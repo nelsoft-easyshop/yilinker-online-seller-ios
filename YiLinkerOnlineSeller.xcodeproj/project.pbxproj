@@ -41,6 +41,10 @@
 		0CF28F031B8CA2E9005B2E54 /* Panton Thin Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EF11B8CA2E9005B2E54 /* Panton Thin Italic.otf */; };
 		0CF28F041B8CA2E9005B2E54 /* Panton Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EF21B8CA2E9005B2E54 /* Panton Thin.otf */; };
 		0CF28F051B8CA2E9005B2E54 /* Panton.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EF31B8CA2E9005B2E54 /* Panton.otf */; };
+		799892F31B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */; };
+		799892F51B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */; };
+		799892F71B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */; };
+		799892F91B8CC7EC00F4CFE2 /* DashBoardItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799892F81B8CC7EC00F4CFE2 /* DashBoardItemCollectionViewCell.swift */; };
 		967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 967EE1C01B8AEA25000591AC /* Images.xcassets */; };
 		967EE1D01B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */; };
 		E72BD5070233EC6FF42DDA3A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B825E81D3B27E563C7C3C53 /* libPods.a */; };
@@ -94,6 +98,10 @@
 		0CF28EF31B8CA2E9005B2E54 /* Panton.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Panton.otf; sourceTree = "<group>"; };
 		3F811DA8573C81594070C601 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		5B825E81D3B27E563C7C3C53 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardHeaderCollectionViewCell.xib; sourceTree = "<group>"; };
+		799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashBoardHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
+		799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardItemCollectionViewCell.xib; sourceTree = "<group>"; };
+		799892F81B8CC7EC00F4CFE2 /* DashBoardItemCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashBoardItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		967EE1B41B8AEA25000591AC /* YiLinkerOnlineSeller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YiLinkerOnlineSeller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		967EE1B81B8AEA25000591AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		967EE1C01B8AEA25000591AC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -189,6 +197,8 @@
 		0CF28EC61B8C85E5005B2E54 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */,
+				799892F81B8CC7EC00F4CFE2 /* DashBoardItemCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -207,6 +217,8 @@
 		0CF28ECC1B8C85E5005B2E54 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */,
+				799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */,
 			);
 			path = Xib;
 			sourceTree = "<group>";
@@ -399,6 +411,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				799892F71B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib in Resources */,
 				0CF28F051B8CA2E9005B2E54 /* Panton.otf in Resources */,
 				0CF28EF91B8CA2E9005B2E54 /* Panton ExtraBold.otf in Resources */,
 				0CF28F011B8CA2E9005B2E54 /* Panton SemiBold Italic.otf in Resources */,
@@ -407,6 +420,7 @@
 				0CF28EFD1B8CA2E9005B2E54 /* Panton Heavy.otf in Resources */,
 				0CF28EFF1B8CA2E9005B2E54 /* Panton Light.otf in Resources */,
 				0CF28EFA1B8CA2E9005B2E54 /* Panton ExtraLight Italic.otf in Resources */,
+				799892F31B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib in Resources */,
 				0CF28F031B8CA2E9005B2E54 /* Panton Thin Italic.otf in Resources */,
 				0CF28EF41B8CA2E9005B2E54 /* Black Italic.otf in Resources */,
 				0CF28EFE1B8CA2E9005B2E54 /* Panton Light Italic.otf in Resources */,
@@ -473,6 +487,7 @@
 				0CF28ED41B8C85E5005B2E54 /* Reachability.swift in Sources */,
 				0CF28ECF1B8C85E5005B2E54 /* APIManager.swift in Sources */,
 				0CF28ED31B8C85E5005B2E54 /* ParseLocalJSON.swift in Sources */,
+				799892F51B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift in Sources */,
 				0CF28ED21B8C85E5005B2E54 /* IPhoneType.swift in Sources */,
 				0CF28ED01B8C85E5005B2E54 /* Enums.swift in Sources */,
 				0CF28ED61B8C85E5005B2E54 /* XibHelper.swift in Sources */,
@@ -483,6 +498,7 @@
 				0CF28EDC1B8C85E5005B2E54 /* SettingsViewController.swift in Sources */,
 				0CF28EDF1B8C868D005B2E54 /* Constants.swift in Sources */,
 				0CF28ED51B8C85E5005B2E54 /* SessionManager.swift in Sources */,
+				799892F91B8CC7EC00F4CFE2 /* DashBoardItemCollectionViewCell.swift in Sources */,
 				0CF28ED11B8C85E5005B2E54 /* HexaColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

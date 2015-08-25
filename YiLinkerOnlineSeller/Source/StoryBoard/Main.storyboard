@@ -15,10 +15,36 @@
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZGG-Iw-lRh">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="g7B-NH-DaN">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                                <connections>
+                                    <outlet property="dataSource" destination="vXZ-lx-hvc" id="zQf-OZ-tPK"/>
+                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="f25-dy-ETQ"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="ZGG-Iw-lRh" secondAttribute="bottom" id="6Uo-eM-lD1"/>
+                            <constraint firstAttribute="trailing" secondItem="ZGG-Iw-lRh" secondAttribute="trailing" id="Dx0-R2-84X"/>
+                            <constraint firstItem="ZGG-Iw-lRh" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="Rgw-Gm-P7T"/>
+                            <constraint firstItem="ZGG-Iw-lRh" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="VtY-3c-8RE"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="MDN-QX-3Tm"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="collectionView" destination="ZGG-Iw-lRh" id="91b-ax-wxe"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
