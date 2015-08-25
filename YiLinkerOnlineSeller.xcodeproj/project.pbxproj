@@ -41,6 +41,12 @@
 		0CF28F031B8CA2E9005B2E54 /* Panton Thin Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EF11B8CA2E9005B2E54 /* Panton Thin Italic.otf */; };
 		0CF28F041B8CA2E9005B2E54 /* Panton Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EF21B8CA2E9005B2E54 /* Panton Thin.otf */; };
 		0CF28F051B8CA2E9005B2E54 /* Panton.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EF31B8CA2E9005B2E54 /* Panton.otf */; };
+		799892FB1B8CE94C00F4CFE2 /* SettingDeactivateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892FA1B8CE94C00F4CFE2 /* SettingDeactivateTableViewCell.xib */; };
+		799892FD1B8CEBA500F4CFE2 /* SettingsHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799892FC1B8CEBA500F4CFE2 /* SettingsHeaderTableViewCell.swift */; };
+		799892FF1B8CEBC100F4CFE2 /* SettingsItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799892FE1B8CEBC100F4CFE2 /* SettingsItemTableViewCell.swift */; };
+		799893011B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799893001B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift */; };
+		799893031B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799893021B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib */; };
+		799893051B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799893041B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib */; };
 		967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 967EE1C01B8AEA25000591AC /* Images.xcassets */; };
 		967EE1D01B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */; };
 		E72BD5070233EC6FF42DDA3A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B825E81D3B27E563C7C3C53 /* libPods.a */; };
@@ -94,6 +100,12 @@
 		0CF28EF31B8CA2E9005B2E54 /* Panton.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Panton.otf; sourceTree = "<group>"; };
 		3F811DA8573C81594070C601 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		5B825E81D3B27E563C7C3C53 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		799892FA1B8CE94C00F4CFE2 /* SettingDeactivateTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingDeactivateTableViewCell.xib; sourceTree = "<group>"; };
+		799892FC1B8CEBA500F4CFE2 /* SettingsHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		799892FE1B8CEBC100F4CFE2 /* SettingsItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsItemTableViewCell.swift; sourceTree = "<group>"; };
+		799893001B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingDeactivateTableViewCell.swift; sourceTree = "<group>"; };
+		799893021B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		799893041B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsItemTableViewCell.xib; sourceTree = "<group>"; };
 		967EE1B41B8AEA25000591AC /* YiLinkerOnlineSeller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YiLinkerOnlineSeller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		967EE1B81B8AEA25000591AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		967EE1C01B8AEA25000591AC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -189,6 +201,9 @@
 		0CF28EC61B8C85E5005B2E54 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				799892FC1B8CEBA500F4CFE2 /* SettingsHeaderTableViewCell.swift */,
+				799892FE1B8CEBC100F4CFE2 /* SettingsItemTableViewCell.swift */,
+				799893001B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -207,6 +222,9 @@
 		0CF28ECC1B8C85E5005B2E54 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				799892FA1B8CE94C00F4CFE2 /* SettingDeactivateTableViewCell.xib */,
+				799893021B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib */,
+				799893041B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib */,
 			);
 			path = Xib;
 			sourceTree = "<group>";
@@ -400,12 +418,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				0CF28F051B8CA2E9005B2E54 /* Panton.otf in Resources */,
+				799893031B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib in Resources */,
 				0CF28EF91B8CA2E9005B2E54 /* Panton ExtraBold.otf in Resources */,
 				0CF28F011B8CA2E9005B2E54 /* Panton SemiBold Italic.otf in Resources */,
 				0CF28ED81B8C85E5005B2E54 /* Main.storyboard in Resources */,
 				0CF28ED71B8C85E5005B2E54 /* LaunchScreen.xib in Resources */,
 				0CF28EFD1B8CA2E9005B2E54 /* Panton Heavy.otf in Resources */,
+				799892FB1B8CE94C00F4CFE2 /* SettingDeactivateTableViewCell.xib in Resources */,
 				0CF28EFF1B8CA2E9005B2E54 /* Panton Light.otf in Resources */,
+				799893051B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib in Resources */,
 				0CF28EFA1B8CA2E9005B2E54 /* Panton ExtraLight Italic.otf in Resources */,
 				0CF28F031B8CA2E9005B2E54 /* Panton Thin Italic.otf in Resources */,
 				0CF28EF41B8CA2E9005B2E54 /* Black Italic.otf in Resources */,
@@ -471,6 +492,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0CF28ED41B8C85E5005B2E54 /* Reachability.swift in Sources */,
+				799893011B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift in Sources */,
 				0CF28ECF1B8C85E5005B2E54 /* APIManager.swift in Sources */,
 				0CF28ED31B8C85E5005B2E54 /* ParseLocalJSON.swift in Sources */,
 				0CF28ED21B8C85E5005B2E54 /* IPhoneType.swift in Sources */,
@@ -479,9 +501,11 @@
 				0CF28EDB1B8C85E5005B2E54 /* SearchViewController.swift in Sources */,
 				0CF28ECE1B8C85E5005B2E54 /* AppDelegate.swift in Sources */,
 				0CF28EDA1B8C85E5005B2E54 /* MessageViewController.swift in Sources */,
+				799892FD1B8CEBA500F4CFE2 /* SettingsHeaderTableViewCell.swift in Sources */,
 				0CF28ED91B8C85E5005B2E54 /* DashboardViewController.swift in Sources */,
 				0CF28EDC1B8C85E5005B2E54 /* SettingsViewController.swift in Sources */,
 				0CF28EDF1B8C868D005B2E54 /* Constants.swift in Sources */,
+				799892FF1B8CEBC100F4CFE2 /* SettingsItemTableViewCell.swift in Sources */,
 				0CF28ED51B8C85E5005B2E54 /* SessionManager.swift in Sources */,
 				0CF28ED11B8C85E5005B2E54 /* HexaColor.swift in Sources */,
 			);

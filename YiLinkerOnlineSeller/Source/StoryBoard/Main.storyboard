@@ -64,10 +64,10 @@
             </objects>
             <point key="canvasLocation" x="9377.5" y="2728.5"/>
         </scene>
-        <!--Search View Controller-->
+        <!--Settings View Controller-->
         <scene sceneID="mjd-HP-rnW">
             <objects>
-                <viewController id="8BQ-Jm-Lzi" customClass="SearchViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="8BQ-Jm-Lzi" customClass="SettingsViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gbR-zW-2QH"/>
                         <viewControllerLayoutGuide type="bottom" id="tN5-pV-nVm"/>
@@ -75,10 +75,30 @@
                     <view key="view" contentMode="scaleToFill" id="O3y-Qz-Dhc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.27450980390000002" green="0.66274509800000003" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="HoV-VC-WRZ">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                                <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="8BQ-Jm-Lzi" id="eaM-IW-RuZ"/>
+                                    <outlet property="delegate" destination="8BQ-Jm-Lzi" id="MMQ-5p-Dd5"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="HoV-VC-WRZ" firstAttribute="leading" secondItem="O3y-Qz-Dhc" secondAttribute="leading" id="4go-m1-cBW"/>
+                            <constraint firstItem="tN5-pV-nVm" firstAttribute="top" secondItem="HoV-VC-WRZ" secondAttribute="bottom" id="YOP-bb-Fuq"/>
+                            <constraint firstAttribute="trailing" secondItem="HoV-VC-WRZ" secondAttribute="trailing" id="u1y-LF-vDC"/>
+                            <constraint firstItem="HoV-VC-WRZ" firstAttribute="top" secondItem="gbR-zW-2QH" secondAttribute="bottom" constant="-64" id="xCI-Zp-Emp"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="5Fr-1n-a90"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="tableView" destination="HoV-VC-WRZ" id="rMi-8y-Ybt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fSM-yK-WfK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
