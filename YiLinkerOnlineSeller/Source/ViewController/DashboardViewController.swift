@@ -20,5 +20,13 @@ class DashboardViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    //--
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let vc = ProductManagementViewController(nibName: "ProductManagementViewController", bundle: nil)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
 }
 
