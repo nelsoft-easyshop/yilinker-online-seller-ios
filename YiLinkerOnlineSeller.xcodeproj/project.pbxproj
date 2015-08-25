@@ -7,12 +7,42 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0CF28ECE1B8C85E5005B2E54 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EB71B8C85E4005B2E54 /* AppDelegate.swift */; };
+		0CF28ECF1B8C85E5005B2E54 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EBA1B8C85E4005B2E54 /* APIManager.swift */; };
+		0CF28ED01B8C85E5005B2E54 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EBB1B8C85E4005B2E54 /* Enums.swift */; };
+		0CF28ED11B8C85E5005B2E54 /* HexaColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EBC1B8C85E4005B2E54 /* HexaColor.swift */; };
+		0CF28ED21B8C85E5005B2E54 /* IPhoneType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EBD1B8C85E4005B2E54 /* IPhoneType.swift */; };
+		0CF28ED31B8C85E5005B2E54 /* ParseLocalJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EBE1B8C85E4005B2E54 /* ParseLocalJSON.swift */; };
+		0CF28ED41B8C85E5005B2E54 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EBF1B8C85E4005B2E54 /* Reachability.swift */; };
+		0CF28ED51B8C85E5005B2E54 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EC01B8C85E4005B2E54 /* SessionManager.swift */; };
+		0CF28ED61B8C85E5005B2E54 /* XibHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EC11B8C85E4005B2E54 /* XibHelper.swift */; };
+		0CF28ED71B8C85E5005B2E54 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EC41B8C85E5005B2E54 /* LaunchScreen.xib */; };
+		0CF28ED81B8C85E5005B2E54 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EC51B8C85E5005B2E54 /* Main.storyboard */; };
+		0CF28ED91B8C85E5005B2E54 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EC81B8C85E5005B2E54 /* DashboardViewController.swift */; };
+		0CF28EDA1B8C85E5005B2E54 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EC91B8C85E5005B2E54 /* MessageViewController.swift */; };
+		0CF28EDB1B8C85E5005B2E54 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28ECA1B8C85E5005B2E54 /* SearchViewController.swift */; };
+		0CF28EDC1B8C85E5005B2E54 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28ECB1B8C85E5005B2E54 /* SettingsViewController.swift */; };
+		0CF28EDF1B8C868D005B2E54 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EDE1B8C868D005B2E54 /* Constants.swift */; };
+		0CF28EF41B8CA2E9005B2E54 /* Black Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EE21B8CA2E9005B2E54 /* Black Italic.otf */; };
+		0CF28EF51B8CA2E9005B2E54 /* Panton Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EE31B8CA2E9005B2E54 /* Panton Black.otf */; };
+		0CF28EF61B8CA2E9005B2E54 /* Panton Bold Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EE41B8CA2E9005B2E54 /* Panton Bold Italic.otf */; };
+		0CF28EF71B8CA2E9005B2E54 /* Panton Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EE51B8CA2E9005B2E54 /* Panton Bold.otf */; };
+		0CF28EF81B8CA2E9005B2E54 /* Panton ExtraBold Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EE61B8CA2E9005B2E54 /* Panton ExtraBold Italic.otf */; };
+		0CF28EF91B8CA2E9005B2E54 /* Panton ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EE71B8CA2E9005B2E54 /* Panton ExtraBold.otf */; };
+		0CF28EFA1B8CA2E9005B2E54 /* Panton ExtraLight Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EE81B8CA2E9005B2E54 /* Panton ExtraLight Italic.otf */; };
+		0CF28EFB1B8CA2E9005B2E54 /* Panton ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EE91B8CA2E9005B2E54 /* Panton ExtraLight.otf */; };
+		0CF28EFC1B8CA2E9005B2E54 /* Panton Heavy Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EEA1B8CA2E9005B2E54 /* Panton Heavy Italic.otf */; };
+		0CF28EFD1B8CA2E9005B2E54 /* Panton Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EEB1B8CA2E9005B2E54 /* Panton Heavy.otf */; };
+		0CF28EFE1B8CA2E9005B2E54 /* Panton Light Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EEC1B8CA2E9005B2E54 /* Panton Light Italic.otf */; };
+		0CF28EFF1B8CA2E9005B2E54 /* Panton Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EED1B8CA2E9005B2E54 /* Panton Light.otf */; };
+		0CF28F001B8CA2E9005B2E54 /* Panton Regular Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EEE1B8CA2E9005B2E54 /* Panton Regular Italic.otf */; };
+		0CF28F011B8CA2E9005B2E54 /* Panton SemiBold Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EEF1B8CA2E9005B2E54 /* Panton SemiBold Italic.otf */; };
+		0CF28F021B8CA2E9005B2E54 /* Panton SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EF01B8CA2E9005B2E54 /* Panton SemiBold.otf */; };
+		0CF28F031B8CA2E9005B2E54 /* Panton Thin Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EF11B8CA2E9005B2E54 /* Panton Thin Italic.otf */; };
+		0CF28F041B8CA2E9005B2E54 /* Panton Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EF21B8CA2E9005B2E54 /* Panton Thin.otf */; };
+		0CF28F051B8CA2E9005B2E54 /* Panton.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EF31B8CA2E9005B2E54 /* Panton.otf */; };
 		967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 967EE1C01B8AEA25000591AC /* Images.xcassets */; };
 		967EE1D01B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */; };
-		96C922F71B8AF197007036DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C922F61B8AF197007036DA /* AppDelegate.swift */; };
-		96C922FA1B8AF21C007036DA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C922F91B8AF21C007036DA /* ViewController.swift */; };
-		96C922FF1B8AF26A007036DA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96C922FB1B8AF26A007036DA /* LaunchScreen.xib */; };
-		96C923001B8AF26A007036DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96C922FD1B8AF26A007036DA /* Main.storyboard */; };
 		E72BD5070233EC6FF42DDA3A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B825E81D3B27E563C7C3C53 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -27,7 +57,41 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0CF28E921B8C5671005B2E54 /* YiLinkerOnlineSeller-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "YiLinkerOnlineSeller-Bridging-Header.h"; path = "Source/YiLinkerOnlineSeller-Bridging-Header.h"; sourceTree = "<group>"; };
+		0CF28EB71B8C85E4005B2E54 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		0CF28EBA1B8C85E4005B2E54 /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		0CF28EBB1B8C85E4005B2E54 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		0CF28EBC1B8C85E4005B2E54 /* HexaColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexaColor.swift; sourceTree = "<group>"; };
+		0CF28EBD1B8C85E4005B2E54 /* IPhoneType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPhoneType.swift; sourceTree = "<group>"; };
+		0CF28EBE1B8C85E4005B2E54 /* ParseLocalJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseLocalJSON.swift; sourceTree = "<group>"; };
+		0CF28EBF1B8C85E4005B2E54 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		0CF28EC01B8C85E4005B2E54 /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
+		0CF28EC11B8C85E4005B2E54 /* XibHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XibHelper.swift; sourceTree = "<group>"; };
+		0CF28EC41B8C85E5005B2E54 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		0CF28EC51B8C85E5005B2E54 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		0CF28EC81B8C85E5005B2E54 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
+		0CF28EC91B8C85E5005B2E54 /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
+		0CF28ECA1B8C85E5005B2E54 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		0CF28ECB1B8C85E5005B2E54 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		0CF28EDD1B8C8614005B2E54 /* YiLinkerOnlineSeller-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YiLinkerOnlineSeller-Bridging-Header.h"; sourceTree = "<group>"; };
+		0CF28EDE1B8C868D005B2E54 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		0CF28EE21B8CA2E9005B2E54 /* Black Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Black Italic.otf"; sourceTree = "<group>"; };
+		0CF28EE31B8CA2E9005B2E54 /* Panton Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Black.otf"; sourceTree = "<group>"; };
+		0CF28EE41B8CA2E9005B2E54 /* Panton Bold Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Bold Italic.otf"; sourceTree = "<group>"; };
+		0CF28EE51B8CA2E9005B2E54 /* Panton Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Bold.otf"; sourceTree = "<group>"; };
+		0CF28EE61B8CA2E9005B2E54 /* Panton ExtraBold Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton ExtraBold Italic.otf"; sourceTree = "<group>"; };
+		0CF28EE71B8CA2E9005B2E54 /* Panton ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton ExtraBold.otf"; sourceTree = "<group>"; };
+		0CF28EE81B8CA2E9005B2E54 /* Panton ExtraLight Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton ExtraLight Italic.otf"; sourceTree = "<group>"; };
+		0CF28EE91B8CA2E9005B2E54 /* Panton ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton ExtraLight.otf"; sourceTree = "<group>"; };
+		0CF28EEA1B8CA2E9005B2E54 /* Panton Heavy Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Heavy Italic.otf"; sourceTree = "<group>"; };
+		0CF28EEB1B8CA2E9005B2E54 /* Panton Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Heavy.otf"; sourceTree = "<group>"; };
+		0CF28EEC1B8CA2E9005B2E54 /* Panton Light Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Light Italic.otf"; sourceTree = "<group>"; };
+		0CF28EED1B8CA2E9005B2E54 /* Panton Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Light.otf"; sourceTree = "<group>"; };
+		0CF28EEE1B8CA2E9005B2E54 /* Panton Regular Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Regular Italic.otf"; sourceTree = "<group>"; };
+		0CF28EEF1B8CA2E9005B2E54 /* Panton SemiBold Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton SemiBold Italic.otf"; sourceTree = "<group>"; };
+		0CF28EF01B8CA2E9005B2E54 /* Panton SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton SemiBold.otf"; sourceTree = "<group>"; };
+		0CF28EF11B8CA2E9005B2E54 /* Panton Thin Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Thin Italic.otf"; sourceTree = "<group>"; };
+		0CF28EF21B8CA2E9005B2E54 /* Panton Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Thin.otf"; sourceTree = "<group>"; };
+		0CF28EF31B8CA2E9005B2E54 /* Panton.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Panton.otf; sourceTree = "<group>"; };
 		3F811DA8573C81594070C601 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		5B825E81D3B27E563C7C3C53 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		967EE1B41B8AEA25000591AC /* YiLinkerOnlineSeller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YiLinkerOnlineSeller.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -36,10 +100,6 @@
 		967EE1C91B8AEA25000591AC /* YiLinkerOnlineSellerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YiLinkerOnlineSellerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		967EE1CE1B8AEA25000591AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YiLinkerOnlineSellerTests.swift; sourceTree = "<group>"; };
-		96C922F61B8AF197007036DA /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Source/AppDelegate.swift; sourceTree = "<group>"; };
-		96C922F91B8AF21C007036DA /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Source/ViewController.swift; sourceTree = "<group>"; };
-		96C922FC1B8AF26A007036DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		96C922FE1B8AF26A007036DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D4D17EE114265F93B1630151 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -62,6 +122,128 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0CF28EB51B8C85E4005B2E54 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				0CF28EDD1B8C8614005B2E54 /* YiLinkerOnlineSeller-Bridging-Header.h */,
+				0CF28EB61B8C85E4005B2E54 /* AppDelegate */,
+				0CF28EB81B8C85E4005B2E54 /* External */,
+				0CF28EB91B8C85E4005B2E54 /* Helper */,
+				0CF28EC21B8C85E4005B2E54 /* Model */,
+				0CF28EC31B8C85E5005B2E54 /* StoryBoard */,
+				0CF28EC61B8C85E5005B2E54 /* View */,
+				0CF28EC71B8C85E5005B2E54 /* ViewController */,
+				0CF28ECC1B8C85E5005B2E54 /* Xib */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		0CF28EB61B8C85E4005B2E54 /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				0CF28EB71B8C85E4005B2E54 /* AppDelegate.swift */,
+			);
+			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		0CF28EB81B8C85E4005B2E54 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				0CF28EE01B8CA2E9005B2E54 /* Font */,
+			);
+			path = External;
+			sourceTree = "<group>";
+		};
+		0CF28EB91B8C85E4005B2E54 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				0CF28EDE1B8C868D005B2E54 /* Constants.swift */,
+				0CF28EBA1B8C85E4005B2E54 /* APIManager.swift */,
+				0CF28EBB1B8C85E4005B2E54 /* Enums.swift */,
+				0CF28EBC1B8C85E4005B2E54 /* HexaColor.swift */,
+				0CF28EBD1B8C85E4005B2E54 /* IPhoneType.swift */,
+				0CF28EBE1B8C85E4005B2E54 /* ParseLocalJSON.swift */,
+				0CF28EBF1B8C85E4005B2E54 /* Reachability.swift */,
+				0CF28EC01B8C85E4005B2E54 /* SessionManager.swift */,
+				0CF28EC11B8C85E4005B2E54 /* XibHelper.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		0CF28EC21B8C85E4005B2E54 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0CF28EC31B8C85E5005B2E54 /* StoryBoard */ = {
+			isa = PBXGroup;
+			children = (
+				0CF28EC41B8C85E5005B2E54 /* LaunchScreen.xib */,
+				0CF28EC51B8C85E5005B2E54 /* Main.storyboard */,
+			);
+			path = StoryBoard;
+			sourceTree = "<group>";
+		};
+		0CF28EC61B8C85E5005B2E54 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0CF28EC71B8C85E5005B2E54 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0CF28EC81B8C85E5005B2E54 /* DashboardViewController.swift */,
+				0CF28EC91B8C85E5005B2E54 /* MessageViewController.swift */,
+				0CF28ECA1B8C85E5005B2E54 /* SearchViewController.swift */,
+				0CF28ECB1B8C85E5005B2E54 /* SettingsViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		0CF28ECC1B8C85E5005B2E54 /* Xib */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Xib;
+			sourceTree = "<group>";
+		};
+		0CF28EE01B8CA2E9005B2E54 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				0CF28EE11B8CA2E9005B2E54 /* Panton */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		0CF28EE11B8CA2E9005B2E54 /* Panton */ = {
+			isa = PBXGroup;
+			children = (
+				0CF28EE21B8CA2E9005B2E54 /* Black Italic.otf */,
+				0CF28EE31B8CA2E9005B2E54 /* Panton Black.otf */,
+				0CF28EE41B8CA2E9005B2E54 /* Panton Bold Italic.otf */,
+				0CF28EE51B8CA2E9005B2E54 /* Panton Bold.otf */,
+				0CF28EE61B8CA2E9005B2E54 /* Panton ExtraBold Italic.otf */,
+				0CF28EE71B8CA2E9005B2E54 /* Panton ExtraBold.otf */,
+				0CF28EE81B8CA2E9005B2E54 /* Panton ExtraLight Italic.otf */,
+				0CF28EE91B8CA2E9005B2E54 /* Panton ExtraLight.otf */,
+				0CF28EEA1B8CA2E9005B2E54 /* Panton Heavy Italic.otf */,
+				0CF28EEB1B8CA2E9005B2E54 /* Panton Heavy.otf */,
+				0CF28EEC1B8CA2E9005B2E54 /* Panton Light Italic.otf */,
+				0CF28EED1B8CA2E9005B2E54 /* Panton Light.otf */,
+				0CF28EEE1B8CA2E9005B2E54 /* Panton Regular Italic.otf */,
+				0CF28EEF1B8CA2E9005B2E54 /* Panton SemiBold Italic.otf */,
+				0CF28EF01B8CA2E9005B2E54 /* Panton SemiBold.otf */,
+				0CF28EF11B8CA2E9005B2E54 /* Panton Thin Italic.otf */,
+				0CF28EF21B8CA2E9005B2E54 /* Panton Thin.otf */,
+				0CF28EF31B8CA2E9005B2E54 /* Panton.otf */,
+			);
+			path = Panton;
+			sourceTree = "<group>";
+		};
 		1A0C852BDE3E210EF3770A77 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -94,8 +276,7 @@
 		967EE1B61B8AEA25000591AC /* YiLinkerOnlineSeller */ = {
 			isa = PBXGroup;
 			children = (
-				96C922ED1B8AEFB9007036DA /* Source */,
-				96C922EE1B8AF06E007036DA /* Screens */,
+				0CF28EB51B8C85E4005B2E54 /* Source */,
 				967EE1C01B8AEA25000591AC /* Images.xcassets */,
 				967EE1B71B8AEA25000591AC /* Supporting Files */,
 			);
@@ -125,73 +306,6 @@
 				967EE1CE1B8AEA25000591AC /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		96C922ED1B8AEFB9007036DA /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				0CF28E921B8C5671005B2E54 /* YiLinkerOnlineSeller-Bridging-Header.h */,
-				96C922F21B8AF0BC007036DA /* Model */,
-				96C922F11B8AF0A7007036DA /* ViewController */,
-				96C922F01B8AF098007036DA /* View */,
-				96C922F31B8AF11F007036DA /* External */,
-				96C922F81B8AF1AD007036DA /* Helper */,
-				96C922F41B8AF14D007036DA /* AppDelegate */,
-			);
-			name = Source;
-			sourceTree = "<group>";
-		};
-		96C922EE1B8AF06E007036DA /* Screens */ = {
-			isa = PBXGroup;
-			children = (
-				96C922FB1B8AF26A007036DA /* LaunchScreen.xib */,
-				96C922FD1B8AF26A007036DA /* Main.storyboard */,
-			);
-			name = Screens;
-			sourceTree = "<group>";
-		};
-		96C922F01B8AF098007036DA /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
-		96C922F11B8AF0A7007036DA /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				96C922F91B8AF21C007036DA /* ViewController.swift */,
-			);
-			name = ViewController;
-			sourceTree = "<group>";
-		};
-		96C922F21B8AF0BC007036DA /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
-		96C922F31B8AF11F007036DA /* External */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = External;
-			sourceTree = "<group>";
-		};
-		96C922F41B8AF14D007036DA /* AppDelegate */ = {
-			isa = PBXGroup;
-			children = (
-				96C922F61B8AF197007036DA /* AppDelegate.swift */,
-			);
-			name = AppDelegate;
-			sourceTree = "<group>";
-		};
-		96C922F81B8AF1AD007036DA /* Helper */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Helper;
 			sourceTree = "<group>";
 		};
 		D957134FEAF8E3FA392A4C1E /* Frameworks */ = {
@@ -285,9 +399,27 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96C923001B8AF26A007036DA /* Main.storyboard in Resources */,
-				96C922FF1B8AF26A007036DA /* LaunchScreen.xib in Resources */,
+				0CF28F051B8CA2E9005B2E54 /* Panton.otf in Resources */,
+				0CF28EF91B8CA2E9005B2E54 /* Panton ExtraBold.otf in Resources */,
+				0CF28F011B8CA2E9005B2E54 /* Panton SemiBold Italic.otf in Resources */,
+				0CF28ED81B8C85E5005B2E54 /* Main.storyboard in Resources */,
+				0CF28ED71B8C85E5005B2E54 /* LaunchScreen.xib in Resources */,
+				0CF28EFD1B8CA2E9005B2E54 /* Panton Heavy.otf in Resources */,
+				0CF28EFF1B8CA2E9005B2E54 /* Panton Light.otf in Resources */,
+				0CF28EFA1B8CA2E9005B2E54 /* Panton ExtraLight Italic.otf in Resources */,
+				0CF28F031B8CA2E9005B2E54 /* Panton Thin Italic.otf in Resources */,
+				0CF28EF41B8CA2E9005B2E54 /* Black Italic.otf in Resources */,
+				0CF28EFE1B8CA2E9005B2E54 /* Panton Light Italic.otf in Resources */,
+				0CF28F001B8CA2E9005B2E54 /* Panton Regular Italic.otf in Resources */,
+				0CF28EFB1B8CA2E9005B2E54 /* Panton ExtraLight.otf in Resources */,
+				0CF28EF71B8CA2E9005B2E54 /* Panton Bold.otf in Resources */,
+				0CF28F041B8CA2E9005B2E54 /* Panton Thin.otf in Resources */,
 				967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */,
+				0CF28EF81B8CA2E9005B2E54 /* Panton ExtraBold Italic.otf in Resources */,
+				0CF28EFC1B8CA2E9005B2E54 /* Panton Heavy Italic.otf in Resources */,
+				0CF28F021B8CA2E9005B2E54 /* Panton SemiBold.otf in Resources */,
+				0CF28EF61B8CA2E9005B2E54 /* Panton Bold Italic.otf in Resources */,
+				0CF28EF51B8CA2E9005B2E54 /* Panton Black.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,8 +470,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96C922FA1B8AF21C007036DA /* ViewController.swift in Sources */,
-				96C922F71B8AF197007036DA /* AppDelegate.swift in Sources */,
+				0CF28ED41B8C85E5005B2E54 /* Reachability.swift in Sources */,
+				0CF28ECF1B8C85E5005B2E54 /* APIManager.swift in Sources */,
+				0CF28ED31B8C85E5005B2E54 /* ParseLocalJSON.swift in Sources */,
+				0CF28ED21B8C85E5005B2E54 /* IPhoneType.swift in Sources */,
+				0CF28ED01B8C85E5005B2E54 /* Enums.swift in Sources */,
+				0CF28ED61B8C85E5005B2E54 /* XibHelper.swift in Sources */,
+				0CF28EDB1B8C85E5005B2E54 /* SearchViewController.swift in Sources */,
+				0CF28ECE1B8C85E5005B2E54 /* AppDelegate.swift in Sources */,
+				0CF28EDA1B8C85E5005B2E54 /* MessageViewController.swift in Sources */,
+				0CF28ED91B8C85E5005B2E54 /* DashboardViewController.swift in Sources */,
+				0CF28EDC1B8C85E5005B2E54 /* SettingsViewController.swift in Sources */,
+				0CF28EDF1B8C868D005B2E54 /* Constants.swift in Sources */,
+				0CF28ED51B8C85E5005B2E54 /* SessionManager.swift in Sources */,
+				0CF28ED11B8C85E5005B2E54 /* HexaColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,25 +504,6 @@
 			targetProxy = 967EE1CA1B8AEA25000591AC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		96C922FB1B8AF26A007036DA /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				96C922FC1B8AF26A007036DA /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-		96C922FD1B8AF26A007036DA /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				96C922FE1B8AF26A007036DA /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		967EE1D11B8AEA25000591AC /* Debug */ = {
