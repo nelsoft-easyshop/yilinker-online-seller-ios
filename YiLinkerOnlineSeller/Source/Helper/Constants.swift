@@ -17,6 +17,7 @@ struct Constants {
         static let backgroundGray: UIColor = HexaColor.colorWithHexa(0xE7E7E7)
         static let selectedGreenColor: UIColor = HexaColor.colorWithHexa(0x44A491)
         static let selectedCellColor: UIColor = HexaColor.colorWithHexa(0xE1E1E1)
+        static let uploadViewColor: UIColor = HexaColor.colorWithHexa(0x54B6A7)
     }
     
     struct Credentials {

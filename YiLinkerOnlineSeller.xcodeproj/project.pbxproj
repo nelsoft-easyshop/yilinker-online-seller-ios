@@ -47,6 +47,10 @@
 		799893011B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799893001B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift */; };
 		799893031B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799893021B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib */; };
 		799893051B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799893041B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib */; };
+		799892F31B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */; };
+		799892F51B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */; };
+		799892F71B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */; };
+		799892F91B8CC7EC00F4CFE2 /* DashBoardItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799892F81B8CC7EC00F4CFE2 /* DashBoardItemCollectionViewCell.swift */; };
 		967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 967EE1C01B8AEA25000591AC /* Images.xcassets */; };
 		967EE1D01B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */; };
 		E72BD5070233EC6FF42DDA3A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B825E81D3B27E563C7C3C53 /* libPods.a */; };
@@ -106,6 +110,10 @@
 		799893001B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingDeactivateTableViewCell.swift; sourceTree = "<group>"; };
 		799893021B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		799893041B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsItemTableViewCell.xib; sourceTree = "<group>"; };
+		799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardHeaderCollectionViewCell.xib; sourceTree = "<group>"; };
+		799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashBoardHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
+		799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardItemCollectionViewCell.xib; sourceTree = "<group>"; };
+		799892F81B8CC7EC00F4CFE2 /* DashBoardItemCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashBoardItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		967EE1B41B8AEA25000591AC /* YiLinkerOnlineSeller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YiLinkerOnlineSeller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		967EE1B81B8AEA25000591AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		967EE1C01B8AEA25000591AC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -204,6 +212,8 @@
 				799892FC1B8CEBA500F4CFE2 /* SettingsHeaderTableViewCell.swift */,
 				799892FE1B8CEBC100F4CFE2 /* SettingsItemTableViewCell.swift */,
 				799893001B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift */,
+				799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */,
+				799892F81B8CC7EC00F4CFE2 /* DashBoardItemCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -225,6 +235,8 @@
 				799892FA1B8CE94C00F4CFE2 /* SettingDeactivateTableViewCell.xib */,
 				799893021B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib */,
 				799893041B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib */,
+				799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */,
+				799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */,
 			);
 			path = Xib;
 			sourceTree = "<group>";
@@ -417,6 +429,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				799892F71B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib in Resources */,
 				0CF28F051B8CA2E9005B2E54 /* Panton.otf in Resources */,
 				799893031B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib in Resources */,
 				0CF28EF91B8CA2E9005B2E54 /* Panton ExtraBold.otf in Resources */,
@@ -428,6 +441,7 @@
 				0CF28EFF1B8CA2E9005B2E54 /* Panton Light.otf in Resources */,
 				799893051B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib in Resources */,
 				0CF28EFA1B8CA2E9005B2E54 /* Panton ExtraLight Italic.otf in Resources */,
+				799892F31B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib in Resources */,
 				0CF28F031B8CA2E9005B2E54 /* Panton Thin Italic.otf in Resources */,
 				0CF28EF41B8CA2E9005B2E54 /* Black Italic.otf in Resources */,
 				0CF28EFE1B8CA2E9005B2E54 /* Panton Light Italic.otf in Resources */,
@@ -495,6 +509,7 @@
 				799893011B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift in Sources */,
 				0CF28ECF1B8C85E5005B2E54 /* APIManager.swift in Sources */,
 				0CF28ED31B8C85E5005B2E54 /* ParseLocalJSON.swift in Sources */,
+				799892F51B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift in Sources */,
 				0CF28ED21B8C85E5005B2E54 /* IPhoneType.swift in Sources */,
 				0CF28ED01B8C85E5005B2E54 /* Enums.swift in Sources */,
 				0CF28ED61B8C85E5005B2E54 /* XibHelper.swift in Sources */,
@@ -507,6 +522,7 @@
 				0CF28EDF1B8C868D005B2E54 /* Constants.swift in Sources */,
 				799892FF1B8CEBC100F4CFE2 /* SettingsItemTableViewCell.swift in Sources */,
 				0CF28ED51B8C85E5005B2E54 /* SessionManager.swift in Sources */,
+				799892F91B8CC7EC00F4CFE2 /* DashBoardItemCollectionViewCell.swift in Sources */,
 				0CF28ED11B8C85E5005B2E54 /* HexaColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
