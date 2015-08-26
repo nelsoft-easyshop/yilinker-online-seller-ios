@@ -189,6 +189,7 @@ extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataS
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
+        self.navigationController?.pushViewController(productDetails, animated: true)
     }
 }
