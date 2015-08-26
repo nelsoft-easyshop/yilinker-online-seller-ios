@@ -31,13 +31,24 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.navigationBarHidden = false
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBarHidden = true
+    }
+    
     func initializeViews() {
         if self.respondsToSelector("edgesForExtendedLayout") {
             self.edgesForExtendedLayout = UIRectEdge.None
         }
         
         self.tabBarController!.tabBar.tintColor = Constants.Colors.appTheme
-        self.navigationController?.navigationBarHidden = true
+        
+        
         
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let screenWidth = screenSize.width
@@ -120,34 +131,33 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         println("Clicked item \(tableData[indexPath.row])")
+        if indexPath.row == 0 {
+            
+        } else if indexPath.row == 0 {
+            
+        } else if indexPath.row == 1 {
+            
+        } else if indexPath.row == 2 {
+            
+        } else if indexPath.row == 3 {
+            
+        } else if indexPath.row == 4 {
+            
+        } else if indexPath.row == 5 {
+            
+        } else if indexPath.row == 6 {
+            
+        } else if indexPath.row == 7 {
+            var activityViewController = ActivityLogTableViewController(nibName: "ActivityLogTableViewController", bundle: nil)
+            self.navigationController?.pushViewController(activityViewController, animated:true)
+        } else if indexPath.row == 8 {
+            
+        } else if indexPath.row == 9 {
+            
+        } else if indexPath.row == 10 {
+            
+        }
     }
-    
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-    return true
-    }
-    */
-    
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-    return true
-    }
-    */
-    
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(collectionView: UICollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-    return false
-    }
-    override func collectionView(collectionView: UICollectionView, canPerformAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
-    return false
-    }
-    override func collectionView(collectionView: UICollectionView, performAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
-    
-    }
-    */
     
 }
 
