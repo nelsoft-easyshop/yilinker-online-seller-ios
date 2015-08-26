@@ -17,6 +17,19 @@ struct Constants {
         static let backgroundGray: UIColor = HexaColor.colorWithHexa(0xE7E7E7)
         static let selectedGreenColor: UIColor = HexaColor.colorWithHexa(0x44A491)
         static let selectedCellColor: UIColor = HexaColor.colorWithHexa(0xE1E1E1)
+        
+        // Product Management
+        static let activeGreenColor: UIColor = HexaColor.colorWithHexa(0x01aa01)
+        static let inactiveRedColor: UIColor = HexaColor.colorWithHexa(0xff3b30)
+        static let cellTitleColor: UIColor = HexaColor.colorWithHexa(0x666666)
+        static let cellSubTitleColor: UIColor = HexaColor.colorWithHexa(0x999999)
+        static let purpleButtonColor: UIColor = HexaColor.colorWithHexa(0x75348a)
+        static let checkRedColor: UIColor = HexaColor.colorWithHexa(0x380016)
+        static let checkGreenColor: UIColor = HexaColor.colorWithHexa(0x32c000)
+        static let deleteRedColor: UIColor = HexaColor.colorWithHexa(0xff3b30)
+
+        static let yesGreenColor: UIColor = HexaColor.colorWithHexa(0x54b6a7)
+        static let noBrownColor: UIColor = HexaColor.colorWithHexa(0x666666)
     }
     
     struct Credentials {

@@ -43,6 +43,8 @@
 		0CF28F051B8CA2E9005B2E54 /* Panton.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EF31B8CA2E9005B2E54 /* Panton.otf */; };
 		26378F211B8CC45A008533B6 /* ProductManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26378F1F1B8CC45A008533B6 /* ProductManagementViewController.swift */; };
 		26378F221B8CC45A008533B6 /* ProductManagementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26378F201B8CC45A008533B6 /* ProductManagementViewController.xib */; };
+		26378F511B8CEE82008533B6 /* ProductManagementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26378F4F1B8CEE82008533B6 /* ProductManagementTableViewCell.swift */; };
+		26378F521B8CEE82008533B6 /* ProductManagementTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26378F501B8CEE82008533B6 /* ProductManagementTableViewCell.xib */; };
 		967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 967EE1C01B8AEA25000591AC /* Images.xcassets */; };
 		967EE1D01B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */; };
 		E72BD5070233EC6FF42DDA3A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B825E81D3B27E563C7C3C53 /* libPods.a */; };
@@ -96,6 +98,8 @@
 		0CF28EF31B8CA2E9005B2E54 /* Panton.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Panton.otf; sourceTree = "<group>"; };
 		26378F1F1B8CC45A008533B6 /* ProductManagementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductManagementViewController.swift; sourceTree = "<group>"; };
 		26378F201B8CC45A008533B6 /* ProductManagementViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductManagementViewController.xib; sourceTree = "<group>"; };
+		26378F4F1B8CEE82008533B6 /* ProductManagementTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductManagementTableViewCell.swift; sourceTree = "<group>"; };
+		26378F501B8CEE82008533B6 /* ProductManagementTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductManagementTableViewCell.xib; sourceTree = "<group>"; };
 		3F811DA8573C81594070C601 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		5B825E81D3B27E563C7C3C53 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		967EE1B41B8AEA25000591AC /* YiLinkerOnlineSeller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YiLinkerOnlineSeller.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -206,6 +210,8 @@
 				0CF28ECB1B8C85E5005B2E54 /* SettingsViewController.swift */,
 				26378F1F1B8CC45A008533B6 /* ProductManagementViewController.swift */,
 				26378F201B8CC45A008533B6 /* ProductManagementViewController.xib */,
+				26378F4F1B8CEE82008533B6 /* ProductManagementTableViewCell.swift */,
+				26378F501B8CEE82008533B6 /* ProductManagementTableViewCell.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -416,6 +422,7 @@
 				0CF28F031B8CA2E9005B2E54 /* Panton Thin Italic.otf in Resources */,
 				26378F221B8CC45A008533B6 /* ProductManagementViewController.xib in Resources */,
 				0CF28EF41B8CA2E9005B2E54 /* Black Italic.otf in Resources */,
+				26378F521B8CEE82008533B6 /* ProductManagementTableViewCell.xib in Resources */,
 				0CF28EFE1B8CA2E9005B2E54 /* Panton Light Italic.otf in Resources */,
 				0CF28F001B8CA2E9005B2E54 /* Panton Regular Italic.otf in Resources */,
 				0CF28EFB1B8CA2E9005B2E54 /* Panton ExtraLight.otf in Resources */,
@@ -477,6 +484,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26378F511B8CEE82008533B6 /* ProductManagementTableViewCell.swift in Sources */,
 				0CF28ED41B8C85E5005B2E54 /* Reachability.swift in Sources */,
 				26378F211B8CC45A008533B6 /* ProductManagementViewController.swift in Sources */,
 				0CF28ECF1B8C85E5005B2E54 /* APIManager.swift in Sources */,
