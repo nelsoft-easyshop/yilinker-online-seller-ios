@@ -57,6 +57,8 @@
 		79EFF7611B8D6DE4008A9E7D /* ActivityLogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EFF7601B8D6DE4008A9E7D /* ActivityLogTableViewCell.swift */; };
 		79EFF7701B8D6E35008A9E7D /* ActivityLogModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EFF76E1B8D6E35008A9E7D /* ActivityLogModel.swift */; };
 		79EFF7711B8D6E35008A9E7D /* ActivityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EFF76F1B8D6E35008A9E7D /* ActivityModel.swift */; };
+		79EFF7781B8D9274008A9E7D /* SalesReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EFF7761B8D9274008A9E7D /* SalesReportViewController.swift */; };
+		79EFF7791B8D9274008A9E7D /* SalesReportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EFF7771B8D9274008A9E7D /* SalesReportViewController.xib */; };
 		967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 967EE1C01B8AEA25000591AC /* Images.xcassets */; };
 		967EE1D01B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */; };
 		E72BD5070233EC6FF42DDA3A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B825E81D3B27E563C7C3C53 /* libPods.a */; };
@@ -126,6 +128,8 @@
 		79EFF7601B8D6DE4008A9E7D /* ActivityLogTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLogTableViewCell.swift; sourceTree = "<group>"; };
 		79EFF76E1B8D6E35008A9E7D /* ActivityLogModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLogModel.swift; sourceTree = "<group>"; };
 		79EFF76F1B8D6E35008A9E7D /* ActivityModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityModel.swift; sourceTree = "<group>"; };
+		79EFF7761B8D9274008A9E7D /* SalesReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalesReportViewController.swift; sourceTree = "<group>"; };
+		79EFF7771B8D9274008A9E7D /* SalesReportViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SalesReportViewController.xib; path = ../ViewController/SalesReportViewController.xib; sourceTree = "<group>"; };
 		967EE1B41B8AEA25000591AC /* YiLinkerOnlineSeller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YiLinkerOnlineSeller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		967EE1B81B8AEA25000591AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		967EE1C01B8AEA25000591AC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -241,6 +245,7 @@
 				0CF28EC91B8C85E5005B2E54 /* MessageViewController.swift */,
 				0CF28ECA1B8C85E5005B2E54 /* SearchViewController.swift */,
 				0CF28ECB1B8C85E5005B2E54 /* SettingsViewController.swift */,
+				79EFF7761B8D9274008A9E7D /* SalesReportViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -248,6 +253,7 @@
 		0CF28ECC1B8C85E5005B2E54 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				79EFF7771B8D9274008A9E7D /* SalesReportViewController.xib */,
 				79EFF75C1B8D6DD3008A9E7D /* ActivityLogTableViewCell.xib */,
 				79EFF75D1B8D6DD3008A9E7D /* ActivityLogTableViewController.xib */,
 				799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */,
@@ -468,6 +474,7 @@
 				0CF28EFB1B8CA2E9005B2E54 /* Panton ExtraLight.otf in Resources */,
 				0CF28EF71B8CA2E9005B2E54 /* Panton Bold.otf in Resources */,
 				0CF28F041B8CA2E9005B2E54 /* Panton Thin.otf in Resources */,
+				79EFF7791B8D9274008A9E7D /* SalesReportViewController.xib in Resources */,
 				79EFF75E1B8D6DD3008A9E7D /* ActivityLogTableViewCell.xib in Resources */,
 				967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */,
 				0CF28EF81B8CA2E9005B2E54 /* Panton ExtraBold Italic.otf in Resources */,
@@ -546,6 +553,7 @@
 				0CF28ED51B8C85E5005B2E54 /* SessionManager.swift in Sources */,
 				79EFF7711B8D6E35008A9E7D /* ActivityModel.swift in Sources */,
 				79EFF7701B8D6E35008A9E7D /* ActivityLogModel.swift in Sources */,
+				79EFF7781B8D9274008A9E7D /* SalesReportViewController.swift in Sources */,
 				799892F91B8CC7EC00F4CFE2 /* DashBoardItemCollectionViewCell.swift in Sources */,
 				0CF28ED11B8C85E5005B2E54 /* HexaColor.swift in Sources */,
 			);

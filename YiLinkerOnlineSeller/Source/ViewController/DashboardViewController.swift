@@ -39,11 +39,12 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBarHidden = true
+        self.tabBarController?.tabBar.hidden = false
     }
     
     func initializeViews() {
         if self.respondsToSelector("edgesForExtendedLayout") {
-            self.edgesForExtendedLayout = UIRectEdge.None
+            self.edgesForExtendedLayout = UIRectEdge.Bottom
         }
         
         self.tabBarController!.tabBar.tintColor = Constants.Colors.appTheme
@@ -136,7 +137,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         } else if indexPath.row == 0 {
             
         } else if indexPath.row == 1 {
-            
+            var salesViewController = SalesReportViewController(nibName: "SalesReportViewController", bundle: nil)
+            self.navigationController?.pushViewController(salesViewController, animated:true)
         } else if indexPath.row == 2 {
             
         } else if indexPath.row == 3 {
