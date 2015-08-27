@@ -16,12 +16,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        if !SessionManager.isLoggedIn() {
-            let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
-            self.window?.rootViewController = signInViewController
-        } else {
-            self.changeRootToDashboard()
-        }
+//        if !NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
+//            let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
+//            self.window?.rootViewController = signInViewController
+//        } else {
+//            self.changeRootToDashboard()
+//        }
         
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         self.window?.makeKeyAndVisible()

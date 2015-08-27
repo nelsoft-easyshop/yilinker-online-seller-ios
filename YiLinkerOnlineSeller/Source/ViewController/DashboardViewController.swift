@@ -22,6 +22,11 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if !NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
+            let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
+            self.presentViewController(signInViewController, animated: false, completion: nil)
+        }
+        
         registerNibs()
         initializeViews()
     }

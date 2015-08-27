@@ -36,7 +36,6 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         self.passwordTextField.addTarget(self, action: "passwordDidTextChanged", forControlEvents: UIControlEvents.EditingChanged)
         self.addCheckInTextField(emailAddressTextField)
         self.addCheckInTextField(passwordTextField)
-        
     }
     
     // MARK: - Methods
@@ -59,6 +58,14 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         field.rightViewMode = UITextFieldViewMode.Always
         field.rightView?.hidden = true
     }
+    
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+    
     // MARK: Actions
     
     @IBAction func forgotPasswordAction(sender: AnyObject) {
@@ -66,8 +73,12 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     }
     
     @IBAction func signInAction(sender: AnyObject) {
-        
-        self.signInButton.setTitle("SIGNING IN ....", forState: .Normal)
+        if self.emailAddressTextField.rightView?.hidden == false && self.passwordTextField.rightView?.hidden == false {
+            self.signInButton.setTitle("SIGNING IN ....", forState: .Normal)
+            self.requestSignin()
+        } else {
+            showAlert(title: "Reminder", message: "Please input valid email and password.")
+        }
     }
     
     func rememberMeAction(gesture: UIGestureRecognizer) {
@@ -81,7 +92,39 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     }
     
     func instantSignin(gesture: UIGestureRecognizer) {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["email": "seller@easyshop.ph",
+            "password": "password",
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantSeller]
         
+        manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            if self.rememberMeImageView.image != nil {
+                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "rememberMe")
+            } else {
+                NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
+            }
+            NSUserDefaults.standardUserDefaults().synchronize()
+            
+//            self.showAlert(title: "YiLinker", message: "Welcome to YiLinker !")
+            SVProgressHUD.dismiss()
+            self.dismissViewControllerAnimated(true, completion: nil)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                self.signInButton.setTitle("SIGN IN", forState: .Normal)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 1011 {
+                    self.showAlert(title: "Error", message: "Email and Password did not match.")
+                } else {
+                    self.showAlert(title: "Error", message: "Something went wrong")
+                }
+                SVProgressHUD.dismiss()
+        })
     }
     
     func hideKeyboard(gesture: UIGestureRecognizer) {
@@ -131,6 +174,44 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         } else {
             self.passwordTextField.rightView?.hidden = true
         }
+    }
+    
+    // MARK: - Requests
+    
+    func requestSignin() {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["email": self.emailAddressTextField.text,
+            "password": self.passwordTextField.text,
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantSeller]
+        
+        manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            if self.rememberMeImageView.image != nil {
+                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "rememberMe")
+            } else {
+                NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
+            }
+            NSUserDefaults.standardUserDefaults().synchronize()
+            
+//            self.showAlert(title: "YiLinker", message: "Welcome to YiLinker !")
+            SVProgressHUD.dismiss()
+            self.dismissViewControllerAnimated(true, completion: nil)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                self.signInButton.setTitle("SIGN IN", forState: .Normal)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 1011 {
+                    self.showAlert(title: "Error", message: "Email and Password did not match.")
+                } else {
+                    self.showAlert(title: "Error", message: "Something went wrong")
+                }
+                SVProgressHUD.dismiss()
+        })
     }
 }
 
