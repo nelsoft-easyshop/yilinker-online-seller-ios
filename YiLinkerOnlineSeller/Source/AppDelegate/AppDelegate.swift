@@ -16,6 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+        if !SessionManager.isLoggedIn() {
+            let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
+            self.window?.rootViewController = signInViewController
+        } else {
+            self.changeRootToDashboard()
+        }
+        
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         self.window?.makeKeyAndVisible()
         
@@ -48,6 +55,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    func changeRootToDashboard() {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let tabBarController: UITabBarController = storyBoard.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
+        self.window?.rootViewController = tabBarController
+    }
 
 }
 
