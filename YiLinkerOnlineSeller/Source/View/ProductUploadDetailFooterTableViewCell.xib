@@ -83,7 +83,7 @@
                         </connections>
                     </button>
                 </subviews>
-                <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstItem="Owr-2S-buI" firstAttribute="top" secondItem="6EZ-Oo-pL6" secondAttribute="bottom" constant="8" id="1yu-h8-f1k"/>
                     <constraint firstItem="p5N-rj-PPW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="CgF-gE-psa"/>
@@ -96,6 +96,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="cellButton" destination="Owr-2S-buI" id="GzO-i6-gQX"/>
                 <outlet property="cellTextField" destination="CEh-AE-rcE" id="os5-HC-Lsn"/>
             </connections>
             <point key="canvasLocation" x="359" y="198"/>

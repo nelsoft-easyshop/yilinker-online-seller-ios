@@ -11,12 +11,14 @@ import UIKit
 protocol ProductUploadDetailFooterTableViewCellDelegate {
     func productUploadDetailFooterTableViewCell(cell: ProductUploadDetailFooterTableViewCell, didSelectButton button: UIButton)
     func productUploadDetailFooterTableViewCell(didPressDoneButton cell: ProductUploadDetailFooterTableViewCell)
+    func productUploadDetailFooterTableViewCell(didPressSaveButton cell: ProductUploadDetailFooterTableViewCell)
 }
 
 class ProductUploadDetailFooterTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     @IBOutlet weak var cellTextField: UITextField!
     var delegate: ProductUploadDetailFooterTableViewCellDelegate?
+    @IBOutlet weak var cellButton: DynamicRoundedButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,11 +30,16 @@ class ProductUploadDetailFooterTableViewCell: UITableViewCell, UITextFieldDelega
     }
     
     @IBAction func save(sender: UIButton) {
-          self.delegate!.productUploadDetailFooterTableViewCell(self, didSelectButton: sender)
+          self.delegate!.productUploadDetailFooterTableViewCell(didPressSaveButton: self)
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        self.delegate?.productUploadDetailFooterTableViewCell(didPressDoneButton: self)
+        if self.cellTextField.isNotEmpty() {
+            self.delegate?.productUploadDetailFooterTableViewCell(didPressDoneButton: self)
+        } else {
+            self.cellTextField.endEditing(true)
+        }
+
         return true
     }
 }

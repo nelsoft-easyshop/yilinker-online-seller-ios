@@ -13,12 +13,18 @@ struct PUDTConstant {
     static let productUploadAttributeCollectionViewCellNibNameAndIdentifier = "ProductUploadAttributeCollectionViewCell"
     static let productUploadDetailFooterTableViewCellNibNameAndIdentifier = "ProductUploadDetailFooterTableViewCell"
     static let productUploadDetailHeaderViewTableViewCellNibNameAndIdentifier = "ProductUploadDetailHeaderViewTableViewCell"
+    static let productUploadAttributeTableViewCellNibNameAndIdentifier = "ProductUploadAttributeTableViewCell"
+}
+
+protocol ProductUploadDetailTableViewControllerDelegate {
+    func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel)
 }
 
 class ProductUploadDetailTableViewController: UITableViewController, ProductUploadDetailFooterTableViewCellDelegate, ProductUploadDetailHeaderViewCollectionViewCellDelegate {
     
     var tempDetailName: String = ""
-    var dynamicRowHeight: CGFloat = 41
+    var dynamicRowHeight: CGFloat = 0
+    var delegate: ProductUploadDetailTableViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +33,24 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         let tapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "endEditing")
         self.tableView.userInteractionEnabled = true
         self.tableView.addGestureRecognizer(tapRecognizer)
+        self.backButton()
+    }
+    
+    func backButton() {
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButton.frame = CGRectMake(0, 0, 40, 40)
+        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    func back() {
+        self.navigationController!.popViewControllerAnimated(true)
     }
     
     func endEditing() {
@@ -61,6 +85,9 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         
         let nib3: UINib = UINib(nibName: PUDTConstant.productUploadDetailHeaderViewTableViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(nib3, forCellReuseIdentifier: PUDTConstant.productUploadDetailHeaderViewTableViewCellNibNameAndIdentifier)
+        
+        let nib4: UINib = UINib(nibName: PUDTConstant.productUploadAttributeTableViewCellNibNameAndIdentifier, bundle: nil)
+        self.tableView.registerNib(nib4, forCellReuseIdentifier: PUDTConstant.productUploadAttributeTableViewCellNibNameAndIdentifier)
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -69,7 +96,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
             
             return cell
         } else if indexPath.row == 1 {
-            let cell: ProductUploadCategoryTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadCategoryViewControllerConstant.productUploadCategoryTableViewCellNibNameAndIdentifier) as! ProductUploadCategoryTableViewCell
+            let cell: ProductUploadAttributeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(PUDTConstant.productUploadAttributeTableViewCellNibNameAndIdentifier) as! ProductUploadAttributeTableViewCell
             
             return cell
         } else {
@@ -94,9 +121,39 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         self.tempDetailName = text
     }
     
+    func productUploadDetailFooterTableViewCell(didPressSaveButton cell: ProductUploadDetailFooterTableViewCell) {
+        let indexPath: NSIndexPath = NSIndexPath(forRow: 0, inSection: 0)
+        
+        let cell: ProductUploadDetailHeaderViewTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! ProductUploadDetailHeaderViewTableViewCell
+        
+        let collectionViewIndexPath: NSIndexPath = NSIndexPath(forItem: 1, inSection: indexPath.section)
+        let attributeCell: ProductUploadAttributeTableViewCell = self.tableView.cellForRowAtIndexPath(collectionViewIndexPath) as! ProductUploadAttributeTableViewCell
+        
+        var attributeModel: AttributeModel = AttributeModel()
+        attributeModel.definition = cell.cellTextField.text
+        attributeModel.values = attributeCell.attributes
+        
+        self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: attributeModel)
+        
+        self.navigationController!.popViewControllerAnimated(true)
+    }
+    
     func productUploadDetailFooterTableViewCell(didPressDoneButton cell: ProductUploadDetailFooterTableViewCell) {
+        let cellPadding: CGFloat = 18
+        let indexPath: NSIndexPath = self.tableView.indexPathForCell(cell)!
+        
+        let collectionViewIndexPath: NSIndexPath = NSIndexPath(forItem: 1, inSection: indexPath.section)
+        let attributeCell: ProductUploadAttributeTableViewCell = self.tableView.cellForRowAtIndexPath(collectionViewIndexPath) as! ProductUploadAttributeTableViewCell
+        attributeCell.attributes.append(cell.cellTextField.text)
+        attributeCell.collectionView.reloadData()
+        
+        cell.cellTextField.text = ""
+        cell.cellTextField.becomeFirstResponder()
+        
+        self.dynamicRowHeight = attributeCell.collectionViewContentSize().height + cellPadding
+        
         self.tableView.beginUpdates()
-        self.dynamicRowHeight = dynamicRowHeight + 50
+        //self.tableView.reloadRowsAtIndexPaths([collectionViewIndexPath], withRowAnimation: UITableViewRowAnimation.None)
         self.tableView.endUpdates()
     }
     func productUploadDetailFooterTableViewCell(cell: ProductUploadDetailFooterTableViewCell, didSelectButton button: UIButton) {

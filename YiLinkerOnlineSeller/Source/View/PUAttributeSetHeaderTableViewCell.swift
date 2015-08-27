@@ -1,5 +1,5 @@
 //
-//  ProductUploadDetailHeaderViewTableViewCell.swift
+//  PUAttributeSetHeaderTableViewCell.swift
 //  YiLinkerOnlineSeller
 //
 //  Created by Alvin John Tandoc on 8/27/15.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-class ProductUploadDetailHeaderViewTableViewCell: UITableViewCell {
+class PUAttributeSetHeaderTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var cellTextField: UITextField!
+    @IBOutlet weak var attributeDefinitionLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -35,6 +35,12 @@ struct ProductUploadTableViewControllerConstant {
 class ProductUploadTableViewController: UITableViewController, ProductUploadUploadImageTableViewCellDataSource, ProductUploadUploadImageTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadCategoryViewControllerDelegate {
     
     var uploadImages: [UIImage] = []
+    var productModel: ProductModel = ProductModel()
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -313,14 +319,17 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     func addMoreDetails(sender: UIButton) {
-        let productUploadDetailViewController: ProductUploadDetailTableViewController = ProductUploadDetailTableViewController(nibName: "ProductUploadDetailTableViewController", bundle: nil)
-        self.navigationController!.pushViewController(productUploadDetailViewController, animated: true)
+        /*let productUploadDetailViewController: ProductUploadDetailTableViewController = ProductUploadDetailTableViewController(nibName: "ProductUploadDetailTableViewController", bundle: nil)
+        self.navigationController!.pushViewController(productUploadDetailViewController, animated: true)*/
+        let productUploadAttributeListTableViewController: ProductUploadAttributeListTableViewController = ProductUploadAttributeListTableViewController(nibName: "ProductUploadAttributeListTableViewController", bundle: nil)
+        productUploadAttributeListTableViewController.productModel = self.productModel
+        self.navigationController!.pushViewController(productUploadAttributeListTableViewController, animated: true)
     }
     
     func productUploadCategoryViewController(didSelectCategory category: String) {
         println(category)
     }
-
+    
     func backButton() {
         var customBackButton:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "back")
         customBackButton.tintColor = UIColor.whiteColor()
