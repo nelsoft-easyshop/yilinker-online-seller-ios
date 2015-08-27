@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ProductUploadAttributeCollectionViewCell" id="gTV-IL-0wX" customClass="ProductUploadAttributeCollectionViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="100" height="40"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="100" height="40"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attribute 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="naa-RF-eie">
+                        <rect key="frame" x="8" y="9" width="84" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="naa-RF-eie" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="CeY-eX-AYq"/>
+                <constraint firstAttribute="trailing" secondItem="naa-RF-eie" secondAttribute="trailing" constant="8" id="LB3-GD-KnH"/>
+                <constraint firstItem="naa-RF-eie" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="9" id="N5H-wk-ulL"/>
+                <constraint firstAttribute="bottom" secondItem="naa-RF-eie" secondAttribute="bottom" constant="10" id="zn5-Ex-tS7"/>
+            </constraints>
+            <size key="customSize" width="102" height="43"/>
+            <connections>
+                <outlet property="attributeLabel" destination="naa-RF-eie" id="wNI-ki-F5O"/>
+            </connections>
+            <point key="canvasLocation" x="351" y="344"/>
+        </collectionViewCell>
+    </objects>
+</document>

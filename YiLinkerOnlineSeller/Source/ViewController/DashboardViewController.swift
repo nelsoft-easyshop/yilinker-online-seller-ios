@@ -13,6 +13,11 @@ class DashboardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController!.tabBar.tintColor = Constants.Colors.appTheme
+
+        let productUploadTableViewController: ProductUploadTableViewController = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
+        let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadTableViewController)
+        navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+        self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {
