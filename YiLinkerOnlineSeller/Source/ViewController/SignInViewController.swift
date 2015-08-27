@@ -144,6 +144,22 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             self.viewsContainer.transform = CGAffineTransformMakeTranslation(0, -135)
             self.profileContainerView.hidden = true
         }
+        
+        if textField == self.emailAddressTextField {
+            textField.layer.borderWidth = 1.0
+            textField.layer.cornerRadius = 3.0
+        } else if textField == self.passwordTextField {
+            textField.layer.borderWidth = 1.0
+            textField.layer.cornerRadius = 3.0
+        }
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        if textField == self.emailAddressTextField {
+            textField.layer.borderWidth = 0.0
+        } else if textField == self.passwordTextField {
+            textField.layer.borderWidth = 0.0
+        }
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
