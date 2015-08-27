@@ -34,6 +34,9 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         
         self.emailAddressTextField.addTarget(self, action: "emailDidTextChanged", forControlEvents: UIControlEvents.EditingChanged)
         self.passwordTextField.addTarget(self, action: "passwordDidTextChanged", forControlEvents: UIControlEvents.EditingChanged)
+        self.addCheckInTextField(emailAddressTextField)
+        self.addCheckInTextField(passwordTextField)
+        
     }
     
     // MARK: - Methods
@@ -48,6 +51,14 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         self.signInButton.layer.cornerRadius = 2.0
     }
     
+    func addCheckInTextField(field: UITextField) {
+        var check = UIImageView(image: UIImage(named: "valid"))
+        check.frame = CGRectMake(0.0, 0.0, check.image!.size.width + 10.0, check.image!.size.height)
+        check.contentMode = UIViewContentMode.Center
+        field.rightView = check
+        field.rightViewMode = UITextFieldViewMode.Always
+        field.rightView?.hidden = true
+    }
     // MARK: Actions
     
     @IBAction func forgotPasswordAction(sender: AnyObject) {
@@ -55,6 +66,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     }
     
     @IBAction func signInAction(sender: AnyObject) {
+        
         self.signInButton.setTitle("SIGNING IN ....", forState: .Normal)
     }
     
@@ -91,22 +103,48 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         }
     }
     
-    func emailDidTextChanged() {
-        
-    }
-    
-    func passwordDidTextChanged() {
-        
-    }
-    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         if textField.returnKeyType == UIReturnKeyType.Next {
             self.passwordTextField.becomeFirstResponder()
         } else if textField.returnKeyType == UIReturnKeyType.Done {
             self.passwordTextField.endEditing(true)
+            if self.view.frame.height <= 568 {
+                self.viewsContainer.transform = CGAffineTransformMakeTranslation(0, 0)
+                self.profileContainerView.hidden = false
+            }
         }
         
         return true
     }
     
+    func emailDidTextChanged() {
+        if self.emailAddressTextField.isValidEmail() {
+            self.emailAddressTextField.rightView?.hidden = false
+        } else {
+            self.emailAddressTextField.rightView?.hidden = true
+        }
+    }
+    
+    func passwordDidTextChanged() {
+        if self.passwordTextField.isAlphaNumeric() && count(self.passwordTextField.text) > 5 {
+            self.passwordTextField.rightView?.hidden = false
+        } else {
+            self.passwordTextField.rightView?.hidden = true
+        }
+    }
+}
+
+extension UITextField {
+    
+    func isValidEmail() -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluateWithObject(self.text)
+    }
+    
+    func isAlphaNumeric() -> Bool {
+        let passwordRegEx = "[A-Za-z0-9_]*"
+        let passwordTest = NSPredicate(format: "SELF MATCHES %@", passwordRegEx)
+        return passwordTest.evaluateWithObject(self.text)
+    }
 }
