@@ -41,6 +41,8 @@
 		0CF28F031B8CA2E9005B2E54 /* Panton Thin Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EF11B8CA2E9005B2E54 /* Panton Thin Italic.otf */; };
 		0CF28F041B8CA2E9005B2E54 /* Panton Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EF21B8CA2E9005B2E54 /* Panton Thin.otf */; };
 		0CF28F051B8CA2E9005B2E54 /* Panton.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EF31B8CA2E9005B2E54 /* Panton.otf */; };
+		26374DA01B8F50A4006C639B /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26374D9E1B8F50A4006C639B /* SignInViewController.swift */; };
+		26374DA11B8F50A4006C639B /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26374D9F1B8F50A4006C639B /* SignInViewController.xib */; };
 		799892F31B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */; };
 		799892F51B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */; };
 		799892F71B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */; };
@@ -108,6 +110,8 @@
 		0CF28EF11B8CA2E9005B2E54 /* Panton Thin Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Thin Italic.otf"; sourceTree = "<group>"; };
 		0CF28EF21B8CA2E9005B2E54 /* Panton Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Thin.otf"; sourceTree = "<group>"; };
 		0CF28EF31B8CA2E9005B2E54 /* Panton.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Panton.otf; sourceTree = "<group>"; };
+		26374D9E1B8F50A4006C639B /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		26374D9F1B8F50A4006C639B /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
 		3F811DA8573C81594070C601 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		5B825E81D3B27E563C7C3C53 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardHeaderCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -241,6 +245,8 @@
 				0CF28EC91B8C85E5005B2E54 /* MessageViewController.swift */,
 				0CF28ECA1B8C85E5005B2E54 /* SearchViewController.swift */,
 				0CF28ECB1B8C85E5005B2E54 /* SettingsViewController.swift */,
+				26374D9E1B8F50A4006C639B /* SignInViewController.swift */,
+				26374D9F1B8F50A4006C639B /* SignInViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -474,6 +480,7 @@
 				0CF28EFC1B8CA2E9005B2E54 /* Panton Heavy Italic.otf in Resources */,
 				0CF28F021B8CA2E9005B2E54 /* Panton SemiBold.otf in Resources */,
 				0CF28EF61B8CA2E9005B2E54 /* Panton Bold Italic.otf in Resources */,
+				26374DA11B8F50A4006C639B /* SignInViewController.xib in Resources */,
 				0CF28EF51B8CA2E9005B2E54 /* Panton Black.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -545,6 +552,7 @@
 				799892FF1B8CEBC100F4CFE2 /* SettingsItemTableViewCell.swift in Sources */,
 				0CF28ED51B8C85E5005B2E54 /* SessionManager.swift in Sources */,
 				79EFF7711B8D6E35008A9E7D /* ActivityModel.swift in Sources */,
+				26374DA01B8F50A4006C639B /* SignInViewController.swift in Sources */,
 				79EFF7701B8D6E35008A9E7D /* ActivityLogModel.swift in Sources */,
 				799892F91B8CC7EC00F4CFE2 /* DashBoardItemCollectionViewCell.swift in Sources */,
 				0CF28ED11B8C85E5005B2E54 /* HexaColor.swift in Sources */,

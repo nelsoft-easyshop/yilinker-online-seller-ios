@@ -22,6 +22,11 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if !NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
+            let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
+            self.presentViewController(signInViewController, animated: false, completion: nil)
+        }
+        
         registerNibs()
         initializeViews()
     }
@@ -155,7 +160,23 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         } else if indexPath.row == 9 {
             
         } else if indexPath.row == 10 {
-            
+            var alert = UIAlertController(title: nil, message: "Are you sure you want to logout?", preferredStyle: .ActionSheet)
+            alert.addAction(UIAlertAction(title: "Logout", style: .Destructive, handler: { action in
+                switch action.style{
+                case .Default:
+                    println("default")
+                    
+                case .Cancel:
+                    println("cancel")
+                    
+                case .Destructive:
+                    NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
+                    let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
+                    self.presentViewController(signInViewController, animated: true, completion: nil)
+                }
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
         }
     }
     
