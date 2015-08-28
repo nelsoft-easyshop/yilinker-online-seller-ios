@@ -12,8 +12,10 @@ struct PUALTVConstant {
     static let pUAttributeSetHeaderTableViewCellNibNameAndIdentifier = "PUAttributeSetHeaderTableViewCell"
 }
 
-class ProductUploadAttributeListTableViewController: UITableViewController, ProductUploadDetailTableViewControllerDelegate, ProductUploadAddFooterViewDelegate {
+class ProductUploadAttributeListTableViewController: UIViewController, ProductUploadDetailTableViewControllerDelegate, ProductUploadAddFooterViewDelegate {
     
+
+    @IBOutlet weak var tableView: UITableView!
     var productModel: ProductModel = ProductModel()
     var dynamicRowHeight: CGFloat = 0
     
@@ -25,6 +27,9 @@ class ProductUploadAttributeListTableViewController: UITableViewController, Prod
             productUploadDetailViewController.delegate = self
             self.navigationController!.pushViewController(productUploadDetailViewController, animated: true)
         }
+        
+        self.title = "Attribute List"
+        
         self.registerCell()
         self.backButton()
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
@@ -81,20 +86,20 @@ class ProductUploadAttributeListTableViewController: UITableViewController, Prod
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
         return self.productModel.attributes.count
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         return 2
     }
 
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell: PUAttributeSetHeaderTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(PUALTVConstant.pUAttributeSetHeaderTableViewCellNibNameAndIdentifier) as! PUAttributeSetHeaderTableViewCell
             
@@ -114,7 +119,7 @@ class ProductUploadAttributeListTableViewController: UITableViewController, Prod
     }
 
 
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat { 
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat { 
         let rowInitialHeight: CGFloat = 18
         
         if indexPath.row == 0 {
@@ -145,4 +150,11 @@ class ProductUploadAttributeListTableViewController: UITableViewController, Prod
         self.productModel.attributes.append(attribute)
         self.tableView.reloadData()
     }
+    
+    @IBAction func proceedToCombination(sender: AnyObject) {
+        let productUploadCombinationListViewController: ProductUploadCombinationListViewController = ProductUploadCombinationListViewController(nibName: "ProductUploadCombinationListViewController", bundle: nil)
+        productUploadCombinationListViewController.productModel = self.productModel
+        self.navigationController!.pushViewController(productUploadCombinationListViewController, animated: true)
+    }
+    
 }

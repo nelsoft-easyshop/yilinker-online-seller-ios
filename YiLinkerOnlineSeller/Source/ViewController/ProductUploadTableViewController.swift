@@ -50,7 +50,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
 
         self.register()
         self.addAddPhoto()
-        self.gestureEndEditing()
+        //self.gestureEndEditing()
     }
     
     func gestureEndEditing() {
@@ -107,6 +107,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
+        //return 5
         return 5
     }
 

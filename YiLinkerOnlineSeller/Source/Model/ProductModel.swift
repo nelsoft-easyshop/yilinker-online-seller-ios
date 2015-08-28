@@ -8,6 +8,7 @@
 
 import UIKit
 
-class ProductModel: NSObject {
+struct ProductModel {
     var attributes: [AttributeModel] = []
+    var attributeCombinations: [CombinationModel] = []
 }

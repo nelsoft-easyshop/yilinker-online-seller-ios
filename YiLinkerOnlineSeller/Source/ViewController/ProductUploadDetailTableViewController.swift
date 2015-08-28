@@ -30,6 +30,8 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         super.viewDidLoad()
         self.registerCell()
         
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        
         let tapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "endEditing")
         self.tableView.userInteractionEnabled = true
         self.tableView.addGestureRecognizer(tapRecognizer)
