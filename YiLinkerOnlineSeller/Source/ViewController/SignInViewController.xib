@@ -53,10 +53,10 @@
                         <constraint firstAttribute="height" constant="60" id="lUz-qZ-Bhu"/>
                     </constraints>
                 </imageView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mtg-Gz-CPJ">
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mtg-Gz-CPJ">
                     <rect key="frame" x="142" y="176" width="90" height="90"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="tBZ-cE-9j9">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="tBZ-cE-9j9">
                             <rect key="frame" x="25" y="25" width="40" height="40"/>
                         </imageView>
                     </subviews>
