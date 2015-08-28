@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsItemTableViewCell" id="aft-Z1-PJq" customClass="SettingsItemTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aft-Z1-PJq" id="jgV-o9-wXc">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aYI-1Y-16f">
+                        <rect key="frame" x="8" y="12" width="294" height="20"/>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CSP-GK-lZh">
+                        <rect key="frame" x="310" y="6" width="51" height="31"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="49" id="Zok-pU-GZN"/>
+                            <constraint firstAttribute="height" constant="31" id="l3n-4d-ycJ"/>
+                        </constraints>
+                        <connections>
+                            <action selector="switchAction:" destination="aft-Z1-PJq" eventType="valueChanged" id="IFY-Jf-9fT"/>
+                        </connections>
+                    </switch>
+                </subviews>
+                <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstItem="aYI-1Y-16f" firstAttribute="top" secondItem="jgV-o9-wXc" secondAttribute="topMargin" constant="4" id="GcX-PE-1g1"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="aYI-1Y-16f" secondAttribute="bottom" constant="4" id="IZn-cu-YeM"/>
+                    <constraint firstItem="aYI-1Y-16f" firstAttribute="leading" secondItem="jgV-o9-wXc" secondAttribute="leadingMargin" id="O4z-gM-2Ui"/>
+                    <constraint firstItem="CSP-GK-lZh" firstAttribute="leading" secondItem="aYI-1Y-16f" secondAttribute="trailing" constant="8" id="Wch-cx-9P3"/>
+                    <constraint firstAttribute="trailing" secondItem="CSP-GK-lZh" secondAttribute="trailing" constant="16" id="eGi-Ck-c7j"/>
+                    <constraint firstItem="CSP-GK-lZh" firstAttribute="top" secondItem="jgV-o9-wXc" secondAttribute="top" constant="6" id="hMx-BP-w0m"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="settingSwitch" destination="CSP-GK-lZh" id="m18-Uq-cFM"/>
+                <outlet property="textLabel" destination="aYI-1Y-16f" id="bhl-uL-mPe"/>
+                <outlet property="titleTextLabel" destination="aYI-1Y-16f" id="cTP-kW-dqV"/>
+            </connections>
+            <point key="canvasLocation" x="303.5" y="128.5"/>
+        </tableViewCell>
+    </objects>
+</document>
