@@ -14,6 +14,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     let dashBoardItemIdentifier: String = "DashBoardItemCollectionViewCell"
 
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var loginBlockerView: UIView!
     
     var tableData: [String] = ["My\nStore", "Sales\nReport", "Transactions", "Product\nManagement", "Customized\nCategory", "Upload\nItem", "Followers", "Activity\nLog", "My\nPoints", "Help", "Logout"]
     
@@ -22,7 +23,9 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Remember Me
         if !NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
+            SessionManager.setAccessToken("")
             let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
             self.presentViewController(signInViewController, animated: false, completion: nil)
         }
@@ -44,6 +47,12 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBarHidden = true
+
+        if SessionManager.isLoggedIn() {
+            self.loginBlockerView.hidden = true
+        } else {
+            self.loginBlockerView.hidden = false
+        }
     }
     
     func initializeViews() {

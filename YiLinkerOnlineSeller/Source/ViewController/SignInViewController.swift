@@ -9,7 +9,7 @@
 import UIKit
 
 class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDelegate {
-
+    
     @IBOutlet weak var profileContainerView: UIView!
     @IBOutlet weak var profileImageView: UIView!
     @IBOutlet weak var emailAddressTextField: UITextField!
@@ -206,6 +206,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         
         manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            println(responseObject)
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             if self.rememberMeImageView.image != nil {
                 NSUserDefaults.standardUserDefaults().setBool(true, forKey: "rememberMe")
@@ -217,6 +218,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
 //            self.showAlert(title: "YiLinker", message: "Welcome to YiLinker !")
             SVProgressHUD.dismiss()
             self.dismissViewControllerAnimated(true, completion: nil)
+            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.signInButton.setTitle("SIGN IN", forState: .Normal)
