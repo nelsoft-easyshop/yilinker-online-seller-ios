@@ -103,7 +103,7 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
         if indexPath.row == 0 {
             let cell: PUAttributeSetHeaderTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(PUALTVConstant.pUAttributeSetHeaderTableViewCellNibNameAndIdentifier) as! PUAttributeSetHeaderTableViewCell
             
-            let attributeModel: AttributeModel = self.productModel.attributes[indexPath.row]
+            let attributeModel: AttributeModel = self.productModel.attributes[indexPath.section]
             
             cell.attributeDefinitionLabel!.text = attributeModel.definition
             return cell

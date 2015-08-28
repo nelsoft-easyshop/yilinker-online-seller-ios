@@ -20,7 +20,6 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
 
     @IBOutlet weak var tableView: UITableView!
     var productModel: ProductModel?
-    var combinations: [CombinationModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +51,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.combinations.count
+        return self.productModel!.attributeCombinations.count
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -73,7 +72,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         } else {
             let cell: ProductUploadPlainDetailCombinationTableViewCell = tableView.dequeueReusableCellWithIdentifier(PUCLVCConstant.productUploadPlainCombinationTableViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ProductUploadPlainDetailCombinationTableViewCell
             
-            let combination: CombinationModel = self.combinations[indexPath.section]
+            let combination: CombinationModel = self.productModel!.attributeCombinations[indexPath.section]
             
             cell.images = combination.images
             cell.skuTextField.text = combination.sku
@@ -126,7 +125,13 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
     }
     
     func productUploadCombinationTableViewController(appendCombination combination: CombinationModel) {
-        self.combinations.append(combination)
+        self.productModel!.attributeCombinations.append(combination)
         self.tableView.reloadData()
+    }
+    @IBAction func saveDetails(sender: AnyObject) {
+        let productUploadTableViewController: ProductUploadTableViewController
+         = self.navigationController!.viewControllers[0] as! ProductUploadTableViewController
+        productUploadTableViewController.replaceProductAttributeWithAttribute(self.productModel!.attributes, combinations: self.productModel!.attributeCombinations)
+        self.navigationController!.popToRootViewControllerAnimated(true)
     }
 }

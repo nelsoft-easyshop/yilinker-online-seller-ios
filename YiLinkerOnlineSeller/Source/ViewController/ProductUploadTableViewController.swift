@@ -323,7 +323,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         /*let productUploadDetailViewController: ProductUploadDetailTableViewController = ProductUploadDetailTableViewController(nibName: "ProductUploadDetailTableViewController", bundle: nil)
         self.navigationController!.pushViewController(productUploadDetailViewController, animated: true)*/
         let productUploadAttributeListTableViewController: ProductUploadAttributeListTableViewController = ProductUploadAttributeListTableViewController(nibName: "ProductUploadAttributeListTableViewController", bundle: nil)
-        productUploadAttributeListTableViewController.productModel = self.productModel
+        productUploadAttributeListTableViewController.productModel = self.productModel.copy()
         self.navigationController!.pushViewController(productUploadAttributeListTableViewController, animated: true)
     }
     
@@ -424,5 +424,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     
     func uzysAssetsPickerControllerDidExceedMaximumNumberOfSelection(picker: UzysAssetsPickerController!) {
         
+    }
+    
+    func replaceProductAttributeWithAttribute(attributes: [AttributeModel], combinations: [CombinationModel]) {
+        self.productModel.attributes = attributes
+        self.productModel.attributeCombinations = combinations
     }
 }
