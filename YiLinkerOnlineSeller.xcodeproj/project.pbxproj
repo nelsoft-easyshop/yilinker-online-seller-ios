@@ -40,6 +40,8 @@
 		0C6661A51B906FBF005ADFDD /* JSONResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6661A41B906FBF005ADFDD /* JSONResponseSerializer.swift */; };
 		0C6661A81B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6661A61B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.swift */; };
 		0C6661A91B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C6661A71B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.xib */; };
+		0C6661AC1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6661AA1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.swift */; };
+		0C6661AD1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C6661AB1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.xib */; };
 		0C8D7F871B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7F851B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.swift */; };
 		0C8D7F881B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C8D7F861B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.xib */; };
 		0C8D7F8D1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7F8B1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.swift */; };
@@ -157,6 +159,8 @@
 		0C6661A41B906FBF005ADFDD /* JSONResponseSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONResponseSerializer.swift; sourceTree = "<group>"; };
 		0C6661A61B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadPlainDetailCombinationTableViewCell.swift; sourceTree = "<group>"; };
 		0C6661A71B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductUploadPlainDetailCombinationTableViewCell.xib; sourceTree = "<group>"; };
+		0C6661AA1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadAttributeSummaryTableViewCell.swift; sourceTree = "<group>"; };
+		0C6661AB1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductUploadAttributeSummaryTableViewCell.xib; sourceTree = "<group>"; };
 		0C8D7F851B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadDetailHeaderViewTableViewCell.swift; sourceTree = "<group>"; };
 		0C8D7F861B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductUploadDetailHeaderViewTableViewCell.xib; sourceTree = "<group>"; };
 		0C8D7F8B1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadAttributeTableViewCell.swift; sourceTree = "<group>"; };
@@ -367,6 +371,8 @@
 				0C8D7FC01B8FE50900B3FA4E /* ProductUploadAttributeValuesCollectionViewCell.xib */,
 				0C6661A61B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.swift */,
 				0C6661A71B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.xib */,
+				0C6661AA1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.swift */,
+				0C6661AB1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -618,6 +624,7 @@
 				0C8D7FC21B8FE50900B3FA4E /* ProductUploadAttributeValuesCollectionViewCell.xib in Resources */,
 				0C65F8D11B8E059A00504D86 /* ProductUploadButtonTableViewCell.xib in Resources */,
 				0C8D7F961B8F12C200B3FA4E /* ProductUploadAttributeListTableViewController.xib in Resources */,
+				0C6661AD1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.xib in Resources */,
 				0C65F8B31B8DC9AC00504D86 /* ProductUploadCategoryViewController.xib in Resources */,
 				0C8D7FA01B8F1B7800B3FA4E /* PUAttributeSetHeaderTableViewCell.xib in Resources */,
 				0C65F8A51B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.xib in Resources */,
@@ -735,6 +742,7 @@
 				0C6661A81B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.swift in Sources */,
 				0CF28EDA1B8C85E5005B2E54 /* MessageViewController.swift in Sources */,
 				0C8D7FB51B8FC4AC00B3FA4E /* ProductUploadCombinationTableViewCell.swift in Sources */,
+				0C6661AC1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.swift in Sources */,
 				0C8D7FB91B8FC79E00B3FA4E /* ProductUploadCombinationFooterTableViewCell.swift in Sources */,
 				0C65F8CC1B8DF8A000504D86 /* ProductUploadSearchViewController.swift in Sources */,
 				0CF28F111B8CAA31005B2E54 /* ProductUploadTableViewController.swift in Sources */,

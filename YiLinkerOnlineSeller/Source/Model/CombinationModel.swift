@@ -10,7 +10,7 @@ import UIKit
 
 class CombinationModel {
     var combinationID: String = ""
-    var dictionary: NSMutableDictionary = NSMutableDictionary()
+    var attributes: [NSMutableDictionary] = []
     var retailPrice: String = ""
     var discountedPrice: String = ""
     var quantity: String = ""

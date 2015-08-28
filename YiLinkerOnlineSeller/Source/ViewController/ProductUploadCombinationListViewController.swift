@@ -44,19 +44,48 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         
         let nib: UINib = UINib(nibName: PUALTVConstant.pUAttributeSetHeaderTableViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: PUALTVConstant.pUAttributeSetHeaderTableViewCellNibNameAndIdentifier)
+        
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 3
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.productModel!.attributeCombinations.count
+        return self.productModel!.validCombinations.count
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.row == 0 {
             return 41
+        } else if indexPath.row == 1 {
+            let rowHeight: CGFloat = 95
+            let rowInitialHeight: CGFloat = 14
+            
+            var attributes: [AttributeModel] = []
+            for dictionary in  self.productModel!.validCombinations[indexPath.section].attributes as [NSMutableDictionary] {
+                let attributeModel: AttributeModel = AttributeModel()
+                attributeModel.definition = dictionary["definition"] as! String
+                attributeModel.values = [dictionary["value"] as! String]
+                attributes.append(attributeModel)
+            }
+            
+            let cellCount: Int = attributes.count
+            
+            
+            var numberOfRows: CGFloat = CGFloat(cellCount) / 2
+            
+            if numberOfRows == 0 {
+                numberOfRows = 1
+            } else if floor(numberOfRows) != numberOfRows {
+                numberOfRows++
+            }
+            
+            var dynamicHeight: CGFloat = floor(numberOfRows) * rowHeight
+            
+            var cellHeight: CGFloat = rowInitialHeight + dynamicHeight
+            
+            return cellHeight
         } else {
             return 271
         }
@@ -69,10 +98,21 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             cell.attributeDefinitionLabel!.text = "Combination \(indexPath.section + 1)"
             
             return cell
+        } else if indexPath.row == 1 {
+            let cell: ProductUploadCombinationTableViewCell = tableView.dequeueReusableCellWithIdentifier(PUCTVCConstant.productUploadCombinationTableViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ProductUploadCombinationTableViewCell
+            var attributes: [AttributeModel] = []
+            for dictionary in  self.productModel!.validCombinations[indexPath.section].attributes as [NSMutableDictionary] {
+                let attributeModel: AttributeModel = AttributeModel()
+                attributeModel.definition = dictionary["definition"] as! String
+                attributeModel.values = [dictionary["value"] as! String]
+                attributes.append(attributeModel)
+            }
+            cell.attributes = attributes
+            return cell
         } else {
             let cell: ProductUploadPlainDetailCombinationTableViewCell = tableView.dequeueReusableCellWithIdentifier(PUCLVCConstant.productUploadPlainCombinationTableViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ProductUploadPlainDetailCombinationTableViewCell
             
-            let combination: CombinationModel = self.productModel!.attributeCombinations[indexPath.section]
+            let combination: CombinationModel = self.productModel!.validCombinations[indexPath.section]
             
             cell.images = combination.images
             cell.skuTextField.text = combination.sku
@@ -125,13 +165,13 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
     }
     
     func productUploadCombinationTableViewController(appendCombination combination: CombinationModel) {
-        self.productModel!.attributeCombinations.append(combination)
+        self.productModel!.validCombinations.append(combination)
         self.tableView.reloadData()
     }
     @IBAction func saveDetails(sender: AnyObject) {
         let productUploadTableViewController: ProductUploadTableViewController
          = self.navigationController!.viewControllers[0] as! ProductUploadTableViewController
-        productUploadTableViewController.replaceProductAttributeWithAttribute(self.productModel!.attributes, combinations: self.productModel!.attributeCombinations)
+        productUploadTableViewController.replaceProductAttributeWithAttribute(self.productModel!.attributes, combinations: self.productModel!.validCombinations)
         self.navigationController!.popToRootViewControllerAnimated(true)
     }
 }

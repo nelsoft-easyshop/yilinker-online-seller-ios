@@ -19,6 +19,7 @@ struct ProductUploadTableViewControllerConstant {
     static let productUploadButtonTableViewCellNibNameAndIdentifier = "ProductUploadButtonTableViewCell"
     static let productUploadQuantityTableViewCellNibNameAndIdentifier = "ProductUploadQuantityTableViewCell"
     static let productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier = "ProductUploadDimensionsAndWeightTableViewCell"
+    static let productUploadAttributeSummaryTableVieCellNibNameAndIdentifier = "ProductUploadAttributeSummaryTableViewCell"
     
     static let normalcellHeight: CGFloat = 72
     static let normalTextViewCellHeight: CGFloat = 80
@@ -94,7 +95,9 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         
         let weightAndHeightNib: UINib = UINib(nibName: ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(weightAndHeightNib, forCellReuseIdentifier: ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier)
-
+        
+        let attributeNib: UINib = UINib(nibName: ProductUploadTableViewControllerConstant.productUploadAttributeSummaryTableVieCellNibNameAndIdentifier, bundle: nil)
+        self.tableView.registerNib(attributeNib, forCellReuseIdentifier: ProductUploadTableViewControllerConstant.productUploadAttributeSummaryTableVieCellNibNameAndIdentifier)
     }
     
     override func didReceiveMemoryWarning() {
@@ -119,8 +122,14 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         } else if section == 1 {
             return 3
         } else if section == 2 {
-            //Product Details
-            return 6
+            //Product Details 6
+            return 3
+        } else if section == 3 {
+            if self.productModel.validCombinations.count == 0 {
+                return 3
+            } else {
+                return self.productModel.validCombinations.count + 2
+            }
         } else if section == 3 {
             return 2
         } else {
@@ -132,6 +141,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         var sectionHeight: CGFloat = 0
         
         if section == 0 {
+            sectionHeight = 0
+        } else if section == 3 {
             sectionHeight = 0
         } else {
             sectionHeight = 41
@@ -184,7 +195,20 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             }
             
         } else if indexPath.section == 3 {
-            return ProductUploadTableViewControllerConstant.priceCellHeight
+            var height: CGFloat = 0
+            
+            if self.productModel.validCombinations.count != 0  {
+                if indexPath.row <= self.productModel.validCombinations.count {
+                    height = 41
+                } else {
+                    height = ProductUploadTableViewControllerConstant.priceCellHeight
+                }
+
+            } else {
+                height = ProductUploadTableViewControllerConstant.priceCellHeight
+            }
+            
+            return height
         } else if indexPath.section == 4 {
             return ProductUploadTableViewControllerConstant.productUploadWeightAndHeightCellHeight
         } else {
@@ -250,7 +274,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.addTextFieldDelegate()
                 
                 return cell
-            } else if indexPath.row == 2 {
+            } else {
                 let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.cellTitleLabel.text = "Condition"
@@ -264,24 +288,71 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.addTextFieldDelegate()
                 
                 return cell
-            } else if indexPath.row == 3 {
-                let cell: ProductUploadButtonTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadButtonTableViewCellNibNameAndIdentifier) as! ProductUploadButtonTableViewCell
-                cell.cellButton.setTitle("ADD M ORE DETAILS", forState: UIControlState.Normal)
-                cell.selectionStyle = UITableViewCellSelectionStyle.None
-                cell.cellButton.addTarget(self, action: "addMoreDetails:", forControlEvents: UIControlEvents.TouchUpInside)
-                return cell
-            } else if indexPath.row == 4 {
-                let cell: ProductUploadQuantityTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadQuantityTableViewCellNibNameAndIdentifier) as! ProductUploadQuantityTableViewCell
-                cell.selectionStyle = UITableViewCellSelectionStyle.None
-                return cell
-            } else {
-                let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
-                cell.selectionStyle = UITableViewCellSelectionStyle.None
-                cell.cellTitleLabel.text = "SKU"
-                cell.cellTexField.placeholder = "SKU"
-                return cell
             }
         } else if indexPath.section == 3 {
+            if self.productModel.validCombinations.count == 0 {
+                if indexPath.row == 0 {
+                    let cell: ProductUploadButtonTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadButtonTableViewCellNibNameAndIdentifier) as! ProductUploadButtonTableViewCell
+                    cell.cellButton.setTitle("ADD MORE DETAILS", forState: UIControlState.Normal)
+                    cell.selectionStyle = UITableViewCellSelectionStyle.None
+                    cell.cellButton.addTarget(self, action: "addMoreDetails:", forControlEvents: UIControlEvents.TouchUpInside)
+                    return cell
+                } else if indexPath.row == 1 {
+                    let cell: ProductUploadQuantityTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadQuantityTableViewCellNibNameAndIdentifier) as! ProductUploadQuantityTableViewCell
+                    cell.selectionStyle = UITableViewCellSelectionStyle.None
+                    return cell
+                } else {
+                    let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
+                    cell.selectionStyle = UITableViewCellSelectionStyle.None
+                    cell.cellTitleLabel.text = "SKU"
+                    cell.cellTexField.placeholder = "SKU"
+                    return cell
+                }
+            } else {
+                let totalQuantityCell: Int = 1
+                if indexPath.row != self.productModel.validCombinations.count + totalQuantityCell {
+                    let cell: ProductUploadAttributeSummaryTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadAttributeSummaryTableVieCellNibNameAndIdentifier) as! ProductUploadAttributeSummaryTableViewCell
+
+                    if indexPath.row < self.productModel.validCombinations.count {
+                        let combination: CombinationModel = self.productModel.validCombinations[indexPath.row]
+                        
+                        cell.cellQuantityLabel.text = "x" + combination.quantity
+                        
+                        var title: String = ""
+                        
+                        for dictionary in self.productModel.validCombinations[indexPath.row].attributes as [NSMutableDictionary] {
+                            let value: String = dictionary["value"] as! String
+                            title = title + value + ", "
+                        }
+                        
+                        title = dropLast(title)
+                        cell.cellTitleLabel.text = title
+                    } else {
+                        var totalQuantity: Int = 0
+                        
+                        for combination in self.productModel.validCombinations as [CombinationModel] {
+                            totalQuantity = totalQuantity + combination.quantity.toInt()!
+                        }
+                        
+                        cell.cellQuantityLabel.text = "x" + "\(totalQuantity)"
+                        
+                        var title: String = "TOTAL QUANTITY"
+                        cell.cellTitleLabel.text = title
+                        let defaultFontSize: CGFloat = 14
+                        cell.cellTitleLabel.font = UIFont(name:"Panton-Bold", size: defaultFontSize)
+                    }
+                    
+                    return cell
+                } else {
+                    let cell: ProductUploadButtonTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadButtonTableViewCellNibNameAndIdentifier) as! ProductUploadButtonTableViewCell
+                    cell.cellButton.setTitle("ADD/EDIT MORE DETAILS", forState: UIControlState.Normal)
+                    cell.selectionStyle = UITableViewCellSelectionStyle.None
+                    cell.cellButton.addTarget(self, action: "addMoreDetails:", forControlEvents: UIControlEvents.TouchUpInside)
+                    return cell
+                }
+            }
+            
+        } else if indexPath.section == 4 {
             if indexPath.row == 0 {
                 let cell: ProductUploadPriceTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadPriceTableViewCellNibNameAndIdentifier) as! ProductUploadPriceTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -428,6 +499,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     
     func replaceProductAttributeWithAttribute(attributes: [AttributeModel], combinations: [CombinationModel]) {
         self.productModel.attributes = attributes
-        self.productModel.attributeCombinations = combinations
+        self.productModel.validCombinations = combinations
+        
+        let range: NSRange = NSMakeRange(3, 1)
+        let section: NSIndexSet = NSIndexSet(indexesInRange: range)
+        self.tableView.reloadSections(section, withRowAnimation: UITableViewRowAnimation.Bottom)
     }
 }

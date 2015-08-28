@@ -10,11 +10,11 @@ import UIKit
 
 class ProductModel {
     var attributes: [AttributeModel] = []
-    var attributeCombinations: [CombinationModel] = []
+    var validCombinations: [CombinationModel] = []
     
-    init (attributes: [AttributeModel], attributeCombinations: [CombinationModel]) {
+    init (attributes: [AttributeModel], validCombinations: [CombinationModel]) {
         self.attributes = attributes
-        self.attributeCombinations = attributeCombinations
+        self.validCombinations = validCombinations
     }
     
     init() {
@@ -22,6 +22,6 @@ class ProductModel {
     }
     
     func copy() -> ProductModel {
-        return ProductModel(attributes: self.attributes, attributeCombinations: self.attributeCombinations)
+        return ProductModel(attributes: self.attributes, validCombinations: self.validCombinations)
     }
 }
