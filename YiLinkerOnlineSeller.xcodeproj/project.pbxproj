@@ -45,6 +45,8 @@
 		26378F221B8CC45A008533B6 /* ProductManagementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26378F201B8CC45A008533B6 /* ProductManagementViewController.xib */; };
 		26378F511B8CEE82008533B6 /* ProductManagementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26378F4F1B8CEE82008533B6 /* ProductManagementTableViewCell.swift */; };
 		26378F521B8CEE82008533B6 /* ProductManagementTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26378F501B8CEE82008533B6 /* ProductManagementTableViewCell.xib */; };
+		26B282F51B91E92B00A7C2B1 /* ProductManagementAllTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B282F31B91E92B00A7C2B1 /* ProductManagementAllTableViewCell.swift */; };
+		26B282F61B91E92B00A7C2B1 /* ProductManagementAllTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26B282F41B91E92B00A7C2B1 /* ProductManagementAllTableViewCell.xib */; };
 		26BD5E491B8DC18B00739488 /* ProductDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BD5E471B8DC18B00739488 /* ProductDetailsViewController.swift */; };
 		26BD5E4A1B8DC18B00739488 /* ProductDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26BD5E481B8DC18B00739488 /* ProductDetailsViewController.xib */; };
 		26BD5E4D1B8DC49800739488 /* ProductDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BD5E4B1B8DC49800739488 /* ProductDetailsTableViewCell.swift */; };
@@ -114,6 +116,8 @@
 		26378F201B8CC45A008533B6 /* ProductManagementViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductManagementViewController.xib; sourceTree = "<group>"; };
 		26378F4F1B8CEE82008533B6 /* ProductManagementTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductManagementTableViewCell.swift; sourceTree = "<group>"; };
 		26378F501B8CEE82008533B6 /* ProductManagementTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductManagementTableViewCell.xib; sourceTree = "<group>"; };
+		26B282F31B91E92B00A7C2B1 /* ProductManagementAllTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductManagementAllTableViewCell.swift; sourceTree = "<group>"; };
+		26B282F41B91E92B00A7C2B1 /* ProductManagementAllTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductManagementAllTableViewCell.xib; sourceTree = "<group>"; };
 		26BD5E471B8DC18B00739488 /* ProductDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewController.swift; sourceTree = "<group>"; };
 		26BD5E481B8DC18B00739488 /* ProductDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductDetailsViewController.xib; sourceTree = "<group>"; };
 		26BD5E4B1B8DC49800739488 /* ProductDetailsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDetailsTableViewCell.swift; sourceTree = "<group>"; };
@@ -254,6 +258,8 @@
 				26BD5E621B8E1A3500739488 /* ProductDescriptionViewController.xib */,
 				26C2854B1B91C21A005EBD3A /* ProductManagementCollectionViewCell.swift */,
 				26C2854C1B91C21A005EBD3A /* ProductManagementCollectionViewCell.xib */,
+				26B282F31B91E92B00A7C2B1 /* ProductManagementAllTableViewCell.swift */,
+				26B282F41B91E92B00A7C2B1 /* ProductManagementAllTableViewCell.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -455,6 +461,7 @@
 			files = (
 				0CF28F051B8CA2E9005B2E54 /* Panton.otf in Resources */,
 				26BD5E641B8E1A3500739488 /* ProductDescriptionViewController.xib in Resources */,
+				26B282F61B91E92B00A7C2B1 /* ProductManagementAllTableViewCell.xib in Resources */,
 				0CF28EF91B8CA2E9005B2E54 /* Panton ExtraBold.otf in Resources */,
 				26BD5E4E1B8DC49800739488 /* ProductDetailsTableViewCell.xib in Resources */,
 				0CF28F011B8CA2E9005B2E54 /* Panton SemiBold Italic.otf in Resources */,
@@ -553,6 +560,7 @@
 				0CF28ED91B8C85E5005B2E54 /* DashboardViewController.swift in Sources */,
 				0CF28EDC1B8C85E5005B2E54 /* SettingsViewController.swift in Sources */,
 				0CF28EDF1B8C868D005B2E54 /* Constants.swift in Sources */,
+				26B282F51B91E92B00A7C2B1 /* ProductManagementAllTableViewCell.swift in Sources */,
 				0CF28ED51B8C85E5005B2E54 /* SessionManager.swift in Sources */,
 				0CF28ED11B8C85E5005B2E54 /* HexaColor.swift in Sources */,
 				26BD5E601B8DFA6400739488 /* ProductDescriptionView.swift in Sources */,

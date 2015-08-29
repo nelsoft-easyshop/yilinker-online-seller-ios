@@ -13,10 +13,14 @@ class ProductManagementViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var buttonsContainer: UIView!
+    @IBOutlet weak var leftContainer: UIView!
+    @IBOutlet weak var rightContainer: UIView!
     
     var pageTitle: [String] = ["All", "Active", "Inactive", "Drafts", "Deleted", "Under Review"]
     var selectedImage: [String] = ["all2", "active2", "inactive2", "drafts2", "deleted2", "review2"]
     var deSelectedImage: [String] = ["all", "active", "inactive", "drafts", "deleted", "review"]
+    var selectedItems: [Bool] = []
     
     var selectedIndex: Int = 0
     var tableViewSectionHeight: CGFloat = 0
@@ -27,19 +31,30 @@ class ProductManagementViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         customizeNavigationBar()
-        self.searchBar.barTintColor = Constants.Colors.appTheme
-        self.searchBar.tintColor = Constants.Colors.appTheme
-        self.searchBar.barStyle = UIBarStyle.Default
-        
-        let nib = UINib(nibName: "ProductManagementTableViewCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: "ProductManagementIdentifier")
-        
-        let nibCVC = UINib(nibName: "ProductManagementCollectionViewCell", bundle: nil)
-        self.collectionView.registerNib(nibCVC, forCellWithReuseIdentifier: "ProductManagementIdentifier")
-        
+        customizeViews()
+        registerNibs()
+        for i in 0..<10 {
+            selectedItems.append(false)
+        }
     }
 
     // MARK: - Methods
+    
+    func registerNibs() {
+        
+        let nibATVC = UINib(nibName: "ProductManagementAllTableViewCell", bundle: nil)
+        self.tableView.registerNib(nibATVC, forCellReuseIdentifier: "ProductManagementAllIdentifier")
+        
+        let nibTVC = UINib(nibName: "ProductManagementTableViewCell", bundle: nil)
+        self.tableView.registerNib(nibTVC, forCellReuseIdentifier: "ProductManagementIdentifier")
+        
+        let nibCVC = UINib(nibName: "ProductManagementCollectionViewCell", bundle: nil)
+        self.collectionView.registerNib(nibCVC, forCellWithReuseIdentifier: "ProductManagementIdentifier")
+    }
+    
+    func customizeViews() {
+        self.searchBar.barTintColor = Constants.Colors.appTheme
+    }
     
     func customizeNavigationBar() {
 
@@ -136,6 +151,7 @@ class ProductManagementViewController: UIViewController {
             self.collectionView.transform = CGAffineTransformMakeTranslation(0.0, 44.0)
             self.tableView.transform = CGAffineTransformMakeTranslation(0.0, 44.0)
         } else {
+            self.searchBar.text = ""
             self.searchBar.endEditing(true)
             self.searchBar.hidden = true
             self.collectionView.transform = CGAffineTransformMakeTranslation(0.0, 0.0)
@@ -163,7 +179,7 @@ class ProductManagementViewController: UIViewController {
 
 
 
-extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ProductManagementTableViewCellDelegate {
     
     // MARK: - Search Bar Delegate
     
@@ -186,15 +202,30 @@ extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataS
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: ProductManagementTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductManagementIdentifier") as! ProductManagementTableViewCell
         
-        cell.selectionStyle = .None
-        cell.index = selectedIndex
-        cell.clearCheckImage()
-        
-        return cell
+        if selectedIndex == 0 {
+            let cell: ProductManagementAllTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductManagementAllIdentifier") as! ProductManagementAllTableViewCell
+            
+            cell.selectionStyle = .None
+            
+            return cell
+        } else {
+            let cell: ProductManagementTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductManagementIdentifier") as! ProductManagementTableViewCell
+            
+            cell.selectionStyle = .None
+            cell.tag = indexPath.row
+            cell.index = selectedIndex
+            cell.clearCheckImage()
+            cell.isSelected(selectedItems[indexPath.row])
+            cell.delegate = self
+            
+            if selectedIndex == 4 {
+                cell.decreaseAlpha()
+            }
+            
+            return cell
+        }
     }
-    
     
     // MARK: - Table View Delegate
     
@@ -246,6 +277,11 @@ extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataS
             self.tableViewSectionHeight = 0.0
         } else {
             self.tableViewSectionHeight = 40.0
+            selectedItems.removeAll(keepCapacity: true)
+            for i in 0..<10 {
+                selectedItems.append(false)
+            }
+            self.buttonsContainer.hidden = true
         }
         
         self.collectionView.reloadData()
@@ -256,4 +292,35 @@ extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataS
         return
             CGSize(width: self.view.frame.size.width / 6, height: 60)
     }
+    
+    // MARK: - Product Management Table View Cell Delegate
+    
+    func updateSelectedItems(index: Int, selected: Bool) {
+        
+        // Optimized this function
+        // if selected add selected item(Int) in array
+        // if deselected remove that item(Int) (removeObject == item)
+        
+        self.selectedItems[index] = selected
+        var inset: UIEdgeInsets = UIEdgeInsetsZero
+        
+        var hideActionBar = true
+        
+        for i in 0..<self.selectedItems.count {
+            if self.selectedItems[i] == true {
+                hideActionBar = false
+                inset = UIEdgeInsetsMake(0, 0, 50, 0)
+            }
+        }
+
+        self.tableView.contentInset = inset
+        self.tableView.scrollIndicatorInsets = inset
+
+        self.buttonsContainer.hidden = hideActionBar
+    }
+    
+    
+    
+    
+    
 }

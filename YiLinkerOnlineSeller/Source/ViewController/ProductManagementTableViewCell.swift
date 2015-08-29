@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ProductManagementTableViewCellDelegate {
+    func updateSelectedItems(index: Int, selected: Bool)
+}
+
 class ProductManagementTableViewCell: UITableViewCell {
 
     @IBOutlet weak var checkContainerView: UIView!
@@ -15,10 +19,12 @@ class ProductManagementTableViewCell: UITableViewCell {
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subTitleLabel: UILabel!
-    @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var arrowImageView: UIImageView!
     
+    var delegate: ProductManagementTableViewCellDelegate?
+    
     var index: Int = 0
+    var checkedItems: Int = 0
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -45,20 +51,73 @@ class ProductManagementTableViewCell: UITableViewCell {
         checkImageView.hidden = true
         checkContainerView.backgroundColor = UIColor.lightGrayColor()
     }
+    
+    func decreaseAlpha() {
+        self.titleLabel.alpha = 0.75
+        self.subTitleLabel.alpha = 0.75
+        self.arrowImageView.alpha = 0.50
+    }
+    
+    func increaseAlpha() {
+        self.titleLabel.alpha = 1
+        self.subTitleLabel.alpha = 1
+        self.arrowImageView.alpha = 1
+    }
+    
+    func selected() {
+        checkImageView.hidden = false
+        if index == 4 {
+            checkContainerView.backgroundColor = Constants.Colors.pmCheckGreenColor
+            self.productImageView.alpha = 1
+            increaseAlpha()
+        } else {
+            checkContainerView.backgroundColor = .redColor()
+            decreaseAlpha()
+        }
+    }
+    
+    func deselected() {
+        clearCheckImage()
+        
+        if index == 4 {
+            self.productImageView.alpha = 0.75
+            decreaseAlpha()
+        } else {
+            increaseAlpha()
+        }
+    }
+    
+    func isSelected(selected: Bool) {
+        if selected {
+            self.selected()
+        }
+    }
+    
     // MARK: - Actions
     
     func checkAction(gesture: UIGestureRecognizer) {
+
         if checkImageView.hidden {
-            checkImageView.hidden = false
-            if index == 4 {
-                checkContainerView.backgroundColor = .redColor()//Constants.Colors.pmCheckRedColor
-            } else {
-                checkContainerView.backgroundColor = Constants.Colors.pmCheckGreenColor
-            }
+            checkedItems++
+            selected()
         } else {
-            clearCheckImage()
+            checkedItems--
+            deselected()
+        }
+     
+        if checkedItems == 0 {
+            delegate?.updateSelectedItems(self.tag, selected: false)
+        } else {
+            delegate?.updateSelectedItems(self.tag, selected: true)
         }
     }
+    
+    
+    
+    
+    
+    
+    
 }
 
 
