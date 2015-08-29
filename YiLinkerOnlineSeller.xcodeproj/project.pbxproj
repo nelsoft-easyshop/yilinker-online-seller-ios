@@ -79,6 +79,16 @@
 		F7BF5C851B93FCA800AEB9DA /* VerifyNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF5C831B93FCA800AEB9DA /* VerifyNumberViewController.swift */; };
 		F7BF5C861B93FCA800AEB9DA /* VerifyNumberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7BF5C841B93FCA800AEB9DA /* VerifyNumberViewController.xib */; };
 		F7BF5C881B94073600AEB9DA /* close2-2.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BF5C871B94073600AEB9DA /* close2-2.png */; };
+		F7BF5C8A1B94073600AEB9DA /* oops.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BF5C891B94073600AEB9DA /* oops.png */; };
+		F7BF5C8D1B94073600AEB9DA /* CreateNewAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF5C8B1B94073600AEB9DA /* CreateNewAddressViewController.swift */; };
+		F7BF5C8E1B94073600AEB9DA /* CreateNewAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7BF5C8C1B94073600AEB9DA /* CreateNewAddressViewController.xib */; };
+		F7BF5C901B94073600AEB9DA /* address.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BF5C8F1B94073600AEB9DA /* address.png */; };
+		F7BF5C931B94073600AEB9DA /* CreateNewBankAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF5C911B94073600AEB9DA /* CreateNewBankAccountViewController.swift */; };
+		F7BF5C941B94073600AEB9DA /* CreateNewBankAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7BF5C921B94073600AEB9DA /* CreateNewBankAccountViewController.xib */; };
+		F7BF5C961B94073600AEB9DA /* bankAccount.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BF5C951B94073600AEB9DA /* bankAccount.png */; };
+		F7BF5C991B94073600AEB9DA /* ChangeMobileNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF5C971B94073600AEB9DA /* ChangeMobileNumberViewController.swift */; };
+		F7BF5C9A1B94073600AEB9DA /* ChangeMobileNumberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7BF5C981B94073600AEB9DA /* ChangeMobileNumberViewController.xib */; };
+		F7BF5C9C1B94073600AEB9DA /* SuccessFailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF5C9B1B94073600AEB9DA /* SuccessFailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -171,6 +181,16 @@
 		F7BF5C831B93FCA800AEB9DA /* VerifyNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyNumberViewController.swift; sourceTree = "<group>"; };
 		F7BF5C841B93FCA800AEB9DA /* VerifyNumberViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VerifyNumberViewController.xib; sourceTree = "<group>"; };
 		F7BF5C871B94073600AEB9DA /* close2-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close2-2.png"; sourceTree = "<group>"; };
+		F7BF5C891B94073600AEB9DA /* oops.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = oops.png; sourceTree = "<group>"; };
+		F7BF5C8B1B94073600AEB9DA /* CreateNewAddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateNewAddressViewController.swift; sourceTree = "<group>"; };
+		F7BF5C8C1B94073600AEB9DA /* CreateNewAddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateNewAddressViewController.xib; sourceTree = "<group>"; };
+		F7BF5C8F1B94073600AEB9DA /* address.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = address.png; sourceTree = "<group>"; };
+		F7BF5C911B94073600AEB9DA /* CreateNewBankAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateNewBankAccountViewController.swift; sourceTree = "<group>"; };
+		F7BF5C921B94073600AEB9DA /* CreateNewBankAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateNewBankAccountViewController.xib; sourceTree = "<group>"; };
+		F7BF5C951B94073600AEB9DA /* bankAccount.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bankAccount.png; sourceTree = "<group>"; };
+		F7BF5C971B94073600AEB9DA /* ChangeMobileNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeMobileNumberViewController.swift; sourceTree = "<group>"; };
+		F7BF5C981B94073600AEB9DA /* ChangeMobileNumberViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangeMobileNumberViewController.xib; sourceTree = "<group>"; };
+		F7BF5C9B1B94073600AEB9DA /* SuccessFailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessFailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -307,8 +327,15 @@
 				799892FA1B8CE94C00F4CFE2 /* SettingDeactivateTableViewCell.xib */,
 				799893021B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib */,
 				799893041B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib */,
+				F7BF5C9B1B94073600AEB9DA /* SuccessFailViewController.swift */,
 				F7BF5C831B93FCA800AEB9DA /* VerifyNumberViewController.swift */,
 				F7BF5C841B93FCA800AEB9DA /* VerifyNumberViewController.xib */,
+				F7BF5C8B1B94073600AEB9DA /* CreateNewAddressViewController.swift */,
+				F7BF5C8C1B94073600AEB9DA /* CreateNewAddressViewController.xib */,
+				F7BF5C911B94073600AEB9DA /* CreateNewBankAccountViewController.swift */,
+				F7BF5C921B94073600AEB9DA /* CreateNewBankAccountViewController.xib */,
+				F7BF5C971B94073600AEB9DA /* ChangeMobileNumberViewController.swift */,
+				F7BF5C981B94073600AEB9DA /* ChangeMobileNumberViewController.xib */,
 			);
 			path = Xib;
 			sourceTree = "<group>";
@@ -388,7 +415,10 @@
 		967EE1B71B8AEA25000591AC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F7BF5C951B94073600AEB9DA /* bankAccount.png */,
+				F7BF5C8F1B94073600AEB9DA /* address.png */,
 				F7BF5C871B94073600AEB9DA /* close2-2.png */,
+				F7BF5C891B94073600AEB9DA /* oops.png */,
 				F7BF5C761B9373AC00AEB9DA /* addressRight.png */,
 				F7BF5C811B93E88300AEB9DA /* photo.png */,
 				967EE1B81B8AEA25000591AC /* Info.plist */,
@@ -520,29 +550,35 @@
 				0CF28EFF1B8CA2E9005B2E54 /* Panton Light.otf in Resources */,
 				799893051B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib in Resources */,
 				0CF28EFA1B8CA2E9005B2E54 /* Panton ExtraLight Italic.otf in Resources */,
+				F7BF5C901B94073600AEB9DA /* address.png in Resources */,
 				799892F31B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib in Resources */,
 				F7BF5C801B93D56E00AEB9DA /* StoreInfoBankAccountTableViewCell.xib in Resources */,
 				0CF28F031B8CA2E9005B2E54 /* Panton Thin Italic.otf in Resources */,
 				0CF28EF41B8CA2E9005B2E54 /* Black Italic.otf in Resources */,
 				F7BF5C751B93738800AEB9DA /* StoreInfoAccountInformationTableViewCell.xib in Resources */,
 				0CF28EFE1B8CA2E9005B2E54 /* Panton Light Italic.otf in Resources */,
+				F7BF5C8E1B94073600AEB9DA /* CreateNewAddressViewController.xib in Resources */,
 				0CF28F001B8CA2E9005B2E54 /* Panton Regular Italic.otf in Resources */,
 				79EFF75F1B8D6DD3008A9E7D /* ActivityLogTableViewController.xib in Resources */,
 				F7BF5C671B93700600AEB9DA /* StoreInfoAddressTableViewCell.xib in Resources */,
+				F7BF5C941B94073600AEB9DA /* CreateNewBankAccountViewController.xib in Resources */,
 				0CF28EFB1B8CA2E9005B2E54 /* Panton ExtraLight.otf in Resources */,
 				0CF28EF71B8CA2E9005B2E54 /* Panton Bold.otf in Resources */,
 				0CF28F041B8CA2E9005B2E54 /* Panton Thin.otf in Resources */,
 				79EFF75E1B8D6DD3008A9E7D /* ActivityLogTableViewCell.xib in Resources */,
 				967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */,
+				F7BF5C9A1B94073600AEB9DA /* ChangeMobileNumberViewController.xib in Resources */,
 				0CF28EF81B8CA2E9005B2E54 /* Panton ExtraBold Italic.otf in Resources */,
 				0CF28EFC1B8CA2E9005B2E54 /* Panton Heavy Italic.otf in Resources */,
 				F7BF5C861B93FCA800AEB9DA /* VerifyNumberViewController.xib in Resources */,
 				0CF28F021B8CA2E9005B2E54 /* Panton SemiBold.otf in Resources */,
 				0CF28EF61B8CA2E9005B2E54 /* Panton Bold Italic.otf in Resources */,
 				26374DA11B8F50A4006C639B /* SignInViewController.xib in Resources */,
+				F7BF5C8A1B94073600AEB9DA /* oops.png in Resources */,
 				F7BF5C881B94073600AEB9DA /* close2-2.png in Resources */,
 				0CF28EF51B8CA2E9005B2E54 /* Panton Black.otf in Resources */,
 				F7BF5C771B9373AC00AEB9DA /* addressRight.png in Resources */,
+				F7BF5C961B94073600AEB9DA /* bankAccount.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -595,6 +631,7 @@
 			files = (
 				0CF28ED41B8C85E5005B2E54 /* Reachability.swift in Sources */,
 				79EFF75B1B8D6DC1008A9E7D /* ActivityLogTableViewController.swift in Sources */,
+				F7BF5C8D1B94073600AEB9DA /* CreateNewAddressViewController.swift in Sources */,
 				F7BF5C6A1B93700600AEB9DA /* StoreInfoTableViewCell.swift in Sources */,
 				799893011B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift in Sources */,
 				0CF28ECF1B8C85E5005B2E54 /* APIManager.swift in Sources */,
@@ -602,11 +639,13 @@
 				79EFF7611B8D6DE4008A9E7D /* ActivityLogTableViewCell.swift in Sources */,
 				799892F51B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift in Sources */,
 				0CF28ED21B8C85E5005B2E54 /* IPhoneType.swift in Sources */,
+				F7BF5C9C1B94073600AEB9DA /* SuccessFailViewController.swift in Sources */,
 				0CF28ED01B8C85E5005B2E54 /* Enums.swift in Sources */,
 				0CF28ED61B8C85E5005B2E54 /* XibHelper.swift in Sources */,
 				0CF28EDB1B8C85E5005B2E54 /* SearchViewController.swift in Sources */,
 				0CF28EDA1B8C85E5005B2E54 /* MessageViewController.swift in Sources */,
 				799892FD1B8CEBA500F4CFE2 /* SettingsHeaderTableViewCell.swift in Sources */,
+				F7BF5C991B94073600AEB9DA /* ChangeMobileNumberViewController.swift in Sources */,
 				0CF28ED91B8C85E5005B2E54 /* DashboardViewController.swift in Sources */,
 				F7BF5C741B93738800AEB9DA /* StoreInfoAccountInformationTableViewCell.swift in Sources */,
 				0CF28EDC1B8C85E5005B2E54 /* SettingsViewController.swift in Sources */,
@@ -621,6 +660,7 @@
 				F7BF5C681B93700600AEB9DA /* StoreInfoSectionTableViewCell.swift in Sources */,
 				79EFF7701B8D6E35008A9E7D /* ActivityLogModel.swift in Sources */,
 				F7BF5C6C1B93700600AEB9DA /* StoreInfoViewController.swift in Sources */,
+				F7BF5C931B94073600AEB9DA /* CreateNewBankAccountViewController.swift in Sources */,
 				799892F91B8CC7EC00F4CFE2 /* DashBoardItemCollectionViewCell.swift in Sources */,
 				0CF28ED11B8C85E5005B2E54 /* HexaColor.swift in Sources */,
 				F7BF5C661B93700600AEB9DA /* StoreInfoAddressTableViewCell.swift in Sources */,

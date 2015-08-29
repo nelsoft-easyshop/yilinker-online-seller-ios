@@ -106,11 +106,13 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     //Store Details Function
     func storeInfoVerify() {
         println("verify")
-       var dimView = UIView(frame: CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.layer.frame.width, self.view.layer.frame.height))
+        /*
+        var dimView = UIView(frame: CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.layer.frame.width, self.view.layer.frame.height))
         dimView.backgroundColor=UIColor.blackColor()
         dimView.alpha = 0.5
         view.addSubview(dimView)
-        
+        */
+
         var attributeModal = VerifyNumberViewController(nibName: "VerifyNumberViewController", bundle: nil)
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         attributeModal.providesPresentationContextTransitionStyle = true
