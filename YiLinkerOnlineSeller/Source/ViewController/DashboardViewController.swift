@@ -156,6 +156,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             var activityViewController = ActivityLogTableViewController(nibName: "ActivityLogTableViewController", bundle: nil)
             self.navigationController?.pushViewController(activityViewController, animated:true)
         } else if indexPath.row == 8 {
+            var myPointsViewController = MyPointsTableViewController(nibName: "MyPointsTableViewController", bundle: nil)
+            self.navigationController?.pushViewController(myPointsViewController, animated:true)
             
         } else if indexPath.row == 9 {
             
