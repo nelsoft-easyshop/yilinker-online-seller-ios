@@ -37,6 +37,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     
     var uploadImages: [UIImage] = []
     var productModel: ProductModel = ProductModel()
+    var sectionFourRows: Int = 2
+    var sectionPriceHeaderHeight: CGFloat = 41
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -51,6 +53,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
 
         self.register()
         self.addAddPhoto()
+        self.footer()
         //self.gestureEndEditing()
     }
     
@@ -58,6 +61,11 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         let gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "hideKeyBoard")
         self.tableView.userInteractionEnabled = true
         self.tableView.addGestureRecognizer(gesture)
+    }
+    
+    func footer() {
+        let footerView: ProductUploadFooterView = XibHelper.puffViewWithNibName("ProductUploadFooterView", index: 0) as! ProductUploadFooterView
+        self.tableView.tableFooterView = footerView
     }
     
     func hideKeyBoard() {
@@ -111,7 +119,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
         //return 5
-        return 5
+        return 6
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -130,8 +138,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             } else {
                 return self.productModel.validCombinations.count + 2
             }
-        } else if section == 3 {
-            return 2
+        } else if section == 4 {
+            return sectionFourRows
         } else {
             return 1
         }
@@ -144,6 +152,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             sectionHeight = 0
         } else if section == 3 {
             sectionHeight = 0
+        } else if section == 4 {
+            return sectionPriceHeaderHeight
         } else {
             sectionHeight = 41
         }
@@ -161,6 +171,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         } else if section == 3 {
             headerView.headerTitleLabel.text = "Price"
         } else if section == 4 {
+            headerView.headerTitleLabel.text = "Price"
+        } else if section == 5 {
             headerView.headerTitleLabel.text = "Dimensions and Weight"
         }
         
@@ -210,9 +222,9 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             
             return height
         } else if indexPath.section == 4 {
-            return ProductUploadTableViewControllerConstant.productUploadWeightAndHeightCellHeight
+            return ProductUploadTableViewControllerConstant.priceCellHeight
         } else {
-            return ProductUploadTableViewControllerConstant.normalcellHeight
+            return ProductUploadTableViewControllerConstant.productUploadWeightAndHeightCellHeight
         }
     }
 
@@ -503,6 +515,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         
         let range: NSRange = NSMakeRange(3, 1)
         let section: NSIndexSet = NSIndexSet(indexesInRange: range)
+        
         self.tableView.reloadSections(section, withRowAnimation: UITableViewRowAnimation.Bottom)
+        self.sectionFourRows = 0
+        self.sectionPriceHeaderHeight = 0
+        self.tableView.reloadData()
     }
 }

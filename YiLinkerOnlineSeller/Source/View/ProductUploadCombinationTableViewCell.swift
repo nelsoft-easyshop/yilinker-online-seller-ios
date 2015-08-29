@@ -27,7 +27,7 @@ class ProductUploadCombinationTableViewCell: UITableViewCell {
         if IphoneType.isIphone4() || IphoneType.isIphone5() {
             flowLayout.itemSize = CGSizeMake(80, 40)
         } else if IphoneType.isIphone6Plus() {
-            flowLayout.itemSize = CGSizeMake(108, 40)
+            flowLayout.itemSize = CGSizeMake(180, 80)
         }
         
         self.collectionView.collectionViewLayout = flowLayout

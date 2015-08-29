@@ -32,7 +32,6 @@ class ProductUploadUploadImageTableViewCell: UITableViewCell, UICollectionViewDa
     override func awakeFromNib() {
         super.awakeFromNib()
         self.registerCell()
-        self.collectionView.scrollEnabled = false
     }
 
     func registerCell() {
