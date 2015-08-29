@@ -17,12 +17,13 @@ struct Constants {
         static let backgroundGray: UIColor = HexaColor.colorWithHexa(0xEBEBF2)
         static let selectedGreenColor: UIColor = HexaColor.colorWithHexa(0x44A491)
         static let selectedCellColor: UIColor = HexaColor.colorWithHexa(0xE1E1E1)
+        static let uploadViewColor: UIColor = HexaColor.colorWithHexa(0x54B6A7)
     }
     
     struct Credentials {
         static let clientID = "1_167rxzqvid8g8swggwokcoswococscocc8ck44wo0g88owgkcc"
         static let clientSecret = "317eq8nohry84ooc0o8woo8000c0k844c4cggws84g80scwwog"
         static let grantRefresh = "refresh_token"
-        static let grantBuyer = "http://yilinker-online.com/grant/buyer"
+        static let grantSeller = "http://yilinker-online.com/grant/seller"
     }
 }

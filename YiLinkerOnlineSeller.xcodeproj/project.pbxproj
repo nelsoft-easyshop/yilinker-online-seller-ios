@@ -112,6 +112,24 @@
 		0CF28F1A1B8CD079005B2E54 /* ProductUploadImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28F181B8CD079005B2E54 /* ProductUploadImageCollectionViewCell.swift */; };
 		0CF28F1B1B8CD079005B2E54 /* ProductUploadImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28F191B8CD079005B2E54 /* ProductUploadImageCollectionViewCell.xib */; };
 		0CF28F1D1B8CD21B005B2E54 /* DynamicRoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28F1C1B8CD21B005B2E54 /* DynamicRoundedButton.swift */; };
+		26374DA01B8F50A4006C639B /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26374D9E1B8F50A4006C639B /* SignInViewController.swift */; };
+		26374DA11B8F50A4006C639B /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26374D9F1B8F50A4006C639B /* SignInViewController.xib */; };
+		799892F31B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */; };
+		799892F51B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */; };
+		799892F71B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */; };
+		799892F91B8CC7EC00F4CFE2 /* DashBoardItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799892F81B8CC7EC00F4CFE2 /* DashBoardItemCollectionViewCell.swift */; };
+		799892FB1B8CE94C00F4CFE2 /* SettingDeactivateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892FA1B8CE94C00F4CFE2 /* SettingDeactivateTableViewCell.xib */; };
+		799892FD1B8CEBA500F4CFE2 /* SettingsHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799892FC1B8CEBA500F4CFE2 /* SettingsHeaderTableViewCell.swift */; };
+		799892FF1B8CEBC100F4CFE2 /* SettingsItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799892FE1B8CEBC100F4CFE2 /* SettingsItemTableViewCell.swift */; };
+		799893011B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799893001B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift */; };
+		799893031B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799893021B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib */; };
+		799893051B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799893041B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib */; };
+		79EFF75B1B8D6DC1008A9E7D /* ActivityLogTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EFF75A1B8D6DC1008A9E7D /* ActivityLogTableViewController.swift */; };
+		79EFF75E1B8D6DD3008A9E7D /* ActivityLogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EFF75C1B8D6DD3008A9E7D /* ActivityLogTableViewCell.xib */; };
+		79EFF75F1B8D6DD3008A9E7D /* ActivityLogTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EFF75D1B8D6DD3008A9E7D /* ActivityLogTableViewController.xib */; };
+		79EFF7611B8D6DE4008A9E7D /* ActivityLogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EFF7601B8D6DE4008A9E7D /* ActivityLogTableViewCell.swift */; };
+		79EFF7701B8D6E35008A9E7D /* ActivityLogModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EFF76E1B8D6E35008A9E7D /* ActivityLogModel.swift */; };
+		79EFF7711B8D6E35008A9E7D /* ActivityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EFF76F1B8D6E35008A9E7D /* ActivityModel.swift */; };
 		967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 967EE1C01B8AEA25000591AC /* Images.xcassets */; };
 		967EE1D01B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */; };
 		E72BD5070233EC6FF42DDA3A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B825E81D3B27E563C7C3C53 /* libPods.a */; };
@@ -234,8 +252,26 @@
 		0CF28F181B8CD079005B2E54 /* ProductUploadImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		0CF28F191B8CD079005B2E54 /* ProductUploadImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadImageCollectionViewCell.xib; path = ../View/ProductUploadImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		0CF28F1C1B8CD21B005B2E54 /* DynamicRoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicRoundedButton.swift; sourceTree = "<group>"; };
+		26374D9E1B8F50A4006C639B /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		26374D9F1B8F50A4006C639B /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
 		3F811DA8573C81594070C601 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		5B825E81D3B27E563C7C3C53 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardHeaderCollectionViewCell.xib; sourceTree = "<group>"; };
+		799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashBoardHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
+		799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardItemCollectionViewCell.xib; sourceTree = "<group>"; };
+		799892F81B8CC7EC00F4CFE2 /* DashBoardItemCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashBoardItemCollectionViewCell.swift; sourceTree = "<group>"; };
+		799892FA1B8CE94C00F4CFE2 /* SettingDeactivateTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingDeactivateTableViewCell.xib; sourceTree = "<group>"; };
+		799892FC1B8CEBA500F4CFE2 /* SettingsHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		799892FE1B8CEBC100F4CFE2 /* SettingsItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsItemTableViewCell.swift; sourceTree = "<group>"; };
+		799893001B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingDeactivateTableViewCell.swift; sourceTree = "<group>"; };
+		799893021B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		799893041B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsItemTableViewCell.xib; sourceTree = "<group>"; };
+		79EFF75A1B8D6DC1008A9E7D /* ActivityLogTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLogTableViewController.swift; sourceTree = "<group>"; };
+		79EFF75C1B8D6DD3008A9E7D /* ActivityLogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityLogTableViewCell.xib; sourceTree = "<group>"; };
+		79EFF75D1B8D6DD3008A9E7D /* ActivityLogTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityLogTableViewController.xib; sourceTree = "<group>"; };
+		79EFF7601B8D6DE4008A9E7D /* ActivityLogTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLogTableViewCell.swift; sourceTree = "<group>"; };
+		79EFF76E1B8D6E35008A9E7D /* ActivityLogModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLogModel.swift; sourceTree = "<group>"; };
+		79EFF76F1B8D6E35008A9E7D /* ActivityModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityModel.swift; sourceTree = "<group>"; };
 		967EE1B41B8AEA25000591AC /* YiLinkerOnlineSeller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YiLinkerOnlineSeller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		967EE1B81B8AEA25000591AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		967EE1C01B8AEA25000591AC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -320,6 +356,8 @@
 				0C8D7F8F1B8F0A6400B3FA4E /* AttributeModel.swift */,
 				0C8D7F911B8F0A7D00B3FA4E /* ProductModel.swift */,
 				0C8D7FC31B8FFC5900B3FA4E /* CombinationModel.swift */,
+				79EFF76E1B8D6E35008A9E7D /* ActivityLogModel.swift */,
+				79EFF76F1B8D6E35008A9E7D /* ActivityModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -379,6 +417,12 @@
 				0C6661AB1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.xib */,
 				0C5E9D8D1B91E2E200F32CFE /* ProductUploadFooterView.swift */,
 				0C5E9D8F1B91E2F700F32CFE /* ProductUploadFooterView.xib */,
+				79EFF7601B8D6DE4008A9E7D /* ActivityLogTableViewCell.swift */,
+				799892FC1B8CEBA500F4CFE2 /* SettingsHeaderTableViewCell.swift */,
+				799892FE1B8CEBC100F4CFE2 /* SettingsItemTableViewCell.swift */,
+				799893001B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift */,
+				799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */,
+				799892F81B8CC7EC00F4CFE2 /* DashBoardItemCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -398,6 +442,7 @@
 				0CF28F101B8CAA31005B2E54 /* ProductUploadTableViewController.xib */,
 				0C65F8AA1B8DB9AD00504D86 /* ProductUploadTableHeaderView.xib */,
 				0C65F8EF1B8E3CB000504D86 /* ProductUploadDetailTableViewController.xib */,
+				79EFF75A1B8D6DC1008A9E7D /* ActivityLogTableViewController.swift */,
 				0CF28EC81B8C85E5005B2E54 /* DashboardViewController.swift */,
 				0CF28EC91B8C85E5005B2E54 /* MessageViewController.swift */,
 				0CF28ECA1B8C85E5005B2E54 /* SearchViewController.swift */,
@@ -413,6 +458,8 @@
 				0C8D7FAC1B8FBDB400B3FA4E /* ProductUploadCombinationListViewController.xib */,
 				0C8D7FAF1B8FC1A400B3FA4E /* ProductUploadCombinationTableViewController.swift */,
 				0C8D7FB01B8FC1A400B3FA4E /* ProductUploadCombinationTableViewController.xib */,
+				26374D9E1B8F50A4006C639B /* SignInViewController.swift */,
+				26374D9F1B8F50A4006C639B /* SignInViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -420,6 +467,13 @@
 		0CF28ECC1B8C85E5005B2E54 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				79EFF75C1B8D6DD3008A9E7D /* ActivityLogTableViewCell.xib */,
+				79EFF75D1B8D6DD3008A9E7D /* ActivityLogTableViewController.xib */,
+				799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */,
+				799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */,
+				799892FA1B8CE94C00F4CFE2 /* SettingDeactivateTableViewCell.xib */,
+				799893021B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib */,
+				799893041B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib */,
 			);
 			path = Xib;
 			sourceTree = "<group>";
@@ -618,6 +672,9 @@
 				0CF28F051B8CA2E9005B2E54 /* Panton.otf in Resources */,
 				0C8D7FB61B8FC4AC00B3FA4E /* ProductUploadCombinationTableViewCell.xib in Resources */,
 				0C65F8ED1B8E377500504D86 /* ProductUploadAttributeCollectionViewCell.xib in Resources */,
+				799892F71B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib in Resources */,
+				0CF28F051B8CA2E9005B2E54 /* Panton.otf in Resources */,
+				799893031B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib in Resources */,
 				0CF28EF91B8CA2E9005B2E54 /* Panton ExtraBold.otf in Resources */,
 				0C65F8F11B8E3CB000504D86 /* ProductUploadDetailTableViewController.xib in Resources */,
 				0CF28F011B8CA2E9005B2E54 /* Panton SemiBold Italic.otf in Resources */,
@@ -635,9 +692,12 @@
 				0C65F8B31B8DC9AC00504D86 /* ProductUploadCategoryViewController.xib in Resources */,
 				0C8D7FA01B8F1B7800B3FA4E /* PUAttributeSetHeaderTableViewCell.xib in Resources */,
 				0C65F8A51B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.xib in Resources */,
+				799892FB1B8CE94C00F4CFE2 /* SettingDeactivateTableViewCell.xib in Resources */,
 				0CF28EFF1B8CA2E9005B2E54 /* Panton Light.otf in Resources */,
+				799893051B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib in Resources */,
 				0CF28EFA1B8CA2E9005B2E54 /* Panton ExtraLight Italic.otf in Resources */,
 				0CF28F1B1B8CD079005B2E54 /* ProductUploadImageCollectionViewCell.xib in Resources */,
+				799892F31B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib in Resources */,
 				0CF28F031B8CA2E9005B2E54 /* Panton Thin Italic.otf in Resources */,
 				0C8D7FBE1B8FCC5800B3FA4E /* ProductUploadCombinationHeaderTableViewCell.xib in Resources */,
 				0CF28EF41B8CA2E9005B2E54 /* Black Italic.otf in Resources */,
@@ -645,9 +705,11 @@
 				0C65F8CD1B8DF8A000504D86 /* ProductUploadSearchViewController.xib in Resources */,
 				0CF28F001B8CA2E9005B2E54 /* Panton Regular Italic.otf in Resources */,
 				0C65F8C11B8DE28D00504D86 /* ProductUploadBrandViewController.xib in Resources */,
+				79EFF75F1B8D6DD3008A9E7D /* ActivityLogTableViewController.xib in Resources */,
 				0CF28EFB1B8CA2E9005B2E54 /* Panton ExtraLight.otf in Resources */,
 				0CF28EF71B8CA2E9005B2E54 /* Panton Bold.otf in Resources */,
 				0CF28F041B8CA2E9005B2E54 /* Panton Thin.otf in Resources */,
+				79EFF75E1B8D6DD3008A9E7D /* ActivityLogTableViewCell.xib in Resources */,
 				967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */,
 				0CF28F171B8CCD3E005B2E54 /* ProductUploadUploadImageTableViewCell.xib in Resources */,
 				0C8D7FA81B8F573800B3FA4E /* ProductUploadAddFooterView.xib in Resources */,
@@ -663,6 +725,7 @@
 				0C8D7FBA1B8FC79E00B3FA4E /* ProductUploadCombinationFooterTableViewCell.xib in Resources */,
 				0CF28EF61B8CA2E9005B2E54 /* Panton Bold Italic.otf in Resources */,
 				0C65F8AF1B8DBC3400504D86 /* ProductUploadTextViewTableViewCell.xib in Resources */,
+				26374DA11B8F50A4006C639B /* SignInViewController.xib in Resources */,
 				0CF28EF51B8CA2E9005B2E54 /* Panton Black.otf in Resources */,
 				0C8D7F881B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.xib in Resources */,
 			);
@@ -721,8 +784,12 @@
 				0C65F8A41B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.swift in Sources */,
 				0C8D7FBD1B8FCC5800B3FA4E /* ProductUploadCombinationHeaderTableViewCell.swift in Sources */,
 				0C65F8D41B8E089200504D86 /* ProductUploadQuantityTableViewCell.swift in Sources */,
+				79EFF75B1B8D6DC1008A9E7D /* ActivityLogTableViewController.swift in Sources */,
+				799893011B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift in Sources */,
 				0CF28ECF1B8C85E5005B2E54 /* APIManager.swift in Sources */,
 				0CF28ED31B8C85E5005B2E54 /* ParseLocalJSON.swift in Sources */,
+				79EFF7611B8D6DE4008A9E7D /* ActivityLogTableViewCell.swift in Sources */,
+				799892F51B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift in Sources */,
 				0CF28ED21B8C85E5005B2E54 /* IPhoneType.swift in Sources */,
 				0C8D7F871B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.swift in Sources */,
 				0C65F8F01B8E3CB000504D86 /* ProductUploadDetailTableViewController.swift in Sources */,
@@ -758,6 +825,7 @@
 				0C8D7F8D1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.swift in Sources */,
 				0C8D7FB11B8FC1A400B3FA4E /* ProductUploadCombinationTableViewController.swift in Sources */,
 				0CF28F1A1B8CD079005B2E54 /* ProductUploadImageCollectionViewCell.swift in Sources */,
+				799892FD1B8CEBA500F4CFE2 /* SettingsHeaderTableViewCell.swift in Sources */,
 				0CF28ED91B8C85E5005B2E54 /* DashboardViewController.swift in Sources */,
 				0C65F8B21B8DC9AC00504D86 /* ProductUploadCategoryViewController.swift in Sources */,
 				0CF28EDC1B8C85E5005B2E54 /* SettingsViewController.swift in Sources */,
@@ -766,7 +834,12 @@
 				0C8D7F9F1B8F1B7800B3FA4E /* PUAttributeSetHeaderTableViewCell.swift in Sources */,
 				0C8D7F981B8F198300B3FA4E /* Category.swift in Sources */,
 				0C65F8C01B8DE28D00504D86 /* ProductUploadBrandViewController.swift in Sources */,
+				799892FF1B8CEBC100F4CFE2 /* SettingsItemTableViewCell.swift in Sources */,
 				0CF28ED51B8C85E5005B2E54 /* SessionManager.swift in Sources */,
+				79EFF7711B8D6E35008A9E7D /* ActivityModel.swift in Sources */,
+				26374DA01B8F50A4006C639B /* SignInViewController.swift in Sources */,
+				79EFF7701B8D6E35008A9E7D /* ActivityLogModel.swift in Sources */,
+				799892F91B8CC7EC00F4CFE2 /* DashBoardItemCollectionViewCell.swift in Sources */,
 				0CF28ED11B8C85E5005B2E54 /* HexaColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
