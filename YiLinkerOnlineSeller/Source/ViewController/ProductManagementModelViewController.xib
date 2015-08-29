@@ -35,13 +35,13 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <view clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OZ4-Vg-grK" userLabel="Modal">
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OZ4-Vg-grK" userLabel="Modal">
                     <rect key="frame" x="17" y="230" width="340" height="208"/>
                     <subviews>
-                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vhp-aA-0TD" userLabel="Buttons Container">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vhp-aA-0TD" userLabel="Buttons Container">
                             <rect key="frame" x="0.0" y="132" width="340" height="76"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KYl-1K-jvn">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KYl-1K-jvn">
                                     <rect key="frame" x="180" y="21" width="120" height="34"/>
                                     <color key="backgroundColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
@@ -53,7 +53,7 @@
                                         <action selector="noAction:" destination="-1" eventType="touchUpInside" id="U1v-2Y-8aX"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wVZ-nB-Zhr">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wVZ-nB-Zhr">
                                     <rect key="frame" x="40" y="21" width="120" height="34"/>
                                     <color key="backgroundColor" red="0.20000000000000001" green="0.65098039220000004" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
@@ -67,9 +67,25 @@
                                 </button>
                             </subviews>
                             <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="KYl-1K-jvn" secondAttribute="trailing" constant="40" id="2nl-wX-G46"/>
+                                <constraint firstItem="wVZ-nB-Zhr" firstAttribute="leading" secondItem="vhp-aA-0TD" secondAttribute="leading" constant="40" id="3XE-5g-Iyd"/>
+                                <constraint firstItem="KYl-1K-jvn" firstAttribute="top" secondItem="vhp-aA-0TD" secondAttribute="top" constant="21" id="F57-6C-q2O"/>
+                                <constraint firstAttribute="height" constant="76" id="IYH-HA-Cmm"/>
+                                <constraint firstItem="wVZ-nB-Zhr" firstAttribute="top" secondItem="vhp-aA-0TD" secondAttribute="top" constant="21" id="QMJ-bF-rrX"/>
+                                <constraint firstItem="wVZ-nB-Zhr" firstAttribute="height" secondItem="KYl-1K-jvn" secondAttribute="height" id="cf9-NV-HZE"/>
+                                <constraint firstItem="wVZ-nB-Zhr" firstAttribute="width" secondItem="KYl-1K-jvn" secondAttribute="width" id="eOz-qL-yge"/>
+                                <constraint firstAttribute="bottom" secondItem="wVZ-nB-Zhr" secondAttribute="bottom" constant="21" id="ly6-Xp-zNQ"/>
+                                <constraint firstItem="KYl-1K-jvn" firstAttribute="leading" secondItem="wVZ-nB-Zhr" secondAttribute="trailing" constant="20" id="vaD-dN-sYt"/>
+                                <constraint firstAttribute="bottom" secondItem="KYl-1K-jvn" secondAttribute="bottom" constant="21" id="zZJ-Mx-C8N"/>
+                            </constraints>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ye2-g3-3zb" userLabel="Close Button">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ye2-g3-3zb" userLabel="Close Button">
                             <rect key="frame" x="17" y="17" width="15" height="15"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="15" id="O4v-Hs-EhQ"/>
+                                <constraint firstAttribute="width" constant="15" id="VRl-GY-bgx"/>
+                            </constraints>
                             <state key="normal" image="close2">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -77,23 +93,48 @@
                                 <action selector="closeAction:" destination="-1" eventType="touchUpInside" id="g5R-Id-aXU"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="You're about to disable all active products" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BlQ-pE-luh">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You're about to disable all active products" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BlQ-pE-luh">
                             <rect key="frame" x="8" y="49" width="324" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" priority="500" constant="21" id="ejV-R7-3ko"/>
+                            </constraints>
                             <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="15"/>
                             <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Are you sure you want to cancel this order?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PVb-p2-pne">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Are you sure you want to cancel this order?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PVb-p2-pne">
                             <rect key="frame" x="8" y="86" width="324" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="IVP-YF-V5h"/>
+                            </constraints>
                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="Ye2-g3-3zb" firstAttribute="top" secondItem="OZ4-Vg-grK" secondAttribute="top" constant="17" id="0rO-4s-DHk"/>
+                        <constraint firstItem="BlQ-pE-luh" firstAttribute="top" secondItem="Ye2-g3-3zb" secondAttribute="bottom" constant="17" id="CEV-Jn-1Qb"/>
+                        <constraint firstItem="PVb-p2-pne" firstAttribute="leading" secondItem="OZ4-Vg-grK" secondAttribute="leading" constant="8" id="IVE-M3-f7e"/>
+                        <constraint firstItem="BlQ-pE-luh" firstAttribute="leading" secondItem="OZ4-Vg-grK" secondAttribute="leading" constant="8" id="LTn-fl-a7g"/>
+                        <constraint firstItem="PVb-p2-pne" firstAttribute="top" secondItem="BlQ-pE-luh" secondAttribute="bottom" constant="16" id="MBL-mj-7yd"/>
+                        <constraint firstAttribute="trailing" secondItem="BlQ-pE-luh" secondAttribute="trailing" constant="8" id="NbM-oG-aOk"/>
+                        <constraint firstAttribute="trailing" secondItem="PVb-p2-pne" secondAttribute="trailing" constant="8" id="Wif-wr-gt4"/>
+                        <constraint firstAttribute="bottom" secondItem="vhp-aA-0TD" secondAttribute="bottom" id="WrQ-Hz-bhX"/>
+                        <constraint firstItem="vhp-aA-0TD" firstAttribute="leading" secondItem="OZ4-Vg-grK" secondAttribute="leading" id="biv-M2-gyi"/>
+                        <constraint firstAttribute="height" constant="208" id="dyn-Wa-qvM"/>
+                        <constraint firstItem="Ye2-g3-3zb" firstAttribute="leading" secondItem="OZ4-Vg-grK" secondAttribute="leading" constant="17" id="iPg-kw-K3H"/>
+                        <constraint firstAttribute="trailing" secondItem="vhp-aA-0TD" secondAttribute="trailing" id="ihk-Dc-zta"/>
+                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="OZ4-Vg-grK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="17" id="XeN-iA-nhu"/>
+                <constraint firstAttribute="trailing" secondItem="OZ4-Vg-grK" secondAttribute="trailing" constant="18" id="ZSc-Oi-fvn"/>
+                <constraint firstAttribute="centerY" secondItem="OZ4-Vg-grK" secondAttribute="centerY" id="c7c-Fl-0tK"/>
+            </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
         </view>
     </objects>
