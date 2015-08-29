@@ -25,6 +25,7 @@ class DashboardViewController: UIViewController {
         super.viewDidAppear(animated)
         
         let vc = ProductManagementViewController(nibName: "ProductManagementViewController", bundle: nil)
+        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

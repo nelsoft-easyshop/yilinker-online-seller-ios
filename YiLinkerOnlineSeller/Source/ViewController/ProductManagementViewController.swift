@@ -30,9 +30,6 @@ class ProductManagementViewController: UIViewController {
         self.searchBar.barTintColor = Constants.Colors.appTheme
         self.searchBar.tintColor = Constants.Colors.appTheme
         self.searchBar.barStyle = UIBarStyle.Default
-//        self.scrollView.frame.origin.y = 0.0
-//        self.scrollView.center = self.view.center
-//        println(self.scrollView.center)
         
         let nib = UINib(nibName: "ProductManagementTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "ProductManagementIdentifier")
@@ -190,6 +187,10 @@ extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataS
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: ProductManagementTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductManagementIdentifier") as! ProductManagementTableViewCell
+        
+        cell.selectionStyle = .None
+        cell.index = selectedIndex
+        cell.clearCheckImage()
         
         return cell
     }
