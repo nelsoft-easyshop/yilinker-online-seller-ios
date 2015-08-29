@@ -18,11 +18,19 @@ class StoreInfoAccountInformationTableViewCell: UITableViewCell {
     
     @IBOutlet weak var saveButton: UIButton!
     
+    @IBOutlet weak var changeMobileButton: UIButton!
+    @IBOutlet weak var changeEmailButton: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
             self.saveButton.layer.cornerRadius = 5.0
             self.saveButton.clipsToBounds = true
+        
+            self.changeEmailButton.layer.cornerRadius = 5.0
+            self.changeEmailButton.clipsToBounds = true
+        
+            self.changeMobileButton.layer.cornerRadius = 5.0
+            self.changeMobileButton.clipsToBounds = true
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

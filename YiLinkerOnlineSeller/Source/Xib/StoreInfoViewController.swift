@@ -11,6 +11,7 @@ import UIKit
 class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoAddressTableViewCellDelagate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate{
     
     @IBOutlet weak var storeInfoTableView: UITableView!
+    
     let storeInfoSectionTableViewCellIndentifier: String = "StoreInfoSectionTableViewCell"
     let storeInfoAddressTableViewCellIdentifier: String = "StoreInfoAddressTableViewCell"
     let storeInfoBankAccountTableViewCellIdentifier: String = "StoreInfoBankAccountTableViewCell"
@@ -94,12 +95,28 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
         if indexPath.section == 0 {
             return 198
         } else if indexPath.section == 1 {
-            return 136
+            return 163
         } else  if indexPath.section == 2 {
-            return 113
+            return 132
         } else {
-            return 220
+            return 299
         }
+    }
+    
+    //Store Details Function
+    func storeInfoVerify() {
+        println("verify")
+       var dimView = UIView(frame: CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.layer.frame.width, self.view.layer.frame.height))
+        dimView.backgroundColor=UIColor.blackColor()
+        dimView.alpha = 0.5
+        view.addSubview(dimView)
+        
+        var attributeModal = VerifyNumberViewController(nibName: "VerifyNumberViewController", bundle: nil)
+        attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        attributeModal.providesPresentationContextTransitionStyle = true
+        attributeModal.definesPresentationContext = true
+        self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
+        
     }
 
     /*
