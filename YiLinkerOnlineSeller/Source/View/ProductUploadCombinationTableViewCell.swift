@@ -11,7 +11,10 @@ import UIKit
 class ProductUploadCombinationTableViewCell: UITableViewCell {
 
     @IBOutlet weak var collectionView: UICollectionView!
+    
     var attributes: [AttributeModel] = []
+    var productModel: ProductModel?
+    var selectedIndexPath: NSIndexPath?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -51,6 +54,14 @@ class ProductUploadCombinationTableViewCell: UITableViewCell {
         
         cell.attributeDefinitionLabel.text = attributeModel.definition
         cell.attributeTextField.text = attributeModel.values[0]
+        
+        if self.productModel != nil {
+            let dictionary: NSMutableDictionary = self.productModel!.validCombinations[selectedIndexPath!.section].attributes[indexPath.row]
+            cell.attributeDefinitionLabel.text = dictionary["definition"] as? String
+            cell.attributeTextField.text  = dictionary["value"] as! String
+        }
+      
+        
         cell.values = attributeModel.values
         cell.addPicker()
         return cell

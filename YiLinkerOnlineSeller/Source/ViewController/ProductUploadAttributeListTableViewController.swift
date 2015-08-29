@@ -117,7 +117,7 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
             cell.attributes = attributeModel.values
             cell.collectionView.reloadData()
             cell.selectionStyle = UITableViewCellSelectionStyle.None
-            
+            cell.userInteractionEnabled = false
             return cell
         }
     }

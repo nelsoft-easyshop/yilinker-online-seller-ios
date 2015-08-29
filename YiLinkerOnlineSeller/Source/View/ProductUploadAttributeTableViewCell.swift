@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ProductUploadAttributeTableViewCellDelegate {
+    func productUploadAttributeTableViewCell(didTapCell cell: ProductUploadAttributeTableViewCell, indexPath: NSIndexPath)
+}
+
 struct PUAConstant {
     static let productUploadAttributeCollectionViewCellNibNameAndIdentier = "ProductUploadAttributeCollectionViewCell"
 }
@@ -17,6 +21,8 @@ class ProductUploadAttributeTableViewCell: UITableViewCell, UICollectionViewData
     @IBOutlet weak var collectionView: UICollectionView!
     var attributes: [String] = []
     @IBOutlet weak var colectionViewHeightConstraint: NSLayoutConstraint!
+    
+    var delegate: ProductUploadAttributeTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -54,7 +60,23 @@ class ProductUploadAttributeTableViewCell: UITableViewCell, UICollectionViewData
         cell.attributeLabel.text = self.attributes[indexPath.row]
         cell.layer.cornerRadius = 5
         
+       /* let imageView: UIImageView = UIImageView(frame: CGRectMake(cell.frame.size.width - 20, (cell.frame.size.height / 2) - 7.5 , 15, 15))
+        imageView.image = UIImage(named: "close")
+        cell.addSubview(imageView)*/
+        
+        let gestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapRecognizer:")
+        cell.userInteractionEnabled = true
+        cell.addGestureRecognizer(gestureRecognizer)
+        
         return cell
+    }
+    
+    func tapRecognizer(sender: UITapGestureRecognizer) {
+        let cell: ProductUploadAttributeCollectionViewCell = sender.view as! ProductUploadAttributeCollectionViewCell
+        let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
+        self.delegate!.productUploadAttributeTableViewCell(didTapCell: self, indexPath: indexPath)
+        self.attributes.removeAtIndex(indexPath.row)
+        self.collectionView.deleteItemsAtIndexPaths([indexPath])
     }
     
     func collectionViewContentSize() -> CGSize {

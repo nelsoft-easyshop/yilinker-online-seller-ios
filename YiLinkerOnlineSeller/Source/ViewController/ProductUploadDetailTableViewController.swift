@@ -20,7 +20,7 @@ protocol ProductUploadDetailTableViewControllerDelegate {
     func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath)
 }
 
-class ProductUploadDetailTableViewController: UITableViewController, ProductUploadDetailFooterTableViewCellDelegate, ProductUploadDetailHeaderViewCollectionViewCellDelegate {
+class ProductUploadDetailTableViewController: UITableViewController, ProductUploadDetailFooterTableViewCellDelegate, ProductUploadDetailHeaderViewCollectionViewCellDelegate, ProductUploadAttributeTableViewCellDelegate {
     
     var tempDetailName: String = ""
     var dynamicRowHeight: CGFloat = 0
@@ -108,6 +108,8 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
                 cell.attributes = self.productModel!.attributes[self.selectedIndexPath.row].values
             }
             
+            cell.delegate = self
+            
             return cell
         } else {
             let detailFooterViewCell: ProductUploadDetailFooterTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(PUDTConstant.productUploadDetailFooterTableViewCellNibNameAndIdentifier) as! ProductUploadDetailFooterTableViewCell
@@ -192,7 +194,12 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         //self.tableView.reloadRowsAtIndexPaths([collectionViewIndexPath], withRowAnimation: UITableViewRowAnimation.None)
         self.tableView.endUpdates()
     }
+    
     func productUploadDetailFooterTableViewCell(cell: ProductUploadDetailFooterTableViewCell, didSelectButton button: UIButton) {
         self.tableView.reloadData()
+    }
+    
+    func productUploadAttributeTableViewCell(didTapCell cell: ProductUploadAttributeTableViewCell, indexPath: NSIndexPath) {
+        self.productModel!.attributes[selectedIndexPath.section].values.removeAtIndex(indexPath.row)
     }
 }

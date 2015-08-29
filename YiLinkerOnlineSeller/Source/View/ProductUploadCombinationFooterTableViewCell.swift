@@ -11,16 +11,15 @@ import UIKit
 protocol ProductUploadCombinationFooterTableViewCellDelegate {
     func productUploadCombinationFooterTableViewCell(didClickDoneButton cell: ProductUploadCombinationFooterTableViewCell, sku: String, quantity: String, discountedPrice: String, retailPrice: String, uploadImages: [UIImage])
     func productUploadCombinationFooterTableViewCell(didClickUploadImage cell: ProductUploadCombinationFooterTableViewCell)
+    func productUploadCombinationFooterTableViewCell(didDeleteUploadImage cell: ProductUploadCombinationFooterTableViewCell, indexPath: NSIndexPath)
 }
 
-class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate {
+class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, ProductUploadImageCollectionViewCellDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     var delegate: ProductUploadCombinationFooterTableViewCellDelegate?
     var images: [UIImage] = []
-    var parentViewController: UIViewController = UIViewController()
-    
-    
+
     @IBOutlet weak var retailPriceTextField: UITextField!
     @IBOutlet weak var discountedPriceTextField: UITextField!
     @IBOutlet weak var quantityTextField: UITextField!
@@ -32,7 +31,10 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
     }
     
     @IBAction func save(sender: AnyObject) {
-        self.images.removeLast()
+        if self.images.last == UIImage(named: "addPhoto") {
+            self.images.removeLast()
+        }
+
         self.delegate!.productUploadCombinationFooterTableViewCell(didClickDoneButton: self, sku: self.skuTextField.text, quantity: self.quantityTextField.text, discountedPrice: self.discountedPriceTextField.text, retailPrice: self.retailPriceTextField.text, uploadImages: self.images)
     }
     
@@ -48,7 +50,7 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: ProductUploadImageCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(ProductUploadUploadImageTableViewCellConstant.productUploadImageCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ProductUploadImageCollectionViewCell
-        
+        cell.delegate = self
         cell.imageView.image = self.images[indexPath.row]
         
         if indexPath.row == self.images.count - 1 {
@@ -69,7 +71,10 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
     }
     
     func productUploadImageCollectionViewCell(didTapDeleteButtonAtCell cell: ProductUploadImageCollectionViewCell) {
-//        let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
-//        self.delegate!.productUploadUploadImageTableViewCell(didDeleteAtRowIndexPath: indexPath, collectionView: self.collectionView)
+        let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
+        self.images.removeAtIndex(indexPath.item)
+        self.collectionView.deleteItemsAtIndexPaths([indexPath])
+        self.delegate!.productUploadCombinationFooterTableViewCell(didDeleteUploadImage: self, indexPath: indexPath)
+        //self.delegate!.productUploadUploadImageTableViewCell(didDeleteAtRowIndexPath: indexPath, collectionView: self.collectionView)
     }
 }

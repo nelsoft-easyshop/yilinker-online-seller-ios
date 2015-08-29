@@ -18,7 +18,7 @@ struct PUCTVCConstant {
 }
 
 protocol ProductUploadCombinationTableViewControllerDelegate {
-    func productUploadCombinationTableViewController(appendCombination combination: CombinationModel)
+    func productUploadCombinationTableViewController(appendCombination combination: CombinationModel, isEdit: Bool, indexPath: NSIndexPath)
 }
 
 class ProductUploadCombinationTableViewController: UITableViewController, ProductUploadCombinationFooterTableViewCellDelegate, UzysAssetsPickerControllerDelegate {
@@ -26,6 +26,8 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
     var attributes: [AttributeModel]?
     var delegate: ProductUploadCombinationTableViewControllerDelegate?
     var images: [UIImage] = []
+    var selectedIndexpath: NSIndexPath?
+    var productModel: ProductModel?
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,12 +92,28 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         if indexPath.row == 0 {
             let cell: ProductUploadCombinationTableViewCell = tableView.dequeueReusableCellWithIdentifier(PUCTVCConstant.productUploadCombinationTableViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ProductUploadCombinationTableViewCell
             cell.attributes = self.attributes!
-            
+            if self.productModel != nil {
+                cell.selectedIndexPath = self.selectedIndexpath
+                cell.productModel = self.productModel!.copy()
+                cell.selectionStyle = UITableViewCellSelectionStyle.None
+            }
             return cell
         } else {
             let cell: ProductUploadCombinationFooterTableViewCell = tableView.dequeueReusableCellWithIdentifier(PUCTVCConstant.productUploadCombinationFooterTableViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ProductUploadCombinationFooterTableViewCell
             cell.delegate = self
             cell.images = self.images
+            
+            if self.productModel != nil {
+                let combination: CombinationModel = self.productModel!.validCombinations[self.selectedIndexpath!.section]
+                combination.images.append(UIImage(named: "addPhoto")!)
+                cell.images = combination.images
+                cell.discountedPriceTextField.text = combination.discountedPrice
+                cell.quantityTextField.text = combination.quantity
+                cell.retailPriceTextField.text = combination.retailPrice
+                cell.skuTextField.text = combination.sku
+            }
+            
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
         }
     }
@@ -108,7 +126,12 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         combination.discountedPrice = discountedPrice
         combination.sku = sku
         combination.retailPrice = retailPrice
-        self.delegate!.productUploadCombinationTableViewController(appendCombination: combination)
+        if self.productModel == nil {
+            self.delegate!.productUploadCombinationTableViewController(appendCombination: combination, isEdit: false, indexPath: NSIndexPath())
+        } else {
+            self.delegate!.productUploadCombinationTableViewController(appendCombination: combination, isEdit: true, indexPath: self.selectedIndexpath!)
+        }
+        
         self.navigationController!.popViewControllerAnimated(true)
     }
     
@@ -183,6 +206,17 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
             return cellHeight
         } else {
             return PUCTVCConstant.footerHeight
+        }
+    }
+    
+    func productUploadCombinationFooterTableViewCell(didDeleteUploadImage cell: ProductUploadCombinationFooterTableViewCell, indexPath: NSIndexPath) {
+        if self.productModel == nil {
+            self.images.removeAtIndex(indexPath.row)
+        } else {
+            if indexPath.row < self.productModel!.validCombinations[self.selectedIndexpath!.section].images.count {
+                self.productModel!.validCombinations[self.selectedIndexpath!.section].images.removeAtIndex(indexPath.row)
+            }
+            
         }
     }
     

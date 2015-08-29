@@ -16,7 +16,7 @@ struct PUCLVCConstant {
     static let productUploadPlainCombinationTableViewCellNibNameAndIdentifier = "ProductUploadPlainDetailCombinationTableViewCell"
 }
 
-class ProductUploadCombinationListViewController: UIViewController, ProductUploadAddFooterViewDelegate, ProductUploadCombinationTableViewControllerDelegate, UITableViewDataSource, UITableViewDelegate {
+class ProductUploadCombinationListViewController: UIViewController, ProductUploadAddFooterViewDelegate, ProductUploadCombinationTableViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, PUAttributeSetHeaderTableViewCellDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     var productModel: ProductModel?
@@ -94,9 +94,8 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell: PUAttributeSetHeaderTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(PUALTVConstant.pUAttributeSetHeaderTableViewCellNibNameAndIdentifier) as! PUAttributeSetHeaderTableViewCell
-            
+            cell.delegate = self
             cell.attributeDefinitionLabel!.text = "Combination \(indexPath.section + 1)"
-            
             return cell
         } else if indexPath.row == 1 {
             let cell: ProductUploadCombinationTableViewCell = tableView.dequeueReusableCellWithIdentifier(PUCTVCConstant.productUploadCombinationTableViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ProductUploadCombinationTableViewCell
@@ -108,12 +107,14 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
                 attributes.append(attributeModel)
             }
             cell.attributes = attributes
+            cell.collectionView.reloadData()
+            cell.userInteractionEnabled = false
             return cell
         } else {
             let cell: ProductUploadPlainDetailCombinationTableViewCell = tableView.dequeueReusableCellWithIdentifier(PUCLVCConstant.productUploadPlainCombinationTableViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ProductUploadPlainDetailCombinationTableViewCell
             
             let combination: CombinationModel = self.productModel!.validCombinations[indexPath.section]
-            
+            cell.collectionView.reloadData()
             cell.images = combination.images
             cell.skuTextField.text = combination.sku
             cell.quantityTextField.text = combination.quantity
@@ -124,7 +125,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             cell.quantityTextField.enabled = false
             cell.retailPriceTextField.enabled = false
             cell.discountedPriceTextField.enabled = false
-            
+            cell.userInteractionEnabled = false
             return cell
         }
     }
@@ -164,14 +165,73 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         self.navigationController!.pushViewController(productUploadCombinationTableViewController, animated: true)
     }
     
-    func productUploadCombinationTableViewController(appendCombination combination: CombinationModel) {
-        self.productModel!.validCombinations.append(combination)
+    func productUploadCombinationTableViewController(appendCombination combination: CombinationModel, isEdit: Bool, indexPath: NSIndexPath) {
+        
+      /*  var combinationIsAvailable: Bool = true
+
+        var values: [String] = []
+        var selectedValues: [String] = []
+        var index: Int = 0
+        
+        for var x = 0; x < combination.attributes.count; x++ {
+            var dictionary: NSMutableDictionary = combination.attributes[x]
+            selectedValues.append(dictionary["value"] as! String)
+        }
+        
+        for attributeCombination in self.productModel!.validCombinations as [CombinationModel] {
+            values = []
+            for var x = 0; x < attributeCombination.attributes.count; x++ {
+                var dictionary: NSMutableDictionary = attributeCombination.attributes[x]
+                values.append(dictionary["value"] as! String)
+            }
+            
+            let set1: NSSet = NSSet(array: selectedValues)
+            let set2: NSSet = NSSet(array: values)
+            
+            if set1.isEqualToSet(set2 as Set<NSObject>) {
+                combinationIsAvailable = false
+                break
+            } else {
+                index++
+            }
+        }*/
+        
+        if !isEdit {
+            self.productModel!.validCombinations.append(combination)
+        } else {
+            self.productModel!.validCombinations[indexPath.section] = combination
+        }
+        
         self.tableView.reloadData()
+      
     }
     @IBAction func saveDetails(sender: AnyObject) {
         let productUploadTableViewController: ProductUploadTableViewController
          = self.navigationController!.viewControllers[0] as! ProductUploadTableViewController
         productUploadTableViewController.replaceProductAttributeWithAttribute(self.productModel!.attributes, combinations: self.productModel!.validCombinations)
         self.navigationController!.popToRootViewControllerAnimated(true)
+    }
+    
+    func pUAttributeSetHeaderTableViewCell(didClickDelete cell: PUAttributeSetHeaderTableViewCell) {
+        let indexPath: NSIndexPath = self.tableView.indexPathForCell(cell)!
+        let range: NSRange = NSMakeRange(indexPath.section, 1)
+        let section: NSIndexSet = NSIndexSet(indexesInRange: range)
+        
+        self.productModel!.validCombinations.removeAtIndex(indexPath.section)
+        self.tableView.beginUpdates()
+        self.tableView.deleteSections(section, withRowAnimation: UITableViewRowAnimation.Left)
+        self.tableView.endUpdates()
+        self.tableView.reloadData()
+    }
+    
+   func pUAttributeSetHeaderTableViewCell(didClickEdit cell: PUAttributeSetHeaderTableViewCell) {
+        let indexPath: NSIndexPath = self.tableView.indexPathForCell(cell)!
+    
+        let productUploadCombinationTableViewController: ProductUploadCombinationTableViewController = ProductUploadCombinationTableViewController(nibName: "ProductUploadCombinationTableViewController", bundle: nil)
+        productUploadCombinationTableViewController.attributes = self.productModel!.attributes
+        productUploadCombinationTableViewController.productModel = self.productModel!.copy()
+        productUploadCombinationTableViewController.selectedIndexpath = indexPath
+        productUploadCombinationTableViewController.delegate = self
+        self.navigationController!.pushViewController(productUploadCombinationTableViewController, animated: true)
     }
 }
