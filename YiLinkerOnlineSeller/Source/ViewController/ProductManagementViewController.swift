@@ -11,10 +11,16 @@ import UIKit
 class ProductManagementViewController: UIViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var collectionView: UICollectionView!
     
-    var pageTitle: String = ""
+    var pageTitle: [String] = ["All", "Active", "Inactive", "Drafts", "Deleted", "Under Review"]
+    var selectedImage: [String] = ["all2", "active2", "inactive2", "drafts2", "deleted2", "review2"]
+    var deSelectedImage: [String] = ["all", "active", "inactive", "drafts", "deleted", "review"]
+    
+    var selectedIndex: Int = 0
+    var tableViewSectionHeight: CGFloat = 0
+    var tableViewSectionTitle: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +36,9 @@ class ProductManagementViewController: UIViewController {
         
         let nib = UINib(nibName: "ProductManagementTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "ProductManagementIdentifier")
+        
+        let nibCVC = UINib(nibName: "ProductManagementCollectionViewCell", bundle: nil)
+        self.collectionView.registerNib(nibCVC, forCellWithReuseIdentifier: "ProductManagementIdentifier")
         
     }
 
@@ -72,12 +81,11 @@ class ProductManagementViewController: UIViewController {
         var sectionHeaderContainverView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 40))
         sectionHeaderContainverView.backgroundColor = UIColor.whiteColor()
         
-        let title: String = "Active"
         let buttonWidth: CGFloat = 80.0
         let lineThin: CGFloat = 0.5
         
         var tabLabel = UILabel(frame: CGRectZero)
-        tabLabel.text = title
+        tabLabel.text = pageTitle[selectedIndex]
         tabLabel.textColor = UIColor.darkGrayColor()
         tabLabel.font = UIFont.systemFontOfSize(13.0)
         tabLabel.sizeToFit()
@@ -85,26 +93,30 @@ class ProductManagementViewController: UIViewController {
         tabLabel.frame.origin.x = 10.0
         sectionHeaderContainverView.addSubview(tabLabel)
         
-        var disableDeleteAllButton = UIButton(frame: CGRectMake(self.view.frame.size.width - buttonWidth, 0, buttonWidth, sectionHeaderContainverView.frame.size.height))
-        disableDeleteAllButton.setTitle("Disable All", forState: .Normal)
-        disableDeleteAllButton.titleLabel?.font = UIFont.systemFontOfSize(11.0)
-        disableDeleteAllButton.setTitleColor(Constants.Colors.appTheme, forState: .Normal)
-        disableDeleteAllButton.addTarget(self, action: "sectionButton:", forControlEvents: .TouchUpInside)
-        sectionHeaderContainverView.addSubview(disableDeleteAllButton)
-
-        if pageTitle == "Inactive" {
-            disableDeleteAllButton.setTitle("Delete All", forState: .Normal)
-            var separatorLineView = UIView(frame: CGRectMake(disableDeleteAllButton.frame.origin.x - lineThin, 0, lineThin, sectionHeaderContainverView.frame.size.height - 10))
-            separatorLineView.center.y = sectionHeaderContainverView.center.y
-            separatorLineView.backgroundColor = UIColor.lightGrayColor()
-            sectionHeaderContainverView.addSubview(separatorLineView)
-            
-            var restoreAllButton = UIButton(frame: CGRectMake(separatorLineView.frame.origin.x - buttonWidth, 0, buttonWidth, sectionHeaderContainverView.frame.size.height))
-            restoreAllButton.setTitle("Restore All", forState: .Normal)
-            restoreAllButton.titleLabel?.font = UIFont.systemFontOfSize(11.0)
-            restoreAllButton.setTitleColor(Constants.Colors.appTheme, forState: .Normal)
-            restoreAllButton.addTarget(self, action: "sectionButton:", forControlEvents: .TouchUpInside)
-            sectionHeaderContainverView.addSubview(restoreAllButton)
+        var button1 = UIButton(frame: CGRectMake(self.view.frame.size.width - buttonWidth, 0, buttonWidth, sectionHeaderContainverView.frame.size.height))
+        button1.titleLabel?.font = UIFont.systemFontOfSize(11.0)
+        button1.setTitleColor(Constants.Colors.appTheme, forState: .Normal)
+        button1.addTarget(self, action: "tabAction:", forControlEvents: .TouchUpInside)
+        sectionHeaderContainverView.addSubview(button1)
+        
+        if selectedIndex == 1 {
+            button1.setTitle("Disable All", forState: .Normal)
+        } else if selectedIndex == 2 || selectedIndex == 3 {
+            button1.setTitle("Delete All", forState: .Normal)
+        
+            if selectedIndex == 2 {
+                var separatorLineView = UIView(frame: CGRectMake(button1.frame.origin.x - lineThin, 0, lineThin, sectionHeaderContainverView.frame.size.height - 10))
+                separatorLineView.center.y = sectionHeaderContainverView.center.y
+                separatorLineView.backgroundColor = UIColor.lightGrayColor()
+                sectionHeaderContainverView.addSubview(separatorLineView)
+                
+                var restoreAllButton = UIButton(frame: CGRectMake(separatorLineView.frame.origin.x - buttonWidth, 0, buttonWidth, sectionHeaderContainverView.frame.size.height))
+                restoreAllButton.setTitle("Restore All", forState: .Normal)
+                restoreAllButton.titleLabel?.font = UIFont.systemFontOfSize(11.0)
+                restoreAllButton.setTitleColor(Constants.Colors.appTheme, forState: .Normal)
+                restoreAllButton.addTarget(self, action: "tabAction:", forControlEvents: .TouchUpInside)
+                sectionHeaderContainverView.addSubview(restoreAllButton)
+            }
         }
         
         var underlineView = UIView(frame: CGRectMake(0, sectionHeaderContainverView.frame.size.height - lineThin, sectionHeaderContainverView.frame.size.width, lineThin))
@@ -124,32 +136,37 @@ class ProductManagementViewController: UIViewController {
         if searchBar.hidden {
             self.searchBar.becomeFirstResponder()
             self.searchBar.hidden = false
-            self.scrollView.transform = CGAffineTransformMakeTranslation(0.0, 44.0)
+            self.collectionView.transform = CGAffineTransformMakeTranslation(0.0, 44.0)
             self.tableView.transform = CGAffineTransformMakeTranslation(0.0, 44.0)
         } else {
             self.searchBar.endEditing(true)
             self.searchBar.hidden = true
-            self.scrollView.transform = CGAffineTransformMakeTranslation(0.0, 0.0)
+            self.collectionView.transform = CGAffineTransformMakeTranslation(0.0, 0.0)
             self.tableView.transform = CGAffineTransformMakeTranslation(0.0, 0.0)
         }
         
     }
     
-    func sectionButton(sender: AnyObject) {
+    func tabAction(sender: AnyObject) {
 
-        if sender.titleLabel!!.text == "Disable All" {
-            
-        } else if sender.titleLabel!!.text == "Delete All" {
-            
-        } else if sender.titleLabel!!.text == "Restore All" {
-            
+        if selectedIndex == 1 {
+            println(pageTitle[selectedIndex] + " " + sender.titleLabel!!.text!)
+        } else if selectedIndex == 2 {
+            if sender.titleLabel!!.text == "Delete All" {
+                println(pageTitle[selectedIndex] + " " + sender.titleLabel!!.text!)
+            } else if sender.titleLabel!!.text == "Restore All" {
+                println(pageTitle[selectedIndex] + " " + sender.titleLabel!!.text!)
+            }
+        } else if selectedIndex == 3 {
+            println(pageTitle[selectedIndex] + " " + sender.titleLabel!!.text!)
         }
     }
+    
 } // ProductManagementViewController
 
 
 
-extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate {
+extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     // MARK: - Search Bar Delegate
     
@@ -181,7 +198,7 @@ extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataS
     // MARK: - Table View Delegate
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40
+        return tableViewSectionHeight
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -191,5 +208,51 @@ extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataS
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
         self.navigationController?.pushViewController(productDetails, animated: true)
+    }
+    
+    // MARK: - Collection View Data Source
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 6
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell: ProductManagementCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier("ProductManagementIdentifier", forIndexPath: indexPath) as! ProductManagementCollectionViewCell
+        
+        cell.titleLabel.text = pageTitle[indexPath.row].capitalizedString
+        
+        if indexPath.row == selectedIndex {
+            cell.backgroundColor = .whiteColor()
+            cell.setTextColor(Constants.Colors.appTheme)
+            cell.setImage(selectedImage[indexPath.row])
+        } else {
+            cell.setTextColor(UIColor.whiteColor())
+            cell.backgroundColor = Constants.Colors.appTheme
+            cell.setImage(deSelectedImage[indexPath.row])
+        }
+        
+        
+        
+        return cell
+    }
+    
+    // MARK: - Collection View Delegate
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        selectedIndex = indexPath.row
+        
+        if selectedIndex == 0 {
+            self.tableViewSectionHeight = 0.0
+        } else {
+            self.tableViewSectionHeight = 40.0
+        }
+        
+        self.collectionView.reloadData()
+        self.tableView.reloadData()
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return
+            CGSize(width: self.view.frame.size.width / 6, height: 60)
     }
 }
