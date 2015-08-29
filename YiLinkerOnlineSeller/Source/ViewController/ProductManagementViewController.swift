@@ -13,9 +13,20 @@ class ProductManagementViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var buttonsContainer: UIView!
     @IBOutlet weak var leftContainer: UIView!
     @IBOutlet weak var rightContainer: UIView!
+    
+    @IBOutlet weak var buttonsContainer: UIView!
+
+    @IBOutlet weak var deleteView: UIView!
+    @IBOutlet weak var activeInactiveContainerView: UIView!
+    @IBOutlet weak var activeView: UIView!
+    @IBOutlet weak var inactiveView: UIView!
+    @IBOutlet weak var activeInactiveDeleteContainerView: UIView!
+    @IBOutlet weak var activeInactiveView: UIView!
+    @IBOutlet weak var delete2View: UIView!
+    
+    @IBOutlet weak var activeInactiveLabel: UILabel!
     
     var pageTitle: [String] = ["All", "Active", "Inactive", "Drafts", "Deleted", "Under Review"]
     var selectedImage: [String] = ["all2", "active2", "inactive2", "drafts2", "deleted2", "review2"]
@@ -54,6 +65,12 @@ class ProductManagementViewController: UIViewController {
     
     func customizeViews() {
         self.searchBar.barTintColor = Constants.Colors.appTheme
+        
+        self.deleteView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "deleteAction:"))
+        self.activeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "activeAction:"))
+        self.inactiveView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "inactiveAction:"))
+        self.activeInactiveView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "activeInactiveAction:"))
+        self.delete2View.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "delete2Action:"))
     }
     
     func customizeNavigationBar() {
@@ -175,6 +192,43 @@ class ProductManagementViewController: UIViewController {
         }
     }
     
+    func deleteAction(gesture: UIGestureRecognizer) {
+        
+        if selectedIndex == 3 {
+            print("DRAFTS > ")
+        } else if selectedIndex == 5 {
+            print("UNDER REVIEW > ")
+        }
+        
+        println("DELETE")
+    }
+    
+    func activeAction(gesture: UIGestureRecognizer) {
+        println("MOVE TO INACTIVE")
+    }
+    
+    func inactiveAction(gesture: UIGestureRecognizer) {
+        println("MOVE TO ACTIVE")
+    }
+    
+    func activeInactiveAction(gesture: UIGestureRecognizer) {
+        if selectedIndex == 1 {
+            println("MOVE TO INACTIVE")
+        } else if selectedIndex == 2 {
+            println("MOVE TO ACTIVE")
+        }
+    }
+    
+    func delete2Action(gesture: UIGestureRecognizer) {
+        if selectedIndex == 1 {
+            print("ACTIVE > ")
+        } else if selectedIndex == 2 {
+            print("INACTIVE > ")
+        }
+        
+        println("DELETE")
+    }
+    
 } // ProductManagementViewController
 
 
@@ -281,6 +335,7 @@ extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataS
             for i in 0..<10 {
                 selectedItems.append(false)
             }
+            
             self.buttonsContainer.hidden = true
         }
         
@@ -317,6 +372,29 @@ extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataS
         self.tableView.scrollIndicatorInsets = inset
 
         self.buttonsContainer.hidden = hideActionBar
+        
+        if selectedIndex == 1 || selectedIndex == 2 {
+            self.activeInactiveDeleteContainerView.hidden = false
+            if selectedIndex == 1 {
+                self.activeInactiveLabel.text = "MOVE TO INACTIVE"
+            } else {
+                self.activeInactiveLabel.text = "MOVE TO ACTIVE"
+            }
+            
+            self.deleteView.hidden = true
+            self.activeInactiveContainerView.hidden = true
+            
+        } else if selectedIndex == 3 || selectedIndex == 5 {
+            self.deleteView.hidden = false
+            
+            self.activeInactiveDeleteContainerView.hidden = true
+            self.activeInactiveContainerView.hidden = true
+        } else if selectedIndex == 4 {
+            self.activeInactiveContainerView.hidden = false
+            
+            self.deleteView.hidden = true
+            self.activeInactiveDeleteContainerView.hidden = true
+        }
     }
     
     

@@ -26,7 +26,7 @@ struct Constants {
         static let pmPurpleButtonColor: UIColor = HexaColor.colorWithHexa(0x75348a)
         static let pmCheckRedColor: UIColor = HexaColor.colorWithHexa(0x380016)
         static let pmCheckGreenColor: UIColor = HexaColor.colorWithHexa(0x32c000)
-        static let pmPeleteRedColor: UIColor = HexaColor.colorWithHexa(0xff3b30)
+        static let pmDeleteRedColor: UIColor = HexaColor.colorWithHexa(0xff3b30)
 
         static let pmYesGreenColor: UIColor = HexaColor.colorWithHexa(0x54b6a7)
         static let pmNoBrownColor: UIColor = HexaColor.colorWithHexa(0x666666)
