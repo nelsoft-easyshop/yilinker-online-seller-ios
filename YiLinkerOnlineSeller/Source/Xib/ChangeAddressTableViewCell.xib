@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton SemiBold.otf">
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChangeAddressTableViewCell" rowHeight="121" id="KGk-i7-Jjw" customClass="ChangeAddressTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="121"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OHT-EC-hve">
+                        <rect key="frame" x="8" y="17" width="20" height="20"/>
+                        <color key="backgroundColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="0z0-Rx-EDw"/>
+                            <constraint firstAttribute="height" constant="20" id="2aR-Hn-C0p"/>
+                        </constraints>
+                        <state key="normal" image="check.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Default Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WIe-cG-Kkv">
+                        <rect key="frame" x="47" y="8" width="123" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="123" id="k2O-dD-suW"/>
+                            <constraint firstAttribute="height" constant="21" id="xR1-8V-4eo"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="2nd Flr Bldg A SM Megamall, Ortigas, Mandaluyong City, Metro Manila, Philippines" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="agG-3A-47O">
+                        <rect key="frame" x="47" y="35" width="232" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="I9Q-uR-Q0V"/>
+                            <constraint firstAttribute="width" constant="232" id="t1H-rN-QVi"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N8l-HN-Dn0">
+                        <rect key="frame" x="272" y="45" width="40" height="41"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="npR-Ko-NBp">
+                                <rect key="frame" x="0.0" y="20" width="40" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="4ep-Ch-mo9"/>
+                                    <constraint firstAttribute="height" constant="21" id="Eyx-Kh-aju"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="10"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TXz-y0-lgW">
+                                <rect key="frame" x="10" y="0.0" width="20" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="YlN-mn-DIL"/>
+                                    <constraint firstAttribute="height" constant="21" id="oKp-f2-BsR"/>
+                                </constraints>
+                                <state key="normal" image="delete.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="npR-Ko-NBp" firstAttribute="top" secondItem="N8l-HN-Dn0" secondAttribute="top" constant="20" id="0ji-7s-wU9"/>
+                            <constraint firstItem="npR-Ko-NBp" firstAttribute="leading" secondItem="N8l-HN-Dn0" secondAttribute="leading" id="3LW-6c-J9p"/>
+                            <constraint firstAttribute="bottom" secondItem="npR-Ko-NBp" secondAttribute="bottom" id="3qx-ML-O4e"/>
+                            <constraint firstAttribute="trailing" secondItem="TXz-y0-lgW" secondAttribute="trailing" constant="10" id="9Ou-Hr-ioK"/>
+                            <constraint firstItem="TXz-y0-lgW" firstAttribute="leading" secondItem="N8l-HN-Dn0" secondAttribute="leading" constant="10" id="Kn2-pV-2LO"/>
+                            <constraint firstAttribute="trailing" secondItem="npR-Ko-NBp" secondAttribute="trailing" id="S5Y-vp-t5j"/>
+                            <constraint firstItem="TXz-y0-lgW" firstAttribute="top" secondItem="N8l-HN-Dn0" secondAttribute="top" id="XdL-d4-C3z"/>
+                            <constraint firstAttribute="height" constant="41" id="fPs-Y9-MuT"/>
+                            <constraint firstAttribute="width" constant="40" id="hbd-QN-EVr"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="N8l-HN-Dn0" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="2cX-Wd-bI1"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="agG-3A-47O" secondAttribute="bottom" constant="27" id="5bv-WN-gt2"/>
+                    <constraint firstItem="agG-3A-47O" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="39" id="6bR-LU-6N4"/>
+                    <constraint firstItem="OHT-EC-hve" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="7o6-KZ-qWX"/>
+                    <constraint firstItem="WIe-cG-Kkv" firstAttribute="leading" secondItem="OHT-EC-hve" secondAttribute="trailing" constant="19" id="BKI-e1-3Gp"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="N8l-HN-Dn0" secondAttribute="bottom" constant="26" id="DQ8-aM-cZU"/>
+                    <constraint firstItem="N8l-HN-Dn0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="37" id="KAC-Bz-1f7"/>
+                    <constraint firstItem="agG-3A-47O" firstAttribute="top" secondItem="WIe-cG-Kkv" secondAttribute="bottom" constant="6" id="S2L-LF-PYC"/>
+                    <constraint firstItem="agG-3A-47O" firstAttribute="leading" secondItem="OHT-EC-hve" secondAttribute="trailing" constant="19" id="YGo-bJ-o2d"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="OHT-EC-hve" secondAttribute="bottom" constant="75" id="bnU-hN-f38"/>
+                    <constraint firstItem="N8l-HN-Dn0" firstAttribute="leading" secondItem="WIe-cG-Kkv" secondAttribute="trailing" constant="102" id="uxd-7i-A6C"/>
+                    <constraint firstItem="OHT-EC-hve" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="9" id="wbM-dx-Dnj"/>
+                    <constraint firstItem="WIe-cG-Kkv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="zJH-U4-Ic2"/>
+                </constraints>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="238" y="364.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="check.png" width="200" height="175"/>
+        <image name="delete.png" width="200" height="200"/>
+    </resources>
+</document>

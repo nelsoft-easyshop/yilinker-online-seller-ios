@@ -111,7 +111,6 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
         dimView.backgroundColor=UIColor.blackColor()
         dimView.alpha = 0.5
         view.addSubview(dimView)
-        */
 
         var attributeModal = VerifyNumberViewController(nibName: "VerifyNumberViewController", bundle: nil)
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
@@ -119,6 +118,15 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
         attributeModal.definesPresentationContext = true
         self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
         
+        var activityViewController = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
+        self.navigationController?.pushViewController(activityViewController, animated:true)
+        */
+        var attributeModal = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
+        attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        attributeModal.providesPresentationContextTransitionStyle = true
+        attributeModal.definesPresentationContext = true
+        self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
+
     }
 
     /*
