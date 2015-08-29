@@ -103,8 +103,10 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         
         manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             self.signinSuccessful()
+            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.signInButton.setTitle("SIGN IN", forState: .Normal)
@@ -199,10 +201,10 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             
-            
-//            self.showAlert(title: "YiLinker", message: "Welcome to YiLinker !")
+            self.hideKeyboard(UIGestureRecognizer())
+            self.signInButton.setTitle("Welcome to YiLinker!", forState: .Normal)
             SVProgressHUD.dismiss()
-           self.signinSuccessful()
+            self.signinSuccessful()
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
