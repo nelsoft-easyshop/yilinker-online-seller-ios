@@ -8,9 +8,15 @@
 
 import UIKit
 
-class PUAttributeSetHeaderTableViewCell: UITableViewCell {
+protocol PUAttributeSetHeaderTableViewCellDelegate {
+    func pUAttributeSetHeaderTableViewCell(didClickEdit cell: PUAttributeSetHeaderTableViewCell)
+    func pUAttributeSetHeaderTableViewCell(didClickDelete cell: PUAttributeSetHeaderTableViewCell)
+}
 
+class PUAttributeSetHeaderTableViewCell: UITableViewCell {
     @IBOutlet weak var attributeDefinitionLabel: UILabel!
+    var delegate: PUAttributeSetHeaderTableViewCellDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -18,8 +24,13 @@ class PUAttributeSetHeaderTableViewCell: UITableViewCell {
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
+    @IBAction func edit(sender: AnyObject) {
+        self.delegate!.pUAttributeSetHeaderTableViewCell(didClickEdit: self)
+    }
+    
+    @IBAction func deleteCell(sender: AnyObject) {
+        self.delegate!.pUAttributeSetHeaderTableViewCell(didClickDelete: self)
+    }
 }

@@ -12,7 +12,7 @@ struct PUALTVConstant {
     static let pUAttributeSetHeaderTableViewCellNibNameAndIdentifier = "PUAttributeSetHeaderTableViewCell"
 }
 
-class ProductUploadAttributeListTableViewController: UIViewController, ProductUploadDetailTableViewControllerDelegate, ProductUploadAddFooterViewDelegate {
+class ProductUploadAttributeListTableViewController: UIViewController, ProductUploadDetailTableViewControllerDelegate, ProductUploadAddFooterViewDelegate, PUAttributeSetHeaderTableViewCellDelegate {
     
 
     @IBOutlet weak var tableView: UITableView!
@@ -104,8 +104,10 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
             let cell: PUAttributeSetHeaderTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(PUALTVConstant.pUAttributeSetHeaderTableViewCellNibNameAndIdentifier) as! PUAttributeSetHeaderTableViewCell
             
             let attributeModel: AttributeModel = self.productModel.attributes[indexPath.section]
-            
+            cell.delegate = self
             cell.attributeDefinitionLabel!.text = attributeModel.definition
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            
             return cell
         } else {
             let cell: ProductUploadAttributeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(PUDTConstant.productUploadAttributeTableViewCellNibNameAndIdentifier) as! ProductUploadAttributeTableViewCell
@@ -113,6 +115,8 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
             let attributeModel: AttributeModel = self.productModel.attributes[indexPath.section]
             
             cell.attributes = attributeModel.values
+            cell.collectionView.reloadData()
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             
             return cell
         }
@@ -146,8 +150,22 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
         }
     }
     
-    func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel) {
-        self.productModel.attributes.append(attribute)
+    func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath) {
+
+        var attributeIsAvailable: Bool = false
+        
+        for productAttribute in self.productModel.attributes as [AttributeModel] {
+            if productAttribute.definition == attribute.definition {
+                attributeIsAvailable = true
+            }
+        }
+        
+        if attributeIsAvailable {
+            self.productModel.attributes[indexPath.section] = attribute
+        } else {
+            self.productModel.attributes.append(attribute)
+        }
+
         self.tableView.reloadData()
     }
     
@@ -157,4 +175,23 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
         self.navigationController!.pushViewController(productUploadCombinationListViewController, animated: true)
     }
     
+    func pUAttributeSetHeaderTableViewCell(didClickDelete cell: PUAttributeSetHeaderTableViewCell) {
+        let indexPath: NSIndexPath = self.tableView.indexPathForCell(cell)!
+        let range: NSRange = NSMakeRange(indexPath.section, 1)
+        let section: NSIndexSet = NSIndexSet(indexesInRange: range)
+        
+        self.productModel.attributes.removeAtIndex(indexPath.section)
+        self.tableView.beginUpdates()
+        self.tableView.deleteSections(section, withRowAnimation: UITableViewRowAnimation.Left)
+        self.tableView.endUpdates()
+        self.tableView.reloadData()
+    }
+    
+    func pUAttributeSetHeaderTableViewCell(didClickEdit cell: PUAttributeSetHeaderTableViewCell) {
+        let productUploadDetailViewController: ProductUploadDetailTableViewController = ProductUploadDetailTableViewController(nibName: "ProductUploadDetailTableViewController", bundle: nil)
+        productUploadDetailViewController.selectedIndexPath = self.tableView.indexPathForCell(cell)!
+        productUploadDetailViewController.delegate = self
+        productUploadDetailViewController.productModel = self.productModel.copy()
+        self.navigationController!.pushViewController(productUploadDetailViewController, animated: true)
+    }
 }

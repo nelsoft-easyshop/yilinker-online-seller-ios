@@ -63,7 +63,7 @@ class ProductUploadCombinationTableViewCell: UITableViewCell {
             var dictionary: NSMutableDictionary = NSMutableDictionary()
             let indexPath: NSIndexPath = NSIndexPath(forItem: item, inSection: 0)
             let cell: ProductUploadAttributeValuesCollectionViewCell = self.collectionView.cellForItemAtIndexPath(indexPath) as! ProductUploadAttributeValuesCollectionViewCell
-            println("Definition: \(cell.attributeDefinitionLabel.text), value: \(cell.attributeTextField.text)")
+            
             let definitionKey: String = "definition"
             let valueKey: String = "value"
             

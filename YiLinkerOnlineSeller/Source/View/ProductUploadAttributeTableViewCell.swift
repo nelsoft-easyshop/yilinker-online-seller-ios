@@ -50,6 +50,7 @@ class ProductUploadAttributeTableViewCell: UITableViewCell, UICollectionViewData
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: ProductUploadAttributeCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(PUAConstant.productUploadAttributeCollectionViewCellNibNameAndIdentier, forIndexPath: indexPath) as! ProductUploadAttributeCollectionViewCell
+
         cell.attributeLabel.text = self.attributes[indexPath.row]
         cell.layer.cornerRadius = 5
         

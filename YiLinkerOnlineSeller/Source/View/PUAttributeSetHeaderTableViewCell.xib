@@ -37,6 +37,9 @@
                         <state key="normal" image="edit">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="edit:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="2IC-mm-u8t"/>
+                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lpt-id-XQr">
                         <rect key="frame" x="285" y="7" width="30" height="30"/>
@@ -47,6 +50,9 @@
                         <state key="normal" image="delete">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="deleteCell:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="JEa-vy-GKQ"/>
+                        </connections>
                     </button>
                 </subviews>
                 <constraints>
