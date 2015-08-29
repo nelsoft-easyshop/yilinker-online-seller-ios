@@ -333,8 +333,8 @@ extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataS
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: ProductManagementCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier("ProductManagementIdentifier", forIndexPath: indexPath) as! ProductManagementCollectionViewCell
         
-        cell.titleLabel.text = pageTitle[indexPath.row].capitalizedString
-        
+        cell.titleLabel.text = pageTitle[indexPath.row].uppercaseString
+
         if indexPath.row == selectedIndex {
             cell.backgroundColor = .whiteColor()
             cell.setTextColor(Constants.Colors.appTheme)

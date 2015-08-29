@@ -212,7 +212,7 @@
                                         <constraint firstAttribute="centerY" secondItem="lu8-yD-w5D" secondAttribute="centerY" id="Um1-Bx-FAf"/>
                                     </constraints>
                                 </view>
-                                <view hidden="YES" alpha="0.85000002384185791" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y4h-6r-cj3" userLabel="Delete Container">
+                                <view alpha="0.85000002384185791" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y4h-6r-cj3" userLabel="Delete Container">
                                     <rect key="frame" x="225" y="0.0" width="150" height="50"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AA5-dZ-M2d" userLabel="Holder">
