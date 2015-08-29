@@ -138,6 +138,17 @@
 		799893011B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799893001B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift */; };
 		799893031B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799893021B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib */; };
 		799893051B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799893041B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib */; };
+		79EDA4021B9204B10037558A /* MyPointsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EDA4011B9204B10037558A /* MyPointsTableViewController.swift */; };
+		79EDA4041B9204CA0037558A /* MyPointsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EDA4031B9204CA0037558A /* MyPointsTableViewController.xib */; };
+		79EDA4091B9204F20037558A /* PointsBreakdownTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EDA4051B9204F20037558A /* PointsBreakdownTableViewCell.swift */; };
+		79EDA40A1B9204F20037558A /* PointsDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EDA4061B9204F20037558A /* PointsDetailsTableViewCell.swift */; };
+		79EDA40B1B9204F20037558A /* PointsEarnedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EDA4071B9204F20037558A /* PointsEarnedTableViewCell.swift */; };
+		79EDA40C1B9204F20037558A /* PointsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EDA4081B9204F20037558A /* PointsTableViewCell.swift */; };
+		79EDA40E1B9204FE0037558A /* PointModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EDA40D1B9204FE0037558A /* PointModel.swift */; };
+		79EDA4131B9205080037558A /* PointsBreakdownTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EDA40F1B9205080037558A /* PointsBreakdownTableViewCell.xib */; };
+		79EDA4141B9205080037558A /* PointsDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EDA4101B9205080037558A /* PointsDetailsTableViewCell.xib */; };
+		79EDA4151B9205080037558A /* PointsEarnedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EDA4111B9205080037558A /* PointsEarnedTableViewCell.xib */; };
+		79EDA4161B9205080037558A /* PointsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EDA4121B9205080037558A /* PointsTableViewCell.xib */; };
 		79EFF75B1B8D6DC1008A9E7D /* ActivityLogTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EFF75A1B8D6DC1008A9E7D /* ActivityLogTableViewController.swift */; };
 		79EFF75E1B8D6DD3008A9E7D /* ActivityLogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EFF75C1B8D6DD3008A9E7D /* ActivityLogTableViewCell.xib */; };
 		79EFF75F1B8D6DD3008A9E7D /* ActivityLogTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EFF75D1B8D6DD3008A9E7D /* ActivityLogTableViewController.xib */; };
@@ -303,6 +314,17 @@
 		799893001B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingDeactivateTableViewCell.swift; sourceTree = "<group>"; };
 		799893021B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		799893041B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsItemTableViewCell.xib; sourceTree = "<group>"; };
+		79EDA4011B9204B10037558A /* MyPointsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsTableViewController.swift; sourceTree = "<group>"; };
+		79EDA4031B9204CA0037558A /* MyPointsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPointsTableViewController.xib; sourceTree = "<group>"; };
+		79EDA4051B9204F20037558A /* PointsBreakdownTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsBreakdownTableViewCell.swift; sourceTree = "<group>"; };
+		79EDA4061B9204F20037558A /* PointsDetailsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsDetailsTableViewCell.swift; sourceTree = "<group>"; };
+		79EDA4071B9204F20037558A /* PointsEarnedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsEarnedTableViewCell.swift; sourceTree = "<group>"; };
+		79EDA4081B9204F20037558A /* PointsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsTableViewCell.swift; sourceTree = "<group>"; };
+		79EDA40D1B9204FE0037558A /* PointModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointModel.swift; sourceTree = "<group>"; };
+		79EDA40F1B9205080037558A /* PointsBreakdownTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsBreakdownTableViewCell.xib; sourceTree = "<group>"; };
+		79EDA4101B9205080037558A /* PointsDetailsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsDetailsTableViewCell.xib; sourceTree = "<group>"; };
+		79EDA4111B9205080037558A /* PointsEarnedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsEarnedTableViewCell.xib; sourceTree = "<group>"; };
+		79EDA4121B9205080037558A /* PointsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsTableViewCell.xib; sourceTree = "<group>"; };
 		79EFF75A1B8D6DC1008A9E7D /* ActivityLogTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLogTableViewController.swift; sourceTree = "<group>"; };
 		79EFF75C1B8D6DD3008A9E7D /* ActivityLogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityLogTableViewCell.xib; sourceTree = "<group>"; };
 		79EFF75D1B8D6DD3008A9E7D /* ActivityLogTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityLogTableViewController.xib; sourceTree = "<group>"; };
@@ -398,6 +420,7 @@
 		0CF28EC21B8C85E4005B2E54 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				79EDA40D1B9204FE0037558A /* PointModel.swift */,
 				79EFF76E1B8D6E35008A9E7D /* ActivityLogModel.swift */,
 				79EFF76F1B8D6E35008A9E7D /* ActivityModel.swift */,
 				79EFF7821B8DB809008A9E7D /* RecentOrderModel.swift */,
@@ -417,6 +440,10 @@
 		0CF28EC61B8C85E5005B2E54 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				79EDA4051B9204F20037558A /* PointsBreakdownTableViewCell.swift */,
+				79EDA4061B9204F20037558A /* PointsDetailsTableViewCell.swift */,
+				79EDA4071B9204F20037558A /* PointsEarnedTableViewCell.swift */,
+				79EDA4081B9204F20037558A /* PointsTableViewCell.swift */,
 				79EFF7601B8D6DE4008A9E7D /* ActivityLogTableViewCell.swift */,
 				799892FC1B8CEBA500F4CFE2 /* SettingsHeaderTableViewCell.swift */,
 				799892FE1B8CEBC100F4CFE2 /* SettingsItemTableViewCell.swift */,
@@ -432,6 +459,7 @@
 		0CF28EC71B8C85E5005B2E54 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				79EDA4011B9204B10037558A /* MyPointsTableViewController.swift */,
 				79EFF75A1B8D6DC1008A9E7D /* ActivityLogTableViewController.swift */,
 				0CF28EC81B8C85E5005B2E54 /* DashboardViewController.swift */,
 				0CF28EC91B8C85E5005B2E54 /* MessageViewController.swift */,
@@ -450,6 +478,11 @@
 		0CF28ECC1B8C85E5005B2E54 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				79EDA40F1B9205080037558A /* PointsBreakdownTableViewCell.xib */,
+				79EDA4101B9205080037558A /* PointsDetailsTableViewCell.xib */,
+				79EDA4111B9205080037558A /* PointsEarnedTableViewCell.xib */,
+				79EDA4121B9205080037558A /* PointsTableViewCell.xib */,
+				79EDA4031B9204CA0037558A /* MyPointsTableViewController.xib */,
 				7928764D1B8E1FD800762A39 /* DatePickerViewController.xib */,
 				79EFF7891B8DCFA2008A9E7D /* SalesReportTableViewController.xib */,
 				79EFF77F1B8DB3C8008A9E7D /* RecentProductsTableViewController.xib */,
@@ -813,6 +846,7 @@
 				0CF28F051B8CA2E9005B2E54 /* Panton.otf in Resources */,
 				799893031B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib in Resources */,
 				0CF28EF91B8CA2E9005B2E54 /* Panton ExtraBold.otf in Resources */,
+				79EDA4161B9205080037558A /* PointsTableViewCell.xib in Resources */,
 				792876491B8E001200762A39 /* SalesReportTableViewCell.xib in Resources */,
 				79EFF78B1B8DCFA2008A9E7D /* SalesReportTableViewController.xib in Resources */,
 				0CF28F011B8CA2E9005B2E54 /* Panton SemiBold Italic.otf in Resources */,
@@ -832,10 +866,14 @@
 				79EFF75F1B8D6DD3008A9E7D /* ActivityLogTableViewController.xib in Resources */,
 				0CF28EFB1B8CA2E9005B2E54 /* Panton ExtraLight.otf in Resources */,
 				0CF28EF71B8CA2E9005B2E54 /* Panton Bold.otf in Resources */,
+				79EDA4041B9204CA0037558A /* MyPointsTableViewController.xib in Resources */,
+				79EDA4141B9205080037558A /* PointsDetailsTableViewCell.xib in Resources */,
 				0CF28F041B8CA2E9005B2E54 /* Panton Thin.otf in Resources */,
 				79EFF7791B8D9274008A9E7D /* SalesReportViewController.xib in Resources */,
 				79EFF75E1B8D6DD3008A9E7D /* ActivityLogTableViewCell.xib in Resources */,
+				79EDA4131B9205080037558A /* PointsBreakdownTableViewCell.xib in Resources */,
 				967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */,
+				79EDA4151B9205080037558A /* PointsEarnedTableViewCell.xib in Resources */,
 				0CF28EF81B8CA2E9005B2E54 /* Panton ExtraBold Italic.otf in Resources */,
 				0CF28EFC1B8CA2E9005B2E54 /* Panton Heavy Italic.otf in Resources */,
 				0CF28F021B8CA2E9005B2E54 /* Panton SemiBold.otf in Resources */,
@@ -914,6 +952,9 @@
 				792876001B8DF89F00762A39 /* ScatterChartView.swift in Sources */,
 				792875FF1B8DF89F00762A39 /* RadarChartView.swift in Sources */,
 				799893011B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift in Sources */,
+				79EDA40C1B9204F20037558A /* PointsTableViewCell.swift in Sources */,
+				79EDA40E1B9204FE0037558A /* PointModel.swift in Sources */,
+				79EDA4021B9204B10037558A /* MyPointsTableViewController.swift in Sources */,
 				792876171B8DF89F00762A39 /* LineChartData.swift in Sources */,
 				7928764E1B8E1FD800762A39 /* DatePickerViewController.swift in Sources */,
 				7928762F1B8DF89F00762A39 /* ChartXAxisRenderer.swift in Sources */,
@@ -937,6 +978,7 @@
 				0CF28ED21B8C85E5005B2E54 /* IPhoneType.swift in Sources */,
 				7928764B1B8E049400762A39 /* SalesReportTableViewCell.swift in Sources */,
 				0CF28ED01B8C85E5005B2E54 /* Enums.swift in Sources */,
+				79EDA4091B9204F20037558A /* PointsBreakdownTableViewCell.swift in Sources */,
 				0CF28ED61B8C85E5005B2E54 /* XibHelper.swift in Sources */,
 				792876251B8DF89F00762A39 /* ChartHighlighter.swift in Sources */,
 				7928761F1B8DF89F00762A39 /* ScatterChartData.swift in Sources */,
@@ -985,7 +1027,9 @@
 				7928760F1B8DF89F00762A39 /* BubbleChartDataSet.swift in Sources */,
 				7928761D1B8DF89F00762A39 /* RadarChartData.swift in Sources */,
 				26374DA01B8F50A4006C639B /* SignInViewController.swift in Sources */,
+				79EDA40A1B9204F20037558A /* PointsDetailsTableViewCell.swift in Sources */,
 				79EFF7701B8D6E35008A9E7D /* ActivityLogModel.swift in Sources */,
+				79EDA40B1B9204F20037558A /* PointsEarnedTableViewCell.swift in Sources */,
 				7928761B1B8DF89F00762A39 /* PieChartData.swift in Sources */,
 				792876281B8DF89F00762A39 /* BarChartRenderer.swift in Sources */,
 				792875FC1B8DF89F00762A39 /* LineChartView.swift in Sources */,
