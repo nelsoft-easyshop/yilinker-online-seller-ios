@@ -8,16 +8,13 @@
 
 import UIKit
 
-class ProductManagementViewController: UIViewController {
+class ProductManagementViewController: UIViewController, ProductManagementModelViewControllerDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var leftContainer: UIView!
-    @IBOutlet weak var rightContainer: UIView!
-    
     @IBOutlet weak var buttonsContainer: UIView!
-
+    
     @IBOutlet weak var deleteView: UIView!
     @IBOutlet weak var activeInactiveContainerView: UIView!
     @IBOutlet weak var activeView: UIView!
@@ -25,8 +22,9 @@ class ProductManagementViewController: UIViewController {
     @IBOutlet weak var activeInactiveDeleteContainerView: UIView!
     @IBOutlet weak var activeInactiveView: UIView!
     @IBOutlet weak var delete2View: UIView!
-    
     @IBOutlet weak var activeInactiveLabel: UILabel!
+    
+    @IBOutlet weak var dimView: UIView!
     
     var pageTitle: [String] = ["All", "Active", "Inactive", "Drafts", "Deleted", "Under Review"]
     var selectedImage: [String] = ["all2", "active2", "inactive2", "drafts2", "deleted2", "review2"]
@@ -71,6 +69,8 @@ class ProductManagementViewController: UIViewController {
         self.inactiveView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "inactiveAction:"))
         self.activeInactiveView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "activeInactiveAction:"))
         self.delete2View.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "delete2Action:"))
+        
+        self.dimView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "dimAction"))
     }
     
     func customizeNavigationBar() {
@@ -155,7 +155,33 @@ class ProductManagementViewController: UIViewController {
         return sectionHeaderContainverView
     }
     
+    func showModal() {
+        var productManagementModel = ProductManagementModelViewController(nibName: "ProductManagementModelViewController", bundle: nil)
+        productManagementModel.delegate = self
+        productManagementModel.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        productManagementModel.providesPresentationContextTransitionStyle = true
+        productManagementModel.definesPresentationContext = true
+        productManagementModel.view.backgroundColor = UIColor.clearColor()
+        self.tabBarController?.presentViewController(productManagementModel, animated: true, completion: nil)
+        
+        UIView.animateWithDuration(0.25, animations: {
+            self.dimView.alpha = 0.60
+            self.dimView.layer.zPosition = 2
+        })
+    }
+    
+    func dismissModal() {
+        UIView.animateWithDuration(0.25, animations: {
+            self.dimView.alpha = 0
+            self.dimView.layer.zPosition = 0
+        })
+    }
+    
     // MARK: - Actions
+    
+    func dimAction() {
+        dismissModal()
+    }
     
     func backAction() {
         self.navigationController!.popViewControllerAnimated(true)
@@ -178,7 +204,7 @@ class ProductManagementViewController: UIViewController {
     }
     
     func tabAction(sender: AnyObject) {
-
+        
         if selectedIndex == 1 {
             println(pageTitle[selectedIndex] + " " + sender.titleLabel!!.text!)
         } else if selectedIndex == 2 {
@@ -190,6 +216,8 @@ class ProductManagementViewController: UIViewController {
         } else if selectedIndex == 3 {
             println(pageTitle[selectedIndex] + " " + sender.titleLabel!!.text!)
         }
+    
+        showModal()
     }
     
     func deleteAction(gesture: UIGestureRecognizer) {
@@ -233,7 +261,7 @@ class ProductManagementViewController: UIViewController {
 
 
 
-extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ProductManagementTableViewCellDelegate {
+extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ProductManagementTableViewCellDelegate, ProductManagementModelViewControllerDelegate {
     
     // MARK: - Search Bar Delegate
     
@@ -397,7 +425,11 @@ extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataS
         }
     }
     
+    // MARK: - Product Management Modal View Controller Delegate
     
+    func pmmvcPressClosed() {
+        self.dismissModal()
+    }
     
     
     

@@ -25,6 +25,7 @@
                 <outlet property="collectionView" destination="vPo-r1-Ubn" id="aO0-eq-XVX"/>
                 <outlet property="delete2View" destination="Y4h-6r-cj3" id="Rns-lv-BAG"/>
                 <outlet property="deleteView" destination="Wfh-2c-ify" id="9bR-K1-YjN"/>
+                <outlet property="dimView" destination="LTb-gA-wY0" id="TPR-i5-XVe"/>
                 <outlet property="inactiveView" destination="Nzf-ql-uSX" id="ss7-Xo-WfY"/>
                 <outlet property="searchBar" destination="6w5-Ec-UDX" id="SzX-iF-Xz5"/>
                 <outlet property="tableView" destination="NPe-9O-VXY" id="3Cj-4s-dRs"/>
@@ -36,6 +37,10 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LTb-gA-wY0" userLabel="Dim View">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
                 <searchBar hidden="YES" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="6w5-Ec-UDX">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                     <constraints>
@@ -176,7 +181,7 @@
                                 <constraint firstItem="Nzf-ql-uSX" firstAttribute="width" secondItem="cwv-eb-YNi" secondAttribute="width" id="zW9-DN-GqA"/>
                             </constraints>
                         </view>
-                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CIM-d9-GI2" userLabel="Active/Inactive and Delete Container">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CIM-d9-GI2" userLabel="Active/Inactive and Delete Container">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                             <subviews>
                                 <view alpha="0.89999997615814209" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BuB-K0-wgf" userLabel="Active/Inactive Container">
@@ -196,18 +201,18 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="141" id="FUC-5S-VxZ"/>
-                                                <constraint firstAttribute="height" constant="50" id="Mn4-zY-3Eh"/>
+                                                <constraint firstAttribute="width" constant="141" id="IL6-Rl-Cd7"/>
+                                                <constraint firstAttribute="height" constant="50" id="niD-Sq-3hF"/>
                                             </constraints>
                                         </view>
                                     </subviews>
                                     <color key="backgroundColor" red="0.50122048590000001" green="0.0" blue="0.7202493687" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
-                                        <constraint firstAttribute="centerY" secondItem="lu8-yD-w5D" secondAttribute="centerY" id="NF7-bm-Yf8"/>
-                                        <constraint firstAttribute="centerX" secondItem="lu8-yD-w5D" secondAttribute="centerX" id="i5v-Hz-icx"/>
+                                        <constraint firstAttribute="centerX" secondItem="lu8-yD-w5D" secondAttribute="centerX" id="KE8-JX-Sva"/>
+                                        <constraint firstAttribute="centerY" secondItem="lu8-yD-w5D" secondAttribute="centerY" id="Um1-Bx-FAf"/>
                                     </constraints>
                                 </view>
-                                <view alpha="0.85000002384185791" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y4h-6r-cj3" userLabel="Delete Container">
+                                <view hidden="YES" alpha="0.85000002384185791" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y4h-6r-cj3" userLabel="Delete Container">
                                     <rect key="frame" x="225" y="0.0" width="150" height="50"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AA5-dZ-M2d" userLabel="Holder">
@@ -224,29 +229,29 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="77" id="LtO-3x-4R8"/>
-                                                <constraint firstAttribute="height" constant="50" id="S0u-LF-eLs"/>
+                                                <constraint firstAttribute="height" constant="50" id="dIS-Me-EHX"/>
+                                                <constraint firstAttribute="width" constant="77" id="nme-fN-ib8"/>
                                             </constraints>
                                         </view>
                                     </subviews>
                                     <color key="backgroundColor" red="0.94901960780000005" green="0.12941176469999999" blue="0.15686274510000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
-                                        <constraint firstAttribute="centerY" secondItem="AA5-dZ-M2d" secondAttribute="centerY" id="Sbu-kE-5nk"/>
-                                        <constraint firstAttribute="centerX" secondItem="AA5-dZ-M2d" secondAttribute="centerX" id="tfG-gr-OMa"/>
+                                        <constraint firstAttribute="centerX" secondItem="AA5-dZ-M2d" secondAttribute="centerX" id="B8l-Nq-4Vd"/>
+                                        <constraint firstAttribute="centerY" secondItem="AA5-dZ-M2d" secondAttribute="centerY" id="P14-NA-9dS"/>
                                     </constraints>
                                 </view>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstItem="Y4h-6r-cj3" firstAttribute="width" secondItem="BuB-K0-wgf" secondAttribute="height" multiplier="3:1" id="2yg-dc-9Mv"/>
-                                <constraint firstAttribute="trailing" secondItem="Y4h-6r-cj3" secondAttribute="trailing" id="8s0-5J-Pnk"/>
-                                <constraint firstItem="Y4h-6r-cj3" firstAttribute="leading" secondItem="BuB-K0-wgf" secondAttribute="trailing" id="BJM-aJ-tbm"/>
-                                <constraint firstAttribute="bottom" secondItem="Y4h-6r-cj3" secondAttribute="bottom" id="FYo-cP-oLh"/>
-                                <constraint firstItem="BuB-K0-wgf" firstAttribute="top" secondItem="CIM-d9-GI2" secondAttribute="top" id="P4P-hP-3sF"/>
-                                <constraint firstItem="BuB-K0-wgf" firstAttribute="leading" secondItem="CIM-d9-GI2" secondAttribute="leading" id="QbP-v5-9LC"/>
-                                <constraint firstItem="Y4h-6r-cj3" firstAttribute="top" secondItem="CIM-d9-GI2" secondAttribute="top" id="bsd-DZ-GmL"/>
-                                <constraint firstItem="Y4h-6r-cj3" firstAttribute="leading" secondItem="BuB-K0-wgf" secondAttribute="trailing" id="nJk-3v-xEi"/>
-                                <constraint firstAttribute="bottom" secondItem="BuB-K0-wgf" secondAttribute="bottom" id="w1s-Mf-Dm9"/>
+                                <constraint firstItem="BuB-K0-wgf" firstAttribute="width" secondItem="Y4h-6r-cj3" secondAttribute="height" multiplier="9:2" id="1iw-Ru-2a3"/>
+                                <constraint firstAttribute="bottom" secondItem="BuB-K0-wgf" secondAttribute="bottom" id="BN9-ey-VFo"/>
+                                <constraint firstAttribute="trailing" secondItem="Y4h-6r-cj3" secondAttribute="trailing" id="GEE-Nx-3x7"/>
+                                <constraint firstItem="BuB-K0-wgf" firstAttribute="leading" secondItem="CIM-d9-GI2" secondAttribute="leading" id="Sz6-tw-P64"/>
+                                <constraint firstItem="Y4h-6r-cj3" firstAttribute="leading" secondItem="BuB-K0-wgf" secondAttribute="trailing" id="V1w-db-VhZ"/>
+                                <constraint firstItem="Y4h-6r-cj3" firstAttribute="leading" secondItem="BuB-K0-wgf" secondAttribute="trailing" id="XCx-zA-Xgr"/>
+                                <constraint firstAttribute="bottom" secondItem="Y4h-6r-cj3" secondAttribute="bottom" id="kfr-YK-EPy"/>
+                                <constraint firstItem="BuB-K0-wgf" firstAttribute="top" secondItem="CIM-d9-GI2" secondAttribute="top" id="lLF-C1-eyB"/>
+                                <constraint firstItem="Y4h-6r-cj3" firstAttribute="top" secondItem="CIM-d9-GI2" secondAttribute="top" id="xrf-Nm-lDh"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -271,6 +276,7 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="zrT-wQ-HdY" secondAttribute="trailing" id="Bvb-Jd-yaS"/>
                 <constraint firstItem="NPe-9O-VXY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="60" id="Cam-tf-LKG"/>
+                <constraint firstAttribute="trailing" secondItem="LTb-gA-wY0" secondAttribute="trailing" id="Cgi-tk-iVn"/>
                 <constraint firstAttribute="trailing" secondItem="6w5-Ec-UDX" secondAttribute="trailing" id="Hao-Im-JMI"/>
                 <constraint firstAttribute="trailing" secondItem="vPo-r1-Ubn" secondAttribute="trailing" id="VdR-Sx-NJk"/>
                 <constraint firstItem="6w5-Ec-UDX" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="jvx-Kc-f7F"/>
@@ -279,6 +285,9 @@
                 <constraint firstItem="zrT-wQ-HdY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="o2Y-jz-LIu"/>
                 <constraint firstItem="vPo-r1-Ubn" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="qGi-IY-wKC"/>
                 <constraint firstItem="NPe-9O-VXY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="qOJ-dk-Hyb"/>
+                <constraint firstAttribute="bottom" secondItem="LTb-gA-wY0" secondAttribute="bottom" id="qef-R1-O0B"/>
+                <constraint firstItem="LTb-gA-wY0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="r2X-zM-fjv"/>
+                <constraint firstItem="LTb-gA-wY0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="tAO-2f-UqU"/>
                 <constraint firstItem="6w5-Ec-UDX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ueZ-KF-K1W"/>
                 <constraint firstItem="vPo-r1-Ubn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="x2F-Y3-GDh"/>
                 <constraint firstAttribute="trailing" secondItem="NPe-9O-VXY" secondAttribute="trailing" id="yms-he-yRW"/>
