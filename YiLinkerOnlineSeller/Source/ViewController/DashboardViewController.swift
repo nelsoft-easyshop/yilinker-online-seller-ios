@@ -44,11 +44,12 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBarHidden = true
+        self.tabBarController?.tabBar.hidden = false
     }
     
     func initializeViews() {
         if self.respondsToSelector("edgesForExtendedLayout") {
-            self.edgesForExtendedLayout = UIRectEdge.None
+            self.edgesForExtendedLayout = UIRectEdge.Bottom
         }
         
         self.tabBarController!.tabBar.tintColor = Constants.Colors.appTheme
@@ -121,6 +122,11 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             headerView.setCoverPhoto("http://g.fastcompany.net/multisite_files/fastcompany/slideshow/2013/07/3014720-slide-i-1-after-five-years-beats-redesigns-studio-headphones.jpg")
             headerView.setProfilePhoto("http://cdn-www.xda-developers.com/wp-content/uploads/2011/10/beats-by_dr_dre-04.jpg")
             
+            var gradient: CAGradientLayer = CAGradientLayer()
+            gradient.frame = CGRectMake(0, 0, view.frame.width, 20)
+            gradient.colors = [UIColor.grayColor().CGColor, UIColor.clearColor().CGColor]
+            headerView.layer.insertSublayer(gradient, atIndex: 1)
+            
             return headerView
         default:
             assert(false, "Unexpected element kind")
@@ -141,7 +147,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         } else if indexPath.row == 0 {
             
         } else if indexPath.row == 1 {
-            
+            var salesViewController = SalesReportViewController(nibName: "SalesReportViewController", bundle: nil)
+            self.navigationController?.pushViewController(salesViewController, animated:true)
         } else if indexPath.row == 2 {
             
         } else if indexPath.row == 3 {
