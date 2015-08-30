@@ -57,7 +57,7 @@ class ProductUploadCombinationTableViewCell: UITableViewCell {
         
         if self.productModel != nil {
             let dictionary: NSMutableDictionary = self.productModel!.validCombinations[selectedIndexPath!.section].attributes[indexPath.row]
-            cell.attributeDefinitionLabel.text = dictionary["definition"] as? String
+            cell.attributeDefinitionLabel.text = dictionary["name"] as? String
             cell.attributeTextField.text  = dictionary["value"] as! String
         }
       
@@ -75,7 +75,7 @@ class ProductUploadCombinationTableViewCell: UITableViewCell {
             let indexPath: NSIndexPath = NSIndexPath(forItem: item, inSection: 0)
             let cell: ProductUploadAttributeValuesCollectionViewCell = self.collectionView.cellForItemAtIndexPath(indexPath) as! ProductUploadAttributeValuesCollectionViewCell
             
-            let definitionKey: String = "definition"
+            let definitionKey: String = "name"
             let valueKey: String = "value"
             
             dictionary[definitionKey] = cell.attributeDefinitionLabel.text

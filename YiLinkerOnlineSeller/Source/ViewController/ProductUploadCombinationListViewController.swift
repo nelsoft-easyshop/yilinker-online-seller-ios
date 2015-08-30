@@ -65,7 +65,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             var attributes: [AttributeModel] = []
             for dictionary in  self.productModel!.validCombinations[indexPath.section].attributes as [NSMutableDictionary] {
                 let attributeModel: AttributeModel = AttributeModel()
-                attributeModel.definition = dictionary["definition"] as! String
+                attributeModel.definition = dictionary["name"] as! String
                 attributeModel.values = [dictionary["value"] as! String]
                 attributes.append(attributeModel)
             }
@@ -102,7 +102,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             var attributes: [AttributeModel] = []
             for dictionary in  self.productModel!.validCombinations[indexPath.section].attributes as [NSMutableDictionary] {
                 let attributeModel: AttributeModel = AttributeModel()
-                attributeModel.definition = dictionary["definition"] as! String
+                attributeModel.definition = dictionary["name"] as! String
                 attributeModel.values = [dictionary["value"] as! String]
                 attributes.append(attributeModel)
             }

@@ -41,6 +41,7 @@ struct ProductUploadTableViewControllerConstant {
     static let uploadQuantityKey = "quantity"
     static let uploadPriceKey = "price"
     static let uploadAccessTokenKey = "access_token"
+    static let uploadPropertyKey = "productProperties"
 }
 
 class ProductUploadTableViewController: UITableViewController, ProductUploadUploadImageTableViewCellDataSource, ProductUploadUploadImageTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadCategoryViewControllerDelegate, ProductUploadFooterViewDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadPriceTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadBrandViewControllerDelegate, ProductUploadQuantityTableViewCellDelegate {
@@ -675,6 +676,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         
         var datas: [NSData] = []
         
+        var productUploadedImagesCount: Int = 0
+        
         for image in self.productModel.images as [UIImage] {
             let data: NSData = UIImageJPEGRepresentation(image, 1)
             datas.append(data)
@@ -685,9 +688,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             ProductUploadTableViewControllerConstant.uploadCategoryKey: self.productModel.category.uid,
             ProductUploadTableViewControllerConstant.uploadBrandKey: self.productModel.brand,
             ProductUploadTableViewControllerConstant.uploadTitleKey: self.productModel.name,
-            ProductUploadTableViewControllerConstant.uploadConditionKey: self.productModel.condition.uid]
+            ProductUploadTableViewControllerConstant.uploadConditionKey: self.productModel.condition.uid,
+            ProductUploadTableViewControllerConstant.uploadPropertyKey: self.property()]
         
         let manager: APIManager = APIManager.sharedInstance
+        
+        println(self.property())
+        
         SVProgressHUD.show()
         manager.POST(APIAtlas.uploadUrl, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
             for (index, data) in enumerate(datas) {
@@ -707,7 +714,19 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
     }
     
-    func fireRefreshToken() {
-        
+    func property() -> NSString {
+        var array: [NSMutableDictionary] = []
+        for combination in self.productModel.validCombinations {
+             let dictionary: NSMutableDictionary = NSMutableDictionary()
+            dictionary["attribute"] = combination.attributes
+            dictionary["price"] = combination.retailPrice
+            dictionary["discountedPrice"] = combination.discountedPrice
+            dictionary["discountedPrice"] = combination.sku
+            dictionary["images"] = ["1","2","3"]
+            array.append(dictionary)
+        }
+        let data = NSJSONSerialization.dataWithJSONObject(array, options: nil, error: nil)
+        let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
+        return string!
     }
 }
