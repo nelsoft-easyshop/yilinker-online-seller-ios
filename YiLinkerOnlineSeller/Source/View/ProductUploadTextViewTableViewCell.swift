@@ -8,14 +8,21 @@
 
 import UIKit
 
-class ProductUploadTextViewTableViewCell: UITableViewCell {
+protocol ProductUploadTextViewTableViewCellDelegate {
+    func productUploadTextViewTableViewCell(textFieldDidChange text: String, cell: ProductUploadTextViewTableViewCell, textFieldType: ProductTextFieldType)
+}
+
+class ProductUploadTextViewTableViewCell: UITableViewCell, UITextViewDelegate {
 
     @IBOutlet weak var productUploadTextView: UITextView!
     @IBOutlet weak var cellTitleLabel: UILabel!
     
+    var delegate: ProductUploadTextViewTableViewCellDelegate?
+    var textFieldType: ProductTextFieldType?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.productUploadTextView.delegate = self
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -24,4 +31,14 @@ class ProductUploadTextViewTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func addTextFieldDelegate() {
+        //self.productUploadTextView.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+
+    }
+    
+    
+    
+    func textViewDidChange(textView: UITextView) {
+        self.delegate!.productUploadTextViewTableViewCell(textFieldDidChange: textView.text, cell: self, textFieldType: self.textFieldType!)
+    }
 }

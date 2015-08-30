@@ -10,7 +10,7 @@ import UIKit
 
 class JSONResponseSerializer: AFJSONResponseSerializer {
     override func responseObjectForResponse(response: NSURLResponse?, data: NSData?, error: NSErrorPointer) -> AnyObject? {
-
+        
         var json: NSMutableDictionary = super.responseObjectForResponse(response, data: data, error: error) as! NSMutableDictionary
         
         if (error.memory != nil) {

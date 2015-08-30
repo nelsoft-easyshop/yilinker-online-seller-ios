@@ -111,7 +111,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             }
             NSUserDefaults.standardUserDefaults().synchronize()
             
-//            self.showAlert(title: "YiLinker", message: "Welcome to YiLinker !")
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             SVProgressHUD.dismiss()
             self.dismissViewControllerAnimated(true, completion: nil)
             }, failure: {

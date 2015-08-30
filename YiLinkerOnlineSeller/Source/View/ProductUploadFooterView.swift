@@ -8,14 +8,15 @@
 
 import UIKit
 
-class ProductUploadFooterView: UIView {
+protocol ProductUploadFooterViewDelegate {
+    func productUploadFooterView(didClickUpload view: ProductUploadFooterView)
+}
 
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+class ProductUploadFooterView: UIView {
+    var delegate: ProductUploadFooterViewDelegate?
+    
+    @IBAction func productUpload(sender: AnyObject) {
+        self.delegate!.productUploadFooterView(didClickUpload: self)
     }
-    */
 
 }

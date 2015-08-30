@@ -8,13 +8,34 @@
 
 import UIKit
 
+protocol ProductUploadDimensionsAndWeightTableViewCellDelegate {
+    func productUploadDimensionsAndWeightTableViewCell(textFieldDidChange textField: UITextField, text: String, cell: ProductUploadDimensionsAndWeightTableViewCell)
+}
+
 class ProductUploadDimensionsAndWeightTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var heightTextField: UITextField!
+    @IBOutlet weak var widthTextField: UITextField!
+    @IBOutlet weak var weightTextField: UITextField!
+    @IBOutlet weak var lengthTextField: UITextField!
+    
+    var delegate: ProductUploadDimensionsAndWeightTableViewCellDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.addTextFieldDelegate()
     }
-
+    func addTextFieldDelegate() {
+        self.heightTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        self.widthTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        self.weightTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        self.lengthTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+    }
+    
+    func textFieldDidChange(sender: UITextField) {
+        self.delegate!.productUploadDimensionsAndWeightTableViewCell(textFieldDidChange: sender, text: sender.text, cell: self)
+    }
+    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

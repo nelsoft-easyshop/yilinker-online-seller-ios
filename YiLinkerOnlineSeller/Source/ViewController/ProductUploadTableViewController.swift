@@ -33,12 +33,13 @@ struct ProductUploadTableViewControllerConstant {
     static let productUploadWeightAndHeightCellHeight: CGFloat = 244
 }
 
-class ProductUploadTableViewController: UITableViewController, ProductUploadUploadImageTableViewCellDataSource, ProductUploadUploadImageTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadCategoryViewControllerDelegate {
+class ProductUploadTableViewController: UITableViewController, ProductUploadUploadImageTableViewCellDataSource, ProductUploadUploadImageTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadCategoryViewControllerDelegate, ProductUploadFooterViewDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadPriceTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate {
     
     var uploadImages: [UIImage] = []
     var productModel: ProductModel = ProductModel()
     var sectionFourRows: Int = 2
     var sectionPriceHeaderHeight: CGFloat = 41
+    var conditions: [ConditionModel] = []
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -50,11 +51,126 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         self.backButton()
         self.title = "Product Upload"
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-
+        
         self.register()
         self.addAddPhoto()
         self.footer()
-        //self.gestureEndEditing()
+        //self.fireCondition()
+        //self.fireCategoryWithParentID(1)
+        //self.fireBrandWithKeyWord("yil")
+    }
+    
+    func fireCondition() {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        let manager: APIManager = APIManager.sharedInstance
+        //seller@easyshop.ph
+        //password
+        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
+        
+        manager.GET(APIAtlas.conditionUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            let conditionParseModel: ConditionParserModel = ConditionParserModel.parseDataFromDictionary(responseObject as! NSDictionary)
+            
+            let uidKey = "productConditionId"
+            let nameKey = "name"
+            
+            if conditionParseModel.isSuccessful {
+                for dictionary in conditionParseModel.data as [NSDictionary] {
+                    let condition: ConditionModel = ConditionModel(uid: "\(dictionary[uidKey])", name: dictionary[nameKey] as! String)
+                    self.conditions.append(condition)
+                }
+            }
+            SVProgressHUD.dismiss()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mismatch username and password", title: "Login Failed")
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                }
+                
+                SVProgressHUD.dismiss()
+        })
+    }
+    
+    func fireCategoryWithParentID(parentID: Int) {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        let manager: APIManager = APIManager.sharedInstance
+        //seller@easyshop.ph
+        //password
+        let parentIDKey = "parentId"
+        let accessTokenKey = "access_token"
+        let parameters: NSDictionary = [accessTokenKey: SessionManager.accessToken(), parentIDKey: parentID]
+        
+        manager.GET(APIAtlas.categoryUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            let dictionary: NSDictionary = responseObject as! NSDictionary
+            let isSuccessful = dictionary["isSuccessful"] as! Bool
+            
+            if isSuccessful {
+                let data: NSArray = dictionary["data"] as! NSArray
+                
+                for categoryDictionary in data as! [NSDictionary] {
+                    let categoryModel: CategoryModel = CategoryModel(uid: categoryDictionary["productCategoryId"] as! Int, name: categoryDictionary["name"] as! String, hasChildren: categoryDictionary["hasChildren"] as! String)
+                }
+            }
+            
+            SVProgressHUD.dismiss()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mismatch username and password", title: "Login Failed")
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                }
+                
+                SVProgressHUD.dismiss()
+        })
+    }
+    
+    func fireBrandWithKeyWord(keyWord: String) {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        let manager: APIManager = APIManager.sharedInstance
+        //seller@easyshop.ph
+        //password
+        
+        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "brandKeyword": keyWord]
+        
+        manager.GET(APIAtlas.brandUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            let dictionary: NSDictionary = responseObject as! NSDictionary
+            let isSuccessful = dictionary["isSuccessful"] as! Bool
+            let data: [NSDictionary] = dictionary["data"] as! [NSDictionary]
+            println(responseObject)
+            if isSuccessful {
+                for brandDictionary in data {
+                    let brandModel: BrandModel = BrandModel(name: brandDictionary["name"] as! String, brandId: brandDictionary["brandId"] as! Int)
+                    println(brandModel.name)
+                }
+            }
+          
+            SVProgressHUD.dismiss()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mismatch username and password", title: "Login Failed")
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                }
+                
+                SVProgressHUD.dismiss()
+        })
     }
     
     func gestureEndEditing() {
@@ -66,6 +182,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     func footer() {
         let footerView: ProductUploadFooterView = XibHelper.puffViewWithNibName("ProductUploadFooterView", index: 0) as! ProductUploadFooterView
         self.tableView.tableFooterView = footerView
+        footerView.delegate = self
     }
     
     func hideKeyBoard() {
@@ -239,18 +356,22 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             if indexPath.row == 0 {
                 let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
+                cell.delegate = self
+                cell.textFieldType = ProductTextFieldType.ProductName
                 return cell
             } else if indexPath.row == 1 {
                 let cell: ProductUploadTextViewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextViewTableViewCellNibNameAndIdentifier) as! ProductUploadTextViewTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
-                
+                cell.delegate = self
+                cell.textFieldType = ProductTextFieldType.ProductShortDescription
                 cell.cellTitleLabel.text = "Short Description"
                 
                 return cell
             } else if indexPath.row == 2 {
                 let cell: ProductUploadTextViewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextViewTableViewCellNibNameAndIdentifier) as! ProductUploadTextViewTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
-                
+                cell.delegate = self
+                cell.textFieldType = ProductTextFieldType.ProductCompleteDescription
                 cell.cellTitleLabel.text = "Complete Description"
                 
                 return cell
@@ -265,6 +386,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.cellTitleLabel.text = "Category*"
                 cell.cellTexField.placeholder = "Select Category"
+                
+                if self.productModel.category.name != "" {
+                    cell.cellTexField.text = self.productModel.category.name
+                }
                 
                 let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "category")
                 cell.cellTexField.userInteractionEnabled = true
@@ -318,6 +443,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     cell.selectionStyle = UITableViewCellSelectionStyle.None
                     cell.cellTitleLabel.text = "SKU"
                     cell.cellTexField.placeholder = "SKU"
+                    cell.delegate = self
+                    cell.textFieldType = ProductTextFieldType.ProductSKU
                     return cell
                 }
             } else {
@@ -368,7 +495,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             if indexPath.row == 0 {
                 let cell: ProductUploadPriceTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadPriceTableViewCellNibNameAndIdentifier) as! ProductUploadPriceTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
-                
+                cell.delegate = self
+                cell.textFieldType = ProductTextFieldType.ProductRetailPrice
                 cell.cellTitleLabel.text = "Retail Price*"
                 cell.cellTextField.placeholder = "0.00"
                 
@@ -376,7 +504,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             } else {
                 let cell: ProductUploadPriceTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadPriceTableViewCellNibNameAndIdentifier) as! ProductUploadPriceTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
-                
+                cell.delegate = self
+                cell.textFieldType = ProductTextFieldType.ProductDiscountPrice
                 cell.cellTitleLabel.text = "Discounted Price*"
                 cell.cellTextField.placeholder = "0.00"
                 
@@ -384,6 +513,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             }
         } else {
             let cell: ProductUploadDimensionsAndWeightTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier) as! ProductUploadDimensionsAndWeightTableViewCell
+            cell.delegate = self
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             
             return cell
@@ -520,5 +650,53 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         self.sectionFourRows = 0
         self.sectionPriceHeaderHeight = 0
         self.tableView.reloadData()
+    }
+    
+    func productUploadFooterView(didClickUpload view: ProductUploadFooterView) {
+        //println(cellProductInfo.cellTexField.text)
+        self.productModel.images = self.uploadImages
+        //self.productModel.name =
+    }
+    
+    func productUploadTextFieldTableViewCell(textFieldDidChange text: String, cell: ProductUploadTextFieldTableViewCell, textFieldType: ProductTextFieldType) {
+        if textFieldType == ProductTextFieldType.ProductName {
+            self.productModel.name = text
+        }  else if textFieldType == ProductTextFieldType.ProductSKU {
+            self.productModel.sku = text
+        }
+    }
+    
+    func productUploadTextViewTableViewCell(textFieldDidChange text: String, cell: ProductUploadTextViewTableViewCell, textFieldType: ProductTextFieldType) {
+        if textFieldType == ProductTextFieldType.ProductShortDescription {
+            self.productModel.shortDescription = text
+        } else if textFieldType == ProductTextFieldType.ProductCompleteDescription {
+            self.productModel.completeDescription = text
+        }
+    }
+    
+    func productUploadPriceTableViewCell(textFieldDidChange text: String, cell: ProductUploadPriceTableViewCell, textFieldType: ProductTextFieldType) {
+        if textFieldType == ProductTextFieldType.ProductRetailPrice {
+            self.productModel.retailPrice = text
+        } else if textFieldType == ProductTextFieldType.ProductDiscountPrice {
+            self.productModel.discoutedPrice = text
+        }
+    }
+    
+    func productUploadDimensionsAndWeightTableViewCell(textFieldDidChange textField: UITextField, text: String, cell: ProductUploadDimensionsAndWeightTableViewCell) {
+        if textField.isEqual(cell.weightTextField) {
+            self.productModel.weigth = text
+        } else if textField.isEqual(cell.heightTextField) {
+            self.productModel.height = text
+        } else if textField.isEqual(cell.lengthTextField) {
+            self.productModel.length = text
+        } else if textField.isEqual(cell.widthTextField) {
+            self.productModel.width = text
+        }
+    }
+    
+     func didSelecteCategory(categoryModel: CategoryModel) {
+        self.productModel.category = categoryModel
+        let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 2)
+        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
     }
 }

@@ -26,7 +26,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
             self.presentViewController(signInViewController, animated: false, completion: nil)
         }
-        
+        println(SessionManager.accessToken())
         registerNibs()
         initializeViews()
     }

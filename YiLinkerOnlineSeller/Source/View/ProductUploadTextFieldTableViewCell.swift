@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ProductUploadTextFieldTableViewCellDelegate {
-    func productUploadTextFieldTableViewCell(textFieldDidChange text: String)
+    func productUploadTextFieldTableViewCell(textFieldDidChange text: String, cell: ProductUploadTextFieldTableViewCell, textFieldType: ProductTextFieldType)
 }
 
 class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
@@ -22,6 +22,7 @@ class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate 
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.addTextFieldDelegate()
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -44,8 +45,6 @@ class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate 
     }
     
     func textFieldDidChange(sender: UITextField) {
-        if self.textFieldType == ProductTextFieldType.Category {
-            self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: sender.text)
-        }
+        self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: sender.text, cell: self, textFieldType: self.textFieldType!)
     }
 }
