@@ -8,11 +8,20 @@
 
 import UIKit
 
-class ProductUploadQuantityTableViewCell: UITableViewCell {
+protocol ProductUploadQuantityTableViewCellDelegate {
+    func productUploadQuantityTableViewCell(textFieldDidChange text: String, cell: ProductUploadQuantityTableViewCell)
+}
 
+class ProductUploadQuantityTableViewCell: UITableViewCell, UITextFieldDelegate {
+
+    @IBOutlet weak var cellTextField: UITextField!
+    
+    var delegate: ProductUploadQuantityTableViewCellDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.cellTextField.delegate = self
+        self.cellTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -21,4 +30,12 @@ class ProductUploadQuantityTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func textFieldDidChange(sender: UITextField) {
+        self.delegate!.productUploadQuantityTableViewCell(textFieldDidChange: sender.text, cell: self)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.cellTextField.endEditing(true)
+        return true
+    }
 }

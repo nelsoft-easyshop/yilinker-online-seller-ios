@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProductUploadPlainDetailCombinationTableViewCell: UITableViewCell {
+class ProductUploadPlainDetailCombinationTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var skuTextField: UITextField!
@@ -20,6 +20,10 @@ class ProductUploadPlainDetailCombinationTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.skuTextField.delegate = self
+        self.retailPriceTextField.delegate = self
+        self.discountedPriceTextField.delegate = self
+        self.quantityTextField.delegate = self
         self.registerCell()
     }
     
@@ -49,6 +53,11 @@ class ProductUploadPlainDetailCombinationTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.endEditing(true)
+        return true
     }
     
 }

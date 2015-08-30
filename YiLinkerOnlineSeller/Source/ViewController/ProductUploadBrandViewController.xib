@@ -26,14 +26,14 @@
                 </textField>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="RJE-zE-y4O">
                     <rect key="frame" x="0.0" y="46" width="375" height="621"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="nIc-Ix-Y2S"/>
                         <outlet property="delegate" destination="-1" id="YSz-Gw-Luk"/>
                     </connections>
                 </tableView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="kNQ-Rm-ayX" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="1ws-Hs-sYM"/>
                 <constraint firstItem="RJE-zE-y4O" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="4hf-wq-Zes"/>
@@ -44,7 +44,7 @@
                 <constraint firstAttribute="bottom" secondItem="RJE-zE-y4O" secondAttribute="bottom" id="oab-Ke-CCz"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <point key="canvasLocation" x="353.5" y="357.5"/>
+            <point key="canvasLocation" x="-206.5" y="134.5"/>
         </view>
     </objects>
 </document>

@@ -36,7 +36,7 @@
                             <constraint firstAttribute="width" constant="36" id="rlF-IK-NkY"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits"/>
+                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
                     </textField>
                 </subviews>
                 <constraints>
@@ -47,6 +47,9 @@
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="cellTextField" destination="Jd1-zk-Nww" id="tdy-Bm-sTi"/>
+            </connections>
             <point key="canvasLocation" x="325" y="162.5"/>
         </tableViewCell>
     </objects>

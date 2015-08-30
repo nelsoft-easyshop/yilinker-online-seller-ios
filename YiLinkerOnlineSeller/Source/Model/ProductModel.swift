@@ -11,10 +11,12 @@ import UIKit
 class ProductModel {
     var attributes: [AttributeModel] = []
     var validCombinations: [CombinationModel] = []
-    var condition: ConditionModel = ConditionModel(uid: "", name: "")
     var images: [UIImage] = []
     
     var category: CategoryModel = CategoryModel(uid: 0, name: "", hasChildren: "")
+    var brand: BrandModel = BrandModel(name: "", brandId:0)
+    var condition: ConditionModel = ConditionModel(uid: 0, name: "")
+    var quantity: Int = 0
     
     var name: String = ""
     var shortDescription: String = ""

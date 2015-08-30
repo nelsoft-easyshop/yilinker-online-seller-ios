@@ -14,7 +14,7 @@ protocol ProductUploadCombinationFooterTableViewCellDelegate {
     func productUploadCombinationFooterTableViewCell(didDeleteUploadImage cell: ProductUploadCombinationFooterTableViewCell, indexPath: NSIndexPath)
 }
 
-class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, ProductUploadImageCollectionViewCellDelegate {
+class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, ProductUploadImageCollectionViewCellDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     var delegate: ProductUploadCombinationFooterTableViewCellDelegate?
@@ -34,7 +34,12 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
         if self.images.last == UIImage(named: "addPhoto") {
             self.images.removeLast()
         }
-
+        
+        self.retailPriceTextField.delegate = self
+        self.discountedPriceTextField.delegate = self
+        self.quantityTextField.delegate = self
+        self.skuTextField.delegate = self
+        
         self.delegate!.productUploadCombinationFooterTableViewCell(didClickDoneButton: self, sku: self.skuTextField.text, quantity: self.quantityTextField.text, discountedPrice: self.discountedPriceTextField.text, retailPrice: self.retailPriceTextField.text, uploadImages: self.images)
     }
     
@@ -76,5 +81,10 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
         self.collectionView.deleteItemsAtIndexPaths([indexPath])
         self.delegate!.productUploadCombinationFooterTableViewCell(didDeleteUploadImage: self, indexPath: indexPath)
         //self.delegate!.productUploadUploadImageTableViewCell(didDeleteAtRowIndexPath: indexPath, collectionView: self.collectionView)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.endEditing(true)
+        return true
     }
 }

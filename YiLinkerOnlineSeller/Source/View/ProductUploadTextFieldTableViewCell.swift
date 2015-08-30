@@ -12,13 +12,14 @@ protocol ProductUploadTextFieldTableViewCellDelegate {
     func productUploadTextFieldTableViewCell(textFieldDidChange text: String, cell: ProductUploadTextFieldTableViewCell, textFieldType: ProductTextFieldType)
 }
 
-class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
+class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
     @IBOutlet weak var cellTitleLabel: UILabel!
     @IBOutlet weak var cellTexField: UITextField!
     
     var delegate: ProductUploadTextFieldTableViewCellDelegate?
     var textFieldType: ProductTextFieldType?
+    var values: [String] = []
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,7 +29,7 @@ class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
+        self.cellTexField.delegate = self
     }
     
     func addTextFieldDelegate() {
@@ -46,5 +47,43 @@ class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate 
     
     func textFieldDidChange(sender: UITextField) {
         self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: sender.text, cell: self, textFieldType: self.textFieldType!)
+    }
+    
+    func addPicker() {
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        
+        let pickerView: UIPickerView = UIPickerView(frame:CGRectMake(0, 0, screenSize.width, 225))
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        
+        self.cellTexField.inputView = pickerView
+         self.cellTexField.text = self.values[0]
+        self.cellTexField.addToolBarWithDoneTarget(self, done: "done")
+    }
+    
+    func done() {
+        self.cellTexField.endEditing(true)
+        self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: self.cellTexField.text, cell: self, textFieldType: self.textFieldType!)
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.cellTexField.text = self.values[row]
+    }
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return values.count
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+        return self.values[row]
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.cellTexField.endEditing(true)
+        return true
     }
 }

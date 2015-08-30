@@ -9,17 +9,18 @@
 import UIKit
 
 protocol ProductUploadBrandViewControllerDelegate {
-    func productUploadBrandViewController(didSelectBrand brand: String)
+    func productUploadBrandViewController(didSelectBrand brand: String, brandModel: BrandModel)
 }
 
 class ProductUploadBrandViewController: UIViewController, UITabBarControllerDelegate, UITableViewDataSource {
-    
-   var titles: [String] = ["Brand 1", "Brand 2", "Brand 3", "Brand 4", "Brand 5", "Brand 6", "Brand 7", "Brand 8", "Brand 9", "Brand 10", "Brand 11", "Brand 12", "Brand 13", "Brand 14"]
     
     @IBOutlet weak var brandTextField: UITextField!    
     @IBOutlet weak var tableView: UITableView!
     
     var delegate: ProductUploadBrandViewControllerDelegate?
+    var brands: NSMutableArray = NSMutableArray()
+    var selectedBrandModel: BrandModel = BrandModel(name: "", brandId: 0)
+    var searchTask: NSURLSessionDataTask?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +34,11 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
         self.title = "Add Brand"
         
         self.registerCell()
+        
+        self.brandTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        
+        let footerView: UIView = UIView(frame: CGRectZero)
+        self.tableView.tableFooterView = footerView
     }
     
     func backButton() {
@@ -52,7 +58,7 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
     func checkButton() {
         var checkButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         checkButton.frame = CGRectMake(0, 0, 40, 40)
-        checkButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        checkButton.addTarget(self, action: "check", forControlEvents: UIControlEvents.TouchUpInside)
         checkButton.setImage(UIImage(named: "check"), forState: UIControlState.Normal)
         var customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: checkButton)
         
@@ -62,6 +68,50 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
         self.navigationItem.rightBarButtonItems = [navigationSpacer, customCheckButton]
     }
     
+    
+    func fireBrandWithKeyWord(keyWord: String) {
+        let manager: APIManager = APIManager.sharedInstance
+        //seller@easyshop.ph
+        //password
+        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "brandKeyword": keyWord]
+        
+        if self.searchTask != nil {
+            self.searchTask!.cancel()
+        }
+        
+        self.searchTask = manager.GET(APIAtlas.brandUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            let dictionary: NSDictionary = responseObject as! NSDictionary
+            let isSuccessful = dictionary["isSuccessful"] as! Bool
+            let data: [NSDictionary] = dictionary["data"] as! [NSDictionary]
+            if isSuccessful {
+                self.brands.removeAllObjects()
+                for brandDictionary in data {
+                    let brandModel: BrandModel = BrandModel(name: brandDictionary["name"] as! String, brandId: brandDictionary["brandId"] as! Int)
+                    self.brands.addObject(brandModel)
+                }
+                self.tableView.reloadData()
+            }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                if error.code != NSURLErrorCancelled {
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "RefreshToken Expired/ No available API for refershing accessToken", title: "Server Error")
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    }
+                }
+            })
+    }
+    
+    
+    func textFieldDidChange(sender: UITextField) {
+        self.fireBrandWithKeyWord(sender.text)
+    }
     
     func registerCell() {
         let nib: UINib = UINib(nibName: ProductUploadCategoryViewControllerConstant.productUploadCategoryTableViewCellNibNameAndIdentifier, bundle: nil)
@@ -73,23 +123,26 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
     }
     
     func check() {
-        self.delegate!.productUploadBrandViewController(didSelectBrand: self.brandTextField.text)
+        self.delegate!.productUploadBrandViewController(didSelectBrand: self.brandTextField.text, brandModel: self.selectedBrandModel)
         self.back()
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       return self.titles.count
+       return self.brands.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let brandModel: BrandModel = self.brands.objectAtIndex(indexPath.row) as! BrandModel
         let cell: ProductUploadCategoryTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadCategoryViewControllerConstant.productUploadCategoryTableViewCellNibNameAndIdentifier) as! ProductUploadCategoryTableViewCell
-        cell.categoryTitleLabel.text = self.titles[indexPath.row]
+        cell.categoryTitleLabel.text = brandModel.name
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let brandModel: BrandModel = self.brands.objectAtIndex(indexPath.row) as! BrandModel
+        self.selectedBrandModel = brandModel
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        self.brandTextField.text = self.titles[indexPath.row]
+        self.brandTextField.text = brandModel.name
     }
     
     override func didReceiveMemoryWarning() {

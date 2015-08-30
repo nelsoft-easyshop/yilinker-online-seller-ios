@@ -12,7 +12,7 @@ protocol ProductUploadDimensionsAndWeightTableViewCellDelegate {
     func productUploadDimensionsAndWeightTableViewCell(textFieldDidChange textField: UITextField, text: String, cell: ProductUploadDimensionsAndWeightTableViewCell)
 }
 
-class ProductUploadDimensionsAndWeightTableViewCell: UITableViewCell {
+class ProductUploadDimensionsAndWeightTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var heightTextField: UITextField!
     @IBOutlet weak var widthTextField: UITextField!
@@ -27,9 +27,13 @@ class ProductUploadDimensionsAndWeightTableViewCell: UITableViewCell {
     }
     func addTextFieldDelegate() {
         self.heightTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        self.heightTextField.delegate = self
         self.widthTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        self.widthTextField.delegate = self
         self.weightTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        self.weightTextField.delegate = self
         self.lengthTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        self.lengthTextField.delegate = self
     }
     
     func textFieldDidChange(sender: UITextField) {
@@ -42,4 +46,8 @@ class ProductUploadDimensionsAndWeightTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.endEditing(true)
+        return true
+    }
 }

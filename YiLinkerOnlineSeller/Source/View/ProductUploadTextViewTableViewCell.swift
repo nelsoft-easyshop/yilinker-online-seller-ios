@@ -36,8 +36,6 @@ class ProductUploadTextViewTableViewCell: UITableViewCell, UITextViewDelegate {
 
     }
     
-    
-    
     func textViewDidChange(textView: UITextView) {
         self.delegate!.productUploadTextViewTableViewCell(textFieldDidChange: textView.text, cell: self, textFieldType: self.textFieldType!)
     }

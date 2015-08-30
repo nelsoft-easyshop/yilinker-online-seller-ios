@@ -8,18 +8,24 @@
 
 import UIKit
 
-class ProductUploadDetailHeaderViewTableViewCell: UITableViewCell {
+class ProductUploadDetailHeaderViewTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var cellTextField: UITextField!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.cellTextField.becomeFirstResponder()
+        self.cellTextField.delegate = self
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.endEditing(true)
+        return true
     }
     
 }

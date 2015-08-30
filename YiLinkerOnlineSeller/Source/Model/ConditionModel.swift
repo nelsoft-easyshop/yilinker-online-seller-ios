@@ -9,10 +9,10 @@
 import UIKit
 
 class ConditionModel: NSObject {
-    var uid: String = ""
+    var uid: Int = 0
     var name: String = ""
     
-    init (uid: String, name: String) {
+    init (uid: Int, name: String) {
         self.uid = uid
         self.name = name
     }

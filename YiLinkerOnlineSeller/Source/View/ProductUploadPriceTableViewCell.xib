@@ -45,7 +45,7 @@
                             <constraint firstAttribute="height" constant="30" id="hDB-61-rEz"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                        <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done"/>
                     </textField>
                 </subviews>
                 <constraints>
