@@ -27,7 +27,6 @@
 		0CF28EF61B8CA2E9005B2E54 /* Panton Bold Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EE41B8CA2E9005B2E54 /* Panton Bold Italic.otf */; };
 		0CF28EF71B8CA2E9005B2E54 /* Panton Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EE51B8CA2E9005B2E54 /* Panton Bold.otf */; };
 		0CF28EF81B8CA2E9005B2E54 /* Panton ExtraBold Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EE61B8CA2E9005B2E54 /* Panton ExtraBold Italic.otf */; };
-		0CF28EF91B8CA2E9005B2E54 /* Panton ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EE71B8CA2E9005B2E54 /* Panton ExtraBold.otf */; };
 		0CF28EFA1B8CA2E9005B2E54 /* Panton ExtraLight Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EE81B8CA2E9005B2E54 /* Panton ExtraLight Italic.otf */; };
 		0CF28EFB1B8CA2E9005B2E54 /* Panton ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EE91B8CA2E9005B2E54 /* Panton ExtraLight.otf */; };
 		0CF28EFC1B8CA2E9005B2E54 /* Panton Heavy Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EEA1B8CA2E9005B2E54 /* Panton Heavy Italic.otf */; };
@@ -912,10 +911,8 @@
 				0CF28F051B8CA2E9005B2E54 /* Panton.otf in Resources */,
 				26BD5E641B8E1A3500739488 /* ProductDescriptionViewController.xib in Resources */,
 				26B282F61B91E92B00A7C2B1 /* ProductManagementAllTableViewCell.xib in Resources */,
-				0CF28EF91B8CA2E9005B2E54 /* Panton ExtraBold.otf in Resources */,
 				26BD5E4E1B8DC49800739488 /* ProductDetailsTableViewCell.xib in Resources */,
 				799893031B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib in Resources */,
-				0CF28EF91B8CA2E9005B2E54 /* Panton ExtraBold.otf in Resources */,
 				79EDA4161B9205080037558A /* PointsTableViewCell.xib in Resources */,
 				792876491B8E001200762A39 /* SalesReportTableViewCell.xib in Resources */,
 				79EFF78B1B8DCFA2008A9E7D /* SalesReportTableViewController.xib in Resources */,
