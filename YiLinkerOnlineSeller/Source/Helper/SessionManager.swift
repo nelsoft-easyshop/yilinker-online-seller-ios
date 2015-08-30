@@ -67,6 +67,7 @@ class SessionManager {
     }
     
     class func isLoggedIn() -> Bool {
+        println(self.accessToken())
         if self.accessToken() != "" {
             return true
         } else {
