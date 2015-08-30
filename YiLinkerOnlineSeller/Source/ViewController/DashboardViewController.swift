@@ -162,7 +162,9 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         } else if indexPath.row == 2 {
             
         } else if indexPath.row == 3 {
-            
+            let productManagement = ProductManagementViewController(nibName: "ProductManagementViewController", bundle: nil)
+            productManagement.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(productManagement, animated: true)
         } else if indexPath.row == 4 {
             
         } else if indexPath.row == 5 {
