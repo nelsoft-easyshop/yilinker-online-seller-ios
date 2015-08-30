@@ -678,25 +678,34 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         
         var productUploadedImagesCount: Int = 0
         
+        let mainImageCount: Int = self.productModel.images.count
+        
+        for combination in self.productModel.validCombinations {
+            for image in combination.images {
+                self.productModel.images.append(image)
+            }
+        }
+        
         for image in self.productModel.images as [UIImage] {
             let data: NSData = UIImageJPEGRepresentation(image, 1)
             datas.append(data)
         }
         
-        let parameters: NSDictionary = [ProductUploadTableViewControllerConstant.uploadAccessTokenKey: SessionManager.accessToken(), ProductUploadTableViewControllerConstant.uploadPriceKey: self.productModel.retailPrice,
+        let parameters: NSDictionary = [ProductUploadTableViewControllerConstant.uploadPriceKey: self.productModel.retailPrice,
             ProductUploadTableViewControllerConstant.uploadQuantityKey: self.productModel.quantity,
             ProductUploadTableViewControllerConstant.uploadCategoryKey: self.productModel.category.uid,
             ProductUploadTableViewControllerConstant.uploadBrandKey: self.productModel.brand,
             ProductUploadTableViewControllerConstant.uploadTitleKey: self.productModel.name,
             ProductUploadTableViewControllerConstant.uploadConditionKey: self.productModel.condition.uid,
-            ProductUploadTableViewControllerConstant.uploadPropertyKey: self.property()]
+            ProductUploadTableViewControllerConstant.uploadPropertyKey: self.property(mainImageCount)]
         
         let manager: APIManager = APIManager.sharedInstance
         
-        println(self.property())
+        println(self.property(mainImageCount))
         
         SVProgressHUD.show()
-        manager.POST(APIAtlas.uploadUrl, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
+        let url: String = "\(APIAtlas.uploadUrl)?\(SessionManager.accessToken())"
+        manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
             for (index, data) in enumerate(datas) {
                 formData.appendPartWithFileData(data, name: "images[]", fileName: "\(index + 1)", mimeType: "image/jpeg")
             }
@@ -714,15 +723,22 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
     }
     
-    func property() -> NSString {
+    func property(mainImageCount: Int) -> NSString {
         var array: [NSMutableDictionary] = []
+        var counter: Int = mainImageCount 
         for combination in self.productModel.validCombinations {
              let dictionary: NSMutableDictionary = NSMutableDictionary()
             dictionary["attribute"] = combination.attributes
             dictionary["price"] = combination.retailPrice
             dictionary["discountedPrice"] = combination.discountedPrice
             dictionary["discountedPrice"] = combination.sku
-            dictionary["images"] = ["1","2","3"]
+            
+            var arrayNumber: [Int] = []
+            
+            for (index, image) in enumerate(combination.images) {
+                arrayNumber.append(counter++)
+            }
+            dictionary["images"] = arrayNumber
             array.append(dictionary)
         }
         let data = NSJSONSerialization.dataWithJSONObject(array, options: nil, error: nil)
