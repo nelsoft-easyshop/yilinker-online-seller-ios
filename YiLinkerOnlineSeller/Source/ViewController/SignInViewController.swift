@@ -9,9 +9,9 @@
 import UIKit
 
 class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDelegate {
-
+    
     @IBOutlet weak var profileContainerView: UIView!
-    @IBOutlet weak var profileImageView: UIView!
+    @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var emailAddressTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var rememberMeView: UIView!
@@ -77,7 +77,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             self.signInButton.setTitle("SIGNING IN ....", forState: .Normal)
             self.requestSignin()
         } else {
-            showAlert(title: "Reminder", message: "Please input valid email and password.")
+            showAlert(title: "Error", message: "Please input valid email and password.")
         }
     }
     
@@ -103,16 +103,9 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         
         manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            if self.rememberMeImageView.image != nil {
-                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "rememberMe")
-            } else {
-                NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
-            }
-            NSUserDefaults.standardUserDefaults().synchronize()
             
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            SVProgressHUD.dismiss()
+            self.signinSuccessful()
             self.dismissViewControllerAnimated(true, completion: nil)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -207,16 +200,12 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            if self.rememberMeImageView.image != nil {
-                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "rememberMe")
-            } else {
-                NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
-            }
-            NSUserDefaults.standardUserDefaults().synchronize()
             
-//            self.showAlert(title: "YiLinker", message: "Welcome to YiLinker !")
+            self.hideKeyboard(UIGestureRecognizer())
+            self.signInButton.setTitle("Welcome to YiLinker!", forState: .Normal)
             SVProgressHUD.dismiss()
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.signinSuccessful()
+            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.signInButton.setTitle("SIGN IN", forState: .Normal)
@@ -229,6 +218,33 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
                 SVProgressHUD.dismiss()
         })
     }
+    
+    func signinSuccessful() {
+        
+        if self.rememberMeImageView.image != nil {
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "rememberMe")
+        } else {
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
+        }
+        NSUserDefaults.standardUserDefaults().synchronize()
+        
+        let imageUrl: NSURL = NSURL(string: "http://cdn-www.xda-developers.com/wp-content/uploads/2011/10/beats-by_dr_dre-04.jpg")!
+        self.profileImageView.sd_setImageWithURL(imageUrl, placeholderImage: UIImage(named: "dummy-placeholder"))
+        self.profileImageView.frame = self.profileContainerView.bounds
+        self.profileImageView.contentMode = .ScaleAspectFill
+
+        SVProgressHUD.dismiss()
+        
+        let delay = 1.0 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+        var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+            
+            self.dismissViewControllerAnimated(true, completion: nil)
+            
+        })
+
+    }
+    
 }
 
 extension UITextField {

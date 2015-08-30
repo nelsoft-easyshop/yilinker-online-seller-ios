@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+        </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RecentProductsTableViewCell" id="DqO-Ht-jge" customClass="RecentProductsTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DqO-Ht-jge" id="TFw-Xe-p9K">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="4RA-Zv-7W0" userLabel="Product Image">
+                        <rect key="frame" x="8" y="8" width="60" height="43"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="43" id="FSh-fk-ElX"/>
+                            <constraint firstAttribute="width" constant="60" id="FmW-UD-F7g"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jg3-bg-5n1">
+                        <rect key="frame" x="76" y="9" width="203" height="14"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="14" id="fHJ-go-KZA"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="12"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mode of Payment" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3SH-ny-y63">
+                        <rect key="frame" x="76" y="23" width="203" height="14"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="14" id="Hfh-0u-WXj"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IeU-hU-1BZ">
+                        <rect key="frame" x="76" y="37" width="203" height="14"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="14" id="dLB-X0-C9S"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pending" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tfd-0n-mib" userLabel="Status">
+                        <rect key="frame" x="287" y="20" width="80" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="6iS-LB-hRf"/>
+                            <constraint firstAttribute="width" constant="80" id="eT4-t8-f96"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="10"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="tfd-0n-mib" secondAttribute="trailing" constant="8" id="FUV-Qm-Mgg"/>
+                    <constraint firstItem="3SH-ny-y63" firstAttribute="top" secondItem="jg3-bg-5n1" secondAttribute="bottom" id="Ge6-Gu-dho"/>
+                    <constraint firstItem="jg3-bg-5n1" firstAttribute="top" secondItem="TFw-Xe-p9K" secondAttribute="top" constant="9" id="Gxb-vr-7BN"/>
+                    <constraint firstItem="tfd-0n-mib" firstAttribute="leading" secondItem="3SH-ny-y63" secondAttribute="trailing" constant="8" id="Hot-bg-qVW"/>
+                    <constraint firstItem="4RA-Zv-7W0" firstAttribute="leading" secondItem="TFw-Xe-p9K" secondAttribute="leading" constant="8" id="Lp0-ok-bKj"/>
+                    <constraint firstItem="tfd-0n-mib" firstAttribute="leading" secondItem="jg3-bg-5n1" secondAttribute="trailing" constant="8" id="OCX-vf-lz9"/>
+                    <constraint firstItem="tfd-0n-mib" firstAttribute="leading" secondItem="IeU-hU-1BZ" secondAttribute="trailing" constant="8" id="Z0b-b8-0xh"/>
+                    <constraint firstItem="4RA-Zv-7W0" firstAttribute="top" secondItem="TFw-Xe-p9K" secondAttribute="top" constant="8" id="gD0-8a-H4N"/>
+                    <constraint firstItem="IeU-hU-1BZ" firstAttribute="top" secondItem="3SH-ny-y63" secondAttribute="bottom" id="gxg-UF-TVr"/>
+                    <constraint firstItem="IeU-hU-1BZ" firstAttribute="leading" secondItem="4RA-Zv-7W0" secondAttribute="trailing" constant="8" id="ots-c5-AAi"/>
+                    <constraint firstItem="3SH-ny-y63" firstAttribute="leading" secondItem="4RA-Zv-7W0" secondAttribute="trailing" constant="8" id="rJz-hb-hBB"/>
+                    <constraint firstItem="jg3-bg-5n1" firstAttribute="leading" secondItem="4RA-Zv-7W0" secondAttribute="trailing" constant="8" id="uCO-Z8-TL0"/>
+                    <constraint firstItem="tfd-0n-mib" firstAttribute="top" secondItem="TFw-Xe-p9K" secondAttribute="top" constant="20" id="yDx-sO-CgA"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="modeOfPaymentLabel" destination="3SH-ny-y63" id="cpt-IC-wMS"/>
+                <outlet property="priceLabel" destination="IeU-hU-1BZ" id="Cwz-tK-Vlx"/>
+                <outlet property="productImageView" destination="4RA-Zv-7W0" id="8Zh-ik-Y3H"/>
+                <outlet property="productNameLabel" destination="jg3-bg-5n1" id="NjO-ML-EUz"/>
+                <outlet property="statusLabel" destination="tfd-0n-mib" id="m4l-Cf-OcQ"/>
+            </connections>
+            <point key="canvasLocation" x="293.5" y="178"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="dummy-placeholder" width="1280" height="800"/>
+    </resources>
+</document>
