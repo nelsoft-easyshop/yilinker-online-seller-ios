@@ -27,13 +27,10 @@ struct APIAtlas {
     
     static let loginUrl = "login"
     static let registerUrl = "user/register"
-    static let getUserInfoUrl = "auth/user/getUser"
-    static let homeUrl = "home/getData"
-    static let cartUrl = "v1/cart"
-    static let wishlistUrl = "v1/cart"
-    static let getSellerUrl = "v1/get-seller"
-    static let productReviewUrl = "v1/product-review"
-    static let productPageUrl = "v1/get-product"
+    static let conditionUrl = "product/getProductConditions"
+    static let categoryUrl = "product/getCategories"
+    static let brandUrl = "product/getBrands"
+    static let uploadUrl = "product/upload"
     static let baseUrl = APIEnvironment.baseUrl()
 }
 
@@ -49,6 +46,7 @@ class APIManager: AFHTTPSessionManager {
             let url: NSURL! = NSURL(string: APIAtlas.baseUrl)
             Static.instance = APIManager(baseURL: url)
             Static.instance?.securityPolicy.allowInvalidCertificates = true
+            //Static.instance?.responseSerializer = JSONResponseSerializer()
         }
         
         return Static.instance!

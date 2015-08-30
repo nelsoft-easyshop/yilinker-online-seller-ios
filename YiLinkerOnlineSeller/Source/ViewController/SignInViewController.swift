@@ -106,7 +106,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             self.signinSuccessful()
-            
+            self.dismissViewControllerAnimated(true, completion: nil)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.signInButton.setTitle("SIGN IN", forState: .Normal)

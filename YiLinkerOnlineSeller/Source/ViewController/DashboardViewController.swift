@@ -22,14 +22,13 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Remember Me
+        self.tabBarController!.tabBar.tintColor = Constants.Colors.appTheme
         if !NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
             SessionManager.setAccessToken("")
             let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
             self.presentViewController(signInViewController, animated: false, completion: nil)
         }
-        
+        println(SessionManager.accessToken())
         registerNibs()
         initializeViews()
     }
@@ -128,7 +127,6 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         switch kind {
         case UICollectionElementKindSectionHeader:
             let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: dashBoardHeaderIdentifier, forIndexPath: indexPath) as! DashBoardHeaderCollectionViewCell
-            
             headerView.setCoverPhoto("http://g.fastcompany.net/multisite_files/fastcompany/slideshow/2013/07/3014720-slide-i-1-after-five-years-beats-redesigns-studio-headphones.jpg")
             headerView.setProfilePhoto("http://cdn-www.xda-developers.com/wp-content/uploads/2011/10/beats-by_dr_dre-04.jpg")
             
@@ -168,7 +166,10 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         } else if indexPath.row == 4 {
             
         } else if indexPath.row == 5 {
-            
+            let productUploadTableViewController: ProductUploadTableViewController = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
+            let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadTableViewController)
+            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+            self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
         } else if indexPath.row == 6 {
             
         } else if indexPath.row == 7 {

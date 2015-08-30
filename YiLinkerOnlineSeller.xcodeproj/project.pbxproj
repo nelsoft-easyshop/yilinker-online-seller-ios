@@ -7,6 +7,75 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C5E9D8E1B91E2E200F32CFE /* ProductUploadFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5E9D8D1B91E2E200F32CFE /* ProductUploadFooterView.swift */; };
+		0C5E9D901B91E2F700F32CFE /* ProductUploadFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C5E9D8F1B91E2F700F32CFE /* ProductUploadFooterView.xib */; };
+		0C65F8A41B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8A21B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.swift */; };
+		0C65F8A51B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C65F8A31B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.xib */; };
+		0C65F8A71B8DB99100504D86 /* ProductUploadTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8A61B8DB99100504D86 /* ProductUploadTableHeaderView.swift */; };
+		0C65F8AB1B8DB9AD00504D86 /* ProductUploadTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C65F8AA1B8DB9AD00504D86 /* ProductUploadTableHeaderView.xib */; };
+		0C65F8AE1B8DBC3400504D86 /* ProductUploadTextViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8AC1B8DBC3400504D86 /* ProductUploadTextViewTableViewCell.swift */; };
+		0C65F8AF1B8DBC3400504D86 /* ProductUploadTextViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C65F8AD1B8DBC3400504D86 /* ProductUploadTextViewTableViewCell.xib */; };
+		0C65F8B21B8DC9AC00504D86 /* ProductUploadCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8B01B8DC9AC00504D86 /* ProductUploadCategoryViewController.swift */; };
+		0C65F8B31B8DC9AC00504D86 /* ProductUploadCategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C65F8B11B8DC9AC00504D86 /* ProductUploadCategoryViewController.xib */; };
+		0C65F8B81B8DCD8B00504D86 /* ProductUploadCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8B61B8DCD8B00504D86 /* ProductUploadCategoryTableViewCell.swift */; };
+		0C65F8B91B8DCD8B00504D86 /* ProductUploadCategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C65F8B71B8DCD8B00504D86 /* ProductUploadCategoryTableViewCell.xib */; };
+		0C65F8C01B8DE28D00504D86 /* ProductUploadBrandViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8BE1B8DE28D00504D86 /* ProductUploadBrandViewController.swift */; };
+		0C65F8C11B8DE28D00504D86 /* ProductUploadBrandViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C65F8BF1B8DE28D00504D86 /* ProductUploadBrandViewController.xib */; };
+		0C65F8C81B8DEE6400504D86 /* ProductUploadPriceTableViewCell.xib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8C61B8DEE6400504D86 /* ProductUploadPriceTableViewCell.xib.swift */; };
+		0C65F8C91B8DEE6400504D86 /* ProductUploadPriceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C65F8C71B8DEE6400504D86 /* ProductUploadPriceTableViewCell.xib */; };
+		0C65F8CC1B8DF8A000504D86 /* ProductUploadSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8CA1B8DF8A000504D86 /* ProductUploadSearchViewController.swift */; };
+		0C65F8CD1B8DF8A000504D86 /* ProductUploadSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C65F8CB1B8DF8A000504D86 /* ProductUploadSearchViewController.xib */; };
+		0C65F8D01B8E059A00504D86 /* ProductUploadButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8CE1B8E059A00504D86 /* ProductUploadButtonTableViewCell.swift */; };
+		0C65F8D11B8E059A00504D86 /* ProductUploadButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C65F8CF1B8E059A00504D86 /* ProductUploadButtonTableViewCell.xib */; };
+		0C65F8D41B8E089200504D86 /* ProductUploadQuantityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8D21B8E089200504D86 /* ProductUploadQuantityTableViewCell.swift */; };
+		0C65F8D51B8E089200504D86 /* ProductUploadQuantityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C65F8D31B8E089200504D86 /* ProductUploadQuantityTableViewCell.xib */; };
+		0C65F8D81B8E0C4600504D86 /* ProductUploadDimensionsAndWeightTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8D61B8E0C4600504D86 /* ProductUploadDimensionsAndWeightTableViewCell.swift */; };
+		0C65F8D91B8E0C4600504D86 /* ProductUploadDimensionsAndWeightTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C65F8D71B8E0C4600504D86 /* ProductUploadDimensionsAndWeightTableViewCell.xib */; };
+		0C65F8E81B8E34C200504D86 /* ProductUploadDetailHeaderViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8E61B8E34C200504D86 /* ProductUploadDetailHeaderViewCollectionViewCell.swift */; };
+		0C65F8E91B8E34C200504D86 /* ProductUploadDetailHeaderViewCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C65F8E71B8E34C200504D86 /* ProductUploadDetailHeaderViewCollectionViewCell.xib */; };
+		0C65F8EC1B8E377500504D86 /* ProductUploadAttributeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8EA1B8E377500504D86 /* ProductUploadAttributeCollectionViewCell.swift */; };
+		0C65F8ED1B8E377500504D86 /* ProductUploadAttributeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C65F8EB1B8E377500504D86 /* ProductUploadAttributeCollectionViewCell.xib */; };
+		0C65F8F01B8E3CB000504D86 /* ProductUploadDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8EE1B8E3CB000504D86 /* ProductUploadDetailTableViewController.swift */; };
+		0C65F8F11B8E3CB000504D86 /* ProductUploadDetailTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C65F8EF1B8E3CB000504D86 /* ProductUploadDetailTableViewController.xib */; };
+		0C65F8F81B8E3EC200504D86 /* ProductUploadDetailFooterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8F61B8E3EC200504D86 /* ProductUploadDetailFooterTableViewCell.swift */; };
+		0C65F8F91B8E3EC200504D86 /* ProductUploadDetailFooterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C65F8F71B8E3EC200504D86 /* ProductUploadDetailFooterTableViewCell.xib */; };
+		0C6661A51B906FBF005ADFDD /* JSONResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6661A41B906FBF005ADFDD /* JSONResponseSerializer.swift */; };
+		0C6661A81B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6661A61B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.swift */; };
+		0C6661A91B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C6661A71B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.xib */; };
+		0C6661AC1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6661AA1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.swift */; };
+		0C6661AD1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C6661AB1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.xib */; };
+		0C8D7F871B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7F851B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.swift */; };
+		0C8D7F881B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C8D7F861B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.xib */; };
+		0C8D7F8D1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7F8B1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.swift */; };
+		0C8D7F8E1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C8D7F8C1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.xib */; };
+		0C8D7F901B8F0A6400B3FA4E /* AttributeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7F8F1B8F0A6400B3FA4E /* AttributeModel.swift */; };
+		0C8D7F921B8F0A7D00B3FA4E /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7F911B8F0A7D00B3FA4E /* ProductModel.swift */; };
+		0C8D7F951B8F12C200B3FA4E /* ProductUploadAttributeListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7F931B8F12C200B3FA4E /* ProductUploadAttributeListTableViewController.swift */; };
+		0C8D7F961B8F12C200B3FA4E /* ProductUploadAttributeListTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C8D7F941B8F12C200B3FA4E /* ProductUploadAttributeListTableViewController.xib */; };
+		0C8D7F981B8F198300B3FA4E /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7F971B8F198300B3FA4E /* Category.swift */; };
+		0C8D7F9F1B8F1B7800B3FA4E /* PUAttributeSetHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7F9D1B8F1B7800B3FA4E /* PUAttributeSetHeaderTableViewCell.swift */; };
+		0C8D7FA01B8F1B7800B3FA4E /* PUAttributeSetHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C8D7F9E1B8F1B7800B3FA4E /* PUAttributeSetHeaderTableViewCell.xib */; };
+		0C8D7FA71B8F573800B3FA4E /* PUAttributeAddFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7FA51B8F573800B3FA4E /* PUAttributeAddFooterView.swift */; };
+		0C8D7FA81B8F573800B3FA4E /* ProductUploadAddFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C8D7FA61B8F573800B3FA4E /* ProductUploadAddFooterView.xib */; };
+		0C8D7FAA1B8F577300B3FA4E /* ProductUploadAddFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7FA91B8F577300B3FA4E /* ProductUploadAddFooterView.swift */; };
+		0C8D7FAD1B8FBDB400B3FA4E /* ProductUploadCombinationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7FAB1B8FBDB400B3FA4E /* ProductUploadCombinationListViewController.swift */; };
+		0C8D7FAE1B8FBDB400B3FA4E /* ProductUploadCombinationListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C8D7FAC1B8FBDB400B3FA4E /* ProductUploadCombinationListViewController.xib */; };
+		0C8D7FB11B8FC1A400B3FA4E /* ProductUploadCombinationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7FAF1B8FC1A400B3FA4E /* ProductUploadCombinationTableViewController.swift */; };
+		0C8D7FB21B8FC1A400B3FA4E /* ProductUploadCombinationTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C8D7FB01B8FC1A400B3FA4E /* ProductUploadCombinationTableViewController.xib */; };
+		0C8D7FB51B8FC4AC00B3FA4E /* ProductUploadCombinationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7FB31B8FC4AC00B3FA4E /* ProductUploadCombinationTableViewCell.swift */; };
+		0C8D7FB61B8FC4AC00B3FA4E /* ProductUploadCombinationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C8D7FB41B8FC4AC00B3FA4E /* ProductUploadCombinationTableViewCell.xib */; };
+		0C8D7FB91B8FC79E00B3FA4E /* ProductUploadCombinationFooterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7FB71B8FC79E00B3FA4E /* ProductUploadCombinationFooterTableViewCell.swift */; };
+		0C8D7FBA1B8FC79E00B3FA4E /* ProductUploadCombinationFooterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C8D7FB81B8FC79E00B3FA4E /* ProductUploadCombinationFooterTableViewCell.xib */; };
+		0C8D7FBD1B8FCC5800B3FA4E /* ProductUploadCombinationHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7FBB1B8FCC5800B3FA4E /* ProductUploadCombinationHeaderTableViewCell.swift */; };
+		0C8D7FBE1B8FCC5800B3FA4E /* ProductUploadCombinationHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C8D7FBC1B8FCC5800B3FA4E /* ProductUploadCombinationHeaderTableViewCell.xib */; };
+		0C8D7FC11B8FE50900B3FA4E /* ProductUploadAttributeValuesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7FBF1B8FE50900B3FA4E /* ProductUploadAttributeValuesCollectionViewCell.swift */; };
+		0C8D7FC21B8FE50900B3FA4E /* ProductUploadAttributeValuesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C8D7FC01B8FE50900B3FA4E /* ProductUploadAttributeValuesCollectionViewCell.xib */; };
+		0C8D7FC41B8FFC5900B3FA4E /* CombinationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7FC31B8FFC5900B3FA4E /* CombinationModel.swift */; };
+		0CAB52A11B91F42300EA441A /* ConditionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB52A01B91F42300EA441A /* ConditionModel.swift */; };
+		0CAB52A31B91F9FB00EA441A /* ConditionParserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB52A21B91F9FB00EA441A /* ConditionParserModel.swift */; };
+		0CAB52A51B92023E00EA441A /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB52A41B92023E00EA441A /* CategoryModel.swift */; };
+		0CAB52A71B920A5800EA441A /* BrandModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB52A61B920A5800EA441A /* BrandModel.swift */; };
+		0CB1F0D81B931160004C7BA0 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CB1F0D71B931160004C7BA0 /* SignInViewController.xib */; };
 		0CF28ECE1B8C85E5005B2E54 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EB71B8C85E4005B2E54 /* AppDelegate.swift */; };
 		0CF28ED01B8C85E5005B2E54 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EBB1B8C85E4005B2E54 /* Enums.swift */; };
 		0CF28ED11B8C85E5005B2E54 /* HexaColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EBC1B8C85E4005B2E54 /* HexaColor.swift */; };
@@ -39,8 +108,14 @@
 		0CF28F031B8CA2E9005B2E54 /* Panton Thin Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EF11B8CA2E9005B2E54 /* Panton Thin Italic.otf */; };
 		0CF28F041B8CA2E9005B2E54 /* Panton Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EF21B8CA2E9005B2E54 /* Panton Thin.otf */; };
 		0CF28F051B8CA2E9005B2E54 /* Panton.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EF31B8CA2E9005B2E54 /* Panton.otf */; };
+		0CF28F111B8CAA31005B2E54 /* ProductUploadTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28F0F1B8CAA31005B2E54 /* ProductUploadTableViewController.swift */; };
+		0CF28F121B8CAA31005B2E54 /* ProductUploadTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28F101B8CAA31005B2E54 /* ProductUploadTableViewController.xib */; };
+		0CF28F161B8CCD3E005B2E54 /* ProductUploadUploadImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28F141B8CCD3E005B2E54 /* ProductUploadUploadImageTableViewCell.swift */; };
+		0CF28F171B8CCD3E005B2E54 /* ProductUploadUploadImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28F151B8CCD3E005B2E54 /* ProductUploadUploadImageTableViewCell.xib */; };
+		0CF28F1A1B8CD079005B2E54 /* ProductUploadImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28F181B8CD079005B2E54 /* ProductUploadImageCollectionViewCell.swift */; };
+		0CF28F1B1B8CD079005B2E54 /* ProductUploadImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28F191B8CD079005B2E54 /* ProductUploadImageCollectionViewCell.xib */; };
+		0CF28F1D1B8CD21B005B2E54 /* DynamicRoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28F1C1B8CD21B005B2E54 /* DynamicRoundedButton.swift */; };
 		26374DA01B8F50A4006C639B /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26374D9E1B8F50A4006C639B /* SignInViewController.swift */; };
-		26374DA11B8F50A4006C639B /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26374D9F1B8F50A4006C639B /* SignInViewController.xib */; };
 		26378F211B8CC45A008533B6 /* ProductManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26378F1F1B8CC45A008533B6 /* ProductManagementViewController.swift */; };
 		26378F221B8CC45A008533B6 /* ProductManagementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26378F201B8CC45A008533B6 /* ProductManagementViewController.xib */; };
 		26378F511B8CEE82008533B6 /* ProductManagementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26378F4F1B8CEE82008533B6 /* ProductManagementTableViewCell.swift */; };
@@ -201,6 +276,75 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C5E9D8D1B91E2E200F32CFE /* ProductUploadFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadFooterView.swift; sourceTree = "<group>"; };
+		0C5E9D8F1B91E2F700F32CFE /* ProductUploadFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadFooterView.xib; path = ../View/ProductUploadFooterView.xib; sourceTree = "<group>"; };
+		0C65F8A21B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadTextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		0C65F8A31B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadTextFieldTableViewCell.xib; path = ../View/ProductUploadTextFieldTableViewCell.xib; sourceTree = "<group>"; };
+		0C65F8A61B8DB99100504D86 /* ProductUploadTableHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadTableHeaderView.swift; sourceTree = "<group>"; };
+		0C65F8AA1B8DB9AD00504D86 /* ProductUploadTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadTableHeaderView.xib; path = ../../../../../ProductUploadTableHeaderView.xib; sourceTree = "<group>"; };
+		0C65F8AC1B8DBC3400504D86 /* ProductUploadTextViewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadTextViewTableViewCell.swift; sourceTree = "<group>"; };
+		0C65F8AD1B8DBC3400504D86 /* ProductUploadTextViewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadTextViewTableViewCell.xib; path = ../View/ProductUploadTextViewTableViewCell.xib; sourceTree = "<group>"; };
+		0C65F8B01B8DC9AC00504D86 /* ProductUploadCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadCategoryViewController.swift; sourceTree = "<group>"; };
+		0C65F8B11B8DC9AC00504D86 /* ProductUploadCategoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadCategoryViewController.xib; path = ../ViewController/ProductUploadCategoryViewController.xib; sourceTree = "<group>"; };
+		0C65F8B61B8DCD8B00504D86 /* ProductUploadCategoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadCategoryTableViewCell.swift; sourceTree = "<group>"; };
+		0C65F8B71B8DCD8B00504D86 /* ProductUploadCategoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadCategoryTableViewCell.xib; path = ../View/ProductUploadCategoryTableViewCell.xib; sourceTree = "<group>"; };
+		0C65F8BE1B8DE28D00504D86 /* ProductUploadBrandViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadBrandViewController.swift; sourceTree = "<group>"; };
+		0C65F8BF1B8DE28D00504D86 /* ProductUploadBrandViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadBrandViewController.xib; path = ../ViewController/ProductUploadBrandViewController.xib; sourceTree = "<group>"; };
+		0C65F8C61B8DEE6400504D86 /* ProductUploadPriceTableViewCell.xib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadPriceTableViewCell.xib.swift; sourceTree = "<group>"; };
+		0C65F8C71B8DEE6400504D86 /* ProductUploadPriceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadPriceTableViewCell.xib; path = ../View/ProductUploadPriceTableViewCell.xib; sourceTree = "<group>"; };
+		0C65F8CA1B8DF8A000504D86 /* ProductUploadSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadSearchViewController.swift; sourceTree = "<group>"; };
+		0C65F8CB1B8DF8A000504D86 /* ProductUploadSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadSearchViewController.xib; path = ../ViewController/ProductUploadSearchViewController.xib; sourceTree = "<group>"; };
+		0C65F8CE1B8E059A00504D86 /* ProductUploadButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadButtonTableViewCell.swift; sourceTree = "<group>"; };
+		0C65F8CF1B8E059A00504D86 /* ProductUploadButtonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadButtonTableViewCell.xib; path = ../View/ProductUploadButtonTableViewCell.xib; sourceTree = "<group>"; };
+		0C65F8D21B8E089200504D86 /* ProductUploadQuantityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadQuantityTableViewCell.swift; sourceTree = "<group>"; };
+		0C65F8D31B8E089200504D86 /* ProductUploadQuantityTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadQuantityTableViewCell.xib; path = ../View/ProductUploadQuantityTableViewCell.xib; sourceTree = "<group>"; };
+		0C65F8D61B8E0C4600504D86 /* ProductUploadDimensionsAndWeightTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadDimensionsAndWeightTableViewCell.swift; sourceTree = "<group>"; };
+		0C65F8D71B8E0C4600504D86 /* ProductUploadDimensionsAndWeightTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadDimensionsAndWeightTableViewCell.xib; path = ../View/ProductUploadDimensionsAndWeightTableViewCell.xib; sourceTree = "<group>"; };
+		0C65F8E61B8E34C200504D86 /* ProductUploadDetailHeaderViewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadDetailHeaderViewCollectionViewCell.swift; sourceTree = "<group>"; };
+		0C65F8E71B8E34C200504D86 /* ProductUploadDetailHeaderViewCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadDetailHeaderViewCollectionViewCell.xib; path = ../View/ProductUploadDetailHeaderViewCollectionViewCell.xib; sourceTree = "<group>"; };
+		0C65F8EA1B8E377500504D86 /* ProductUploadAttributeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadAttributeCollectionViewCell.swift; sourceTree = "<group>"; };
+		0C65F8EB1B8E377500504D86 /* ProductUploadAttributeCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadAttributeCollectionViewCell.xib; path = ../View/ProductUploadAttributeCollectionViewCell.xib; sourceTree = "<group>"; };
+		0C65F8EE1B8E3CB000504D86 /* ProductUploadDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadDetailTableViewController.swift; sourceTree = "<group>"; };
+		0C65F8EF1B8E3CB000504D86 /* ProductUploadDetailTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadDetailTableViewController.xib; path = ../ViewController/ProductUploadDetailTableViewController.xib; sourceTree = "<group>"; };
+		0C65F8F61B8E3EC200504D86 /* ProductUploadDetailFooterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadDetailFooterTableViewCell.swift; sourceTree = "<group>"; };
+		0C65F8F71B8E3EC200504D86 /* ProductUploadDetailFooterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadDetailFooterTableViewCell.xib; path = ../View/ProductUploadDetailFooterTableViewCell.xib; sourceTree = "<group>"; };
+		0C6661A41B906FBF005ADFDD /* JSONResponseSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONResponseSerializer.swift; sourceTree = "<group>"; };
+		0C6661A61B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadPlainDetailCombinationTableViewCell.swift; sourceTree = "<group>"; };
+		0C6661A71B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadPlainDetailCombinationTableViewCell.xib; path = ../View/ProductUploadPlainDetailCombinationTableViewCell.xib; sourceTree = "<group>"; };
+		0C6661AA1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadAttributeSummaryTableViewCell.swift; sourceTree = "<group>"; };
+		0C6661AB1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadAttributeSummaryTableViewCell.xib; path = ../View/ProductUploadAttributeSummaryTableViewCell.xib; sourceTree = "<group>"; };
+		0C8D7F851B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadDetailHeaderViewTableViewCell.swift; sourceTree = "<group>"; };
+		0C8D7F861B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadDetailHeaderViewTableViewCell.xib; path = ../View/ProductUploadDetailHeaderViewTableViewCell.xib; sourceTree = "<group>"; };
+		0C8D7F8B1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadAttributeTableViewCell.swift; sourceTree = "<group>"; };
+		0C8D7F8C1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadAttributeTableViewCell.xib; path = ../View/ProductUploadAttributeTableViewCell.xib; sourceTree = "<group>"; };
+		0C8D7F8F1B8F0A6400B3FA4E /* AttributeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributeModel.swift; sourceTree = "<group>"; };
+		0C8D7F911B8F0A7D00B3FA4E /* ProductModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
+		0C8D7F931B8F12C200B3FA4E /* ProductUploadAttributeListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadAttributeListTableViewController.swift; sourceTree = "<group>"; };
+		0C8D7F941B8F12C200B3FA4E /* ProductUploadAttributeListTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadAttributeListTableViewController.xib; path = ../ViewController/ProductUploadAttributeListTableViewController.xib; sourceTree = "<group>"; };
+		0C8D7F971B8F198300B3FA4E /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		0C8D7F9D1B8F1B7800B3FA4E /* PUAttributeSetHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PUAttributeSetHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		0C8D7F9E1B8F1B7800B3FA4E /* PUAttributeSetHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PUAttributeSetHeaderTableViewCell.xib; path = ../View/PUAttributeSetHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		0C8D7FA51B8F573800B3FA4E /* PUAttributeAddFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PUAttributeAddFooterView.swift; sourceTree = "<group>"; };
+		0C8D7FA61B8F573800B3FA4E /* ProductUploadAddFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadAddFooterView.xib; path = ../View/ProductUploadAddFooterView.xib; sourceTree = "<group>"; };
+		0C8D7FA91B8F577300B3FA4E /* ProductUploadAddFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadAddFooterView.swift; sourceTree = "<group>"; };
+		0C8D7FAB1B8FBDB400B3FA4E /* ProductUploadCombinationListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadCombinationListViewController.swift; sourceTree = "<group>"; };
+		0C8D7FAC1B8FBDB400B3FA4E /* ProductUploadCombinationListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadCombinationListViewController.xib; path = ../ViewController/ProductUploadCombinationListViewController.xib; sourceTree = "<group>"; };
+		0C8D7FAF1B8FC1A400B3FA4E /* ProductUploadCombinationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadCombinationTableViewController.swift; sourceTree = "<group>"; };
+		0C8D7FB01B8FC1A400B3FA4E /* ProductUploadCombinationTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadCombinationTableViewController.xib; path = ../ViewController/ProductUploadCombinationTableViewController.xib; sourceTree = "<group>"; };
+		0C8D7FB31B8FC4AC00B3FA4E /* ProductUploadCombinationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadCombinationTableViewCell.swift; sourceTree = "<group>"; };
+		0C8D7FB41B8FC4AC00B3FA4E /* ProductUploadCombinationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadCombinationTableViewCell.xib; path = ../View/ProductUploadCombinationTableViewCell.xib; sourceTree = "<group>"; };
+		0C8D7FB71B8FC79E00B3FA4E /* ProductUploadCombinationFooterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadCombinationFooterTableViewCell.swift; sourceTree = "<group>"; };
+		0C8D7FB81B8FC79E00B3FA4E /* ProductUploadCombinationFooterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadCombinationFooterTableViewCell.xib; path = ../View/ProductUploadCombinationFooterTableViewCell.xib; sourceTree = "<group>"; };
+		0C8D7FBB1B8FCC5800B3FA4E /* ProductUploadCombinationHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadCombinationHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		0C8D7FBC1B8FCC5800B3FA4E /* ProductUploadCombinationHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadCombinationHeaderTableViewCell.xib; path = ../View/ProductUploadCombinationHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		0C8D7FBF1B8FE50900B3FA4E /* ProductUploadAttributeValuesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadAttributeValuesCollectionViewCell.swift; sourceTree = "<group>"; };
+		0C8D7FC01B8FE50900B3FA4E /* ProductUploadAttributeValuesCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadAttributeValuesCollectionViewCell.xib; path = ../View/ProductUploadAttributeValuesCollectionViewCell.xib; sourceTree = "<group>"; };
+		0C8D7FC31B8FFC5900B3FA4E /* CombinationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CombinationModel.swift; sourceTree = "<group>"; };
+		0CAB52A01B91F42300EA441A /* ConditionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConditionModel.swift; sourceTree = "<group>"; };
+		0CAB52A21B91F9FB00EA441A /* ConditionParserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConditionParserModel.swift; sourceTree = "<group>"; };
+		0CAB52A41B92023E00EA441A /* CategoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
+		0CAB52A61B920A5800EA441A /* BrandModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrandModel.swift; sourceTree = "<group>"; };
+		0CB1F0D71B931160004C7BA0 /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
 		0CF28EB71B8C85E4005B2E54 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0CF28EBA1B8C85E4005B2E54 /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		0CF28EBB1B8C85E4005B2E54 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
@@ -236,8 +380,14 @@
 		0CF28EF11B8CA2E9005B2E54 /* Panton Thin Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Thin Italic.otf"; sourceTree = "<group>"; };
 		0CF28EF21B8CA2E9005B2E54 /* Panton Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Thin.otf"; sourceTree = "<group>"; };
 		0CF28EF31B8CA2E9005B2E54 /* Panton.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Panton.otf; sourceTree = "<group>"; };
+		0CF28F0F1B8CAA31005B2E54 /* ProductUploadTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadTableViewController.swift; sourceTree = "<group>"; };
+		0CF28F101B8CAA31005B2E54 /* ProductUploadTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadTableViewController.xib; path = ../ViewController/ProductUploadTableViewController.xib; sourceTree = "<group>"; };
+		0CF28F141B8CCD3E005B2E54 /* ProductUploadUploadImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadUploadImageTableViewCell.swift; sourceTree = "<group>"; };
+		0CF28F151B8CCD3E005B2E54 /* ProductUploadUploadImageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadUploadImageTableViewCell.xib; path = ../View/ProductUploadUploadImageTableViewCell.xib; sourceTree = "<group>"; };
+		0CF28F181B8CD079005B2E54 /* ProductUploadImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		0CF28F191B8CD079005B2E54 /* ProductUploadImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadImageCollectionViewCell.xib; path = ../View/ProductUploadImageCollectionViewCell.xib; sourceTree = "<group>"; };
+		0CF28F1C1B8CD21B005B2E54 /* DynamicRoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicRoundedButton.swift; sourceTree = "<group>"; };
 		26374D9E1B8F50A4006C639B /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
-		26374D9F1B8F50A4006C639B /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
 		26378F1F1B8CC45A008533B6 /* ProductManagementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductManagementViewController.swift; sourceTree = "<group>"; };
 		26378F201B8CC45A008533B6 /* ProductManagementViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductManagementViewController.xib; sourceTree = "<group>"; };
 		26378F4F1B8CEE82008533B6 /* ProductManagementTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductManagementTableViewCell.swift; sourceTree = "<group>"; };
@@ -447,6 +597,7 @@
 		0CF28EB91B8C85E4005B2E54 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				0C8D7F971B8F198300B3FA4E /* Category.swift */,
 				0CF28EDE1B8C868D005B2E54 /* Constants.swift */,
 				0CF28EBA1B8C85E4005B2E54 /* APIManager.swift */,
 				0CF28EBB1B8C85E4005B2E54 /* Enums.swift */,
@@ -456,6 +607,7 @@
 				0CF28EBF1B8C85E4005B2E54 /* Reachability.swift */,
 				0CF28EC01B8C85E4005B2E54 /* SessionManager.swift */,
 				0CF28EC11B8C85E4005B2E54 /* XibHelper.swift */,
+				0C6661A41B906FBF005ADFDD /* JSONResponseSerializer.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -463,6 +615,13 @@
 		0CF28EC21B8C85E4005B2E54 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0C8D7F8F1B8F0A6400B3FA4E /* AttributeModel.swift */,
+				0C8D7F911B8F0A7D00B3FA4E /* ProductModel.swift */,
+				0C8D7FC31B8FFC5900B3FA4E /* CombinationModel.swift */,
+				0CAB52A01B91F42300EA441A /* ConditionModel.swift */,
+				0CAB52A21B91F9FB00EA441A /* ConditionParserModel.swift */,
+				0CAB52A41B92023E00EA441A /* CategoryModel.swift */,
+				0CAB52A61B920A5800EA441A /* BrandModel.swift */,
 				79EDA40D1B9204FE0037558A /* PointModel.swift */,
 				79EFF76E1B8D6E35008A9E7D /* ActivityLogModel.swift */,
 				79EFF76F1B8D6E35008A9E7D /* ActivityModel.swift */,
@@ -483,6 +642,32 @@
 		0CF28EC61B8C85E5005B2E54 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0CF28F1C1B8CD21B005B2E54 /* DynamicRoundedButton.swift */,
+				0CF28F141B8CCD3E005B2E54 /* ProductUploadUploadImageTableViewCell.swift */,
+				0CF28F181B8CD079005B2E54 /* ProductUploadImageCollectionViewCell.swift */,
+				0C65F8A21B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.swift */,
+				0C65F8A61B8DB99100504D86 /* ProductUploadTableHeaderView.swift */,
+				0C65F8AC1B8DBC3400504D86 /* ProductUploadTextViewTableViewCell.swift */,
+				0C65F8B61B8DCD8B00504D86 /* ProductUploadCategoryTableViewCell.swift */,
+				0C65F8C61B8DEE6400504D86 /* ProductUploadPriceTableViewCell.xib.swift */,
+				0C65F8CE1B8E059A00504D86 /* ProductUploadButtonTableViewCell.swift */,
+				0C65F8D21B8E089200504D86 /* ProductUploadQuantityTableViewCell.swift */,
+				0C65F8D61B8E0C4600504D86 /* ProductUploadDimensionsAndWeightTableViewCell.swift */,
+				0C65F8E61B8E34C200504D86 /* ProductUploadDetailHeaderViewCollectionViewCell.swift */,
+				0C65F8EA1B8E377500504D86 /* ProductUploadAttributeCollectionViewCell.swift */,
+				0C65F8F61B8E3EC200504D86 /* ProductUploadDetailFooterTableViewCell.swift */,
+				0C8D7FA51B8F573800B3FA4E /* PUAttributeAddFooterView.swift */,
+				0C8D7F851B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.swift */,
+				0C8D7F8B1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.swift */,
+				0C8D7F9D1B8F1B7800B3FA4E /* PUAttributeSetHeaderTableViewCell.swift */,
+				0C8D7FA91B8F577300B3FA4E /* ProductUploadAddFooterView.swift */,
+				0C8D7FB31B8FC4AC00B3FA4E /* ProductUploadCombinationTableViewCell.swift */,
+				0C8D7FB71B8FC79E00B3FA4E /* ProductUploadCombinationFooterTableViewCell.swift */,
+				0C8D7FBB1B8FCC5800B3FA4E /* ProductUploadCombinationHeaderTableViewCell.swift */,
+				0C8D7FBF1B8FE50900B3FA4E /* ProductUploadAttributeValuesCollectionViewCell.swift */,
+				0C6661A61B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.swift */,
+				0C6661AA1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.swift */,
+				0C5E9D8D1B91E2E200F32CFE /* ProductUploadFooterView.swift */,
 				79EDA4051B9204F20037558A /* PointsBreakdownTableViewCell.swift */,
 				79EDA4061B9204F20037558A /* PointsDetailsTableViewCell.swift */,
 				79EDA4071B9204F20037558A /* PointsEarnedTableViewCell.swift */,
@@ -508,6 +693,14 @@
 				0CF28EC91B8C85E5005B2E54 /* MessageViewController.swift */,
 				0CF28ECA1B8C85E5005B2E54 /* SearchViewController.swift */,
 				0CF28ECB1B8C85E5005B2E54 /* SettingsViewController.swift */,
+				0CF28F0F1B8CAA31005B2E54 /* ProductUploadTableViewController.swift */,
+				0C65F8B01B8DC9AC00504D86 /* ProductUploadCategoryViewController.swift */,
+				0C65F8BE1B8DE28D00504D86 /* ProductUploadBrandViewController.swift */,
+				0C65F8CA1B8DF8A000504D86 /* ProductUploadSearchViewController.swift */,
+				0C65F8EE1B8E3CB000504D86 /* ProductUploadDetailTableViewController.swift */,
+				0C8D7F931B8F12C200B3FA4E /* ProductUploadAttributeListTableViewController.swift */,
+				0C8D7FAB1B8FBDB400B3FA4E /* ProductUploadCombinationListViewController.swift */,
+				0C8D7FAF1B8FC1A400B3FA4E /* ProductUploadCombinationTableViewController.swift */,
 				26378F1F1B8CC45A008533B6 /* ProductManagementViewController.swift */,
 				26378F4F1B8CEE82008533B6 /* ProductManagementTableViewCell.swift */,
 				26BD5E471B8DC18B00739488 /* ProductDetailsViewController.swift */,
@@ -535,7 +728,6 @@
 				79EFF7881B8DCFA2008A9E7D /* SalesReportTableViewController.swift */,
 				7928764C1B8E1FD800762A39 /* DatePickerViewController.swift */,
 				26374D9E1B8F50A4006C639B /* SignInViewController.swift */,
-				26374D9F1B8F50A4006C639B /* SignInViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -543,6 +735,39 @@
 		0CF28ECC1B8C85E5005B2E54 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				0CB1F0D71B931160004C7BA0 /* SignInViewController.xib */,
+				0C65F8CB1B8DF8A000504D86 /* ProductUploadSearchViewController.xib */,
+				0C65F8C71B8DEE6400504D86 /* ProductUploadPriceTableViewCell.xib */,
+				0C65F8BF1B8DE28D00504D86 /* ProductUploadBrandViewController.xib */,
+				0C65F8B71B8DCD8B00504D86 /* ProductUploadCategoryTableViewCell.xib */,
+				0C65F8B11B8DC9AC00504D86 /* ProductUploadCategoryViewController.xib */,
+				0C65F8AD1B8DBC3400504D86 /* ProductUploadTextViewTableViewCell.xib */,
+				0C65F8A31B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.xib */,
+				0CF28F191B8CD079005B2E54 /* ProductUploadImageCollectionViewCell.xib */,
+				0CF28F151B8CCD3E005B2E54 /* ProductUploadUploadImageTableViewCell.xib */,
+				0CF28F101B8CAA31005B2E54 /* ProductUploadTableViewController.xib */,
+				0C65F8AA1B8DB9AD00504D86 /* ProductUploadTableHeaderView.xib */,
+				0C65F8EF1B8E3CB000504D86 /* ProductUploadDetailTableViewController.xib */,
+				0C8D7F941B8F12C200B3FA4E /* ProductUploadAttributeListTableViewController.xib */,
+				0C8D7FAC1B8FBDB400B3FA4E /* ProductUploadCombinationListViewController.xib */,
+				0C8D7FB01B8FC1A400B3FA4E /* ProductUploadCombinationTableViewController.xib */,
+				0C65F8CF1B8E059A00504D86 /* ProductUploadButtonTableViewCell.xib */,
+				0C65F8D31B8E089200504D86 /* ProductUploadQuantityTableViewCell.xib */,
+				0C65F8D71B8E0C4600504D86 /* ProductUploadDimensionsAndWeightTableViewCell.xib */,
+				0C65F8E71B8E34C200504D86 /* ProductUploadDetailHeaderViewCollectionViewCell.xib */,
+				0C65F8EB1B8E377500504D86 /* ProductUploadAttributeCollectionViewCell.xib */,
+				0C65F8F71B8E3EC200504D86 /* ProductUploadDetailFooterTableViewCell.xib */,
+				0C8D7FA61B8F573800B3FA4E /* ProductUploadAddFooterView.xib */,
+				0C8D7F861B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.xib */,
+				0C8D7F8C1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.xib */,
+				0C8D7F9E1B8F1B7800B3FA4E /* PUAttributeSetHeaderTableViewCell.xib */,
+				0C8D7FB41B8FC4AC00B3FA4E /* ProductUploadCombinationTableViewCell.xib */,
+				0C8D7FB81B8FC79E00B3FA4E /* ProductUploadCombinationFooterTableViewCell.xib */,
+				0C8D7FBC1B8FCC5800B3FA4E /* ProductUploadCombinationHeaderTableViewCell.xib */,
+				0C8D7FC01B8FE50900B3FA4E /* ProductUploadAttributeValuesCollectionViewCell.xib */,
+				0C6661A71B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.xib */,
+				0C6661AB1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.xib */,
+				0C5E9D8F1B91E2F700F32CFE /* ProductUploadFooterView.xib */,
 				79EDA40F1B9205080037558A /* PointsBreakdownTableViewCell.xib */,
 				79EDA4101B9205080037558A /* PointsDetailsTableViewCell.xib */,
 				79EDA4111B9205080037558A /* PointsEarnedTableViewCell.xib */,
@@ -905,25 +1130,45 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C5E9D901B91E2F700F32CFE /* ProductUploadFooterView.xib in Resources */,
+				0C65F8C91B8DEE6400504D86 /* ProductUploadPriceTableViewCell.xib in Resources */,
+				0CF28F121B8CAA31005B2E54 /* ProductUploadTableViewController.xib in Resources */,
+				0C8D7FB61B8FC4AC00B3FA4E /* ProductUploadCombinationTableViewCell.xib in Resources */,
+				0C65F8ED1B8E377500504D86 /* ProductUploadAttributeCollectionViewCell.xib in Resources */,
 				79EFF7811B8DB3C8008A9E7D /* RecentProductsTableViewController.xib in Resources */,
 				79EFF7851B8DBB97008A9E7D /* RecentProductsTableViewCell.xib in Resources */,
+				0CB1F0D81B931160004C7BA0 /* SignInViewController.xib in Resources */,
 				799892F71B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib in Resources */,
 				0CF28F051B8CA2E9005B2E54 /* Panton.otf in Resources */,
 				26BD5E641B8E1A3500739488 /* ProductDescriptionViewController.xib in Resources */,
 				26B282F61B91E92B00A7C2B1 /* ProductManagementAllTableViewCell.xib in Resources */,
 				26BD5E4E1B8DC49800739488 /* ProductDetailsTableViewCell.xib in Resources */,
 				799893031B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib in Resources */,
+				0C65F8F11B8E3CB000504D86 /* ProductUploadDetailTableViewController.xib in Resources */,
 				79EDA4161B9205080037558A /* PointsTableViewCell.xib in Resources */,
 				792876491B8E001200762A39 /* SalesReportTableViewCell.xib in Resources */,
 				79EFF78B1B8DCFA2008A9E7D /* SalesReportTableViewController.xib in Resources */,
 				0CF28F011B8CA2E9005B2E54 /* Panton SemiBold Italic.otf in Resources */,
+				0C8D7F8E1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.xib in Resources */,
 				0CF28ED81B8C85E5005B2E54 /* Main.storyboard in Resources */,
+				0C65F8B91B8DCD8B00504D86 /* ProductUploadCategoryTableViewCell.xib in Resources */,
+				0C65F8D51B8E089200504D86 /* ProductUploadQuantityTableViewCell.xib in Resources */,
 				0CF28ED71B8C85E5005B2E54 /* LaunchScreen.xib in Resources */,
 				0CF28EFD1B8CA2E9005B2E54 /* Panton Heavy.otf in Resources */,
+				0C65F8E91B8E34C200504D86 /* ProductUploadDetailHeaderViewCollectionViewCell.xib in Resources */,
+				0C8D7FC21B8FE50900B3FA4E /* ProductUploadAttributeValuesCollectionViewCell.xib in Resources */,
+				0C65F8D11B8E059A00504D86 /* ProductUploadButtonTableViewCell.xib in Resources */,
+				0C8D7F961B8F12C200B3FA4E /* ProductUploadAttributeListTableViewController.xib in Resources */,
+				0C6661AD1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.xib in Resources */,
+				0C65F8B31B8DC9AC00504D86 /* ProductUploadCategoryViewController.xib in Resources */,
+				0C8D7FA01B8F1B7800B3FA4E /* PUAttributeSetHeaderTableViewCell.xib in Resources */,
+				0C65F8A51B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.xib in Resources */,
 				799892FB1B8CE94C00F4CFE2 /* SettingDeactivateTableViewCell.xib in Resources */,
 				0CF28EFF1B8CA2E9005B2E54 /* Panton Light.otf in Resources */,
 				799893051B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib in Resources */,
 				0CF28EFA1B8CA2E9005B2E54 /* Panton ExtraLight Italic.otf in Resources */,
+				0CF28F1B1B8CD079005B2E54 /* ProductUploadImageCollectionViewCell.xib in Resources */,
+				0C8D7FBE1B8FCC5800B3FA4E /* ProductUploadCombinationHeaderTableViewCell.xib in Resources */,
 				26BD5E5C1B8DCF9B00739488 /* ProductImagesCollectionViewCell.xib in Resources */,
 				799892F31B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib in Resources */,
 				0CF28F031B8CA2E9005B2E54 /* Panton Thin Italic.otf in Resources */,
@@ -933,8 +1178,10 @@
 				0CF28EF41B8CA2E9005B2E54 /* Black Italic.otf in Resources */,
 				26378F521B8CEE82008533B6 /* ProductManagementTableViewCell.xib in Resources */,
 				0CF28EFE1B8CA2E9005B2E54 /* Panton Light Italic.otf in Resources */,
+				0C65F8CD1B8DF8A000504D86 /* ProductUploadSearchViewController.xib in Resources */,
 				7928764F1B8E1FD800762A39 /* DatePickerViewController.xib in Resources */,
 				0CF28F001B8CA2E9005B2E54 /* Panton Regular Italic.otf in Resources */,
+				0C65F8C11B8DE28D00504D86 /* ProductUploadBrandViewController.xib in Resources */,
 				79EFF75F1B8D6DD3008A9E7D /* ActivityLogTableViewController.xib in Resources */,
 				0CF28EFB1B8CA2E9005B2E54 /* Panton ExtraLight.otf in Resources */,
 				0CF28EF71B8CA2E9005B2E54 /* Panton Bold.otf in Resources */,
@@ -945,15 +1192,25 @@
 				79EFF75E1B8D6DD3008A9E7D /* ActivityLogTableViewCell.xib in Resources */,
 				79EDA4131B9205080037558A /* PointsBreakdownTableViewCell.xib in Resources */,
 				967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */,
+				0CF28F171B8CCD3E005B2E54 /* ProductUploadUploadImageTableViewCell.xib in Resources */,
+				0C8D7FA81B8F573800B3FA4E /* ProductUploadAddFooterView.xib in Resources */,
+				0C6661A91B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.xib in Resources */,
+				0C8D7FAE1B8FBDB400B3FA4E /* ProductUploadCombinationListViewController.xib in Resources */,
 				79EDA4151B9205080037558A /* PointsEarnedTableViewCell.xib in Resources */,
 				0CF28EF81B8CA2E9005B2E54 /* Panton ExtraBold Italic.otf in Resources */,
 				0CF28EFC1B8CA2E9005B2E54 /* Panton Heavy Italic.otf in Resources */,
+				0C65F8D91B8E0C4600504D86 /* ProductUploadDimensionsAndWeightTableViewCell.xib in Resources */,
+				0C8D7FB21B8FC1A400B3FA4E /* ProductUploadCombinationTableViewController.xib in Resources */,
+				0C65F8AB1B8DB9AD00504D86 /* ProductUploadTableHeaderView.xib in Resources */,
 				0CF28F021B8CA2E9005B2E54 /* Panton SemiBold.otf in Resources */,
+				0C65F8F91B8E3EC200504D86 /* ProductUploadDetailFooterTableViewCell.xib in Resources */,
+				0C8D7FBA1B8FC79E00B3FA4E /* ProductUploadCombinationFooterTableViewCell.xib in Resources */,
 				0CF28EF61B8CA2E9005B2E54 /* Panton Bold Italic.otf in Resources */,
+				0C65F8AF1B8DBC3400504D86 /* ProductUploadTextViewTableViewCell.xib in Resources */,
 				26C2854E1B91C21A005EBD3A /* ProductManagementCollectionViewCell.xib in Resources */,
 				26BD5E4A1B8DC18B00739488 /* ProductDetailsViewController.xib in Resources */,
-				26374DA11B8F50A4006C639B /* SignInViewController.xib in Resources */,
 				0CF28EF51B8CA2E9005B2E54 /* Panton Black.otf in Resources */,
+				0C8D7F881B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1004,6 +1261,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C8D7F901B8F0A6400B3FA4E /* AttributeModel.swift in Sources */,
+				0C65F8AE1B8DBC3400504D86 /* ProductUploadTextViewTableViewCell.swift in Sources */,
+				0C65F8A41B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.swift in Sources */,
+				0C8D7FBD1B8FCC5800B3FA4E /* ProductUploadCombinationHeaderTableViewCell.swift in Sources */,
+				0C65F8D41B8E089200504D86 /* ProductUploadQuantityTableViewCell.swift in Sources */,
+				0CAB52A51B92023E00EA441A /* CategoryModel.swift in Sources */,
+				0CAB52A11B91F42300EA441A /* ConditionModel.swift in Sources */,
 				26B282FC1B929BE300A7C2B1 /* APIManager.swift in Sources */,
 				26378F511B8CEE82008533B6 /* ProductManagementTableViewCell.swift in Sources */,
 				26BD5E5B1B8DCF9B00739488 /* ProductImagesCollectionViewCell.swift in Sources */,
@@ -1055,10 +1319,45 @@
 				799892F51B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift in Sources */,
 				792876101B8DF89F00762A39 /* CandleChartData.swift in Sources */,
 				0CF28ED21B8C85E5005B2E54 /* IPhoneType.swift in Sources */,
+				0C8D7F871B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.swift in Sources */,
+				0C65F8F01B8E3CB000504D86 /* ProductUploadDetailTableViewController.swift in Sources */,
+				0C65F8F81B8E3EC200504D86 /* ProductUploadDetailFooterTableViewCell.swift in Sources */,
+				0C65F8B81B8DCD8B00504D86 /* ProductUploadCategoryTableViewCell.swift in Sources */,
+				0C8D7FC11B8FE50900B3FA4E /* ProductUploadAttributeValuesCollectionViewCell.swift in Sources */,
+				0C65F8C81B8DEE6400504D86 /* ProductUploadPriceTableViewCell.xib.swift in Sources */,
+				0CAB52A71B920A5800EA441A /* BrandModel.swift in Sources */,
+				0C8D7F921B8F0A7D00B3FA4E /* ProductModel.swift in Sources */,
+				0C6661A51B906FBF005ADFDD /* JSONResponseSerializer.swift in Sources */,
+				0C65F8EC1B8E377500504D86 /* ProductUploadAttributeCollectionViewCell.swift in Sources */,
 				7928764B1B8E049400762A39 /* SalesReportTableViewCell.swift in Sources */,
 				0CF28ED01B8C85E5005B2E54 /* Enums.swift in Sources */,
 				79EDA4091B9204F20037558A /* PointsBreakdownTableViewCell.swift in Sources */,
 				0CF28ED61B8C85E5005B2E54 /* XibHelper.swift in Sources */,
+				0C5E9D8E1B91E2E200F32CFE /* ProductUploadFooterView.swift in Sources */,
+				0C8D7FC41B8FFC5900B3FA4E /* CombinationModel.swift in Sources */,
+				0C65F8E81B8E34C200504D86 /* ProductUploadDetailHeaderViewCollectionViewCell.swift in Sources */,
+				0C65F8A71B8DB99100504D86 /* ProductUploadTableHeaderView.swift in Sources */,
+				0C65F8D01B8E059A00504D86 /* ProductUploadButtonTableViewCell.swift in Sources */,
+				0CF28F161B8CCD3E005B2E54 /* ProductUploadUploadImageTableViewCell.swift in Sources */,
+				0C8D7F951B8F12C200B3FA4E /* ProductUploadAttributeListTableViewController.swift in Sources */,
+				0C8D7FAA1B8F577300B3FA4E /* ProductUploadAddFooterView.swift in Sources */,
+				0C65F8D81B8E0C4600504D86 /* ProductUploadDimensionsAndWeightTableViewCell.swift in Sources */,
+				0C8D7FA71B8F573800B3FA4E /* PUAttributeAddFooterView.swift in Sources */,
+				0C6661A81B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.swift in Sources */,
+				0C8D7FB51B8FC4AC00B3FA4E /* ProductUploadCombinationTableViewCell.swift in Sources */,
+				0C6661AC1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.swift in Sources */,
+				0C8D7FB91B8FC79E00B3FA4E /* ProductUploadCombinationFooterTableViewCell.swift in Sources */,
+				0C65F8CC1B8DF8A000504D86 /* ProductUploadSearchViewController.swift in Sources */,
+				0CF28F111B8CAA31005B2E54 /* ProductUploadTableViewController.swift in Sources */,
+				0CF28F1D1B8CD21B005B2E54 /* DynamicRoundedButton.swift in Sources */,
+				0C8D7F8D1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.swift in Sources */,
+				0C8D7FB11B8FC1A400B3FA4E /* ProductUploadCombinationTableViewController.swift in Sources */,
+				0CF28F1A1B8CD079005B2E54 /* ProductUploadImageCollectionViewCell.swift in Sources */,
+				0C65F8B21B8DC9AC00504D86 /* ProductUploadCategoryViewController.swift in Sources */,
+				0C8D7FAD1B8FBDB400B3FA4E /* ProductUploadCombinationListViewController.swift in Sources */,
+				0C8D7F9F1B8F1B7800B3FA4E /* PUAttributeSetHeaderTableViewCell.swift in Sources */,
+				0C8D7F981B8F198300B3FA4E /* Category.swift in Sources */,
+				0C65F8C01B8DE28D00504D86 /* ProductUploadBrandViewController.swift in Sources */,
 				792876251B8DF89F00762A39 /* ChartHighlighter.swift in Sources */,
 				7928761F1B8DF89F00762A39 /* ScatterChartData.swift in Sources */,
 				792876231B8DF89F00762A39 /* BarChartHighlighter.swift in Sources */,
@@ -1125,6 +1424,7 @@
 				792876131B8DF89F00762A39 /* ChartData.swift in Sources */,
 				792876381B8DF89F00762A39 /* LineChartRenderer.swift in Sources */,
 				0CF28ED11B8C85E5005B2E54 /* HexaColor.swift in Sources */,
+				0CAB52A31B91F9FB00EA441A /* ConditionParserModel.swift in Sources */,
 				26BD5E601B8DFA6400739488 /* ProductDescriptionView.swift in Sources */,
 				792876391B8DF89F00762A39 /* LineScatterCandleRadarChartRenderer.swift in Sources */,
 				7928760C1B8DF89F00762A39 /* BarLineScatterCandleChartDataSet.swift in Sources */,
