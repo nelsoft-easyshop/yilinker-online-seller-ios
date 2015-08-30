@@ -4,3 +4,5 @@
 
 #import <AFNetworking/AFNetworking.h>
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <SVProgressHUD/SVProgressHUD.h>
+#import "UIImageView+WebCache.h"

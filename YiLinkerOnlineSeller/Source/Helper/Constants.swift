@@ -14,6 +14,7 @@ struct Constants {
         static let productPrice: UIColor = HexaColor.colorWithHexa(0x75348a)
         static let productReviewGreen: UIColor = HexaColor.colorWithHexa(0xb3b233)
         static let grayLine: UIColor = HexaColor.colorWithHexa(0x606060)
+        static let grayText: UIColor = HexaColor.colorWithHexa(0x666666)
         static let backgroundGray: UIColor = HexaColor.colorWithHexa(0xE7E7E7)
         static let selectedGreenColor: UIColor = HexaColor.colorWithHexa(0x44A491)
         static let selectedCellColor: UIColor = HexaColor.colorWithHexa(0xE1E1E1)
@@ -30,12 +31,14 @@ struct Constants {
 
         static let pmYesGreenColor: UIColor = HexaColor.colorWithHexa(0x54b6a7)
         static let pmNoBrownColor: UIColor = HexaColor.colorWithHexa(0x666666)
+
+        static let uploadViewColor: UIColor = HexaColor.colorWithHexa(0x54B6A7)
     }
     
     struct Credentials {
         static let clientID = "1_167rxzqvid8g8swggwokcoswococscocc8ck44wo0g88owgkcc"
         static let clientSecret = "317eq8nohry84ooc0o8woo8000c0k844c4cggws84g80scwwog"
         static let grantRefresh = "refresh_token"
-        static let grantBuyer = "http://yilinker-online.com/grant/buyer"
+        static let grantSeller = "http://yilinker-online.com/grant/seller"
     }
 }
