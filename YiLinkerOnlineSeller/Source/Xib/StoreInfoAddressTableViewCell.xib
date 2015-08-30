@@ -47,6 +47,15 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="2nd Flr Bldg A SM Megamall, Ortigas, Mandaluyong City, Metro Manila, Philippines" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJJ-C5-EXD">
+                                        <rect key="frame" x="17" y="71" width="289" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" priority="500" constant="32" id="r16-GV-E0u"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AU4-WQ-Gmt">
                                         <rect key="frame" x="392" y="71" width="13" height="23"/>
                                         <constraints>
@@ -58,15 +67,6 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="2nd Flr Bldg A SM Megamall, Ortigas, Mandaluyong City, Metro Manila, Philippines" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJJ-C5-EXD">
-                                        <rect key="frame" x="17" y="71" width="289" height="32"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" priority="500" constant="32" id="r16-GV-E0u"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
-                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -120,7 +120,7 @@
                     <constraint firstAttribute="trailing" secondItem="xf3-9Y-248" secondAttribute="trailing" constant="-8" id="fb2-j3-vjV"/>
                 </constraints>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="345.5" y="393"/>
+            <point key="canvasLocation" x="341.5" y="374"/>
         </tableViewCell>
     </objects>
     <resources>
