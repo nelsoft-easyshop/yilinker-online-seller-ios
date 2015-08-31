@@ -621,8 +621,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     
     func productUploadFooterView(didClickUpload view: ProductUploadFooterView) {
         self.productModel.images = self.uploadImages
-        //self.fireUpload()
-        
+
         if self.productModel.name == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert product name.", title: "Incomplete Product Details")
         } else if self.productModel.shortDescription == "" {
@@ -637,6 +636,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert quantity.", title: "Incomplete Product Details")
         } else if self.productModel.retailPrice == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert Retail Price.", title: "Incomplete Product Details")
+        } else if (self.productModel.retailPrice as NSString).doubleValue < (self.productModel.discoutedPrice as NSString).doubleValue {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Retail price must be larger than discount price.", title: "Incomplete Product Details")
         } else {
             self.fireUpload()
         }

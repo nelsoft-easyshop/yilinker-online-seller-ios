@@ -19,6 +19,7 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
     @IBOutlet weak var collectionView: UICollectionView!
     var delegate: ProductUploadCombinationFooterTableViewCellDelegate?
     var images: [UIImage] = []
+    var viewController: UIViewController?
 
     @IBOutlet weak var retailPriceTextField: UITextField!
     @IBOutlet weak var discountedPriceTextField: UITextField!
@@ -40,7 +41,17 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
         self.quantityTextField.delegate = self
         self.skuTextField.delegate = self
         
-        self.delegate!.productUploadCombinationFooterTableViewCell(didClickDoneButton: self, sku: self.skuTextField.text, quantity: self.quantityTextField.text, discountedPrice: self.discountedPriceTextField.text, retailPrice: self.retailPriceTextField.text, uploadImages: self.images)
+        if self.retailPriceTextField.text == "" {
+            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Please insert Retail Price.", title: "Incomplete Product Details")
+        } else if self.quantityTextField.text == "" {
+            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Please insert quantity.", title: "Incomplete Product Details")
+        } else if self.skuTextField.text == "" {
+            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Please insert sku.", title: "Incomplete Product Details")
+        } else if (self.retailPriceTextField.text as NSString).doubleValue < (self.discountedPriceTextField.text as NSString).doubleValue {
+            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Retail price must be greater than discount price.", title: "Incomplete Product Details")
+        } else {
+            self.delegate!.productUploadCombinationFooterTableViewCell(didClickDoneButton: self, sku: self.skuTextField.text, quantity: self.quantityTextField.text, discountedPrice: self.discountedPriceTextField.text, retailPrice: self.retailPriceTextField.text, uploadImages: self.images)
+        }
     }
     
     func registerCell() {

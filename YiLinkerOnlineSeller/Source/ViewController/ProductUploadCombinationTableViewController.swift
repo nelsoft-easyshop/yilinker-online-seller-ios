@@ -112,7 +112,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
                 cell.retailPriceTextField.text = combination.retailPrice
                 cell.skuTextField.text = combination.sku
             }
-            
+            cell.viewController = self
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
         }
