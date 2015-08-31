@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoAddressTableViewCellDelagate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate{
+class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoAddressTableViewCellDelagate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate {
     
     @IBOutlet weak var storeInfoTableView: UITableView!
     
@@ -117,18 +117,57 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
         attributeModal.providesPresentationContextTransitionStyle = true
         attributeModal.definesPresentationContext = true
         self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
-        
-        var activityViewController = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
-        self.navigationController?.pushViewController(activityViewController, animated:true)
+
         */
-        var attributeModal = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
-        attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        attributeModal.providesPresentationContextTransitionStyle = true
-        attributeModal.definesPresentationContext = true
-        self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
+        
+        var verifyNumberViewController = VerifyNumberViewController(nibName: "VerifyNumberViewController", bundle: nil)
+        verifyNumberViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        verifyNumberViewController.providesPresentationContextTransitionStyle = true
+        verifyNumberViewController.definesPresentationContext = true
+        let black = UIColor.blackColor()
+        let transparent = black.colorWithAlphaComponent(0.5)
+        verifyNumberViewController.view.backgroundColor = transparent
+        verifyNumberViewController.view.frame.origin.y = verifyNumberViewController.view.frame.size.height
+        self.navigationController?.presentViewController(verifyNumberViewController, animated: true, completion:
+            nil)
+        
 
     }
+    
+    func changeAddress() {
+        var changeAddressViewController = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
+        self.navigationController?.pushViewController(changeAddressViewController, animated:true)
+    }
 
+    func newBankAccount() {
+        var changeBankAccountViewController = ChangeBankAccountViewController(nibName: "ChangeBankAccountViewController", bundle: nil)
+        self.navigationController?.pushViewController(changeBankAccountViewController, animated:true)
+    }
+    
+    func changeEmailAddress(){
+        println("Email Address")
+    }
+    
+    func changeMobileNumber(){
+        var changeMobileNumberViewController = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
+        changeMobileNumberViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        changeMobileNumberViewController.providesPresentationContextTransitionStyle = true
+        changeMobileNumberViewController.definesPresentationContext = true
+        let black = UIColor.blackColor()
+        let transparent = black.colorWithAlphaComponent(0.5)
+        changeMobileNumberViewController.view.backgroundColor = transparent
+        changeMobileNumberViewController.view.frame.origin.y = changeMobileNumberViewController.view.frame.size.height
+        self.navigationController?.presentViewController(changeMobileNumberViewController, animated: true, completion:
+            nil)
+    }
+    
+    func saveMobile() {
+        println("Save Mobile")
+    }
+    
+    func generateQRCode() {
+        println("QR Code")
+    }
     /*
     // MARK: - Navigation
 

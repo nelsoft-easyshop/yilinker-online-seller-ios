@@ -25,7 +25,7 @@ class StoreInfoTableViewCell: UITableViewCell {
         self.verifyButton.layer.cornerRadius = 5.0
         self.verifyButton.clipsToBounds = true
         
-        self.profilePhotoView.layer.cornerRadius = 60.0
+        self.profilePhotoView.layer.cornerRadius = self.profilePhotoView.frame.size.width / 2
         self.profilePhotoView.clipsToBounds = true
         
         self.coverPhotoView.layer.cornerRadius = 5.0

@@ -8,6 +8,9 @@
 
 import UIKit
 
+protocol ChangeMobileNumberViewControllerDelegate {
+    
+}
 class ChangeMobileNumberViewController: UIViewController {
 
    
@@ -18,6 +21,8 @@ class ChangeMobileNumberViewController: UIViewController {
     @IBOutlet weak var oldNumberTextField: UITextField!
     
     @IBOutlet weak var newNumberTextField: UITextField!
+    
+    var delegate: ChangeMobileNumberViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +36,7 @@ class ChangeMobileNumberViewController: UIViewController {
     }
     
     @IBAction func closeAction(sender: AnyObject){
-        
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func submit(sender: AnyObject){

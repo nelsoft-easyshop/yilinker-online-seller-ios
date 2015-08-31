@@ -137,6 +137,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         println("Clicked item \(tableData[indexPath.row])")
         if indexPath.row == 0 {
+            /*var storeInfoViewController = StoreInfoViewController(nibName: "StoreInfoViewController", bundle: nil)
+            self.navigationController?.pushViewController(storeInfoViewController, animated:true)*/
             var storeInfoViewController = StoreInfoViewController(nibName: "StoreInfoViewController", bundle: nil)
             self.navigationController?.pushViewController(storeInfoViewController, animated:true)
         } else if indexPath.row == 0 {

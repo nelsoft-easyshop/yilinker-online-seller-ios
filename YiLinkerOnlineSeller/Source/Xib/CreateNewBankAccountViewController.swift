@@ -36,7 +36,7 @@ class CreateNewBankAccountViewController: UIViewController {
     }
     
     @IBAction func closeAction(sender: AnyObject) {
-        
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func createBankAcount(sender: AnyObject) {

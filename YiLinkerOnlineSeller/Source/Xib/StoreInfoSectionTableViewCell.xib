@@ -42,6 +42,9 @@
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="generateQRCode" destination="KGk-i7-Jjw" eventType="touchUpInside" id="50J-6G-KnE"/>
+                        </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iz3-oe-xRY">
                         <rect key="frame" x="8" y="60" width="415" height="56"/>
@@ -67,6 +70,9 @@
                     <constraint firstItem="Ved-1A-3Tj" firstAttribute="top" secondItem="iz3-oe-xRY" secondAttribute="bottom" constant="18" id="t2G-y5-TBv"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="generateQRCodeButton" destination="Ved-1A-3Tj" id="rFt-g3-ebA"/>
+            </connections>
             <point key="canvasLocation" x="267.5" y="383"/>
         </tableViewCell>
     </objects>

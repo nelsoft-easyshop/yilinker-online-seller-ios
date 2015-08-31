@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -237,6 +238,7 @@
                             <constraint firstItem="Y4y-e8-3DA" firstAttribute="leading" secondItem="X2p-zv-8b7" secondAttribute="leading" constant="39" id="L48-Wp-HBy"/>
                             <constraint firstItem="Y4y-e8-3DA" firstAttribute="top" secondItem="X2p-zv-8b7" secondAttribute="top" constant="21" id="du7-FI-1bo"/>
                             <constraint firstAttribute="trailing" secondItem="Pgz-Rm-cfh" secondAttribute="trailing" constant="47" id="ehg-y8-Drg"/>
+                            <constraint firstItem="Pgz-Rm-cfh" firstAttribute="width" secondItem="Y4y-e8-3DA" secondAttribute="height" multiplier="1:1" id="h62-TY-xgX"/>
                             <constraint firstItem="Pgz-Rm-cfh" firstAttribute="top" secondItem="Y4y-e8-3DA" secondAttribute="top" id="hAr-kY-pc7"/>
                             <constraint firstItem="Pgz-Rm-cfh" firstAttribute="top" secondItem="X2p-zv-8b7" secondAttribute="top" constant="21" id="tPb-WS-rZZ"/>
                         </constraints>

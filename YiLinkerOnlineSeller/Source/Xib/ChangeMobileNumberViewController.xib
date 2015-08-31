@@ -19,7 +19,6 @@
                 <outlet property="closeButton" destination="gJu-yV-dgd" id="nfS-RN-nNP"/>
                 <outlet property="newNumberTextField" destination="4n3-Z9-ZzD" id="SdP-D8-kNJ"/>
                 <outlet property="oldNumberTextField" destination="Vo8-Wb-PZj" id="yKJ-P2-FXD"/>
-                <outlet property="oldNumberTextView" destination="Vo8-Wb-PZj" id="cqj-1W-m0G"/>
                 <outlet property="submitButton" destination="F4e-jY-O8N" id="Krg-h4-yqm"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -40,6 +39,9 @@
                                     <state key="normal" image="close2-2.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <connections>
+                                        <action selector="closeAction:" destination="-1" eventType="touchUpInside" id="VJu-i5-Dm2"/>
+                                    </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Change Mobile Number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hl3-48-41P">
                                     <rect key="frame" x="101" y="12" width="156" height="21"/>
@@ -60,6 +62,9 @@
                                     <state key="normal" title="SUBMIT">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <connections>
+                                        <action selector="submit:" destination="-1" eventType="touchUpInside" id="b4q-ra-Aml"/>
+                                    </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Old Number" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jdS-KA-beh">
                                     <rect key="frame" x="8" y="8" width="93" height="30"/>
@@ -87,10 +92,9 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="90.5" y="321"/>
         </view>

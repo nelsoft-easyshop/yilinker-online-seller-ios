@@ -9,13 +9,14 @@
 import UIKit
 
 protocol StoreInfoSectionTableViewCellDelegate {
-    
+    func generateQRCode()
 }
 
 class StoreInfoSectionTableViewCell: UITableViewCell {
 
     var delegate: StoreInfoSectionTableViewCellDelegate?
     
+    @IBOutlet weak var generateQRCodeButton: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -27,4 +28,7 @@ class StoreInfoSectionTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    @IBAction func generateQRCode(){
+        self.delegate?.generateQRCode()
+    }
 }

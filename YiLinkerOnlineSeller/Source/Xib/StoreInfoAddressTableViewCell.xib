@@ -112,6 +112,9 @@
                     <constraint firstAttribute="trailing" secondItem="srs-wV-U41" secondAttribute="trailing" id="bXs-GY-gmW"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="changeAddressButton" destination="AU4-WQ-Gmt" id="zqf-yQ-aPE"/>
+            </connections>
             <point key="canvasLocation" x="278.5" y="354.5"/>
         </tableViewCell>
     </objects>

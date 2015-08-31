@@ -9,17 +9,20 @@
 import UIKit
 
 protocol StoreInfoAccountInformationTableViewCellDelegate {
-    
+    func saveMobile()
+    func changeMobileNumber()
+    func changeEmailAddress()
 }
 
 class StoreInfoAccountInformationTableViewCell: UITableViewCell {
-
-    var delegate: StoreInfoBankAccountTableViewCellDelegate!
     
     @IBOutlet weak var saveButton: UIButton!
     
     @IBOutlet weak var changeMobileButton: UIButton!
     @IBOutlet weak var changeEmailButton: UIButton!
+    
+    var delegate: StoreInfoAccountInformationTableViewCellDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -37,6 +40,23 @@ class StoreInfoAccountInformationTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    @IBAction func changeMobile(sender: AnyObject){
+        println("Change Mobile")
+        self.delegate?.changeMobileNumber()
+    }
+    
+    
+    @IBAction func changeEmail(sender: AnyObject){
+        println("Change Email")
+        self.delegate?.changeEmailAddress()
+    }
+    
+    
+    @IBAction func submitMobile(sender: AnyObject){
+        println("Submit Mobile")
+        self.delegate?.saveMobile()
     }
     
 }

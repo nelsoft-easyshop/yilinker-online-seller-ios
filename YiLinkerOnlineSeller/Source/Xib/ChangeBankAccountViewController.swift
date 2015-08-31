@@ -1,17 +1,17 @@
 //
-//  ChangeAddressViewController.swift
-//  YiLinkerOnlineBuyer
+//  ChangeBankAccountViewController.swift
+//  YiLinkerOnlineSeller
 //
-//  Created by Alvin John Tandoc on 8/20/15.
-//  Copyright (c) 2015 yiLinker-online-buyer. All rights reserved.
+//  Created by Joriel Oller Fronda on 8/30/15.
+//  Copyright (c) 2015 YiLinker. All rights reserved.
 //
 
 import UIKit
 
-class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, ChangeAddressCollectionViewCellDelegate, ChangeAddressFooterCollectionViewCellDelegate, AddAddressTableViewControllerDelegate, ChangeMobileNumberViewControllerDelegate {
-
-    @IBOutlet weak var collectionView: UICollectionView!
-   
+class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, ChangeAddressCollectionViewCellDelegate, ChangeAddressFooterCollectionViewCellDelegate, AddAddressTableViewControllerDelegate {
+    
+    @IBOutlet weak var changeBankAccountCollectionView: UICollectionView!
+    
     var cellCount: Int = 3
     var selectedIndex: Int = 0
     
@@ -23,15 +23,15 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: self.view.frame.size.width - 20, height: 79)
         layout.minimumLineSpacing = 20
-        layout.footerReferenceSize = CGSizeMake(self.collectionView.frame.size.width, 41)
-        collectionView.collectionViewLayout = layout
-        collectionView.dataSource = self
-        collectionView.delegate = self
+        layout.footerReferenceSize = CGSizeMake(self.changeBankAccountCollectionView.frame.size.width, 41)
+        changeBankAccountCollectionView.collectionViewLayout = layout
+        changeBankAccountCollectionView.dataSource = self
+        changeBankAccountCollectionView.delegate = self
         self.regsiterNib()
     }
     
     func titleView() {
-        self.title = "Change Address"
+        self.title = "Change Bank Account"
     }
     
     func backButton() {
@@ -43,7 +43,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
-        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]        
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
         
         var checkButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         checkButton.frame = CGRectMake(0, 0, 25, 25)
@@ -53,7 +53,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         
         let navigationSpacer2: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer2.width = -10
-
+        
         self.navigationItem.rightBarButtonItems = [navigationSpacer2, customCheckButton]
     }
     
@@ -67,20 +67,20 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     
     func regsiterNib() {
         let changeAddressNib: UINib = UINib(nibName: Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier, bundle: nil)
-        self.collectionView.registerNib(changeAddressNib, forCellWithReuseIdentifier: Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier)
+        self.changeBankAccountCollectionView.registerNib(changeAddressNib, forCellWithReuseIdentifier: Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier)
         
         let collectionViewFooterNib: UINib = UINib(nibName: Constants.Checkout.changeAddressFooterCollectionViewCellNibNameAndIdentifier, bundle: nil)
-        self.collectionView.registerNib(collectionViewFooterNib, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: Constants.Checkout.changeAddressFooterCollectionViewCellNibNameAndIdentifier)
-        self.collectionView.registerNib(collectionViewFooterNib, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: Constants.Checkout.changeAddressFooterCollectionViewCellNibNameAndIdentifier)
+        self.changeBankAccountCollectionView.registerNib(collectionViewFooterNib, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: Constants.Checkout.changeAddressFooterCollectionViewCellNibNameAndIdentifier)
     }
-
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cellCount
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell : ChangeAddressCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressCollectionViewCell
-        
+        cell.titleLabel.text = "Shop Account"
+        cell.subTitleLabel.text = "02-2331685\nJuan Dela Cruz\nBPI"
         if indexPath.row == self.selectedIndex {
             cell.layer.borderWidth = 1
             cell.layer.borderColor = Constants.Colors.selectedGreenColor.CGColor
@@ -98,7 +98,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         
         cell.layer.cornerRadius = 5
         cell.delegate = self
-
+        
         return cell
     }
     
@@ -108,20 +108,20 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         self.selectedIndex = indexPath.row
-        self.collectionView.reloadData()
+        self.changeBankAccountCollectionView.reloadData()
     }
     
     func addCellInIndexPath(indexPath: NSIndexPath) {
         self.cellCount++
-        self.collectionView.insertItemsAtIndexPaths([NSIndexPath(forItem: indexPath.row, inSection: indexPath.section)])
+        self.changeBankAccountCollectionView.insertItemsAtIndexPaths([NSIndexPath(forItem: indexPath.row, inSection: indexPath.section)])
     }
     
     func deleteCellInIndexPath(indexPath: NSIndexPath) {
         if cellCount != 0 {
             self.cellCount = self.cellCount - 1
         }
-   
-        self.collectionView.deleteItemsAtIndexPaths([NSIndexPath(forItem: indexPath.row, inSection: indexPath.section)])
+        
+        self.changeBankAccountCollectionView.deleteItemsAtIndexPaths([NSIndexPath(forItem: indexPath.row, inSection: indexPath.section)])
     }
     
     override func didReceiveMemoryWarning() {
@@ -130,12 +130,12 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     }
     
     func changeAddressCollectionViewCell(deleteAddressWithCell cell: ChangeAddressCollectionViewCell) {
-        let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
+        let indexPath: NSIndexPath = self.changeBankAccountCollectionView.indexPathForCell(cell)!
         self.deleteCellInIndexPath(indexPath)
     }
-
+    
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        let footerView: ChangeAddressFooterCollectionViewCell = self.collectionView?.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: Constants.Checkout.changeAddressFooterCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressFooterCollectionViewCell
+        let footerView: ChangeAddressFooterCollectionViewCell = self.changeBankAccountCollectionView?.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: Constants.Checkout.changeAddressFooterCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressFooterCollectionViewCell
         
         footerView.delegate = self
         
@@ -147,11 +147,17 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         /*let indexPath: NSIndexPath = NSIndexPath(forItem: self.cellCount, inSection: 0)
         self.addCellInIndexPath(indexPath)*/
         
-        var attributeModal = CreateNewAddressViewController(nibName: "CreateNewAddressViewController", bundle: nil)
+        /*let addAddressTableViewController: AddAddressTableViewController = AddAddressTableViewController(nibName: "AddAddressTableViewController", bundle: nil)
+        addAddressTableViewController.delegate = self
+        self.navigationController!.presentViewController(addAddressTableViewController, animated: true, completion: nil)
+        */
+        var attributeModal = ChangeBankAccountViewController(nibName: "ChangeBankAccountViewController", bundle: nil)
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         attributeModal.providesPresentationContextTransitionStyle = true
         attributeModal.definesPresentationContext = true
         self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
+    
+        println("footer")
     }
     
     func addAddressTableViewController(didAddAddressSucceed addAddressTableViewController: AddAddressTableViewController) {
@@ -159,3 +165,4 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         self.addCellInIndexPath(indexPath)
     }
 }
+

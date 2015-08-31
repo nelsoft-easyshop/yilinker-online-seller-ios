@@ -9,13 +9,15 @@
 import UIKit
 
 protocol StoreInfoAddressTableViewCellDelagate{
-    
+        func changeAddress()
 }
 
 class StoreInfoAddressTableViewCell: UITableViewCell {
 
     var delegate: StoreInfoAddressTableViewCellDelagate?
     
+    @IBOutlet weak var changeAddressButton: UIButton!
+   
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -27,5 +29,11 @@ class StoreInfoAddressTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    @IBAction func changeAddress(sender: AnyObject){
+        self.delegate?.changeAddress()
+    }
+    
+    
     
 }
