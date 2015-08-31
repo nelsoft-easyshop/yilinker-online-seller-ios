@@ -110,12 +110,21 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.signInButton.setTitle("SIGN IN", forState: .Normal)
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 1011 {
-                    self.showAlert(title: "Error", message: "Email and Password did not match.")
+                
+                if error.userInfo != nil {
+                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                        let errorDescription: String = jsonResult["error_description"] as! String
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
+                    }
                 } else {
-                    self.showAlert(title: "Error", message: "Something went wrong")
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    if task.statusCode == 1011 {
+                        self.showAlert(title: "Error", message: "Email and Password did not match.")
+                    } else {
+                        self.showAlert(title: "Error", message: "Something went wrong")
+                    }
                 }
+                
                 SVProgressHUD.dismiss()
         })
     }
@@ -209,12 +218,21 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.signInButton.setTitle("SIGN IN", forState: .Normal)
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 1011 {
-                    self.showAlert(title: "Error", message: "Email and Password did not match.")
+                
+                if error.userInfo != nil {
+                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                        let errorDescription: String = jsonResult["error_description"] as! String
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
+                    }
                 } else {
-                    self.showAlert(title: "Error", message: "Something went wrong")
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    if task.statusCode == 1011 {
+                        self.showAlert(title: "Error", message: "Email and Password did not match.")
+                    } else {
+                        self.showAlert(title: "Error", message: "Something went wrong")
+                    }
                 }
+                
                 SVProgressHUD.dismiss()
         })
     }
