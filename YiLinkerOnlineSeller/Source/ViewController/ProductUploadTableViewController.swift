@@ -663,7 +663,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     func productUploadQuantityTableViewCell(textFieldDidChange text: String, cell: ProductUploadQuantityTableViewCell) {
-        self.productModel.quantity = text.toInt()!
+        if let val = text.toInt() {
+           self.productModel.quantity = text.toInt()!
+            println(text.toInt())
+        }
     }
     
      func didSelecteCategory(categoryModel: CategoryModel) {
@@ -725,7 +728,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     
     func property(mainImageCount: Int) -> NSString {
         var array: [NSMutableDictionary] = []
-        var counter: Int = mainImageCount 
+        var counter: Int = mainImageCount
         for combination in self.productModel.validCombinations {
              let dictionary: NSMutableDictionary = NSMutableDictionary()
             dictionary["attribute"] = combination.attributes
