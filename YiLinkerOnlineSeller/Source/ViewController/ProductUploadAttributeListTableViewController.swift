@@ -179,8 +179,15 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
         if attributeIsAvailable {
             self.productModel.attributes[indexPath.section] = attribute
         } else {
+            if self.productModel.validCombinations.count != 0 {
+                for (index, combination) in enumerate(self.productModel.validCombinations) {
+                    self.productModel.validCombinations.removeAtIndex(0)
+                }
+            }
+            
             self.productModel.attributes.append(attribute)
         }
+
         
         self.tableView.reloadData()
     }
