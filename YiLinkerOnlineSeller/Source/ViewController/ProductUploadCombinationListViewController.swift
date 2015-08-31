@@ -196,14 +196,28 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             }
         }*/
         
-        if !isEdit {
-            self.productModel!.validCombinations.append(combination)
-        } else {
-            self.productModel!.validCombinations[indexPath.section] = combination
+        var isValidCombination: Bool = true
+        
+        if self.productModel != nil {
+            for combinationLoop in self.productModel!.validCombinations {
+                if combinationLoop.attributes == combination.attributes {
+                    isValidCombination = false
+                    break
+                }
+            }
         }
         
-        self.tableView.reloadData()
-      
+        if isValidCombination {
+            if !isEdit {
+                self.productModel!.validCombinations.append(combination)
+            } else {
+                self.productModel!.validCombinations[indexPath.section] = combination
+            }
+            
+            self.tableView.reloadData()
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Combination already exist.", title: "Error")
+        }
     }
     @IBAction func saveDetails(sender: AnyObject) {
         let productUploadTableViewController: ProductUploadTableViewController
