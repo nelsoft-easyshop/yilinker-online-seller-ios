@@ -8,19 +8,99 @@
 
 import UIKit
 
-class StoreInfoViewController: UIViewController {
-
+class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoAddressTableViewCellDelagate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate{
+    
+    @IBOutlet weak var storeInfoTableView: UITableView!
+    let storeInfoSectionTableViewCellIndentifier: String = "StoreInfoSectionTableViewCell"
+    let storeInfoAddressTableViewCellIdentifier: String = "StoreInfoAddressTableViewCell"
+    let storeInfoBankAccountTableViewCellIdentifier: String = "StoreInfoBankAccountTableViewCell"
+    let storeInfoAccountInformationTableViewCellIdentifier: String = "StoreInfoAccountInformationTableViewCell"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        let storeInfoHeader: StoreInfoTableViewCell = XibHelper.puffViewWithNibName("StoreInfoTableViewCell", index: 0) as! StoreInfoTableViewCell
+        storeInfoHeader.delegate = self
+        
+        self.storeInfoTableView.tableHeaderView = storeInfoHeader
+        
+        self.initializeViews()
+        self.registerNibs()
+        
+        
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    func initializeViews() {
+        self.storeInfoTableView.tableFooterView = UIView(frame: CGRectZero)
+        self.storeInfoTableView.delegate = self
+        self.storeInfoTableView.dataSource = self
+    }
+    
+    func registerNibs() {
+        var storeInfo = UINib(nibName: storeInfoSectionTableViewCellIndentifier, bundle: nil)
+        self.storeInfoTableView.registerNib(storeInfo, forCellReuseIdentifier: storeInfoSectionTableViewCellIndentifier)
+        
+        var storeInfoBankAccount = UINib(nibName: storeInfoBankAccountTableViewCellIdentifier, bundle: nil)
+        storeInfoTableView.registerNib(storeInfoBankAccount, forCellReuseIdentifier: storeInfoBankAccountTableViewCellIdentifier)
+        
+        var storeInfoAddress = UINib(nibName: storeInfoAddressTableViewCellIdentifier, bundle: nil)
+        storeInfoTableView.registerNib(storeInfoAddress, forCellReuseIdentifier: storeInfoAddressTableViewCellIdentifier)
+        
+        var storeInfoAccountInformation = UINib(nibName: storeInfoAccountInformationTableViewCellIdentifier, bundle: nil)
+        storeInfoTableView.registerNib(storeInfoAccountInformation, forCellReuseIdentifier: storeInfoAccountInformationTableViewCellIdentifier)
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+       return 4
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier(storeInfoSectionTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoSectionTableViewCell
+            cell.delegate = self
+            
+            return cell
+       } else if indexPath.section == 1 {
+            let cell = tableView.dequeueReusableCellWithIdentifier(storeInfoAddressTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAddressTableViewCell
+            cell.delegate = self
+            
+            return cell
+        } else if indexPath.section == 2 {
+            let cell = tableView.dequeueReusableCellWithIdentifier( storeInfoBankAccountTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoBankAccountTableViewCell
+            cell.delegate = self
+            
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier( storeInfoAccountInformationTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAccountInformationTableViewCell
+            cell.delegate = self
+            
+            return cell
+        }
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return 1
+        
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            return 198
+        } else if indexPath.section == 1 {
+            return 136
+        } else  if indexPath.section == 2 {
+            return 113
+        } else {
+            return 220
+        }
+    }
 
     /*
     // MARK: - Navigation

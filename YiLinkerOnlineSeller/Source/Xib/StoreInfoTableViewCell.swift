@@ -8,11 +8,21 @@
 
 import UIKit
 
+protocol StoreInfoTableViewCellDelegate {
+    
+}
+
 class StoreInfoTableViewCell: UITableViewCell {
 
+    var delegate: StoreInfoTableViewCellDelegate?
+    
+    @IBOutlet weak var verifyButton: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.verifyButton.layer.cornerRadius = 5.0
+        self.verifyButton.clipsToBounds = true
+        
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

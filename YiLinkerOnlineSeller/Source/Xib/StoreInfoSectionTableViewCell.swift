@@ -8,8 +8,14 @@
 
 import UIKit
 
+protocol StoreInfoSectionTableViewCellDelegate {
+    
+}
+
 class StoreInfoSectionTableViewCell: UITableViewCell {
 
+    var delegate: StoreInfoSectionTableViewCellDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -8,8 +8,14 @@
 
 import UIKit
 
+protocol StoreInfoBankAccountTableViewCellDelegate{
+    
+}
+
 class StoreInfoBankAccountTableViewCell: UITableViewCell {
 
+    var delegate: StoreInfoBankAccountTableViewCellDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

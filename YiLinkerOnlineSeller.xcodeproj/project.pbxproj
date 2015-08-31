@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0CF28ECE1B8C85E5005B2E54 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EB71B8C85E4005B2E54 /* AppDelegate.swift */; };
 		0CF28ECF1B8C85E5005B2E54 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EBA1B8C85E4005B2E54 /* APIManager.swift */; };
 		0CF28ED01B8C85E5005B2E54 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EBB1B8C85E4005B2E54 /* Enums.swift */; };
 		0CF28ED11B8C85E5005B2E54 /* HexaColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EBC1B8C85E4005B2E54 /* HexaColor.swift */; };
@@ -62,14 +61,20 @@
 		967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 967EE1C01B8AEA25000591AC /* Images.xcassets */; };
 		967EE1D01B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */; };
 		E72BD5070233EC6FF42DDA3A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B825E81D3B27E563C7C3C53 /* libPods.a */; };
-		F7BF5C661B93700600AEB9DA /* StoreInfoFooterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF5C5E1B93700600AEB9DA /* StoreInfoFooterTableViewCell.swift */; };
-		F7BF5C671B93700600AEB9DA /* StoreInfoFooterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7BF5C5F1B93700600AEB9DA /* StoreInfoFooterTableViewCell.xib */; };
+		F7BF5C661B93700600AEB9DA /* StoreInfoAddressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF5C5E1B93700600AEB9DA /* StoreInfoAddressTableViewCell.swift */; };
+		F7BF5C671B93700600AEB9DA /* StoreInfoAddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7BF5C5F1B93700600AEB9DA /* StoreInfoAddressTableViewCell.xib */; };
 		F7BF5C681B93700600AEB9DA /* StoreInfoSectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF5C601B93700600AEB9DA /* StoreInfoSectionTableViewCell.swift */; };
 		F7BF5C691B93700600AEB9DA /* StoreInfoSectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7BF5C611B93700600AEB9DA /* StoreInfoSectionTableViewCell.xib */; };
 		F7BF5C6A1B93700600AEB9DA /* StoreInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF5C621B93700600AEB9DA /* StoreInfoTableViewCell.swift */; };
 		F7BF5C6B1B93700600AEB9DA /* StoreInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7BF5C631B93700600AEB9DA /* StoreInfoTableViewCell.xib */; };
 		F7BF5C6C1B93700600AEB9DA /* StoreInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF5C641B93700600AEB9DA /* StoreInfoViewController.swift */; };
 		F7BF5C6D1B93700600AEB9DA /* StoreInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7BF5C651B93700600AEB9DA /* StoreInfoViewController.xib */; };
+		F7BF5C701B93733A00AEB9DA /* StoreInfoBankAccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF5C6E1B93733A00AEB9DA /* StoreInfoBankAccountTableViewCell.swift */; };
+		F7BF5C741B93738800AEB9DA /* StoreInfoAccountInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF5C721B93738800AEB9DA /* StoreInfoAccountInformationTableViewCell.swift */; };
+		F7BF5C751B93738800AEB9DA /* StoreInfoAccountInformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7BF5C731B93738800AEB9DA /* StoreInfoAccountInformationTableViewCell.xib */; };
+		F7BF5C771B9373AC00AEB9DA /* addressRight.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BF5C761B9373AC00AEB9DA /* addressRight.png */; };
+		F7BF5C7E1B93AB2E00AEB9DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EB71B8C85E4005B2E54 /* AppDelegate.swift */; };
+		F7BF5C801B93D56E00AEB9DA /* StoreInfoBankAccountTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7BF5C7F1B93D56E00AEB9DA /* StoreInfoBankAccountTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,14 +150,19 @@
 		967EE1CE1B8AEA25000591AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YiLinkerOnlineSellerTests.swift; sourceTree = "<group>"; };
 		D4D17EE114265F93B1630151 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		F7BF5C5E1B93700600AEB9DA /* StoreInfoFooterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoFooterTableViewCell.swift; sourceTree = "<group>"; };
-		F7BF5C5F1B93700600AEB9DA /* StoreInfoFooterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoFooterTableViewCell.xib; sourceTree = "<group>"; };
+		F7BF5C5E1B93700600AEB9DA /* StoreInfoAddressTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoAddressTableViewCell.swift; sourceTree = "<group>"; };
+		F7BF5C5F1B93700600AEB9DA /* StoreInfoAddressTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoAddressTableViewCell.xib; sourceTree = "<group>"; };
 		F7BF5C601B93700600AEB9DA /* StoreInfoSectionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoSectionTableViewCell.swift; sourceTree = "<group>"; };
 		F7BF5C611B93700600AEB9DA /* StoreInfoSectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoSectionTableViewCell.xib; sourceTree = "<group>"; };
 		F7BF5C621B93700600AEB9DA /* StoreInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoTableViewCell.swift; sourceTree = "<group>"; };
 		F7BF5C631B93700600AEB9DA /* StoreInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoTableViewCell.xib; sourceTree = "<group>"; };
 		F7BF5C641B93700600AEB9DA /* StoreInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoViewController.swift; sourceTree = "<group>"; };
 		F7BF5C651B93700600AEB9DA /* StoreInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoViewController.xib; sourceTree = "<group>"; };
+		F7BF5C6E1B93733A00AEB9DA /* StoreInfoBankAccountTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoBankAccountTableViewCell.swift; sourceTree = "<group>"; };
+		F7BF5C721B93738800AEB9DA /* StoreInfoAccountInformationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoAccountInformationTableViewCell.swift; sourceTree = "<group>"; };
+		F7BF5C731B93738800AEB9DA /* StoreInfoAccountInformationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoAccountInformationTableViewCell.xib; sourceTree = "<group>"; };
+		F7BF5C761B9373AC00AEB9DA /* addressRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addressRight.png; sourceTree = "<group>"; };
+		F7BF5C7F1B93D56E00AEB9DA /* StoreInfoBankAccountTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoBankAccountTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -270,8 +280,12 @@
 		0CF28ECC1B8C85E5005B2E54 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
-				F7BF5C5E1B93700600AEB9DA /* StoreInfoFooterTableViewCell.swift */,
-				F7BF5C5F1B93700600AEB9DA /* StoreInfoFooterTableViewCell.xib */,
+				F7BF5C721B93738800AEB9DA /* StoreInfoAccountInformationTableViewCell.swift */,
+				F7BF5C731B93738800AEB9DA /* StoreInfoAccountInformationTableViewCell.xib */,
+				F7BF5C6E1B93733A00AEB9DA /* StoreInfoBankAccountTableViewCell.swift */,
+				F7BF5C7F1B93D56E00AEB9DA /* StoreInfoBankAccountTableViewCell.xib */,
+				F7BF5C5E1B93700600AEB9DA /* StoreInfoAddressTableViewCell.swift */,
+				F7BF5C5F1B93700600AEB9DA /* StoreInfoAddressTableViewCell.xib */,
 				F7BF5C601B93700600AEB9DA /* StoreInfoSectionTableViewCell.swift */,
 				F7BF5C611B93700600AEB9DA /* StoreInfoSectionTableViewCell.xib */,
 				F7BF5C621B93700600AEB9DA /* StoreInfoTableViewCell.swift */,
@@ -364,6 +378,7 @@
 		967EE1B71B8AEA25000591AC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F7BF5C761B9373AC00AEB9DA /* addressRight.png */,
 				967EE1B81B8AEA25000591AC /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -493,12 +508,14 @@
 				799893051B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib in Resources */,
 				0CF28EFA1B8CA2E9005B2E54 /* Panton ExtraLight Italic.otf in Resources */,
 				799892F31B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib in Resources */,
+				F7BF5C801B93D56E00AEB9DA /* StoreInfoBankAccountTableViewCell.xib in Resources */,
 				0CF28F031B8CA2E9005B2E54 /* Panton Thin Italic.otf in Resources */,
 				0CF28EF41B8CA2E9005B2E54 /* Black Italic.otf in Resources */,
+				F7BF5C751B93738800AEB9DA /* StoreInfoAccountInformationTableViewCell.xib in Resources */,
 				0CF28EFE1B8CA2E9005B2E54 /* Panton Light Italic.otf in Resources */,
 				0CF28F001B8CA2E9005B2E54 /* Panton Regular Italic.otf in Resources */,
 				79EFF75F1B8D6DD3008A9E7D /* ActivityLogTableViewController.xib in Resources */,
-				F7BF5C671B93700600AEB9DA /* StoreInfoFooterTableViewCell.xib in Resources */,
+				F7BF5C671B93700600AEB9DA /* StoreInfoAddressTableViewCell.xib in Resources */,
 				0CF28EFB1B8CA2E9005B2E54 /* Panton ExtraLight.otf in Resources */,
 				0CF28EF71B8CA2E9005B2E54 /* Panton Bold.otf in Resources */,
 				0CF28F041B8CA2E9005B2E54 /* Panton Thin.otf in Resources */,
@@ -510,6 +527,7 @@
 				0CF28EF61B8CA2E9005B2E54 /* Panton Bold Italic.otf in Resources */,
 				26374DA11B8F50A4006C639B /* SignInViewController.xib in Resources */,
 				0CF28EF51B8CA2E9005B2E54 /* Panton Black.otf in Resources */,
+				F7BF5C771B9373AC00AEB9DA /* addressRight.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,12 +590,14 @@
 				0CF28ED01B8C85E5005B2E54 /* Enums.swift in Sources */,
 				0CF28ED61B8C85E5005B2E54 /* XibHelper.swift in Sources */,
 				0CF28EDB1B8C85E5005B2E54 /* SearchViewController.swift in Sources */,
-				0CF28ECE1B8C85E5005B2E54 /* AppDelegate.swift in Sources */,
 				0CF28EDA1B8C85E5005B2E54 /* MessageViewController.swift in Sources */,
 				799892FD1B8CEBA500F4CFE2 /* SettingsHeaderTableViewCell.swift in Sources */,
 				0CF28ED91B8C85E5005B2E54 /* DashboardViewController.swift in Sources */,
+				F7BF5C741B93738800AEB9DA /* StoreInfoAccountInformationTableViewCell.swift in Sources */,
 				0CF28EDC1B8C85E5005B2E54 /* SettingsViewController.swift in Sources */,
 				0CF28EDF1B8C868D005B2E54 /* Constants.swift in Sources */,
+				F7BF5C7E1B93AB2E00AEB9DA /* AppDelegate.swift in Sources */,
+				F7BF5C701B93733A00AEB9DA /* StoreInfoBankAccountTableViewCell.swift in Sources */,
 				799892FF1B8CEBC100F4CFE2 /* SettingsItemTableViewCell.swift in Sources */,
 				0CF28ED51B8C85E5005B2E54 /* SessionManager.swift in Sources */,
 				79EFF7711B8D6E35008A9E7D /* ActivityModel.swift in Sources */,
@@ -587,7 +607,7 @@
 				F7BF5C6C1B93700600AEB9DA /* StoreInfoViewController.swift in Sources */,
 				799892F91B8CC7EC00F4CFE2 /* DashBoardItemCollectionViewCell.swift in Sources */,
 				0CF28ED11B8C85E5005B2E54 /* HexaColor.swift in Sources */,
-				F7BF5C661B93700600AEB9DA /* StoreInfoFooterTableViewCell.swift in Sources */,
+				F7BF5C661B93700600AEB9DA /* StoreInfoAddressTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

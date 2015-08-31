@@ -8,11 +8,21 @@
 
 import UIKit
 
+protocol StoreInfoAccountInformationTableViewCellDelegate {
+    
+}
+
 class StoreInfoAccountInformationTableViewCell: UITableViewCell {
 
+    var delegate: StoreInfoBankAccountTableViewCellDelegate!
+    
+    @IBOutlet weak var saveButton: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+            self.saveButton.layer.cornerRadius = 5.0
+            self.saveButton.clipsToBounds = true
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

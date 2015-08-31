@@ -8,12 +8,19 @@
 
 import UIKit
 
-class StoreInfoFooterTableViewCell: UITableViewCell {
+protocol StoreInfoAddressTableViewCellDelagate{
+    
+}
 
+class StoreInfoAddressTableViewCell: UITableViewCell {
+
+    var delegate: StoreInfoAddressTableViewCellDelagate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
+    @IBOutlet weak var storeAddressLabel: UILabel!
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
