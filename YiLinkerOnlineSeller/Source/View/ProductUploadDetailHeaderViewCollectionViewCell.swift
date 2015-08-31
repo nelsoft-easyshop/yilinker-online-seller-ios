@@ -34,4 +34,8 @@ class ProductUploadDetailHeaderViewCollectionViewCell: UICollectionViewCell, UIT
     func textFieldDidBeginEditing(textField: UITextField) {
         
     }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        
+    }
 }
