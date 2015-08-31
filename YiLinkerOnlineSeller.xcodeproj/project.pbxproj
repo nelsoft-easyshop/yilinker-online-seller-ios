@@ -224,6 +224,8 @@
 		7928764B1B8E049400762A39 /* SalesReportTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7928764A1B8E049400762A39 /* SalesReportTableViewCell.swift */; };
 		7928764E1B8E1FD800762A39 /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7928764C1B8E1FD800762A39 /* DatePickerViewController.swift */; };
 		7928764F1B8E1FD800762A39 /* DatePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7928764D1B8E1FD800762A39 /* DatePickerViewController.xib */; };
+		794880761B94C3FD0090B259 /* CustomizedCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794880751B94C3FD0090B259 /* CustomizedCategoryModel.swift */; };
+		794880781B94C65B0090B259 /* CustomizedCategoriesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794880771B94C65B0090B259 /* CustomizedCategoriesModel.swift */; };
 		799892F31B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */; };
 		799892F51B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */; };
 		799892F71B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */; };
@@ -497,6 +499,8 @@
 		7928764A1B8E049400762A39 /* SalesReportTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalesReportTableViewCell.swift; sourceTree = "<group>"; };
 		7928764C1B8E1FD800762A39 /* DatePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
 		7928764D1B8E1FD800762A39 /* DatePickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DatePickerViewController.xib; path = ../ViewController/DatePickerViewController.xib; sourceTree = "<group>"; };
+		794880751B94C3FD0090B259 /* CustomizedCategoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomizedCategoryModel.swift; sourceTree = "<group>"; };
+		794880771B94C65B0090B259 /* CustomizedCategoriesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomizedCategoriesModel.swift; sourceTree = "<group>"; };
 		799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardHeaderCollectionViewCell.xib; sourceTree = "<group>"; };
 		799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashBoardHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardItemCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -626,6 +630,8 @@
 				79EFF76E1B8D6E35008A9E7D /* ActivityLogModel.swift */,
 				79EFF76F1B8D6E35008A9E7D /* ActivityModel.swift */,
 				79EFF7821B8DB809008A9E7D /* RecentOrderModel.swift */,
+				794880751B94C3FD0090B259 /* CustomizedCategoryModel.swift */,
+				794880771B94C65B0090B259 /* CustomizedCategoriesModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1281,12 +1287,14 @@
 				792876291B8DF89F00762A39 /* BubbleChartRenderer.swift in Sources */,
 				792876211B8DF89F00762A39 /* ChartDataApproximatorFilter.swift in Sources */,
 				792876271B8DF89F00762A39 /* HorizontalBarChartHighlighter.swift in Sources */,
+				794880781B94C65B0090B259 /* CustomizedCategoriesModel.swift in Sources */,
 				792876241B8DF89F00762A39 /* ChartHighlight.swift in Sources */,
 				792876111B8DF89F00762A39 /* CandleChartDataEntry.swift in Sources */,
 				79EFF75B1B8D6DC1008A9E7D /* ActivityLogTableViewController.swift in Sources */,
 				792875FB1B8DF89F00762A39 /* HorizontalBarChartView.swift in Sources */,
 				792876011B8DF89F00762A39 /* ChartAxisBase.swift in Sources */,
 				7928762B1B8DF89F00762A39 /* ChartAxisRendererBase.swift in Sources */,
+				794880761B94C3FD0090B259 /* CustomizedCategoryModel.swift in Sources */,
 				79EFF78A1B8DCFA2008A9E7D /* SalesReportTableViewController.swift in Sources */,
 				7928763A1B8DF89F00762A39 /* PieChartRenderer.swift in Sources */,
 				792876411B8DF89F00762A39 /* ChartTransformerHorizontalBarChart.swift in Sources */,
