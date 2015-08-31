@@ -295,6 +295,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.delegate = self
                 cell.cellTitleLabel.text = "Product Name"
                 cell.cellTexField.placeholder = "Product Name"
+                cell.cellTexField.text = self.productModel.name
                 cell.textFieldType = ProductTextFieldType.ProductName
                 return cell
             } else if indexPath.row == 1 {
@@ -303,7 +304,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.delegate = self
                 cell.textFieldType = ProductTextFieldType.ProductShortDescription
                 cell.cellTitleLabel.text = "Short Description"
-                
+                cell.productUploadTextView.text = self.productModel.shortDescription
                 return cell
             } else if indexPath.row == 2 {
                 let cell: ProductUploadTextViewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextViewTableViewCellNibNameAndIdentifier) as! ProductUploadTextViewTableViewCell
@@ -311,7 +312,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.delegate = self
                 cell.textFieldType = ProductTextFieldType.ProductCompleteDescription
                 cell.cellTitleLabel.text = "Complete Description"
-                
+                cell.productUploadTextView.text = self.productModel.completeDescription
                 return cell
             } else {
                 let cell: ProductUploadTextViewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextViewTableViewCellNibNameAndIdentifier) as! ProductUploadTextViewTableViewCell
@@ -324,7 +325,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.cellTitleLabel.text = "Category*"
                 cell.cellTexField.placeholder = "Select Category"
-                
+                cell.cellTexField.text = self.productModel.category.name
                 if self.productModel.category.name != "" {
                     cell.cellTexField.text = self.productModel.category.name
                 }
@@ -340,7 +341,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.cellTitleLabel.text = "Brand"
                 cell.cellTexField.placeholder = "Brand"
-                
+                cell.cellTexField.text = self.productModel.brand.name
                 if self.productModel.brand.name != "" {
                     cell.cellTexField.text = self.productModel.brand.name
                 }
@@ -360,7 +361,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.cellTexField.placeholder = "Select the condition of the product"
                 cell.textFieldType = ProductTextFieldType.Condition
                 cell.delegate = self
-                
+                cell.cellTexField.text = self.productModel.condition.name
                 var values: [String] = []
                 
                 if self.conditions.count != 0 {
@@ -386,6 +387,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     let cell: ProductUploadQuantityTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadQuantityTableViewCellNibNameAndIdentifier) as! ProductUploadQuantityTableViewCell
                     cell.selectionStyle = UITableViewCellSelectionStyle.None
                     cell.delegate = self
+                    cell.cellTextField.text = "\(self.productModel.quantity)"
                     return cell
                 } else {
                     let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
@@ -394,6 +396,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     cell.cellTexField.placeholder = "SKU"
                     cell.delegate = self
                     cell.textFieldType = ProductTextFieldType.ProductSKU
+                    cell.cellTexField.text = self.productModel.sku
                     return cell
                 }
             } else {
@@ -448,7 +451,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.textFieldType = ProductTextFieldType.ProductRetailPrice
                 cell.cellTitleLabel.text = "Retail Price*"
                 cell.cellTextField.placeholder = "0.00"
-                
+                cell.cellTextField.text = self.productModel.retailPrice
                 return cell
             } else {
                 let cell: ProductUploadPriceTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadPriceTableViewCellNibNameAndIdentifier) as! ProductUploadPriceTableViewCell
@@ -457,14 +460,17 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.textFieldType = ProductTextFieldType.ProductDiscountPrice
                 cell.cellTitleLabel.text = "Discounted Price*"
                 cell.cellTextField.placeholder = "0.00"
-                
+                cell.cellTextField.text = self.productModel.discoutedPrice
                 return cell
             }
         } else {
             let cell: ProductUploadDimensionsAndWeightTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier) as! ProductUploadDimensionsAndWeightTableViewCell
             cell.delegate = self
             cell.selectionStyle = UITableViewCellSelectionStyle.None
-            
+            cell.weightTextField.text = self.productModel.weigth
+            cell.lengthTextField.text = self.productModel.length
+            cell.heightTextField.text = self.productModel.height
+            cell.widthTextField.text = self.productModel.width
             return cell
         }
     }
@@ -615,7 +621,25 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     
     func productUploadFooterView(didClickUpload view: ProductUploadFooterView) {
         self.productModel.images = self.uploadImages
-        self.fireUpload()
+        //self.fireUpload()
+        
+        if self.productModel.name == "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert product name.", title: "Incomplete Product Details")
+        } else if self.productModel.shortDescription == "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert short description.", title: "Incomplete Product Details")
+        } else if self.productModel.completeDescription == "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert complete description.", title: "Incomplete Product Details")
+        } else if self.productModel.category.name == "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please select category.", title: "Incomplete Product Details")
+        } else if self.productModel.condition == "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please select condition.", title: "Incomplete Product Details")
+        } else if self.productModel.quantity == 0 {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert quantity.", title: "Incomplete Product Details")
+        } else if self.productModel.retailPrice == "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert Retail Price.", title: "Incomplete Product Details")
+        } else {
+            self.fireUpload()
+        }
     }
     
     func productUploadTextFieldTableViewCell(textFieldDidChange text: String, cell: ProductUploadTextFieldTableViewCell, textFieldType: ProductTextFieldType) {
