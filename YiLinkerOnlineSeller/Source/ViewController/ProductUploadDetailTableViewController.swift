@@ -27,6 +27,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
     var dynamicRowHeight: CGFloat = 0
     var delegate: ProductUploadDetailTableViewControllerDelegate?
     var productModel: ProductModel?
+    var deletedCells: [NSIndexPath] = []
     var selectedIndexPath: NSIndexPath = NSIndexPath.new()
     
     override func viewDidLoad() {
@@ -156,8 +157,11 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
     }
     
     func productUploadDetailFooterTableViewCell(didPressSaveButton cell: ProductUploadDetailFooterTableViewCell) {
-        let indexPath: NSIndexPath = NSIndexPath(forRow: 0, inSection: 0)
+        for (index, path) in enumerate(self.deletedCells) {
+            self.productModel!.attributes[selectedIndexPath.section].values.removeAtIndex(path.row)
+        }
         
+        let indexPath: NSIndexPath = NSIndexPath(forRow: 0, inSection: 0)
         let cell: ProductUploadDetailHeaderViewTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! ProductUploadDetailHeaderViewTableViewCell
         
         let collectionViewIndexPath: NSIndexPath = NSIndexPath(forItem: 1, inSection: indexPath.section)
@@ -204,6 +208,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
     }
     
     func productUploadAttributeTableViewCell(didTapCell cell: ProductUploadAttributeTableViewCell, indexPath: NSIndexPath) {
-        self.productModel!.attributes[selectedIndexPath.section].values.removeAtIndex(indexPath.row)
+        self.deletedCells.append(indexPath)
+        //
     }
 }
