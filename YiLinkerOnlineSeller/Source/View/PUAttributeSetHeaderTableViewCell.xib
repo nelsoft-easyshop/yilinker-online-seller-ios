@@ -22,19 +22,19 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hhn-0N-cCA">
                         <rect key="frame" x="8" y="11" width="233" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="21" id="piq-es-xev"/>
+                            <constraint firstAttribute="height" constant="21" id="HJL-eb-LRE"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jME-Ig-8p9">
-                        <rect key="frame" x="249" y="7" width="30" height="30"/>
+                        <rect key="frame" x="261" y="12" width="20" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="30" id="SoY-fS-d8U"/>
-                            <constraint firstAttribute="width" constant="30" id="gv3-Gb-w2n"/>
+                            <constraint firstAttribute="width" constant="20" id="JcK-TN-1qd"/>
+                            <constraint firstAttribute="height" constant="20" id="h6Q-c2-b4C"/>
                         </constraints>
-                        <state key="normal" image="edit">
+                        <state key="normal" image="edit-gray">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
@@ -42,12 +42,12 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lpt-id-XQr">
-                        <rect key="frame" x="285" y="7" width="30" height="30"/>
+                        <rect key="frame" x="289" y="12" width="20" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="30" id="edc-vy-6ha"/>
-                            <constraint firstAttribute="width" constant="30" id="rYE-I0-X5G"/>
+                            <constraint firstAttribute="height" constant="20" id="UD7-uc-8Qy"/>
+                            <constraint firstAttribute="width" constant="20" id="nxz-zq-xsp"/>
                         </constraints>
-                        <state key="normal" image="delete">
+                        <state key="normal" image="delete-red">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
@@ -56,13 +56,13 @@
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="jME-Ig-8p9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="7" id="9XR-YJ-R7T"/>
-                    <constraint firstAttribute="trailing" secondItem="Lpt-id-XQr" secondAttribute="trailing" constant="5" id="btT-55-fuB"/>
-                    <constraint firstItem="Hhn-0N-cCA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="eEb-bL-27A"/>
-                    <constraint firstItem="Lpt-id-XQr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="7" id="edM-pe-vRX"/>
-                    <constraint firstItem="jME-Ig-8p9" firstAttribute="leading" secondItem="Hhn-0N-cCA" secondAttribute="trailing" constant="8" id="jWj-rJ-rQ5"/>
-                    <constraint firstItem="Hhn-0N-cCA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="mX0-az-vjG"/>
-                    <constraint firstItem="Lpt-id-XQr" firstAttribute="leading" secondItem="jME-Ig-8p9" secondAttribute="trailing" constant="6" id="sw5-ny-Vat"/>
+                    <constraint firstItem="Lpt-id-XQr" firstAttribute="leading" secondItem="jME-Ig-8p9" secondAttribute="trailing" constant="8" id="0F7-wY-69f"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Lpt-id-XQr" secondAttribute="trailing" constant="3" id="0TN-cO-vaV"/>
+                    <constraint firstItem="jME-Ig-8p9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="4" id="Cjp-RV-rnA"/>
+                    <constraint firstItem="Lpt-id-XQr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="4" id="Hi8-gr-Myf"/>
+                    <constraint firstItem="Hhn-0N-cCA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="KDn-PH-Azh"/>
+                    <constraint firstItem="Hhn-0N-cCA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="PZI-vN-NGG"/>
+                    <constraint firstItem="jME-Ig-8p9" firstAttribute="leading" secondItem="Hhn-0N-cCA" secondAttribute="trailing" constant="20" id="u5T-UX-fyl"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -71,7 +71,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="delete" width="96" height="96"/>
-        <image name="edit" width="96" height="96"/>
+        <image name="delete-red" width="120" height="120"/>
+        <image name="edit-gray" width="150" height="150"/>
     </resources>
 </document>
