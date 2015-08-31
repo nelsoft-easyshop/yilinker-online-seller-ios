@@ -177,7 +177,12 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
         }
         
         if attributeIsAvailable {
-            self.productModel.attributes[indexPath.section] = attribute
+            if self.productModel.attributes.count > indexPath.section {
+               self.productModel.attributes[indexPath.section] = attribute
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error", title: "Attribute Definition \(attribute.definition) already exist.")
+            }
+            
         } else {
             if self.productModel.validCombinations.count != 0 {
                 for (index, combination) in enumerate(self.productModel.validCombinations) {
