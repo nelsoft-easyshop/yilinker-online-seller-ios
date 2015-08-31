@@ -293,6 +293,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.delegate = self
+                cell.cellTitleLabel.text = "Product Name"
+                cell.cellTexField.placeholder = "Product Name"
                 cell.textFieldType = ProductTextFieldType.ProductName
                 return cell
             } else if indexPath.row == 1 {
@@ -704,10 +706,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         
         let manager: APIManager = APIManager.sharedInstance
         
-        println(self.property(mainImageCount))
-        
         SVProgressHUD.show()
-        let url: String = "\(APIAtlas.uploadUrl)?\(SessionManager.accessToken())"
+        let url: String = "\(APIAtlas.uploadUrl)?access_token=\(SessionManager.accessToken())"
         manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
             for (index, data) in enumerate(datas) {
                 formData.appendPartWithFileData(data, name: "images[]", fileName: "\(index + 1)", mimeType: "image/jpeg")
