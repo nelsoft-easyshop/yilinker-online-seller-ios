@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProductUploadUploadImageTableViewCell" rowHeight="173" id="KGk-i7-Jjw" customClass="ProductUploadUploadImageTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="380" height="173"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="wNX-WU-PB3">
+                        <rect key="frame" x="0.0" y="39" width="380" height="132"/>
+                        <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="mEq-Ht-IeT">
+                            <size key="itemSize" width="120" height="120"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <connections>
+                            <outlet property="dataSource" destination="KGk-i7-Jjw" id="K7M-6U-aoK"/>
+                            <outlet property="delegate" destination="KGk-i7-Jjw" id="GCU-L8-Ymd"/>
+                        </connections>
+                    </collectionView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product Photos" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xse-Zw-n9X">
+                        <rect key="frame" x="10" y="8" width="96" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="HTY-HK-G08"/>
+                            <constraint firstAttribute="width" constant="96" id="Ohj-JA-pI4"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m83-DC-HOU">
+                        <rect key="frame" x="99" y="8" width="15" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="15" id="71o-4c-yOT"/>
+                            <constraint firstAttribute="height" constant="21" id="yPA-dS-NfZ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.89631470960000004" green="0.029226388759999999" blue="0.12704667019999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="m83-DC-HOU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="9eg-sG-9PK"/>
+                    <constraint firstAttribute="trailing" secondItem="wNX-WU-PB3" secondAttribute="trailing" id="CWk-b3-S2u"/>
+                    <constraint firstItem="Xse-Zw-n9X" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="2" id="GQ4-IS-7fj"/>
+                    <constraint firstItem="m83-DC-HOU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="91" id="Kne-od-21j"/>
+                    <constraint firstItem="wNX-WU-PB3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Lg2-Q5-3RH"/>
+                    <constraint firstAttribute="bottom" secondItem="wNX-WU-PB3" secondAttribute="bottom" constant="1" id="NDW-2J-B9D"/>
+                    <constraint firstItem="Xse-Zw-n9X" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="eLy-5V-AXX"/>
+                    <constraint firstItem="wNX-WU-PB3" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="39" id="yOc-y5-6KV"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="collectionView" destination="wNX-WU-PB3" id="s08-n8-MUl"/>
+            </connections>
+            <point key="canvasLocation" x="377" y="283.5"/>
+        </tableViewCell>
+    </objects>
+</document>

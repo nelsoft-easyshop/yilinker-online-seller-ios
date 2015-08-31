@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+        </mutableArray>
+        <mutableArray key="Panton SemiBold.otf">
+            <string>Panton-SemiBold</string>
+        </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SalesReportTableViewCell" id="rVZ-LF-x94" customClass="SalesReportTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rVZ-LF-x94" id="78X-Q6-Idh">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RX7-4H-vkR" userLabel="Top">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sold" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eTB-be-Xcn">
+                                <rect key="frame" x="28" y="20" width="25" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="kFT-ah-Of5"/>
+                                    <constraint firstAttribute="width" constant="25" id="zk1-IW-iZV"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                                <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PvP-aI-emc" userLabel="Cancelled Circle">
+                                <rect key="frame" x="69" y="22" width="12" height="12"/>
+                                <color key="backgroundColor" red="0.94509803920000002" green="0.70980392160000005" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="12" id="7Pm-Vj-tB5"/>
+                                    <constraint firstAttribute="height" constant="12" id="U7W-6j-72f"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cancelled" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CZW-Kz-9jH">
+                                <rect key="frame" x="89" y="20" width="51" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="51" id="KIj-c0-1BI"/>
+                                    <constraint firstAttribute="height" constant="15" id="onr-lc-cfO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                                <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QiW-W6-icp" userLabel="Sold Circle">
+                                <rect key="frame" x="8" y="22" width="12" height="12"/>
+                                <color key="backgroundColor" red="0.25098039220000001" green="0.56862745100000001" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="12" id="Lut-lU-iIt"/>
+                                    <constraint firstAttribute="width" constant="12" id="xlO-Bd-vmq"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="44q-wB-k8q" userLabel="Calendar View">
+                                <rect key="frame" x="217" y="10" width="150" height="35"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right2" translatesAutoresizingMaskIntoConstraints="NO" id="ZWc-tf-mF1">
+                                        <rect key="frame" x="130" y="12" width="12" height="12"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="12" id="KZB-me-VTa"/>
+                                            <constraint firstAttribute="width" constant="12" id="NIr-jh-FHJ"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aug 29 - Sep 29" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sJF-YJ-VdG" userLabel="Date">
+                                        <rect key="frame" x="23" y="10" width="104" height="15"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="15" id="mw0-7r-2ZH"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="12"/>
+                                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calendar" translatesAutoresizingMaskIntoConstraints="NO" id="uvq-y8-WNi">
+                                        <rect key="frame" x="0.0" y="9" width="18" height="18"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="18" id="Dlz-zs-VyC"/>
+                                            <constraint firstAttribute="width" constant="18" id="dgJ-7F-1kk"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="ZWc-tf-mF1" secondAttribute="trailing" constant="8" id="1EF-qV-3Mw"/>
+                                    <constraint firstAttribute="centerY" secondItem="uvq-y8-WNi" secondAttribute="centerY" id="CFc-Es-1N7"/>
+                                    <constraint firstItem="uvq-y8-WNi" firstAttribute="leading" secondItem="44q-wB-k8q" secondAttribute="leading" id="FeX-KF-agN"/>
+                                    <constraint firstAttribute="centerX" secondItem="sJF-YJ-VdG" secondAttribute="centerX" id="KUV-oh-SfS"/>
+                                    <constraint firstItem="sJF-YJ-VdG" firstAttribute="leading" secondItem="uvq-y8-WNi" secondAttribute="trailing" constant="5" id="RUq-cl-sRA"/>
+                                    <constraint firstItem="ZWc-tf-mF1" firstAttribute="leading" secondItem="sJF-YJ-VdG" secondAttribute="trailing" constant="3" id="Sbz-zT-pmW"/>
+                                    <constraint firstAttribute="centerY" secondItem="ZWc-tf-mF1" secondAttribute="centerY" id="Vjc-Lz-r6u"/>
+                                    <constraint firstAttribute="height" constant="35" id="dhd-lf-P1Z"/>
+                                    <constraint firstAttribute="width" constant="150" id="eeV-b3-PKS"/>
+                                    <constraint firstAttribute="centerY" secondItem="sJF-YJ-VdG" secondAttribute="centerY" id="esS-Js-wWM"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="CZW-Kz-9jH" firstAttribute="leading" secondItem="PvP-aI-emc" secondAttribute="trailing" constant="8" id="FTh-7N-Z3W"/>
+                            <constraint firstItem="eTB-be-Xcn" firstAttribute="leading" secondItem="QiW-W6-icp" secondAttribute="trailing" constant="8" id="GKd-aI-zw3"/>
+                            <constraint firstAttribute="trailing" secondItem="44q-wB-k8q" secondAttribute="trailing" constant="8" id="N60-Q1-epS"/>
+                            <constraint firstAttribute="height" constant="55" id="T01-r6-Bri"/>
+                            <constraint firstItem="QiW-W6-icp" firstAttribute="leading" secondItem="RX7-4H-vkR" secondAttribute="leading" constant="8" id="TDx-kW-n2i"/>
+                            <constraint firstAttribute="centerY" secondItem="PvP-aI-emc" secondAttribute="centerY" id="UMv-dX-q4w"/>
+                            <constraint firstAttribute="centerY" secondItem="eTB-be-Xcn" secondAttribute="centerY" id="aK4-mb-gZG"/>
+                            <constraint firstAttribute="centerY" secondItem="44q-wB-k8q" secondAttribute="centerY" id="i4c-nb-A14"/>
+                            <constraint firstAttribute="centerY" secondItem="QiW-W6-icp" secondAttribute="centerY" id="klE-Vg-ngq"/>
+                            <constraint firstAttribute="centerY" secondItem="CZW-Kz-9jH" secondAttribute="centerY" id="upP-rs-vXT"/>
+                            <constraint firstItem="PvP-aI-emc" firstAttribute="leading" secondItem="eTB-be-Xcn" secondAttribute="trailing" constant="16" id="vtV-gY-mfZ"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xdu-rY-hP1" userLabel="Line Chart Small" customClass="LineChartView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="355" width="375" height="60"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="60" id="KnY-0m-Vd9"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Total Sales (Gross)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mzV-Zw-gr7" userLabel="Total Sales Label">
+                        <rect key="frame" x="14" y="454" width="110" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="12" id="KFB-nD-bz8"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="10"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="16" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6se-Wj-NFL" userLabel="Total Transactions">
+                        <rect key="frame" x="132" y="429" width="110" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="qK0-BJ-Dm1"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="18"/>
+                        <color key="textColor" red="0.70196078429999997" green="0.69803921570000005" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Transactions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fmC-45-PJO" userLabel="Total Transactions Label">
+                        <rect key="frame" x="132" y="454" width="110" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="12" id="Yvy-Tb-y4b"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="10"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mEQ-dp-HN3" userLabel="Total Products">
+                        <rect key="frame" x="250" y="429" width="110" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="b6u-qD-qWA"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="18"/>
+                        <color key="textColor" red="0.70196078429999997" green="0.69803921570000005" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total products" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W0L-Ly-UDx" userLabel="Total Products Label">
+                        <rect key="frame" x="250" y="454" width="110" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="12" id="qiM-0X-3Mx"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="10"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Qu-B2-7Tj" userLabel="Line Chart Big" customClass="LineChartView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="55" width="375" height="300"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="300" id="EVu-mP-BWb"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="P 23, 000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FqT-h7-b9d" userLabel="Total Sales">
+                        <rect key="frame" x="14" y="429" width="110" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="HT4-5z-y4w"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="18"/>
+                        <color key="textColor" red="0.70196078429999997" green="0.69803921570000005" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="W0L-Ly-UDx" firstAttribute="top" secondItem="mEQ-dp-HN3" secondAttribute="bottom" constant="5" id="6Ot-z8-xn8"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="W0L-Ly-UDx" secondAttribute="trailing" constant="7" id="8h4-Tl-l8e"/>
+                    <constraint firstItem="6se-Wj-NFL" firstAttribute="width" secondItem="FqT-h7-b9d" secondAttribute="width" id="BAm-o7-cgd"/>
+                    <constraint firstItem="fmC-45-PJO" firstAttribute="top" secondItem="6se-Wj-NFL" secondAttribute="bottom" constant="5" id="CCd-3P-25q"/>
+                    <constraint firstAttribute="trailing" secondItem="xdu-rY-hP1" secondAttribute="trailing" id="Jsr-Hf-RKX"/>
+                    <constraint firstItem="6se-Wj-NFL" firstAttribute="width" secondItem="mzV-Zw-gr7" secondAttribute="width" id="KoP-3T-sAd"/>
+                    <constraint firstAttribute="centerX" secondItem="6se-Wj-NFL" secondAttribute="centerX" id="M1n-lN-hbm"/>
+                    <constraint firstItem="6se-Wj-NFL" firstAttribute="width" secondItem="mEQ-dp-HN3" secondAttribute="width" id="PTQ-xq-8Ui"/>
+                    <constraint firstItem="xdu-rY-hP1" firstAttribute="leading" secondItem="78X-Q6-Idh" secondAttribute="leading" id="Pl6-zh-P2a"/>
+                    <constraint firstItem="mEQ-dp-HN3" firstAttribute="top" secondItem="xdu-rY-hP1" secondAttribute="bottom" constant="14" id="RIE-jx-f7M"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="mEQ-dp-HN3" secondAttribute="trailing" constant="7" id="S33-I5-46W"/>
+                    <constraint firstItem="fmC-45-PJO" firstAttribute="leading" secondItem="mzV-Zw-gr7" secondAttribute="trailing" constant="8" id="TxH-aq-abA"/>
+                    <constraint firstItem="5Qu-B2-7Tj" firstAttribute="leading" secondItem="78X-Q6-Idh" secondAttribute="leading" id="Wcp-m9-1Er"/>
+                    <constraint firstItem="6se-Wj-NFL" firstAttribute="top" secondItem="xdu-rY-hP1" secondAttribute="bottom" constant="14" id="XEe-T6-YyI"/>
+                    <constraint firstItem="W0L-Ly-UDx" firstAttribute="leading" secondItem="fmC-45-PJO" secondAttribute="trailing" constant="8" id="Xgg-Md-qnb"/>
+                    <constraint firstItem="FqT-h7-b9d" firstAttribute="top" secondItem="xdu-rY-hP1" secondAttribute="bottom" constant="14" id="XrK-qf-E4V"/>
+                    <constraint firstItem="mEQ-dp-HN3" firstAttribute="leading" secondItem="6se-Wj-NFL" secondAttribute="trailing" constant="8" id="YEp-NB-phI"/>
+                    <constraint firstItem="RX7-4H-vkR" firstAttribute="leading" secondItem="78X-Q6-Idh" secondAttribute="leading" id="bQI-Yw-Xgl"/>
+                    <constraint firstAttribute="trailing" secondItem="5Qu-B2-7Tj" secondAttribute="trailing" id="cn4-vp-n8Q"/>
+                    <constraint firstItem="mzV-Zw-gr7" firstAttribute="top" secondItem="FqT-h7-b9d" secondAttribute="bottom" constant="5" id="efj-FI-uRi"/>
+                    <constraint firstItem="fmC-45-PJO" firstAttribute="leading" secondItem="mzV-Zw-gr7" secondAttribute="trailing" constant="8" id="faQ-57-9VF"/>
+                    <constraint firstItem="6se-Wj-NFL" firstAttribute="leading" secondItem="FqT-h7-b9d" secondAttribute="trailing" constant="8" id="gkj-mH-q4g"/>
+                    <constraint firstItem="5Qu-B2-7Tj" firstAttribute="top" secondItem="RX7-4H-vkR" secondAttribute="bottom" id="hk0-PX-d2W"/>
+                    <constraint firstItem="6se-Wj-NFL" firstAttribute="width" secondItem="W0L-Ly-UDx" secondAttribute="width" id="iCb-jQ-2ra"/>
+                    <constraint firstItem="RX7-4H-vkR" firstAttribute="top" secondItem="78X-Q6-Idh" secondAttribute="top" id="iDk-Iz-blE"/>
+                    <constraint firstItem="mEQ-dp-HN3" firstAttribute="leading" secondItem="6se-Wj-NFL" secondAttribute="trailing" constant="8" id="iN3-jm-EuN"/>
+                    <constraint firstItem="W0L-Ly-UDx" firstAttribute="leading" secondItem="fmC-45-PJO" secondAttribute="trailing" constant="8" id="kZf-1s-x6O"/>
+                    <constraint firstAttribute="trailing" secondItem="RX7-4H-vkR" secondAttribute="trailing" id="m2k-cf-gj2"/>
+                    <constraint firstAttribute="centerX" secondItem="fmC-45-PJO" secondAttribute="centerX" id="oWN-A5-iEh"/>
+                    <constraint firstItem="6se-Wj-NFL" firstAttribute="leading" secondItem="FqT-h7-b9d" secondAttribute="trailing" constant="8" id="qla-DN-clC"/>
+                    <constraint firstItem="xdu-rY-hP1" firstAttribute="top" secondItem="5Qu-B2-7Tj" secondAttribute="bottom" id="swq-eA-efh"/>
+                    <constraint firstItem="6se-Wj-NFL" firstAttribute="width" secondItem="fmC-45-PJO" secondAttribute="width" id="vEk-qJ-sBS"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="calendarView" destination="44q-wB-k8q" id="GvE-qY-Lvm"/>
+                <outlet property="cancelledCircleView" destination="PvP-aI-emc" id="fzn-cN-2in"/>
+                <outlet property="dateLabel" destination="sJF-YJ-VdG" id="4Rf-qE-Cav"/>
+                <outlet property="largeLineChart" destination="5Qu-B2-7Tj" id="E7o-Tp-17e"/>
+                <outlet property="smallLineChart" destination="xdu-rY-hP1" id="nWF-wt-wtV"/>
+                <outlet property="soldCircleView" destination="QiW-W6-icp" id="gc7-Ik-tpc"/>
+                <outlet property="totalProducts" destination="mEQ-dp-HN3" id="N8x-x5-t5V"/>
+                <outlet property="totalSalesLabel" destination="FqT-h7-b9d" id="6A7-c9-SKV"/>
+                <outlet property="totalTransactionsLabel" destination="6se-Wj-NFL" id="nua-5a-qcK"/>
+            </connections>
+            <point key="canvasLocation" x="180.5" y="94"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="calendar" width="200" height="200"/>
+        <image name="right2" width="97" height="200"/>
+    </resources>
+</document>
