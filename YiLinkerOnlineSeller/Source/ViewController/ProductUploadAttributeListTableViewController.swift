@@ -196,6 +196,19 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
         let range: NSRange = NSMakeRange(indexPath.section, 1)
         let section: NSIndexSet = NSIndexSet(indexesInRange: range)
         
+        let deletedAttribute: AttributeModel = self.productModel.attributes[indexPath.section]
+        let attributeTitle: String = deletedAttribute.definition
+        
+        for combination in self.productModel.validCombinations {
+            for dictionary in combination.attributes {
+                if attributeTitle == dictionary["name"] as! String {
+                    for (index, c) in enumerate(self.productModel.validCombinations) {
+                        self.productModel.validCombinations.removeAtIndex(0)
+                    }
+                }
+            }
+        }
+        
         self.productModel.attributes.removeAtIndex(indexPath.section)
         self.tableView.beginUpdates()
         self.tableView.deleteSections(section, withRowAnimation: UITableViewRowAnimation.Left)
