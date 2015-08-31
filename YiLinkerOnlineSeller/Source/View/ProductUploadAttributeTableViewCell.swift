@@ -23,6 +23,7 @@ class ProductUploadAttributeTableViewCell: UITableViewCell, UICollectionViewData
     @IBOutlet weak var colectionViewHeightConstraint: NSLayoutConstraint!
     
     var delegate: ProductUploadAttributeTableViewCellDelegate?
+    var parentViewController: ProductUploadDetailTableViewController?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -73,10 +74,56 @@ class ProductUploadAttributeTableViewCell: UITableViewCell, UICollectionViewData
     
     func tapRecognizer(sender: UITapGestureRecognizer) {
         let cell: ProductUploadAttributeCollectionViewCell = sender.view as! ProductUploadAttributeCollectionViewCell
-        let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
-        self.delegate!.productUploadAttributeTableViewCell(didTapCell: self, indexPath: indexPath)
-        self.attributes.removeAtIndex(indexPath.row)
-        self.collectionView.deleteItemsAtIndexPaths([indexPath])
+        
+        var isValidToDelete: Bool = true
+        var combinationNumber: Int = 0
+        
+        let attributeValue: String = cell.attributeLabel.text!
+        
+        for (index, combination) in enumerate(self.parentViewController!.productModel!.validCombinations){
+            for dictionary in combination.attributes as [NSMutableDictionary] {
+                if attributeValue == dictionary["value"] as! String {
+                    isValidToDelete = false
+                    combinationNumber = index
+                    break
+                }
+            }
+            
+            if isValidToDelete == false {
+                break
+            }
+        }
+        
+        if isValidToDelete {
+            let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
+            self.delegate!.productUploadAttributeTableViewCell(didTapCell: self, indexPath: indexPath)
+            self.attributes.removeAtIndex(indexPath.row)
+            self.collectionView.deleteItemsAtIndexPaths([indexPath])
+        } else {
+            let alertController = UIAlertController(title: "Warning", message: "This attribute item has an existing combination. Continue removing this item?", preferredStyle: .Alert)
+            
+            let cancelAction = UIAlertAction(title: "NO", style: .Cancel) { (action) in
+                
+            }
+            
+            alertController.addAction(cancelAction)
+            let OKAction = UIAlertAction(title: "YES", style: .Default) { (action) in
+                let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
+                self.delegate!.productUploadAttributeTableViewCell(didTapCell: self, indexPath: indexPath)
+                self.attributes.removeAtIndex(indexPath.row)
+                self.collectionView.deleteItemsAtIndexPaths([indexPath])
+                println(self.parentViewController!.productModel!.validCombinations.count)
+                self.parentViewController!.productModel!.validCombinations.removeAtIndex(combinationNumber)
+                println(self.parentViewController!.productModel!.validCombinations.count)
+            }
+            
+            alertController.addAction(OKAction)
+            self.parentViewController!.presentViewController(alertController, animated: true) {
+                
+            }
+        }
+        
+        
     }
     
     func collectionViewContentSize() -> CGSize {

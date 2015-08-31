@@ -150,10 +150,9 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
         }
     }
     
-    func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath) {
-
+    func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath, productModel: ProductModel) {
         var attributeIsAvailable: Bool = false
-        
+        self.productModel = productModel
         for productAttribute in self.productModel.attributes as [AttributeModel] {
             if productAttribute.definition == attribute.definition {
                 attributeIsAvailable = true
@@ -166,6 +165,23 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
             self.productModel.attributes.append(attribute)
         }
 
+        self.tableView.reloadData()
+    }
+    
+    func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath) {
+        var attributeIsAvailable: Bool = false
+        for productAttribute in self.productModel.attributes as [AttributeModel] {
+            if productAttribute.definition == attribute.definition {
+                attributeIsAvailable = true
+            }
+        }
+        
+        if attributeIsAvailable {
+            self.productModel.attributes[indexPath.section] = attribute
+        } else {
+            self.productModel.attributes.append(attribute)
+        }
+        
         self.tableView.reloadData()
     }
     

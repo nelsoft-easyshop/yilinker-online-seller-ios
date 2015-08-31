@@ -17,6 +17,7 @@ struct PUDTConstant {
 }
 
 protocol ProductUploadDetailTableViewControllerDelegate {
+    func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath, productModel: ProductModel)
     func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath)
 }
 
@@ -107,7 +108,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
             if self.productModel != nil {
                 cell.attributes = self.productModel!.attributes[self.selectedIndexPath.row].values
             }
-            
+            cell.parentViewController = self
             cell.delegate = self
             
             return cell
@@ -165,9 +166,12 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         var attributeModel: AttributeModel = AttributeModel()
         attributeModel.definition = cell.cellTextField.text
         attributeModel.values = attributeCell.attributes
-        
-        self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: attributeModel, indexPath: self.selectedIndexPath)
-        
+        if self.productModel != nil {
+            self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: attributeModel, indexPath: self.selectedIndexPath, productModel: self.productModel!)
+        } else {
+            self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: attributeModel, indexPath: self.selectedIndexPath)
+        }
+       
         self.navigationController!.popViewControllerAnimated(true)
     }
     

@@ -297,7 +297,7 @@
         </view>
     </objects>
     <resources>
-        <image name="delete" width="200" height="200"/>
+        <image name="delete" width="96" height="96"/>
         <image name="moveToInactive" width="150" height="200"/>
     </resources>
 </document>
