@@ -100,7 +100,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
                 if task.statusCode == 401 {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "RefreshToken Expired/ No available API for refershing accessToken", title: "Server Error")
+                    self.fireRefreshToken()
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 }
@@ -745,7 +745,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
             let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
             if task.statusCode == 401 {
-               UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "RefreshToken Expired/ No available API for refershing accessToken", title: "Server Error")
+               self.fireRefreshToken2()
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
             }
@@ -774,5 +774,50 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         let data = NSJSONSerialization.dataWithJSONObject(array, options: nil, error: nil)
         let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
         return string!
+    }
+    
+    
+    func fireRefreshToken() {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.fireCondition()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                SVProgressHUD.dismiss()
+        })
+
+    }
+    
+    func fireRefreshToken2() {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.fireUpload()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                SVProgressHUD.dismiss()
+        })
+        
     }
 }

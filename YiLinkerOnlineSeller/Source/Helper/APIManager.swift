@@ -26,6 +26,7 @@ struct APIEnvironment {
 struct APIAtlas {
     
     static let loginUrl = "login"
+    static let refreshTokenUrl = "login"
     static let registerUrl = "user/register"
     static let conditionUrl = "product/getProductConditions"
     static let categoryUrl = "product/getCategories"
