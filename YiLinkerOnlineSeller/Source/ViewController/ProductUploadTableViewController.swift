@@ -621,8 +621,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     
     func productUploadFooterView(didClickUpload view: ProductUploadFooterView) {
         self.productModel.images = self.uploadImages
-        //self.fireUpload()
-        
+
         if self.productModel.name == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert product name.", title: "Incomplete Product Details")
         } else if self.productModel.shortDescription == "" {
@@ -637,6 +636,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert quantity.", title: "Incomplete Product Details")
         } else if self.productModel.retailPrice == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert Retail Price.", title: "Incomplete Product Details")
+        } else if (self.productModel.retailPrice as NSString).doubleValue < (self.productModel.discoutedPrice as NSString).doubleValue {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Retail price must be larger than discount price.", title: "Incomplete Product Details")
         } else {
             self.fireUpload()
         }
@@ -726,7 +727,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             ProductUploadTableViewControllerConstant.uploadBrandKey: self.productModel.brand,
             ProductUploadTableViewControllerConstant.uploadTitleKey: self.productModel.name,
             ProductUploadTableViewControllerConstant.uploadConditionKey: self.productModel.condition.uid,
-            ProductUploadTableViewControllerConstant.uploadPropertyKey: self.property(mainImageCount)]
+            ProductUploadTableViewControllerConstant.uploadPropertyKey: self.property(mainImageCount),
+            "customBrand": ""]
         
         let manager: APIManager = APIManager.sharedInstance
         
@@ -739,6 +741,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             
         }, success: { (NSURLSessionDataTask, AnyObject) -> Void in
             SVProgressHUD.dismiss()
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Your product is successfully uploaded.", title: "Success")
         }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
             let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
             if task.statusCode == 401 {
@@ -758,7 +761,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             dictionary["attribute"] = combination.attributes
             dictionary["price"] = combination.retailPrice
             dictionary["discountedPrice"] = combination.discountedPrice
-            dictionary["discountedPrice"] = combination.sku
+            dictionary["quantity"] = combination.quantity.toInt()
             
             var arrayNumber: [Int] = []
             
