@@ -36,9 +36,14 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         if self.respondsToSelector("edgesForExtendedLayout") {
             self.edgesForExtendedLayout = UIRectEdge.None
         }
-        
+        self.footerView()
         self.registerCell()
         self.fireCategoryWithParentID(self.parentID)
+    }
+    
+    func footerView() {
+        let footerView: UIView = UIView(frame: CGRectZero)
+        self.tableView.tableFooterView = footerView
     }
     
     func fireCategoryWithParentID(parentID: Int) {
@@ -110,7 +115,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         var categoryModel: CategoryModel = self.categories[indexPath.row]
         if categoryModel.hasChildren == "1" {
             let productUploadCategoryViewController: ProductUploadCategoryViewController = ProductUploadCategoryViewController(nibName: "ProductUploadCategoryViewController", bundle: nil)
-            productUploadCategoryViewController.pageTitle = self.titles[indexPath.row]
+            productUploadCategoryViewController.pageTitle = categoryModel.name
             productUploadCategoryViewController.parentID = categoryModel.uid
             self.navigationController!.pushViewController(productUploadCategoryViewController, animated: true)
         } else {
