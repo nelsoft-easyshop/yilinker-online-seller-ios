@@ -119,13 +119,16 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
     }
     
     func productUploadCombinationFooterTableViewCell(didClickDoneButton cell: ProductUploadCombinationFooterTableViewCell, sku: String, quantity: String, discountedPrice: String, retailPrice: String, uploadImages: [UIImage]) {
+        
         let cell: ProductUploadCombinationTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! ProductUploadCombinationTableViewCell
         let combination: CombinationModel = cell.data()
+        
         combination.images = uploadImages
         combination.quantity = quantity
         combination.discountedPrice = discountedPrice
         combination.sku = sku
         combination.retailPrice = retailPrice
+        
         if self.productModel == nil {
             self.delegate!.productUploadCombinationTableViewController(appendCombination: combination, isEdit: false, indexPath: NSIndexPath())
         } else {
