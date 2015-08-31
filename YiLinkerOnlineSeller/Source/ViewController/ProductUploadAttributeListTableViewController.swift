@@ -150,10 +150,9 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
         }
     }
     
-    func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath) {
-
+    func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath, productModel: ProductModel) {
         var attributeIsAvailable: Bool = false
-        
+        self.productModel = productModel
         for productAttribute in self.productModel.attributes as [AttributeModel] {
             if productAttribute.definition == attribute.definition {
                 attributeIsAvailable = true
@@ -169,6 +168,30 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
         self.tableView.reloadData()
     }
     
+    func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath) {
+        var attributeIsAvailable: Bool = false
+        for productAttribute in self.productModel.attributes as [AttributeModel] {
+            if productAttribute.definition == attribute.definition {
+                attributeIsAvailable = true
+            }
+        }
+        
+        if attributeIsAvailable {
+            self.productModel.attributes[indexPath.section] = attribute
+        } else {
+            if self.productModel.validCombinations.count != 0 {
+                for (index, combination) in enumerate(self.productModel.validCombinations) {
+                    self.productModel.validCombinations.removeAtIndex(0)
+                }
+            }
+            
+            self.productModel.attributes.append(attribute)
+        }
+
+        
+        self.tableView.reloadData()
+    }
+    
     @IBAction func proceedToCombination(sender: AnyObject) {
         let productUploadCombinationListViewController: ProductUploadCombinationListViewController = ProductUploadCombinationListViewController(nibName: "ProductUploadCombinationListViewController", bundle: nil)
         productUploadCombinationListViewController.productModel = self.productModel
@@ -179,6 +202,19 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
         let indexPath: NSIndexPath = self.tableView.indexPathForCell(cell)!
         let range: NSRange = NSMakeRange(indexPath.section, 1)
         let section: NSIndexSet = NSIndexSet(indexesInRange: range)
+        
+        let deletedAttribute: AttributeModel = self.productModel.attributes[indexPath.section]
+        let attributeTitle: String = deletedAttribute.definition
+        
+        for combination in self.productModel.validCombinations {
+            for dictionary in combination.attributes {
+                if attributeTitle == dictionary["name"] as! String {
+                    for (index, c) in enumerate(self.productModel.validCombinations) {
+                        self.productModel.validCombinations.removeAtIndex(0)
+                    }
+                }
+            }
+        }
         
         self.productModel.attributes.removeAtIndex(indexPath.section)
         self.tableView.beginUpdates()

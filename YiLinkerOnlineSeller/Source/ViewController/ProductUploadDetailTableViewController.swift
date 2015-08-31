@@ -17,6 +17,7 @@ struct PUDTConstant {
 }
 
 protocol ProductUploadDetailTableViewControllerDelegate {
+    func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath, productModel: ProductModel)
     func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath)
 }
 
@@ -26,6 +27,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
     var dynamicRowHeight: CGFloat = 0
     var delegate: ProductUploadDetailTableViewControllerDelegate?
     var productModel: ProductModel?
+    var deletedCells: [NSIndexPath] = []
     var selectedIndexPath: NSIndexPath = NSIndexPath.new()
     
     override func viewDidLoad() {
@@ -107,7 +109,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
             if self.productModel != nil {
                 cell.attributes = self.productModel!.attributes[self.selectedIndexPath.row].values
             }
-            
+            cell.parentViewController = self
             cell.delegate = self
             
             return cell
@@ -155,8 +157,11 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
     }
     
     func productUploadDetailFooterTableViewCell(didPressSaveButton cell: ProductUploadDetailFooterTableViewCell) {
-        let indexPath: NSIndexPath = NSIndexPath(forRow: 0, inSection: 0)
+        for (index, path) in enumerate(self.deletedCells) {
+            self.productModel!.attributes[selectedIndexPath.section].values.removeAtIndex(path.row)
+        }
         
+        let indexPath: NSIndexPath = NSIndexPath(forRow: 0, inSection: 0)
         let cell: ProductUploadDetailHeaderViewTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! ProductUploadDetailHeaderViewTableViewCell
         
         let collectionViewIndexPath: NSIndexPath = NSIndexPath(forItem: 1, inSection: indexPath.section)
@@ -165,9 +170,12 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         var attributeModel: AttributeModel = AttributeModel()
         attributeModel.definition = cell.cellTextField.text
         attributeModel.values = attributeCell.attributes
-        
-        self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: attributeModel, indexPath: self.selectedIndexPath)
-        
+        if self.productModel != nil {
+            self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: attributeModel, indexPath: self.selectedIndexPath, productModel: self.productModel!)
+        } else {
+            self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: attributeModel, indexPath: self.selectedIndexPath)
+        }
+       
         self.navigationController!.popViewControllerAnimated(true)
     }
     
@@ -200,6 +208,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
     }
     
     func productUploadAttributeTableViewCell(didTapCell cell: ProductUploadAttributeTableViewCell, indexPath: NSIndexPath) {
-        self.productModel!.attributes[selectedIndexPath.section].values.removeAtIndex(indexPath.row)
+        self.deletedCells.append(indexPath)
+        //
     }
 }
