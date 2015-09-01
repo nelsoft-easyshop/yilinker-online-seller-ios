@@ -28,6 +28,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
     var images: [UIImage] = []
     var selectedIndexpath: NSIndexPath?
     var productModel: ProductModel?
+    var headerTitle: String = ""
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +37,12 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         
         let headerView: ProductUploadCombinationHeaderTableViewCell = XibHelper.puffViewWithNibName("ProductUploadCombinationHeaderTableViewCell", index: 0) as! ProductUploadCombinationHeaderTableViewCell
         self.tableView.tableHeaderView = headerView
-        self.images.append(UIImage(named: "addPhoto")!)
+        headerView.combinationLabel.text = self.headerTitle
+        
+        if self.images.count == 0 {
+          self.images.append(UIImage(named: "addPhoto")!)
+        }
+        
         self.registerCell()
     }
 
@@ -119,8 +125,11 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
     }
     
     func productUploadCombinationFooterTableViewCell(didClickDoneButton cell: ProductUploadCombinationFooterTableViewCell, sku: String, quantity: String, discountedPrice: String, retailPrice: String, uploadImages: [UIImage]) {
+        self.tableView.endEditing(true)
+        self.tableView.reloadData()
         
         let cell: ProductUploadCombinationTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! ProductUploadCombinationTableViewCell
+       
         let combination: CombinationModel = cell.data()
         
         combination.images = uploadImages

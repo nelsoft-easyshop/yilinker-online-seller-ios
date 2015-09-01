@@ -100,7 +100,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         if indexPath.row == 0 {
             let cell: ProductUploadDetailHeaderViewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(PUDTConstant.productUploadDetailHeaderViewTableViewCellNibNameAndIdentifier) as! ProductUploadDetailHeaderViewTableViewCell
             if self.productModel != nil {
-                cell.cellTextField.text = self.productModel!.attributes[self.selectedIndexPath.row].definition
+                cell.cellTextField.text = self.productModel!.attributes[self.selectedIndexPath.section].definition
                 cell.edited = true
             } else {
                 cell.edited = false
@@ -111,8 +111,9 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
             let cell: ProductUploadAttributeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(PUDTConstant.productUploadAttributeTableViewCellNibNameAndIdentifier) as! ProductUploadAttributeTableViewCell
             
             if self.productModel != nil {
-                cell.attributes = self.productModel!.attributes[self.selectedIndexPath.row].values
+                cell.attributes = self.productModel!.attributes[self.selectedIndexPath.section].values
             }
+            
             cell.parentViewController = self
             cell.delegate = self
             
@@ -161,9 +162,14 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
     }
     
     func productUploadDetailFooterTableViewCell(didPressSaveButton cell: ProductUploadDetailFooterTableViewCell) {
-        for (index, path) in enumerate(self.deletedCells) {
-            self.productModel!.attributes[selectedIndexPath.section].values.removeAtIndex(path.row)
+        if self.productModel != nil {
+            for (index, path) in enumerate(self.deletedCells) {
+                if self.productModel!.attributes.count != 0 && self.productModel!.attributes.count < path.section && self.productModel!.attributes[selectedIndexPath.section].values.count < path.row {
+                    self.productModel!.attributes[selectedIndexPath.section].values.removeAtIndex(path.row)
+                }
+            }
         }
+        
         
         let indexPath: NSIndexPath = NSIndexPath(forRow: 0, inSection: 0)
         let cell: ProductUploadDetailHeaderViewTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! ProductUploadDetailHeaderViewTableViewCell

@@ -162,6 +162,12 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         let productUploadCombinationTableViewController: ProductUploadCombinationTableViewController = ProductUploadCombinationTableViewController(nibName: "ProductUploadCombinationTableViewController", bundle: nil)
         productUploadCombinationTableViewController.attributes = self.productModel!.attributes
         productUploadCombinationTableViewController.delegate = self
+        var counter: Int = 0
+        if self.productModel != nil {
+           counter = self.productModel!.validCombinations.count
+        }
+        
+        productUploadCombinationTableViewController.headerTitle = "Combination \(counter + 1)"
         self.navigationController!.pushViewController(productUploadCombinationTableViewController, animated: true)
     }
     
@@ -198,7 +204,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         
         var isValidCombination: Bool = true
         
-        if self.productModel != nil {
+        if self.productModel != nil && !isEdit {
             for combinationLoop in self.productModel!.validCombinations {
                 if combinationLoop.attributes == combination.attributes {
                     isValidCombination = false
@@ -220,10 +226,14 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         }
     }
     @IBAction func saveDetails(sender: AnyObject) {
-        let productUploadTableViewController: ProductUploadTableViewController
-         = self.navigationController!.viewControllers[0] as! ProductUploadTableViewController
-        productUploadTableViewController.replaceProductAttributeWithAttribute(self.productModel!.attributes, combinations: self.productModel!.validCombinations)
-        self.navigationController!.popToRootViewControllerAnimated(true)
+        if self.productModel!.validCombinations.count == 0 {
+             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Combinations are required.", title: "Incomplete Product Details")
+        } else {
+            let productUploadTableViewController: ProductUploadTableViewController
+            = self.navigationController!.viewControllers[0] as! ProductUploadTableViewController
+            productUploadTableViewController.replaceProductAttributeWithAttribute(self.productModel!.attributes, combinations: self.productModel!.validCombinations)
+            self.navigationController!.popToRootViewControllerAnimated(true)
+        }
     }
     
     func pUAttributeSetHeaderTableViewCell(didClickDelete cell: PUAttributeSetHeaderTableViewCell) {

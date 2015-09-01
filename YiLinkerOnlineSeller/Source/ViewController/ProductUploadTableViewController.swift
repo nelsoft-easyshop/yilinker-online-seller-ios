@@ -621,8 +621,9 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     
     func productUploadFooterView(didClickUpload view: ProductUploadFooterView) {
         self.productModel.images = self.uploadImages
-
-        if self.productModel.name == "" {
+        if self.productModel.images.count == 1 {
+          UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert atleast one product image.", title: "Incomplete Product Details")
+        } else if self.productModel.name == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert product name.", title: "Incomplete Product Details")
         } else if self.productModel.shortDescription == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert short description.", title: "Incomplete Product Details")
