@@ -26,7 +26,9 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         if !NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
             SessionManager.setAccessToken("")
             let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
-            self.presentViewController(signInViewController, animated: false, completion: nil)
+//            self.presentViewController(signInViewController, animated: false, completion: nil)
+            let firstView = CustomizedCategoryViewController(nibName: "CustomizedCategoryViewController", bundle: nil)
+            self.navigationController?.pushViewController(firstView, animated: true)
         }
         println(SessionManager.accessToken())
         registerNibs()

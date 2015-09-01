@@ -1,17 +1,15 @@
 //
-//  ProductUploadCategoryTableViewCell.swift
+//  CustomizedCategoryTableViewCell.swift
 //  YiLinkerOnlineSeller
 //
-//  Created by Alvin John Tandoc on 8/26/15.
+//  Created by Rj Constantino on 9/1/15.
 //  Copyright (c) 2015 YiLinker. All rights reserved.
 //
 
 import UIKit
 
-class ProductUploadCategoryTableViewCell: UITableViewCell {
- 
-    @IBOutlet weak var categoryTitleLabel: UILabel!
-    
+class CustomizedCategoryTableViewCell: UITableViewCell {
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
