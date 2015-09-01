@@ -61,6 +61,15 @@
 		967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 967EE1C01B8AEA25000591AC /* Images.xcassets */; };
 		967EE1D01B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */; };
 		E72BD5070233EC6FF42DDA3A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B825E81D3B27E563C7C3C53 /* libPods.a */; };
+		F78BB4FD1B953F770010DAF7 /* FilterAttributeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78BB4FC1B953F770010DAF7 /* FilterAttributeModel.swift */; };
+		F78BB5001B95428A0010DAF7 /* FilterFooterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78BB4FE1B95428A0010DAF7 /* FilterFooterTableViewCell.swift */; };
+		F78BB5011B95428A0010DAF7 /* FilterFooterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F78BB4FF1B95428A0010DAF7 /* FilterFooterTableViewCell.xib */; };
+		F78BB5091B954DC10010DAF7 /* sort.png in Resources */ = {isa = PBXBuildFile; fileRef = F78BB5081B954DC10010DAF7 /* sort.png */; };
+		F78BB50B1B954DD30010DAF7 /* filter.png in Resources */ = {isa = PBXBuildFile; fileRef = F78BB50A1B954DD30010DAF7 /* filter.png */; };
+		F78BB50E1B954E250010DAF7 /* FilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78BB50C1B954E250010DAF7 /* FilterCollectionViewCell.swift */; };
+		F78BB5111B954E8B0010DAF7 /* FilterCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F78BB5101B954E8B0010DAF7 /* FilterCollectionViewCell.xib */; };
+		F78BB5131B954F8C0010DAF7 /* SearchResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78BB5121B954F8C0010DAF7 /* SearchResultModel.swift */; };
+		F78BB5151B954FC70010DAF7 /* SearchSuggestionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78BB5141B954FC70010DAF7 /* SearchSuggestionModel.swift */; };
 		F7BF5C661B93700600AEB9DA /* StoreInfoAddressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF5C5E1B93700600AEB9DA /* StoreInfoAddressTableViewCell.swift */; };
 		F7BF5C671B93700600AEB9DA /* StoreInfoAddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7BF5C5F1B93700600AEB9DA /* StoreInfoAddressTableViewCell.xib */; };
 		F7BF5C681B93700600AEB9DA /* StoreInfoSectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF5C601B93700600AEB9DA /* StoreInfoSectionTableViewCell.swift */; };
@@ -88,9 +97,22 @@
 		F7BF5C991B94073600AEB9DA /* ChangeMobileNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BF5C971B94073600AEB9DA /* ChangeMobileNumberViewController.swift */; };
 		F7BF5C9A1B94073600AEB9DA /* ChangeMobileNumberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7BF5C981B94073600AEB9DA /* ChangeMobileNumberViewController.xib */; };
 		F7BF5CA81B94073600AEB9DA /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BF5CA71B94073600AEB9DA /* check.png */; };
+		F7C13D711B95663200CE8EBB /* FilterResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C13D6F1B95663200CE8EBB /* FilterResultsViewController.swift */; };
+		F7C13D721B95663200CE8EBB /* FilterResultsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C13D701B95663200CE8EBB /* FilterResultsViewController.xib */; };
 		F7C305F91B9346C000C1B084 /* ChangeBankAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C305F71B9346C000C1B084 /* ChangeBankAccountViewController.swift */; };
 		F7C305FA1B9346C000C1B084 /* ChangeBankAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C305F81B9346C000C1B084 /* ChangeBankAccountViewController.xib */; };
 		F7C305FE1B937DEA00C1B084 /* StoreInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C305FD1B937DEA00C1B084 /* StoreInfoViewController.xib */; };
+		F7CCDB9C1B946B5B000F5AD4 /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCDB9A1B946B5B000F5AD4 /* CategoryTableViewCell.swift */; };
+		F7CCDB9D1B946B5B000F5AD4 /* CategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDB9B1B946B5B000F5AD4 /* CategoryTableViewCell.xib */; };
+		F7CCDBA11B94831C000F5AD4 /* SearchSellerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCDB9F1B94831C000F5AD4 /* SearchSellerViewController.swift */; };
+		F7CCDBA21B94831C000F5AD4 /* SearchSellerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDBA01B94831C000F5AD4 /* SearchSellerViewController.xib */; };
+		F7CCDBA41B949A1F000F5AD4 /* cart3.png in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDBA31B949A1F000F5AD4 /* cart3.png */; };
+		F7CCDBA61B949A23000F5AD4 /* truck.png in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDBA51B949A23000F5AD4 /* truck.png */; };
+		F7CCDBA81B949CE7000F5AD4 /* dropdown.png in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDBA71B949CE7000F5AD4 /* dropdown.png */; };
+		F7CCDBAB1B94A111000F5AD4 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCDBA91B94A111000F5AD4 /* FilterViewController.swift */; };
+		F7CCDBAF1B94A2ED000F5AD4 /* FilterByTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCDBAD1B94A2ED000F5AD4 /* FilterByTableViewCell.swift */; };
+		F7CCDBB01B94A2ED000F5AD4 /* FilterByTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDBAE1B94A2ED000F5AD4 /* FilterByTableViewCell.xib */; };
+		F7CCDBB21B94BB34000F5AD4 /* arrow_up.png in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDBB11B94BB33000F5AD4 /* arrow_up.png */; };
 		F7D37CA51B93041100FA7B16 /* ChangeAddressCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D37CA31B93041100FA7B16 /* ChangeAddressCollectionViewCell.swift */; };
 		F7D37CA61B93041100FA7B16 /* ChangeAddressFooterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D37CA41B93041100FA7B16 /* ChangeAddressFooterCollectionViewCell.swift */; };
 		F7D37CA81B93041B00FA7B16 /* ChangeAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D37CA71B93041B00FA7B16 /* ChangeAddressViewController.swift */; };
@@ -110,6 +132,9 @@
 		F7D37CCC1B930D8300FA7B16 /* delete .png in Resources */ = {isa = PBXBuildFile; fileRef = F7D37CCB1B930D8300FA7B16 /* delete .png */; };
 		F7D37CCE1B930E1400FA7B16 /* checkBox.png in Resources */ = {isa = PBXBuildFile; fileRef = F7D37CCD1B930E1400FA7B16 /* checkBox.png */; };
 		F7D37CD01B93119100FA7B16 /* back-white.png in Resources */ = {isa = PBXBuildFile; fileRef = F7D37CCF1B93119100FA7B16 /* back-white.png */; };
+		F7E25A4D1B953DF100EF9B53 /* FilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E25A4C1B953DF100EF9B53 /* FilterViewController.xib */; };
+		F7E25A541B953F1900EF9B53 /* FilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E25A521B953F1900EF9B53 /* FilterTableViewCell.swift */; };
+		F7E25A551B953F1900EF9B53 /* FilterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E25A531B953F1900EF9B53 /* FilterTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -185,6 +210,15 @@
 		967EE1CE1B8AEA25000591AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YiLinkerOnlineSellerTests.swift; sourceTree = "<group>"; };
 		D4D17EE114265F93B1630151 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		F78BB4FC1B953F770010DAF7 /* FilterAttributeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterAttributeModel.swift; sourceTree = "<group>"; };
+		F78BB4FE1B95428A0010DAF7 /* FilterFooterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterFooterTableViewCell.swift; sourceTree = "<group>"; };
+		F78BB4FF1B95428A0010DAF7 /* FilterFooterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterFooterTableViewCell.xib; sourceTree = "<group>"; };
+		F78BB5081B954DC10010DAF7 /* sort.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sort.png; sourceTree = "<group>"; };
+		F78BB50A1B954DD30010DAF7 /* filter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = filter.png; sourceTree = "<group>"; };
+		F78BB50C1B954E250010DAF7 /* FilterCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCollectionViewCell.swift; sourceTree = "<group>"; };
+		F78BB5101B954E8B0010DAF7 /* FilterCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterCollectionViewCell.xib; sourceTree = "<group>"; };
+		F78BB5121B954F8C0010DAF7 /* SearchResultModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultModel.swift; sourceTree = "<group>"; };
+		F78BB5141B954FC70010DAF7 /* SearchSuggestionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSuggestionModel.swift; sourceTree = "<group>"; };
 		F7BF5C5E1B93700600AEB9DA /* StoreInfoAddressTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoAddressTableViewCell.swift; sourceTree = "<group>"; };
 		F7BF5C5F1B93700600AEB9DA /* StoreInfoAddressTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoAddressTableViewCell.xib; sourceTree = "<group>"; };
 		F7BF5C601B93700600AEB9DA /* StoreInfoSectionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoSectionTableViewCell.swift; sourceTree = "<group>"; };
@@ -211,9 +245,22 @@
 		F7BF5C971B94073600AEB9DA /* ChangeMobileNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeMobileNumberViewController.swift; sourceTree = "<group>"; };
 		F7BF5C981B94073600AEB9DA /* ChangeMobileNumberViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangeMobileNumberViewController.xib; sourceTree = "<group>"; };
 		F7BF5CA71B94073600AEB9DA /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = check.png; path = Source/Xib/check.png; sourceTree = "<group>"; };
+		F7C13D6F1B95663200CE8EBB /* FilterResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterResultsViewController.swift; sourceTree = "<group>"; };
+		F7C13D701B95663200CE8EBB /* FilterResultsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterResultsViewController.xib; sourceTree = "<group>"; };
 		F7C305F71B9346C000C1B084 /* ChangeBankAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeBankAccountViewController.swift; sourceTree = "<group>"; };
 		F7C305F81B9346C000C1B084 /* ChangeBankAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangeBankAccountViewController.xib; sourceTree = "<group>"; };
 		F7C305FD1B937DEA00C1B084 /* StoreInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoViewController.xib; sourceTree = "<group>"; };
+		F7CCDB9A1B946B5B000F5AD4 /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
+		F7CCDB9B1B946B5B000F5AD4 /* CategoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryTableViewCell.xib; sourceTree = "<group>"; };
+		F7CCDB9F1B94831C000F5AD4 /* SearchSellerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSellerViewController.swift; sourceTree = "<group>"; };
+		F7CCDBA01B94831C000F5AD4 /* SearchSellerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchSellerViewController.xib; sourceTree = "<group>"; };
+		F7CCDBA31B949A1F000F5AD4 /* cart3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cart3.png; sourceTree = "<group>"; };
+		F7CCDBA51B949A23000F5AD4 /* truck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = truck.png; sourceTree = "<group>"; };
+		F7CCDBA71B949CE7000F5AD4 /* dropdown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dropdown.png; sourceTree = "<group>"; };
+		F7CCDBA91B94A111000F5AD4 /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		F7CCDBAD1B94A2ED000F5AD4 /* FilterByTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterByTableViewCell.swift; sourceTree = "<group>"; };
+		F7CCDBAE1B94A2ED000F5AD4 /* FilterByTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterByTableViewCell.xib; sourceTree = "<group>"; };
+		F7CCDBB11B94BB33000F5AD4 /* arrow_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_up.png; sourceTree = "<group>"; };
 		F7D37CA31B93041100FA7B16 /* ChangeAddressCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeAddressCollectionViewCell.swift; sourceTree = "<group>"; };
 		F7D37CA41B93041100FA7B16 /* ChangeAddressFooterCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeAddressFooterCollectionViewCell.swift; sourceTree = "<group>"; };
 		F7D37CA71B93041B00FA7B16 /* ChangeAddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeAddressViewController.swift; sourceTree = "<group>"; };
@@ -233,6 +280,9 @@
 		F7D37CCB1B930D8300FA7B16 /* delete .png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "delete .png"; sourceTree = "<group>"; };
 		F7D37CCD1B930E1400FA7B16 /* checkBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkBox.png; sourceTree = "<group>"; };
 		F7D37CCF1B93119100FA7B16 /* back-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-white.png"; sourceTree = "<group>"; };
+		F7E25A4C1B953DF100EF9B53 /* FilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterViewController.xib; sourceTree = "<group>"; };
+		F7E25A521B953F1900EF9B53 /* FilterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTableViewCell.swift; sourceTree = "<group>"; };
+		F7E25A531B953F1900EF9B53 /* FilterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -306,6 +356,9 @@
 		0CF28EC21B8C85E4005B2E54 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F78BB5141B954FC70010DAF7 /* SearchSuggestionModel.swift */,
+				F78BB4FC1B953F770010DAF7 /* FilterAttributeModel.swift */,
+				F78BB5121B954F8C0010DAF7 /* SearchResultModel.swift */,
 				79EFF76E1B8D6E35008A9E7D /* ActivityLogModel.swift */,
 				79EFF76F1B8D6E35008A9E7D /* ActivityModel.swift */,
 			);
@@ -356,6 +409,22 @@
 		0CF28ECC1B8C85E5005B2E54 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				F78BB50C1B954E250010DAF7 /* FilterCollectionViewCell.swift */,
+				F78BB5101B954E8B0010DAF7 /* FilterCollectionViewCell.xib */,
+				F7CCDBAD1B94A2ED000F5AD4 /* FilterByTableViewCell.swift */,
+				F7CCDBAE1B94A2ED000F5AD4 /* FilterByTableViewCell.xib */,
+				F7CCDBA91B94A111000F5AD4 /* FilterViewController.swift */,
+				F7E25A4C1B953DF100EF9B53 /* FilterViewController.xib */,
+				F7C13D6F1B95663200CE8EBB /* FilterResultsViewController.swift */,
+				F7C13D701B95663200CE8EBB /* FilterResultsViewController.xib */,
+				F7E25A521B953F1900EF9B53 /* FilterTableViewCell.swift */,
+				F7E25A531B953F1900EF9B53 /* FilterTableViewCell.xib */,
+				F78BB4FE1B95428A0010DAF7 /* FilterFooterTableViewCell.swift */,
+				F78BB4FF1B95428A0010DAF7 /* FilterFooterTableViewCell.xib */,
+				F7CCDB9A1B946B5B000F5AD4 /* CategoryTableViewCell.swift */,
+				F7CCDB9B1B946B5B000F5AD4 /* CategoryTableViewCell.xib */,
+				F7CCDB9F1B94831C000F5AD4 /* SearchSellerViewController.swift */,
+				F7CCDBA01B94831C000F5AD4 /* SearchSellerViewController.xib */,
 				F7BF5C721B93738800AEB9DA /* StoreInfoAccountInformationTableViewCell.swift */,
 				F7BF5C731B93738800AEB9DA /* StoreInfoAccountInformationTableViewCell.xib */,
 				F7BF5C6E1B93733A00AEB9DA /* StoreInfoBankAccountTableViewCell.swift */,
@@ -474,6 +543,12 @@
 		967EE1B71B8AEA25000591AC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F78BB50A1B954DD30010DAF7 /* filter.png */,
+				F78BB5081B954DC10010DAF7 /* sort.png */,
+				F7CCDBB11B94BB33000F5AD4 /* arrow_up.png */,
+				F7CCDBA71B949CE7000F5AD4 /* dropdown.png */,
+				F7CCDBA51B949A23000F5AD4 /* truck.png */,
+				F7CCDBA31B949A1F000F5AD4 /* cart3.png */,
 				F7D37CCF1B93119100FA7B16 /* back-white.png */,
 				F7BF5CA71B94073600AEB9DA /* check.png */,
 				F7BF5C951B94073600AEB9DA /* bankAccount.png */,
@@ -599,6 +674,7 @@
 			files = (
 				799892F71B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib in Resources */,
 				0CF28F051B8CA2E9005B2E54 /* Panton.otf in Resources */,
+				F7CCDBB01B94A2ED000F5AD4 /* FilterByTableViewCell.xib in Resources */,
 				799893031B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib in Resources */,
 				F7D37CAD1B93042A00FA7B16 /* ChangeAddressFooterCollectionViewCell.xib in Resources */,
 				0CF28EF91B8CA2E9005B2E54 /* Panton ExtraBold.otf in Resources */,
@@ -612,35 +688,47 @@
 				F7BF5C691B93700600AEB9DA /* StoreInfoSectionTableViewCell.xib in Resources */,
 				0CF28EFF1B8CA2E9005B2E54 /* Panton Light.otf in Resources */,
 				799893051B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib in Resources */,
+				F7CCDBA81B949CE7000F5AD4 /* dropdown.png in Resources */,
 				0CF28EFA1B8CA2E9005B2E54 /* Panton ExtraLight Italic.otf in Resources */,
+				F7CCDBA61B949A23000F5AD4 /* truck.png in Resources */,
 				F7BF5C901B94073600AEB9DA /* address.png in Resources */,
 				F7D37CAE1B93042A00FA7B16 /* ChangeAddressViewController.xib in Resources */,
 				F7C305FA1B9346C000C1B084 /* ChangeBankAccountViewController.xib in Resources */,
 				799892F31B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib in Resources */,
 				F7BF5C801B93D56E00AEB9DA /* StoreInfoBankAccountTableViewCell.xib in Resources */,
 				0CF28F031B8CA2E9005B2E54 /* Panton Thin Italic.otf in Resources */,
+				F78BB5011B95428A0010DAF7 /* FilterFooterTableViewCell.xib in Resources */,
 				F7D37CB61B9304C100FA7B16 /* NewAddressTableViewCell.xib in Resources */,
 				0CF28EF41B8CA2E9005B2E54 /* Black Italic.otf in Resources */,
 				F7BF5C751B93738800AEB9DA /* StoreInfoAccountInformationTableViewCell.xib in Resources */,
 				0CF28EFE1B8CA2E9005B2E54 /* Panton Light Italic.otf in Resources */,
 				F7BF5C8E1B94073600AEB9DA /* CreateNewAddressViewController.xib in Resources */,
+				F7E25A551B953F1900EF9B53 /* FilterTableViewCell.xib in Resources */,
 				0CF28F001B8CA2E9005B2E54 /* Panton Regular Italic.otf in Resources */,
 				79EFF75F1B8D6DD3008A9E7D /* ActivityLogTableViewController.xib in Resources */,
 				F7BF5C671B93700600AEB9DA /* StoreInfoAddressTableViewCell.xib in Resources */,
 				F7BF5C941B94073600AEB9DA /* CreateNewBankAccountViewController.xib in Resources */,
 				0CF28EFB1B8CA2E9005B2E54 /* Panton ExtraLight.otf in Resources */,
+				F7CCDBA21B94831C000F5AD4 /* SearchSellerViewController.xib in Resources */,
+				F7CCDBA41B949A1F000F5AD4 /* cart3.png in Resources */,
+				F7CCDB9D1B946B5B000F5AD4 /* CategoryTableViewCell.xib in Resources */,
 				0CF28EF71B8CA2E9005B2E54 /* Panton Bold.otf in Resources */,
 				F7D37CCC1B930D8300FA7B16 /* delete .png in Resources */,
 				0CF28F041B8CA2E9005B2E54 /* Panton Thin.otf in Resources */,
 				79EFF75E1B8D6DD3008A9E7D /* ActivityLogTableViewCell.xib in Resources */,
 				967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */,
+				F78BB50B1B954DD30010DAF7 /* filter.png in Resources */,
 				F7BF5C9A1B94073600AEB9DA /* ChangeMobileNumberViewController.xib in Resources */,
+				F78BB5091B954DC10010DAF7 /* sort.png in Resources */,
+				F7CCDBB21B94BB34000F5AD4 /* arrow_up.png in Resources */,
+				F7E25A4D1B953DF100EF9B53 /* FilterViewController.xib in Resources */,
 				0CF28EF81B8CA2E9005B2E54 /* Panton ExtraBold Italic.otf in Resources */,
 				0CF28EFC1B8CA2E9005B2E54 /* Panton Heavy Italic.otf in Resources */,
 				F7BF5C861B93FCA800AEB9DA /* VerifyNumberViewController.xib in Resources */,
 				F7D37CCE1B930E1400FA7B16 /* checkBox.png in Resources */,
 				F7D37CD01B93119100FA7B16 /* back-white.png in Resources */,
 				0CF28F021B8CA2E9005B2E54 /* Panton SemiBold.otf in Resources */,
+				F7C13D721B95663200CE8EBB /* FilterResultsViewController.xib in Resources */,
 				0CF28EF61B8CA2E9005B2E54 /* Panton Bold Italic.otf in Resources */,
 				26374DA11B8F50A4006C639B /* SignInViewController.xib in Resources */,
 				F7BF5CA81B94073600AEB9DA /* check.png in Resources */,
@@ -649,6 +737,7 @@
 				F7BF5C881B94073600AEB9DA /* close2-2.png in Resources */,
 				0CF28EF51B8CA2E9005B2E54 /* Panton Black.otf in Resources */,
 				F7BF5C771B9373AC00AEB9DA /* addressRight.png in Resources */,
+				F78BB5111B954E8B0010DAF7 /* FilterCollectionViewCell.xib in Resources */,
 				F7BF5C961B94073600AEB9DA /* bankAccount.png in Resources */,
 				F7D37CAC1B93042A00FA7B16 /* ChangeAddressCollectionViewCell.xib in Resources */,
 				F7D37CB01B93048800FA7B16 /* AddAddressTableViewController.xib in Resources */,
@@ -704,26 +793,34 @@
 			files = (
 				0CF28ED41B8C85E5005B2E54 /* Reachability.swift in Sources */,
 				F7D37CA81B93041B00FA7B16 /* ChangeAddressViewController.swift in Sources */,
+				F7CCDBAF1B94A2ED000F5AD4 /* FilterByTableViewCell.swift in Sources */,
 				F7C305F91B9346C000C1B084 /* ChangeBankAccountViewController.swift in Sources */,
 				79EFF75B1B8D6DC1008A9E7D /* ActivityLogTableViewController.swift in Sources */,
+				F78BB5151B954FC70010DAF7 /* SearchSuggestionModel.swift in Sources */,
 				F7BF5C8D1B94073600AEB9DA /* CreateNewAddressViewController.swift in Sources */,
+				F78BB50E1B954E250010DAF7 /* FilterCollectionViewCell.swift in Sources */,
 				F7BF5C6A1B93700600AEB9DA /* StoreInfoTableViewCell.swift in Sources */,
 				799893011B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift in Sources */,
+				F7CCDBA11B94831C000F5AD4 /* SearchSellerViewController.swift in Sources */,
 				0CF28ECF1B8C85E5005B2E54 /* APIManager.swift in Sources */,
 				0CF28ED31B8C85E5005B2E54 /* ParseLocalJSON.swift in Sources */,
 				79EFF7611B8D6DE4008A9E7D /* ActivityLogTableViewCell.swift in Sources */,
 				799892F51B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift in Sources */,
 				0CF28ED21B8C85E5005B2E54 /* IPhoneType.swift in Sources */,
 				F7D37CC01B9305EC00FA7B16 /* DynamicRoundedLabel.swift in Sources */,
+				F7C13D711B95663200CE8EBB /* FilterResultsViewController.swift in Sources */,
+				F78BB5001B95428A0010DAF7 /* FilterFooterTableViewCell.swift in Sources */,
 				F7D37CBF1B9305EC00FA7B16 /* DynamicRoundedButton.swift in Sources */,
 				F7D37CBA1B9305C700FA7B16 /* SemiRoundedButton.swift in Sources */,
 				0CF28ED01B8C85E5005B2E54 /* Enums.swift in Sources */,
 				F7D37CB41B9304B800FA7B16 /* NewAddressTableViewCell.swift in Sources */,
+				F78BB4FD1B953F770010DAF7 /* FilterAttributeModel.swift in Sources */,
 				0CF28ED61B8C85E5005B2E54 /* XibHelper.swift in Sources */,
 				0CF28EDB1B8C85E5005B2E54 /* SearchViewController.swift in Sources */,
 				0CF28EDA1B8C85E5005B2E54 /* MessageViewController.swift in Sources */,
 				799892FD1B8CEBA500F4CFE2 /* SettingsHeaderTableViewCell.swift in Sources */,
 				F7BF5C991B94073600AEB9DA /* ChangeMobileNumberViewController.swift in Sources */,
+				F7CCDB9C1B946B5B000F5AD4 /* CategoryTableViewCell.swift in Sources */,
 				0CF28ED91B8C85E5005B2E54 /* DashboardViewController.swift in Sources */,
 				F7BF5C741B93738800AEB9DA /* StoreInfoAccountInformationTableViewCell.swift in Sources */,
 				0CF28EDC1B8C85E5005B2E54 /* SettingsViewController.swift in Sources */,
@@ -741,10 +838,13 @@
 				F7D37CC21B9305EC00FA7B16 /* DynamicRoundedView.swift in Sources */,
 				F7D37CB81B93058A00FA7B16 /* Category.swift in Sources */,
 				F7BF5C681B93700600AEB9DA /* StoreInfoSectionTableViewCell.swift in Sources */,
+				F7E25A541B953F1900EF9B53 /* FilterTableViewCell.swift in Sources */,
 				79EFF7701B8D6E35008A9E7D /* ActivityLogModel.swift in Sources */,
 				F7BF5C6C1B93700600AEB9DA /* StoreInfoViewController.swift in Sources */,
+				F7CCDBAB1B94A111000F5AD4 /* FilterViewController.swift in Sources */,
 				F7BF5C931B94073600AEB9DA /* CreateNewBankAccountViewController.swift in Sources */,
 				F7D37CA51B93041100FA7B16 /* ChangeAddressCollectionViewCell.swift in Sources */,
+				F78BB5131B954F8C0010DAF7 /* SearchResultModel.swift in Sources */,
 				799892F91B8CC7EC00F4CFE2 /* DashBoardItemCollectionViewCell.swift in Sources */,
 				0CF28ED11B8C85E5005B2E54 /* HexaColor.swift in Sources */,
 				F7BF5C661B93700600AEB9DA /* StoreInfoAddressTableViewCell.swift in Sources */,
