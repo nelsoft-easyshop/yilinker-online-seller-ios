@@ -113,7 +113,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="changeAddressButton" destination="AU4-WQ-Gmt" id="zqf-yQ-aPE"/>
+                <outlet property="addressView" destination="srs-wV-U41" id="gv2-A1-2kd"/>
             </connections>
             <point key="canvasLocation" x="278.5" y="354.5"/>
         </tableViewCell>

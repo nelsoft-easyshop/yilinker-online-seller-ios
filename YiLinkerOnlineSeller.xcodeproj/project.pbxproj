@@ -99,6 +99,7 @@
 		F7BF5CA81B94073600AEB9DA /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BF5CA71B94073600AEB9DA /* check.png */; };
 		F7C13D711B95663200CE8EBB /* FilterResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C13D6F1B95663200CE8EBB /* FilterResultsViewController.swift */; };
 		F7C13D721B95663200CE8EBB /* FilterResultsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C13D701B95663200CE8EBB /* FilterResultsViewController.xib */; };
+		F7C13D741B95939E00CE8EBB /* StoreInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C13D731B95939E00CE8EBB /* StoreInfoModel.swift */; };
 		F7C305F91B9346C000C1B084 /* ChangeBankAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C305F71B9346C000C1B084 /* ChangeBankAccountViewController.swift */; };
 		F7C305FA1B9346C000C1B084 /* ChangeBankAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C305F81B9346C000C1B084 /* ChangeBankAccountViewController.xib */; };
 		F7C305FE1B937DEA00C1B084 /* StoreInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C305FD1B937DEA00C1B084 /* StoreInfoViewController.xib */; };
@@ -247,6 +248,7 @@
 		F7BF5CA71B94073600AEB9DA /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = check.png; path = Source/Xib/check.png; sourceTree = "<group>"; };
 		F7C13D6F1B95663200CE8EBB /* FilterResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterResultsViewController.swift; sourceTree = "<group>"; };
 		F7C13D701B95663200CE8EBB /* FilterResultsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterResultsViewController.xib; sourceTree = "<group>"; };
+		F7C13D731B95939E00CE8EBB /* StoreInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoModel.swift; sourceTree = "<group>"; };
 		F7C305F71B9346C000C1B084 /* ChangeBankAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeBankAccountViewController.swift; sourceTree = "<group>"; };
 		F7C305F81B9346C000C1B084 /* ChangeBankAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangeBankAccountViewController.xib; sourceTree = "<group>"; };
 		F7C305FD1B937DEA00C1B084 /* StoreInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoViewController.xib; sourceTree = "<group>"; };
@@ -361,6 +363,7 @@
 				F78BB5121B954F8C0010DAF7 /* SearchResultModel.swift */,
 				79EFF76E1B8D6E35008A9E7D /* ActivityLogModel.swift */,
 				79EFF76F1B8D6E35008A9E7D /* ActivityModel.swift */,
+				F7C13D731B95939E00CE8EBB /* StoreInfoModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -834,6 +837,7 @@
 				F7D37CC11B9305EC00FA7B16 /* DynamicRoundedTextField.swift in Sources */,
 				79EFF7711B8D6E35008A9E7D /* ActivityModel.swift in Sources */,
 				26374DA01B8F50A4006C639B /* SignInViewController.swift in Sources */,
+				F7C13D741B95939E00CE8EBB /* StoreInfoModel.swift in Sources */,
 				F7BF5C851B93FCA800AEB9DA /* VerifyNumberViewController.swift in Sources */,
 				F7D37CC21B9305EC00FA7B16 /* DynamicRoundedView.swift in Sources */,
 				F7D37CB81B93058A00FA7B16 /* Category.swift in Sources */,

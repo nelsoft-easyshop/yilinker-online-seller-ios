@@ -16,10 +16,13 @@ class StoreInfoBankAccountTableViewCell: UITableViewCell {
 
     var delegate: StoreInfoBankAccountTableViewCellDelegate?
    
-    @IBOutlet weak var changeBankAccountButton: UIButton!
+    @IBOutlet weak var bankAccountView: UIView!
+  
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        var tapBankView = UITapGestureRecognizer(target: self, action: "tapBankAccount")
+        bankAccountView.addGestureRecognizer(tapBankView)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -28,9 +31,8 @@ class StoreInfoBankAccountTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    @IBAction func bankAccount(sender: AnyObject) {
-        println("New Bank Account")
+    func tapBankAccount(){
         self.delegate?.newBankAccount()
+        println("new bank account")
     }
-    
 }

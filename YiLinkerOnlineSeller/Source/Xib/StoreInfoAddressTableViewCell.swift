@@ -16,13 +16,14 @@ class StoreInfoAddressTableViewCell: UITableViewCell {
 
     var delegate: StoreInfoAddressTableViewCellDelagate?
     
-    @IBOutlet weak var changeAddressButton: UIButton!
-   
+    @IBOutlet weak var addressView: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        var tapAddressView = UIGestureRecognizer(target: self, action: "tapAddress")
+        self.addressView.addGestureRecognizer(tapAddressView)
     }
-    @IBOutlet weak var storeAddressLabel: UILabel!
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -30,8 +31,9 @@ class StoreInfoAddressTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    @IBAction func changeAddress(sender: AnyObject){
+    func tapAddress(){
         self.delegate?.changeAddress()
+        println("tap address")
     }
     
     

@@ -18,6 +18,7 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.edgesForExtendedLayout = .None
         self.titleView()
         self.backButton()
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
