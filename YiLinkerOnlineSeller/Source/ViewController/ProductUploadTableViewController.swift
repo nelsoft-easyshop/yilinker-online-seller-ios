@@ -42,6 +42,9 @@ struct ProductUploadTableViewControllerConstant {
     static let uploadPriceKey = "price"
     static let uploadAccessTokenKey = "access_token"
     static let uploadPropertyKey = "productProperties"
+    static let uploadShortDescriptionkey = "shortDescription"
+    static let uploadDescriptionKey = "description"
+    static let uploadDiscountedPriceKey = "discountedPrice"
 }
 
 class ProductUploadTableViewController: UITableViewController, ProductUploadUploadImageTableViewCellDataSource, ProductUploadUploadImageTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadCategoryViewControllerDelegate, ProductUploadFooterViewDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadPriceTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadBrandViewControllerDelegate, ProductUploadQuantityTableViewCellDelegate {
@@ -93,6 +96,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 let indexPath: NSIndexPath = NSIndexPath(forItem: 2, inSection: 2)
                 self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
             }
+            
+            self.productModel.condition = self.conditions[0]
             
             SVProgressHUD.dismiss()
             }, failure: {
@@ -489,10 +494,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     func productUploadBrandViewController(didSelectBrand brand: String, brandModel: BrandModel) {
-        if brandModel.name != "" {
-            self.productModel.brand = brandModel
+        if brandModel.name != brand {
+            self.productModel.brand = BrandModel(name: brand, brandId: 1)
         } else {
-            self.productModel.brand = BrandModel(name: brand, brandId: 0)
+            self.productModel.brand = brandModel
         }
         
         let indexPath: NSIndexPath = NSIndexPath(forItem: 1, inSection: 2)
@@ -708,8 +713,14 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         var datas: [NSData] = []
         
         var productUploadedImagesCount: Int = 0
-        
+        self.productModel.images.removeLast()
         let mainImageCount: Int = self.productModel.images.count
+        
+        var imagesKey: [String] = []
+        
+        for var x = 0; x < mainImageCount; x++ {
+            imagesKey.append("\(x)")
+        }
         
         for combination in self.productModel.validCombinations {
             for image in combination.images {
@@ -722,14 +733,27 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             datas.append(data)
         }
         
+        var customBrand: String = ""
+        
+        if self.productModel.brand.brandId != 0 {
+            customBrand = self.productModel.brand.name
+        }
+        
+    
         let parameters: NSDictionary = [ProductUploadTableViewControllerConstant.uploadPriceKey: self.productModel.retailPrice,
+            ProductUploadTableViewControllerConstant.uploadShortDescriptionkey: self.productModel.shortDescription,
+            ProductUploadTableViewControllerConstant.uploadDescriptionKey: self.productModel.completeDescription,
+            ProductUploadTableViewControllerConstant.uploadPriceKey: self.productModel.retailPrice,
+            ProductUploadTableViewControllerConstant.uploadDiscountedPriceKey: self.productModel.discoutedPrice,
             ProductUploadTableViewControllerConstant.uploadQuantityKey: self.productModel.quantity,
             ProductUploadTableViewControllerConstant.uploadCategoryKey: self.productModel.category.uid,
-            ProductUploadTableViewControllerConstant.uploadBrandKey: self.productModel.brand,
+            ProductUploadTableViewControllerConstant.uploadBrandKey: self.productModel.brand.brandId,
             ProductUploadTableViewControllerConstant.uploadTitleKey: self.productModel.name,
             ProductUploadTableViewControllerConstant.uploadConditionKey: self.productModel.condition.uid,
             ProductUploadTableViewControllerConstant.uploadPropertyKey: self.property(mainImageCount),
-            "customBrand": ""]
+            ProductUploadTableViewControllerConstant.uploadImagesKey: imagesKey,
+            "customBrand": customBrand,
+            "isFreeShipping": false]
         
         let manager: APIManager = APIManager.sharedInstance
         
@@ -737,14 +761,18 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         let url: String = "\(APIAtlas.uploadUrl)?access_token=\(SessionManager.accessToken())"
         manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
             for (index, data) in enumerate(datas) {
-                formData.appendPartWithFileData(data, name: "images[]", fileName: "\(index + 1)", mimeType: "image/jpeg")
+                println("index: \(index)")
+                formData.appendPartWithFileData(data, name: "images[]", fileName: "\(index)", mimeType: "image/jpeg")
             }
             
-        }, success: { (NSURLSessionDataTask, AnyObject) -> Void in
+            }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
+            println(response)
             SVProgressHUD.dismiss()
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Your product is successfully uploaded.", title: "Success")
         }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
+            println(error)
             let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+            println(error.userInfo)
             if task.statusCode == 401 {
                self.fireRefreshToken2()
             } else {
@@ -760,20 +788,27 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         for combination in self.productModel.validCombinations {
              let dictionary: NSMutableDictionary = NSMutableDictionary()
             dictionary["attribute"] = combination.attributes
-            dictionary["price"] = combination.retailPrice
-            dictionary["discountedPrice"] = combination.discountedPrice
+            dictionary["price"] = (combination.retailPrice as NSString).doubleValue
+            dictionary["discountedPrice"] = (combination.discountedPrice as NSString).doubleValue
             dictionary["quantity"] = combination.quantity.toInt()
+            dictionary["sku"] = combination.sku
             
-            var arrayNumber: [Int] = []
+            var arrayNumber: [String] = []
             
             for (index, image) in enumerate(combination.images) {
-                arrayNumber.append(counter++)
+                var x: Int = counter
+                counter++
+                arrayNumber.append("\(x)")
             }
-            dictionary["images"] = arrayNumber
+            //dictionary["images"] = arrayNumber
+            dictionary["images"] = "\(arrayNumber)"
             array.append(dictionary)
         }
+        
+       
         let data = NSJSONSerialization.dataWithJSONObject(array, options: nil, error: nil)
         let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
+        println(string)
         return string!
     }
     
