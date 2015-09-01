@@ -276,8 +276,12 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="coverPhotoImageView" destination="NfW-oq-T4e" id="JJ9-Ca-7J5"/>
                 <outlet property="coverPhotoView" destination="Pgz-Rm-cfh" id="kDO-Kr-r5c"/>
+                <outlet property="mobilePhoneTextField" destination="eHR-NW-Ujy" id="uOY-Zj-ZI6"/>
                 <outlet property="profilePhotoView" destination="Y4y-e8-3DA" id="vl3-8E-tag"/>
+                <outlet property="profilePictureImageView" destination="CR1-8h-W6D" id="7mb-D7-2BQ"/>
+                <outlet property="storeNameTextField" destination="EOO-H0-sgx" id="mCF-bp-hVm"/>
                 <outlet property="verifyButton" destination="dXb-Oo-kKP" id="npc-82-VLO"/>
             </connections>
             <point key="canvasLocation" x="293.5" y="319.5"/>

@@ -23,10 +23,11 @@ class ChangeMobileNumberViewController: UIViewController {
     @IBOutlet weak var newNumberTextField: UITextField!
     
     var delegate: ChangeMobileNumberViewControllerDelegate?
-    
+    var storeInfo: StoreInfoViewController?
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        
         // Do any additional setup after loading the view.
     }
 
@@ -40,7 +41,9 @@ class ChangeMobileNumberViewController: UIViewController {
     }
     
     @IBAction func submit(sender: AnyObject){
-        
+        self.dismissViewControllerAnimated(true, completion: nil)
+        self.storeInfo?.storeInfoHeader.mobilePhoneTextField.text = self.newNumberTextField.text
+        self.storeInfo?.storeInfoTableView.reloadData()
     }
     /*
     // MARK: - Navigation

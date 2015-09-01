@@ -11,60 +11,77 @@ import UIKit
 class VerifyNumberViewController: UIViewController {
 
     @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var verificationCodeTextFiels: UITextField!
     @IBOutlet weak var verifyButton: UIButton!
+    @IBOutlet weak var requestNewVerificationButton: UIButton!
+    @IBOutlet weak var verifyTitleLabel: UILabel!
     @IBOutlet weak var viewContainer: UIView!
-    
     @IBOutlet weak var successFailView: UIView!
     
-    var startTime = NSTimeInterval()
-    var timer = NSTimer()
+    var viewControllers = [UIViewController]()
+    var congratulationsViewController: CongratulationsViewController?
+    var verifyViewController: VerifyViewController?
+    var selectedChildViewController: UIViewController?
     
+    var contentViewFrame: CGRect?
+    var selectedIndex: Int = 0
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         self.viewContainer.layer.cornerRadius = 5.0
         self.viewContainer.clipsToBounds = true
-        let aSelector : Selector = "updateTime"
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.04, target: self, selector: aSelector, userInfo: nil, repeats: true)
-        startTime = NSDate.timeIntervalSinceReferenceDate()
+    
+        initViewController()
+        self.setSelectedViewControllerWithIndex(1)
     }
-
-    func updateTime() {
+    
+    func initViewController() {
         
-        var currentTime = NSDate.timeIntervalSinceReferenceDate()
+        verifyViewController = VerifyViewController(nibName: "VerifyViewController", bundle: nil)
+        congratulationsViewController = CongratulationsViewController(nibName: "CongratulationsViewController", bundle: nil)
         
-        //Find the difference between current time and start time.
+        self.viewControllers.append(verifyViewController!)
+        self.viewControllers.append(congratulationsViewController!)
         
-        var elapsedTime: NSTimeInterval = currentTime - startTime
-        
-        //calculate the minutes in elapsed time.
-        
-        let minutes = UInt8(elapsedTime / 60.0)
-        
-        elapsedTime -= (NSTimeInterval(minutes) * 60)
-        
-        //calculate the seconds in elapsed time.
-        
-        let seconds = UInt8(elapsedTime)
-        
-        elapsedTime -= NSTimeInterval(seconds)
-        
-        //find out the fraction of milliseconds to be displayed.
-        
-        let fraction = UInt8(elapsedTime * 100)
-        
-        //add the leading zero for minutes, seconds and millseconds and store them as string constants
-        
-        let strMinutes = String(format: "%02d", minutes)
-        let strSeconds = String(format: "%02d", seconds)
-        let strFraction = String(format: "%02d", fraction)
-        
-        //concatenate minuets, seconds and milliseconds as assign it to the UILabel
-        
-        self.timeLabel.text = "\(strMinutes):\(strSeconds):\(strFraction)"
+    }
+    
+    func setSelectedViewControllerWithIndex(index: Int) {
+        if index == 0 {
+            let viewController: UIViewController = viewControllers[index]
+            self.verifyTitleLabel.hidden  = false
+            self.verifyButton.setTitle("Verify", forState: UIControlState.Normal)
+            self.requestNewVerificationButton.hidden = false
+            setSelectedViewController(viewController)
+        } else if index == 1 {
+            let viewController: UIViewController = viewControllers[index]
+            setSelectedViewController(viewController)
+            self.verifyTitleLabel.hidden  = true
+            self.congratulationsViewController?.successFailView.backgroundColor = Constants.Colors.appTheme
+            //Set condition to check if fail or not
+            self.verifyButton.setTitle("Continue", forState: UIControlState.Normal)
+            self.requestNewVerificationButton.hidden = true
+        }
+    }
+    
+    func setSelectedViewController(viewController: UIViewController) {
+        if !(selectedChildViewController == viewController) {
+            if self.isViewLoaded() {
+                selectedChildViewController?.willMoveToParentViewController(self)
+                selectedChildViewController?.view.removeFromSuperview()
+                selectedChildViewController?.removeFromParentViewController()
+            }
+        }
+        self.view.layoutIfNeeded()
+        self.addChildViewController(viewController)
+        viewController.view.frame = self.contentViewFrame!
+        successFailView.addSubview(viewController.view)
+        viewController.didMoveToParentViewController(self)
+        selectedChildViewController = viewController
+    }
+    
+    override func viewDidLayoutSubviews() {
+        self.contentViewFrame = successFailView.bounds
         
     }
     
@@ -77,6 +94,19 @@ class VerifyNumberViewController: UIViewController {
          self.dismissViewControllerAnimated(true, completion: nil)
        // self.pressedDimViewFromProductPage(self)
       
+    }
+    
+    @IBAction func requestNewVerificationCode(sender: AnyObject){
+        //Set action to send new verification code
+    }
+    
+    @IBAction func verifyContinueRequest(sender: AnyObject){
+        //Set action to send verification/continue/request new code
+        if self.verifyButton.titleLabel?.text == "Verify" {
+            println("Verify")
+        } else if self.verifyButton.titleLabel?.text == "Continue" {
+            println("Continue")
+        }
     }
     
     /*

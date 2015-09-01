@@ -17,14 +17,14 @@
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StoreInfoAddressTableViewCell" rowHeight="157" id="KGk-i7-Jjw" customClass="StoreInfoAddressTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="413" height="155"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+            <tableViewCellContentView key="contentView" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="srs-wV-U41">
                         <rect key="frame" x="0.0" y="19" width="413" height="135"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vsD-dO-TO3">
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vsD-dO-TO3">
                                 <rect key="frame" x="17" y="28" width="400" height="1"/>
                                 <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -39,16 +39,6 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change Address" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d8T-T9-3Hb">
-                                <rect key="frame" x="337" y="63" width="42" height="42"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="42" id="VgW-zb-V0Y"/>
-                                    <constraint firstAttribute="width" constant="42" id="ll0-8Q-pAE"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="2nd Flr Bldg A SM Megamall, Ortigas, Mandaluyong City, Metro Manila, Philippines" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJJ-C5-EXD">
@@ -79,6 +69,16 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Address" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d8T-T9-3Hb">
+                                <rect key="frame" x="337" y="63" width="42" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="VgW-zb-V0Y"/>
+                                    <constraint firstAttribute="width" constant="42" id="ll0-8Q-pAE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -113,7 +113,8 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="addressView" destination="srs-wV-U41" id="gv2-A1-2kd"/>
+                <outlet property="addressLabel" destination="bJJ-C5-EXD" id="zPX-Fv-SZx"/>
+                <outlet property="addressView" destination="srs-wV-U41" id="3dK-5H-oaz"/>
             </connections>
             <point key="canvasLocation" x="278.5" y="354.5"/>
         </tableViewCell>

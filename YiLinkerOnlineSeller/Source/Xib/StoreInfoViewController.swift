@@ -12,22 +12,27 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     
     @IBOutlet weak var storeInfoTableView: UITableView!
     
+    var storeInfoModel: StoreInfoModel?
+    
     let storeInfoSectionTableViewCellIndentifier: String = "StoreInfoSectionTableViewCell"
     let storeInfoAddressTableViewCellIdentifier: String = "StoreInfoAddressTableViewCell"
     let storeInfoBankAccountTableViewCellIdentifier: String = "StoreInfoBankAccountTableViewCell"
     let storeInfoAccountInformationTableViewCellIdentifier: String = "StoreInfoAccountInformationTableViewCell"
     
+    var storeInfoHeader: StoreInfoTableViewCell = XibHelper.puffViewWithNibName("StoreInfoTableViewCell", index: 0) as! StoreInfoTableViewCell
+    
+    var newContactNumber: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let storeInfoHeader: StoreInfoTableViewCell = XibHelper.puffViewWithNibName("StoreInfoTableViewCell", index: 0) as! StoreInfoTableViewCell
+       
         storeInfoHeader.delegate = self
         
         self.storeInfoTableView.tableHeaderView = storeInfoHeader
         
         self.initializeViews()
         self.registerNibs()
-        
+        self.fireStoreInfo()
         
         // Do any additional setup after loading the view.
     }
@@ -57,30 +62,66 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
         storeInfoTableView.registerNib(storeInfoAccountInformation, forCellReuseIdentifier: storeInfoAccountInformationTableViewCellIdentifier)
     }
     
+    func fireStoreInfo(){
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
+        
+        manager.POST(APIAtlas.sellerStoreInfo, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.storeInfoModel = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
+            //self.populateData()
+           
+            self.storeInfoHeader.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+            self.storeInfoHeader.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+            self.storeInfoHeader.storeNameTextField.text = self.storeInfoModel?.store_name
+            self.storeInfoHeader.mobilePhoneTextField.text = self.storeInfoModel?.contact_number
+            
+            if self.storeInfoModel?.contact_number == nil {
+                self.storeInfoHeader.verifyButton.setTitle("Verify", forState: UIControlState.Normal)
+                self.storeInfoHeader.verifyButton.tag = 1
+            } else {
+                self.storeInfoHeader.verifyButton.setTitle("Change", forState: UIControlState.Normal)
+                self.storeInfoHeader.verifyButton.tag = 2
+            }
+            self.storeInfoTableView.reloadData()
+            SVProgressHUD.dismiss()
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                SVProgressHUD.dismiss()
+                println(error)
+            })
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
        return 4
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        println("sections \(indexPath.section)")
+        println("\(self.storeInfoModel?.store_address)")
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier(storeInfoSectionTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoSectionTableViewCell
+            let cell: StoreInfoSectionTableViewCell = self.storeInfoTableView.dequeueReusableCellWithIdentifier(storeInfoSectionTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoSectionTableViewCell
             cell.delegate = self
-            
             return cell
        } else if indexPath.section == 1 {
-            let cell = tableView.dequeueReusableCellWithIdentifier(storeInfoAddressTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAddressTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier( storeInfoAddressTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAddressTableViewCell
             cell.delegate = self
-            
+            //Display current bank account
+            cell.addressLabel.text = self.storeInfoModel?.store_address
             return cell
         } else if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCellWithIdentifier( storeInfoBankAccountTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoBankAccountTableViewCell
             cell.delegate = self
-            
+            //Display current bank account
+            cell.bankAccountTitleLabel.text = self.storeInfoModel?.accountTitle
+            cell.bankAccountDetailLabel.text = self.storeInfoModel?.bankAccount
             return cell
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier( storeInfoAccountInformationTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAccountInformationTableViewCell
             cell.delegate = self
-            
+            cell.emailAddressTextField.text = self.storeInfoModel?.email
+            //
             return cell
         }
     }
@@ -97,7 +138,7 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
         } else if indexPath.section == 1 {
             return 163
         } else  if indexPath.section == 2 {
-            return 132
+            return 163
         } else {
             return 299
         }
@@ -119,22 +160,39 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
         self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
 
         */
-        
-        var verifyNumberViewController = VerifyNumberViewController(nibName: "VerifyNumberViewController", bundle: nil)
-        verifyNumberViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        verifyNumberViewController.providesPresentationContextTransitionStyle = true
-        verifyNumberViewController.definesPresentationContext = true
-        let black = UIColor.blackColor()
-        let transparent = black.colorWithAlphaComponent(0.5)
-        verifyNumberViewController.view.backgroundColor = transparent
-        verifyNumberViewController.view.frame.origin.y = verifyNumberViewController.view.frame.size.height
-        self.navigationController?.presentViewController(verifyNumberViewController, animated: true, completion:
-            nil)
-        
+        if storeInfoHeader.verifyButton.tag == 1 {
+            var verifyNumberViewController = VerifyNumberViewController(nibName: "VerifyNumberViewController", bundle: nil)
+            verifyNumberViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+            verifyNumberViewController.providesPresentationContextTransitionStyle = true
+            verifyNumberViewController.definesPresentationContext = true
+            let black = UIColor.blackColor()
+            let transparent = black.colorWithAlphaComponent(0.5)
+            verifyNumberViewController.view.backgroundColor = transparent
+            verifyNumberViewController.view.frame.origin.y = verifyNumberViewController.view.frame.size.height
+            self.navigationController?.presentViewController(verifyNumberViewController, animated: true, completion:
+                nil)
+        } else {
+            var changeMobileNumber = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
+            changeMobileNumber.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+            changeMobileNumber.providesPresentationContextTransitionStyle = true
+            changeMobileNumber.definesPresentationContext = true
+            let black = UIColor.blackColor()
+            let transparent = black.colorWithAlphaComponent(0.5)
+            changeMobileNumber.view.backgroundColor = transparent
+            changeMobileNumber.view.frame.origin.y = changeMobileNumber.view.frame.size.height
+            self.navigationController?.presentViewController(changeMobileNumber, animated: true, completion:
+                nil)
+
+        }
 
     }
     
     func changeAddress() {
+        var changeAddressViewController = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
+        self.navigationController?.pushViewController(changeAddressViewController, animated:true)
+    }
+    
+    func newAddress() {
         var changeAddressViewController = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
         self.navigationController?.pushViewController(changeAddressViewController, animated:true)
     }
@@ -161,8 +219,8 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
             nil)
     }
     
-    func saveMobile() {
-        println("Save Mobile")
+    func saveAccountInfo() {
+        println("Save Account Info")
     }
     
     func generateQRCode() {

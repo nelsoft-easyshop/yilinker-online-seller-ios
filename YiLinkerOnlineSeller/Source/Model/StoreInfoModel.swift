@@ -6,51 +6,9 @@
 //  Copyright (c) 2015 YiLinker. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class StoreInfoModel: NSObject {
-    /*
-    "{
-    ""isSuccessful"": true,
-    ""message"": ""Store info."",
-    ""data"": {
-    ""userId"": 1,
-    ""fullName"": ""Kevin Baisas"",
-    ""firstName"": ""Kevin"",
-    ""lastName"": ""Baisas"",
-    ""email"": ""kevin.baisas@easyshop.ph"",
-    ""gender"": ""M"",
-    ""nickname"": null,
-    ""contactNumber"": ""6378523"",
-    ""specialty"": ""PARENT"",
-    ""birthdate"": ""Nov 06, 2015"",
-    ""storeName"": ""Test Store"",
-    ""storeDescription"": ""Lorem ipsum dolor sit amet"",
-    ""profilePhoto"": ""http://yilinker-online.dev/assets/images/uploads/users/1/seller-img-1.jpg?"",
-    ""coverPhoto"": """",
-    ""isFollowed"": false,
-    ""storeAddress"": {
-    ""userAddressId"": 4,
-    ""locationId"": 1106,
-    ""unitNumber"": null,
-    ""buildingName"": null,
-    ""streetNumber"": null,
-    ""streetName"": null,
-    ""subdivision"": null,
-    ""zipCode"": null,
-    ""streetAddress"": null,
-    ""province"": null,
-    ""city"": ""City"",
-    ""municipality"": ""Municipality"",
-    ""barangay"": null,
-    ""longitude"": null,
-    ""latitude"": null,
-    ""landline"": null
-    }
-    }
-    }"
-
-    */
     
     var name: String = ""
     var avatar: NSURL = NSURL(string: "")!
@@ -78,8 +36,13 @@ class StoreInfoModel: NSObject {
     var city: String = ""
     var municipality: String = ""
     var barangay: String = ""*/
+    var accountName: String = ""
+    var accountNumber: String = ""
+    var bankName: String = ""
+    var bankAccount: String = ""
+    var accountTitle: String = ""
     
-    init(name : String, email : String, gender : String, nickname : String, contact_number : String, specialty : String, birthdate : String, store_name : String, store_description : String, avatar : NSURL, cover_photo : NSURL, is_allowed : Bool, unit_number: String, bldg_name: String, street_number: String, street_name: String, subdivision: String, zip_code: String) {
+    init(name : String, email : String, gender : String, nickname : String, contact_number : String, specialty : String, birthdate : String, store_name : String, store_description : String, avatar : NSURL, cover_photo : NSURL, is_allowed : Bool, unit_number: String, bldg_name: String, street_number: String, street_name: String, subdivision: String, zip_code: String, full_address: String, account_title: String, bank_account: String) {
         self.name = name
         self.email = email
         self.gender = gender
@@ -97,6 +60,9 @@ class StoreInfoModel: NSObject {
         self.streetName = street_name
         self.subdivision = subdivision
         self.zipCode = zip_code
+        self.store_address = full_address
+        self.bankAccount = bank_account
+        self.accountTitle = account_title
     }
 
     class func parseSellerDataFromDictionary(dictionary: NSDictionary) -> StoreInfoModel {
@@ -114,13 +80,19 @@ class StoreInfoModel: NSObject {
         var cover_photo: NSURL = NSURL(string: "")!
         var is_followed: Bool = false
         var store_address: String = ""
-        var unitNumber: String = ""
-        var bldgName: String = ""
-        var streetNumber: String = ""
-        var streetName: String = ""
+        var unit_number: String = ""
+        var bldg_name: String = ""
+        var street_number: String = ""
+        var street_name: String = ""
         var subdivision: String = ""
-        var zipCode: String = ""
+        var zip_code: String = ""
+        var account_name: String = ""
+        var account_number: Int = 0
+        var bank_name: String = ""
+        var bank_account: String = ""
+        var account_title: String = ""
         
+        println(dictionary["data"])
         if let value: AnyObject = dictionary["data"] {
             
             if let sellerName = value["fullName"] as? String {
@@ -195,17 +167,42 @@ class StoreInfoModel: NSObject {
                 is_followed = false
             }
             
-            if let val: AnyObject = value["storeAddress"] {
+            if let val: AnyObject = value["bankAccount"] {
+                if let temBankName = val["bankName"] as? String {
+                    bank_name = temBankName
+                }
+                
+                if let temAccountTitle = val["accountTitle"] as? String {
+                    account_title = temAccountTitle
+                }
+                
+                if let temAccountNumber = val["accountNumber"] as? Int {
+                    account_number = temAccountNumber
+                }
+                
+                if let temAccountName = val["accountName"] as? String {
+                    account_name = temAccountName
+                }
+                
+                bank_account = "\(account_number)" + "\n" + account_name + "\n" + bank_name
+                
+            }
+            
+            if let val: AnyObject = value["userAddress"] {
                 if let temUnitNo = val["unitNumber"] as? String {
-                    unitNumber = temUnitNo
+                    unit_number = temUnitNo
                 }
                 
                 if let temBldgNo = val["buildingName"] as? String {
-                    bldgName = temBldgNo
+                    bldg_name = temBldgNo
                 }
                 
                 if let temStreetNo = val["streetNumber"] as? String {
-                    streetNumber = temStreetNo
+                    street_number = temStreetNo
+                }
+                
+                if let temStreetName = val["streetName"] as? String {
+                    street_name = temStreetName
                 }
                 
                 if let temSubdivision = val["subdivision"] as? String {
@@ -213,18 +210,20 @@ class StoreInfoModel: NSObject {
                 }
                 
                 if let temZipCode = val["zipCode"] as? String {
-                    zipCode = temZipCode
+                    zip_code = temZipCode
                 }
-                /*
-                store_address = unitNumber + " " + bldgName + ", " + streetName + ", " + subdivision + ", " + zipCode
-                */
+                
+                store_address = unit_number + " " + bldg_name + ", " + street_number + " " + street_name + ", " + subdivision + ", " + zip_code
+                
+                println("\(store_address)")
+                
             }
             
         }
         
-        let sellerModel: StoreInfoModel = StoreInfoModel(name: name, email: email, gender: gender, nickname: nickname, contact_number: contact_number, specialty: contact_number, birthdate: birthdate, store_name: store_name, store_description: store_description, avatar: avatar, cover_photo: cover_photo, is_allowed: is_followed, unit_number: unitNumber, bldg_name: bldgName, street_number: streetNumber, street_name: streetName, subdivision: subdivision, zip_code: zipCode)
-        
-        return sellerModel
+        let storeInfo: StoreInfoModel = StoreInfoModel(name: name, email: email, gender: gender, nickname: nickname, contact_number: contact_number, specialty: contact_number, birthdate: birthdate, store_name: store_name, store_description: store_description, avatar: avatar, cover_photo: cover_photo, is_allowed: is_followed, unit_number: unit_number, bldg_name: bldg_name, street_number: street_number, street_name: street_name, subdivision: subdivision, zip_code: zip_code, full_address: store_address, account_title: account_title, bank_account: bank_account)
+        println("\(store_address)")
+        return storeInfo
     }
     
 }

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol StoreInfoAccountInformationTableViewCellDelegate {
-    func saveMobile()
+    func saveAccountInfo()
     func changeMobileNumber()
     func changeEmailAddress()
 }
@@ -18,6 +18,8 @@ class StoreInfoAccountInformationTableViewCell: UITableViewCell {
     
     @IBOutlet weak var saveButton: UIButton!
     
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var emailAddressTextField: UITextField!
     @IBOutlet weak var changeMobileButton: UIButton!
     @IBOutlet weak var changeEmailButton: UIButton!
     
@@ -54,9 +56,9 @@ class StoreInfoAccountInformationTableViewCell: UITableViewCell {
     }
     
     
-    @IBAction func submitMobile(sender: AnyObject){
-        println("Submit Mobile")
-        self.delegate?.saveMobile()
+    @IBAction func saveAccountInfo(sender: AnyObject){
+        println("Save Account Info")
+        self.delegate?.saveAccountInfo()
     }
     
 }

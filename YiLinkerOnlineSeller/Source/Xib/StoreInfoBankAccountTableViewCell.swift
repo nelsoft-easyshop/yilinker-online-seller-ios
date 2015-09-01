@@ -16,8 +16,12 @@ class StoreInfoBankAccountTableViewCell: UITableViewCell {
 
     var delegate: StoreInfoBankAccountTableViewCellDelegate?
    
+    @IBOutlet weak var bankAccountTitleLabel: UILabel!
+    
+    @IBOutlet weak var bankAccountDetailLabel: UILabel!
+    
     @IBOutlet weak var bankAccountView: UIView!
-  
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

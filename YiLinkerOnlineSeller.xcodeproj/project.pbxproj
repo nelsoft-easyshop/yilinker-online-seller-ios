@@ -100,6 +100,11 @@
 		F7C13D711B95663200CE8EBB /* FilterResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C13D6F1B95663200CE8EBB /* FilterResultsViewController.swift */; };
 		F7C13D721B95663200CE8EBB /* FilterResultsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C13D701B95663200CE8EBB /* FilterResultsViewController.xib */; };
 		F7C13D741B95939E00CE8EBB /* StoreInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C13D731B95939E00CE8EBB /* StoreInfoModel.swift */; };
+		F7C13D771B95B6DD00CE8EBB /* CongratulationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C13D751B95B6DD00CE8EBB /* CongratulationsViewController.swift */; };
+		F7C13D781B95B6DD00CE8EBB /* CongratulationsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C13D761B95B6DD00CE8EBB /* CongratulationsViewController.xib */; };
+		F7C13D7B1B95B90B00CE8EBB /* VerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C13D791B95B90B00CE8EBB /* VerifyViewController.swift */; };
+		F7C13D7C1B95B90B00CE8EBB /* VerifyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C13D7A1B95B90B00CE8EBB /* VerifyViewController.xib */; };
+		F7C13D7E1B95DE2200CE8EBB /* dummy-placeholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F7C13D7D1B95DE2200CE8EBB /* dummy-placeholder.jpg */; };
 		F7C305F91B9346C000C1B084 /* ChangeBankAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C305F71B9346C000C1B084 /* ChangeBankAccountViewController.swift */; };
 		F7C305FA1B9346C000C1B084 /* ChangeBankAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C305F81B9346C000C1B084 /* ChangeBankAccountViewController.xib */; };
 		F7C305FE1B937DEA00C1B084 /* StoreInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C305FD1B937DEA00C1B084 /* StoreInfoViewController.xib */; };
@@ -249,6 +254,11 @@
 		F7C13D6F1B95663200CE8EBB /* FilterResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterResultsViewController.swift; sourceTree = "<group>"; };
 		F7C13D701B95663200CE8EBB /* FilterResultsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterResultsViewController.xib; sourceTree = "<group>"; };
 		F7C13D731B95939E00CE8EBB /* StoreInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoModel.swift; sourceTree = "<group>"; };
+		F7C13D751B95B6DD00CE8EBB /* CongratulationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CongratulationsViewController.swift; sourceTree = "<group>"; };
+		F7C13D761B95B6DD00CE8EBB /* CongratulationsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CongratulationsViewController.xib; sourceTree = "<group>"; };
+		F7C13D791B95B90B00CE8EBB /* VerifyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyViewController.swift; sourceTree = "<group>"; };
+		F7C13D7A1B95B90B00CE8EBB /* VerifyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VerifyViewController.xib; sourceTree = "<group>"; };
+		F7C13D7D1B95DE2200CE8EBB /* dummy-placeholder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "dummy-placeholder.jpg"; sourceTree = "<group>"; };
 		F7C305F71B9346C000C1B084 /* ChangeBankAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeBankAccountViewController.swift; sourceTree = "<group>"; };
 		F7C305F81B9346C000C1B084 /* ChangeBankAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangeBankAccountViewController.xib; sourceTree = "<group>"; };
 		F7C305FD1B937DEA00C1B084 /* StoreInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoViewController.xib; sourceTree = "<group>"; };
@@ -449,6 +459,10 @@
 				799893041B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib */,
 				F7BF5C831B93FCA800AEB9DA /* VerifyNumberViewController.swift */,
 				F7BF5C841B93FCA800AEB9DA /* VerifyNumberViewController.xib */,
+				F7C13D751B95B6DD00CE8EBB /* CongratulationsViewController.swift */,
+				F7C13D761B95B6DD00CE8EBB /* CongratulationsViewController.xib */,
+				F7C13D791B95B90B00CE8EBB /* VerifyViewController.swift */,
+				F7C13D7A1B95B90B00CE8EBB /* VerifyViewController.xib */,
 				F7BF5C8B1B94073600AEB9DA /* CreateNewAddressViewController.swift */,
 				F7BF5C8C1B94073600AEB9DA /* CreateNewAddressViewController.xib */,
 				F7BF5C911B94073600AEB9DA /* CreateNewBankAccountViewController.swift */,
@@ -546,6 +560,7 @@
 		967EE1B71B8AEA25000591AC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F7C13D7D1B95DE2200CE8EBB /* dummy-placeholder.jpg */,
 				F78BB50A1B954DD30010DAF7 /* filter.png */,
 				F78BB5081B954DC10010DAF7 /* sort.png */,
 				F7CCDBB11B94BB33000F5AD4 /* arrow_up.png */,
@@ -679,9 +694,11 @@
 				0CF28F051B8CA2E9005B2E54 /* Panton.otf in Resources */,
 				F7CCDBB01B94A2ED000F5AD4 /* FilterByTableViewCell.xib in Resources */,
 				799893031B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib in Resources */,
+				F7C13D781B95B6DD00CE8EBB /* CongratulationsViewController.xib in Resources */,
 				F7D37CAD1B93042A00FA7B16 /* ChangeAddressFooterCollectionViewCell.xib in Resources */,
 				0CF28EF91B8CA2E9005B2E54 /* Panton ExtraBold.otf in Resources */,
 				0CF28F011B8CA2E9005B2E54 /* Panton SemiBold Italic.otf in Resources */,
+				F7C13D7C1B95B90B00CE8EBB /* VerifyViewController.xib in Resources */,
 				0CF28ED81B8C85E5005B2E54 /* Main.storyboard in Resources */,
 				0CF28ED71B8C85E5005B2E54 /* LaunchScreen.xib in Resources */,
 				F7BF5C821B93E88300AEB9DA /* photo.png in Resources */,
@@ -713,6 +730,7 @@
 				F7BF5C941B94073600AEB9DA /* CreateNewBankAccountViewController.xib in Resources */,
 				0CF28EFB1B8CA2E9005B2E54 /* Panton ExtraLight.otf in Resources */,
 				F7CCDBA21B94831C000F5AD4 /* SearchSellerViewController.xib in Resources */,
+				F7C13D7E1B95DE2200CE8EBB /* dummy-placeholder.jpg in Resources */,
 				F7CCDBA41B949A1F000F5AD4 /* cart3.png in Resources */,
 				F7CCDB9D1B946B5B000F5AD4 /* CategoryTableViewCell.xib in Resources */,
 				0CF28EF71B8CA2E9005B2E54 /* Panton Bold.otf in Resources */,
@@ -827,9 +845,11 @@
 				0CF28ED91B8C85E5005B2E54 /* DashboardViewController.swift in Sources */,
 				F7BF5C741B93738800AEB9DA /* StoreInfoAccountInformationTableViewCell.swift in Sources */,
 				0CF28EDC1B8C85E5005B2E54 /* SettingsViewController.swift in Sources */,
+				F7C13D7B1B95B90B00CE8EBB /* VerifyViewController.swift in Sources */,
 				F7D37CB21B93049100FA7B16 /* AddAddressTableViewController.swift in Sources */,
 				0CF28EDF1B8C868D005B2E54 /* Constants.swift in Sources */,
 				F7BF5C7E1B93AB2E00AEB9DA /* AppDelegate.swift in Sources */,
+				F7C13D771B95B6DD00CE8EBB /* CongratulationsViewController.swift in Sources */,
 				F7BF5C701B93733A00AEB9DA /* StoreInfoBankAccountTableViewCell.swift in Sources */,
 				799892FF1B8CEBC100F4CFE2 /* SettingsItemTableViewCell.swift in Sources */,
 				0CF28ED51B8C85E5005B2E54 /* SessionManager.swift in Sources */,

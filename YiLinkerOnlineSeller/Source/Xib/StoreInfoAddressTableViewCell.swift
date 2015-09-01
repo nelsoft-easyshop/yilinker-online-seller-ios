@@ -9,19 +9,21 @@
 import UIKit
 
 protocol StoreInfoAddressTableViewCellDelagate{
-        func changeAddress()
+    func changeAddress()
+    func newAddress()
 }
 
 class StoreInfoAddressTableViewCell: UITableViewCell {
 
     var delegate: StoreInfoAddressTableViewCellDelagate?
     
+    @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var addressView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        var tapAddressView = UIGestureRecognizer(target: self, action: "tapAddress")
+        var tapAddressView = UIGestureRecognizer(target: self, action: "changeAddress")
         self.addressView.addGestureRecognizer(tapAddressView)
     }
 
@@ -36,6 +38,10 @@ class StoreInfoAddressTableViewCell: UITableViewCell {
         println("tap address")
     }
     
+    
+    func changeAddress(){
+        self.delegate?.newAddress()
+    }
     
     
 }

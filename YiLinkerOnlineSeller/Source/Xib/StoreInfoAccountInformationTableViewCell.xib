@@ -31,11 +31,11 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wht-2l-Tg0">
                         <rect key="frame" x="0.0" y="19" width="364" height="46"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shipping Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F9V-7J-AzL">
-                                <rect key="frame" x="8" y="12" width="103" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account Information" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F9V-7J-AzL">
+                                <rect key="frame" x="8" y="12" width="117" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="79Z-Yl-mpM"/>
-                                    <constraint firstAttribute="width" constant="103" id="dCI-Vo-SoO"/>
+                                    <constraint firstAttribute="width" constant="117" id="dCI-Vo-SoO"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -147,7 +147,7 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
-                            <action selector="submitMobile:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="qEc-h2-JOy"/>
+                            <action selector="saveAccountInfo:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="JwW-mb-3vh"/>
                         </connections>
                     </button>
                 </subviews>
@@ -193,6 +193,8 @@
             <connections>
                 <outlet property="changeEmailButton" destination="AmA-We-YcP" id="BKv-rI-w36"/>
                 <outlet property="changeMobileButton" destination="CTN-mJ-yjy" id="Dbj-dW-mqs"/>
+                <outlet property="emailAddressTextField" destination="7Jr-B8-Mxd" id="3KX-bv-J65"/>
+                <outlet property="passwordTextField" destination="uYo-7r-VBy" id="7Jg-hX-xyR"/>
                 <outlet property="saveButton" destination="tjg-OX-UXr" id="0wQ-ax-wsu"/>
             </connections>
             <point key="canvasLocation" x="232.5" y="336.5"/>

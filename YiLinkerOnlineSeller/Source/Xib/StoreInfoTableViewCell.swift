@@ -16,9 +16,17 @@ class StoreInfoTableViewCell: UITableViewCell {
 
     var delegate: StoreInfoTableViewCellDelegate?
     
+    @IBOutlet weak var profilePictureImageView: UIImageView!
+    @IBOutlet weak var coverPhotoImageView: UIImageView!
+    @IBOutlet weak var mobilePhoneTextField: UITextField!
+    @IBOutlet weak var storeNameTextField: UITextField!
+    
     @IBOutlet weak var verifyButton: UIButton!
+    
     @IBOutlet weak var coverPhotoView: UIView!
     @IBOutlet weak var profilePhotoView: UIView!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
