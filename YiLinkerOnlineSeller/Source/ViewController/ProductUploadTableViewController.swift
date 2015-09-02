@@ -778,7 +778,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 SVProgressHUD.dismiss()
                 self.success()
         }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
-            println(error)
             let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
             println(error.userInfo)
             if task.statusCode == 401 {
