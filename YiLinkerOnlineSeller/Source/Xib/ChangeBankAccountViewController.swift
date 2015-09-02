@@ -12,6 +12,8 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
     
     @IBOutlet weak var changeBankAccountCollectionView: UICollectionView!
     
+    var bankAccountModel: BankAccountModel!
+    
     var cellCount: Int = 3
     var selectedIndex: Int = 0
     
@@ -29,10 +31,31 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
         changeBankAccountCollectionView.dataSource = self
         changeBankAccountCollectionView.delegate = self
         self.regsiterNib()
+        self.fireBankAccount()
     }
     
     func titleView() {
         self.title = "Change Bank Account"
+    }
+    
+    func fireBankAccount(){
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
+        
+        manager.POST(APIAtlas.sellerBankAccountList, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.bankAccountModel = BankAccountModel.parseBankAccountDataFromDictionary(responseObject as! NSDictionary)
+            //self.populateData()
+
+            println(self.bankAccountModel!.account_name[0])
+            self.changeBankAccountCollectionView.reloadData()
+            SVProgressHUD.dismiss()
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                SVProgressHUD.dismiss()
+                println(error)
+        })
     }
     
     func backButton() {
@@ -80,8 +103,10 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell : ChangeAddressCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressCollectionViewCell
-        cell.titleLabel.text = "Shop Account"
-        cell.subTitleLabel.text = "02-2331685\nJuan Dela Cruz\nBPI"
+        if self.bankAccountModel != nil {
+            cell.titleLabel.text = self.bankAccountModel!.account_name[indexPath.row]
+            cell.subTitleLabel.text = "\(self.bankAccountModel!.account_number[indexPath.row])"+"\n"+self.bankAccountModel!.account_name[indexPath.row]+"\n"+self.bankAccountModel!.bank_name[indexPath.row]
+        }
         if indexPath.row == self.selectedIndex {
             cell.layer.borderWidth = 1
             cell.layer.borderColor = Constants.Colors.selectedGreenColor.CGColor
@@ -147,12 +172,12 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
     func changeAddressFooterCollectionViewCell(didSelecteAddAddress cell: ChangeAddressFooterCollectionViewCell) {
         /*let indexPath: NSIndexPath = NSIndexPath(forItem: self.cellCount, inSection: 0)
         self.addCellInIndexPath(indexPath)*/
-        
-        /*let addAddressTableViewController: AddAddressTableViewController = AddAddressTableViewController(nibName: "AddAddressTableViewController", bundle: nil)
+        /*
+        let addAddressTableViewController: AddAddressTableViewController = AddAddressTableViewController(nibName: "AddAddressTableViewController", bundle: nil)
         addAddressTableViewController.delegate = self
         self.navigationController!.presentViewController(addAddressTableViewController, animated: true, completion: nil)
         */
-        var attributeModal = ChangeBankAccountViewController(nibName: "ChangeBankAccountViewController", bundle: nil)
+        var attributeModal = CreateNewBankAccountViewController(nibName: "CreateNewBankAccountViewControllers", bundle: nil)
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         attributeModal.providesPresentationContextTransitionStyle = true
         attributeModal.definesPresentationContext = true

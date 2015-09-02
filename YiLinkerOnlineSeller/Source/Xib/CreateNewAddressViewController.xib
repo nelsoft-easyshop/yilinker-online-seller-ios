@@ -30,11 +30,15 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="376" height="603"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hbq-Kz-Cbj">
-                    <rect key="frame" x="9" y="101" width="359" height="401"/>
+                <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2f9-yo-atg">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="600"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hbq-Kz-Cbj" customClass="DynamicRoundedView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+                    <rect key="frame" x="8" y="100" width="359" height="401"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sZH-kF-YgE">
                             <rect key="frame" x="255" y="351" width="96" height="28"/>
@@ -63,7 +67,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="address.png" translatesAutoresizingMaskIntoConstraints="NO" id="rse-of-rZN">
-                                    <rect key="frame" x="149" y="8" width="61" height="60"/>
+                                    <rect key="frame" x="149" y="0.0" width="61" height="60"/>
                                 </imageView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -126,9 +130,19 @@
                         </view>
                     </subviews>
                     <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="2f9-yo-atg" secondAttribute="bottom" id="ZLK-14-hpX"/>
+                <constraint firstItem="2f9-yo-atg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="aDZ-wJ-0SP"/>
+                <constraint firstItem="2f9-yo-atg" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="pxS-Oz-Ebb"/>
+                <constraint firstAttribute="trailing" secondItem="2f9-yo-atg" secondAttribute="trailing" id="qi2-VF-49V"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="253" y="322.5"/>
         </view>

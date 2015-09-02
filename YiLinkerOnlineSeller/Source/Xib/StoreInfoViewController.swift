@@ -98,7 +98,7 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        println("sections \(indexPath.section)")
+        println("sections \(indexPath.section) row \(indexPath.row)")
         println("\(self.storeInfoModel?.store_address)")
         if indexPath.section == 0 {
             let cell: StoreInfoSectionTableViewCell = self.storeInfoTableView.dequeueReusableCellWithIdentifier(storeInfoSectionTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoSectionTableViewCell
