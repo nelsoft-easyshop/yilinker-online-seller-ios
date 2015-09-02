@@ -20,6 +20,11 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     
     var tableImages: [String] = ["mystore", "report", "transaction", "product", "category", "uploadItem", "followers", "activityLog", "points", "help", "logout"]
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController!.tabBar.tintColor = Constants.Colors.appTheme
