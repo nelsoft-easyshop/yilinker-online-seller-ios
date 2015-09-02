@@ -638,7 +638,11 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         let section: NSIndexSet = NSIndexSet(indexesInRange: range)
         
         self.tableView.reloadSections(section, withRowAnimation: UITableViewRowAnimation.Fade)
-        self.sectionFourRows = 0
+        if self.productModel.validCombinations.count == 0 {
+            self.sectionFourRows = 2
+        } else {
+            self.sectionFourRows = 0
+        }
         self.sectionPriceHeaderHeight = 0
         self.tableView.reloadData()
     }
@@ -789,7 +793,16 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             
             }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
                 self.hud?.hide(true)
-                self.success()
+                let dictionary: NSDictionary = response as! NSDictionary
+                
+                if dictionary["isSuccessful"] as! Bool == true {
+                    self.success()
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: dictionary["message"] as! String, title: "Server Error")
+                }
+                
+                
+                println(response)
         }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
             let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
             println(error.userInfo)

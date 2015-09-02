@@ -15,6 +15,7 @@ struct PUALTVConstant {
 class ProductUploadAttributeListTableViewController: UIViewController, ProductUploadDetailTableViewControllerDelegate, ProductUploadAddFooterViewDelegate, PUAttributeSetHeaderTableViewCellDelegate {
     
 
+    @IBOutlet weak var footerButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     var productModel: ProductModel = ProductModel()
     var dynamicRowHeight: CGFloat = 0
@@ -39,6 +40,7 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
         let addMoreTableViewFooter: ProductUploadAddFooterView = XibHelper.puffViewWithNibName("ProductUploadAddFooterView", index: 0) as! ProductUploadAddFooterView
         addMoreTableViewFooter.delegate = self
         self.tableView.tableFooterView = addMoreTableViewFooter
+        self.changeButtonName()
     }
     
     func productUploadAddFooterView(didSelectAddMore view: UIView) {
@@ -166,6 +168,7 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
         }
 
         self.tableView.reloadData()
+        self.changeButtonName()
     }
     
     func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath) {
@@ -195,6 +198,7 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
 
         
         self.tableView.reloadData()
+        self.changeButtonName()
     }
     
     @IBAction func proceedToCombination(sender: AnyObject) {
@@ -203,7 +207,10 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
             productUploadCombinationListViewController.productModel = self.productModel
             self.navigationController!.pushViewController(productUploadCombinationListViewController, animated: true)
         } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "One or more attribute is required.")
+            let productUploadTableViewController: ProductUploadTableViewController
+            = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
+            productUploadTableViewController.replaceProductAttributeWithAttribute(self.productModel.attributes, combinations: self.productModel.validCombinations)
+            self.navigationController?.popToRootViewControllerAnimated(true)
         }
        
     }
@@ -231,6 +238,7 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
         self.tableView.deleteSections(section, withRowAnimation: UITableViewRowAnimation.Fade)
         self.tableView.endUpdates()
         self.tableView.reloadData()
+        self.changeButtonName()
     }
     
     func pUAttributeSetHeaderTableViewCell(didClickEdit cell: PUAttributeSetHeaderTableViewCell) {
@@ -240,6 +248,15 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
         productUploadDetailViewController.productModel = self.productModel.copy()
         self.navigationController!.pushViewController(productUploadDetailViewController, animated: true)
     }
+    
+    func changeButtonName() {
+        if self.productModel.attributes.count == 0 {
+            self.footerButton.setTitle("SAVE PRODUCT DETAILS", forState: UIControlState.Normal)
+        } else {
+            self.footerButton.setTitle("PROCEED TO COMBINATION", forState: UIControlState.Normal)
+        }
+    }
+        
     // Dealloc
     deinit {
         self.tableView.delegate = nil
