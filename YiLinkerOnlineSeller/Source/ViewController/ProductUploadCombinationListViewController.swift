@@ -155,7 +155,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
     }
     
     func back() {
-        self.navigationController!.popViewControllerAnimated(true)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     func productUploadAddFooterView(didSelectAddMore view: UIView) {
@@ -168,7 +168,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         }
         
         productUploadCombinationTableViewController.headerTitle = "Combination \(counter + 1)"
-        self.navigationController!.pushViewController(productUploadCombinationTableViewController, animated: true)
+        self.navigationController?.pushViewController(productUploadCombinationTableViewController, animated: true)
     }
     
     func productUploadCombinationTableViewController(appendCombination combination: CombinationModel, isEdit: Bool, indexPath: NSIndexPath) {
@@ -230,9 +230,9 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
              UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Combinations are required.", title: "Incomplete Product Details")
         } else {
             let productUploadTableViewController: ProductUploadTableViewController
-            = self.navigationController!.viewControllers[0] as! ProductUploadTableViewController
+            = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
             productUploadTableViewController.replaceProductAttributeWithAttribute(self.productModel!.attributes, combinations: self.productModel!.validCombinations)
-            self.navigationController!.popToRootViewControllerAnimated(true)
+            self.navigationController?.popToRootViewControllerAnimated(true)
         }
     }
     
@@ -256,6 +256,12 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         productUploadCombinationTableViewController.productModel = self.productModel!.copy()
         productUploadCombinationTableViewController.selectedIndexpath = indexPath
         productUploadCombinationTableViewController.delegate = self
-        self.navigationController!.pushViewController(productUploadCombinationTableViewController, animated: true)
+        self.navigationController?.pushViewController(productUploadCombinationTableViewController, animated: true)
+    }
+    
+    // Dealloc
+    deinit {
+        self.tableView.delegate = nil
+        self.tableView.dataSource = nil
     }
 }

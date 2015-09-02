@@ -240,4 +240,9 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
         productUploadDetailViewController.productModel = self.productModel.copy()
         self.navigationController!.pushViewController(productUploadDetailViewController, animated: true)
     }
+    // Dealloc
+    deinit {
+        self.tableView.delegate = nil
+        self.tableView.dataSource = nil
+    }
 }

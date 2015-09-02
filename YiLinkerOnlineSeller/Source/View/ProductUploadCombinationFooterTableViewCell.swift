@@ -37,9 +37,9 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
     }
     
     @IBAction func save(sender: AnyObject) {
-        if self.images.last == UIImage(named: "addPhoto") {
+        //if self.images.last == UIImage(named: "addPhoto") {
             self.images.removeLast()
-        }
+        //}
         
         if self.retailPriceTextField.text == "" {
             UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Please insert Retail Price.", title: "Incomplete Product Details")
@@ -54,7 +54,7 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
                 viewController!.view.endEditing(true)
             }
             
-            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.8 * Double(NSEC_PER_SEC)))
+            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.3 * Double(NSEC_PER_SEC)))
             dispatch_after(delayTime, dispatch_get_main_queue()) {
                 self.delegate!.productUploadCombinationFooterTableViewCell(didClickDoneButton: self, sku: self.skuTextField.text, quantity: self.quantityTextField.text, discountedPrice: self.discountedPriceTextField.text, retailPrice: self.retailPriceTextField.text, uploadImages: self.images)
             }
@@ -104,5 +104,11 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.endEditing(true)
         return true
+    }
+    
+    // Dealloc
+    deinit {
+        self.collectionView.delegate = nil
+        self.collectionView.dataSource = nil
     }
 }

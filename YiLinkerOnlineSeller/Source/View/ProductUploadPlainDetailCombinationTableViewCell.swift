@@ -60,4 +60,9 @@ class ProductUploadPlainDetailCombinationTableViewCell: UITableViewCell, UITextF
         return true
     }
     
+    // Dealloc
+    deinit {
+        self.collectionView.delegate = nil
+        self.collectionView.dataSource = nil
+    }
 }
