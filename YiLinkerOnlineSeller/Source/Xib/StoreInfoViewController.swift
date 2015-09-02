@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoAddressTableViewCellDelagate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeMobileNumberViewControllerDelegate {
+class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate {
     
     @IBOutlet weak var storeInfoTableView: UITableView!
     
@@ -217,6 +217,12 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
         changeBankAccountViewController.delegate = self
         self.navigationController?.pushViewController(changeBankAccountViewController, animated:true)
         
+    }
+    
+    func changeToNewAddress() {
+        var changeAddressViewController = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
+        changeAddressViewController.delegate = self
+        self.navigationController?.pushViewController(changeAddressViewController, animated:true)
     }
     
     func changeEmailAddress(){

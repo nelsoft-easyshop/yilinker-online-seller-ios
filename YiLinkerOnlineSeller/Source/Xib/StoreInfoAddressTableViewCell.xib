@@ -114,7 +114,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="addressLabel" destination="bJJ-C5-EXD" id="zPX-Fv-SZx"/>
-                <outlet property="addressView" destination="srs-wV-U41" id="3dK-5H-oaz"/>
+                <outlet property="addressView" destination="srs-wV-U41" id="fi7-zS-dz2"/>
             </connections>
             <point key="canvasLocation" x="278.5" y="354.5"/>
         </tableViewCell>

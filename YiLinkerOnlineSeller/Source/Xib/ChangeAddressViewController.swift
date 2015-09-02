@@ -8,12 +8,18 @@
 
 import UIKit
 
+protocol ChangeAddressViewControllerDelegate {
+    
+}
+
 class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, ChangeAddressCollectionViewCellDelegate, ChangeAddressFooterCollectionViewCellDelegate, AddAddressTableViewControllerDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
    
     var cellCount: Int = 3
     var selectedIndex: Int = 0
+    
+    var delegate: ChangeMobileNumberViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +38,10 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     
     func titleView() {
         self.title = "Change Address"
+    }
+    
+    fireSellerAddress(){
+    
     }
     
     func backButton() {

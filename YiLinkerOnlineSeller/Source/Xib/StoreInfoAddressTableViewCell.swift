@@ -9,8 +9,7 @@
 import UIKit
 
 protocol StoreInfoAddressTableViewCellDelagate{
-    func changeAddress()
-    func newAddress()
+    func changeToNewAddress()
 }
 
 class StoreInfoAddressTableViewCell: UITableViewCell {
@@ -23,8 +22,10 @@ class StoreInfoAddressTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        var tapAddressView = UIGestureRecognizer(target: self, action: "changeAddress")
-        self.addressView.addGestureRecognizer(tapAddressView)
+        //var tapAddressView = UITapGestureRecognizer(target: self, action: "changeMobileAddress")
+        //self.addressView.addGestureRecognizer(<#gestureRecognizer: UIGestureRecognizer#>)(tapAddressView)
+        var tapAddressView = UITapGestureRecognizer(target: self, action: "changeMobileAddress")
+        addressView.addGestureRecognizer(tapAddressView)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -33,14 +34,9 @@ class StoreInfoAddressTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func tapAddress(){
-        self.delegate?.changeAddress()
-        println("tap address")
-    }
-    
-    
-    func changeAddress(){
-        self.delegate?.newAddress()
+    func changeMobileAddress(){
+        println("tap")
+        self.delegate?.changeToNewAddress()
     }
     
     

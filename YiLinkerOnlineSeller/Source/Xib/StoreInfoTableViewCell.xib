@@ -56,7 +56,6 @@
                             <constraint firstItem="yBT-Xd-kFE" firstAttribute="leading" secondItem="i0s-7T-Hur" secondAttribute="leading" constant="8" id="9oL-I1-fTe"/>
                             <constraint firstAttribute="bottom" secondItem="yBT-Xd-kFE" secondAttribute="bottom" constant="13" id="EDN-ly-jiE"/>
                             <constraint firstItem="yBT-Xd-kFE" firstAttribute="top" secondItem="i0s-7T-Hur" secondAttribute="top" constant="12" id="dDV-P7-2Ym"/>
-                            <constraint firstAttribute="width" constant="375" id="sdG-0v-ura"/>
                             <constraint firstAttribute="height" constant="46" id="xen-3O-APx"/>
                         </constraints>
                     </view>
@@ -64,7 +63,6 @@
                         <rect key="frame" x="8" y="267" width="359" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="Bix-Hp-M3S"/>
-                            <constraint firstAttribute="width" constant="359" id="Dn9-jx-hvE"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" returnKeyType="next"/>
@@ -72,7 +70,6 @@
                     <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your contact number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eHR-NW-Ujy">
                         <rect key="frame" x="8" y="333" width="359" height="30"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="359" id="3Br-gk-0m3"/>
                             <constraint firstAttribute="height" constant="30" id="UT5-cy-8Ly"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
