@@ -39,8 +39,12 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         self.tableView.tableHeaderView = headerView
         headerView.combinationLabel.text = self.headerTitle
         
-        if self.images.count == 0 {
+        //if self.images.count == 0 {
           self.images.append(UIImage(named: "addPhoto")!)
+        //}
+        
+        if self.productModel?.validCombinations[self.selectedIndexpath!.section].images.count == 0 {
+            self.productModel?.validCombinations[self.selectedIndexpath!.section].images.append(UIImage(named: "addPhoto")!)
         }
         
         self.registerCell()
@@ -111,7 +115,8 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
             
             if self.productModel != nil {
                 let combination: CombinationModel = self.productModel!.validCombinations[self.selectedIndexpath!.section]
-                combination.images.append(UIImage(named: "addPhoto")!)
+                //check if image contains defaultAddPhoto
+                //combination.images.append(UIImage(named: "addPhoto")!)
                 cell.images = combination.images
                 cell.discountedPriceTextField.text = combination.discountedPrice
                 cell.quantityTextField.text = combination.quantity
