@@ -47,17 +47,17 @@ struct ProductUploadTableViewControllerConstant {
     static let uploadDiscountedPriceKey = "discountedPrice"
 }
 
-class ProductUploadTableViewController: UITableViewController, ProductUploadUploadImageTableViewCellDataSource, ProductUploadUploadImageTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadCategoryViewControllerDelegate, ProductUploadFooterViewDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadPriceTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadBrandViewControllerDelegate, ProductUploadQuantityTableViewCellDelegate {
+class ProductUploadTableViewController: UITableViewController, ProductUploadUploadImageTableViewCellDataSource, ProductUploadUploadImageTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadCategoryViewControllerDelegate, ProductUploadFooterViewDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadPriceTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadBrandViewControllerDelegate, ProductUploadQuantityTableViewCellDelegate, SuccessUploadViewControllerDelegate {
     
     var uploadImages: [UIImage] = []
     var productModel: ProductModel = ProductModel()
     var sectionFourRows: Int = 2
     var sectionPriceHeaderHeight: CGFloat = 41
     var conditions: [ConditionModel] = []
-    
+
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
     }
     
     override func viewDidLoad() {
@@ -291,6 +291,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             let cell: ProductUploadUploadImageTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadUploadImageTableViewCellNibNameAndIdentifier) as! ProductUploadUploadImageTableViewCell
             cell.dataSource = self
             cell.delegate = self
+            cell.collectionView.reloadData()
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
         } else if indexPath.section == 1 {
@@ -774,9 +775,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             }
             
             }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
-            println(response)
-            SVProgressHUD.dismiss()
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Your product is successfully uploaded.", title: "Success")
+                SVProgressHUD.dismiss()
+                self.success()
         }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
             println(error)
             let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -788,6 +788,28 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             }
             SVProgressHUD.dismiss()
         }
+    }
+    
+    func success() {
+        let successViewController: SuccessUploadViewController = SuccessUploadViewController(nibName: "SuccessUploadViewController", bundle: nil)
+        successViewController.delegate = self
+        self.presentViewController(successViewController, animated: true, completion: nil)
+    }
+    
+    func successUploadViewController(didTapDashBoard viewController: SuccessUploadViewController) {
+        self.tableView.hidden = true
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func successUploadViewController(didTapUploadAgain viewController: SuccessUploadViewController) {
+        for (index, images) in enumerate(self.uploadImages) {
+            self.uploadImages.removeLast()
+        }
+        
+        self.addAddPhoto()
+        self.productModel = ProductModel()
+        self.tableView.reloadData()
+        self.tableView.setContentOffset(CGPointZero, animated: true)
     }
     
     func property(mainImageCount: Int) -> NSString {
@@ -864,6 +886,5 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 SVProgressHUD.dismiss()
         })
-        
     }
 }
