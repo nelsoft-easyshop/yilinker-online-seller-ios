@@ -36,7 +36,7 @@
                             <constraint firstAttribute="width" constant="36" id="rlF-IK-NkY"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                        <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
                     </textField>
                 </subviews>
                 <constraints>

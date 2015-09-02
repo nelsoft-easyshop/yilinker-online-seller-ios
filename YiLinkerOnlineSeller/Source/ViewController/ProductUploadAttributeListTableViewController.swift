@@ -198,9 +198,14 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
     }
     
     @IBAction func proceedToCombination(sender: AnyObject) {
-        let productUploadCombinationListViewController: ProductUploadCombinationListViewController = ProductUploadCombinationListViewController(nibName: "ProductUploadCombinationListViewController", bundle: nil)
-        productUploadCombinationListViewController.productModel = self.productModel
-        self.navigationController!.pushViewController(productUploadCombinationListViewController, animated: true)
+        if self.productModel.attributes.count != 0 {
+            let productUploadCombinationListViewController: ProductUploadCombinationListViewController = ProductUploadCombinationListViewController(nibName: "ProductUploadCombinationListViewController", bundle: nil)
+            productUploadCombinationListViewController.productModel = self.productModel
+            self.navigationController!.pushViewController(productUploadCombinationListViewController, animated: true)
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "One or more attribute is required.")
+        }
+       
     }
     
     func pUAttributeSetHeaderTableViewCell(didClickDelete cell: PUAttributeSetHeaderTableViewCell) {
