@@ -10,6 +10,9 @@ import UIKit
 
 class CustomizedCategoryTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var parentCategoryLabel: UILabel!
+    @IBOutlet weak var subCategoriesLabel: UILabel!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

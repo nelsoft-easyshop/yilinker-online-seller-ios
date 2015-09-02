@@ -8,8 +8,14 @@
 
 import UIKit
 
-class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+protocol AddCustomizedCategoryViewControllerDelegate {
+    func addCategory(parent: String, sub: NSArray, items: NSArray)
+}
 
+class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CCCategoryDetailsViewDelegate, ParentCategoryViewControllerDelegate, CCSubCategoriesViewDelegate, CCCategoryItemsViewDelegate, AddItemViewControllerDelegate, EditSubCategoriesViewControllerDelegate {
+
+    var delegate: AddCustomizedCategoryViewControllerDelegate?
+    
     @IBOutlet weak var tableView: UITableView!
     
     var headerView: UIView!
@@ -20,8 +26,11 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     var seeAllItemsView: UIView!
     var newFrame: CGRect!
     
+    var subCategoriesHeight: CGFloat = 46 // size of view height(45) + bottom margin (1)
     var subCategoriesItems: Int = 0
     var imageItems: Int = 0
+    
+    var subCategories: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +45,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
 
         loadViewsWithDetails()
     }
+    
     // MARK: Methods
     
     func customizedNavigationBar() {
@@ -69,6 +79,8 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     func getCategoryDetailsView() -> CCCategoryDetailsView {
         if self.categoryDetailsView == nil {
             self.categoryDetailsView = XibHelper.puffViewWithNibName("CustomizedCategoryViewsViewController", index: 0) as! CCCategoryDetailsView
+            self.categoryDetailsView.categoryNameTextField.becomeFirstResponder()
+            self.categoryDetailsView.delegate = self
             self.categoryDetailsView.frame.size.width = self.view.frame.size.width
         }
         return self.categoryDetailsView
@@ -86,7 +98,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     func getCategoryItemsView() -> CCCategoryItemsView {
         if self.categoryItemsView == nil {
             self.categoryItemsView = XibHelper.puffViewWithNibName("CustomizedCategoryViewsViewController", index: 2) as! CCCategoryItemsView
-
+            self.categoryItemsView.delegate = self
             self.categoryItemsView.frame.size.width = self.view.frame.size.width
         }
         return self.categoryItemsView
@@ -95,6 +107,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     func getItemImageView() -> CCCItemImagesView {
         if self.itemImagesView == nil {
             self.itemImagesView = XibHelper.puffViewWithNibName("CustomizedCategoryViewsViewController", index: 3) as! CCCItemImagesView
+
             self.itemImagesView.frame.size.width = self.view.frame.size.width
         }
         return self.itemImagesView
@@ -171,26 +184,49 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     }
     
     func checkAction() {
+        if self.categoryDetailsView.parentCategoryLabel.text != "" {
+            if self.categoryDetailsView.parentCategoryLabel.text == "NONE" {
+                delegate?.addCategory(self.categoryDetailsView.categoryNameTextField.text.capitalizedString, sub: subCategories, items: [])
+            } else {
+                delegate?.addCategory(self.categoryDetailsView.parentCategoryLabel.text!, sub: [self.categoryDetailsView.categoryNameTextField.text], items: [])
+            }
+            closeAction()
+        }
         
     }
     
-    // MARK: - Table View Data Source
+    // MARK: - Table View Data Source and Delegates
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        var headerSectionContainer = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, subCategoriesHeight))
+        headerSectionContainer.backgroundColor = Constants.Colors.backgroundGray
+        
         var subCategoriesView = XibHelper.puffViewWithNibName("CustomizedCategoryViewsViewController", index: 1) as! CCSubCategoriesView
+        subCategoriesView.delegate = self
         if subCategoriesItems != 0 {
             subCategoriesView.setTitle("EDIT")
         }
         
-        return subCategoriesView
+        headerSectionContainer.addSubview(subCategoriesView)
+        
+        return headerSectionContainer
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return subCategoriesHeight
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return subCategoriesItems
+        return subCategories.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: AddCustomizedCategoryTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("AddCustomizedCategory") as! AddCustomizedCategoryTableViewCell
+//        let cell: AddCustomizedCategoryTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("AddCustomizedCategory") as!  AddCustomizedCategoryTableViewCell
+        let cell = UITableViewCell(style: .Default, reuseIdentifier: "identifier")
+        
+        cell.textLabel?.text = self.subCategories[indexPath.row]
+        cell.textLabel?.font = UIFont(name: "Panton-Bold", size: 12.0)
+        cell.textLabel?.textColor = Constants.Colors.hex666666
         
         return cell
     }
@@ -199,5 +235,62 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         
     }
     
-
+    // MARK: - Category Details Delegate 
+    
+    func gotoParentCategory() {
+        let parentCategory = ParentCategoryViewController(nibName: "ParentCategoryViewController", bundle: nil)
+        parentCategory.delegate = self
+        var root = UINavigationController(rootViewController: parentCategory)
+        self.navigationController?.presentViewController(root, animated: false, completion: nil)
+    }
+    
+    // MARK: - Parent Category View Controller Delegate
+    
+    func updateParentCategory(parentCategory: String) {
+        self.categoryDetailsView.parentCategoryLabel.text = parentCategory
+        subCategoriesHeight = 0.0
+        self.subCategories = []
+        self.tableView.reloadData()
+    }
+    
+    // MARK: - Sub Categories Delegate
+    
+    func gotoEditSubCategories() {
+        let subCategories = EditSubCategoriesViewController(nibName: "EditSubCategoriesViewController", bundle: nil)
+        subCategories.delegate = self
+        subCategories.createdCategory = self.categoryDetailsView.categoryNameTextField.text.capitalizedString
+        var root = UINavigationController(rootViewController: subCategories)
+        self.navigationController?.presentViewController(root, animated: false, completion: nil)
+    }
+    
+    // MARK: - Category Items View Controller Delegate
+    
+    func gotoAddItem() {
+        let addItem = AddItemViewController(nibName: "AddItemViewController", bundle: nil)
+        addItem.delegate = self
+        var root = UINavigationController(rootViewController: addItem)
+        self.navigationController?.presentViewController(root, animated: false, completion: nil)
+    }
+    
+    func gotoEditItem() {
+        let editItem = EdititemsViewController(nibName: "EdititemsViewController", bundle: nil)
+        var root = UINavigationController(rootViewController: editItem)
+        self.navigationController?.presentViewController(root, animated: false, completion: nil)
+    }
+    
+    // MARK: - Add Item View Controller Delegate
+    
+    func updateCategoryImages(numberOfImages: Int) {
+        self.imageItems = numberOfImages
+        loadViewsWithDetails()
+    }
+    
+    // MARK: - Edit Sub Categories View Controller
+    
+    func addSubCategories(controller: EditSubCategoriesViewController, categories: NSArray) {
+        self.subCategories = categories as! [String]
+        self.tableView.reloadData()
+    }
+    
 }
+

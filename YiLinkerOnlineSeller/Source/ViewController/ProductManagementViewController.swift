@@ -345,8 +345,6 @@ extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataS
             cell.setImage(deSelectedImage[indexPath.row])
         }
         
-        
-        
         return cell
     }
     

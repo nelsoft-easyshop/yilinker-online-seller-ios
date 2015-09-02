@@ -68,6 +68,10 @@
                     <constraint firstItem="tPS-uF-HCv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="yLM-NX-yrf"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="parentCategoryLabel" destination="wMY-NF-YwF" id="LAk-Fc-I4U"/>
+                <outlet property="subCategoriesLabel" destination="T2L-17-oBU" id="hcF-Ov-bsX"/>
+            </connections>
             <point key="canvasLocation" x="412.5" y="247"/>
         </tableViewCell>
     </objects>

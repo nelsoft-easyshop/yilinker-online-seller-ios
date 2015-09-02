@@ -8,8 +8,15 @@
 
 import UIKit
 
+protocol CCCategoryItemsViewDelegate {
+    func gotoAddItem()
+    func gotoEditItem()
+}
+
 class CCCategoryItemsView: UIView {
 
+    var delegate: CCCategoryItemsViewDelegate?
+    
     @IBOutlet weak var addNewItemButton: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -20,6 +27,11 @@ class CCCategoryItemsView: UIView {
     // MARK: - Actions
     
     @IBAction func addNewItemAction(sender: AnyObject) {
+        if sender.titleLabel!!.text == "EDIT" {
+            delegate?.gotoEditItem()
+        } else {
+            delegate?.gotoAddItem()
+        }
     }
 
 }

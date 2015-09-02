@@ -8,9 +8,13 @@
 
 import UIKit
 
-class CustomizedCategoryViewController: UIViewController, UITableViewDataSource {
+class CustomizedCategoryViewController: UIViewController, UITableViewDataSource, AddCustomizedCategoryViewControllerDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    
+    var parentCategory: [String] = []
+    var subCategories: [NSArray] = []
+    var categoryItems: [NSArray] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +56,7 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
     
     func addCategoryAction() {
         let addCustomizedCategory = AddCustomizedCategoryViewController(nibName: "AddCustomizedCategoryViewController", bundle: nil)
+        addCustomizedCategory.delegate = self
         var rootViewController = UINavigationController(rootViewController: addCustomizedCategory)
         self.navigationController?.presentViewController(rootViewController, animated: true, completion: nil)
     }
@@ -59,14 +64,39 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return parentCategory.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: CustomizedCategoryTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("CustomizedCategory") as! CustomizedCategoryTableViewCell
         cell.selectionStyle = .None
+
+//        let subCategoriesString = ", ".join(subCategoriesArray)
+        
+        cell.parentCategoryLabel.text = self.parentCategory[indexPath.row]
+
+        let subCategoriesArray: NSArray = self.subCategories[indexPath.row]
+        var sub: String = ""
+        for i in 0..<subCategoriesArray.count {
+            sub += subCategoriesArray[i] as! String
+            if i != subCategoriesArray.count - 1 {
+                sub += ", "
+            }
+        }
+        cell.subCategoriesLabel.text = sub
+        
+//        let cell = UITableViewCell(style: .Default, reuseIdentifier: "identifier")
+//        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+//        cell.selectionStyle = .None
+//        cell.textLabel?.text = "Sub Category " + String(indexPath.row)
+//        cell.textLabel?.font = UIFont(name: "Panton-Bold", size: 12.0)
+//        cell.textLabel?.textColor = Constants.Colors.hex666666
+//        cell.detailTextLabel.text = "Sub Categories"
+        
         return cell
     }
+    
+    // MARK: - Table View Delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let addCustomizedCategory = AddCustomizedCategoryViewController(nibName: "AddCustomizedCategoryViewController", bundle: nil)
@@ -76,5 +106,19 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
         self.navigationController?.pushViewController(addCustomizedCategory, animated: true)
     }
     
+    // MARK: - Add Customized Category View Controller Delegate
+    
+    func addCategory(parent: String, sub: NSArray, items: NSArray) {
+        
+        self.parentCategory.append(parent)
+        self.subCategories.append(sub)
+        self.categoryItems.append(items)
+        
+        self.tableView.reloadData()
+    }
+    
+    func passNewCategory(category: String) {
+        
+    }
     
 }

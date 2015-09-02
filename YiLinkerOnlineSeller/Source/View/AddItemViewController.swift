@@ -1,5 +1,5 @@
 //
-//  ParentCategoryViewController.swift
+//  AddItemViewController.swift
 //  YiLinkerOnlineSeller
 //
 //  Created by Rj Constantino on 9/1/15.
@@ -8,18 +8,19 @@
 
 import UIKit
 
-protocol ParentCategoryViewControllerDelegate {
-    func updateParentCategory(parentCategory: String)
+protocol AddItemViewControllerDelegate {
+    func updateCategoryImages(numberOfImages: Int)
 }
 
-class ParentCategoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
-    var delegate: ParentCategoryViewControllerDelegate?
+class AddItemViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+
+    var delegate: AddItemViewControllerDelegate?
     
     @IBOutlet weak var searchBarTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
-
+    
     var selectedIndex: Int = -1
+    var selectedItem: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,13 +29,15 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
         customizedNavigationBar()
         customizedViews()
         
+        let nib = UINib(nibName: "AddItemTableViewCell", bundle: nil)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: "AddItemTableViewCell")
     }
-    
+
     // MARK: - Methods
     
     func customizedNavigationBar() {
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.title = "Parent Category"
+        self.title = "Add Item"
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
         
@@ -64,8 +67,7 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func checkAction() {
-        
-        delegate?.updateParentCategory("Category" + String(selectedIndex))
+        delegate?.updateCategoryImages(selectedItem)
         closeAction()
     }
     
@@ -76,36 +78,25 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .Default, reuseIdentifier: "identifier")
-        
+        let cell: AddItemTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("AddItemTableViewCell") as! AddItemTableViewCell
         cell.selectionStyle = .None
-        cell.textLabel?.text = "Category" + String(indexPath.row)
-        cell.textLabel?.font = UIFont(name: "Panton", size: 12.0)
-        
-        if selectedIndex == indexPath.row {
-            var check = UIImageView(frame: CGRectMake(0, 0, 10, 10))
-            check.image = UIImage(named: "checkCategory")
-            cell.accessoryView = check
-        }
         
         return cell
     }
-
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.selectedIndex = indexPath.row
-        self.tableView.reloadData()
+        
+        let cell: AddItemTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! AddItemTableViewCell
+        if cell.addImageView?.image == UIImage(named: "addItem") {
+            cell.updateStatusImage(true)
+            selectedItem++
+        } else {
+            cell.updateStatusImage(false)
+            selectedItem--
+        }
+
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if cell.respondsToSelector("setSeparatorInset:") {
-            cell.separatorInset = UIEdgeInsetsZero
-        }
-        if cell.respondsToSelector("setLayoutMargins:") {
-            cell.layoutMargins = UIEdgeInsetsZero
-        }
-        if cell.respondsToSelector("setPreservesSuperviewLayoutMargins:") {
-            cell.preservesSuperviewLayoutMargins = false
-        }
-    }
-    
+
 }

@@ -8,8 +8,14 @@
 
 import UIKit
 
+protocol CCSubCategoriesViewDelegate {
+    func gotoEditSubCategories()
+}
+
 class CCSubCategoriesView: UIView {
 
+    var delegate: CCSubCategoriesViewDelegate?
+    
     @IBOutlet weak var addSubCategoryButton: UIButton!
   
     override func awakeFromNib() {
@@ -33,6 +39,7 @@ class CCSubCategoriesView: UIView {
     }
     
     @IBAction func addSubCategoryAction(sender: AnyObject) {
+        delegate!.gotoEditSubCategories()
         
     }
 }

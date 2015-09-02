@@ -121,12 +121,12 @@
                                 <action selector="arrowAction:" destination="UaV-Hc-XA0" eventType="touchUpInside" id="zvv-Bd-Rfd"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NONE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EXc-nd-dxt">
+                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NONE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EXc-nd-dxt">
                             <rect key="frame" x="136" y="12" width="215" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="rye-Dj-zLB"/>
                             </constraints>
-                            <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="14"/>
+                            <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
                             <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
