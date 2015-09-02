@@ -63,6 +63,7 @@
                     <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your desired store name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EOO-H0-sgx">
                         <rect key="frame" x="8" y="267" width="359" height="30"/>
                         <constraints>
+                            <constraint firstAttribute="height" constant="30" id="Bix-Hp-M3S"/>
                             <constraint firstAttribute="width" constant="359" id="Dn9-jx-hvE"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -128,7 +129,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pgz-Rm-cfh">
                                 <rect key="frame" x="203" y="21" width="125" height="125"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addressRight.png" translatesAutoresizingMaskIntoConstraints="NO" id="NfW-oq-T4e">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NfW-oq-T4e">
                                         <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
                                     </imageView>
                                     <view alpha="0.69999998807907104" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b83-6n-JIw">
@@ -181,7 +182,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y4y-e8-3DA">
                                 <rect key="frame" x="39" y="21" width="125" height="125"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addressRight.png" translatesAutoresizingMaskIntoConstraints="NO" id="CR1-8h-W6D">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CR1-8h-W6D">
                                         <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
                                     </imageView>
                                     <view alpha="0.69999998807907104" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jW7-DH-mHD">
@@ -288,7 +289,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="addressRight.png" width="97" height="200"/>
         <image name="photo.png" width="200" height="159"/>
     </resources>
 </document>

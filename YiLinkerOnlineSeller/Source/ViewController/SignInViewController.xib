@@ -53,23 +53,6 @@
                         <constraint firstAttribute="height" constant="60" id="lUz-qZ-Bhu"/>
                     </constraints>
                 </imageView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mtg-Gz-CPJ">
-                    <rect key="frame" x="142" y="176" width="90" height="90"/>
-                    <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="tBZ-cE-9j9">
-                            <rect key="frame" x="25" y="25" width="40" height="40"/>
-                        </imageView>
-                    </subviews>
-                    <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstItem="tBZ-cE-9j9" firstAttribute="top" secondItem="Mtg-Gz-CPJ" secondAttribute="top" constant="25" id="5I9-Ws-JZA"/>
-                        <constraint firstItem="tBZ-cE-9j9" firstAttribute="leading" secondItem="Mtg-Gz-CPJ" secondAttribute="leading" constant="25" id="WgX-iJ-AmY"/>
-                        <constraint firstAttribute="trailing" secondItem="tBZ-cE-9j9" secondAttribute="trailing" constant="25" id="ZZh-sU-oe1"/>
-                        <constraint firstAttribute="height" constant="90" id="dpI-u7-H7W"/>
-                        <constraint firstAttribute="bottom" secondItem="tBZ-cE-9j9" secondAttribute="bottom" constant="25" id="jzo-id-gst"/>
-                        <constraint firstAttribute="width" constant="90" id="ndv-yM-Vcv"/>
-                    </constraints>
-                </view>
                 <view alpha="0.69999999999999973" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qW2-BF-QDF">
                     <rect key="frame" x="10" y="296" width="355" height="179"/>
                     <subviews>
@@ -167,6 +150,23 @@
                         <constraint firstItem="Hwr-XN-vWq" firstAttribute="top" secondItem="O6t-ug-bEx" secondAttribute="bottom" constant="17" id="u2s-gd-FAp"/>
                         <constraint firstAttribute="trailing" secondItem="r1J-ls-B5j" secondAttribute="trailing" id="wy5-Tr-8Mt"/>
                         <constraint firstItem="O6t-ug-bEx" firstAttribute="leading" secondItem="qW2-BF-QDF" secondAttribute="leading" id="xBd-1T-N5R"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mtg-Gz-CPJ">
+                    <rect key="frame" x="142" y="176" width="90" height="90"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="tBZ-cE-9j9">
+                            <rect key="frame" x="25" y="25" width="40" height="40"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="tBZ-cE-9j9" firstAttribute="top" secondItem="Mtg-Gz-CPJ" secondAttribute="top" constant="25" id="5I9-Ws-JZA"/>
+                        <constraint firstItem="tBZ-cE-9j9" firstAttribute="leading" secondItem="Mtg-Gz-CPJ" secondAttribute="leading" constant="25" id="WgX-iJ-AmY"/>
+                        <constraint firstAttribute="trailing" secondItem="tBZ-cE-9j9" secondAttribute="trailing" constant="25" id="ZZh-sU-oe1"/>
+                        <constraint firstAttribute="height" constant="90" id="dpI-u7-H7W"/>
+                        <constraint firstAttribute="bottom" secondItem="tBZ-cE-9j9" secondAttribute="bottom" constant="25" id="jzo-id-gst"/>
+                        <constraint firstAttribute="width" constant="90" id="ndv-yM-Vcv"/>
                     </constraints>
                 </view>
             </subviews>

@@ -9,11 +9,14 @@
 import UIKit
 
 protocol ChangeMobileNumberViewControllerDelegate {
-    func changeMobileNumber(mobileNumber: String)
+    func setMobileNumber(mobileNumber: String)
+    func dismissView()
 }
+
 class ChangeMobileNumberViewController: UIViewController {
 
    
+    @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var closeButton: UIButton!
     
     @IBOutlet weak var submitButton: UIButton!
@@ -27,7 +30,6 @@ class ChangeMobileNumberViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         // Do any additional setup after loading the view.
     }
 
@@ -37,13 +39,20 @@ class ChangeMobileNumberViewController: UIViewController {
     }
     
     @IBAction func closeAction(sender: AnyObject){
+        self.delegate?.dismissView()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func submit(sender: AnyObject){
-        self.delegate?.changeMobileNumber(self.newNumberTextField.text)
+        self.delegate?.setMobileNumber(self.newNumberTextField.text)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    @IBAction func textFieldDidBeginEditing(sender: AnyObject) {
+        topConstraint.constant = 100
+    }
+    
+    
     
     /*
     // MARK: - Navigation

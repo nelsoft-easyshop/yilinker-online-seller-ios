@@ -33,12 +33,12 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view alpha="0.49999999999999961" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tap-hn-0Cf">
+                <view alpha="0.49999999999999961" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tap-hn-0Cf">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="600"/>
                     <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                 </view>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LAl-id-6Gt">
-                    <rect key="frame" x="8" y="93" width="359" height="401"/>
+                    <rect key="frame" x="8" y="100" width="359" height="401"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8z7-mF-4mI">
                             <rect key="frame" x="255" y="351" width="96" height="28"/>
@@ -135,8 +135,14 @@
                     <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
             </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="Tap-hn-0Cf" secondAttribute="bottom" id="Jac-QZ-iYp"/>
+                <constraint firstAttribute="trailing" secondItem="Tap-hn-0Cf" secondAttribute="trailing" id="NLb-FG-8zt"/>
+                <constraint firstItem="Tap-hn-0Cf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Qte-69-KeN"/>
+                <constraint firstItem="Tap-hn-0Cf" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="iI3-AY-iIE"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="202" y="330"/>
+            <point key="canvasLocation" x="201.5" y="330"/>
         </view>
     </objects>
     <resources>

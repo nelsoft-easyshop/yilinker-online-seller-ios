@@ -39,9 +39,4 @@ class StoreInfoBankAccountTableViewCell: UITableViewCell {
         self.delegate?.newBankAccount()
         println("new bank account")
     }
-    
-    func setNewAddress(bankTitle: String, accountName: String, accountNumber: Int, bankName: String){
-        bankAccountTitleLabel.text = bankTitle
-        bankAccountDetailLabel.text = accountName + "\n" + "\(accountNumber)" + "\n" + bankName
-    }
 }

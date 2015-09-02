@@ -23,13 +23,20 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var newContactNumber: String = ""
     
+    var dimView: UIView = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
         storeInfoHeader.delegate = self
         
-        self.storeInfoTableView.tableHeaderView = storeInfoHeader
+        dimView = UIView(frame: self.view.bounds)
+        dimView.backgroundColor=UIColor.blackColor()
+        dimView.alpha = 0.5
+        self.navigationController?.view.addSubview(dimView)
+        dimView.hidden = true
         
+        self.storeInfoTableView.tableHeaderView = storeInfoHeader
         self.initializeViews()
         self.registerNibs()
         self.fireStoreInfo()
@@ -116,6 +123,7 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
             //Display current bank account
             cell.bankAccountTitleLabel.text = self.storeInfoModel?.accountTitle
             cell.bankAccountDetailLabel.text = self.storeInfoModel?.bankAccount
+            println(cell)
             return cell
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier( storeInfoAccountInformationTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAccountInformationTableViewCell
@@ -148,10 +156,7 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     func storeInfoVerify() {
         println("verify")
         /*
-        var dimView = UIView(frame: CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.layer.frame.width, self.view.layer.frame.height))
-        dimView.backgroundColor=UIColor.blackColor()
-        dimView.alpha = 0.5
-        view.addSubview(dimView)
+       
 
         var attributeModal = VerifyNumberViewController(nibName: "VerifyNumberViewController", bundle: nil)
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
@@ -160,6 +165,18 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
         self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
 
         */
+//        var dimView = UIView(frame: CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.layer.frame.width, self.view.layer.frame.height))
+//        dimView.backgroundColor=UIColor.blackColor()
+//        dimView.alpha = 0.5
+//        self.navigationController?.view.addSubview(dimView)
+//        dimView.hidden = true
+        
+        dimView.hidden = false
+        UIView.animateWithDuration(0.25, animations: {
+            self.dimView.alpha = 0.5
+            }, completion: { finished in
+        })
+        
         if storeInfoHeader.verifyButton.tag == 1 {
             var verifyNumberViewController = VerifyNumberViewController(nibName: "VerifyNumberViewController", bundle: nil)
             verifyNumberViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
@@ -173,12 +190,10 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
                 nil)
         } else {
             var changeMobileNumber = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
+            changeMobileNumber.delegate = self
             changeMobileNumber.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
             changeMobileNumber.providesPresentationContextTransitionStyle = true
             changeMobileNumber.definesPresentationContext = true
-            let black = UIColor.blackColor()
-            let transparent = black.colorWithAlphaComponent(0.5)
-            changeMobileNumber.view.backgroundColor = transparent
             changeMobileNumber.view.frame.origin.y = changeMobileNumber.view.frame.size.height
             self.navigationController?.presentViewController(changeMobileNumber, animated: true, completion:
                 nil)
@@ -230,13 +245,26 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func updateBankDetail(accountTitle: String, accountName: String, accountNumber: Int, bankName: String) {
-        let cell: StoreInfoBankAccountTableViewCell = self.storeInfoTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 2)) as! StoreInfoBankAccountTableViewCell
-        cell.setNewAddress(accountTitle, accountName: accountName, accountNumber: accountNumber, bankName: bankName)
+        self.storeInfoModel?.accountTitle = accountTitle
+        self.storeInfoModel?.bankAccount = accountName + "\n\(accountNumber)\n" + bankName
+        self.storeInfoTableView.reloadData()
     }
     
-    func changeMobileNumber(mobileNumber: String) {
-        storeInfoHeader.setNewMobile(mobileNumber)
-        println(mobileNumber)
+    func setMobileNumber(newNumber: String) {
+       self.storeInfoHeader.mobilePhoneTextField.text = newNumber
+        UIView.animateWithDuration(0.25, animations: {
+            self.dimView.alpha = 0
+            }, completion: { finished in
+                self.dimView.hidden = true
+        })
+    }
+    
+    func dismissView() {
+        UIView.animateWithDuration(0.25, animations: {
+            self.dimView.alpha = 0
+            }, completion: { finished in
+                self.dimView.hidden = true
+        })
     }
     /*
     // MARK: - Navigation

@@ -30,7 +30,13 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
         self.titleView()
         self.backButton()
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: self.view.frame.size.width - 20, height: 79)
+        
+        if IphoneType.isIphone5() {
+             layout.itemSize = CGSize(width: self.view.frame.size.width - 80, height: 79)
+        } else {
+             layout.itemSize = CGSize(width: self.view.frame.size.width - 20, height: 79)
+        }
+       
         layout.minimumLineSpacing = 20
         layout.footerReferenceSize = CGSizeMake(self.changeBankAccountCollectionView.frame.size.width, 41)
         changeBankAccountCollectionView.collectionViewLayout = layout
@@ -143,7 +149,7 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
         let cell : ChangeAddressCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressCollectionViewCell
         
         if self.bankAccountModel != nil {
-            cell.titleLabel.text = self.bankAccountModel!.account_name[indexPath.row]
+            cell.titleLabel.text = self.bankAccountModel!.account_title[indexPath.row]
             cell.subTitleLabel.text = "\(self.bankAccountModel!.account_number[indexPath.row])"+"\n"+self.bankAccountModel!.account_name[indexPath.row]+"\n"+self.bankAccountModel!.bank_name[indexPath.row]
             cell.titleLabel.tag = self.bankAccountModel!.bank_account_id[indexPath.row]
             
