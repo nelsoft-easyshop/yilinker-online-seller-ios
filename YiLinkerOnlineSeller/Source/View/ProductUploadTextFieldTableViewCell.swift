@@ -24,6 +24,7 @@ class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate,
     override func awakeFromNib() {
         super.awakeFromNib()
         self.addTextFieldDelegate()
+        self.cellTexField.delegate = self
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -41,8 +42,14 @@ class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate,
         self.cellTexField.rightViewMode = UITextFieldViewMode.Always
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        
+    
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        if self.textFieldType == ProductTextFieldType.Brand || self.textFieldType == ProductTextFieldType.Category {
+            self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: "", cell: self, textFieldType: self.textFieldType!)
+            return false
+        } else {
+            return true
+        }
     }
     
     func textFieldDidChange(sender: UITextField) {

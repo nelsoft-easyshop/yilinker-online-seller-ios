@@ -331,14 +331,16 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.cellTitleLabel.text = "Category*"
                 cell.cellTexField.placeholder = "Select Category"
                 cell.cellTexField.text = self.productModel.category.name
+                cell.textFieldType = ProductTextFieldType.Category
+                cell.delegate = self
                 if self.productModel.category.name != "" {
                     cell.cellTexField.text = self.productModel.category.name
                 }
                 
-                let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "category")
+               /*let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "category")
                 cell.cellTexField.userInteractionEnabled = true
                 cell.cellTexField.superview!.addGestureRecognizer(tapGestureRecognizer)
-                cell.cellTexField.enabled = false
+                cell.cellTexField.enabled = false*/
                 
                 return cell
             } else if indexPath.row == 1 {
@@ -346,15 +348,17 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.cellTitleLabel.text = "Brand"
                 cell.cellTexField.placeholder = "Brand"
+                cell.delegate = self
                 cell.cellTexField.text = self.productModel.brand.name
+                cell.textFieldType = ProductTextFieldType.Brand
                 if self.productModel.brand.name != "" {
                     cell.cellTexField.text = self.productModel.brand.name
                 }
                 
-                let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "brand")
+               /*let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "brand")
                 cell.cellTexField.userInteractionEnabled = true
                 cell.cellTexField.superview!.addGestureRecognizer(tapGestureRecognizer)
-                cell.cellTexField.enabled = false
+                cell.cellTexField.enabled = false*/
                 
                 cell.addTextFieldDelegate()
                 
@@ -575,6 +579,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
         
         self.reloadUploadCellCollectionViewData()
+        self.tableView.reloadData()
     }
     
     func reloadUploadCellCollectionViewData() {
@@ -664,6 +669,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             }
             println("selected condition: \(self.conditions[selectedIndex].name)")
             self.productModel.condition = self.conditions[selectedIndex]
+        } else if textFieldType == ProductTextFieldType.Brand {
+            self.brand()
+        } else if textFieldType == ProductTextFieldType.Category {
+            self.category()
         }
     }
     
@@ -709,7 +718,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     func fireUpload() {
-        
         var datas: [NSData] = []
         
         var productUploadedImagesCount: Int = 0
