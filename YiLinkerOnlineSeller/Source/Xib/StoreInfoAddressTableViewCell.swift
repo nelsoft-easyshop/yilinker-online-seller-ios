@@ -16,6 +16,7 @@ class StoreInfoAddressTableViewCell: UITableViewCell {
 
     var delegate: StoreInfoAddressTableViewCellDelagate?
     
+    @IBOutlet weak var addressTitle: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var addressView: UIView!
     

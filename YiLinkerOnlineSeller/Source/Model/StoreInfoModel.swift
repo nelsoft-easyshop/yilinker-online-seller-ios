@@ -24,6 +24,7 @@ class StoreInfoModel: NSObject {
     var store_name: String = ""
     var store_description = ""
     var is_allowed: Bool = false
+    var title: String = ""
     var store_address: String = ""
     var unitNumber: String = ""
     var bldgName: String = ""
@@ -43,7 +44,7 @@ class StoreInfoModel: NSObject {
     var accountTitle: String = ""
     var bankId: Int = 0
     
-    init(name : String, email : String, gender : String, nickname : String, contact_number : String, specialty : String, birthdate : String, store_name : String, store_description : String, avatar : NSURL, cover_photo : NSURL, is_allowed : Bool, unit_number: String, bldg_name: String, street_number: String, street_name: String, subdivision: String, zip_code: String, full_address: String, account_title: String, bank_account: String, bank_id: Int) {
+    init(name : String, email : String, gender : String, nickname : String, contact_number : String, specialty : String, birthdate : String, store_name : String, store_description : String, avatar : NSURL, cover_photo : NSURL, is_allowed : Bool, title: String, unit_number: String, bldg_name: String, street_number: String, street_name: String, subdivision: String, zip_code: String, full_address: String, account_title: String, bank_account: String, bank_id: Int) {
         self.name = name
         self.email = email
         self.gender = gender
@@ -56,6 +57,7 @@ class StoreInfoModel: NSObject {
         self.avatar = avatar
         self.coverPhoto = cover_photo
         self.is_allowed = is_allowed
+        self.title = title
         self.unitNumber = unit_number
         self.bldgName = bldg_name
         self.streetName = street_name
@@ -81,6 +83,7 @@ class StoreInfoModel: NSObject {
         var avatar: NSURL = NSURL(string: "")!
         var cover_photo: NSURL = NSURL(string: "")!
         var is_followed: Bool = false
+        var title: String = ""
         var store_address: String = ""
         var unit_number: String = ""
         var bldg_name: String = ""
@@ -198,6 +201,11 @@ class StoreInfoModel: NSObject {
             }
             
             if let val: AnyObject = value["userAddress"] {
+                
+                if let temTitle = val["title"] as? String {
+                    title = temTitle
+                }
+                
                 if let temUnitNo = val["unitNumber"] as? String {
                     unit_number = temUnitNo
                 }
@@ -230,7 +238,7 @@ class StoreInfoModel: NSObject {
             
         }
         
-        let storeInfo: StoreInfoModel = StoreInfoModel(name: name, email: email, gender: gender, nickname: nickname, contact_number: contact_number, specialty: contact_number, birthdate: birthdate, store_name: store_name, store_description: store_description, avatar: avatar, cover_photo: cover_photo, is_allowed: is_followed, unit_number: unit_number, bldg_name: bldg_name, street_number: street_number, street_name: street_name, subdivision: subdivision, zip_code: zip_code, full_address: store_address, account_title: account_title, bank_account: bank_account, bank_id: bank_id)
+        let storeInfo: StoreInfoModel = StoreInfoModel(name: name, email: email, gender: gender, nickname: nickname, contact_number: contact_number, specialty: contact_number, birthdate: birthdate, store_name: store_name, store_description: store_description, avatar: avatar, cover_photo: cover_photo, is_allowed: is_followed, title: title, unit_number: unit_number, bldg_name: bldg_name, street_number: street_number, street_name: street_name, subdivision: subdivision, zip_code: zip_code, full_address: store_address, account_title: account_title, bank_account: bank_account, bank_id: bank_id)
         println("\(store_address)")
         return storeInfo
     }

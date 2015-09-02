@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol CreateNewAddressViewControllerDelegate {
+    
+}
+
 class CreateNewAddressViewController: UIViewController {
 
     @IBOutlet weak var closeButton: UIButton!
@@ -22,6 +26,8 @@ class CreateNewAddressViewController: UIViewController {
     
     @IBOutlet weak var addressInfoTextField: UITextField!
     
+    var delegate: CreateNewAddressViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -34,11 +40,11 @@ class CreateNewAddressViewController: UIViewController {
     }
     
     @IBAction func closeAction(sender: AnyObject){
-        
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func createAddress(sender: AnyObject){
-        
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     /*

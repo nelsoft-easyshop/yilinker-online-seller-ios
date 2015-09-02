@@ -9,17 +9,19 @@
 import UIKit
 
 protocol ChangeAddressViewControllerDelegate {
-    
+    func updateStoreAddressDetail(user_address_id: Int, location_id: Int, title: String, unit_number: String, building_name: String, street_number: String, street_name: String, subdivision: String, zip_code: String, street_address: String, country: String, island: String, region: String, province: String, city: String, municipality: String, barangay: String, longitude: Double, latitude: Double, landline: String, is_default: Bool)
 }
 
-class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, ChangeAddressCollectionViewCellDelegate, ChangeAddressFooterCollectionViewCellDelegate, AddAddressTableViewControllerDelegate {
+class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, ChangeAddressCollectionViewCellDelegate, ChangeAddressFooterCollectionViewCellDelegate, AddAddressTableViewControllerDelegate, CreateNewAddressViewControllerDelegate {
 
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var changeAddressCollectionView: UICollectionView!
    
     var cellCount: Int = 3
     var selectedIndex: Int = 0
     
-    var delegate: ChangeMobileNumberViewControllerDelegate?
+    var delegate: ChangeAddressViewControllerDelegate?
+    
+    var storeAddressModel: StoreAddressModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,10 +31,10 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: self.view.frame.size.width - 20, height: 79)
         layout.minimumLineSpacing = 20
-        layout.footerReferenceSize = CGSizeMake(self.collectionView.frame.size.width, 41)
-        collectionView.collectionViewLayout = layout
-        collectionView.dataSource = self
-        collectionView.delegate = self
+        layout.footerReferenceSize = CGSizeMake(self.changeAddressCollectionView.frame.size.width, 41)
+        changeAddressCollectionView.collectionViewLayout = layout
+        changeAddressCollectionView.dataSource = self
+        changeAddressCollectionView.delegate = self
         self.regsiterNib()
     }
     
@@ -40,8 +42,28 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         self.title = "Change Address"
     }
     
-    fireSellerAddress(){
-    
+    func fireSellerAddress(){
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
+        
+        manager.POST(APIAtlas.sellerStoreAddresses, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.storeAddressModel = StoreAddressModel.parseStoreAddressDataFromDictionary(responseObject as! NSDictionary)
+            
+            self.cellCount = self.storeAddressModel!.title.count
+            for var num  = 0; num < self.storeAddressModel?.user_address_id.count; num++ {
+                if self.storeAddressModel.is_default[num]{
+                    self.selectedIndex = num
+                }
+            }
+            self.changeAddressCollectionView.reloadData()
+            SVProgressHUD.dismiss()
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                SVProgressHUD.dismiss()
+                println(error)
+        })
     }
     
     func backButton() {
@@ -72,16 +94,37 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     }
     
     func done() {
-        self.navigationController!.popViewControllerAnimated(true)
+        fireSetDefaultStoreAddress()
     }
     
+    func fireSetDefaultStoreAddress(){
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
+        
+        manager.POST(APIAtlas.sellerSetDefaultBankAccount, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.delegate?.updateStoreAddressDetail(self.storeAddressModel.user_address_id[self.selectedIndex], location_id: self.storeAddressModel.location_id[self.selectedIndex], title: self.storeAddressModel.title[self.selectedIndex], unit_number: self.storeAddressModel.unit_number[self.selectedIndex], building_name: self.storeAddressModel.building_name[self.selectedIndex], street_number: self.storeAddressModel.street_number[self.selectedIndex], street_name: self.storeAddressModel.street_name[self.selectedIndex], subdivision: self.storeAddressModel.subdivision[self.selectedIndex], zip_code: self.storeAddressModel.zip_code[self.selectedIndex], street_address: self.storeAddressModel.street_address[self.selectedIndex], country: self.storeAddressModel.country[self.selectedIndex], island: self.storeAddressModel.island[self.selectedIndex], region: self.storeAddressModel.region[self.selectedIndex], province: self.storeAddressModel.province[self.selectedIndex], city: self.storeAddressModel.city[self.selectedIndex], municipality: self.storeAddressModel.municipality[self.selectedIndex], barangay: self.storeAddressModel.barangay[self.selectedIndex], longitude: self.storeAddressModel.longitude[self.selectedIndex], latitude: self.storeAddressModel.latitude[self.selectedIndex], landline: self.storeAddressModel.landline[self.selectedIndex], is_default: self.storeAddressModel.is_default[self.selectedIndex])
+            
+            //self.changeBankAccountCollectionView.reloadData()
+            
+            self.navigationController!.popViewControllerAnimated(true)
+            SVProgressHUD.dismiss()
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                SVProgressHUD.dismiss()
+                println(error)
+        })
+    }
+
     func regsiterNib() {
         let changeAddressNib: UINib = UINib(nibName: Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier, bundle: nil)
-        self.collectionView.registerNib(changeAddressNib, forCellWithReuseIdentifier: Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier)
+        self.changeAddressCollectionView.registerNib(changeAddressNib, forCellWithReuseIdentifier: Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier)
         
         let collectionViewFooterNib: UINib = UINib(nibName: Constants.Checkout.changeAddressFooterCollectionViewCellNibNameAndIdentifier, bundle: nil)
-        self.collectionView.registerNib(collectionViewFooterNib, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: Constants.Checkout.changeAddressFooterCollectionViewCellNibNameAndIdentifier)
-        self.collectionView.registerNib(collectionViewFooterNib, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: Constants.Checkout.changeAddressFooterCollectionViewCellNibNameAndIdentifier)
+        self.changeAddressCollectionView.registerNib(collectionViewFooterNib, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: Constants.Checkout.changeAddressFooterCollectionViewCellNibNameAndIdentifier)
+        self.changeAddressCollectionView.registerNib(collectionViewFooterNib, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: Constants.Checkout.changeAddressFooterCollectionViewCellNibNameAndIdentifier)
     }
 
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -91,23 +134,31 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell : ChangeAddressCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressCollectionViewCell
         
-        if indexPath.row == self.selectedIndex {
-            cell.layer.borderWidth = 1
-            cell.layer.borderColor = Constants.Colors.selectedGreenColor.CGColor
-            cell.checkBoxButton.setImage(UIImage(named: "checkBox"), forState: UIControlState.Normal)
-            cell.checkBoxButton.backgroundColor = Constants.Colors.selectedGreenColor
-        } else {
-            cell.checkBoxButton.setImage(nil, forState: UIControlState.Normal)
-            cell.checkBoxButton.layer.borderWidth = 1
-            cell.checkBoxButton.layer.borderColor = UIColor.lightGrayColor().CGColor
-            cell.checkBoxButton.backgroundColor = UIColor.clearColor()
+            if self.storeAddressModel != nil {
+                cell.titleLabel.text = self.storeAddressModel!.title[indexPath.row]
+                
+                cell.subTitleLabel.text = "\(self.storeAddressModel!.unit_number[indexPath.row])"+""+self.storeAddressModel!.building_name[indexPath.row]+", "+self.storeAddressModel!.street_number[indexPath.row]+""+self.storeAddressModel!.street_name[indexPath.row]+", "+self.storeAddressModel!.subdivision[indexPath.row]+", "+self.storeAddressModel!.zip_code[indexPath.row]
+                
+                cell.titleLabel.tag = self.storeAddressModel!.location_id[indexPath.row]
+
+                if indexPath.row == self.selectedIndex {
+                    cell.layer.borderWidth = 1
+                    cell.layer.borderColor = Constants.Colors.selectedGreenColor.CGColor
+                    cell.checkBoxButton.setImage(UIImage(named: "checkBox"), forState: UIControlState.Normal)
+                    cell.checkBoxButton.backgroundColor = Constants.Colors.selectedGreenColor
+                } else {
+                    cell.checkBoxButton.setImage(nil, forState: UIControlState.Normal)
+                    cell.checkBoxButton.layer.borderWidth = 1
+                    cell.checkBoxButton.layer.borderColor = UIColor.lightGrayColor().CGColor
+                    cell.checkBoxButton.backgroundColor = UIColor.clearColor()
             
-            cell.layer.borderWidth = 1
-            cell.layer.borderColor = UIColor.lightGrayColor().CGColor
-        }
+                    cell.layer.borderWidth = 1
+                    cell.layer.borderColor = UIColor.lightGrayColor().CGColor
+                }
         
-        cell.layer.cornerRadius = 5
-        cell.delegate = self
+                cell.layer.cornerRadius = 5
+                cell.delegate = self
+            }
 
         return cell
     }
@@ -118,12 +169,12 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         self.selectedIndex = indexPath.row
-        self.collectionView.reloadData()
+        self.changeAddressCollectionView.reloadData()
     }
     
     func addCellInIndexPath(indexPath: NSIndexPath) {
         self.cellCount++
-        self.collectionView.insertItemsAtIndexPaths([NSIndexPath(forItem: indexPath.row, inSection: indexPath.section)])
+        self.changeAddressCollectionView.insertItemsAtIndexPaths([NSIndexPath(forItem: indexPath.row, inSection: indexPath.section)])
     }
     
     func deleteCellInIndexPath(indexPath: NSIndexPath) {
@@ -131,7 +182,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             self.cellCount = self.cellCount - 1
         }
    
-        self.collectionView.deleteItemsAtIndexPaths([NSIndexPath(forItem: indexPath.row, inSection: indexPath.section)])
+        self.changeAddressCollectionView.deleteItemsAtIndexPaths([NSIndexPath(forItem: indexPath.row, inSection: indexPath.section)])
     }
     
     override func didReceiveMemoryWarning() {
@@ -140,18 +191,35 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     }
     
     func changeAddressCollectionViewCell(deleteAddressWithCell cell: ChangeAddressCollectionViewCell) {
-        let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
+        let indexPath: NSIndexPath = self.changeAddressCollectionView.indexPathForCell(cell)!
+        fireDeleteStoreAddress(cell.titleLabel.tag, indexPath: indexPath)
         self.deleteCellInIndexPath(indexPath)
     }
 
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        let footerView: ChangeAddressFooterCollectionViewCell = self.collectionView?.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: Constants.Checkout.changeAddressFooterCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressFooterCollectionViewCell
+        let footerView: ChangeAddressFooterCollectionViewCell = self.changeAddressCollectionView?.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: Constants.Checkout.changeAddressFooterCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressFooterCollectionViewCell
         
         footerView.delegate = self
         
         return footerView
     }
     
+    func fireDeleteStoreAddress(locationId: Int, indexPath: NSIndexPath){
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "locationId" : NSNumber(integer: locationId)];
+        
+        manager.POST(APIAtlas.sellerStoreAddresses, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.deleteCellInIndexPath(indexPath)
+            self.changeAddressCollectionView.reloadData()
+            SVProgressHUD.dismiss()
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                SVProgressHUD.dismiss()
+                println(error)
+        })
+    }
     
     func changeAddressFooterCollectionViewCell(didSelecteAddAddress cell: ChangeAddressFooterCollectionViewCell) {
         /*let indexPath: NSIndexPath = NSIndexPath(forItem: self.cellCount, inSection: 0)
@@ -167,5 +235,10 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     func addAddressTableViewController(didAddAddressSucceed addAddressTableViewController: AddAddressTableViewController) {
         let indexPath: NSIndexPath = NSIndexPath(forItem: self.cellCount, inSection: 0)
         self.addCellInIndexPath(indexPath)
+    }
+    
+    func updateCollectionView() {
+        fireSellerAddress()
+        self.changeAddressCollectionView.reloadData()
     }
 }

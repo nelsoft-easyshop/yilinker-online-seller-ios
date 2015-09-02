@@ -8,11 +8,12 @@
 
 import UIKit
 
-class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate {
+class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate {
     
     @IBOutlet weak var storeInfoTableView: UITableView!
     
     var storeInfoModel: StoreInfoModel?
+    var storeAddressModel: StoreAddressModel?
     
     let storeInfoSectionTableViewCellIndentifier: String = "StoreInfoSectionTableViewCell"
     let storeInfoAddressTableViewCellIdentifier: String = "StoreInfoAddressTableViewCell"
@@ -254,6 +255,20 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
         self.storeInfoModel?.accountTitle = accountTitle
         self.storeInfoModel?.bankAccount = accountName + "\n\(accountNumber)\n" + bankName
         self.storeInfoTableView.reloadData()
+    }
+    
+    func updateStoreAddressDetail(user_address_id: Int, location_id: Int, title: String, unit_number: String, building_name: String, street_number: String, street_name: String, subdivision: String, zip_code: String, street_address: String, country: String, island: String, region: String, province: String, city: String, municipality: String, barangay: String, longitude: Double, latitude: Double, landline: String, is_default: Bool) {
+        var unitNumber: String = ""
+        var bldgName: String = ""
+        var streetNumber: String = ""
+        var streetName: String = ""
+        var subdivision: String = ""
+        var zipCode: String = ""
+        self.storeInfoModel?.title = title
+        self.storeInfoModel?.store_address = unit_number + " " + building_name + ", " + street_number + " " + street_name + " " + subdivision + ", " + zip_code
+        
+        self.storeInfoTableView.reloadData()
+
     }
     
     func setMobileNumber(newNumber: String) {

@@ -141,6 +141,7 @@
 		F7D37CD01B93119100FA7B16 /* back-white.png in Resources */ = {isa = PBXBuildFile; fileRef = F7D37CCF1B93119100FA7B16 /* back-white.png */; };
 		F7D741341B9690C300FC1497 /* SellerTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D741321B9690C300FC1497 /* SellerTableHeaderView.swift */; };
 		F7D741351B9690C300FC1497 /* SellerTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7D741331B9690C300FC1497 /* SellerTableHeaderView.xib */; };
+		F7D741371B975A1800FC1497 /* StoreAddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D741361B975A1800FC1497 /* StoreAddressModel.swift */; };
 		F7E25A4D1B953DF100EF9B53 /* FilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E25A4C1B953DF100EF9B53 /* FilterViewController.xib */; };
 		F7E25A541B953F1900EF9B53 /* FilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E25A521B953F1900EF9B53 /* FilterTableViewCell.swift */; };
 		F7E25A551B953F1900EF9B53 /* FilterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E25A531B953F1900EF9B53 /* FilterTableViewCell.xib */; };
@@ -298,6 +299,7 @@
 		F7D37CCF1B93119100FA7B16 /* back-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-white.png"; sourceTree = "<group>"; };
 		F7D741321B9690C300FC1497 /* SellerTableHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SellerTableHeaderView.swift; sourceTree = "<group>"; };
 		F7D741331B9690C300FC1497 /* SellerTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SellerTableHeaderView.xib; sourceTree = "<group>"; };
+		F7D741361B975A1800FC1497 /* StoreAddressModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreAddressModel.swift; sourceTree = "<group>"; };
 		F7E25A4C1B953DF100EF9B53 /* FilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterViewController.xib; sourceTree = "<group>"; };
 		F7E25A521B953F1900EF9B53 /* FilterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTableViewCell.swift; sourceTree = "<group>"; };
 		F7E25A531B953F1900EF9B53 /* FilterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterTableViewCell.xib; sourceTree = "<group>"; };
@@ -381,6 +383,7 @@
 				79EFF76F1B8D6E35008A9E7D /* ActivityModel.swift */,
 				F7C13D731B95939E00CE8EBB /* StoreInfoModel.swift */,
 				F7C13D7F1B9614B800CE8EBB /* BankAccountModel.swift */,
+				F7D741361B975A1800FC1497 /* StoreAddressModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -840,6 +843,7 @@
 				79EFF7611B8D6DE4008A9E7D /* ActivityLogTableViewCell.swift in Sources */,
 				799892F51B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift in Sources */,
 				0CF28ED21B8C85E5005B2E54 /* IPhoneType.swift in Sources */,
+				F7D741371B975A1800FC1497 /* StoreAddressModel.swift in Sources */,
 				F7D37CC01B9305EC00FA7B16 /* DynamicRoundedLabel.swift in Sources */,
 				F7C13D711B95663200CE8EBB /* FilterResultsViewController.swift in Sources */,
 				F78BB5001B95428A0010DAF7 /* FilterFooterTableViewCell.swift in Sources */,
