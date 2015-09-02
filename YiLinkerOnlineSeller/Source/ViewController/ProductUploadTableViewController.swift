@@ -94,7 +94,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 }
                 
                 let indexPath: NSIndexPath = NSIndexPath(forItem: 2, inSection: 2)
-                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
             }
             
             self.productModel.condition = self.conditions[0]
@@ -505,7 +505,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
         
         let indexPath: NSIndexPath = NSIndexPath(forItem: 1, inSection: 2)
-        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
     }
     
     func addMoreDetails(sender: UIButton) {
@@ -623,7 +623,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         let range: NSRange = NSMakeRange(3, 1)
         let section: NSIndexSet = NSIndexSet(indexesInRange: range)
         
-        self.tableView.reloadSections(section, withRowAnimation: UITableViewRowAnimation.Bottom)
+        self.tableView.reloadSections(section, withRowAnimation: UITableViewRowAnimation.Fade)
         self.sectionFourRows = 0
         self.sectionPriceHeaderHeight = 0
         self.tableView.reloadData()
@@ -714,7 +714,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
      func didSelecteCategory(categoryModel: CategoryModel) {
         self.productModel.category = categoryModel
         let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 2)
-        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
     }
     
     func fireUpload() {

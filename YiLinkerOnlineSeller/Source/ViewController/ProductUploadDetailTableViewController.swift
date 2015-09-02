@@ -178,7 +178,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         let attributeCell: ProductUploadAttributeTableViewCell = self.tableView.cellForRowAtIndexPath(collectionViewIndexPath) as! ProductUploadAttributeTableViewCell
         
         var attributeModel: AttributeModel = AttributeModel()
-        attributeModel.definition = cell.cellTextField.text
+        attributeModel.definition = CommonHelper.firstCharacterUppercaseString(cell.cellTextField.text)
         attributeModel.values = attributeCell.attributes
         if self.productModel != nil {
             self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: attributeModel, indexPath: self.selectedIndexPath, productModel: self.productModel!)
@@ -204,10 +204,12 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         }
         
         if isValid {
-            attributeCell.attributes.append(cell.cellTextField.text)
+            let value: String = CommonHelper.firstCharacterUppercaseString(cell.cellTextField.text)
+            attributeCell.attributes.append(value)
             
             if self.productModel != nil {
-                self.productModel!.attributes[self.selectedIndexPath.section].values.append(cell.cellTextField.text)
+                let value: String = CommonHelper.firstCharacterUppercaseString(cell.cellTextField.text)
+                self.productModel!.attributes[self.selectedIndexPath.section].values.append(value)
             }
             
             attributeCell.collectionView.reloadData()
