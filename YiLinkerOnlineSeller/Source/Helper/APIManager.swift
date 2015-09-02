@@ -36,6 +36,9 @@ struct APIAtlas {
     static let productPageUrl = "v1/get-product"
     static let sellerStoreInfo = "auth/merchant/getUserInfo"
     static let sellerBankAccountList = "auth/bank/account/getBankAccounts"
+    static let sellerAddBankAccount = "auth/bank/account/addBankAccount"
+    static let sellerDeleteBankAccount = "auth/bank/account/deleteBankAccount"
+    static let sellerSetDefaultBankAccount = "auth/bank/account/setDefaultBankAccount"
     static let baseUrl = APIEnvironment.baseUrl()
 }
 

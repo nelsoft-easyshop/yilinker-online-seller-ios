@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoAddressTableViewCellDelagate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate {
+class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoAddressTableViewCellDelagate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeMobileNumberViewControllerDelegate {
     
     @IBOutlet weak var storeInfoTableView: UITableView!
     
@@ -199,7 +199,9 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
 
     func newBankAccount() {
         var changeBankAccountViewController = ChangeBankAccountViewController(nibName: "ChangeBankAccountViewController", bundle: nil)
+        changeBankAccountViewController.delegate = self
         self.navigationController?.pushViewController(changeBankAccountViewController, animated:true)
+        
     }
     
     func changeEmailAddress(){
@@ -225,6 +227,16 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func generateQRCode() {
         println("QR Code")
+    }
+    
+    func updateBankDetail(accountTitle: String, accountName: String, accountNumber: Int, bankName: String) {
+        let cell: StoreInfoBankAccountTableViewCell = self.storeInfoTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 2)) as! StoreInfoBankAccountTableViewCell
+        cell.setNewAddress(accountTitle, accountName: accountName, accountNumber: accountNumber, bankName: bankName)
+    }
+    
+    func changeMobileNumber(mobileNumber: String) {
+        storeInfoHeader.setNewMobile(mobileNumber)
+        println(mobileNumber)
     }
     /*
     // MARK: - Navigation

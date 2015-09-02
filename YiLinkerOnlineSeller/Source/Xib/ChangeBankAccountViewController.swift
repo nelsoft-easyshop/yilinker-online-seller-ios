@@ -8,15 +8,21 @@
 
 import UIKit
 
-class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, ChangeAddressCollectionViewCellDelegate, ChangeAddressFooterCollectionViewCellDelegate, AddAddressTableViewControllerDelegate {
+protocol ChangeBankAccountViewControllerDelegate {
+    func updateBankDetail(accountTitle: String, accountName: String, accountNumber: Int, bankName: String)
+}
+
+class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, ChangeAddressCollectionViewCellDelegate, ChangeAddressFooterCollectionViewCellDelegate, AddAddressTableViewControllerDelegate, CreateNewBankAccountViewControllerDelegate {
     
     @IBOutlet weak var changeBankAccountCollectionView: UICollectionView!
     
     var bankAccountModel: BankAccountModel!
     
-    var cellCount: Int = 3
-    var selectedIndex: Int = 0
+    var cellCount: Int = 0
+    var selectedIndex: Int = -1
     
+    var delegate: ChangeBankAccountViewControllerDelegate?
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,7 +55,13 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
             self.bankAccountModel = BankAccountModel.parseBankAccountDataFromDictionary(responseObject as! NSDictionary)
             //self.populateData()
 
-            println(self.bankAccountModel!.account_name[0])
+            self.cellCount = self.bankAccountModel.account_name.count
+            for var num  = 0; num < self.bankAccountModel.account_name.count; num++ {
+                if self.bankAccountModel.is_default[num]{
+                    self.selectedIndex = num
+                }
+                
+            }
             self.changeBankAccountCollectionView.reloadData()
             SVProgressHUD.dismiss()
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
@@ -86,9 +98,30 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
     }
     
     func done() {
-        self.navigationController!.popViewControllerAnimated(true)
+        fireSetDefaultBankAccount()
     }
     
+    func fireSetDefaultBankAccount(){
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "bankAccountId" : self.bankAccountModel.bank_account_id[self.selectedIndex]];
+        
+        manager.POST(APIAtlas.sellerSetDefaultBankAccount, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+          
+            self.delegate?.updateBankDetail(self.bankAccountModel.account_title[self.selectedIndex], accountName: self.bankAccountModel.account_name[self.selectedIndex], accountNumber: self.bankAccountModel.account_number[self.selectedIndex], bankName: self.bankAccountModel.bank_name[self.selectedIndex])
+
+            //self.changeBankAccountCollectionView.reloadData()
+            
+            self.navigationController!.popViewControllerAnimated(true)
+            SVProgressHUD.dismiss()
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                SVProgressHUD.dismiss()
+                println(error)
+        })
+    }
+
     func regsiterNib() {
         let changeAddressNib: UINib = UINib(nibName: Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier, bundle: nil)
         self.changeBankAccountCollectionView.registerNib(changeAddressNib, forCellWithReuseIdentifier: Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier)
@@ -98,32 +131,40 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cellCount
+        if(self.cellCount == 0){
+            return 0
+        } else {
+            return self.cellCount
+        }
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
         let cell : ChangeAddressCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressCollectionViewCell
+        
         if self.bankAccountModel != nil {
             cell.titleLabel.text = self.bankAccountModel!.account_name[indexPath.row]
             cell.subTitleLabel.text = "\(self.bankAccountModel!.account_number[indexPath.row])"+"\n"+self.bankAccountModel!.account_name[indexPath.row]+"\n"+self.bankAccountModel!.bank_name[indexPath.row]
-        }
-        if indexPath.row == self.selectedIndex {
-            cell.layer.borderWidth = 1
-            cell.layer.borderColor = Constants.Colors.selectedGreenColor.CGColor
-            cell.checkBoxButton.setImage(UIImage(named: "checkBox"), forState: UIControlState.Normal)
-            cell.checkBoxButton.backgroundColor = Constants.Colors.selectedGreenColor
-        } else {
-            cell.checkBoxButton.setImage(nil, forState: UIControlState.Normal)
-            cell.checkBoxButton.layer.borderWidth = 1
-            cell.checkBoxButton.layer.borderColor = UIColor.lightGrayColor().CGColor
-            cell.checkBoxButton.backgroundColor = UIColor.clearColor()
+            cell.titleLabel.tag = self.bankAccountModel!.bank_account_id[indexPath.row]
             
-            cell.layer.borderWidth = 1
-            cell.layer.borderColor = UIColor.lightGrayColor().CGColor
+            if self.selectedIndex == indexPath.row {
+                cell.layer.borderWidth = 1
+                cell.layer.borderColor = Constants.Colors.selectedGreenColor.CGColor
+                cell.checkBoxButton.setImage(UIImage(named: "checkBox"), forState: UIControlState.Normal)
+                cell.checkBoxButton.backgroundColor = Constants.Colors.selectedGreenColor
+            } else {
+                cell.checkBoxButton.setImage(nil, forState: UIControlState.Normal)
+                cell.checkBoxButton.layer.borderWidth = 1
+                cell.checkBoxButton.layer.borderColor = UIColor.lightGrayColor().CGColor
+                cell.checkBoxButton.backgroundColor = UIColor.clearColor()
+                
+                cell.layer.borderWidth = 1
+                cell.layer.borderColor = UIColor.lightGrayColor().CGColor
+            }
+            
+            cell.layer.cornerRadius = 5
+            cell.delegate = self
         }
-        
-        cell.layer.cornerRadius = 5
-        cell.delegate = self
         
         return cell
     }
@@ -157,7 +198,25 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
     
     func changeAddressCollectionViewCell(deleteAddressWithCell cell: ChangeAddressCollectionViewCell) {
         let indexPath: NSIndexPath = self.changeBankAccountCollectionView.indexPathForCell(cell)!
-        self.deleteCellInIndexPath(indexPath)
+        fireDeleteBankAccount(cell.titleLabel.tag, indexPath: indexPath)
+        println("deleted bank account \(cell.titleLabel.tag)")
+    }
+    
+    func fireDeleteBankAccount(bankAccountId: Int, indexPath: NSIndexPath){
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "bankAccountId" : NSNumber(integer: bankAccountId)];
+        
+        manager.POST(APIAtlas.sellerDeleteBankAccount, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.deleteCellInIndexPath(indexPath)
+            self.changeBankAccountCollectionView.reloadData()
+            SVProgressHUD.dismiss()
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                SVProgressHUD.dismiss()
+                println(error)
+        })
     }
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
@@ -177,7 +236,8 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
         addAddressTableViewController.delegate = self
         self.navigationController!.presentViewController(addAddressTableViewController, animated: true, completion: nil)
         */
-        var attributeModal = CreateNewBankAccountViewController(nibName: "CreateNewBankAccountViewControllers", bundle: nil)
+        var attributeModal = CreateNewBankAccountViewController(nibName: "CreateNewBankAccountViewController", bundle: nil)
+        attributeModal.delegate = self
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         attributeModal.providesPresentationContextTransitionStyle = true
         attributeModal.definesPresentationContext = true
@@ -189,6 +249,11 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
     func addAddressTableViewController(didAddAddressSucceed addAddressTableViewController: AddAddressTableViewController) {
         let indexPath: NSIndexPath = NSIndexPath(forItem: self.cellCount, inSection: 0)
         self.addCellInIndexPath(indexPath)
+    }
+    
+    func updateCollectionView() {
+        fireBankAccount()
+        self.changeBankAccountCollectionView.reloadData()
     }
 }
 

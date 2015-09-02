@@ -64,7 +64,6 @@
                                 <rect key="frame" x="12" y="60" width="289" height="55"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="FOe-1x-sal"/>
-                                    <constraint firstAttribute="width" constant="289" id="nwd-ti-ABt"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>

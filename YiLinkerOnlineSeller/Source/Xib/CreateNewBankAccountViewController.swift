@@ -7,7 +7,9 @@
 //
 
 import UIKit
-
+protocol CreateNewBankAccountViewControllerDelegate{
+   func updateCollectionView()
+}
 class CreateNewBankAccountViewController: UIViewController {
 
     
@@ -23,6 +25,9 @@ class CreateNewBankAccountViewController: UIViewController {
     
     @IBOutlet weak var bankNameTextField: UITextField!
     
+    var storeInfoModel: StoreInfoModel!
+    
+    var delegate: CreateNewBankAccountViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,8 +44,26 @@ class CreateNewBankAccountViewController: UIViewController {
     }
     
     @IBAction func createBankAcount(sender: AnyObject) {
-        
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        let manager = APIManager.sharedInstance
+        var accountNumber: Int? = self.accountNumberTextField.text.toInt()
+        var bankId: Int? = "1".toInt()
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : NSNumber(integer: accountNumber!), "accountName" : self.accountNameTextField.text, "bankId" : 1]
+        println(NSNumber(integer: accountNumber!))
+        manager.POST(APIAtlas.sellerAddBankAccount, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            println("\(parameters)")
+            self.dismissViewControllerAnimated(true, completion: nil)
+            SVProgressHUD.dismiss()
+            self.delegate?.updateCollectionView()
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                SVProgressHUD.dismiss()
+                println(error)
+        })
     }
+    
+    
 
     /*
     // MARK: - Navigation

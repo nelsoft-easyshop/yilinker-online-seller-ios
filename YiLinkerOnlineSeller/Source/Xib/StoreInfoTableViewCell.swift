@@ -50,4 +50,8 @@ class StoreInfoTableViewCell: UITableViewCell {
         self.delegate?.storeInfoVerify()
     }
     
+    func setNewMobile(mobileNumber: String){
+        self.mobilePhoneTextField.text = mobileNumber
+    }
+    
 }

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ChangeMobileNumberViewControllerDelegate {
-    
+    func changeMobileNumber(mobileNumber: String)
 }
 class ChangeMobileNumberViewController: UIViewController {
 
@@ -23,7 +23,7 @@ class ChangeMobileNumberViewController: UIViewController {
     @IBOutlet weak var newNumberTextField: UITextField!
     
     var delegate: ChangeMobileNumberViewControllerDelegate?
-    var storeInfo: StoreInfoViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,10 +41,10 @@ class ChangeMobileNumberViewController: UIViewController {
     }
     
     @IBAction func submit(sender: AnyObject){
+        self.delegate?.changeMobileNumber(self.newNumberTextField.text)
         self.dismissViewControllerAnimated(true, completion: nil)
-        self.storeInfo?.storeInfoHeader.mobilePhoneTextField.text = self.newNumberTextField.text
-        self.storeInfo?.storeInfoTableView.reloadData()
     }
+    
     /*
     // MARK: - Navigation
 
