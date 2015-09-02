@@ -94,7 +94,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 }
                 
                 let indexPath: NSIndexPath = NSIndexPath(forItem: 2, inSection: 2)
-                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
             }
             
             self.productModel.condition = self.conditions[0]
@@ -331,14 +331,16 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.cellTitleLabel.text = "Category*"
                 cell.cellTexField.placeholder = "Select Category"
                 cell.cellTexField.text = self.productModel.category.name
+                cell.textFieldType = ProductTextFieldType.Category
+                cell.delegate = self
                 if self.productModel.category.name != "" {
                     cell.cellTexField.text = self.productModel.category.name
                 }
                 
-                let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "category")
+               /*let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "category")
                 cell.cellTexField.userInteractionEnabled = true
                 cell.cellTexField.superview!.addGestureRecognizer(tapGestureRecognizer)
-                cell.cellTexField.enabled = false
+                cell.cellTexField.enabled = false*/
                 
                 return cell
             } else if indexPath.row == 1 {
@@ -346,15 +348,17 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.cellTitleLabel.text = "Brand"
                 cell.cellTexField.placeholder = "Brand"
+                cell.delegate = self
                 cell.cellTexField.text = self.productModel.brand.name
+                cell.textFieldType = ProductTextFieldType.Brand
                 if self.productModel.brand.name != "" {
                     cell.cellTexField.text = self.productModel.brand.name
                 }
                 
-                let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "brand")
+               /*let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "brand")
                 cell.cellTexField.userInteractionEnabled = true
                 cell.cellTexField.superview!.addGestureRecognizer(tapGestureRecognizer)
-                cell.cellTexField.enabled = false
+                cell.cellTexField.enabled = false*/
                 
                 cell.addTextFieldDelegate()
                 
@@ -501,7 +505,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
         
         let indexPath: NSIndexPath = NSIndexPath(forItem: 1, inSection: 2)
-        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
     }
     
     func addMoreDetails(sender: UIButton) {
@@ -575,6 +579,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
         
         self.reloadUploadCellCollectionViewData()
+        self.tableView.reloadData()
     }
     
     func reloadUploadCellCollectionViewData() {
@@ -618,7 +623,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         let range: NSRange = NSMakeRange(3, 1)
         let section: NSIndexSet = NSIndexSet(indexesInRange: range)
         
-        self.tableView.reloadSections(section, withRowAnimation: UITableViewRowAnimation.Bottom)
+        self.tableView.reloadSections(section, withRowAnimation: UITableViewRowAnimation.Fade)
         self.sectionFourRows = 0
         self.sectionPriceHeaderHeight = 0
         self.tableView.reloadData()
@@ -638,9 +643,9 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please select category.", title: "Incomplete Product Details")
         } else if self.productModel.condition == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please select condition.", title: "Incomplete Product Details")
-        } else if self.productModel.quantity == 0 {
+        } else if self.productModel.quantity == 0 && self.productModel.validCombinations.count == 0 {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert quantity.", title: "Incomplete Product Details")
-        } else if self.productModel.retailPrice == "" {
+        } else if self.productModel.retailPrice == "" && self.productModel.validCombinations.count == 0 {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert Retail Price.", title: "Incomplete Product Details")
         } else if (self.productModel.retailPrice as NSString).doubleValue < (self.productModel.discoutedPrice as NSString).doubleValue {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Retail price must be larger than discount price.", title: "Incomplete Product Details")
@@ -664,6 +669,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             }
             println("selected condition: \(self.conditions[selectedIndex].name)")
             self.productModel.condition = self.conditions[selectedIndex]
+        } else if textFieldType == ProductTextFieldType.Brand {
+            self.brand()
+        } else if textFieldType == ProductTextFieldType.Category {
+            self.category()
         }
     }
     
@@ -705,11 +714,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
      func didSelecteCategory(categoryModel: CategoryModel) {
         self.productModel.category = categoryModel
         let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 2)
-        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
     }
     
     func fireUpload() {
-        
         var datas: [NSData] = []
         
         var productUploadedImagesCount: Int = 0
@@ -820,7 +828,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         let parameters: NSDictionary = [
             "client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantRefreshToken]
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
         
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -842,7 +851,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         let parameters: NSDictionary = [
             "client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantRefreshToken]
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
         
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in

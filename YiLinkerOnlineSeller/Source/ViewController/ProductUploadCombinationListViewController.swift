@@ -243,7 +243,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         
         self.productModel!.validCombinations.removeAtIndex(indexPath.section)
         self.tableView.beginUpdates()
-        self.tableView.deleteSections(section, withRowAnimation: UITableViewRowAnimation.Left)
+        self.tableView.deleteSections(section, withRowAnimation: UITableViewRowAnimation.Fade)
         self.tableView.endUpdates()
         self.tableView.reloadData()
     }

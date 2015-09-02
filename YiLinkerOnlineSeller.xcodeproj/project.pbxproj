@@ -44,6 +44,7 @@
 		0C6661A91B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C6661A71B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.xib */; };
 		0C6661AC1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6661AA1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.swift */; };
 		0C6661AD1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C6661AB1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.xib */; };
+		0C8739D71B96CFA5005D2EF8 /* CommonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8739D61B96CFA5005D2EF8 /* CommonHelper.swift */; };
 		0C8D7F871B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7F851B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.swift */; };
 		0C8D7F881B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C8D7F861B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.xib */; };
 		0C8D7F8D1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7F8B1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.swift */; };
@@ -318,6 +319,7 @@
 		0C6661A71B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadPlainDetailCombinationTableViewCell.xib; path = ../View/ProductUploadPlainDetailCombinationTableViewCell.xib; sourceTree = "<group>"; };
 		0C6661AA1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadAttributeSummaryTableViewCell.swift; sourceTree = "<group>"; };
 		0C6661AB1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadAttributeSummaryTableViewCell.xib; path = ../View/ProductUploadAttributeSummaryTableViewCell.xib; sourceTree = "<group>"; };
+		0C8739D61B96CFA5005D2EF8 /* CommonHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonHelper.swift; sourceTree = "<group>"; };
 		0C8D7F851B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadDetailHeaderViewTableViewCell.swift; sourceTree = "<group>"; };
 		0C8D7F861B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadDetailHeaderViewTableViewCell.xib; path = ../View/ProductUploadDetailHeaderViewTableViewCell.xib; sourceTree = "<group>"; };
 		0C8D7F8B1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadAttributeTableViewCell.swift; sourceTree = "<group>"; };
@@ -618,6 +620,7 @@
 				0CF28EC01B8C85E4005B2E54 /* SessionManager.swift */,
 				0CF28EC11B8C85E4005B2E54 /* XibHelper.swift */,
 				0C6661A41B906FBF005ADFDD /* JSONResponseSerializer.swift */,
+				0C8739D61B96CFA5005D2EF8 /* CommonHelper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1364,6 +1367,7 @@
 				0C6661A81B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.swift in Sources */,
 				0C8D7FB51B8FC4AC00B3FA4E /* ProductUploadCombinationTableViewCell.swift in Sources */,
 				0C6661AC1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.swift in Sources */,
+				0C8739D71B96CFA5005D2EF8 /* CommonHelper.swift in Sources */,
 				0C8D7FB91B8FC79E00B3FA4E /* ProductUploadCombinationFooterTableViewCell.swift in Sources */,
 				0C65F8CC1B8DF8A000504D86 /* ProductUploadSearchViewController.swift in Sources */,
 				0CF28F111B8CAA31005B2E54 /* ProductUploadTableViewController.swift in Sources */,
