@@ -643,9 +643,9 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please select category.", title: "Incomplete Product Details")
         } else if self.productModel.condition == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please select condition.", title: "Incomplete Product Details")
-        } else if self.productModel.quantity == 0 {
+        } else if self.productModel.quantity == 0 && self.productModel.validCombinations.count == 0 {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert quantity.", title: "Incomplete Product Details")
-        } else if self.productModel.retailPrice == "" {
+        } else if self.productModel.retailPrice == "" && self.productModel.validCombinations.count == 0 {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert Retail Price.", title: "Incomplete Product Details")
         } else if (self.productModel.retailPrice as NSString).doubleValue < (self.productModel.discoutedPrice as NSString).doubleValue {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Retail price must be larger than discount price.", title: "Incomplete Product Details")
@@ -828,7 +828,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         let parameters: NSDictionary = [
             "client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantRefreshToken]
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
         
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -850,7 +851,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         let parameters: NSDictionary = [
             "client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantRefreshToken]
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
         
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
