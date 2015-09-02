@@ -90,4 +90,9 @@ class ProductUploadCombinationTableViewCell: UITableViewCell {
         return self.collectionView.collectionViewLayout.collectionViewContentSize()
     }
     
+    // Dealloc
+    deinit {
+        self.collectionView.delegate = nil
+        self.collectionView.dataSource = nil
+    }
 }

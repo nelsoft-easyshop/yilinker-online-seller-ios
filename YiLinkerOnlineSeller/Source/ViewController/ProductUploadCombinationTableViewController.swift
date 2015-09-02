@@ -39,13 +39,14 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         self.tableView.tableHeaderView = headerView
         headerView.combinationLabel.text = self.headerTitle
         
-        //if self.images.count == 0 {
-          self.images.append(UIImage(named: "addPhoto")!)
-        //}
-        
-        if self.productModel?.validCombinations[self.selectedIndexpath!.section].images.count == 0 {
-            self.productModel?.validCombinations[self.selectedIndexpath!.section].images.append(UIImage(named: "addPhoto")!)
+        if self.productModel != nil {
+            self.images = self.productModel!.validCombinations[self.selectedIndexpath!.section].images
+            self.images.append(UIImage(named: "addPhoto")!)
+        } else {
+            self.images.append(UIImage(named: "addPhoto")!)
         }
+        
+        
         
         self.registerCell()
     }
@@ -75,7 +76,10 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
     }
     
     func back() {
-        self.navigationController!.popViewControllerAnimated(true)
+        self.navigationController?.popViewControllerAnimated(true)
+//        if self.productModel != nil {
+//                self.productModel?.images.removeLast()
+//        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -111,17 +115,16 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         } else {
             let cell: ProductUploadCombinationFooterTableViewCell = tableView.dequeueReusableCellWithIdentifier(PUCTVCConstant.productUploadCombinationFooterTableViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ProductUploadCombinationFooterTableViewCell
             cell.delegate = self
-            cell.images = self.images
             
             if self.productModel != nil {
                 let combination: CombinationModel = self.productModel!.validCombinations[self.selectedIndexpath!.section]
-                //check if image contains defaultAddPhoto
-                //combination.images.append(UIImage(named: "addPhoto")!)
-                cell.images = combination.images
+                cell.images = self.images
                 cell.discountedPriceTextField.text = combination.discountedPrice
                 cell.quantityTextField.text = combination.quantity
                 cell.retailPriceTextField.text = combination.retailPrice
                 cell.skuTextField.text = combination.sku
+            } else {
+                cell.images = self.images
             }
             cell.viewController = self
             cell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -149,7 +152,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
             self.delegate!.productUploadCombinationTableViewController(appendCombination: combination, isEdit: true, indexPath: self.selectedIndexpath!)
         }
         
-        self.navigationController!.popViewControllerAnimated(true)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     func productUploadCombinationFooterTableViewCell(didClickUploadImage cell: ProductUploadCombinationFooterTableViewCell) {
@@ -237,4 +240,9 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         }
     }
     
+    // Dealloc
+    deinit {
+        self.tableView.delegate = nil
+        self.tableView.dataSource = nil
+    }
 }

@@ -54,6 +54,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     var sectionFourRows: Int = 2
     var sectionPriceHeaderHeight: CGFloat = 41
     var conditions: [ConditionModel] = []
+    var hud: MBProgressHUD?
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -72,9 +73,21 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         self.fireCondition()
     }
     
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
     func fireCondition() {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
         //seller@easyshop.ph
         //password
@@ -99,7 +112,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             
             self.productModel.condition = self.conditions[0]
             
-            SVProgressHUD.dismiss()
+            self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -110,7 +123,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 }
                 
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
         })
     }
     
@@ -766,7 +779,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         
         let manager: APIManager = APIManager.sharedInstance
         
-        SVProgressHUD.show()
+        self.showHUD()
         let url: String = "\(APIAtlas.uploadUrl)?access_token=\(SessionManager.accessToken())"
         manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
             for (index, data) in enumerate(datas) {
@@ -775,7 +788,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             }
             
             }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
                 self.success()
         }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
             let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -785,7 +798,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
             }
-            SVProgressHUD.dismiss()
+            self.hud?.hide(true)
         }
     }
     
@@ -843,8 +856,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     
     
     func fireRefreshToken() {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = [
             "client_id": Constants.Credentials.clientID,
@@ -860,14 +872,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
         })
 
     }
     
     func fireRefreshToken2() {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = [
             "client_id": Constants.Credentials.clientID,
@@ -883,7 +894,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
         })
+    }
+    
+    // Dealloc
+    deinit {
+        self.tableView.delegate = nil
+        self.tableView.dataSource = nil
     }
 }
