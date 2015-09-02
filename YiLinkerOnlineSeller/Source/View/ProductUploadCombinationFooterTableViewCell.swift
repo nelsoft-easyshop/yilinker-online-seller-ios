@@ -29,17 +29,17 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
     override func awakeFromNib() {
         super.awakeFromNib()
         self.registerCell()
+        
+        self.retailPriceTextField.delegate = self
+        self.discountedPriceTextField.delegate = self
+        self.quantityTextField.delegate = self
+        self.skuTextField.delegate = self
     }
     
     @IBAction func save(sender: AnyObject) {
         if self.images.last == UIImage(named: "addPhoto") {
             self.images.removeLast()
         }
-        
-        self.retailPriceTextField.delegate = self
-        self.discountedPriceTextField.delegate = self
-        self.quantityTextField.delegate = self
-        self.skuTextField.delegate = self
         
         if self.retailPriceTextField.text == "" {
             UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Please insert Retail Price.", title: "Incomplete Product Details")
