@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol SignInViewControllerDelegate{
+    func passStoreInfoModel(storeInfoModel: StoreInfoModel)
+}
+
 class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDelegate {
+    
+    var delegate: SignInViewControllerDelegate?
     
     @IBOutlet weak var profileContainerView: UIView!
     @IBOutlet weak var profileImageView: UIImageView!
@@ -23,6 +29,8 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     @IBOutlet weak var viewsContainer: UIView!
     
     var hud: MBProgressHUD?
+    
+    var storeInfoModel: StoreInfoModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -261,21 +269,39 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         }
         NSUserDefaults.standardUserDefaults().synchronize()
         
-        let imageUrl: NSURL = NSURL(string: "http://cdn-www.xda-developers.com/wp-content/uploads/2011/10/beats-by_dr_dre-04.jpg")!
-        self.profileImageView.sd_setImageWithURL(imageUrl, placeholderImage: UIImage(named: "dummy-placeholder"))
-        self.profileImageView.frame = self.profileContainerView.bounds
-        self.profileImageView.contentMode = .ScaleAspectFill
-
-        self.hud?.hide(true)
+        fireStoreInfo()
+    }
+    
+    func fireStoreInfo(){
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
         
-        let delay = 1.0 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
-        var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-        dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+        manager.POST(APIAtlas.sellerStoreInfo, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.storeInfoModel = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
+            //self.populateData()
             
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.profileImageView.sd_setImageWithURL(self.storeInfoModel?.avatar, placeholderImage: UIImage(named: "dummy-placeholder"))
+            self.profileImageView.frame = self.profileContainerView.bounds
+            self.profileImageView.contentMode = .ScaleAspectFill
             
+            self.hud?.hide(true)
+            
+            let delay = 1.0 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+            var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+            dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+                
+                self.dismissViewControllerAnimated(true, completion: nil)
+                
+            })
+            
+            self.delegate?.passStoreInfoModel(self.storeInfoModel!)
+            
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                println(error)
         })
-
     }
     
 }
