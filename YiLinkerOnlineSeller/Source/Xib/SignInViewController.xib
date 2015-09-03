@@ -85,9 +85,6 @@
                                 <outlet property="delegate" destination="-1" id="Md3-WL-89g"/>
                             </connections>
                         </textField>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gY0-Xk-ZTZ">
-                            <rect key="frame" x="316" y="1" width="39" height="29"/>
-                        </imageView>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="O6t-ug-bEx">
                             <rect key="frame" x="0.0" y="50" width="355" height="30"/>
                             <constraints>

@@ -80,17 +80,19 @@ class ProductUploadAttributeTableViewCell: UITableViewCell, UICollectionViewData
         
         let attributeValue: String = cell.attributeLabel.text!
         
-        for (index, combination) in enumerate(self.parentViewController!.productModel!.validCombinations){
-            for dictionary in combination.attributes as [NSMutableDictionary] {
-                if attributeValue == dictionary["value"] as! String {
-                    isValidToDelete = false
-                    combinationNumber = index
+        if self.parentViewController!.productModel != nil {
+            for (index, combination) in enumerate(self.parentViewController!.productModel!.validCombinations){
+                for dictionary in combination.attributes as [NSMutableDictionary] {
+                    if attributeValue == dictionary["value"] as! String {
+                        isValidToDelete = false
+                        combinationNumber = index
+                        break
+                    }
+                }
+                
+                if isValidToDelete == false {
                     break
                 }
-            }
-            
-            if isValidToDelete == false {
-                break
             }
         }
         
@@ -130,4 +132,9 @@ class ProductUploadAttributeTableViewCell: UITableViewCell, UICollectionViewData
         return self.collectionView.collectionViewLayout.collectionViewContentSize()
     }
     
+    // Dealloc
+    deinit {
+        self.collectionView.delegate = nil
+        self.collectionView.dataSource = nil
+    }
 }

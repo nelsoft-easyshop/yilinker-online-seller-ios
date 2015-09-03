@@ -20,12 +20,11 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
 
     @IBOutlet weak var tableView: UITableView!
     
-    var titles: [String] = ["Category 1", "Category 2", "Category 3", "Category 4", "Category 5", "Category 6", "Category 7", "Category 8", "Category 9", "Category 10", "Category 11", "Category 12", "Category 13", "Category 14"]
-    
     var delegate: ProductUploadCategoryViewControllerDelegate?
     var categories: [CategoryModel] = []
     var pageTitle: String = ""
     var parentID: Int = 1
+    var hud: MBProgressHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,9 +45,23 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         self.tableView.tableFooterView = footerView
     }
     
+    //Show HUD
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
     func fireCategoryWithParentID(parentID: Int) {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
         //seller@easyshop.ph
         //password
@@ -71,7 +84,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
                 }
             }
             self.tableView.reloadData()
-            SVProgressHUD.dismiss()
+            self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -82,7 +95,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 }
                 
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
         })
     }
     
@@ -174,5 +187,11 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
         searchViewController.modalTransitionStyle = modalStyle
         self.presentViewController(navigationController, animated: true, completion: nil)
+    }
+    
+    // Dealloc
+    deinit {
+        self.tableView.delegate = nil
+        self.tableView.dataSource = nil
     }
 }

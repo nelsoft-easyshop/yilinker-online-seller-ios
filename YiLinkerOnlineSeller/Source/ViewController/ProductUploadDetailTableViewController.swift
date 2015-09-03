@@ -21,7 +21,7 @@ protocol ProductUploadDetailTableViewControllerDelegate {
     func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath)
 }
 
-class ProductUploadDetailTableViewController: UITableViewController, ProductUploadDetailFooterTableViewCellDelegate, ProductUploadDetailHeaderViewCollectionViewCellDelegate, ProductUploadAttributeTableViewCellDelegate {
+class ProductUploadDetailTableViewController: UITableViewController, ProductUploadDetailFooterTableViewCellDelegate, ProductUploadDetailHeaderViewCollectionViewCellDelegate, ProductUploadAttributeTableViewCellDelegate, ProductUploadDetailHeaderViewTableViewCellDelegate {
     
     var tempDetailName: String = ""
     var dynamicRowHeight: CGFloat = 0
@@ -100,15 +100,20 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         if indexPath.row == 0 {
             let cell: ProductUploadDetailHeaderViewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(PUDTConstant.productUploadDetailHeaderViewTableViewCellNibNameAndIdentifier) as! ProductUploadDetailHeaderViewTableViewCell
             if self.productModel != nil {
-                cell.cellTextField.text = self.productModel!.attributes[self.selectedIndexPath.row].definition
+                cell.cellTextField.text = self.productModel!.attributes[self.selectedIndexPath.section].definition
+                cell.edited = true
+            } else {
+                cell.edited = false
             }
+            cell.delegate = self
             return cell
         } else if indexPath.row == 1 {
             let cell: ProductUploadAttributeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(PUDTConstant.productUploadAttributeTableViewCellNibNameAndIdentifier) as! ProductUploadAttributeTableViewCell
             
             if self.productModel != nil {
-                cell.attributes = self.productModel!.attributes[self.selectedIndexPath.row].values
+                cell.attributes = self.productModel!.attributes[self.selectedIndexPath.section].values
             }
+            
             cell.parentViewController = self
             cell.delegate = self
             
@@ -157,9 +162,14 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
     }
     
     func productUploadDetailFooterTableViewCell(didPressSaveButton cell: ProductUploadDetailFooterTableViewCell) {
-        for (index, path) in enumerate(self.deletedCells) {
-            self.productModel!.attributes[selectedIndexPath.section].values.removeAtIndex(path.row)
+        if self.productModel != nil {
+            for (index, path) in enumerate(self.deletedCells) {
+                if self.productModel!.attributes.count != 0 && self.productModel!.attributes.count < path.section && self.productModel!.attributes[selectedIndexPath.section].values.count < path.row {
+                    self.productModel!.attributes[selectedIndexPath.section].values.removeAtIndex(path.row)
+                }
+            }
         }
+        
         
         let indexPath: NSIndexPath = NSIndexPath(forRow: 0, inSection: 0)
         let cell: ProductUploadDetailHeaderViewTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! ProductUploadDetailHeaderViewTableViewCell
@@ -167,16 +177,22 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         let collectionViewIndexPath: NSIndexPath = NSIndexPath(forItem: 1, inSection: indexPath.section)
         let attributeCell: ProductUploadAttributeTableViewCell = self.tableView.cellForRowAtIndexPath(collectionViewIndexPath) as! ProductUploadAttributeTableViewCell
         
-        var attributeModel: AttributeModel = AttributeModel()
-        attributeModel.definition = cell.cellTextField.text
-        attributeModel.values = attributeCell.attributes
-        if self.productModel != nil {
-            self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: attributeModel, indexPath: self.selectedIndexPath, productModel: self.productModel!)
+        if attributeCell.attributes.count != 0 && cell.cellTextField.text != "" {
+            var attributeModel: AttributeModel = AttributeModel()
+            attributeModel.definition = CommonHelper.firstCharacterUppercaseString(cell.cellTextField.text)
+            attributeModel.values = attributeCell.attributes
+            if self.productModel != nil {
+                self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: attributeModel, indexPath: self.selectedIndexPath, productModel: self.productModel!)
+            } else {
+                self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: attributeModel, indexPath: self.selectedIndexPath)
+            }
+            
+            self.navigationController!.popViewControllerAnimated(true)
         } else {
-            self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: attributeModel, indexPath: self.selectedIndexPath)
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Attribute defintion and values are required.")
         }
-       
-        self.navigationController!.popViewControllerAnimated(true)
+        
+        
     }
     
     func productUploadDetailFooterTableViewCell(didPressDoneButton cell: ProductUploadDetailFooterTableViewCell) {
@@ -185,22 +201,36 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         
         let collectionViewIndexPath: NSIndexPath = NSIndexPath(forItem: 1, inSection: indexPath.section)
         let attributeCell: ProductUploadAttributeTableViewCell = self.tableView.cellForRowAtIndexPath(collectionViewIndexPath) as! ProductUploadAttributeTableViewCell
-        attributeCell.attributes.append(cell.cellTextField.text)
-
-        if self.productModel != nil {
-            self.productModel!.attributes[self.selectedIndexPath.section].values.append(cell.cellTextField.text)
+        var isValid: Bool = true
+        for attribute in attributeCell.attributes {
+            if attribute == cell.cellTextField.text {
+                isValid = false
+                break
+            }
         }
-
-        attributeCell.collectionView.reloadData()
         
-        cell.cellTextField.text = ""
-        cell.cellTextField.becomeFirstResponder()
-        
-        self.dynamicRowHeight = attributeCell.collectionViewContentSize().height + cellPadding
-        
-        self.tableView.beginUpdates()
-        //self.tableView.reloadRowsAtIndexPaths([collectionViewIndexPath], withRowAnimation: UITableViewRowAnimation.None)
-        self.tableView.endUpdates()
+        if isValid {
+            let value: String = CommonHelper.firstCharacterUppercaseString(cell.cellTextField.text)
+            attributeCell.attributes.append(value)
+            
+            if self.productModel != nil {
+                let value: String = CommonHelper.firstCharacterUppercaseString(cell.cellTextField.text)
+                self.productModel!.attributes[self.selectedIndexPath.section].values.append(value)
+            }
+            
+            attributeCell.collectionView.reloadData()
+            
+            cell.cellTextField.text = ""
+            cell.cellTextField.becomeFirstResponder()
+            
+            self.dynamicRowHeight = attributeCell.collectionViewContentSize().height + cellPadding
+            
+            self.tableView.beginUpdates()
+            //self.tableView.reloadRowsAtIndexPaths([collectionViewIndexPath], withRowAnimation: UITableViewRowAnimation.None)
+            self.tableView.endUpdates()
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error", title: "This attribute value already exist.")
+        }
     }
     
     func productUploadDetailFooterTableViewCell(cell: ProductUploadDetailFooterTableViewCell, didSelectButton button: UIButton) {
@@ -210,5 +240,15 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
     func productUploadAttributeTableViewCell(didTapCell cell: ProductUploadAttributeTableViewCell, indexPath: NSIndexPath) {
         self.deletedCells.append(indexPath)
         //
+    }
+    
+    func productUploadDetailHeaderViewTableViewCell(didEndEditing productUploadDetailHeaderViewTableViewCell: ProductUploadDetailHeaderViewTableViewCell, text: String) {
+        
+    }
+    
+    // Dealloc
+    deinit {
+        self.tableView.delegate = nil
+        self.tableView.dataSource = nil
     }
 }

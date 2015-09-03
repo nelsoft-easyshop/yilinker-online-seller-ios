@@ -149,4 +149,10 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // Dealloc
+    deinit {
+        self.tableView.delegate = nil
+        self.tableView.dataSource = nil
+    }
 }

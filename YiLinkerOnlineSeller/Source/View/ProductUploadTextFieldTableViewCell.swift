@@ -24,6 +24,7 @@ class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate,
     override func awakeFromNib() {
         super.awakeFromNib()
         self.addTextFieldDelegate()
+        self.cellTexField.delegate = self
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -41,8 +42,14 @@ class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate,
         self.cellTexField.rightViewMode = UITextFieldViewMode.Always
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        
+    
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        if self.textFieldType == ProductTextFieldType.Brand || self.textFieldType == ProductTextFieldType.Category {
+            self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: "", cell: self, textFieldType: self.textFieldType!)
+            return false
+        } else {
+            return true
+        }
     }
     
     func textFieldDidChange(sender: UITextField) {
@@ -50,15 +57,17 @@ class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate,
     }
     
     func addPicker() {
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
-        
-        let pickerView: UIPickerView = UIPickerView(frame:CGRectMake(0, 0, screenSize.width, 225))
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        
-        self.cellTexField.inputView = pickerView
-         self.cellTexField.text = self.values[0]
-        self.cellTexField.addToolBarWithDoneTarget(self, done: "done")
+        if self.textFieldType == ProductTextFieldType.Condition {
+            let screenSize: CGRect = UIScreen.mainScreen().bounds
+            
+            let pickerView: UIPickerView = UIPickerView(frame:CGRectMake(0, 0, screenSize.width, 225))
+            pickerView.delegate = self
+            pickerView.dataSource = self
+            
+            self.cellTexField.inputView = pickerView
+            self.cellTexField.text = self.values[0]
+            self.cellTexField.addToolBarWithDoneTarget(self, done: "done")
+        }
     }
     
     func done() {

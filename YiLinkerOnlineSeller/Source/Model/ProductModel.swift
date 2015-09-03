@@ -14,7 +14,7 @@ class ProductModel {
     var images: [UIImage] = []
     
     var category: CategoryModel = CategoryModel(uid: 0, name: "", hasChildren: "")
-    var brand: BrandModel = BrandModel(name: "", brandId:0)
+    var brand: BrandModel = BrandModel(name: "", brandId:1)
     var condition: ConditionModel = ConditionModel(uid: 0, name: "")
     var quantity: Int = 0
     
