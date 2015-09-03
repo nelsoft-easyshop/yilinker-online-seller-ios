@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton SemiBold.otf">
+            <string>Panton-SemiBold</string>
+        </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CustomizedCategory" id="KGk-i7-Jjw" customClass="CustomizedCategoryTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sub Category1, Category2, Category3" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T2L-17-oBU">
+                        <rect key="frame" x="16" y="40" width="334" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="2zC-EN-vZq"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
+                        <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right2" translatesAutoresizingMaskIntoConstraints="NO" id="J90-IN-LMp">
+                        <rect key="frame" x="358" y="31" width="10" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="G8h-Lc-X6O"/>
+                            <constraint firstAttribute="width" constant="10" id="tcA-e4-7DZ"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tPS-uF-HCv">
+                        <rect key="frame" x="0.0" y="78" width="375" height="1"/>
+                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="apj-Va-YL0"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wMY-NF-YwF">
+                        <rect key="frame" x="16" y="18" width="334" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="WZd-QD-Z5A"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="16"/>
+                        <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="wMY-NF-YwF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="2zH-9z-KVB"/>
+                    <constraint firstItem="J90-IN-LMp" firstAttribute="leading" secondItem="T2L-17-oBU" secondAttribute="trailing" constant="8" id="98b-5d-PAj"/>
+                    <constraint firstAttribute="trailing" secondItem="J90-IN-LMp" secondAttribute="trailing" constant="7" id="APD-1b-KRE"/>
+                    <constraint firstAttribute="trailing" secondItem="tPS-uF-HCv" secondAttribute="trailing" id="Boz-cp-zqJ"/>
+                    <constraint firstItem="J90-IN-LMp" firstAttribute="leading" secondItem="wMY-NF-YwF" secondAttribute="trailing" constant="8" id="HYY-Fk-GSX"/>
+                    <constraint firstItem="T2L-17-oBU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="JII-DA-oB1"/>
+                    <constraint firstItem="T2L-17-oBU" firstAttribute="top" secondItem="wMY-NF-YwF" secondAttribute="bottom" constant="1" id="XKP-jK-uMA"/>
+                    <constraint firstItem="J90-IN-LMp" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="31" id="bZE-1L-kRJ"/>
+                    <constraint firstItem="wMY-NF-YwF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="18" id="owc-uy-9xp"/>
+                    <constraint firstAttribute="bottom" secondItem="tPS-uF-HCv" secondAttribute="bottom" id="t8Z-oe-I3O"/>
+                    <constraint firstItem="tPS-uF-HCv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="yLM-NX-yrf"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="parentCategoryLabel" destination="wMY-NF-YwF" id="LAk-Fc-I4U"/>
+                <outlet property="subCategoriesLabel" destination="T2L-17-oBU" id="hcF-Ov-bsX"/>
+            </connections>
+            <point key="canvasLocation" x="412.5" y="247"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="right2" width="97" height="200"/>
+    </resources>
+</document>

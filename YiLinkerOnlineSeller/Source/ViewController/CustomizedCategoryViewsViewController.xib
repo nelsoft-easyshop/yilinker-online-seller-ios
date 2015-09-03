@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+        </mutableArray>
+        <mutableArray key="Panton SemiBold.otf">
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+        </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomizedCategoryViewsViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="UaV-Hc-XA0" customClass="CCCategoryDetailsView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="153"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LXR-zO-FPU" userLabel="Category Details">
+                    <rect key="frame" x="0.0" y="8" width="375" height="45"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category Details" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9A5-74-Rr8">
+                            <rect key="frame" x="8" y="12" width="125" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="125" id="6Gx-GU-2gx"/>
+                                <constraint firstAttribute="height" constant="21" id="KLq-qp-cHe"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="16"/>
+                            <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="45" id="Oic-mL-wCn"/>
+                        <constraint firstItem="9A5-74-Rr8" firstAttribute="top" secondItem="LXR-zO-FPU" secondAttribute="top" constant="12" id="PQM-EM-hsR"/>
+                        <constraint firstItem="9A5-74-Rr8" firstAttribute="leading" secondItem="LXR-zO-FPU" secondAttribute="leading" constant="8" id="ziv-xH-Tfl"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="at1-nJ-efV" userLabel="separator">
+                    <rect key="frame" x="0.0" y="53" width="375" height="1"/>
+                    <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="PD2-IS-Ha4"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r3j-kf-8r4" userLabel="Category Name">
+                    <rect key="frame" x="0.0" y="54" width="375" height="45"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W7O-g0-qdP">
+                            <rect key="frame" x="8" y="12" width="120" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="120" id="iJh-HT-Kry"/>
+                                <constraint firstAttribute="height" constant="21" id="tLi-IO-fSi"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="hqR-19-n0f">
+                            <rect key="frame" x="136" y="8" width="231" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="8hq-Dv-S74"/>
+                            </constraints>
+                            <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="45" id="2xe-dj-8IU"/>
+                        <constraint firstAttribute="trailing" secondItem="hqR-19-n0f" secondAttribute="trailing" constant="8" id="KWq-Yj-3LN"/>
+                        <constraint firstItem="W7O-g0-qdP" firstAttribute="top" secondItem="r3j-kf-8r4" secondAttribute="top" constant="12" id="fzx-Hd-fBv"/>
+                        <constraint firstItem="hqR-19-n0f" firstAttribute="leading" secondItem="W7O-g0-qdP" secondAttribute="trailing" constant="8" id="ihX-RP-EjV"/>
+                        <constraint firstItem="W7O-g0-qdP" firstAttribute="leading" secondItem="r3j-kf-8r4" secondAttribute="leading" constant="8" id="mtw-o0-n45"/>
+                        <constraint firstItem="hqR-19-n0f" firstAttribute="top" secondItem="r3j-kf-8r4" secondAttribute="top" constant="8" id="vgr-B8-9ZZ"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ASa-Oy-iGs" userLabel="separator">
+                    <rect key="frame" x="0.0" y="99" width="375" height="1"/>
+                    <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="NVz-Z0-HS3"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cpc-qy-Gcl" userLabel="Parent Category">
+                    <rect key="frame" x="0.0" y="100" width="375" height="45"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parent Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7d-My-lVb">
+                            <rect key="frame" x="8" y="12" width="120" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="Nc9-Y4-3bG"/>
+                                <constraint firstAttribute="width" constant="120" id="kQH-Iz-KGr"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZyV-zn-FAb">
+                            <rect key="frame" x="359" y="15" width="8" height="15"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="15" id="Bv8-E1-KsD"/>
+                                <constraint firstAttribute="width" constant="8" id="vYM-Ig-TEd"/>
+                            </constraints>
+                            <state key="normal" image="right2">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="arrowAction:" destination="UaV-Hc-XA0" eventType="touchUpInside" id="zvv-Bd-Rfd"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NONE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EXc-nd-dxt">
+                            <rect key="frame" x="136" y="12" width="215" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="rye-Dj-zLB"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                            <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="ZyV-zn-FAb" firstAttribute="top" secondItem="cpc-qy-Gcl" secondAttribute="top" constant="15" id="9Nd-8E-wdu"/>
+                        <constraint firstItem="EXc-nd-dxt" firstAttribute="top" secondItem="cpc-qy-Gcl" secondAttribute="top" constant="12" id="DZF-yj-kCb"/>
+                        <constraint firstItem="ZyV-zn-FAb" firstAttribute="leading" secondItem="EXc-nd-dxt" secondAttribute="trailing" constant="8" id="SNC-Ce-eTp"/>
+                        <constraint firstAttribute="trailing" secondItem="ZyV-zn-FAb" secondAttribute="trailing" constant="8" id="Wdr-zm-kp6"/>
+                        <constraint firstItem="U7d-My-lVb" firstAttribute="top" secondItem="cpc-qy-Gcl" secondAttribute="top" constant="12" id="Xcg-W1-sKF"/>
+                        <constraint firstItem="U7d-My-lVb" firstAttribute="leading" secondItem="cpc-qy-Gcl" secondAttribute="leading" constant="8" id="XwR-Ep-sCQ"/>
+                        <constraint firstItem="EXc-nd-dxt" firstAttribute="leading" secondItem="U7d-My-lVb" secondAttribute="trailing" constant="8" id="uka-Un-xE8"/>
+                        <constraint firstAttribute="height" constant="45" id="uzt-bA-bXC"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstItem="LXR-zO-FPU" firstAttribute="leading" secondItem="UaV-Hc-XA0" secondAttribute="leading" id="8Y8-8h-eD9"/>
+                <constraint firstItem="cpc-qy-Gcl" firstAttribute="leading" secondItem="UaV-Hc-XA0" secondAttribute="leading" id="HD4-x0-L6p"/>
+                <constraint firstAttribute="trailing" secondItem="at1-nJ-efV" secondAttribute="trailing" id="IyF-kR-rrM"/>
+                <constraint firstItem="r3j-kf-8r4" firstAttribute="leading" secondItem="UaV-Hc-XA0" secondAttribute="leading" id="KwG-VP-utd"/>
+                <constraint firstItem="at1-nJ-efV" firstAttribute="leading" secondItem="UaV-Hc-XA0" secondAttribute="leading" id="LMC-mX-OiK"/>
+                <constraint firstItem="at1-nJ-efV" firstAttribute="top" secondItem="LXR-zO-FPU" secondAttribute="bottom" id="MFh-y5-JGZ"/>
+                <constraint firstItem="r3j-kf-8r4" firstAttribute="top" secondItem="at1-nJ-efV" secondAttribute="bottom" id="TJw-V6-T2b"/>
+                <constraint firstItem="ASa-Oy-iGs" firstAttribute="leading" secondItem="UaV-Hc-XA0" secondAttribute="leading" id="c5X-QF-ZIO"/>
+                <constraint firstAttribute="trailing" secondItem="r3j-kf-8r4" secondAttribute="trailing" id="h3r-bE-ob3"/>
+                <constraint firstAttribute="trailing" secondItem="LXR-zO-FPU" secondAttribute="trailing" id="lDF-cr-cyT"/>
+                <constraint firstItem="cpc-qy-Gcl" firstAttribute="top" secondItem="ASa-Oy-iGs" secondAttribute="bottom" id="mg2-r3-uwU"/>
+                <constraint firstItem="LXR-zO-FPU" firstAttribute="top" secondItem="UaV-Hc-XA0" secondAttribute="top" constant="8" id="oDa-WR-WiF"/>
+                <constraint firstAttribute="trailing" secondItem="ASa-Oy-iGs" secondAttribute="trailing" id="oYb-FL-4O6"/>
+                <constraint firstItem="ASa-Oy-iGs" firstAttribute="top" secondItem="r3j-kf-8r4" secondAttribute="bottom" id="osE-Zt-b35"/>
+                <constraint firstAttribute="trailing" secondItem="cpc-qy-Gcl" secondAttribute="trailing" id="rAf-ap-c2I"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="categoryNameTextField" destination="hqR-19-n0f" id="Wnl-ib-MSb"/>
+                <outlet property="parentCategoryLabel" destination="EXc-nd-dxt" id="Hhu-Oy-p4c"/>
+            </connections>
+            <point key="canvasLocation" x="447.5" y="20.5"/>
+        </view>
+        <view contentMode="scaleToFill" id="gex-5u-WJK" customClass="CCSubCategoriesView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sub Categories" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OBv-nf-4rN">
+                    <rect key="frame" x="8" y="12" width="125" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="125" id="Ikg-Nf-C4w"/>
+                        <constraint firstAttribute="height" constant="21" id="Oke-Yy-uEn"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="16"/>
+                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YyV-rN-k1N">
+                    <rect key="frame" x="224" y="10" width="143" height="25"/>
+                    <color key="backgroundColor" red="0.43529411759999997" green="0.20392156859999999" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" priority="500" constant="143" id="3oA-zP-QId"/>
+                        <constraint firstAttribute="height" constant="25" id="KrX-Sg-e4h"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="12"/>
+                    <state key="normal" title="ADD SUB CATEGORY">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="addSubCategoryAction:" destination="gex-5u-WJK" eventType="touchUpInside" id="KsL-BR-pzg"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="YyV-rN-k1N" secondAttribute="trailing" constant="8" id="AFu-mg-xGW"/>
+                <constraint firstItem="OBv-nf-4rN" firstAttribute="leading" secondItem="gex-5u-WJK" secondAttribute="leading" constant="8" id="KM3-Vh-9yY"/>
+                <constraint firstItem="OBv-nf-4rN" firstAttribute="top" secondItem="gex-5u-WJK" secondAttribute="top" constant="12" id="s37-pH-eMN"/>
+                <constraint firstItem="YyV-rN-k1N" firstAttribute="top" secondItem="gex-5u-WJK" secondAttribute="top" constant="10" id="tiS-JT-hAB"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="addSubCategoryButton" destination="YyV-rN-k1N" id="oq4-Ig-6yJ"/>
+            </connections>
+            <point key="canvasLocation" x="447.5" y="196.5"/>
+        </view>
+        <view contentMode="scaleToFill" id="Diq-YZ-ZN8" customClass="CCCategoryItemsView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="trd-E6-0Ms">
+                    <rect key="frame" x="0.0" y="8" width="375" height="45"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Items under this Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dyM-e8-Fcy">
+                            <rect key="frame" x="8" y="12" width="193" height="21"/>
+                            <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="16"/>
+                            <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="prZ-Dr-rxx">
+                            <rect key="frame" x="253" y="10" width="114" height="25"/>
+                            <color key="backgroundColor" red="0.43529411759999997" green="0.20392156859999999" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="12"/>
+                            <state key="normal" title="ADD NEW ITEM">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="addNewItemAction:" destination="Diq-YZ-ZN8" eventType="touchUpInside" id="YME-LT-UJ6"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="addNewItemButton" destination="prZ-Dr-rxx" id="x3C-eB-yB6"/>
+                <outlet property="collectionView" destination="rsG-wa-4Yq" id="ouC-00-Efd"/>
+            </connections>
+            <point key="canvasLocation" x="447.5" y="294.5"/>
+        </view>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="We4-ri-0y6" customClass="CCCItemImagesView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="5" width="375" height="130"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="rsG-wa-4Yq">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="120" id="vXn-ee-RIj"/>
+                    </constraints>
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="15" minimumInteritemSpacing="0.0" id="r0K-zI-XkF">
+                        <size key="itemSize" width="120" height="120"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="rsG-wa-4Yq" firstAttribute="leading" secondItem="We4-ri-0y6" secondAttribute="leading" id="UW4-4k-sCI"/>
+                <constraint firstItem="rsG-wa-4Yq" firstAttribute="top" secondItem="We4-ri-0y6" secondAttribute="top" id="eLN-by-nTK"/>
+                <constraint firstAttribute="trailing" secondItem="rsG-wa-4Yq" secondAttribute="trailing" id="oFl-bU-Dxf"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="collectionView" destination="rsG-wa-4Yq" id="pQj-zj-WN9"/>
+            </connections>
+            <point key="canvasLocation" x="447.5" y="474"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="right2" width="97" height="200"/>
+    </resources>
+</document>

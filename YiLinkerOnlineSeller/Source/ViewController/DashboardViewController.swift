@@ -168,7 +168,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             productManagement.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(productManagement, animated: true)
         } else if indexPath.row == 4 {
-            
+            var customizedCategory = CustomizedCategoryViewController(nibName: "CustomizedCategoryViewController", bundle: nil)
+            self.navigationController?.pushViewController(customizedCategory, animated:true)
         } else if indexPath.row == 5 {
             let productUploadTableViewController: ProductUploadTableViewController = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
             let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadTableViewController)

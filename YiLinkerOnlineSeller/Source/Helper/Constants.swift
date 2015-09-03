@@ -31,6 +31,8 @@ struct Constants {
 
         static let pmYesGreenColor: UIColor = HexaColor.colorWithHexa(0x54b6a7)
         static let pmNoBrownColor: UIColor = HexaColor.colorWithHexa(0x666666)
+        
+        static let hex666666: UIColor = HexaColor.colorWithHexa(0x666666)
 
         static let uploadViewColor: UIColor = HexaColor.colorWithHexa(0x54B6A7)
     }

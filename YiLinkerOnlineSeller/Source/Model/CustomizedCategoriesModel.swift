@@ -11,7 +11,7 @@ import UIKit
 class CustomizedCategoriesModel: NSObject {
     var message: String = ""
     var isSuccessful: Bool = false
-    var customizedCategories: [CustomizedCategoryModel]?
+    var customizedCategories: [CustomizedCategoryModel]
     
     init(message: String, isSuccessful: Bool, customizedCategories: [CustomizedCategoryModel]) {
         self.message = message
