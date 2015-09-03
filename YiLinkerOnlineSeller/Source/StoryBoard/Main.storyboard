@@ -181,6 +181,9 @@
                         <color key="barTintColor" red="0.37647058820000001" green="0.1215686275" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="aQm-jw-7MA" kind="relationship" relationship="rootViewController" id="ZWd-PM-gLW"/>
+                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z5z-fb-b7o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -329,7 +332,7 @@
                                     <outlet property="delegate" destination="nOb-Vl-TXr" id="7Gh-fd-Ggt"/>
                                 </connections>
                             </tableView>
-                            <view alpha="0.5" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wyL-yh-FrS">
+                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wyL-yh-FrS">
                                 <rect key="frame" x="0.0" y="114" width="375" height="600"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -364,9 +367,9 @@
                         </subviews>
                         <color key="backgroundColor" red="0.49803921569999998" green="0.0" blue="0.49803921569999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="wyL-yh-FrS" firstAttribute="top" secondItem="P4i-u7-5FG" secondAttribute="bottom" constant="-106" id="0JD-Sx-zlC"/>
+                            <constraint firstItem="wyL-yh-FrS" firstAttribute="top" secondItem="P4i-u7-5FG" secondAttribute="bottom" constant="8" id="0JD-Sx-zlC"/>
                             <constraint firstItem="Kw1-t8-18t" firstAttribute="top" secondItem="P4i-u7-5FG" secondAttribute="bottom" constant="8" id="ACm-TV-7Hy"/>
-                            <constraint firstItem="VdL-4l-7VO" firstAttribute="top" secondItem="wyL-yh-FrS" secondAttribute="bottom" constant="67" id="CYY-fn-ERs"/>
+                            <constraint firstItem="VdL-4l-7VO" firstAttribute="top" secondItem="wyL-yh-FrS" secondAttribute="bottom" constant="-47" id="CYY-fn-ERs"/>
                             <constraint firstItem="3aD-Xm-eWu" firstAttribute="leading" secondItem="nOb-Vl-TXr" secondAttribute="leadingMargin" constant="-16" id="ECq-O1-Exi"/>
                             <constraint firstItem="VdL-4l-7VO" firstAttribute="top" secondItem="Kw1-t8-18t" secondAttribute="bottom" constant="433" id="HQ0-kw-Lky"/>
                             <constraint firstAttribute="trailingMargin" secondItem="3aD-Xm-eWu" secondAttribute="trailing" constant="-16" id="Lql-KA-8Vd"/>
@@ -397,7 +400,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Chg-4g-o66" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7960.5" y="2736.5"/>
+            <point key="canvasLocation" x="7959.5" y="2704.5"/>
         </scene>
     </scenes>
     <resources>
