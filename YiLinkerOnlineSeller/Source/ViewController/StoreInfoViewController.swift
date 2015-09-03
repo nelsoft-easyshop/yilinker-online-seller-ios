@@ -99,14 +99,14 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
             self.storeInfoHeader.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
             self.storeInfoHeader.storeNameTextField.text = self.storeInfoModel?.store_name
             self.storeInfoHeader.mobilePhoneTextField.text = self.storeInfoModel?.contact_number
-            
+            self.storeInfoHeader.verifyButton.setTitle("Change", forState: UIControlState.Normal)
+            self.storeInfoHeader.verifyButton.tag = 2
+           /*
             if self.storeInfoModel?.contact_number == nil {
-                self.storeInfoHeader.verifyButton.setTitle("Verify", forState: UIControlState.Normal)
-                self.storeInfoHeader.verifyButton.tag = 1
+            
             } else {
-                self.storeInfoHeader.verifyButton.setTitle("Change", forState: UIControlState.Normal)
-                self.storeInfoHeader.verifyButton.tag = 2
-            }
+            
+            } */
             self.storeInfoTableView.reloadData()
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
@@ -170,22 +170,6 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     //Store Details Function
     func storeInfoVerify() {
         println("verify")
-        /*
-       
-
-        var attributeModal = VerifyNumberViewController(nibName: "VerifyNumberViewController", bundle: nil)
-        attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        attributeModal.providesPresentationContextTransitionStyle = true
-        attributeModal.definesPresentationContext = true
-        self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
-
-        */
-//        var dimView = UIView(frame: CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.layer.frame.width, self.view.layer.frame.height))
-//        dimView.backgroundColor=UIColor.blackColor()
-//        dimView.alpha = 0.5
-//        self.navigationController?.view.addSubview(dimView)
-//        dimView.hidden = true
-        
         self.showView()
         
         if storeInfoHeader.verifyButton.tag == 1 {
@@ -313,7 +297,9 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func setMobileNumber(newNumber: String) {
-       self.storeInfoHeader.mobilePhoneTextField.text = newNumber
+        self.storeInfoHeader.mobilePhoneTextField.text = newNumber
+        self.storeInfoHeader.verifyButton.setTitle("Verify", forState: UIControlState.Normal)
+        self.storeInfoHeader.verifyButton.tag = 1
         UIView.animateWithDuration(0.25, animations: {
             self.dimView.alpha = 0
             }, completion: { finished in

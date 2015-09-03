@@ -31,6 +31,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Dim view
         dimView = UIView(frame: self.view.bounds)
         dimView.backgroundColor=UIColor.blackColor()
         dimView.alpha = 0.5
@@ -38,8 +39,10 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         dimView.hidden = true
         
         self.edgesForExtendedLayout = .None
+        
         self.titleView()
         self.backButton()
+        
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: self.view.frame.size.width - 20, height: 79)
         layout.minimumLineSpacing = 20
@@ -47,6 +50,13 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         changeAddressCollectionView.collectionViewLayout = layout
         changeAddressCollectionView.dataSource = self
         changeAddressCollectionView.delegate = self
+        
+        if IphoneType.isIphone5() {
+            layout.itemSize = CGSize(width: self.view.frame.size.width - 80, height: 79)
+        } else {
+            layout.itemSize = CGSize(width: self.view.frame.size.width - 20, height: 79)
+        }
+        
         self.regsiterNib()
         self.fireSellerAddress()
     }
