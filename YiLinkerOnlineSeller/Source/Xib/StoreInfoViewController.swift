@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate {
+class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate {
     
     @IBOutlet weak var storeInfoTableView: UITableView!
     
@@ -172,11 +172,7 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
 //        self.navigationController?.view.addSubview(dimView)
 //        dimView.hidden = true
         
-        dimView.hidden = false
-        UIView.animateWithDuration(0.25, animations: {
-            self.dimView.alpha = 0.5
-            }, completion: { finished in
-        })
+        self.showView()
         
         if storeInfoHeader.verifyButton.tag == 1 {
             var verifyNumberViewController = VerifyNumberViewController(nibName: "VerifyNumberViewController", bundle: nil)
@@ -228,6 +224,42 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func changeEmailAddress(){
         println("Email Address")
+        var changeEmailViewController = ChangeEmailViewController(nibName: "ChangeEmailViewController", bundle: nil)
+        changeEmailViewController.delegate = self
+        changeEmailViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        changeEmailViewController.providesPresentationContextTransitionStyle = true
+        changeEmailViewController.definesPresentationContext = true
+        changeEmailViewController.view.frame.origin.y = changeEmailViewController.view.frame.size.height
+        changeEmailViewController.type = "email"
+        self.navigationController?.presentViewController(changeEmailViewController, animated:true, completion: nil)
+        
+        self.showView()
+    }
+    
+    func changePassword() {
+        println("Email Password")
+        var changeEmailViewController = ChangeEmailViewController(nibName: "ChangeEmailViewController", bundle: nil)
+        changeEmailViewController.delegate = self
+        changeEmailViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        changeEmailViewController.providesPresentationContextTransitionStyle = true
+        changeEmailViewController.definesPresentationContext = true
+        changeEmailViewController.view.frame.origin.y = changeEmailViewController.view.frame.size.height
+        changeEmailViewController.titleLabel.text = "Change Password"
+        changeEmailViewController.oldEmailLabel.text = "Old Password"
+        changeEmailViewController.newEmailLabel.text = "New Password"
+        changeEmailViewController.confirmEmailLabel.text = "Confirm Password"
+        changeEmailViewController.oldEmailAddressTextField.placeholder = "Enter old password"
+        changeEmailViewController.newEmailAddressTextField.placeholder = "Enter new password"
+        changeEmailViewController.confirmEmailAddressTextField.placeholder = "Confirm new password"
+        changeEmailViewController.newEmailAddressTextField.secureTextEntry = true
+        changeEmailViewController.confirmEmailAddressTextField.secureTextEntry = true
+        changeEmailViewController.type = "password"
+        self.navigationController?.presentViewController(changeEmailViewController, animated:true, completion: nil)
+        self.showView()
+    }
+    
+    func submit(type: String) {
+        
     }
     
     func changeMobileNumber(){
@@ -258,12 +290,7 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func updateStoreAddressDetail(user_address_id: Int, location_id: Int, title: String, unit_number: String, building_name: String, street_number: String, street_name: String, subdivision: String, zip_code: String, street_address: String, country: String, island: String, region: String, province: String, city: String, municipality: String, barangay: String, longitude: Double, latitude: Double, landline: String, is_default: Bool) {
-        var unitNumber: String = ""
-        var bldgName: String = ""
-        var streetNumber: String = ""
-        var streetName: String = ""
-        var subdivision: String = ""
-        var zipCode: String = ""
+    
         self.storeInfoModel?.title = title
         self.storeInfoModel?.store_address = unit_number + " " + building_name + ", " + street_number + " " + street_name + " " + subdivision + ", " + zip_code
         
@@ -287,6 +314,16 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
                 self.dimView.hidden = true
         })
     }
+    
+    func showView(){
+        dimView.hidden = false
+        UIView.animateWithDuration(0.25, animations: {
+            self.dimView.alpha = 0.5
+            }, completion: { finished in
+        })
+    }
+
+    
     /*
     // MARK: - Navigation
 

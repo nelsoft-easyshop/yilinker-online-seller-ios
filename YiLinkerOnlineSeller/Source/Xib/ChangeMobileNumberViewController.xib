@@ -20,6 +20,7 @@
                 <outlet property="newNumberTextField" destination="4n3-Z9-ZzD" id="SdP-D8-kNJ"/>
                 <outlet property="oldNumberTextField" destination="Vo8-Wb-PZj" id="yKJ-P2-FXD"/>
                 <outlet property="submitButton" destination="F4e-jY-O8N" id="Krg-h4-yqm"/>
+                <outlet property="topConstraint" destination="cj6-MO-bJh" id="qfN-Aq-75E"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -41,7 +42,7 @@
                                         <constraint firstAttribute="height" constant="30" id="dhs-oV-bF5"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
-                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter new number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4n3-Z9-ZzD">
@@ -62,7 +63,7 @@
                                         <constraint firstAttribute="width" constant="93" id="eCs-y8-LkD"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
-                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="+63xxxxxxxxxx" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vo8-Wb-PZj">
@@ -160,8 +161,8 @@
             </subviews>
             <constraints>
                 <constraint firstItem="9kf-eJ-roQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="1FK-PS-ey4"/>
-                <constraint firstAttribute="bottom" secondItem="9kf-eJ-roQ" secondAttribute="bottom" constant="180" id="4PY-sO-VdW"/>
                 <constraint firstAttribute="trailing" secondItem="9kf-eJ-roQ" secondAttribute="trailing" constant="8" id="Lbe-6a-fdd"/>
+                <constraint firstItem="9kf-eJ-roQ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="158" id="cj6-MO-bJh"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="90.5" y="321"/>

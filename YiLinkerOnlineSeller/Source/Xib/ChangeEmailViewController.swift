@@ -1,33 +1,43 @@
 //
-//  ChangeMobileNumberViewController.swift
+//  ChangeEmailViewController.swift
 //  YiLinkerOnlineSeller
 //
-//  Created by Joriel Oller Fronda on 8/30/15.
+//  Created by Joriel Oller Fronda on 9/3/15.
 //  Copyright (c) 2015 YiLinker. All rights reserved.
 //
 
 import UIKit
 
-protocol ChangeMobileNumberViewControllerDelegate {    func dismissView()
+protocol ChangeEmailViewControllerDelegate {
+    func dismissView()
 }
 
-class ChangeMobileNumberViewController: UIViewController {
-
-   
-    @IBOutlet weak var topConstraint: NSLayoutConstraint!
+class ChangeEmailViewController: UIViewController {
+    
+    @IBOutlet weak var submitEmailAddressButton: DynamicRoundedButton!
+    
     @IBOutlet weak var closeButton: UIButton!
     
-    @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var oldEmailAddressTextField: UITextField!
     
-    @IBOutlet weak var oldNumberTextField: UITextField!
+    @IBOutlet weak var newEmailAddressTextField: UITextField!
     
-    @IBOutlet weak var newNumberTextField: UITextField!
+    @IBOutlet weak var confirmEmailAddressTextField: UITextField!
     
-    var delegate: ChangeMobileNumberViewControllerDelegate?
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var oldEmailLabel: UILabel!
+   
+    @IBOutlet weak var newEmailLabel: UILabel!
+    
+    @IBOutlet weak var confirmEmailLabel: UILabel!
+    
+    var type: String = ""
+    var delegate: ChangeEmailViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Do any additional setup after loading the view.
     }
 
@@ -41,16 +51,16 @@ class ChangeMobileNumberViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    @IBAction func submit(sender: AnyObject){
+    @IBAction func sumbitAction(sender: AnyObject) {
+        self.delegate?.dismissView()
+        if type == "email" {
+            println("Submit email")
+        } else {
+            println("Submit password")
+        }
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
-    @IBAction func textFieldDidBeginEditing(sender: AnyObject) {
-        topConstraint.constant = 100
-    }
-    
-    
-    
+
     /*
     // MARK: - Navigation
 

@@ -10,7 +10,7 @@ import UIKit
 
 protocol StoreInfoAccountInformationTableViewCellDelegate {
     func saveAccountInfo()
-    func changeMobileNumber()
+    func changePassword()
     func changeEmailAddress()
 }
 
@@ -44,15 +44,15 @@ class StoreInfoAccountInformationTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    @IBAction func changeMobile(sender: AnyObject){
-        println("Change Mobile")
-        self.delegate?.changeMobileNumber()
+    @IBAction func changeEmailAddress(sender: AnyObject){
+        println("Change Email address")
+        self.delegate?.changeEmailAddress()
     }
     
     
-    @IBAction func changeEmail(sender: AnyObject){
-        println("Change Email")
-        self.delegate?.changeEmailAddress()
+    @IBAction func changePassword(sender: AnyObject){
+        println("Change password")
+        self.delegate?.changePassword()
     }
     
     

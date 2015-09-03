@@ -59,14 +59,6 @@
                             <constraint firstAttribute="height" constant="46" id="xen-3O-APx"/>
                         </constraints>
                     </view>
-                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your desired store name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EOO-H0-sgx">
-                        <rect key="frame" x="8" y="267" width="359" height="30"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="30" id="Bix-Hp-M3S"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits" returnKeyType="next"/>
-                    </textField>
                     <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your contact number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eHR-NW-Ujy">
                         <rect key="frame" x="8" y="333" width="359" height="30"/>
                         <constraints>
@@ -106,7 +98,7 @@
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dXb-Oo-kKP">
                         <rect key="frame" x="291" y="335" width="73" height="26"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                        <color key="backgroundColor" red="0.43529411764705883" green="0.44313725490196076" blue="0.47450980392156861" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="73" id="lkH-ot-Kq4"/>
                             <constraint firstAttribute="height" constant="26" id="tVi-Xe-Soo"/>
@@ -150,7 +142,7 @@
                                                 </constraints>
                                             </imageView>
                                         </subviews>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="bG8-T7-62k" firstAttribute="centerX" secondItem="b83-6n-JIw" secondAttribute="centerX" id="0Gb-mJ-9Nc"/>
                                             <constraint firstAttribute="bottom" secondItem="bG8-T7-62k" secondAttribute="bottom" constant="29" id="1xT-Sc-VZu"/>
@@ -160,6 +152,7 @@
                                             <constraint firstItem="bG8-T7-62k" firstAttribute="leading" secondItem="b83-6n-JIw" secondAttribute="leading" constant="22" id="X9A-fM-VJk"/>
                                             <constraint firstItem="bG8-T7-62k" firstAttribute="leading" secondItem="b83-6n-JIw" secondAttribute="leading" constant="22" id="XAO-DQ-ztk"/>
                                             <constraint firstAttribute="trailing" secondItem="bG8-T7-62k" secondAttribute="trailing" constant="22" id="Z8V-L2-riY"/>
+                                            <constraint firstAttribute="width" secondItem="b83-6n-JIw" secondAttribute="height" multiplier="1:1" id="f1M-sl-tv2"/>
                                             <constraint firstItem="bG8-T7-62k" firstAttribute="top" secondItem="d40-TW-vrB" secondAttribute="bottom" constant="8" symbolic="YES" id="jhe-fL-fSK"/>
                                             <constraint firstItem="bG8-T7-62k" firstAttribute="top" secondItem="b83-6n-JIw" secondAttribute="top" constant="61" id="qCL-Mj-rew"/>
                                             <constraint firstItem="bG8-T7-62k" firstAttribute="leading" secondItem="b83-6n-JIw" secondAttribute="leading" constant="22" id="uhF-zq-Wte"/>
@@ -203,7 +196,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="yru-Jd-P6Z" secondAttribute="trailing" constant="22" id="2L9-h6-xSU"/>
                                             <constraint firstAttribute="trailing" secondItem="hKi-hD-WrH" secondAttribute="trailing" constant="47" id="5Ca-6b-dHG"/>
@@ -212,6 +205,7 @@
                                             <constraint firstItem="hKi-hD-WrH" firstAttribute="leading" secondItem="jW7-DH-mHD" secondAttribute="leading" constant="46" id="fD7-pT-Yf5"/>
                                             <constraint firstItem="hKi-hD-WrH" firstAttribute="top" secondItem="jW7-DH-mHD" secondAttribute="top" constant="29" id="pK5-0D-YRQ"/>
                                             <constraint firstAttribute="bottom" secondItem="yru-Jd-P6Z" secondAttribute="bottom" constant="29" id="wAZ-iD-Pfn"/>
+                                            <constraint firstAttribute="width" secondItem="jW7-DH-mHD" secondAttribute="height" multiplier="1:1" id="wSE-Dh-GOu"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -241,6 +235,14 @@
                             <constraint firstItem="Pgz-Rm-cfh" firstAttribute="top" secondItem="X2p-zv-8b7" secondAttribute="top" constant="21" id="tPb-WS-rZZ"/>
                         </constraints>
                     </view>
+                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your desired store name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EOO-H0-sgx">
+                        <rect key="frame" x="8" y="267" width="359" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="Bix-Hp-M3S"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                    </textField>
                 </subviews>
                 <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>

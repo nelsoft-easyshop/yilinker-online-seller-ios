@@ -109,6 +109,8 @@
 		F7C305F91B9346C000C1B084 /* ChangeBankAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C305F71B9346C000C1B084 /* ChangeBankAccountViewController.swift */; };
 		F7C305FA1B9346C000C1B084 /* ChangeBankAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C305F81B9346C000C1B084 /* ChangeBankAccountViewController.xib */; };
 		F7C305FE1B937DEA00C1B084 /* StoreInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C305FD1B937DEA00C1B084 /* StoreInfoViewController.xib */; };
+		F7C40F481B97FFD20091C16C /* ChangeEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C40F461B97FFD20091C16C /* ChangeEmailViewController.swift */; };
+		F7C40F491B97FFD20091C16C /* ChangeEmailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C40F471B97FFD20091C16C /* ChangeEmailViewController.xib */; };
 		F7CCDB9C1B946B5B000F5AD4 /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCDB9A1B946B5B000F5AD4 /* CategoryTableViewCell.swift */; };
 		F7CCDB9D1B946B5B000F5AD4 /* CategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDB9B1B946B5B000F5AD4 /* CategoryTableViewCell.xib */; };
 		F7CCDBA11B94831C000F5AD4 /* SearchSellerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCDB9F1B94831C000F5AD4 /* SearchSellerViewController.swift */; };
@@ -267,6 +269,8 @@
 		F7C305F71B9346C000C1B084 /* ChangeBankAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeBankAccountViewController.swift; sourceTree = "<group>"; };
 		F7C305F81B9346C000C1B084 /* ChangeBankAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangeBankAccountViewController.xib; sourceTree = "<group>"; };
 		F7C305FD1B937DEA00C1B084 /* StoreInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoViewController.xib; sourceTree = "<group>"; };
+		F7C40F461B97FFD20091C16C /* ChangeEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeEmailViewController.swift; sourceTree = "<group>"; };
+		F7C40F471B97FFD20091C16C /* ChangeEmailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangeEmailViewController.xib; sourceTree = "<group>"; };
 		F7CCDB9A1B946B5B000F5AD4 /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
 		F7CCDB9B1B946B5B000F5AD4 /* CategoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryTableViewCell.xib; sourceTree = "<group>"; };
 		F7CCDB9F1B94831C000F5AD4 /* SearchSellerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSellerViewController.swift; sourceTree = "<group>"; };
@@ -481,6 +485,8 @@
 				F7BF5C921B94073600AEB9DA /* CreateNewBankAccountViewController.xib */,
 				F7BF5C971B94073600AEB9DA /* ChangeMobileNumberViewController.swift */,
 				F7BF5C981B94073600AEB9DA /* ChangeMobileNumberViewController.xib */,
+				F7C40F461B97FFD20091C16C /* ChangeEmailViewController.swift */,
+				F7C40F471B97FFD20091C16C /* ChangeEmailViewController.xib */,
 				F7D37CA71B93041B00FA7B16 /* ChangeAddressViewController.swift */,
 				F7D37CAB1B93042A00FA7B16 /* ChangeAddressViewController.xib */,
 				F7C305F71B9346C000C1B084 /* ChangeBankAccountViewController.swift */,
@@ -731,6 +737,7 @@
 				F7BF5C801B93D56E00AEB9DA /* StoreInfoBankAccountTableViewCell.xib in Resources */,
 				0CF28F031B8CA2E9005B2E54 /* Panton Thin Italic.otf in Resources */,
 				F78BB5011B95428A0010DAF7 /* FilterFooterTableViewCell.xib in Resources */,
+				F7C40F491B97FFD20091C16C /* ChangeEmailViewController.xib in Resources */,
 				F7D37CB61B9304C100FA7B16 /* NewAddressTableViewCell.xib in Resources */,
 				0CF28EF41B8CA2E9005B2E54 /* Black Italic.otf in Resources */,
 				F7BF5C751B93738800AEB9DA /* StoreInfoAccountInformationTableViewCell.xib in Resources */,
@@ -864,6 +871,7 @@
 				F7C13D7B1B95B90B00CE8EBB /* VerifyViewController.swift in Sources */,
 				F7D37CB21B93049100FA7B16 /* AddAddressTableViewController.swift in Sources */,
 				0CF28EDF1B8C868D005B2E54 /* Constants.swift in Sources */,
+				F7C40F481B97FFD20091C16C /* ChangeEmailViewController.swift in Sources */,
 				F7BF5C7E1B93AB2E00AEB9DA /* AppDelegate.swift in Sources */,
 				F7C13D771B95B6DD00CE8EBB /* CongratulationsViewController.swift in Sources */,
 				F7BF5C701B93733A00AEB9DA /* StoreInfoBankAccountTableViewCell.swift in Sources */,

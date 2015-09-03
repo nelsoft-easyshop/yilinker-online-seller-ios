@@ -10,22 +10,32 @@ import UIKit
 
 protocol ChangeAddressViewControllerDelegate {
     func updateStoreAddressDetail(user_address_id: Int, location_id: Int, title: String, unit_number: String, building_name: String, street_number: String, street_name: String, subdivision: String, zip_code: String, street_address: String, country: String, island: String, region: String, province: String, city: String, municipality: String, barangay: String, longitude: Double, latitude: Double, landline: String, is_default: Bool)
+    func dismissView()
 }
 
 class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, ChangeAddressCollectionViewCellDelegate, ChangeAddressFooterCollectionViewCellDelegate, AddAddressTableViewControllerDelegate, CreateNewAddressViewControllerDelegate {
 
     @IBOutlet weak var changeAddressCollectionView: UICollectionView!
    
-    var cellCount: Int = 3
+    var cellCount: Int = 0
     var selectedIndex: Int = 0
     
     var delegate: ChangeAddressViewControllerDelegate?
     
     var storeAddressModel: StoreAddressModel!
     
+    var dimView: UIView = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        dimView = UIView(frame: self.view.bounds)
+        dimView.backgroundColor=UIColor.blackColor()
+        dimView.alpha = 0.5
+        self.navigationController?.view.addSubview(dimView)
+        dimView.hidden = true
+        
+        self.edgesForExtendedLayout = .None
         self.titleView()
         self.backButton()
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -36,6 +46,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         changeAddressCollectionView.dataSource = self
         changeAddressCollectionView.delegate = self
         self.regsiterNib()
+        self.fireSellerAddress()
     }
     
     func titleView() {
@@ -53,7 +64,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             self.storeAddressModel = StoreAddressModel.parseStoreAddressDataFromDictionary(responseObject as! NSDictionary)
             
             self.cellCount = self.storeAddressModel!.title.count
-            for var num  = 0; num < self.storeAddressModel?.user_address_id.count; num++ {
+            for var num  = 0; num < self.storeAddressModel?.title.count; num++ {
                 if self.storeAddressModel.is_default[num]{
                     self.selectedIndex = num
                 }
@@ -137,10 +148,10 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             if self.storeAddressModel != nil {
                 cell.titleLabel.text = self.storeAddressModel!.title[indexPath.row]
                 
-                cell.subTitleLabel.text = "\(self.storeAddressModel!.unit_number[indexPath.row])"+""+self.storeAddressModel!.building_name[indexPath.row]+", "+self.storeAddressModel!.street_number[indexPath.row]+""+self.storeAddressModel!.street_name[indexPath.row]+", "+self.storeAddressModel!.subdivision[indexPath.row]+", "+self.storeAddressModel!.zip_code[indexPath.row]
+               cell.subTitleLabel.text = "\(self.storeAddressModel!.unit_number[indexPath.row])"+" "+self.storeAddressModel!.building_name[indexPath.row]+", "+self.storeAddressModel!.street_number[indexPath.row]+" "+self.storeAddressModel!.street_name[indexPath.row]+", "+self.storeAddressModel!.subdivision[indexPath.row]+", "+self.storeAddressModel!.zip_code[indexPath.row]
                 
                 cell.titleLabel.tag = self.storeAddressModel!.location_id[indexPath.row]
-
+                //println("\(self.storeAddressModel.zip_code[0])")
                 if indexPath.row == self.selectedIndex {
                     cell.layer.borderWidth = 1
                     cell.layer.borderColor = Constants.Colors.selectedGreenColor.CGColor
@@ -225,7 +236,14 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         /*let indexPath: NSIndexPath = NSIndexPath(forItem: self.cellCount, inSection: 0)
         self.addCellInIndexPath(indexPath)*/
         
+        dimView.hidden = false
+        UIView.animateWithDuration(0.25, animations: {
+            self.dimView.alpha = 0.5
+            }, completion: { finished in
+        })
+        
         var attributeModal = CreateNewAddressViewController(nibName: "CreateNewAddressViewController", bundle: nil)
+        attributeModal.delegate = self
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         attributeModal.providesPresentationContextTransitionStyle = true
         attributeModal.definesPresentationContext = true
@@ -240,5 +258,13 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     func updateCollectionView() {
         fireSellerAddress()
         self.changeAddressCollectionView.reloadData()
+    }
+    
+    func dismmissDimView() {
+        dimView.hidden = true
+        UIView.animateWithDuration(0.25, animations: {
+            self.dimView.alpha = 0
+            }, completion: { finished in
+        })
     }
 }

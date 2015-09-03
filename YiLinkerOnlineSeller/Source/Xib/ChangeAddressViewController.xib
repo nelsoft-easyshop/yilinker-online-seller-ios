@@ -6,8 +6,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChangeAddressViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
             <connections>
-                <outlet property="collectionView" destination="uch-Kw-fBS" id="URd-lj-cWj"/>
-                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="changeAddressCollectionView" destination="uch-Kw-fBS" id="1Mc-AL-uGW"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="Lvv-Rm-oT2"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
