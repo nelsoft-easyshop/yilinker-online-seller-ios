@@ -41,4 +41,12 @@ struct Constants {
         static let grantRefreshToken = "refresh_token"
         static let grantSeller = "http://yilinker-online.com/grant/seller"
     }
+    
+    struct Checkout {
+        static let changeAddressCollectionViewCellNibNameAndIdentifier = "ChangeAddressCollectionViewCell"
+        static let changeAddressFooterCollectionViewCellNibNameAndIdentifier = "ChangeAddressFooterCollectionViewCell"
+        
+        static let newAddressTableViewCellNibNameAndIdentifier = "NewAddressTableViewCell"
+        
+    }
 }
