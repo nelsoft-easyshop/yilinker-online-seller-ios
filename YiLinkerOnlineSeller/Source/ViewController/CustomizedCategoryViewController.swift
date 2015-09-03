@@ -16,6 +16,10 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource,
     var subCategories: [NSArray] = []
     var categoryItems: [NSArray] = []
     
+    var hud: MBProgressHUD?
+    
+    var customizedCategoriesModel: CustomizedCategoriesModel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,6 +29,7 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource,
         self.tableView.registerNib(nib, forCellReuseIdentifier: "CustomizedCategory")
         
         customizedNavigationBar()
+        requestGetCustomizedCategories()
 
     }
 
@@ -48,6 +53,19 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource,
         self.navigationItem.rightBarButtonItems = [UIBarButtonItem(image: UIImage(named: "addCategory"), style: .Plain, target: self, action: "addCategoryAction"), navigationSpacer]
     }
 
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
     // MARK: - Actions
     
     func backAction() {
@@ -61,29 +79,52 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource,
         self.navigationController?.presentViewController(rootViewController, animated: true, completion: nil)
     }
     
+    // MARK: - Requests
+    
+    func requestGetCustomizedCategories() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
+
+        manager.POST(APIAtlas.getCustomizedCategories, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.customizedCategoriesModel = CustomizedCategoriesModel.parseDataWithDictionary(responseObject as! NSDictionary)
+            self.tableView.reloadData()
+            self.hud?.hide(true)
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println(error)
+                self.hud?.hide(true)
+        })
+    }
+    
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return parentCategory.count
+        if customizedCategoriesModel == nil {
+            return 0
+        }
+        
+        return customizedCategoriesModel.customizedCategories.count//parentCategory.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: CustomizedCategoryTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("CustomizedCategory") as! CustomizedCategoryTableViewCell
         cell.selectionStyle = .None
-
-//        let subCategoriesString = ", ".join(subCategoriesArray)
         
-        cell.parentCategoryLabel.text = self.parentCategory[indexPath.row]
+        cell.parentCategoryLabel.text = customizedCategoriesModel.customizedCategories[indexPath.row].name //self.parentCategory[indexPath.row]
 
-        let subCategoriesArray: NSArray = self.subCategories[indexPath.row]
-        var sub: String = ""
-        for i in 0..<subCategoriesArray.count {
-            sub += subCategoriesArray[i] as! String
-            if i != subCategoriesArray.count - 1 {
-                sub += ", "
-            }
-        }
-        cell.subCategoriesLabel.text = sub
+//        let subCategoriesArray: NSArray = self.subCategories[indexPath.row]
+//        var sub: String = ""
+//        for i in 0..<subCategoriesArray.count {
+//            sub += subCategoriesArray[i] as! String
+//            if i != subCategoriesArray.count - 1 {
+//                sub += ", "
+//            }
+//        }
+//        cell.subCategoriesLabel.text = sub
         
 //        let cell = UITableViewCell(style: .Default, reuseIdentifier: "identifier")
 //        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
@@ -100,8 +141,8 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource,
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let addCustomizedCategory = AddCustomizedCategoryViewController(nibName: "AddCustomizedCategoryViewController", bundle: nil)
-        addCustomizedCategory.subCategoriesItems = 4
-        addCustomizedCategory.imageItems = 5
+//        addCustomizedCategory.requestEditCustomizedCategories(self.customizedCategoriesModel.customizedCategories[indexPath.row].categoryId)
+        addCustomizedCategory.requestGetCategoryDetails(self.customizedCategoriesModel.customizedCategories[indexPath.row].categoryId)
         addCustomizedCategory.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(addCustomizedCategory, animated: true)
     }

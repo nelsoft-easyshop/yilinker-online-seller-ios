@@ -11,14 +11,20 @@ import Foundation
 class CategoryDetailsModel: NSObject {
     var message: String = ""
     var isSuccessful: Bool = false
-    var categoryDetails: CategoryDetailModel?
+    var categoryId: Int = 0
+    var categoryName: String = ""
+    var parentId: String = ""
+    var sortOrder: Int = 0
     var subcategories: [CategoryDetailModel] = []
     var products: [CategoryProductModel] = []
     
-    init(message: String, isSuccessful: Bool, categoryDetails: CategoryDetailModel, subcategories: [CategoryDetailModel], products: [CategoryProductModel]) {
+    init(message: String, isSuccessful: Bool, categoryId: Int, categoryName: String, parentId: String, sortOrder: Int, subcategories: [CategoryDetailModel], products: [CategoryProductModel]) {
         self.message = message
         self.isSuccessful = isSuccessful
-        self.categoryDetails = categoryDetails
+        self.categoryId = categoryId
+        self.categoryName = categoryName
+        self.parentId = parentId
+        self.sortOrder = sortOrder
         self.subcategories = subcategories
         self.products = products
     }
@@ -27,7 +33,10 @@ class CategoryDetailsModel: NSObject {
         
         var message: String = ""
         var isSuccessful: Bool = false
-        var categoryDetails: CategoryDetailModel?
+        var categoryId: Int = 0
+        var categoryName: String = ""
+        var parentId: String = ""
+        var sortOrder: Int = 0
         var subcategories: [CategoryDetailModel] = []
         var products: [CategoryProductModel] = []
         
@@ -47,39 +56,38 @@ class CategoryDetailsModel: NSObject {
             if dictionary["data"] != nil {
                 if let tempVar = dictionary["data"] as? NSDictionary {
                     if tempVar["categoryId"] != nil {
-                        if let tempVar = dictionary["categoryId"] as? Int {
-                            categoryDetails?.categoryId = tempVar
+                        if let value = tempVar["categoryId"] as? Int {
+                            categoryId = value
                         }
                     }
                     
                     if tempVar["categoryName"] != nil {
-                        if let tempVar = dictionary["categoryName"] as? String {
-                            categoryDetails?.categoryName = tempVar
+                        if let value = tempVar["categoryName"] as? String {
+                            categoryName = value
                         }
                     }
                     
                     if tempVar["sortOrder"] != nil {
-                        if let tempVar = dictionary["sortOrder"] as? Int {
-                            categoryDetails?.sortOrder = tempVar
+                        if let value = tempVar["sortOrder"] as? Int {
+                            sortOrder = value
                         }
                     }
                     
                     if tempVar["subcategories"] != nil {
-                        if let tempVar = dictionary["subcategories"] as? NSArray {
-                            subcategories = CategoryDetailModel.parseDataWithArray(tempVar)
+                        if let value = tempVar["subcategories"] as? NSArray {
+                            subcategories = CategoryDetailModel.parseDataWithArray(value)
                         }
                     }
                     
                     if tempVar["products"] != nil {
-                        if let tempVar = dictionary["products"] as? NSArray {
-                            products = CategoryProductModel.parseDataWithArray(tempVar)
+                        if let value = tempVar["products"] as? NSArray {
+                            products = CategoryProductModel.parseDataWithArray(value)
                         }
                     }
-                }
-                products = CategoryProductModel.parseDataWithArray(dictionary["data"] as! NSArray)
-            }
+                } // data
+            } // data
         }
         
-        return CategoryDetailsModel(message: message, isSuccessful: isSuccessful, categoryDetails: categoryDetails!, subcategories: subcategories, products: products)
+        return CategoryDetailsModel(message: message, isSuccessful: isSuccessful, categoryId: categoryId, categoryName: categoryName, parentId: parentId, sortOrder: sortOrder, subcategories: subcategories, products: products)
     }
 }

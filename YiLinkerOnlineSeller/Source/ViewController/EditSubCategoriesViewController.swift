@@ -27,6 +27,8 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     var removeSubCategories: Bool = false
     var createdCategory: String = ""
     
+    var hud: MBProgressHUD?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -56,6 +58,19 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     func customizedViews() {
         self.tableView.backgroundColor = Constants.Colors.backgroundGray
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
     
     // MARK: - Actions
@@ -127,6 +142,48 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
         self.tableView.scrollIndicatorInsets = UIEdgeInsetsZero
         self.tableView.reloadData()
     }
+    
+    // MARK: - Requests
+    
+    func requestEditCustomizedCategories(categoryId: Int) {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
+                                        "categoryId": "1"]
+        
+        manager.POST(APIAtlas.getCategoryDetails, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            println(responseObject)
+//            self.customizedCategoriesModel = CustomizedCategoriesModel.parseDataWithDictionary(responseObject as! NSDictionary)
+//            self.tableView.reloadData()
+            self.hud?.hide(true)
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println(error)
+                self.hud?.hide(true)
+        })
+    }
+    
+//    func requestEditCustomizedCategories() {
+//        self.showHUD()
+//        let manager = APIManager.sharedInstance
+//        let url = "http://merchant.online.api.easydeal.ph/api/v1/category/getCustomCategories"
+//        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
+//        
+//        manager.POST(url, parameters: parameters, success: {
+//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+//            
+//            self.customizedCategoriesModel = CustomizedCategoriesModel.parseDataWithDictionary(responseObject as! NSDictionary)
+//            self.tableView.reloadData()
+//            self.hud?.hide(true)
+//            
+//            }, failure: {
+//                (task: NSURLSessionDataTask!, error: NSError!) in
+//                println(error)
+//                self.hud?.hide(true)
+//        })
+//    }
     
     // MARK: - Table View Data Source
     

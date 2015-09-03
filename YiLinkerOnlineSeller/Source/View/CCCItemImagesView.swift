@@ -12,6 +12,8 @@ class CCCItemImagesView: UIView, UICollectionViewDataSource {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
+    var itemsModel: [CategoryProductModel]!
+    
     override func awakeFromNib() {
         let nib = UINib(nibName: "ItemImagesHorizontalCollectionViewCell", bundle: nil)
         self.collectionView.registerNib(nib, forCellWithReuseIdentifier: "HorizontalCellIdentifier")
@@ -21,7 +23,10 @@ class CCCItemImagesView: UIView, UICollectionViewDataSource {
     // MARK: - Collection View Data Source
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        if itemsModel != nil {
+            return itemsModel.count
+        }
+        return 0
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -29,5 +34,13 @@ class CCCItemImagesView: UIView, UICollectionViewDataSource {
         let cell: ItemImagesHorizontalCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier("HorizontalCellIdentifier", forIndexPath: indexPath) as! ItemImagesHorizontalCollectionViewCell
         
         return cell
+    }
+    
+    // MARK: - 
+    
+    func setItemsImages(model: [CategoryProductModel]) {
+        self.itemsModel = model
+        
+        self.collectionView.reloadData()
     }
 }
