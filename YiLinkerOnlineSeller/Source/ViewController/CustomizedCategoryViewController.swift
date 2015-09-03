@@ -51,7 +51,7 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource,
     // MARK: - Actions
     
     func backAction() {
-        
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     func addCategoryAction() {
