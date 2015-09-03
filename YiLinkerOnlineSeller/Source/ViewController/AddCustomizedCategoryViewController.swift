@@ -188,7 +188,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             if self.categoryDetailsView.parentCategoryLabel.text == "NONE" {
                 delegate?.addCategory(self.categoryDetailsView.categoryNameTextField.text.capitalizedString, sub: subCategories, items: [])
             } else {
-                delegate?.addCategory(self.categoryDetailsView.parentCategoryLabel.text!, sub: [self.categoryDetailsView.categoryNameTextField.text], items: [])
+                delegate?.addCategory(self.categoryDetailsView.parentCategoryLabel.text!.capitalizedString, sub: [self.categoryDetailsView.categoryNameTextField.text.capitalizedString], items: [])
             }
             closeAction()
         }

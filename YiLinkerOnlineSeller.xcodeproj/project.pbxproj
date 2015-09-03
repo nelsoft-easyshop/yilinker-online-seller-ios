@@ -171,6 +171,8 @@
 		26BD5E641B8E1A3500739488 /* ProductDescriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26BD5E621B8E1A3500739488 /* ProductDescriptionViewController.xib */; };
 		26C2854D1B91C21A005EBD3A /* ProductManagementCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C2854B1B91C21A005EBD3A /* ProductManagementCollectionViewCell.swift */; };
 		26C2854E1B91C21A005EBD3A /* ProductManagementCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26C2854C1B91C21A005EBD3A /* ProductManagementCollectionViewCell.xib */; };
+		26DB062B1B97F9EB00D38EA8 /* RemovedItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DB06291B97F9EB00D38EA8 /* RemovedItemTableViewCell.swift */; };
+		26DB062C1B97F9EB00D38EA8 /* RemovedItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DB062A1B97F9EB00D38EA8 /* RemovedItemTableViewCell.xib */; };
 		792875F31B8DF89F00762A39 /* ChartAnimationEasing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7928759B1B8DF89F00762A39 /* ChartAnimationEasing.swift */; };
 		792875F41B8DF89F00762A39 /* ChartAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7928759C1B8DF89F00762A39 /* ChartAnimator.swift */; };
 		792875F51B8DF89F00762A39 /* BarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7928759E1B8DF89F00762A39 /* BarChartView.swift */; };
@@ -474,6 +476,8 @@
 		26BD5E621B8E1A3500739488 /* ProductDescriptionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductDescriptionViewController.xib; path = ../ViewController/ProductDescriptionViewController.xib; sourceTree = "<group>"; };
 		26C2854B1B91C21A005EBD3A /* ProductManagementCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductManagementCollectionViewCell.swift; sourceTree = "<group>"; };
 		26C2854C1B91C21A005EBD3A /* ProductManagementCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductManagementCollectionViewCell.xib; path = ../ViewController/ProductManagementCollectionViewCell.xib; sourceTree = "<group>"; };
+		26DB06291B97F9EB00D38EA8 /* RemovedItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemovedItemTableViewCell.swift; sourceTree = "<group>"; };
+		26DB062A1B97F9EB00D38EA8 /* RemovedItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemovedItemTableViewCell.xib; sourceTree = "<group>"; };
 		3F811DA8573C81594070C601 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		5B825E81D3B27E563C7C3C53 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7928759B1B8DF89F00762A39 /* ChartAnimationEasing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartAnimationEasing.swift; sourceTree = "<group>"; };
@@ -758,6 +762,8 @@
 				2625FEA01B95F5E800DD24AF /* AddItemTableViewCell.xib */,
 				2618DD771B9788470030C6D2 /* EdititemsViewController.swift */,
 				2618DD781B9788470030C6D2 /* EdititemsViewController.xib */,
+				26DB06291B97F9EB00D38EA8 /* RemovedItemTableViewCell.swift */,
+				26DB062A1B97F9EB00D38EA8 /* RemovedItemTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1275,6 +1281,7 @@
 				26BD5E5C1B8DCF9B00739488 /* ProductImagesCollectionViewCell.xib in Resources */,
 				799892F31B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib in Resources */,
 				26B5B2561B94F3AC00CBDDE5 /* CustomizedCategoryViewsViewController.xib in Resources */,
+				26DB062C1B97F9EB00D38EA8 /* RemovedItemTableViewCell.xib in Resources */,
 				0CF28F031B8CA2E9005B2E54 /* Panton Thin Italic.otf in Resources */,
 				26BD5E521B8DC4B900739488 /* ProductDetailViews.xib in Resources */,
 				26378F221B8CC45A008533B6 /* ProductManagementViewController.xib in Resources */,
@@ -1528,6 +1535,7 @@
 				792875F91B8DF89F00762A39 /* ChartViewBase.swift in Sources */,
 				7928761E1B8DF89F00762A39 /* RadarChartDataSet.swift in Sources */,
 				792875FE1B8DF89F00762A39 /* PieRadarChartViewBase.swift in Sources */,
+				26DB062B1B97F9EB00D38EA8 /* RemovedItemTableViewCell.swift in Sources */,
 				79EFF7711B8D6E35008A9E7D /* ActivityModel.swift in Sources */,
 				792875F81B8DF89F00762A39 /* CandleStickChartView.swift in Sources */,
 				792875F61B8DF89F00762A39 /* BarLineChartViewBase.swift in Sources */,

@@ -81,6 +81,9 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
         let cell: AddItemTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("AddItemTableViewCell") as! AddItemTableViewCell
         cell.selectionStyle = .None
         
+        cell.itemNameLabel.text = "Sample Item \(indexPath.row)"
+        cell.vendorLabel.text = "Sample Vendor \(indexPath.row)"
+        
         return cell
     }
     

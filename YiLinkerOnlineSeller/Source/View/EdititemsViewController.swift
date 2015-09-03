@@ -17,6 +17,7 @@ class EdititemsViewController: UIViewController {
     
     var selectedIndex: Int = -1
     var selectedItem: Int = 0
+    var removingItems: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +28,8 @@ class EdititemsViewController: UIViewController {
         
         let nib = UINib(nibName: "AddItemTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "AddItemTableViewCell")
+        let removedCell = UINib(nibName: "RemovedItemTableViewCell", bundle: nil)
+        self.tableView.registerNib(removedCell, forCellReuseIdentifier: "RemovedItem")
     }
     
     // MARK: - Methods
@@ -65,6 +68,9 @@ class EdititemsViewController: UIViewController {
     @IBAction func removeItemsAction(sender: AnyObject) {
         self.clearAllButton.hidden = false
         self.bottomBarView.hidden = false
+        self.removingItems = true
+        self.title = "Remove Items"
+        self.tableView.reloadData()
     }
     
     @IBAction func addItem(sender: AnyObject) {
@@ -74,11 +80,16 @@ class EdititemsViewController: UIViewController {
     }
     
     @IBAction func removedSelectedAction(sender: AnyObject) {
+        
     }
     
     @IBAction func cancel(sender: AnyObject!) {
         self.bottomBarView.hidden = true
         self.clearAllButton.hidden = true
+        self.removingItems = false
+        self.title = "Edit Items"
+        
+        self.tableView.reloadData()
     }
     
     // MARK: - Table View Data Source
@@ -88,10 +99,21 @@ class EdititemsViewController: UIViewController {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: AddItemTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("AddItemTableViewCell") as! AddItemTableViewCell
-        cell.selectionStyle = .None
+        if removingItems {
+            let cell: RemovedItemTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("RemovedItem") as! RemovedItemTableViewCell
+            cell.selectionStyle = .None
+            
+            return cell
+            
+        } else {
+            let cell: AddItemTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("AddItemTableViewCell") as! AddItemTableViewCell
+            cell.selectionStyle = .None
+            
+            cell.addImageView.image = UIImage(named: "right2")
+            
+            return cell
+        }
         
-        return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

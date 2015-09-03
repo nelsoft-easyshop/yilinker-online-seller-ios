@@ -65,7 +65,7 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
     
     func checkAction() {
         
-        delegate?.updateParentCategory("Category" + String(selectedIndex))
+        delegate?.updateParentCategory("Parent Category " + String(selectedIndex))
         closeAction()
     }
     
@@ -79,7 +79,7 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "identifier")
         
         cell.selectionStyle = .None
-        cell.textLabel?.text = "Category" + String(indexPath.row)
+        cell.textLabel?.text = "Parent Category " + String(indexPath.row)
         cell.textLabel?.font = UIFont(name: "Panton", size: 12.0)
         
         if selectedIndex == indexPath.row {

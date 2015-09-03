@@ -12,7 +12,7 @@ protocol AddSubCategoriesViewControllerDelegate {
     func addSubCategory(category: String)
 }
 
-class AddSubCategoriesViewController: UIViewController {
+class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDelegate {
 
     var delegate: AddSubCategoriesViewControllerDelegate?
     
@@ -83,7 +83,7 @@ class AddSubCategoriesViewController: UIViewController {
     func getCategoryItemsView() -> CCCategoryItemsView {
         if self.categoryItemsView == nil {
             self.categoryItemsView = XibHelper.puffViewWithNibName("CustomizedCategoryViewsViewController", index: 2) as! CCCategoryItemsView
-//            self.categoryItemsView.delegate = self
+            self.categoryItemsView.delegate = self
             self.categoryItemsView.frame.size.width = self.view.frame.size.width
         }
         return self.categoryItemsView
@@ -160,5 +160,18 @@ class AddSubCategoriesViewController: UIViewController {
         if cell.respondsToSelector("setPreservesSuperviewLayoutMargins:") {
             cell.preservesSuperviewLayoutMargins = false
         }
+    }
+    
+    // MARK: - Category Items View Delegate
+    
+    func gotoAddItem() {
+        let addItem = AddItemViewController(nibName: "AddItemViewController", bundle: nil)
+        //        addItem.delegate = self
+        var root = UINavigationController(rootViewController: addItem)
+        self.navigationController?.presentViewController(root, animated: true, completion: nil)
+    }
+    
+    func gotoEditItem() {
+        
     }
 }
