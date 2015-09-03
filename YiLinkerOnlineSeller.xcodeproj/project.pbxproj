@@ -274,6 +274,10 @@
 		F7C40F511B983A590091C16C /* BankAccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C40F4E1B983A590091C16C /* BankAccountModel.swift */; };
 		F7C40F521B983A590091C16C /* StoreAddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C40F4F1B983A590091C16C /* StoreAddressModel.swift */; };
 		F7C40F531B983A590091C16C /* StoreInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C40F501B983A590091C16C /* StoreInfoModel.swift */; };
+		F7C40F581B983A7B0091C16C /* DynamicRoundedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C40F541B983A7B0091C16C /* DynamicRoundedLabel.swift */; };
+		F7C40F591B983A7B0091C16C /* DynamicRoundedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C40F551B983A7B0091C16C /* DynamicRoundedTextField.swift */; };
+		F7C40F5A1B983A7B0091C16C /* DynamicRoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C40F561B983A7B0091C16C /* DynamicRoundedView.swift */; };
+		F7C40F5B1B983A7B0091C16C /* SemiRoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C40F571B983A7B0091C16C /* SemiRoundedButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -562,6 +566,10 @@
 		F7C40F4E1B983A590091C16C /* BankAccountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankAccountModel.swift; sourceTree = "<group>"; };
 		F7C40F4F1B983A590091C16C /* StoreAddressModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreAddressModel.swift; sourceTree = "<group>"; };
 		F7C40F501B983A590091C16C /* StoreInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoModel.swift; sourceTree = "<group>"; };
+		F7C40F541B983A7B0091C16C /* DynamicRoundedLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicRoundedLabel.swift; sourceTree = "<group>"; };
+		F7C40F551B983A7B0091C16C /* DynamicRoundedTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicRoundedTextField.swift; sourceTree = "<group>"; };
+		F7C40F561B983A7B0091C16C /* DynamicRoundedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicRoundedView.swift; sourceTree = "<group>"; };
+		F7C40F571B983A7B0091C16C /* SemiRoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemiRoundedButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -669,6 +677,10 @@
 		0CF28EC61B8C85E5005B2E54 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F7C40F541B983A7B0091C16C /* DynamicRoundedLabel.swift */,
+				F7C40F551B983A7B0091C16C /* DynamicRoundedTextField.swift */,
+				F7C40F561B983A7B0091C16C /* DynamicRoundedView.swift */,
+				F7C40F571B983A7B0091C16C /* SemiRoundedButton.swift */,
 				0CF28F1C1B8CD21B005B2E54 /* DynamicRoundedButton.swift */,
 				0CF28F141B8CCD3E005B2E54 /* ProductUploadUploadImageTableViewCell.swift */,
 				0CF28F181B8CD079005B2E54 /* ProductUploadImageCollectionViewCell.swift */,
@@ -1365,6 +1377,7 @@
 				0C8D7F921B8F0A7D00B3FA4E /* ProductModel.swift in Sources */,
 				0C6661A51B906FBF005ADFDD /* JSONResponseSerializer.swift in Sources */,
 				0C65F8EC1B8E377500504D86 /* ProductUploadAttributeCollectionViewCell.swift in Sources */,
+				F7C40F591B983A7B0091C16C /* DynamicRoundedTextField.swift in Sources */,
 				7928764B1B8E049400762A39 /* SalesReportTableViewCell.swift in Sources */,
 				0CF28ED01B8C85E5005B2E54 /* Enums.swift in Sources */,
 				79EDA4091B9204F20037558A /* PointsBreakdownTableViewCell.swift in Sources */,
@@ -1378,6 +1391,7 @@
 				0CF28F161B8CCD3E005B2E54 /* ProductUploadUploadImageTableViewCell.swift in Sources */,
 				0C8D7F951B8F12C200B3FA4E /* ProductUploadAttributeListTableViewController.swift in Sources */,
 				0C8D7FAA1B8F577300B3FA4E /* ProductUploadAddFooterView.swift in Sources */,
+				F7C40F5B1B983A7B0091C16C /* SemiRoundedButton.swift in Sources */,
 				0C65F8D81B8E0C4600504D86 /* ProductUploadDimensionsAndWeightTableViewCell.swift in Sources */,
 				0C8D7FA71B8F573800B3FA4E /* PUAttributeAddFooterView.swift in Sources */,
 				0C6661A81B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.swift in Sources */,
@@ -1404,6 +1418,7 @@
 				7928761F1B8DF89F00762A39 /* ScatterChartData.swift in Sources */,
 				792876231B8DF89F00762A39 /* BarChartHighlighter.swift in Sources */,
 				0CF28EDB1B8C85E5005B2E54 /* SearchViewController.swift in Sources */,
+				F7C40F5A1B983A7B0091C16C /* DynamicRoundedView.swift in Sources */,
 				26BD5E491B8DC18B00739488 /* ProductDetailsViewController.swift in Sources */,
 				26BD5E4D1B8DC49800739488 /* ProductDetailsTableViewCell.swift in Sources */,
 				26BD5E631B8E1A3500739488 /* ProductDescriptionViewController.swift in Sources */,
@@ -1439,6 +1454,7 @@
 				79EFF7871B8DBEA7008A9E7D /* RecentProductsTableViewCell.swift in Sources */,
 				792876431B8DF89F00762A39 /* ChartViewPortHandler.swift in Sources */,
 				792876331B8DF89F00762A39 /* ChartYAxisRenderer.swift in Sources */,
+				F7C40F581B983A7B0091C16C /* DynamicRoundedLabel.swift in Sources */,
 				7928762C1B8DF89F00762A39 /* ChartDataRendererBase.swift in Sources */,
 				792876151B8DF89F00762A39 /* ChartDataSet.swift in Sources */,
 				792875F71B8DF89F00762A39 /* BubbleChartView.swift in Sources */,
