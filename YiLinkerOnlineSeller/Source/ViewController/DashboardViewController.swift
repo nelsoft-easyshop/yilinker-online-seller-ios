@@ -16,9 +16,9 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var loginBlockerView: UIView!
     
-    var tableData: [String] = ["My\nStore", "Sales\nReport", "Transactions", "Product\nManagement", "Customized\nCategory", "Upload\nItem", "Followers", "Activity\nLog", "My\nPoints", "Help", "Logout"]
+    var tableData: [String] = ["My\nStore", "Sales\nReport", "Transactions", "Product\nManagement", "Customized\nCategory", "Upload\nItem", "Followers", "Activity\nLog", "My\nPoints", "Resolution\nCenter", "Help", "Logout"]
     
-    var tableImages: [String] = ["mystore", "report", "transaction", "product", "category", "uploadItem", "followers", "activityLog", "points", "help", "logout"]
+    var tableImages: [String] = ["mystore", "report", "transaction", "product", "category", "uploadItem", "followers", "activityLog", "points", "resolution", "help", "logout"]
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -154,14 +154,15 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         println("Clicked item \(tableData[indexPath.row])")
         if indexPath.row == 0 {
-            
+            var storeInfoViewController = StoreInfoViewController(nibName: "StoreInfoViewController", bundle: nil)
+            self.navigationController?.pushViewController(storeInfoViewController, animated:true)
         } else if indexPath.row == 0 {
-            
+           
         } else if indexPath.row == 1 {
             var salesViewController = SalesReportViewController(nibName: "SalesReportViewController", bundle: nil)
             self.navigationController?.pushViewController(salesViewController, animated:true)
         } else if indexPath.row == 2 {
-            
+
         } else if indexPath.row == 3 {
             let productManagement = ProductManagementViewController(nibName: "ProductManagementViewController", bundle: nil)
             productManagement.hidesBottomBarWhenPushed = true
@@ -185,8 +186,13 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             self.navigationController?.pushViewController(myPointsViewController, animated:true)
             
         } else if indexPath.row == 9 {
-            
+            let resolutionCenter = self.storyboard?.instantiateViewControllerWithIdentifier("ResolutionCenterViewController")
+                as! ResolutionCenterViewController
+            resolutionCenter.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(resolutionCenter, animated:true)
         } else if indexPath.row == 10 {
+            
+        } else if indexPath.row == 11 {
             var alert = UIAlertController(title: nil, message: "Are you sure you want to logout?", preferredStyle: .ActionSheet)
             alert.addAction(UIAlertAction(title: "Logout", style: .Destructive, handler: { action in
                 switch action.style{
