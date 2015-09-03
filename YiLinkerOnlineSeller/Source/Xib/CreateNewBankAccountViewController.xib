@@ -242,7 +242,6 @@
             <constraints>
                 <constraint firstItem="2Wr-Ff-fkx" firstAttribute="top" secondItem="6lU-0w-ZxS" secondAttribute="top" constant="104" id="f9I-7A-pCS"/>
                 <constraint firstItem="2Wr-Ff-fkx" firstAttribute="leading" secondItem="6lU-0w-ZxS" secondAttribute="leading" constant="8" id="qdX-P3-yeZ"/>
-                <constraint firstAttribute="trailing" secondItem="2Wr-Ff-fkx" secondAttribute="trailing" constant="8" id="zJf-UW-46l"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="-98.5" y="330"/>

@@ -15,23 +15,26 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     var storeInfoModel: StoreInfoModel?
     var storeAddressModel: StoreAddressModel?
     
+    let storeInfoHeaderTableViewCellIndentifier: String = "StoreInfoTableViewCell"
     let storeInfoSectionTableViewCellIndentifier: String = "StoreInfoSectionTableViewCell"
     let storeInfoAddressTableViewCellIdentifier: String = "StoreInfoAddressTableViewCell"
     let storeInfoBankAccountTableViewCellIdentifier: String = "StoreInfoBankAccountTableViewCell"
     let storeInfoAccountInformationTableViewCellIdentifier: String = "StoreInfoAccountInformationTableViewCell"
     
-    var storeInfoHeader: StoreInfoTableViewCell = XibHelper.puffViewWithNibName("StoreInfoTableViewCell", index: 0) as! StoreInfoTableViewCell
+    //var storeInfoHeader: StoreInfoTableViewCell = XibHelper.puffViewWithNibName("StoreInfoTableViewCell", index: 0) as! StoreInfoTableViewCell
     
     var newContactNumber: String = ""
     
     var dimView: UIView = UIView()
+    
+    var verifyOrChange: Int = 0
     
     var hud: MBProgressHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        storeInfoHeader.delegate = self
+        //storeInfoHeader.delegate = self
         
         dimView = UIView(frame: self.view.bounds)
         dimView.backgroundColor=UIColor.blackColor()
@@ -39,7 +42,7 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
         self.navigationController?.view.addSubview(dimView)
         dimView.hidden = true
         
-        self.storeInfoTableView.tableHeaderView = storeInfoHeader
+        //self.storeInfoTableView.tableHeaderView = storeInfoHeader
         self.initializeViews()
         self.registerNibs()
         self.fireStoreInfo()
@@ -72,6 +75,10 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     }
 
     func registerNibs() {
+        
+        var storeInfoHeader = UINib(nibName: storeInfoHeaderTableViewCellIndentifier, bundle: nil)
+        self.storeInfoTableView.registerNib(storeInfoHeader, forCellReuseIdentifier: storeInfoHeaderTableViewCellIndentifier)
+        
         var storeInfo = UINib(nibName: storeInfoSectionTableViewCellIndentifier, bundle: nil)
         self.storeInfoTableView.registerNib(storeInfo, forCellReuseIdentifier: storeInfoSectionTableViewCellIndentifier)
         
@@ -94,14 +101,7 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.storeInfoModel = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
             //self.populateData()
-           
-            self.storeInfoHeader.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
-            self.storeInfoHeader.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
-            self.storeInfoHeader.storeNameTextField.text = self.storeInfoModel?.store_name
-            self.storeInfoHeader.mobilePhoneTextField.text = self.storeInfoModel?.contact_number
-            self.storeInfoHeader.verifyButton.setTitle("Change", forState: UIControlState.Normal)
-            self.storeInfoHeader.verifyButton.tag = 2
-           /*
+            /*
             if self.storeInfoModel?.contact_number == nil {
             
             } else {
@@ -116,23 +116,40 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-       return 4
+       return 5
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         println("sections \(indexPath.section) row \(indexPath.row)")
         println("\(self.storeInfoModel?.store_address)")
+        
+        
         if indexPath.section == 0 {
+            
+            let cell: StoreInfoTableViewCell = self.storeInfoTableView.dequeueReusableCellWithIdentifier(storeInfoHeaderTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoTableViewCell
+            cell.delegate = self
+            if(self.storeInfoModel?.store_name != nil){
+                cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                cell.storeNameTextField.text = self.storeInfoModel?.store_name
+                cell.mobilePhoneTextField.text = self.storeInfoModel?.contact_number
+                cell.verifyButton.setTitle("Change", forState: UIControlState.Normal)
+                cell.verifyButton.tag = 2
+                verifyOrChange = 2
+            }
+           
+            return cell
+        } else if indexPath.section == 1 {
             let cell: StoreInfoSectionTableViewCell = self.storeInfoTableView.dequeueReusableCellWithIdentifier(storeInfoSectionTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoSectionTableViewCell
             cell.delegate = self
             return cell
-       } else if indexPath.section == 1 {
+       } else if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCellWithIdentifier( storeInfoAddressTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAddressTableViewCell
             cell.delegate = self
             //Display current bank account
             cell.addressLabel.text = self.storeInfoModel?.store_address
             return cell
-        } else if indexPath.section == 2 {
+        } else if indexPath.section == 3 {
             let cell = tableView.dequeueReusableCellWithIdentifier( storeInfoBankAccountTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoBankAccountTableViewCell
             cell.delegate = self
             //Display current bank account
@@ -157,10 +174,12 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 198
+            return 381
         } else if indexPath.section == 1 {
+            return 198
+        } else if indexPath.section == 2 {
             return 163
-        } else  if indexPath.section == 2 {
+        } else  if indexPath.section == 3 {
             return 163
         } else {
             return 299
@@ -172,7 +191,7 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
         println("verify")
         self.showView()
         
-        if storeInfoHeader.verifyButton.tag == 1 {
+        if verifyOrChange == 1 {
             var verifyNumberViewController = VerifyNumberViewController(nibName: "VerifyNumberViewController", bundle: nil)
             verifyNumberViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
             verifyNumberViewController.providesPresentationContextTransitionStyle = true
@@ -296,15 +315,17 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
 
     }
     
-    func setMobileNumber(newNumber: String) {
-        self.storeInfoHeader.mobilePhoneTextField.text = newNumber
-        self.storeInfoHeader.verifyButton.setTitle("Verify", forState: UIControlState.Normal)
-        self.storeInfoHeader.verifyButton.tag = 1
+    func setMobileNumber(newNumber: String, verifyOrChange: String) {
+        self.storeInfoModel?.contact_number = newNumber
+        //self.storeInfoModel?.store_name =
+        //    NSString("Verify", forState: UIControlState.Normal)
+        self.verifyOrChange = 2
         UIView.animateWithDuration(0.25, animations: {
             self.dimView.alpha = 0
             }, completion: { finished in
                 self.dimView.hidden = true
         })
+        self.storeInfoTableView.reloadData()
     }
     
     func dismissView() {

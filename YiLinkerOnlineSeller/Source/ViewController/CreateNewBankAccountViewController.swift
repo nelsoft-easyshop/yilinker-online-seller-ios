@@ -9,7 +9,7 @@
 import UIKit
 protocol CreateNewBankAccountViewControllerDelegate{
     func updateCollectionView()
-    func dismissView()
+    func dismissDimView()
 }
 class CreateNewBankAccountViewController: UIViewController {
 
@@ -44,7 +44,7 @@ class CreateNewBankAccountViewController: UIViewController {
     }
     
     @IBAction func closeAction(sender: AnyObject) {
-        self.delegate?.dismissView()
+        self.delegate?.dismissDimView()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -56,12 +56,12 @@ class CreateNewBankAccountViewController: UIViewController {
         let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : NSNumber(integer: accountNumber!), "accountName" : self.accountNameTextField.text, "bankId" : 1]
         println(NSNumber(integer: accountNumber!))
         
-        self.delegate?.dismissView()
+        self.delegate?.dismissDimView()
         
         manager.POST(APIAtlas.sellerAddBankAccount, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             println("\(parameters)")
-            self.dismissViewControllerAnimated(true, completion: nil)
+            //self.dismissViewControllerAnimated(true, completion: nil)
             self.hud?.hide(true)
             self.delegate?.updateCollectionView()
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in

@@ -14,7 +14,7 @@ protocol StoreInfoAccountInformationTableViewCellDelegate {
     func changeEmailAddress()
 }
 
-class StoreInfoAccountInformationTableViewCell: UITableViewCell {
+class StoreInfoAccountInformationTableViewCell: UITableViewCell{
     
     @IBOutlet weak var saveButton: UIButton!
     

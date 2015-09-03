@@ -51,7 +51,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         changeAddressCollectionView.dataSource = self
         changeAddressCollectionView.delegate = self
         
-        if IphoneType.isIphone4()  {
+        if IphoneType.isIphone5(){
             layout.itemSize = CGSize(width: self.view.frame.size.width - 100, height: 79)
         } else if IphoneType.isIphone5() {
             layout.itemSize = CGSize(width: self.view.frame.size.width - 80, height: 79)
@@ -276,16 +276,17 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
     }
     
-    func updateCollectionView() {
+    func updateCollectionView(){
         fireSellerAddress()
         self.changeAddressCollectionView.reloadData()
     }
-    
-    func dismmissDimView() {
+    func dismissDimView() {
         dimView.hidden = true
         UIView.animateWithDuration(0.25, animations: {
             self.dimView.alpha = 0
             }, completion: { finished in
         })
+
     }
+
 }

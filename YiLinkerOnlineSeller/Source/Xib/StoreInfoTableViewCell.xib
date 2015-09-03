@@ -15,7 +15,6 @@
             <string>Panton-SemiBold</string>
             <string>Panton-SemiBold</string>
             <string>Panton-SemiBold</string>
-            <string>Panton-SemiBold</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -296,25 +295,6 @@
             </connections>
             <point key="canvasLocation" x="293.5" y="319.5"/>
         </tableViewCell>
-        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo.png" translatesAutoresizingMaskIntoConstraints="NO" id="hKi-hD-WrH">
-            <rect key="frame" x="0.0" y="0.0" width="32" height="24"/>
-            <constraints>
-                <constraint firstAttribute="height" constant="24" id="AXc-yH-3hE"/>
-                <constraint firstAttribute="width" constant="32" id="oem-e3-am5"/>
-            </constraints>
-            <point key="canvasLocation" x="190" y="61"/>
-        </imageView>
-        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Profle Photo" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yru-Jd-P6Z">
-            <rect key="frame" x="0.0" y="0.0" width="81" height="35"/>
-            <constraints>
-                <constraint firstAttribute="height" constant="35" id="MI2-jH-I3R"/>
-                <constraint firstAttribute="width" constant="81" id="vUx-rc-2UT"/>
-            </constraints>
-            <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
-            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <nil key="highlightedColor"/>
-            <point key="canvasLocation" x="290.5" y="60.5"/>
-        </label>
     </objects>
     <resources>
         <image name="photo.png" width="200" height="159"/>

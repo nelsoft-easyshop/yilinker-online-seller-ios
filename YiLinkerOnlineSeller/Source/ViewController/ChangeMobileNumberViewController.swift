@@ -8,7 +8,8 @@
 
 import UIKit
 
-protocol ChangeMobileNumberViewControllerDelegate {    func dismissView()
+protocol ChangeMobileNumberViewControllerDelegate {
+    func dismissView()
 }
 
 class ChangeMobileNumberViewController: UIViewController {
@@ -42,6 +43,7 @@ class ChangeMobileNumberViewController: UIViewController {
     }
     
     @IBAction func submit(sender: AnyObject){
+        self.delegate?.dismissView()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     

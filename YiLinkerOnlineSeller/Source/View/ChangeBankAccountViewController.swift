@@ -30,7 +30,7 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
         super.viewDidLoad()
         
         dimView = UIView(frame: self.view.bounds)
-        dimView.backgroundColor=UIColor.blackColor()
+        dimView.backgroundColor = UIColor.blackColor()
         dimView.alpha = 0.5
         self.navigationController?.view.addSubview(dimView)
         dimView.hidden = true
@@ -271,7 +271,8 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         attributeModal.providesPresentationContextTransitionStyle = true
         attributeModal.definesPresentationContext = true
-        self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
+        attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
+        self.navigationController?.presentViewController(attributeModal, animated: true, completion: nil)
     
         println("footer")
     }
@@ -281,7 +282,7 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
         self.changeBankAccountCollectionView.reloadData()
     }
     
-    func dismissView() {
+    func dismissDimView() {
         UIView.animateWithDuration(0.25, animations: {
             self.dimView.alpha = 0
             }, completion: { finished in

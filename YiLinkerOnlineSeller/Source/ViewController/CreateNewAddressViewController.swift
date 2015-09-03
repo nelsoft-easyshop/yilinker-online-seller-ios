@@ -10,7 +10,7 @@ import UIKit
 
 protocol CreateNewAddressViewControllerDelegate {
     func updateCollectionView()
-    func dismmissDimView()
+    func dismissDimView()
 }
 
 class CreateNewAddressViewController: UIViewController {
@@ -41,12 +41,12 @@ class CreateNewAddressViewController: UIViewController {
     }
     
     @IBAction func closeAction(sender: AnyObject){
-        self.delegate?.dismmissDimView()
+        self.delegate?.dismissDimView()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func createAddress(sender: AnyObject){
-        self.delegate?.dismmissDimView()
+        self.delegate?.dismissDimView()
         self.delegate?.updateCollectionView()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
