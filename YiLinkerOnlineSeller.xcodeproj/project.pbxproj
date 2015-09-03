@@ -176,6 +176,12 @@
 		26C2854E1B91C21A005EBD3A /* ProductManagementCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26C2854C1B91C21A005EBD3A /* ProductManagementCollectionViewCell.xib */; };
 		26DB062B1B97F9EB00D38EA8 /* RemovedItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DB06291B97F9EB00D38EA8 /* RemovedItemTableViewCell.swift */; };
 		26DB062C1B97F9EB00D38EA8 /* RemovedItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DB062A1B97F9EB00D38EA8 /* RemovedItemTableViewCell.xib */; };
+		26DB06351B98BF2C00D38EA8 /* TransactionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DB062F1B98BF2C00D38EA8 /* TransactionCollectionViewCell.swift */; };
+		26DB06361B98BF2C00D38EA8 /* TransactionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DB06301B98BF2C00D38EA8 /* TransactionCollectionViewCell.xib */; };
+		26DB06371B98BF2C00D38EA8 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DB06311B98BF2C00D38EA8 /* TransactionTableViewCell.swift */; };
+		26DB06381B98BF2C00D38EA8 /* TransactionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DB06321B98BF2C00D38EA8 /* TransactionTableViewCell.xib */; };
+		26DB06391B98BF2C00D38EA8 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DB06331B98BF2C00D38EA8 /* TransactionViewController.swift */; };
+		26DB063A1B98BF2C00D38EA8 /* TransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DB06341B98BF2C00D38EA8 /* TransactionViewController.xib */; };
 		792875F31B8DF89F00762A39 /* ChartAnimationEasing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7928759B1B8DF89F00762A39 /* ChartAnimationEasing.swift */; };
 		792875F41B8DF89F00762A39 /* ChartAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7928759C1B8DF89F00762A39 /* ChartAnimator.swift */; };
 		792875F51B8DF89F00762A39 /* BarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7928759E1B8DF89F00762A39 /* BarChartView.swift */; };
@@ -576,6 +582,12 @@
 		26C2854C1B91C21A005EBD3A /* ProductManagementCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductManagementCollectionViewCell.xib; path = ../ViewController/ProductManagementCollectionViewCell.xib; sourceTree = "<group>"; };
 		26DB06291B97F9EB00D38EA8 /* RemovedItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemovedItemTableViewCell.swift; sourceTree = "<group>"; };
 		26DB062A1B97F9EB00D38EA8 /* RemovedItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemovedItemTableViewCell.xib; sourceTree = "<group>"; };
+		26DB062F1B98BF2C00D38EA8 /* TransactionCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCollectionViewCell.swift; sourceTree = "<group>"; };
+		26DB06301B98BF2C00D38EA8 /* TransactionCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionCollectionViewCell.xib; sourceTree = "<group>"; };
+		26DB06311B98BF2C00D38EA8 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
+		26DB06321B98BF2C00D38EA8 /* TransactionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionTableViewCell.xib; sourceTree = "<group>"; };
+		26DB06331B98BF2C00D38EA8 /* TransactionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
+		26DB06341B98BF2C00D38EA8 /* TransactionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionViewController.xib; sourceTree = "<group>"; };
 		3F811DA8573C81594070C601 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		5B825E81D3B27E563C7C3C53 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7928759B1B8DF89F00762A39 /* ChartAnimationEasing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartAnimationEasing.swift; sourceTree = "<group>"; };
@@ -993,6 +1005,12 @@
 		0CF28EC71B8C85E5005B2E54 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				26DB062F1B98BF2C00D38EA8 /* TransactionCollectionViewCell.swift */,
+				26DB06301B98BF2C00D38EA8 /* TransactionCollectionViewCell.xib */,
+				26DB06311B98BF2C00D38EA8 /* TransactionTableViewCell.swift */,
+				26DB06321B98BF2C00D38EA8 /* TransactionTableViewCell.xib */,
+				26DB06331B98BF2C00D38EA8 /* TransactionViewController.swift */,
+				26DB06341B98BF2C00D38EA8 /* TransactionViewController.xib */,
 				961F70331B97F7A5007D0EA5 /* ResolutionCenterViewController.swift */,
 				961F702D1B97F077007D0EA5 /* DisputeViewController.swift */,
 				961F702B1B97F057007D0EA5 /* CaseDetailsTableViewController.swift */,
@@ -1009,7 +1027,6 @@
 				F7C40F661B983AD60091C16C /* ChangeEmailViewController.swift */,
 				F7C40F641B983AD10091C16C /* ChangeBankAccountViewController.swift */,
 				F7C40F621B983ACD0091C16C /* ChangeAddressViewController.swift */,
-				79EFF75A1B8D6DC1008A9E7D /* ActivityLogTableViewController.swift */,
 				0CF28EC81B8C85E5005B2E54 /* DashboardViewController.swift */,
 				79EFF75A1B8D6DC1008A9E7D /* ActivityLogTableViewController.swift */,
 				7928764C1B8E1FD800762A39 /* DatePickerViewController.swift */,
@@ -1069,10 +1086,6 @@
 				26B5B2441B94DE6700CBDDE5 /* CustomizedCategoryViews.xib */,
 				26B5B24E1B94E93F00CBDDE5 /* AddCustomizedCategoryTableViewCell.xib */,
 				26B5B2551B94F3AC00CBDDE5 /* CustomizedCategoryViewsViewController.xib */,
-				0C1C3A861B9453BE00E6180D /* ProductUploadTableHeaderView.xib */,
-				26378F201B8CC45A008533B6 /* ProductManagementViewController.xib */,
-				26378F501B8CEE82008533B6 /* ProductManagementTableViewCell.xib */,
-				26BD5E481B8DC18B00739488 /* ProductDetailsViewController.xib */,
 				9628AC951B9848E600734551 /* DisputeViewController.xib */,
 				961F70311B97F266007D0EA5 /* ResolutionCenterCell.xib */,
 				F7C40FB81B983C460091C16C /* CategoryTableViewCell.xib */,
@@ -1557,6 +1570,8 @@
 				F7C40FD41B983CD90091C16C /* delete .png in Resources */,
 				F7C40F9F1B983BE30091C16C /* FilterResultsViewController.xib in Resources */,
 				792876491B8E001200762A39 /* SalesReportTableViewCell.xib in Resources */,
+				26DB063A1B98BF2C00D38EA8 /* TransactionViewController.xib in Resources */,
+				26DB06381B98BF2C00D38EA8 /* TransactionTableViewCell.xib in Resources */,
 				79EFF78B1B8DCFA2008A9E7D /* SalesReportTableViewController.xib in Resources */,
 				0CF28F011B8CA2E9005B2E54 /* Panton SemiBold Italic.otf in Resources */,
 				0C8D7F8E1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.xib in Resources */,
@@ -1601,6 +1616,7 @@
 				2618DD7A1B9788470030C6D2 /* EdititemsViewController.xib in Resources */,
 				26B282FA1B921BAF00A7C2B1 /* ProductManagementModelViewController.xib in Resources */,
 				F7C40FB71B983C410091C16C /* ChangeAddressCollectionViewCell.xib in Resources */,
+				26DB06361B98BF2C00D38EA8 /* TransactionCollectionViewCell.xib in Resources */,
 				0CF28EF41B8CA2E9005B2E54 /* Black Italic.otf in Resources */,
 				F7C40FB31B983C310091C16C /* ChangeAddressViewController.xib in Resources */,
 				26378F521B8CEE82008533B6 /* ProductManagementTableViewCell.xib in Resources */,
@@ -1735,6 +1751,7 @@
 				2618DD751B975E910030C6D2 /* EditSubCategoriesRemovedTableViewCell.swift in Sources */,
 				26BD5E5E1B8DFA5200739488 /* ProductImagesView.swift in Sources */,
 				26378F211B8CC45A008533B6 /* ProductManagementViewController.swift in Sources */,
+				26DB06371B98BF2C00D38EA8 /* TransactionTableViewCell.swift in Sources */,
 				26BD5E511B8DC4B900739488 /* ProductDetailViews.swift in Sources */,
 				7928760A1B8DF89F00762A39 /* BarChartDataSet.swift in Sources */,
 				792876401B8DF89F00762A39 /* ChartTransformer.swift in Sources */,
@@ -1828,6 +1845,7 @@
 				0C8D7FAA1B8F577300B3FA4E /* ProductUploadAddFooterView.swift in Sources */,
 				F7C40F5B1B983A7B0091C16C /* SemiRoundedButton.swift in Sources */,
 				0C65F8D81B8E0C4600504D86 /* ProductUploadDimensionsAndWeightTableViewCell.swift in Sources */,
+				26DB06351B98BF2C00D38EA8 /* TransactionCollectionViewCell.swift in Sources */,
 				2671424C1B94C6AF00B66458 /* CustomizedCategoryViewController.swift in Sources */,
 				0C8D7FA71B8F573800B3FA4E /* PUAttributeAddFooterView.swift in Sources */,
 				0C6661A81B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.swift in Sources */,
@@ -1866,6 +1884,7 @@
 				792875FD1B8DF89F00762A39 /* PieChartView.swift in Sources */,
 				961F702C1B97F057007D0EA5 /* CaseDetailsTableViewController.swift in Sources */,
 				0CF28EDA1B8C85E5005B2E54 /* MessageViewController.swift in Sources */,
+				26DB06391B98BF2C00D38EA8 /* TransactionViewController.swift in Sources */,
 				26B282F91B921BAF00A7C2B1 /* ProductManagementModelViewController.swift in Sources */,
 				26C2854D1B91C21A005EBD3A /* ProductManagementCollectionViewCell.swift in Sources */,
 				2686E37A1B9585D600E8FA80 /* ParentCategoryViewController.swift in Sources */,
@@ -1927,8 +1946,6 @@
 				79EDA40B1B9204F20037558A /* PointsEarnedTableViewCell.swift in Sources */,
 				7928761B1B8DF89F00762A39 /* PieChartData.swift in Sources */,
 				792876281B8DF89F00762A39 /* BarChartRenderer.swift in Sources */,
-				792875FC1B8DF89F00762A39 /* LineChartView.swift in Sources */,
-				79EFF7781B8D9274008A9E7D /* SalesReportViewController.swift in Sources */,
 				26B5B2451B94DE6700CBDDE5 /* CustomizedCategoryViews.swift in Sources */,
 				F7C40F751B983B3D0091C16C /* FilterFooterTableViewCell.swift in Sources */,
 				F7C40F831B983B700091C16C /* StoreInfoSectionTableViewCell.swift in Sources */,

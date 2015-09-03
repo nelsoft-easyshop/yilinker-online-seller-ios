@@ -207,7 +207,9 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             var salesViewController = SalesReportViewController(nibName: "SalesReportViewController", bundle: nil)
             self.navigationController?.pushViewController(salesViewController, animated:true)
         } else if indexPath.row == 2 {
-
+            let transaction = TransactionViewController(nibName: "TransactionViewController", bundle: nil)
+            transaction.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(transaction, animated: true)
         } else if indexPath.row == 3 {
             let productManagement = ProductManagementViewController(nibName: "ProductManagementViewController", bundle: nil)
             productManagement.hidesBottomBarWhenPushed = true
