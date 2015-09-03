@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DashboardViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class DashboardViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, SignInViewControllerDelegate {
     
     let dashBoardHeaderIdentifier: String = "DashBoardHeaderCollectionViewCell"
     let dashBoardItemIdentifier: String = "DashBoardItemCollectionViewCell"
@@ -19,6 +19,10 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     var tableData: [String] = ["My\nStore", "Sales\nReport", "Transactions", "Product\nManagement", "Customized\nCategory", "Upload\nItem", "Followers", "Activity\nLog", "My\nPoints", "Resolution\nCenter", "Help", "Logout"]
     
     var tableImages: [String] = ["mystore", "report", "transaction", "product", "category", "uploadItem", "followers", "activityLog", "points", "resolution", "help", "logout"]
+    
+    var storeInfo: StoreInfoModel!
+    
+    var hud: MBProgressHUD?
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -31,8 +35,10 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         if !NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
             SessionManager.setAccessToken("")
             let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
+            signInViewController.delegate = self
             self.presentViewController(signInViewController, animated: false, completion: nil)
         }
+        
         println(SessionManager.accessToken())
         registerNibs()
         initializeViews()
@@ -57,8 +63,30 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         } else {
             self.loginBlockerView.hidden = false
         }
+        
+        if NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
+            if storeInfo == nil {
+                fireStoreInfo()
+            }
+        }
 
         self.tabBarController?.tabBar.hidden = false
+    }
+    
+    
+    // Show hud
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
     
     func initializeViews() {
@@ -98,6 +126,13 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         self.collectionView?.registerNib(cellNib, forCellWithReuseIdentifier: dashBoardItemIdentifier)
     }
     
+    
+    // MARK: SignInViewControllerDelegate
+    func passStoreInfoModel(storeInfoModel: StoreInfoModel) {
+        storeInfo = storeInfoModel
+        collectionView.reloadData()
+    }
+    
     // MARK: UICollectionViewDataSource
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -130,8 +165,18 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         switch kind {
         case UICollectionElementKindSectionHeader:
             let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: dashBoardHeaderIdentifier, forIndexPath: indexPath) as! DashBoardHeaderCollectionViewCell
-            headerView.setCoverPhoto("http://g.fastcompany.net/multisite_files/fastcompany/slideshow/2013/07/3014720-slide-i-1-after-five-years-beats-redesigns-studio-headphones.jpg")
-            headerView.setProfilePhoto("http://cdn-www.xda-developers.com/wp-content/uploads/2011/10/beats-by_dr_dre-04.jpg")
+            
+            if storeInfo != nil{
+                let totalSales: String = "P\(storeInfo.totalSales)"
+                let totalProducts: String = "\(storeInfo.productCount)"
+                let totalTransactions: String = "\(storeInfo.transactionCount)"
+                
+                headerView.setCoverPhotoUrl(storeInfo.coverPhoto)
+                headerView.setProfilePhotoUrl(storeInfo.avatar)
+                headerView.setTotalProducts(totalProducts)
+                headerView.setTotalSales(totalSales)
+                headerView.setTotalTransactions(totalTransactions)
+            }
             
             var gradient: CAGradientLayer = CAGradientLayer()
             gradient.frame = CGRectMake(0, 0, view.frame.width, 20)
@@ -211,6 +256,23 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
         }
+    }
+    
+    func fireStoreInfo(){
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
+        
+        manager.POST(APIAtlas.sellerStoreInfo, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.storeInfo = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
+            self.collectionView.reloadData()
+            self.hud?.hide(true)
+            
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                println(error)
+        })
     }
     
 }
