@@ -75,5 +75,10 @@ class ProductUploadUploadImageTableViewCell: UITableViewCell, UICollectionViewDa
         let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
         self.delegate!.productUploadUploadImageTableViewCell(didDeleteAtRowIndexPath: indexPath, collectionView: self.collectionView)
     }
-    
+
+    // Dealloc
+    deinit {
+        self.collectionView.delegate = nil
+        self.collectionView.dataSource = nil
+    }
 }

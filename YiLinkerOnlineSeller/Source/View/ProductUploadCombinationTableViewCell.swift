@@ -25,7 +25,7 @@ class ProductUploadCombinationTableViewCell: UITableViewCell {
         flowLayout.itemSize = CGSizeMake(153, 80)
         
         if IphoneType.isIphone4() || IphoneType.isIphone5() {
-            flowLayout.itemSize = CGSizeMake(80, 40)
+            flowLayout.itemSize = CGSizeMake(132, 80)
         } else if IphoneType.isIphone6Plus() {
             flowLayout.itemSize = CGSizeMake(180, 80)
         }
@@ -90,4 +90,9 @@ class ProductUploadCombinationTableViewCell: UITableViewCell {
         return self.collectionView.collectionViewLayout.collectionViewContentSize()
     }
     
+    // Dealloc
+    deinit {
+        self.collectionView.delegate = nil
+        self.collectionView.dataSource = nil
+    }
 }

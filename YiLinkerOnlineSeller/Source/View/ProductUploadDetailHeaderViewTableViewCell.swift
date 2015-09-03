@@ -8,9 +8,17 @@
 
 import UIKit
 
+protocol ProductUploadDetailHeaderViewTableViewCellDelegate {
+    func productUploadDetailHeaderViewTableViewCell(didEndEditing productUploadDetailHeaderViewTableViewCell: ProductUploadDetailHeaderViewTableViewCell, text: String)
+}
+
 class ProductUploadDetailHeaderViewTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var cellTextField: UITextField!
+    
+    var delegate: ProductUploadDetailHeaderViewTableViewCellDelegate?
+    var edited: Bool = true
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.cellTextField.becomeFirstResponder()
@@ -28,4 +36,9 @@ class ProductUploadDetailHeaderViewTableViewCell: UITableViewCell, UITextFieldDe
         return true
     }
     
+    func textFieldDidEndEditing(textField: UITextField) {
+        if !edited {
+            self.delegate?.productUploadDetailHeaderViewTableViewCell(didEndEditing: self, text: self.cellTextField.text)
+        }
+    }
 }

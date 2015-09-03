@@ -37,7 +37,13 @@ class CategoryProductsModel: NSObject {
             }
             
             if dictionary["data"] != nil {
-                products = CategoryProductModel.parseDataWithArray(dictionary["data"] as! NSArray)
+                if let tempVar = dictionary["data"] as? NSDictionary {
+                    if tempVar["products"] != nil {
+                        if let tempProducts = tempVar["products"] as? NSArray {
+                            products = CategoryProductModel.parseDataWithArray(tempProducts as NSArray)
+                        }
+                    }
+                }
             }
         }
         

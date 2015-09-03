@@ -19,6 +19,7 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
     @IBOutlet weak var collectionView: UICollectionView!
     var delegate: ProductUploadCombinationFooterTableViewCellDelegate?
     var images: [UIImage] = []
+    var viewController: UIViewController?
 
     @IBOutlet weak var retailPriceTextField: UITextField!
     @IBOutlet weak var discountedPriceTextField: UITextField!
@@ -28,19 +29,36 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
     override func awakeFromNib() {
         super.awakeFromNib()
         self.registerCell()
-    }
-    
-    @IBAction func save(sender: AnyObject) {
-        if self.images.last == UIImage(named: "addPhoto") {
-            self.images.removeLast()
-        }
         
         self.retailPriceTextField.delegate = self
         self.discountedPriceTextField.delegate = self
         self.quantityTextField.delegate = self
         self.skuTextField.delegate = self
+    }
+    
+    @IBAction func save(sender: AnyObject) {
+        //if self.images.last == UIImage(named: "addPhoto") {
+            self.images.removeLast()
+        //}
         
-        self.delegate!.productUploadCombinationFooterTableViewCell(didClickDoneButton: self, sku: self.skuTextField.text, quantity: self.quantityTextField.text, discountedPrice: self.discountedPriceTextField.text, retailPrice: self.retailPriceTextField.text, uploadImages: self.images)
+        if self.retailPriceTextField.text == "" {
+            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Please insert Retail Price.", title: "Incomplete Product Details")
+        } else if self.quantityTextField.text == "" {
+            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Please insert quantity.", title: "Incomplete Product Details")
+        } else if (self.retailPriceTextField.text as NSString).doubleValue < (self.discountedPriceTextField.text as NSString).doubleValue {
+            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Retail price must be greater than discount price.", title: "Incomplete Product Details")
+        } else if(quantityTextField.text as NSString).doubleValue == 0 {
+            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Please insert quanity.", title: "Incomplete Product Details")
+        } else {
+            if self.viewController != nil {
+                viewController!.view.endEditing(true)
+            }
+            
+            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.3 * Double(NSEC_PER_SEC)))
+            dispatch_after(delayTime, dispatch_get_main_queue()) {
+                self.delegate!.productUploadCombinationFooterTableViewCell(didClickDoneButton: self, sku: self.skuTextField.text, quantity: self.quantityTextField.text, discountedPrice: self.discountedPriceTextField.text, retailPrice: self.retailPriceTextField.text, uploadImages: self.images)
+            }
+        }
     }
     
     func registerCell() {
@@ -86,5 +104,11 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.endEditing(true)
         return true
+    }
+    
+    // Dealloc
+    deinit {
+        self.collectionView.delegate = nil
+        self.collectionView.dataSource = nil
     }
 }

@@ -155,14 +155,20 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
     }
     
     func back() {
-        self.navigationController!.popViewControllerAnimated(true)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     func productUploadAddFooterView(didSelectAddMore view: UIView) {
         let productUploadCombinationTableViewController: ProductUploadCombinationTableViewController = ProductUploadCombinationTableViewController(nibName: "ProductUploadCombinationTableViewController", bundle: nil)
         productUploadCombinationTableViewController.attributes = self.productModel!.attributes
         productUploadCombinationTableViewController.delegate = self
-        self.navigationController!.pushViewController(productUploadCombinationTableViewController, animated: true)
+        var counter: Int = 0
+        if self.productModel != nil {
+           counter = self.productModel!.validCombinations.count
+        }
+        
+        productUploadCombinationTableViewController.headerTitle = "Combination \(counter + 1)"
+        self.navigationController?.pushViewController(productUploadCombinationTableViewController, animated: true)
     }
     
     func productUploadCombinationTableViewController(appendCombination combination: CombinationModel, isEdit: Bool, indexPath: NSIndexPath) {
@@ -196,20 +202,38 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             }
         }*/
         
-        if !isEdit {
-            self.productModel!.validCombinations.append(combination)
-        } else {
-            self.productModel!.validCombinations[indexPath.section] = combination
+        var isValidCombination: Bool = true
+        
+        if self.productModel != nil && !isEdit {
+            for combinationLoop in self.productModel!.validCombinations {
+                if combinationLoop.attributes == combination.attributes {
+                    isValidCombination = false
+                    break
+                }
+            }
         }
         
-        self.tableView.reloadData()
-      
+        if isValidCombination {
+            if !isEdit {
+                self.productModel!.validCombinations.append(combination)
+            } else {
+                self.productModel!.validCombinations[indexPath.section] = combination
+            }
+            
+            self.tableView.reloadData()
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Combination already exist.", title: "Error")
+        }
     }
     @IBAction func saveDetails(sender: AnyObject) {
-        let productUploadTableViewController: ProductUploadTableViewController
-         = self.navigationController!.viewControllers[0] as! ProductUploadTableViewController
-        productUploadTableViewController.replaceProductAttributeWithAttribute(self.productModel!.attributes, combinations: self.productModel!.validCombinations)
-        self.navigationController!.popToRootViewControllerAnimated(true)
+        if self.productModel!.validCombinations.count == 0 {
+             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Combinations are required.", title: "Incomplete Product Details")
+        } else {
+            let productUploadTableViewController: ProductUploadTableViewController
+            = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
+            productUploadTableViewController.replaceProductAttributeWithAttribute(self.productModel!.attributes, combinations: self.productModel!.validCombinations)
+            self.navigationController?.popToRootViewControllerAnimated(true)
+        }
     }
     
     func pUAttributeSetHeaderTableViewCell(didClickDelete cell: PUAttributeSetHeaderTableViewCell) {
@@ -219,7 +243,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         
         self.productModel!.validCombinations.removeAtIndex(indexPath.section)
         self.tableView.beginUpdates()
-        self.tableView.deleteSections(section, withRowAnimation: UITableViewRowAnimation.Left)
+        self.tableView.deleteSections(section, withRowAnimation: UITableViewRowAnimation.Fade)
         self.tableView.endUpdates()
         self.tableView.reloadData()
     }
@@ -232,6 +256,12 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         productUploadCombinationTableViewController.productModel = self.productModel!.copy()
         productUploadCombinationTableViewController.selectedIndexpath = indexPath
         productUploadCombinationTableViewController.delegate = self
-        self.navigationController!.pushViewController(productUploadCombinationTableViewController, animated: true)
+        self.navigationController?.pushViewController(productUploadCombinationTableViewController, animated: true)
+    }
+    
+    // Dealloc
+    deinit {
+        self.tableView.delegate = nil
+        self.tableView.dataSource = nil
     }
 }

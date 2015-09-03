@@ -26,6 +26,7 @@ struct APIEnvironment {
 struct APIAtlas {
     
     static let loginUrl = "login"
+    static let refreshTokenUrl = "login"
     static let registerUrl = "user/register"
     static let conditionUrl = "product/getProductConditions"
     static let categoryUrl = "product/getCategories"
@@ -46,7 +47,7 @@ class APIManager: AFHTTPSessionManager {
             let url: NSURL! = NSURL(string: APIAtlas.baseUrl)
             Static.instance = APIManager(baseURL: url)
             Static.instance?.securityPolicy.allowInvalidCertificates = true
-            //Static.instance?.responseSerializer = JSONResponseSerializer()
+            Static.instance?.responseSerializer = JSONResponseSerializer()
         }
         
         return Static.instance!

@@ -170,4 +170,11 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         let productDescription = ProductDescriptionViewController(nibName: "ProductDescriptionViewController", bundle: nil)
         self.navigationController?.presentViewController(productDescription, animated: true, completion: nil)
     }
+    
+    // Dealloc
+    
+    deinit {
+        self.tableView.delegate = nil
+        self.tableView.dataSource = nil
+    }
 }

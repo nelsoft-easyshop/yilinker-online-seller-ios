@@ -42,19 +42,23 @@ struct ProductUploadTableViewControllerConstant {
     static let uploadPriceKey = "price"
     static let uploadAccessTokenKey = "access_token"
     static let uploadPropertyKey = "productProperties"
+    static let uploadShortDescriptionkey = "shortDescription"
+    static let uploadDescriptionKey = "description"
+    static let uploadDiscountedPriceKey = "discountedPrice"
 }
 
-class ProductUploadTableViewController: UITableViewController, ProductUploadUploadImageTableViewCellDataSource, ProductUploadUploadImageTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadCategoryViewControllerDelegate, ProductUploadFooterViewDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadPriceTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadBrandViewControllerDelegate, ProductUploadQuantityTableViewCellDelegate {
+class ProductUploadTableViewController: UITableViewController, ProductUploadUploadImageTableViewCellDataSource, ProductUploadUploadImageTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadCategoryViewControllerDelegate, ProductUploadFooterViewDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadPriceTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadBrandViewControllerDelegate, ProductUploadQuantityTableViewCellDelegate, SuccessUploadViewControllerDelegate {
     
     var uploadImages: [UIImage] = []
     var productModel: ProductModel = ProductModel()
     var sectionFourRows: Int = 2
     var sectionPriceHeaderHeight: CGFloat = 41
     var conditions: [ConditionModel] = []
-    
+    var hud: MBProgressHUD?
+
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
     }
     
     override func viewDidLoad() {
@@ -69,9 +73,21 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         self.fireCondition()
     }
     
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
     func fireCondition() {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
         //seller@easyshop.ph
         //password
@@ -91,21 +107,23 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 }
                 
                 let indexPath: NSIndexPath = NSIndexPath(forItem: 2, inSection: 2)
-                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
             }
             
-            SVProgressHUD.dismiss()
+            self.productModel.condition = self.conditions[0]
+            
+            self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
                 if task.statusCode == 401 {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "RefreshToken Expired/ No available API for refershing accessToken", title: "Server Error")
+                    self.fireRefreshToken()
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 }
                 
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
         })
     }
     
@@ -286,6 +304,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             let cell: ProductUploadUploadImageTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadUploadImageTableViewCellNibNameAndIdentifier) as! ProductUploadUploadImageTableViewCell
             cell.dataSource = self
             cell.delegate = self
+            cell.collectionView.reloadData()
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
         } else if indexPath.section == 1 {
@@ -295,6 +314,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.delegate = self
                 cell.cellTitleLabel.text = "Product Name"
                 cell.cellTexField.placeholder = "Product Name"
+                cell.cellTexField.text = self.productModel.name
                 cell.textFieldType = ProductTextFieldType.ProductName
                 return cell
             } else if indexPath.row == 1 {
@@ -303,7 +323,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.delegate = self
                 cell.textFieldType = ProductTextFieldType.ProductShortDescription
                 cell.cellTitleLabel.text = "Short Description"
-                
+                cell.productUploadTextView.text = self.productModel.shortDescription
                 return cell
             } else if indexPath.row == 2 {
                 let cell: ProductUploadTextViewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextViewTableViewCellNibNameAndIdentifier) as! ProductUploadTextViewTableViewCell
@@ -311,7 +331,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.delegate = self
                 cell.textFieldType = ProductTextFieldType.ProductCompleteDescription
                 cell.cellTitleLabel.text = "Complete Description"
-                
+                cell.productUploadTextView.text = self.productModel.completeDescription
                 return cell
             } else {
                 let cell: ProductUploadTextViewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextViewTableViewCellNibNameAndIdentifier) as! ProductUploadTextViewTableViewCell
@@ -324,15 +344,17 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.cellTitleLabel.text = "Category*"
                 cell.cellTexField.placeholder = "Select Category"
-                
+                cell.cellTexField.text = self.productModel.category.name
+                cell.textFieldType = ProductTextFieldType.Category
+                cell.delegate = self
                 if self.productModel.category.name != "" {
                     cell.cellTexField.text = self.productModel.category.name
                 }
                 
-                let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "category")
+               /*let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "category")
                 cell.cellTexField.userInteractionEnabled = true
                 cell.cellTexField.superview!.addGestureRecognizer(tapGestureRecognizer)
-                cell.cellTexField.enabled = false
+                cell.cellTexField.enabled = false*/
                 
                 return cell
             } else if indexPath.row == 1 {
@@ -340,15 +362,17 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.cellTitleLabel.text = "Brand"
                 cell.cellTexField.placeholder = "Brand"
-                
+                cell.delegate = self
+                cell.cellTexField.text = self.productModel.brand.name
+                cell.textFieldType = ProductTextFieldType.Brand
                 if self.productModel.brand.name != "" {
                     cell.cellTexField.text = self.productModel.brand.name
                 }
                 
-                let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "brand")
+               /*let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "brand")
                 cell.cellTexField.userInteractionEnabled = true
                 cell.cellTexField.superview!.addGestureRecognizer(tapGestureRecognizer)
-                cell.cellTexField.enabled = false
+                cell.cellTexField.enabled = false*/
                 
                 cell.addTextFieldDelegate()
                 
@@ -360,7 +384,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.cellTexField.placeholder = "Select the condition of the product"
                 cell.textFieldType = ProductTextFieldType.Condition
                 cell.delegate = self
-                
+                cell.cellTexField.text = self.productModel.condition.name
                 var values: [String] = []
                 
                 if self.conditions.count != 0 {
@@ -386,6 +410,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     let cell: ProductUploadQuantityTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadQuantityTableViewCellNibNameAndIdentifier) as! ProductUploadQuantityTableViewCell
                     cell.selectionStyle = UITableViewCellSelectionStyle.None
                     cell.delegate = self
+                    cell.cellTextField.text = "\(self.productModel.quantity)"
                     return cell
                 } else {
                     let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
@@ -394,6 +419,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     cell.cellTexField.placeholder = "SKU"
                     cell.delegate = self
                     cell.textFieldType = ProductTextFieldType.ProductSKU
+                    cell.cellTexField.text = self.productModel.sku
                     return cell
                 }
             } else {
@@ -448,7 +474,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.textFieldType = ProductTextFieldType.ProductRetailPrice
                 cell.cellTitleLabel.text = "Retail Price*"
                 cell.cellTextField.placeholder = "0.00"
-                
+                cell.cellTextField.text = self.productModel.retailPrice
                 return cell
             } else {
                 let cell: ProductUploadPriceTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadPriceTableViewCellNibNameAndIdentifier) as! ProductUploadPriceTableViewCell
@@ -457,14 +483,17 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.textFieldType = ProductTextFieldType.ProductDiscountPrice
                 cell.cellTitleLabel.text = "Discounted Price*"
                 cell.cellTextField.placeholder = "0.00"
-                
+                cell.cellTextField.text = self.productModel.discoutedPrice
                 return cell
             }
         } else {
             let cell: ProductUploadDimensionsAndWeightTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier) as! ProductUploadDimensionsAndWeightTableViewCell
             cell.delegate = self
             cell.selectionStyle = UITableViewCellSelectionStyle.None
-            
+            cell.weightTextField.text = self.productModel.weigth
+            cell.lengthTextField.text = self.productModel.length
+            cell.heightTextField.text = self.productModel.height
+            cell.widthTextField.text = self.productModel.width
             return cell
         }
     }
@@ -483,14 +512,14 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     func productUploadBrandViewController(didSelectBrand brand: String, brandModel: BrandModel) {
-        if brandModel.name != "" {
-            self.productModel.brand = brandModel
+        if brandModel.name != brand {
+            self.productModel.brand = BrandModel(name: brand, brandId: 1)
         } else {
-            self.productModel.brand = BrandModel(name: brand, brandId: 0)
+            self.productModel.brand = brandModel
         }
         
         let indexPath: NSIndexPath = NSIndexPath(forItem: 1, inSection: 2)
-        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
     }
     
     func addMoreDetails(sender: UIButton) {
@@ -564,6 +593,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
         
         self.reloadUploadCellCollectionViewData()
+        self.tableView.reloadData()
     }
     
     func reloadUploadCellCollectionViewData() {
@@ -607,15 +637,39 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         let range: NSRange = NSMakeRange(3, 1)
         let section: NSIndexSet = NSIndexSet(indexesInRange: range)
         
-        self.tableView.reloadSections(section, withRowAnimation: UITableViewRowAnimation.Bottom)
-        self.sectionFourRows = 0
+        self.tableView.reloadSections(section, withRowAnimation: UITableViewRowAnimation.Fade)
+        if self.productModel.validCombinations.count == 0 {
+            self.sectionFourRows = 2
+        } else {
+            self.sectionFourRows = 0
+        }
         self.sectionPriceHeaderHeight = 0
         self.tableView.reloadData()
     }
     
     func productUploadFooterView(didClickUpload view: ProductUploadFooterView) {
         self.productModel.images = self.uploadImages
-        self.fireUpload()
+        if self.productModel.images.count == 1 {
+          UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert atleast one product image.", title: "Incomplete Product Details")
+        } else if self.productModel.name == "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert product name.", title: "Incomplete Product Details")
+        } else if self.productModel.shortDescription == "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert short description.", title: "Incomplete Product Details")
+        } else if self.productModel.completeDescription == "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert complete description.", title: "Incomplete Product Details")
+        } else if self.productModel.category.name == "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please select category.", title: "Incomplete Product Details")
+        } else if self.productModel.condition == "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please select condition.", title: "Incomplete Product Details")
+        } else if self.productModel.quantity == 0 && self.productModel.validCombinations.count == 0 {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert quantity.", title: "Incomplete Product Details")
+        } else if self.productModel.retailPrice == "" && self.productModel.validCombinations.count == 0 {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert Retail Price.", title: "Incomplete Product Details")
+        } else if (self.productModel.retailPrice as NSString).doubleValue < (self.productModel.discoutedPrice as NSString).doubleValue {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Retail price must be larger than discount price.", title: "Incomplete Product Details")
+        } else {
+            self.fireUpload()
+        }
     }
     
     func productUploadTextFieldTableViewCell(textFieldDidChange text: String, cell: ProductUploadTextFieldTableViewCell, textFieldType: ProductTextFieldType) {
@@ -633,6 +687,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             }
             println("selected condition: \(self.conditions[selectedIndex].name)")
             self.productModel.condition = self.conditions[selectedIndex]
+        } else if textFieldType == ProductTextFieldType.Brand {
+            self.brand()
+        } else if textFieldType == ProductTextFieldType.Category {
+            self.category()
         }
     }
     
@@ -674,16 +732,21 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
      func didSelecteCategory(categoryModel: CategoryModel) {
         self.productModel.category = categoryModel
         let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 2)
-        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
     }
     
     func fireUpload() {
-        
         var datas: [NSData] = []
         
         var productUploadedImagesCount: Int = 0
-        
+        self.productModel.images.removeLast()
         let mainImageCount: Int = self.productModel.images.count
+        
+        var imagesKey: [String] = []
+        
+        for var x = 0; x < mainImageCount; x++ {
+            imagesKey.append("\(x)")
+        }
         
         for combination in self.productModel.validCombinations {
             for image in combination.images {
@@ -696,34 +759,82 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             datas.append(data)
         }
         
+        var customBrand: String = ""
+        
+        if self.productModel.brand.brandId != 0 {
+            customBrand = self.productModel.brand.name
+        }
+        
+    
         let parameters: NSDictionary = [ProductUploadTableViewControllerConstant.uploadPriceKey: self.productModel.retailPrice,
+            ProductUploadTableViewControllerConstant.uploadShortDescriptionkey: self.productModel.shortDescription,
+            ProductUploadTableViewControllerConstant.uploadDescriptionKey: self.productModel.completeDescription,
+            ProductUploadTableViewControllerConstant.uploadPriceKey: self.productModel.retailPrice,
+            ProductUploadTableViewControllerConstant.uploadDiscountedPriceKey: self.productModel.discoutedPrice,
             ProductUploadTableViewControllerConstant.uploadQuantityKey: self.productModel.quantity,
             ProductUploadTableViewControllerConstant.uploadCategoryKey: self.productModel.category.uid,
-            ProductUploadTableViewControllerConstant.uploadBrandKey: self.productModel.brand,
+            ProductUploadTableViewControllerConstant.uploadBrandKey: self.productModel.brand.brandId,
             ProductUploadTableViewControllerConstant.uploadTitleKey: self.productModel.name,
             ProductUploadTableViewControllerConstant.uploadConditionKey: self.productModel.condition.uid,
-            ProductUploadTableViewControllerConstant.uploadPropertyKey: self.property(mainImageCount)]
+            ProductUploadTableViewControllerConstant.uploadPropertyKey: self.property(mainImageCount),
+            ProductUploadTableViewControllerConstant.uploadImagesKey: imagesKey,
+            "customBrand": customBrand,
+            "isFreeShipping": false]
         
         let manager: APIManager = APIManager.sharedInstance
         
-        SVProgressHUD.show()
+        self.showHUD()
         let url: String = "\(APIAtlas.uploadUrl)?access_token=\(SessionManager.accessToken())"
         manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
             for (index, data) in enumerate(datas) {
-                formData.appendPartWithFileData(data, name: "images[]", fileName: "\(index + 1)", mimeType: "image/jpeg")
+                println("index: \(index)")
+                formData.appendPartWithFileData(data, name: "images[]", fileName: "\(index)", mimeType: "image/jpeg")
             }
             
-        }, success: { (NSURLSessionDataTask, AnyObject) -> Void in
-            SVProgressHUD.dismiss()
+            }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
+                self.hud?.hide(true)
+                let dictionary: NSDictionary = response as! NSDictionary
+                
+                if dictionary["isSuccessful"] as! Bool == true {
+                    self.success()
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: dictionary["message"] as! String, title: "Server Error")
+                }
+                
+                
+                println(response)
         }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
             let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+            println(error.userInfo)
             if task.statusCode == 401 {
-               UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "RefreshToken Expired/ No available API for refershing accessToken", title: "Server Error")
+               self.fireRefreshToken2()
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
             }
-            SVProgressHUD.dismiss()
+            self.hud?.hide(true)
         }
+    }
+    
+    func success() {
+        let successViewController: SuccessUploadViewController = SuccessUploadViewController(nibName: "SuccessUploadViewController", bundle: nil)
+        successViewController.delegate = self
+        self.presentViewController(successViewController, animated: true, completion: nil)
+    }
+    
+    func successUploadViewController(didTapDashBoard viewController: SuccessUploadViewController) {
+        self.tableView.hidden = true
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func successUploadViewController(didTapUploadAgain viewController: SuccessUploadViewController) {
+        for (index, images) in enumerate(self.uploadImages) {
+            self.uploadImages.removeLast()
+        }
+        
+        self.addAddPhoto()
+        self.productModel = ProductModel()
+        self.tableView.reloadData()
+        self.tableView.setContentOffset(CGPointZero, animated: true)
     }
     
     func property(mainImageCount: Int) -> NSString {
@@ -732,20 +843,77 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         for combination in self.productModel.validCombinations {
              let dictionary: NSMutableDictionary = NSMutableDictionary()
             dictionary["attribute"] = combination.attributes
-            dictionary["price"] = combination.retailPrice
-            dictionary["discountedPrice"] = combination.discountedPrice
-            dictionary["discountedPrice"] = combination.sku
+            dictionary["price"] = (combination.retailPrice as NSString).doubleValue
+            dictionary["discountedPrice"] = (combination.discountedPrice as NSString).doubleValue
+            dictionary["quantity"] = combination.quantity.toInt()
+            dictionary["sku"] = combination.sku
             
-            var arrayNumber: [Int] = []
+            var arrayNumber: [String] = []
             
             for (index, image) in enumerate(combination.images) {
-                arrayNumber.append(counter++)
+                var x: Int = counter
+                counter++
+                arrayNumber.append("\(x)")
             }
-            dictionary["images"] = arrayNumber
+            //dictionary["images"] = arrayNumber
+            dictionary["images"] = "\(arrayNumber)"
             array.append(dictionary)
         }
+        
+       
         let data = NSJSONSerialization.dataWithJSONObject(array, options: nil, error: nil)
         let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
+        println(string)
         return string!
+    }
+    
+    
+    func fireRefreshToken() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.fireCondition()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+        })
+
+    }
+    
+    func fireRefreshToken2() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.fireUpload()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+        })
+    }
+    
+    // Dealloc
+    deinit {
+        self.tableView.delegate = nil
+        self.tableView.dataSource = nil
     }
 }

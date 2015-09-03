@@ -20,6 +20,11 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     
     var tableImages: [String] = ["mystore", "report", "transaction", "product", "category", "uploadItem", "followers", "activityLog", "points", "help", "logout"]
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController!.tabBar.tintColor = Constants.Colors.appTheme
@@ -63,8 +68,6 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         
         self.tabBarController!.tabBar.tintColor = Constants.Colors.appTheme
         
-        
-        
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let screenWidth = screenSize.width
         let screenHeight = screenSize.height
@@ -83,7 +86,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         layout.sectionInset = UIEdgeInsetsMake(0, 16.0, 0, 16.0)
         collectionView.setCollectionViewLayout(layout, animated: true)
         collectionView?.backgroundColor = UIColor.whiteColor()
-        collectionView?.bounces = true
+        collectionView?.bounces = false
         collectionView?.alwaysBounceVertical = true
     }
     
@@ -171,7 +174,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
             self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
         } else if indexPath.row == 6 {
-            
+            var followerController = FollowersViewController(nibName: "FollowersViewController", bundle: nil)
+            self.navigationController?.pushViewController(followerController, animated:true)
         } else if indexPath.row == 7 {
             var activityViewController = ActivityLogTableViewController(nibName: "ActivityLogTableViewController", bundle: nil)
             self.navigationController?.pushViewController(activityViewController, animated:true)
