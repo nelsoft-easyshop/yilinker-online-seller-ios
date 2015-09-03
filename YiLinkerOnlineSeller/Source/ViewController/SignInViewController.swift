@@ -235,7 +235,6 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             
             self.hideKeyboard(UIGestureRecognizer())
             self.signInButton.setTitle("Welcome to YiLinker!", forState: .Normal)
-            self.hud?.hide(true)
             self.signinSuccessful()
             
             }, failure: {
@@ -272,8 +271,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         fireStoreInfo()
     }
     
-    func fireStoreInfo(){
-        self.showHUD()
+    func fireStoreInfo() {
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
         
