@@ -51,7 +51,9 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         changeAddressCollectionView.dataSource = self
         changeAddressCollectionView.delegate = self
         
-        if IphoneType.isIphone5() {
+        if IphoneType.isIphone4()  {
+            layout.itemSize = CGSize(width: self.view.frame.size.width - 100, height: 79)
+        } else if IphoneType.isIphone5() {
             layout.itemSize = CGSize(width: self.view.frame.size.width - 80, height: 79)
         } else {
             layout.itemSize = CGSize(width: self.view.frame.size.width - 20, height: 79)

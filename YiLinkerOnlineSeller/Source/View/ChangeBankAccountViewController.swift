@@ -24,19 +24,28 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
     var delegate: ChangeBankAccountViewControllerDelegate?
     
     var hud: MBProgressHUD?
-   
+    var dimView: UIView = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        dimView = UIView(frame: self.view.bounds)
+        dimView.backgroundColor=UIColor.blackColor()
+        dimView.alpha = 0.5
+        self.navigationController?.view.addSubview(dimView)
+        dimView.hidden = true
         
         self.edgesForExtendedLayout = .None
         self.titleView()
         self.backButton()
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         
-        if IphoneType.isIphone5() {
-             layout.itemSize = CGSize(width: self.view.frame.size.width - 80, height: 79)
+        if IphoneType.isIphone4()  {
+            layout.itemSize = CGSize(width: self.view.frame.size.width - 100, height: 79)
+        } else if IphoneType.isIphone5() {
+            layout.itemSize = CGSize(width: self.view.frame.size.width - 80, height: 79)
         } else {
-             layout.itemSize = CGSize(width: self.view.frame.size.width - 20, height: 79)
+            layout.itemSize = CGSize(width: self.view.frame.size.width - 20, height: 79)
         }
        
         layout.minimumLineSpacing = 20
@@ -256,6 +265,7 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
         addAddressTableViewController.delegate = self
         self.navigationController!.presentViewController(addAddressTableViewController, animated: true, completion: nil)
         */
+        self.showView()
         var attributeModal = CreateNewBankAccountViewController(nibName: "CreateNewBankAccountViewController", bundle: nil)
         attributeModal.delegate = self
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
@@ -269,6 +279,22 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
     func updateCollectionView() {
         fireBankAccount()
         self.changeBankAccountCollectionView.reloadData()
+    }
+    
+    func dismissView() {
+        UIView.animateWithDuration(0.25, animations: {
+            self.dimView.alpha = 0
+            }, completion: { finished in
+                self.dimView.hidden = true
+        })
+    }
+    
+    func showView(){
+        dimView.hidden = false
+        UIView.animateWithDuration(0.25, animations: {
+            self.dimView.alpha = 0.5
+            }, completion: { finished in
+        })
     }
 }
 

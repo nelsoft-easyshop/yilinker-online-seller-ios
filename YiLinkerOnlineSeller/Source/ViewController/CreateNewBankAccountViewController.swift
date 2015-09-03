@@ -8,10 +8,12 @@
 
 import UIKit
 protocol CreateNewBankAccountViewControllerDelegate{
-   func updateCollectionView()
+    func updateCollectionView()
+    func dismissView()
 }
 class CreateNewBankAccountViewController: UIViewController {
 
+    @IBOutlet weak var topConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var closeButton: UIButton!
     
@@ -42,6 +44,7 @@ class CreateNewBankAccountViewController: UIViewController {
     }
     
     @IBAction func closeAction(sender: AnyObject) {
+        self.delegate?.dismissView()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -52,6 +55,9 @@ class CreateNewBankAccountViewController: UIViewController {
         var bankId: Int? = "1".toInt()
         let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : NSNumber(integer: accountNumber!), "accountName" : self.accountNameTextField.text, "bankId" : 1]
         println(NSNumber(integer: accountNumber!))
+        
+        self.delegate?.dismissView()
+        
         manager.POST(APIAtlas.sellerAddBankAccount, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             println("\(parameters)")
@@ -78,6 +84,15 @@ class CreateNewBankAccountViewController: UIViewController {
     }
 
     
+    @IBAction func updateTopContraint(sender: AnyObject) {
+        if IphoneType.isIphone4() {
+            self.topConstraint.constant = -150
+        } else if IphoneType.isIphone5() {
+            topConstraint.constant = -60
+        } else {
+            topConstraint.constant = 60
+        }
+    }
 
     /*
     // MARK: - Navigation

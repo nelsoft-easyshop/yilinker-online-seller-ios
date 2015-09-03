@@ -47,9 +47,9 @@ class ChangeMobileNumberViewController: UIViewController {
     
     @IBAction func textFieldDidBeginEditing(sender: AnyObject) {
         if IphoneType.isIphone4() {
-            topConstraint.constant = 150
+            topConstraint.constant = 40
         } else if IphoneType.isIphone5() {
-            topConstraint.constant = 120
+            topConstraint.constant = 60
         } else {
              topConstraint.constant = 100
         }
