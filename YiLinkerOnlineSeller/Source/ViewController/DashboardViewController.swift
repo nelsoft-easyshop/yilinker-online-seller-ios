@@ -154,10 +154,10 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         println("Clicked item \(tableData[indexPath.row])")
         if indexPath.row == 0 {
-            
-        } else if indexPath.row == 0 {
             var storeInfoViewController = StoreInfoViewController(nibName: "StoreInfoViewController", bundle: nil)
             self.navigationController?.pushViewController(storeInfoViewController, animated:true)
+        } else if indexPath.row == 0 {
+           
         } else if indexPath.row == 1 {
             var salesViewController = SalesReportViewController(nibName: "SalesReportViewController", bundle: nil)
             self.navigationController?.pushViewController(salesViewController, animated:true)

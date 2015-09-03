@@ -172,7 +172,6 @@
         <!--Search-->
         <scene sceneID="A4b-Zw-EBG">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="z5z-fb-b7o" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lRx-te-Bba" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Search" image="search" id="hw5-fD-Obi"/>
                     <toolbarItems/>
@@ -183,6 +182,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="z5z-fb-b7o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="7344" y="2679"/>
         </scene>
@@ -329,7 +329,7 @@
                                     <outlet property="delegate" destination="nOb-Vl-TXr" id="7Gh-fd-Ggt"/>
                                 </connections>
                             </tableView>
-                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wyL-yh-FrS">
+                            <view alpha="0.5" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wyL-yh-FrS">
                                 <rect key="frame" x="0.0" y="114" width="375" height="600"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
