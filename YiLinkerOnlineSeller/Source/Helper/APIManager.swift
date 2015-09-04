@@ -49,6 +49,9 @@ struct APIAtlas {
     static let checkIfCategoryNameExists = "auth/category/checkIfCategoryExists"
     static let getAllCategoryProducts = "auth/category/getAllCategoryProducts"
     
+    static let managementGetProductList = "auth/product/getProductList"
+    static let managementUpdateProductStatus = "auth/product/updateProductStatus"
+    
     static let baseUrl = APIEnvironment.baseUrl()
 }
 
