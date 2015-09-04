@@ -27,4 +27,36 @@ class ProductManagementAllTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func setProductImage(image: String) {
+        productImageView.sd_setImageWithURL(NSURL(string: image), placeholderImage: UIImage(named: "dummy-placeholder"))
+    }
+    
+    func setStatus(status: Int) {
+        
+        if status == 0 {
+            statusLabel.text = "Draft"
+            statusLabel.textColor = UIColor.darkGrayColor()
+        } else if status == 1 {
+            statusLabel.text = "Under Review"
+            statusLabel.textColor = UIColor.darkGrayColor()
+        } else if status == 2 {
+            statusLabel.text = "Active"
+            statusLabel.textColor = UIColor.greenColor()
+        } else if status == 3 {
+            statusLabel.text = "Inactive"
+            statusLabel.textColor = UIColor.redColor()
+        } else if status == 4 {
+            statusLabel.text = "Deleted"
+            statusLabel.textColor = UIColor.darkGrayColor()
+            setDeleted()
+        }
+    }
+    
+    func setDeleted() {
+        self.productImageView.alpha = 0.50
+        self.titleLabel.alpha = 0.75
+        self.subTitleLabel.alpha = 0.75
+        self.statusLabel.alpha = 0.75
+    }
+    
 }

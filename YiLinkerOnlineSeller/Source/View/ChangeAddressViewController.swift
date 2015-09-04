@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ChangeAddressViewControllerDelegate {
-    func updateStoreAddressDetail(user_address_id: Int, location_id: Int, title: String, unit_number: String, building_name: String, street_number: String, street_name: String, subdivision: String, zip_code: String, street_address: String, country: String, island: String, region: String, province: String, city: String, municipality: String, barangay: String, longitude: Double, latitude: Double, landline: String, is_default: Bool)
+    func updateStoreAddressDetail(title: String, storeAddress: String)
     func dismissView()
 }
 
@@ -31,6 +31,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Dim view
         dimView = UIView(frame: self.view.bounds)
         dimView.backgroundColor=UIColor.blackColor()
         dimView.alpha = 0.5
@@ -38,8 +39,10 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         dimView.hidden = true
         
         self.edgesForExtendedLayout = .None
+        
         self.titleView()
         self.backButton()
+        
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: self.view.frame.size.width - 20, height: 79)
         layout.minimumLineSpacing = 20
@@ -47,6 +50,15 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         changeAddressCollectionView.collectionViewLayout = layout
         changeAddressCollectionView.dataSource = self
         changeAddressCollectionView.delegate = self
+        
+        if IphoneType.isIphone5(){
+            layout.itemSize = CGSize(width: self.view.frame.size.width - 100, height: 79)
+        } else if IphoneType.isIphone5() {
+            layout.itemSize = CGSize(width: self.view.frame.size.width - 80, height: 79)
+        } else {
+            layout.itemSize = CGSize(width: self.view.frame.size.width - 20, height: 79)
+        }
+        
         self.regsiterNib()
         self.fireSellerAddress()
     }
@@ -80,11 +92,13 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             self.storeAddressModel = StoreAddressModel.parseStoreAddressDataFromDictionary(responseObject as! NSDictionary)
             
             self.cellCount = self.storeAddressModel!.title.count
+            println(self.storeAddressModel!.store_address.count)
             for var num  = 0; num < self.storeAddressModel?.title.count; num++ {
                 if self.storeAddressModel.is_default[num]{
                     self.selectedIndex = num
                 }
             }
+            
             self.changeAddressCollectionView.reloadData()
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
@@ -127,14 +141,16 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     func fireSetDefaultStoreAddress(){
         self.showHUD()
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "userAddressId" : self.storeAddressModel.user_address_id[self.selectedIndex]];
         
-        manager.POST(APIAtlas.sellerSetDefaultBankAccount, parameters: parameters, success: {
+        manager.POST(APIAtlas.sellerSetDefaultStoreAddress, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            self.delegate?.updateStoreAddressDetail(self.storeAddressModel.user_address_id[self.selectedIndex], location_id: self.storeAddressModel.location_id[self.selectedIndex], title: self.storeAddressModel.title[self.selectedIndex], unit_number: self.storeAddressModel.unit_number[self.selectedIndex], building_name: self.storeAddressModel.building_name[self.selectedIndex], street_number: self.storeAddressModel.street_number[self.selectedIndex], street_name: self.storeAddressModel.street_name[self.selectedIndex], subdivision: self.storeAddressModel.subdivision[self.selectedIndex], zip_code: self.storeAddressModel.zip_code[self.selectedIndex], street_address: self.storeAddressModel.street_address[self.selectedIndex], country: self.storeAddressModel.country[self.selectedIndex], island: self.storeAddressModel.island[self.selectedIndex], region: self.storeAddressModel.region[self.selectedIndex], province: self.storeAddressModel.province[self.selectedIndex], city: self.storeAddressModel.city[self.selectedIndex], municipality: self.storeAddressModel.municipality[self.selectedIndex], barangay: self.storeAddressModel.barangay[self.selectedIndex], longitude: self.storeAddressModel.longitude[self.selectedIndex], latitude: self.storeAddressModel.latitude[self.selectedIndex], landline: self.storeAddressModel.landline[self.selectedIndex], is_default: self.storeAddressModel.is_default[self.selectedIndex])
-            
+            //self.delegate?.updateStoreAddressDetail(self.storeAddressModel.user_address_id[self.selectedIndex], location_id: self.storeAddressModel.location_id[self.selectedIndex], title: self.storeAddressModel.title[self.selectedIndex], unit_number: self.storeAddressModel.unit_number[self.selectedIndex], building_name: self.storeAddressModel.building_name[self.selectedIndex], street_number: self.storeAddressModel.street_number[self.selectedIndex], street_name: self.storeAddressModel.street_name[self.selectedIndex], subdivision: self.storeAddressModel.subdivision[self.selectedIndex], zip_code: self.storeAddressModel.zip_code[self.selectedIndex], street_address: self.storeAddressModel.street_address[self.selectedIndex], country: self.storeAddressModel.country[self.selectedIndex], island: self.storeAddressModel.island[self.selectedIndex], region: self.storeAddressModel.region[self.selectedIndex], province: self.storeAddressModel.province[self.selectedIndex], city: self.storeAddressModel.city[self.selectedIndex], municipality: self.storeAddressModel.municipality[self.selectedIndex], barangay: self.storeAddressModel.barangay[self.selectedIndex], longitude: self.storeAddressModel.longitude[self.selectedIndex], latitude: self.storeAddressModel.latitude[self.selectedIndex], landline: self.storeAddressModel.landline[self.selectedIndex], is_default: self.storeAddressModel.is_default[self.selectedIndex])
+       
+            self.delegate?.updateStoreAddressDetail(self.storeAddressModel.title[self.selectedIndex], storeAddress: self.storeAddressModel.store_address[self.selectedIndex])
             //self.changeBankAccountCollectionView.reloadData()
+            
             
             self.navigationController!.popViewControllerAnimated(true)
             self.hud?.hide(true)
@@ -159,14 +175,11 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell : ChangeAddressCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressCollectionViewCell
-        
             if self.storeAddressModel != nil {
                 cell.titleLabel.text = self.storeAddressModel!.title[indexPath.row]
                 
-               cell.subTitleLabel.text = "\(self.storeAddressModel!.unit_number[indexPath.row])"+" "+self.storeAddressModel!.building_name[indexPath.row]+", "+self.storeAddressModel!.street_number[indexPath.row]+" "+self.storeAddressModel!.street_name[indexPath.row]+", "+self.storeAddressModel!.subdivision[indexPath.row]+", "+self.storeAddressModel!.zip_code[indexPath.row]
-                
-                cell.titleLabel.tag = self.storeAddressModel!.location_id[indexPath.row]
-                //println("\(self.storeAddressModel.zip_code[0])")
+                cell.subTitleLabel.text = self.storeAddressModel!.store_address[indexPath.row]
+                cell.titleLabel.tag = self.storeAddressModel.user_address_id[indexPath.row]
                 if indexPath.row == self.selectedIndex {
                     cell.layer.borderWidth = 1
                     cell.layer.borderColor = Constants.Colors.selectedGreenColor.CGColor
@@ -219,7 +232,6 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     func changeAddressCollectionViewCell(deleteAddressWithCell cell: ChangeAddressCollectionViewCell) {
         let indexPath: NSIndexPath = self.changeAddressCollectionView.indexPathForCell(cell)!
         fireDeleteStoreAddress(cell.titleLabel.tag, indexPath: indexPath)
-        self.deleteCellInIndexPath(indexPath)
     }
 
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
@@ -230,12 +242,12 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         return footerView
     }
     
-    func fireDeleteStoreAddress(locationId: Int, indexPath: NSIndexPath){
+    func fireDeleteStoreAddress(userAddressId: Int, indexPath: NSIndexPath){
         self.showHUD()
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "locationId" : NSNumber(integer: locationId)];
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "userAddressId" : NSNumber(integer: userAddressId)];
         
-        manager.POST(APIAtlas.sellerStoreAddresses, parameters: parameters, success: {
+        manager.POST(APIAtlas.sellerDeleteStoreAddress, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.deleteCellInIndexPath(indexPath)
             self.changeAddressCollectionView.reloadData()
@@ -264,16 +276,18 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
     }
     
-    func updateCollectionView() {
+    func updateCollectionView(){
         fireSellerAddress()
         self.changeAddressCollectionView.reloadData()
     }
     
-    func dismmissDimView() {
+    func dismissDimView() {
         dimView.hidden = true
         UIView.animateWithDuration(0.25, animations: {
             self.dimView.alpha = 0
             }, completion: { finished in
         })
+
     }
+
 }

@@ -9,6 +9,7 @@
 import UIKit
 
 class DisputeViewController: UIViewController {
+    @IBOutlet weak var caseId: UILabel!
     @IBOutlet weak var disputeTitle: UITextField!
     @IBOutlet weak var transactionNumber: UITextField!
     @IBOutlet weak var remarks: UITextView!

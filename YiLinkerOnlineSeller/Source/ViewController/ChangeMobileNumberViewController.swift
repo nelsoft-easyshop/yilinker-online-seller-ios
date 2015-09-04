@@ -8,7 +8,9 @@
 
 import UIKit
 
-protocol ChangeMobileNumberViewControllerDelegate {    func dismissView()
+protocol ChangeMobileNumberViewControllerDelegate {
+    func setMobileNumber(newMobile: String, oldNumber: String)
+    func dismissView()
 }
 
 class ChangeMobileNumberViewController: UIViewController {
@@ -42,14 +44,21 @@ class ChangeMobileNumberViewController: UIViewController {
     }
     
     @IBAction func submit(sender: AnyObject){
+        self.delegate?.setMobileNumber(newNumberTextField.text, oldNumber: oldNumberTextField.text)
+        self.delegate?.dismissView()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func textFieldDidBeginEditing(sender: AnyObject) {
-        topConstraint.constant = 100
+        if IphoneType.isIphone4() {
+            topConstraint.constant = 40
+        } else if IphoneType.isIphone5() {
+            topConstraint.constant = 60
+        } else {
+             topConstraint.constant = 100
+        }
+       
     }
-    
-    
     
     /*
     // MARK: - Navigation

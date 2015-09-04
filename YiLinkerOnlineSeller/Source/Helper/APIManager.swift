@@ -38,8 +38,12 @@ struct APIAtlas {
     static let sellerDeleteBankAccount = "auth/bank/account/deleteBankAccount"
     static let sellerSetDefaultBankAccount = "auth/bank/account/setDefaultBankAccount"
     static let sellerStoreAddresses = "auth/address/getUserAddresses"
+    static let sellerSetDefaultStoreAddress = "auth/address/setDefaultAddress"
     static let sellerDeleteStoreAddress = "auth/address/deleteUserAddress"
-    
+    static let sellerChangeMobileNumber = "auth/user/changeContactNumber"
+    static let sellerMobileNumberVerification = "auth/sms/verify"
+    static let sellerChangePassword = "auth/user/changePassword"
+    static let sellerUpdateSellerInfo = "auth/merchant/updateUserInfo"
     static let getCustomizedCategories = "category/getCustomCategories"
     static let getCategoryDetails = "auth/category/getCategoryDetails"
     static let editCustomizedCategory = "auth/category/updateCustomCategory"
@@ -48,7 +52,8 @@ struct APIAtlas {
     static let sortParentCategory = "auth/category/sortParentCategories"
     static let checkIfCategoryNameExists = "auth/category/checkIfCategoryExists"
     static let getAllCategoryProducts = "auth/category/getAllCategoryProducts"
-    
+    static let managementGetProductList = "auth/product/getProductList"
+    static let managementUpdateProductStatus = "auth/product/updateProductStatus"
     static let baseUrl = APIEnvironment.baseUrl()
 }
 

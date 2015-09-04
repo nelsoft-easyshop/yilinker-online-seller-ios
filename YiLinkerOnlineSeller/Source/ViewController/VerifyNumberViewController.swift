@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol VerifyViewControllerDelegate {
+    func dismissView()
+}
+
 class VerifyNumberViewController: UIViewController {
 
     @IBOutlet weak var closeButton: UIButton!
@@ -25,6 +29,10 @@ class VerifyNumberViewController: UIViewController {
     var contentViewFrame: CGRect?
     var selectedIndex: Int = 0
 
+    var delegate: VerifyViewControllerDelegate?
+    
+    var hud: MBProgressHUD?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,7 +41,7 @@ class VerifyNumberViewController: UIViewController {
         self.viewContainer.clipsToBounds = true
     
         initViewController()
-        self.setSelectedViewControllerWithIndex(1)
+        self.setSelectedViewControllerWithIndex(0)
     }
     
     func initViewController() {
@@ -91,8 +99,8 @@ class VerifyNumberViewController: UIViewController {
     }
     
     @IBAction func cancelAction(sender: AnyObject!) {
-         self.dismissViewControllerAnimated(true, completion: nil)
-       // self.pressedDimViewFromProductPage(self)
+        self.dismissViewControllerAnimated(true, completion: nil)
+        self.delegate?.dismissView()
       
     }
     
@@ -103,12 +111,42 @@ class VerifyNumberViewController: UIViewController {
     @IBAction func verifyContinueRequest(sender: AnyObject){
         //Set action to send verification/continue/request new code
         if self.verifyButton.titleLabel?.text == "Verify" {
-            println("Verify")
+            println("fire verify")
+            self.fireVerify(self.verifyViewController!.verificationCodeTextField.text!)
         } else if self.verifyButton.titleLabel?.text == "Continue" {
             println("Continue")
         }
+        
+        self.delegate?.dismissView()
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    func fireVerify(verificationCode: String){
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "code" : NSNumber(integer: verificationCode.toInt()!)];
+        
+        manager.POST(APIAtlas.sellerMobileNumberVerification, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.hud?.hide(true)
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                println(error)
+        })
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
     /*
     // MARK: - Navigation
 
