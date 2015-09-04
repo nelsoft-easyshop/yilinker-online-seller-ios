@@ -45,10 +45,10 @@ class StoreInfoModel: NSObject {
     var bankId: Int = 0
     
     var productCount: Int = 0
-    var transactionCount: String = ""
+    var transactionCount: Int = 0
     var totalSales: String = ""
     
-    init(name : String, email : String, gender : String, nickname : String, contact_number : String, specialty : String, birthdate : String, store_name : String, store_description : String, avatar : NSURL, cover_photo : NSURL, is_allowed : Bool, title: String, unit_number: String, bldg_name: String, street_number: String, street_name: String, subdivision: String, zip_code: String, full_address: String, account_title: String, bank_account: String, bank_id: Int, productCount: Int, transactionCount: String, totalSales: String) {
+    init(name : String, email : String, gender : String, nickname : String, contact_number : String, specialty : String, birthdate : String, store_name : String, store_description : String, avatar : NSURL, cover_photo : NSURL, is_allowed : Bool, title: String, unit_number: String, bldg_name: String, street_number: String, street_name: String, subdivision: String, zip_code: String, full_address: String, account_title: String, bank_account: String, bank_id: Int, productCount: Int, transactionCount: Int, totalSales: String) {
         self.name = name
         self.email = email
         self.gender = gender
@@ -105,7 +105,7 @@ class StoreInfoModel: NSObject {
         var bank_id: Int = 0
         var account_title: String = ""
         var productCount: Int = 0
-        var transactionCount: String = ""
+        var transactionCount: Int = 0
         var totalSales: String = ""
         
         println(dictionary["data"])
@@ -189,10 +189,10 @@ class StoreInfoModel: NSObject {
                 productCount = 0
             }
             
-            if let tempVar = value["transactionCount"] as? String {
+            if let tempVar = value["transactionCount"] as? Int {
                 transactionCount = tempVar
             } else {
-                transactionCount = ""
+                transactionCount = 0
             }
             
             if let tempVar = value["totalSales"] as? String {
@@ -258,9 +258,9 @@ class StoreInfoModel: NSObject {
                     zip_code = temZipCode
                 }
                 
-                store_address = unit_number + " " + bldg_name + ", " + street_number + " " + street_name + ", " + subdivision + ", " + zip_code
-                
-                println("\(store_address)")
+                if let tempVar = val["fullLocation"] as? String {
+                    store_address = tempVar
+                }
                 
             }
             

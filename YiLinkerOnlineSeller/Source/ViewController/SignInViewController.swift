@@ -286,6 +286,15 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             
             self.hud?.hide(true)
             
+            NSUserDefaults.standardUserDefaults().setObject(self.storeInfoModel?.store_name, forKey: "storeName")
+            NSUserDefaults.standardUserDefaults().setObject(self.storeInfoModel?.store_address, forKey: "storeAddress")
+            NSUserDefaults.standardUserDefaults().setObject(self.storeInfoModel?.totalSales, forKey: "totalSales")
+            NSUserDefaults.standardUserDefaults().setObject(self.storeInfoModel?.productCount, forKey: "productCount")
+            NSUserDefaults.standardUserDefaults().setObject(self.storeInfoModel?.transactionCount, forKey: "transactionCount")
+            
+            
+            NSUserDefaults.standardUserDefaults().synchronize()
+            
             let delay = 1.0 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
             var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
             dispatch_after(dispatchTime, dispatch_get_main_queue(), {
