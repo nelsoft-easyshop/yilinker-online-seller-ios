@@ -34,7 +34,9 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     
     var hud: MBProgressHUD?
     
-    var subCategories: [String] = []
+    var parentId: Int = 0
+    var products: [NSDictionary] = []
+    var subCategories: [NSDictionary] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -255,11 +257,14 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         })
     }
     
-    func requestAdCustomizedCategory(categoryId: Int) {
+    func requestAdCustomizedCategory() {
         self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-            "categoryId": String(categoryId)]
+            "categoryName": self.categoryDetailsView.categoryNameTextField.text,
+            "parentId": self.parentId,
+            "products": self.products,
+            "subcategories": self.subCategories]
         
         manager.POST(APIAtlas.addCustomizedCategory, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -306,7 +311,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
 //        let cell: AddCustomizedCategoryTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("AddCustomizedCategory") as!  AddCustomizedCategoryTableViewCell
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "identifier")
         
-        cell.textLabel?.text = self.subCategories[indexPath.row]
+        cell.textLabel?.text = "Sub Categories here"
         cell.textLabel?.font = UIFont(name: "Panton-Bold", size: 12.0)
         cell.textLabel?.textColor = Constants.Colors.hex666666
         
@@ -370,7 +375,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     // MARK: - Edit Sub Categories View Controller
     
     func addSubCategories(controller: EditSubCategoriesViewController, categories: NSArray) {
-        self.subCategories = categories as! [String]
+//        self.subCategories = categories as! [String]
         self.tableView.reloadData()
     }
     
