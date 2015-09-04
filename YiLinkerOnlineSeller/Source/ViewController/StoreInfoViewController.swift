@@ -313,12 +313,23 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
 
     }
     
-    func setMobileNumber(newNumber: String) {
-        self.storeInfoModel?.contact_number = newNumber
-        self.verifyOrChange = 1
-        println(self.verifyOrChange)
-        self.storeInfoTableView.reloadData()
-        println(self.verifyOrChange)
+    func setMobileNumber(newNumber: String, oldNumber: String) {
+        
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldNumber" : oldNumber, "newNumber" : newNumber];
+        
+        manager.POST(APIAtlas.sellerChangeMobileNumber, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.storeInfoModel?.contact_number = newNumber
+            self.verifyOrChange = 1
+            println(self.verifyOrChange)
+            self.storeInfoTableView.reloadData()
+            self.hud?.hide(true)
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                println(error)
+        })
     }
     
     func dismissView() {

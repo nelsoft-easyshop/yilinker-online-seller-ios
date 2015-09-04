@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ChangeMobileNumberViewControllerDelegate {
-    func setMobileNumber(newMobile: String)
+    func setMobileNumber(newMobile: String, oldNumber: String)
     func dismissView()
 }
 
@@ -44,7 +44,7 @@ class ChangeMobileNumberViewController: UIViewController {
     }
     
     @IBAction func submit(sender: AnyObject){
-        self.delegate?.setMobileNumber(newNumberTextField.text)
+        self.delegate?.setMobileNumber(newNumberTextField.text, oldNumber: oldNumberTextField.text)
         self.delegate?.dismissView()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -59,8 +59,6 @@ class ChangeMobileNumberViewController: UIViewController {
         }
        
     }
-    
-    
     
     /*
     // MARK: - Navigation

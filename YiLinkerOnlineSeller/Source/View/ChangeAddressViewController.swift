@@ -139,12 +139,12 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     func fireSetDefaultStoreAddress(){
         self.showHUD()
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
-        
-        manager.POST(APIAtlas.sellerSetDefaultBankAccount, parameters: parameters, success: {
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "userAddressId" : self.storeAddressModel.user_address_id[self.selectedIndex]];
+        println("\(self.storeAddressModel.user_address_id.count) \(self.selectedIndex)")
+        manager.POST(APIAtlas.sellerSetDefaultStoreAddress, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            self.delegate?.updateStoreAddressDetail(self.storeAddressModel.user_address_id[self.selectedIndex], location_id: self.storeAddressModel.location_id[self.selectedIndex], title: self.storeAddressModel.title[self.selectedIndex], unit_number: self.storeAddressModel.unit_number[self.selectedIndex], building_name: self.storeAddressModel.building_name[self.selectedIndex], street_number: self.storeAddressModel.street_number[self.selectedIndex], street_name: self.storeAddressModel.street_name[self.selectedIndex], subdivision: self.storeAddressModel.subdivision[self.selectedIndex], zip_code: self.storeAddressModel.zip_code[self.selectedIndex], street_address: self.storeAddressModel.street_address[self.selectedIndex], country: self.storeAddressModel.country[self.selectedIndex], island: self.storeAddressModel.island[self.selectedIndex], region: self.storeAddressModel.region[self.selectedIndex], province: self.storeAddressModel.province[self.selectedIndex], city: self.storeAddressModel.city[self.selectedIndex], municipality: self.storeAddressModel.municipality[self.selectedIndex], barangay: self.storeAddressModel.barangay[self.selectedIndex], longitude: self.storeAddressModel.longitude[self.selectedIndex], latitude: self.storeAddressModel.latitude[self.selectedIndex], landline: self.storeAddressModel.landline[self.selectedIndex], is_default: self.storeAddressModel.is_default[self.selectedIndex])
+            //self.delegate?.updateStoreAddressDetail(self.storeAddressModel.user_address_id[self.selectedIndex], location_id: self.storeAddressModel.location_id[self.selectedIndex], title: self.storeAddressModel.title[self.selectedIndex], unit_number: self.storeAddressModel.unit_number[self.selectedIndex], building_name: self.storeAddressModel.building_name[self.selectedIndex], street_number: self.storeAddressModel.street_number[self.selectedIndex], street_name: self.storeAddressModel.street_name[self.selectedIndex], subdivision: self.storeAddressModel.subdivision[self.selectedIndex], zip_code: self.storeAddressModel.zip_code[self.selectedIndex], street_address: self.storeAddressModel.street_address[self.selectedIndex], country: self.storeAddressModel.country[self.selectedIndex], island: self.storeAddressModel.island[self.selectedIndex], region: self.storeAddressModel.region[self.selectedIndex], province: self.storeAddressModel.province[self.selectedIndex], city: self.storeAddressModel.city[self.selectedIndex], municipality: self.storeAddressModel.municipality[self.selectedIndex], barangay: self.storeAddressModel.barangay[self.selectedIndex], longitude: self.storeAddressModel.longitude[self.selectedIndex], latitude: self.storeAddressModel.latitude[self.selectedIndex], landline: self.storeAddressModel.landline[self.selectedIndex], is_default: self.storeAddressModel.is_default[self.selectedIndex])
             
             //self.changeBankAccountCollectionView.reloadData()
             
@@ -177,7 +177,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 
                cell.subTitleLabel.text = "\(self.storeAddressModel!.unit_number[indexPath.row])"+" "+self.storeAddressModel!.building_name[indexPath.row]+", "+self.storeAddressModel!.street_number[indexPath.row]+" "+self.storeAddressModel!.street_name[indexPath.row]+", "+self.storeAddressModel!.subdivision[indexPath.row]+", "+self.storeAddressModel!.zip_code[indexPath.row]
                 
-                cell.titleLabel.tag = self.storeAddressModel!.location_id[indexPath.row]
+                //cell.titleLabel.tag = self.storeAddressModel!.location_id[indexPath.row]
                 //println("\(self.storeAddressModel.zip_code[0])")
                 if indexPath.row == self.selectedIndex {
                     cell.layer.borderWidth = 1
@@ -280,6 +280,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         fireSellerAddress()
         self.changeAddressCollectionView.reloadData()
     }
+    
     func dismissDimView() {
         dimView.hidden = true
         UIView.animateWithDuration(0.25, animations: {
