@@ -21,6 +21,8 @@ class StoreInfoTableViewCell: UITableViewCell {
     @IBOutlet weak var mobilePhoneTextField: UITextField!
     @IBOutlet weak var storeNameTextField: UITextField!
     
+    @IBOutlet weak var storeDescriptionTextView: UITextView!
+    
     @IBOutlet weak var verifyButton: UIButton!
     
     @IBOutlet weak var coverPhotoView: UIView!
@@ -38,6 +40,14 @@ class StoreInfoTableViewCell: UITableViewCell {
         
         self.coverPhotoView.layer.cornerRadius = 5.0
         self.coverPhotoView.clipsToBounds = true
+        
+        self.storeDescriptionTextView.layer.cornerRadius = 5.0
+        self.storeDescriptionTextView.layer.borderWidth = 1.0
+        self.storeDescriptionTextView.layer.borderColor = Constants.Colors.backgroundGray.CGColor
+        self.storeDescriptionTextView.clipsToBounds = true
+        
+        self.mobilePhoneTextField.enabled = false
+        
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

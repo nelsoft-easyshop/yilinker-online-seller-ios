@@ -133,6 +133,7 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
                 cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
                 cell.storeNameTextField.text = self.storeInfoModel?.store_name
                 cell.mobilePhoneTextField.text = self.storeInfoModel?.contact_number
+                cell.storeDescriptionTextView.text = self.storeInfoModel?.store_description
                 if(self.verifyOrChange == 1) {
                     cell.verifyButton.setTitle("Verify", forState: UIControlState.Normal)
                 } else {
@@ -177,7 +178,7 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 381
+            return 502
         } else if indexPath.section == 1 {
             return 198
         } else if indexPath.section == 2 {
