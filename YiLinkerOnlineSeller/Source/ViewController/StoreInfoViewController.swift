@@ -133,7 +133,11 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
                 cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
                 cell.storeNameTextField.text = self.storeInfoModel?.store_name
                 cell.mobilePhoneTextField.text = self.storeInfoModel?.contact_number
-                cell.verifyButton.setTitle("Change", forState: UIControlState.Normal)
+                if(self.verifyOrChange == 1) {
+                    cell.verifyButton.setTitle("Verify", forState: UIControlState.Normal)
+                } else {
+                    cell.verifyButton.setTitle("Change", forState: UIControlState.Normal)
+                }
                 cell.verifyButton.tag = 2
             }
            
