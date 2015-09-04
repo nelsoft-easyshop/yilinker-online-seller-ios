@@ -11,17 +11,15 @@ import UIKit
 protocol StoreInfoAccountInformationTableViewCellDelegate {
     func saveAccountInfo()
     func changePassword()
-    func changeEmailAddress()
 }
 
-class StoreInfoAccountInformationTableViewCell: UITableViewCell {
+class StoreInfoAccountInformationTableViewCell: UITableViewCell{
     
     @IBOutlet weak var saveButton: UIButton!
     
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var emailAddressTextField: UITextField!
-    @IBOutlet weak var changeMobileButton: UIButton!
-    @IBOutlet weak var changeEmailButton: UIButton!
+    
+    @IBOutlet weak var changePasswordButton: UIButton!
     
     var delegate: StoreInfoAccountInformationTableViewCellDelegate?
     
@@ -31,22 +29,15 @@ class StoreInfoAccountInformationTableViewCell: UITableViewCell {
             self.saveButton.layer.cornerRadius = 5.0
             self.saveButton.clipsToBounds = true
         
-            self.changeEmailButton.layer.cornerRadius = 5.0
-            self.changeEmailButton.clipsToBounds = true
+            self.changePasswordButton.layer.cornerRadius = 5.0
+            self.changePasswordButton.clipsToBounds = true
         
-            self.changeMobileButton.layer.cornerRadius = 5.0
-            self.changeMobileButton.clipsToBounds = true
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
-    }
-    
-    @IBAction func changeEmailAddress(sender: AnyObject){
-        println("Change Email address")
-        self.delegate?.changeEmailAddress()
     }
     
     

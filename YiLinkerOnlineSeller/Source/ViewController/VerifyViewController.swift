@@ -13,6 +13,7 @@ class VerifyViewController: UIViewController {
     
     @IBOutlet weak var timeLabel: UILabel!
     
+    @IBOutlet weak var verificationCodeTextField: UITextField!
     
     var startTime = NSTimeInterval()
     var timer = NSTimer()
