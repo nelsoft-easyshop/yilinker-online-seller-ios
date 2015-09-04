@@ -164,8 +164,7 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier( storeInfoAccountInformationTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAccountInformationTableViewCell
             cell.delegate = self
-            cell.emailAddressTextField.text = self.storeInfoModel?.email
-            //
+            //cell.emailAddressTextField.text = self.storeInfoModel?.email
             return cell
         }
     }
@@ -186,7 +185,7 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
         } else  if indexPath.section == 3 {
             return 163
         } else {
-            return 299
+            return 221
         }
     }
     
