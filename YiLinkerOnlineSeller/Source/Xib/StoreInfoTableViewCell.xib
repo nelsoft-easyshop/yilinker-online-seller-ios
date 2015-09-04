@@ -326,8 +326,10 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="coverPhotoImageView" destination="NfW-oq-T4e" id="JJ9-Ca-7J5"/>
+                <outlet property="coverPhotoUploadView" destination="2aH-Ud-5Hm" id="1yZ-f6-Iae"/>
                 <outlet property="coverPhotoView" destination="Pgz-Rm-cfh" id="kDO-Kr-r5c"/>
                 <outlet property="mobilePhoneTextField" destination="NSj-Ax-OOU" id="xQC-jy-gqP"/>
+                <outlet property="profileCoverPhotoUploadView" destination="bEn-jb-g2x" id="Z4w-Ye-QDW"/>
                 <outlet property="profilePhotoView" destination="Y4y-e8-3DA" id="vl3-8E-tag"/>
                 <outlet property="profilePictureImageView" destination="CR1-8h-W6D" id="7mb-D7-2BQ"/>
                 <outlet property="storeDescriptionTextView" destination="eMS-mt-zX4" id="4LX-PA-jWu"/>

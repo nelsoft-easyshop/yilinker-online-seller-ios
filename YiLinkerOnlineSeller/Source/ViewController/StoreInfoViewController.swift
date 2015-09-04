@@ -8,7 +8,11 @@
 
 import UIKit
 
-class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate {
+protocol StoreInfoViewControllerDelegate {
+    
+}
+
+class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate , UzysAssetsPickerControllerDelegate{
     
     @IBOutlet weak var storeInfoTableView: UITableView!
     
@@ -30,6 +34,13 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     var verifyOrChange: Int = 0
     
     var hud: MBProgressHUD?
+    
+    var index: NSIndexPath?
+    
+    var uploadImages: [UIImage] = []
+    var image: UIImage?
+    var imageCover: UIImage?
+    var imageType: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,7 +87,7 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
 
     func registerNibs() {
         
-        var storeInfoHeader = UINib(nibName: storeInfoHeaderTableViewCellIndentifier, bundle: nil)
+        let storeInfoHeader = UINib(nibName: storeInfoHeaderTableViewCellIndentifier, bundle: nil)
         self.storeInfoTableView.registerNib(storeInfoHeader, forCellReuseIdentifier: storeInfoHeaderTableViewCellIndentifier)
         
         var storeInfo = UINib(nibName: storeInfoSectionTableViewCellIndentifier, bundle: nil)
@@ -127,6 +138,7 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
         if indexPath.section == 0 {
             
             let cell: StoreInfoTableViewCell = self.storeInfoTableView.dequeueReusableCellWithIdentifier(storeInfoHeaderTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoTableViewCell
+            index = indexPath
             cell.delegate = self
             if(self.storeInfoModel?.store_name != nil){
                 cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
@@ -242,19 +254,6 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
         self.navigationController?.pushViewController(changeAddressViewController, animated:true)
     }
     
-    func changeEmailAddress(){
-        println("Email Address")
-        var changeEmailViewController = ChangeEmailViewController(nibName: "ChangeEmailViewController", bundle: nil)
-        changeEmailViewController.delegate = self
-        changeEmailViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        changeEmailViewController.providesPresentationContextTransitionStyle = true
-        changeEmailViewController.definesPresentationContext = true
-        changeEmailViewController.view.frame.origin.y = changeEmailViewController.view.frame.size.height
-        changeEmailViewController.type = "email"
-        self.navigationController?.presentViewController(changeEmailViewController, animated:true, completion: nil)
-        
-        self.showView()
-    }
     
     func changePassword() {
         println("Email Password")
@@ -293,7 +292,76 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func saveAccountInfo() {
-        println("Save Account Info")
+        self.storeInfoTableView.reloadData()
+        let cell: StoreInfoTableViewCell = self.storeInfoTableView.dequeueReusableCellWithIdentifier(storeInfoHeaderTableViewCellIndentifier, forIndexPath: index!) as! StoreInfoTableViewCell
+        cell.delegate = self
+
+        println("sample \(cell.storeNameTextField.text)")
+        
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        
+        var datas: [NSData] = []
+        
+        var imagesKeyProfile: [String] = []
+        var imagesKeyCover: [String] = []
+
+        for var x = 0; x < 1; x++ {
+            imagesKeyProfile.append("\(x)")
+        }
+        
+        for var x = 0; x < 1; x++ {
+            imagesKeyCover.append("\(x)")
+        }
+    
+
+        if self.image != nil && self.imageCover != nil {
+            let data: NSData = UIImageJPEGRepresentation(self.image, 0)
+            let dataCoverPhoto: NSData = UIImageJPEGRepresentation(self.imageCover, 1)
+            datas.append(data)
+            datas.append(dataCoverPhoto)
+        } else if self.image != nil && self.imageCover == nil{
+            let data: NSData = UIImageJPEGRepresentation(self.image, 0)
+            datas.append(data)
+        } else if self.image == nil && self.imageCover != nil {
+            let dataCoverPhoto: NSData = UIImageJPEGRepresentation(self.imageCover, 0)
+            datas.append(dataCoverPhoto)
+        }
+       
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "storeName" : cell.storeNameTextField.text, "storeDescription" : cell.storeDescriptionTextView.text, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
+
+        let url: String = "\(APIAtlas.sellerUpdateSellerInfo)?access_token=\(SessionManager.accessToken())"
+        manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
+            for (index, data) in enumerate(datas) {
+                println("index: \(index)")
+                if self.image != nil && self.imageCover != nil {
+                    if(index == 0){
+                        formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(0)", mimeType: "image/jpeg")
+                    } else {
+                         formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(1)", mimeType: "image/jpeg")
+                    }
+                } else if self.image != nil && self.imageCover == nil{
+                       formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(index)", mimeType: "image/jpeg")
+                } else if self.image == nil && self.imageCover != nil {
+                    formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(index)", mimeType: "image/jpeg")
+                }
+            }
+            
+            }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
+                //self.hud?.hide(true)
+                
+                println(response)
+                self.fireStoreInfo()
+                self.storeInfoTableView.reloadData()
+                //cell.coverPhotoImageView.image = self.image
+                
+            }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                println(error.userInfo)
+                
+                self.hud?.hide(true)
+        }
+
     }
     
     func generateQRCode() {
@@ -315,7 +383,6 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func setMobileNumber(newNumber: String, oldNumber: String) {
-        
         self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldNumber" : oldNumber, "newNumber" : newNumber];
@@ -350,6 +417,69 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     }
 
     
+    func callUzyPicker(imageType: String) {
+        self.imageType = imageType
+        let picker: UzysAssetsPickerController = UzysAssetsPickerController()
+        let maxCount: Int = 6
+        
+        let imageLimit: Int = 1
+        picker.delegate = self
+        picker.maximumNumberOfSelectionVideo = 0
+        picker.maximumNumberOfSelectionPhoto = 1
+        UzysAssetsPickerController.setUpAppearanceConfig(self.uzyConfig())
+        self.presentViewController(picker, animated: true, completion: nil)
+    }
+    
+    func uzyConfig() -> UzysAppearanceConfig {
+        let config: UzysAppearanceConfig = UzysAppearanceConfig()
+        config.finishSelectionButtonColor = Constants.Colors.appTheme
+        return config
+    }
+    
+    //UzzyPickerDelegate
+    
+    func uzysAssetsPickerController(picker: UzysAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) {
+        let assetsLibrary = ALAssetsLibrary()
+        let alaSset: ALAsset = assets[0] as! ALAsset
+        
+        for allaSset in assets as! [ALAsset] {
+            let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!
+            self.uploadImages.insert(image, atIndex: 0)
+
+            self.setImageProfileCoverPhoto(image)
+        }
+        
+        //self.reloadUploadCellCollectionViewData()
+        //self.storeInfoTableView.reloadData()
+    }
+    
+    func setImageProfileCoverPhoto(image: UIImage){
+        let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
+        let cell: StoreInfoTableViewCell = self.storeInfoTableView.cellForRowAtIndexPath(indexPath) as! StoreInfoTableViewCell
+        //cell.collectionView.reloadData()
+        if self.imageType == "profile" {
+            cell.profilePictureImageView.image = nil
+            cell.profilePictureImageView.image = image
+            self.image = image
+        } else {
+            //Cover photo
+            cell.coverPhotoImageView.image = nil
+            cell.coverPhotoImageView.image = image
+            self.imageCover = image
+        }
+    }
+    
+    func reloadUploadCellCollectionViewData() {
+     
+    }
+    func uzysAssetsPickerControllerDidCancel(picker: UzysAssetsPickerController!) {
+        
+    }
+    
+    func uzysAssetsPickerControllerDidExceedMaximumNumberOfSelection(picker: UzysAssetsPickerController!) {
+        
+    }
+
     /*
     // MARK: - Navigation
 

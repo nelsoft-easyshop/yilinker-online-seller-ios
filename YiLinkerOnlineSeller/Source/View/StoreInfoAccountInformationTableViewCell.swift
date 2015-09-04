@@ -11,7 +11,6 @@ import UIKit
 protocol StoreInfoAccountInformationTableViewCellDelegate {
     func saveAccountInfo()
     func changePassword()
-    func changeEmailAddress()
 }
 
 class StoreInfoAccountInformationTableViewCell: UITableViewCell{
@@ -21,6 +20,7 @@ class StoreInfoAccountInformationTableViewCell: UITableViewCell{
     @IBOutlet weak var passwordTextField: UITextField!
     
     @IBOutlet weak var changePasswordButton: UIButton!
+    
     var delegate: StoreInfoAccountInformationTableViewCellDelegate?
     
     override func awakeFromNib() {
@@ -38,11 +38,6 @@ class StoreInfoAccountInformationTableViewCell: UITableViewCell{
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
-    }
-    
-    @IBAction func changeEmailAddress(sender: AnyObject){
-        println("Change Email address")
-        self.delegate?.changeEmailAddress()
     }
     
     

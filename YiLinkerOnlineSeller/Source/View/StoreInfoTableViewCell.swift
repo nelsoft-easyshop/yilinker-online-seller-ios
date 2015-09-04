@@ -10,6 +10,7 @@ import UIKit
 
 protocol StoreInfoTableViewCellDelegate {
     func storeInfoVerify()
+    func callUzyPicker(imageType: String)
 }
 
 class StoreInfoTableViewCell: UITableViewCell {
@@ -28,6 +29,8 @@ class StoreInfoTableViewCell: UITableViewCell {
     @IBOutlet weak var coverPhotoView: UIView!
     @IBOutlet weak var profilePhotoView: UIView!
     
+    @IBOutlet weak var profileCoverPhotoUploadView: UIView!
+    @IBOutlet weak var coverPhotoUploadView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -48,6 +51,12 @@ class StoreInfoTableViewCell: UITableViewCell {
         
         self.mobilePhoneTextField.enabled = false
         
+        var tapProfilePhoto = UITapGestureRecognizer(target: self, action: "callUzyPicker")
+        self.profileCoverPhotoUploadView.addGestureRecognizer(tapProfilePhoto)
+        
+        var tapCoverPhoto = UITapGestureRecognizer(target: self, action: "callUzyPickerCover")
+        self.coverPhotoUploadView.addGestureRecognizer(tapCoverPhoto)
+        
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -59,4 +68,12 @@ class StoreInfoTableViewCell: UITableViewCell {
         self.delegate?.storeInfoVerify()
     }
     
+    func callUzyPicker(){
+        self.delegate?.callUzyPicker("profile")
+    }
+    
+    func callUzyPickerCover(){
+        self.delegate?.callUzyPicker("cover")
+    }
+   
 }
