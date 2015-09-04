@@ -51,5 +51,9 @@ class StoreInfoAccountInformationTableViewCell: UITableViewCell{
         println("Save Account Info")
         self.delegate?.saveAccountInfo()
     }
+    @IBAction func dismissKeyboard(sender: AnyObject) {
+        
+        self.passwordTextField.resignFirstResponder()
+    }
     
 }

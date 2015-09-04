@@ -12,9 +12,7 @@ protocol StoreInfoViewControllerDelegate {
     
 }
 
-class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate , UzysAssetsPickerControllerDelegate{
-    
-    @IBOutlet weak var storeInfoTableView: UITableView!
+class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate , UzysAssetsPickerControllerDelegate{
     
     var storeInfoModel: StoreInfoModel?
     var storeAddressModel: StoreAddressModel?
@@ -58,6 +56,10 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
         self.registerNibs()
         self.fireStoreInfo()
         
+        var tap = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        tap.cancelsTouchesInView = false
+        self.tableView.addGestureRecognizer(tap)
+        
         // Do any additional setup after loading the view.
     }
     
@@ -67,9 +69,9 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func initializeViews() {
-        self.storeInfoTableView.tableFooterView = UIView(frame: CGRectZero)
-        self.storeInfoTableView.delegate = self
-        self.storeInfoTableView.dataSource = self
+        self.tableView.tableFooterView = UIView(frame: CGRectZero)
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
     }
     
     func showHUD() {
@@ -78,29 +80,29 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
             self.hud = nil
         }
         
-        self.hud = MBProgressHUD(view: self.view)
+        self.hud = MBProgressHUD(view: self.tableView)
         self.hud?.removeFromSuperViewOnHide = true
         self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
+        self.tableView.addSubview(self.hud!)
         self.hud?.show(true)
     }
 
     func registerNibs() {
         
         let storeInfoHeader = UINib(nibName: storeInfoHeaderTableViewCellIndentifier, bundle: nil)
-        self.storeInfoTableView.registerNib(storeInfoHeader, forCellReuseIdentifier: storeInfoHeaderTableViewCellIndentifier)
+        self.tableView.registerNib(storeInfoHeader, forCellReuseIdentifier: storeInfoHeaderTableViewCellIndentifier)
         
         var storeInfo = UINib(nibName: storeInfoSectionTableViewCellIndentifier, bundle: nil)
-        self.storeInfoTableView.registerNib(storeInfo, forCellReuseIdentifier: storeInfoSectionTableViewCellIndentifier)
+        self.tableView.registerNib(storeInfo, forCellReuseIdentifier: storeInfoSectionTableViewCellIndentifier)
         
         var storeInfoBankAccount = UINib(nibName: storeInfoBankAccountTableViewCellIdentifier, bundle: nil)
-        storeInfoTableView.registerNib(storeInfoBankAccount, forCellReuseIdentifier: storeInfoBankAccountTableViewCellIdentifier)
+        self.tableView.registerNib(storeInfoBankAccount, forCellReuseIdentifier: storeInfoBankAccountTableViewCellIdentifier)
         
         var storeInfoAddress = UINib(nibName: storeInfoAddressTableViewCellIdentifier, bundle: nil)
-        storeInfoTableView.registerNib(storeInfoAddress, forCellReuseIdentifier: storeInfoAddressTableViewCellIdentifier)
+        self.tableView.registerNib(storeInfoAddress, forCellReuseIdentifier: storeInfoAddressTableViewCellIdentifier)
         
         var storeInfoAccountInformation = UINib(nibName: storeInfoAccountInformationTableViewCellIdentifier, bundle: nil)
-        storeInfoTableView.registerNib(storeInfoAccountInformation, forCellReuseIdentifier: storeInfoAccountInformationTableViewCellIdentifier)
+        self.tableView.registerNib(storeInfoAccountInformation, forCellReuseIdentifier: storeInfoAccountInformationTableViewCellIdentifier)
     }
     
     func fireStoreInfo(){
@@ -118,7 +120,7 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
             } else {
             
             } */
-            self.storeInfoTableView.reloadData()
+            self.tableView.reloadData()
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
@@ -126,18 +128,18 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
             })
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
        return 5
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         println("sections \(indexPath.section) row \(indexPath.row)")
         println("\(self.storeInfoModel?.store_address)")
         
         
         if indexPath.section == 0 {
             
-            let cell: StoreInfoTableViewCell = self.storeInfoTableView.dequeueReusableCellWithIdentifier(storeInfoHeaderTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoTableViewCell
+            let cell: StoreInfoTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoHeaderTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoTableViewCell
             index = indexPath
             cell.delegate = self
             if(self.storeInfoModel?.store_name != nil){
@@ -163,18 +165,18 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
            
             return cell
         } else if indexPath.section == 1 {
-            let cell: StoreInfoSectionTableViewCell = self.storeInfoTableView.dequeueReusableCellWithIdentifier(storeInfoSectionTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoSectionTableViewCell
+            let cell: StoreInfoSectionTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoSectionTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoSectionTableViewCell
             cell.delegate = self
             return cell
        } else if indexPath.section == 2 {
-            let cell = tableView.dequeueReusableCellWithIdentifier( storeInfoAddressTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAddressTableViewCell
+            let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoAddressTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAddressTableViewCell
             cell.delegate = self
             //Display current bank account
             cell.addressLabel.text = self.storeInfoModel?.store_address
             cell.addressTitle.text = self.storeInfoModel?.title
             return cell
         } else if indexPath.section == 3 {
-            let cell = tableView.dequeueReusableCellWithIdentifier( storeInfoBankAccountTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoBankAccountTableViewCell
+            let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoBankAccountTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoBankAccountTableViewCell
             cell.delegate = self
             //Display current bank account
             cell.bankAccountTitleLabel.text = self.storeInfoModel?.accountTitle
@@ -182,20 +184,20 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
             println(cell)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier( storeInfoAccountInformationTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAccountInformationTableViewCell
+            let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoAccountInformationTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAccountInformationTableViewCell
             cell.delegate = self
             //cell.emailAddressTextField.text = self.storeInfoModel?.email
             return cell
         }
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return 1
         
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
             return 502
         } else if indexPath.section == 1 {
@@ -299,13 +301,14 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func saveAccountInfo() {
-        self.storeInfoTableView.reloadData()
-        let cell: StoreInfoTableViewCell = self.storeInfoTableView.dequeueReusableCellWithIdentifier(storeInfoHeaderTableViewCellIndentifier, forIndexPath: index!) as! StoreInfoTableViewCell
+        self.showHUD()
+
+        self.tableView.reloadData()
+        let cell: StoreInfoTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoHeaderTableViewCellIndentifier, forIndexPath: index!) as! StoreInfoTableViewCell
         cell.delegate = self
 
         println("sample \(cell.storeNameTextField.text)")
         
-        self.showHUD()
         let manager = APIManager.sharedInstance
         
         var datas: [NSData] = []
@@ -355,11 +358,11 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
             }
             
             }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
-                //self.hud?.hide(true)
+                self.hud?.hide(true)
                 
                 println(response)
                 self.fireStoreInfo()
-                self.storeInfoTableView.reloadData()
+                self.tableView.reloadData()
                 //cell.coverPhotoImageView.image = self.image
                 
             }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
@@ -378,14 +381,14 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     func updateBankDetail(accountTitle: String, accountName: String, accountNumber: Int, bankName: String) {
         self.storeInfoModel?.accountTitle = accountTitle
         self.storeInfoModel?.bankAccount = accountName + "\n\(accountNumber)\n" + bankName
-        self.storeInfoTableView.reloadData()
+        self.tableView.reloadData()
     }
     
     func updateStoreAddressDetail(title: String, storeAddress: String) {
     
         self.storeInfoModel?.title = title
         self.storeInfoModel?.store_address = storeAddress
-        self.storeInfoTableView.reloadData()
+        self.tableView.reloadData()
 
     }
     
@@ -393,17 +396,17 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
         self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldNumber" : oldNumber, "newNumber" : newNumber];
-        
+        manager.responseSerializer.acceptableContentTypes = NSSet(objects: "application/json", "text/html", "text/json", "text/json", "charset=utf-8") as Set<NSObject>
         manager.POST(APIAtlas.sellerChangeMobileNumber, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.storeInfoModel?.contact_number = newNumber
             self.verifyOrChange = 1
             println(self.verifyOrChange)
-            self.storeInfoTableView.reloadData()
+            self.tableView.reloadData()
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                println(error)
+                println(error.userInfo)
         })
     }
     
@@ -462,7 +465,7 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func setImageProfileCoverPhoto(image: UIImage){
         let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
-        let cell: StoreInfoTableViewCell = self.storeInfoTableView.cellForRowAtIndexPath(indexPath) as! StoreInfoTableViewCell
+        let cell: StoreInfoTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! StoreInfoTableViewCell
         //cell.collectionView.reloadData()
         if self.imageType == "profile" {
             cell.profilePictureImageView.image = nil
@@ -487,6 +490,9 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
         
     }
 
+    func dismissKeyboard(){
+        self.view.endEditing(true)
+    }
     /*
     // MARK: - Navigation
 
