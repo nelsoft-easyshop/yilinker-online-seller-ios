@@ -116,6 +116,11 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         collectionView?.backgroundColor = UIColor.whiteColor()
         collectionView?.bounces = false
         collectionView?.alwaysBounceVertical = true
+        
+        var gradient: CAGradientLayer = CAGradientLayer()
+        gradient.frame = CGRectMake(0, 0, view.frame.width, 20)
+        gradient.colors = [UIColor.grayColor().CGColor, UIColor.clearColor().CGColor]
+        self.view.layer.insertSublayer(gradient, atIndex: 1)
     }
     
     func registerNibs() {
@@ -171,17 +176,16 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                 let totalProducts: String = "\(storeInfo.productCount)"
                 let totalTransactions: String = "\(storeInfo.transactionCount)"
                 
+                headerView.setStoreName(storeInfo.store_name)
+                headerView.setAddress(storeInfo.store_address)
                 headerView.setCoverPhotoUrl(storeInfo.coverPhoto)
                 headerView.setProfilePhotoUrl(storeInfo.avatar)
                 headerView.setTotalProducts(totalProducts)
                 headerView.setTotalSales(totalSales)
                 headerView.setTotalTransactions(totalTransactions)
+                
+                println("totalTransactions \(totalTransactions)")
             }
-            
-            var gradient: CAGradientLayer = CAGradientLayer()
-            gradient.frame = CGRectMake(0, 0, view.frame.width, 20)
-            gradient.colors = [UIColor.grayColor().CGColor, UIColor.clearColor().CGColor]
-            headerView.layer.insertSublayer(gradient, atIndex: 1)
             
             return headerView
         default:
@@ -268,11 +272,34 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         manager.POST(APIAtlas.sellerStoreInfo, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.storeInfo = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
+            
+            NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.store_name, forKey: "storeName")
+            NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.store_address, forKey: "storeAddress")
+            NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.totalSales, forKey: "totalSales")
+            NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.productCount, forKey: "productCount")
+            NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.transactionCount, forKey: "transactionCount")
+            
+            NSUserDefaults.standardUserDefaults().synchronize()
+            
             self.collectionView.reloadData()
             self.hud?.hide(true)
             
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
+                
+                self.storeInfo = StoreInfoModel(name: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "")
+                
+                
+                var store_name1 = NSUserDefaults.standardUserDefaults().stringForKey("storeName")
+                println("Store name \(store_name1)")
+                self.storeInfo.store_name = NSUserDefaults.standardUserDefaults().stringForKey("storeName")!
+                self.storeInfo.store_address = NSUserDefaults.standardUserDefaults().stringForKey("storeAddress")!
+                self.storeInfo.totalSales = NSUserDefaults.standardUserDefaults().stringForKey("totalSales")!
+                self.storeInfo.productCount = NSUserDefaults.standardUserDefaults().integerForKey("productCount")
+                self.storeInfo.transactionCount = NSUserDefaults.standardUserDefaults().integerForKey("transactionCount")
+                
+                self.collectionView.reloadData()
+                
                 println(error)
         })
     }
