@@ -152,6 +152,7 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
             cell.delegate = self
             //Display current bank account
             cell.addressLabel.text = self.storeInfoModel?.store_address
+            cell.addressTitle.text = self.storeInfoModel?.title
             return cell
         } else if indexPath.section == 3 {
             let cell = tableView.dequeueReusableCellWithIdentifier( storeInfoBankAccountTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoBankAccountTableViewCell
@@ -270,6 +271,7 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
         changeEmailViewController.oldEmailAddressTextField.placeholder = "Enter old password"
         changeEmailViewController.newEmailAddressTextField.placeholder = "Enter new password"
         changeEmailViewController.confirmEmailAddressTextField.placeholder = "Confirm new password"
+        changeEmailViewController.oldEmailAddressTextField.secureTextEntry = true
         changeEmailViewController.newEmailAddressTextField.secureTextEntry = true
         changeEmailViewController.confirmEmailAddressTextField.secureTextEntry = true
         changeEmailViewController.type = "password"
@@ -304,11 +306,10 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
         self.storeInfoTableView.reloadData()
     }
     
-    func updateStoreAddressDetail(user_address_id: Int, location_id: Int, title: String, unit_number: String, building_name: String, street_number: String, street_name: String, subdivision: String, zip_code: String, street_address: String, country: String, island: String, region: String, province: String, city: String, municipality: String, barangay: String, longitude: Double, latitude: Double, landline: String, is_default: Bool) {
+    func updateStoreAddressDetail(title: String, storeAddress: String) {
     
         self.storeInfoModel?.title = title
-        self.storeInfoModel?.store_address = unit_number + " " + building_name + ", " + street_number + " " + street_name + " " + subdivision + ", " + zip_code
-        
+        self.storeInfoModel?.store_address = storeAddress
         self.storeInfoTableView.reloadData()
 
     }

@@ -42,6 +42,7 @@ struct APIAtlas {
     static let sellerDeleteStoreAddress = "auth/address/deleteUserAddress"
     static let sellerChangeMobileNumber = "auth/user/changeContactNumber"
     static let sellerMobileNumberVerification = "auth/sms/verify"
+    static let sellerChangePassword = "auth/user/changePassword"
     static let getCustomizedCategories = "category/getCustomCategories"
     static let getCategoryDetails = "auth/category/getCategoryDetails"
     static let editCustomizedCategory = "auth/category/updateCustomCategory"
