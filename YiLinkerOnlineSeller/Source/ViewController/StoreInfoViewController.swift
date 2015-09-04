@@ -146,12 +146,19 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
                 cell.storeNameTextField.text = self.storeInfoModel?.store_name
                 cell.mobilePhoneTextField.text = self.storeInfoModel?.contact_number
                 cell.storeDescriptionTextView.text = self.storeInfoModel?.store_description
+                cell.profileEditImageView.image = UIImage(named: "edit.png")
+                cell.coverEditImageView.image = UIImage(named: "edit.png")
+                cell.profileEditLabel.text = "Edit Profile Photo"
+                cell.coverEditLabel.text = "Edit Cover Photo"
                 if(self.verifyOrChange == 1) {
                     cell.verifyButton.setTitle("Verify", forState: UIControlState.Normal)
                 } else {
                     cell.verifyButton.setTitle("Change", forState: UIControlState.Normal)
                 }
                 cell.verifyButton.tag = 2
+            } else {
+                cell.profileEditImageView.image = UIImage(named: "dummy-placeholder.jpg")
+                cell.coverEditImageView.image = UIImage(named: "dummy-placeholder.jpg")
             }
            
             return cell

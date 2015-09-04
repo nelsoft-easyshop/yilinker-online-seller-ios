@@ -31,6 +31,10 @@ class StoreInfoTableViewCell: UITableViewCell {
     
     @IBOutlet weak var profileCoverPhotoUploadView: UIView!
     @IBOutlet weak var coverPhotoUploadView: UIView!
+    @IBOutlet weak var profileEditImageView: UIImageView!
+    @IBOutlet weak var coverEditImageView: UIImageView!
+    @IBOutlet weak var profileEditLabel: UILabel!
+    @IBOutlet weak var coverEditLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
