@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate {
+class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate {
     
     @IBOutlet weak var storeInfoTableView: UITableView!
     
@@ -135,7 +135,6 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
                 cell.mobilePhoneTextField.text = self.storeInfoModel?.contact_number
                 cell.verifyButton.setTitle("Change", forState: UIControlState.Normal)
                 cell.verifyButton.tag = 2
-                verifyOrChange = 2
             }
            
             return cell
@@ -188,17 +187,15 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
     
     //Store Details Function
     func storeInfoVerify() {
-        println("verify")
+        println("verify " + "\(self.verifyOrChange)")
         self.showView()
         
-        if verifyOrChange == 1 {
+        if self.verifyOrChange == 1 {
             var verifyNumberViewController = VerifyNumberViewController(nibName: "VerifyNumberViewController", bundle: nil)
+            verifyNumberViewController.delegate = self
             verifyNumberViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
             verifyNumberViewController.providesPresentationContextTransitionStyle = true
             verifyNumberViewController.definesPresentationContext = true
-            let black = UIColor.blackColor()
-            let transparent = black.colorWithAlphaComponent(0.5)
-            verifyNumberViewController.view.backgroundColor = transparent
             verifyNumberViewController.view.frame.origin.y = verifyNumberViewController.view.frame.size.height
             self.navigationController?.presentViewController(verifyNumberViewController, animated: true, completion:
                 nil)
@@ -211,6 +208,7 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
             changeMobileNumber.view.frame.origin.y = changeMobileNumber.view.frame.size.height
             self.navigationController?.presentViewController(changeMobileNumber, animated: true, completion:
                 nil)
+            self.verifyOrChange = 2
 
         }
 
@@ -275,10 +273,6 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
         self.showView()
     }
     
-    func submit(type: String) {
-        
-    }
-    
     func changeMobileNumber(){
         var changeMobileNumberViewController = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
         changeMobileNumberViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
@@ -315,17 +309,12 @@ class StoreInfoViewController: UIViewController, UITableViewDelegate, UITableVie
 
     }
     
-    func setMobileNumber(newNumber: String, verifyOrChange: String) {
+    func setMobileNumber(newNumber: String) {
         self.storeInfoModel?.contact_number = newNumber
-        //self.storeInfoModel?.store_name =
-        //    NSString("Verify", forState: UIControlState.Normal)
-        self.verifyOrChange = 2
-        UIView.animateWithDuration(0.25, animations: {
-            self.dimView.alpha = 0
-            }, completion: { finished in
-                self.dimView.hidden = true
-        })
+        self.verifyOrChange = 1
+        println(self.verifyOrChange)
         self.storeInfoTableView.reloadData()
+        println(self.verifyOrChange)
     }
     
     func dismissView() {

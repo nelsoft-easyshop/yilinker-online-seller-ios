@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol VerifyViewControllerDelegate {
+    func dismissView()
+}
+
 class VerifyNumberViewController: UIViewController {
 
     @IBOutlet weak var closeButton: UIButton!
@@ -25,6 +29,8 @@ class VerifyNumberViewController: UIViewController {
     var contentViewFrame: CGRect?
     var selectedIndex: Int = 0
 
+    var delegate: VerifyViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,7 +39,7 @@ class VerifyNumberViewController: UIViewController {
         self.viewContainer.clipsToBounds = true
     
         initViewController()
-        self.setSelectedViewControllerWithIndex(1)
+        self.setSelectedViewControllerWithIndex(0)
     }
     
     func initViewController() {
@@ -91,8 +97,8 @@ class VerifyNumberViewController: UIViewController {
     }
     
     @IBAction func cancelAction(sender: AnyObject!) {
-         self.dismissViewControllerAnimated(true, completion: nil)
-       // self.pressedDimViewFromProductPage(self)
+        self.dismissViewControllerAnimated(true, completion: nil)
+        self.delegate?.dismissView()
       
     }
     
@@ -107,6 +113,9 @@ class VerifyNumberViewController: UIViewController {
         } else if self.verifyButton.titleLabel?.text == "Continue" {
             println("Continue")
         }
+        
+        self.delegate?.dismissView()
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     /*

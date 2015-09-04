@@ -46,12 +46,7 @@ class StoreInfoTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     @IBAction func callVerification(sender: AnyObject){
-        
         self.delegate?.storeInfoVerify()
-    }
-    
-    func setNewMobile(mobileNumber: String){
-        self.mobilePhoneTextField.text = mobileNumber
     }
     
 }
