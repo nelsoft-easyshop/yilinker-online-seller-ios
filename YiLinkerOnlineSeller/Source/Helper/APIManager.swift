@@ -39,6 +39,7 @@ struct APIAtlas {
     static let sellerSetDefaultBankAccount = "auth/bank/account/setDefaultBankAccount"
     static let sellerStoreAddresses = "auth/address/getUserAddresses"
     static let sellerDeleteStoreAddress = "auth/address/deleteUserAddress"
+    static let sellerChangeMobileNumber = "auth/user/changeContactNumber"
     static let baseUrl = APIEnvironment.baseUrl()
 }
 
