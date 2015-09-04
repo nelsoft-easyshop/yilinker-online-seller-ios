@@ -111,13 +111,7 @@ class ProductManagementTableViewCell: UITableViewCell {
             delegate?.updateSelectedItems(self.tag, selected: true)
         }
     }
-    
-    
-    
-    
-    
-    
-    
+
 }
 
 

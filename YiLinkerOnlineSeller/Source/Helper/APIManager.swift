@@ -42,6 +42,14 @@ struct APIAtlas {
     static let sellerDeleteStoreAddress = "auth/address/deleteUserAddress"
     static let sellerChangeMobileNumber = "auth/user/changeContactNumber"
     static let sellerMobileNumberVerification = "auth/sms/verify"
+    static let getCustomizedCategories = "category/getCustomCategories"
+    static let getCategoryDetails = "auth/category/getCategoryDetails"
+    static let editCustomizedCategory = "auth/category/updateCustomCategory"
+    static let addCustomizedCategory = "auth/category/addCustomCategory"
+    static let deleteCustomizedCategory = "auth/category/deleteCustomCategory"
+    static let sortParentCategory = "auth/category/sortParentCategories"
+    static let checkIfCategoryNameExists = "auth/category/checkIfCategoryExists"
+    static let getAllCategoryProducts = "auth/category/getAllCategoryProducts"
     static let baseUrl = APIEnvironment.baseUrl()
 }
 

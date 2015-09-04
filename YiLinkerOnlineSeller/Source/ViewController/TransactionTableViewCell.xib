@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+        </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TransactionTableIdentifier" rowHeight="90" id="KGk-i7-Jjw" customClass="TransactionTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TID-203-553-918" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6M3-cm-2cM">
+                        <rect key="frame" x="57" y="7" width="291" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="40R-cN-CPv"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
+                        <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5 products     January 21, 2014" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Le3-02-BH8">
+                        <rect key="frame" x="57" y="30" width="291" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="g0P-hu-u57"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 4,500" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zkH-Jm-tDN">
+                        <rect key="frame" x="57" y="58" width="88" height="21"/>
+                        <color key="backgroundColor" red="0.43529411759999997" green="0.20392156859999999" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="JfV-kq-kkn"/>
+                            <constraint firstAttribute="width" constant="88" id="RZa-RK-eLA"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right2" translatesAutoresizingMaskIntoConstraints="NO" id="TnZ-Tf-wpg">
+                        <rect key="frame" x="357" y="33" width="8" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="bTI-CF-x0g"/>
+                            <constraint firstAttribute="width" constant="8" id="bm0-2D-JOn"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lxw-GE-6nc">
+                        <rect key="frame" x="14" y="28" width="33" height="33"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="exclamation" translatesAutoresizingMaskIntoConstraints="NO" id="Vd8-Qi-aXo">
+                                <rect key="frame" x="6" y="6" width="20" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="I9w-vI-gIR"/>
+                                    <constraint firstAttribute="height" constant="22" id="IMT-cG-cFm"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.87843137250000003" green="0.62352941179999999" blue="0.035294117649999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="Vd8-Qi-aXo" secondAttribute="centerY" id="AH5-Ii-QDJ"/>
+                            <constraint firstAttribute="height" constant="33" id="Bzc-ky-zuf"/>
+                            <constraint firstAttribute="centerX" secondItem="Vd8-Qi-aXo" secondAttribute="centerX" id="OkL-yr-nqv"/>
+                            <constraint firstAttribute="width" constant="33" id="bFg-NE-41S"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="zkH-Jm-tDN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="49" id="6gj-3A-zwA"/>
+                    <constraint firstItem="Lxw-GE-6nc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="28" id="77k-7J-Ie4"/>
+                    <constraint firstAttribute="trailing" secondItem="6M3-cm-2cM" secondAttribute="trailing" constant="27" id="Cnh-D2-48Q"/>
+                    <constraint firstAttribute="trailing" secondItem="TnZ-Tf-wpg" secondAttribute="trailing" constant="10" id="DS8-7B-OUs"/>
+                    <constraint firstItem="6M3-cm-2cM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="7" id="DyH-M0-2qh"/>
+                    <constraint firstItem="TnZ-Tf-wpg" firstAttribute="leading" secondItem="Le3-02-BH8" secondAttribute="trailing" constant="9" id="Imp-IG-QwB"/>
+                    <constraint firstItem="TnZ-Tf-wpg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="33" id="Kib-KW-6Qa"/>
+                    <constraint firstItem="Lxw-GE-6nc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="14" id="M7V-R4-hbJ"/>
+                    <constraint firstItem="Le3-02-BH8" firstAttribute="leading" secondItem="Lxw-GE-6nc" secondAttribute="trailing" constant="10" id="UIM-ih-dc6"/>
+                    <constraint firstItem="6M3-cm-2cM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="57" id="Wk9-5o-fC0"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="zkH-Jm-tDN" secondAttribute="bottom" constant="2" id="kE4-OR-C8F"/>
+                    <constraint firstItem="Le3-02-BH8" firstAttribute="top" secondItem="6M3-cm-2cM" secondAttribute="bottom" constant="2" id="vtM-Mv-UaG"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="imageContainer" destination="Lxw-GE-6nc" id="Csd-86-J1M"/>
+                <outlet property="priceLabel" destination="zkH-Jm-tDN" id="Vvg-5T-bAX"/>
+                <outlet property="productsDateLabel" destination="Le3-02-BH8" id="izW-0H-zB2"/>
+                <outlet property="statusImageVIew" destination="Vd8-Qi-aXo" id="khw-T2-FQ9"/>
+                <outlet property="tidLabel" destination="6M3-cm-2cM" id="AHO-zC-jKq"/>
+            </connections>
+            <point key="canvasLocation" x="313.5" y="258"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="exclamation" width="31" height="200"/>
+        <image name="right2" width="97" height="200"/>
+    </resources>
+</document>

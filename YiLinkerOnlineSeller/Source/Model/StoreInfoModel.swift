@@ -44,7 +44,11 @@ class StoreInfoModel: NSObject {
     var accountTitle: String = ""
     var bankId: Int = 0
     
-    init(name : String, email : String, gender : String, nickname : String, contact_number : String, specialty : String, birthdate : String, store_name : String, store_description : String, avatar : NSURL, cover_photo : NSURL, is_allowed : Bool, title: String, unit_number: String, bldg_name: String, street_number: String, street_name: String, subdivision: String, zip_code: String, full_address: String, account_title: String, bank_account: String, bank_id: Int) {
+    var productCount: Int = 0
+    var transactionCount: Int = 0
+    var totalSales: String = ""
+    
+    init(name : String, email : String, gender : String, nickname : String, contact_number : String, specialty : String, birthdate : String, store_name : String, store_description : String, avatar : NSURL, cover_photo : NSURL, is_allowed : Bool, title: String, unit_number: String, bldg_name: String, street_number: String, street_name: String, subdivision: String, zip_code: String, full_address: String, account_title: String, bank_account: String, bank_id: Int, productCount: Int, transactionCount: Int, totalSales: String) {
         self.name = name
         self.email = email
         self.gender = gender
@@ -67,6 +71,9 @@ class StoreInfoModel: NSObject {
         self.bankAccount = bank_account
         self.accountTitle = account_title
         self.bankId = bank_id
+        self.productCount = productCount
+        self.transactionCount = transactionCount
+        self.totalSales = totalSales
     }
 
     class func parseSellerDataFromDictionary(dictionary: NSDictionary) -> StoreInfoModel {
@@ -97,6 +104,9 @@ class StoreInfoModel: NSObject {
         var bank_account: String = ""
         var bank_id: Int = 0
         var account_title: String = ""
+        var productCount: Int = 0
+        var transactionCount: Int = 0
+        var totalSales: String = ""
         
         println(dictionary["data"])
         if let value: AnyObject = dictionary["data"] {
@@ -173,6 +183,24 @@ class StoreInfoModel: NSObject {
                 is_followed = false
             }
             
+            if let tempVar = value["productCount"] as? Int {
+                productCount = tempVar
+            } else {
+                productCount = 0
+            }
+            
+            if let tempVar = value["transactionCount"] as? Int {
+                transactionCount = tempVar
+            } else {
+                transactionCount = 0
+            }
+            
+            if let tempVar = value["totalSales"] as? String {
+                totalSales = tempVar
+            } else {
+                totalSales = ""
+            }
+            
             if let val: AnyObject = value["bankAccount"] {
                 
                 if let temBankId = val["bankId"] as? Int {
@@ -230,15 +258,15 @@ class StoreInfoModel: NSObject {
                     zip_code = temZipCode
                 }
                 
-                store_address = unit_number + " " + bldg_name + ", " + street_number + " " + street_name + ", " + subdivision + ", " + zip_code
-                
-                println("\(store_address)")
+                if let tempVar = val["fullLocation"] as? String {
+                    store_address = tempVar
+                }
                 
             }
             
         }
         
-        let storeInfo: StoreInfoModel = StoreInfoModel(name: name, email: email, gender: gender, nickname: nickname, contact_number: contact_number, specialty: contact_number, birthdate: birthdate, store_name: store_name, store_description: store_description, avatar: avatar, cover_photo: cover_photo, is_allowed: is_followed, title: title, unit_number: unit_number, bldg_name: bldg_name, street_number: street_number, street_name: street_name, subdivision: subdivision, zip_code: zip_code, full_address: store_address, account_title: account_title, bank_account: bank_account, bank_id: bank_id)
+        let storeInfo: StoreInfoModel = StoreInfoModel(name: name, email: email, gender: gender, nickname: nickname, contact_number: contact_number, specialty: contact_number, birthdate: birthdate, store_name: store_name, store_description: store_description, avatar: avatar, cover_photo: cover_photo, is_allowed: is_followed, title: title, unit_number: unit_number, bldg_name: bldg_name, street_number: street_number, street_name: street_name, subdivision: subdivision, zip_code: zip_code, full_address: store_address, account_title: account_title, bank_account: bank_account, bank_id: bank_id, productCount: productCount, transactionCount: transactionCount, totalSales: totalSales)
         println("\(store_address)")
         return storeInfo
     }

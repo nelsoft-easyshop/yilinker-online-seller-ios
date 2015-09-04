@@ -9,6 +9,7 @@
 import UIKit
 
 class ProductUploadCategoryTableViewCell: UITableViewCell {
+ 
     @IBOutlet weak var categoryTitleLabel: UILabel!
     
     override func awakeFromNib() {
