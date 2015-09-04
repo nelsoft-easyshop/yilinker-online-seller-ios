@@ -3,9 +3,25 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+        </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DisputeViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
             <connections>
+                <outlet property="caseId" destination="ay7-ML-LSW" id="ZZc-5c-MQ3"/>
                 <outlet property="disputeTitle" destination="b2Y-Dz-oZd" id="ae1-dH-4Yf"/>
                 <outlet property="modalView" destination="9J9-Ai-3QY" id="yLY-ns-sYb"/>
                 <outlet property="remarks" destination="Gwf-ux-sZJ" id="Tlh-u8-rjA"/>
@@ -27,17 +43,15 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9J9-Ai-3QY" userLabel="ModalWindow">
                     <rect key="frame" x="14" y="106" width="292" height="356"/>
                     <subviews>
-                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A9S-oM-o3Y" userLabel="TitleView">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A9S-oM-o3Y" userLabel="TitleView">
                             <rect key="frame" x="0.0" y="0.0" width="292" height="81"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Your Case ID: 236475860" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mq8-1a-x3G">
-                                    <rect key="frame" x="47" y="14" width="198" height="21"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qeC-KR-umM">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qeC-KR-umM">
                                     <rect key="frame" x="8" y="11" width="20" height="22"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="22" id="J6V-fR-GjE"/>
+                                        <constraint firstAttribute="width" constant="20" id="Y7C-wx-9YF"/>
+                                    </constraints>
                                     <state key="normal" image="dialog-close">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
@@ -45,52 +59,76 @@
                                         <action selector="closeButtonPressed:" destination="-1" eventType="touchUpInside" id="dN3-q5-P7e"/>
                                     </connections>
                                 </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Case ID: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zYc-bf-zk7" userLabel="Title Label">
+                                    <rect key="frame" x="56" y="11" width="102" height="21"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="102" id="1cy-dd-hUQ"/>
+                                        <constraint firstAttribute="height" constant="21" id="ACg-Q4-CRG"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="17"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="236475860" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ay7-ML-LSW" userLabel="Case ID">
+                                    <rect key="frame" x="158" y="11" width="104" height="21"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="21" id="9MB-tG-cJN"/>
+                                        <constraint firstAttribute="width" constant="104" id="Yu8-D7-KMN"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="17"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="qeC-KR-umM" firstAttribute="top" secondItem="A9S-oM-o3Y" secondAttribute="top" constant="11" id="9Eg-SM-gPE"/>
+                                <constraint firstItem="qeC-KR-umM" firstAttribute="centerY" secondItem="ay7-ML-LSW" secondAttribute="centerY" id="Be2-cW-WAC"/>
+                                <constraint firstAttribute="height" constant="81" id="dVF-3g-i21"/>
+                                <constraint firstItem="qeC-KR-umM" firstAttribute="centerY" secondItem="zYc-bf-zk7" secondAttribute="centerY" id="h15-ku-1Fx"/>
+                                <constraint firstAttribute="width" constant="292" id="pd1-kR-Cni"/>
+                                <constraint firstItem="ay7-ML-LSW" firstAttribute="leading" secondItem="zYc-bf-zk7" secondAttribute="trailing" id="rrr-la-EIE"/>
+                                <constraint firstItem="qeC-KR-umM" firstAttribute="leading" secondItem="A9S-oM-o3Y" secondAttribute="leading" constant="8" id="rt4-8V-Sur"/>
+                                <constraint firstItem="zYc-bf-zk7" firstAttribute="leading" secondItem="qeC-KR-umM" secondAttribute="trailing" constant="28" id="tuM-7K-Abw"/>
+                            </constraints>
                         </view>
                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vrB-hD-167" userLabel="WidgetContainer">
                             <rect key="frame" x="0.0" y="50" width="292" height="298"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Dispute Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F7Q-xZ-A03" userLabel="WindowTitle">
                                     <rect key="frame" x="8" y="8" width="96" height="21"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b2Y-Dz-oZd">
-                                    <rect key="frame" x="8" y="27" width="276" height="30"/>
-                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits"/>
-                                </textField>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Transaction No. (optional)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fRa-v4-gZ7">
-                                    <rect key="frame" x="8" y="65" width="196" height="21"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <rect key="frame" x="8" y="70" width="196" height="21"/>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wG2-2Y-nTH">
-                                    <rect key="frame" x="8" y="87" width="276" height="30"/>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter transaction number here" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wG2-2Y-nTH">
+                                    <rect key="frame" x="8" y="92" width="276" height="30"/>
                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Remarks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K1y-6V-qWb">
-                                    <rect key="frame" x="8" y="125" width="68" height="21"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <rect key="frame" x="8" y="130" width="68" height="21"/>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gwf-ux-sZJ">
-                                    <rect key="frame" x="8" y="148" width="276" height="83"/>
+                                    <rect key="frame" x="8" y="153" width="276" height="83"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 </textView>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aVw-hQ-F8J">
                                     <rect key="frame" x="177" y="250" width="107" height="40"/>
                                     <color key="backgroundColor" red="0.27450980392156865" green="0.66274509803921566" blue="0.59215686274509804" alpha="1" colorSpace="calibratedRGB"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="16"/>
                                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <state key="normal" title="SUBMIT">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -99,14 +137,22 @@
                                         <action selector="submitButtonPressed:" destination="-1" eventType="touchUpInside" id="JEN-GJ-Z7m"/>
                                     </connections>
                                 </button>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b2Y-Dz-oZd">
+                                    <rect key="frame" x="8" y="32" width="276" height="30"/>
+                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
                             </subviews>
                             <color key="backgroundColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
                     </subviews>
                     <color key="backgroundColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstItem="A9S-oM-o3Y" firstAttribute="leading" secondItem="9J9-Ai-3QY" secondAttribute="leading" id="40w-dI-uCW"/>
                         <constraint firstAttribute="width" constant="292" id="SPz-TR-c2Y"/>
                         <constraint firstAttribute="height" constant="356" id="bnU-PR-rTV"/>
+                        <constraint firstItem="A9S-oM-o3Y" firstAttribute="top" secondItem="9J9-Ai-3QY" secondAttribute="top" id="zDP-vw-4Zy"/>
                     </constraints>
                 </view>
             </subviews>
