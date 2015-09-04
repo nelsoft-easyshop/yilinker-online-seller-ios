@@ -26,14 +26,19 @@ struct APIEnvironment {
 struct APIAtlas {
     
     static let loginUrl = "login"
+    static let refreshTokenUrl = "login"
     static let registerUrl = "user/register"
-    static let getUserInfoUrl = "auth/user/getUser"
-    static let homeUrl = "home/getData"
-    static let cartUrl = "v1/cart"
-    static let wishlistUrl = "v1/cart"
-    static let getSellerUrl = "v1/get-seller"
-    static let productReviewUrl = "v1/product-review"
-    static let productPageUrl = "v1/get-product"
+    static let conditionUrl = "product/getProductConditions"
+    static let categoryUrl = "product/getCategories"
+    static let brandUrl = "product/getBrands"
+    static let uploadUrl = "product/upload"
+    static let sellerStoreInfo = "auth/merchant/getUserInfo"
+    static let sellerBankAccountList = "auth/bank/account/getBankAccounts"
+    static let sellerAddBankAccount = "auth/bank/account/addBankAccount"
+    static let sellerDeleteBankAccount = "auth/bank/account/deleteBankAccount"
+    static let sellerSetDefaultBankAccount = "auth/bank/account/setDefaultBankAccount"
+    static let sellerStoreAddresses = "auth/address/getUserAddresses"
+    static let sellerDeleteStoreAddress = "auth/address/deleteUserAddress"
     static let baseUrl = APIEnvironment.baseUrl()
 }
 
@@ -49,6 +54,7 @@ class APIManager: AFHTTPSessionManager {
             let url: NSURL! = NSURL(string: APIAtlas.baseUrl)
             Static.instance = APIManager(baseURL: url)
             Static.instance?.securityPolicy.allowInvalidCertificates = true
+            Static.instance?.responseSerializer = JSONResponseSerializer()
         }
         
         return Static.instance!

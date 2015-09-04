@@ -16,20 +16,24 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var loginBlockerView: UIView!
     
-    var tableData: [String] = ["My\nStore", "Sales\nReport", "Transactions", "Product\nManagement", "Customized\nCategory", "Upload\nItem", "Followers", "Activity\nLog", "My\nPoints", "Help", "Logout"]
+    var tableData: [String] = ["My\nStore", "Sales\nReport", "Transactions", "Product\nManagement", "Customized\nCategory", "Upload\nItem", "Followers", "Activity\nLog", "My\nPoints", "Resolution\nCenter", "Help", "Logout"]
     
-    var tableImages: [String] = ["mystore", "report", "transaction", "product", "category", "uploadItem", "followers", "activityLog", "points", "help", "logout"]
+    var tableImages: [String] = ["mystore", "report", "transaction", "product", "category", "uploadItem", "followers", "activityLog", "points", "resolution", "help", "logout"]
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Remember Me
+        self.tabBarController!.tabBar.tintColor = Constants.Colors.appTheme
         if !NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
             SessionManager.setAccessToken("")
             let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
             self.presentViewController(signInViewController, animated: false, completion: nil)
         }
-        
+        println(SessionManager.accessToken())
         registerNibs()
         initializeViews()
     }
@@ -53,16 +57,16 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         } else {
             self.loginBlockerView.hidden = false
         }
+
+        self.tabBarController?.tabBar.hidden = false
     }
     
     func initializeViews() {
         if self.respondsToSelector("edgesForExtendedLayout") {
-            self.edgesForExtendedLayout = UIRectEdge.None
+            self.edgesForExtendedLayout = UIRectEdge.Bottom
         }
         
         self.tabBarController!.tabBar.tintColor = Constants.Colors.appTheme
-        
-        
         
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let screenWidth = screenSize.width
@@ -82,7 +86,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         layout.sectionInset = UIEdgeInsetsMake(0, 16.0, 0, 16.0)
         collectionView.setCollectionViewLayout(layout, animated: true)
         collectionView?.backgroundColor = UIColor.whiteColor()
-        collectionView?.bounces = true
+        collectionView?.bounces = false
         collectionView?.alwaysBounceVertical = true
     }
     
@@ -126,9 +130,13 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         switch kind {
         case UICollectionElementKindSectionHeader:
             let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: dashBoardHeaderIdentifier, forIndexPath: indexPath) as! DashBoardHeaderCollectionViewCell
-            
             headerView.setCoverPhoto("http://g.fastcompany.net/multisite_files/fastcompany/slideshow/2013/07/3014720-slide-i-1-after-five-years-beats-redesigns-studio-headphones.jpg")
             headerView.setProfilePhoto("http://cdn-www.xda-developers.com/wp-content/uploads/2011/10/beats-by_dr_dre-04.jpg")
+            
+            var gradient: CAGradientLayer = CAGradientLayer()
+            gradient.frame = CGRectMake(0, 0, view.frame.width, 20)
+            gradient.colors = [UIColor.grayColor().CGColor, UIColor.clearColor().CGColor]
+            headerView.layer.insertSublayer(gradient, atIndex: 1)
             
             return headerView
         default:
@@ -146,29 +154,44 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         println("Clicked item \(tableData[indexPath.row])")
         if indexPath.row == 0 {
-            
+            var storeInfoViewController = StoreInfoViewController(nibName: "StoreInfoViewController", bundle: nil)
+            self.navigationController?.pushViewController(storeInfoViewController, animated:true)
         } else if indexPath.row == 0 {
-            
+           
         } else if indexPath.row == 1 {
-            
+            var salesViewController = SalesReportViewController(nibName: "SalesReportViewController", bundle: nil)
+            self.navigationController?.pushViewController(salesViewController, animated:true)
         } else if indexPath.row == 2 {
-            
+
         } else if indexPath.row == 3 {
-            
+            let productManagement = ProductManagementViewController(nibName: "ProductManagementViewController", bundle: nil)
+            productManagement.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(productManagement, animated: true)
         } else if indexPath.row == 4 {
             
         } else if indexPath.row == 5 {
-            
+            let productUploadTableViewController: ProductUploadTableViewController = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
+            let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadTableViewController)
+            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+            self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
         } else if indexPath.row == 6 {
-            
+            var followerController = FollowersViewController(nibName: "FollowersViewController", bundle: nil)
+            self.navigationController?.pushViewController(followerController, animated:true)
         } else if indexPath.row == 7 {
             var activityViewController = ActivityLogTableViewController(nibName: "ActivityLogTableViewController", bundle: nil)
             self.navigationController?.pushViewController(activityViewController, animated:true)
         } else if indexPath.row == 8 {
+            var myPointsViewController = MyPointsTableViewController(nibName: "MyPointsTableViewController", bundle: nil)
+            self.navigationController?.pushViewController(myPointsViewController, animated:true)
             
         } else if indexPath.row == 9 {
-            
+            let resolutionCenter = self.storyboard?.instantiateViewControllerWithIdentifier("ResolutionCenterViewController")
+                as! ResolutionCenterViewController
+            resolutionCenter.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(resolutionCenter, animated:true)
         } else if indexPath.row == 10 {
+            
+        } else if indexPath.row == 11 {
             var alert = UIAlertController(title: nil, message: "Are you sure you want to logout?", preferredStyle: .ActionSheet)
             alert.addAction(UIAlertAction(title: "Logout", style: .Destructive, handler: { action in
                 switch action.style{

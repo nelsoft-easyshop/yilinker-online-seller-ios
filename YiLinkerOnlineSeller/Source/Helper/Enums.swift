@@ -25,3 +25,19 @@ enum CustomizeShoppingType {
     case Promos
     case Others
 }
+
+enum ProductTextFieldType {
+    case Brand
+    case Category
+    case Condition
+    case ProductName
+    case ProductShortDescription
+    case ProductCompleteDescription
+    case ProductSKU
+    case ProductRetailPrice
+    case ProductDiscountPrice
+    case ProductLenght
+    case ProductWidth
+    case ProductWeight
+    case ProductHeight
+}

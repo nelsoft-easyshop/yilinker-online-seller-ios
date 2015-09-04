@@ -22,6 +22,8 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     
     @IBOutlet weak var viewsContainer: UIView!
     
+    var hud: MBProgressHUD?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -36,6 +38,21 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         self.passwordTextField.addTarget(self, action: "passwordDidTextChanged", forControlEvents: UIControlEvents.EditingChanged)
         self.addCheckInTextField(emailAddressTextField)
         self.addCheckInTextField(passwordTextField)
+    }
+    
+    // Show hud
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
     
     // MARK: - Methods
@@ -92,8 +109,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     }
     
     func instantSignin(gesture: UIGestureRecognizer) {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["email": "seller@easyshop.ph",
             "password": "password",
@@ -103,18 +119,29 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         
         manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             self.signinSuccessful()
+            self.dismissViewControllerAnimated(true, completion: nil)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.signInButton.setTitle("SIGN IN", forState: .Normal)
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 1011 {
-                    self.showAlert(title: "Error", message: "Email and Password did not match.")
+                
+                if error.userInfo != nil {
+                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                        let errorDescription: String = jsonResult["error_description"] as! String
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
+                    }
                 } else {
-                    self.showAlert(title: "Error", message: "Something went wrong")
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    if task.statusCode == 1011 {
+                        self.showAlert(title: "Error", message: "Email and Password did not match.")
+                    } else {
+                        self.showAlert(title: "Error", message: "Something went wrong")
+                    }
                 }
-                SVProgressHUD.dismiss()
+                
+                self.hud?.hide(true)
         })
     }
     
@@ -186,8 +213,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     // MARK: - Requests
     
     func requestSignin() {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["email": self.emailAddressTextField.text,
             "password": self.passwordTextField.text,
@@ -199,21 +225,30 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             
-            
-//            self.showAlert(title: "YiLinker", message: "Welcome to YiLinker !")
-            SVProgressHUD.dismiss()
-           self.signinSuccessful()
+            self.hideKeyboard(UIGestureRecognizer())
+            self.signInButton.setTitle("Welcome to YiLinker!", forState: .Normal)
+            self.hud?.hide(true)
+            self.signinSuccessful()
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.signInButton.setTitle("SIGN IN", forState: .Normal)
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 1011 {
-                    self.showAlert(title: "Error", message: "Email and Password did not match.")
+                
+                if error.userInfo != nil {
+                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                        let errorDescription: String = jsonResult["error_description"] as! String
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
+                    }
                 } else {
-                    self.showAlert(title: "Error", message: "Something went wrong")
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    if task.statusCode == 1011 {
+                        self.showAlert(title: "Error", message: "Email and Password did not match.")
+                    } else {
+                        self.showAlert(title: "Error", message: "Something went wrong")
+                    }
                 }
-                SVProgressHUD.dismiss()
+                
+                self.hud?.hide(true)
         })
     }
     
@@ -231,7 +266,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         self.profileImageView.frame = self.profileContainerView.bounds
         self.profileImageView.contentMode = .ScaleAspectFill
 
-        SVProgressHUD.dismiss()
+        self.hud?.hide(true)
         
         let delay = 1.0 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
         var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
