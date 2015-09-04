@@ -29,8 +29,9 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        dimView = UIView(frame: self.view.bounds)
-        dimView.backgroundColor = UIColor.blackColor()
+        self.edgesForExtendedLayout = .None
+        dimView = UIView(frame: UIScreen.mainScreen().bounds)
+        dimView.backgroundColor=UIColor.blackColor()
         dimView.alpha = 0.5
         self.navigationController?.view.addSubview(dimView)
         dimView.hidden = true

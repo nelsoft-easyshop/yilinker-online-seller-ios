@@ -44,8 +44,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         super.viewDidLoad()
        
         //storeInfoHeader.delegate = self
-        
-        dimView = UIView(frame: self.view.bounds)
+        self.edgesForExtendedLayout = .None
+        dimView = UIView(frame: UIScreen.mainScreen().bounds)
         dimView.backgroundColor=UIColor.blackColor()
         dimView.alpha = 0.5
         self.navigationController?.view.addSubview(dimView)
@@ -80,10 +80,10 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             self.hud = nil
         }
         
-        self.hud = MBProgressHUD(view: self.tableView)
+        self.hud = MBProgressHUD(view: self.view)
         self.hud?.removeFromSuperViewOnHide = true
         self.hud?.dimBackground = false
-        self.tableView.addSubview(self.hud!)
+        self.navigationController?.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
 
@@ -303,7 +303,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     func saveAccountInfo() {
         self.showHUD()
 
-        self.tableView.reloadData()
+        //self.tableView.reloadData()
         let cell: StoreInfoTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoHeaderTableViewCellIndentifier, forIndexPath: index!) as! StoreInfoTableViewCell
         cell.delegate = self
 
