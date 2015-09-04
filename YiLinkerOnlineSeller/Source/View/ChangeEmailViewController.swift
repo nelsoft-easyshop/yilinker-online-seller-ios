@@ -63,7 +63,7 @@ class ChangeEmailViewController: UIViewController {
             self.showHUD()
             let manager = APIManager.sharedInstance
             let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldPassword" : self.oldEmailAddressTextField.text, "newPassword" : self.newEmailAddressTextField.text, "newPasswordConfirm" : self.confirmEmailAddressTextField.text];
-            
+            self.showHUD()
             manager.POST(APIAtlas.sellerChangePassword, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 println("SUCCESS!")
