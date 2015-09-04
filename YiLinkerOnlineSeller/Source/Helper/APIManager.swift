@@ -44,14 +44,16 @@ struct APIAtlas {
     static let sellerMobileNumberVerification = "auth/sms/verify"
     static let sellerChangePassword = "auth/user/changePassword"
     static let sellerUpdateSellerInfo = "auth/merchant/updateUserInfo"
-    static let getCustomizedCategories = "category/getCustomCategories"
-    static let getCategoryDetails = "auth/category/getCategoryDetails"
+    
+    static let getCustomizedCategories = "category/getCustomCategories"           // Applied
+    static let getCategoryDetails = "auth/category/getCategoryDetails"            // Applied
     static let editCustomizedCategory = "auth/category/updateCustomCategory"
-    static let addCustomizedCategory = "auth/category/addCustomCategory"
+    static let addCustomizedCategory = "auth/category/addCustomCategory"          // Applied
     static let deleteCustomizedCategory = "auth/category/deleteCustomCategory"
     static let sortParentCategory = "auth/category/sortParentCategories"
     static let checkIfCategoryNameExists = "auth/category/checkIfCategoryExists"
     static let getAllCategoryProducts = "auth/category/getAllCategoryProducts"
+    
     static let managementGetProductList = "auth/product/getProductList"
     static let managementUpdateProductStatus = "auth/product/updateProductStatus"
     static let baseUrl = APIEnvironment.baseUrl()
