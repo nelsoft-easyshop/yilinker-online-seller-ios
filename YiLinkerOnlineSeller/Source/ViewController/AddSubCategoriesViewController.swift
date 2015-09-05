@@ -9,13 +9,14 @@
 import UIKit
 
 protocol AddSubCategoriesViewControllerDelegate {
-    func addSubCategory(category: String)
+    func addSubCategory(subCategory: NSDictionary, categoryName: String)
 }
 
-class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDelegate, AddItemViewControllerDelegate {
+class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDelegate, AddItemViewControllerDelegate, EditItemsViewControllerDelegate {
 
     var delegate: AddSubCategoriesViewControllerDelegate?
     var productManagementProductModel: ProductManagementProductModel!
+    var subCategoriesProducts: [Int] = []
     var itemIndexes: [Int] = []
     
     @IBOutlet weak var tableView: UITableView!
@@ -41,7 +42,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+        println("Add Sub > \(subCategoriesProducts)")
         loadViewsWithDetails()
     }
     
@@ -108,7 +109,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
         self.seeAllItemsView.backgroundColor = UIColor.whiteColor()
         
         var seeAllItemsLabel = UILabel(frame: CGRectZero)
-        seeAllItemsLabel.text = "See all " + "20" + " items   "
+        seeAllItemsLabel.text = "See all " + String(itemIndexes.count) + " items   "
         seeAllItemsLabel.font = UIFont(name: "Panton-Bold", size: 12.0)
         seeAllItemsLabel.textColor = UIColor.darkGrayColor()
         seeAllItemsLabel.sizeToFit()
@@ -158,7 +159,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
     }
     
     func populateItems() {
-        if self.productManagementProductModel != nil {
+        if self.itemIndexes.count != 0 {
             self.categoryItemsView.addNewItemButton.setTitle("EDIT", forState: .Normal)
             self.getHeaderView().addSubview(getItemImageView())
             self.getHeaderView().addSubview(getSeeAllItemsView())
@@ -178,10 +179,13 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
     
     func checkAction() {
         if self.categoryDetailsView.categoryNameTextField.text != "" {
-            delegate?.addSubCategory(self.categoryDetailsView.categoryNameTextField.text.capitalizedString)
+            let subCategory = ["categoryId": 0,
+                             "categoryName": self.categoryDetailsView.categoryNameTextField.text.capitalizedString,
+                                 "products": subCategoriesProducts]
+            println(subCategory)
+            delegate?.addSubCategory(subCategory, categoryName: self.categoryDetailsView.categoryNameTextField.text.capitalizedString)
+            closeAction()
         }
-        
-        closeAction()
     }
     
     // MARK: - Table View Data Source and Delegates
@@ -228,20 +232,32 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
     
     func gotoEditItem() {
         let editItem = EdititemsViewController(nibName: "EdititemsViewController", bundle: nil)
+        editItem.delegate = self
+        editItem.subCategoriesProducts = subCategoriesProducts
         editItem.updateListOfItems(self.productManagementProductModel, itemIndexes: self.itemIndexes)
         var root = UINavigationController(rootViewController: editItem)
         self.navigationController?.presentViewController(root, animated: false, completion: nil)
     }
     
     // MARK: Add Item View Controller Delegate
-    
-    func updateCategoryImages(productModel: ProductManagementProductModel, itemIndexes: [Int]) {
+
+    func addProductItems(productModel: ProductManagementProductModel, itemIndexes: [Int], products: [Int]) {
         self.productManagementProductModel = productModel
         self.itemIndexes = itemIndexes
+        self.subCategoriesProducts = products
         populateItems()
     }
     
-    func updateEditItems(itemIndexes: [Int]) {
+    // MARK: Edit Item View Controller Delegate
+    
+    func updateProductItems(productModel: ProductManagementProductModel, itemIndexes: [Int], products: [Int]) {
+        self.productManagementProductModel = productModel
+        self.itemIndexes = itemIndexes
+        self.subCategoriesProducts = products
+        println(self.subCategoriesProducts)
+        
+        populateItems()
+
     }
     
     

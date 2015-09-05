@@ -34,7 +34,7 @@ class AddItemTableViewCell: UITableViewCell {
     
     func updateStatusImage(added: Bool) {
         if added {
-            addImageView.image = UIImage(named: "checkItem")
+            addImageView.image = UIImage(named: "checkCategory")
         } else {
             addImageView.image = UIImage(named: "addItem")
         }

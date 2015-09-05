@@ -9,8 +9,7 @@
 import UIKit
 
 protocol AddItemViewControllerDelegate {
-    func updateCategoryImages(productModel: ProductManagementProductModel, itemIndexes: [Int])
-    func updateEditItems(itemIndexes: [Int])
+    func addProductItems(productModel: ProductManagementProductModel, itemIndexes: [Int], products: [Int])
 }
 
 class AddItemViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -20,8 +19,8 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @IBOutlet weak var searchBarTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
-    
-    var selectedItemIDs: [String] = []
+
+    var selectedItemIDs: [Int] = []
     var selectedItemIDsIndex: [Int] = []
     
     var hud: MBProgressHUD?
@@ -40,6 +39,11 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
         self.tableView.registerNib(nib, forCellReuseIdentifier: "AddItemTableViewCell")
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        println(self.selectedItemIDs)
+    }
     // MARK: - Methods
     
     func customizedNavigationBar() {
@@ -79,11 +83,8 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
 //        }
 
         if self.selectedItemIDsIndex.count != 0 {
-            delegate?.updateCategoryImages(self.productModel, itemIndexes: self.selectedItemIDsIndex)
+            delegate?.addProductItems(self.productModel, itemIndexes: self.selectedItemIDsIndex, products: selectedItemIDs)
         }
-        
-        // Edit Item View Controller
-        delegate?.updateEditItems(self.selectedItemIDsIndex)
         
         closeAction()
     }
@@ -148,21 +149,25 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
             cell.updateStatusImage(false)
         }
         
+        
+        
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell: AddItemTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! AddItemTableViewCell
+        let productId: Int = self.productModel.products[indexPath.row].id.toInt()!
         if cell.addImageView?.image == UIImage(named: "addItem") {
             cell.updateStatusImage(true)
-            selectedItemIDs.append(self.productModel.products[indexPath.row].id)
+            selectedItemIDs.append(productId)
             selectedItemIDsIndex.append(indexPath.row)
         } else {
             cell.updateStatusImage(false)
-            selectedItemIDs = selectedItemIDs.filter({$0 != self.productModel.products[indexPath.row].id})
+            selectedItemIDs = selectedItemIDs.filter({$0 != productId})
             selectedItemIDsIndex = selectedItemIDsIndex.filter({$0 != indexPath.row})
         }
         
+//        println(selectedItemIDs)
         println(selectedItemIDsIndex)
 
     }

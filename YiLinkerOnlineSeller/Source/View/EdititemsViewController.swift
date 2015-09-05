@@ -8,7 +8,12 @@
 
 import UIKit
 
+protocol EditItemsViewControllerDelegate {
+    func updateProductItems(productModel: ProductManagementProductModel, itemIndexes: [Int], products: [Int])
+}
+
 class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, RemovedItemTableViewCellDelegate {
+    var delegate: EditItemsViewControllerDelegate?
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var topBarView: UIView!
@@ -23,6 +28,8 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
     var selectedItemIDsIndex: [Int] = []
     var itemsToRemoved: [Int] = []
     
+    var subCategoriesProducts: [Int] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,6 +43,11 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
         self.tableView.registerNib(removedCell, forCellReuseIdentifier: "RemovedItem")
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        println("Edit Items > \(self.subCategoriesProducts)")
+    }
     // MARK: - Methods
     
     func customizedNavigationBar() {
@@ -66,11 +78,17 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
     // MARK: - Actions
     
     func closeAction() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        if self.title != "Edit items" {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
     func checkAction() {
-        closeAction()
+        if self.title != "Edit items" {
+            println("From Edit Items > \(subCategoriesProducts)")
+            delegate?.updateProductItems(self.productModel, itemIndexes: self.selectedItemIDsIndex, products: subCategoriesProducts)
+            closeAction()
+        }
     }
     
     @IBAction func clearAllAction(sender: AnyObject) {
@@ -90,6 +108,7 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
     @IBAction func addItem(sender: AnyObject) {
         let addItem = AddItemViewController(nibName: "AddItemViewController", bundle: nil)
         addItem.delegate = self
+        addItem.selectedItemIDs = subCategoriesProducts
         addItem.selectedItemIDsIndex = selectedItemIDsIndex
         addItem.productModel = productModel
         var rootViewController = UINavigationController(rootViewController: addItem)
@@ -143,52 +162,26 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        self.selectedIndex = indexPath.row
-//        
-//        let cell: AddItemTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! AddItemTableViewCell
-//        if cell.addImageView?.image == UIImage(named: "addItem") {
-//            cell.updateStatusImage(true)
-//            selectedItem++
-//        } else {
-//            cell.updateStatusImage(false)
-//            selectedItem--
-//        }
-        
 
-//        if cell.addImageView?.image == UIImage(named: "addItem") {
-//            cell.updateStatusImage(true)
-//            selectedItemIDs.append(self.productModel.products[indexPath.row].id)
-//            selectedItemIDsIndex.append(indexPath.row)
-//        } else {
-//            cell.updateStatusImage(false)
-//            selectedItemIDs = selectedItemIDs.filter({$0 != self.productModel.products[indexPath.row].id})
-//            selectedItemIDsIndex = selectedItemIDsIndex.filter({$0 != indexPath.row})
-//        }
     }
 
     // MARK - Removed Item Table View Cell Delegate
     
     func addSelectedItems(index: Int) {
-//        self.itemsToRemoved = self.itemsToRemoved.filter({$0 != index})
         self.selectedItemIDsIndex = self.selectedItemIDsIndex.filter({$0 != index})
-        println(self.selectedItemIDsIndex)
     }
     
     func removeSelectedItems(index: Int) {
         self.selectedItemIDsIndex.append(index)
-        println(self.selectedItemIDsIndex)
-//        self.itemsToRemoved.append(index)
     }
     
     // MARK: - Add Item View Controller Delegate
     
-    func updateEditItems(itemIndexes: [Int]) {
+    func addProductItems(productModel: ProductManagementProductModel, itemIndexes: [Int], products: [Int]) {
+        println("From Add Item to Edit Item \(products)")
         self.selectedItemIDsIndex = itemIndexes
+        self.subCategoriesProducts = products
         self.tableView.reloadData()
-    }
-    
-    func updateCategoryImages(productModel: ProductManagementProductModel, itemIndexes: [Int]) {
-        
     }
     
 }

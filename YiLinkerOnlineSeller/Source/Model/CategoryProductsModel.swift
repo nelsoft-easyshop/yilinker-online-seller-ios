@@ -36,15 +36,15 @@ class CategoryProductsModel: NSObject {
                 }
             }
             
-            if dictionary["data"] != nil {
-                if let tempVar = dictionary["data"] as? NSDictionary {
-                    if tempVar["products"] != nil {
-                        if let tempProducts = tempVar["products"] as? NSArray {
-                            products = CategoryProductModel.parseDataWithArray(tempProducts as NSArray)
-                        }
-                    }
-                }
-            }
+//            if dictionary["data"] != nil {
+//                if let tempVar = dictionary["data"] as? NSDictionary {
+//                    if tempVar["products"] != nil {
+//                        if let tempProducts = tempVar["products"] as? NSArray {
+//                            products = CategoryProductModel.parseDataWithArray(tempProducts as NSArray)
+//                        }
+//                    }
+//                }
+//            }
         }
         
         return CategoryProductsModel(message: message, isSuccessful: isSuccessful, products: products)
