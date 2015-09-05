@@ -24,6 +24,9 @@
                 <constraint firstItem="NRA-OB-eiB" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ovB-82-Ddu"/>
                 <constraint firstAttribute="bottom" secondItem="NRA-OB-eiB" secondAttribute="bottom" id="ud6-wm-yd5"/>
             </constraints>
+            <connections>
+                <outlet property="itemImageView" destination="NRA-OB-eiB" id="cwu-Af-ozY"/>
+            </connections>
         </collectionViewCell>
     </objects>
     <resources>
