@@ -327,6 +327,18 @@
 		967EE1D01B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */; };
 		E72BD5070233EC6FF42DDA3A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B825E81D3B27E563C7C3C53 /* libPods.a */; };
 		F727FF591B99C94700872E11 /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = F727FF581B99C94700872E11 /* edit.png */; };
+		F7AC5F5E1B9A9C8C00227D18 /* AddAddressTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AC5F5D1B9A9C8C00227D18 /* AddAddressTableViewController.swift */; };
+		F7AC5F621B9A9CA400227D18 /* AddAddressTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7AC5F611B9A9CA400227D18 /* AddAddressTableViewController.xib */; };
+		F7AC5F6E1B9AA23E00227D18 /* BarangayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AC5F6D1B9AA23E00227D18 /* BarangayModel.swift */; };
+		F7AC5F711B9AA2DC00227D18 /* CityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AC5F6F1B9AA2DC00227D18 /* CityModel.swift */; };
+		F7AC5F721B9AA2DC00227D18 /* ProvinceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AC5F701B9AA2DC00227D18 /* ProvinceModel.swift */; };
+		F7AC5F741B9AA32D00227D18 /* AddressModelV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AC5F731B9AA32D00227D18 /* AddressModelV2.swift */; };
+		F7AC5F761B9AA3B400227D18 /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AC5F751B9AA3B400227D18 /* ErrorModel.swift */; };
+		F7AC5F781B9AA45D00227D18 /* NewAddressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AC5F771B9AA45D00227D18 /* NewAddressTableViewCell.swift */; };
+		F7AC5F7A1B9AA49400227D18 /* NewAddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7AC5F791B9AA49400227D18 /* NewAddressTableViewCell.xib */; };
+		F7AC5F7C1B9AA75300227D18 /* GetAddressesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AC5F7B1B9AA75300227D18 /* GetAddressesModel.swift */; };
+		F7AC5F831B9ACB6500227D18 /* NewAddressHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AC5F811B9ACB6500227D18 /* NewAddressHeaderTableViewCell.swift */; };
+		F7AC5F841B9ACB6500227D18 /* NewAddressHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7AC5F821B9ACB6500227D18 /* NewAddressHeaderTableViewCell.xib */; };
 		F7C40F511B983A590091C16C /* BankAccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C40F4E1B983A590091C16C /* BankAccountModel.swift */; };
 		F7C40F521B983A590091C16C /* StoreAddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C40F4F1B983A590091C16C /* StoreAddressModel.swift */; };
 		F7C40F531B983A590091C16C /* StoreInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C40F501B983A590091C16C /* StoreInfoModel.swift */; };
@@ -744,6 +756,18 @@
 		967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YiLinkerOnlineSellerTests.swift; sourceTree = "<group>"; };
 		D4D17EE114265F93B1630151 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F727FF581B99C94700872E11 /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
+		F7AC5F5D1B9A9C8C00227D18 /* AddAddressTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAddressTableViewController.swift; sourceTree = "<group>"; };
+		F7AC5F611B9A9CA400227D18 /* AddAddressTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddAddressTableViewController.xib; sourceTree = "<group>"; };
+		F7AC5F6D1B9AA23E00227D18 /* BarangayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarangayModel.swift; sourceTree = "<group>"; };
+		F7AC5F6F1B9AA2DC00227D18 /* CityModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityModel.swift; sourceTree = "<group>"; };
+		F7AC5F701B9AA2DC00227D18 /* ProvinceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProvinceModel.swift; sourceTree = "<group>"; };
+		F7AC5F731B9AA32D00227D18 /* AddressModelV2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressModelV2.swift; sourceTree = "<group>"; };
+		F7AC5F751B9AA3B400227D18 /* ErrorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorModel.swift; sourceTree = "<group>"; };
+		F7AC5F771B9AA45D00227D18 /* NewAddressTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAddressTableViewCell.swift; sourceTree = "<group>"; };
+		F7AC5F791B9AA49400227D18 /* NewAddressTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewAddressTableViewCell.xib; sourceTree = "<group>"; };
+		F7AC5F7B1B9AA75300227D18 /* GetAddressesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAddressesModel.swift; sourceTree = "<group>"; };
+		F7AC5F811B9ACB6500227D18 /* NewAddressHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAddressHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		F7AC5F821B9ACB6500227D18 /* NewAddressHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewAddressHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		F7C40F4E1B983A590091C16C /* BankAccountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankAccountModel.swift; sourceTree = "<group>"; };
 		F7C40F4F1B983A590091C16C /* StoreAddressModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreAddressModel.swift; sourceTree = "<group>"; };
 		F7C40F501B983A590091C16C /* StoreInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoModel.swift; sourceTree = "<group>"; };
@@ -895,6 +919,12 @@
 		0CF28EC21B8C85E4005B2E54 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F7AC5F7B1B9AA75300227D18 /* GetAddressesModel.swift */,
+				F7AC5F751B9AA3B400227D18 /* ErrorModel.swift */,
+				F7AC5F6F1B9AA2DC00227D18 /* CityModel.swift */,
+				F7AC5F731B9AA32D00227D18 /* AddressModelV2.swift */,
+				F7AC5F701B9AA2DC00227D18 /* ProvinceModel.swift */,
+				F7AC5F6D1B9AA23E00227D18 /* BarangayModel.swift */,
 				2690ED171B999354009343E0 /* ProductManagementProductModel.swift */,
 				2690ED181B999354009343E0 /* ProductManagementProductsModel.swift */,
 				0C8D7F8F1B8F0A6400B3FA4E /* AttributeModel.swift */,
@@ -1013,6 +1043,10 @@
 		0CF28EC71B8C85E5005B2E54 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				F7AC5F811B9ACB6500227D18 /* NewAddressHeaderTableViewCell.swift */,
+				F7AC5F821B9ACB6500227D18 /* NewAddressHeaderTableViewCell.xib */,
+				F7AC5F771B9AA45D00227D18 /* NewAddressTableViewCell.swift */,
+				F7AC5F5D1B9A9C8C00227D18 /* AddAddressTableViewController.swift */,
 				26DB062F1B98BF2C00D38EA8 /* TransactionCollectionViewCell.swift */,
 				26DB06301B98BF2C00D38EA8 /* TransactionCollectionViewCell.xib */,
 				26DB06311B98BF2C00D38EA8 /* TransactionTableViewCell.swift */,
@@ -1086,6 +1120,8 @@
 		0CF28ECC1B8C85E5005B2E54 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				F7AC5F791B9AA49400227D18 /* NewAddressTableViewCell.xib */,
+				F7AC5F611B9A9CA400227D18 /* AddAddressTableViewController.xib */,
 				2686E3791B9585D600E8FA80 /* ParentCategoryViewController.xib */,
 				2686E3751B956C4A00E8FA80 /* ItemImagesHorizontalCollectionViewCell.xib */,
 				2671424B1B94C6AF00B66458 /* CustomizedCategoryViewController.xib */,
@@ -1548,6 +1584,7 @@
 				0C5E9D901B91E2F700F32CFE /* ProductUploadFooterView.xib in Resources */,
 				2618DD761B975E910030C6D2 /* EditSubCategoriesRemovedTableViewCell.xib in Resources */,
 				0C65F8C91B8DEE6400504D86 /* ProductUploadPriceTableViewCell.xib in Resources */,
+				F7AC5F621B9A9CA400227D18 /* AddAddressTableViewController.xib in Resources */,
 				F7C40FD11B983CD90091C16C /* check.png in Resources */,
 				0CF28F121B8CAA31005B2E54 /* ProductUploadTableViewController.xib in Resources */,
 				0C8D7FB61B8FC4AC00B3FA4E /* ProductUploadCombinationTableViewCell.xib in Resources */,
@@ -1573,6 +1610,7 @@
 				26B5B2421B94DE4200CBDDE5 /* AddCustomizedCategoryViewController.xib in Resources */,
 				799893031B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib in Resources */,
 				2625FEA21B95F5E800DD24AF /* AddItemTableViewCell.xib in Resources */,
+				F7AC5F841B9ACB6500227D18 /* NewAddressHeaderTableViewCell.xib in Resources */,
 				0C65F8F11B8E3CB000504D86 /* ProductUploadDetailTableViewController.xib in Resources */,
 				79EDA4161B9205080037558A /* PointsTableViewCell.xib in Resources */,
 				7948807C1B94D9BD0090B259 /* FollowersViewController.xib in Resources */,
@@ -1595,6 +1633,7 @@
 				0CF28EFD1B8CA2E9005B2E54 /* Panton Heavy.otf in Resources */,
 				26B5B2461B94DE6700CBDDE5 /* CustomizedCategoryViews.xib in Resources */,
 				0C65F8E91B8E34C200504D86 /* ProductUploadDetailHeaderViewCollectionViewCell.xib in Resources */,
+				F7AC5F7A1B9AA49400227D18 /* NewAddressTableViewCell.xib in Resources */,
 				0C8D7FC21B8FE50900B3FA4E /* ProductUploadAttributeValuesCollectionViewCell.xib in Resources */,
 				0C65F8D11B8E059A00504D86 /* ProductUploadButtonTableViewCell.xib in Resources */,
 				0C8D7F961B8F12C200B3FA4E /* ProductUploadAttributeListTableViewController.xib in Resources */,
@@ -1764,6 +1803,7 @@
 				26DB06371B98BF2C00D38EA8 /* TransactionTableViewCell.swift in Sources */,
 				26BD5E511B8DC4B900739488 /* ProductDetailViews.swift in Sources */,
 				7928760A1B8DF89F00762A39 /* BarChartDataSet.swift in Sources */,
+				F7AC5F781B9AA45D00227D18 /* NewAddressTableViewCell.swift in Sources */,
 				792876401B8DF89F00762A39 /* ChartTransformer.swift in Sources */,
 				7928763C1B8DF89F00762A39 /* ScatterChartRenderer.swift in Sources */,
 				F7C40F631B983ACD0091C16C /* ChangeAddressViewController.swift in Sources */,
@@ -1803,15 +1843,19 @@
 				7928764E1B8E1FD800762A39 /* DatePickerViewController.swift in Sources */,
 				2690ED191B999354009343E0 /* ProductManagementProductModel.swift in Sources */,
 				7928762F1B8DF89F00762A39 /* ChartXAxisRenderer.swift in Sources */,
+				F7AC5F7C1B9AA75300227D18 /* GetAddressesModel.swift in Sources */,
 				792876031B8DF89F00762A39 /* ChartLegend.swift in Sources */,
 				7928763E1B8DF89F00762A39 /* ChartFillFormatter.swift in Sources */,
 				792876061B8DF89F00762A39 /* ChartXAxis.swift in Sources */,
 				792875F51B8DF89F00762A39 /* BarChartView.swift in Sources */,
+				F7AC5F5E1B9A9C8C00227D18 /* AddAddressTableViewController.swift in Sources */,
 				792876321B8DF89F00762A39 /* ChartXAxisRendererRadarChart.swift in Sources */,
 				7928762E1B8DF89F00762A39 /* ChartRendererBase.swift in Sources */,
 				792876301B8DF89F00762A39 /* ChartXAxisRendererBarChart.swift in Sources */,
+				F7AC5F761B9AA3B400227D18 /* ErrorModel.swift in Sources */,
 				26B5B2411B94DE4200CBDDE5 /* AddCustomizedCategoryViewController.swift in Sources */,
 				792876351B8DF89F00762A39 /* ChartYAxisRendererRadarChart.swift in Sources */,
+				F7AC5F741B9AA32D00227D18 /* AddressModelV2.swift in Sources */,
 				7928763F1B8DF89F00762A39 /* ChartSelectionDetail.swift in Sources */,
 				7928760B1B8DF89F00762A39 /* BarLineScatterCandleChartData.swift in Sources */,
 				7928760E1B8DF89F00762A39 /* BubbleChartDataEntry.swift in Sources */,
@@ -1872,6 +1916,7 @@
 				F7C40F711B983B320091C16C /* FilterByTableViewCell.swift in Sources */,
 				0C65F8CC1B8DF8A000504D86 /* ProductUploadSearchViewController.swift in Sources */,
 				0CF28F111B8CAA31005B2E54 /* ProductUploadTableViewController.swift in Sources */,
+				F7AC5F831B9ACB6500227D18 /* NewAddressHeaderTableViewCell.swift in Sources */,
 				794880821B94EB530090B259 /* FollowerModel.swift in Sources */,
 				0CF28F1D1B8CD21B005B2E54 /* DynamicRoundedButton.swift in Sources */,
 				0C8D7F8D1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.swift in Sources */,
@@ -1900,6 +1945,7 @@
 				26B282F91B921BAF00A7C2B1 /* ProductManagementModelViewController.swift in Sources */,
 				26C2854D1B91C21A005EBD3A /* ProductManagementCollectionViewCell.swift in Sources */,
 				2686E37A1B9585D600E8FA80 /* ParentCategoryViewController.swift in Sources */,
+				F7AC5F6E1B9AA23E00227D18 /* BarangayModel.swift in Sources */,
 				7928763B1B8DF89F00762A39 /* RadarChartRenderer.swift in Sources */,
 				792876051B8DF89F00762A39 /* ChartMarker.swift in Sources */,
 				799892FD1B8CEBA500F4CFE2 /* SettingsHeaderTableViewCell.swift in Sources */,
@@ -1909,6 +1955,7 @@
 				79EFF7801B8DB3C8008A9E7D /* RecentProductsTableViewController.swift in Sources */,
 				0CF28EDF1B8C868D005B2E54 /* Constants.swift in Sources */,
 				26B282F51B91E92B00A7C2B1 /* ProductManagementAllTableViewCell.swift in Sources */,
+				F7AC5F721B9AA2DC00227D18 /* ProvinceModel.swift in Sources */,
 				792876191B8DF89F00762A39 /* LineRadarChartDataSet.swift in Sources */,
 				26B5B24A1B94E37A00CBDDE5 /* CCSubCategoriesView.swift in Sources */,
 				7928760D1B8DF89F00762A39 /* BubbleChartData.swift in Sources */,
@@ -1923,6 +1970,7 @@
 				792876181B8DF89F00762A39 /* LineChartDataSet.swift in Sources */,
 				F7C40FDD1B9840490091C16C /* FilterAttributeModel.swift in Sources */,
 				792876221B8DF89F00762A39 /* ChartDataBaseFilter.swift in Sources */,
+				F7AC5F711B9AA2DC00227D18 /* CityModel.swift in Sources */,
 				792876081B8DF89F00762A39 /* BarChartData.swift in Sources */,
 				792876361B8DF89F00762A39 /* CombinedChartRenderer.swift in Sources */,
 				2686E3761B956C4A00E8FA80 /* ItemImagesHorizontalCollectionViewCell.swift in Sources */,

@@ -10,6 +10,7 @@ import UIKit
 
 protocol ChangeAddressCollectionViewCellDelegate {
     func changeAddressCollectionViewCell(deleteAddressWithCell cell: ChangeAddressCollectionViewCell)
+    func checkAddressCollectionViewCell(checkAdressWithCell cell: ChangeAddressCollectionViewCell)
 }
 
 class ChangeAddressCollectionViewCell: UICollectionViewCell {
@@ -28,5 +29,10 @@ class ChangeAddressCollectionViewCell: UICollectionViewCell {
 
     @IBAction func deleteIndexPath(sender: AnyObject) {
         self.delegate?.changeAddressCollectionViewCell(deleteAddressWithCell: self)
+    }
+    
+    @IBAction func selectAddress(sender: AnyObject) {
+        self.delegate?.checkAddressCollectionViewCell(checkAdressWithCell: self)
+        println("check")
     }
 }

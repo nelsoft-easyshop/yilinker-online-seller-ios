@@ -17,10 +17,12 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
     @IBOutlet weak var changeBankAccountCollectionView: UICollectionView!
     
     var bankAccountModel: BankAccountModel!
+    var getAddressModel: GetAddressesModel!
     
     var cellCount: Int = 0
     var selectedIndex: Int = -1
-    
+    var defaultBank: Int = 0;
+    var selectedBankId: Int = 0
     var delegate: ChangeBankAccountViewControllerDelegate?
     
     var hud: MBProgressHUD?
@@ -90,7 +92,8 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
             self.cellCount = self.bankAccountModel.account_name.count
             for var num  = 0; num < self.bankAccountModel.account_name.count; num++ {
                 if self.bankAccountModel.is_default[num]{
-                    self.selectedIndex = num
+                    //self.selectedIndex = num
+                    self.defaultBank = num
                 }
                 
             }
@@ -136,12 +139,13 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
     func fireSetDefaultBankAccount(){
         self.showHUD()
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "bankAccountId" : self.bankAccountModel.bank_account_id[self.selectedIndex]];
+        println("\(self.bankAccountModel.bank_account_id.count)")
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "bankAccountId" : self.selectedBankId]
         
         manager.POST(APIAtlas.sellerSetDefaultBankAccount, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
           
-            self.delegate?.updateBankDetail(self.bankAccountModel.account_title[self.selectedIndex], accountName: self.bankAccountModel.account_name[self.selectedIndex], accountNumber: self.bankAccountModel.account_number[self.selectedIndex], bankName: self.bankAccountModel.bank_name[self.selectedIndex])
+            self.delegate?.updateBankDetail(self.bankAccountModel.account_title[self.defaultBank], accountName: self.bankAccountModel.account_name[self.defaultBank], accountNumber: self.bankAccountModel.account_number[self.defaultBank], bankName: self.bankAccountModel.bank_name[self.defaultBank])
 
             //self.changeBankAccountCollectionView.reloadData()
             
@@ -178,8 +182,8 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
             cell.titleLabel.text = self.bankAccountModel!.account_title[indexPath.row]
             cell.subTitleLabel.text = "\(self.bankAccountModel!.account_number[indexPath.row])"+"\n"+self.bankAccountModel!.account_name[indexPath.row]+"\n"+self.bankAccountModel!.bank_name[indexPath.row]
             cell.titleLabel.tag = self.bankAccountModel!.bank_account_id[indexPath.row]
-            
-            if self.selectedIndex == indexPath.row {
+            self.selectedIndex = indexPath.row
+            if self.defaultBank == indexPath.row {
                 cell.layer.borderWidth = 1
                 cell.layer.borderColor = Constants.Colors.selectedGreenColor.CGColor
                 cell.checkBoxButton.setImage(UIImage(named: "checkBox"), forState: UIControlState.Normal)
@@ -206,10 +210,10 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        self.selectedIndex = indexPath.row
-        self.changeBankAccountCollectionView.reloadData()
+        println("selected bank for edit \(indexPath.row)")
+        
     }
-    
+
     func addCellInIndexPath(indexPath: NSIndexPath) {
         self.cellCount++
         self.changeBankAccountCollectionView.insertItemsAtIndexPaths([NSIndexPath(forItem: indexPath.row, inSection: indexPath.section)])
@@ -232,6 +236,24 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
         let indexPath: NSIndexPath = self.changeBankAccountCollectionView.indexPathForCell(cell)!
         fireDeleteBankAccount(cell.titleLabel.tag, indexPath: indexPath)
         println("deleted bank account \(cell.titleLabel.tag)")
+    }
+    
+    func checkAddressCollectionViewCell(checkAdressWithCell cell: ChangeAddressCollectionViewCell){
+         println("check bank account \(cell.titleLabel.text)")
+        let indexPath: NSIndexPath = self.changeBankAccountCollectionView.indexPathForCell(cell)!
+    
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = Constants.Colors.selectedGreenColor.CGColor
+        cell.checkBoxButton.setImage(UIImage(named: "checkBox"), forState: UIControlState.Normal)
+        cell.checkBoxButton.backgroundColor = Constants.Colors.selectedGreenColor
+        
+        self.selectedBankId = cell.titleLabel.tag
+        self.defaultBank = indexPath.row
+        
+        cell.layer.cornerRadius = 5
+        cell.delegate = self
+        self.changeBankAccountCollectionView.reloadData()
+        self.selectedIndex = indexPath.row
     }
     
     func fireDeleteBankAccount(bankAccountId: Int, indexPath: NSIndexPath){
@@ -278,6 +300,7 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
     
         println("footer")
     }
+    
     
     func updateCollectionView() {
         fireBankAccount()
