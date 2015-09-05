@@ -89,6 +89,9 @@
                         <rect key="frame" x="8" y="101" width="347" height="30"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
+                        <connections>
+                            <action selector="dismissKeyboard:" destination="KGk-i7-Jjw" eventType="editingDidEnd" id="LtY-gR-qYu"/>
+                        </connections>
                     </textField>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JK2-YS-HgT">
                         <rect key="frame" x="279" y="103" width="73" height="26"/>
