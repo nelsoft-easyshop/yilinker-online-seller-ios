@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomizedCategoryViewController: UIViewController, UITableViewDataSource, AddCustomizedCategoryViewControllerDelegate {
+class CustomizedCategoryViewController: UIViewController, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -74,7 +74,8 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource,
     
     func addCategoryAction() {
         let addCustomizedCategory = AddCustomizedCategoryViewController(nibName: "AddCustomizedCategoryViewController", bundle: nil)
-        addCustomizedCategory.delegate = self
+//        addCustomizedCategory.delegate = self
+        addCustomizedCategory.title = "Add Customized Category"
         var rootViewController = UINavigationController(rootViewController: addCustomizedCategory)
         self.navigationController?.presentViewController(rootViewController, animated: true, completion: nil)
     }
@@ -141,7 +142,7 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource,
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let addCustomizedCategory = AddCustomizedCategoryViewController(nibName: "AddCustomizedCategoryViewController", bundle: nil)
-//        addCustomizedCategory.requestEditCustomizedCategories(self.customizedCategoriesModel.customizedCategories[indexPath.row].categoryId)
+        addCustomizedCategory.title = "Edit Customized Category"
         addCustomizedCategory.requestGetCategoryDetails(self.customizedCategoriesModel.customizedCategories[indexPath.row].categoryId)
         addCustomizedCategory.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(addCustomizedCategory, animated: true)
@@ -149,14 +150,14 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource,
     
     // MARK: - Add Customized Category View Controller Delegate
     
-    func addCategory(parent: String, sub: NSArray, items: NSArray) {
-        
-        self.parentCategory.append(parent)
-        self.subCategories.append(sub)
-        self.categoryItems.append(items)
-        
-        self.tableView.reloadData()
-    }
+//    func addCategory(parent: String, sub: NSArray, items: NSArray) {
+//        
+//        self.parentCategory.append(parent)
+//        self.subCategories.append(sub)
+//        self.categoryItems.append(items)
+//        
+//        self.tableView.reloadData()
+//    }
     
     func passNewCategory(category: String) {
         

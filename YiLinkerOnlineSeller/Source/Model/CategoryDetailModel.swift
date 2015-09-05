@@ -50,16 +50,4 @@ class CategoryDetailModel: NSObject {
         
         return CategoryDetailModel(categoryId: categoryId, categoryName: categoryName, sortOrder: sortOrder)
     }
-    
-    class func parseDataWithArray(array: AnyObject) -> [CategoryDetailModel] {
-        var categoryDetails : [CategoryDetailModel]  = []
-        
-        for categoryDetail in categoryDetails {
-            if categoryDetail.isKindOfClass(NSDictionary) {
-                categoryDetails.append(CategoryDetailModel.parseDataWithDictionary(categoryDetail))
-            }
-        }
-        
-        return categoryDetails
-    }
 }

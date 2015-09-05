@@ -15,10 +15,10 @@ class CategoryDetailsModel: NSObject {
     var categoryName: String = ""
     var parentId: String = ""
     var sortOrder: Int = 0
-    var subcategories: [CategoryDetailModel] = []
+    var subcategories: [SubCategoryModel] = []
     var products: [CategoryProductModel] = []
     
-    init(message: String, isSuccessful: Bool, categoryId: Int, categoryName: String, parentId: String, sortOrder: Int, subcategories: [CategoryDetailModel], products: [CategoryProductModel]) {
+    init(message: String, isSuccessful: Bool, categoryId: Int, categoryName: String, parentId: String, sortOrder: Int, subcategories: [SubCategoryModel], products: [CategoryProductModel]) {
         self.message = message
         self.isSuccessful = isSuccessful
         self.categoryId = categoryId
@@ -37,7 +37,7 @@ class CategoryDetailsModel: NSObject {
         var categoryName: String = ""
         var parentId: String = ""
         var sortOrder: Int = 0
-        var subcategories: [CategoryDetailModel] = []
+        var subcategories: [SubCategoryModel] = []
         var products: [CategoryProductModel] = []
         
         if dictionary.isKindOfClass(NSDictionary) {
@@ -54,36 +54,35 @@ class CategoryDetailsModel: NSObject {
             }
             
             if dictionary["data"] != nil {
-                if let tempVar = dictionary["data"] as? NSDictionary {
-                    if tempVar["categoryId"] != nil {
-                        if let value = tempVar["categoryId"] as? Int {
-                            categoryId = value
+                if let value = dictionary["data"] as? NSDictionary {
+                    if value["categoryId"] != nil {
+                        if let tempVar = value["categoryId"] as? Int {
+                            categoryId = tempVar
                         }
                     }
                     
-                    if tempVar["categoryName"] != nil {
-                        if let value = tempVar["categoryName"] as? String {
-                            categoryName = value
+                    if value["categoryName"] != nil {
+                        if let tempVar = value["categoryName"] as? String {
+                            categoryName = tempVar
                         }
                     }
                     
-                    if tempVar["sortOrder"] != nil {
-                        if let value = tempVar["sortOrder"] as? Int {
-                            sortOrder = value
+                    if value["sortOrder"] != nil {
+                        if let tempVar = value["sortOrder"] as? Int {
+                            sortOrder = tempVar
                         }
                     }
                     
-                    if tempVar["subcategories"] != nil {
-                        if let value = tempVar["subcategories"] as? NSArray {
-                            subcategories = CategoryDetailModel.parseDataWithArray(value)
-                        }
+                    for subValue in value["subcategories"] as! NSArray {
+                        let model: SubCategoryModel = SubCategoryModel.parseSubCategories(subValue as! NSDictionary)
+                        subcategories.append(model)
                     }
                     
-                    if tempVar["products"] != nil {
-                        if let value = tempVar["products"] as? NSArray {
-                            products = CategoryProductModel.parseDataWithArray(value)
-                        }
+                    for subValue in value["products"] as! NSArray {
+                        let model: CategoryProductModel = CategoryProductModel.parseCategoryProducts(subValue as! NSDictionary)
+                        products.append(model)
                     }
+
                 } // data
             } // data
         }

@@ -8,8 +8,15 @@
 
 import UIKit
 
+protocol RemovedItemTableViewCellDelegate {
+    func addSelectedItems(index: Int)
+    func removeSelectedItems(index: Int)
+}
+
 class RemovedItemTableViewCell: UITableViewCell {
 
+    var delegate: RemovedItemTableViewCellDelegate?
+    
     @IBOutlet weak var checkContainerView: UIView!
     @IBOutlet weak var checkImageView: UIImageView!
     @IBOutlet weak var itemImageView: UIImageView!
@@ -34,6 +41,10 @@ class RemovedItemTableViewCell: UITableViewCell {
         self.checkContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "checkAction:"))
         
         checkContainerView.backgroundColor = Constants.Colors.backgroundGray
+    }
+    
+    func setProductImage(image: String) {
+        self.itemImageView.sd_setImageWithURL(NSURL(string: image), placeholderImage: UIImage(named: "dummy-placeholder"))
     }
     
     func selected() {
@@ -63,8 +74,10 @@ class RemovedItemTableViewCell: UITableViewCell {
         
         if checkImageView.hidden {
             selected()
+            delegate?.addSelectedItems(self.tag)
         } else {
             deselected()
+            delegate?.removeSelectedItems(self.tag)
         }
     }
     
