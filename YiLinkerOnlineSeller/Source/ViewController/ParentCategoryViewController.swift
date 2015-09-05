@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ParentCategoryViewControllerDelegate {
-    func updateParentCategory(parentCategory: String)
+    func updateParentCategory(parentCategory: String, parentId: Int)
 }
 
 class ParentCategoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -102,7 +102,7 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func checkAction() {
-        delegate?.updateParentCategory(customizedCategoriesModel.customizedCategories[selectedIndex].name)
+        delegate?.updateParentCategory(customizedCategoriesModel.customizedCategories[selectedIndex].name, parentId: customizedCategoriesModel.customizedCategories[selectedIndex].parentId)
         closeAction()
     }
     

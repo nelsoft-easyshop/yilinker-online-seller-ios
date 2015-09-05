@@ -190,4 +190,5 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
     func updateCategoryImages(productModel: ProductManagementProductModel, itemIndexes: [Int]) {
         
     }
+    
 }

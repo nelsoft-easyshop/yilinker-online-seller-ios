@@ -149,14 +149,14 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource,
     
     // MARK: - Add Customized Category View Controller Delegate
     
-    func addCategory(parent: String, sub: NSArray, items: NSArray) {
-        
-        self.parentCategory.append(parent)
-        self.subCategories.append(sub)
-        self.categoryItems.append(items)
-        
-        self.tableView.reloadData()
-    }
+//    func addCategory(parent: String, sub: NSArray, items: NSArray) {
+//        
+//        self.parentCategory.append(parent)
+//        self.subCategories.append(sub)
+//        self.categoryItems.append(items)
+//        
+//        self.tableView.reloadData()
+//    }
     
     func passNewCategory(category: String) {
         

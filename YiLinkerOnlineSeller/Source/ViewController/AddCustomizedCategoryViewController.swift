@@ -9,7 +9,7 @@
 import UIKit
 
 protocol AddCustomizedCategoryViewControllerDelegate {
-    func addCategory(parent: String, sub: NSArray, items: NSArray)
+    
 }
 
 class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CCCategoryDetailsViewDelegate, ParentCategoryViewControllerDelegate, CCSubCategoriesViewDelegate, CCCategoryItemsViewDelegate, AddItemViewControllerDelegate, EditSubCategoriesViewControllerDelegate {
@@ -241,15 +241,19 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     func closeAction() {
         self.dismissViewControllerAnimated(true, completion: nil)
         self.navigationController?.popViewControllerAnimated(true)
-    }
+    }   
     
     func checkAction() {
         if self.categoryDetailsView.parentCategoryLabel.text != "" {
-            if self.categoryDetailsView.parentCategoryLabel.text == "NONE" {
-                delegate?.addCategory(self.categoryDetailsView.categoryNameTextField.text.capitalizedString, sub: subCategories, items: [])
-            } else {
-                delegate?.addCategory(self.categoryDetailsView.parentCategoryLabel.text!.capitalizedString, sub: [self.categoryDetailsView.categoryNameTextField.text.capitalizedString], items: [])
-            }
+//            if self.categoryDetailsView.parentCategoryLabel.text == "NONE" {
+//                delegate?.addCategory(self.categoryDetailsView.categoryNameTextField.text.capitalizedString, sub: subCategories, items: [])
+//            } else {
+//                delegate?.addCategory(self.categoryDetailsView.parentCategoryLabel.text!.capitalizedString, sub: [self.categoryDetailsView.categoryNameTextField.text.capitalizedString], items: [])
+//            }
+            
+            
+            requestAddCustomizedCategory()
+            
             closeAction()
         }
         
@@ -278,7 +282,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         })
     }
     
-    func requestAdCustomizedCategory() {
+    func requestAddCustomizedCategory() {
         self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
@@ -292,7 +296,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             println(responseObject)
             
             self.categoryDetailsModel = CategoryDetailsModel.parseDataWithDictionary(responseObject as! NSDictionary)
-            
+
             self.hud?.hide(true)
             
             }, failure: {
@@ -353,7 +357,8 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     
     // MARK: - Parent Category View Controller Delegate
     
-    func updateParentCategory(parentCategory: String) {
+    func updateParentCategory(parentCategory: String, parentId: Int) {
+        self.parentId = parentId
         self.categoryDetailsView.parentCategoryLabel.text = parentCategory
         subCategoriesHeight = 0.0
         self.subCategories = []

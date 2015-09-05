@@ -12,15 +12,19 @@ protocol AddSubCategoriesViewControllerDelegate {
     func addSubCategory(category: String)
 }
 
-class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDelegate {
+class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDelegate, AddItemViewControllerDelegate {
 
     var delegate: AddSubCategoriesViewControllerDelegate?
+    var productManagementProductModel: ProductManagementProductModel!
+    var itemIndexes: [Int] = []
     
     @IBOutlet weak var tableView: UITableView!
     
     var headerView: UIView!
     var categoryDetailsView: CCCategoryDetailsView!
     var categoryItemsView: CCCategoryItemsView!
+    var itemImagesView: CCCItemImagesView!
+    var seeAllItemsView: UIView!
     var newFrame: CGRect!
     var createdCategory: String = ""
     
@@ -45,7 +49,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
     
     func customizedNavigationBar() {
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.title = "Edit Sub Categories"
+        self.title = "Add Sub Categories"
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
         
@@ -76,6 +80,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
             self.categoryDetailsView.categoryNameTextField.becomeFirstResponder()
             //            self.categoryDetailsView.delegate = self
             self.categoryDetailsView.frame.size.width = self.view.frame.size.width
+            self.categoryDetailsView.frame.size.height = 100.0
         }
         return self.categoryDetailsView
     }
@@ -87,6 +92,34 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
             self.categoryItemsView.frame.size.width = self.view.frame.size.width
         }
         return self.categoryItemsView
+    }
+    
+    func getItemImageView() -> CCCItemImagesView {
+        if self.itemImagesView == nil {
+            self.itemImagesView = XibHelper.puffViewWithNibName("CustomizedCategoryViewsViewController", index: 3) as! CCCItemImagesView
+            
+            self.itemImagesView.frame.size.width = self.view.frame.size.width
+        }
+        return self.itemImagesView
+    }
+    
+    func getSeeAllItemsView() -> UIView {
+        self.seeAllItemsView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 45))
+        self.seeAllItemsView.backgroundColor = UIColor.whiteColor()
+        
+        var seeAllItemsLabel = UILabel(frame: CGRectZero)
+        seeAllItemsLabel.text = "See all " + "20" + " items   "
+        seeAllItemsLabel.font = UIFont(name: "Panton-Bold", size: 12.0)
+        seeAllItemsLabel.textColor = UIColor.darkGrayColor()
+        seeAllItemsLabel.sizeToFit()
+        seeAllItemsLabel.center = self.seeAllItemsView.center
+        self.seeAllItemsView.addSubview(seeAllItemsLabel)
+        
+        var arrowImageView = UIImageView(frame: CGRectMake(CGRectGetMaxX(seeAllItemsLabel.frame), 18, 7, 10))
+        arrowImageView.image = UIImage(named: "right2")
+        self.seeAllItemsView.addSubview(arrowImageView)
+        
+        return self.seeAllItemsView
     }
     
     func loadViewsWithDetails() {
@@ -101,7 +134,17 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
         setPosition(self.categoryItemsView, from: self.categoryDetailsView)
         
         newFrame = self.headerView.frame
-        newFrame.size.height = CGRectGetMaxY(self.categoryItemsView.frame)
+        
+        if self.productManagementProductModel != nil {
+            if self.productManagementProductModel.products.count != 0 {
+                setPosition(self.itemImagesView, from: self.categoryItemsView)
+                setPosition(self.seeAllItemsView, from: self.itemImagesView)
+                newFrame.size.height = CGRectGetMaxY(self.seeAllItemsView.frame) + 20.0
+            }
+        } else {
+            newFrame.size.height = CGRectGetMaxY(self.categoryItemsView.frame)
+        }
+        
         self.headerView.frame = newFrame
         
         self.tableView.tableHeaderView = nil
@@ -112,6 +155,18 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
         newFrame = view.frame
         newFrame.origin.y = CGRectGetMaxY(from.frame)
         view.frame = newFrame
+    }
+    
+    func populateItems() {
+        if self.productManagementProductModel != nil {
+            self.categoryItemsView.addNewItemButton.setTitle("EDIT", forState: .Normal)
+            self.getHeaderView().addSubview(getItemImageView())
+            self.getHeaderView().addSubview(getSeeAllItemsView())
+            self.itemImagesView.setProductsManagement(products: self.productManagementProductModel.products, selectedItems: self.itemIndexes)
+        }
+        
+        setUpViews()
+        self.tableView.reloadData()
     }
     
     // MARK: - Actions
@@ -166,12 +221,28 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
     
     func gotoAddItem() {
         let addItem = AddItemViewController(nibName: "AddItemViewController", bundle: nil)
-        //        addItem.delegate = self
+        addItem.delegate = self
         var root = UINavigationController(rootViewController: addItem)
         self.navigationController?.presentViewController(root, animated: true, completion: nil)
     }
     
     func gotoEditItem() {
-        
+        let editItem = EdititemsViewController(nibName: "EdititemsViewController", bundle: nil)
+        editItem.updateListOfItems(self.productManagementProductModel, itemIndexes: self.itemIndexes)
+        var root = UINavigationController(rootViewController: editItem)
+        self.navigationController?.presentViewController(root, animated: false, completion: nil)
     }
+    
+    // MARK: Add Item View Controller Delegate
+    
+    func updateCategoryImages(productModel: ProductManagementProductModel, itemIndexes: [Int]) {
+        self.productManagementProductModel = productModel
+        self.itemIndexes = itemIndexes
+        populateItems()
+    }
+    
+    func updateEditItems(itemIndexes: [Int]) {
+    }
+    
+    
 }
