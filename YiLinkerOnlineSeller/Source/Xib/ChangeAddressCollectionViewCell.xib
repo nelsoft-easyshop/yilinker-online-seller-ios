@@ -32,6 +32,9 @@
                                 <real key="value" value="5"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="addAddress:" destination="gTV-IL-0wX" eventType="touchUpInside" id="487-uS-SV2"/>
+                        </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="LG. Sta Lucia East Grand Mall, Marcos HighWay Corner Felix Avenue . Ortigas Pasig City" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sx5-GY-uj9">
                         <rect key="frame" x="46" y="30" width="270" height="44"/>

@@ -66,17 +66,6 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="+63xxxxxxxxxx" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vo8-Wb-PZj">
-                                    <rect key="frame" x="8" y="35" width="327" height="30"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="30" id="HsI-QC-CAO"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" returnKeyType="next"/>
-                                    <connections>
-                                        <action selector="textFieldDidBeginEditing:" destination="-1" eventType="editingDidBegin" id="GjT-9D-9u9"/>
-                                    </connections>
-                                </textField>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F4e-jY-O8N">
                                     <rect key="frame" x="239" y="148" width="96" height="28"/>
                                     <color key="backgroundColor" red="0.20000000000000001" green="0.65098039220000004" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
@@ -91,6 +80,17 @@
                                         <action selector="submit:" destination="-1" eventType="touchUpInside" id="b4q-ra-Aml"/>
                                     </connections>
                                 </button>
+                                <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="+63xxxxxxxxxx" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vo8-Wb-PZj">
+                                    <rect key="frame" x="8" y="35" width="327" height="30"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="30" id="HsI-QC-CAO"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                    <connections>
+                                        <action selector="textFieldDidBeginEditing:" destination="-1" eventType="editingDidBegin" id="GjT-9D-9u9"/>
+                                    </connections>
+                                </textField>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
