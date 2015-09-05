@@ -23,6 +23,7 @@
                 <outlet property="accountNumberTextField" destination="eyj-Ew-iqL" id="ts9-ho-c2j"/>
                 <outlet property="accountTitleTextField" destination="BLp-Ns-DAI" id="Wbv-pK-jEx"/>
                 <outlet property="bankNameTextField" destination="XYo-gd-QFh" id="BRT-qp-9ju"/>
+                <outlet property="bankTableView" destination="Yku-YD-pVK" id="imf-Ai-VSo"/>
                 <outlet property="closeButton" destination="W9d-zE-J1s" id="CE6-4i-Ndo"/>
                 <outlet property="createButton" destination="m7e-fb-G5R" id="BHM-UE-p3f"/>
                 <outlet property="topConstraint" destination="f9I-7A-pCS" id="Iin-0l-fNi"/>
@@ -135,6 +136,14 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                 </textField>
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="30" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Yku-YD-pVK">
+                                    <rect key="frame" x="107" y="165" width="240" height="82"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <connections>
+                                        <outlet property="dataSource" destination="-1" id="hem-aq-1pV"/>
+                                        <outlet property="delegate" destination="-1" id="hkg-5P-rB7"/>
+                                    </connections>
+                                </tableView>
                             </subviews>
                             <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>

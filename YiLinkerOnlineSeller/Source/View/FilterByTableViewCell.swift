@@ -8,8 +8,14 @@
 
 import UIKit
 
+protocol FilterByTableViewCellDelegate {
+    
+}
+
 class FilterByTableViewCell: UITableViewCell {
 
+    var delegate: FilterByTableViewCellDelegate!
+    
     @IBOutlet weak var filterByLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()

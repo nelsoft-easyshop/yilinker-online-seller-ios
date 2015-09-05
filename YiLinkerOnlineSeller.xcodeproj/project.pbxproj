@@ -339,6 +339,7 @@
 		F7AC5F7C1B9AA75300227D18 /* GetAddressesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AC5F7B1B9AA75300227D18 /* GetAddressesModel.swift */; };
 		F7AC5F831B9ACB6500227D18 /* NewAddressHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AC5F811B9ACB6500227D18 /* NewAddressHeaderTableViewCell.swift */; };
 		F7AC5F841B9ACB6500227D18 /* NewAddressHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7AC5F821B9ACB6500227D18 /* NewAddressHeaderTableViewCell.xib */; };
+		F7C282EF1B9AE97500864451 /* BankModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C282EE1B9AE97500864451 /* BankModel.swift */; };
 		F7C40F511B983A590091C16C /* BankAccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C40F4E1B983A590091C16C /* BankAccountModel.swift */; };
 		F7C40F521B983A590091C16C /* StoreAddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C40F4F1B983A590091C16C /* StoreAddressModel.swift */; };
 		F7C40F531B983A590091C16C /* StoreInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C40F501B983A590091C16C /* StoreInfoModel.swift */; };
@@ -768,6 +769,7 @@
 		F7AC5F7B1B9AA75300227D18 /* GetAddressesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAddressesModel.swift; sourceTree = "<group>"; };
 		F7AC5F811B9ACB6500227D18 /* NewAddressHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAddressHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		F7AC5F821B9ACB6500227D18 /* NewAddressHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewAddressHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		F7C282EE1B9AE97500864451 /* BankModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankModel.swift; sourceTree = "<group>"; };
 		F7C40F4E1B983A590091C16C /* BankAccountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankAccountModel.swift; sourceTree = "<group>"; };
 		F7C40F4F1B983A590091C16C /* StoreAddressModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreAddressModel.swift; sourceTree = "<group>"; };
 		F7C40F501B983A590091C16C /* StoreInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoModel.swift; sourceTree = "<group>"; };
@@ -948,6 +950,7 @@
 				F7C40F4E1B983A590091C16C /* BankAccountModel.swift */,
 				F7C40F4F1B983A590091C16C /* StoreAddressModel.swift */,
 				F7C40F501B983A590091C16C /* StoreInfoModel.swift */,
+				F7C282EE1B9AE97500864451 /* BankModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1843,6 +1846,7 @@
 				7928764E1B8E1FD800762A39 /* DatePickerViewController.swift in Sources */,
 				2690ED191B999354009343E0 /* ProductManagementProductModel.swift in Sources */,
 				7928762F1B8DF89F00762A39 /* ChartXAxisRenderer.swift in Sources */,
+				F7C282EF1B9AE97500864451 /* BankModel.swift in Sources */,
 				F7AC5F7C1B9AA75300227D18 /* GetAddressesModel.swift in Sources */,
 				792876031B8DF89F00762A39 /* ChartLegend.swift in Sources */,
 				7928763E1B8DF89F00762A39 /* ChartFillFormatter.swift in Sources */,
