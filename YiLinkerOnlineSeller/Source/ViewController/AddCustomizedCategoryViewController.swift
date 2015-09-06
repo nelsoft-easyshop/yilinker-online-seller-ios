@@ -165,7 +165,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         self.getHeaderView().addSubview(getCategoryDetailsView())
         self.getHeaderView().addSubview(getSubCategoriesView())
         self.getFooterView().addSubview(getCategoryItemsView())
-        
+
         setUpViews()
     }
     
@@ -235,13 +235,14 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             }
         }
         
-        if self.customizedCategoryProducts.count != 0 {
-            println(self.customizedCategoryProducts.count)
-            self.categoryItemsView.addNewItemButton.setTitle("EDIT", forState: .Normal)
-            self.getFooterView().addSubview(getItemImageView())
+//        if self.customizedCategoryProducts.count != 0 {
+//            println(self.customizedCategoryProducts.count)
+//            self.categoryItemsView.addNewItemButton.setTitle("EDIT", forState: .Normal)
+//            self.getFooterView().addSubview(getItemImageView())
 //            self.getFooterView().addSubview(getSeeAllItemsView())
-            self.itemImagesView.setProductsCategory(products: self.customizedCategoryProducts)
-        }
+//            self.itemImagesView.setProductsCategory(products: self.customizedCategoryProducts)
+////            self.itemImagesView.setProductsManagement(products: [], selectedItems: [])
+//        }
         
         // ---------------- Adding
         if self.productIds.count != 0 {
@@ -250,7 +251,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             self.getFooterView().addSubview(getSeeAllItemsView())
             self.itemImagesView.setProductsManagement(products: self.productManagementProductModel.products, selectedItems: self.itemIndexes)
         } else if self.productIds.count == 0 {
-            self.categoryItemsView.addNewItemButton.setTitle("ADD NEW ITEM  ", forState: .Normal)
+            self.categoryItemsView.addNewItemButton.setTitle("ADD NEW ITEM", forState: .Normal)
             if self.itemImagesView != nil {
                 self.itemImagesView.removeFromSuperview()
             }
@@ -493,8 +494,10 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     // MARK: - Sub Categories Delegate
     
     func gotoEditSubCategories() {
+        println(self.subCategories)
         let subCategories = EditSubCategoriesViewController(nibName: "EditSubCategoriesViewController", bundle: nil)
         subCategories.categories = self.newSubCategoryNames
+        subCategories.subCategories = self.subCategories
         subCategories.delegate = self
         var root = UINavigationController(rootViewController: subCategories)
         self.navigationController?.presentViewController(root, animated: false, completion: nil)

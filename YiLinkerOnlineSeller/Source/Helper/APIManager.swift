@@ -49,7 +49,7 @@ struct APIAtlas {
     static let getCategoryDetails        = "auth/category/getCategoryDetails"       // Applied
     static let editCustomizedCategory    = "auth/category/updateCustomCategory"
     static let addCustomizedCategory     = "auth/category/addCustomCategory"        // Applied
-    static let deleteCustomizedCategory  = "auth/category/deleteCustomCategory"
+    static let deleteCustomizedCategory  = "auth/category/deleteCustomCategory"     // Applied
     static let sortParentCategory        = "auth/category/sortParentCategories"
     static let checkIfCategoryNameExists = "auth/category/checkIfCategoryExists"
     static let getAllCategoryProducts    = "auth/category/getAllCategoryProducts"

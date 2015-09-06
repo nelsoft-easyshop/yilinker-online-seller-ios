@@ -112,6 +112,24 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
         })
     }
     
+    func requestDeleteCustomizedCategories(categoryId: Int) {
+        self.showHUD()
+        
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
+                                          "categoryId": categoryId]
+        
+        manager.POST(APIAtlas.deleteCustomizedCategory, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.hud?.hide(true)
+            self.tableView.reloadData()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println(error)
+                self.hud?.hide(true)
+        })
+    }
+    
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -159,6 +177,9 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
         addCustomizedCategory.requestGetCategoryDetails(self.customizedCategoriesModel.customizedCategories[indexPath.row].categoryId)
         addCustomizedCategory.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(addCustomizedCategory, animated: true)
+        
+        // to delete categories
+//        requestDeleteCustomizedCategories(self.customizedCategoriesModel.customizedCategories[indexPath.row].categoryId)
     }
     
     // MARK: - Add Customized Category View Controller Delegate

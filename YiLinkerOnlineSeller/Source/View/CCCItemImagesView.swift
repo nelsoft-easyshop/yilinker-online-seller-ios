@@ -42,7 +42,7 @@ class CCCItemImagesView: UIView, UICollectionViewDataSource {
         
         if categoryProducts.count != 0 {
             cell.setItemImage(categoryProducts[indexPath.row].image)
-        } else {
+        } else if selectedItems.count != 0 {
             let index: Int = selectedItems[indexPath.row]
             cell.setItemImage(productManagement[index].image)
 
@@ -57,8 +57,9 @@ class CCCItemImagesView: UIView, UICollectionViewDataSource {
         
         if products.count != 0 {
             self.categoryProducts = products
-            self.collectionView.reloadData()
         }
+        
+        self.collectionView.reloadData()
     }
     
     func setProductsManagement(#products: [ProductManagementProductsModel], selectedItems: [Int]) {
