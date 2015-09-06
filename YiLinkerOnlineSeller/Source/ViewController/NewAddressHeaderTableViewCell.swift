@@ -1,22 +1,17 @@
 //
-//  FilterByTableViewCell.swift
+//  NewAddressHeaderTableViewCell.swift
 //  YiLinkerOnlineSeller
 //
-//  Created by Joriel Oller Fronda on 8/31/15.
+//  Created by Joriel Oller Fronda on 9/5/15.
 //  Copyright (c) 2015 YiLinker. All rights reserved.
 //
 
 import UIKit
 
-protocol FilterByTableViewCellDelegate {
-    
-}
+class NewAddressHeaderTableViewCell: UITableViewCell {
 
-class FilterByTableViewCell: UITableViewCell {
-
-    var delegate: FilterByTableViewCellDelegate!
-    
-    @IBOutlet weak var filterByLabel: UILabel!
+    @IBOutlet weak var addressLabel: UILabel!
+    @IBOutlet weak var addressDetailLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
