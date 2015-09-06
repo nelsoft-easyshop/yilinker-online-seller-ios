@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TransactionCollectionIdentifier" id="gTV-IL-0wX" customClass="TransactionCollectionViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="62" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="62" height="50"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="KqQ-zg-E75">
+                        <rect key="frame" x="20" y="8" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="vex-OX-Mmt"/>
+                            <constraint firstAttribute="width" constant="20" id="xKt-Uu-265"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TITLE" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HNi-BQ-ftg">
+                        <rect key="frame" x="0.0" y="29" width="62" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="QNf-xu-Ipa"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="8"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <color key="backgroundColor" red="0.20000000000000001" green="0.65098039220000004" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="centerY" secondItem="KqQ-zg-E75" secondAttribute="centerY" constant="7" id="3fm-Bk-xUD"/>
+                <constraint firstAttribute="centerX" secondItem="KqQ-zg-E75" secondAttribute="centerX" constant="1" id="6v4-6U-5ky"/>
+                <constraint firstAttribute="bottom" secondItem="HNi-BQ-ftg" secondAttribute="bottom" id="RoO-dn-2qS"/>
+                <constraint firstItem="HNi-BQ-ftg" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="mmb-ec-dbF"/>
+                <constraint firstAttribute="trailing" secondItem="HNi-BQ-ftg" secondAttribute="trailing" id="ysV-K0-FTK"/>
+            </constraints>
+            <connections>
+                <outlet property="pageImageView" destination="KqQ-zg-E75" id="eGQ-h5-rlg"/>
+                <outlet property="pageLabel" destination="HNi-BQ-ftg" id="VIp-2I-7mA"/>
+            </connections>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="dummy-placeholder" width="1280" height="800"/>
+    </resources>
+</document>

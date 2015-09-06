@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+        </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TransactionProductDetailsTableViewCell" rowHeight="180" id="fOA-ps-StD" customClass="TransactionProductDetailsTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="35"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fOA-ps-StD" id="umh-5M-7Mz">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product Attribute" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qj3-WY-7R6">
+                        <rect key="frame" x="16" y="6" width="171" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="dl8-jr-ymj"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product Attribute Value" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ACz-Pc-gRk" userLabel="Payment Type Value">
+                        <rect key="frame" x="188" y="6" width="171" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="DS0-PU-eul"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="ACz-Pc-gRk" firstAttribute="leading" secondItem="Qj3-WY-7R6" secondAttribute="trailing" constant="1" id="C9U-NN-62B"/>
+                    <constraint firstItem="ACz-Pc-gRk" firstAttribute="top" secondItem="umh-5M-7Mz" secondAttribute="top" constant="6" id="Mbv-VB-dho"/>
+                    <constraint firstItem="Qj3-WY-7R6" firstAttribute="top" secondItem="umh-5M-7Mz" secondAttribute="top" constant="6" id="Wum-KG-M56"/>
+                    <constraint firstItem="ACz-Pc-gRk" firstAttribute="width" secondItem="Qj3-WY-7R6" secondAttribute="width" id="kn2-1U-OGd"/>
+                    <constraint firstItem="ACz-Pc-gRk" firstAttribute="leading" secondItem="Qj3-WY-7R6" secondAttribute="trailing" constant="1" id="mN1-IO-z6O"/>
+                    <constraint firstAttribute="trailing" secondItem="ACz-Pc-gRk" secondAttribute="trailing" constant="16" id="tCE-Xa-G9S"/>
+                    <constraint firstItem="Qj3-WY-7R6" firstAttribute="leading" secondItem="umh-5M-7Mz" secondAttribute="leading" constant="16" id="u7Y-PL-vaq"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="productAttributeLabel" destination="Qj3-WY-7R6" id="4Wd-Jj-PSQ"/>
+                <outlet property="productDeatilsLabel" destination="ACz-Pc-gRk" id="Ocn-ce-Cbd"/>
+            </connections>
+            <point key="canvasLocation" x="290.5" y="202"/>
+        </tableViewCell>
+    </objects>
+</document>

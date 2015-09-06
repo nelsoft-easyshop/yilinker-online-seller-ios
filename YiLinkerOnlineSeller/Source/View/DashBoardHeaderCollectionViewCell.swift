@@ -34,8 +34,16 @@ class DashBoardHeaderCollectionViewCell: UICollectionViewCell {
         coverPhotoImageView.sd_setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: "dummy-placeholder"))
     }
     
+    func setCoverPhotoUrl(url: NSURL) {
+        coverPhotoImageView.sd_setImageWithURL(url, placeholderImage: UIImage(named: "dummy-placeholder"))
+    }
+    
     func setProfilePhoto(url: String) {
         profilePhotoImageView.sd_setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: "dummy-placeholder"))
+    }
+    
+    func setProfilePhotoUrl(url: NSURL) {
+        profilePhotoImageView.sd_setImageWithURL(url, placeholderImage: UIImage(named: "dummy-placeholder"))
     }
     
     func setStoreName(text: String) {
