@@ -29,6 +29,10 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
     
     @IBOutlet weak var bankTableView: UITableView!
     
+    @IBOutlet weak var bankAccountTitleLabel: UILabel!
+    
+    @IBOutlet weak var bankAccountDetailLabel: UILabel!
+    
     var storeInfoModel: StoreInfoModel!
     var bankModel: BankModel!
     
@@ -69,7 +73,10 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         self.fireEnabledBanks()
         
         if self.edit {
+            self.bankAccountTitleLabel.text = "Edit Bank Account"
             self.fillBankDetails(accountTitle, accountName: accountName, accountNumber: accountNumber, bankName: bankName, bankAccountId: editBankId)
+        } else {
+            self.bankAccountTitleLabel.text = "Create Bank Account"
         }
       
         // Do any additional setup after loading the view.

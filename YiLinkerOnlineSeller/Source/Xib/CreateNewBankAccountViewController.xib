@@ -22,6 +22,8 @@
                 <outlet property="accountNameTextField" destination="hyD-MF-zWj" id="Gj1-mH-Vhq"/>
                 <outlet property="accountNumberTextField" destination="eyj-Ew-iqL" id="ts9-ho-c2j"/>
                 <outlet property="accountTitleTextField" destination="BLp-Ns-DAI" id="Wbv-pK-jEx"/>
+                <outlet property="bankAccountDetailLabel" destination="Txr-sg-MmE" id="HcB-gH-CqF"/>
+                <outlet property="bankAccountTitleLabel" destination="fcl-ew-Uj6" id="z4D-3j-XX4"/>
                 <outlet property="bankNameTextField" destination="XYo-gd-QFh" id="BRT-qp-9ju"/>
                 <outlet property="bankTableView" destination="Yku-YD-pVK" id="imf-Ai-VSo"/>
                 <outlet property="closeButton" destination="W9d-zE-J1s" id="CE6-4i-Ndo"/>
@@ -202,6 +204,12 @@
                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bankAccount.png" translatesAutoresizingMaskIntoConstraints="NO" id="89N-hS-P90">
+                                    <rect key="frame" x="155" y="30" width="49" height="60"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="49" id="38h-jB-J7z"/>
+                                    </constraints>
+                                </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Txr-sg-MmE">
                                     <rect key="frame" x="8" y="116" width="343" height="40"/>
                                     <constraints>
@@ -212,12 +220,6 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bankAccount.png" translatesAutoresizingMaskIntoConstraints="NO" id="89N-hS-P90">
-                                    <rect key="frame" x="155" y="30" width="49" height="60"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="49" id="38h-jB-J7z"/>
-                                    </constraints>
-                                </imageView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
