@@ -35,6 +35,10 @@ struct Constants {
         static let hex666666: UIColor = HexaColor.colorWithHexa(0x666666)
 
         static let uploadViewColor: UIColor = HexaColor.colorWithHexa(0x54B6A7)
+        
+        //Transactions 
+        static let transactionGreen: UIColor = HexaColor.colorWithHexa(0x6ec850)
+        static let transactionGrey: UIColor = HexaColor.colorWithHexa(0xB6B6B6)
     }
     
     struct Credentials {

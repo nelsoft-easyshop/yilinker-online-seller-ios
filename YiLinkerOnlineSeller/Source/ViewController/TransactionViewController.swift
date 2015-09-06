@@ -70,10 +70,11 @@ class TransactionViewController: UIViewController {
     }
     
     func filterAction() {        
-//        let filter = TransactionFilterViewController(nibName: "TransactionFilterViewController", bundle: nil)
-//        var navigation = UINavigationController(rootViewController: filter)
-//        navigation.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
-//        self.navigationController?.presentViewController(navigation, animated: true, completion: nil)
+        let filterController = TransactionTableViewController(nibName: "TransactionTableViewController", bundle: nil)
+        var navigation = UINavigationController(rootViewController: filterController)
+        navigation.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
+        navigation.navigationBar.barTintColor = Constants.Colors.appTheme
+        self.navigationController?.presentViewController(navigation, animated: true, completion: nil)
     }
     
     
@@ -139,6 +140,8 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
     // MARK: Table View Delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        var transactionDetailsController = TransactionDetailsTableViewController(nibName: "TransactionDetailsTableViewController", bundle: nil)
+        self.navigationController?.pushViewController(transactionDetailsController, animated:true)
+
     }
 }
