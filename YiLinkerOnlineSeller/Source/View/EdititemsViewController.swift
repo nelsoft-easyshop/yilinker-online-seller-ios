@@ -92,6 +92,7 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
     }
     
     @IBAction func clearAllAction(sender: AnyObject) {
+        self.subCategoriesProducts = []
         self.selectedItemIDsIndex = []
         self.tableView.reloadData()
         self.cancel(nil)

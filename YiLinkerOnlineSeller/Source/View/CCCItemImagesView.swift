@@ -26,6 +26,7 @@ class CCCItemImagesView: UIView, UICollectionViewDataSource {
     // MARK: - Collection View Data Source
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        println(">> \(categoryProducts.count)")
         if categoryProducts.count != 0 {
             return categoryProducts.count
         } else if selectedItems.count != 0 {
@@ -56,9 +57,8 @@ class CCCItemImagesView: UIView, UICollectionViewDataSource {
         
         if products.count != 0 {
             self.categoryProducts = products
+            self.collectionView.reloadData()
         }
-        
-        self.collectionView.reloadData()
     }
     
     func setProductsManagement(#products: [ProductManagementProductsModel], selectedItems: [Int]) {

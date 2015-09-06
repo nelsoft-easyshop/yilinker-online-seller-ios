@@ -216,7 +216,6 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     
     func addSubCategory(subCategory: NSDictionary, categoryName: String) {
         subCategories.append(subCategory)
-        println(subCategories)
         categories.append(categoryName)
         self.tableView.reloadData()
     }

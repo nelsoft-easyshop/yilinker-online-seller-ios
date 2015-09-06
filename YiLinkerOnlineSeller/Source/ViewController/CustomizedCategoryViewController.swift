@@ -33,6 +33,14 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
 
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if customizedCategoriesModel != nil {
+            requestGetCustomizedCategories()
+        }
+    }
+    
     // MARK: - Methods
     
     func customizedNavigationBar() {
@@ -83,7 +91,10 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
     // MARK: - Requests
     
     func requestGetCustomizedCategories() {
-        self.showHUD()
+        if self.customizedCategoriesModel == nil {
+            self.showHUD()
+        }
+        
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
 
@@ -115,8 +126,10 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
         let cell: CustomizedCategoryTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("CustomizedCategory") as! CustomizedCategoryTableViewCell
         cell.selectionStyle = .None
         
-        cell.parentCategoryLabel.text = customizedCategoriesModel.customizedCategories[indexPath.row].name //self.parentCategory[indexPath.row]
-
+        cell.parentCategoryLabel.text = customizedCategoriesModel.customizedCategories[indexPath.row].name
+        cell.subCategoriesLabel.text = String(customizedCategoriesModel.customizedCategories[indexPath.row].categoryId)
+        
+        
 //        let subCategoriesArray: NSArray = self.subCategories[indexPath.row]
 //        var sub: String = ""
 //        for i in 0..<subCategoriesArray.count {
