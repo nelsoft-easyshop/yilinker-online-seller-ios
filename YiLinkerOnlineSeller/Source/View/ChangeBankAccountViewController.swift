@@ -220,6 +220,7 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
         attributeModal.accountNumber = self.bankAccountModel.account_number[indexPath.row]
         attributeModal.bankName = self.bankAccountModel.bank_name[indexPath.row]
         attributeModal.editBankId = self.bankAccountModel.bank_account_id[indexPath.row]
+        println("bank account id \(self.bankAccountModel.bank_account_id[indexPath.row])")
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         attributeModal.providesPresentationContextTransitionStyle = true
         attributeModal.definesPresentationContext = true

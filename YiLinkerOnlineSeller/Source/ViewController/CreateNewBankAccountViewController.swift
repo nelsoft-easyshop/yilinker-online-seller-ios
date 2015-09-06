@@ -69,7 +69,7 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         self.fireEnabledBanks()
         
         if self.edit {
-            self.fillBankDetails(accountTitle, accountName: accountName, accountNumber: accountNumber, bankName: bankName, bankAccountId: bankId)
+            self.fillBankDetails(accountTitle, accountName: accountName, accountNumber: accountNumber, bankName: bankName, bankAccountId: editBankId)
         }
       
         // Do any additional setup after loading the view.
@@ -89,32 +89,49 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         self.showHUD()
         let manager = APIManager.sharedInstance
         var bankId2: Int = 0
+        var url: String = ""
+        var accountNumber: Int? = self.accountNumberTextField.text.toInt()
         if edit {
             bankId2 = self.bankDictionary[self.bankName]!
+            url = APIAtlas.sellerEditBankAccount
+            var parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : NSNumber(integer: accountNumber!), "accountName" : self.accountNameTextField.text, "bankId" : NSNumber(integer: bankId2), "bankAccountId" : self.editBankId]
+            manager.POST(url, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                println("edited bank account")
+                //self.dismissViewControllerAnimated(true, completion: nil)
+                
+                self.hud?.hide(true)
+                self.delegate?.updateCollectionView()
+                self.dismissViewControllerAnimated(true, completion: nil)
+                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                    
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.hud?.hide(true)
+                    println(error)
+            })
         } else {
             bankId2 = self.bankId
+            url = APIAtlas.sellerAddBankAccount
+            var parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : NSNumber(integer: accountNumber!), "accountName" : self.accountNameTextField.text, "bankId" : NSNumber(integer: bankId2)]
+            manager.POST(url, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                println("created bank account")
+                //self.dismissViewControllerAnimated(true, completion: nil)
+                
+                self.hud?.hide(true)
+                self.delegate?.updateCollectionView()
+                self.dismissViewControllerAnimated(true, completion: nil)
+                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                    
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.hud?.hide(true)
+                    println(error)
+            })
         }
-        var accountNumber: Int? = self.accountNumberTextField.text.toInt()
-        //var bankId2: Int? = bankId.toInt()
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : NSNumber(integer: accountNumber!), "accountName" : self.accountNameTextField.text, "bankId" : NSNumber(integer: bankId2)]
-        println(NSNumber(integer: accountNumber!))
         
         self.delegate?.dismissDimView()
         
-        manager.POST(APIAtlas.sellerAddBankAccount, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println("\(parameters)")
-            //self.dismissViewControllerAnimated(true, completion: nil)
-            
-            self.hud?.hide(true)
-            self.delegate?.updateCollectionView()
-            self.dismissViewControllerAnimated(true, completion: nil)
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                
-                self.dismissViewControllerAnimated(true, completion: nil)
-                self.hud?.hide(true)
-                println(error)
-        })
+        
     }
     
     func showHUD() {
