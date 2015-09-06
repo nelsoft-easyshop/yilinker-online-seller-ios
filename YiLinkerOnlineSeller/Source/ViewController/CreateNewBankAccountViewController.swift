@@ -39,11 +39,10 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
     var autoCompleteArray: NSMutableArray?
     var autoCompleteFilterArray: NSArray?
     var autoCompleteFilterArrayId: NSArray?
-    var bankDict: NSMutableDictionary?
-    var bankId: String = ""
+    var bankDictionary = Dictionary<String, Int>()
+    var bankId: Int = 0
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         self.bankTableView.hidden = true
         self.bankNameTextField.delegate = self
         self.bankTableView.tableFooterView = UIView.new()
@@ -77,8 +76,8 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         self.showHUD()
         let manager = APIManager.sharedInstance
         var accountNumber: Int? = self.accountNumberTextField.text.toInt()
-        var bankId2: Int? = "1".toInt()
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : NSNumber(integer: accountNumber!), "accountName" : self.accountNameTextField.text, "bankId" : NSNumber(integer: bankId2!)]
+        //var bankId2: Int? = bankId.toInt()
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : NSNumber(integer: accountNumber!), "accountName" : self.accountNameTextField.text, "bankId" : NSNumber(integer: self.bankId)]
         println(NSNumber(integer: accountNumber!))
         
         self.delegate?.dismissDimView()
@@ -90,6 +89,7 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
             
             self.hud?.hide(true)
             self.delegate?.updateCollectionView()
+            self.dismissViewControllerAnimated(true, completion: nil)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
                 println(error)
@@ -146,7 +146,7 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell: FilterByTableViewCell = self.bankTableView.cellForRowAtIndexPath(indexPath) as! FilterByTableViewCell
         self.bankNameTextField.text = cell.filterByLabel.text
-        self.bankId = sam
+        self.bankId = self.bankDictionary[cell.filterByLabel.text!]!
         self.bankTableView.hidden = true
     }
     
@@ -173,6 +173,9 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
             self.autoCompleteArray = NSMutableArray(array: self.bankModel.bankName as NSArray)
             self.autoCompleteFilterArray = NSArray(array: self.bankModel.bankName) as NSArray
             self.autoCompleteFilterArrayId = NSArray(array: self.bankModel.bankId) as NSArray
+            for var num = 0 ; num < self.bankModel.bankName.count; num++ {
+                self.bankDictionary[self.bankModel.bankName[num]] = self.bankModel.bankId[num]
+            }
             println("autocompletearray \(self.autoCompleteArray)")
             self.hud?.hide(true)
             self.bankTableView.reloadData()
