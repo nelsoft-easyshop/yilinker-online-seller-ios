@@ -12,7 +12,10 @@ class CCCItemImagesView: UIView, UICollectionViewDataSource {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var itemsModel: [CategoryProductModel]!
+    var itemsModel: NSArray = []
+    var categoryProducts: [CategoryProductModel] = []
+    var productManagement: [ProductManagementProductsModel] = []
+    var selectedItems: [Int] = []
     
     override func awakeFromNib() {
         let nib = UINib(nibName: "ItemImagesHorizontalCollectionViewCell", bundle: nil)
@@ -23,9 +26,12 @@ class CCCItemImagesView: UIView, UICollectionViewDataSource {
     // MARK: - Collection View Data Source
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if itemsModel != nil {
-            return itemsModel.count
+        if categoryProducts.count != 0 {
+            return categoryProducts.count
+        } else if selectedItems.count != 0 {
+            return selectedItems.count
         }
+        
         return 0
     }
     
@@ -33,14 +39,36 @@ class CCCItemImagesView: UIView, UICollectionViewDataSource {
         
         let cell: ItemImagesHorizontalCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier("HorizontalCellIdentifier", forIndexPath: indexPath) as! ItemImagesHorizontalCollectionViewCell
         
+        if categoryProducts.count != 0 {
+            cell.setItemImage(categoryProducts[indexPath.row].image)
+        } else {
+            let index: Int = selectedItems[indexPath.row]
+            cell.setItemImage(productManagement[index].image)
+
+        }
+        
         return cell
     }
     
     // MARK: - 
     
-    func setItemsImages(model: [CategoryProductModel]) {
-        self.itemsModel = model
+    func setProductsCategory(#products: [CategoryProductModel]) {
+        
+        if products.count != 0 {
+            self.categoryProducts = products
+        }
         
         self.collectionView.reloadData()
     }
+    
+    func setProductsManagement(#products: [ProductManagementProductsModel], selectedItems: [Int]) {
+
+        self.selectedItems = selectedItems
+        if products.count != 0 {
+            self.productManagement = products
+        }
+        
+        self.collectionView.reloadData()
+    }
+    
 }

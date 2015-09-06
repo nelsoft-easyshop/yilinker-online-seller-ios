@@ -8,7 +8,12 @@
 
 import UIKit
 
-class EdititemsViewController: UIViewController {
+protocol EditItemsViewControllerDelegate {
+    func updateProductItems(productModel: ProductManagementProductModel, itemIndexes: [Int], products: [Int])
+}
+
+class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, RemovedItemTableViewCellDelegate {
+    var delegate: EditItemsViewControllerDelegate?
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var topBarView: UIView!
@@ -18,6 +23,12 @@ class EdititemsViewController: UIViewController {
     var selectedIndex: Int = -1
     var selectedItem: Int = 0
     var removingItems: Bool = false
+    
+    var productModel: ProductManagementProductModel!
+    var selectedItemIDsIndex: [Int] = []
+    var itemsToRemoved: [Int] = []
+    
+    var subCategoriesProducts: [Int] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +43,11 @@ class EdititemsViewController: UIViewController {
         self.tableView.registerNib(removedCell, forCellReuseIdentifier: "RemovedItem")
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        println("Edit Items > \(self.subCategoriesProducts)")
+    }
     // MARK: - Methods
     
     func customizedNavigationBar() {
@@ -52,17 +68,33 @@ class EdititemsViewController: UIViewController {
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
     }
     
+    func updateListOfItems(productModel: ProductManagementProductModel, itemIndexes: [Int]) {
+        self.productModel = productModel
+        self.selectedItemIDsIndex = itemIndexes
+        
+//        self.tableView.reloadData()
+    }
+    
     // MARK: - Actions
     
     func closeAction() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        if self.title != "Edit items" {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
     func checkAction() {
-        closeAction()
+        if self.title != "Edit items" {
+            println("From Edit Items > \(subCategoriesProducts)")
+            delegate?.updateProductItems(self.productModel, itemIndexes: self.selectedItemIDsIndex, products: subCategoriesProducts)
+            closeAction()
+        }
     }
     
     @IBAction func clearAllAction(sender: AnyObject) {
+        self.selectedItemIDsIndex = []
+        self.tableView.reloadData()
+        self.cancel(nil)
     }
     
     @IBAction func removeItemsAction(sender: AnyObject) {
@@ -75,12 +107,16 @@ class EdititemsViewController: UIViewController {
     
     @IBAction func addItem(sender: AnyObject) {
         let addItem = AddItemViewController(nibName: "AddItemViewController", bundle: nil)
+        addItem.delegate = self
+        addItem.selectedItemIDs = subCategoriesProducts
+        addItem.selectedItemIDsIndex = selectedItemIDsIndex
+        addItem.productModel = productModel
         var rootViewController = UINavigationController(rootViewController: addItem)
         self.navigationController?.presentViewController(rootViewController, animated: false, completion: nil)
     }
     
     @IBAction func removedSelectedAction(sender: AnyObject) {
-        
+        self.tableView.reloadData()
     }
     
     @IBAction func cancel(sender: AnyObject!) {
@@ -95,13 +131,19 @@ class EdititemsViewController: UIViewController {
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.selectedItemIDsIndex.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if removingItems {
             let cell: RemovedItemTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("RemovedItem") as! RemovedItemTableViewCell
+            cell.delegate = self
             cell.selectionStyle = .None
+            cell.tag = indexPath.row
+            cell.deselected()
+            
+            cell.setProductImage(self.productModel.products[indexPath.row].image)
+            cell.itemLabel.text = self.productModel.products[indexPath.row].name
             
             return cell
             
@@ -109,6 +151,9 @@ class EdititemsViewController: UIViewController {
             let cell: AddItemTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("AddItemTableViewCell") as! AddItemTableViewCell
             cell.selectionStyle = .None
             
+            cell.setProductImage(self.productModel.products[indexPath.row].image)
+            cell.itemNameLabel.text = self.productModel.products[indexPath.row].name
+//           cell.vendorLabel.text = self.productModel.products[indexPath.row].category
             cell.addImageView.image = UIImage(named: "right2")
             
             return cell
@@ -117,17 +162,26 @@ class EdititemsViewController: UIViewController {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        self.selectedIndex = indexPath.row
-//        
-//        let cell: AddItemTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! AddItemTableViewCell
-//        if cell.addImageView?.image == UIImage(named: "addItem") {
-//            cell.updateStatusImage(true)
-//            selectedItem++
-//        } else {
-//            cell.updateStatusImage(false)
-//            selectedItem--
-//        }
-        
+
     }
 
+    // MARK - Removed Item Table View Cell Delegate
+    
+    func addSelectedItems(index: Int) {
+        self.selectedItemIDsIndex = self.selectedItemIDsIndex.filter({$0 != index})
+    }
+    
+    func removeSelectedItems(index: Int) {
+        self.selectedItemIDsIndex.append(index)
+    }
+    
+    // MARK: - Add Item View Controller Delegate
+    
+    func addProductItems(productModel: ProductManagementProductModel, itemIndexes: [Int], products: [Int]) {
+        println("From Add Item to Edit Item \(products)")
+        self.selectedItemIDsIndex = itemIndexes
+        self.subCategoriesProducts = products
+        self.tableView.reloadData()
+    }
+    
 }
