@@ -211,7 +211,20 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         println("selected bank for edit \(indexPath.row)")
-        
+        self.showView()
+        var attributeModal = CreateNewBankAccountViewController(nibName: "CreateNewBankAccountViewController", bundle: nil)
+        attributeModal.delegate = self
+        attributeModal.edit = true
+        attributeModal.accountTitle = self.bankAccountModel.account_title[indexPath.row]
+        attributeModal.accountName = self.bankAccountModel.account_name[indexPath.row]
+        attributeModal.accountNumber = self.bankAccountModel.account_number[indexPath.row]
+        attributeModal.bankName = self.bankAccountModel.bank_name[indexPath.row]
+        attributeModal.editBankId = self.bankAccountModel.bank_account_id[indexPath.row]
+        attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        attributeModal.providesPresentationContextTransitionStyle = true
+        attributeModal.definesPresentationContext = true
+        attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
+        self.navigationController?.presentViewController(attributeModal, animated: true, completion: nil)
     }
 
     func addCellInIndexPath(indexPath: NSIndexPath) {
@@ -292,6 +305,7 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
         self.showView()
         var attributeModal = CreateNewBankAccountViewController(nibName: "CreateNewBankAccountViewController", bundle: nil)
         attributeModal.delegate = self
+        attributeModal.edit = false
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         attributeModal.providesPresentationContextTransitionStyle = true
         attributeModal.definesPresentationContext = true

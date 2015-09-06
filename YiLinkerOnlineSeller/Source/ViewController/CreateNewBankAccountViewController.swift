@@ -41,6 +41,14 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
     var autoCompleteFilterArrayId: NSArray?
     var bankDictionary = Dictionary<String, Int>()
     var bankId: Int = 0
+    
+    var edit: Bool = false
+    var editBankId: Int = 0
+    var accountTitle: String = ""
+    var accountName: String = ""
+    var accountNumber: Int = 0
+    var bankName: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.bankTableView.hidden = true
@@ -59,6 +67,11 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         self.bankTableView.registerNib(storeInfo, forCellReuseIdentifier: "FilterByTableViewCell")
     
         self.fireEnabledBanks()
+        
+        if self.edit {
+            self.fillBankDetails(accountTitle, accountName: accountName, accountNumber: accountNumber, bankName: bankName, bankAccountId: bankId)
+        }
+      
         // Do any additional setup after loading the view.
     }
 
@@ -75,9 +88,15 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
     @IBAction func createBankAcount(sender: AnyObject) {
         self.showHUD()
         let manager = APIManager.sharedInstance
+        var bankId2: Int = 0
+        if edit {
+            bankId2 = self.bankId
+        } else {
+            bankId2 = self.bankDictionary[self.bankName]!
+        }
         var accountNumber: Int? = self.accountNumberTextField.text.toInt()
         //var bankId2: Int? = bankId.toInt()
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : NSNumber(integer: accountNumber!), "accountName" : self.accountNameTextField.text, "bankId" : NSNumber(integer: self.bankId)]
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : NSNumber(integer: accountNumber!), "accountName" : self.accountNameTextField.text, "bankId" : NSNumber(integer: bankId2)]
         println(NSNumber(integer: accountNumber!))
         
         self.delegate?.dismissDimView()
@@ -91,6 +110,8 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
             self.delegate?.updateCollectionView()
             self.dismissViewControllerAnimated(true, completion: nil)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                
+                self.dismissViewControllerAnimated(true, completion: nil)
                 self.hud?.hide(true)
                 println(error)
         })
@@ -204,6 +225,16 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
     
     func textFieldDidEndEditing(textField: UITextField) {
         self.bankTableView.hidden = true
+    }
+    
+    func fillBankDetails(accountTitle: String, accountName: String,  accountNumber: Int, bankName: String, bankAccountId: Int){
+        if(!accountTitle.isEmpty) {
+            self.accountTitleTextField.text = accountTitle
+            self.accountNameTextField.text = accountName
+            self.accountNumberTextField.text = "\(accountNumber)"
+            self.bankNameTextField.text = "\(bankName)"
+        }
+      
     }
     /*
     // MARK: - Navigation
