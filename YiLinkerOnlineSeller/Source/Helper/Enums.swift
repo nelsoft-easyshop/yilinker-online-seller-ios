@@ -41,3 +41,11 @@ enum ProductTextFieldType {
     case ProductWeight
     case ProductHeight
 }
+
+enum AddressRefreshType {
+    case Edit
+    case Delete
+    case Create
+    case SetDefault
+    case Get
+}

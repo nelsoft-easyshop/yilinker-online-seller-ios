@@ -9,23 +9,29 @@
 import UIKit
 
 protocol AddItemViewControllerDelegate {
-    func updateCategoryImages(numberOfImages: Int)
+    func addProductItems(productModel: ProductManagementProductModel, itemIndexes: [Int], products: [Int])
 }
 
 class AddItemViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     var delegate: AddItemViewControllerDelegate?
+    var productModel: ProductManagementProductModel!
     
     @IBOutlet weak var searchBarTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
+
+    var selectedItemIDs: [Int] = []
+    var selectedItemIDsIndex: [Int] = []
     
-    var selectedIndex: Int = -1
-    var selectedItem: Int = 0
+    var hud: MBProgressHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        if selectedItemIDsIndex.count == 0 {
+            requestGetProductList("")
+        }
         customizedNavigationBar()
         customizedViews()
         
@@ -33,6 +39,11 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
         self.tableView.registerNib(nib, forCellReuseIdentifier: "AddItemTableViewCell")
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        println(self.selectedItemIDs)
+    }
     // MARK: - Methods
     
     func customizedNavigationBar() {
@@ -67,37 +78,97 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func checkAction() {
-        delegate?.updateCategoryImages(selectedItem)
+//        if self.selectedItemIDs.count != 0 {
+//            delegate?.updateCategoryImages(self.productModel, itemIDs: self.selectedItemIDs)
+//        }
+
+        if self.selectedItemIDsIndex.count != 0 {
+            delegate?.addProductItems(self.productModel, itemIndexes: self.selectedItemIDsIndex, products: selectedItemIDs)
+        }
+        
         closeAction()
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    // MARK: - Requests
+    
+    func requestGetProductList(key: String) {
+        self.showHUD()
+        
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
+                                        "status": "5",
+                                        "keyword": key]
+        
+        manager.POST(APIAtlas.managementGetProductList, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+
+            self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
+            self.tableView.reloadData()
+            self.hud?.hide(true)
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                
+                self.hud?.hide(true)
+        })
     }
     
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        if self.productModel != nil {
+            return self.productModel.products.count
+        }
+        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: AddItemTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("AddItemTableViewCell") as! AddItemTableViewCell
         cell.selectionStyle = .None
         
-        cell.itemNameLabel.text = "Sample Item \(indexPath.row)"
-        cell.vendorLabel.text = "Sample Vendor \(indexPath.row)"
+        cell.setProductImage(self.productModel.products[indexPath.row].image)
+        cell.itemNameLabel.text = self.productModel.products[indexPath.row].name
+//        cell.vendorLabel.text = self.productModel.products[indexPath.row].category
+        
+        if (find(selectedItemIDsIndex, indexPath.row) != nil) {
+            cell.updateStatusImage(true)
+        } else {
+            cell.updateStatusImage(false)
+        }
+        
+        
         
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.selectedIndex = indexPath.row
-        
         let cell: AddItemTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! AddItemTableViewCell
+        let productId: Int = self.productModel.products[indexPath.row].id.toInt()!
         if cell.addImageView?.image == UIImage(named: "addItem") {
             cell.updateStatusImage(true)
-            selectedItem++
+            selectedItemIDs.append(productId)
+            selectedItemIDsIndex.append(indexPath.row)
         } else {
             cell.updateStatusImage(false)
-            selectedItem--
+            selectedItemIDs = selectedItemIDs.filter({$0 != productId})
+            selectedItemIDsIndex = selectedItemIDsIndex.filter({$0 != indexPath.row})
         }
+        
+//        println(selectedItemIDs)
+        println(selectedItemIDsIndex)
 
     }
     

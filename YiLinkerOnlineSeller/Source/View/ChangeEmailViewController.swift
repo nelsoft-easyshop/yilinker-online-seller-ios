@@ -33,6 +33,9 @@ class ChangeEmailViewController: UIViewController {
     @IBOutlet weak var confirmEmailLabel: UILabel!
     
     var type: String = ""
+    
+    var hud : MBProgressHUD?
+    
     var delegate: ChangeEmailViewControllerDelegate?
     
     override func viewDidLoad() {
@@ -57,8 +60,33 @@ class ChangeEmailViewController: UIViewController {
             println("Submit email")
         } else {
             println("Submit password")
+            self.showHUD()
+            let manager = APIManager.sharedInstance
+            let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldPassword" : self.oldEmailAddressTextField.text, "newPassword" : self.newEmailAddressTextField.text, "newPasswordConfirm" : self.confirmEmailAddressTextField.text];
+            self.showHUD()
+            manager.POST(APIAtlas.sellerChangePassword, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                println("SUCCESS!")
+                self.hud?.hide(true)
+                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                    self.hud?.hide(true)
+                    println(error)
+            })
         }
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
 
     /*

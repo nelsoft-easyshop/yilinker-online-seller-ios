@@ -9,13 +9,15 @@
 import UIKit
 
 protocol AddCustomizedCategoryViewControllerDelegate {
-    func addCategory(parent: String, sub: NSArray, items: NSArray)
+    func updateAddSubCategoryButtonTitle(text: String)
 }
 
 class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CCCategoryDetailsViewDelegate, ParentCategoryViewControllerDelegate, CCSubCategoriesViewDelegate, CCCategoryItemsViewDelegate, AddItemViewControllerDelegate, EditSubCategoriesViewControllerDelegate {
 
     var delegate: AddCustomizedCategoryViewControllerDelegate?
     var categoryDetailsModel: CategoryDetailsModel!
+    var productManagementProductModel: ProductManagementProductModel!
+    var itemIndexes: [Int] = []
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -30,11 +32,17 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     
     var subCategoriesHeight: CGFloat = 46 // size of view height(45) + bottom margin (1)
     var subCategoriesItems: Int = 0
-    var imageItems: Int = 0
     
     var hud: MBProgressHUD?
     
-    var subCategories: [String] = []
+    var parentId: Int = 0
+    var products: [NSDictionary] = []
+    var subCategories: [NSDictionary] = []
+    
+    var customizedSubCategories: [SubCategoryModel] = []
+    var customizedCategoryProducts: [CategoryProductModel] = []
+    
+    var newSubCategoryNames: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +62,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     
     func customizedNavigationBar() {
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.title = "Customized Category"
+//        self.title = "Customized Category"
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
         
@@ -90,6 +98,15 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         return self.categoryDetailsView
     }
     
+    func getSubCategoriesView() -> CCSubCategoriesView {
+        if self.subCategoriesView == nil {
+            subCategoriesView = XibHelper.puffViewWithNibName("CustomizedCategoryViewsViewController", index: 1) as! CCSubCategoriesView
+            subCategoriesView.delegate = self
+            self.subCategoriesView.frame.size.width = self.view.frame.size.width
+        }
+        return self.subCategoriesView
+    }
+    
     func getFooterView() -> UIView {
         if self.footerView == nil {
             self.footerView = UIView(frame: CGRectZero)
@@ -122,7 +139,13 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         self.seeAllItemsView.backgroundColor = UIColor.whiteColor()
         
         var seeAllItemsLabel = UILabel(frame: CGRectZero)
-        seeAllItemsLabel.text = "See all " + "20" + " items   "
+        if customizedCategoryProducts.count != 0 {
+            seeAllItemsLabel.text = "See all " + String(self.customizedCategoryProducts.count) + " items   "
+        } else if itemIndexes.count != 0 {
+            seeAllItemsLabel.text = "See all " + String(self.itemIndexes.count) + " items   "
+        } else {
+            self.seeAllItemsView.hidden = true
+        }
         seeAllItemsLabel.font = UIFont(name: "Panton-Bold", size: 12.0)
         seeAllItemsLabel.textColor = UIColor.darkGrayColor()
         seeAllItemsLabel.sizeToFit()
@@ -138,26 +161,31 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     
     func loadViewsWithDetails() {
         self.getHeaderView().addSubview(getCategoryDetailsView())
+        self.getHeaderView().addSubview(getSubCategoriesView())
         self.getFooterView().addSubview(getCategoryItemsView())
         
         setUpViews()
     }
     
     func setUpViews() {
+        // ------ HEADER
+        
+        setPosition(self.subCategoriesView, from: self.categoryDetailsView)
         newFrame = self.headerView.frame
-        newFrame.size.height = CGRectGetMaxY(self.categoryDetailsView.frame)
+        newFrame.size.height = CGRectGetMaxY(self.subCategoriesView.frame) + 1.0
         self.headerView.frame = newFrame
+        
         self.tableView.tableHeaderView = nil
         self.tableView.tableHeaderView = self.headerView
         
+        // ------ FOOTER
+        
         newFrame = self.footerView.frame
         
-        if self.categoryDetailsModel != nil {
-            if self.categoryDetailsModel.products.count != 0 {
-                setPosition(self.itemImagesView, from: self.categoryItemsView)
-                setPosition(self.seeAllItemsView, from: self.itemImagesView)
-                newFrame.size.height = CGRectGetMaxY(self.seeAllItemsView.frame) + 20.0
-            }
+        if self.customizedCategoryProducts.count != 0 || self.productManagementProductModel != nil {
+            setPosition(self.itemImagesView, from: self.categoryItemsView)
+            setPosition(self.seeAllItemsView, from: self.itemImagesView)
+            newFrame.size.height = CGRectGetMaxY(self.seeAllItemsView.frame) + 20.0
         } else {
             newFrame.size.height = CGRectGetMaxY(self.categoryItemsView.frame)
         }
@@ -165,39 +193,51 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         self.footerView.frame = newFrame
         self.tableView.tableFooterView = nil
         self.tableView.tableFooterView = self.footerView
+        
+        self.tableView.reloadData()
     }
     
     func setPosition(view: UIView!, from: UIView!) {
         newFrame = view.frame
         newFrame.origin.y = CGRectGetMaxY(from.frame)
-        if view == self.seeAllItemsView {
-            newFrame.origin.y += 1
-        }
         view.frame = newFrame
     }
 
     func populateDetails() {
-        self.categoryDetailsView.categoryNameTextField.text = self.categoryDetailsModel.categoryName
-        if self.categoryDetailsModel.parentId == "" {
-            self.categoryDetailsView.parentCategoryLabel.text = "NONE"
-        } else {
-            self.categoryDetailsView.parentCategoryLabel.text = self.categoryDetailsModel.parentId
+        
+        if self.categoryDetailsModel != nil {
+            // Category Name
+            self.categoryDetailsView.categoryNameTextField.text = self.categoryDetailsModel.categoryName
+            
+            // Parent Category
+            if self.categoryDetailsModel.parentId == "" {
+                self.categoryDetailsView.parentCategoryLabel.text = "NONE"
+            } else {
+                self.categoryDetailsView.parentCategoryLabel.text = self.categoryDetailsModel.parentId
+            }
+            
+            // Sub Categories
+            if self.customizedSubCategories.count != 0 {
+                self.subCategoriesView.setTitle("EDIT")
+            }
+            
+            // Category Products
+            if self.customizedCategoryProducts.count != 0 {
+                self.categoryItemsView.addNewItemButton.setTitle("EDIT", forState: .Normal)
+                self.getFooterView().addSubview(getItemImageView())
+                self.getFooterView().addSubview(getSeeAllItemsView())
+                self.itemImagesView.setProductsCategory(products: self.customizedCategoryProducts)
+            }
         }
         
-        if self.categoryDetailsModel.subcategories.count != 0 {
-            self.subCategoriesView.addSubCategoryButton.setTitle("EDIT", forState: .Normal)
-            self.subCategoriesView.setTitle("EDIT")
-        }
-        
-        if self.categoryDetailsModel.products.count != 0 {
+        if self.productManagementProductModel != nil {
             self.categoryItemsView.addNewItemButton.setTitle("EDIT", forState: .Normal)
             self.getFooterView().addSubview(getItemImageView())
             self.getFooterView().addSubview(getSeeAllItemsView())
-            self.itemImagesView.setItemsImages(self.categoryDetailsModel.products)
-            
+            self.itemImagesView.setProductsManagement(products: self.productManagementProductModel.products, selectedItems: self.itemIndexes)
         }
         
-        self.tableView.reloadData()
+        setUpViews()
     }
     
     func showHUD() {
@@ -218,15 +258,19 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     func closeAction() {
         self.dismissViewControllerAnimated(true, completion: nil)
         self.navigationController?.popViewControllerAnimated(true)
-    }
+    }   
     
     func checkAction() {
         if self.categoryDetailsView.parentCategoryLabel.text != "" {
-            if self.categoryDetailsView.parentCategoryLabel.text == "NONE" {
-                delegate?.addCategory(self.categoryDetailsView.categoryNameTextField.text.capitalizedString, sub: subCategories, items: [])
-            } else {
-                delegate?.addCategory(self.categoryDetailsView.parentCategoryLabel.text!.capitalizedString, sub: [self.categoryDetailsView.categoryNameTextField.text.capitalizedString], items: [])
-            }
+//            if self.categoryDetailsView.parentCategoryLabel.text == "NONE" {
+//                delegate?.addCategory(self.categoryDetailsView.categoryNameTextField.text.capitalizedString, sub: subCategories, items: [])
+//            } else {
+//                delegate?.addCategory(self.categoryDetailsView.parentCategoryLabel.text!.capitalizedString, sub: [self.categoryDetailsView.categoryNameTextField.text.capitalizedString], items: [])
+//            }
+            
+            
+            requestAddCustomizedCategory()
+            
             closeAction()
         }
         
@@ -244,8 +288,11 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.categoryDetailsModel = CategoryDetailsModel.parseDataWithDictionary(responseObject as! NSDictionary)
-            self.populateDetails()
+            self.customizedSubCategories = self.categoryDetailsModel.subcategories
+            self.customizedCategoryProducts = self.categoryDetailsModel.products
             
+            self.populateDetails()
+
             self.hud?.hide(true)
             
             }, failure: {
@@ -255,18 +302,19 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         })
     }
     
-    func requestAdCustomizedCategory(categoryId: Int) {
+    func requestAddCustomizedCategory() {
         self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-            "categoryId": String(categoryId)]
+            "categoryName": self.categoryDetailsView.categoryNameTextField.text,
+            "parentId": self.parentId,
+            "products": self.products,
+            "subcategories": self.subCategories]
         
         manager.POST(APIAtlas.addCustomizedCategory, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
             
             self.categoryDetailsModel = CategoryDetailsModel.parseDataWithDictionary(responseObject as! NSDictionary)
-            self.populateDetails()
             
             self.hud?.hide(true)
             
@@ -277,28 +325,20 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         })
     }
     
-    // MARK: - Table View Data Source and Delegates
-    
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        var headerSectionContainer = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, subCategoriesHeight))
-        headerSectionContainer.backgroundColor = Constants.Colors.backgroundGray
-        
-        subCategoriesView = XibHelper.puffViewWithNibName("CustomizedCategoryViewsViewController", index: 1) as! CCSubCategoriesView
-        subCategoriesView.delegate = self
-//        subCategoriesView.setTitle("EDIT")
-        headerSectionContainer.addSubview(subCategoriesView)
-        
-        return headerSectionContainer
-    }
-    
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return subCategoriesHeight
-    }
+    // MARK: - Table View Data Source and Delegate
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if  self.categoryDetailsModel != nil {
-             self.categoryDetailsModel.subcategories.count
+
+        if self.title == "Edit Customized Category" {
+            if  self.categoryDetailsModel != nil {
+                return self.customizedSubCategories.count
+            }
+        } else if self.title == "Add Customized Category" {
+            if self.newSubCategoryNames.count != 0 {
+                return self.newSubCategoryNames.count
+            }
         }
+        
         return 0
     }
     
@@ -306,7 +346,14 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
 //        let cell: AddCustomizedCategoryTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("AddCustomizedCategory") as!  AddCustomizedCategoryTableViewCell
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "identifier")
         
-        cell.textLabel?.text = self.subCategories[indexPath.row]
+        if self.customizedSubCategories.count != 0 {
+            cell.textLabel?.text = self.customizedSubCategories[indexPath.row].categoryName
+        } else if self.newSubCategoryNames.count != 0 {
+            cell.textLabel?.text = self.newSubCategoryNames[indexPath.row]
+        } else {
+            cell.textLabel?.text = "Sub Categories here"
+        }
+        
         cell.textLabel?.font = UIFont(name: "Panton-Bold", size: 12.0)
         cell.textLabel?.textColor = Constants.Colors.hex666666
         
@@ -317,7 +364,19 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         
     }
     
-    // MARK: - Category Details Delegate 
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if cell.respondsToSelector("setSeparatorInset:") {
+            cell.separatorInset = UIEdgeInsetsZero
+        }
+        if cell.respondsToSelector("setLayoutMargins:") {
+            cell.layoutMargins = UIEdgeInsetsZero
+        }
+        if cell.respondsToSelector("setPreservesSuperviewLayoutMargins:") {
+            cell.preservesSuperviewLayoutMargins = false
+        }
+    }
+    
+    // MARK: - Category Details Delegate
     
     func gotoParentCategory() {
         let parentCategory = ParentCategoryViewController(nibName: "ParentCategoryViewController", bundle: nil)
@@ -328,7 +387,8 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     
     // MARK: - Parent Category View Controller Delegate
     
-    func updateParentCategory(parentCategory: String) {
+    func updateParentCategory(parentCategory: String, parentId: Int) {
+        self.parentId = parentId
         self.categoryDetailsView.parentCategoryLabel.text = parentCategory
         subCategoriesHeight = 0.0
         self.subCategories = []
@@ -339,8 +399,8 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     
     func gotoEditSubCategories() {
         let subCategories = EditSubCategoriesViewController(nibName: "EditSubCategoriesViewController", bundle: nil)
+        subCategories.categories = self.newSubCategoryNames
         subCategories.delegate = self
-        subCategories.createdCategory = self.categoryDetailsView.categoryNameTextField.text.capitalizedString
         var root = UINavigationController(rootViewController: subCategories)
         self.navigationController?.presentViewController(root, animated: false, completion: nil)
     }
@@ -356,21 +416,32 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     
     func gotoEditItem() {
         let editItem = EdititemsViewController(nibName: "EdititemsViewController", bundle: nil)
+        editItem.updateListOfItems(self.productManagementProductModel, itemIndexes: self.itemIndexes)
         var root = UINavigationController(rootViewController: editItem)
         self.navigationController?.presentViewController(root, animated: false, completion: nil)
     }
     
     // MARK: - Add Item View Controller Delegate
-    
-    func updateCategoryImages(numberOfImages: Int) {
-        self.imageItems = numberOfImages
-        loadViewsWithDetails()
+
+    func addProductItems(productModel: ProductManagementProductModel, itemIndexes: [Int], products: [Int]) {
+        self.productManagementProductModel = productModel
+        self.itemIndexes = itemIndexes
+        populateDetails()
     }
     
     // MARK: - Edit Sub Categories View Controller
     
-    func addSubCategories(controller: EditSubCategoriesViewController, categories: NSArray) {
-        self.subCategories = categories as! [String]
+    func addSubCategories(controller: EditSubCategoriesViewController, subCategories: [NSDictionary], categoryNames: [String]) {
+        self.subCategories = subCategories
+        self.newSubCategoryNames = categoryNames
+        
+        if self.newSubCategoryNames.count != 0 {
+            self.subCategoriesView.setTitle("EDIT")
+        } else {
+            self.subCategoriesView.setTitle("ADD SUB CATEGORY")
+        }
+        
+        
         self.tableView.reloadData()
     }
     

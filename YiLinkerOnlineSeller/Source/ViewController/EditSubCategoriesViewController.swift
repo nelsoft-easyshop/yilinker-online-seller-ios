@@ -9,12 +9,13 @@
 import UIKit
 
 protocol EditSubCategoriesViewControllerDelegate {
-    func addSubCategories(controller: EditSubCategoriesViewController, categories: NSArray)
+    func addSubCategories(controller: EditSubCategoriesViewController, subCategories: [NSDictionary], categoryNames: [String])
 }
 
 class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewControllerDelegate, CCCategoryItemsViewDelegate, EditSubCategoriesRemovedTableViewCellDelegate {
 
     var delegate: EditSubCategoriesViewControllerDelegate?
+    var subCategories: [NSDictionary] = []
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var topBarView: UIView!
@@ -81,7 +82,7 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     }
     
     func checkAction() {
-        delegate?.addSubCategories(self, categories: self.categories)
+        delegate?.addSubCategories(self, subCategories: subCategories, categoryNames: categories)
         closeAction()
     }
     
@@ -165,26 +166,6 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
         })
     }
     
-//    func requestEditCustomizedCategories() {
-//        self.showHUD()
-//        let manager = APIManager.sharedInstance
-//        let url = "http://merchant.online.api.easydeal.ph/api/v1/category/getCustomCategories"
-//        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
-//        
-//        manager.POST(url, parameters: parameters, success: {
-//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-//            
-//            self.customizedCategoriesModel = CustomizedCategoriesModel.parseDataWithDictionary(responseObject as! NSDictionary)
-//            self.tableView.reloadData()
-//            self.hud?.hide(true)
-//            
-//            }, failure: {
-//                (task: NSURLSessionDataTask!, error: NSError!) in
-//                println(error)
-//                self.hud?.hide(true)
-//        })
-//    }
-    
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -233,8 +214,10 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     
     // MARK: - Add Sub Category View Controller Delegate
     
-    func addSubCategory(category: String) {
-        categories.append(category)
+    func addSubCategory(subCategory: NSDictionary, categoryName: String) {
+        subCategories.append(subCategory)
+        println(subCategories)
+        categories.append(categoryName)
         self.tableView.reloadData()
     }
     

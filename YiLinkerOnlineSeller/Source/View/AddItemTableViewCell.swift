@@ -28,9 +28,13 @@ class AddItemTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func setProductImage(image: String) {
+        self.itemImageView.sd_setImageWithURL(NSURL(string: image), placeholderImage: UIImage(named: "dummy-placeholder"))
+    }
+    
     func updateStatusImage(added: Bool) {
         if added {
-            addImageView.image = UIImage(named: "checkItem")
+            addImageView.image = UIImage(named: "checkCategory")
         } else {
             addImageView.image = UIImage(named: "addItem")
         }

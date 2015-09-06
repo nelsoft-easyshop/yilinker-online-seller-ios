@@ -31,8 +31,9 @@ class StoreAddressModel: NSObject {
     var latitude: [Double] = []
     var landline: [String] = []
     var is_default: [Bool] = []
+    var store_address: [String] = []
     
-    init(user_address_id: NSArray, location_id: NSArray, title: NSArray, unit_number: NSArray, building_name: NSArray, street_number: NSArray, street_name: NSArray, subdivision: NSArray, zip_code: NSArray, street_address: NSArray, country: NSArray, island: NSArray, region: NSArray, province: NSArray, city: NSArray, municipality: NSArray, barangay: NSArray, longitude: NSArray, latitude: NSArray, landline: NSArray, is_default: NSArray){
+    init(user_address_id: NSArray, location_id: NSArray, title: NSArray, unit_number: NSArray, building_name: NSArray, street_number: NSArray, street_name: NSArray, subdivision: NSArray, zip_code: NSArray, street_address: NSArray, country: NSArray, island: NSArray, region: NSArray, province: NSArray, city: NSArray, municipality: NSArray, barangay: NSArray, longitude: NSArray, latitude: NSArray, landline: NSArray, is_default: NSArray, store_address: NSArray){
     
         self.user_address_id = user_address_id as! [Int]
         self.location_id = location_id  as! [Int]
@@ -54,6 +55,7 @@ class StoreAddressModel: NSObject {
         self.latitude = latitude as! [Double]
         self.landline = landline as! [String]
         self.is_default = is_default as! [Bool]
+        self.store_address = store_address as! [String]
     
     }
     
@@ -79,6 +81,7 @@ class StoreAddressModel: NSObject {
         var latitude: [Double] = []
         var landline: [String] = []
         var is_default: [Bool] = []
+        var store_address: [String] = []
         
         if dictionary.isKindOfClass(NSDictionary) {
             
@@ -168,10 +171,14 @@ class StoreAddressModel: NSObject {
                     if let tempIsDefault = address["isDefault"] as? Bool {
                         is_default.append(tempIsDefault)
                     }
+                    
+                    if let tempStoreAddress = address["fullLocation"] as? String {
+                        store_address.append(tempStoreAddress)
+                    }
                 }
             }
         }
-        var storeAddressModel = StoreAddressModel(user_address_id: user_address_id, location_id: location_id, title: title, unit_number: unit_number, building_name: building_name, street_number: street_number, street_name: street_name, subdivision: subdivision, zip_code: zip_code, street_address: street_address, country: country, island: island, region: region, province: province, city: city, municipality: municipality, barangay: barangay, longitude: longitude, latitude: latitude, landline: landline, is_default: is_default)
+        var storeAddressModel = StoreAddressModel(user_address_id: user_address_id, location_id: location_id, title: title, unit_number: unit_number, building_name: building_name, street_number: street_number, street_name: street_name, subdivision: subdivision, zip_code: zip_code, street_address: street_address, country: country, island: island, region: region, province: province, city: city, municipality: municipality, barangay: barangay, longitude: longitude, latitude: latitude, landline: landline, is_default: is_default, store_address: store_address)
         
         return storeAddressModel
     }

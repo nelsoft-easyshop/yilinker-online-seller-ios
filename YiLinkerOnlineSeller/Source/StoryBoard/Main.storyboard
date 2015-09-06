@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="PZ0-iH-fRI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="PZ0-iH-fRI">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+        </mutableArray>
+        <mutableArray key="Panton Light.otf">
+            <string>Panton-Light</string>
+        </mutableArray>
         <mutableArray key="Panton SemiBold.otf">
             <string>Panton-SemiBold</string>
         </mutableArray>
         <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
             <string>Panton-Regular</string>
         </mutableArray>
     </customFonts>
@@ -293,6 +314,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="2mi-dD-N9i"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="15"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="File a Dispute">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -392,7 +414,7 @@
                                                         <constraint firstAttribute="height" constant="21" id="aKI-O1-TNH"/>
                                                         <constraint firstAttribute="width" constant="68" id="xDD-mN-gA2"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -426,7 +448,7 @@
                                                         <constraint firstAttribute="height" constant="21" id="RWU-mE-amB"/>
                                                         <constraint firstAttribute="width" constant="97" id="wjm-nD-EIl"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -460,7 +482,7 @@
                                                         <constraint firstAttribute="height" constant="21" id="Bhw-2x-Fo2"/>
                                                         <constraint firstAttribute="width" constant="147" id="rPp-5a-qDK"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -494,7 +516,7 @@
                                                         <constraint firstAttribute="width" constant="111" id="Wuo-95-r1X"/>
                                                         <constraint firstAttribute="height" constant="21" id="iaf-BG-DRg"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -532,7 +554,7 @@
                                                         <constraint firstAttribute="height" constant="21" id="EWn-i8-0HO"/>
                                                         <constraint firstAttribute="width" constant="42" id="dhS-qv-JAq"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -566,7 +588,7 @@
                                                         <constraint firstAttribute="width" constant="71" id="UJz-3d-KWS"/>
                                                         <constraint firstAttribute="height" constant="21" id="Ulr-sT-Zp6"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -653,13 +675,13 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="456375867" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ugy-EI-iya">
                                                     <rect key="frame" x="14" y="46" width="208" height="21"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="22"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Case ID:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9N0-AG-7ig">
                                                     <rect key="frame" x="14" y="15" width="89" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="22"/>
+                                                    <fontDescription key="fontDescription" name="Panton-Light" family="Panton" pointSize="22"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -681,7 +703,7 @@
                                                         <constraint firstAttribute="width" constant="50" id="hVQ-Ul-9em"/>
                                                         <constraint firstAttribute="height" constant="21" id="rbM-Ca-b8b"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -692,7 +714,7 @@
                                                         <constraint firstAttribute="height" constant="26" id="6ji-8f-Wqa"/>
                                                         <constraint firstAttribute="width" constant="97" id="dJx-r8-7cu"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="17"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -716,16 +738,17 @@
                                                         <constraint firstAttribute="width" constant="83" id="8ug-N4-8dC"/>
                                                         <constraint firstAttribute="height" constant="21" id="Qrq-rT-8bX"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="January 21, 2016" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XmG-pd-47b">
-                                                    <rect key="frame" x="172" y="11" width="133" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="January 21, 2016" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XmG-pd-47b">
+                                                    <rect key="frame" x="142" y="11" width="163" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="2mX-Io-CYP"/>
+                                                        <constraint firstAttribute="width" constant="163" id="gtK-cz-swU"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -753,10 +776,10 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seller" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="80T-Ls-bpS">
-                                                    <rect key="frame" x="262" y="11" width="43" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seller" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="80T-Ls-bpS">
+                                                    <rect key="frame" x="190" y="11" width="115" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="43" id="BfV-m2-FeK"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="115" id="MJ1-Z2-eIW"/>
                                                         <constraint firstAttribute="height" constant="21" id="VXp-uF-5m1"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -783,7 +806,7 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Complainant Remarks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Bx-HD-AnK">
                                                     <rect key="frame" x="15" y="11" width="179" height="21"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -798,7 +821,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="250" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="maX-yb-5W2">
                                                     <rect key="frame" x="15" y="8" width="290" height="105"/>
                                                     <string key="text">Silence the noise from your daily commute or the drama from your loud neighbors with dual-mode Adaptive Noise Canceling. When you’re listening to music, ANC automatically strikes the perfect blend between your music and the world outside. If you only want to use the headphone to cancel external noise, the ANC only mode automatically increases the level of noise cancelation, to put the world on mute.</string>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -822,7 +845,7 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="CSR Remarks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nlo-n9-ZN5">
                                                     <rect key="frame" x="15" y="11" width="179" height="21"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -837,7 +860,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="250" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pNT-yg-bE6">
                                                     <rect key="frame" x="15" y="8" width="290" height="105"/>
                                                     <string key="text">Silence the noise from your daily commute or the drama from your loud neighbors with dual-mode Adaptive Noise Canceling. When you’re listening to music, ANC automatically strikes the perfect blend between your music and the world outside. If you only want to use the headphone to cancel external noise, the ANC only mode automatically increases the level of noise cancelation, to put the world on mute.</string>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -1013,6 +1036,7 @@
                                     <constraint firstAttribute="bottom" secondItem="aZB-TK-5J6" secondAttribute="bottom" constant="-2" id="Wom-vu-rq4"/>
                                     <constraint firstItem="bYM-ay-3oQ" firstAttribute="leading" secondItem="7dG-Ed-1dH" secondAttribute="trailing" constant="1" id="Z0q-Qk-Dea"/>
                                     <constraint firstItem="7dG-Ed-1dH" firstAttribute="leading" secondItem="xNt-4E-Mci" secondAttribute="trailing" constant="-1" id="dP9-1j-ywF"/>
+                                    <constraint firstAttribute="width" constant="359" id="dVG-TF-PSJ"/>
                                     <constraint firstAttribute="trailing" secondItem="aZB-TK-5J6" secondAttribute="trailing" id="esa-4e-of5"/>
                                     <constraint firstItem="bYM-ay-3oQ" firstAttribute="leading" secondItem="7dG-Ed-1dH" secondAttribute="trailing" constant="1" id="hsq-28-kZD"/>
                                     <constraint firstItem="7dG-Ed-1dH" firstAttribute="top" secondItem="P4i-u7-5FG" secondAttribute="top" id="kEo-9u-I0y"/>
@@ -1047,6 +1071,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="3aD-Xm-eWu" secondAttribute="trailing" constant="-16" id="Lql-KA-8Vd"/>
                             <constraint firstAttribute="trailingMargin" secondItem="wyL-yh-FrS" secondAttribute="trailing" constant="-16" id="OTv-ao-Uxw"/>
                             <constraint firstItem="P4i-u7-5FG" firstAttribute="leading" secondItem="nOb-Vl-TXr" secondAttribute="leadingMargin" constant="-8" id="RWK-Bk-8zL"/>
+                            <constraint firstItem="P4i-u7-5FG" firstAttribute="top" secondItem="cKA-AC-DhN" secondAttribute="bottom" constant="8" id="Y8G-5i-F7A"/>
                             <constraint firstItem="P4i-u7-5FG" firstAttribute="top" secondItem="cKA-AC-DhN" secondAttribute="bottom" constant="8" id="aUP-Q8-zER"/>
                             <constraint firstItem="3aD-Xm-eWu" firstAttribute="top" secondItem="P4i-u7-5FG" secondAttribute="bottom" constant="57" id="cTx-3z-P3Z"/>
                             <constraint firstItem="VdL-4l-7VO" firstAttribute="top" secondItem="3aD-Xm-eWu" secondAttribute="bottom" constant="-51" id="e2X-Hd-fxf"/>
@@ -1054,6 +1079,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="ytg-6M-24S" secondAttribute="trailing" constant="-16" id="fit-JR-IdH"/>
                             <constraint firstItem="wyL-yh-FrS" firstAttribute="leading" secondItem="nOb-Vl-TXr" secondAttribute="leadingMargin" constant="-16" id="fkJ-ey-nf1"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Kw1-t8-18t" secondAttribute="trailing" constant="-16" id="g06-hA-CNb"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="P4i-u7-5FG" secondAttribute="trailing" constant="-8" id="heO-EL-1G1"/>
                             <constraint firstItem="VdL-4l-7VO" firstAttribute="top" secondItem="ytg-6M-24S" secondAttribute="bottom" constant="-121" id="mOK-AJ-V5K"/>
                             <constraint firstItem="Kw1-t8-18t" firstAttribute="leading" secondItem="nOb-Vl-TXr" secondAttribute="leadingMargin" constant="-16" id="mz6-ga-rCy"/>
                             <constraint firstItem="P4i-u7-5FG" firstAttribute="top" secondItem="ytg-6M-24S" secondAttribute="top" constant="-42" id="rmU-Fu-NAo"/>

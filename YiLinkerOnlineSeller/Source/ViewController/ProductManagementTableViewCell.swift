@@ -42,6 +42,10 @@ class ProductManagementTableViewCell: UITableViewCell {
     
     // MARK: - Methods
     
+    func setProductImage(image: String) {
+        productImageView.sd_setImageWithURL(NSURL(string: image), placeholderImage: UIImage(named: "dummy-placeholder"))
+    }
+    
     func costumizeVies() {
         checkContainerView.layer.cornerRadius = 4.0
         checkContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "checkAction:"))

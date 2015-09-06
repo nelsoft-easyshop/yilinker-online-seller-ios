@@ -185,7 +185,8 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
             println(responseObject)
             
             if transactionModel.isSuccessful {
-                self.self.tableData = transactionModel.transactions
+                self.tableData.removeAll(keepCapacity: false)
+                self.tableData = transactionModel.transactions
                 self.tableView.reloadData()
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")

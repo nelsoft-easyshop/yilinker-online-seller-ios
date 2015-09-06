@@ -9,22 +9,26 @@
 import UIKit
 
 protocol ParentCategoryViewControllerDelegate {
-    func updateParentCategory(parentCategory: String)
+    func updateParentCategory(parentCategory: String, parentId: Int)
 }
 
 class ParentCategoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var delegate: ParentCategoryViewControllerDelegate?
+    var customizedCategoriesModel: CustomizedCategoriesModel!
     
     @IBOutlet weak var searchBarTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
 
     var selectedIndex: Int = -1
+
+    var hud: MBProgressHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        requestGetCustomizedCategories()
         customizedNavigationBar()
         customizedViews()
         
@@ -57,6 +61,40 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
     }
     
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    // MARK: - Requests
+    
+    func requestGetCustomizedCategories() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
+        
+        manager.POST(APIAtlas.getCustomizedCategories, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.customizedCategoriesModel = CustomizedCategoriesModel.parseDataWithDictionary(responseObject as! NSDictionary)
+            self.tableView.reloadData()
+            self.hud?.hide(true)
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println(error)
+                self.hud?.hide(true)
+        })
+    }
+    
     // MARK: - Actions
     
     func closeAction() {
@@ -64,22 +102,24 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func checkAction() {
-        
-        delegate?.updateParentCategory("Parent Category " + String(selectedIndex))
+        delegate?.updateParentCategory(customizedCategoriesModel.customizedCategories[selectedIndex].name, parentId: customizedCategoriesModel.customizedCategories[selectedIndex].parentId)
         closeAction()
     }
     
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        if self.customizedCategoriesModel != nil {
+            return self.customizedCategoriesModel.customizedCategories.count
+        }
+        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "identifier")
         
         cell.selectionStyle = .None
-        cell.textLabel?.text = "Parent Category " + String(indexPath.row)
+        cell.textLabel?.text = customizedCategoriesModel.customizedCategories[indexPath.row].name
         cell.textLabel?.font = UIFont(name: "Panton", size: 12.0)
         
         if selectedIndex == indexPath.row {
@@ -96,16 +136,6 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
         self.tableView.reloadData()
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if cell.respondsToSelector("setSeparatorInset:") {
-            cell.separatorInset = UIEdgeInsetsZero
-        }
-        if cell.respondsToSelector("setLayoutMargins:") {
-            cell.layoutMargins = UIEdgeInsetsZero
-        }
-        if cell.respondsToSelector("setPreservesSuperviewLayoutMargins:") {
-            cell.preservesSuperviewLayoutMargins = false
-        }
-    }
+        
     
 }

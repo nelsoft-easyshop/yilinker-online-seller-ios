@@ -13,16 +13,13 @@
             <string>Panton-SemiBold</string>
             <string>Panton-SemiBold</string>
             <string>Panton-SemiBold</string>
-            <string>Panton-SemiBold</string>
-            <string>Panton-SemiBold</string>
-            <string>Panton-SemiBold</string>
         </mutableArray>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StoreInfoAccountInformationTableViewCell" rowHeight="299" id="KGk-i7-Jjw" customClass="StoreInfoAccountInformationTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="363" height="299"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StoreInfoAccountInformationTableViewCell" rowHeight="221" id="KGk-i7-Jjw" customClass="StoreInfoAccountInformationTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="360" height="221"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -52,41 +49,10 @@
                             <constraint firstAttribute="height" constant="46" id="sdF-Rf-diV"/>
                         </constraints>
                     </view>
-                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Jr-B8-Mxd">
-                        <rect key="frame" x="8" y="101" width="347" height="30"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits" returnKeyType="next"/>
-                    </textField>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AmA-We-YcP">
-                        <rect key="frame" x="279" y="103" width="73" height="26"/>
-                        <color key="backgroundColor" red="0.43529411764705883" green="0.44313725490196076" blue="0.47450980392156861" alpha="1" colorSpace="calibratedRGB"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PSA-q5-LA3">
+                        <rect key="frame" x="8" y="80" width="62" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="73" id="ViE-aY-N77"/>
-                            <constraint firstAttribute="height" constant="26" id="oKB-Qa-6z6"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
-                        <state key="normal" title="Change">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="changeEmailAddress:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="CRp-zM-ocI"/>
-                        </connections>
-                    </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b3L-qL-x6W">
-                        <rect key="frame" x="67" y="142" width="18" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="U0j-uu-joC"/>
-                            <constraint firstAttribute="width" constant="18" id="XEi-mr-Ugv"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
-                        <color key="textColor" red="1" green="0.2160583505" blue="0.20584909009999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PSA-q5-LA3">
-                        <rect key="frame" x="8" y="80" width="80" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="80" id="MGn-Wr-1p8"/>
+                            <constraint firstAttribute="width" constant="62" id="MGn-Wr-1p8"/>
                             <constraint firstAttribute="height" constant="21" id="XIg-ha-vbM"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
@@ -94,7 +60,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NxH-dT-DmS">
-                        <rect key="frame" x="89" y="80" width="18" height="21"/>
+                        <rect key="frame" x="65" y="80" width="18" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="6br-wP-v5m"/>
                             <constraint firstAttribute="width" constant="18" id="uHB-wb-uZi"/>
@@ -103,26 +69,11 @@
                         <color key="textColor" red="1" green="0.2160583505" blue="0.20584909009999999" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uYo-7r-VBy">
-                        <rect key="frame" x="8" y="163" width="347" height="30"/>
-                        <nil key="textColor"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
-                    </textField>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ulO-gL-rCU">
-                        <rect key="frame" x="8" y="142" width="59" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="POg-4R-X5d"/>
-                            <constraint firstAttribute="width" constant="59" id="x5Y-em-v33"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tjg-OX-UXr">
-                        <rect key="frame" x="8" y="221" width="345" height="58"/>
+                        <rect key="frame" x="7" y="154" width="345" height="58"/>
                         <color key="backgroundColor" red="0.20000000000000001" green="0.65098039220000004" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstAttribute="width" constant="345" id="nh9-Sq-Zjg"/>
                             <constraint firstAttribute="height" constant="58" id="xxE-Xb-6sh"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-ExtraBold" family="Panton" pointSize="14"/>
@@ -134,12 +85,20 @@
                             <action selector="saveAccountInfo:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="JwW-mb-3vh"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CTN-mJ-yjy">
-                        <rect key="frame" x="280" y="165" width="73" height="26"/>
-                        <color key="backgroundColor" red="0.43529411764705883" green="0.44313725490196076" blue="0.47450980392156861" alpha="1" colorSpace="calibratedRGB"/>
+                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Jr-B8-Mxd">
+                        <rect key="frame" x="8" y="101" width="347" height="30"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
+                        <connections>
+                            <action selector="dismissKeyboard:" destination="KGk-i7-Jjw" eventType="editingDidEnd" id="LtY-gR-qYu"/>
+                        </connections>
+                    </textField>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JK2-YS-HgT">
+                        <rect key="frame" x="279" y="103" width="73" height="26"/>
+                        <color key="backgroundColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="26" id="ZLw-x3-QWj"/>
-                            <constraint firstAttribute="width" constant="73" id="eRA-NN-qnF"/>
+                            <constraint firstAttribute="width" constant="73" id="PR3-Ok-7Tz"/>
+                            <constraint firstAttribute="height" constant="26" id="pGT-bz-WH6"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
                         <state key="normal" title="Change">
@@ -147,52 +106,35 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
-                            <action selector="changePassword:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="3If-gm-F34"/>
+                            <action selector="changePassword:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="z5m-kp-0lv"/>
                         </connections>
                     </button>
                 </subviews>
                 <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstItem="Wht-2l-Tg0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="11" id="2uG-CR-Sxw"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="tjg-OX-UXr" secondAttribute="bottom" constant="11" id="9rM-x0-d6j"/>
-                    <constraint firstItem="uYo-7r-VBy" firstAttribute="leading" secondItem="7Jr-B8-Mxd" secondAttribute="leading" id="Cwb-PP-IEc"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="tjg-OX-UXr" secondAttribute="bottom" id="9rM-x0-d6j"/>
                     <constraint firstItem="7Jr-B8-Mxd" firstAttribute="top" secondItem="NxH-dT-DmS" secondAttribute="bottom" id="EKi-0N-ohb"/>
                     <constraint firstItem="7Jr-B8-Mxd" firstAttribute="leading" secondItem="PSA-q5-LA3" secondAttribute="leading" id="FCt-vO-yAD"/>
-                    <constraint firstItem="ulO-gL-rCU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="G1x-Jr-kjg"/>
-                    <constraint firstItem="AmA-We-YcP" firstAttribute="leading" secondItem="7Jr-B8-Mxd" secondAttribute="trailing" constant="-76" id="HN9-3j-wIc"/>
-                    <constraint firstItem="ulO-gL-rCU" firstAttribute="top" secondItem="7Jr-B8-Mxd" secondAttribute="bottom" constant="11" id="HXY-G0-dO9"/>
-                    <constraint firstItem="7Jr-B8-Mxd" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="M6N-8q-6eg"/>
-                    <constraint firstItem="CTN-mJ-yjy" firstAttribute="trailing" secondItem="AmA-We-YcP" secondAttribute="trailing" constant="1" id="N69-eM-eFW"/>
-                    <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="tjg-OX-UXr" secondAttribute="trailing" constant="2" id="QG4-5C-5b4"/>
-                    <constraint firstItem="NxH-dT-DmS" firstAttribute="leading" secondItem="PSA-q5-LA3" secondAttribute="trailing" constant="1" id="QWy-aG-xLK"/>
+                    <constraint firstItem="7Jr-B8-Mxd" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="3" id="M6N-8q-6eg"/>
+                    <constraint firstItem="NxH-dT-DmS" firstAttribute="leading" secondItem="PSA-q5-LA3" secondAttribute="trailing" constant="-5" id="QWy-aG-xLK"/>
                     <constraint firstItem="7Jr-B8-Mxd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="RtC-EZ-rJc"/>
-                    <constraint firstItem="CTN-mJ-yjy" firstAttribute="leading" secondItem="uYo-7r-VBy" secondAttribute="trailing" constant="-75" id="SLv-0C-xH2"/>
-                    <constraint firstItem="uYo-7r-VBy" firstAttribute="leading" secondItem="PSA-q5-LA3" secondAttribute="leading" id="UMm-WE-g4v"/>
-                    <constraint firstItem="AmA-We-YcP" firstAttribute="centerY" secondItem="7Jr-B8-Mxd" secondAttribute="centerY" id="Wuj-OP-V0C"/>
-                    <constraint firstItem="CTN-mJ-yjy" firstAttribute="centerY" secondItem="uYo-7r-VBy" secondAttribute="centerY" id="Xu6-cd-Neb"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="JK2-YS-HgT" secondAttribute="trailing" id="SXX-WA-fQ4"/>
+                    <constraint firstItem="JK2-YS-HgT" firstAttribute="baseline" secondItem="7Jr-B8-Mxd" secondAttribute="baseline" id="ZYn-hE-sz1"/>
                     <constraint firstItem="PSA-q5-LA3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Zcj-pY-69F"/>
                     <constraint firstItem="Wht-2l-Tg0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="c0h-qw-ggV"/>
-                    <constraint firstItem="CTN-mJ-yjy" firstAttribute="leading" secondItem="AmA-We-YcP" secondAttribute="leading" constant="1" id="cFy-jf-1ni"/>
-                    <constraint firstItem="uYo-7r-VBy" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="fDN-wd-DHO"/>
                     <constraint firstItem="NxH-dT-DmS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="72" id="fjC-jf-n7O"/>
-                    <constraint firstItem="uYo-7r-VBy" firstAttribute="trailing" secondItem="7Jr-B8-Mxd" secondAttribute="trailing" id="hJc-TD-hHM"/>
-                    <constraint firstItem="b3L-qL-x6W" firstAttribute="top" secondItem="7Jr-B8-Mxd" secondAttribute="bottom" constant="11" id="jYx-xK-IQr"/>
-                    <constraint firstItem="b3L-qL-x6W" firstAttribute="leading" secondItem="ulO-gL-rCU" secondAttribute="trailing" id="leK-wR-P25"/>
-                    <constraint firstItem="uYo-7r-VBy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="rbD-U4-yH9"/>
-                    <constraint firstItem="tjg-OX-UXr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="sku-UH-IyB"/>
-                    <constraint firstItem="uYo-7r-VBy" firstAttribute="top" secondItem="ulO-gL-rCU" secondAttribute="bottom" id="whq-4R-4bL"/>
-                    <constraint firstItem="tjg-OX-UXr" firstAttribute="top" secondItem="uYo-7r-VBy" secondAttribute="bottom" constant="28" id="wtT-Kj-CaH"/>
+                    <constraint firstItem="tjg-OX-UXr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-1" id="sku-UH-IyB"/>
+                    <constraint firstItem="tjg-OX-UXr" firstAttribute="top" secondItem="7Jr-B8-Mxd" secondAttribute="bottom" constant="23" id="wCz-r0-qMz"/>
                     <constraint firstItem="7Jr-B8-Mxd" firstAttribute="top" secondItem="PSA-q5-LA3" secondAttribute="bottom" id="yOt-a4-tcO"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="changeEmailButton" destination="AmA-We-YcP" id="BKv-rI-w36"/>
-                <outlet property="changeMobileButton" destination="CTN-mJ-yjy" id="Dbj-dW-mqs"/>
-                <outlet property="emailAddressTextField" destination="7Jr-B8-Mxd" id="3KX-bv-J65"/>
-                <outlet property="passwordTextField" destination="uYo-7r-VBy" id="7Jg-hX-xyR"/>
+                <outlet property="changePasswordButton" destination="JK2-YS-HgT" id="Hwf-3H-jwP"/>
+                <outlet property="passwordTextField" destination="7Jr-B8-Mxd" id="FIw-87-nZy"/>
                 <outlet property="saveButton" destination="tjg-OX-UXr" id="0wQ-ax-wsu"/>
             </connections>
-            <point key="canvasLocation" x="232.5" y="336.5"/>
+            <point key="canvasLocation" x="231" y="297.5"/>
         </tableViewCell>
     </objects>
 </document>
