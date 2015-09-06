@@ -90,9 +90,9 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         let manager = APIManager.sharedInstance
         var bankId2: Int = 0
         if edit {
-            bankId2 = self.bankId
-        } else {
             bankId2 = self.bankDictionary[self.bankName]!
+        } else {
+            bankId2 = self.bankId
         }
         var accountNumber: Int? = self.accountNumberTextField.text.toInt()
         //var bankId2: Int? = bankId.toInt()
