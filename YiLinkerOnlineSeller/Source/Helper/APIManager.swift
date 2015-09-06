@@ -39,6 +39,7 @@ struct APIAtlas {
     static let sellerSetDefaultBankAccount = "auth/bank/account/setDefaultBankAccount"
     static let sellerStoreAddresses = "auth/address/getUserAddresses"
     static let sellerDeleteStoreAddress = "auth/address/deleteUserAddress"
+    static let transactionList = "auth/getTransactionList"
     
     static let getCustomizedCategories = "category/getCustomCategories"
     static let getCategoryDetails = "auth/category/getCategoryDetails"
@@ -48,6 +49,8 @@ struct APIAtlas {
     static let sortParentCategory = "auth/category/sortParentCategories"
     static let checkIfCategoryNameExists = "auth/category/checkIfCategoryExists"
     static let getAllCategoryProducts = "auth/category/getAllCategoryProducts"
+
+    
     
     static let baseUrl = APIEnvironment.baseUrl()
 }

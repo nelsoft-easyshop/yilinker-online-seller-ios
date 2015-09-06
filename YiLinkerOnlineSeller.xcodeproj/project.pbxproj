@@ -322,6 +322,8 @@
 		79E633AD1B9B328E0062DB14 /* TransactionShipItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E633AC1B9B328E0062DB14 /* TransactionShipItemTableViewCell.swift */; };
 		79E633B01B9B3C330062DB14 /* TransactionDeliveryLogTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E633AE1B9B3C330062DB14 /* TransactionDeliveryLogTableViewController.swift */; };
 		79E633B11B9B3C330062DB14 /* TransactionDeliveryLogTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E633AF1B9B3C330062DB14 /* TransactionDeliveryLogTableViewController.xib */; };
+		79ED2F621B9BF09700C5BC0A /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79ED2F611B9BF09700C5BC0A /* TransactionModel.swift */; };
+		79ED2F641B9BF2CA00C5BC0A /* TransactionsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79ED2F631B9BF2CA00C5BC0A /* TransactionsModel.swift */; };
 		79EDA4021B9204B10037558A /* MyPointsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EDA4011B9204B10037558A /* MyPointsTableViewController.swift */; };
 		79EDA4041B9204CA0037558A /* MyPointsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EDA4031B9204CA0037558A /* MyPointsTableViewController.xib */; };
 		79EDA4091B9204F20037558A /* PointsBreakdownTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EDA4051B9204F20037558A /* PointsBreakdownTableViewCell.swift */; };
@@ -793,6 +795,8 @@
 		79E633AC1B9B328E0062DB14 /* TransactionShipItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionShipItemTableViewCell.swift; sourceTree = "<group>"; };
 		79E633AE1B9B3C330062DB14 /* TransactionDeliveryLogTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionDeliveryLogTableViewController.swift; sourceTree = "<group>"; };
 		79E633AF1B9B3C330062DB14 /* TransactionDeliveryLogTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionDeliveryLogTableViewController.xib; sourceTree = "<group>"; };
+		79ED2F611B9BF09700C5BC0A /* TransactionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionModel.swift; sourceTree = "<group>"; };
+		79ED2F631B9BF2CA00C5BC0A /* TransactionsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsModel.swift; sourceTree = "<group>"; };
 		79EDA4011B9204B10037558A /* MyPointsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsTableViewController.swift; sourceTree = "<group>"; };
 		79EDA4031B9204CA0037558A /* MyPointsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPointsTableViewController.xib; sourceTree = "<group>"; };
 		79EDA4051B9204F20037558A /* PointsBreakdownTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsBreakdownTableViewCell.swift; sourceTree = "<group>"; };
@@ -1026,6 +1030,8 @@
 				F7C40F4F1B983A590091C16C /* StoreAddressModel.swift */,
 				F7C40F501B983A590091C16C /* StoreInfoModel.swift */,
 				79EF7AB91B99950E0082CD35 /* TransactionsFilterModel.swift */,
+				79ED2F611B9BF09700C5BC0A /* TransactionModel.swift */,
+				79ED2F631B9BF2CA00C5BC0A /* TransactionsModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2130,11 +2136,13 @@
 				792876041B8DF89F00762A39 /* ChartLimitLine.swift in Sources */,
 				792875F41B8DF89F00762A39 /* ChartAnimator.swift in Sources */,
 				0CF28ED51B8C85E5005B2E54 /* SessionManager.swift in Sources */,
+				79ED2F621B9BF09700C5BC0A /* TransactionModel.swift in Sources */,
 				26B5B24F1B94E93F00CBDDE5 /* AddCustomizedCategoryTableViewCell.swift in Sources */,
 				792876091B8DF89F00762A39 /* BarChartDataEntry.swift in Sources */,
 				792876181B8DF89F00762A39 /* LineChartDataSet.swift in Sources */,
 				F7C40FDD1B9840490091C16C /* FilterAttributeModel.swift in Sources */,
 				792876221B8DF89F00762A39 /* ChartDataBaseFilter.swift in Sources */,
+				79ED2F641B9BF2CA00C5BC0A /* TransactionsModel.swift in Sources */,
 				792876081B8DF89F00762A39 /* BarChartData.swift in Sources */,
 				792876361B8DF89F00762A39 /* CombinedChartRenderer.swift in Sources */,
 				79E6339F1B9B27E70062DB14 /* FSCalendar+IBExtension.m in Sources */,

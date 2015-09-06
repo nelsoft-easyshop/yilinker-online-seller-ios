@@ -39,6 +39,10 @@ struct Constants {
         //Transactions 
         static let transactionGreen: UIColor = HexaColor.colorWithHexa(0x6ec850)
         static let transactionGrey: UIColor = HexaColor.colorWithHexa(0xB6B6B6)
+        static let transactionNew: UIColor = HexaColor.colorWithHexa(0xF6B300)
+        static let transactionOngoing: UIColor = HexaColor.colorWithHexa(0xEC6A00)
+        static let transactionCompleted: UIColor = HexaColor.colorWithHexa(0x48B400)
+        static let transactionCancelled: UIColor = HexaColor.colorWithHexa(0xB6B6B6)
     }
     
     struct Credentials {
