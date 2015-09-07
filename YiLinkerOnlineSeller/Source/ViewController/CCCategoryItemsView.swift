@@ -24,6 +24,12 @@ class CCCategoryItemsView: UIView {
         self.addNewItemButton.layer.cornerRadius = self.addNewItemButton.frame.size.height / 2
     }
     
+    // MARK: - Methods
+    
+    func setItemButtonTitle(title: String) {
+        self.addNewItemButton.setTitle(title, forState: .Normal)
+    }
+    
     // MARK: - Actions
     
     @IBAction func addNewItemAction(sender: AnyObject) {

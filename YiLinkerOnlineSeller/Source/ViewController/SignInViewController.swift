@@ -137,8 +137,12 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
                 
                 if error.userInfo != nil {
                     if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                        let errorDescription: String = jsonResult["error_description"] as! String
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
+                        if jsonResult["error_description"] != nil {
+                            let errorDescription: String = jsonResult["error_description"] as! String
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
+                        } else {
+                            self.showAlert(title: "Error", message: "Something went wrong")
+                        }
                     }
                 } else {
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse

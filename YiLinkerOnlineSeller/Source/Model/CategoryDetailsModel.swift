@@ -73,14 +73,18 @@ class CategoryDetailsModel: NSObject {
                         }
                     }
                     
-                    for subValue in value["subcategories"] as! NSArray {
-                        let model: SubCategoryModel = SubCategoryModel.parseSubCategories(subValue as! NSDictionary)
-                        subcategories.append(model)
+                    if value["subcategories"] != nil {
+                        for subValue in value["subcategories"] as! NSArray {
+                            let model: SubCategoryModel = SubCategoryModel.parseSubCategories(subValue as! NSDictionary)
+                            subcategories.append(model)
+                        }
                     }
                     
-                    for subValue in value["products"] as! NSArray {
-                        let model: CategoryProductModel = CategoryProductModel.parseCategoryProducts(subValue as! NSDictionary)
-                        products.append(model)
+                    if value["products"] != nil {
+                        for subValue in value["products"] as! NSArray {
+                            let model: CategoryProductModel = CategoryProductModel.parseCategoryProducts(subValue as! NSDictionary)
+                            products.append(model)
+                        }
                     }
 
                 } // data
