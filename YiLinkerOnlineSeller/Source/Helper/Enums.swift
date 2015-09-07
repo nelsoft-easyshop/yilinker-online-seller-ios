@@ -49,3 +49,13 @@ enum AddressRefreshType {
     case SetDefault
     case Get
 }
+
+enum UserType {
+    case Seller
+    case Reseller
+}
+
+enum ResellerItemStatus {
+    case Selected
+    case Unselected
+}
