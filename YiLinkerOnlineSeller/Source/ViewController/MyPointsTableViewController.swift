@@ -14,8 +14,14 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
     let cellPointsBreakDownHeader: String = "PointsBreakdownTableViewCell"
     let cellPoints: String = "PointsTableViewCell"
     
-    var tableData: [PointModel] = [PointModel(date: "Jan 20, 2016", details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", points: "-10"), PointModel(date: "Jan 21, 2016", details: "Maecenas eu ipsum feugiat, sodales elit gravida, convallis tortor.", points: "+20"), PointModel(date: "Jan 22, 2016", details: "Pellentesque iaculis interdum dui non auctor.", points: "+50"), PointModel(date: "Jan 23, 2016", details: "Maecenas vel tincidunt ligula. ", points: "-20")]
-        
+    var hud: MBProgressHUD?
+    
+    var totalPointsModel: TotalPointsModel = TotalPointsModel(isSuccessful: false, message: "", data: "0")
+    var myPointsHistory: MyPointsHistoryModel = MyPointsHistoryModel(isSuccessful: false, message: "", data: [])
+    
+    var isMyPointsEnd: Bool = false
+    var myPointsPage: Int = 1
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,6 +31,12 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
         registerNibs()
     }
 
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        myPointsPage = 0
+        fireGetTotalPoints()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -40,6 +52,11 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
         self.tableView.estimatedRowHeight = 150.0
 
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
+        
+        var headerView = UIView(frame: CGRectMake(0, 0, self.view.frame.width, 1))
+        headerView.backgroundColor = UIColor(red: 70/255, green: 35/255, blue: 103/255, alpha: 1)
+        
+        self.tableView.tableHeaderView = headerView
     }
     
     func titleView() {
@@ -87,14 +104,19 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return tableData.count + 3
+        if myPointsHistory.data.count != 0 {
+            
+            return myPointsHistory.data.count + 3
+        } else {
+            return 0
+        }
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellPointsEarned, forIndexPath: indexPath) as! PointsEarnedTableViewCell
-            cell.pointsLabel.text = "6,399"
+            cell.pointsLabel.text = totalPointsModel.data
             return cell
         } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellPointsDetails, forIndexPath: indexPath) as! PointsDetailsTableViewCell
@@ -103,18 +125,38 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
             let cell = tableView.dequeueReusableCellWithIdentifier(cellPointsBreakDownHeader, forIndexPath: indexPath) as! PointsBreakdownTableViewCell
             cell.delegate = self
             
-            if tableData.count == 0 {
+            if myPointsHistory.data.count == 0 {
                 cell.breakDownView.hidden = true
+            } else {
+                cell.breakDownView.hidden = false
             }
             
             return cell
         }else {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellPoints, forIndexPath: indexPath) as! PointsTableViewCell
             
-            cell.dateLabel.text = tableData[indexPath.row - 3].date
-            cell.detailsLabel.text = tableData[indexPath.row - 3].details
+            println("Index \(indexPath.row)")
+            println("Count \(myPointsHistory.data.count)")
             
-            var points: String = tableData[indexPath.row - 3].points
+            let tempModel: MyPointsModel = myPointsHistory.data[indexPath.row - 3]
+            
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.s6"
+            let date: NSDate = dateFormatter.dateFromString(tempModel.date)!
+            
+            let dateFormatter1 = NSDateFormatter()
+            dateFormatter1.dateFormat = "MMM dd, yyyy"
+            let dateAdded = dateFormatter1.stringFromDate(date)
+            
+            
+            cell.dateLabel.text = dateAdded
+            cell.detailsLabel.text = tempModel.userPointTypeName
+        
+            var points: String = tempModel.points
+            
+            if Array(tempModel.points)[0] != "-" {
+                points = "+\(tempModel.points)"
+            }
             
             if points.rangeOfString("+") != nil {
                 cell.pointsLabel.textColor = UIColor(red: 85/255.0, green: 85/255.0, blue: 85/255.0, alpha: 1.0)
@@ -127,6 +169,20 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
             cell.pointsLabel.text = points
             
             return cell
+        }
+    }
+    
+    override func scrollViewDidEndDragging(aScrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        var offset: CGPoint = aScrollView.contentOffset
+        var bounds: CGRect = aScrollView.bounds
+        var size: CGSize = aScrollView.contentSize
+        var inset: UIEdgeInsets = aScrollView.contentInset
+        var y: CGFloat = offset.y + bounds.size.height - inset.bottom
+        var h: CGFloat = size.height
+        var reload_distance: CGFloat = 50
+        var temp: CGFloat = h + reload_distance
+        if y > temp {
+            fireGetPointsHistory()
         }
     }
     
@@ -191,6 +247,129 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
     // MARK: - PointsBreakdownTableViewCellDelegate
     // Callback when how to earned points button is clicked
     func howToEarnActionForIndex(sender: AnyObject) {
+        
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+
+    
+    func fireGetTotalPoints() {
+        showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
+        
+        manager.GET(APIAtlas.getPointsTotal, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.totalPointsModel = TotalPointsModel.parseDataWithDictionary(responseObject as! NSDictionary)
+            
+            if self.totalPointsModel.isSuccessful {
+                self.fireGetPointsHistory()
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.totalPointsModel.message, title: "Error")
+            }
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.fireRefreshToken("totalPoints")
+                } else {
+                    if Reachability.isConnectedToNetwork() {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong!", title: "Error")
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                    }
+                    println(error)
+                }
+                
+                
+        })
+    }
+    
+    func fireGetPointsHistory() {
+        if !isMyPointsEnd {
+            
+            showHUD()
+            let manager = APIManager.sharedInstance
+
+            myPointsPage++
+            
+            let url: String = "\(APIAtlas.getPointsHistory)?access_token=\(SessionManager.accessToken())&perPage=15&page=\(myPointsPage)"
+            
+            manager.GET(url, parameters: nil, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+    
+                self.myPointsHistory = MyPointsHistoryModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                println("Count 1 \(self.myPointsHistory.data.count)")
+                
+                if self.myPointsHistory.data.count < 15 {
+                    self.isMyPointsEnd = true
+                }
+                
+                if self.totalPointsModel.isSuccessful {
+                    self.tableView.reloadData()
+                } else {
+                    self.isMyPointsEnd = true
+                }
+                self.hud?.hide(true)
+                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                    self.hud?.hide(true)
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.fireRefreshToken("pointsHistory")
+                    } else {
+                        if Reachability.isConnectedToNetwork() {
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong!", title: "Error")
+                        } else {
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                        }
+                        println(error)
+                    }
+            })
+        } else {
+            self.hud?.hide(true)
+        }
+
+    }
+    
+    func fireRefreshToken(type: String) {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            if type == "totalPoints" {
+                self.fireGetTotalPoints()
+            } else if type == "pointsHistory" {
+                self.fireGetPointsHistory()
+            }
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+        })
         
     }
     
