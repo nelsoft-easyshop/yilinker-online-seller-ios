@@ -74,6 +74,15 @@
 		0C8D7FC11B8FE50900B3FA4E /* ProductUploadAttributeValuesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7FBF1B8FE50900B3FA4E /* ProductUploadAttributeValuesCollectionViewCell.swift */; };
 		0C8D7FC21B8FE50900B3FA4E /* ProductUploadAttributeValuesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C8D7FC01B8FE50900B3FA4E /* ProductUploadAttributeValuesCollectionViewCell.xib */; };
 		0C8D7FC41B8FFC5900B3FA4E /* CombinationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7FC31B8FFC5900B3FA4E /* CombinationModel.swift */; };
+		0CAACCB01B9D2DC000BE5EF3 /* ResellerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAACCAE1B9D2DC000BE5EF3 /* ResellerViewController.swift */; };
+		0CAACCB11B9D2DC000BE5EF3 /* ResellerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAACCAF1B9D2DC000BE5EF3 /* ResellerViewController.xib */; };
+		0CAACCBC1B9D857900BE5EF3 /* ResellerCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAACCBA1B9D857900BE5EF3 /* ResellerCollectionReusableView.xib */; };
+		0CAACCBD1B9D857900BE5EF3 /* ResellerCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAACCBB1B9D857900BE5EF3 /* ResellerCollectionReusableView.swift */; };
+		0CAACCC01B9D8B3200BE5EF3 /* ResellerItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAACCBE1B9D8B3200BE5EF3 /* ResellerItemTableViewCell.swift */; };
+		0CAACCC11B9D8B3200BE5EF3 /* ResellerItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAACCBF1B9D8B3200BE5EF3 /* ResellerItemTableViewCell.xib */; };
+		0CAACCC41B9D8EA500BE5EF3 /* ResellerItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAACCC21B9D8EA500BE5EF3 /* ResellerItemViewController.swift */; };
+		0CAACCC71B9D950C00BE5EF3 /* ResellerItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAACCC61B9D950C00BE5EF3 /* ResellerItemModel.swift */; };
+		0CAACCC91B9D9C0A00BE5EF3 /* ResellerItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAACCC81B9D9C0A00BE5EF3 /* ResellerItemViewController.xib */; };
 		0CAB52A11B91F42300EA441A /* ConditionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB52A01B91F42300EA441A /* ConditionModel.swift */; };
 		0CAB52A31B91F9FB00EA441A /* ConditionParserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB52A21B91F9FB00EA441A /* ConditionParserModel.swift */; };
 		0CAB52A51B92023E00EA441A /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB52A41B92023E00EA441A /* CategoryModel.swift */; };
@@ -551,6 +560,15 @@
 		0C8D7FBF1B8FE50900B3FA4E /* ProductUploadAttributeValuesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadAttributeValuesCollectionViewCell.swift; sourceTree = "<group>"; };
 		0C8D7FC01B8FE50900B3FA4E /* ProductUploadAttributeValuesCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadAttributeValuesCollectionViewCell.xib; path = ../View/ProductUploadAttributeValuesCollectionViewCell.xib; sourceTree = "<group>"; };
 		0C8D7FC31B8FFC5900B3FA4E /* CombinationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CombinationModel.swift; sourceTree = "<group>"; };
+		0CAACCAE1B9D2DC000BE5EF3 /* ResellerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResellerViewController.swift; sourceTree = "<group>"; };
+		0CAACCAF1B9D2DC000BE5EF3 /* ResellerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ResellerViewController.xib; path = ../ViewController/ResellerViewController.xib; sourceTree = "<group>"; };
+		0CAACCBA1B9D857900BE5EF3 /* ResellerCollectionReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResellerCollectionReusableView.xib; sourceTree = "<group>"; };
+		0CAACCBB1B9D857900BE5EF3 /* ResellerCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResellerCollectionReusableView.swift; sourceTree = "<group>"; };
+		0CAACCBE1B9D8B3200BE5EF3 /* ResellerItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResellerItemTableViewCell.swift; sourceTree = "<group>"; };
+		0CAACCBF1B9D8B3200BE5EF3 /* ResellerItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResellerItemTableViewCell.xib; sourceTree = "<group>"; };
+		0CAACCC21B9D8EA500BE5EF3 /* ResellerItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResellerItemViewController.swift; sourceTree = "<group>"; };
+		0CAACCC61B9D950C00BE5EF3 /* ResellerItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResellerItemModel.swift; sourceTree = "<group>"; };
+		0CAACCC81B9D9C0A00BE5EF3 /* ResellerItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResellerItemViewController.xib; sourceTree = "<group>"; };
 		0CAB52A01B91F42300EA441A /* ConditionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConditionModel.swift; sourceTree = "<group>"; };
 		0CAB52A21B91F9FB00EA441A /* ConditionParserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConditionParserModel.swift; sourceTree = "<group>"; };
 		0CAB52A41B92023E00EA441A /* CategoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
@@ -1082,6 +1100,7 @@
 				79ED2F631B9BF2CA00C5BC0A /* TransactionsModel.swift */,
 				F7C282EE1B9AE97500864451 /* BankModel.swift */,
 				26B35CAF1B9B06800067793A /* SubCategoryModel.swift */,
+				0CAACCC61B9D950C00BE5EF3 /* ResellerItemModel.swift */,
 				792F6E4F1B9D438B00F0CB03 /* TotalPointsModel.swift */,
 				792F6E511B9D44EC00F0CB03 /* MyPointsModel.swift */,
 				792F6E531B9D484000F0CB03 /* MyPointsHistoryModel.swift */,
@@ -1173,6 +1192,10 @@
 				F7C40F801B983B6B0091C16C /* StoreInfoBankAccountTableViewCell.swift */,
 				F7C40F7E1B983B650091C16C /* StoreInfoAddressTableViewCell.swift */,
 				F7C40F841B983B7C0091C16C /* StoreInfoTableViewCell.swift */,
+				0CAACCBA1B9D857900BE5EF3 /* ResellerCollectionReusableView.xib */,
+				0CAACCBB1B9D857900BE5EF3 /* ResellerCollectionReusableView.swift */,
+				0CAACCBE1B9D8B3200BE5EF3 /* ResellerItemTableViewCell.swift */,
+				0CAACCBF1B9D8B3200BE5EF3 /* ResellerItemTableViewCell.xib */,
 				79EF7AB51B998A8B0082CD35 /* TransactionFilterTableViewCell.swift */,
 				79EF7AC11B99F0D30082CD35 /* TransactionDetailsTableViewCell.swift */,
 				79EF7AC51B99F8980082CD35 /* TransactionProductTableViewCell.swift */,
@@ -1250,6 +1273,8 @@
 				26374D9E1B8F50A4006C639B /* SignInViewController.swift */,
 				F7C40F861B983B810091C16C /* StoreInfoViewController.swift */,
 				0C8739D81B96E172005D2EF8 /* SuccessUploadViewController.swift */,
+				0CAACCAE1B9D2DC000BE5EF3 /* ResellerViewController.swift */,
+				0CAACCC21B9D8EA500BE5EF3 /* ResellerItemViewController.swift */,
 				79E633801B9B07670062DB14 /* TransactionCancelOrderSuccessViewController.swift */,
 				79E6337C1B9AF4FD0062DB14 /* TransactionCancelOrderViewController.swift */,
 				26DB062F1B98BF2C00D38EA8 /* TransactionCollectionViewCell.swift */,
@@ -1271,6 +1296,8 @@
 		0CF28ECC1B8C85E5005B2E54 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				0C8739D91B96E172005D2EF8 /* SuccessUploadViewController.xib */,
+				0CAACCAF1B9D2DC000BE5EF3 /* ResellerViewController.xib */,
 				79E633811B9B07670062DB14 /* TransactionCancelOrderSuccessViewController.xib */,
 				79E6337D1B9AF4FD0062DB14 /* TransactionCancelOrderViewController.xib */,
 				79EFF75C1B8D6DD3008A9E7D /* ActivityLogTableViewCell.xib */,
@@ -1366,6 +1393,8 @@
 				799893021B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib */,
 				799893041B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib */,
 				0CB1F0D71B931160004C7BA0 /* SignInViewController.xib */,
+				7948807D1B94DAA50090B259 /* FollowerTableViewCell.xib */,
+				0CAACCC81B9D9C0A00BE5EF3 /* ResellerItemViewController.xib */,
 				F7C40F981B983BD40091C16C /* StoreInfoAccountInformationTableViewCell.xib */,
 				F7C40F961B983BC90091C16C /* StoreInfoAddressTableViewCell.xib */,
 				F7C40F941B983BC40091C16C /* StoreInfoBankAccountTableViewCell.xib */,
@@ -1836,6 +1865,7 @@
 				0CF28F011B8CA2E9005B2E54 /* Panton SemiBold Italic.otf in Resources */,
 				0C8D7F8E1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.xib in Resources */,
 				0CF28ED81B8C85E5005B2E54 /* Main.storyboard in Resources */,
+				0CAACCC11B9D8B3200BE5EF3 /* ResellerItemTableViewCell.xib in Resources */,
 				0C65F8B91B8DCD8B00504D86 /* ProductUploadCategoryTableViewCell.xib in Resources */,
 				0C65F8D51B8E089200504D86 /* ProductUploadQuantityTableViewCell.xib in Resources */,
 				2625FEA61B96A92500DD24AF /* EditSubCategoriesViewController.xib in Resources */,
@@ -1858,6 +1888,7 @@
 				0C65F8A51B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.xib in Resources */,
 				799892FB1B8CE94C00F4CFE2 /* SettingDeactivateTableViewCell.xib in Resources */,
 				0CF28EFF1B8CA2E9005B2E54 /* Panton Light.otf in Resources */,
+				0CAACCC91B9D9C0A00BE5EF3 /* ResellerItemViewController.xib in Resources */,
 				F7C40F951B983BC40091C16C /* StoreInfoBankAccountTableViewCell.xib in Resources */,
 				799893051B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib in Resources */,
 				0CF28EFA1B8CA2E9005B2E54 /* Panton ExtraLight Italic.otf in Resources */,
@@ -1905,6 +1936,7 @@
 				79EDA4041B9204CA0037558A /* MyPointsTableViewController.xib in Resources */,
 				F7C40FCB1B983CD90091C16C /* address.png in Resources */,
 				F7C40FCD1B983CD90091C16C /* arrow_up.png in Resources */,
+				0CAACCB11B9D2DC000BE5EF3 /* ResellerViewController.xib in Resources */,
 				79E6336D1B9AC2310062DB14 /* TransactionProductPurchaseTableViewCell.xib in Resources */,
 				79EDA4141B9205080037558A /* PointsDetailsTableViewCell.xib in Resources */,
 				0CF28F041B8CA2E9005B2E54 /* Panton Thin.otf in Resources */,
@@ -1913,6 +1945,7 @@
 				79EFF75E1B8D6DD3008A9E7D /* ActivityLogTableViewCell.xib in Resources */,
 				2686E37F1B95D44D00E8FA80 /* AddItemViewController.xib in Resources */,
 				79EDA4131B9205080037558A /* PointsBreakdownTableViewCell.xib in Resources */,
+				0CAACCBC1B9D857900BE5EF3 /* ResellerCollectionReusableView.xib in Resources */,
 				F7C40FB11B983C2B0091C16C /* ChangeBankAccountViewController.xib in Resources */,
 				F7C40FB51B983C370091C16C /* ChangeAddressFooterCollectionViewCell.xib in Resources */,
 				967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */,
@@ -2062,6 +2095,7 @@
 				792876071B8DF89F00762A39 /* ChartYAxis.swift in Sources */,
 				7928763D1B8DF89F00762A39 /* ChartColorTemplates.swift in Sources */,
 				26B35CB01B9B06800067793A /* SubCategoryModel.swift in Sources */,
+				0CAACCBD1B9D857900BE5EF3 /* ResellerCollectionReusableView.swift in Sources */,
 				792876261B8DF89F00762A39 /* ChartRange.swift in Sources */,
 				792876001B8DF89F00762A39 /* ScatterChartView.swift in Sources */,
 				792875FF1B8DF89F00762A39 /* RadarChartView.swift in Sources */,
@@ -2143,6 +2177,7 @@
 				0C8D7F951B8F12C200B3FA4E /* ProductUploadAttributeListTableViewController.swift in Sources */,
 				0C8D7FAA1B8F577300B3FA4E /* ProductUploadAddFooterView.swift in Sources */,
 				F7C40F5B1B983A7B0091C16C /* SemiRoundedButton.swift in Sources */,
+				0CAACCB01B9D2DC000BE5EF3 /* ResellerViewController.swift in Sources */,
 				79E633A41B9B27E70062DB14 /* FSCalendarHeader.m in Sources */,
 				0C65F8D81B8E0C4600504D86 /* ProductUploadDimensionsAndWeightTableViewCell.swift in Sources */,
 				26DB06351B98BF2C00D38EA8 /* TransactionCollectionViewCell.swift in Sources */,
@@ -2190,6 +2225,7 @@
 				961F702C1B97F057007D0EA5 /* CaseDetailsTableViewController.swift in Sources */,
 				0CF28EDA1B8C85E5005B2E54 /* MessageViewController.swift in Sources */,
 				26DB06391B98BF2C00D38EA8 /* TransactionViewController.swift in Sources */,
+				0CAACCC71B9D950C00BE5EF3 /* ResellerItemModel.swift in Sources */,
 				26B282F91B921BAF00A7C2B1 /* ProductManagementModelViewController.swift in Sources */,
 				26C2854D1B91C21A005EBD3A /* ProductManagementCollectionViewCell.swift in Sources */,
 				2686E37A1B9585D600E8FA80 /* ParentCategoryViewController.swift in Sources */,
@@ -2243,6 +2279,7 @@
 				79E6337B1B9AEDA50062DB14 /* TransactionDetailsFooterView.swift in Sources */,
 				F7C40F531B983A590091C16C /* StoreInfoModel.swift in Sources */,
 				792875FE1B8DF89F00762A39 /* PieRadarChartViewBase.swift in Sources */,
+				0CAACCC41B9D8EA500BE5EF3 /* ResellerItemViewController.swift in Sources */,
 				26DB062B1B97F9EB00D38EA8 /* RemovedItemTableViewCell.swift in Sources */,
 				F7C40F871B983B810091C16C /* StoreInfoViewController.swift in Sources */,
 				79EFF7711B8D6E35008A9E7D /* ActivityModel.swift in Sources */,
@@ -2269,6 +2306,7 @@
 				26B5B2451B94DE6700CBDDE5 /* CustomizedCategoryViews.swift in Sources */,
 				F7C40F751B983B3D0091C16C /* FilterFooterTableViewCell.swift in Sources */,
 				F7C40F831B983B700091C16C /* StoreInfoSectionTableViewCell.swift in Sources */,
+				0CAACCC01B9D8B3200BE5EF3 /* ResellerItemTableViewCell.swift in Sources */,
 				79E6336F1B9AC3640062DB14 /* TransactionProductPurchaseTableViewCell.swift in Sources */,
 				793C41E51B982CFA009CE671 /* CategoryDetailModel.swift in Sources */,
 				793C41E31B9824AD009CE671 /* CategoryProductsModel.swift in Sources */,
