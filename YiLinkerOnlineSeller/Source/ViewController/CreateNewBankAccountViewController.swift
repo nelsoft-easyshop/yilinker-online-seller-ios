@@ -50,7 +50,7 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
     var editBankId: Int = 0
     var accountTitle: String = ""
     var accountName: String = ""
-    var accountNumber: Int = 0
+    var accountNumber: String = ""
     var bankName: String = ""
     
     override func viewDidLoad() {
@@ -101,7 +101,7 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         if edit {
             bankId2 = self.bankDictionary[self.bankName]!
             url = APIAtlas.sellerEditBankAccount
-            var parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : NSNumber(integer: accountNumber!), "accountName" : self.accountNameTextField.text, "bankId" : NSNumber(integer: bankId2), "bankAccountId" : self.editBankId]
+            var parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : accountNumber, "accountName" : self.accountNameTextField.text, "bankId" : NSNumber(integer: bankId2), "bankAccountId" : self.editBankId]
             manager.POST(url, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 println("edited bank account")
@@ -119,7 +119,7 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         } else {
             bankId2 = self.bankId
             url = APIAtlas.sellerAddBankAccount
-            var parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : NSNumber(integer: accountNumber!), "accountName" : self.accountNameTextField.text, "bankId" : NSNumber(integer: bankId2)]
+            var parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : accountNumber, "accountName" : self.accountNameTextField.text, "bankId" : NSNumber(integer: bankId2)]
             manager.POST(url, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 println("created bank account")
@@ -251,11 +251,11 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         self.bankTableView.hidden = true
     }
     
-    func fillBankDetails(accountTitle: String, accountName: String,  accountNumber: Int, bankName: String, bankAccountId: Int){
+    func fillBankDetails(accountTitle: String, accountName: String,  accountNumber: String, bankName: String, bankAccountId: Int){
         if(!accountTitle.isEmpty) {
             self.accountTitleTextField.text = accountTitle
             self.accountNameTextField.text = accountName
-            self.accountNumberTextField.text = "\(accountNumber)"
+            self.accountNumberTextField.text = accountNumber
             self.bankNameTextField.text = "\(bankName)"
         }
       

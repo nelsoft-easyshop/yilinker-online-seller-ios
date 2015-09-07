@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ChangeBankAccountViewControllerDelegate {
-    func updateBankDetail(accountTitle: String, accountName: String, accountNumber: Int, bankName: String)
+    func updateBankDetail(accountTitle: String, accountName: String, accountNumber: String, bankName: String)
 }
 
 class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, ChangeAddressCollectionViewCellDelegate, ChangeAddressFooterCollectionViewCellDelegate, CreateNewBankAccountViewControllerDelegate {

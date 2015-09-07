@@ -378,9 +378,9 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         println("QR Code")
     }
     
-    func updateBankDetail(accountTitle: String, accountName: String, accountNumber: Int, bankName: String) {
+    func updateBankDetail(accountTitle: String, accountName: String, accountNumber: String, bankName: String) {
         self.storeInfoModel?.accountTitle = accountTitle
-        self.storeInfoModel?.bankAccount = accountName + "\n\(accountNumber)\n" + bankName
+        self.storeInfoModel?.bankAccount = accountName + "\n"+accountNumber+"\n" + bankName
         self.tableView.reloadData()
     }
     
