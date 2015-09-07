@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ChangeBankAccountViewControllerDelegate {
-    func updateBankDetail(accountTitle: String, accountName: String, accountNumber: Int, bankName: String)
+    func updateBankDetail(accountTitle: String, accountName: String, accountNumber: String, bankName: String)
 }
 
 class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, ChangeAddressCollectionViewCellDelegate, ChangeAddressFooterCollectionViewCellDelegate, CreateNewBankAccountViewControllerDelegate {
@@ -177,7 +177,6 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
         
         let cell : ChangeAddressCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressCollectionViewCell
         
-        println(self.bankAccountModel!.account_title[indexPath.row])
         if self.bankAccountModel != nil {
             cell.titleLabel.text = self.bankAccountModel!.account_title[indexPath.row]
             cell.subTitleLabel.text = "\(self.bankAccountModel!.account_number[indexPath.row])"+"\n"+self.bankAccountModel!.account_name[indexPath.row]+"\n"+self.bankAccountModel!.bank_name[indexPath.row]
