@@ -11,7 +11,7 @@ protocol CreateNewBankAccountViewControllerDelegate{
     func updateCollectionView()
     func dismissDimView()
 }
-class CreateNewBankAccountViewController: UIViewController {
+class CreateNewBankAccountViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FilterByTableViewCellDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     
@@ -27,14 +27,58 @@ class CreateNewBankAccountViewController: UIViewController {
     
     @IBOutlet weak var bankNameTextField: UITextField!
     
+    @IBOutlet weak var bankTableView: UITableView!
+    
+    @IBOutlet weak var bankAccountTitleLabel: UILabel!
+    
+    @IBOutlet weak var bankAccountDetailLabel: UILabel!
+    
     var storeInfoModel: StoreInfoModel!
+    var bankModel: BankModel!
     
     var delegate: CreateNewBankAccountViewControllerDelegate?
     
     var hud: MBProgressHUD?
     
+    var autoCompleteArray: NSMutableArray?
+    var autoCompleteFilterArray: NSArray?
+    var autoCompleteFilterArrayId: NSArray?
+    var bankDictionary = Dictionary<String, Int>()
+    var bankId: Int = 0
+    
+    var edit: Bool = false
+    var editBankId: Int = 0
+    var accountTitle: String = ""
+    var accountName: String = ""
+    var accountNumber: String = ""
+    var bankName: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.bankTableView.hidden = true
+        self.bankNameTextField.delegate = self
+        self.bankTableView.tableFooterView = UIView.new()
+        self.bankTableView.layer.masksToBounds = false
+        self.bankTableView.layer.shadowColor = UIColor.blackColor().CGColor
+        self.bankTableView.layer.shadowOffset = CGSizeMake(0.0, 5.0)
+        self.bankTableView.layer.shadowOpacity = 0.3
+        self.bankTableView.delegate = self
+        self.bankTableView.dataSource = self
+        self.bankTableView.separatorInset = UIEdgeInsetsZero
+        self.bankTableView.layoutMargins = UIEdgeInsetsZero
+       
+        var storeInfo = UINib(nibName: "FilterByTableViewCell", bundle: nil)
+        self.bankTableView.registerNib(storeInfo, forCellReuseIdentifier: "FilterByTableViewCell")
+    
+        self.fireEnabledBanks()
+        
+        if self.edit {
+            self.bankAccountTitleLabel.text = "Edit Bank Account"
+            self.fillBankDetails(accountTitle, accountName: accountName, accountNumber: accountNumber, bankName: bankName, bankAccountId: editBankId)
+        } else {
+            self.bankAccountTitleLabel.text = "Create Bank Account"
+        }
+      
         // Do any additional setup after loading the view.
     }
 
@@ -51,23 +95,50 @@ class CreateNewBankAccountViewController: UIViewController {
     @IBAction func createBankAcount(sender: AnyObject) {
         self.showHUD()
         let manager = APIManager.sharedInstance
-        var accountNumber: Int? = self.accountNumberTextField.text.toInt()
-        var bankId: Int? = "1".toInt()
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : NSNumber(integer: accountNumber!), "accountName" : self.accountNameTextField.text, "bankId" : 1]
-        println(NSNumber(integer: accountNumber!))
+        var bankId2: Int = 0
+        var url: String = ""
+        var accountNumber = self.accountNumberTextField.text
+        if edit {
+            bankId2 = self.bankDictionary[self.bankNameTextField.text]!
+            url = APIAtlas.sellerEditBankAccount
+            var parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : accountNumber, "accountName" : self.accountNameTextField.text, "bankId" : NSNumber(integer: bankId2), "bankAccountId" : self.editBankId]
+            manager.POST(url, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                println("edited bank account")
+                //self.dismissViewControllerAnimated(true, completion: nil)
+                
+                self.hud?.hide(true)
+                self.delegate?.updateCollectionView()
+                self.dismissViewControllerAnimated(true, completion: nil)
+                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                    
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.hud?.hide(true)
+                    println(error)
+            })
+        } else {
+            bankId2 = self.bankId
+            url = APIAtlas.sellerAddBankAccount
+            var parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : accountNumber, "accountName" : self.accountNameTextField.text, "bankId" : NSNumber(integer: bankId2)]
+            manager.POST(url, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                println("created bank account")
+                //self.dismissViewControllerAnimated(true, completion: nil)
+                
+                self.hud?.hide(true)
+                self.delegate?.updateCollectionView()
+                self.dismissViewControllerAnimated(true, completion: nil)
+                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                    
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.hud?.hide(true)
+                    println(error)
+            })
+        }
         
         self.delegate?.dismissDimView()
         
-        manager.POST(APIAtlas.sellerAddBankAccount, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println("\(parameters)")
-            //self.dismissViewControllerAnimated(true, completion: nil)
-            self.hud?.hide(true)
-            self.delegate?.updateCollectionView()
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
-                println(error)
-        })
+        
     }
     
     func showHUD() {
@@ -82,7 +153,47 @@ class CreateNewBankAccountViewController: UIViewController {
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if autoCompleteFilterArray != nil {
+        return autoCompleteFilterArray!.count
+        } else {
+            return 1
+        }
+        
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 30
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        //UITableViewCell *ell = [tableView dequeueReusableHeaderFooterViewWithIdentifier:nil];
+        let cell: FilterByTableViewCell = self.bankTableView.dequeueReusableCellWithIdentifier("FilterByTableViewCell") as! FilterByTableViewCell
+        cell.delegate = self
+        println(self.bankModel)
+        if(self.bankModel != nil){
+            //autoCompleteArray?.addObject(self.bankModel.bankName[indexPath.row])
+            //autoCompleteArray = NSMutableArray(array: self.bankModel.bankName as NSArray)
+            if(autoCompleteFilterArray != nil){
+                cell.filterByLabel?.text = autoCompleteFilterArray!.objectAtIndex(indexPath.row) as? String
+                
+                println("complete array 1 \(autoCompleteArray)")
+            }
+        }
+       
+        cell.contentView.backgroundColor = UIColor.whiteColor()
+        cell.backgroundColor = UIColor.clearColor()
 
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell: FilterByTableViewCell = self.bankTableView.cellForRowAtIndexPath(indexPath) as! FilterByTableViewCell
+        self.bankNameTextField.text = cell.filterByLabel.text
+        self.bankId = self.bankDictionary[cell.filterByLabel.text!]!
+        self.bankTableView.hidden = true
+    }
     
     @IBAction func updateTopContraint(sender: AnyObject) {
         if IphoneType.isIphone4() {
@@ -94,6 +205,61 @@ class CreateNewBankAccountViewController: UIViewController {
         }
     }
 
+    func fireEnabledBanks (){
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()]
+        
+        manager.POST(APIAtlas.sellerBank, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+           
+            self.bankModel = BankModel.parseEnablebankData(responseObject as! NSDictionary)
+            //self.dismissViewControllerAnimated(true, completion: nil)
+            self.autoCompleteArray = NSMutableArray(array: self.bankModel.bankName as NSArray)
+            self.autoCompleteFilterArray = NSArray(array: self.bankModel.bankName) as NSArray
+            self.autoCompleteFilterArrayId = NSArray(array: self.bankModel.bankId) as NSArray
+            for var num = 0 ; num < self.bankModel.bankName.count; num++ {
+                self.bankDictionary[self.bankModel.bankName[num]] = self.bankModel.bankId[num]
+            }
+            println("autocompletearray \(self.autoCompleteArray)")
+            self.hud?.hide(true)
+            self.bankTableView.reloadData()
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                println(error)
+        })
+    }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        var passcode = (self.bankNameTextField.text as NSString).stringByReplacingCharactersInRange(range, withString: string)
+
+        var predicate = NSPredicate(format: "SELF CONTAINS %@", passcode.uppercaseString)
+        println(passcode)
+        
+        autoCompleteFilterArray = (autoCompleteArray!).filteredArrayUsingPredicate(predicate)
+        if autoCompleteFilterArray?.count != 0 {
+            self.bankTableView.hidden = false
+        } else {
+            self.bankTableView.hidden = true
+        }
+        
+        self.bankTableView.reloadData()
+        return true
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        self.bankTableView.hidden = true
+    }
+    
+    func fillBankDetails(accountTitle: String, accountName: String,  accountNumber: String, bankName: String, bankAccountId: Int){
+        if(!accountTitle.isEmpty) {
+            self.accountTitleTextField.text = accountTitle
+            self.accountNameTextField.text = accountName
+            self.accountNumberTextField.text = accountNumber
+            self.bankNameTextField.text = "\(bankName)"
+        }
+      
+    }
     /*
     // MARK: - Navigation
 

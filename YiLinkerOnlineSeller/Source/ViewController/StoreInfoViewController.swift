@@ -378,9 +378,9 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         println("QR Code")
     }
     
-    func updateBankDetail(accountTitle: String, accountName: String, accountNumber: Int, bankName: String) {
+    func updateBankDetail(accountTitle: String, accountName: String, accountNumber: String, bankName: String) {
         self.storeInfoModel?.accountTitle = accountTitle
-        self.storeInfoModel?.bankAccount = accountName + "\n\(accountNumber)\n" + bankName
+        self.storeInfoModel?.bankAccount = accountName + "\n"+accountNumber+"\n" + bankName
         self.tableView.reloadData()
     }
     
@@ -396,8 +396,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldNumber" : oldNumber, "newNumber" : newNumber];
-        manager.responseSerializer.acceptableContentTypes = NSSet(objects: "application/json", "text/html", "text/json", "text/json", "charset=utf-8") as Set<NSObject>
-        manager.POST(APIAtlas.sellerChangeMobileNumber, parameters: parameters, success: {
+//        manager.responseSerializer.acceptableContentTypes = NSSet(objects: "application/json", "text/html", "text/json", "text/json", "charset=utf-8") as Set<NSObject>
+        manager.POST(APIAtlas.sellerChangeMobileNumber+"?access_token=\(SessionManager.accessToken())", parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.storeInfoModel?.contact_number = newNumber
             self.verifyOrChange = 1

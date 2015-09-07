@@ -12,7 +12,7 @@ class BankAccountModel: NSObject {
     
     var account_title: [String] = []
     var account_name: [String] = []
-    var account_number: [Int] = []
+    var account_number: [String] = []
     var bank_name: [String] = []
     var bank_account_id: [Int] = []
     var is_default: [Bool] = []
@@ -20,7 +20,7 @@ class BankAccountModel: NSObject {
     init(account_title: NSArray, account_name: NSArray, account_number: NSArray, bank_name: NSArray, bank_account_id: NSArray, is_default: NSArray){
         self.account_title = account_title as! [String]
         self.account_name = account_name as! [String]
-        self.account_number = account_number as! [Int]
+        self.account_number = account_number as! [String]
         self.bank_name = bank_name as! [String]
         self.bank_account_id = bank_account_id as! [Int]
         self.is_default = is_default as! [Bool]
@@ -29,7 +29,7 @@ class BankAccountModel: NSObject {
     class func parseBankAccountDataFromDictionary(dictionary: AnyObject) -> BankAccountModel {
         var account_title: [String] = []
         var account_name: [String] = []
-        var account_number: [Int] = []
+        var account_number: [String] = []
         var bank_name: [String] = []
         var bank_account_id: [Int] = []
         var is_default: [Bool] = []
@@ -38,7 +38,7 @@ class BankAccountModel: NSObject {
         if let categories: AnyObject = dictionary["data"] {
             
             for category in categories as! NSArray {
-                if let tempAccountNumber = category["accountNumber"] as? Int {
+                if let tempAccountNumber = category["accountNumber"] as? String {
                     account_number.append(tempAccountNumber)
                 }
                 

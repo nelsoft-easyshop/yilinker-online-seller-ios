@@ -35,4 +35,35 @@ class TransactionTableViewCell: UITableViewCell {
         self.imageContainer.layer.cornerRadius = self.imageContainer.frame.size.height / 2
         self.priceLabel.layer.cornerRadius = self.priceLabel.frame.size.height / 2
     }
+    
+    func setStatus(status: Int) {
+        if status == 1 {
+            self.imageContainer.backgroundColor = Constants.Colors.transactionNew
+            self.statusImageVIew.image = UIImage(named: "exclamation")
+        } else if status == 2 {
+            self.imageContainer.backgroundColor = Constants.Colors.transactionNew
+            self.statusImageVIew.image = UIImage(named: "exclamation")
+        } else if status == 3 {
+            self.imageContainer.backgroundColor = Constants.Colors.transactionOngoing
+            self.statusImageVIew.image = UIImage(named: "onGoing")
+        } else if status == 4 {
+            self.imageContainer.backgroundColor = Constants.Colors.transactionCompleted
+            self.statusImageVIew.image = UIImage(named: "completed")
+        } else if status == 5 {
+            self.imageContainer.backgroundColor = Constants.Colors.transactionCancelled
+            self.statusImageVIew.image = UIImage(named: "cancelled")
+        }
+    }
+    
+    func setTID(text: String) {
+        self.tidLabel.text = text
+    }
+    
+    func setProductDate(text: String) {
+        self.productsDateLabel.text = text
+    }
+    
+    func setPrice(text: String) {
+        self.priceLabel.text = text
+    }
 }

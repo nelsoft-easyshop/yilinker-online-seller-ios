@@ -41,3 +41,21 @@ enum ProductTextFieldType {
     case ProductWeight
     case ProductHeight
 }
+
+enum AddressRefreshType {
+    case Edit
+    case Delete
+    case Create
+    case SetDefault
+    case Get
+}
+
+enum UserType {
+    case Seller
+    case Reseller
+}
+
+enum ResellerItemStatus {
+    case Selected
+    case Unselected
+}

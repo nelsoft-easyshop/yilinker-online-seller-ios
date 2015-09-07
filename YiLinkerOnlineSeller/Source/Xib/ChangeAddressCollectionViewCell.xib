@@ -33,7 +33,7 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                         <connections>
-                            <action selector="addAddress:" destination="gTV-IL-0wX" eventType="touchUpInside" id="487-uS-SV2"/>
+                            <action selector="selectAddress:" destination="gTV-IL-0wX" eventType="touchUpInside" id="tD4-K8-LW7"/>
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="LG. Sta Lucia East Grand Mall, Marcos HighWay Corner Felix Avenue . Ortigas Pasig City" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sx5-GY-uj9">

@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol FilterViewControllerDelegate {
+    func dismissView()
+}
+
 class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate {
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var resetButton: UIButton!
@@ -17,6 +21,8 @@ class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate 
     var tableData: [FilterAttributeModel] = [
         FilterAttributeModel(title: "Search By", attributes: ["Product Name", "Transaction Id", "Rider"]),
         FilterAttributeModel(title: "Date", attributes: ["All", "Today", "Day Ago", "Week", "New"])]
+    
+    var delegate: FilterViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +49,7 @@ class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate 
     
     @IBAction func cancelAction(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
+        self.delegate?.dismissView()
     }
     
     @IBAction func resetAction(sender: AnyObject) {

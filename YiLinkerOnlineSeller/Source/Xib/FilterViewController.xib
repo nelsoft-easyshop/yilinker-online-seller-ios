@@ -21,17 +21,81 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RFd-IT-tlg" userLabel="Background">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" style="plain" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="104" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="5lB-ZM-aDf">
-                            <rect key="frame" x="0.0" y="188" width="375" height="414"/>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" style="plain" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="104" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="5lB-ZM-aDf">
+                            <rect key="frame" x="0.0" y="188" width="375" height="190"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="190" id="rrq-sm-X4g"/>
+                            </constraints>
                             <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <outlet property="dataSource" destination="-1" id="86L-bd-ctv"/>
                                 <outlet property="delegate" destination="-1" id="VsO-NH-kbE"/>
                             </connections>
                         </tableView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jyZ-DS-naW" customClass="FSCalendar">
+                            <rect key="frame" x="0.0" y="378" width="375" height="226"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="0.37647058820000001" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="375" id="g8Z-H8-llo"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="fakedSelectedDay">
+                                    <integer key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="eventColor">
+                                    <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="weekdayTextColor">
+                                    <color key="value" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="headerTitleColor">
+                                    <color key="value" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="titleDefaultColor">
+                                    <color key="value" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="titleSelectionColor">
+                                    <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="titleTodayColor">
+                                    <color key="value" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="titlePlaceholderColor">
+                                    <color key="value" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="titleWeekendColor">
+                                    <color key="value" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="selectionColor">
+                                    <color key="value" red="0.45882352939999999" green="0.20392156859999999" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="todayColor">
+                                    <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="todaySelectionColor">
+                                    <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="useVeryShortWeekdaySymbols" value="YES"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="fakeSubtitles" value="NO"/>
+                                <userDefinedRuntimeAttribute type="number" keyPath="titleTextSize">
+                                    <real key="value" value="20"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="weekdayTextSize">
+                                    <real key="value" value="20"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
                     </subviews>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="5lB-ZM-aDf" firstAttribute="top" secondItem="RFd-IT-tlg" secondAttribute="top" constant="188" id="Ufu-P2-QTe"/>
+                        <constraint firstItem="5lB-ZM-aDf" firstAttribute="leading" secondItem="jyZ-DS-naW" secondAttribute="leading" id="e0d-dg-gmK"/>
+                        <constraint firstItem="jyZ-DS-naW" firstAttribute="top" secondItem="5lB-ZM-aDf" secondAttribute="bottom" id="gId-tg-ehY"/>
+                        <constraint firstAttribute="trailing" secondItem="5lB-ZM-aDf" secondAttribute="trailing" id="xVW-fK-vaa"/>
+                        <constraint firstItem="5lB-ZM-aDf" firstAttribute="leading" secondItem="RFd-IT-tlg" secondAttribute="leading" id="yNo-xp-X5U"/>
+                        <constraint firstItem="5lB-ZM-aDf" firstAttribute="trailing" secondItem="jyZ-DS-naW" secondAttribute="trailing" id="zKG-15-Ext"/>
+                    </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8XA-UV-6WB" userLabel="Cancel Container">
                     <rect key="frame" x="0.0" y="146" width="375" height="41"/>
@@ -129,6 +193,7 @@
                 <constraint firstAttribute="bottom" secondItem="RFd-IT-tlg" secondAttribute="bottom" id="9no-Bv-L8d"/>
                 <constraint firstItem="RFd-IT-tlg" firstAttribute="top" secondItem="8XA-UV-6WB" secondAttribute="bottom" constant="-187" id="KaX-Mg-YTD"/>
                 <constraint firstItem="RFd-IT-tlg" firstAttribute="bottom" secondItem="dPY-Uy-W9U" secondAttribute="bottom" id="NWR-aG-G7j"/>
+                <constraint firstItem="dPY-Uy-W9U" firstAttribute="top" secondItem="jyZ-DS-naW" secondAttribute="bottom" constant="-2" id="PoO-oi-fld"/>
                 <constraint firstItem="RFd-IT-tlg" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="SC9-vX-44B"/>
                 <constraint firstItem="RFd-IT-tlg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="TRG-eA-Y5A"/>
                 <constraint firstAttribute="trailing" secondItem="RFd-IT-tlg" secondAttribute="trailing" id="YXR-H5-eek"/>

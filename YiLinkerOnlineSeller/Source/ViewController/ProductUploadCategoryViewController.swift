@@ -25,6 +25,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
     var pageTitle: String = ""
     var parentID: Int = 1
     var hud: MBProgressHUD?
+    var userType: UserType?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,7 +91,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
                 if task.statusCode == 401 {
-                   UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "RefreshToken Expired/ No available API for refershing accessToken", title: "Server Error")
+                   self.fireRefreshToken(parentID)
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 }
@@ -132,9 +133,14 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
             productUploadCategoryViewController.parentID = categoryModel.uid
             self.navigationController!.pushViewController(productUploadCategoryViewController, animated: true)
         } else {
-            let uploadViewController: ProductUploadTableViewController = self.navigationController!.viewControllers[0] as! ProductUploadTableViewController
-            uploadViewController.didSelecteCategory(categoryModel)
-            self.navigationController!.popToRootViewControllerAnimated(true)
+            if self.userType == UserType.Seller {
+                let uploadViewController: ProductUploadTableViewController = self.navigationController!.viewControllers[0] as! ProductUploadTableViewController
+                uploadViewController.didSelecteCategory(categoryModel)
+                self.navigationController!.popToRootViewControllerAnimated(true)
+            } else {
+                let resellerViewController: ResellerItemViewController = ResellerItemViewController(nibName: "ResellerItemViewController", bundle: nil)
+                self.navigationController?.pushViewController(resellerViewController, animated: true)
+            }
         }
      
     }
@@ -187,6 +193,28 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
         searchViewController.modalTransitionStyle = modalStyle
         self.presentViewController(navigationController, animated: true, completion: nil)
+    }
+    
+    func fireRefreshToken(parentID: Int) {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.fireCategoryWithParentID(parentID)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+        })
+        
     }
     
     // Dealloc
