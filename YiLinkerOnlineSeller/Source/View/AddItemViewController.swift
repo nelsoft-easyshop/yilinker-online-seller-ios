@@ -16,6 +16,7 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
 
     var delegate: AddItemViewControllerDelegate?
     var productModel: ProductManagementProductModel!
+    var productModelEdit: [CategoryProductModel] = []
     
     @IBOutlet weak var searchBarTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
@@ -44,6 +45,7 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
         
         println(self.selectedItemIDs)
     }
+    
     // MARK: - Methods
     
     func customizedNavigationBar() {
@@ -138,6 +140,14 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: AddItemTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("AddItemTableViewCell") as! AddItemTableViewCell
         cell.selectionStyle = .None
+        
+//        if productModelEdit.count != 0 {
+//            for i in 0..<productModelEdit.count {
+//                if i == self.productModelEdit[indexPath.row].productId {
+//                    
+//                }
+//            }
+//        }
         
         cell.setProductImage(self.productModel.products[indexPath.row].image)
         cell.itemNameLabel.text = self.productModel.products[indexPath.row].name

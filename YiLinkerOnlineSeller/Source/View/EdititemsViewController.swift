@@ -24,6 +24,8 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
     var selectedItem: Int = 0
     var removingItems: Bool = false
     
+    var productModelEdit: [CategoryProductModel] = []
+    
     var productModel: ProductManagementProductModel!
     var selectedItemIDsIndex: [Int] = []
     var itemsToRemoved: [Int] = []
@@ -75,6 +77,10 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
 //        self.tableView.reloadData()
     }
     
+    func updateListEdit(productsEdit: [CategoryProductModel]) {
+        self.productModelEdit = productsEdit
+    }
+    
     // MARK: - Actions
     
     func closeAction() {
@@ -84,14 +90,15 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
     }
     
     func checkAction() {
-        if self.title != "Edit items" {
+        if self.title == "Edit Items" {
             println("From Edit Items > \(subCategoriesProducts)")
             delegate?.updateProductItems(self.productModel, itemIndexes: self.selectedItemIDsIndex, products: subCategoriesProducts)
             closeAction()
         }
     }
     
-    @IBAction func clearAllAction(sender: AnyObject) {
+    @IBAction func clearAllAction(sender: AnyObject!) {
+        self.productModelEdit = []
         self.subCategoriesProducts = []
         self.selectedItemIDsIndex = []
         self.tableView.reloadData()
@@ -112,11 +119,15 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
         addItem.selectedItemIDs = subCategoriesProducts
         addItem.selectedItemIDsIndex = selectedItemIDsIndex
         addItem.productModel = productModel
+        addItem.productModelEdit = self.productModelEdit
         var rootViewController = UINavigationController(rootViewController: addItem)
         self.navigationController?.presentViewController(rootViewController, animated: false, completion: nil)
     }
     
     @IBAction func removedSelectedAction(sender: AnyObject) {
+        if self.selectedItemIDsIndex.count == 0 {
+            self.clearAllAction(nil)
+        }
         self.tableView.reloadData()
     }
     
@@ -132,7 +143,13 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.selectedItemIDsIndex.count
+        if productModelEdit.count != 0 {
+            return productModelEdit.count
+        } else if self.selectedItemIDsIndex.count != 0 {
+            return self.selectedItemIDsIndex.count
+        }
+        
+        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -143,8 +160,13 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
             cell.tag = indexPath.row
             cell.deselected()
             
-            cell.setProductImage(self.productModel.products[indexPath.row].image)
-            cell.itemLabel.text = self.productModel.products[indexPath.row].name
+            if productModelEdit.count != 0 {
+                cell.setProductImage(self.productModelEdit[indexPath.row].image)
+                cell.itemLabel.text = self.productModelEdit[indexPath.row].productName
+            } else {
+                cell.setProductImage(self.productModel.products[indexPath.row].image)
+                cell.itemLabel.text = self.productModel.products[indexPath.row].name
+            }
             
             return cell
             
@@ -152,8 +174,14 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
             let cell: AddItemTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("AddItemTableViewCell") as! AddItemTableViewCell
             cell.selectionStyle = .None
             
-            cell.setProductImage(self.productModel.products[indexPath.row].image)
-            cell.itemNameLabel.text = self.productModel.products[indexPath.row].name
+            if productModelEdit.count != 0 {
+                cell.setProductImage(self.productModelEdit[indexPath.row].image)
+                cell.itemNameLabel.text = self.productModelEdit[indexPath.row].productName
+            } else {
+                cell.setProductImage(self.productModel.products[indexPath.row].image)
+                cell.itemNameLabel.text = self.productModel.products[indexPath.row].name
+            }
+            
 //           cell.vendorLabel.text = self.productModel.products[indexPath.row].category
             cell.addImageView.image = UIImage(named: "right2")
             

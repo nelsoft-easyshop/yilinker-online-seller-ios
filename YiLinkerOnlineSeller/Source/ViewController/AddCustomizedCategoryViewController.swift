@@ -60,6 +60,84 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         loadViewsWithDetails()
     }
     
+    func initializeViews() {
+        // HEADER
+        getHeaderView().addSubview(getCategoryDetailsView())
+        getHeaderView().addSubview(getSubCategoriesView())
+        
+        setPosition(self.subCategoriesView, from: self.categoryDetailsView)
+        
+        newFrame = self.headerView.frame
+        newFrame.size.height = CGRectGetMaxY(self.subCategoriesView.frame) + 1.0
+        self.headerView.frame = newFrame
+        
+        self.tableView.tableHeaderView = nil
+        self.tableView.tableHeaderView = self.headerView
+        
+        
+        // FOOTER
+        getFooterView().addSubview(getCategoryItemsView())
+        getFooterView().addSubview(getItemImageView())
+        self.itemImagesView.hidden = true
+        setPosition(self.itemImagesView, from: self.categoryItemsView)
+        
+        newFrame = self.footerView.frame
+        newFrame.size.height = CGRectGetMaxY(self.itemImagesView.frame)
+        self.footerView.frame = newFrame
+        
+        self.tableView.tableFooterView = nil
+        self.tableView.tableFooterView = self.footerView
+        
+    }
+    
+    func applyDetails() {
+
+        if self.categoryDetailsModel != nil {
+            
+            // Category Name
+            self.categoryDetailsView.categoryNameTextField.text = self.categoryDetailsModel.categoryName
+            
+            // Parent Category
+            if self.categoryDetailsModel.parentId == "" {
+                self.categoryDetailsView.parentCategoryLabel.text = "NONE"
+            } else {
+                self.categoryDetailsView.parentCategoryLabel.text = self.categoryDetailsModel.parentId
+            }
+            
+            // Sub Categories
+            if self.customizedSubCategories.count != 0 {
+                for i in 0..<self.customizedSubCategories.count {
+                    let subCategoryDict: Dictionary = ["categoryName": self.customizedSubCategories[i].categoryName,
+                        "products": "[]"]
+                    self.subCategories.append(subCategoryDict)
+                }
+
+                self.subCategoriesView.setTitle("EDIT")
+                self.tableView.reloadData()
+            }
+            
+            // Category Products
+            if self.customizedCategoryProducts.count != 0 {
+                for i in 0..<self.categoryDetailsModel.products.count {
+                    let id: Int = self.categoryDetailsModel.products[i].productId.toInt()!
+                    self.productIds.append(id)
+                }
+                
+                self.categoryItemsView.setItemButtonTitle("EDIT")
+                self.itemImagesView.setProductsCategory(products: self.customizedCategoryProducts)
+                self.itemImagesView.hidden = false
+                
+                getFooterView().addSubview(getSeeAllItemsView())
+                setPosition(self.seeAllItemsView, from: self.itemImagesView)
+                newFrame = self.footerView.frame
+                newFrame.size.height = CGRectGetMaxY(self.seeAllItemsView.frame)
+                self.footerView.frame = newFrame
+                self.tableView.tableFooterView = nil
+                self.tableView.tableFooterView = self.footerView
+            }
+        }
+    }
+    
     // MARK: Methods
     
     func customizedNavigationBar() {
@@ -146,7 +224,8 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         } else if itemIndexes.count != 0 {
             seeAllItemsLabel.text = "See all " + String(self.itemIndexes.count) + " items   "
         } else {
-            self.seeAllItemsView.hidden = true
+            seeAllItemsLabel.text = "See all 0 items   "
+            self.seeAllItemsView.hidden = false
         }
         seeAllItemsLabel.font = UIFont(name: "Panton-Bold", size: 12.0)
         seeAllItemsLabel.textColor = UIColor.darkGrayColor()
@@ -183,10 +262,10 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         self.tableView.tableHeaderView = nil
         self.tableView.tableHeaderView = self.headerView
         
-        // ------ FOOTER
-        
+//        // ------ FOOTER
+//        
         newFrame = self.footerView.frame
-        
+
         if self.customizedCategoryProducts.count != 0 || self.productIds.count != 0 {
             setPosition(self.itemImagesView, from: self.categoryItemsView)
             setPosition(self.seeAllItemsView, from: self.itemImagesView)
@@ -194,7 +273,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         } else {
             newFrame.size.height = CGRectGetMaxY(self.categoryItemsView.frame)
         }
-        
+
         self.footerView.frame = newFrame
         self.tableView.tableFooterView = nil
         self.tableView.tableFooterView = self.footerView
@@ -210,53 +289,20 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
 
     func populateDetails() {
         
-        if self.categoryDetailsModel != nil {
-            // Category Name
-            self.categoryDetailsView.categoryNameTextField.text = self.categoryDetailsModel.categoryName
-            
-            // Parent Category
-            if self.categoryDetailsModel.parentId == "" {
-                self.categoryDetailsView.parentCategoryLabel.text = "NONE"
-            } else {
-                self.categoryDetailsView.parentCategoryLabel.text = self.categoryDetailsModel.parentId
-            }
-            
-            // Sub Categories
-            if self.customizedSubCategories.count != 0 {
-                self.subCategoriesView.setTitle("EDIT")
-            }
-            
-            // Category Products
-            if self.customizedCategoryProducts.count != 0 {
-                self.categoryItemsView.addNewItemButton.setTitle("EDIT", forState: .Normal)
-                self.getFooterView().addSubview(getItemImageView())
-                self.getFooterView().addSubview(getSeeAllItemsView())
-                self.itemImagesView.setProductsCategory(products: self.customizedCategoryProducts)
-            }
-        }
-        
-//        if self.customizedCategoryProducts.count != 0 {
-//            println(self.customizedCategoryProducts.count)
-//            self.categoryItemsView.addNewItemButton.setTitle("EDIT", forState: .Normal)
-//            self.getFooterView().addSubview(getItemImageView())
-//            self.getFooterView().addSubview(getSeeAllItemsView())
-//            self.itemImagesView.setProductsCategory(products: self.customizedCategoryProducts)
-////            self.itemImagesView.setProductsManagement(products: [], selectedItems: [])
-//        }
-        
-        // ---------------- Adding
         if self.productIds.count != 0 {
             self.categoryItemsView.addNewItemButton.setTitle("EDIT", forState: .Normal)
             self.getFooterView().addSubview(getItemImageView())
             self.getFooterView().addSubview(getSeeAllItemsView())
             self.itemImagesView.setProductsManagement(products: self.productManagementProductModel.products, selectedItems: self.itemIndexes)
         } else if self.productIds.count == 0 {
+            
             self.categoryItemsView.addNewItemButton.setTitle("ADD NEW ITEM", forState: .Normal)
             if self.itemImagesView != nil {
                 self.itemImagesView.removeFromSuperview()
             }
-            
+
             if self.seeAllItemsView != nil {
+                self.seeAllItemsView.hidden = true
                 self.seeAllItemsView.removeFromSuperview()
             }
         }
@@ -304,18 +350,52 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         }
     }
     
-    func formattedSubCategories() -> String {
-        var stringCategories: String = self.subCategories.description
+    func formattedString(dictionary: String) -> String {
+        var stringCategories: String = dictionary
         stringCategories = stringCategories.stringByReplacingOccurrencesOfString("\"", withString: "", options: nil, range: nil)
         stringCategories = stringCategories.stringByReplacingOccurrencesOfString("\n", withString: "\"", options: nil, range: nil)
         stringCategories = stringCategories.stringByReplacingOccurrencesOfString(" = ", withString: "\":\"", options: nil, range: nil)
         stringCategories = stringCategories.stringByReplacingOccurrencesOfString(";", withString: "", options: nil, range: nil)
         stringCategories = stringCategories.stringByReplacingOccurrencesOfString("products", withString: ",\"products", options: nil,
             range: nil)
+        
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("categoryId", withString: ",\"categoryId", options: nil,
+            range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("categoryName", withString: ",\"categoryName", options: nil,
+            range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("parentId", withString: ",\"parentId", options: nil,
+            range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("sortOrder", withString: ",\"sortOrder", options: nil,
+            range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("subcategories", withString: ",\"subcategories", options: nil,
+            range: nil)
         stringCategories = stringCategories.stringByReplacingOccurrencesOfString("    ", withString: "", options: nil, range: nil)
         stringCategories = stringCategories.stringByReplacingOccurrencesOfString("\"[", withString: "[", options: nil, range: nil)
         stringCategories = stringCategories.stringByReplacingOccurrencesOfString("]\"", withString: "]", options: nil, range: nil)
         
+        return stringCategories
+    }
+    
+    func formattedEditCategory(dictionary: String) -> String {
+        var stringCategories: String = dictionary
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString(";\n", withString: "", options: nil, range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("\"", withString: "", options: nil, range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("\n", withString: "\"", options: nil, range: nil)
+//        stringCategories = stringCategories.stringByReplacingOccurrencesOfString(" = ", withString: "\":\"", options: nil, range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("categoryId = ", withString: "\"categoryId\": ", options: nil, range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("categoryName = ", withString: ",\"categoryName\": \"", options: nil, range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("parentId = ", withString: "\",\"parentId\": ", options: nil, range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("sortOrder = ", withString: ",\"sortOrder\": ", options: nil, range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("products = ", withString: ",\"products\": ", options: nil, range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("subcategories = ", withString: ",\"subcategories\": ", options: nil, range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("    ", withString: "", options: nil, range: nil)
+//        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("\"[", withString: "[", options: nil, range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("\\", withString: "\"", options: nil, range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("[{\"", withString: "[{", options: nil, range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString(": [{,\"", withString: ": [{\"", options: nil, range: nil)
+//        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("]\"", withString: "]", options: nil, range: nil)
+//        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("]\"", withString: "]", options: nil, range: nil)
+//        }\")}]
         return stringCategories
     }
     
@@ -334,7 +414,31 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             self.customizedSubCategories = self.categoryDetailsModel.subcategories
             self.customizedCategoryProducts = self.categoryDetailsModel.products
 
-            self.populateDetails()
+            self.initializeViews()
+            self.applyDetails()
+            
+//            self.getFooterView().addSubview(self.getItemImageView())
+//            self.getFooterView().addSubview(self.getSeeAllItemsView())
+//            
+//            self.setPosition(self.itemImagesView, from: self.categoryItemsView)
+//            self.setPosition(self.seeAllItemsView, from: self.itemImagesView)
+//            self.newFrame.size.height = CGRectGetMaxY(self.seeAllItemsView.frame) + 20.0
+//            
+//            self.itemImagesView.backgroundColor = .redColor()
+//            
+//            self.newFrame = self.footerView.frame
+//            self.footerView.frame = self.newFrame
+//            self.tableView.tableFooterView = nil
+//            self.tableView.tableFooterView = self.footerView
+//            
+//            self.tableView.reloadData()
+//            
+//            println(self.customizedCategoryProducts[0].image)
+//            
+//            self.itemImagesView.setProductsCategory(products: self.customizedCategoryProducts)
+//            
+//            
+//            self.populateDetails()
 
             self.hud?.hide(true)
             
@@ -353,7 +457,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             "categoryName": self.categoryDetailsView.categoryNameTextField.text,
             "parentId": self.parentId,
             "products": self.productIds.description,
-            "subcategories": self.formattedSubCategories()]
+            "subcategories": self.formattedString(self.subCategories.description)]
         
         println(parameters)
             
@@ -394,19 +498,48 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     func requestEditCustomizedCategory() {
         self.showHUD()
         let manager = APIManager.sharedInstance
-//        let categories = "[{"categoryId": 98, "categoryName": "Clothing & Accessories", "parentId": 0, "sortOrder": 0, "subcategories": [             {                 "categoryId": 189,                 "categoryName": "ios sub 1",                 "sortOrder": 0             }         ],         "products": [1,4,7] }]"
-//        
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-            "categories": ""]
         
-        manager.POST(APIAtlas.editCustomizedCategory, parameters: parameters, success: {
+        var parameters: [NSDictionary] = []
+        parameters.append(["categoryId": self.categoryDetailsModel.categoryId,
+            "categoryName": self.categoryDetailsView.categoryNameTextField.text,
+            "parentId": self.parentId,
+            "products": self.productIds,
+            "subcategories": self.subCategories])
+
+        let data = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
+        var editedCategory: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+        
+        let params: NSDictionary = ["access_token": SessionManager.accessToken(),
+                                      "categories": editedCategory]
+        
+        println(params)
+        
+        manager.POST(APIAtlas.editCustomizedCategory, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.hud?.hide(true)
             
+            if responseObject["isSuccessful"] as! Bool {
+                self.closeAction()
+            } else {
+                self.showAlert(title: "Error", message: responseObject["message"] as! String)
+            }
+            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                println(error)
+                
+                if error.userInfo != nil {
+                    println(error.userInfo)
+                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                        if jsonResult["message"] != nil {
+                            self.showAlert(title: jsonResult["message"] as! String, message: nil)
+                        } else {
+                            self.showAlert(title: "Something went wrong", message: nil)
+                        }
+                    }
+                } else {
+                    self.showAlert(title: "Something went wrong", message: nil)
+                }
                 self.hud?.hide(true)
         })
     }
@@ -416,7 +549,9 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         if self.title == "Edit Customized Category" {
-            if  self.categoryDetailsModel != nil {
+            if self.newSubCategoryNames.count != 0 {
+                return self.newSubCategoryNames.count
+            } else if self.categoryDetailsModel != nil {
                 return self.customizedSubCategories.count
             }
         } else if self.title == "Add Customized Category" {
@@ -432,10 +567,10 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
 //        let cell: AddCustomizedCategoryTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("AddCustomizedCategory") as!  AddCustomizedCategoryTableViewCell
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "identifier")
         
-        if self.customizedSubCategories.count != 0 {
-            cell.textLabel?.text = self.customizedSubCategories[indexPath.row].categoryName
-        } else if self.newSubCategoryNames.count != 0 {
+        if self.newSubCategoryNames.count != 0 {
             cell.textLabel?.text = self.newSubCategoryNames[indexPath.row]
+        } else if self.customizedSubCategories.count != 0 {
+            cell.textLabel?.text = self.customizedSubCategories[indexPath.row].categoryName
         } else {
             cell.textLabel?.text = "Sub Categories here"
         }
@@ -478,13 +613,20 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         self.parentId = parentId
         self.parentCategoryIndex = parentIndex
         self.categoryDetailsView.parentCategoryLabel.text = parentCategory
+        self.newSubCategoryNames = []
         self.subCategories = []
+        
         if parentIndex != -1 {
             if self.subCategoriesView != nil {
                 self.subCategoriesView.removeFromSuperview()
             }
         } else {
             self.getHeaderView().addSubview(self.getSubCategoriesView())
+            if self.newSubCategoryNames.count != 0 {
+                self.subCategoriesView.setTitle("EDIT")
+            } else {
+                self.subCategoriesView.setTitle("ADD SUB CATEGORY")
+            }
         }
         
         setUpViews()
@@ -494,10 +636,17 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     // MARK: - Sub Categories Delegate
     
     func gotoEditSubCategories() {
-        println(self.subCategories)
         let subCategories = EditSubCategoriesViewController(nibName: "EditSubCategoriesViewController", bundle: nil)
-        subCategories.categories = self.newSubCategoryNames
-        subCategories.subCategories = self.subCategories
+
+        if self.newSubCategoryNames.count != 0 {
+            subCategories.categories = self.newSubCategoryNames
+            subCategories.subCategories = self.subCategories
+        } else if self.customizedSubCategories.count != 0 {
+            subCategories.getSubCategoriesEdit(customizedSubCategories)
+        } else {
+            
+        }
+        
         subCategories.delegate = self
         var root = UINavigationController(rootViewController: subCategories)
         self.navigationController?.presentViewController(root, animated: false, completion: nil)
@@ -515,8 +664,14 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     func gotoEditItem() {
         let editItem = EdititemsViewController(nibName: "EdititemsViewController", bundle: nil)
         editItem.delegate = self
-        editItem.subCategoriesProducts = productIds
-        editItem.updateListOfItems(self.productManagementProductModel, itemIndexes: self.itemIndexes)
+       
+        if self.categoryDetailsModel != nil {
+            editItem.updateListEdit(self.customizedCategoryProducts)
+        } else if self.productManagementProductModel != nil {
+            editItem.subCategoriesProducts = productIds
+            editItem.updateListOfItems(self.productManagementProductModel, itemIndexes: self.itemIndexes)
+        }
+        
         var root = UINavigationController(rootViewController: editItem)
         self.navigationController?.presentViewController(root, animated: false, completion: nil)
     }
@@ -539,7 +694,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         populateDetails()
     }
     
-    // MARK: - Edit Sub     Categories View Controller
+    // MARK: - Edit Sub Categories View Controller
     
     func addSubCategories(controller: EditSubCategoriesViewController, subCategories: [NSDictionary], categoryNames: [String]) {
         self.subCategories = subCategories
@@ -550,7 +705,6 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         } else {
             self.subCategoriesView.setTitle("ADD SUB CATEGORY")
         }
-        
         
         self.tableView.reloadData()
     }

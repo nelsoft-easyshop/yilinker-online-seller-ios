@@ -28,6 +28,8 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     var removeSubCategories: Bool = false
     var createdCategory: String = ""
     
+    var subCategoriesEdit: [SubCategoryModel] = []
+    
     var hud: MBProgressHUD?
     
     override func viewDidLoad() {
@@ -72,6 +74,16 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
         self.hud?.dimBackground = false
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
+    }
+    
+    func getSubCategoriesEdit(subCategoryModel: [SubCategoryModel]) {
+        self.categories = []
+        for i in 0..<subCategoryModel.count {
+//            self.categories.append(subCategoryModel[i].categoryName)
+            let subCategoryDict: Dictionary = ["categoryName": subCategoryModel[i].categoryName,
+                                                   "products": []]
+            addSubCategory(subCategoryDict, categoryName: subCategoryModel[i].categoryName)
+        }
     }
     
     // MARK: - Actions
@@ -169,6 +181,12 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        if subCategoriesEdit.count != 0 {
+//            return subCategoriesEdit.count
+//        } else if categories.count != 0 {
+//            return categories.count
+//        }
+        
         return categories.count
     }
     
@@ -185,8 +203,8 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
             return cell
         } else {
             let cell = UITableViewCell(style: .Default, reuseIdentifier: "identifier")
-            
             cell.selectionStyle = .None
+        
             cell.textLabel?.text = categories[indexPath.row]
             cell.textLabel?.font = UIFont(name: "Panton-Bold", size: 12.0)
             cell.textLabel?.textColor = Constants.Colors.hex666666
@@ -217,7 +235,9 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     func addSubCategory(subCategory: NSDictionary, categoryName: String) {
         subCategories.append(subCategory)
         categories.append(categoryName)
-        self.tableView.reloadData()
+        if self.tableView != nil {
+            self.tableView.reloadData()
+        }
     }
     
     // MARK: - Category Items View Delegate 

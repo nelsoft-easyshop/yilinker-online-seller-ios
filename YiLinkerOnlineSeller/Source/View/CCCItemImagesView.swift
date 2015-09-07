@@ -26,14 +26,10 @@ class CCCItemImagesView: UIView, UICollectionViewDataSource {
     // MARK: - Collection View Data Source
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        println(">> \(categoryProducts.count)")
         if categoryProducts.count != 0 {
             return categoryProducts.count
-        } else if selectedItems.count != 0 {
-            return selectedItems.count
         }
-        
-        return 0
+        return selectedItems.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -42,10 +38,9 @@ class CCCItemImagesView: UIView, UICollectionViewDataSource {
         
         if categoryProducts.count != 0 {
             cell.setItemImage(categoryProducts[indexPath.row].image)
-        } else if selectedItems.count != 0 {
+        } else {
             let index: Int = selectedItems[indexPath.row]
             cell.setItemImage(productManagement[index].image)
-
         }
         
         return cell
