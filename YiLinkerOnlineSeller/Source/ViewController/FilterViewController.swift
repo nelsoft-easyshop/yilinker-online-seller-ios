@@ -75,20 +75,34 @@ class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate 
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.row == 3 {
+        if indexPath.row == 2 {
             return 298
+        } else if indexPath.row == 0{
+            return 95
         } else {
             return 95
         }
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.row == 3 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("FilterCalendarTableViewCell", forIndexPath: indexPath) as! FilterCalendarTableViewCell
-            return cell
-        } else {
+         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("FilterTableViewCell", forIndexPath: indexPath) as! FilterTableViewCell
-            cell.passModel(tableData[indexPath.row])
+            println("\(tableData.count)")
+            //if !tableData.isEmpty {
+                cell.passModel(tableData[0])
+            //}
+            
+            return cell
+        } else if indexPath.row == 1{
+            let cell = tableView.dequeueReusableCellWithIdentifier("FilterTableViewCell", forIndexPath: indexPath) as! FilterTableViewCell
+            println("\(tableData.count)")
+            //if !tableData.isEmpty {
+            cell.passModel(tableData[1])
+            //}
+            
+            return cell
+        }  else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("FilterCalendarTableViewCell", forIndexPath: indexPath) as! FilterCalendarTableViewCell
             return cell
         }
         
