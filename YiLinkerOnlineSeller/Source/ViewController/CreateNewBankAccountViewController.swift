@@ -97,7 +97,7 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         let manager = APIManager.sharedInstance
         var bankId2: Int = 0
         var url: String = ""
-        var accountNumber: Int? = self.accountNumberTextField.text.toInt()
+        var accountNumber = self.accountNumberTextField.text
         if edit {
             bankId2 = self.bankDictionary[self.bankName]!
             url = APIAtlas.sellerEditBankAccount
