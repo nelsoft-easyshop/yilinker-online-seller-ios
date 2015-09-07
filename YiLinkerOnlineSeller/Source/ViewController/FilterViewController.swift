@@ -31,10 +31,12 @@ class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate 
         var nib = UINib(nibName: "FilterTableViewCell", bundle: nil)
         filterTableView.registerNib(nib, forCellReuseIdentifier: "FilterTableViewCell")
         
+        var nibCalendar = UINib(nibName: "FilterCalendarTableViewCell", bundle: nil)
+        filterTableView.registerNib(nibCalendar, forCellReuseIdentifier: "FilterCalendarTableViewCell")
+        
         let filterFooterNib: UINib = UINib(nibName: "FilterFooterTableViewCell", bundle: nil)
         self.filterTableView.registerNib(filterFooterNib, forCellReuseIdentifier: "FilterFooterTableViewCell")
         
-        self.filterTableView.estimatedRowHeight = 262
         self.filterTableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, -5)
         self.filterTableView.rowHeight = UITableViewAutomaticDimension
         self.filterTableView.layoutIfNeeded()
@@ -69,16 +71,27 @@ class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 2
+        return 3
     }
     
-    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.row == 3 {
+            return 298
+        } else {
+            return 95
+        }
+    }
+
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("FilterTableViewCell", forIndexPath: indexPath) as! FilterTableViewCell
-        cell.passModel(tableData[indexPath.row])
-        // Configure the cell...
+        if indexPath.row == 3 {
+            let cell = tableView.dequeueReusableCellWithIdentifier("FilterCalendarTableViewCell", forIndexPath: indexPath) as! FilterCalendarTableViewCell
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("FilterTableViewCell", forIndexPath: indexPath) as! FilterTableViewCell
+            cell.passModel(tableData[indexPath.row])
+            return cell
+        }
         
-        return cell
     }
     
     func tableFooterView() -> UIView {
