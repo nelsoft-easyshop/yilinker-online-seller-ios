@@ -269,6 +269,9 @@
 		7928764B1B8E049400762A39 /* SalesReportTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7928764A1B8E049400762A39 /* SalesReportTableViewCell.swift */; };
 		7928764E1B8E1FD800762A39 /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7928764C1B8E1FD800762A39 /* DatePickerViewController.swift */; };
 		7928764F1B8E1FD800762A39 /* DatePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7928764D1B8E1FD800762A39 /* DatePickerViewController.xib */; };
+		792F6E501B9D438B00F0CB03 /* TotalPointsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792F6E4F1B9D438B00F0CB03 /* TotalPointsModel.swift */; };
+		792F6E521B9D44EC00F0CB03 /* MyPointsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792F6E511B9D44EC00F0CB03 /* MyPointsModel.swift */; };
+		792F6E541B9D484000F0CB03 /* MyPointsHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792F6E531B9D484000F0CB03 /* MyPointsHistoryModel.swift */; };
 		793C41E11B98237F009CE671 /* CategoryProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793C41E01B98237F009CE671 /* CategoryProductModel.swift */; };
 		793C41E31B9824AD009CE671 /* CategoryProductsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793C41E21B9824AD009CE671 /* CategoryProductsModel.swift */; };
 		793C41E51B982CFA009CE671 /* CategoryDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793C41E41B982CFA009CE671 /* CategoryDetailModel.swift */; };
@@ -748,6 +751,9 @@
 		7928764A1B8E049400762A39 /* SalesReportTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalesReportTableViewCell.swift; sourceTree = "<group>"; };
 		7928764C1B8E1FD800762A39 /* DatePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
 		7928764D1B8E1FD800762A39 /* DatePickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DatePickerViewController.xib; path = ../ViewController/DatePickerViewController.xib; sourceTree = "<group>"; };
+		792F6E4F1B9D438B00F0CB03 /* TotalPointsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalPointsModel.swift; sourceTree = "<group>"; };
+		792F6E511B9D44EC00F0CB03 /* MyPointsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsModel.swift; sourceTree = "<group>"; };
+		792F6E531B9D484000F0CB03 /* MyPointsHistoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsHistoryModel.swift; sourceTree = "<group>"; };
 		793C41E01B98237F009CE671 /* CategoryProductModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryProductModel.swift; sourceTree = "<group>"; };
 		793C41E21B9824AD009CE671 /* CategoryProductsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryProductsModel.swift; sourceTree = "<group>"; };
 		793C41E41B982CFA009CE671 /* CategoryDetailModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryDetailModel.swift; sourceTree = "<group>"; };
@@ -1076,6 +1082,9 @@
 				79ED2F631B9BF2CA00C5BC0A /* TransactionsModel.swift */,
 				F7C282EE1B9AE97500864451 /* BankModel.swift */,
 				26B35CAF1B9B06800067793A /* SubCategoryModel.swift */,
+				792F6E4F1B9D438B00F0CB03 /* TotalPointsModel.swift */,
+				792F6E511B9D44EC00F0CB03 /* MyPointsModel.swift */,
+				792F6E531B9D484000F0CB03 /* MyPointsHistoryModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2036,6 +2045,7 @@
 				961F70381B983ECF007D0EA5 /* CheckBox.swift in Sources */,
 				792876111B8DF89F00762A39 /* CandleChartDataEntry.swift in Sources */,
 				79EFF75B1B8D6DC1008A9E7D /* ActivityLogTableViewController.swift in Sources */,
+				792F6E501B9D438B00F0CB03 /* TotalPointsModel.swift in Sources */,
 				792875FB1B8DF89F00762A39 /* HorizontalBarChartView.swift in Sources */,
 				792876011B8DF89F00762A39 /* ChartAxisBase.swift in Sources */,
 				79EF7ACE1B9A0A8A0082CD35 /* TransactionDeliveryTableViewCell.swift in Sources */,
@@ -2061,6 +2071,7 @@
 				79E633A71B9B27E70062DB14 /* NSDate+FSExtension.m in Sources */,
 				26B5B24C1B94E39A00CBDDE5 /* CCCategoryItemsView.swift in Sources */,
 				79EDA40E1B9204FE0037558A /* PointModel.swift in Sources */,
+				792F6E521B9D44EC00F0CB03 /* MyPointsModel.swift in Sources */,
 				79EDA4021B9204B10037558A /* MyPointsTableViewController.swift in Sources */,
 				792876171B8DF89F00762A39 /* LineChartData.swift in Sources */,
 				2618DD711B970E210030C6D2 /* AddSubCategoriesViewController.swift in Sources */,
@@ -2222,6 +2233,7 @@
 				792876331B8DF89F00762A39 /* ChartYAxisRenderer.swift in Sources */,
 				F7C40F7F1B983B650091C16C /* StoreInfoAddressTableViewCell.swift in Sources */,
 				F7C40F581B983A7B0091C16C /* DynamicRoundedLabel.swift in Sources */,
+				792F6E541B9D484000F0CB03 /* MyPointsHistoryModel.swift in Sources */,
 				7928762C1B8DF89F00762A39 /* ChartDataRendererBase.swift in Sources */,
 				792876151B8DF89F00762A39 /* ChartDataSet.swift in Sources */,
 				792875F71B8DF89F00762A39 /* BubbleChartView.swift in Sources */,

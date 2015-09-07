@@ -63,6 +63,11 @@ struct APIAtlas {
     static let addAddressUrl = "auth/address/addNewAddress"
     static let sellerBank = "auth/bank/getEnabledBanks"
     static let sellerEditBankAccount = "auth/bank/account/editBankAccount"
+    
+    //My Points
+    static let getPointsTotal = "auth/user/getPoints"
+    static let getPointsHistory = "auth/user/getPointHistory"
+    
     static let baseUrl = APIEnvironment.baseUrl()
 }
 
