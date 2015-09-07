@@ -40,11 +40,11 @@ struct APIAtlas {
     static let sellerStoreAddresses = "auth/address/getUserAddresses"
     static let sellerSetDefaultStoreAddress = "auth/address/setDefaultAddress"
     static let sellerDeleteStoreAddress = "auth/address/deleteUserAddress"
+    static let transactionList = "auth/getTransactionList"
     static let sellerChangeMobileNumber = "auth/user/changeContactNumber"
     static let sellerMobileNumberVerification = "auth/sms/verify"
     static let sellerChangePassword = "auth/user/changePassword"
     static let sellerUpdateSellerInfo = "auth/merchant/updateUserInfo"
-    
     static let getCustomizedCategories   = "category/getCustomCategories"           // Applied
     static let getCategoryDetails        = "auth/category/getCategoryDetails"       // Applied
     static let editCustomizedCategory    = "auth/category/updateCustomCategory"

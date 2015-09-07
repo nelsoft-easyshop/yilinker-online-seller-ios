@@ -22,6 +22,10 @@ class TransactionViewController: UIViewController {
     var tableViewSectionHeight: CGFloat = 0
     var tableViewSectionTitle: String = ""
     
+    var tableData: [TransactionModel] = []
+    
+    var hud: MBProgressHUD?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -29,6 +33,11 @@ class TransactionViewController: UIViewController {
         registerNibs()
         customizedNavigationBar()
         customizedVies()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        fireGetTransaction()
     }
 
     // MARK: - Methods
@@ -60,7 +69,7 @@ class TransactionViewController: UIViewController {
     }
     
     func customizedVies() {
-        
+        self.tableView.tableFooterView = UIView(frame: CGRectZero)
     }
     
     // MARK: - Actions
@@ -70,10 +79,11 @@ class TransactionViewController: UIViewController {
     }
     
     func filterAction() {        
-//        let filter = TransactionFilterViewController(nibName: "TransactionFilterViewController", bundle: nil)
-//        var navigation = UINavigationController(rootViewController: filter)
-//        navigation.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
-//        self.navigationController?.presentViewController(navigation, animated: true, completion: nil)
+        let filterController = TransactionTableViewController(nibName: "TransactionTableViewController", bundle: nil)
+        var navigation = UINavigationController(rootViewController: filterController)
+        navigation.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
+        navigation.navigationBar.barTintColor = Constants.Colors.appTheme
+        self.navigationController?.presentViewController(navigation, animated: true, completion: nil)
     }
     
     
@@ -125,20 +135,113 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return tableData.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: TransactionTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("TransactionTableIdentifier") as! TransactionTableViewCell
-        
         cell.selectionStyle = .None
         
+        let tempModel = tableData[indexPath.row]
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let date: NSDate = dateFormatter.dateFromString(tempModel.date_added)!
+        
+        let dateFormatter1 = NSDateFormatter()
+        dateFormatter1.dateFormat = "MMMM dd, yyyy"
+        let dateAdded = dateFormatter1.stringFromDate(date)
+        
+        cell.setStatus(tempModel.order_status_id.toInt()!)
+        cell.setTID(tempModel.order_id)
+        //cell.setPrice("P \(tempModel.total_price)"
+            
+        if tempModel.total_quantity.toInt() < 2 {
+            cell.setProductDate("\(tempModel.total_quantity) product\t\t\(dateAdded)")
+        } else {
+            cell.setProductDate("\(tempModel.total_quantity) products\t\t\(dateAdded)")
+        }
+            
         return cell
     }
     
     // MARK: Table View Delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var transactionDetailsController = TransactionDetailsTableViewController(nibName: "TransactionDetailsTableViewController", bundle: nil)
+        self.navigationController?.pushViewController(transactionDetailsController, animated:true)
+
+    }
+    
+    func fireGetTransaction(){
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
         
+        manager.GET(APIAtlas.transactionList, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            let transactionModel: TransactionsModel = TransactionsModel.parseDataWithDictionary(responseObject)
+            
+            println(responseObject)
+            
+            if transactionModel.isSuccessful {
+                self.tableData.removeAll(keepCapacity: false)
+                self.tableData = transactionModel.transactions
+                self.tableView.reloadData()
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+            }
+            
+            
+            self.hud?.hide(true)
+            
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.fireRefreshToken()
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                }
+                
+                println(error)
+        })
+    }
+    
+    func fireRefreshToken() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.fireGetTransaction()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+        })
+        
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
 }
