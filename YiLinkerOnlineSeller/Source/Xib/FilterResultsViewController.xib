@@ -79,7 +79,7 @@
                             <rect key="frame" x="188" y="0.0" width="187" height="35"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="filter2.png" translatesAutoresizingMaskIntoConstraints="NO" id="IvW-tM-6cK">
-                                    <rect key="frame" x="61" y="8" width="20" height="20"/>
+                                    <rect key="frame" x="86" y="8" width="20" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="7Vg-tl-dTk"/>
                                         <constraint firstAttribute="width" constant="20" id="LZM-nN-fNt"/>
@@ -87,7 +87,7 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filter" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jZF-jZ-lYD">
-                                    <rect key="frame" x="84" y="5" width="28" height="25"/>
+                                    <rect key="frame" x="109" y="5" width="28" height="25"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="25" id="1CG-1L-HNG"/>
                                     </constraints>
@@ -99,7 +99,7 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="LHw-F0-6GA"/>
-                                <constraint firstAttribute="trailing" secondItem="jZF-jZ-lYD" secondAttribute="trailing" constant="75" id="Tpn-mk-zlE"/>
+                                <constraint firstAttribute="trailing" secondItem="jZF-jZ-lYD" secondAttribute="trailing" constant="50" id="Tpn-mk-zlE"/>
                                 <constraint firstItem="jZF-jZ-lYD" firstAttribute="leading" secondItem="IvW-tM-6cK" secondAttribute="trailing" constant="3" id="VbI-KG-m0U"/>
                                 <constraint firstItem="jZF-jZ-lYD" firstAttribute="top" secondItem="Zxp-al-mAM" secondAttribute="top" constant="5" id="dHF-lh-Vns"/>
                                 <constraint firstAttribute="bottom" secondItem="IvW-tM-6cK" secondAttribute="bottom" constant="7" id="jFj-V6-X5v"/>
@@ -111,7 +111,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="187" height="35"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sort" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ohX-Pb-v9U">
-                                    <rect key="frame" x="103" y="5" width="24" height="25"/>
+                                    <rect key="frame" x="78" y="5" width="24" height="25"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="25" id="Qxl-eF-pGy"/>
                                     </constraints>
@@ -120,7 +120,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sort.png" translatesAutoresizingMaskIntoConstraints="NO" id="jv3-My-Xgz">
-                                    <rect key="frame" x="75" y="7" width="20" height="20"/>
+                                    <rect key="frame" x="50" y="7" width="20" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="N5i-zC-D5R"/>
                                         <constraint firstAttribute="width" constant="20" id="azJ-hS-bzS"/>
@@ -129,8 +129,8 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstItem="jv3-My-Xgz" firstAttribute="leading" secondItem="v45-hB-CPT" secondAttribute="leading" constant="75" id="8lG-3y-gCj"/>
                                 <constraint firstAttribute="height" constant="35" id="Eem-Cx-jXH"/>
+                                <constraint firstItem="jv3-My-Xgz" firstAttribute="leading" secondItem="v45-hB-CPT" secondAttribute="leading" constant="50" id="PPh-fa-WXP"/>
                                 <constraint firstAttribute="bottom" secondItem="jv3-My-Xgz" secondAttribute="bottom" constant="8" id="gWp-xb-3yb"/>
                                 <constraint firstAttribute="bottom" secondItem="ohX-Pb-v9U" secondAttribute="bottom" constant="5" id="iLS-nx-je0"/>
                                 <constraint firstItem="ohX-Pb-v9U" firstAttribute="top" secondItem="v45-hB-CPT" secondAttribute="top" constant="5" id="jbk-1m-x2c"/>
