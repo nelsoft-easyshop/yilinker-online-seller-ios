@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+        </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="144" id="KGk-i7-Jjw" customClass="NewAddressHeaderTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="359" height="144"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2nB-x4-sys">
+                        <rect key="frame" x="0.0" y="0.0" width="359" height="135"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create New Address" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hmd-Pi-h6c">
+                                <rect key="frame" x="127" y="70" width="116" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="Nls-sb-P2u"/>
+                                    <constraint firstAttribute="width" constant="116" id="u0K-dc-LTV"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dlP-Yr-47n">
+                                <rect key="frame" x="44" y="85" width="283" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Go4-gx-jGp"/>
+                                    <constraint firstAttribute="width" constant="283" id="tjv-4Z-ADJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="address.png" translatesAutoresizingMaskIntoConstraints="NO" id="t4y-dO-ljE">
+                                <rect key="frame" x="149" y="8" width="61" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="t4y-dO-ljE" secondAttribute="height" multiplier="61:60" id="0ah-3T-g0n"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Hmd-Pi-h6c" secondAttribute="trailing" constant="116" id="0ap-1i-tmm"/>
+                            <constraint firstAttribute="width" constant="359" id="1ew-On-R4S"/>
+                            <constraint firstItem="Hmd-Pi-h6c" firstAttribute="top" secondItem="t4y-dO-ljE" secondAttribute="bottom" constant="2" id="4E5-Cr-Zc7"/>
+                            <constraint firstItem="t4y-dO-ljE" firstAttribute="leading" secondItem="2nB-x4-sys" secondAttribute="leading" constant="149" id="8Ua-6T-SLw"/>
+                            <constraint firstAttribute="trailing" secondItem="dlP-Yr-47n" secondAttribute="trailing" constant="32" id="Bbj-aC-GL9"/>
+                            <constraint firstAttribute="bottom" secondItem="dlP-Yr-47n" secondAttribute="bottom" constant="10" id="G9R-dZ-Efr"/>
+                            <constraint firstItem="dlP-Yr-47n" firstAttribute="top" secondItem="Hmd-Pi-h6c" secondAttribute="bottom" constant="-6" id="O7u-SG-NKV"/>
+                            <constraint firstAttribute="height" constant="135" id="RZG-u1-atK"/>
+                            <constraint firstItem="t4y-dO-ljE" firstAttribute="top" secondItem="2nB-x4-sys" secondAttribute="top" constant="8" id="W9Q-Kq-iWa"/>
+                            <constraint firstAttribute="centerX" secondItem="t4y-dO-ljE" secondAttribute="centerX" id="lK8-aI-kjy"/>
+                            <constraint firstItem="dlP-Yr-47n" firstAttribute="leading" secondItem="2nB-x4-sys" secondAttribute="leading" constant="44" id="pGM-9l-PrY"/>
+                            <constraint firstItem="Hmd-Pi-h6c" firstAttribute="leading" secondItem="2nB-x4-sys" secondAttribute="leading" constant="127" id="rOY-hU-3Ql"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="2nB-x4-sys" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="0LR-8W-R0J"/>
+                    <constraint firstItem="2nB-x4-sys" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="FsT-pn-C0v"/>
+                    <constraint firstItem="2nB-x4-sys" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="G1e-Ke-GJM"/>
+                    <constraint firstAttribute="bottom" secondItem="2nB-x4-sys" secondAttribute="bottom" constant="8" id="Ioa-2v-x6U"/>
+                    <constraint firstAttribute="trailing" secondItem="2nB-x4-sys" secondAttribute="trailing" id="JIl-VQ-RsF"/>
+                    <constraint firstItem="2nB-x4-sys" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="Smr-nj-lpt"/>
+                    <constraint firstItem="2nB-x4-sys" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="T1K-Z9-bar"/>
+                    <constraint firstItem="2nB-x4-sys" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="Vxe-JK-3Yb"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="addressDetailLabel" destination="dlP-Yr-47n" id="XW0-oC-E9K"/>
+                <outlet property="addressLabel" destination="Hmd-Pi-h6c" id="9Ga-zq-rgh"/>
+            </connections>
+            <point key="canvasLocation" x="296.5" y="267"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="address.png" width="200" height="198"/>
+    </resources>
+</document>
