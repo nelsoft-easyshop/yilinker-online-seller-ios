@@ -459,7 +459,7 @@
 		F7C40FD41B983CD90091C16C /* delete .png in Resources */ = {isa = PBXBuildFile; fileRef = F7C40FC31B983CD90091C16C /* delete .png */; };
 		F7C40FD51B983CD90091C16C /* dropdown.png in Resources */ = {isa = PBXBuildFile; fileRef = F7C40FC41B983CD90091C16C /* dropdown.png */; };
 		F7C40FD61B983CD90091C16C /* dummy-placeholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F7C40FC51B983CD90091C16C /* dummy-placeholder.jpg */; };
-		F7C40FD71B983CD90091C16C /* filter.png in Resources */ = {isa = PBXBuildFile; fileRef = F7C40FC61B983CD90091C16C /* filter.png */; };
+		F7C40FD71B983CD90091C16C /* filter2.png in Resources */ = {isa = PBXBuildFile; fileRef = F7C40FC61B983CD90091C16C /* filter2.png */; };
 		F7C40FD81B983CD90091C16C /* oops.png in Resources */ = {isa = PBXBuildFile; fileRef = F7C40FC71B983CD90091C16C /* oops.png */; };
 		F7C40FD91B983CD90091C16C /* photo.png in Resources */ = {isa = PBXBuildFile; fileRef = F7C40FC81B983CD90091C16C /* photo.png */; };
 		F7C40FDA1B983CD90091C16C /* sort.png in Resources */ = {isa = PBXBuildFile; fileRef = F7C40FC91B983CD90091C16C /* sort.png */; };
@@ -954,7 +954,7 @@
 		F7C40FC31B983CD90091C16C /* delete .png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "delete .png"; sourceTree = "<group>"; };
 		F7C40FC41B983CD90091C16C /* dropdown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dropdown.png; sourceTree = "<group>"; };
 		F7C40FC51B983CD90091C16C /* dummy-placeholder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "dummy-placeholder.jpg"; sourceTree = "<group>"; };
-		F7C40FC61B983CD90091C16C /* filter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = filter.png; sourceTree = "<group>"; };
+		F7C40FC61B983CD90091C16C /* filter2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = filter2.png; sourceTree = "<group>"; };
 		F7C40FC71B983CD90091C16C /* oops.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = oops.png; sourceTree = "<group>"; };
 		F7C40FC81B983CD90091C16C /* photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo.png; sourceTree = "<group>"; };
 		F7C40FC91B983CD90091C16C /* sort.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sort.png; sourceTree = "<group>"; };
@@ -1657,7 +1657,7 @@
 				F7C40FC31B983CD90091C16C /* delete .png */,
 				F7C40FC41B983CD90091C16C /* dropdown.png */,
 				F7C40FC51B983CD90091C16C /* dummy-placeholder.jpg */,
-				F7C40FC61B983CD90091C16C /* filter.png */,
+				F7C40FC61B983CD90091C16C /* filter2.png */,
 				F7C40FC71B983CD90091C16C /* oops.png */,
 				F7C40FC81B983CD90091C16C /* photo.png */,
 				F7C40FC91B983CD90091C16C /* sort.png */,
@@ -1788,7 +1788,7 @@
 				9628AC961B9848E700734551 /* DisputeViewController.xib in Resources */,
 				0C8739DB1B96E172005D2EF8 /* SuccessUploadViewController.xib in Resources */,
 				F7C40FDF1B98443B0091C16C /* StoreInfoSectionTableViewCell.xib in Resources */,
-				F7C40FD71B983CD90091C16C /* filter.png in Resources */,
+				F7C40FD71B983CD90091C16C /* filter2.png in Resources */,
 				79EFF7811B8DB3C8008A9E7D /* RecentProductsTableViewController.xib in Resources */,
 				79EFF7851B8DBB97008A9E7D /* RecentProductsTableViewCell.xib in Resources */,
 				F7C40FD01B983CD90091C16C /* cart3.png in Resources */,
