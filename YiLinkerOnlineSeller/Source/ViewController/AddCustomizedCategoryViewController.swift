@@ -344,7 +344,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             if self.title == "Add Customized Category" {
                 requestAddCustomizedCategory()
             } else if self.title == "Edit Customized Category" {
-                requestEditCustomizedCategory()
+                requestEditCustomizedCategory() 
             }
 
         }
