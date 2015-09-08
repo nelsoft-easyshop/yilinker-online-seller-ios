@@ -272,6 +272,8 @@
 		792F6E501B9D438B00F0CB03 /* TotalPointsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792F6E4F1B9D438B00F0CB03 /* TotalPointsModel.swift */; };
 		792F6E521B9D44EC00F0CB03 /* MyPointsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792F6E511B9D44EC00F0CB03 /* MyPointsModel.swift */; };
 		792F6E541B9D484000F0CB03 /* MyPointsHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792F6E531B9D484000F0CB03 /* MyPointsHistoryModel.swift */; };
+		792F6E561B9D7E5000F0CB03 /* SalesReportTransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792F6E551B9D7E5000F0CB03 /* SalesReportTransactionModel.swift */; };
+		792F6E581B9D7F2300F0CB03 /* SalesReportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792F6E571B9D7F2300F0CB03 /* SalesReportModel.swift */; };
 		793C41E11B98237F009CE671 /* CategoryProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793C41E01B98237F009CE671 /* CategoryProductModel.swift */; };
 		793C41E31B9824AD009CE671 /* CategoryProductsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793C41E21B9824AD009CE671 /* CategoryProductsModel.swift */; };
 		793C41E51B982CFA009CE671 /* CategoryDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793C41E41B982CFA009CE671 /* CategoryDetailModel.swift */; };
@@ -754,6 +756,8 @@
 		792F6E4F1B9D438B00F0CB03 /* TotalPointsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalPointsModel.swift; sourceTree = "<group>"; };
 		792F6E511B9D44EC00F0CB03 /* MyPointsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsModel.swift; sourceTree = "<group>"; };
 		792F6E531B9D484000F0CB03 /* MyPointsHistoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsHistoryModel.swift; sourceTree = "<group>"; };
+		792F6E551B9D7E5000F0CB03 /* SalesReportTransactionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalesReportTransactionModel.swift; sourceTree = "<group>"; };
+		792F6E571B9D7F2300F0CB03 /* SalesReportModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalesReportModel.swift; sourceTree = "<group>"; };
 		793C41E01B98237F009CE671 /* CategoryProductModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryProductModel.swift; sourceTree = "<group>"; };
 		793C41E21B9824AD009CE671 /* CategoryProductsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryProductsModel.swift; sourceTree = "<group>"; };
 		793C41E41B982CFA009CE671 /* CategoryDetailModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryDetailModel.swift; sourceTree = "<group>"; };
@@ -1085,6 +1089,8 @@
 				792F6E4F1B9D438B00F0CB03 /* TotalPointsModel.swift */,
 				792F6E511B9D44EC00F0CB03 /* MyPointsModel.swift */,
 				792F6E531B9D484000F0CB03 /* MyPointsHistoryModel.swift */,
+				792F6E551B9D7E5000F0CB03 /* SalesReportTransactionModel.swift */,
+				792F6E571B9D7F2300F0CB03 /* SalesReportModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2160,6 +2166,7 @@
 				F7C40F521B983A590091C16C /* StoreAddressModel.swift in Sources */,
 				F7C40F711B983B320091C16C /* FilterByTableViewCell.swift in Sources */,
 				0C65F8CC1B8DF8A000504D86 /* ProductUploadSearchViewController.swift in Sources */,
+				792F6E581B9D7F2300F0CB03 /* SalesReportModel.swift in Sources */,
 				0CF28F111B8CAA31005B2E54 /* ProductUploadTableViewController.swift in Sources */,
 				F7AC5F831B9ACB6500227D18 /* NewAddressHeaderTableViewCell.swift in Sources */,
 				794880821B94EB530090B259 /* FollowerModel.swift in Sources */,
@@ -2253,6 +2260,7 @@
 				7928761A1B8DF89F00762A39 /* LineScatterCandleChartDataSet.swift in Sources */,
 				792876311B8DF89F00762A39 /* ChartXAxisRendererHorizontalBarChart.swift in Sources */,
 				79EF7AAF1B9984640082CD35 /* TransactionTableViewController.swift in Sources */,
+				792F6E561B9D7E5000F0CB03 /* SalesReportTransactionModel.swift in Sources */,
 				7928760F1B8DF89F00762A39 /* BubbleChartDataSet.swift in Sources */,
 				7928761D1B8DF89F00762A39 /* RadarChartData.swift in Sources */,
 				26374DA01B8F50A4006C639B /* SignInViewController.swift in Sources */,
