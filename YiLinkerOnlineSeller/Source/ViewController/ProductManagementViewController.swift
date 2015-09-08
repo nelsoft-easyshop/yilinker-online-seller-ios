@@ -437,8 +437,8 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println("product id >  + \(self.productModel.products[indexPath.row].id)")
-        //        let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
-        //        self.navigationController?.pushViewController(productDetails, animated: true)
+        let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
+        self.navigationController?.pushViewController(productDetails, animated: true)
     }
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
