@@ -486,6 +486,8 @@
 		F7C40FE11B9854B20091C16C /* SalesReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EFF7761B8D9274008A9E7D /* SalesReportViewController.swift */; };
 		F7CB78431B9D822C001AF766 /* FilterCalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CB78411B9D822C001AF766 /* FilterCalendarTableViewCell.swift */; };
 		F7CB78441B9D822C001AF766 /* FilterCalendarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CB78421B9D822C001AF766 /* FilterCalendarTableViewCell.xib */; };
+		F7E465841B9F2D7B00FAB97D /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E465821B9F2D7B00FAB97D /* SearchTableViewCell.swift */; };
+		F7E465851B9F2D7B00FAB97D /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E465831B9F2D7B00FAB97D /* SearchTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -997,6 +999,8 @@
 		F7C40FDE1B98443B0091C16C /* StoreInfoSectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoSectionTableViewCell.xib; sourceTree = "<group>"; };
 		F7CB78411B9D822C001AF766 /* FilterCalendarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCalendarTableViewCell.swift; sourceTree = "<group>"; };
 		F7CB78421B9D822C001AF766 /* FilterCalendarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterCalendarTableViewCell.xib; sourceTree = "<group>"; };
+		F7E465821B9F2D7B00FAB97D /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
+		F7E465831B9F2D7B00FAB97D /* SearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1224,6 +1228,8 @@
 				79E633761B9AD2570062DB14 /* TransactionProductDescriptionTableViewCell.swift */,
 				79E6337A1B9AEDA50062DB14 /* TransactionDetailsFooterView.swift */,
 				79E633AC1B9B328E0062DB14 /* TransactionShipItemTableViewCell.swift */,
+				F7E465821B9F2D7B00FAB97D /* SearchTableViewCell.swift */,
+				F7E465831B9F2D7B00FAB97D /* SearchTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1864,6 +1870,7 @@
 				79E633751B9AD0740062DB14 /* TransactionProductDescriptionTableViewCell.xib in Resources */,
 				26B5B2421B94DE4200CBDDE5 /* AddCustomizedCategoryViewController.xib in Resources */,
 				799893031B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib in Resources */,
+				F7E465851B9F2D7B00FAB97D /* SearchTableViewCell.xib in Resources */,
 				2625FEA21B95F5E800DD24AF /* AddItemTableViewCell.xib in Resources */,
 				F7AC5F841B9ACB6500227D18 /* NewAddressHeaderTableViewCell.xib in Resources */,
 				0C65F8F11B8E3CB000504D86 /* ProductUploadDetailTableViewController.xib in Resources */,
@@ -2181,6 +2188,7 @@
 				79EDA4091B9204F20037558A /* PointsBreakdownTableViewCell.swift in Sources */,
 				F7C40F6F1B983B280091C16C /* CreateNewBankAccountViewController.swift in Sources */,
 				0CF28ED61B8C85E5005B2E54 /* XibHelper.swift in Sources */,
+				F7E465841B9F2D7B00FAB97D /* SearchTableViewCell.swift in Sources */,
 				0C5E9D8E1B91E2E200F32CFE /* ProductUploadFooterView.swift in Sources */,
 				0C8D7FC41B8FFC5900B3FA4E /* CombinationModel.swift in Sources */,
 				26B5B2531B94F37000CBDDE5 /* CustomizedCategoryViewsViewController.swift in Sources */,

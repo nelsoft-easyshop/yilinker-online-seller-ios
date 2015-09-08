@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchTableViewCell" rowHeight="46" id="KGk-i7-Jjw" customClass="SearchTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="-1" width="375" height="46"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right2" translatesAutoresizingMaskIntoConstraints="NO" id="SZ3-UO-BxL">
+                        <rect key="frame" x="348" y="11" width="10" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="10" id="E0Y-gE-3bM"/>
+                            <constraint firstAttribute="height" constant="21" id="Paj-Bw-byg"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TID-123-456-789" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UhW-le-g5K">
+                        <rect key="frame" x="8" y="11" width="296" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="qGb-VK-GcH"/>
+                            <constraint firstAttribute="width" constant="296" id="qh3-zL-Emg"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="UhW-le-g5K" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="JBh-r4-4YB"/>
+                    <constraint firstAttribute="trailing" secondItem="SZ3-UO-BxL" secondAttribute="trailing" constant="17" id="TmQ-Zp-Q03"/>
+                    <constraint firstAttribute="bottom" secondItem="UhW-le-g5K" secondAttribute="bottom" constant="13" id="V1u-V7-nax"/>
+                    <constraint firstAttribute="centerY" secondItem="UhW-le-g5K" secondAttribute="centerY" constant="1" id="YTR-3g-dca"/>
+                    <constraint firstItem="UhW-le-g5K" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="Z5r-pO-rUk"/>
+                    <constraint firstAttribute="bottom" secondItem="SZ3-UO-BxL" secondAttribute="bottom" constant="13" id="iJw-4Y-Vpi"/>
+                    <constraint firstItem="SZ3-UO-BxL" firstAttribute="leading" secondItem="UhW-le-g5K" secondAttribute="trailing" constant="44" id="mPF-jP-eUa"/>
+                    <constraint firstItem="SZ3-UO-BxL" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="yKL-Vp-2lb"/>
+                </constraints>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="224.5" y="211"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="right2" width="97" height="200"/>
+    </resources>
+</document>

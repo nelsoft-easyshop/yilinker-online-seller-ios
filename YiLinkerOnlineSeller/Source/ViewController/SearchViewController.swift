@@ -68,6 +68,9 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         var nibCategory = UINib(nibName: "CategoryTableViewCell", bundle: nil)
         searchResultTableView.registerNib(nibCategory, forCellReuseIdentifier: "CategoryTableViewCell")
         
+        var nibSearch = UINib(nibName: "SearchTableViewCell", bundle: nil)
+        searchResultTableView.registerNib(nibSearch, forCellReuseIdentifier: "SearchTableViewCell")
+        
         var nibFilter = UINib(nibName: "FilterByTableViewCell", bundle: nil)
         filterByTableView.registerNib(nibFilter, forCellReuseIdentifier: "FilterByTableViewCell")
         
@@ -93,7 +96,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if(tableView .isEqual(self.searchResultTableView)){
-            return 144
+            return 46
         } else {
             return 30
         }
@@ -102,7 +105,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if (tableView .isEqual(self.searchResultTableView)){
-            let cell = searchResultTableView.dequeueReusableCellWithIdentifier("CategoryTableViewCell") as! CategoryTableViewCell
+            let cell = searchResultTableView.dequeueReusableCellWithIdentifier("SearchTableViewCell") as! SearchTableViewCell
             
             return cell
         } else {
