@@ -295,6 +295,7 @@
 		794880801B94DE480090B259 /* FollowerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948807F1B94DE480090B259 /* FollowerTableViewCell.swift */; };
 		794880821B94EB530090B259 /* FollowerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794880811B94EB530090B259 /* FollowerModel.swift */; };
 		794A96571B9E8870002F32A0 /* OrderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A96561B9E8870002F32A0 /* OrderModel.swift */; };
+		794A965B1B9EAAEA002F32A0 /* FollowersModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A965A1B9EAAEA002F32A0 /* FollowersModel.swift */; };
 		799892F31B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */; };
 		799892F51B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */; };
 		799892F71B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */; };
@@ -789,6 +790,7 @@
 		7948807F1B94DE480090B259 /* FollowerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowerTableViewCell.swift; sourceTree = "<group>"; };
 		794880811B94EB530090B259 /* FollowerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowerModel.swift; sourceTree = "<group>"; };
 		794A96561B9E8870002F32A0 /* OrderModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderModel.swift; sourceTree = "<group>"; };
+		794A965A1B9EAAEA002F32A0 /* FollowersModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowersModel.swift; sourceTree = "<group>"; };
 		799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardHeaderCollectionViewCell.xib; sourceTree = "<group>"; };
 		799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashBoardHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardItemCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -1113,6 +1115,7 @@
 				792F6E551B9D7E5000F0CB03 /* SalesReportTransactionModel.swift */,
 				792F6E571B9D7F2300F0CB03 /* SalesReportModel.swift */,
 				794A96561B9E8870002F32A0 /* OrderModel.swift */,
+				794A965A1B9EAAEA002F32A0 /* FollowersModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1305,7 +1308,6 @@
 		0CF28ECC1B8C85E5005B2E54 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
-				0C8739D91B96E172005D2EF8 /* SuccessUploadViewController.xib */,
 				0CAACCAF1B9D2DC000BE5EF3 /* ResellerViewController.xib */,
 				79E633811B9B07670062DB14 /* TransactionCancelOrderSuccessViewController.xib */,
 				79E6337D1B9AF4FD0062DB14 /* TransactionCancelOrderViewController.xib */,
@@ -1342,7 +1344,6 @@
 				F7C40F9C1B983BDF0091C16C /* FilterTableViewCell.xib */,
 				F7C40F9A1B983BD90091C16C /* FilterViewController.xib */,
 				7948807A1B94D9BD0090B259 /* FollowersViewController.xib */,
-				7948807D1B94DAA50090B259 /* FollowerTableViewCell.xib */,
 				2686E3751B956C4A00E8FA80 /* ItemImagesHorizontalCollectionViewCell.xib */,
 				79EDA4031B9204CA0037558A /* MyPointsTableViewController.xib */,
 				2686E3791B9585D600E8FA80 /* ParentCategoryViewController.xib */,
@@ -2330,6 +2331,7 @@
 				792876381B8DF89F00762A39 /* LineChartRenderer.swift in Sources */,
 				961F702A1B97EEEC007D0EA5 /* ButtonToTabBehaviorizer.swift in Sources */,
 				F7C40F611B983AC50091C16C /* ChangeAddressFooterCollectionViewCell.swift in Sources */,
+				794A965B1B9EAAEA002F32A0 /* FollowersModel.swift in Sources */,
 				0CF28ED11B8C85E5005B2E54 /* HexaColor.swift in Sources */,
 				0CAB52A31B91F9FB00EA441A /* ConditionParserModel.swift in Sources */,
 				2618DD791B9788470030C6D2 /* EdititemsViewController.swift in Sources */,
