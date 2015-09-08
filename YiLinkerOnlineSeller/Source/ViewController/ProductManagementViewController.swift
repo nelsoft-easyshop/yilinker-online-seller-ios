@@ -18,7 +18,9 @@ struct Status {
 
 class ProductManagementViewController: UIViewController, ProductManagementModelViewControllerDelegate {
     
-    @IBOutlet weak var searchBar: UISearchBar!
+
+    @IBOutlet weak var searchBarContainerView: UIView!
+    @IBOutlet weak var searchBarTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var buttonsContainer: UIView!
@@ -80,7 +82,14 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     }
     
     func customizeViews() {
-        self.searchBar.barTintColor = Constants.Colors.appTheme
+        self.searchBarContainerView.backgroundColor = Constants.Colors.appTheme
+        self.searchBarTextField.addTarget(self, action: "searchBarTextDidChanged:", forControlEvents: UIControlEvents.EditingChanged)
+        self.searchBarTextField.layer.cornerRadius = self.searchBarTextField.frame.size.height / 2
+        let searchImageView: UIImageView = UIImageView(image: UIImage(named: "search2"))
+        searchImageView.frame = CGRectMake(0.0, 0.0, searchImageView.image!.size.width + 10.0, searchImageView.image!.size.height)
+        searchImageView.contentMode = UIViewContentMode.Center
+        self.searchBarTextField.leftViewMode = UITextFieldViewMode.Always
+        self.searchBarTextField.leftView = searchImageView
         
         self.deleteView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "deleteAction:"))
         self.activeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "activeAction:"))
@@ -221,16 +230,16 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     }
     
     func searchAction() {
-        if searchBar.hidden {
-            self.searchBar.becomeFirstResponder()
-            self.searchBar.hidden = false
+        if searchBarContainerView.hidden {
+            self.searchBarTextField.becomeFirstResponder()
+            self.searchBarContainerView.hidden = false
             self.collectionView.transform = CGAffineTransformMakeTranslation(0.0, 44.0)
             self.tableView.frame.size.height -= 44.0
             self.tableView.transform = CGAffineTransformMakeTranslation(0.0, 44.0)
         } else {
-            self.searchBar.text = ""
-            self.searchBar.endEditing(true)
-            self.searchBar.hidden = true
+            self.searchBarTextField.text = ""
+            self.searchBarTextField.endEditing(true)
+            self.searchBarContainerView.hidden = true
             self.collectionView.transform = CGAffineTransformMakeTranslation(0.0, 0.0)
             self.tableView.frame.size.height += 44.0
             self.tableView.transform = CGAffineTransformMakeTranslation(0.0, 0.0)
@@ -327,7 +336,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             self.selectedItems = []
             self.updateSelectedItems(0, selected: false)
             
-            self.requestGetProductList(self.statusId[self.selectedIndex], key: self.searchBar.text)
+            self.requestGetProductList(self.statusId[self.selectedIndex], key: self.searchBarTextField.text)
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -339,9 +348,15 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
 } // ProductManagementViewController
 
 
-extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ProductManagementTableViewCellDelegate, ProductManagementModelViewControllerDelegate {
+extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ProductManagementTableViewCellDelegate, ProductManagementModelViewControllerDelegate {
     
     // MARK: - Search Bar Delegate
+    
+    func searchBarTextDidChanged(textField: UITextField) {
+        if count(self.searchBarTextField.text) > 2 || self.searchBarTextField.text == "" {
+            requestGetProductList(statusId[selectedIndex], key: searchBarTextField.text)
+        }
+    }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         if count(searchBar.text) > 2 {
@@ -427,7 +442,7 @@ extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataS
     }
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        self.searchBar.resignFirstResponder()
+        self.searchBarTextField.resignFirstResponder()
     }
     
     // MARK: - Collection View Data Source
@@ -461,7 +476,7 @@ extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataS
         if selectedIndex != indexPath.row {
             self.selectedItems = []
             self.productModel = nil
-            requestGetProductList(statusId[indexPath.row], key: searchBar.text)
+            requestGetProductList(statusId[indexPath.row], key: searchBarTextField.text)
             selectedIndex = indexPath.row
             
             if selectedIndex == 0 {
