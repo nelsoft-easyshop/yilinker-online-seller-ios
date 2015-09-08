@@ -8,6 +8,14 @@
 
 import UIKit
 
+struct Status {
+    static let active = 2
+    static let inactive = 3
+    static let draft = 0
+    static let deleted = 4
+    static let review = 1
+}
+
 class ProductManagementViewController: UIViewController, ProductManagementModelViewControllerDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -29,12 +37,15 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     var pageTitle: [String] = ["All", "Active", "Inactive", "Drafts", "Deleted", "Under Review"]
     var selectedImage: [String] = ["all2", "active2", "inactive2", "drafts2", "deleted2", "review2"]
     var deSelectedImage: [String] = ["all", "active", "inactive", "drafts", "deleted", "review"]
-    var selectedItems: [Bool] = []
+
     var statusId: [Int] = [5, 2, 3, 0, 4, 1]
     
     var selectedIndex: Int = 0
     var tableViewSectionHeight: CGFloat = 0
     var tableViewSectionTitle: String = ""
+    
+    var selectedItemsIndex: [Int] = []
+    var selectedItems: [String] = []
     
     var hud: MBProgressHUD?
     
@@ -49,9 +60,9 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         customizeNavigationBar()
         customizeViews()
         registerNibs()
-        for i in 0..<10 {
-            selectedItems.append(false)
-        }
+//        for i in 0..<10 {
+//            selectedItems.append(false)
+//        }
     }
     
     // MARK: - Methods
@@ -162,13 +173,15 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         return sectionHeaderContainverView
     }
     
-    func showModal() {
+    func showModal(#title: String, message: String) {
         var productManagementModel = ProductManagementModelViewController(nibName: "ProductManagementModelViewController", bundle: nil)
         productManagementModel.delegate = self
         productManagementModel.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         productManagementModel.providesPresentationContextTransitionStyle = true
         productManagementModel.definesPresentationContext = true
         productManagementModel.view.backgroundColor = UIColor.clearColor()
+        productManagementModel.titleLabel.text = title
+        productManagementModel.subTitleLabel.text = message
         self.tabBarController?.presentViewController(productManagementModel, animated: true, completion: nil)
         
         UIView.animateWithDuration(0.25, animations: {
@@ -227,57 +240,46 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     }
     
     func tabAction(sender: AnyObject) {
-        
-        if selectedIndex == 1 {
-            println(pageTitle[selectedIndex] + " " + sender.titleLabel!!.text!)
-        } else if selectedIndex == 2 {
-            if sender.titleLabel!!.text == "Delete All" {
+        if productModel.products.count != 0 {
+            if selectedIndex == 1 {
                 println(pageTitle[selectedIndex] + " " + sender.titleLabel!!.text!)
-            } else if sender.titleLabel!!.text == "Restore All" {
+            } else if selectedIndex == 2 {
+                if sender.titleLabel!!.text == "Delete All" {
+                    println(pageTitle[selectedIndex] + " " + sender.titleLabel!!.text!)
+                } else if sender.titleLabel!!.text == "Restore All" {
+                    println(pageTitle[selectedIndex] + " " + sender.titleLabel!!.text!)
+                }
+            } else if selectedIndex == 3 {
                 println(pageTitle[selectedIndex] + " " + sender.titleLabel!!.text!)
             }
-        } else if selectedIndex == 3 {
-            println(pageTitle[selectedIndex] + " " + sender.titleLabel!!.text!)
+            
+            showModal(title: "You're about to " + sender.titleLabel!!.text!.lowercaseString + " active products.",
+                message: "Are you sure you want to cancel this order?")
         }
-        
-        showModal()
     }
     
     func deleteAction(gesture: UIGestureRecognizer) {
-        
-        if selectedIndex == 3 {
-            print("DRAFTS > ")
-        } else if selectedIndex == 5 {
-            print("UNDER REVIEW > ")
-        }
-        
-        println("DELETE")
+        requestUpdateProductStatus(Status.deleted)
     }
     
     func activeAction(gesture: UIGestureRecognizer) {
-        println("MOVE TO INACTIVE")
+        requestUpdateProductStatus(Status.inactive)
     }
     
     func inactiveAction(gesture: UIGestureRecognizer) {
-        println("MOVE TO ACTIVE")
+        requestUpdateProductStatus(Status.active)
     }
     
     func activeInactiveAction(gesture: UIGestureRecognizer) {
         if selectedIndex == 1 {
-            println("MOVE TO INACTIVE")
+            requestUpdateProductStatus(Status.inactive)
         } else if selectedIndex == 2 {
-            println("MOVE TO ACTIVE")
+            requestUpdateProductStatus(Status.active)
         }
     }
     
     func delete2Action(gesture: UIGestureRecognizer) {
-        if selectedIndex == 1 {
-            print("ACTIVE > ")
-        } else if selectedIndex == 2 {
-            print("INACTIVE > ")
-        }
-        
-        println("DELETE")
+        requestUpdateProductStatus(Status.deleted)
     }
     
     // MARK: - Requests
@@ -312,23 +314,24 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         })
     }
     
-    func requestUpdateProductStatus(status: Int, key: String) {
+    func requestUpdateProductStatus(status: Int) {
         self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-            "productId": "",
-            "status": String(status)]
+                                           "productId": selectedItems.description,
+                                              "status": status]
         
-        manager.POST(APIAtlas.managementGetProductList, parameters: parameters, success: {
+        manager.POST(APIAtlas.managementUpdateProductStatus, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
-            self.tableView.reloadData()
-            self.hud?.hide(true)
+            self.selectedItems = []
+            self.updateSelectedItems(0, selected: false)
+            
+            self.requestGetProductList(self.statusId[self.selectedIndex], key: self.searchBar.text)
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                
+                println(error)
                 self.hud?.hide(true)
         })
     }
@@ -343,8 +346,6 @@ extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataS
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         if count(searchBar.text) > 2 {
             requestGetProductList(statusId[selectedIndex], key: searchBar.text)
-            //            searchBar.resignFirstResponder()
-            //            searchAction()
         }
     }
     
@@ -383,13 +384,19 @@ extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataS
             return cell
         } else {
             let cell: ProductManagementTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductManagementIdentifier") as! ProductManagementTableViewCell
-            
             cell.selectionStyle = .None
             cell.tag = indexPath.row
+            
+            cell.delegate = self
             cell.index = selectedIndex
             cell.clearCheckImage()
-            //            cell.isSelected(selectedItems[indexPath.row])
-            cell.delegate = self
+            
+            if contains(selectedItems, self.productModel.products[indexPath.row].id) {
+                cell.selected()
+            } else {
+                cell.deselected()
+            }
+            
             
             cell.setProductImage(self.productModel.products[indexPath.row].image)
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
@@ -450,24 +457,23 @@ extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataS
     // MARK: - Collection View Delegate
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        self.productModel = nil
-        requestGetProductList(statusId[indexPath.row], key: searchBar.text)
-        selectedIndex = indexPath.row
         
-        if selectedIndex == 0 {
-            self.tableViewSectionHeight = 0.0
-        } else {
-            self.tableViewSectionHeight = 40.0
-            selectedItems.removeAll(keepCapacity: true)
-            for i in 0..<10 {
-                selectedItems.append(false)
-            }
+        if selectedIndex != indexPath.row {
+            self.selectedItems = []
+            self.productModel = nil
+            requestGetProductList(statusId[indexPath.row], key: searchBar.text)
+            selectedIndex = indexPath.row
             
-            self.buttonsContainer.hidden = true
+            if selectedIndex == 0 {
+                self.tableViewSectionHeight = 0.0
+            } else {
+                self.tableViewSectionHeight = 40.0
+                self.buttonsContainer.hidden = true
+            }
+            self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(self.tableViewSectionHeight, 0, 0, 0)
+            self.collectionView.reloadData()
+            self.tableView.reloadData()
         }
-        self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(self.tableViewSectionHeight, 0, 0, 0)
-        self.collectionView.reloadData()
-        self.tableView.reloadData()
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -479,26 +485,23 @@ extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataS
     
     func updateSelectedItems(index: Int, selected: Bool) {
         
-        // Optimized this function
-        // if selected add selected item(Int) in array
-        // if deselected remove that item(Int) (removeObject == item)
-        
-        self.selectedItems[index] = selected
-        var inset: UIEdgeInsets = UIEdgeInsetsZero
-        
-        var hideActionBar = true
-        
-        for i in 0..<self.selectedItems.count {
-            if self.selectedItems[i] == true {
-                hideActionBar = false
-                inset = UIEdgeInsetsMake(0, 0, 50, 0)
-            }
+        if selected {
+            self.selectedItems.append(self.productModel.products[index].id)
+        } else {
+            self.selectedItems = self.selectedItems.filter({$0 != self.productModel.products[index].id})
         }
         
-        self.tableView.contentInset = inset
-        self.tableView.scrollIndicatorInsets = inset
+        println(self.selectedItems)
         
-        self.buttonsContainer.hidden = hideActionBar
+        if self.selectedItems.count != 0 {
+            self.buttonsContainer.hidden = false
+            self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0)
+            self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 50, 0)
+        } else {
+            self.buttonsContainer.hidden = true
+            self.tableView.contentInset = UIEdgeInsetsZero
+            self.tableView.scrollIndicatorInsets = UIEdgeInsetsZero
+        }
         
         if selectedIndex == 1 || selectedIndex == 2 {
             self.activeInactiveDeleteContainerView.hidden = false
@@ -526,7 +529,15 @@ extension ProductManagementViewController: UISearchBarDelegate, UITableViewDataS
     
     // MARK: - Product Management Modal View Controller Delegate
     
-    func pmmvcPressClosed() {
+    func pmmvcPressClose() {
+        self.dismissModal()
+    }
+    
+    func pmmvcPressNo() {
+        self.dismissModal()
+    }
+    
+    func pmmvcPressYes() {
         self.dismissModal()
     }
     
