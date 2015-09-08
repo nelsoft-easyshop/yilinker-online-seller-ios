@@ -33,6 +33,14 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
 
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if customizedCategoriesModel != nil {
+            requestGetCustomizedCategories()
+        }
+    }
+    
     // MARK: - Methods
     
     func customizedNavigationBar() {
@@ -83,7 +91,10 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
     // MARK: - Requests
     
     func requestGetCustomizedCategories() {
-        self.showHUD()
+        if self.customizedCategoriesModel == nil {
+            self.showHUD()
+        }
+        
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
 
@@ -94,6 +105,24 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
             self.tableView.reloadData()
             self.hud?.hide(true)
             
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println(error)
+                self.hud?.hide(true)
+        })
+    }
+    
+    func requestDeleteCustomizedCategories(categoryId: Int) {
+        self.showHUD()
+        
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
+                                          "categoryId": categoryId]
+        
+        manager.POST(APIAtlas.deleteCustomizedCategory, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.hud?.hide(true)
+            self.tableView.reloadData()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 println(error)
@@ -115,8 +144,10 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
         let cell: CustomizedCategoryTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("CustomizedCategory") as! CustomizedCategoryTableViewCell
         cell.selectionStyle = .None
         
-        cell.parentCategoryLabel.text = customizedCategoriesModel.customizedCategories[indexPath.row].name //self.parentCategory[indexPath.row]
-
+        cell.parentCategoryLabel.text = customizedCategoriesModel.customizedCategories[indexPath.row].name
+        cell.subCategoriesLabel.text = String(customizedCategoriesModel.customizedCategories[indexPath.row].categoryId)
+        
+        
 //        let subCategoriesArray: NSArray = self.subCategories[indexPath.row]
 //        var sub: String = ""
 //        for i in 0..<subCategoriesArray.count {
@@ -146,6 +177,9 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
         addCustomizedCategory.requestGetCategoryDetails(self.customizedCategoriesModel.customizedCategories[indexPath.row].categoryId)
         addCustomizedCategory.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(addCustomizedCategory, animated: true)
+        
+        // to delete categories
+//        requestDeleteCustomizedCategories(self.customizedCategoriesModel.customizedCategories[indexPath.row].categoryId)
     }
     
     // MARK: - Add Customized Category View Controller Delegate

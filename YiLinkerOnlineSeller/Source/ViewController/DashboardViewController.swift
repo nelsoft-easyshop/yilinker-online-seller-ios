@@ -39,7 +39,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             self.presentViewController(signInViewController, animated: false, completion: nil)
         }
         
-        println(SessionManager.accessToken())
+//        println(SessionManager.accessToken())
         registerNibs()
         initializeViews()
     }
@@ -201,7 +201,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        println("Clicked item \(tableData[indexPath.row])")
+//        println("Clicked item \(tableData[indexPath.row])")
         if indexPath.row == 0 {
             var storeInfoViewController = StoreInfoViewController(nibName: "StoreInfoViewController", bundle: nil)
             self.navigationController?.pushViewController(storeInfoViewController, animated:true)

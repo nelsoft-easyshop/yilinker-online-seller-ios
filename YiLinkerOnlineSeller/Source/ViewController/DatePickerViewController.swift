@@ -46,8 +46,9 @@ class DatePickerViewController: UIViewController {
         }
         
         datePicker.maximumDate = NSDate()
-        startDateLabel.text = formatDate(NSDate())
-        endDateLabel.text = formatDate(NSDate())
+        datePicker.date = startDate
+        startDateLabel.text = formatDate(startDate)
+        endDateLabel.text = formatDate(endDate)
     }
     
     func initializeNavigationBar() {

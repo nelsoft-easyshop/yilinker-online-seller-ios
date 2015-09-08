@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ParentCategoryViewControllerDelegate {
-    func updateParentCategory(parentCategory: String, parentId: Int)
+    func updateParentCategory(parentCategory: String, parentId: Int, parentIndex: Int)
 }
 
 class ParentCategoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -102,7 +102,14 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func checkAction() {
-        delegate?.updateParentCategory(customizedCategoriesModel.customizedCategories[selectedIndex].name, parentId: customizedCategoriesModel.customizedCategories[selectedIndex].parentId)
+        if self.selectedIndex != -1 {
+            delegate?.updateParentCategory(customizedCategoriesModel.customizedCategories[selectedIndex].name,
+                                 parentId: customizedCategoriesModel.customizedCategories[selectedIndex].categoryId,
+                              parentIndex: selectedIndex)
+        } else {
+            delegate?.updateParentCategory("NONE", parentId: 0, parentIndex: -1)
+        }
+        
         closeAction()
     }
     
@@ -132,10 +139,14 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.selectedIndex = indexPath.row
+        if self.selectedIndex == indexPath.row {
+            self.selectedIndex = -1
+        } else {
+            self.selectedIndex = indexPath.row
+        }
         self.tableView.reloadData()
     }
     
-        
+    
     
 }

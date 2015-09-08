@@ -179,9 +179,8 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
     
     func checkAction() {
         if self.categoryDetailsView.categoryNameTextField.text != "" {
-            let subCategory = ["categoryId": 0,
-                             "categoryName": self.categoryDetailsView.categoryNameTextField.text.capitalizedString,
-                                 "products": subCategoriesProducts]
+            let subCategory = ["categoryName": self.categoryDetailsView.categoryNameTextField.text.capitalizedString,
+                                   "products": subCategoriesProducts.description]
             println(subCategory)
             delegate?.addSubCategory(subCategory, categoryName: self.categoryDetailsView.categoryNameTextField.text.capitalizedString)
             closeAction()
