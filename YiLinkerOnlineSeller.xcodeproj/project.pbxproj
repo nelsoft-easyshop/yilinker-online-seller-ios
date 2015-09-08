@@ -285,6 +285,7 @@
 		7948807E1B94DAA50090B259 /* FollowerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7948807D1B94DAA50090B259 /* FollowerTableViewCell.xib */; };
 		794880801B94DE480090B259 /* FollowerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948807F1B94DE480090B259 /* FollowerTableViewCell.swift */; };
 		794880821B94EB530090B259 /* FollowerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794880811B94EB530090B259 /* FollowerModel.swift */; };
+		794A96571B9E8870002F32A0 /* OrderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A96561B9E8870002F32A0 /* OrderModel.swift */; };
 		799892F31B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */; };
 		799892F51B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */; };
 		799892F71B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */; };
@@ -769,6 +770,7 @@
 		7948807D1B94DAA50090B259 /* FollowerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowerTableViewCell.xib; sourceTree = "<group>"; };
 		7948807F1B94DE480090B259 /* FollowerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowerTableViewCell.swift; sourceTree = "<group>"; };
 		794880811B94EB530090B259 /* FollowerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowerModel.swift; sourceTree = "<group>"; };
+		794A96561B9E8870002F32A0 /* OrderModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderModel.swift; sourceTree = "<group>"; };
 		799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardHeaderCollectionViewCell.xib; sourceTree = "<group>"; };
 		799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashBoardHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardItemCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -1091,6 +1093,7 @@
 				792F6E531B9D484000F0CB03 /* MyPointsHistoryModel.swift */,
 				792F6E551B9D7E5000F0CB03 /* SalesReportTransactionModel.swift */,
 				792F6E571B9D7F2300F0CB03 /* SalesReportModel.swift */,
+				794A96561B9E8870002F32A0 /* OrderModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2171,6 +2174,7 @@
 				F7AC5F831B9ACB6500227D18 /* NewAddressHeaderTableViewCell.swift in Sources */,
 				794880821B94EB530090B259 /* FollowerModel.swift in Sources */,
 				0CF28F1D1B8CD21B005B2E54 /* DynamicRoundedButton.swift in Sources */,
+				794A96571B9E8870002F32A0 /* OrderModel.swift in Sources */,
 				0C8D7F8D1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.swift in Sources */,
 				79E633A51B9B27E70062DB14 /* FSCalendarHeaderTouchDeliver.m in Sources */,
 				0C8D7FB11B8FC1A400B3FA4E /* ProductUploadCombinationTableViewController.swift in Sources */,

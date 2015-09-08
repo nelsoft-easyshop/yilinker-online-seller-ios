@@ -12,32 +12,26 @@ class RecentProductsTableViewController: UITableViewController {
     
     let recentOrderCellIdentifier: String = "RecentProductsTableViewCell"
     
-    var tableData: [RecentOrderModel] = [
-        RecentOrderModel(imageURL: "http://ecx.images-amazon.com/images/I/61My0e0VboL._SY355_.jpg", productName: "Beats Solo", modeOfPayment: "Cash on Delivery", price: "P 11, 192", status: "Pending"),
-         RecentOrderModel(imageURL: "http://srv-live.lazada.com.ph/p/beats-solo2-2787-212883-1-zoom.jpg", productName: "Beats Solo 2", modeOfPayment: "Cash on Delivery", price: "P 13, 164", status: "Complete"),
-         RecentOrderModel(imageURL: "http://srv-live.lazada.com.ph/p/beats-pro-over-the-ear-headphones-white-9961-587063-1-zoom.jpg", productName: "Beats Pro", modeOfPayment: "Cash on Delivery", price: "P 24, 500", status: "Pending"),
-        
-        RecentOrderModel(imageURL: "http://ecx.images-amazon.com/images/I/61My0e0VboL._SY355_.jpg", productName: "Beats Solo", modeOfPayment: "Cash on Delivery", price: "P 11, 192", status: "Pending"),
-        RecentOrderModel(imageURL: "http://srv-live.lazada.com.ph/p/beats-solo2-2787-212883-1-zoom.jpg", productName: "Beats Solo 2", modeOfPayment: "Cash on Delivery", price: "P 13, 164", status: "Complete"),
-        RecentOrderModel(imageURL: "http://srv-live.lazada.com.ph/p/beats-pro-over-the-ear-headphones-white-9961-587063-1-zoom.jpg", productName: "Beats Pro", modeOfPayment: "Cash on Delivery", price: "P 24, 500", status: "Pending"),
-        
-        RecentOrderModel(imageURL: "http://ecx.images-amazon.com/images/I/61My0e0VboL._SY355_.jpg", productName: "Beats Solo", modeOfPayment: "Cash on Delivery", price: "P 11, 192", status: "Pending"),
-        RecentOrderModel(imageURL: "http://srv-live.lazada.com.ph/p/beats-solo2-2787-212883-1-zoom.jpg", productName: "Beats Solo 2", modeOfPayment: "Cash on Delivery", price: "P 13, 164", status: "Complete"),
-        RecentOrderModel(imageURL: "http://srv-live.lazada.com.ph/p/beats-pro-over-the-ear-headphones-white-9961-587063-1-zoom.jpg", productName: "Beats Pro", modeOfPayment: "Cash on Delivery", price: "P 24, 500", status: "Pending"),
-        
-        RecentOrderModel(imageURL: "http://ecx.images-amazon.com/images/I/61My0e0VboL._SY355_.jpg", productName: "Beats Solo", modeOfPayment: "Cash on Delivery", price: "P 11, 192", status: "Pending"),
-        RecentOrderModel(imageURL: "http://srv-live.lazada.com.ph/p/beats-solo2-2787-212883-1-zoom.jpg", productName: "Beats Solo 2", modeOfPayment: "Cash on Delivery", price: "P 13, 164", status: "Complete"),
-        RecentOrderModel(imageURL: "http://srv-live.lazada.com.ph/p/beats-pro-over-the-ear-headphones-white-9961-587063-1-zoom.jpg", productName: "Beats Pro", modeOfPayment: "Cash on Delivery", price: "P 24, 500", status: "Pending"),
-        
-        RecentOrderModel(imageURL: "http://ecx.images-amazon.com/images/I/61My0e0VboL._SY355_.jpg", productName: "Beats Solo", modeOfPayment: "Cash on Delivery", price: "P 11, 192", status: "Pending"),
-        RecentOrderModel(imageURL: "http://srv-live.lazada.com.ph/p/beats-solo2-2787-212883-1-zoom.jpg", productName: "Beats Solo 2", modeOfPayment: "Cash on Delivery", price: "P 13, 164", status: "Complete"),
-        RecentOrderModel(imageURL: "http://srv-live.lazada.com.ph/p/beats-pro-over-the-ear-headphones-white-9961-587063-1-zoom.jpg", productName: "Beats Pro", modeOfPayment: "Cash on Delivery", price: "P 24, 500", status: "Pending")]
+    var hud: MBProgressHUD?
+    
+    var isProductsEnd: Bool = false
+    var productPage: Int = 1
+    
+    var tableData: [TransactionModel] = []
         
     override func viewDidLoad() {
         super.viewDidLoad()
 
         initializeViews()
         registerNibs()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        productPage = 0
+        isProductsEnd = false
+        tableData = []
+        fireGetRecentOrders()
     }
 
     override func didReceiveMemoryWarning() {
@@ -72,12 +66,12 @@ class RecentProductsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(recentOrderCellIdentifier, forIndexPath: indexPath) as! RecentProductsTableViewCell
 
-        var temp: RecentOrderModel = tableData[indexPath.row]
-        cell.setProductImage(temp.imageURL)
-        cell.setProductName(temp.productName)
-        cell.setModeOfPayment(temp.modeOfPayment)
-        cell.setPrice(temp.price)
-        cell.setStatus(temp.status)
+        var temp: TransactionModel = tableData[indexPath.row]
+        cell.setProductImage("")
+        cell.setProductName(temp.order_id)
+        cell.setModeOfPayment(temp.payment_type)
+        cell.setPrice(temp.total_price)
+        cell.setStatus(temp.order_status)
 
         return cell
     }
@@ -86,50 +80,101 @@ class RecentProductsTableViewController: UITableViewController {
         return 60
     }
     
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
+    override func scrollViewDidEndDragging(aScrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        var offset: CGPoint = aScrollView.contentOffset
+        var bounds: CGRect = aScrollView.bounds
+        var size: CGSize = aScrollView.contentSize
+        var inset: UIEdgeInsets = aScrollView.contentInset
+        var y: CGFloat = offset.y + bounds.size.height - inset.bottom
+        var h: CGFloat = size.height
+        var reload_distance: CGFloat = 50
+        var temp: CGFloat = h + reload_distance
+        if y > temp {
+            fireGetRecentOrders()
+        }
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
     
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    func fireGetRecentOrders() {
+        if !isProductsEnd {
+            
+            self.showHUD()
+            let manager = APIManager.sharedInstance
+            productPage++
+            
+            let url: String = "\(APIAtlas.transactionList)?access_token=\(SessionManager.accessToken())&perPage=15&page=\(productPage)"
+            
+            manager.GET(url, parameters: nil, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                let transactionModel: TransactionsModel = TransactionsModel.parseDataWithDictionary(responseObject)
+                
+                println(responseObject)
+                
+                if transactionModel.transactions.count < 15 {
+                    self.isProductsEnd = true
+                }
+                
+                if transactionModel.isSuccessful {
+                    self.tableData += transactionModel.transactions
+                    self.tableView.reloadData()
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                }
+                
+                
+                self.hud?.hide(true)
+                
+                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                    self.hud?.hide(true)
+                    
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.fireRefreshToken()
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    }
+                    
+                    println(error)
+            })
+        } else {
+            self.hud?.hide(true)
+        }
+        
+    }
+    
+    func fireRefreshToken() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.fireGetRecentOrders()
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+        })
+        
+    }
 }
