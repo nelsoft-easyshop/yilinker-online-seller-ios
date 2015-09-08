@@ -9,7 +9,9 @@
 import UIKit
 
 protocol ProductManagementModelViewControllerDelegate {
-    func pmmvcPressClosed()
+    func pmmvcPressYes()
+    func pmmvcPressNo()
+    func pmmvcPressClose()
 }
 
 class ProductManagementModelViewController: UIViewController {
@@ -20,7 +22,7 @@ class ProductManagementModelViewController: UIViewController {
     @IBOutlet weak var closeButton: UIView!
     @IBOutlet weak var yesButton: UIView!
     @IBOutlet weak var noButton: UIButton!
-    @IBOutlet weak var TitleLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subTitleLabel: UILabel!
     
     var delegate: ProductManagementModelViewControllerDelegate?
@@ -41,11 +43,10 @@ class ProductManagementModelViewController: UIViewController {
         
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "selfAction:"))
     }
-
     
     func closeView() {
         self.dismissViewControllerAnimated(true, completion: nil)
-        delegate?.pmmvcPressClosed()
+        delegate?.pmmvcPressClose()
     }
     
     // MARK: - Actions
@@ -60,6 +61,7 @@ class ProductManagementModelViewController: UIViewController {
     
     @IBAction func yesAction(sender: AnyObject) {
         closeView()
+        delegate?.pmmvcPressYes()
     }
 
     @IBAction func noAction(sender: AnyObject) {
