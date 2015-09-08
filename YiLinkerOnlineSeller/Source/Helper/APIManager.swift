@@ -68,6 +68,9 @@ struct APIAtlas {
     static let getPointsTotal = "auth/user/getPoints"
     static let getPointsHistory = "auth/user/getPointHistory"
     
+    static let getSalesReport = "auth/merchant/getSalesReport"
+    static let getFollowers = "auth/merchant/getFollowers"
+    
     static let baseUrl = APIEnvironment.baseUrl()
 }
 

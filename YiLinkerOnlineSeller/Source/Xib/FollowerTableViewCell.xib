@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Panton Bold.otf">
@@ -24,7 +23,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dan-fZ-ad1" userLabel="Name">
                         <rect key="frame" x="76" y="18" width="250" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="21" id="qls-gB-1Y4"/>
+                            <constraint firstAttribute="height" constant="21" id="a7B-fU-Toj"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="15"/>
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -33,7 +32,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z7V-8u-bot" userLabel="Email">
                         <rect key="frame" x="76" y="36" width="250" height="15"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="15" id="MZF-7X-5Wd"/>
+                            <constraint firstAttribute="height" constant="15" id="XMe-X1-3r7"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="12"/>
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -42,8 +41,8 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K6C-hi-JMD" userLabel="Message">
                         <rect key="frame" x="334" y="22" width="25" height="25"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="25" id="KWo-sP-7sl"/>
-                            <constraint firstAttribute="width" constant="25" id="ggn-px-gza"/>
+                            <constraint firstAttribute="width" constant="25" id="Q2K-rX-1Wc"/>
+                            <constraint firstAttribute="height" constant="25" id="Z1Y-Jf-9or"/>
                         </constraints>
                         <state key="normal" image="follow">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -55,25 +54,23 @@
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="HRH-6B-1yy" userLabel="Image">
                         <rect key="frame" x="16" y="9" width="52" height="52"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="52" id="3r7-GD-cVU"/>
-                            <constraint firstAttribute="height" constant="52" id="w0k-UD-9WU"/>
+                            <constraint firstAttribute="height" constant="52" id="TWq-I3-4PQ"/>
+                            <constraint firstAttribute="width" constant="52" id="xsj-lH-buL"/>
                         </constraints>
                     </imageView>
                 </subviews>
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
-                    <constraint firstItem="HRH-6B-1yy" firstAttribute="top" secondItem="ewq-A5-f9C" secondAttribute="topMargin" constant="1" id="0fI-mn-rzI"/>
-                    <constraint firstItem="Dan-fZ-ad1" firstAttribute="top" secondItem="ewq-A5-f9C" secondAttribute="topMargin" constant="10" id="OKs-OO-DhT"/>
-                    <constraint firstItem="z7V-8u-bot" firstAttribute="top" secondItem="ewq-A5-f9C" secondAttribute="topMargin" constant="28" id="ROd-30-USq"/>
-                    <constraint firstItem="K6C-hi-JMD" firstAttribute="top" secondItem="ewq-A5-f9C" secondAttribute="topMargin" constant="14" id="XNh-iG-d0X"/>
-                    <constraint firstItem="Dan-fZ-ad1" firstAttribute="leading" secondItem="HRH-6B-1yy" secondAttribute="trailing" constant="8" id="eKH-0T-1Ax"/>
-                    <constraint firstAttribute="centerY" secondItem="K6C-hi-JMD" secondAttribute="centerY" id="f3b-qj-f9Y"/>
-                    <constraint firstItem="K6C-hi-JMD" firstAttribute="leading" secondItem="Dan-fZ-ad1" secondAttribute="trailing" constant="8" id="hkE-so-35e"/>
-                    <constraint firstAttribute="centerY" secondItem="HRH-6B-1yy" secondAttribute="centerY" id="mYl-Ng-Ohq"/>
-                    <constraint firstItem="z7V-8u-bot" firstAttribute="leading" secondItem="HRH-6B-1yy" secondAttribute="trailing" constant="8" id="qAh-9W-gfI"/>
-                    <constraint firstItem="HRH-6B-1yy" firstAttribute="leading" secondItem="ewq-A5-f9C" secondAttribute="leadingMargin" constant="8" id="qn5-Zi-kJN"/>
-                    <constraint firstItem="K6C-hi-JMD" firstAttribute="leading" secondItem="z7V-8u-bot" secondAttribute="trailing" constant="8" id="rNc-oN-HlB"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="K6C-hi-JMD" secondAttribute="trailing" constant="8" id="xeY-Ii-6hB"/>
+                    <constraint firstItem="HRH-6B-1yy" firstAttribute="leading" secondItem="ewq-A5-f9C" secondAttribute="leading" constant="16" id="5r2-VS-6m2"/>
+                    <constraint firstItem="Dan-fZ-ad1" firstAttribute="top" secondItem="ewq-A5-f9C" secondAttribute="top" constant="18" id="EUk-K5-aXo"/>
+                    <constraint firstItem="K6C-hi-JMD" firstAttribute="leading" secondItem="z7V-8u-bot" secondAttribute="trailing" constant="8" id="OLn-dk-aWP"/>
+                    <constraint firstItem="z7V-8u-bot" firstAttribute="leading" secondItem="HRH-6B-1yy" secondAttribute="trailing" constant="8" id="PVZ-Zz-P7F"/>
+                    <constraint firstItem="K6C-hi-JMD" firstAttribute="top" secondItem="ewq-A5-f9C" secondAttribute="top" constant="22" id="S7B-Hk-6yN"/>
+                    <constraint firstItem="HRH-6B-1yy" firstAttribute="top" secondItem="ewq-A5-f9C" secondAttribute="top" constant="9" id="UkN-Ef-jKW"/>
+                    <constraint firstAttribute="bottom" secondItem="z7V-8u-bot" secondAttribute="bottom" constant="18" id="cVh-Ah-vH3"/>
+                    <constraint firstItem="K6C-hi-JMD" firstAttribute="leading" secondItem="Dan-fZ-ad1" secondAttribute="trailing" constant="8" id="iXf-bW-S9W"/>
+                    <constraint firstItem="Dan-fZ-ad1" firstAttribute="leading" secondItem="HRH-6B-1yy" secondAttribute="trailing" constant="8" id="ihY-fA-uhf"/>
+                    <constraint firstAttribute="trailing" secondItem="K6C-hi-JMD" secondAttribute="trailing" constant="16" id="sW5-k0-afb"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
