@@ -136,6 +136,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         if indexPath.section == 0 {
             let cell: TransactionDetailsTableViewCell = tableView.dequeueReusableCellWithIdentifier(detailsCellIdentifier, forIndexPath: indexPath) as! TransactionDetailsTableViewCell
             cell.selectionStyle = .None;
+            
             return cell
         } else if indexPath.section == 1 {
             let cell: TransactionProductTableViewCell = tableView.dequeueReusableCellWithIdentifier(productsCellIdentifier, forIndexPath: indexPath) as! TransactionProductTableViewCell
