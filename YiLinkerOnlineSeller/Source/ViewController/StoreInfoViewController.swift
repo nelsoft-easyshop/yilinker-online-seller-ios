@@ -152,11 +152,11 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 cell.coverEditImageView.image = UIImage(named: "edit.png")
                 cell.profileEditLabel.text = "Edit Profile Photo"
                 cell.coverEditLabel.text = "Edit Cover Photo"
-                if(self.verifyOrChange == 1) {
-                    cell.verifyButton.setTitle("Verify", forState: UIControlState.Normal)
-                } else {
-                    cell.verifyButton.setTitle("Change", forState: UIControlState.Normal)
-                }
+                //if(self.verifyOrChange == 1) {
+                //    cell.verifyButton.setTitle("Verify", forState: UIControlState.Normal)
+                //} else {
+                cell.verifyButton.setTitle("Change", forState: UIControlState.Normal)
+                //}
                 cell.verifyButton.tag = 2
             } else {
                 cell.profileEditImageView.image = UIImage(named: "dummy-placeholder.jpg")
@@ -225,6 +225,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             verifyNumberViewController.view.frame.origin.y = verifyNumberViewController.view.frame.size.height
             self.navigationController?.presentViewController(verifyNumberViewController, animated: true, completion:
                 nil)
+            self.verifyOrChange = 2
         } else {
             var changeMobileNumber = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
             changeMobileNumber.delegate = self
@@ -235,7 +236,6 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             self.navigationController?.presentViewController(changeMobileNumber, animated: true, completion:
                 nil)
             self.verifyOrChange = 2
-
         }
 
     }

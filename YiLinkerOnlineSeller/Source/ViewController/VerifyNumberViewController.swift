@@ -70,15 +70,15 @@ class VerifyNumberViewController: UIViewController {
             if isSuccessful {
                 self.congratulationsViewController?.successFailView.backgroundColor = Constants.Colors.appTheme
                 //Set condition to check if fail or not
-                self.verifyButton.frame = CGRectMake(131, 203, 96, 26)
                 self.verifyButton.setTitle("Continue", forState: UIControlState.Normal)
+                self.verifyButton.frame = CGRectMake(131, 203, 96, 26)
                 self.congratulationsViewController?.titleLabel.text  = "Congratulatutions!"
                 self.congratulationsViewController?.subTitleLabel.text  = "You have successfully verified your account."
             } else {
                 self.congratulationsViewController?.successFailView.backgroundColor = Constants.Colors.grayLine
                 //Set condition to check if fail or not
-                self.verifyButton.frame = CGRectMake(53, 203, 252, 26)
                 self.verifyButton.setTitle("REQUEST NEW VERIFICATION CODE", forState: UIControlState.Normal)
+                self.verifyButton.frame = CGRectMake(53, 203, 252, 26)
                 self.congratulationsViewController?.titleLabel.text  = "Ooops!"
                 self.congratulationsViewController?.subTitleLabel.text  = "You have either entered an incorrect code or \nit has already expired."
             }
