@@ -10,6 +10,9 @@ import UIKit
 
 class SearchTableViewCell: UITableViewCell {
 
+
+    @IBOutlet weak var invoiceNumberLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

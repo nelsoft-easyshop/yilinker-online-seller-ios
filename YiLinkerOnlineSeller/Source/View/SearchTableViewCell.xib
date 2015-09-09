@@ -42,7 +42,10 @@
                     <constraint firstItem="SZ3-UO-BxL" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="yKL-Vp-2lb"/>
                 </constraints>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="224.5" y="211"/>
+            <connections>
+                <outlet property="invoiceNumberLabel" destination="UhW-le-g5K" id="Ax7-pO-gl5"/>
+            </connections>
+            <point key="canvasLocation" x="49.5" y="223"/>
         </tableViewCell>
     </objects>
     <resources>

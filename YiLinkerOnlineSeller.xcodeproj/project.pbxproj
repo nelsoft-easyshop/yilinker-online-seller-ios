@@ -488,6 +488,7 @@
 		F7CB78441B9D822C001AF766 /* FilterCalendarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CB78421B9D822C001AF766 /* FilterCalendarTableViewCell.xib */; };
 		F7E465841B9F2D7B00FAB97D /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E465821B9F2D7B00FAB97D /* SearchTableViewCell.swift */; };
 		F7E465851B9F2D7B00FAB97D /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E465831B9F2D7B00FAB97D /* SearchTableViewCell.xib */; };
+		F7E465871B9F36C600FAB97D /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E465861B9F36C600FAB97D /* SearchModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1001,6 +1002,7 @@
 		F7CB78421B9D822C001AF766 /* FilterCalendarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterCalendarTableViewCell.xib; sourceTree = "<group>"; };
 		F7E465821B9F2D7B00FAB97D /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		F7E465831B9F2D7B00FAB97D /* SearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
+		F7E465861B9F36C600FAB97D /* SearchModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1124,6 +1126,7 @@
 				792F6E571B9D7F2300F0CB03 /* SalesReportModel.swift */,
 				794A96561B9E8870002F32A0 /* OrderModel.swift */,
 				794A965A1B9EAAEA002F32A0 /* FollowersModel.swift */,
+				F7E465861B9F36C600FAB97D /* SearchModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2188,6 +2191,7 @@
 				79EDA4091B9204F20037558A /* PointsBreakdownTableViewCell.swift in Sources */,
 				F7C40F6F1B983B280091C16C /* CreateNewBankAccountViewController.swift in Sources */,
 				0CF28ED61B8C85E5005B2E54 /* XibHelper.swift in Sources */,
+				F7E465871B9F36C600FAB97D /* SearchModel.swift in Sources */,
 				F7E465841B9F2D7B00FAB97D /* SearchTableViewCell.swift in Sources */,
 				0C5E9D8E1B91E2E200F32CFE /* ProductUploadFooterView.swift in Sources */,
 				0C8D7FC41B8FFC5900B3FA4E /* CombinationModel.swift in Sources */,
