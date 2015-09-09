@@ -10,10 +10,14 @@ import UIKit
 
 class ProductDescriptionViewController: UIViewController {
 
+    @IBOutlet weak var webView: UIWebView!
+    var fullDescription: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        webView.loadHTMLString(fullDescription, baseURL: nil)
     }
 
     @IBAction func closeAction(sender: AnyObject) {

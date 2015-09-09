@@ -14,18 +14,26 @@ struct myConstant {
 
 class ProductDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProductDescriptionViewDelegate {
 
+    var productDetailsModel: ProductDetailsModel!
+    var productAttributesModel: [ProductAttributeModel]!
+    var productUnitsModel: [ProductUnitsModel]!
+    var productImagesModel: [ProductImagesModel]!
+    
+    @IBOutlet weak var tableView: UITableView!
+    
     var headerView: UIView!
     var productImagesView: ProductImagesView!
     var productDescriptionView: ProductDescriptionView!
     
-    @IBOutlet weak var tableView: UITableView!
-    
+    var productId: String = "1"
     var newFrame: CGRect!
+    var hud: MBProgressHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        requestProductDetails()
         customizeNavigationBar()
         
         let nib = UINib(nibName: "ProductDetailsTableViewCell", bundle: nil)
@@ -50,7 +58,6 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     func getProductImagesView() -> ProductImagesView {
         if self.productImagesView == nil {
             self.productImagesView = XibHelper.puffViewWithNibName("ProductDetailViews", index: 0) as! ProductImagesView
-            
             self.productImagesView.frame.size.width = self.view.frame.size.width
         }
         return self.productImagesView
@@ -121,6 +128,62 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         return sectionView
     }
     
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func populateDetails() {
+        
+        self.productImagesView.setDetails(productDetailsModel, images: productImagesModel)
+        self.productDescriptionView.descriptionLabel.text = productDetailsModel.shortDescription
+        
+    }
+    
+    // MARK: - Request
+    
+    func requestProductDetails() {
+        self.showHUD()
+        let id: String = "?access_token=" + SessionManager.accessToken() + "&productId=" + productId
+        
+        let manager = APIManager.sharedInstance
+        manager.GET(APIAtlas.getProductDetails + id, parameters: nil, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            if responseObject["isSuccessful"] as! Bool {
+                self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
+                self.productAttributesModel = self.productDetailsModel.attributes
+                self.productUnitsModel = self.productDetailsModel.productUnits
+                self.productImagesModel = self.productDetailsModel.images
+                
+                self.populateDetails()
+            } else {
+                self.showAlert(title: "Error", message: responseObject["message"] as! String)
+                
+            }
+            self.hud?.hide(true)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println(error)
+                self.hud?.hide(true)
+        })
+    }
+    
     // MARK: - Actions
     
     func backAction() {
@@ -168,6 +231,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     func gotoDescriptionViewController(view: ProductDescriptionView) {
         let productDescription = ProductDescriptionViewController(nibName: "ProductDescriptionViewController", bundle: nil)
+        productDescription.fullDescription = self.productDetailsModel.fullDescription
         self.navigationController?.presentViewController(productDescription, animated: true, completion: nil)
     }
     
