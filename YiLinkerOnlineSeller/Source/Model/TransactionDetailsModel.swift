@@ -42,7 +42,7 @@ class TransactionDetailsModel: NSObject {
         var message: String = ""
         var transactionInvoice: String = ""
         var transactionShippingFee: String = ""
-        var transactionDate: String = ""
+        var transactionDate: String = "2000-01-01 00:00:00.000000"
         var transactionPrice: String = ""
         var transactionQuantity: Int = 0
         var transactionStatusId: Int = 0
@@ -65,42 +65,42 @@ class TransactionDetailsModel: NSObject {
             
             if dictionary["data"] != nil {
                 if let tempDict = dictionary["data"] as? NSDictionary {
-                    if dictionary["transactionInvoice"] != nil {
-                        if let tempVar = dictionary["transactionInvoice"] as? String {
+                    if tempDict["transactionInvoice"] != nil {
+                        if let tempVar = tempDict["transactionInvoice"] as? String {
                             transactionInvoice = tempVar
                         }
                     }
                     
-                    if dictionary["transactionShippingFee"] != nil {
-                        if let tempVar = dictionary["transactionShippingFee"] as? String {
+                    if tempDict["transactionShippingFee"] != nil {
+                        if let tempVar = tempDict["transactionShippingFee"] as? String {
                             transactionShippingFee = tempVar
                         }
                     }
                     
-                    if dictionary["transactionDate"] != nil {
-                        if let tempDictInner = dictionary["transactionDate"] as? NSDictionary {
+                    if tempDict[" transactionDate"] != nil {
+                        if let tempDictInner = tempDict[" transactionDate"] as? NSDictionary {
                             if tempDictInner["date"] != nil {
                                 if let tempVar = tempDictInner["date"] as? String {
-                                    transactionShippingFee = tempVar
+                                    transactionDate = tempVar
                                 }
                             }
                         }
                     }
 
-                    if dictionary["transactionPrice"] != nil {
-                        if let tempVar = dictionary["transactionPrice"] as? String {
+                    if tempDict["transactionPrice"] != nil {
+                        if let tempVar = tempDict["transactionPrice"] as? String {
                             transactionPrice = tempVar
                         }
                     }
                     
-                    if dictionary["transactionQuantity"] != nil {
-                        if let tempVar = dictionary["transactionQuantity"] as? Int {
+                    if tempDict["transactionQuantity"] != nil {
+                        if let tempVar = tempDict["transactionQuantity"] as? Int {
                             transactionQuantity = tempVar
                         }
                     }
                     
-                    if dictionary["transactionStatus"] != nil {
-                        if let tempDictInner = dictionary["transactionStatus"] as? NSDictionary {
+                    if tempDict["transactionStatus"] != nil {
+                        if let tempDictInner = tempDict["transactionStatus"] as? NSDictionary {
                             if tempDictInner["statusId"] != nil {
                                 if let tempVar = tempDictInner["statusId"] as? Int {
                                     transactionStatusId = tempVar
@@ -115,14 +115,14 @@ class TransactionDetailsModel: NSObject {
                         }
                     }
                     
-                    if dictionary["transactionPayment"] != nil {
-                        if let tempVar = dictionary["transactionPayment"] as? String {
+                    if tempDict["transactionPayment"] != nil {
+                        if let tempVar = tempDict["transactionPayment"] as? String {
                             transactionPayment = tempVar
                         }
                     }
                     
-                    if dictionary["transactionOrderProducts"] != nil {
-                        for subValue in dictionary["transactionOrderProducts"] as! NSArray {
+                    if tempDict["transactionOrderProducts"] != nil {
+                        for subValue in tempDict["transactionOrderProducts"] as! NSArray {
                             transactionOrderProducts.append(TransactionOrderProductModel.parseDataWithDictionary(subValue))
                         }
                     }

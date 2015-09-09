@@ -149,7 +149,7 @@ class TransactionModel: NSObject {
             
             if dictionary["product_count"] != nil {
                 if let tempVar = dictionary["product_count"] as? String {
-                    invoice_number = tempVar
+                    product_count = tempVar
                 }
             }
         }
