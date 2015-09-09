@@ -26,13 +26,26 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     
     var dimView: UIView?
     
+    var invoiceNumber: String = ""
+    
+    var hud: MBProgressHUD?
+    
+    var transactionDetailsModel: TransactionDetailsModel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        transactionDetailsModel = TransactionDetailsModel(isSuccessful: false, message: "", transactionInvoice: "", transactionShippingFee: "", transactionDate: "2000-01-01 00:00:00.000000", transactionPrice: "", transactionQuantity: 0, transactionStatusId: 0, transactionStatusName: "", transactionPayment: "", transactionOrderProducts: [])
 
         initializeNavigationBar()
         initializeTableView()
         initializeViews()
         registerNibs()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        fireGetTransactionDetails()
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,13 +74,13 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         tidLabel = UILabel(frame: CGRectMake(16, 20, (self.view.bounds.width - 32), 20))
         tidLabel.textColor = Constants.Colors.grayText
         tidLabel.font = UIFont(name: "Panton-Bold", size: CGFloat(14))
-        tidLabel.text = "TID-203-553-918"
+        tidLabel.text = ""
         tableHeaderView.addSubview(tidLabel)
         
         counterLabel = UILabel(frame: CGRectMake(16, 40, (self.view.bounds.width - 32), 20))
         counterLabel.textColor = Constants.Colors.grayText
         counterLabel.font = UIFont(name: "Panton-Regular", size: CGFloat(14))
-        counterLabel.text = "5 Products"
+        counterLabel.text = ""
         tableHeaderView.addSubview(counterLabel)
         
         if tableFooterView == nil {
@@ -121,7 +134,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         if section == 0 {           //Details
             return 1
         } else if section == 1 {    //Product Lis
-            return productList.count
+            return transactionDetailsModel.transactionOrderProducts.count
         } else if section == 2 {    //Consignee
             return 1
         }  else if section == 3 {    //Delivery Status
@@ -136,11 +149,17 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         if indexPath.section == 0 {
             let cell: TransactionDetailsTableViewCell = tableView.dequeueReusableCellWithIdentifier(detailsCellIdentifier, forIndexPath: indexPath) as! TransactionDetailsTableViewCell
             cell.selectionStyle = .None;
-            
+            cell.statusLabel.text = transactionDetailsModel.transactionStatusName
+            cell.paymentTypeLabel.text = transactionDetailsModel.transactionPayment
+            cell.dateCreatedLabel.text = formatDateToString(formatStringToDate(transactionDetailsModel.transactionDate))
+            cell.totalQuantityLabel.text = "\(transactionDetailsModel.transactionQuantity)"
+            cell.totalUnitCostLabel.text = transactionDetailsModel.transactionPrice
+            cell.shippingCostLabel.text = transactionDetailsModel.transactionShippingFee
+            cell.totalCostLabel.text = transactionDetailsModel.transactionPrice
             return cell
         } else if indexPath.section == 1 {
             let cell: TransactionProductTableViewCell = tableView.dequeueReusableCellWithIdentifier(productsCellIdentifier, forIndexPath: indexPath) as! TransactionProductTableViewCell
-            cell.productNameLabel.text = productList[indexPath.row]
+            cell.productNameLabel.text = transactionDetailsModel.transactionOrderProducts[indexPath.row].productName
             
             return cell
         }  else if indexPath.section == 2 {
@@ -200,51 +219,89 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         }
         
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
+    
+    func fireGetTransactionDetails(){
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "transactionId": invoiceNumber];
+        
+        manager.GET(APIAtlas.transactionDetails, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.transactionDetailsModel = TransactionDetailsModel.parseDataWithDictionary(responseObject)
+            
+            println(responseObject)
+            
+            if self.transactionDetailsModel.isSuccessful {
+                self.tableView.reloadData()
+                self.tidLabel.text = self.transactionDetailsModel.transactionInvoice
+                if self.transactionDetailsModel.transactionQuantity > 1 {
+                    self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) Products"
+                } else {
+                    self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) Product"
+                }
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.transactionDetailsModel.message, title: "Error")
+                self.navigationController!.popViewControllerAnimated(true)
+            }
+            
+            
+            self.hud?.hide(true)
+            
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                if Reachability.isConnectedToNetwork() {
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.fireRefreshToken()
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        self.navigationController!.popViewControllerAnimated(true)
+                    }
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                    self.navigationController!.popViewControllerAnimated(true)
+                }
+                
+                
+                println(error)
+        })
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    
+    func fireRefreshToken() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.fireGetTransactionDetails()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+        })
+        
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     func showDimView() {
         self.dimView!.hidden = false
@@ -322,5 +379,17 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     
     func callConsigneeAction() {
         
+    }
+    
+    func formatDateToString(date: NSDate) -> String {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MMMM dd, yyyy"
+        return dateFormatter.stringFromDate(date)
+    }
+    
+    func formatStringToDate(date: String) -> NSDate {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
+        return dateFormatter.dateFromString(date)!
     }
 }

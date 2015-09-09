@@ -168,8 +168,13 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
     // MARK: Table View Delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var transactionDetailsController = TransactionDetailsTableViewController(nibName: "TransactionDetailsTableViewController", bundle: nil)
-        self.navigationController?.pushViewController(transactionDetailsController, animated:true)
+        if !tableData[indexPath.row].invoice_number.isEmpty {
+            var transactionDetailsController = TransactionDetailsTableViewController(nibName: "TransactionDetailsTableViewController", bundle: nil)
+            transactionDetailsController.invoiceNumber = tableData[indexPath.row].invoice_number
+            self.navigationController?.pushViewController(transactionDetailsController, animated:true)
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "No ivoice number!", title: "Error")
+        }
 
     }
     
