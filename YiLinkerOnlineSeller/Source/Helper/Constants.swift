@@ -45,9 +45,9 @@ struct Constants {
         static let transactionCancelled: UIColor = HexaColor.colorWithHexa(0xB6B6B6)
         
         static let soldColor: UIColor = HexaColor.colorWithHexa(0x409185)
-        static let soldLineColor: UIColor = HexaColor.colorWithHexa(0xBF409185)
+        static let soldLineColor: UIColor = HexaColor.colorWithHexa(0x409185)
         static let cancelledColor: UIColor = HexaColor.colorWithHexa(0xF1B54D)
-        static let cancelledLineColor: UIColor = HexaColor.colorWithHexa(0xBFF1B54D)
+        static let cancelledLineColor: UIColor = HexaColor.colorWithHexa(0xF1B54D)
     }
     
     struct Credentials {

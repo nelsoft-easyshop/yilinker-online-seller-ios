@@ -12,10 +12,8 @@
             <string>Panton-Bold</string>
             <string>Panton-Bold</string>
             <string>Panton-Bold</string>
-        </mutableArray>
-        <mutableArray key="Panton.otf">
-            <string>Panton-Regular</string>
-            <string>Panton-Regular</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -28,6 +26,7 @@
                 <outlet property="submitButton" destination="aVw-hQ-F8J" id="46O-PO-O4N"/>
                 <outlet property="titleView" destination="A9S-oM-o3Y" id="qaN-3T-3FS"/>
                 <outlet property="transactionNumber" destination="wG2-2Y-nTH" id="D4A-8m-q2x"/>
+                <outlet property="verticalSpaceInset" destination="QgA-5A-YVY" id="OyE-UQ-5Ro"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -122,7 +121,7 @@
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gwf-ux-sZJ">
                                     <rect key="frame" x="8" y="153" width="276" height="83"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 </textView>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aVw-hQ-F8J">
@@ -140,7 +139,7 @@
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b2Y-Dz-oZd">
                                     <rect key="frame" x="8" y="32" width="276" height="30"/>
                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
                             </subviews>
@@ -157,12 +156,12 @@
                 </view>
             </subviews>
             <constraints>
+                <constraint firstItem="9J9-Ai-3QY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="106" id="QgA-5A-YVY" userLabel="verticalSpaceInset"/>
                 <constraint firstItem="3pB-Bf-E7d" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="TOx-eT-c5A"/>
                 <constraint firstAttribute="trailing" secondItem="3pB-Bf-E7d" secondAttribute="trailing" id="XpM-Uo-bms"/>
                 <constraint firstItem="3pB-Bf-E7d" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="fTI-4c-MrD"/>
                 <constraint firstAttribute="centerX" secondItem="9J9-Ai-3QY" secondAttribute="centerX" id="hUi-fl-vp7"/>
                 <constraint firstAttribute="bottom" secondItem="3pB-Bf-E7d" secondAttribute="bottom" id="nGQ-t6-6Ju"/>
-                <constraint firstAttribute="centerY" secondItem="9J9-Ai-3QY" secondAttribute="centerY" id="yX3-IP-Gk0"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <point key="canvasLocation" x="281" y="377"/>

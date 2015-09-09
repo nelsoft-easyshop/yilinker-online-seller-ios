@@ -395,6 +395,7 @@
 		9628AC961B9848E700734551 /* DisputeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9628AC951B9848E600734551 /* DisputeViewController.xib */; };
 		967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 967EE1C01B8AEA25000591AC /* Images.xcassets */; };
 		967EE1D01B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */; };
+		96FBF6811BA06C94009DDD29 /* ResolutionCenterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FBF6801BA06C94009DDD29 /* ResolutionCenterModel.swift */; };
 		E72BD5070233EC6FF42DDA3A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B825E81D3B27E563C7C3C53 /* libPods.a */; };
 		F727FF591B99C94700872E11 /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = F727FF581B99C94700872E11 /* edit.png */; };
 		F7AC5F5E1B9A9C8C00227D18 /* AddAddressTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AC5F5D1B9A9C8C00227D18 /* AddAddressTableViewController.swift */; };
@@ -911,6 +912,7 @@
 		967EE1C91B8AEA25000591AC /* YiLinkerOnlineSellerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YiLinkerOnlineSellerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		967EE1CE1B8AEA25000591AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YiLinkerOnlineSellerTests.swift; sourceTree = "<group>"; };
+		96FBF6801BA06C94009DDD29 /* ResolutionCenterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionCenterModel.swift; sourceTree = "<group>"; };
 		D4D17EE114265F93B1630151 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F727FF581B99C94700872E11 /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
 		F7AC5F5D1B9A9C8C00227D18 /* AddAddressTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAddressTableViewController.swift; sourceTree = "<group>"; };
@@ -1083,6 +1085,7 @@
 		0CF28EC21B8C85E4005B2E54 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				96FBF6801BA06C94009DDD29 /* ResolutionCenterModel.swift */,
 				79EFF76E1B8D6E35008A9E7D /* ActivityLogModel.swift */,
 				79EF7AB71B9994320082CD35 /* TransactionsFilterItemModel.swift */,
 				79EFF76F1B8D6E35008A9E7D /* ActivityModel.swift */,
@@ -2204,6 +2207,7 @@
 				0CF28F161B8CCD3E005B2E54 /* ProductUploadUploadImageTableViewCell.swift in Sources */,
 				79E633A21B9B27E70062DB14 /* FSCalendarCell.m in Sources */,
 				79EF7AB61B998A8B0082CD35 /* TransactionFilterTableViewCell.swift in Sources */,
+				96FBF6811BA06C94009DDD29 /* ResolutionCenterModel.swift in Sources */,
 				0C8D7F951B8F12C200B3FA4E /* ProductUploadAttributeListTableViewController.swift in Sources */,
 				0C8D7FAA1B8F577300B3FA4E /* ProductUploadAddFooterView.swift in Sources */,
 				F7C40F5B1B983A7B0091C16C /* SemiRoundedButton.swift in Sources */,
