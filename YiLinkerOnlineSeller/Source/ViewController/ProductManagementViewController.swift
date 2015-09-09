@@ -412,7 +412,6 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
                 cell.deselected()
             }
             
-            
             cell.setProductImage(self.productModel.products[indexPath.row].image)
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
             cell.subTitleLabel.text = self.productModel.products[indexPath.row].category
@@ -555,7 +554,5 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     func pmmvcPressYes() {
         self.dismissModal()
     }
-    
-    
     
 }
