@@ -395,12 +395,12 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     func setMobileNumber(newNumber: String, oldNumber: String) {
         self.showHUD()
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldNumber" : oldNumber, "newNumber" : newNumber];
-//        manager.responseSerializer.acceptableContentTypes = NSSet(objects: "application/json", "text/html", "text/json", "text/json", "charset=utf-8") as Set<NSObject>
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldContactNumber" : oldNumber, "newContactNumber" : newNumber];
         manager.POST(APIAtlas.sellerChangeMobileNumber, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.storeInfoModel?.contact_number = newNumber
             self.verifyOrChange = 1
+            self.storeInfoVerify()
             println(self.verifyOrChange)
             self.tableView.reloadData()
             self.hud?.hide(true)

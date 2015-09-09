@@ -23,26 +23,26 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="LwR-8C-XxP">
-            <rect key="frame" x="5" y="0.0" width="338" height="132"/>
+            <rect key="frame" x="0.0" y="0.0" width="359" height="132"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a1A-Hi-dmJ">
-                    <rect key="frame" x="-5" y="0.0" width="343" height="131"/>
+                    <rect key="frame" x="-5" y="0.0" width="364" height="131"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Congratulations!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hfq-Ke-jRu">
-                            <rect key="frame" x="124" y="79" width="95" height="21"/>
+                            <rect key="frame" x="25" y="79" width="331" height="21"/>
                             <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="You have successfully verified your  account" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PqR-Qs-neD">
-                            <rect key="frame" x="14" y="102" width="314" height="21"/>
+                            <rect key="frame" x="25" y="102" width="314" height="21"/>
                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L6e-31-hnE" customClass="DynamicRoundedView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
-                            <rect key="frame" x="139" y="8" width="65" height="66"/>
+                            <rect key="frame" x="150" y="8" width="65" height="66"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="oops.png" translatesAutoresizingMaskIntoConstraints="NO" id="dLX-Oj-Vrp">
                                     <rect key="frame" x="14" y="15" width="37" height="36"/>
@@ -61,7 +61,7 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="448" y="151"/>
+            <point key="canvasLocation" x="447.5" y="151"/>
         </view>
     </objects>
     <resources>

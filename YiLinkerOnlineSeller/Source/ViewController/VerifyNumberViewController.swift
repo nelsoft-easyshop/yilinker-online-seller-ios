@@ -33,6 +33,8 @@ class VerifyNumberViewController: UIViewController {
     
     var hud: MBProgressHUD?
     
+    var isSuccessful = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -65,9 +67,22 @@ class VerifyNumberViewController: UIViewController {
             let viewController: UIViewController = viewControllers[index]
             setSelectedViewController(viewController)
             self.verifyTitleLabel.hidden  = true
-            self.congratulationsViewController?.successFailView.backgroundColor = Constants.Colors.appTheme
-            //Set condition to check if fail or not
-            self.verifyButton.setTitle("Continue", forState: UIControlState.Normal)
+            if isSuccessful {
+                self.congratulationsViewController?.successFailView.backgroundColor = Constants.Colors.appTheme
+                //Set condition to check if fail or not
+                self.verifyButton.frame = CGRectMake(131, 203, 96, 26)
+                self.verifyButton.setTitle("Continue", forState: UIControlState.Normal)
+                self.congratulationsViewController?.titleLabel.text  = "Congratulatutions!"
+                self.congratulationsViewController?.subTitleLabel.text  = "You have successfully verified your account."
+            } else {
+                self.congratulationsViewController?.successFailView.backgroundColor = Constants.Colors.grayLine
+                //Set condition to check if fail or not
+                self.verifyButton.frame = CGRectMake(53, 203, 252, 26)
+                self.verifyButton.setTitle("REQUEST NEW VERIFICATION CODE", forState: UIControlState.Normal)
+                self.congratulationsViewController?.titleLabel.text  = "Ooops!"
+                self.congratulationsViewController?.subTitleLabel.text  = "You have either entered an incorrect code or it has already expired."
+            }
+           
             self.requestNewVerificationButton.hidden = true
         }
     }
@@ -115,10 +130,14 @@ class VerifyNumberViewController: UIViewController {
             self.fireVerify(self.verifyViewController!.verificationCodeTextField.text!)
         } else if self.verifyButton.titleLabel?.text == "Continue" {
             println("Continue")
+            self.delegate?.dismissView()
+            self.dismissViewControllerAnimated(true, completion: nil)
+        } else {
+            println("Request new ferification code")
+            self.setSelectedViewControllerWithIndex(1)
+            self.isSuccessful = true
         }
         
-        self.delegate?.dismissView()
-        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func fireVerify(verificationCode: String){
@@ -128,6 +147,16 @@ class VerifyNumberViewController: UIViewController {
         
         manager.POST(APIAtlas.sellerMobileNumberVerification, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            if responseObject["isSuccessful"] as! Bool {
+                self.isSuccessful = true
+            } else {
+                self.isSuccessful = false
+            }
+            self.setSelectedViewControllerWithIndex(1)
+//            self.delegate?.dismissView()
+//            self.dismissViewControllerAnimated(true, completion: nil)
+            println(responseObject.description)
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
