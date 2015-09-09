@@ -16,6 +16,7 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
 
     var delegate: EditSubCategoriesViewControllerDelegate?
     var subCategories: [NSDictionary] = []
+    var tempSubCategories: [NSDictionary] = []
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var topBarView: UIView!
@@ -86,6 +87,27 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
         }
     }
     
+    func showAddSubView() {
+        self.clearAllButton.hidden = false
+        self.bottomBarView.hidden = false
+        self.removeSubCategories = true
+        
+        self.tableView.reloadData()
+        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0)
+        self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 50, 0)
+        self.tableView.reloadData()
+    }
+    
+    func showEditSubView() {
+        self.categoriesToBeRemove = []
+        self.bottomBarView.hidden = true
+        self.clearAllButton.hidden = true
+        self.removeSubCategories = false
+        self.tableView.contentInset = UIEdgeInsetsZero
+        self.tableView.scrollIndicatorInsets = UIEdgeInsetsZero
+        self.tableView.reloadData()
+    }
+    
     // MARK: - Actions
     
     func closeAction() {
@@ -100,17 +122,12 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     
     @IBAction func clearAllAction(sender: AnyObject) {
         categories = []
+        showEditSubView()
     }
     
     @IBAction func removeCategoriesAction(sender: AnyObject) {
         if categories.count != 0 {
-            self.clearAllButton.hidden = false
-            self.bottomBarView.hidden = false
-            self.removeSubCategories = true
-            
-            self.tableView.reloadData()
-            self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0)
-            self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 50, 0)
+            showAddSubView()
         }
     }
     
@@ -132,28 +149,17 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     @IBAction func removedSelectedAction(sender: AnyObject) {
 
         for i in 0..<categoriesToBeRemove.count {
-            println(categoriesToBeRemove[i])
-            categories.removeAtIndex(categoriesToBeRemove[i])
-            let cell: EditSubCategoriesRemovedTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: categoriesToBeRemove[i], inSection: 0)) as! EditSubCategoriesRemovedTableViewCell
-            cell.checkImageView.hidden = false
-            cell.checkAction(UIGestureRecognizer())
+            var indexPath: NSIndexPath = NSIndexPath(forRow: self.categoriesToBeRemove[i], inSection: 0)
+            let cell: EditSubCategoriesRemovedTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! EditSubCategoriesRemovedTableViewCell
+            
+            self.categories = self.categories.filter({$0 != self.categories[self.categoriesToBeRemove[i]]})
         }
         
-        //        categoriesToBeRemove = []
-        if categories.count == 0 {
-            self.removeSubCategories = true
-            cancel(nil)
-        }
-        self.tableView.reloadData()
+        showEditSubView()
     }
     
     @IBAction func cancel(sender: AnyObject!) {
-        self.bottomBarView.hidden = true
-        self.clearAllButton.hidden = true
-        self.removeSubCategories = false
-        self.tableView.contentInset = UIEdgeInsetsZero
-        self.tableView.scrollIndicatorInsets = UIEdgeInsetsZero
-        self.tableView.reloadData()
+        showEditSubView()
     }
     
     // MARK: - Requests
@@ -191,24 +197,26 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
+            
         if self.removeSubCategories {
             let cell: EditSubCategoriesRemovedTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("EditSubCategoriesRemoved") as! EditSubCategoriesRemovedTableViewCell
             cell.selectionStyle = .None
             cell.tag = indexPath.row
             cell.delegate = self
-            
             cell.subCategoryLabel.text = categories[indexPath.row]
+            
+            if self.categoriesToBeRemove.count == 0 {
+                cell.deselected()
+            }
             
             return cell
         } else {
             let cell = UITableViewCell(style: .Default, reuseIdentifier: "identifier")
             cell.selectionStyle = .None
-        
             cell.textLabel?.text = categories[indexPath.row]
             cell.textLabel?.font = UIFont(name: "Panton-Bold", size: 12.0)
             cell.textLabel?.textColor = Constants.Colors.hex666666
-            
+            cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
             return cell
         }
         
@@ -255,8 +263,12 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     
     // MARK: - Edit Sub Categories Removed Table View Cell Delegate
     
-    func updateCategoryItems(index: Int) {
+    func addThisItemToBeRemove(index: Int) {
         categoriesToBeRemove.append(index)
+    }
+    
+    func removeThisItemToBeRemove(index: Int) {
+        categoriesToBeRemove = categoriesToBeRemove.filter({$0 != index})
     }
 
 }
