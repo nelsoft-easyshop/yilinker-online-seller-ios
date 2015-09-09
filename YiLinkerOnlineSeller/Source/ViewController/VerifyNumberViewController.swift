@@ -80,7 +80,7 @@ class VerifyNumberViewController: UIViewController {
                 self.verifyButton.frame = CGRectMake(53, 203, 252, 26)
                 self.verifyButton.setTitle("REQUEST NEW VERIFICATION CODE", forState: UIControlState.Normal)
                 self.congratulationsViewController?.titleLabel.text  = "Ooops!"
-                self.congratulationsViewController?.subTitleLabel.text  = "You have either entered an incorrect code or it has already expired."
+                self.congratulationsViewController?.subTitleLabel.text  = "You have either entered an incorrect code or \nit has already expired."
             }
            
             self.requestNewVerificationButton.hidden = true
@@ -134,8 +134,8 @@ class VerifyNumberViewController: UIViewController {
             self.dismissViewControllerAnimated(true, completion: nil)
         } else {
             println("Request new ferification code")
-            self.setSelectedViewControllerWithIndex(1)
-            self.isSuccessful = true
+            //self.setSelectedViewControllerWithIndex(1)
+            //self.isSuccessful = true
         }
         
     }
