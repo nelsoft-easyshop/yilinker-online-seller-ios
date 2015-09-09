@@ -16,6 +16,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VerifyViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
             <connections>
                 <outlet property="timeLabel" destination="6Nj-7d-sxc" id="rIU-4N-1Rz"/>
+                <outlet property="timerLabel" destination="6Nj-7d-sxc" id="q3J-Lh-jia"/>
                 <outlet property="verificationCodeTextField" destination="nSJ-RN-bzF" id="ZEZ-HM-BYX"/>
                 <outlet property="view" destination="zVs-1E-OqR" id="Pml-G4-RQT"/>
             </connections>

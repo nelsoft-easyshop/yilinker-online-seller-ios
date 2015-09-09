@@ -15,6 +15,7 @@ class VerifyViewController: UIViewController {
     
     @IBOutlet weak var verificationCodeTextField: UITextField!
     
+    @IBOutlet weak var timerLabel: UILabel!
     var seconds: Int = 300
     var timer = NSTimer()
     
