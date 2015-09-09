@@ -16,7 +16,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
 
     var delegate: AddSubCategoriesViewControllerDelegate?
     var productManagementProductModel: ProductManagementProductModel!
-    var subCategoriesProducts: [Int] = []
+    var subCategoriesProducts: [ProductManagementProductsModel] = []
     var itemIndexes: [Int] = []
     
     @IBOutlet weak var tableView: UITableView!
@@ -159,11 +159,11 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
     }
     
     func populateItems() {
-        if self.itemIndexes.count != 0 {
+        if self.subCategoriesProducts.count != 0 {
             self.categoryItemsView.addNewItemButton.setTitle("EDIT", forState: .Normal)
             self.getHeaderView().addSubview(getItemImageView())
             self.getHeaderView().addSubview(getSeeAllItemsView())
-            self.itemImagesView.setProductsManagement(products: self.productManagementProductModel.products, selectedItems: self.itemIndexes)
+            self.itemImagesView.setProductsManagement(products: self.productManagementProductModel.products, selectedItems: subCategoriesProducts)
         }
         
         setUpViews()
@@ -240,7 +240,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
     
     // MARK: Add Item View Controller Delegate
 
-    func addProductItems(productModel: ProductManagementProductModel, itemIndexes: [Int], products: [Int]) {
+    func addProductItems(productModel: ProductManagementProductModel, itemIndexes: [Int], products: [ProductManagementProductsModel]) {
         self.productManagementProductModel = productModel
         self.itemIndexes = itemIndexes
         self.subCategoriesProducts = products
@@ -249,7 +249,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
     
     // MARK: Edit Item View Controller Delegate
     
-    func updateProductItems(productModel: ProductManagementProductModel, itemIndexes: [Int], products: [Int]) {
+    func updateProductItems(productModel: ProductManagementProductModel, itemIndexes: [Int], products: [ProductManagementProductsModel]) {
         self.productManagementProductModel = productModel
         self.itemIndexes = itemIndexes
         self.subCategoriesProducts = products

@@ -25,7 +25,7 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     
     var categories: [String] = []
     var categoriesToBeRemove: [Int] = []
-    var numberOfList: Int = 0
+
     var removeSubCategories: Bool = false
     var createdCategory: String = ""
     
@@ -137,21 +137,11 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
         addSubCategoryViewController.createdCategory = createdCategory
         var rootViewController = UINavigationController(rootViewController: addSubCategoryViewController)
         self.navigationController?.presentViewController(rootViewController, animated: false, completion: nil)
-//        self.navigationController?.pushViewController(addSubCatetory, animated: true)
-        
-//        loadViewsWithDetails()
-//        numberOfList = 0
-//        self.topBarView.hidden = true
-//        self.tableView.transform = CGAffineTransformMakeTranslation(0, 0)
-//        self.tableView.reloadData()
     }
     
     @IBAction func removedSelectedAction(sender: AnyObject) {
 
         for i in 0..<categoriesToBeRemove.count {
-            var indexPath: NSIndexPath = NSIndexPath(forRow: self.categoriesToBeRemove[i], inSection: 0)
-            let cell: EditSubCategoriesRemovedTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! EditSubCategoriesRemovedTableViewCell
-            
             self.categories = self.categories.filter({$0 != self.categories[self.categoriesToBeRemove[i]]})
         }
         
@@ -172,7 +162,7 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
         
         manager.POST(APIAtlas.getCategoryDetails, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
+
 //            self.customizedCategoriesModel = CustomizedCategoriesModel.parseDataWithDictionary(responseObject as! NSDictionary)
 //            self.tableView.reloadData()
             self.hud?.hide(true)
