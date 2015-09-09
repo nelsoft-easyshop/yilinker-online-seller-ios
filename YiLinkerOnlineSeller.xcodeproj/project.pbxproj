@@ -132,6 +132,7 @@
 		260725F61BA0A2B900C24DDB /* ProductDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260725F31BA0A2B900C24DDB /* ProductDetailsModel.swift */; };
 		260725F81BA0A40200C24DDB /* ProductImagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260725F71BA0A40200C24DDB /* ProductImagesModel.swift */; };
 		260725FA1BA0A41000C24DDB /* ProductUnitsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260725F91BA0A41000C24DDB /* ProductUnitsModel.swift */; };
+		260725FC1BA0C5D900C24DDB /* productDetailsItemsJson.json in Resources */ = {isa = PBXBuildFile; fileRef = 260725FB1BA0C5D900C24DDB /* productDetailsItemsJson.json */; };
 		2618DD711B970E210030C6D2 /* AddSubCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2618DD6F1B970E210030C6D2 /* AddSubCategoriesViewController.swift */; };
 		2618DD721B970E210030C6D2 /* AddSubCategoriesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2618DD701B970E210030C6D2 /* AddSubCategoriesViewController.xib */; };
 		2618DD751B975E910030C6D2 /* EditSubCategoriesRemovedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2618DD731B975E910030C6D2 /* EditSubCategoriesRemovedTableViewCell.swift */; };
@@ -636,6 +637,7 @@
 		260725F31BA0A2B900C24DDB /* ProductDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDetailsModel.swift; sourceTree = "<group>"; };
 		260725F71BA0A40200C24DDB /* ProductImagesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductImagesModel.swift; sourceTree = "<group>"; };
 		260725F91BA0A41000C24DDB /* ProductUnitsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUnitsModel.swift; sourceTree = "<group>"; };
+		260725FB1BA0C5D900C24DDB /* productDetailsItemsJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = productDetailsItemsJson.json; sourceTree = "<group>"; };
 		2618DD6F1B970E210030C6D2 /* AddSubCategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSubCategoriesViewController.swift; sourceTree = "<group>"; };
 		2618DD701B970E210030C6D2 /* AddSubCategoriesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddSubCategoriesViewController.xib; path = ../ViewController/AddSubCategoriesViewController.xib; sourceTree = "<group>"; };
 		2618DD731B975E910030C6D2 /* EditSubCategoriesRemovedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditSubCategoriesRemovedTableViewCell.swift; sourceTree = "<group>"; };
@@ -1088,6 +1090,7 @@
 				0CF28EC11B8C85E4005B2E54 /* XibHelper.swift */,
 				0C6661A41B906FBF005ADFDD /* JSONResponseSerializer.swift */,
 				0C8739D61B96CFA5005D2EF8 /* CommonHelper.swift */,
+				260725FB1BA0C5D900C24DDB /* productDetailsItemsJson.json */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1885,6 +1888,7 @@
 				26B282F61B91E92B00A7C2B1 /* ProductManagementAllTableViewCell.xib in Resources */,
 				79EF7ACC1B9A092E0082CD35 /* TransactionDeliveryTableViewCell.xib in Resources */,
 				F7C40F8D1B983B9D0091C16C /* VerifyViewController.xib in Resources */,
+				260725FC1BA0C5D900C24DDB /* productDetailsItemsJson.json in Resources */,
 				79E6337F1B9AF4FD0062DB14 /* TransactionCancelOrderViewController.xib in Resources */,
 				F7C40FA51B983BFC0091C16C /* FilterByTableViewCell.xib in Resources */,
 				26BD5E4E1B8DC49800739488 /* ProductDetailsTableViewCell.xib in Resources */,

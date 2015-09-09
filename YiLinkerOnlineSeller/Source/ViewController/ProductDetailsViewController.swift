@@ -14,21 +14,85 @@ struct myConstant {
 
 class ProductDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProductDescriptionViewDelegate {
 
+    // MARK: - Models
     var productDetailsModel: ProductDetailsModel!
     var productAttributesModel: [ProductAttributeModel]!
     var productUnitsModel: [ProductUnitsModel]!
     var productImagesModel: [ProductImagesModel]!
     
+    // MARK: - Views
     @IBOutlet weak var tableView: UITableView!
-    
     var headerView: UIView!
     var productImagesView: ProductImagesView!
     var productDescriptionView: ProductDescriptionView!
-    
-    var productId: String = "1"
-    var newFrame: CGRect!
     var hud: MBProgressHUD?
     
+    var newFrame: CGRect!
+    
+    // MARK: - Sample Data
+    var productId: String = "1"
+    var sampleJson: String = "{
+    "isSuccessful": true,
+    "message": "",
+    "data": {
+    "items": [
+    {
+    "id": "1",
+    "groupName": "Details",
+    "items": [
+    {
+    "name": "Category",
+    "value": "Electronics"
+    },
+    {
+    "name": "Brand",
+    "value": "Beats Electronics"
+    }
+    ]
+    },
+    {
+    "id": "2",
+    "groupName": "Price",
+    "items": [
+    {
+    "name": "Retail Price",
+    "value": "16,000"
+    },
+    {
+    "name": "Discounted Price",
+    "value": "14,000"
+    }
+    ]
+    },
+    {
+    "id": "3",
+    "groupName": "Dimensions & Weight",
+    "items": [
+    {
+    "name": "Length (CM)",
+    "value": "50cm"
+    },
+    {
+    "name": "Width (CM)",
+    "value": "100cm"
+    },
+    {
+    "name": "Weigh (KG)",
+    "value": "1000kg"
+    },
+    {
+    "name": "Height (CM)",
+    "value": "34cm"
+    }
+    ]
+    }
+    ]
+    }
+}"
+    var sectionItems: [NSArray] = []
+    var details: []
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
