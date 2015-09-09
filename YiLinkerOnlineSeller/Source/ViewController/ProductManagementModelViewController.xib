@@ -16,12 +16,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProductManagementModelViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
             <connections>
-                <outlet property="TitleLabel" destination="BlQ-pE-luh" id="C1v-4S-364"/>
                 <outlet property="closeButton" destination="Ye2-g3-3zb" id="sl1-Qz-Twf"/>
                 <outlet property="dimView" destination="TdX-38-ewe" id="cyV-DB-Dxg"/>
                 <outlet property="modalView" destination="OZ4-Vg-grK" id="eiO-w8-vU1"/>
                 <outlet property="noButton" destination="KYl-1K-jvn" id="w9G-js-ZWb"/>
                 <outlet property="subTitleLabel" destination="PVb-p2-pne" id="4f3-Ap-6jr"/>
+                <outlet property="titleLabel" destination="BlQ-pE-luh" id="4aW-CX-E3W"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="yesButton" destination="wVZ-nB-Zhr" id="1CR-FT-4hR"/>
             </connections>

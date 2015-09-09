@@ -312,14 +312,17 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
             manager.GET(url, parameters: nil, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
     
-                self.myPointsHistory = MyPointsHistoryModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                //self.myPointsHistory = MyPointsHistoryModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                
+                let pointHistory: MyPointsHistoryModel = MyPointsHistoryModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 println("Count 1 \(self.myPointsHistory.data.count)")
                 
-                if self.myPointsHistory.data.count < 15 {
+                if pointHistory.data.count < 15 {
                     self.isMyPointsEnd = true
                 }
                 
                 if self.totalPointsModel.isSuccessful {
+                    self.myPointsHistory.data += pointHistory.data
                     self.tableView.reloadData()
                 } else {
                     self.isMyPointsEnd = true
