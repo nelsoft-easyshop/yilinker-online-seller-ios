@@ -212,10 +212,10 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             self.hud = nil
         }
         
-        self.hud = MBProgressHUD(view: self.view)
+        self.hud = MBProgressHUD(view: self.tableView)
         self.hud?.removeFromSuperViewOnHide = true
         self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
+        self.tableView.addSubview(self.hud!)
         self.hud?.show(true)
     }
     
