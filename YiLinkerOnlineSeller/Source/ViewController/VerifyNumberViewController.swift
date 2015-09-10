@@ -126,9 +126,13 @@ class VerifyNumberViewController: UIViewController {
     
     @IBAction func requestNewVerificationCode(sender: AnyObject){
         //Set action to send new verification code
+        self.setSelectedViewControllerWithIndex(0)
+        self.fireResendVerificationCode()
+        println("Resending verification code")
     }
     
     @IBAction func verifyContinueRequest(sender: AnyObject){
+        
         //Set action to send verification/continue/request new code
         if self.verifyButton.titleLabel?.text == "Verify" {
             println("fire verify")
@@ -145,41 +149,43 @@ class VerifyNumberViewController: UIViewController {
     }
     
     func fireResendVerificationCode() {
+        
         self.showHUD()
+        
         let manager = APIManager.sharedInstance
-        println("mobile number \(self.mobileNumber)")
-        println("\(APIAtlas.sellerResendVerification) \(SessionManager.accessToken())&mobileNumber=\(self.mobileNumber)")
+       
         manager.POST(APIAtlas.sellerResendVerification+"\(SessionManager.accessToken())&mobileNumber=\(self.mobileNumber)", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            self.setSelectedViewControllerWithIndex(0)
-            self.hud?.hide(true)
-            println(responseObject.description)
+                self.setSelectedViewControllerWithIndex(0)
+                self.hud?.hide(true)
+            
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                println(error.description)
         })
     }
+    
     func fireVerify(verificationCode: String){
         
         if self.verifyViewController?.timerLabel.text != "00:00" {
+            
             self.showHUD()
+            
             let manager = APIManager.sharedInstance
             let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "code" : NSNumber(integer: verificationCode.toInt()!)];
             
             manager.POST(APIAtlas.sellerMobileNumberVerification, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 
-                if responseObject["isSuccessful"] as! Bool {
-                    self.isSuccessful = true
-                } else {
-                    self.isSuccessful = false
-                }
-                self.setSelectedViewControllerWithIndex(1)
-                //            self.delegate?.dismissView()
-                //            self.dismissViewControllerAnimated(true, completion: nil)
-                println(responseObject.description)
-                self.hud?.hide(true)
+                    if responseObject["isSuccessful"] as! Bool {
+                        self.isSuccessful = true
+                    } else {
+                        self.isSuccessful = false
+                    }
+                    self.setSelectedViewControllerWithIndex(1)
+                
+                    self.hud?.hide(true)
+                
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                     self.hud?.hide(true)
                     println(error)
@@ -203,6 +209,7 @@ class VerifyNumberViewController: UIViewController {
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
+    
     /*
     // MARK: - Navigation
 
