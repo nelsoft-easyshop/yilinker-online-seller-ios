@@ -57,6 +57,10 @@
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="itemNameLabel" destination="cIr-6F-2MS" id="Iuc-TE-DMP"/>
+                <outlet property="itemValueLabel" destination="5Kt-Uf-wQz" id="DbJ-7v-4mD"/>
+            </connections>
             <point key="canvasLocation" x="215.5" y="362.5"/>
         </tableViewCell>
     </objects>

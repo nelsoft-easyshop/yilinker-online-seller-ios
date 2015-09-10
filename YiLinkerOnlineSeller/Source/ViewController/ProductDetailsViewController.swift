@@ -31,68 +31,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     // MARK: - Sample Data
     var productId: String = "1"
-    var sampleJson: String = "{
-    "isSuccessful": true,
-    "message": "",
-    "data": {
-    "items": [
-    {
-    "id": "1",
-    "groupName": "Details",
-    "items": [
-    {
-    "name": "Category",
-    "value": "Electronics"
-    },
-    {
-    "name": "Brand",
-    "value": "Beats Electronics"
-    }
-    ]
-    },
-    {
-    "id": "2",
-    "groupName": "Price",
-    "items": [
-    {
-    "name": "Retail Price",
-    "value": "16,000"
-    },
-    {
-    "name": "Discounted Price",
-    "value": "14,000"
-    }
-    ]
-    },
-    {
-    "id": "3",
-    "groupName": "Dimensions & Weight",
-    "items": [
-    {
-    "name": "Length (CM)",
-    "value": "50cm"
-    },
-    {
-    "name": "Width (CM)",
-    "value": "100cm"
-    },
-    {
-    "name": "Weigh (KG)",
-    "value": "1000kg"
-    },
-    {
-    "name": "Height (CM)",
-    "value": "34cm"
-    }
-    ]
-    }
-    ]
-    }
-}"
-    var sectionItems: [NSArray] = []
-    var details: []
-
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -182,7 +121,8 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         
         var titleLabel = UILabel(frame: CGRectMake(10.0, 0, self.view.frame.size.width - 10.0, sectionView.frame.size.height))
         titleLabel.text = "Title"
-        titleLabel.font = UIFont.boldSystemFontOfSize(17.0)
+        titleLabel.font = UIFont(name: "Panton-SemoBold", size: 17.0)
+        titleLabel.textColor = UIColor.darkGrayColor()
         sectionView.addSubview(titleLabel)
         
         var underlineView = UIView(frame: CGRectMake(0, sectionView.frame.size.height - 1, self.view.frame.size.width, 1))
@@ -217,6 +157,31 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         self.productImagesView.setDetails(productDetailsModel, images: productImagesModel)
         self.productDescriptionView.descriptionLabel.text = productDetailsModel.shortDescription
         
+    }
+    
+    func localJson() {
+        if let path = NSBundle.mainBundle().pathForResource("productDetailsItemsJson", ofType: "json") {
+            if let jsonData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil) {
+                if let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers, error: nil) as? NSDictionary {
+                    if let data : NSDictionary = jsonResult["data"] as? NSDictionary {
+                        if let items : NSArray = data["items"] as? NSArray {
+                            for item in items as NSArray {
+                                if let tempVar = item["items"] as? NSDictionary {
+                                    println(tempVar)
+//                                    for tempVar2 in tempVar as NSArray {
+//                                        
+//                                    }
+                                }
+//
+//                                if let tempVar = category["fullName"] as? String {
+//                                    fullName.append(tempVar)
+//                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     
     // MARK: - Request
@@ -267,7 +232,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 4
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
