@@ -65,6 +65,7 @@ class VerifyNumberViewController: UIViewController {
             self.verifyButton.setTitle("Verify", forState: UIControlState.Normal)
             self.requestNewVerificationButton.hidden = false
             setSelectedViewController(viewController)
+            verifyViewController?.invalidateTimer()
         } else if index == 1 {
             let viewController: UIViewController = viewControllers[index]
             setSelectedViewController(viewController)

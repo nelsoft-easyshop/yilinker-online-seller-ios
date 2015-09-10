@@ -57,6 +57,13 @@ class VerifyViewController: UIViewController {
             //self.dismissViewControllerAnimated(true, completion: nil)
         }
     }
+    
+    func invalidateTimer() {
+        timer.invalidate()
+        seconds = 300
+        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("subtractTime"), userInfo: nil, repeats: true)
+        verificationCodeTextField.text = ""
+    }
     /*
     // MARK: - Navigation
 
