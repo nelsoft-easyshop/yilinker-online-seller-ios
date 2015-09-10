@@ -87,6 +87,7 @@ class ProductManagementTableViewCell: UITableViewCell {
             self.productImageView.alpha = 0.75
             decreaseAlpha()
         } else {
+            self.productImageView.alpha = 1
             increaseAlpha()
         }
     }
