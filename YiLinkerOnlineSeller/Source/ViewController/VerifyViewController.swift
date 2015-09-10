@@ -21,11 +21,7 @@ class VerifyViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let aSelector : Selector = "updateTime"
-        
         timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("subtractTime"), userInfo: nil, repeats: true)
-        
         // Do any additional setup after loading the view.
     }
 
@@ -36,11 +32,9 @@ class VerifyViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-        let aSelector : Selector = "updateTime"
-        
-        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("subtractTime"), userInfo: nil, repeats: true)
     }
     
+    //MARK: Start countdown timer
     func subtractTime() {
         seconds--
         var secondsTemp: Int = seconds % 60
@@ -58,12 +52,14 @@ class VerifyViewController: UIViewController {
         }
     }
     
+    //MARK: Invalidate timer - Reset to 05:00
     func invalidateTimer() {
         timer.invalidate()
         seconds = 300
         timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("subtractTime"), userInfo: nil, repeats: true)
         verificationCodeTextField.text = ""
     }
+    
     /*
     // MARK: - Navigation
 
