@@ -24,6 +24,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var buttonsContainer: UIView!
+    @IBOutlet weak var loaderContainerView: UIView!
     
     @IBOutlet weak var deleteView: UIView!
     @IBOutlet weak var activeInactiveContainerView: UIView!
@@ -182,7 +183,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         return sectionHeaderContainverView
     }
     
-    func showModal(#title: String, message: String) {
+    func showModal(#title: String, message: String, status: Int) {
         var productManagementModel = ProductManagementModelViewController(nibName: "ProductManagementModelViewController", bundle: nil)
         productManagementModel.delegate = self
         productManagementModel.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
@@ -191,6 +192,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         productManagementModel.view.backgroundColor = UIColor.clearColor()
         productManagementModel.titleLabel.text = title
         productManagementModel.subTitleLabel.text = message
+        productManagementModel.status = status
         self.tabBarController?.presentViewController(productManagementModel, animated: true, completion: nil)
         
         UIView.animateWithDuration(0.25, animations: {
@@ -212,10 +214,11 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             self.hud = nil
         }
         
-        self.hud = MBProgressHUD(view: self.tableView)
+        self.hud = MBProgressHUD(frame: CGRectZero)
         self.hud?.removeFromSuperViewOnHide = true
         self.hud?.dimBackground = false
-        self.tableView.addSubview(self.hud!)
+        self.loaderContainerView.addSubview(self.hud!)
+        self.loaderContainerView.hidden = false
         self.hud?.show(true)
     }
     
@@ -234,15 +237,19 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             self.searchBarTextField.becomeFirstResponder()
             self.searchBarContainerView.hidden = false
             self.collectionView.transform = CGAffineTransformMakeTranslation(0.0, 44.0)
-            self.tableView.frame.size.height -= 44.0
             self.tableView.transform = CGAffineTransformMakeTranslation(0.0, 44.0)
+            self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 44, 0)
+            self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 44, 0)
+            self.loaderContainerView.transform = CGAffineTransformMakeTranslation(0.0, 44.0)
         } else {
             self.searchBarTextField.text = ""
             self.searchBarTextField.endEditing(true)
             self.searchBarContainerView.hidden = true
             self.collectionView.transform = CGAffineTransformMakeTranslation(0.0, 0.0)
-            self.tableView.frame.size.height += 44.0
             self.tableView.transform = CGAffineTransformMakeTranslation(0.0, 0.0)
+            self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
+            self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+            self.loaderContainerView.transform = CGAffineTransformMakeTranslation(0.0, 0.0)
             
         }
         
@@ -250,36 +257,43 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     
     func tabAction(sender: AnyObject) {
         if productModel.products.count != 0 {
+            var action: Int = 0
+            
             if selectedIndex == 1 {
-                println(pageTitle[selectedIndex] + " " + sender.titleLabel!!.text!)
+                action = Status.inactive
             } else if selectedIndex == 2 {
                 if sender.titleLabel!!.text == "Delete All" {
-                    println(pageTitle[selectedIndex] + " " + sender.titleLabel!!.text!)
+                    action = Status.deleted
                 } else if sender.titleLabel!!.text == "Restore All" {
-                    println(pageTitle[selectedIndex] + " " + sender.titleLabel!!.text!)
+                    action = Status.active
                 }
             } else if selectedIndex == 3 {
-                println(pageTitle[selectedIndex] + " " + sender.titleLabel!!.text!)
+                action = Status.deleted
             }
             
             showModal(title: "You're about to " + sender.titleLabel!!.text!.lowercaseString + " active products.",
-                    message: "Are you sure you want to " + sender.titleLabel!!.text!.lowercaseString + " products?")
+                    message: "Are you sure you want to " + sender.titleLabel!!.text!.lowercaseString + " products?",
+                     status: action)
         }
     }
     
     func deleteAction(gesture: UIGestureRecognizer) {
+        self.searchBarTextField.userInteractionEnabled = false
         requestUpdateProductStatus(Status.deleted)
     }
     
     func activeAction(gesture: UIGestureRecognizer) {
+        self.searchBarTextField.userInteractionEnabled = false
         requestUpdateProductStatus(Status.inactive)
     }
     
     func inactiveAction(gesture: UIGestureRecognizer) {
+        self.searchBarTextField.userInteractionEnabled = false
         requestUpdateProductStatus(Status.active)
     }
     
     func activeInactiveAction(gesture: UIGestureRecognizer) {
+        self.searchBarTextField.userInteractionEnabled = false
         if selectedIndex == 1 {
             requestUpdateProductStatus(Status.inactive)
         } else if selectedIndex == 2 {
@@ -288,6 +302,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     }
     
     func delete2Action(gesture: UIGestureRecognizer) {
+        self.searchBarTextField.userInteractionEnabled = false
         requestUpdateProductStatus(Status.deleted)
     }
     
@@ -303,8 +318,8 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-            "status": String(status),
-            "keyword": key]
+                                              "status": String(status),
+                                             "keyword": key]
         
         self.requestTask = manager.POST(APIAtlas.managementGetProductList, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -312,12 +327,15 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
             self.tableView.reloadData()
             self.hud?.hide(true)
-            
+            self.loaderContainerView.hidden = true
+            self.searchBarTextField.userInteractionEnabled = true
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 
                 if error.code != NSURLErrorCancelled {
                     self.hud?.hide(true)
+                    self.loaderContainerView.hidden = true
+                    self.searchBarTextField.userInteractionEnabled = true
                 }
                 
         })
@@ -335,13 +353,14 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             
             self.selectedItems = []
             self.updateSelectedItems(0, selected: false)
-            
+
             self.requestGetProductList(self.statusId[self.selectedIndex], key: self.searchBarTextField.text)
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 println(error)
                 self.hud?.hide(true)
+                self.loaderContainerView.hidden = true
         })
     }
     
@@ -358,22 +377,10 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
         }
     }
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        if count(searchBar.text) > 2 {
-            requestGetProductList(statusId[selectedIndex], key: searchBar.text)
-        }
-    }
-    
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.searchBarTextField.resignFirstResponder()
         
-    }
-    
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        if count(searchBar.text) > 2 {
-            requestGetProductList(statusId[selectedIndex], key: searchBar.text)
-            searchBar.resignFirstResponder()
-            searchAction()
-        }
+        return true
     }
     
     // MARK: - Table View Data Source
@@ -551,7 +558,15 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
         self.dismissModal()
     }
     
-    func pmmvcPressYes() {
+    func pmmvcPressYes(status: Int) {
+        
+        selectedItems = []
+        for i in 0..<productModel.products.count {
+            selectedItems.append(productModel.products[i].id)
+        }
+        
+        requestUpdateProductStatus(status)
+        
         self.dismissModal()
     }
     
