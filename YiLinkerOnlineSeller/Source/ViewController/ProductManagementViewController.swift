@@ -212,10 +212,10 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             self.hud = nil
         }
         
-        self.hud = MBProgressHUD(view: self.view)
+        self.hud = MBProgressHUD(view: self.tableView)
         self.hud?.removeFromSuperViewOnHide = true
         self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
+        self.tableView.addSubview(self.hud!)
         self.hud?.show(true)
     }
     
@@ -263,7 +263,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             }
             
             showModal(title: "You're about to " + sender.titleLabel!!.text!.lowercaseString + " active products.",
-                message: "Are you sure you want to cancel this order?")
+                    message: "Are you sure you want to " + sender.titleLabel!!.text!.lowercaseString + " products?")
         }
     }
     
@@ -412,7 +412,6 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
                 cell.deselected()
             }
             
-            
             cell.setProductImage(self.productModel.products[indexPath.row].image)
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
             cell.subTitleLabel.text = self.productModel.products[indexPath.row].category
@@ -555,7 +554,5 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     func pmmvcPressYes() {
         self.dismissModal()
     }
-    
-    
     
 }

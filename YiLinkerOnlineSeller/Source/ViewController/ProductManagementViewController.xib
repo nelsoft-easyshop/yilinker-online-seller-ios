@@ -108,7 +108,7 @@
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="delete" translatesAutoresizingMaskIntoConstraints="NO" id="6Zn-ek-WeU">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="delete-white" translatesAutoresizingMaskIntoConstraints="NO" id="6Zn-ek-WeU">
                                             <rect key="frame" x="0.0" y="15" width="17" height="16"/>
                                         </imageView>
                                     </subviews>
@@ -234,7 +234,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AA5-dZ-M2d" userLabel="Holder">
                                             <rect key="frame" x="37" y="0.0" width="77" height="50"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="delete" translatesAutoresizingMaskIntoConstraints="NO" id="182-Om-Hgg">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="delete-white" translatesAutoresizingMaskIntoConstraints="NO" id="182-Om-Hgg">
                                                     <rect key="frame" x="0.0" y="14" width="16" height="19"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DELETE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UyK-yn-GHc">
@@ -313,7 +313,7 @@
         </view>
     </objects>
     <resources>
-        <image name="delete" width="96" height="96"/>
+        <image name="delete-white" width="200" height="200"/>
         <image name="moveToInactive" width="150" height="200"/>
     </resources>
 </document>
