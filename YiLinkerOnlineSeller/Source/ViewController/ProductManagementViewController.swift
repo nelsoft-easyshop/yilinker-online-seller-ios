@@ -215,8 +215,11 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         
         self.hud = MBProgressHUD(view: self.tableView)
         self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.tableView.addSubview(self.hud!)
+        self.hud?.dimBackground = true
+        self.view.addSubview(self.hud!)
+//        self.tableView.addSubview(self.hud!)
+//        println(self.tableView.contentOffset.y)
+//        self.hud?.frame.origin.y = self.tableView.contentOffset.y
         self.hud?.show(true)
     }
     
@@ -562,7 +565,6 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             selectedItems.append(productModel.products[i].id)
         }
         
-        println(selectedItems)
         requestUpdateProductStatus(status)
         
         self.dismissModal()
