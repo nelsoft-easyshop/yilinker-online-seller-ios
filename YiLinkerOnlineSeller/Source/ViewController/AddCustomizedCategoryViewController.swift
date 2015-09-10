@@ -118,13 +118,14 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             }
             
             // Category Products
-            if self.customizedCategoryProducts.count != 0 {
-                for i in 0..<self.categoryDetailsModel.products.count {
+            if self.selectedProductsModel.count != 0 {
+//                for i in 0..<self.categoryDetailsModel.products.count {
 //                    self.productIds.append(self.categoryDetailsModel.products[i].productId)
-                }
+//                }
                 
                 self.categoryItemsView.setItemButtonTitle("EDIT")
-                self.itemImagesView.setProductsCategory(products: self.customizedCategoryProducts)
+//                self.itemImagesView.setProductsCategory(products: self.customizedCategoryProducts)
+                self.itemImagesView.setProductsManagement(products: selectedProductsModel)
                 self.itemImagesView.hidden = false
                 
                 getFooterView().addSubview(getSeeAllItemsView())
@@ -219,14 +220,14 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         self.seeAllItemsView.backgroundColor = UIColor.whiteColor()
         
         var seeAllItemsLabel = UILabel(frame: CGRectZero)
-        if customizedCategoryProducts.count != 0 {
-            seeAllItemsLabel.text = "See all " + String(self.customizedCategoryProducts.count) + " items   "
-        } else if selectedProductsModel.count != 0 {
+//        if customizedCategoryProducts.count != 0 {
+//            seeAllItemsLabel.text = "See all " + String(self.customizedCategoryProducts.count) + " items   "
+//        } else if selectedProductsModel.count != 0 {
             seeAllItemsLabel.text = "See all " + String(self.selectedProductsModel.count) + " items   "
-        } else {
-            seeAllItemsLabel.text = "See all 0 items   "
-            self.seeAllItemsView.hidden = false
-        }
+//        } else {
+//            seeAllItemsLabel.text = "See all 0 items   "
+//            self.seeAllItemsView.hidden = false
+//        }
         seeAllItemsLabel.font = UIFont(name: "Panton-Bold", size: 12.0)
         seeAllItemsLabel.textColor = UIColor.darkGrayColor()
         seeAllItemsLabel.sizeToFit()
@@ -291,9 +292,14 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         
         if self.selectedProductsModel.count != 0 {
             self.categoryItemsView.addNewItemButton.setTitle("EDIT", forState: .Normal)
-            self.getFooterView().addSubview(getItemImageView())
+            if self.itemImagesView != nil {
+               self.itemImagesView.hidden = false
+            } else {
+                self.getFooterView().addSubview(getItemImageView())
+            }
             self.getFooterView().addSubview(getSeeAllItemsView())
-            self.itemImagesView.setProductsManagement(products: self.productManagementProductModel.products, selectedItems: selectedProductsModel)
+//            self.itemImagesView.setProductsManagement(products: self.productManagementProductModel.products, selectedItems: selectedProductsModel)
+            self.itemImagesView.setProductsManagement(products: selectedProductsModel)
         } else if self.selectedProductsModel.count == 0 {
             
             self.categoryItemsView.addNewItemButton.setTitle("ADD NEW ITEM", forState: .Normal)
@@ -413,7 +419,15 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             self.categoryDetailsModel = CategoryDetailsModel.parseDataWithDictionary(responseObject as! NSDictionary)
             self.customizedSubCategories = self.categoryDetailsModel.subcategories
             self.customizedCategoryProducts = self.categoryDetailsModel.products
-
+            
+            for i in 0..<self.customizedCategoryProducts.count {
+                let categoryProducts = ProductManagementProductsModel()
+                categoryProducts.id = self.customizedCategoryProducts[i].productId
+                categoryProducts.name = self.customizedCategoryProducts[i].productName
+                categoryProducts.image = self.customizedCategoryProducts[i].image
+                self.selectedProductsModel.append(categoryProducts)
+            }
+            
             self.initializeViews()
             self.applyDetails()
             
@@ -502,12 +516,16 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     func requestEditCustomizedCategory() {
         self.showHUD()
         let manager = APIManager.sharedInstance
+        var productIds: [Int] = []
+        for i in 0..<self.selectedProductsModel.count {
+            productIds.append(self.selectedProductsModel[i].id.toInt()!)
+        }
         
         var parameters: [NSDictionary] = []
         parameters.append(["categoryId": self.categoryDetailsModel.categoryId,
             "categoryName": self.categoryDetailsView.categoryNameTextField.text,
             "parentId": self.parentId,
-            "products": self.productIds,
+            "products": productIds,
             "subcategories": self.subCategories])
 
         let data = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
@@ -669,12 +687,12 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         let editItem = EdititemsViewController(nibName: "EdititemsViewController", bundle: nil)
         editItem.delegate = self
        
-        if self.categoryDetailsModel != nil {
-            editItem.updateListEdit(self.customizedCategoryProducts)
-        } else if self.productManagementProductModel != nil {
+//        if self.categoryDetailsModel != nil {
+//            editItem.updateListEdit(self.customizedCategoryProducts)
+//        } else if self.productManagementProductModel != nil {
             editItem.subCategoriesProducts = selectedProductsModel
-            editItem.updateListOfItems(self.productManagementProductModel, itemIndexes: self.itemIndexes)
-        }
+//            editItem.updateListOfItems(self.productManagementProductModel, itemIndexes: self.itemIndexes)
+//        }
         
         var root = UINavigationController(rootViewController: editItem)
         self.navigationController?.presentViewController(root, animated: false, completion: nil)
@@ -686,14 +704,20 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         self.productManagementProductModel = productModel
         self.itemIndexes = itemIndexes
         self.selectedProductsModel = products
+        
         populateDetails()
     }
     
     // MARK: Edit Item View Controller Delegate
     
-    func updateProductItems(productModel: ProductManagementProductModel, itemIndexes: [Int], products: [ProductManagementProductsModel]) {
-        self.productManagementProductModel = productModel
-        self.itemIndexes = itemIndexes
+//    func updateProductItems(productModel: ProductManagementProductModel, itemIndexes: [Int], products: [ProductManagementProductsModel]) {
+//        self.productManagementProductModel = productModel
+//        self.itemIndexes = itemIndexes
+//        self.selectedProductsModel = products
+//        populateDetails()
+//    }
+    
+    func updateProductItems(products: [ProductManagementProductsModel]) {
         self.selectedProductsModel = products
         populateDetails()
     }

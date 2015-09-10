@@ -34,9 +34,10 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
 //        if selectedItemIDsIndex.count == 0 {
 //            requestGetProductList("")
 //        }
-        if selectedProductsModel.count == 0 {
+        
+//        if selectedProductsModel.count == 0 {
             requestGetProductList("")
-        }
+//        }
         customizedNavigationBar()
         customizedViews()
         

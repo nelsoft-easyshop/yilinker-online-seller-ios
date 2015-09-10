@@ -163,7 +163,8 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
             self.categoryItemsView.addNewItemButton.setTitle("EDIT", forState: .Normal)
             self.getHeaderView().addSubview(getItemImageView())
             self.getHeaderView().addSubview(getSeeAllItemsView())
-            self.itemImagesView.setProductsManagement(products: self.productManagementProductModel.products, selectedItems: subCategoriesProducts)
+//            self.itemImagesView.setProductsManagement(products: self.productManagementProductModel.products, selectedItems: subCategoriesProducts)
+            self.itemImagesView.setProductsManagement(products: subCategoriesProducts)
         }
         
         setUpViews()
@@ -249,14 +250,19 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
     
     // MARK: Edit Item View Controller Delegate
     
-    func updateProductItems(productModel: ProductManagementProductModel, itemIndexes: [Int], products: [ProductManagementProductsModel]) {
-        self.productManagementProductModel = productModel
-        self.itemIndexes = itemIndexes
+//    func updateProductItems(productModel: ProductManagementProductModel, itemIndexes: [Int], products: [ProductManagementProductsModel]) {
+//        self.productManagementProductModel = productModel
+//        self.itemIndexes = itemIndexes
+//        self.subCategoriesProducts = products
+//        println(self.subCategoriesProducts)
+//        
+//        populateItems()
+//
+//    }
+    
+    func updateProductItems(products: [ProductManagementProductsModel]) {
         self.subCategoriesProducts = products
-        println(self.subCategoriesProducts)
-        
         populateItems()
-
     }
     
     

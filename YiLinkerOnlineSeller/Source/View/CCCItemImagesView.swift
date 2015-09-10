@@ -57,13 +57,20 @@ class CCCItemImagesView: UIView, UICollectionViewDataSource {
         self.collectionView.reloadData()
     }
     
-    func setProductsManagement(#products: [ProductManagementProductsModel], selectedItems: [ProductManagementProductsModel]) {
+//    func setProductsManagement(#products: [ProductManagementProductsModel], selectedItems: [ProductManagementProductsModel]) {
+//
+//        self.selectedItems = selectedItems
+//        if products.count != 0 {
+//            self.productManagement = products
+//        }
+//        
+//        self.collectionView.reloadData()
+//    }
 
-        self.selectedItems = selectedItems
-        if products.count != 0 {
-            self.productManagement = products
-        }
+    func setProductsManagement(#products: [ProductManagementProductsModel]) {
         
+        self.selectedItems = products
+        println(self.selectedItems.count)
         self.collectionView.reloadData()
     }
     

@@ -9,7 +9,8 @@
 import UIKit
 
 protocol EditItemsViewControllerDelegate {
-    func updateProductItems(productModel: ProductManagementProductModel, itemIndexes: [Int], products: [ProductManagementProductsModel])
+//    func updateProductItems(productModel: ProductManagementProductModel, itemIndexes: [Int], products: [ProductManagementProductsModel])
+    func updateProductItems(products: [ProductManagementProductsModel])
 }
 
 class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, RemovedItemTableViewCellDelegate {
@@ -113,8 +114,8 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
     }
     
     func checkAction() {
-        println("From Edit Items > \(subCategoriesProducts)")
-        delegate?.updateProductItems(self.productModel, itemIndexes: self.selectedItemIDsIndex, products: subCategoriesProducts)
+//        delegate?.updateProductItems(self.productModel, itemIndexes: self.selectedItemIDsIndex, products: subCategoriesProducts)
+        delegate?.updateProductItems(subCategoriesProducts)
         closeAction()
     }
     
