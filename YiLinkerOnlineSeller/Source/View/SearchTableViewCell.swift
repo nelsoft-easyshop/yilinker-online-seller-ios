@@ -1,17 +1,17 @@
 //
-//  ProductDetailsTableViewCell.swift
+//  SearchTableViewCell.swift
 //  YiLinkerOnlineSeller
 //
-//  Created by Rj Constantino on 8/26/15.
+//  Created by Joriel Oller Fronda on 9/8/15.
 //  Copyright (c) 2015 YiLinker. All rights reserved.
 //
 
 import UIKit
 
-class ProductDetailsTableViewCell: UITableViewCell {
+class SearchTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var itemNameLabel: UILabel!
-    @IBOutlet weak var itemValueLabel: UILabel!
+
+    @IBOutlet weak var invoiceNumberLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

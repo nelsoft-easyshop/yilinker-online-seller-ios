@@ -152,11 +152,11 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 cell.coverEditImageView.image = UIImage(named: "edit.png")
                 cell.profileEditLabel.text = "Edit Profile Photo"
                 cell.coverEditLabel.text = "Edit Cover Photo"
-                if(self.verifyOrChange == 1) {
-                    cell.verifyButton.setTitle("Verify", forState: UIControlState.Normal)
-                } else {
-                    cell.verifyButton.setTitle("Change", forState: UIControlState.Normal)
-                }
+                //if(self.verifyOrChange == 1) {
+                //    cell.verifyButton.setTitle("Verify", forState: UIControlState.Normal)
+                //} else {
+                cell.verifyButton.setTitle("Change", forState: UIControlState.Normal)
+                //}
                 cell.verifyButton.tag = 2
             } else {
                 cell.profileEditImageView.image = UIImage(named: "dummy-placeholder.jpg")
@@ -225,6 +225,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             verifyNumberViewController.view.frame.origin.y = verifyNumberViewController.view.frame.size.height
             self.navigationController?.presentViewController(verifyNumberViewController, animated: true, completion:
                 nil)
+            self.verifyOrChange = 2
         } else {
             var changeMobileNumber = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
             changeMobileNumber.delegate = self
@@ -235,7 +236,6 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             self.navigationController?.presentViewController(changeMobileNumber, animated: true, completion:
                 nil)
             self.verifyOrChange = 2
-
         }
 
     }
@@ -395,18 +395,18 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     func setMobileNumber(newNumber: String, oldNumber: String) {
         self.showHUD()
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldNumber" : oldNumber, "newNumber" : newNumber];
-//        manager.responseSerializer.acceptableContentTypes = NSSet(objects: "application/json", "text/html", "text/json", "text/json", "charset=utf-8") as Set<NSObject>
-        manager.POST(APIAtlas.sellerChangeMobileNumber+"?access_token=\(SessionManager.accessToken())", parameters: parameters, success: {
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldContactNumber" : oldNumber, "newContactNumber" : newNumber];
+        manager.POST(APIAtlas.sellerChangeMobileNumber, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.storeInfoModel?.contact_number = newNumber
             self.verifyOrChange = 1
+            self.storeInfoVerify()
             println(self.verifyOrChange)
             self.tableView.reloadData()
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                println(error.userInfo)
+                println(error.description)
         })
     }
     

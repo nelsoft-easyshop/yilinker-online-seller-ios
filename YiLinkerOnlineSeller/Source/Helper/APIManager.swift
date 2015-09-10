@@ -32,6 +32,7 @@ struct APIAtlas {
     static let categoryUrl = "product/getCategories"
     static let brandUrl = "product/getBrands"
     static let uploadUrl = "product/upload"
+    static let getProductDetails = "auth/product/getProductDetail"
     static let sellerStoreInfo = "auth/merchant/getUserInfo"
     static let sellerBankAccountList = "auth/bank/account/getBankAccounts"
     static let sellerAddBankAccount = "auth/bank/account/addBankAccount"
@@ -70,6 +71,9 @@ struct APIAtlas {
     
     static let getSalesReport = "auth/merchant/getSalesReport"
     static let getFollowers = "auth/merchant/getFollowers"
+    
+    //Search
+    static let transaction = "auth/transaction/searchKeyword?access_token="
     
     static let baseUrl = APIEnvironment.baseUrl()
 }

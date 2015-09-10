@@ -1,18 +1,15 @@
 //
-//  ProductDetailsTableViewCell.swift
+//  FilterCalendarTableViewCell.swift
 //  YiLinkerOnlineSeller
 //
-//  Created by Rj Constantino on 8/26/15.
+//  Created by Joriel Oller Fronda on 9/7/15.
 //  Copyright (c) 2015 YiLinker. All rights reserved.
 //
 
 import UIKit
 
-class ProductDetailsTableViewCell: UITableViewCell {
+class FilterCalendarTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var itemNameLabel: UILabel!
-    @IBOutlet weak var itemValueLabel: UILabel!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

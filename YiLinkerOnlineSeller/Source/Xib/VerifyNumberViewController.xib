@@ -33,7 +33,7 @@
                     <rect key="frame" x="8" y="156" width="359" height="273"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PHP-nN-SZc">
-                            <rect key="frame" x="131" y="203" width="96" height="26"/>
+                            <rect key="frame" x="58" y="203" width="238" height="26"/>
                             <color key="backgroundColor" red="0.20000000000000001" green="0.65098039220000004" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
                             <state key="normal" title="VERIFY">
