@@ -19,6 +19,10 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     var productAttributesModel: [ProductAttributeModel]!
     var productUnitsModel: [ProductUnitsModel]!
     var productImagesModel: [ProductImagesModel]!
+    // Upload Models
+    var productUploadModel: ProductModel!
+    var uploadAttributeModel: [AttributeModel] = []
+    var uploadCombinationModel: [CombinationModel] = []
     
     // MARK: - Views
     @IBOutlet weak var tableView: UITableView!
@@ -29,8 +33,9 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     var newFrame: CGRect!
     
-    // MARK: - Sample Data
     var productId: String = "1"
+    
+    // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -157,6 +162,25 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         self.productImagesView.setDetails(productDetailsModel, images: productImagesModel)
         self.productDescriptionView.descriptionLabel.text = productDetailsModel.shortDescription
         
+//        self.productUploadModel.attributes        = uploadAttributeModel
+//        self.productUploadModel.validCombinations = uploadCombinationModel
+//        self.productUploadModel.images            = [UIImage]()
+        
+//        self.productUploadModel.category  = CategoryModel(uid: 0, name: "", hasChildren: "")
+//        self.productUploadModel.brand     = BrandModel(name: "", brandId: 1)
+//        self.productUploadModel.condition = ConditionModel(uid: 0, name: "")
+//        self.productUploadModel.quantity  = 0
+        
+//        self.productUploadModel.name                = ""
+//        self.productUploadModel.shortDescription    = ""
+//        self.productUploadModel.completeDescription = ""
+//        self.productUploadModel.sku                 = ""
+//        self.productUploadModel.retailPrice         = ""
+//        self.productUploadModel.discoutedPrice      = ""
+//        self.productUploadModel.width               = ""
+//        self.productUploadModel.height              = ""
+//        self.productUploadModel.length              = ""
+//        self.productUploadModel.weigth              = ""
     }
     
     func localJson() {
@@ -220,9 +244,9 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func editAction() {
-        let alertController = UIAlertController(title: "YiLinker", message: "Goto Upload Page.", preferredStyle: .Alert)
-        alertController.addAction(UIAlertAction(title: "CLOSE", style: .Destructive, handler: nil))
-        presentViewController(alertController, animated: true, completion: nil)
+        let upload = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
+//        upload.productModel = productUploadModel
+        self.navigationController?.pushViewController(upload, animated: true)
     }
 
     // MARK: - Table View Data Source
