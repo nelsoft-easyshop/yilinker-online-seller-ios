@@ -35,6 +35,8 @@ class VerifyNumberViewController: UIViewController {
     
     var isSuccessful = false
     
+    var mobileNumber: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -136,12 +138,27 @@ class VerifyNumberViewController: UIViewController {
             self.dismissViewControllerAnimated(true, completion: nil)
         } else {
             println("Request new ferification code")
-            //self.setSelectedViewControllerWithIndex(1)
-            //self.isSuccessful = true
+            self.fireResendVerificationCode()
         }
         
     }
     
+    func fireResendVerificationCode() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        println("mobile number \(self.mobileNumber)")
+        println("\(APIAtlas.sellerResendVerification) \(SessionManager.accessToken())&mobileNumber=\(self.mobileNumber)")
+        manager.POST(APIAtlas.sellerResendVerification+"\(SessionManager.accessToken())&mobileNumber=\(self.mobileNumber)", parameters: nil, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.setSelectedViewControllerWithIndex(0)
+            self.hud?.hide(true)
+            println(responseObject.description)
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                println(error.description)
+        })
+    }
     func fireVerify(verificationCode: String){
         
         if self.verifyViewController?.timerLabel.text != "00:00" {
@@ -168,8 +185,7 @@ class VerifyNumberViewController: UIViewController {
             })
         } else {
             println("Verification code has expired.")
-             self.setSelectedViewControllerWithIndex(1)
-            self.isSuccessful = false
+            
         }
        
     }

@@ -34,6 +34,13 @@ class VerifyViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        let aSelector : Selector = "updateTime"
+        
+        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("subtractTime"), userInfo: nil, repeats: true)
+    }
+    
     func subtractTime() {
         seconds--
         var secondsTemp: Int = seconds % 60
@@ -47,7 +54,7 @@ class VerifyViewController: UIViewController {
         if(seconds == 0)  {
             timer.invalidate()
             timeLabel.text = "00:00"
-            self.dismissViewControllerAnimated(true, completion: nil)
+            //self.dismissViewControllerAnimated(true, completion: nil)
         }
     }
     /*

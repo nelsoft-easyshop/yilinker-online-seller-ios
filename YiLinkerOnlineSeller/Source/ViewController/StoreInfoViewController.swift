@@ -39,6 +39,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     var image: UIImage?
     var imageCover: UIImage?
     var imageType: String = ""
+    var mobileNumber: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -226,6 +227,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             self.navigationController?.presentViewController(verifyNumberViewController, animated: true, completion:
                 nil)
             self.verifyOrChange = 2
+            verifyNumberViewController.mobileNumber = self.mobileNumber
+            println(verifyNumberViewController.mobileNumber)
         } else {
             var changeMobileNumber = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
             changeMobileNumber.delegate = self
@@ -402,6 +405,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             self.verifyOrChange = 1
             self.storeInfoVerify()
             println(self.verifyOrChange)
+            self.mobileNumber = newNumber
+            println(self.mobileNumber)
             self.tableView.reloadData()
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
