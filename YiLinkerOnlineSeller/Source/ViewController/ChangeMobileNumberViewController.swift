@@ -18,11 +18,8 @@ class ChangeMobileNumberViewController: UIViewController {
    
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var closeButton: UIButton!
-    
     @IBOutlet weak var submitButton: UIButton!
-    
     @IBOutlet weak var oldNumberTextField: UITextField!
-    
     @IBOutlet weak var newNumberTextField: UITextField!
     
     var delegate: ChangeMobileNumberViewControllerDelegate?
@@ -45,7 +42,7 @@ class ChangeMobileNumberViewController: UIViewController {
     
     @IBAction func submit(sender: AnyObject){
         self.delegate?.setMobileNumber(newNumberTextField.text, oldNumber: oldNumberTextField.text)
-        self.delegate?.dismissView()
+        //self.delegate?.dismissView()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
