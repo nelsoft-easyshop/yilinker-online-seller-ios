@@ -263,7 +263,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             }
             
             showModal(title: "You're about to " + sender.titleLabel!!.text!.lowercaseString + " active products.",
-                message: "Are you sure you want to cancel this order?")
+                    message: "Are you sure you want to " + sender.titleLabel!!.text!.lowercaseString + " products?")
         }
     }
     
