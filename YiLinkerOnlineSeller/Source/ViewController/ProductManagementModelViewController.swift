@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ProductManagementModelViewControllerDelegate {
-    func pmmvcPressYes()
+    func pmmvcPressYes(status: Int)
     func pmmvcPressNo()
     func pmmvcPressClose()
 }
@@ -22,8 +22,10 @@ class ProductManagementModelViewController: UIViewController {
     @IBOutlet weak var closeButton: UIView!
     @IBOutlet weak var yesButton: UIView!
     @IBOutlet weak var noButton: UIButton!
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subTitleLabel: UILabel!
+    var status: Int = 0
     
     var delegate: ProductManagementModelViewControllerDelegate?
     
@@ -61,7 +63,7 @@ class ProductManagementModelViewController: UIViewController {
     
     @IBAction func yesAction(sender: AnyObject) {
         closeView()
-        delegate?.pmmvcPressYes()
+        delegate?.pmmvcPressYes(status)
     }
 
     @IBAction func noAction(sender: AnyObject) {
