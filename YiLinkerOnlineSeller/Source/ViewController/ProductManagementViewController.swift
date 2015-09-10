@@ -182,7 +182,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         return sectionHeaderContainverView
     }
     
-    func showModal(#title: String, message: String) {
+    func showModal(#title: String, message: String, status: Int) {
         var productManagementModel = ProductManagementModelViewController(nibName: "ProductManagementModelViewController", bundle: nil)
         productManagementModel.delegate = self
         productManagementModel.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
@@ -191,6 +191,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         productManagementModel.view.backgroundColor = UIColor.clearColor()
         productManagementModel.titleLabel.text = title
         productManagementModel.subTitleLabel.text = message
+        productManagementModel.status = status
         self.tabBarController?.presentViewController(productManagementModel, animated: true, completion: nil)
         
         UIView.animateWithDuration(0.25, animations: {
@@ -250,20 +251,23 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     
     func tabAction(sender: AnyObject) {
         if productModel.products.count != 0 {
+            var action: Int = 0
+            
             if selectedIndex == 1 {
-                println(pageTitle[selectedIndex] + " " + sender.titleLabel!!.text!)
+                action = Status.inactive
             } else if selectedIndex == 2 {
                 if sender.titleLabel!!.text == "Delete All" {
-                    println(pageTitle[selectedIndex] + " " + sender.titleLabel!!.text!)
+                    action = Status.deleted
                 } else if sender.titleLabel!!.text == "Restore All" {
-                    println(pageTitle[selectedIndex] + " " + sender.titleLabel!!.text!)
+                    action = Status.active
                 }
             } else if selectedIndex == 3 {
-                println(pageTitle[selectedIndex] + " " + sender.titleLabel!!.text!)
+                action = Status.deleted
             }
             
             showModal(title: "You're about to " + sender.titleLabel!!.text!.lowercaseString + " active products.",
-                    message: "Are you sure you want to " + sender.titleLabel!!.text!.lowercaseString + " products?")
+                    message: "Are you sure you want to " + sender.titleLabel!!.text!.lowercaseString + " products?",
+                     status: action)
         }
     }
     
@@ -551,7 +555,16 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
         self.dismissModal()
     }
     
-    func pmmvcPressYes() {
+    func pmmvcPressYes(status: Int) {
+        
+        selectedItems = []
+        for i in 0..<productModel.products.count {
+            selectedItems.append(productModel.products[i].id)
+        }
+        
+        println(selectedItems)
+        requestUpdateProductStatus(status)
+        
         self.dismissModal()
     }
     
