@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TransactionDetailsTableViewController: UITableViewController, TransactionDetailsFooterViewDelegate, TransactionConsigneeTableViewCellDelegate, TransactionCancelOrderViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate {
+class TransactionDetailsTableViewController: UITableViewController, TransactionDetailsFooterViewDelegate, TransactionConsigneeTableViewCellDelegate, TransactionCancelOrderViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate, TransactionCancelReasonOrderViewControllerDelegate {
     
     var detailsCellIdentifier: String = "TransactionDetailsTableViewCell"
     var productsCellIdentifier: String = "TransactionProductTableViewCell"
@@ -296,10 +296,10 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             self.hud = nil
         }
         
-        self.hud = MBProgressHUD(view: self.view)
+        self.hud = MBProgressHUD(view: self.navigationController?.view)
         self.hud?.removeFromSuperViewOnHide = true
         self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
+        self.navigationController?.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
     
@@ -322,6 +322,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     // MARK: - TransactionDetailsFooterViewDelegate
     func shipItemAction() {
         var shipItemController = TransactionShipItemTableViewController(nibName: "TransactionShipItemTableViewController", bundle: nil)
+        shipItemController.invoiceNumber = invoiceNumber
         self.navigationController?.pushViewController(shipItemController, animated:true)
     }
     
@@ -343,13 +344,14 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     }
     
     func yesCancelOrderAction() {
-        var successController = TransactionCancelOrderSuccessViewController(nibName: "TransactionCancelOrderSuccessViewController", bundle: nil)
-        successController.delegate = self
-        successController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        successController.providesPresentationContextTransitionStyle = true
-        successController.definesPresentationContext = true
-        successController.view.backgroundColor = UIColor.clearColor()
-        self.tabBarController?.presentViewController(successController, animated: true, completion: nil)
+        var reasonController = TransactionCancelReasonOrderViewController(nibName: "TransactionCancelReasonOrderViewController", bundle: nil)
+        reasonController.delegate = self
+        reasonController.invoiceNumber = invoiceNumber
+        reasonController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        reasonController.providesPresentationContextTransitionStyle = true
+        reasonController.definesPresentationContext = true
+        reasonController.view.backgroundColor = UIColor.clearColor()
+        self.tabBarController?.presentViewController(reasonController, animated: true, completion: nil)
     }
     
     func noCancelOrderAction() {
@@ -364,9 +366,24 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     
     func returnToDashboardAction() {
         hideDimView()
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
-
+    // MARK: TransactionCancelReasonOrderViewControllerDelegate
+    func closeTransactionCancelReasonOrderViewController() {
+        hideDimView()
+    }
+    
+    func submitTransactionCancelReason() {
+        var successController = TransactionCancelOrderSuccessViewController(nibName: "TransactionCancelOrderSuccessViewController", bundle: nil)
+        successController.delegate = self
+        successController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        successController.providesPresentationContextTransitionStyle = true
+        successController.definesPresentationContext = true
+        successController.view.backgroundColor = UIColor.clearColor()
+        self.tabBarController?.presentViewController(successController, animated: true, completion: nil)
+    }
+    
     
     // MARK: - TransactionConsigneeTableViewCellDelegate
     func messageConsigneeAction() {

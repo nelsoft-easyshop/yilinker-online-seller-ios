@@ -386,6 +386,9 @@
 		79EFF7871B8DBEA7008A9E7D /* RecentProductsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EFF7861B8DBEA7008A9E7D /* RecentProductsTableViewCell.swift */; };
 		79EFF78A1B8DCFA2008A9E7D /* SalesReportTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EFF7881B8DCFA2008A9E7D /* SalesReportTableViewController.swift */; };
 		79EFF78B1B8DCFA2008A9E7D /* SalesReportTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EFF7891B8DCFA2008A9E7D /* SalesReportTableViewController.xib */; };
+		79F107651BA18E5800B6CE51 /* TransactionCancelReasonOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F107631BA18E5800B6CE51 /* TransactionCancelReasonOrderViewController.swift */; };
+		79F107661BA18E5800B6CE51 /* TransactionCancelReasonOrderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79F107641BA18E5800B6CE51 /* TransactionCancelReasonOrderViewController.xib */; };
+		79F107681BA1C46500B6CE51 /* TransactionCancellationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F107671BA1C46500B6CE51 /* TransactionCancellationModel.swift */; };
 		961F702A1B97EEEC007D0EA5 /* ButtonToTabBehaviorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961F70291B97EEEC007D0EA5 /* ButtonToTabBehaviorizer.swift */; };
 		961F702C1B97F057007D0EA5 /* CaseDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961F702B1B97F057007D0EA5 /* CaseDetailsTableViewController.swift */; };
 		961F702E1B97F077007D0EA5 /* DisputeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961F702D1B97F077007D0EA5 /* DisputeViewController.swift */; };
@@ -895,6 +898,9 @@
 		79EFF7861B8DBEA7008A9E7D /* RecentProductsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentProductsTableViewCell.swift; sourceTree = "<group>"; };
 		79EFF7881B8DCFA2008A9E7D /* SalesReportTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalesReportTableViewController.swift; sourceTree = "<group>"; };
 		79EFF7891B8DCFA2008A9E7D /* SalesReportTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SalesReportTableViewController.xib; path = ../ViewController/SalesReportTableViewController.xib; sourceTree = "<group>"; };
+		79F107631BA18E5800B6CE51 /* TransactionCancelReasonOrderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCancelReasonOrderViewController.swift; sourceTree = "<group>"; };
+		79F107641BA18E5800B6CE51 /* TransactionCancelReasonOrderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionCancelReasonOrderViewController.xib; sourceTree = "<group>"; };
+		79F107671BA1C46500B6CE51 /* TransactionCancellationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCancellationModel.swift; sourceTree = "<group>"; };
 		961F70291B97EEEC007D0EA5 /* ButtonToTabBehaviorizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonToTabBehaviorizer.swift; sourceTree = "<group>"; };
 		961F702B1B97F057007D0EA5 /* CaseDetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaseDetailsTableViewController.swift; sourceTree = "<group>"; };
 		961F702D1B97F077007D0EA5 /* DisputeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisputeViewController.swift; sourceTree = "<group>"; };
@@ -1122,6 +1128,7 @@
 				794A965A1B9EAAEA002F32A0 /* FollowersModel.swift */,
 				79C071141B9F2B7D0032B7A5 /* TransactionOrderProductModel.swift */,
 				79C071161B9F2CCF0032B7A5 /* TransactionDetailsModel.swift */,
+				79F107671BA1C46500B6CE51 /* TransactionCancellationModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1307,6 +1314,8 @@
 				26DB06331B98BF2C00D38EA8 /* TransactionViewController.swift */,
 				F7C40F881B983B860091C16C /* VerifyNumberViewController.swift */,
 				F7C40F8A1B983B8D0091C16C /* VerifyViewController.swift */,
+				79F107631BA18E5800B6CE51 /* TransactionCancelReasonOrderViewController.swift */,
+				79F107641BA18E5800B6CE51 /* TransactionCancelReasonOrderViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1837,6 +1846,7 @@
 				F7C40FD11B983CD90091C16C /* check.png in Resources */,
 				0CF28F121B8CAA31005B2E54 /* ProductUploadTableViewController.xib in Resources */,
 				0C8D7FB61B8FC4AC00B3FA4E /* ProductUploadCombinationTableViewCell.xib in Resources */,
+				79F107661BA18E5800B6CE51 /* TransactionCancelReasonOrderViewController.xib in Resources */,
 				F7C40FA91B983C0D0091C16C /* CreateNewAddressViewController.xib in Resources */,
 				0C65F8ED1B8E377500504D86 /* ProductUploadAttributeCollectionViewCell.xib in Resources */,
 				9628AC961B9848E700734551 /* DisputeViewController.xib in Resources */,
@@ -2077,6 +2087,7 @@
 				26BD5E5E1B8DFA5200739488 /* ProductImagesView.swift in Sources */,
 				79E633861B9B15FD0062DB14 /* TransactionShipItemTableViewController.swift in Sources */,
 				26378F211B8CC45A008533B6 /* ProductManagementViewController.swift in Sources */,
+				79F107681BA1C46500B6CE51 /* TransactionCancellationModel.swift in Sources */,
 				26DB06371B98BF2C00D38EA8 /* TransactionTableViewCell.swift in Sources */,
 				26BD5E511B8DC4B900739488 /* ProductDetailViews.swift in Sources */,
 				7928760A1B8DF89F00762A39 /* BarChartDataSet.swift in Sources */,
@@ -2189,6 +2200,7 @@
 				794880801B94DE480090B259 /* FollowerTableViewCell.swift in Sources */,
 				0C65F8D01B8E059A00504D86 /* ProductUploadButtonTableViewCell.swift in Sources */,
 				0CF28F161B8CCD3E005B2E54 /* ProductUploadUploadImageTableViewCell.swift in Sources */,
+				79F107651BA18E5800B6CE51 /* TransactionCancelReasonOrderViewController.swift in Sources */,
 				79E633A21B9B27E70062DB14 /* FSCalendarCell.m in Sources */,
 				79EF7AB61B998A8B0082CD35 /* TransactionFilterTableViewCell.swift in Sources */,
 				0C8D7F951B8F12C200B3FA4E /* ProductUploadAttributeListTableViewController.swift in Sources */,

@@ -10,9 +10,9 @@
         </mutableArray>
         <mutableArray key="Panton SemiBold.otf">
             <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
         </mutableArray>
         <mutableArray key="Panton.otf">
-            <string>Panton-Regular</string>
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
@@ -22,16 +22,162 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TransactionShipItemTableViewCell" id="tLc-Gn-Poc" customClass="TransactionShipItemTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="600"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TransactionShipItemTableViewCell" rowHeight="621" id="tLc-Gn-Poc" customClass="TransactionShipItemTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="621"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tLc-Gn-Poc" id="hIr-fn-AfD">
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WcH-r4-pl7" customClass="FSCalendar">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PICKUP SCHEDULE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqo-DC-hNj">
+                        <rect key="frame" x="16" y="21" width="343" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="12" id="jYw-9D-aVo"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                        <color key="textColor" red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consectetur adiscing elit, sed" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O9e-Ks-E7K">
+                        <rect key="frame" x="16" y="37" width="343" height="28"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="28" id="kZb-ev-vs2"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
+                        <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JOv-zQ-xgg">
+                        <rect key="frame" x="0.0" y="451" width="375" height="106"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JgG-SF-Z9n">
+                                <rect key="frame" x="16" y="22" width="343" height="76"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="76" id="5IS-FW-gmP"/>
+                                </constraints>
+                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="no"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="notes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jaw-BJ-E6B">
+                                <rect key="frame" x="12" y="8" width="351" height="12"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="12" id="yKw-Uc-7xb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                                <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="JgG-SF-Z9n" secondAttribute="trailing" constant="16" id="4lJ-7a-vdZ"/>
+                            <constraint firstItem="Jaw-BJ-E6B" firstAttribute="leading" secondItem="JOv-zQ-xgg" secondAttribute="leading" constant="12" id="89m-rx-wTU"/>
+                            <constraint firstItem="Jaw-BJ-E6B" firstAttribute="top" secondItem="JOv-zQ-xgg" secondAttribute="top" constant="8" id="dxo-uu-Twl"/>
+                            <constraint firstItem="JgG-SF-Z9n" firstAttribute="leading" secondItem="JOv-zQ-xgg" secondAttribute="leading" constant="16" id="oHA-OK-kI7"/>
+                            <constraint firstAttribute="height" constant="106" id="q8n-FB-Vg0"/>
+                            <constraint firstAttribute="trailing" secondItem="Jaw-BJ-E6B" secondAttribute="trailing" constant="12" id="s9w-Vk-o9a"/>
+                            <constraint firstItem="JgG-SF-Z9n" firstAttribute="top" secondItem="Jaw-BJ-E6B" secondAttribute="bottom" constant="2" id="yOv-Fu-TPd"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bnT-uc-IPo">
+                        <rect key="frame" x="1" y="399" width="373" height="50"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vxd-nq-2D0">
+                                <rect key="frame" x="16" y="10" width="233" height="12"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="12" id="gxc-3I-7Xv"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                                <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="August 12, 2014" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pkk-UP-ey4" userLabel="Picku rider Value">
+                                <rect key="frame" x="16" y="25" width="233" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="5fD-Hi-HKU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="6:00 AM" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vv6-hI-LWG">
+                                <rect key="frame" x="257" y="5" width="100" height="39"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="39" id="PIZ-hC-s7g"/>
+                                    <constraint firstAttribute="width" constant="100" id="q3v-3n-cbF"/>
+                                </constraints>
+                                <color key="textColor" red="0.45882352941176469" green="0.20392156862745098" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="22"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Vv6-hI-LWG" secondAttribute="trailing" constant="16" id="BZ6-mq-pNJ"/>
+                            <constraint firstItem="vxd-nq-2D0" firstAttribute="top" secondItem="bnT-uc-IPo" secondAttribute="top" constant="10" id="FrU-dN-YCf"/>
+                            <constraint firstItem="pkk-UP-ey4" firstAttribute="leading" secondItem="bnT-uc-IPo" secondAttribute="leading" constant="16" id="LKw-UN-zRD"/>
+                            <constraint firstItem="Vv6-hI-LWG" firstAttribute="leading" secondItem="vxd-nq-2D0" secondAttribute="trailing" constant="8" id="Oee-Fc-7VJ"/>
+                            <constraint firstAttribute="height" constant="50" id="Qpn-gI-qsE"/>
+                            <constraint firstItem="pkk-UP-ey4" firstAttribute="top" secondItem="vxd-nq-2D0" secondAttribute="bottom" constant="3" id="Qpu-F5-SSi"/>
+                            <constraint firstItem="vxd-nq-2D0" firstAttribute="leading" secondItem="bnT-uc-IPo" secondAttribute="leading" constant="16" id="T1k-Zq-1eF"/>
+                            <constraint firstItem="Vv6-hI-LWG" firstAttribute="top" secondItem="bnT-uc-IPo" secondAttribute="top" constant="5" id="Uou-Pv-hLJ"/>
+                            <constraint firstItem="Vv6-hI-LWG" firstAttribute="leading" secondItem="pkk-UP-ey4" secondAttribute="trailing" constant="8" id="qc6-5A-Wjq"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EDr-Db-gc3">
+                        <rect key="frame" x="1" y="565" width="373" height="55"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZgR-uL-JFn">
+                                <rect key="frame" x="16" y="8" width="165" height="40"/>
+                                <color key="backgroundColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Qnz-9J-5Zj"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="CANCEL">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonAction:" destination="tLc-Gn-Poc" eventType="touchUpInside" id="Eby-QK-7Jr"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bBZ-8N-cOV">
+                                <rect key="frame" x="194" y="8" width="165" height="40"/>
+                                <color key="backgroundColor" red="0.3294117647" green="0.71372549019999998" blue="0.65490196079999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Em8-uW-agG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="READY FOR PICKUP">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonAction:" destination="tLc-Gn-Poc" eventType="touchUpInside" id="hJL-kg-XsL"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="bBZ-8N-cOV" secondAttribute="trailing" constant="14" id="Ao4-5C-tUz"/>
+                            <constraint firstItem="ZgR-uL-JFn" firstAttribute="width" secondItem="bBZ-8N-cOV" secondAttribute="width" id="INe-Gn-PmL"/>
+                            <constraint firstItem="bBZ-8N-cOV" firstAttribute="leading" secondItem="ZgR-uL-JFn" secondAttribute="trailing" constant="13" id="K6y-wO-hNk"/>
+                            <constraint firstItem="ZgR-uL-JFn" firstAttribute="leading" secondItem="EDr-Db-gc3" secondAttribute="leading" constant="16" id="RV8-RU-QuN"/>
+                            <constraint firstAttribute="height" constant="55" id="WSt-oV-tQj"/>
+                            <constraint firstAttribute="centerY" secondItem="bBZ-8N-cOV" secondAttribute="centerY" id="Y5Y-H7-1Xh"/>
+                            <constraint firstItem="bBZ-8N-cOV" firstAttribute="leading" secondItem="ZgR-uL-JFn" secondAttribute="trailing" constant="13" id="ytA-p7-7Y1"/>
+                            <constraint firstAttribute="centerY" secondItem="ZgR-uL-JFn" secondAttribute="centerY" id="ziX-o0-A1T"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WcH-r4-pl7" customClass="FSCalendar">
                         <rect key="frame" x="0.0" y="65" width="375" height="326"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="tintColor" red="0.37647058820000001" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="326" id="V1T-Vo-PJS"/>
+                        </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="fakedSelectedDay">
                                 <integer key="value" value="1"/>
@@ -67,7 +213,7 @@
                                 <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="color" keyPath="todaySelectionColor">
-                                <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="value" red="0.45882352941176469" green="0.20392156862745098" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="useVeryShortWeekdaySymbols" value="YES"/>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="fakeSubtitles" value="NO"/>
@@ -79,102 +225,42 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                         <connections>
-                            <outlet property="dataSource" destination="-1" id="xe3-G9-baY"/>
-                            <outlet property="delegate" destination="-1" id="dAI-iI-qYV"/>
+                            <outlet property="dataSource" destination="-1" id="Hkc-HV-2EF"/>
+                            <outlet property="delegate" destination="-1" id="F74-cZ-1qy"/>
                         </connections>
-                    </view>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JOv-zQ-xgg">
-                        <rect key="frame" x="0.0" y="451" width="375" height="85"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="notes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jaw-BJ-E6B">
-                                <rect key="frame" x="16" y="10" width="351" height="12"/>
-                                <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
-                                <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JgG-SF-Z9n">
-                                <rect key="frame" x="16" y="28" width="343" height="49"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="no"/>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EDr-Db-gc3">
-                        <rect key="frame" x="0.0" y="544" width="375" height="55"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZgR-uL-JFn">
-                                <rect key="frame" x="16" y="8" width="165" height="40"/>
-                                <color key="backgroundColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="CANCEL">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bBZ-8N-cOV">
-                                <rect key="frame" x="194" y="8" width="165" height="40"/>
-                                <color key="backgroundColor" red="0.3294117647" green="0.71372549019999998" blue="0.65490196079999996" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="READY FOR PICKUP">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PICKUP SCHEDULE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqo-DC-hNj">
-                        <rect key="frame" x="16" y="21" width="343" height="12"/>
-                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
-                        <color key="textColor" red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Lorem ipsum dolor sit amet, consectetur adiscing elit, sed" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O9e-Ks-E7K">
-                        <rect key="frame" x="16" y="37" width="343" height="12"/>
-                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
-                        <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bnT-uc-IPo">
-                        <rect key="frame" x="-1" y="399" width="375" height="50"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vxd-nq-2D0">
-                                <rect key="frame" x="16" y="10" width="235" height="12"/>
-                                <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
-                                <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="August 12, 2014" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pkk-UP-ey4" userLabel="Picku rider Value">
-                                <rect key="frame" x="16" y="25" width="235" height="15"/>
-                                <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
-                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bfh-6h-Urf">
-                                <rect key="frame" x="259" y="10" width="100" height="30"/>
-                                <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="22"/>
-                                <state key="normal" title="6:00 AM">
-                                    <color key="titleColor" red="0.45882352939999999" green="0.20392156859999999" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </subviews>
                 <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstItem="O9e-Ks-E7K" firstAttribute="leading" secondItem="hIr-fn-AfD" secondAttribute="leading" constant="16" id="3y6-GV-QFH"/>
+                    <constraint firstItem="bnT-uc-IPo" firstAttribute="top" secondItem="WcH-r4-pl7" secondAttribute="bottom" constant="8" id="5lE-1Q-BbI"/>
+                    <constraint firstItem="JOv-zQ-xgg" firstAttribute="top" secondItem="bnT-uc-IPo" secondAttribute="bottom" constant="2" id="7ET-bc-iBk"/>
+                    <constraint firstItem="O9e-Ks-E7K" firstAttribute="top" secondItem="pqo-DC-hNj" secondAttribute="bottom" constant="4" id="B1t-tb-tEZ"/>
+                    <constraint firstItem="WcH-r4-pl7" firstAttribute="leading" secondItem="hIr-fn-AfD" secondAttribute="leading" id="OHd-7G-AQX"/>
+                    <constraint firstAttribute="trailing" secondItem="WcH-r4-pl7" secondAttribute="trailing" id="RGs-ba-PIX"/>
+                    <constraint firstAttribute="trailing" secondItem="bnT-uc-IPo" secondAttribute="trailing" constant="1" id="U9c-xT-XiN"/>
+                    <constraint firstItem="JOv-zQ-xgg" firstAttribute="leading" secondItem="hIr-fn-AfD" secondAttribute="leading" id="Ykr-iH-hFF"/>
+                    <constraint firstItem="pqo-DC-hNj" firstAttribute="top" secondItem="hIr-fn-AfD" secondAttribute="top" constant="21" id="b11-fC-UWG"/>
+                    <constraint firstAttribute="trailing" secondItem="pqo-DC-hNj" secondAttribute="trailing" constant="16" id="bo9-gy-4zK"/>
+                    <constraint firstItem="EDr-Db-gc3" firstAttribute="top" secondItem="JOv-zQ-xgg" secondAttribute="bottom" constant="8" id="edc-ND-GQO"/>
+                    <constraint firstAttribute="trailing" secondItem="O9e-Ks-E7K" secondAttribute="trailing" constant="16" id="ejX-zN-qc6"/>
+                    <constraint firstItem="bnT-uc-IPo" firstAttribute="leading" secondItem="hIr-fn-AfD" secondAttribute="leading" constant="1" id="guZ-32-PXa"/>
+                    <constraint firstAttribute="trailing" secondItem="JOv-zQ-xgg" secondAttribute="trailing" id="iT8-px-NmX"/>
+                    <constraint firstItem="EDr-Db-gc3" firstAttribute="leading" secondItem="hIr-fn-AfD" secondAttribute="leading" constant="1" id="jwr-od-PGh"/>
+                    <constraint firstItem="pqo-DC-hNj" firstAttribute="leading" secondItem="hIr-fn-AfD" secondAttribute="leading" constant="16" id="qNv-Tq-TwX"/>
+                    <constraint firstItem="WcH-r4-pl7" firstAttribute="top" secondItem="O9e-Ks-E7K" secondAttribute="bottom" id="xxg-fb-dxl"/>
+                    <constraint firstAttribute="trailing" secondItem="EDr-Db-gc3" secondAttribute="trailing" constant="1" id="y3y-6C-0eB"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="calendarView" destination="WcH-r4-pl7" id="QEL-Ah-iEY"/>
                 <outlet property="cancelButton" destination="ZgR-uL-JFn" id="AHn-Jz-Yus"/>
                 <outlet property="dateLabel" destination="pkk-UP-ey4" id="wzm-c1-NPT"/>
+                <outlet property="notesTextView" destination="JgG-SF-Z9n" id="igs-GK-Dap"/>
                 <outlet property="pickupButton" destination="bBZ-8N-cOV" id="4yv-BW-Tsg"/>
+                <outlet property="timeTextField" destination="Vv6-hI-LWG" id="MWQ-uv-RkM"/>
             </connections>
-            <point key="canvasLocation" x="282.5" y="127"/>
+            <point key="canvasLocation" x="282.5" y="137.5"/>
         </tableViewCell>
     </objects>
 </document>
