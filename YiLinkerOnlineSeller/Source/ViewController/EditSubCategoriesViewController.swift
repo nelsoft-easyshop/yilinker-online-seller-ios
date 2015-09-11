@@ -9,13 +9,13 @@
 import UIKit
 
 protocol EditSubCategoriesViewControllerDelegate {
-    func addSubCategories(controller: EditSubCategoriesViewController, subCategories: [NSDictionary], categoryNames: [String])
+    func addSubCategories(controller: EditSubCategoriesViewController, subCategories: [SubCategoryModel], categoryNames: [String])
 }
 
 class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewControllerDelegate, CCCategoryItemsViewDelegate, EditSubCategoriesRemovedTableViewCellDelegate {
 
     var delegate: EditSubCategoriesViewControllerDelegate?
-    var subCategories: [NSDictionary] = []
+    var subCategories: [SubCategoryModel] = []
     var tempSubCategories: [NSDictionary] = []
     
     @IBOutlet weak var tableView: UITableView!
@@ -79,12 +79,12 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     
     func getSubCategoriesEdit(subCategoryModel: [SubCategoryModel]) {
         self.categories = []
-        for i in 0..<subCategoryModel.count {
+        subCategories = subCategoryModel
+//        for i in 0..<subCategoryModel.count {
 //            self.categories.append(subCategoryModel[i].categoryName)
-            let subCategoryDict: Dictionary = ["categoryName": subCategoryModel[i].categoryName,
-                                                   "products": []]
-            addSubCategory(subCategoryDict, categoryName: subCategoryModel[i].categoryName)
-        }
+//            let subCategoryDict: Dictionary = ["categoryName": subCategoryModel[i].categoryName, "products": []]
+//            addSubCategory(subCategoryDict, categoryName: subCategoryModel[i].categoryName)
+//        }
     }
     
     func showAddSubView() {
@@ -121,12 +121,12 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     }
     
     @IBAction func clearAllAction(sender: AnyObject) {
-        categories = []
+        subCategories = []
         showEditSubView()
     }
     
     @IBAction func removeCategoriesAction(sender: AnyObject) {
-        if categories.count != 0 {
+        if subCategories.count != 0 {
             showAddSubView()
         }
     }
@@ -142,7 +142,7 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     @IBAction func removedSelectedAction(sender: AnyObject) {
 
         for i in 0..<categoriesToBeRemove.count {
-            self.categories = self.categories.filter({$0 != self.categories[self.categoriesToBeRemove[i]]})
+            self.subCategories = self.subCategories.filter({$0 != self.subCategories[self.categoriesToBeRemove[i]]})
         }
         
         showEditSubView()
@@ -183,7 +183,7 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
 //            return categories.count
 //        }
         
-        return categories.count
+        return subCategories.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -193,7 +193,7 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
             cell.selectionStyle = .None
             cell.tag = indexPath.row
             cell.delegate = self
-            cell.subCategoryLabel.text = categories[indexPath.row]
+            cell.subCategoryLabel.text = subCategories[indexPath.row].categoryName
             
             if self.categoriesToBeRemove.count == 0 {
                 cell.deselected()
@@ -203,7 +203,7 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
         } else {
             let cell = UITableViewCell(style: .Default, reuseIdentifier: "identifier")
             cell.selectionStyle = .None
-            cell.textLabel?.text = categories[indexPath.row]
+            cell.textLabel?.text = subCategories[indexPath.row].categoryName
             cell.textLabel?.font = UIFont(name: "Panton-Bold", size: 12.0)
             cell.textLabel?.textColor = Constants.Colors.hex666666
             cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
@@ -213,7 +213,10 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        let editSubCategory = AddSubCategoriesViewController(nibName: "AddSubCategoriesViewController", bundle: nil)
+        editSubCategory.title = "Edit Customized Category"
+        editSubCategory.requestGetSubCategoryDetails(parentName: subCategories[indexPath.row].parentName, categoryId: subCategories[indexPath.row].categoryId)
+        self.navigationController?.pushViewController(editSubCategory, animated: true)
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -230,7 +233,7 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     
     // MARK: - Add Sub Category View Controller Delegate
     
-    func addSubCategory(subCategory: NSDictionary, categoryName: String) {
+    func addSubCategory(subCategory: SubCategoryModel, categoryName: String) {
         subCategories.append(subCategory)
         categories.append(categoryName)
         if self.tableView != nil {

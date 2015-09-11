@@ -9,11 +9,13 @@
 import UIKit
 
 protocol AddSubCategoriesViewControllerDelegate {
-    func addSubCategory(subCategory: NSDictionary, categoryName: String)
+    func addSubCategory(subCategory: SubCategoryModel, categoryName: String)
 }
 
 class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDelegate, AddItemViewControllerDelegate, EditItemsViewControllerDelegate {
 
+    var hud: MBProgressHUD?
+    
     var delegate: AddSubCategoriesViewControllerDelegate?
     var productManagementProductModel: ProductManagementProductModel!
     var subCategoriesProducts: [ProductManagementProductsModel] = []
@@ -30,6 +32,8 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
     var createdCategory: String = ""
     
     var numberOfList: Int = 10
+    
+    var subCategoryDetailModel: SubCategoryModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,7 +113,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
         self.seeAllItemsView.backgroundColor = UIColor.whiteColor()
         
         var seeAllItemsLabel = UILabel(frame: CGRectZero)
-        seeAllItemsLabel.text = "See all " + String(itemIndexes.count) + " items   "
+        seeAllItemsLabel.text = "See all " + String(subCategoriesProducts.count) + " items   "
         seeAllItemsLabel.font = UIFont(name: "Panton-Bold", size: 12.0)
         seeAllItemsLabel.textColor = UIColor.darkGrayColor()
         seeAllItemsLabel.sizeToFit()
@@ -136,8 +140,8 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
         
         newFrame = self.headerView.frame
         
-        if self.productManagementProductModel != nil {
-            if self.productManagementProductModel.products.count != 0 {
+        if self.subCategoriesProducts.count != 0 {
+            if self.subCategoriesProducts.count != 0 {
                 setPosition(self.itemImagesView, from: self.categoryItemsView)
                 setPosition(self.seeAllItemsView, from: self.itemImagesView)
                 newFrame.size.height = CGRectGetMaxY(self.seeAllItemsView.frame) + 20.0
@@ -158,6 +162,13 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
         view.frame = newFrame
     }
     
+    func populateDetails() {
+        self.categoryDetailsView.categoryNameTextField.text = subCategoryDetailModel.categoryName
+        self.categoryDetailsView.parentCategoryLabel.text = subCategoryDetailModel.parentName
+        
+        self.populateItems()
+    }
+    
     func populateItems() {
         if self.subCategoriesProducts.count != 0 {
             self.categoryItemsView.addNewItemButton.setTitle("EDIT", forState: .Normal)
@@ -171,21 +182,100 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
         self.tableView.reloadData()
     }
     
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
     // MARK: - Actions
     
     func closeAction() {
         self.dismissViewControllerAnimated(false, completion: nil)
-        self.navigationController?.popViewControllerAnimated(false)
+//        self.navigationController?.popViewControllerAnimated(true)
     }
     
     func checkAction() {
         if self.categoryDetailsView.categoryNameTextField.text != "" {
-            let subCategory = ["categoryName": self.categoryDetailsView.categoryNameTextField.text.capitalizedString,
-                                   "products": subCategoriesProducts.description]
-            println(subCategory)
-            delegate?.addSubCategory(subCategory, categoryName: self.categoryDetailsView.categoryNameTextField.text.capitalizedString)
+//            let subCategory: SubCategoryModel!
+//            subCategory.categoryName
+//            subCategory.p
+//            let subCategory = ["categoryName": self.categoryDetailsView.categoryNameTextField.text.capitalizedString,
+//                                   "products": subCategoriesProducts.description]
+//            println(subCategory)
+//            delegate?.addSubCategory(subCategory, categoryName: self.categoryDetailsView.categoryNameTextField.text.capitalizedString)
             closeAction()
         }
+    }
+    
+    // MARK: - Request
+    
+    func requestGetSubCategoryDetails(#parentName: String, categoryId: Int) {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
+                                          "categoryId": String(categoryId)]
+        
+        manager.POST(APIAtlas.getCategoryDetails, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            println(responseObject)
+            
+            let subCategoryDetail: SubCategoryModel = SubCategoryModel.parseSubCategories(responseObject as! NSDictionary)
+            
+            self.subCategoryDetailModel = (SubCategoryModel(message: subCategoryDetail.message,
+                isSuccessful: subCategoryDetail.isSuccessful,
+                categoryId: subCategoryDetail.categoryId,
+                categoryName: subCategoryDetail.categoryName,
+                parentName: parentName,
+                parentId: subCategoryDetail.parentId,
+                sortOrder: subCategoryDetail.sortOrder,
+                products: subCategoryDetail.products))
+            
+            for i in 0..<subCategoryDetail.products.count {
+                println(subCategoryDetail.products[i].image)
+                let categoryProducts = ProductManagementProductsModel()
+                categoryProducts.id = subCategoryDetail.products[i].productId
+                categoryProducts.name = subCategoryDetail.products[i].productName
+                categoryProducts.image = subCategoryDetail.products[i].image
+                self.subCategoriesProducts.append(categoryProducts)
+            }
+            
+            self.populateDetails()
+            
+            
+            
+            self.categoryDetailsView.frame.size.height = 153.0
+            self.setUpViews()
+//            self.categoryDetailsModel = CategoryDetailsModel.parseDataWithDictionary(responseObject as! NSDictionary)
+//            self.customizedSubCategories = self.categoryDetailsModel.subcategories
+//            self.customizedCategoryProducts = self.categoryDetailsModel.products
+//            
+//            for i in 0..<self.customizedCategoryProducts.count {
+//                let categoryProducts = ProductManagementProductsModel()
+//                categoryProducts.id = self.customizedCategoryProducts[i].productId
+//                categoryProducts.name = self.customizedCategoryProducts[i].productName
+//                categoryProducts.image = self.customizedCategoryProducts[i].image
+//                self.selectedProductsModel.append(categoryProducts)
+//            }
+//            
+//            self.initializeViews()
+//            self.applyDetails()
+            
+            self.hud?.hide(true)
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println(error)
+                self.hud?.hide(true)
+        })
     }
     
     // MARK: - Table View Data Source and Delegates
@@ -234,7 +324,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
         let editItem = EdititemsViewController(nibName: "EdititemsViewController", bundle: nil)
         editItem.delegate = self
         editItem.subCategoriesProducts = subCategoriesProducts
-        editItem.updateListOfItems(self.productManagementProductModel, itemIndexes: self.itemIndexes)
+//        editItem.updateListOfItems(self.productManagementProductModel, itemIndexes: self.itemIndexes)
         var root = UINavigationController(rootViewController: editItem)
         self.navigationController?.presentViewController(root, animated: false, completion: nil)
     }

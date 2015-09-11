@@ -37,15 +37,14 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     
     var parentId: Int = 0
     var productIds: [Int] = []
-    var subCategories: [NSDictionary] = []
     var products: [NSDictionary] = []
     var selectedProductsModel: [ProductManagementProductsModel] = []
-    var customizedSubCategories: [SubCategoryModel] = []
     var customizedCategoryProducts: [CategoryProductModel] = []
     
     var newSubCategoryNames: [String] = []
     var parentCategoryIndex: Int = -1
     
+    var subCategories2: [SubCategoryModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,12 +105,12 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             }
             
             // Sub Categories
-            if self.customizedSubCategories.count != 0 {
-                for i in 0..<self.customizedSubCategories.count {
-                    let subCategoryDict: Dictionary = ["categoryName": self.customizedSubCategories[i].categoryName,
-                        "products": "[]"]
-                    self.subCategories.append(subCategoryDict)
-                }
+            if self.subCategories2.count != 0 {
+//                for i in 0..<self.customizedSubCategories.count {
+//                    let subCategoryDict: Dictionary = ["categoryName": self.customizedSubCategories[i].categoryName,
+//                        "products": "[]"]
+//                    self.subCategories.append(subCategoryDict)
+//                }
 
                 self.subCategoriesView.setTitle("EDIT")
                 self.tableView.reloadData()
@@ -417,8 +416,18 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.categoryDetailsModel = CategoryDetailsModel.parseDataWithDictionary(responseObject as! NSDictionary)
-            self.customizedSubCategories = self.categoryDetailsModel.subcategories
             self.customizedCategoryProducts = self.categoryDetailsModel.products
+            
+            for i in 0..<self.categoryDetailsModel.subcategories.count {
+                self.subCategories2.append(SubCategoryModel(message: "",
+                    isSuccessful: true,
+                    categoryId: self.categoryDetailsModel.subcategories[i].categoryId,
+                    categoryName: self.categoryDetailsModel.subcategories[i].categoryName,
+                    parentName: self.categoryDetailsModel.categoryName,
+                    parentId: self.categoryDetailsModel.categoryId,
+                    sortOrder: self.categoryDetailsModel.subcategories[i].sortOrder,
+                    products: [CategoryProductModel]()))
+            }
             
             for i in 0..<self.customizedCategoryProducts.count {
                 let categoryProducts = ProductManagementProductsModel()
@@ -430,29 +439,6 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             
             self.initializeViews()
             self.applyDetails()
-            
-//            self.getFooterView().addSubview(self.getItemImageView())
-//            self.getFooterView().addSubview(self.getSeeAllItemsView())
-//            
-//            self.setPosition(self.itemImagesView, from: self.categoryItemsView)
-//            self.setPosition(self.seeAllItemsView, from: self.itemImagesView)
-//            self.newFrame.size.height = CGRectGetMaxY(self.seeAllItemsView.frame) + 20.0
-//            
-//            self.itemImagesView.backgroundColor = .redColor()
-//            
-//            self.newFrame = self.footerView.frame
-//            self.footerView.frame = self.newFrame
-//            self.tableView.tableFooterView = nil
-//            self.tableView.tableFooterView = self.footerView
-//            
-//            self.tableView.reloadData()
-//            
-//            println(self.customizedCategoryProducts[0].image)
-//            
-//            self.itemImagesView.setProductsCategory(products: self.customizedCategoryProducts)
-//            
-//            
-//            self.populateDetails()
 
             self.hud?.hide(true)
             
@@ -471,11 +457,17 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             productIds.append(self.selectedProductsModel[i].id.toInt()!)
         }
         
+        var subCategories: [SubCategoryModel] = []
+        for i in 0..<self.subCategories2.count {
+//            subCategories.append(<#newElement: T#>)
+        }
+        
+        
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
             "categoryName": self.categoryDetailsView.categoryNameTextField.text,
             "parentId": self.parentId,
             "products": productIds.description,
-            "subcategories": self.formattedString(self.subCategories.description)]
+            "subcategories": self.formattedString(self.subCategories2.description)]
         
         println(parameters)
             
@@ -521,12 +513,17 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             productIds.append(self.selectedProductsModel[i].id.toInt()!)
         }
         
+//        var subs: [Int] = []
+//        for i in 0..<self.subCategories2.count {
+//            productIds.append(self.subCategories2[i].id.toInt()!)
+//        }
+        
         var parameters: [NSDictionary] = []
         parameters.append(["categoryId": self.categoryDetailsModel.categoryId,
             "categoryName": self.categoryDetailsView.categoryNameTextField.text,
             "parentId": self.parentId,
             "products": productIds,
-            "subcategories": self.subCategories])
+            "subcategories": self.subCategories2])
 
         let data = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
         var editedCategory: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
@@ -574,7 +571,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             if self.newSubCategoryNames.count != 0 {
                 return self.newSubCategoryNames.count
             } else if self.categoryDetailsModel != nil {
-                return self.customizedSubCategories.count
+                return self.subCategories2.count
             }
         } else if self.title == "Add Customized Category" {
             if self.newSubCategoryNames.count != 0 {
@@ -589,13 +586,15 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
 //        let cell: AddCustomizedCategoryTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("AddCustomizedCategory") as!  AddCustomizedCategoryTableViewCell
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "identifier")
         
-        if self.newSubCategoryNames.count != 0 {
-            cell.textLabel?.text = self.newSubCategoryNames[indexPath.row]
-        } else if self.customizedSubCategories.count != 0 {
-            cell.textLabel?.text = self.customizedSubCategories[indexPath.row].categoryName
-        } else {
-            cell.textLabel?.text = "Sub Categories here"
-        }
+//        if self.newSubCategoryNames.count != 0 {
+//            cell.textLabel?.text = self.newSubCategoryNames[indexPath.row]
+//        } else if self.subCategories2.count != 0 {
+//            cell.textLabel?.text = self.subCategories2[indexPath.row].categoryName
+//        } else {
+//            cell.textLabel?.text = "Sub Categories here"
+//        }
+
+        cell.textLabel?.text = self.subCategories2[indexPath.row].categoryName
         
         cell.textLabel?.font = UIFont(name: "Panton-Bold", size: 12.0)
         cell.textLabel?.textColor = Constants.Colors.hex666666
@@ -636,7 +635,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         self.parentCategoryIndex = parentIndex
         self.categoryDetailsView.parentCategoryLabel.text = parentCategory
         self.newSubCategoryNames = []
-        self.subCategories = []
+        self.subCategories2 = []
         
         if parentIndex != -1 {
             if self.subCategoriesView != nil {
@@ -660,15 +659,19 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     func gotoEditSubCategories() {
         let subCategories = EditSubCategoriesViewController(nibName: "EditSubCategoriesViewController", bundle: nil)
 
-        if self.newSubCategoryNames.count != 0 {
-            subCategories.categories = self.newSubCategoryNames
-            subCategories.subCategories = self.subCategories
-        } else if self.customizedSubCategories.count != 0 {
-            subCategories.getSubCategoriesEdit(customizedSubCategories)
-        } else {
-            
-        }
+//        if self.newSubCategoryNames.count != 0 {
+//            subCategories.categories = self.newSubCategoryNames
+//            subCategories.subCategories = self.subCategories2
+//        } else if self.subCategories2.count != 0 {
+//            subCategories.getSubCategoriesEdit(subCategories2)
+//        } else {
+//            
+//        }
+
+//        subCategories.getSubCategoriesEdit(subCategories2)
         
+        println(subCategories2[0].parentName)
+        subCategories.subCategories = subCategories2
         subCategories.delegate = self
         var root = UINavigationController(rootViewController: subCategories)
         self.navigationController?.presentViewController(root, animated: false, completion: nil)
@@ -724,8 +727,8 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     
     // MARK: - Edit Sub Categories View Controller
     
-    func addSubCategories(controller: EditSubCategoriesViewController, subCategories: [NSDictionary], categoryNames: [String]) {
-        self.subCategories = subCategories
+    func addSubCategories(controller: EditSubCategoriesViewController, subCategories: [SubCategoryModel], categoryNames: [String]) {
+        self.subCategories2 = subCategories
         self.newSubCategoryNames = categoryNames
         
         if self.newSubCategoryNames.count != 0 {
