@@ -764,9 +764,8 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     
     func addSubCategories(controller: EditSubCategoriesViewController, subCategories: [SubCategoryModel], categoryNames: [String]) {
         self.subCategories2 = subCategories
-        self.newSubCategoryNames = categoryNames
         
-        if self.newSubCategoryNames.count != 0 {
+        if self.subCategories2.count != 0 {
             self.subCategoriesView.setTitle("EDIT")
         } else {
             self.subCategoriesView.setTitle("ADD SUB CATEGORY")
