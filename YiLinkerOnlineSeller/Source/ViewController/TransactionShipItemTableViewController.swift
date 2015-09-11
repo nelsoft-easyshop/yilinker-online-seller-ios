@@ -99,7 +99,6 @@ class TransactionShipItemTableViewController: UITableViewController, Transaction
             if response["isSuccessful"] as! Bool {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Successfully added item for pickup!", title: "Success")
                 self.navigationController?.popViewControllerAnimated(true)
-                
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: response["message"] as! String, title: "Error")
             }

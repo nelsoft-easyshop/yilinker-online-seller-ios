@@ -366,7 +366,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     
     func returnToDashboardAction() {
         hideDimView()
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     // MARK: TransactionCancelReasonOrderViewControllerDelegate
