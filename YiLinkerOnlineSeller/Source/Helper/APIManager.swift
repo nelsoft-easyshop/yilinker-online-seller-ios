@@ -73,6 +73,8 @@ struct APIAtlas {
     static let getSalesReport = "auth/merchant/getSalesReport"
     static let getFollowers = "auth/merchant/getFollowers"
     
+    static let getActivityLogs = "auth/user/activityLog"
+    
     //Search
     static let transaction = "auth/transaction/searchKeyword?access_token="
     
