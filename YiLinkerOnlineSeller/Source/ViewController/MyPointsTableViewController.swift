@@ -179,7 +179,7 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
         var inset: UIEdgeInsets = aScrollView.contentInset
         var y: CGFloat = offset.y + bounds.size.height - inset.bottom
         var h: CGFloat = size.height
-        var reload_distance: CGFloat = 50
+        var reload_distance: CGFloat = 10
         var temp: CGFloat = h + reload_distance
         if y > temp {
             fireGetPointsHistory()
@@ -345,6 +345,7 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
             })
         } else {
             self.hud?.hide(true)
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "No more data!", title: "My Points")
         }
 
     }
