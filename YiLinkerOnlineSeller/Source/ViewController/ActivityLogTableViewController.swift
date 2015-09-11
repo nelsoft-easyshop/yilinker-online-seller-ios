@@ -10,10 +10,13 @@ import UIKit
 
 class ActivityLogTableViewController: UITableViewController {
     
-    var tableData:[ActivityLogModel] = [
-        ActivityLogModel(date: "JUNE 23, 2015", activities: [ActivityModel(time: "2:58 AM", details: "You have purchased iPhone 6 - Gold from seller2daMax"), ActivityModel(time: "1:20 AM", details: "Upload Profile Photo")]),
-        ActivityLogModel(date: "JUNE 09, 2015", activities: [ActivityModel(time: "2:58 AM", details: "You have purchased iPhone 6 - Gold from seller2daMax"), ActivityModel(time: "1:20 AM", details: "Upload Profile Photo")])
-    ]
+    var tableData:[ActivityLogModel] = []
+    
+    var activities: ActivityLogItemsModel = ActivityLogItemsModel(isSuccessful: false, message: "", activities: [])
+    
+    var hud: MBProgressHUD?
+    var isPageEnd: Bool = false
+    var page: Int = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +24,12 @@ class ActivityLogTableViewController: UITableViewController {
         initializeViews()
         initializeNavigationBar()
         registerNibs()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        page = 0
+        fireGetActivityLogs()
     }
 
     override func didReceiveMemoryWarning() {
@@ -95,16 +104,20 @@ class ActivityLogTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30.0
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+    
+    override func scrollViewDidEndDragging(aScrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        var offset: CGPoint = aScrollView.contentOffset
+        var bounds: CGRect = aScrollView.bounds
+        var size: CGSize = aScrollView.contentSize
+        var inset: UIEdgeInsets = aScrollView.contentInset
+        var y: CGFloat = offset.y + bounds.size.height - inset.bottom
+        var h: CGFloat = size.height
+        var reload_distance: CGFloat = 10
+        var temp: CGFloat = h + reload_distance
+        if y > temp {
+            fireGetActivityLogs()
+        }
     }
-    */
     
     // MARK: - Methods
     
@@ -130,6 +143,141 @@ class ActivityLogTableViewController: UITableViewController {
         sectionHeaderView.addSubview(dateLabel)
         
         return sectionHeaderView
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    func initializeActivityLogsItem() {
+        tableData.removeAll(keepCapacity: false)
+        var tempDates: [String] = []
+    
+        for subValue in activities.activities {
+            if !contains(tempDates, formatDateToCompleteString(formatStringToDate(subValue.date))) {
+                tempDates.append(formatDateToCompleteString(formatStringToDate(subValue.date)))
+                tableData.append(ActivityLogModel(date: formatDateToCompleteString(formatStringToDate(subValue.date)), activities: []))
+            }
+        }
+        
+        println(tempDates)
+        
+        for var i = 0; i < tableData.count; i++ {
+            for subValue in activities.activities {
+                if formatDateToCompleteString(formatStringToDate(subValue.date)) == tableData[i].date {
+                    tableData[i].activities.append(ActivityModel(time: formatDateToTimeString(formatStringToDate(subValue.date)), details: subValue.text))
+                }
+            }
+        }
+
+        self.tableView.reloadData()
+    }
+    
+    func fireGetActivityLogs() {
+        if !isPageEnd {
+            
+            showHUD()
+            let manager = APIManager.sharedInstance
+            
+            page++
+            
+            let url: String = "\(APIAtlas.getActivityLogs)?access_token=\(SessionManager.accessToken())&perPage=15&page=\(page)"
+            
+            manager.GET(url, parameters: nil, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                
+                    let activityLogs: ActivityLogItemsModel = ActivityLogItemsModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                
+                    if activityLogs.activities.count < 15 {
+                        self.isPageEnd = true
+                    }
+                
+                    if activityLogs.isSuccessful {
+                        self.activities.activities += activityLogs.activities
+                        self.initializeActivityLogsItem()
+                    } else {
+                    self.isPageEnd = true
+                    }
+                
+                    self.hud?.hide(true)
+                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                    self.hud?.hide(true)
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.fireRefreshToken()
+                    } else {
+                        if Reachability.isConnectedToNetwork() {
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong!", title: "Error")
+                        } else {
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                        }
+                        println(error)
+                    }
+            })
+        } else {
+            self.hud?.hide(true)
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "No more data!", title: "Activity Logs")
+        }
+        
+    }
+    
+    func fireRefreshToken() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.fireGetActivityLogs()
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+        })
+        
+    }
+    
+    
+    func formatStringToDate(date: String) -> NSDate {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
+        
+        return dateFormatter.dateFromString(date)!
+    }
+    
+    func formatDateToString(date: NSDate) -> String {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
+        return dateFormatter.stringFromDate(date)
+    }
+    
+    func formatDateToTimeString(date: NSDate) -> String {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "KK:mm aa"
+        return dateFormatter.stringFromDate(date)
+    }
+    
+    func formatDateToCompleteString(date: NSDate) -> String {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MMMM dd, yyyy"
+        return dateFormatter.stringFromDate(date)
     }
     
 }
