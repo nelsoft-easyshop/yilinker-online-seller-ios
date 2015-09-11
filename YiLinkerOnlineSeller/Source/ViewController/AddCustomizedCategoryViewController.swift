@@ -1,4 +1,4 @@
-//
+    //
 //  AddCustomizedCategoryViewController.swift
 //  YiLinkerOnlineSeller
 //
@@ -349,7 +349,34 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             if self.title == "Add Customized Category" {
                 requestAddCustomizedCategory()
             } else if self.title == "Edit Customized Category" {
-                requestEditCustomizedCategory() 
+//                requestEditCustomizedCategory() 
+                var productIds: [Int] = []
+                for i in 0..<self.selectedProductsModel.count {
+                    productIds.append(self.selectedProductsModel[i].id.toInt()!)
+                }
+
+                var subs: [NSDictionary] = []
+                for i in 0..<self.subCategories2.count {
+//                    println(self.subCategories2[i].categoryName)
+                    //format of edited sub categories here
+                }
+                
+                var parameters: [NSDictionary] = []
+                parameters.append(["categoryId": self.categoryDetailsModel.categoryId,
+                                 "categoryName": self.categoryDetailsView.categoryNameTextField.text,
+                                     "parentId": self.parentId,
+                                     "products": productIds,
+                                "subcategories": self.subCategories2])
+
+                println(parameters)
+                
+//                let data = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
+//                var editedCategory: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+//
+//                let params: NSDictionary = ["access_token": SessionManager.accessToken(),
+//                    "categories": editedCategory]
+//                
+//                println(params)
             }
 
         }
@@ -447,7 +474,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                 println(error)
                 self.hud?.hide(true)
         })
-    }
+            }
     
     func requestAddCustomizedCategory() {
         self.showHUD()
@@ -567,19 +594,23 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        if self.title == "Edit Customized Category" {
-            if self.newSubCategoryNames.count != 0 {
-                return self.newSubCategoryNames.count
-            } else if self.categoryDetailsModel != nil {
-                return self.subCategories2.count
-            }
-        } else if self.title == "Add Customized Category" {
-            if self.newSubCategoryNames.count != 0 {
-                return self.newSubCategoryNames.count
-            }
+//        if self.title == "Edit Customized Category" {
+//            if self.newSubCategoryNames.count != 0 {
+//                return self.newSubCategoryNames.count
+//            } else if self.categoryDetailsModel != nil {
+//                return self.subCategories2.count
+//            }
+//        } else if self.title == "Add Customized Category" {
+//            if self.newSubCategoryNames.count != 0 {
+//                return self.newSubCategoryNames.count
+//            }
+//        }
+//
+        if self.categoryDetailsView.parentCategoryLabel.text != "NONE" {
+            return 0
         }
         
-        return 0
+        return self.subCategories2.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -622,36 +653,39 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     
     func gotoParentCategory() {
         let parentCategory = ParentCategoryViewController(nibName: "ParentCategoryViewController", bundle: nil)
-        parentCategory.selectedIndex = self.parentCategoryIndex
+        parentCategory.selectedParentId = self.parentId
         parentCategory.delegate = self
-        var root = UINavigationController(rootViewController: parentCategory)
-        self.navigationController?.presentViewController(root, animated: false, completion: nil)
+        self.navigationController?.pushViewController(parentCategory, animated: false)
     }
     
     // MARK: - Parent Category View Controller Delegate
     
-    func updateParentCategory(parentCategory: String, parentId: Int, parentIndex: Int) {
+    func updateParentCategory(parentCategory: String, parentId: Int) {
         self.parentId = parentId
-        self.parentCategoryIndex = parentIndex
         self.categoryDetailsView.parentCategoryLabel.text = parentCategory
-        self.newSubCategoryNames = []
-        self.subCategories2 = []
         
-        if parentIndex != -1 {
-            if self.subCategoriesView != nil {
-                self.subCategoriesView.removeFromSuperview()
-            }
+//        self.subCategories2 = []
+        
+//        if parentId != 0 {
+//            if self.subCategoriesView != nil {
+//                self.subCategoriesView.removeFromSuperview()
+//            }
+//        } else {
+//            self.getHeaderView().addSubview(self.getSubCategoriesView())
+//            if self.subCategories2.count != 0 {
+//                self.subCategoriesView.setTitle("EDIT")
+//            } else {
+//                self.subCategoriesView.setTitle("ADD SUB CATEGORY")
+//            }
+//        }
+        
+        if parentId != 0 {
+            self.categoryItemsView.frame.origin.y -= 50.0
         } else {
-            self.getHeaderView().addSubview(self.getSubCategoriesView())
-            if self.newSubCategoryNames.count != 0 {
-                self.subCategoriesView.setTitle("EDIT")
-            } else {
-                self.subCategoriesView.setTitle("ADD SUB CATEGORY")
-            }
+            self.categoryItemsView.frame.origin.y += 50.0
         }
         
         setUpViews()
-//        self.tableView.reloadData()
     }
     
     // MARK: - Sub Categories Delegate
@@ -669,12 +703,9 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
 //        }
 
 //        subCategories.getSubCategoriesEdit(subCategories2)
-        
-        println(subCategories2[0].parentName)
         subCategories.subCategories = subCategories2
         subCategories.delegate = self
-        var root = UINavigationController(rootViewController: subCategories)
-        self.navigationController?.presentViewController(root, animated: false, completion: nil)
+        self.navigationController?.pushViewController(subCategories, animated: false)
     }
     
     // MARK: - Category Items View Controller Delegate
@@ -682,8 +713,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     func gotoAddItem() {
         let addItem = AddItemViewController(nibName: "AddItemViewController", bundle: nil)
         addItem.delegate = self
-        var root = UINavigationController(rootViewController: addItem)
-        self.navigationController?.presentViewController(root, animated: false, completion: nil)
+        self.navigationController?.pushViewController(addItem, animated: false)
     }
     
     func gotoEditItem() {
@@ -696,9 +726,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             editItem.subCategoriesProducts = selectedProductsModel
 //            editItem.updateListOfItems(self.productManagementProductModel, itemIndexes: self.itemIndexes)
 //        }
-        
-        var root = UINavigationController(rootViewController: editItem)
-        self.navigationController?.presentViewController(root, animated: false, completion: nil)
+        self.navigationController?.pushViewController(editItem, animated: false)
     }
     
     // MARK: - Add Item View Controller Delegate

@@ -12,7 +12,7 @@ protocol AddSubCategoriesViewControllerDelegate {
     func addSubCategory(subCategory: SubCategoryModel, categoryName: String)
 }
 
-class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDelegate, AddItemViewControllerDelegate, EditItemsViewControllerDelegate {
+class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDelegate, CCCategoryItemsViewDelegate, AddItemViewControllerDelegate, EditItemsViewControllerDelegate, ParentCategoryViewControllerDelegate {
 
     var hud: MBProgressHUD?
     
@@ -83,7 +83,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
         if self.categoryDetailsView == nil {
             self.categoryDetailsView = XibHelper.puffViewWithNibName("CustomizedCategoryViewsViewController", index: 0) as! CCCategoryDetailsView
             self.categoryDetailsView.categoryNameTextField.becomeFirstResponder()
-            //            self.categoryDetailsView.delegate = self
+            self.categoryDetailsView.delegate = self
             self.categoryDetailsView.frame.size.width = self.view.frame.size.width
             self.categoryDetailsView.frame.size.height = 100.0
         }
@@ -163,10 +163,12 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
     }
     
     func populateDetails() {
+        self.categoryDetailsView.updateParentText(subCategoryDetailModel.parentName)
         self.categoryDetailsView.categoryNameTextField.text = subCategoryDetailModel.categoryName
         self.categoryDetailsView.parentCategoryLabel.text = subCategoryDetailModel.parentName
         
         self.populateItems()
+        
     }
     
     func populateItems() {
@@ -198,8 +200,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
     // MARK: - Actions
     
     func closeAction() {
-        self.dismissViewControllerAnimated(false, completion: nil)
-//        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewControllerAnimated(false)
     }
     
     func checkAction() {
@@ -228,23 +229,25 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
             
             println(responseObject)
             
-            let subCategoryDetail: SubCategoryModel = SubCategoryModel.parseSubCategories(responseObject as! NSDictionary)
+//            let subCategoryDetail: SubCategoryModel = SubCategoryModel.parseSubCategories(responseObject as! NSDictionary)
+            self.subCategoryDetailModel = SubCategoryModel.parseSubCategories(responseObject as! NSDictionary)
+            self.subCategoryDetailModel.parentName = parentName
             
-            self.subCategoryDetailModel = (SubCategoryModel(message: subCategoryDetail.message,
-                isSuccessful: subCategoryDetail.isSuccessful,
-                categoryId: subCategoryDetail.categoryId,
-                categoryName: subCategoryDetail.categoryName,
-                parentName: parentName,
-                parentId: subCategoryDetail.parentId,
-                sortOrder: subCategoryDetail.sortOrder,
-                products: subCategoryDetail.products))
+//            self.subCategoryDetailModel = (SubCategoryModel(message: subCategoryDetail.message,
+//                isSuccessful: subCategoryDetail.isSuccessful,
+//                categoryId: subCategoryDetail.categoryId,
+//                categoryName: subCategoryDetail.categoryName,
+//                parentName: parentName,
+//                parentId: subCategoryDetail.parentId,
+//                sortOrder: subCategoryDetail.sortOrder,
+//                products: subCategoryDetail.products))
             
-            for i in 0..<subCategoryDetail.products.count {
-                println(subCategoryDetail.products[i].image)
+            for i in 0..<self.subCategoryDetailModel.products.count {
+                println(self.subCategoryDetailModel.products[i].image)
                 let categoryProducts = ProductManagementProductsModel()
-                categoryProducts.id = subCategoryDetail.products[i].productId
-                categoryProducts.name = subCategoryDetail.products[i].productName
-                categoryProducts.image = subCategoryDetail.products[i].image
+                categoryProducts.id = self.subCategoryDetailModel.products[i].productId
+                categoryProducts.name = self.subCategoryDetailModel.products[i].productName
+                categoryProducts.image = self.subCategoryDetailModel.products[i].image
                 self.subCategoriesProducts.append(categoryProducts)
             }
             
@@ -316,8 +319,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
     func gotoAddItem() {
         let addItem = AddItemViewController(nibName: "AddItemViewController", bundle: nil)
         addItem.delegate = self
-        var root = UINavigationController(rootViewController: addItem)
-        self.navigationController?.presentViewController(root, animated: true, completion: nil)
+        self.navigationController?.pushViewController(addItem, animated: false)
     }
     
     func gotoEditItem() {
@@ -325,8 +327,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
         editItem.delegate = self
         editItem.subCategoriesProducts = subCategoriesProducts
 //        editItem.updateListOfItems(self.productManagementProductModel, itemIndexes: self.itemIndexes)
-        var root = UINavigationController(rootViewController: editItem)
-        self.navigationController?.presentViewController(root, animated: false, completion: nil)
+    self.navigationController?.pushViewController(editItem, animated: false)
     }
     
     // MARK: Add Item View Controller Delegate
@@ -355,5 +356,23 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryItemsViewDeleg
         populateItems()
     }
     
+    // MARK: - Category Details Delegate
     
+    func gotoParentCategory() {
+        let parentCategory = ParentCategoryViewController(nibName: "ParentCategoryViewController", bundle: nil)
+        parentCategory.delegate = self
+        parentCategory.selectedParentId = subCategoryDetailModel.parentId
+        self.navigationController?.pushViewController(parentCategory, animated: true)
+    }
+    
+    // MARK: - Parent Category View Controller Delegate
+    
+    func updateParentCategory(parentCategory: String, parentId: Int) {
+        
+        self.subCategoryDetailModel.parentName = parentCategory
+        self.subCategoryDetailModel.parentId = parentId
+        
+        self.categoryDetailsView.categoryNameTextField.text = parentCategory
+//        populateDetails()
+    }
 }

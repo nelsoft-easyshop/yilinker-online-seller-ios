@@ -135,8 +135,7 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
         let addSubCategoryViewController = AddSubCategoriesViewController(nibName: "AddSubCategoriesViewController", bundle: nil)
         addSubCategoryViewController.delegate = self
         addSubCategoryViewController.createdCategory = createdCategory
-        var rootViewController = UINavigationController(rootViewController: addSubCategoryViewController)
-        self.navigationController?.presentViewController(rootViewController, animated: false, completion: nil)
+        self.navigationController?.pushViewController(addSubCategoryViewController, animated: false)
     }
     
     @IBAction func removedSelectedAction(sender: AnyObject) {
@@ -174,7 +173,7 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
         })
     }
     
-    // MARK: - Table View Data Source
+    // MARK: - Table View Data Source   
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        if subCategoriesEdit.count != 0 {

@@ -57,6 +57,7 @@ class SubCategoryModel: NSObject {
             
             if subCategories["data"] != nil {
                 if let value = subCategories["data"] as? NSDictionary {
+                    
                     if value["categoryId"] != nil {
                         if let tempVar = value["categoryId"] as? Int {
                             categoryId = tempVar
@@ -72,6 +73,12 @@ class SubCategoryModel: NSObject {
                     if value["sortOrder"] != nil {
                         if let tempVar = value["sortOrder"] as? Int {
                             sortOrder = tempVar
+                        }
+                    }
+                    
+                    if value["parentId"] != nil {
+                        if let tempVar = value["parentId"] as? Int {
+                            parentId = tempVar
                         }
                     }
                     

@@ -81,7 +81,7 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: - Actions
     
     func closeAction() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController?.popViewControllerAnimated(false)
     }
     
     func checkAction() {
