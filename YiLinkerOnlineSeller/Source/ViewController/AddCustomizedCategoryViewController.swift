@@ -357,6 +357,13 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
 
                 var subs: [NSDictionary] = []
                 for i in 0..<self.subCategories2.count {
+                    var subProducts: [Int] = []
+                    for j in 0..<self.subCategories2[i].products.count {
+                        subProducts.append(self.subCategories2[i].products[j].productId.toInt()!)
+                    }
+                    subs.append(["categoryId": self.subCategories2[i].categoryId,
+                               "categoryName": self.subCategories2[i].categoryName,
+                                   "products": subProducts])
 //                    println(self.subCategories2[i].categoryName)
                     //format of edited sub categories here
                 }
@@ -366,7 +373,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                                  "categoryName": self.categoryDetailsView.categoryNameTextField.text,
                                      "parentId": self.parentId,
                                      "products": productIds,
-                                "subcategories": self.subCategories2])
+                                "subcategories": subs])
 
                 println(parameters)
                 
