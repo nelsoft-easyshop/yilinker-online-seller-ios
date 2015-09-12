@@ -107,7 +107,7 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
             for i in 0..<customizedCategoriesModel.customizedCategories.count {
                 if self.selectedParentId == customizedCategoriesModel.customizedCategories[i].categoryId {
                     delegate?.updateParentCategory(customizedCategoriesModel.customizedCategories[i].name,
-                        parentId: customizedCategoriesModel.customizedCategories[i].categoryId)
+                                         parentId: customizedCategoriesModel.customizedCategories[i].categoryId)
                     break
                 }
             }

@@ -453,7 +453,8 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
         self.subCategoryDetailModel.parentName = parentCategory
         self.subCategoryDetailModel.parentId = parentId
         
-        self.subCategoryDetailModel.parentName = parentCategory
+        self.categoryDetailsView.parentCategoryLabel.text = parentCategory
+        println(self.categoryDetailsView.parentCategoryLabel.text)
 //        populateDetails()
     }
 }
