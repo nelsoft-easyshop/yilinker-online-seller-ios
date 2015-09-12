@@ -43,6 +43,7 @@ struct APIAtlas {
     static let transactionList = "auth/getTransactionList"
     static let transactionDetails = "auth/getTransaction"
     static let transactionCancellation = "auth/cancellation/reasons"
+    static let transactionConsignee = "auth/getTransactionConsignee"
     static let postTransactionCancellation = "auth/transaction/cancel"
     static let shipItem = "auth/transaction/pickup"
     static let sellerChangeMobileNumber = "auth/user/changeContactNumber"

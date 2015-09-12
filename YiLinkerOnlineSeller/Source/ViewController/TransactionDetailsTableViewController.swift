@@ -31,12 +31,25 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     var hud: MBProgressHUD?
     
     var transactionDetailsModel: TransactionDetailsModel!
+    var transactionConsigneeModel: TransactionConsigneeModel!
+    
+    var isDetailsDone: Bool = false
+    var isConsigneeDone: Bool = false
+    var isDeliveryDone: Bool = false
+    
+    var isDetailsSuccessful: Bool = false
+    var isConsigneeSuccessful: Bool = false
+    var isDeliverySuccessful: Bool = false
+    
+    var errorMessage: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         transactionDetailsModel = TransactionDetailsModel(isSuccessful: false, message: "", transactionInvoice: "", transactionShippingFee: "", transactionDate: "2000-01-01 00:00:00.000000", transactionPrice: "", transactionQuantity: 0, transactionStatusId: 0, transactionStatusName: "", transactionPayment: "", transactionOrderProducts: [])
-
+        
+        transactionConsigneeModel = TransactionConsigneeModel(isSuccessful: false, message: "", deliveryAddress: "", consigneeName: "", consigneeContactNumber: "")
+        
         initializeNavigationBar()
         initializeTableView()
         initializeViews()
@@ -47,7 +60,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         super.viewDidAppear(animated)
         fireGetTransactionDetails()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -120,16 +133,16 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
-
-
+    
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
         return sectionHeader.count
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {           //Details
             return 1
@@ -141,9 +154,9 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             return 1
         } else {
             return 0
-        }        
+        }
     }
-
+    
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
@@ -217,7 +230,6 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             var productDetailsController = TransactionProductTableViewController(nibName: "TransactionProductTableViewController", bundle: nil)
             self.navigationController?.pushViewController(productDetailsController, animated:true)
         }
-        
     }
     
     func fireGetTransactionDetails(){
@@ -230,6 +242,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             self.transactionDetailsModel = TransactionDetailsModel.parseDataWithDictionary(responseObject)
             
             println(responseObject)
+            self.isDetailsDone = true
             
             if self.transactionDetailsModel.isSuccessful {
                 self.tableView.reloadData()
@@ -239,16 +252,79 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
                 } else {
                     self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) Product"
                 }
+                self.isDetailsSuccessful = true
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.transactionDetailsModel.message, title: "Error")
                 self.navigationController!.popViewControllerAnimated(true)
+                
+                self.isDetailsSuccessful = false
             }
             
             
-            self.hud?.hide(true)
+            self.hideHUD()
             
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
+                
+                self.hideHUD()
+                self.isDetailsDone = true
+                self.isDetailsSuccessful = false
+                
+                if Reachability.isConnectedToNetwork() {
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.fireRefreshToken()
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        self.navigationController!.popViewControllerAnimated(true)
+                    }
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                    self.navigationController!.popViewControllerAnimated(true)
+                }
+                
+                
+                println(error)
+        })
+    }
+    
+    func fireGetConsigneeDetails(){
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "transactionId": invoiceNumber];
+        
+        manager.GET(APIAtlas.transactionConsignee, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.transactionConsigneeModel = TransactionConsigneeModel.parseDataWithDictionary(responseObject)
+            
+            println(responseObject)
+            self.isDetailsDone = true
+            
+            if self.transactionConsigneeModel.isSuccessful {
+                self.tableView.reloadData()
+                self.tidLabel.text = self.transactionDetailsModel.transactionInvoice
+                if self.transactionDetailsModel.transactionQuantity > 1 {
+                    self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) Products"
+                } else {
+                    self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) Product"
+                }
+                self.isDetailsSuccessful = true
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.transactionDetailsModel.message, title: "Error")
+                self.navigationController!.popViewControllerAnimated(true)
+                
+                self.isDetailsSuccessful = false
+            }
+            
+            
+            self.hideHUD()
+            
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                
+                self.hideHUD()
+                self.isDetailsDone = true
+                self.isDetailsSuccessful = false
+                
                 if Reachability.isConnectedToNetwork() {
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     
@@ -301,6 +377,16 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         self.hud?.dimBackground = false
         self.navigationController?.view.addSubview(self.hud!)
         self.hud?.show(true)
+    }
+    
+    func hideHUD() {
+        if isDetailsDone && isConsigneeDone && isDeliveryDone {
+            self.hud?.hide(true)
+            self.tableView.reloadData()
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorMessage, title: "Error")
+            self.navigationController!.popViewControllerAnimated(true)
+        }
     }
     
     func showDimView() {
@@ -389,7 +475,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     func messageConsigneeAction() {
         
     }
-
+    
     func smsConsigneeAction() {
         
     }
