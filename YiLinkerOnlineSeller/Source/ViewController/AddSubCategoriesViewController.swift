@@ -9,7 +9,8 @@
 import UIKit
 
 protocol AddSubCategoriesViewControllerDelegate {
-    func addSubCategory(subCategory: SubCategoryModel, categoryName: String)
+    func addSubCategory(subCategory: SubCategoryModel, new: Bool)
+    func updateSubCategory(subCategory: SubCategoryModel)
 }
 
 class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDelegate, CCCategoryItemsViewDelegate, AddItemViewControllerDelegate, EditItemsViewControllerDelegate, ParentCategoryViewControllerDelegate {
@@ -46,15 +47,12 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        println("Add Sub > \(subCategoriesProducts)")
-        loadViewsWithDetails()
     }
     
     // MARK: - Methods
     
     func customizedNavigationBar() {
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.title = "Add Sub Categories"
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
         
@@ -162,13 +160,29 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
         view.frame = newFrame
     }
     
+    func populateFromLocal(subCategory: SubCategoryModel) {
+        self.subCategoryDetailModel = subCategory
+        
+        for i in 0..<self.subCategoryDetailModel.products.count {
+            let categoryProducts = ProductManagementProductsModel()
+            categoryProducts.id = self.subCategoryDetailModel.products[i].productId
+            categoryProducts.name = self.subCategoryDetailModel.products[i].productName
+            categoryProducts.image = self.subCategoryDetailModel.products[i].image
+            self.subCategoriesProducts.append(categoryProducts)
+        }
+        
+        self.populateDetails()
+        
+        self.categoryDetailsView.frame.size.height = 153.0
+        self.setUpViews()
+    }
+    
     func populateDetails() {
         self.categoryDetailsView.updateParentText(subCategoryDetailModel.parentName)
         self.categoryDetailsView.categoryNameTextField.text = subCategoryDetailModel.categoryName
-        self.categoryDetailsView.parentCategoryLabel.text = subCategoryDetailModel.parentName
+//        self.categoryDetailsView.parentCategoryLabel.text = subCategoryDetailModel.parentName
         
         self.populateItems()
-        
     }
     
     func populateItems() {
@@ -176,7 +190,6 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
             self.categoryItemsView.addNewItemButton.setTitle("EDIT", forState: .Normal)
             self.getHeaderView().addSubview(getItemImageView())
             self.getHeaderView().addSubview(getSeeAllItemsView())
-//            self.itemImagesView.setProductsManagement(products: self.productManagementProductModel.products, selectedItems: subCategoriesProducts)
             self.itemImagesView.setProductsManagement(products: subCategoriesProducts)
         }
         
@@ -197,6 +210,13 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
         self.hud?.show(true)
     }
     
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+    
     // MARK: - Actions
     
     func closeAction() {
@@ -204,16 +224,80 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
     }
     
     func checkAction() {
-        if self.categoryDetailsView.categoryNameTextField.text != "" {
-//            let subCategory: SubCategoryModel!
-//            subCategory.categoryName
-//            subCategory.p
-//            let subCategory = ["categoryName": self.categoryDetailsView.categoryNameTextField.text.capitalizedString,
-//                                   "products": subCategoriesProducts.description]
-//            println(subCategory)
-//            delegate?.addSubCategory(subCategory, categoryName: self.categoryDetailsView.categoryNameTextField.text.capitalizedString)
-            closeAction()
+        
+        var products: [CategoryProductModel] = []
+        for i in 0..<self.subCategoriesProducts.count {
+            var product = CategoryProductModel()
+            product.productId = self.subCategoriesProducts[i].id
+            product.productName = self.subCategoriesProducts[i].name
+            product.image = self.subCategoriesProducts[i].image
+            products.append(product)
         }
+        
+        if self.title == "Edit Category" {
+            self.subCategoryDetailModel.categoryName = self.categoryDetailsView.categoryNameTextField.text
+            self.subCategoryDetailModel.parentName = self.categoryDetailsView.parentCategoryLabel.text!
+            self.subCategoryDetailModel.products = products
+            self.subCategoryDetailModel.local = true
+            delegate?.updateSubCategory(self.subCategoryDetailModel)
+        } else {
+            subCategoryDetailModel = SubCategoryModel(message: "",
+                isSuccessful: true,
+                categoryId: 0,
+                categoryName: self.categoryDetailsView.categoryNameTextField.text,
+                parentName: "",
+                parentId: 0,
+                sortOrder: 0,
+                products: products,
+                local: true)
+            delegate?.addSubCategory(subCategoryDetailModel, new: true)
+        }
+        
+        closeAction()
+//        
+//        var productIds: [Int] = []
+//        for i in 0..<self.subCategoriesProducts.count {
+//            productIds.append(self.subCategoriesProducts[i].id.toInt()!)
+//        }
+        
+//        if self.subCategoryDetailModel.parentId == 0 {
+//            println("Parent Category")
+//            var parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
+//                                              "categoryId": self.subCategoryDetailModel.categoryId,
+//                                            "categoryName": self.categoryDetailsView.categoryNameTextField.text,
+//                                                "products": productIds]
+//            println(parameters)
+//            requestEditCustomizedCategoryWithDetail(parameters)
+//        } else {
+//            println("Sub Category")
+//            var parameters: [NSDictionary] = []
+//            parameters.append(["categoryId": self.subCategoryDetailModel.categoryId,
+//                             "categoryName": self.categoryDetailsView.categoryNameTextField.text,
+//                                 "products": productIds])
+//            
+//            let data = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
+//            var categoryFormat: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+//            
+//            let params: NSDictionary = ["access_token": SessionManager.accessToken(),
+//                                          "categories": categoryFormat]
+//            
+//            println(params)
+//            requestEditCustomizedCategoryWithDetail(params)
+//        }
+        
+        
+//        if self.categoryDetailsView.categoryNameTextField.text != "" {
+//            subCategoryDetailModel = SubCategoryModel(message: "",
+//                isSuccessful: true,
+//                categoryId: 0,
+//                categoryName: categoryDetailsView.categoryNameTextField.text,
+//                parentName: "",
+//                parentId: 0,
+//                sortOrder: 0,
+//                products: [CategoryProductModel]())
+//            
+//            delegate?.addSubCategory(subCategoryDetailModel, categoryName: self.categoryDetailsView.categoryNameTextField.text.capitalizedString)
+//        }
     }
     
     // MARK: - Request
@@ -252,8 +336,6 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
             }
             
             self.populateDetails()
-            
-            
             
             self.categoryDetailsView.frame.size.height = 153.0
             self.setUpViews()
@@ -326,8 +408,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
         let editItem = EdititemsViewController(nibName: "EdititemsViewController", bundle: nil)
         editItem.delegate = self
         editItem.subCategoriesProducts = subCategoriesProducts
-//        editItem.updateListOfItems(self.productManagementProductModel, itemIndexes: self.itemIndexes)
-    self.navigationController?.pushViewController(editItem, animated: false)
+        self.navigationController?.pushViewController(editItem, animated: false)
     }
     
     // MARK: Add Item View Controller Delegate
@@ -372,7 +453,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
         self.subCategoryDetailModel.parentName = parentCategory
         self.subCategoryDetailModel.parentId = parentId
         
-        self.categoryDetailsView.categoryNameTextField.text = parentCategory
+        self.subCategoryDetailModel.parentName = parentCategory
 //        populateDetails()
     }
 }

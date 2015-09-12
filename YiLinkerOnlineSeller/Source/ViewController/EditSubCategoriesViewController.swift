@@ -9,7 +9,7 @@
 import UIKit
 
 protocol EditSubCategoriesViewControllerDelegate {
-    func addSubCategories(controller: EditSubCategoriesViewController, subCategories: [SubCategoryModel], categoryNames: [String])
+    func addSubCategories(controller: EditSubCategoriesViewController, subCategories: [SubCategoryModel])
 }
 
 class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewControllerDelegate, CCCategoryItemsViewDelegate, EditSubCategoriesRemovedTableViewCellDelegate {
@@ -116,7 +116,8 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     }
     
     func checkAction() {
-        delegate?.addSubCategories(self, subCategories: subCategories, categoryNames: categories)
+        println(subCategories)
+        delegate?.addSubCategories(self, subCategories: subCategories)
         closeAction()
     }
     
@@ -134,6 +135,8 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     @IBAction func addCategories(sender: AnyObject) {
         let addSubCategoryViewController = AddSubCategoriesViewController(nibName: "AddSubCategoriesViewController", bundle: nil)
         addSubCategoryViewController.delegate = self
+        addSubCategoryViewController.loadViewsWithDetails()
+        addSubCategoryViewController.title = "Add Category"
         addSubCategoryViewController.createdCategory = createdCategory
         self.navigationController?.pushViewController(addSubCategoryViewController, animated: false)
     }
@@ -213,8 +216,14 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let editSubCategory = AddSubCategoriesViewController(nibName: "AddSubCategoriesViewController", bundle: nil)
-        editSubCategory.title = "Edit Customized Category"
-        editSubCategory.requestGetSubCategoryDetails(parentName: subCategories[indexPath.row].parentName, categoryId: subCategories[indexPath.row].categoryId)
+        editSubCategory.delegate = self
+        editSubCategory.title = "Edit Category"
+        editSubCategory.loadViewsWithDetails()
+        if subCategories[indexPath.row].local {
+            editSubCategory.populateFromLocal(subCategories[indexPath.row])
+        } else {
+            editSubCategory.requestGetSubCategoryDetails(parentName: subCategories[indexPath.row].parentName, categoryId: subCategories[indexPath.row].categoryId)
+        }
         self.navigationController?.pushViewController(editSubCategory, animated: true)
     }
     
@@ -232,15 +241,28 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     
     // MARK: - Add Sub Category View Controller Delegate
     
-    func addSubCategory(subCategory: SubCategoryModel, categoryName: String) {
-        subCategories.append(subCategory)
-        categories.append(categoryName)
+    func addSubCategory(subCategory: SubCategoryModel, new: Bool) {
+        self.subCategories.append(subCategory)
+        
         if self.tableView != nil {
             self.tableView.reloadData()
         }
     }
     
-    // MARK: - Category Items View Delegate 
+    func updateSubCategory(subCategory: SubCategoryModel) {
+        for i in 0..<self.subCategories.count {
+            if self.subCategories[i].categoryId == subCategory.categoryId {
+                self.subCategories[i] = subCategory
+                break
+            }
+        }
+        
+        if self.tableView != nil {
+            self.tableView.reloadData()
+        }
+    }
+    
+    // MARK: - Category Items View Delegate
     
     func gotoAddItem() {
         let addItem = AddItemViewController(nibName: "AddItemViewController", bundle: nil)

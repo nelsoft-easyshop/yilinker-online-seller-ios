@@ -84,7 +84,7 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
     }
     
     func showAddItemView() {
-        self.title = "Edit Items"
+        self.title = "Remove Items"
         self.clearAllButton.hidden = false
         self.bottomBarView.hidden = false
         self.removingItems = true
@@ -95,7 +95,7 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
     }
     
     func showEditItemView() {
-        self.title = "Remove Items"
+        self.title = "Edit Items"
         self.itemsToRemoved = []
         self.bottomBarView.hidden = true
         self.clearAllButton.hidden = true
@@ -109,7 +109,7 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
     
     func closeAction() {
         if self.title != "Edit items" {
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.navigationController?.popViewControllerAnimated(false)
         }
     }
     
@@ -147,8 +147,7 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
 //        addItem.selectedItemIDsIndex = selectedItemIDsIndex
         addItem.productModel = productModel
         addItem.productModelEdit = self.productModelEdit
-        var rootViewController = UINavigationController(rootViewController: addItem)
-        self.navigationController?.presentViewController(rootViewController, animated: false, completion: nil)
+        self.navigationController?.pushViewController(addItem, animated: false)
     }
     
     @IBAction func removedSelectedAction(sender: AnyObject) {

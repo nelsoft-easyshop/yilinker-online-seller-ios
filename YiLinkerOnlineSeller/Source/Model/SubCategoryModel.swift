@@ -18,8 +18,9 @@ class SubCategoryModel: NSObject {
     var parentId: Int = 0
     var sortOrder: Int = 0
     var products: [CategoryProductModel] = []
+    var local: Bool = false
     
-    init(message: String, isSuccessful: Bool, categoryId: Int, categoryName: String, parentName: String, parentId: Int, sortOrder: Int, products: [CategoryProductModel]) {
+    init(message: String, isSuccessful: Bool, categoryId: Int, categoryName: String, parentName: String, parentId: Int, sortOrder: Int, products: [CategoryProductModel], local: Bool) {
         self.message = message
         self.isSuccessful = isSuccessful
         self.categoryId = categoryId
@@ -28,6 +29,7 @@ class SubCategoryModel: NSObject {
         self.parentId = parentId
         self.sortOrder = sortOrder
         self.products = products
+        self.local = local
     }
     
     class func parseSubCategories(subCategories: NSDictionary) -> SubCategoryModel {
@@ -40,6 +42,7 @@ class SubCategoryModel: NSObject {
         var parentId: Int = 0
         var sortOrder: Int = 0
         var products: [CategoryProductModel] = []
+        var local: Bool = false
         
         if subCategories.isKindOfClass(NSDictionary) {
 
@@ -98,7 +101,7 @@ class SubCategoryModel: NSObject {
             
         }
         
-        return SubCategoryModel(message: message, isSuccessful: isSuccessful, categoryId: categoryId, categoryName: categoryName, parentName: parentName, parentId: parentId, sortOrder: sortOrder, products: products)
+        return SubCategoryModel(message: message, isSuccessful: isSuccessful, categoryId: categoryId, categoryName: categoryName, parentName: parentName, parentId: parentId, sortOrder: sortOrder, products: products, local: local)
     }
     
 }

@@ -460,7 +460,8 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                     parentName: self.categoryDetailsModel.categoryName,
                     parentId: self.categoryDetailsModel.categoryId,
                     sortOrder: self.categoryDetailsModel.subcategories[i].sortOrder,
-                    products: [CategoryProductModel]()))
+                    products: [CategoryProductModel](),
+                    local: false))
             }
             
             for i in 0..<self.customizedCategoryProducts.count {
@@ -762,7 +763,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     
     // MARK: - Edit Sub Categories View Controller
     
-    func addSubCategories(controller: EditSubCategoriesViewController, subCategories: [SubCategoryModel], categoryNames: [String]) {
+    func addSubCategories(controller: EditSubCategoriesViewController, subCategories: [SubCategoryModel]) {
         self.subCategories2 = subCategories
         
         if self.subCategories2.count != 0 {
