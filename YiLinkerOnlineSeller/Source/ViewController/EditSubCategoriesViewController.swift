@@ -30,6 +30,7 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     var createdCategory: String = ""
     
     var subCategoriesEdit: [SubCategoryModel] = []
+    var parentName: String = ""
     
     var hud: MBProgressHUD?
     
@@ -137,6 +138,7 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
         addSubCategoryViewController.delegate = self
         addSubCategoryViewController.loadViewsWithDetails()
         addSubCategoryViewController.title = "Add Category"
+        addSubCategoryViewController.parentName = self.parentName
         addSubCategoryViewController.createdCategory = createdCategory
         self.navigationController?.pushViewController(addSubCategoryViewController, animated: false)
     }
@@ -152,28 +154,6 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     
     @IBAction func cancel(sender: AnyObject!) {
         showEditSubView()
-    }
-    
-    // MARK: - Requests
-    
-    func requestEditCustomizedCategories(categoryId: Int) {
-        self.showHUD()
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-                                        "categoryId": "1"]
-        
-        manager.POST(APIAtlas.getCategoryDetails, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-
-//            self.customizedCategoriesModel = CustomizedCategoriesModel.parseDataWithDictionary(responseObject as! NSDictionary)
-//            self.tableView.reloadData()
-            self.hud?.hide(true)
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                println(error)
-                self.hud?.hide(true)
-        })
     }
     
     // MARK: - Table View Data Source   

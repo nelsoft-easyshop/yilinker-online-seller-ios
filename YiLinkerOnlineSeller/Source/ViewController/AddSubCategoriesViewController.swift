@@ -35,6 +35,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
     var numberOfList: Int = 10
     
     var subCategoryDetailModel: SubCategoryModel!
+    var parentName: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -178,10 +179,9 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
     }
     
     func populateDetails() {
-        self.categoryDetailsView.updateParentText(subCategoryDetailModel.parentName)
         self.categoryDetailsView.categoryNameTextField.text = subCategoryDetailModel.categoryName
-//        self.categoryDetailsView.parentCategoryLabel.text = subCategoryDetailModel.parentName
-        
+        self.categoryDetailsView.parentCategoryLabel.text = subCategoryDetailModel.parentName
+
         self.populateItems()
     }
     
@@ -245,7 +245,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
                 isSuccessful: true,
                 categoryId: 0,
                 categoryName: self.categoryDetailsView.categoryNameTextField.text,
-                parentName: "",
+                parentName: self.parentName,
                 parentId: 0,
                 sortOrder: 0,
                 products: products,
@@ -454,7 +454,6 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
         self.subCategoryDetailModel.parentId = parentId
         
         self.categoryDetailsView.parentCategoryLabel.text = parentCategory
-        println(self.categoryDetailsView.parentCategoryLabel.text)
 //        populateDetails()
     }
 }
