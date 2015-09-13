@@ -366,13 +366,13 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                 }
                 
                 let data = NSJSONSerialization.dataWithJSONObject(subs, options: nil, error: nil)
-                var editedCategory: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+                var formattedCategories: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
                 
                 let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
                     "categoryName": self.categoryDetailsView.categoryNameTextField.text,
                     "parentId": self.parentId,
                     "products": productIds.description,
-                    "subcategories": editedCategory]
+                    "subcategories": formattedCategories]
                 
                 println(parameters)
                 requestAddCustomizedCategory(parameters)
@@ -403,10 +403,10 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                                 "subcategories": subs])
                 
                 let data = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
-                var editedCategory: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+                var formattedCategory: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
 
                 let params: NSDictionary = ["access_token": SessionManager.accessToken(),
-                                              "categories": editedCategory]
+                                              "categories": formattedCategory]
 
                 println(params)
                 requestEditCustomizedCategory(params)
