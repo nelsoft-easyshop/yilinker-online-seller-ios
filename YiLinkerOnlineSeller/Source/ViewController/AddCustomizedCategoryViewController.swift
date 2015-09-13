@@ -252,12 +252,15 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     func setUpViews() {
         // ------ HEADER
         newFrame = self.headerView.frame
-        if self.categoryDetailsView.parentCategoryLabel == "NONE" {
-            setPosition(self.subCategoriesView, from: self.categoryDetailsView)
-            newFrame.size.height = CGRectGetMaxY(self.subCategoriesView.frame) + 1.0
-        } else {
-            newFrame.size.height = CGRectGetMaxY(self.categoryDetailsView.frame)
-        }
+//        if self.categoryDetailsView.parentCategoryLabel == "NONE" {
+//            setPosition(self.subCategoriesView, from: self.categoryDetailsView)
+//            newFrame.size.height = CGRectGetMaxY(self.subCategoriesView.frame) + 1.0
+//        } else {
+//            newFrame.size.height = CGRectGetMaxY(self.categoryDetailsView.frame) + 1.0
+//        }
+        setPosition(self.subCategoriesView, from: self.categoryDetailsView)
+        newFrame.size.height = CGRectGetMaxY(self.subCategoriesView.frame) + 1.0
+
         self.headerView.frame = newFrame
         
         self.tableView.tableHeaderView = nil
@@ -374,15 +377,16 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                                      "products": productIds,
                                 "subcategories": subs])
 
-                println(parameters)
+//                println(parameters)
                 
-//                let data = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
-//                var editedCategory: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
-//
-//                let params: NSDictionary = ["access_token": SessionManager.accessToken(),
-//                    "categories": editedCategory]
-//                
-//                println(params)
+                let data = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
+                var editedCategory: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+
+                let params: NSDictionary = ["access_token": SessionManager.accessToken(),
+                                              "categories": editedCategory]
+
+                println(params)
+                requestEditCustomizedCategory(params)
             }
 
         }
@@ -539,35 +543,11 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         })
     }
     
-    func requestEditCustomizedCategory() {
+    func requestEditCustomizedCategory(parameter: NSDictionary) {
         self.showHUD()
         let manager = APIManager.sharedInstance
-        var productIds: [Int] = []
-        for i in 0..<self.selectedProductsModel.count {
-            productIds.append(self.selectedProductsModel[i].id.toInt()!)
-        }
         
-//        var subs: [Int] = []
-//        for i in 0..<self.subCategories2.count {
-//            productIds.append(self.subCategories2[i].id.toInt()!)
-//        }
-        
-        var parameters: [NSDictionary] = []
-        parameters.append(["categoryId": self.categoryDetailsModel.categoryId,
-            "categoryName": self.categoryDetailsView.categoryNameTextField.text,
-            "parentId": self.parentId,
-            "products": productIds,
-            "subcategories": self.subCategories2])
-
-        let data = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
-        var editedCategory: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
-        
-        let params: NSDictionary = ["access_token": SessionManager.accessToken(),
-                                      "categories": editedCategory]
-        
-        println(params)
-        
-        manager.POST(APIAtlas.editCustomizedCategory, parameters: params, success: {
+        manager.POST(APIAtlas.editCustomizedCategory, parameters: parameter, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.hud?.hide(true)
@@ -681,7 +661,6 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         subCategories.parentName = self.categoryDetailsModel.categoryName
         subCategories.delegate = self
         self.navigationController?.pushViewController(subCategories, animated: false)
-        showAlert(title: "Sub Category Button", message: nil)
     }
     
     // MARK: - Category Items View Controller Delegate
