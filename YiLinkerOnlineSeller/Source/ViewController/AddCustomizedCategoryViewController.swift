@@ -349,9 +349,35 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         if self.categoryDetailsView.categoryNameTextField.text != "" {
             
             if self.title == "Add Customized Category" {
-                requestAddCustomizedCategory()
+                var productIds: [Int] = []
+                for i in 0..<self.selectedProductsModel.count {
+                    productIds.append(self.selectedProductsModel[i].id.toInt()!)
+                }
+                
+                var subs: [NSDictionary] = []
+                for i in 0..<self.subCategories2.count {
+                    var subProducts: [Int] = []
+                    for j in 0..<self.subCategories2[i].products.count {
+                        subProducts.append(self.subCategories2[i].products[j].productId.toInt()!)
+                    }
+                    subs.append(["categoryId": self.subCategories2[i].categoryId,
+                        "categoryName": self.subCategories2[i].categoryName,
+                        "products": subProducts])
+                }
+                
+                let data = NSJSONSerialization.dataWithJSONObject(subs, options: nil, error: nil)
+                var editedCategory: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+                
+                let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
+                    "categoryName": self.categoryDetailsView.categoryNameTextField.text,
+                    "parentId": self.parentId,
+                    "products": productIds.description,
+                    "subcategories": editedCategory]
+                
+                println(parameters)
+                requestAddCustomizedCategory(parameters)
             } else if self.title == "Edit Customized Category" {
-//                requestEditCustomizedCategory() 
+
                 var productIds: [Int] = []
                 for i in 0..<self.selectedProductsModel.count {
                     productIds.append(self.selectedProductsModel[i].id.toInt()!)
@@ -365,9 +391,8 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                     }
                     subs.append(["categoryId": self.subCategories2[i].categoryId,
                                "categoryName": self.subCategories2[i].categoryName,
+                                   "parentId": self.subCategories2[i].parentId,
                                    "products": subProducts])
-//                    println(self.subCategories2[i].categoryName)
-                    //format of edited sub categories here
                 }
                 
                 var parameters: [NSDictionary] = []
@@ -376,8 +401,6 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                                      "parentId": self.parentId,
                                      "products": productIds,
                                 "subcategories": subs])
-
-//                println(parameters)
                 
                 let data = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
                 var editedCategory: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
@@ -487,29 +510,11 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         })
             }
     
-    func requestAddCustomizedCategory() {
+    func requestAddCustomizedCategory(parameter: NSDictionary) {
         self.showHUD()
         var manager = APIManager.sharedInstance
-        var productIds: [Int] = []
-        for i in 0..<self.selectedProductsModel.count {
-            productIds.append(self.selectedProductsModel[i].id.toInt()!)
-        }
-        
-        var subCategories: [SubCategoryModel] = []
-        for i in 0..<self.subCategories2.count {
-//            subCategories.append(<#newElement: T#>)
-        }
-        
-        
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-            "categoryName": self.categoryDetailsView.categoryNameTextField.text,
-            "parentId": self.parentId,
-            "products": productIds.description,
-            "subcategories": self.formattedString(self.subCategories2.description)]
-        
-        println(parameters)
             
-        manager.POST(APIAtlas.addCustomizedCategory, parameters: parameters, success: {
+        manager.POST(APIAtlas.addCustomizedCategory, parameters: parameter, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.hud?.hide(true)
@@ -518,10 +523,6 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                 self.closeAction()
             } else {
                 self.showAlert(title: "Error", message: responseObject["message"] as! String)
-            }
-            
-            if responseObject["isSuccessful"] as! Bool {
-                self.closeAction()
             }
             
             }, failure: {
@@ -658,7 +659,9 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     func gotoEditSubCategories() {
         let subCategories = EditSubCategoriesViewController(nibName: "EditSubCategoriesViewController", bundle: nil)
         subCategories.subCategories = subCategories2
-        subCategories.parentName = self.categoryDetailsModel.categoryName
+        if self.categoryDetailsModel != nil {
+            subCategories.parentName = self.categoryDetailsModel.categoryName
+        }
         subCategories.delegate = self
         self.navigationController?.pushViewController(subCategories, animated: false)
     }
