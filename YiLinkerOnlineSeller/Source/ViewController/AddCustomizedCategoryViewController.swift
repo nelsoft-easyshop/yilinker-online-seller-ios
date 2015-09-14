@@ -493,8 +493,19 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             
             self.categoryDetailsModel = CategoryDetailsModel.parseDataWithDictionary(responseObject as! NSDictionary)
             self.customizedCategoryProducts = self.categoryDetailsModel.products
-            
+//            self.subCategories2 = self.categoryDetailsModel.subcategories
+
             for i in 0..<self.categoryDetailsModel.subcategories.count {
+
+                var subProducts: [CategoryProductModel] = []
+                for j in 0..<self.categoryDetailsModel.subcategories[i].products.count {
+                    let products = CategoryProductModel()
+                    products.productId = self.categoryDetailsModel.subcategories[i].products[j].productId
+                    products.productName = self.categoryDetailsModel.subcategories[i].products[j].productName
+                    products.image = self.categoryDetailsModel.subcategories[i].products[j].image
+                    subProducts.append(products)
+                }
+                
                 self.subCategories2.append(SubCategoryModel(message: "",
                     isSuccessful: true,
                     categoryId: self.categoryDetailsModel.subcategories[i].categoryId,
@@ -502,7 +513,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                     parentName: self.categoryDetailsModel.categoryName,
                     parentId: self.categoryDetailsModel.categoryId,
                     sortOrder: self.categoryDetailsModel.subcategories[i].sortOrder,
-                    products: [CategoryProductModel](),
+                    products: subProducts,
                     local: false))
             }
             
