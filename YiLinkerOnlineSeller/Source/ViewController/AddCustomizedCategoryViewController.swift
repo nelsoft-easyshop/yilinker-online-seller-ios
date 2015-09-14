@@ -354,28 +354,40 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                     productIds.append(self.selectedProductsModel[i].id.toInt()!)
                 }
                 
-                var subs: [NSDictionary] = []
-                for i in 0..<self.subCategories2.count {
-                    var subProducts: [Int] = []
-                    for j in 0..<self.subCategories2[i].products.count {
-                        subProducts.append(self.subCategories2[i].products[j].productId.toInt()!)
+                var formattedCategories: String = ""
+                println(self.parentId)
+                if self.parentId == 0 {
+                    var subs: [NSDictionary] = []
+                    for i in 0..<self.subCategories2.count {
+                        var subProducts: [Int] = []
+                        for j in 0..<self.subCategories2[i].products.count {
+                            subProducts.append(self.subCategories2[i].products[j].productId.toInt()!)
+                        }
+                        subs.append(["categoryId": self.subCategories2[i].categoryId,
+                                   "categoryName": self.subCategories2[i].categoryName,
+                                       "products": subProducts])
                     }
-                    subs.append(["categoryId": self.subCategories2[i].categoryId,
-                        "categoryName": self.subCategories2[i].categoryName,
-                        "products": subProducts])
+                    
+                    let data = NSJSONSerialization.dataWithJSONObject(subs, options: nil, error: nil)
+                    var formattedCategories: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+                    println("> \(formattedCategories)")
+                    let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
+                        "categoryName": self.categoryDetailsView.categoryNameTextField.text,
+                        "parentId": self.parentId,
+                        "products": productIds.description,
+                        "subcategories": formattedCategories]
+                    println(parameters)
+                    requestAddCustomizedCategory(parameters)
+                } else {
+                    let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
+                        "categoryName": self.categoryDetailsView.categoryNameTextField.text,
+                        "parentId": self.parentId,
+                        "products": productIds.description,
+                        "subcategories": formattedCategories]
+                    
+                    println(parameters)
+                    requestAddCustomizedCategory(parameters)
                 }
-                
-                let data = NSJSONSerialization.dataWithJSONObject(subs, options: nil, error: nil)
-                var formattedCategories: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
-                
-                let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-                    "categoryName": self.categoryDetailsView.categoryNameTextField.text,
-                    "parentId": self.parentId,
-                    "products": productIds.description,
-                    "subcategories": formattedCategories]
-                
-                println(parameters)
-                requestAddCustomizedCategory(parameters)
             } else if self.title == "Edit Customized Category" {
 
                 var productIds: [Int] = []
