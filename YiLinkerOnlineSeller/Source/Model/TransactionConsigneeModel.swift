@@ -20,6 +20,7 @@ class TransactionConsigneeModel: NSObject {
         self.isSuccessful = isSuccessful
         self.message = message
         self.deliveryAddress = deliveryAddress
+        self.consigneeName = consigneeName
         self.consigneeContactNumber = consigneeContactNumber
     }
     

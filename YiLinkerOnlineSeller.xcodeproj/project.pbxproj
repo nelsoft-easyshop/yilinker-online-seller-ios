@@ -297,6 +297,7 @@
 		794A96571B9E8870002F32A0 /* OrderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A96561B9E8870002F32A0 /* OrderModel.swift */; };
 		794A965B1B9EAAEA002F32A0 /* FollowersModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A965A1B9EAAEA002F32A0 /* FollowersModel.swift */; };
 		794AFDA01BA3D3190063976E /* TransactionConsigneeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794AFD9F1BA3D3190063976E /* TransactionConsigneeModel.swift */; };
+		794AFDA21BA405BF0063976E /* DeliveryLogsItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794AFDA11BA405BF0063976E /* DeliveryLogsItemModel.swift */; };
 		799892F31B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */; };
 		799892F51B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */; };
 		799892F71B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */; };
@@ -798,6 +799,7 @@
 		794A96561B9E8870002F32A0 /* OrderModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderModel.swift; sourceTree = "<group>"; };
 		794A965A1B9EAAEA002F32A0 /* FollowersModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowersModel.swift; sourceTree = "<group>"; };
 		794AFD9F1BA3D3190063976E /* TransactionConsigneeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionConsigneeModel.swift; sourceTree = "<group>"; };
+		794AFDA11BA405BF0063976E /* DeliveryLogsItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryLogsItemModel.swift; sourceTree = "<group>"; };
 		799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardHeaderCollectionViewCell.xib; sourceTree = "<group>"; };
 		799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashBoardHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardItemCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -1132,6 +1134,7 @@
 				79C071161B9F2CCF0032B7A5 /* TransactionDetailsModel.swift */,
 				79F107671BA1C46500B6CE51 /* TransactionCancellationModel.swift */,
 				794AFD9F1BA3D3190063976E /* TransactionConsigneeModel.swift */,
+				794AFDA11BA405BF0063976E /* DeliveryLogsItemModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2339,6 +2342,7 @@
 				F7C40F811B983B6B0091C16C /* StoreInfoBankAccountTableViewCell.swift in Sources */,
 				79EDA40B1B9204F20037558A /* PointsEarnedTableViewCell.swift in Sources */,
 				7928761B1B8DF89F00762A39 /* PieChartData.swift in Sources */,
+				794AFDA21BA405BF0063976E /* DeliveryLogsItemModel.swift in Sources */,
 				792876281B8DF89F00762A39 /* BarChartRenderer.swift in Sources */,
 				26B5B2451B94DE6700CBDDE5 /* CustomizedCategoryViews.swift in Sources */,
 				F7C40F751B983B3D0091C16C /* FilterFooterTableViewCell.swift in Sources */,

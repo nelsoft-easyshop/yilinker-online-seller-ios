@@ -84,6 +84,9 @@ SmFudWFyeSAxNSwgMjAxNSBhdCAxMTo1OSBQTQPigKgDQm9ncyBCb3JqYSwgTWFuaWxhA
                         <state key="normal" image="sms">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="buttonAction:" destination="TH2-lw-L4C" eventType="touchUpInside" id="9uY-vc-YQu"/>
+                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xEL-7A-hDc" userLabel="Call Button">
                         <rect key="frame" x="339" y="80" width="20" height="20"/>
@@ -94,6 +97,9 @@ SmFudWFyeSAxNSwgMjAxNSBhdCAxMTo1OSBQTQPigKgDQm9ncyBCb3JqYSwgTWFuaWxhA
                         <state key="normal" image="call">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="buttonAction:" destination="TH2-lw-L4C" eventType="touchUpInside" id="84p-Rr-O6a"/>
+                        </connections>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bdf-QG-vdB" userLabel="Separator 2">
                         <rect key="frame" x="0.0" y="110" width="375" height="1"/>
@@ -129,6 +135,9 @@ SmFudWFyeSAxNSwgMjAxNSBhdCAxMTo1OSBQTQPigKgDQm9ncyBCb3JqYSwgTWFuaWxhA
                         <state key="normal" image="sms">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="buttonAction:" destination="TH2-lw-L4C" eventType="touchUpInside" id="Aop-49-Smj"/>
+                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NwV-KF-LLM" userLabel="Call Button">
                         <rect key="frame" x="339" y="123" width="20" height="20"/>
@@ -139,6 +148,16 @@ SmFudWFyeSAxNSwgMjAxNSBhdCAxMTo1OSBQTQPigKgDQm9ncyBCb3JqYSwgTWFuaWxhA
                         <state key="normal" image="call">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="buttonAction:" destination="TH2-lw-L4C" eventType="touchUpInside" id="lFe-yh-6UA"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dpp-i3-lYc">
+                        <rect key="frame" x="16" y="8" width="343" height="49"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                        <connections>
+                            <action selector="buttonAction:" destination="TH2-lw-L4C" eventType="touchUpInside" id="nb3-j2-T8c"/>
+                        </connections>
                     </button>
                 </subviews>
                 <constraints>
@@ -182,6 +201,7 @@ SmFudWFyeSAxNSwgMjAxNSBhdCAxMTo1OSBQTQPigKgDQm9ncyBCb3JqYSwgTWFuaWxhA
                 <outlet property="deliveryRiderCallButton" destination="NwV-KF-LLM" id="jEE-D9-Pfb"/>
                 <outlet property="deliveryRiderLabel" destination="ULr-I1-HjE" id="xEp-Yw-Mzb"/>
                 <outlet property="deliveryRiderSMSButton" destination="KQx-ox-4tH" id="gb3-RD-tx5"/>
+                <outlet property="lastCheckinButton" destination="dpp-i3-lYc" id="wSS-eB-7ix"/>
                 <outlet property="lastCheckinLabel" destination="C5J-Ho-YQY" id="0hb-s4-pUZ"/>
                 <outlet property="pickupRiderCallButton" destination="xEL-7A-hDc" id="2r1-6U-vHF"/>
                 <outlet property="pickupRiderLabel" destination="agY-sI-jcb" id="CSs-68-9sN"/>

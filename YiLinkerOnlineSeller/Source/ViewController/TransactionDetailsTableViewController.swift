@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TransactionDetailsTableViewController: UITableViewController, TransactionDetailsFooterViewDelegate, TransactionConsigneeTableViewCellDelegate, TransactionCancelOrderViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate, TransactionCancelReasonOrderViewControllerDelegate {
+class TransactionDetailsTableViewController: UITableViewController, TransactionDetailsFooterViewDelegate, TransactionConsigneeTableViewCellDelegate, TransactionCancelOrderViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate, TransactionCancelReasonOrderViewControllerDelegate, TransactionDeliveryTableViewCellDelegate {
     
     var detailsCellIdentifier: String = "TransactionDetailsTableViewCell"
     var productsCellIdentifier: String = "TransactionProductTableViewCell"
@@ -32,14 +32,6 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     
     var transactionDetailsModel: TransactionDetailsModel!
     var transactionConsigneeModel: TransactionConsigneeModel!
-    
-    var isDetailsDone: Bool = false
-    var isConsigneeDone: Bool = false
-    var isDeliveryDone: Bool = false
-    
-    var isDetailsSuccessful: Bool = false
-    var isConsigneeSuccessful: Bool = false
-    var isDeliverySuccessful: Bool = false
     
     var errorMessage: String = ""
     
@@ -178,11 +170,21 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         }  else if indexPath.section == 2 {
             let cell: TransactionConsigneeTableViewCell = tableView.dequeueReusableCellWithIdentifier(consigneeCellIdentifier, forIndexPath: indexPath) as! TransactionConsigneeTableViewCell
             cell.selectionStyle = .None;
+            cell.nameLabel.text = transactionConsigneeModel.consigneeName
+            cell.addressLabel.text = transactionConsigneeModel.deliveryAddress
+            
+            if transactionConsigneeModel.consigneeContactNumber.isEmpty {
+                cell.contactNumberLabel.text = "No contact number."
+            } else {
+                cell.contactNumberLabel.text = transactionConsigneeModel.consigneeContactNumber
+            }
+            
             cell.delegate = self
             return cell
         }  else if indexPath.section == 3 {
             let cell: TransactionDeliveryTableViewCell = tableView.dequeueReusableCellWithIdentifier(deliveryCellIdentifier, forIndexPath: indexPath) as! TransactionDeliveryTableViewCell
             cell.selectionStyle = .None;
+            cell.delegate = self
             return cell
         } else {
             let cell: TransactionDetailsTableViewCell = tableView.dequeueReusableCellWithIdentifier(detailsCellIdentifier, forIndexPath: indexPath) as! TransactionDetailsTableViewCell
@@ -242,32 +244,25 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             self.transactionDetailsModel = TransactionDetailsModel.parseDataWithDictionary(responseObject)
             
             println(responseObject)
-            self.isDetailsDone = true
             
             if self.transactionDetailsModel.isSuccessful {
-                self.tableView.reloadData()
                 self.tidLabel.text = self.transactionDetailsModel.transactionInvoice
                 if self.transactionDetailsModel.transactionQuantity > 1 {
                     self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) Products"
                 } else {
                     self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) Product"
                 }
-                self.isDetailsSuccessful = true
+                
+                self.fireGetConsigneeDetails()
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.transactionDetailsModel.message, title: "Error")
                 self.navigationController!.popViewControllerAnimated(true)
-                
-                self.isDetailsSuccessful = false
+                self.hud?.hide(true)
             }
-            
-            
-            self.hideHUD()
             
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 
-                self.hideHUD()
-                self.isDetailsDone = true
-                self.isDetailsSuccessful = false
+                self.hud?.hide(true)
                 
                 if Reachability.isConnectedToNetwork() {
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -282,8 +277,6 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
                     self.navigationController!.popViewControllerAnimated(true)
                 }
-                
-                
                 println(error)
         })
     }
@@ -296,34 +289,21 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         manager.GET(APIAtlas.transactionConsignee, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.transactionConsigneeModel = TransactionConsigneeModel.parseDataWithDictionary(responseObject)
-            
+            println(self.transactionConsigneeModel.consigneeName)
             println(responseObject)
-            self.isDetailsDone = true
             
             if self.transactionConsigneeModel.isSuccessful {
                 self.tableView.reloadData()
-                self.tidLabel.text = self.transactionDetailsModel.transactionInvoice
-                if self.transactionDetailsModel.transactionQuantity > 1 {
-                    self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) Products"
-                } else {
-                    self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) Product"
-                }
-                self.isDetailsSuccessful = true
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.transactionDetailsModel.message, title: "Error")
                 self.navigationController!.popViewControllerAnimated(true)
-                
-                self.isDetailsSuccessful = false
             }
             
-            
-            self.hideHUD()
+            self.hud?.hide(true)
             
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 
-                self.hideHUD()
-                self.isDetailsDone = true
-                self.isDetailsSuccessful = false
+                self.hud?.hide(true)
                 
                 if Reachability.isConnectedToNetwork() {
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -377,16 +357,6 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         self.hud?.dimBackground = false
         self.navigationController?.view.addSubview(self.hud!)
         self.hud?.show(true)
-    }
-    
-    func hideHUD() {
-        if isDetailsDone && isConsigneeDone && isDeliveryDone {
-            self.hud?.hide(true)
-            self.tableView.reloadData()
-        } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorMessage, title: "Error")
-            self.navigationController!.popViewControllerAnimated(true)
-        }
     }
     
     func showDimView() {
@@ -473,16 +443,43 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     
     // MARK: - TransactionConsigneeTableViewCellDelegate
     func messageConsigneeAction() {
-        
+       
     }
     
     func smsConsigneeAction() {
-        
+        if !transactionConsigneeModel.consigneeContactNumber.isEmpty {
+            UIApplication.sharedApplication().openURL(NSURL(string: "sms:\(transactionConsigneeModel.consigneeContactNumber)")!)
+        }
     }
     
     func callConsigneeAction() {
+        if !transactionConsigneeModel.consigneeContactNumber.isEmpty {
+            UIApplication.sharedApplication().openURL(NSURL(string: "tel:\(transactionConsigneeModel.consigneeContactNumber)")!)
+        }
+    }
+    
+    // MARK: - TransactionDeliveryTableViewCellDelegate {
+    func smsPickupRiderAction() {
         
     }
+    
+    func callPickupRiderAction() {
+        
+    }
+    
+    func smsDeliveryRiderAction() {
+        
+    }
+    
+    func callDeliveryRiderAction() {
+        
+    }
+    
+    func lastCheckinAction() {
+        var transactionDetailsController = TransactionDeliveryLogTableViewController(nibName: "TransactionDeliveryLogTableViewController", bundle: nil)
+        self.navigationController?.pushViewController(transactionDetailsController, animated:true)
+    }
+    
     
     func formatDateToString(date: NSDate) -> String {
         var dateFormatter = NSDateFormatter()
