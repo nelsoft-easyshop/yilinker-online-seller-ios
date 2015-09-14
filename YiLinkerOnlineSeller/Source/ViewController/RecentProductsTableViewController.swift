@@ -68,7 +68,7 @@ class RecentProductsTableViewController: UITableViewController {
 
         var temp: TransactionModel = tableData[indexPath.row]
         cell.setProductImage("")
-        cell.setProductName(temp.order_id)
+        cell.setProductName(temp.invoice_number)
         cell.setModeOfPayment(temp.payment_type)
         cell.setPrice(temp.total_price)
         cell.setStatus(temp.order_status)
