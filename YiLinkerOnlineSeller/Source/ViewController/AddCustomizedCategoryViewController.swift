@@ -493,18 +493,24 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             
             self.categoryDetailsModel = CategoryDetailsModel.parseDataWithDictionary(responseObject as! NSDictionary)
             self.customizedCategoryProducts = self.categoryDetailsModel.products
-            
-            for i in 0..<self.categoryDetailsModel.subcategories.count {
-                self.subCategories2.append(SubCategoryModel(message: "",
-                    isSuccessful: true,
-                    categoryId: self.categoryDetailsModel.subcategories[i].categoryId,
-                    categoryName: self.categoryDetailsModel.subcategories[i].categoryName,
-                    parentName: self.categoryDetailsModel.categoryName,
-                    parentId: self.categoryDetailsModel.categoryId,
-                    sortOrder: self.categoryDetailsModel.subcategories[i].sortOrder,
-                    products: [CategoryProductModel](),
-                    local: false))
-            }
+            self.subCategories2 = self.categoryDetailsModel.subcategories
+
+//            for i in 0..<self.categoryDetailsModel.subcategories.count {
+//
+//                for j in 0..<self.categoryDetailsModel.subcategories[i].products.count {
+//                    println(self.categoryDetailsModel.subcategories[i].products[j].productName)
+//                }
+//                
+//                self.subCategories2.append(SubCategoryModel(message: "",
+//                    isSuccessful: true,
+//                    categoryId: self.categoryDetailsModel.subcategories[i].categoryId,
+//                    categoryName: self.categoryDetailsModel.subcategories[i].categoryName,
+//                    parentName: self.categoryDetailsModel.categoryName,
+//                    parentId: self.categoryDetailsModel.categoryId,
+//                    sortOrder: self.categoryDetailsModel.subcategories[i].sortOrder,
+//                    products: [CategoryProductModel](),
+//                    local: false))
+//            }
             
             for i in 0..<self.customizedCategoryProducts.count {
                 let categoryProducts = ProductManagementProductsModel()

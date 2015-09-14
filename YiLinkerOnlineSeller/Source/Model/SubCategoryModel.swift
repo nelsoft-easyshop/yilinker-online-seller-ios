@@ -97,6 +97,11 @@ class SubCategoryModel: NSObject {
                 categoryId = subCategories["categoryId"] as! Int
                 categoryName = subCategories["categoryName"] as! String
                 sortOrder = subCategories["sortOrder"] as! Int
+                
+                for subValue in subCategories["products"] as! NSArray {
+                    let model: CategoryProductModel = CategoryProductModel.parseCategoryProducts(subValue as! NSDictionary)
+                    products.append(model)
+                }
             }
             
         }
