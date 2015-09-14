@@ -193,7 +193,7 @@ class SalesReportTableViewCell: UITableViewCell {
         soldItemDataSet1.circleRadius = 2
         soldItemDataSet1.setCircleColor(Constants.Colors.soldColor)
         soldItemDataSet1.drawCircleHoleEnabled = false
-        soldItemDataSet1.valueTextColor = Constants.Colors.soldColor
+        soldItemDataSet1.drawValuesEnabled = false
         
         var cancelledItemDataSet1: LineChartDataSet = LineChartDataSet(yVals: cancelledItemEntries, label: "Cancelled Items")
         cancelledItemDataSet1.axisDependency = ChartYAxis.AxisDependency.Left
@@ -203,7 +203,7 @@ class SalesReportTableViewCell: UITableViewCell {
         cancelledItemDataSet1.circleRadius = 2
         cancelledItemDataSet1.setCircleColor(Constants.Colors.cancelledColor)
         cancelledItemDataSet1.drawCircleHoleEnabled = false
-        cancelledItemDataSet1.valueTextColor = Constants.Colors.cancelledColor
+        cancelledItemDataSet1.drawValuesEnabled = false
         
         var lineDataSets1: [LineChartDataSet] = []
         lineDataSets1.append(soldItemDataSet1)

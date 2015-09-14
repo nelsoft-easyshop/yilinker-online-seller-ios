@@ -16,6 +16,7 @@ class DatePickerViewController: UIViewController {
     
     var delegate: DatePickerViewControllerDelegate?
     
+    var originalMinimumDate: NSDate = NSDate()
     var startDate: NSDate = NSDate()
     var endDate: NSDate = NSDate()
     
@@ -29,6 +30,8 @@ class DatePickerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        originalMinimumDate = datePicker.minimumDate!
 
         initializeViews()
         initializeNavigationBar()
@@ -45,7 +48,7 @@ class DatePickerViewController: UIViewController {
             self.edgesForExtendedLayout = UIRectEdge.Bottom
         }
         
-        datePicker.maximumDate = NSDate()
+        datePicker.maximumDate = endDate
         datePicker.date = startDate
         startDateLabel.text = formatDate(startDate)
         endDateLabel.text = formatDate(endDate)
@@ -104,11 +107,15 @@ class DatePickerViewController: UIViewController {
             endDateLabel.textColor = Constants.Colors.grayText
             currentView = "startView"
             datePicker.date = startDate
+            datePicker.maximumDate = endDate
+            datePicker.minimumDate = originalMinimumDate
         } else {
             endDateLabel.textColor = Constants.Colors.productPrice
             startDateLabel.textColor = Constants.Colors.grayText
             currentView = "endView"
             datePicker.date = endDate
+            datePicker.maximumDate = NSDate()
+            datePicker.minimumDate = startDate
         }
         
     }
