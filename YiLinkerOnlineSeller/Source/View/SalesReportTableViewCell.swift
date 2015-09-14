@@ -31,8 +31,12 @@ class SalesReportTableViewCell: UITableViewCell {
     var startDate: NSDate = NSDate()
     var endDate: NSDate = NSDate()
     
+    var valueFormater: NSNumberFormatter = NSNumberFormatter()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        valueFormater.numberStyle = NSNumberFormatterStyle.NoStyle
         
         initializeViews()
     }
@@ -135,6 +139,8 @@ class SalesReportTableViewCell: UITableViewCell {
         var soldItemIndex: Int = 0
         var cancelledItemIndex:Int = 0
         
+        var maximumYVals: Int = 0
+     
         for var i = 0; i < xValues.count; i++ {
             var date: String = xValues[i] as String
             
@@ -143,6 +149,11 @@ class SalesReportTableViewCell: UITableViewCell {
                 println("tempNumber\(i) \(tempNumber)")
                 soldItemEntries.append(ChartDataEntry(value: tempNumber.doubleValue, xIndex: i))
                 soldItemIndex++
+                
+                if tempNumber.integerValue > maximumYVals {
+                    maximumYVals = tempNumber.integerValue
+                }
+                
             } else {
                 soldItemEntries.append(ChartDataEntry(value: 0, xIndex: i))
             }
@@ -152,6 +163,10 @@ class SalesReportTableViewCell: UITableViewCell {
                 println("tempNumber\(i) \(tempNumber)")
                 cancelledItemEntries.append(ChartDataEntry(value: tempNumber.doubleValue, xIndex: i))
                 cancelledItemIndex++
+                
+                if tempNumber.integerValue > maximumYVals {
+                    maximumYVals = tempNumber.integerValue
+                }
             } else {
                 cancelledItemEntries.append(ChartDataEntry(value: 0, xIndex: i))
             }
@@ -204,6 +219,16 @@ class SalesReportTableViewCell: UITableViewCell {
         cancelledItemDataSet1.setCircleColor(Constants.Colors.cancelledColor)
         cancelledItemDataSet1.drawCircleHoleEnabled = false
         cancelledItemDataSet1.drawValuesEnabled = false
+        
+        if maximumYVals > 1 {
+            soldItemDataSet.valueFormatter = valueFormater
+            cancelledItemDataSet.valueFormatter = valueFormater
+            
+            soldItemDataSet1.valueFormatter = valueFormater
+            cancelledItemDataSet1.valueFormatter = valueFormater
+            
+            yAxisLeft.valueFormatter = valueFormater
+        }
         
         var lineDataSets1: [LineChartDataSet] = []
         lineDataSets1.append(soldItemDataSet1)
