@@ -43,6 +43,7 @@ struct APIAtlas {
     static let sellerDeleteStoreAddress = "auth/address/deleteUserAddress"
     static let transactionList = "auth/getTransactionList"
     static let sellerChangeMobileNumber = "auth/user/changeContactNumber"
+    static let sellerResendVerification = "auth/sms/getCode?access_token="
     static let sellerMobileNumberVerification = "auth/sms/verify"
     static let sellerChangePassword = "auth/user/changePassword"
     static let sellerUpdateSellerInfo = "auth/merchant/updateUserInfo"
@@ -71,6 +72,8 @@ struct APIAtlas {
     
     static let getSalesReport = "auth/merchant/getSalesReport"
     static let getFollowers = "auth/merchant/getFollowers"
+    
+    static let getActivityLogs = "auth/user/activityLog"
     
     //Search
     static let transaction = "auth/transaction/searchKeyword?access_token="

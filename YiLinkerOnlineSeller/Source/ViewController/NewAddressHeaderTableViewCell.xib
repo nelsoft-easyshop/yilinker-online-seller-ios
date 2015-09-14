@@ -24,7 +24,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2nB-x4-sys">
-                        <rect key="frame" x="0.0" y="0.0" width="359" height="135"/>
+                        <rect key="frame" x="0.0" y="0.0" width="359" height="145"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create New Address" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hmd-Pi-h6c">
                                 <rect key="frame" x="127" y="70" width="116" height="21"/>
@@ -37,10 +37,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dlP-Yr-47n">
-                                <rect key="frame" x="44" y="85" width="283" height="40"/>
+                                <rect key="frame" x="8" y="85" width="343" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Go4-gx-jGp"/>
-                                    <constraint firstAttribute="width" constant="283" id="tjv-4Z-ADJ"/>
+                                    <constraint firstAttribute="width" constant="343" id="tjv-4Z-ADJ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -55,30 +55,23 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="Hmd-Pi-h6c" secondAttribute="trailing" constant="116" id="0ap-1i-tmm"/>
-                            <constraint firstAttribute="width" constant="359" id="1ew-On-R4S"/>
                             <constraint firstItem="Hmd-Pi-h6c" firstAttribute="top" secondItem="t4y-dO-ljE" secondAttribute="bottom" constant="2" id="4E5-Cr-Zc7"/>
-                            <constraint firstItem="t4y-dO-ljE" firstAttribute="leading" secondItem="2nB-x4-sys" secondAttribute="leading" constant="149" id="8Ua-6T-SLw"/>
-                            <constraint firstAttribute="trailing" secondItem="dlP-Yr-47n" secondAttribute="trailing" constant="32" id="Bbj-aC-GL9"/>
-                            <constraint firstAttribute="bottom" secondItem="dlP-Yr-47n" secondAttribute="bottom" constant="10" id="G9R-dZ-Efr"/>
+                            <constraint firstAttribute="bottom" secondItem="dlP-Yr-47n" secondAttribute="bottom" constant="20" id="G9R-dZ-Efr"/>
+                            <constraint firstAttribute="centerX" secondItem="dlP-Yr-47n" secondAttribute="centerX" id="InY-In-Ibc"/>
                             <constraint firstItem="dlP-Yr-47n" firstAttribute="top" secondItem="Hmd-Pi-h6c" secondAttribute="bottom" constant="-6" id="O7u-SG-NKV"/>
-                            <constraint firstAttribute="height" constant="135" id="RZG-u1-atK"/>
+                            <constraint firstAttribute="centerX" secondItem="Hmd-Pi-h6c" secondAttribute="centerX" constant="-5.5" id="R3K-gW-7tN"/>
                             <constraint firstItem="t4y-dO-ljE" firstAttribute="top" secondItem="2nB-x4-sys" secondAttribute="top" constant="8" id="W9Q-Kq-iWa"/>
                             <constraint firstAttribute="centerX" secondItem="t4y-dO-ljE" secondAttribute="centerX" id="lK8-aI-kjy"/>
-                            <constraint firstItem="dlP-Yr-47n" firstAttribute="leading" secondItem="2nB-x4-sys" secondAttribute="leading" constant="44" id="pGM-9l-PrY"/>
-                            <constraint firstItem="Hmd-Pi-h6c" firstAttribute="leading" secondItem="2nB-x4-sys" secondAttribute="leading" constant="127" id="rOY-hU-3Ql"/>
                         </constraints>
                     </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="2nB-x4-sys" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="0LR-8W-R0J"/>
                     <constraint firstItem="2nB-x4-sys" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="FsT-pn-C0v"/>
-                    <constraint firstItem="2nB-x4-sys" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="G1e-Ke-GJM"/>
-                    <constraint firstAttribute="bottom" secondItem="2nB-x4-sys" secondAttribute="bottom" constant="8" id="Ioa-2v-x6U"/>
                     <constraint firstAttribute="trailing" secondItem="2nB-x4-sys" secondAttribute="trailing" id="JIl-VQ-RsF"/>
                     <constraint firstItem="2nB-x4-sys" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="Smr-nj-lpt"/>
                     <constraint firstItem="2nB-x4-sys" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="T1K-Z9-bar"/>
-                    <constraint firstItem="2nB-x4-sys" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="Vxe-JK-3Yb"/>
+                    <constraint firstAttribute="bottom" secondItem="2nB-x4-sys" secondAttribute="bottom" constant="-2" id="YHW-vF-eMC"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

@@ -10,7 +10,6 @@
 		0C1C3A871B9453BE00E6180D /* ProductUploadTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C1C3A861B9453BE00E6180D /* ProductUploadTableHeaderView.xib */; };
 		0C5E9D8E1B91E2E200F32CFE /* ProductUploadFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5E9D8D1B91E2E200F32CFE /* ProductUploadFooterView.swift */; };
 		0C5E9D901B91E2F700F32CFE /* ProductUploadFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C5E9D8F1B91E2F700F32CFE /* ProductUploadFooterView.xib */; };
-		0C65F8A41B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8A21B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.swift */; };
 		0C65F8A51B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C65F8A31B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.xib */; };
 		0C65F8A71B8DB99100504D86 /* ProductUploadTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8A61B8DB99100504D86 /* ProductUploadTableHeaderView.swift */; };
 		0C65F8AE1B8DBC3400504D86 /* ProductUploadTextViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8AC1B8DBC3400504D86 /* ProductUploadTextViewTableViewCell.swift */; };
@@ -301,6 +300,8 @@
 		794880821B94EB530090B259 /* FollowerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794880811B94EB530090B259 /* FollowerModel.swift */; };
 		794A96571B9E8870002F32A0 /* OrderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A96561B9E8870002F32A0 /* OrderModel.swift */; };
 		794A965B1B9EAAEA002F32A0 /* FollowersModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A965A1B9EAAEA002F32A0 /* FollowersModel.swift */; };
+		795B0D261BA307CB00FC373C /* ActivityLogItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795B0D251BA307CB00FC373C /* ActivityLogItemModel.swift */; };
+		795B0D281BA3093000FC373C /* ActivityLogItemsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795B0D271BA3093000FC373C /* ActivityLogItemsModel.swift */; };
 		799892F31B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */; };
 		799892F51B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */; };
 		799892F71B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */; };
@@ -492,6 +493,7 @@
 		F7C40FE11B9854B20091C16C /* SalesReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EFF7761B8D9274008A9E7D /* SalesReportViewController.swift */; };
 		F7CB78431B9D822C001AF766 /* FilterCalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CB78411B9D822C001AF766 /* FilterCalendarTableViewCell.swift */; };
 		F7CB78441B9D822C001AF766 /* FilterCalendarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CB78421B9D822C001AF766 /* FilterCalendarTableViewCell.xib */; };
+		F7E175761BA3F32C00A3820B /* ProductUploadTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8A21B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.swift */; };
 		F7E465841B9F2D7B00FAB97D /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E465821B9F2D7B00FAB97D /* SearchTableViewCell.swift */; };
 		F7E465851B9F2D7B00FAB97D /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E465831B9F2D7B00FAB97D /* SearchTableViewCell.xib */; };
 		F7E465871B9F36C600FAB97D /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E465861B9F36C600FAB97D /* SearchModel.swift */; };
@@ -504,6 +506,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 967EE1B31B8AEA25000591AC;
 			remoteInfo = YiLinkerOnlineSeller;
+		};
+		F7E175721BA3F0B300A3820B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 967EE1AC1B8AEA25000591AC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 967EE1C81B8AEA25000591AC;
+			remoteInfo = YiLinkerOnlineSellerTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -807,6 +816,8 @@
 		794880811B94EB530090B259 /* FollowerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowerModel.swift; sourceTree = "<group>"; };
 		794A96561B9E8870002F32A0 /* OrderModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderModel.swift; sourceTree = "<group>"; };
 		794A965A1B9EAAEA002F32A0 /* FollowersModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowersModel.swift; sourceTree = "<group>"; };
+		795B0D251BA307CB00FC373C /* ActivityLogItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLogItemModel.swift; sourceTree = "<group>"; };
+		795B0D271BA3093000FC373C /* ActivityLogItemsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLogItemsModel.swift; sourceTree = "<group>"; };
 		799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardHeaderCollectionViewCell.xib; sourceTree = "<group>"; };
 		799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashBoardHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardItemCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -1145,6 +1156,8 @@
 				794A96561B9E8870002F32A0 /* OrderModel.swift */,
 				794A965A1B9EAAEA002F32A0 /* FollowersModel.swift */,
 				F7E465861B9F36C600FAB97D /* SearchModel.swift */,
+				795B0D251BA307CB00FC373C /* ActivityLogItemModel.swift */,
+				795B0D271BA3093000FC373C /* ActivityLogItemsModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1789,6 +1802,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				F7E175731BA3F0B300A3820B /* PBXTargetDependency */,
 			);
 			name = YiLinkerOnlineSeller;
 			productName = YiLinkerOnlineSeller;
@@ -2080,12 +2094,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7E175761BA3F32C00A3820B /* ProductUploadTextFieldTableViewCell.swift in Sources */,
 				961F70361B983E50007D0EA5 /* ResolutionFilterViewController.swift in Sources */,
 				F7C40FE11B9854B20091C16C /* SalesReportViewController.swift in Sources */,
 				F7C40FE01B9854A80091C16C /* LineChartView.swift in Sources */,
 				0C8D7F901B8F0A6400B3FA4E /* AttributeModel.swift in Sources */,
 				0C65F8AE1B8DBC3400504D86 /* ProductUploadTextViewTableViewCell.swift in Sources */,
-				0C65F8A41B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.swift in Sources */,
+				795B0D281BA3093000FC373C /* ActivityLogItemsModel.swift in Sources */,
 				0C8D7FBD1B8FCC5800B3FA4E /* ProductUploadCombinationHeaderTableViewCell.swift in Sources */,
 				F7C40F6D1B983B210091C16C /* CreateNewAddressViewController.swift in Sources */,
 				F7C40F651B983AD10091C16C /* ChangeBankAccountViewController.swift in Sources */,
@@ -2163,6 +2178,7 @@
 				792876031B8DF89F00762A39 /* ChartLegend.swift in Sources */,
 				7928763E1B8DF89F00762A39 /* ChartFillFormatter.swift in Sources */,
 				792876061B8DF89F00762A39 /* ChartXAxis.swift in Sources */,
+				795B0D261BA307CB00FC373C /* ActivityLogItemModel.swift in Sources */,
 				792875F51B8DF89F00762A39 /* BarChartView.swift in Sources */,
 				F7AC5F5E1B9A9C8C00227D18 /* AddAddressTableViewController.swift in Sources */,
 				260725F41BA0A2B900C24DDB /* ProductAttributeModel.swift in Sources */,
@@ -2411,6 +2427,11 @@
 			target = 967EE1B31B8AEA25000591AC /* YiLinkerOnlineSeller */;
 			targetProxy = 967EE1CA1B8AEA25000591AC /* PBXContainerItemProxy */;
 		};
+		F7E175731BA3F0B300A3820B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 967EE1C81B8AEA25000591AC /* YiLinkerOnlineSellerTests */;
+			targetProxy = F7E175721BA3F0B300A3820B /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -2527,7 +2548,6 @@
 		967EE1D71B8AEA25000591AC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -2539,14 +2559,12 @@
 				INFOPLIST_FILE = YiLinkerOnlineSellerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YiLinkerOnlineSeller.app/YiLinkerOnlineSeller";
 			};
 			name = Debug;
 		};
 		967EE1D81B8AEA25000591AC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -2554,7 +2572,6 @@
 				INFOPLIST_FILE = YiLinkerOnlineSellerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YiLinkerOnlineSeller.app/YiLinkerOnlineSeller";
 			};
 			name = Release;
 		};

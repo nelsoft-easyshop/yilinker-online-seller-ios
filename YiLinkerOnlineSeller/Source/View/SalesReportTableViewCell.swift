@@ -24,6 +24,7 @@ class SalesReportTableViewCell: UITableViewCell {
     @IBOutlet weak var totalSalesLabel: UILabel!
     @IBOutlet weak var totalTransactionsLabel: UILabel!
     @IBOutlet weak var totalProducts: UILabel!
+    @IBOutlet weak var smallLineChart: LineChartView!
     
     var salesReportModel: SalesReportModel!
     
@@ -48,6 +49,7 @@ class SalesReportTableViewCell: UITableViewCell {
     
     func initializeGraph() {
         largeLineChart.noDataText = "No data available"
+        largeLineChart.descriptionText = ""
         
         var xAxis: ChartXAxis = largeLineChart.xAxis
         xAxis.labelPosition = ChartXAxis.XAxisLabelPosition.Bottom
@@ -73,6 +75,34 @@ class SalesReportTableViewCell: UITableViewCell {
         largeLineChart.backgroundColor = UIColor.whiteColor()
         
         largeLineChart.animate(xAxisDuration: 2.5)
+        
+        
+        //preview
+        smallLineChart.noDataText = "No data available"
+        
+        var xAxis1: ChartXAxis = smallLineChart.xAxis
+        xAxis1.enabled = false
+        
+        var yAxisRight1: ChartYAxis = smallLineChart.rightAxis
+        yAxisRight1.enabled = false
+        
+        var yAxisLeft1: ChartYAxis = smallLineChart.leftAxis
+        yAxisLeft1.enabled = false
+        
+        var legend1: ChartLegend = smallLineChart.legend
+        legend1.enabled = false
+        
+        
+        smallLineChart.descriptionText = ""
+        smallLineChart.pinchZoomEnabled = false
+        smallLineChart.scaleYEnabled = false
+        smallLineChart.doubleTapToZoomEnabled = false
+        smallLineChart.zoom(0, scaleY: 0, x: 0, y: 0)
+        
+        smallLineChart.drawGridBackgroundEnabled = false
+        smallLineChart.backgroundColor = UIColor.whiteColor()
+        
+        smallLineChart.animate(xAxisDuration: 2.5)
         
         
         var xValues: [String] = []
@@ -153,6 +183,37 @@ class SalesReportTableViewCell: UITableViewCell {
         
         var data: LineChartData = LineChartData(xVals: xValues, dataSets: lineDataSets)
         largeLineChart.data = data
+        
+        //preview
+        var soldItemDataSet1: LineChartDataSet = LineChartDataSet(yVals: soldItemEntries, label: "Sold Items")
+        soldItemDataSet1.axisDependency = ChartYAxis.AxisDependency.Left
+        soldItemDataSet1.lineWidth = 1
+        soldItemDataSet1.setColor(Constants.Colors.soldLineColor)
+        soldItemDataSet1.setCircleColor(Constants.Colors.soldColor)
+        soldItemDataSet1.circleRadius = 2
+        soldItemDataSet1.setCircleColor(Constants.Colors.soldColor)
+        soldItemDataSet1.drawCircleHoleEnabled = false
+        soldItemDataSet1.valueTextColor = Constants.Colors.soldColor
+        
+        var cancelledItemDataSet1: LineChartDataSet = LineChartDataSet(yVals: cancelledItemEntries, label: "Cancelled Items")
+        cancelledItemDataSet1.axisDependency = ChartYAxis.AxisDependency.Left
+        cancelledItemDataSet1.lineWidth = 1
+        cancelledItemDataSet1.setColor(Constants.Colors.cancelledLineColor)
+        cancelledItemDataSet1.setCircleColor(Constants.Colors.cancelledColor)
+        cancelledItemDataSet1.circleRadius = 2
+        cancelledItemDataSet1.setCircleColor(Constants.Colors.cancelledColor)
+        cancelledItemDataSet1.drawCircleHoleEnabled = false
+        cancelledItemDataSet1.valueTextColor = Constants.Colors.cancelledColor
+        
+        var lineDataSets1: [LineChartDataSet] = []
+        lineDataSets1.append(soldItemDataSet1)
+        lineDataSets1.append(cancelledItemDataSet1)
+        
+        var data1: LineChartData = LineChartData(xVals: xValues, dataSets: lineDataSets1)
+        smallLineChart.data = data1
+
+        largeLineChart.zoom(0, scaleY: 0, x: 0, y: 0)
+        largeLineChart.zoom(CGFloat(xValues.count > 4 ? xValues.count/4 : 0), scaleY: CGFloat(0), x: CGFloat(0), y: CGFloat(0))
         
     }
     

@@ -168,25 +168,23 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
     
     func fireGetFollower(searchKey: String) {
         self.emptyLabel.hidden = true
-        
-        
+    
         let manager = APIManager.sharedInstance
-        var url :String = ""
+        
+        var params: Dictionary = ["access_token" : SessionManager.accessToken()]
         if searchKey.isEmpty {
             if getCtr == 0{
                 showHUD()
             }
-            url = "\(APIAtlas.getFollowers)?access_token=\(SessionManager.accessToken())"
         } else {
-            
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-            url = "\(APIAtlas.getFollowers)?access_token=\(SessionManager.accessToken())&searchKeyword=\(searchKey)"
+            params["searchKeyword"] = searchKey
         }
         
         getCtr++
         
         manager.operationQueue.cancelAllOperations()
-        manager.GET(url, parameters: nil, success: {
+        manager.GET(APIAtlas.getFollowers, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.followersModel = FollowersModel.parseDataWithDictionary(responseObject as! NSDictionary)

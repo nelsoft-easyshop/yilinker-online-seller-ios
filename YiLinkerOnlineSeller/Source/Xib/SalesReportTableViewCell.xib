@@ -128,7 +128,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Total Sales (Gross)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mzV-Zw-gr7" userLabel="Total Sales Label">
                         <rect key="frame" x="14" y="454" width="110" height="12"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="12" id="jcY-DC-Rex"/>
+                            <constraint firstAttribute="height" constant="12" id="dNp-Vg-ohY"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="10"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -137,7 +137,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Transactions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fmC-45-PJO" userLabel="Total Transactions Label">
                         <rect key="frame" x="132" y="454" width="110" height="12"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="12" id="rH6-pO-1bx"/>
+                            <constraint firstAttribute="height" constant="12" id="0gz-dV-Ahc"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="10"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -146,7 +146,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mEQ-dp-HN3" userLabel="Total Products">
                         <rect key="frame" x="250" y="429" width="110" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="20" id="S69-ni-k4K"/>
+                            <constraint firstAttribute="height" constant="20" id="R5y-xH-3M0"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="18"/>
                         <color key="textColor" red="0.70196078429999997" green="0.69803921570000005" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -155,7 +155,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total products" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W0L-Ly-UDx" userLabel="Total Products Label">
                         <rect key="frame" x="250" y="454" width="110" height="12"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="12" id="y6m-f6-bbw"/>
+                            <constraint firstAttribute="height" constant="12" id="Uis-5d-MVz"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="10"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -164,59 +164,71 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="P 23, 000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="FqT-h7-b9d" userLabel="Total Sales">
                         <rect key="frame" x="14" y="429" width="110" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="20" id="TBm-Nn-Egj"/>
+                            <constraint firstAttribute="height" constant="20" id="Xcl-LZ-FVT"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="18"/>
                         <color key="textColor" red="0.70196078429999997" green="0.69803921570000005" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Qu-B2-7Tj" userLabel="Line Chart Big" customClass="LineChartView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="55" width="375" height="366"/>
+                        <rect key="frame" x="0.0" y="55" width="375" height="285"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="366" id="EVu-mP-BWb"/>
+                            <constraint firstAttribute="height" constant="285" id="eyb-t4-oPT"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="16" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6se-Wj-NFL" userLabel="Total Transactions">
                         <rect key="frame" x="132" y="429" width="110" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="20" id="5ZS-j7-cig"/>
+                            <constraint firstAttribute="height" constant="20" id="xl7-RS-WeE"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="18"/>
                         <color key="textColor" red="0.70196078429999997" green="0.69803921570000005" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RE4-SQ-SIa" userLabel="Line Chart Big" customClass="LineChartView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="340" width="375" height="81"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="81" id="zN0-QF-XLY"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="mEQ-dp-HN3" firstAttribute="top" secondItem="5Qu-B2-7Tj" secondAttribute="bottom" constant="8" id="0LU-nk-QEe"/>
-                    <constraint firstItem="W0L-Ly-UDx" firstAttribute="width" secondItem="mEQ-dp-HN3" secondAttribute="width" id="6CA-7h-UJ5"/>
-                    <constraint firstItem="6se-Wj-NFL" firstAttribute="top" secondItem="5Qu-B2-7Tj" secondAttribute="bottom" constant="8" id="7dG-7o-3yh"/>
-                    <constraint firstItem="mEQ-dp-HN3" firstAttribute="leading" secondItem="6se-Wj-NFL" secondAttribute="trailing" constant="8" id="G3Z-b2-WTE"/>
-                    <constraint firstItem="fmC-45-PJO" firstAttribute="top" secondItem="6se-Wj-NFL" secondAttribute="bottom" constant="5" id="IKU-iz-PTx"/>
-                    <constraint firstItem="FqT-h7-b9d" firstAttribute="leading" secondItem="78X-Q6-Idh" secondAttribute="leading" constant="14" id="IQg-q8-jaT"/>
-                    <constraint firstAttribute="trailing" secondItem="W0L-Ly-UDx" secondAttribute="trailing" constant="15" id="JTF-RM-Jc2"/>
-                    <constraint firstItem="W0L-Ly-UDx" firstAttribute="leading" secondItem="fmC-45-PJO" secondAttribute="trailing" constant="8" id="KNe-wB-p3X"/>
-                    <constraint firstItem="W0L-Ly-UDx" firstAttribute="leading" secondItem="fmC-45-PJO" secondAttribute="trailing" constant="8" id="QEK-oY-cBp"/>
-                    <constraint firstItem="fmC-45-PJO" firstAttribute="leading" secondItem="mzV-Zw-gr7" secondAttribute="trailing" constant="8" id="QcQ-5T-CMG"/>
-                    <constraint firstItem="mzV-Zw-gr7" firstAttribute="leading" secondItem="78X-Q6-Idh" secondAttribute="leading" constant="14" id="Skf-Ma-abk"/>
-                    <constraint firstItem="mzV-Zw-gr7" firstAttribute="top" secondItem="FqT-h7-b9d" secondAttribute="bottom" constant="5" id="VAO-tS-dnH"/>
-                    <constraint firstItem="5Qu-B2-7Tj" firstAttribute="leading" secondItem="78X-Q6-Idh" secondAttribute="leading" id="Wcp-m9-1Er"/>
-                    <constraint firstAttribute="trailing" secondItem="mEQ-dp-HN3" secondAttribute="trailing" constant="15" id="ajQ-bw-mDo"/>
-                    <constraint firstItem="W0L-Ly-UDx" firstAttribute="width" secondItem="fmC-45-PJO" secondAttribute="width" id="bBu-Ai-aHG"/>
-                    <constraint firstItem="6se-Wj-NFL" firstAttribute="leading" secondItem="FqT-h7-b9d" secondAttribute="trailing" constant="8" id="bD3-uf-dvL"/>
+                    <constraint firstItem="mzV-Zw-gr7" firstAttribute="top" secondItem="FqT-h7-b9d" secondAttribute="bottom" constant="5" id="1ae-Rq-NpZ"/>
+                    <constraint firstItem="6se-Wj-NFL" firstAttribute="leading" secondItem="FqT-h7-b9d" secondAttribute="trailing" constant="8" id="6fo-fO-EXC"/>
+                    <constraint firstAttribute="trailing" secondItem="RE4-SQ-SIa" secondAttribute="trailing" id="7q6-6A-vFJ"/>
+                    <constraint firstItem="W0L-Ly-UDx" firstAttribute="leading" secondItem="fmC-45-PJO" secondAttribute="trailing" constant="8" id="8P2-TN-LFz"/>
+                    <constraint firstItem="W0L-Ly-UDx" firstAttribute="top" secondItem="mEQ-dp-HN3" secondAttribute="bottom" constant="5" id="8T4-Id-tpT"/>
+                    <constraint firstItem="W0L-Ly-UDx" firstAttribute="leading" secondItem="fmC-45-PJO" secondAttribute="trailing" constant="8" id="CAA-vk-6G9"/>
+                    <constraint firstAttribute="trailing" secondItem="5Qu-B2-7Tj" secondAttribute="trailing" id="CtP-qH-ISW"/>
+                    <constraint firstAttribute="trailing" secondItem="W0L-Ly-UDx" secondAttribute="trailing" constant="15" id="F0N-rF-6mF"/>
+                    <constraint firstItem="mzV-Zw-gr7" firstAttribute="width" secondItem="mEQ-dp-HN3" secondAttribute="width" id="FZJ-y6-V4v"/>
+                    <constraint firstItem="mzV-Zw-gr7" firstAttribute="width" secondItem="fmC-45-PJO" secondAttribute="width" id="Ft0-VD-GoA"/>
+                    <constraint firstItem="fmC-45-PJO" firstAttribute="leading" secondItem="mzV-Zw-gr7" secondAttribute="trailing" constant="8" id="G8F-2D-QCg"/>
+                    <constraint firstItem="RE4-SQ-SIa" firstAttribute="leading" secondItem="78X-Q6-Idh" secondAttribute="leading" id="Hor-3l-PfY"/>
+                    <constraint firstItem="mEQ-dp-HN3" firstAttribute="top" secondItem="RE4-SQ-SIa" secondAttribute="bottom" constant="8" id="J8a-94-mqw"/>
+                    <constraint firstItem="5Qu-B2-7Tj" firstAttribute="top" secondItem="RX7-4H-vkR" secondAttribute="bottom" id="R1S-6T-RoH"/>
+                    <constraint firstItem="mzV-Zw-gr7" firstAttribute="width" secondItem="6se-Wj-NFL" secondAttribute="width" id="YVG-9f-L2x"/>
+                    <constraint firstItem="mzV-Zw-gr7" firstAttribute="width" secondItem="W0L-Ly-UDx" secondAttribute="width" id="ZEI-ed-grr"/>
                     <constraint firstItem="RX7-4H-vkR" firstAttribute="leading" secondItem="78X-Q6-Idh" secondAttribute="leading" id="bQI-Yw-Xgl"/>
-                    <constraint firstAttribute="trailing" secondItem="5Qu-B2-7Tj" secondAttribute="trailing" id="cn4-vp-n8Q"/>
-                    <constraint firstItem="W0L-Ly-UDx" firstAttribute="width" secondItem="6se-Wj-NFL" secondAttribute="width" id="eQr-Qe-Sgh"/>
-                    <constraint firstItem="mEQ-dp-HN3" firstAttribute="leading" secondItem="6se-Wj-NFL" secondAttribute="trailing" constant="8" id="gsL-cM-JlQ"/>
-                    <constraint firstItem="5Qu-B2-7Tj" firstAttribute="top" secondItem="RX7-4H-vkR" secondAttribute="bottom" id="hk0-PX-d2W"/>
+                    <constraint firstItem="RE4-SQ-SIa" firstAttribute="top" secondItem="5Qu-B2-7Tj" secondAttribute="bottom" id="cBp-hv-ToD"/>
+                    <constraint firstAttribute="centerX" secondItem="6se-Wj-NFL" secondAttribute="centerX" id="cuE-I7-AEw"/>
+                    <constraint firstItem="mzV-Zw-gr7" firstAttribute="width" secondItem="FqT-h7-b9d" secondAttribute="width" id="fsK-2w-qee"/>
+                    <constraint firstItem="mEQ-dp-HN3" firstAttribute="leading" secondItem="6se-Wj-NFL" secondAttribute="trailing" constant="8" id="gD9-IU-oaB"/>
+                    <constraint firstItem="FqT-h7-b9d" firstAttribute="leading" secondItem="78X-Q6-Idh" secondAttribute="leading" constant="14" id="hgS-JQ-uuZ"/>
                     <constraint firstItem="RX7-4H-vkR" firstAttribute="top" secondItem="78X-Q6-Idh" secondAttribute="top" id="iDk-Iz-blE"/>
+                    <constraint firstItem="6se-Wj-NFL" firstAttribute="top" secondItem="RE4-SQ-SIa" secondAttribute="bottom" constant="8" id="jsy-rb-2ye"/>
+                    <constraint firstItem="mEQ-dp-HN3" firstAttribute="leading" secondItem="6se-Wj-NFL" secondAttribute="trailing" constant="8" id="kw7-C5-pKs"/>
                     <constraint firstAttribute="trailing" secondItem="RX7-4H-vkR" secondAttribute="trailing" id="m2k-cf-gj2"/>
-                    <constraint firstItem="W0L-Ly-UDx" firstAttribute="top" secondItem="mEQ-dp-HN3" secondAttribute="bottom" constant="5" id="oLr-o1-vtF"/>
-                    <constraint firstItem="W0L-Ly-UDx" firstAttribute="width" secondItem="mzV-Zw-gr7" secondAttribute="width" id="oxj-oi-MdB"/>
-                    <constraint firstItem="FqT-h7-b9d" firstAttribute="top" secondItem="5Qu-B2-7Tj" secondAttribute="bottom" constant="8" id="pmY-b7-RNb"/>
-                    <constraint firstItem="W0L-Ly-UDx" firstAttribute="width" secondItem="FqT-h7-b9d" secondAttribute="width" id="qa4-pg-bdV"/>
-                    <constraint firstItem="6se-Wj-NFL" firstAttribute="leading" secondItem="FqT-h7-b9d" secondAttribute="trailing" constant="8" id="v9G-YS-719"/>
-                    <constraint firstItem="fmC-45-PJO" firstAttribute="leading" secondItem="mzV-Zw-gr7" secondAttribute="trailing" constant="8" id="vul-4v-CCj"/>
+                    <constraint firstItem="6se-Wj-NFL" firstAttribute="leading" secondItem="FqT-h7-b9d" secondAttribute="trailing" constant="8" id="mLa-Qw-pbp"/>
+                    <constraint firstItem="fmC-45-PJO" firstAttribute="leading" secondItem="mzV-Zw-gr7" secondAttribute="trailing" constant="8" id="odL-xt-BCE"/>
+                    <constraint firstItem="5Qu-B2-7Tj" firstAttribute="leading" secondItem="78X-Q6-Idh" secondAttribute="leading" id="pKh-5B-Lba"/>
+                    <constraint firstItem="fmC-45-PJO" firstAttribute="top" secondItem="6se-Wj-NFL" secondAttribute="bottom" constant="5" id="sXm-be-SVr"/>
+                    <constraint firstAttribute="trailing" secondItem="mEQ-dp-HN3" secondAttribute="trailing" constant="15" id="spc-5t-OGF"/>
+                    <constraint firstAttribute="centerX" secondItem="fmC-45-PJO" secondAttribute="centerX" id="uk8-He-gc7"/>
+                    <constraint firstItem="FqT-h7-b9d" firstAttribute="top" secondItem="RE4-SQ-SIa" secondAttribute="bottom" constant="8" id="vD1-go-spf"/>
+                    <constraint firstItem="mzV-Zw-gr7" firstAttribute="leading" secondItem="78X-Q6-Idh" secondAttribute="leading" constant="14" id="xQG-Gu-Y2e"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -224,6 +236,7 @@
                 <outlet property="cancelledCircleView" destination="PvP-aI-emc" id="fzn-cN-2in"/>
                 <outlet property="dateLabel" destination="sJF-YJ-VdG" id="4Rf-qE-Cav"/>
                 <outlet property="largeLineChart" destination="5Qu-B2-7Tj" id="E7o-Tp-17e"/>
+                <outlet property="smallLineChart" destination="RE4-SQ-SIa" id="PWN-9j-K8i"/>
                 <outlet property="soldCircleView" destination="QiW-W6-icp" id="gc7-Ik-tpc"/>
                 <outlet property="totalProducts" destination="mEQ-dp-HN3" id="N8x-x5-t5V"/>
                 <outlet property="totalSalesLabel" destination="FqT-h7-b9d" id="6A7-c9-SKV"/>
