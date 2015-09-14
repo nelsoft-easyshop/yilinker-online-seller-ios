@@ -52,6 +52,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         self.initializeViews()
         self.registerNibs()
         self.fireStoreInfo()
+        self.backButton()
         
         var tap = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         tap.cancelsTouchesInView = false
@@ -112,6 +113,23 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 self.showAlert("Error", message: "Something went wrong.")
                 println(error)
             })
+    }
+    
+    //MARK: Navigation bar
+    func backButton() {
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButton.frame = CGRectMake(0, 0, 40, 40)
+        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    func back() {
+        self.navigationController!.popViewControllerAnimated(true)
     }
     
     //MARK: Tableview delegate methods
@@ -571,6 +589,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             
         }
     }
+    
     /*
     // MARK: - Navigation
 
