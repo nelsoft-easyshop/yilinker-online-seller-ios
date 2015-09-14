@@ -144,7 +144,7 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
         cell.selectionStyle = .None
         
         cell.parentCategoryLabel.text = customizedCategoriesModel.customizedCategories[indexPath.row].name
-        cell.subCategoriesLabel.text = String(customizedCategoriesModel.customizedCategories[indexPath.row].categoryId)
+//        cell.subCategoriesLabel.text = String(customizedCategoriesModel.customizedCategories[indexPath.row].categoryId)
         
         
 //        let subCategoriesArray: NSArray = self.subCategories[indexPath.row]
