@@ -19,7 +19,7 @@
                 <outlet property="closeButton" destination="gJu-yV-dgd" id="nfS-RN-nNP"/>
                 <outlet property="newNumberTextField" destination="4n3-Z9-ZzD" id="SdP-D8-kNJ"/>
                 <outlet property="oldNumberTextField" destination="Vo8-Wb-PZj" id="yKJ-P2-FXD"/>
-                <outlet property="submitButton" destination="F4e-jY-O8N" id="Krg-h4-yqm"/>
+                <outlet property="submitButton" destination="F4e-jY-O8N" id="782-Qh-txf"/>
                 <outlet property="topConstraint" destination="cj6-MO-bJh" id="qfN-Aq-75E"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -29,7 +29,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9kf-eJ-roQ">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9kf-eJ-roQ" customClass="DynamicRoundedView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
                     <rect key="frame" x="8" y="158" width="359" height="262"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t8D-jP-buX">
@@ -66,7 +66,7 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F4e-jY-O8N">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F4e-jY-O8N" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
                                     <rect key="frame" x="239" y="148" width="96" height="28"/>
                                     <color key="backgroundColor" red="0.20000000000000001" green="0.65098039220000004" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
@@ -76,8 +76,13 @@
                                     <state key="normal" title="SUBMIT">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="5"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
                                     <connections>
-                                        <action selector="submit:" destination="-1" eventType="touchUpInside" id="b4q-ra-Aml"/>
+                                        <action selector="submit:" destination="-1" eventType="touchUpInside" id="kUd-ch-lFp"/>
                                     </connections>
                                 </button>
                                 <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="+63xxxxxxxxxx" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vo8-Wb-PZj">
@@ -86,7 +91,7 @@
                                         <constraint firstAttribute="height" constant="30" id="HsI-QC-CAO"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                    <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="next"/>
                                     <connections>
                                         <action selector="textFieldDidBeginEditing:" destination="-1" eventType="editingDidBegin" id="GjT-9D-9u9"/>
                                     </connections>
@@ -157,6 +162,11 @@
                         <constraint firstItem="H16-a7-Fj7" firstAttribute="top" secondItem="9kf-eJ-roQ" secondAttribute="top" id="tUd-mR-9pn"/>
                         <constraint firstItem="H16-a7-Fj7" firstAttribute="leading" secondItem="9kf-eJ-roQ" secondAttribute="leading" id="vy5-5w-Akd"/>
                     </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
             <constraints>

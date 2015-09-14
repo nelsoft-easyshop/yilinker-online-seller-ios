@@ -34,7 +34,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kuK-qh-y2y">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kuK-qh-y2y" customClass="DynamicRoundedView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
                     <rect key="frame" x="8" y="142" width="359" height="332"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aj8-vW-XFN">
@@ -134,7 +134,7 @@
                                     </state>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                            <real key="value" value="5"/>
+                                            <real key="value" value="4"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                     <connections>
@@ -185,6 +185,11 @@
                         <constraint firstAttribute="bottom" secondItem="Sf1-2M-nEg" secondAttribute="bottom" constant="8" id="iQB-fn-Tmy"/>
                         <constraint firstAttribute="trailing" secondItem="aj8-vW-XFN" secondAttribute="trailing" id="sJO-pM-4vC"/>
                     </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
             <constraints>

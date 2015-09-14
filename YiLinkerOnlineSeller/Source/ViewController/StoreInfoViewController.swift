@@ -425,18 +425,32 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldContactNumber" : oldNumber, "newContactNumber" : newNumber];
         manager.POST(APIAtlas.sellerChangeMobileNumber, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.storeInfoModel?.contact_number = newNumber
-            self.verifyOrChange = 1
-            self.storeInfoVerify()
-            println(self.verifyOrChange)
-            self.mobileNumber = newNumber
-            println(self.mobileNumber)
-            println(responseObject.description)
-            self.tableView.reloadData()
+            if responseObject["isSuccessful"] as! Bool {
+                self.storeInfoModel?.contact_number = newNumber
+                self.verifyOrChange = 1
+                self.storeInfoVerify()
+                println(self.verifyOrChange)
+                self.mobileNumber = newNumber
+                println(self.mobileNumber)
+                println(responseObject.description)
+                self.tableView.reloadData()
+                self.hud?.hide(true)
+            } else {
+                self.showAlert("Error", message: responseObject["message"] as! String)
+                self.dismissView()
+                self.hud?.hide(true)
+            }
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                println(error.description)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 404 {
+                    let data = error.userInfo as! Dictionary<String, AnyObject>
+                    self.showAlert("Error", message: data["message"] as! String)
+                } else {
+                    self.showAlert("Error", message: "Something went wrong.")
+                }
+                self.dismissView()
         })
     }
     

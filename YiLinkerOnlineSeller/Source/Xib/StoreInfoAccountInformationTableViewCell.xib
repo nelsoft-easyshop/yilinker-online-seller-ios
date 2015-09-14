@@ -69,22 +69,6 @@
                         <color key="textColor" red="1" green="0.2160583505" blue="0.20584909009999999" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tjg-OX-UXr">
-                        <rect key="frame" x="7" y="154" width="345" height="58"/>
-                        <color key="backgroundColor" red="0.20000000000000001" green="0.65098039220000004" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="345" id="nh9-Sq-Zjg"/>
-                            <constraint firstAttribute="height" constant="58" id="xxE-Xb-6sh"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Panton-ExtraBold" family="Panton" pointSize="14"/>
-                        <state key="normal" title="SAVE">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="saveAccountInfo:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="JwW-mb-3vh"/>
-                        </connections>
-                    </button>
                     <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Jr-B8-Mxd">
                         <rect key="frame" x="8" y="101" width="347" height="30"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -109,6 +93,21 @@
                             <action selector="changePassword:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="z5m-kp-0lv"/>
                         </connections>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tjg-OX-UXr">
+                        <rect key="frame" x="7" y="154" width="345" height="58"/>
+                        <color key="backgroundColor" red="0.20000000000000001" green="0.65098039220000004" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="58" id="xxE-Xb-6sh"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-ExtraBold" family="Panton" pointSize="14"/>
+                        <state key="normal" title="SAVE">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="saveAccountInfo:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="JwW-mb-3vh"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
@@ -126,6 +125,7 @@
                     <constraint firstItem="NxH-dT-DmS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="72" id="fjC-jf-n7O"/>
                     <constraint firstItem="tjg-OX-UXr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-1" id="sku-UH-IyB"/>
                     <constraint firstItem="tjg-OX-UXr" firstAttribute="top" secondItem="7Jr-B8-Mxd" secondAttribute="bottom" constant="23" id="wCz-r0-qMz"/>
+                    <constraint firstAttribute="centerX" secondItem="tjg-OX-UXr" secondAttribute="centerX" id="x7a-SJ-LCe"/>
                     <constraint firstItem="7Jr-B8-Mxd" firstAttribute="top" secondItem="PSA-q5-LA3" secondAttribute="bottom" id="yOt-a4-tcO"/>
                 </constraints>
             </tableViewCellContentView>
