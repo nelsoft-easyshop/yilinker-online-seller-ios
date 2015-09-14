@@ -8,3 +8,4 @@
 #import <MBProgressHUD.h>
 #import "UIImageView+WebCache.h"
 #import "FSCalendar.h"
+#import <Google/CloudMessaging.h>
