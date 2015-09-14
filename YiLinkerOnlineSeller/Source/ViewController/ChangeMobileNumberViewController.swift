@@ -18,7 +18,8 @@ class ChangeMobileNumberViewController: UIViewController {
    
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var submitButton: UIButton!
+   
+    @IBOutlet weak var submitButton: DynamicRoundedButton!
     @IBOutlet weak var oldNumberTextField: UITextField!
     @IBOutlet weak var newNumberTextField: UITextField!
     

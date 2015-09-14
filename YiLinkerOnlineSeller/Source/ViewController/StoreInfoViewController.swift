@@ -52,6 +52,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         self.initializeViews()
         self.registerNibs()
         self.fireStoreInfo()
+        self.backButton()
         
         var tap = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         tap.cancelsTouchesInView = false
@@ -112,6 +113,23 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 self.showAlert("Error", message: "Something went wrong.")
                 println(error)
             })
+    }
+    
+    //MARK: Navigation bar
+    func backButton() {
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButton.frame = CGRectMake(0, 0, 40, 40)
+        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    func back() {
+        self.navigationController!.popViewControllerAnimated(true)
     }
     
     //MARK: Tableview delegate methods
@@ -425,18 +443,32 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldContactNumber" : oldNumber, "newContactNumber" : newNumber];
         manager.POST(APIAtlas.sellerChangeMobileNumber, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.storeInfoModel?.contact_number = newNumber
-            self.verifyOrChange = 1
-            self.storeInfoVerify()
-            println(self.verifyOrChange)
-            self.mobileNumber = newNumber
-            println(self.mobileNumber)
-            println(responseObject.description)
-            self.tableView.reloadData()
+            if responseObject["isSuccessful"] as! Bool {
+                self.storeInfoModel?.contact_number = newNumber
+                self.verifyOrChange = 1
+                self.storeInfoVerify()
+                println(self.verifyOrChange)
+                self.mobileNumber = newNumber
+                println(self.mobileNumber)
+                println(responseObject.description)
+                self.tableView.reloadData()
+                self.hud?.hide(true)
+            } else {
+                self.showAlert("Error", message: responseObject["message"] as! String)
+                self.dismissView()
+                self.hud?.hide(true)
+            }
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                println(error.description)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 404 {
+                    let data = error.userInfo as! Dictionary<String, AnyObject>
+                    self.showAlert("Error", message: data["message"] as! String)
+                } else {
+                    self.showAlert("Error", message: "Something went wrong.")
+                }
+                self.dismissView()
         })
     }
     
@@ -557,6 +589,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             
         }
     }
+    
     /*
     // MARK: - Navigation
 
