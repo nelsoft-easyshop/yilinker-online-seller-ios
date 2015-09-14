@@ -9,7 +9,8 @@
 import UIKit
 
 protocol EditSubCategoriesRemovedTableViewCellDelegate {
-    func updateCategoryItems(index: Int)
+    func addThisItemToBeRemove(index: Int)
+    func removeThisItemToBeRemove(index: Int)
 }
 
 class EditSubCategoriesRemovedTableViewCell: UITableViewCell {
@@ -43,13 +44,14 @@ class EditSubCategoriesRemovedTableViewCell: UITableViewCell {
     }
     
     func selected() {
-        delegate?.updateCategoryItems(self.tag)
+        delegate?.addThisItemToBeRemove(self.tag)
         self.subCategoryLabel.alpha = 0.50
         checkImageView.hidden = false
         imageContainerView.backgroundColor = .redColor()
     }
     
     func deselected() {
+        delegate?.removeThisItemToBeRemove(self.tag)
         self.subCategoryLabel.alpha = 1
         checkImageView.hidden = true
         imageContainerView.backgroundColor = Constants.Colors.backgroundGray
