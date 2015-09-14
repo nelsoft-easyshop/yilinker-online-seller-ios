@@ -258,8 +258,12 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
 //        } else {
 //            newFrame.size.height = CGRectGetMaxY(self.categoryDetailsView.frame) + 1.0
 //        }
-        setPosition(self.subCategoriesView, from: self.categoryDetailsView)
-        newFrame.size.height = CGRectGetMaxY(self.subCategoriesView.frame) + 1.0
+        if self.parentId == 0 {
+            setPosition(self.subCategoriesView, from: self.categoryDetailsView)
+            newFrame.size.height = CGRectGetMaxY(self.subCategoriesView.frame) + 1.0
+        } else {
+            newFrame.size.height = CGRectGetMaxY(self.categoryDetailsView.frame) + 1.0
+        }
 
         self.headerView.frame = newFrame
         
@@ -663,6 +667,17 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     func updateParentCategory(parentCategory: String, parentId: Int) {
         self.parentId = parentId
         self.categoryDetailsView.parentCategoryLabel.text = parentCategory
+        
+//        if self.parentId != 0 {
+//            self.subCategoriesView.setTitle("ADD SUB CATEGORY")
+//        } else {
+//            if subCategories2.count != 0 {
+//                self.subCategoriesView.setTitle("EDIT")
+//            } else {
+//                self.subCategoriesView.setTitle("ADD SUB CATEGORY")
+//            }
+//        }
+        
         setUpViews()
     }
     
@@ -676,6 +691,20 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         }
         subCategories.delegate = self
         self.navigationController?.pushViewController(subCategories, animated: false)
+    }
+    
+    // MARK: - Edit Sub Categories View Controller
+    
+    func addSubCategories(controller: EditSubCategoriesViewController, subCategories: [SubCategoryModel]) {
+        self.subCategories2 = subCategories
+        
+        if self.subCategories2.count != 0 {
+            self.subCategoriesView.setTitle("EDIT")
+        } else {
+            self.subCategoriesView.setTitle("ADD SUB CATEGORY")
+        }
+        
+        self.tableView.reloadData()
     }
     
     // MARK: - Category Items View Controller Delegate
@@ -709,33 +738,9 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         populateDetails()
     }
     
-    // MARK: Edit Item View Controller Delegate
-    
-//    func updateProductItems(productModel: ProductManagementProductModel, itemIndexes: [Int], products: [ProductManagementProductsModel]) {
-//        self.productManagementProductModel = productModel
-//        self.itemIndexes = itemIndexes
-//        self.selectedProductsModel = products
-//        populateDetails()
-//    }
-    
     func updateProductItems(products: [ProductManagementProductsModel]) {
         self.selectedProductsModel = products
         populateDetails()
     }
-    
-    // MARK: - Edit Sub Categories View Controller
-    
-    func addSubCategories(controller: EditSubCategoriesViewController, subCategories: [SubCategoryModel]) {
-        self.subCategories2 = subCategories
-        
-        if self.subCategories2.count != 0 {
-            self.subCategoriesView.setTitle("EDIT")
-        } else {
-            self.subCategoriesView.setTitle("ADD SUB CATEGORY")
-        }
-        
-        self.tableView.reloadData()
-    }
-    
 }
 
