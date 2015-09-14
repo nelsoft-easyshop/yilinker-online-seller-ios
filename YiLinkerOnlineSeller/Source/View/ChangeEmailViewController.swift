@@ -14,6 +14,7 @@ protocol ChangeEmailViewControllerDelegate {
 
 class ChangeEmailViewController: UIViewController {
     
+    @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var submitEmailAddressButton: DynamicRoundedButton!
     
     @IBOutlet weak var closeButton: UIButton!
@@ -87,6 +88,17 @@ class ChangeEmailViewController: UIViewController {
         self.hud?.dimBackground = false
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
+    }
+    
+    @IBAction func textFieldDidBeginEditing(sender: AnyObject) {
+        if IphoneType.isIphone4() {
+            topConstraint.constant = 40
+        } else if IphoneType.isIphone5() {
+            topConstraint.constant = 60
+        } else {
+            topConstraint.constant = 100
+        }
+        
     }
 
     /*

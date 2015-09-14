@@ -26,6 +26,7 @@
                 <outlet property="oldEmailLabel" destination="oEc-gx-88g" id="aDk-FT-UHr"/>
                 <outlet property="submitEmailAddressButton" destination="ik6-N1-JMZ" id="8LQ-Or-bTz"/>
                 <outlet property="titleLabel" destination="7ri-Jr-Y4Z" id="cFe-Go-4kd"/>
+                <outlet property="topConstraint" destination="Hcw-9P-yN3" id="8m6-Zj-Qc0"/>
                 <outlet property="view" destination="snU-yY-few" id="teO-Bm-7TK"/>
             </connections>
         </placeholder>
@@ -121,6 +122,9 @@
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                    <connections>
+                                        <action selector="textFieldDidBeginEditing:" destination="-1" eventType="editingDidBegin" id="ONf-8j-cxF"/>
+                                    </connections>
                                 </textField>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ik6-N1-JMZ" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
                                     <rect key="frame" x="239" y="222" width="96" height="28"/>
