@@ -359,7 +359,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                 }
                 
                 var formattedCategories: String = ""
-                println(self.parentId)
+
                 if self.parentId == 0 {
                     var subs: [NSDictionary] = []
                     for i in 0..<self.subCategories2.count {
@@ -400,15 +400,17 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                 }
 
                 var subs: [NSDictionary] = []
-                for i in 0..<self.subCategories2.count {
-                    var subProducts: [Int] = []
-                    for j in 0..<self.subCategories2[i].products.count {
-                        subProducts.append(self.subCategories2[i].products[j].productId.toInt()!)
+                if self.parentId == 0 {
+                    for i in 0..<self.subCategories2.count {
+                        var subProducts: [Int] = []
+                        for j in 0..<self.subCategories2[i].products.count {
+                            subProducts.append(self.subCategories2[i].products[j].productId.toInt()!)
+                        }
+                        subs.append(["categoryId": self.subCategories2[i].categoryId,
+                            "categoryName": self.subCategories2[i].categoryName,
+                            "parentId": self.subCategories2[i].parentId,
+                            "products": subProducts])
                     }
-                    subs.append(["categoryId": self.subCategories2[i].categoryId,
-                               "categoryName": self.subCategories2[i].categoryName,
-                                   "parentId": self.subCategories2[i].parentId,
-                                   "products": subProducts])
                 }
                 
                 var parameters: [NSDictionary] = []
