@@ -493,24 +493,29 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             
             self.categoryDetailsModel = CategoryDetailsModel.parseDataWithDictionary(responseObject as! NSDictionary)
             self.customizedCategoryProducts = self.categoryDetailsModel.products
-            self.subCategories2 = self.categoryDetailsModel.subcategories
+//            self.subCategories2 = self.categoryDetailsModel.subcategories
 
-//            for i in 0..<self.categoryDetailsModel.subcategories.count {
-//
-//                for j in 0..<self.categoryDetailsModel.subcategories[i].products.count {
-//                    println(self.categoryDetailsModel.subcategories[i].products[j].productName)
-//                }
-//                
-//                self.subCategories2.append(SubCategoryModel(message: "",
-//                    isSuccessful: true,
-//                    categoryId: self.categoryDetailsModel.subcategories[i].categoryId,
-//                    categoryName: self.categoryDetailsModel.subcategories[i].categoryName,
-//                    parentName: self.categoryDetailsModel.categoryName,
-//                    parentId: self.categoryDetailsModel.categoryId,
-//                    sortOrder: self.categoryDetailsModel.subcategories[i].sortOrder,
-//                    products: [CategoryProductModel](),
-//                    local: false))
-//            }
+            for i in 0..<self.categoryDetailsModel.subcategories.count {
+
+                var subProducts: [CategoryProductModel] = []
+                for j in 0..<self.categoryDetailsModel.subcategories[i].products.count {
+                    let products = CategoryProductModel()
+                    products.productId = self.categoryDetailsModel.subcategories[i].products[j].productId
+                    products.productName = self.categoryDetailsModel.subcategories[i].products[j].productName
+                    products.image = self.categoryDetailsModel.subcategories[i].products[j].image
+                    subProducts.append(products)
+                }
+                
+                self.subCategories2.append(SubCategoryModel(message: "",
+                    isSuccessful: true,
+                    categoryId: self.categoryDetailsModel.subcategories[i].categoryId,
+                    categoryName: self.categoryDetailsModel.subcategories[i].categoryName,
+                    parentName: self.categoryDetailsModel.categoryName,
+                    parentId: self.categoryDetailsModel.categoryId,
+                    sortOrder: self.categoryDetailsModel.subcategories[i].sortOrder,
+                    products: subProducts,
+                    local: false))
+            }
             
             for i in 0..<self.customizedCategoryProducts.count {
                 let categoryProducts = ProductManagementProductsModel()
