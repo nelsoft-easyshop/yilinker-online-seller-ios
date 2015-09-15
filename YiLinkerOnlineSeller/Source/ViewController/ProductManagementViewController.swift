@@ -18,7 +18,6 @@ struct Status {
 
 class ProductManagementViewController: UIViewController, ProductManagementModelViewControllerDelegate {
     
-
     @IBOutlet weak var searchBarContainerView: UIView!
     @IBOutlet weak var searchBarTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
