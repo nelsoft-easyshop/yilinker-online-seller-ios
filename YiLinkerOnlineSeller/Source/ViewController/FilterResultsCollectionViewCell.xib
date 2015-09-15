@@ -6,17 +6,21 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="FilterResultsCollectionViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="368" height="63"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FilterResultsCollectionViewCell" id="gTV-IL-0wX" customClass="FilterResultsCollectionViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="1" width="368" height="40"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="368" height="63"/>
+                <rect key="frame" x="0.0" y="0.0" width="368" height="40"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="right2" translatesAutoresizingMaskIntoConstraints="NO" id="U2j-q0-sQz">
-                        <rect key="frame" x="348" y="21" width="10" height="21"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right2" translatesAutoresizingMaskIntoConstraints="NO" id="U2j-q0-sQz">
+                        <rect key="frame" x="348" y="9" width="10" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="HpR-Gb-doS"/>
+                            <constraint firstAttribute="width" constant="10" id="UOj-sX-Bfo"/>
+                        </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="TID-123-456-789" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jcG-pZ-D7j">
-                        <rect key="frame" x="8" y="21" width="296" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TID-123-456-789" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="296" translatesAutoresizingMaskIntoConstraints="NO" id="jcG-pZ-D7j">
+                        <rect key="frame" x="8" y="9" width="296" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -24,8 +28,20 @@
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
-            <size key="customSize" width="368" height="63"/>
-            <point key="canvasLocation" x="287" y="319.5"/>
+            <constraints>
+                <constraint firstItem="jcG-pZ-D7j" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="9" id="Af5-9E-c8P"/>
+                <constraint firstItem="U2j-q0-sQz" firstAttribute="leading" secondItem="jcG-pZ-D7j" secondAttribute="trailing" constant="44" id="IBt-KM-pbG"/>
+                <constraint firstItem="jcG-pZ-D7j" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="S7d-fg-3bz"/>
+                <constraint firstAttribute="trailing" secondItem="U2j-q0-sQz" secondAttribute="trailing" constant="10" id="TFh-lM-unv"/>
+                <constraint firstAttribute="bottom" secondItem="U2j-q0-sQz" secondAttribute="bottom" constant="10" id="lhw-la-CVJ"/>
+                <constraint firstAttribute="bottom" secondItem="jcG-pZ-D7j" secondAttribute="bottom" constant="10" id="mSo-Fs-C50"/>
+                <constraint firstItem="U2j-q0-sQz" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="9" id="tfr-c6-CDs"/>
+            </constraints>
+            <size key="customSize" width="368" height="40"/>
+            <connections>
+                <outlet property="transactionLabel" destination="jcG-pZ-D7j" id="Y2w-nn-uY1"/>
+            </connections>
+            <point key="canvasLocation" x="287" y="320"/>
         </collectionViewCell>
     </objects>
     <resources>

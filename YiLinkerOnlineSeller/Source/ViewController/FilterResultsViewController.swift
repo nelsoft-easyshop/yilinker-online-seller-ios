@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FilterResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource , FilterViewControllerDelegate {
+class FilterResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, FilterViewControllerDelegate {
 
     @IBOutlet weak var dimView: UIView!
     
@@ -63,7 +63,24 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
         var nibFilter = UINib(nibName: "FilterByTableViewCell", bundle: nil)
         self.filterTableView.registerNib(nibFilter, forCellReuseIdentifier: "FilterByTableViewCell")
         
-        println("search model \(self.searchModel?.invoiceNumber.count)")
+        let collectionViewNib: UINib = UINib(nibName: "FilterResultsCollectionViewCell", bundle: nil)
+        self.searchFilterCollectionView.registerNib(collectionViewNib, forCellWithReuseIdentifier: "FilterResultsCollectionViewCell")
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        
+        if IphoneType.isIphone4()  {
+            layout.itemSize = CGSize(width: self.view.frame.size.width - 100, height: 79)
+        } else if IphoneType.isIphone5() {
+            layout.itemSize = CGSize(width: self.view.frame.size.width - 80, height: 79)
+        } else {
+            layout.itemSize = CGSize(width: self.view.frame.size.width - 20, height: 79)
+        }
+        
+        layout.minimumLineSpacing = 20
+        layout.footerReferenceSize = CGSizeMake(self.searchFilterCollectionView.frame.size.width, 38)
+        searchFilterCollectionView.collectionViewLayout = layout
+        searchFilterCollectionView.dataSource = self
+        searchFilterCollectionView.delegate = self
+
         
     }
 
@@ -130,7 +147,38 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
         println(filterBySelected)
     
     }
-
+    
+    //MARK: Collection view delegate methods
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.searchModel!.invoiceNumber.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        let cell : FilterResultsCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("FilterResultsCollectionViewCell", forIndexPath: indexPath) as! FilterResultsCollectionViewCell
+        
+        if self.searchModel != nil {
+            cell.transactionLabel.text = self.searchModel?.invoiceNumber[indexPath.row]
+        }
+        
+        return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        //self.showView()
+        
+    }
+    
+    func collectionView(collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+            return CGSizeMake(collectionView.bounds.size.width, CGFloat(40.0))
+    }
+    
     func dismissView() {
         UIView.animateWithDuration(0.25, animations: {
             self.dimView2.alpha = 0
