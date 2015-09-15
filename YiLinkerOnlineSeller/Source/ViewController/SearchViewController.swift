@@ -190,7 +190,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //self.searchTextField.resignFirstResponder()
         self.searchTextField.endEditing(true)
         
-        if filterBySelected == 0 || filterBySelected == 2 || filterBySelected == 2 {
+        if filterBySelected == 0 || filterBySelected == 2 || filterBySelected == 3 {
             self.showAlert(title: "Information", message: "Search by \(filterBy[filterBySelected]) is not yet available.")
         } else {
             self.fireSearch()
