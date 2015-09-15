@@ -27,24 +27,23 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JuM-gK-w3p">
-                    <rect key="frame" x="0.0" y="70" width="375" height="140"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="140" id="ak5-Gp-aHJ"/>
-                    </constraints>
-                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P7d-vm-IdI" userLabel="Start">
                     <rect key="frame" x="0.0" y="30" width="375" height="39"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Starts" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mL3-2h-Xxj">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Starts" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mL3-2h-Xxj">
                             <rect key="frame" x="8" y="9" width="179" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="6oU-RO-Gxu"/>
+                            </constraints>
                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
                             <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="August 9, 2015" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOC-Sf-JrJ">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="August 9, 2015" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOC-Sf-JrJ">
                             <rect key="frame" x="188" y="9" width="179" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="Eb1-iC-BGP"/>
+                            </constraints>
                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="16"/>
                             <color key="textColor" red="0.45882352939999999" green="0.20392156859999999" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -52,7 +51,14 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="39" id="v9f-R7-oWT"/>
+                        <constraint firstAttribute="trailing" secondItem="cOC-Sf-JrJ" secondAttribute="trailing" constant="8" id="4yt-8e-ORW"/>
+                        <constraint firstItem="mL3-2h-Xxj" firstAttribute="leading" secondItem="P7d-vm-IdI" secondAttribute="leading" constant="8" id="7uv-CR-wU4"/>
+                        <constraint firstAttribute="height" constant="39" id="PZG-Qj-xd7"/>
+                        <constraint firstItem="cOC-Sf-JrJ" firstAttribute="top" secondItem="P7d-vm-IdI" secondAttribute="top" constant="9" id="RDJ-A8-EZb"/>
+                        <constraint firstItem="cOC-Sf-JrJ" firstAttribute="width" secondItem="mL3-2h-Xxj" secondAttribute="width" id="VrT-QT-qKT"/>
+                        <constraint firstItem="cOC-Sf-JrJ" firstAttribute="leading" secondItem="mL3-2h-Xxj" secondAttribute="trailing" constant="1" id="vI2-HP-lpe"/>
+                        <constraint firstItem="mL3-2h-Xxj" firstAttribute="top" secondItem="P7d-vm-IdI" secondAttribute="top" constant="9" id="vjI-Ez-94W"/>
+                        <constraint firstItem="cOC-Sf-JrJ" firstAttribute="leading" secondItem="mL3-2h-Xxj" secondAttribute="trailing" constant="1" id="xK7-GN-5C2"/>
                     </constraints>
                 </view>
                 <datePicker contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="g5I-sC-xWS">
@@ -60,7 +66,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <color key="tintColor" red="0.45882352939999999" green="0.20392156859999999" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="140" id="FKf-6F-LD8"/>
+                        <constraint firstAttribute="height" constant="140" id="MOc-MY-VHM"/>
                     </constraints>
                     <date key="date" timeIntervalSinceReferenceDate="462299215.74659801">
                         <!--2015-08-26 16:26:55 +0000-->
@@ -73,16 +79,22 @@
                     </connections>
                 </datePicker>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ISM-8n-RAf" userLabel="End">
-                    <rect key="frame" x="0.0" y="211" width="375" height="39"/>
+                    <rect key="frame" x="0.0" y="212" width="375" height="39"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Ends" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AH5-bH-BOq">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ends" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AH5-bH-BOq">
                             <rect key="frame" x="8" y="9" width="179" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="3pV-mX-FQt"/>
+                            </constraints>
                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
                             <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="August 9, 2015" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VPT-4L-Ntn">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="August 9, 2015" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VPT-4L-Ntn">
                             <rect key="frame" x="188" y="9" width="179" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="5OA-vg-Lgj"/>
+                            </constraints>
                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="16"/>
                             <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -90,24 +102,28 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="39" id="Xug-HJ-STF"/>
+                        <constraint firstItem="VPT-4L-Ntn" firstAttribute="width" secondItem="AH5-bH-BOq" secondAttribute="width" id="0ND-q1-Blq"/>
+                        <constraint firstItem="AH5-bH-BOq" firstAttribute="top" secondItem="ISM-8n-RAf" secondAttribute="top" constant="9" id="Dbf-TI-PS4"/>
+                        <constraint firstItem="VPT-4L-Ntn" firstAttribute="leading" secondItem="AH5-bH-BOq" secondAttribute="trailing" constant="1" id="IJd-0w-BC4"/>
+                        <constraint firstItem="VPT-4L-Ntn" firstAttribute="leading" secondItem="AH5-bH-BOq" secondAttribute="trailing" constant="1" id="YSI-6m-yNR"/>
+                        <constraint firstItem="VPT-4L-Ntn" firstAttribute="top" secondItem="ISM-8n-RAf" secondAttribute="top" constant="9" id="mHo-bo-F0z"/>
+                        <constraint firstAttribute="trailing" secondItem="VPT-4L-Ntn" secondAttribute="trailing" constant="8" id="q3W-uY-Npa"/>
+                        <constraint firstAttribute="height" constant="39" id="tYg-he-sKd"/>
+                        <constraint firstItem="AH5-bH-BOq" firstAttribute="leading" secondItem="ISM-8n-RAf" secondAttribute="leading" constant="8" id="z8a-63-6kO"/>
                     </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="ISM-8n-RAf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="4Py-Ad-5Qa"/>
-                <constraint firstItem="g5I-sC-xWS" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="6sg-dc-6pe"/>
-                <constraint firstAttribute="trailing" secondItem="g5I-sC-xWS" secondAttribute="trailing" id="8TF-No-WgU"/>
-                <constraint firstAttribute="trailing" secondItem="P7d-vm-IdI" secondAttribute="trailing" id="B4N-a2-bZM"/>
-                <constraint firstItem="P7d-vm-IdI" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="30" id="GDu-WL-J4n"/>
-                <constraint firstAttribute="trailing" secondItem="ISM-8n-RAf" secondAttribute="trailing" id="Nwg-I3-PnH"/>
-                <constraint firstItem="JuM-gK-w3p" firstAttribute="top" secondItem="P7d-vm-IdI" secondAttribute="bottom" constant="1" id="Qw0-qx-SFV"/>
-                <constraint firstItem="ISM-8n-RAf" firstAttribute="top" secondItem="g5I-sC-xWS" secondAttribute="bottom" constant="1" id="XDk-KX-aCt"/>
-                <constraint firstAttribute="trailing" secondItem="JuM-gK-w3p" secondAttribute="trailing" id="ZgJ-fC-6Id"/>
-                <constraint firstItem="JuM-gK-w3p" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="bg5-bS-Geq"/>
-                <constraint firstItem="g5I-sC-xWS" firstAttribute="top" secondItem="P7d-vm-IdI" secondAttribute="bottom" constant="1" id="tm0-4a-yqp"/>
-                <constraint firstItem="P7d-vm-IdI" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="wwn-9x-eOW"/>
+                <constraint firstAttribute="trailing" secondItem="ISM-8n-RAf" secondAttribute="trailing" id="CYZ-yI-f8F"/>
+                <constraint firstItem="ISM-8n-RAf" firstAttribute="top" secondItem="g5I-sC-xWS" secondAttribute="bottom" constant="2" id="MbF-8s-biu"/>
+                <constraint firstItem="g5I-sC-xWS" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="P9j-Vn-SdB"/>
+                <constraint firstAttribute="trailing" secondItem="g5I-sC-xWS" secondAttribute="trailing" id="Stb-Nr-0nT"/>
+                <constraint firstItem="P7d-vm-IdI" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="30" id="WO5-gP-tWC"/>
+                <constraint firstItem="g5I-sC-xWS" firstAttribute="top" secondItem="P7d-vm-IdI" secondAttribute="bottom" constant="1" id="dmf-aL-gMY"/>
+                <constraint firstItem="P7d-vm-IdI" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="lqc-Iw-NQk"/>
+                <constraint firstItem="ISM-8n-RAf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="pIh-81-rd2"/>
+                <constraint firstAttribute="trailing" secondItem="P7d-vm-IdI" secondAttribute="trailing" id="uL0-DH-Mh2"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="297.5" y="197.5"/>
