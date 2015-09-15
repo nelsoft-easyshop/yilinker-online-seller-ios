@@ -15,7 +15,7 @@ class CCCItemImagesView: UIView, UICollectionViewDataSource {
     var itemsModel: NSArray = []
     var categoryProducts: [CategoryProductModel] = []
     var productManagement: [ProductManagementProductsModel] = []
-    var selectedItems: [Int] = []
+    var selectedItems: [ProductManagementProductsModel] = []
     
     override func awakeFromNib() {
         let nib = UINib(nibName: "ItemImagesHorizontalCollectionViewCell", bundle: nil)
@@ -39,8 +39,7 @@ class CCCItemImagesView: UIView, UICollectionViewDataSource {
         if categoryProducts.count != 0 {
             cell.setItemImage(categoryProducts[indexPath.row].image)
         } else {
-            let index: Int = selectedItems[indexPath.row]
-            cell.setItemImage(productManagement[index].image)
+            cell.setItemImage(selectedItems[indexPath.row].image)
         }
         
         return cell
@@ -57,13 +56,19 @@ class CCCItemImagesView: UIView, UICollectionViewDataSource {
         self.collectionView.reloadData()
     }
     
-    func setProductsManagement(#products: [ProductManagementProductsModel], selectedItems: [Int]) {
+//    func setProductsManagement(#products: [ProductManagementProductsModel], selectedItems: [ProductManagementProductsModel]) {
+//
+//        self.selectedItems = selectedItems
+//        if products.count != 0 {
+//            self.productManagement = products
+//        }
+//        
+//        self.collectionView.reloadData()
+//    }
 
-        self.selectedItems = selectedItems
-        if products.count != 0 {
-            self.productManagement = products
-        }
+    func setProductsManagement(#products: [ProductManagementProductsModel]) {
         
+        self.selectedItems = products
         self.collectionView.reloadData()
     }
     

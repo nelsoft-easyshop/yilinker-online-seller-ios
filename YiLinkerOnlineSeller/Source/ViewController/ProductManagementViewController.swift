@@ -512,8 +512,6 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             self.selectedItems = self.selectedItems.filter({$0 != self.productModel.products[index].id})
         }
         
-        println(self.selectedItems)
-        
         if self.selectedItems.count != 0 {
             self.buttonsContainer.hidden = false
             self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0)
