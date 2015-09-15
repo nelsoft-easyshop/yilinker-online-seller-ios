@@ -81,7 +81,16 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
         searchFilterCollectionView.dataSource = self
         searchFilterCollectionView.delegate = self
 
+        /*
+        for var i = 0; i < self.searchModel!.invoiceNumber.count; i++ {
+            self.allObjectArray.addObject(i)
+        }
+        self.elements.addObjectsFromArray(self.allObjectArray.subarrayWithRange(NSMakeRange(0, 20)))
+        */
         
+        self.title = "\(self.searchModel!.invoiceNumber.count) Results"
+        
+        self.backButton()
     }
 
     override func didReceiveMemoryWarning() {
@@ -165,7 +174,7 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        return UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -176,7 +185,37 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
     func collectionView(collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-            return CGSizeMake(collectionView.bounds.size.width, CGFloat(40.0))
+            return CGSizeMake(collectionView.bounds.size.width, CGFloat(50.0))
+    }
+    
+    /*
+    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        nextpage = elements.count - 5
+        if indexPath.row == nextpage {
+            currentPage++
+            nextpage = elements.count  - 5
+            elements.addObjectsFromArray(allObjectArray.subarrayWithRange(NSMakeRange(currentPage, 20)))
+            self.searchFilterCollectionView.reloadData()
+        }
+
+    }
+    */
+    
+    //MARK: Navigation bar
+    func backButton() {
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButton.frame = CGRectMake(0, 0, 40, 40)
+        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    func back() {
+        self.navigationController!.popViewControllerAnimated(true)
     }
     
     func dismissView() {
