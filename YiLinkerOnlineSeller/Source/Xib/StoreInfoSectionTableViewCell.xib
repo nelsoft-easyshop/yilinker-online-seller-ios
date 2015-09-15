@@ -23,8 +23,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QR Code" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g88-Q9-kGf">
                         <rect key="frame" x="8" y="8" width="123" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="123" id="LUj-eW-C16"/>
-                            <constraint firstAttribute="height" constant="21" id="jc8-pz-cMY"/>
+                            <constraint firstAttribute="width" constant="123" id="Xb3-dr-nOJ"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -34,7 +33,6 @@
                         <rect key="frame" x="31" y="134" width="369" height="45"/>
                         <color key="backgroundColor" red="0.49803921568627452" green="0.0" blue="0.49803921568627452" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="369" id="GK8-Oe-4cC"/>
                             <constraint firstAttribute="height" constant="45" id="uI2-fB-sOn"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
@@ -47,10 +45,9 @@
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iz3-oe-xRY">
-                        <rect key="frame" x="8" y="60" width="415" height="56"/>
+                        <rect key="frame" x="8" y="37" width="415" height="81"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="415" id="uhG-mx-YMX"/>
-                            <constraint firstAttribute="height" constant="56" id="zel-3g-vSP"/>
+                            <constraint firstAttribute="height" constant="81" id="sgG-7g-dB8"/>
                         </constraints>
                         <string key="text">Generate your store QR code and spread the word about yout store. Your QR code points to your store page can be scanned by most martphones for easier access.</string>
                         <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
@@ -59,21 +56,21 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailingMargin" secondItem="Ved-1A-3Tj" secondAttribute="trailing" constant="23" id="BZo-U2-9uX"/>
                     <constraint firstAttribute="bottomMargin" secondItem="Ved-1A-3Tj" secondAttribute="bottom" constant="10" id="GSi-TU-d13"/>
-                    <constraint firstItem="iz3-oe-xRY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="GbW-Sw-3Cz"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="Ved-1A-3Tj" secondAttribute="trailing" constant="23" id="IX4-JN-L2N"/>
-                    <constraint firstItem="iz3-oe-xRY" firstAttribute="top" secondItem="g88-Q9-kGf" secondAttribute="bottom" constant="31" id="Mb0-yp-FdH"/>
                     <constraint firstItem="g88-Q9-kGf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="NVk-CQ-L4e"/>
+                    <constraint firstItem="iz3-oe-xRY" firstAttribute="top" secondItem="g88-Q9-kGf" secondAttribute="bottom" constant="8" id="bmA-Oi-UoC"/>
+                    <constraint firstItem="Ved-1A-3Tj" firstAttribute="top" secondItem="iz3-oe-xRY" secondAttribute="bottom" constant="16" id="fSf-50-Xng"/>
                     <constraint firstItem="iz3-oe-xRY" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="maQ-yr-zgd"/>
-                    <constraint firstItem="Ved-1A-3Tj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="23" id="mgA-iD-5v6"/>
                     <constraint firstItem="g88-Q9-kGf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="nuj-EL-ex3"/>
-                    <constraint firstItem="Ved-1A-3Tj" firstAttribute="top" secondItem="iz3-oe-xRY" secondAttribute="bottom" constant="18" id="t2G-y5-TBv"/>
+                    <constraint firstItem="Ved-1A-3Tj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="23" id="uzi-bW-Lni"/>
+                    <constraint firstAttribute="centerX" secondItem="iz3-oe-xRY" secondAttribute="centerX" id="vkW-51-u5j"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="generateQRCodeButton" destination="Ved-1A-3Tj" id="rFt-g3-ebA"/>
             </connections>
-            <point key="canvasLocation" x="267.5" y="383"/>
+            <point key="canvasLocation" x="297.5" y="351"/>
         </tableViewCell>
     </objects>
 </document>

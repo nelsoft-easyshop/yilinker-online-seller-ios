@@ -15,6 +15,7 @@ protocol VerifyViewControllerDelegate {
 
 class VerifyNumberViewController: UIViewController {
 
+    @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var verifyButton: UIButton!
     @IBOutlet weak var requestNewVerificationButton: UIButton!
@@ -50,6 +51,9 @@ class VerifyNumberViewController: UIViewController {
         self.viewContainer.layer.cornerRadius = 5.0
         self.viewContainer.clipsToBounds = true
 
+        self.verifyButton.layer.cornerRadius = 4.0
+        self.verifyButton.clipsToBounds = true
+        
         timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("subtractTime"), userInfo: nil, repeats: true)
         
     }
@@ -190,6 +194,18 @@ class VerifyNumberViewController: UIViewController {
         self.presentViewController(alertController, animated: true) {
             
         }
+    }
+    
+    //MARK: Textfield
+    @IBAction func textFieldDidBeginEditing(sender: AnyObject) {
+        if IphoneType.isIphone4() {
+            topConstraint.constant = 40
+        } else if IphoneType.isIphone5() {
+            topConstraint.constant = 60
+        } else {
+            topConstraint.constant = 100
+        }
+        
     }
     /*
     // MARK: - Navigation

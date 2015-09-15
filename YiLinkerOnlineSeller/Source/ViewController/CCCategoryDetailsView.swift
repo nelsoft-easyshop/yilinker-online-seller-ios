@@ -30,15 +30,9 @@ class CCCategoryDetailsView: UIView {
         
     }
     
-//    func textDidChanged() {
-//        if self.categoryNameTextField.text == "" {
-//            self.parentCategoryLabel.userInteractionEnabled = false
-//            self.parentCategoryLabel.alpha = 0.70
-//        } else {
-//            self.parentCategoryLabel.userInteractionEnabled = true
-//            self.parentCategoryLabel.alpha = 1
-//        }
-//    }
+    func updateParentText(text: String) {
+        self.parentCategoryLabel.text = text
+    }
     
     func parentCategoryAction(gesture: UIGestureRecognizer) {
         self.delegate?.gotoParentCategory()

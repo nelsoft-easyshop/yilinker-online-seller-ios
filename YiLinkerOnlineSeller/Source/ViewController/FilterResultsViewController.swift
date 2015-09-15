@@ -10,6 +10,8 @@ import UIKit
 
 class FilterResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource , FilterViewControllerDelegate {
 
+    @IBOutlet weak var dimView: UIView!
+    
     @IBOutlet weak var sortView: UIView!
     
     @IBOutlet weak var filterView: UIView!
@@ -24,10 +26,15 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
     
     var filterBy = ["Old to New", "New to Old", "A Week Ago", "A Month"]
     
-    
-    @IBOutlet weak var dimView: UIView!
-    
     var dimView2: UIView!
+    
+    var searchModel: SearchModel?
+    
+    var currentPage: Int = 0
+    var nextpage: Int = 0
+    
+    var allObjectArray: NSMutableArray = []
+    var elements: NSMutableArray = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +62,8 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
         
         var nibFilter = UINib(nibName: "FilterByTableViewCell", bundle: nil)
         self.filterTableView.registerNib(nibFilter, forCellReuseIdentifier: "FilterByTableViewCell")
+        
+        println("search model \(self.searchModel?.invoiceNumber.count)")
         
     }
 
