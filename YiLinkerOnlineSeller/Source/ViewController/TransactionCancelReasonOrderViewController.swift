@@ -153,7 +153,7 @@ class TransactionCancelReasonOrderViewController: UIViewController, UITextViewDe
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
            println(responseObject)
             var response: NSDictionary = responseObject as! NSDictionary
-            if response["isSucccessful"] as! Bool {
+            if response["isSuccessful"] as! Bool {
                 for subValue in response["data"] as! NSArray {
                     self.cancellationModels.append(TransactionCancellationModel.parseDataWithDictionary(subValue as! NSDictionary))
                 }
