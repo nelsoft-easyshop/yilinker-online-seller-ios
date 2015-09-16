@@ -298,6 +298,7 @@
 		794A965B1B9EAAEA002F32A0 /* FollowersModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A965A1B9EAAEA002F32A0 /* FollowersModel.swift */; };
 		794AFDA01BA3D3190063976E /* TransactionConsigneeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794AFD9F1BA3D3190063976E /* TransactionConsigneeModel.swift */; };
 		794AFDA21BA405BF0063976E /* DeliveryLogsItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794AFDA11BA405BF0063976E /* DeliveryLogsItemModel.swift */; };
+		797777A31BA924AD004D48FC /* TransactionItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797777A21BA924AD004D48FC /* TransactionItemModel.swift */; };
 		799892F31B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */; };
 		799892F51B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */; };
 		799892F71B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */; };
@@ -800,6 +801,7 @@
 		794A965A1B9EAAEA002F32A0 /* FollowersModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowersModel.swift; sourceTree = "<group>"; };
 		794AFD9F1BA3D3190063976E /* TransactionConsigneeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionConsigneeModel.swift; sourceTree = "<group>"; };
 		794AFDA11BA405BF0063976E /* DeliveryLogsItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryLogsItemModel.swift; sourceTree = "<group>"; };
+		797777A21BA924AD004D48FC /* TransactionItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionItemModel.swift; sourceTree = "<group>"; };
 		799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardHeaderCollectionViewCell.xib; sourceTree = "<group>"; };
 		799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashBoardHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardItemCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -1135,6 +1137,7 @@
 				79F107671BA1C46500B6CE51 /* TransactionCancellationModel.swift */,
 				794AFD9F1BA3D3190063976E /* TransactionConsigneeModel.swift */,
 				794AFDA11BA405BF0063976E /* DeliveryLogsItemModel.swift */,
+				797777A21BA924AD004D48FC /* TransactionItemModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2212,6 +2215,7 @@
 				0C8D7F951B8F12C200B3FA4E /* ProductUploadAttributeListTableViewController.swift in Sources */,
 				0C8D7FAA1B8F577300B3FA4E /* ProductUploadAddFooterView.swift in Sources */,
 				F7C40F5B1B983A7B0091C16C /* SemiRoundedButton.swift in Sources */,
+				797777A31BA924AD004D48FC /* TransactionItemModel.swift in Sources */,
 				0CAACCB01B9D2DC000BE5EF3 /* ResellerViewController.swift in Sources */,
 				79E633A41B9B27E70062DB14 /* FSCalendarHeader.m in Sources */,
 				0C65F8D81B8E0C4600504D86 /* ProductUploadDimensionsAndWeightTableViewCell.swift in Sources */,

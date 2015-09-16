@@ -19,6 +19,8 @@ class TransactionProductTableViewController: UITableViewController {
     
     var tableHeaderView: TransactionProductDetailsHeaderView!
     
+    var productModel: TransactionOrderProductModel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -47,6 +49,8 @@ class TransactionProductTableViewController: UITableViewController {
         if tableHeaderView == nil {
             tableHeaderView = XibHelper.puffViewWithNibName("TransactionProductDetailsHeaderView", index: 0) as! TransactionProductDetailsHeaderView
             tableHeaderView.frame.size.width = self.view.frame.size.width
+            tableHeaderView.productNameLabel.text = productModel.productName
+            tableHeaderView.productDescriptionLabel.text = ""
         }
         
         self.tableView.tableHeaderView = tableHeaderView
@@ -131,6 +135,9 @@ class TransactionProductTableViewController: UITableViewController {
         
         if indexPath.section == 0 {
             let cell: TransactionProductPurchaseTableViewCell = tableView.dequeueReusableCellWithIdentifier(purchaseCellIdentifier, forIndexPath: indexPath) as! TransactionProductPurchaseTableViewCell
+            cell.quantityLabel.text = "\(productModel.quantity)"
+            cell.priceLabel.text = productModel.unitPrice
+            cell.totalCostLabel.text = productModel.totalPrice
             return cell
         } else if indexPath.section == 1 {
             let cell: TransactionProductDetailsTableViewCell = tableView.dequeueReusableCellWithIdentifier(productCellIdentifier, forIndexPath: indexPath) as! TransactionProductDetailsTableViewCell
@@ -146,49 +153,5 @@ class TransactionProductTableViewController: UITableViewController {
     }
     
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
     
 }

@@ -38,7 +38,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        transactionDetailsModel = TransactionDetailsModel(isSuccessful: false, message: "", transactionInvoice: "", transactionShippingFee: "", transactionDate: "2000-01-01 00:00:00.000000", transactionPrice: "", transactionQuantity: 0, transactionStatusId: 0, transactionStatusName: "", transactionPayment: "", transactionOrderProducts: [])
+        transactionDetailsModel = TransactionDetailsModel(isSuccessful: false, message: "", transactionInvoice: "", transactionShippingFee: "", transactionDate: "2000-01-01 00:00:00.000000", transactionPrice: "", transactionQuantity: 0, transactionStatusId: 0, transactionStatusName: "", transactionPayment: "", transactionItems: [])
         
         transactionConsigneeModel = TransactionConsigneeModel(isSuccessful: false, message: "", deliveryAddress: "", consigneeName: "", consigneeContactNumber: "")
         
@@ -46,11 +46,11 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         initializeTableView()
         initializeViews()
         registerNibs()
+        fireGetTransactionDetails()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        fireGetTransactionDetails()
     }
     
     override func didReceiveMemoryWarning() {
@@ -139,7 +139,11 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         if section == 0 {           //Details
             return 1
         } else if section == 1 {    //Product Lis
-            return transactionDetailsModel.transactionOrderProducts.count
+            if transactionDetailsModel.transactionItems.count != 0 {
+                return transactionDetailsModel.transactionItems[0].products.count
+            } else {
+                return 0
+            }
         } else if section == 2 {    //Consignee
             return 1
         }  else if section == 3 {    //Delivery Status
@@ -164,8 +168,9 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             return cell
         } else if indexPath.section == 1 {
             let cell: TransactionProductTableViewCell = tableView.dequeueReusableCellWithIdentifier(productsCellIdentifier, forIndexPath: indexPath) as! TransactionProductTableViewCell
-            cell.productNameLabel.text = transactionDetailsModel.transactionOrderProducts[indexPath.row].productName
-            
+            if transactionDetailsModel.transactionItems.count != 0 {
+                cell.productNameLabel.text = transactionDetailsModel.transactionItems[0].products[indexPath.row].productName
+            }
             return cell
         }  else if indexPath.section == 2 {
             let cell: TransactionConsigneeTableViewCell = tableView.dequeueReusableCellWithIdentifier(consigneeCellIdentifier, forIndexPath: indexPath) as! TransactionConsigneeTableViewCell
@@ -230,6 +235,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         if indexPath.section == 1 {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
             var productDetailsController = TransactionProductTableViewController(nibName: "TransactionProductTableViewController", bundle: nil)
+            productDetailsController.productModel = transactionDetailsModel.transactionItems[0].products[indexPath.row]
             self.navigationController?.pushViewController(productDetailsController, animated:true)
         }
     }

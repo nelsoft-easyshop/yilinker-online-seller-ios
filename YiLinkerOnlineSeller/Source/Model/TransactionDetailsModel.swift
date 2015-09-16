@@ -20,9 +20,9 @@ class TransactionDetailsModel: NSObject {
     var transactionStatusId: Int = 0
     var transactionStatusName: String = ""
     var transactionPayment: String = ""
-    var transactionOrderProducts: [TransactionOrderProductModel] = []
+    var transactionItems: [TransactionItemModel] = []
     
-    init(isSuccessful: Bool, message: String, transactionInvoice: String, transactionShippingFee: String, transactionDate: String, transactionPrice: String, transactionQuantity: Int, transactionStatusId: Int, transactionStatusName: String, transactionPayment: String, transactionOrderProducts: [TransactionOrderProductModel]) {
+    init(isSuccessful: Bool, message: String, transactionInvoice: String, transactionShippingFee: String, transactionDate: String, transactionPrice: String, transactionQuantity: Int, transactionStatusId: Int, transactionStatusName: String, transactionPayment: String, transactionItems: [TransactionItemModel]) {
         self.isSuccessful = isSuccessful
         self.message = message
         self.transactionInvoice = transactionInvoice
@@ -33,7 +33,7 @@ class TransactionDetailsModel: NSObject {
         self.transactionStatusId = transactionStatusId
         self.transactionStatusName = transactionStatusName
         self.transactionPayment = transactionPayment
-        self.transactionOrderProducts = transactionOrderProducts
+        self.transactionItems = transactionItems
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> TransactionDetailsModel {
@@ -48,7 +48,8 @@ class TransactionDetailsModel: NSObject {
         var transactionStatusId: Int = 0
         var transactionStatusName: String = ""
         var transactionPayment: String = ""
-        var transactionOrderProducts: [TransactionOrderProductModel] = []
+        
+        var transactionItems: [TransactionItemModel] = []
         
         if dictionary.isKindOfClass(NSDictionary) {
             if dictionary["message"] != nil {
@@ -121,9 +122,9 @@ class TransactionDetailsModel: NSObject {
                         }
                     }
                     
-                    if tempDict["transactionOrderProducts"] != nil {
-                        for subValue in tempDict["transactionOrderProducts"] as! NSArray {
-                            transactionOrderProducts.append(TransactionOrderProductModel.parseDataWithDictionary(subValue))
+                    if tempDict["transactionItems"] != nil {
+                        for subValue in tempDict["transactionItems"] as! NSArray {
+                            transactionItems.append(TransactionItemModel.parseDataWithDictionary(subValue))
                         }
                     }
                     
@@ -131,7 +132,7 @@ class TransactionDetailsModel: NSObject {
             }
         }
         
-        return TransactionDetailsModel(isSuccessful: isSuccessful, message: message, transactionInvoice: transactionInvoice, transactionShippingFee: transactionShippingFee, transactionDate: transactionDate, transactionPrice: transactionPrice, transactionQuantity: transactionQuantity, transactionStatusId: transactionStatusId, transactionStatusName: transactionStatusName, transactionPayment: transactionPayment, transactionOrderProducts: transactionOrderProducts)
+        return TransactionDetailsModel(isSuccessful: isSuccessful, message: message, transactionInvoice: transactionInvoice, transactionShippingFee: transactionShippingFee, transactionDate: transactionDate, transactionPrice: transactionPrice, transactionQuantity: transactionQuantity, transactionStatusId: transactionStatusId, transactionStatusName: transactionStatusName, transactionPayment: transactionPayment, transactionItems: transactionItems)
     }
 
 }
