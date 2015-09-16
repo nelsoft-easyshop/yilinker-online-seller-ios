@@ -8,8 +8,10 @@
 
 import UIKit
 
-class FilterResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FilterResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource , FilterViewControllerDelegate {
 
+    @IBOutlet weak var dimView: UIView!
+    
     @IBOutlet weak var sortView: UIView!
     
     @IBOutlet weak var filterView: UIView!
@@ -18,13 +20,21 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
     
     @IBOutlet weak var noResultsLabel: UILabel!
     
-    @IBOutlet weak var dimView: UIView!
-    
     @IBOutlet weak var searchFilterCollectionView: UICollectionView!
     
     var filterBySelected: String = ""
     
     var filterBy = ["Old to New", "New to Old", "A Week Ago", "A Month"]
+    
+    var dimView2: UIView!
+    
+    var searchModel: SearchModel?
+    
+    var currentPage: Int = 0
+    var nextpage: Int = 0
+    
+    var allObjectArray: NSMutableArray = []
+    var elements: NSMutableArray = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +43,13 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
         self.filterTableView.dataSource = self
         self.filterTableView.separatorInset = UIEdgeInsetsZero
         self.filterTableView.layoutMargins = UIEdgeInsetsZero
+        
+        self.edgesForExtendedLayout = .None
+        dimView2 = UIView(frame: UIScreen.mainScreen().bounds)
+        dimView2.backgroundColor=UIColor.blackColor()
+        dimView2.alpha = 0.5
+        self.navigationController?.view.addSubview(dimView2)
+        dimView2.hidden = true
         
         self.dimView.hidden = true
         self.noResultsLabel.hidden = true
@@ -45,6 +62,8 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
         
         var nibFilter = UINib(nibName: "FilterByTableViewCell", bundle: nil)
         self.filterTableView.registerNib(nibFilter, forCellReuseIdentifier: "FilterByTableViewCell")
+        
+        println("search model \(self.searchModel?.invoiceNumber.count)")
         
     }
 
@@ -70,10 +89,12 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func filter(){
+        self.showView()
         var filterViewController = FilterViewController(nibName: "FilterViewController", bundle: nil)
         filterViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         filterViewController.providesPresentationContextTransitionStyle = true
         filterViewController.definesPresentationContext = true
+        filterViewController.delegate = self
         self.tabBarController?.presentViewController(filterViewController, animated: true, completion: nil)
     }
     
@@ -109,9 +130,22 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
         println(filterBySelected)
     
     }
-    
 
+    func dismissView() {
+        UIView.animateWithDuration(0.25, animations: {
+            self.dimView2.alpha = 0
+            }, completion: { finished in
+                self.dimView2.hidden = true
+        })
+    }
     
+    func showView(){
+        dimView2.hidden = false
+        UIView.animateWithDuration(0.25, animations: {
+            self.dimView2.alpha = 0.5
+            }, completion: { finished in
+        })
+    }
     /*
     // MARK: - Navigation
 

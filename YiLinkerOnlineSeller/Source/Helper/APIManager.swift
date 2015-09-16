@@ -32,6 +32,7 @@ struct APIAtlas {
     static let categoryUrl = "product/getCategories"
     static let brandUrl = "product/getBrands"
     static let uploadUrl = "product/upload"
+    static let getProductDetails = "auth/product/getProductDetail"
     static let sellerStoreInfo = "auth/merchant/getUserInfo"
     static let sellerBankAccountList = "auth/bank/account/getBankAccounts"
     static let sellerAddBankAccount = "auth/bank/account/addBankAccount"
@@ -40,16 +41,17 @@ struct APIAtlas {
     static let sellerStoreAddresses = "auth/address/getUserAddresses"
     static let sellerSetDefaultStoreAddress = "auth/address/setDefaultAddress"
     static let sellerDeleteStoreAddress = "auth/address/deleteUserAddress"
+    static let transactionList = "auth/getTransactionList"
     static let sellerChangeMobileNumber = "auth/user/changeContactNumber"
+    static let sellerResendVerification = "auth/sms/getCode?access_token="
     static let sellerMobileNumberVerification = "auth/sms/verify"
     static let sellerChangePassword = "auth/user/changePassword"
     static let sellerUpdateSellerInfo = "auth/merchant/updateUserInfo"
-    
     static let getCustomizedCategories   = "category/getCustomCategories"           // Applied
     static let getCategoryDetails        = "auth/category/getCategoryDetails"       // Applied
     static let editCustomizedCategory    = "auth/category/updateCustomCategory"
     static let addCustomizedCategory     = "auth/category/addCustomCategory"        // Applied
-    static let deleteCustomizedCategory  = "auth/category/deleteCustomCategory"
+    static let deleteCustomizedCategory  = "auth/category/deleteCustomCategory"     // Applied
     static let sortParentCategory        = "auth/category/sortParentCategories"
     static let checkIfCategoryNameExists = "auth/category/checkIfCategoryExists"
     static let getAllCategoryProducts    = "auth/category/getAllCategoryProducts"
@@ -63,6 +65,19 @@ struct APIAtlas {
     static let addAddressUrl = "auth/address/addNewAddress"
     static let sellerBank = "auth/bank/getEnabledBanks"
     static let sellerEditBankAccount = "auth/bank/account/editBankAccount"
+    
+    //My Points
+    static let getPointsTotal = "auth/user/getPoints"
+    static let getPointsHistory = "auth/user/getPointHistory"
+    
+    static let getSalesReport = "auth/merchant/getSalesReport"
+    static let getFollowers = "auth/merchant/getFollowers"
+    
+    static let getActivityLogs = "auth/user/activityLog"
+    
+    //Search
+    static let transaction = "auth/transaction/searchKeyword?access_token="
+    
     static let baseUrl = APIEnvironment.baseUrl()
 }
 

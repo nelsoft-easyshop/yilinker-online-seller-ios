@@ -39,7 +39,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             self.presentViewController(signInViewController, animated: false, completion: nil)
         }
         
-        println(SessionManager.accessToken())
+//        println(SessionManager.accessToken())
         registerNibs()
         initializeViews()
     }
@@ -201,7 +201,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        println("Clicked item \(tableData[indexPath.row])")
+//        println("Clicked item \(tableData[indexPath.row])")
         if indexPath.row == 0 {
             var storeInfoViewController = StoreInfoViewController(nibName: "StoreInfoViewController", bundle: nil)
             self.navigationController?.pushViewController(storeInfoViewController, animated:true)
@@ -273,6 +273,9 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.storeInfo = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
             
+            SessionManager.setFullAddress(self.storeInfo.store_address)
+            SessionManager.setUserFullName(self.storeInfo.name)
+            
             NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.store_name, forKey: "storeName")
             NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.store_address, forKey: "storeAddress")
             NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.totalSales, forKey: "totalSales")
@@ -287,21 +290,50 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
                 
-                self.storeInfo = StoreInfoModel(name: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "")
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                
-                var store_name1 = NSUserDefaults.standardUserDefaults().stringForKey("storeName")
-                println("Store name \(store_name1)")
-                self.storeInfo.store_name = NSUserDefaults.standardUserDefaults().stringForKey("storeName")!
-                self.storeInfo.store_address = NSUserDefaults.standardUserDefaults().stringForKey("storeAddress")!
-                self.storeInfo.totalSales = NSUserDefaults.standardUserDefaults().stringForKey("totalSales")!
-                self.storeInfo.productCount = NSUserDefaults.standardUserDefaults().integerForKey("productCount")
-                self.storeInfo.transactionCount = NSUserDefaults.standardUserDefaults().integerForKey("transactionCount")
-                
-                self.collectionView.reloadData()
+                if task.statusCode == 401 {
+                    self.fireRefreshToken()
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    self.storeInfo = StoreInfoModel(name: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", account_number: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "")
+                    
+                    
+                    var store_name1 = NSUserDefaults.standardUserDefaults().stringForKey("storeName")
+                    println("Store name \(store_name1)")
+                    self.storeInfo.store_name = NSUserDefaults.standardUserDefaults().stringForKey("storeName")!
+                    self.storeInfo.store_address = NSUserDefaults.standardUserDefaults().stringForKey("storeAddress")!
+                    self.storeInfo.totalSales = NSUserDefaults.standardUserDefaults().stringForKey("totalSales")!
+                    self.storeInfo.productCount = NSUserDefaults.standardUserDefaults().integerForKey("productCount")
+                    self.storeInfo.transactionCount = NSUserDefaults.standardUserDefaults().integerForKey("transactionCount")
+                    
+                    self.collectionView.reloadData()
+                }
                 
                 println(error)
         })
+    }
+    
+    func fireRefreshToken() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.fireStoreInfo()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+        })
+        
     }
     
 }

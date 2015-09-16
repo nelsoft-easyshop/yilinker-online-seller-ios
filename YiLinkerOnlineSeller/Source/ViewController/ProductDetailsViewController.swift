@@ -14,18 +14,34 @@ struct myConstant {
 
 class ProductDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProductDescriptionViewDelegate {
 
+    // MARK: - Models
+    var productDetailsModel: ProductDetailsModel!
+    var productAttributesModel: [ProductAttributeModel]!
+    var productUnitsModel: [ProductUnitsModel]!
+    var productImagesModel: [ProductImagesModel]!
+    // Upload Models
+    var productUploadModel: ProductModel!
+    var uploadAttributeModel: [AttributeModel] = []
+    var uploadCombinationModel: [CombinationModel] = []
+    
+    // MARK: - Views
+    @IBOutlet weak var tableView: UITableView!
     var headerView: UIView!
     var productImagesView: ProductImagesView!
     var productDescriptionView: ProductDescriptionView!
-    
-    @IBOutlet weak var tableView: UITableView!
+    var hud: MBProgressHUD?
     
     var newFrame: CGRect!
+    
+    var productId: String = "1"
+    
+    // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        requestProductDetails()
         customizeNavigationBar()
         
         let nib = UINib(nibName: "ProductDetailsTableViewCell", bundle: nil)
@@ -50,7 +66,6 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     func getProductImagesView() -> ProductImagesView {
         if self.productImagesView == nil {
             self.productImagesView = XibHelper.puffViewWithNibName("ProductDetailViews", index: 0) as! ProductImagesView
-            
             self.productImagesView.frame.size.width = self.view.frame.size.width
         }
         return self.productImagesView
@@ -111,7 +126,8 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         
         var titleLabel = UILabel(frame: CGRectMake(10.0, 0, self.view.frame.size.width - 10.0, sectionView.frame.size.height))
         titleLabel.text = "Title"
-        titleLabel.font = UIFont.boldSystemFontOfSize(17.0)
+        titleLabel.font = UIFont(name: "Panton-SemoBold", size: 17.0)
+        titleLabel.textColor = UIColor.darkGrayColor()
         sectionView.addSubview(titleLabel)
         
         var underlineView = UIView(frame: CGRectMake(0, sectionView.frame.size.height - 1, self.view.frame.size.width, 1))
@@ -121,6 +137,106 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         return sectionView
     }
     
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func populateDetails() {
+        
+        self.productImagesView.setDetails(productDetailsModel, images: productImagesModel)
+        self.productDescriptionView.descriptionLabel.text = productDetailsModel.shortDescription
+        
+//        self.productUploadModel.attributes        = uploadAttributeModel
+//        self.productUploadModel.validCombinations = uploadCombinationModel
+//        self.productUploadModel.images            = [UIImage]()
+        
+//        self.productUploadModel.category  = CategoryModel(uid: 0, name: "", hasChildren: "")
+//        self.productUploadModel.brand     = BrandModel(name: "", brandId: 1)
+//        self.productUploadModel.condition = ConditionModel(uid: 0, name: "")
+//        self.productUploadModel.quantity  = 0
+        
+//        self.productUploadModel.name                = ""
+//        self.productUploadModel.shortDescription    = ""
+//        self.productUploadModel.completeDescription = ""
+//        self.productUploadModel.sku                 = ""
+//        self.productUploadModel.retailPrice         = ""
+//        self.productUploadModel.discoutedPrice      = ""
+//        self.productUploadModel.width               = ""
+//        self.productUploadModel.height              = ""
+//        self.productUploadModel.length              = ""
+//        self.productUploadModel.weigth              = ""
+    }
+    
+    func localJson() {
+        if let path = NSBundle.mainBundle().pathForResource("productDetailsItemsJson", ofType: "json") {
+            if let jsonData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil) {
+                if let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers, error: nil) as? NSDictionary {
+                    if let data : NSDictionary = jsonResult["data"] as? NSDictionary {
+                        if let items : NSArray = data["items"] as? NSArray {
+                            for item in items as NSArray {
+                                if let tempVar = item["items"] as? NSDictionary {
+                                    println(tempVar)
+//                                    for tempVar2 in tempVar as NSArray {
+//                                        
+//                                    }
+                                }
+//
+//                                if let tempVar = category["fullName"] as? String {
+//                                    fullName.append(tempVar)
+//                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    // MARK: - Request
+    
+    func requestProductDetails() {
+        self.showHUD()
+        let id: String = "?access_token=" + SessionManager.accessToken() + "&productId=" + productId
+        
+        let manager = APIManager.sharedInstance
+        manager.GET(APIAtlas.getProductDetails + id, parameters: nil, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            if responseObject["isSuccessful"] as! Bool {
+                self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
+                self.productAttributesModel = self.productDetailsModel.attributes
+                self.productUnitsModel = self.productDetailsModel.productUnits
+                self.productImagesModel = self.productDetailsModel.images
+                
+                self.populateDetails()
+            } else {
+                self.showAlert(title: "Error", message: responseObject["message"] as! String)
+                
+            }
+            self.hud?.hide(true)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println(error)
+                self.hud?.hide(true)
+        })
+    }
+    
     // MARK: - Actions
     
     func backAction() {
@@ -128,9 +244,9 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func editAction() {
-        let alertController = UIAlertController(title: "YiLinker", message: "Goto Upload Page.", preferredStyle: .Alert)
-        alertController.addAction(UIAlertAction(title: "CLOSE", style: .Destructive, handler: nil))
-        presentViewController(alertController, animated: true, completion: nil)
+        let upload = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
+//        upload.productModel = productUploadModel
+        self.navigationController?.pushViewController(upload, animated: true)
     }
 
     // MARK: - Table View Data Source
@@ -140,7 +256,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 4
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -168,6 +284,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     func gotoDescriptionViewController(view: ProductDescriptionView) {
         let productDescription = ProductDescriptionViewController(nibName: "ProductDescriptionViewController", bundle: nil)
+        productDescription.fullDescription = self.productDetailsModel.fullDescription
         self.navigationController?.presentViewController(productDescription, animated: true, completion: nil)
     }
     

@@ -502,6 +502,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         let productUploadCategoryViewController: ProductUploadCategoryViewController = ProductUploadCategoryViewController(nibName: "ProductUploadCategoryViewController", bundle: nil)
         productUploadCategoryViewController.delegate = self
         productUploadCategoryViewController.pageTitle = "Select Category"
+        productUploadCategoryViewController.userType = UserType.Seller
         self.navigationController!.pushViewController(productUploadCategoryViewController, animated: true)
     }
     

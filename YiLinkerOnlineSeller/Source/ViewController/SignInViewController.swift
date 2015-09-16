@@ -21,6 +21,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     @IBOutlet weak var emailAddressTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var rememberMeView: UIView!
+    @IBOutlet weak var rememberMeImageContainerView: UIView!
     @IBOutlet weak var rememberMeImageView: UIImageView!
    
     @IBOutlet weak var forgotPasswordButton: UIButton!
@@ -68,9 +69,8 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     func costumizeViews() {
         self.profileContainerView.layer.cornerRadius = self.profileContainerView.frame.size.height / 2
         
-        self.rememberMeImageView.layer.cornerRadius = 3.0
-        self.rememberMeImageView.layer.borderWidth = 0.5
-        self.rememberMeImageView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        self.rememberMeImageContainerView.layer.cornerRadius = 3.0
+        self.rememberMeImageContainerView.layer.borderWidth = 0.5
         
         self.signInButton.layer.cornerRadius = 2.0
     }
@@ -109,10 +109,10 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     func rememberMeAction(gesture: UIGestureRecognizer) {
         if self.rememberMeImageView.image != nil {
             self.rememberMeImageView.image = nil
-            self.rememberMeImageView.backgroundColor = UIColor.clearColor()
+            self.rememberMeImageContainerView.backgroundColor = UIColor.clearColor()
         } else {
             self.rememberMeImageView.image = UIImage(named: "check2")
-            self.rememberMeImageView.backgroundColor = .lightGrayColor()
+            self.rememberMeImageContainerView.backgroundColor = .greenColor()
         }
     }
     
@@ -137,8 +137,12 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
                 
                 if error.userInfo != nil {
                     if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                        let errorDescription: String = jsonResult["error_description"] as! String
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
+                        if jsonResult["error_description"] != nil {
+                            let errorDescription: String = jsonResult["error_description"] as! String
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
+                        } else {
+                            self.showAlert(title: "Error", message: "Something went wrong")
+                        }
                     }
                 } else {
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
