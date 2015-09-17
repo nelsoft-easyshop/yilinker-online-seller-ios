@@ -32,6 +32,7 @@ struct APIAtlas {
     static let categoryUrl = "product/getCategories"
     static let brandUrl = "product/getBrands"
     static let uploadUrl = "product/upload"
+    static let getProductDetails = "auth/product/getProductDetail"
     static let sellerStoreInfo = "auth/merchant/getUserInfo"
     static let sellerBankAccountList = "auth/bank/account/getBankAccounts"
     static let sellerAddBankAccount = "auth/bank/account/addBankAccount"
@@ -47,6 +48,7 @@ struct APIAtlas {
     static let postTransactionCancellation = "auth/transaction/cancel"
     static let shipItem = "auth/transaction/pickup"
     static let sellerChangeMobileNumber = "auth/user/changeContactNumber"
+    static let sellerResendVerification = "auth/sms/getCode?access_token="
     static let sellerMobileNumberVerification = "auth/sms/verify"
     static let sellerChangePassword = "auth/user/changePassword"
     static let sellerUpdateSellerInfo = "auth/merchant/updateUserInfo"
@@ -75,6 +77,11 @@ struct APIAtlas {
     
     static let getSalesReport = "auth/merchant/getSalesReport"
     static let getFollowers = "auth/merchant/getFollowers"
+    
+    static let getActivityLogs = "auth/user/activityLog"
+    
+    //Search
+    static let transaction = "auth/transaction/searchKeyword?access_token="
     
     static let baseUrl = APIEnvironment.baseUrl()
 }

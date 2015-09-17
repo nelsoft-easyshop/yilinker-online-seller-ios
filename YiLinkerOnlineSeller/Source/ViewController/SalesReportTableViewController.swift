@@ -13,7 +13,7 @@ class SalesReportTableViewController: UITableViewController, SalesReportTableVie
     let cellIdentifier: String = "SalesReportTableViewCell"
     var datePickerController: DatePickerViewController?
     
-    var tempEndDate: NSDate = NSDate()
+    var tempEndDate: NSDate = NSDate().addDays(1)
     var tempStartDate: NSDate = NSDate()
     
     
@@ -69,14 +69,17 @@ class SalesReportTableViewController: UITableViewController, SalesReportTableVie
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as! SalesReportTableViewCell
         cell.delegate = self
         cell.dateLabel.text = formatDate(tempStartDate) + "-" + formatDate(tempEndDate)
-        cell.passModel(salesReportModel, startDate: tempStartDate, endDate: tempEndDate)
+        cell.passModel(salesReportModel, startDate: tempStartDate, endDate: tempEndDate.addDays(1))
         return cell
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 500.0
+        if IphoneType.isIphone4() {
+            return UIScreen.mainScreen().bounds.size.height * 0.68
+        } else {
+            return UIScreen.mainScreen().bounds.size.height * 0.72
+        }
     }
-    
     
     // MARK: - SalesReportTableViewCellDelegate
     

@@ -41,7 +41,7 @@ class ProductManagementAllTableViewCell: UITableViewCell {
             statusLabel.textColor = UIColor.darkGrayColor()
         } else if status == 2 {
             statusLabel.text = "Active"
-            statusLabel.textColor = UIColor.greenColor()
+            statusLabel.textColor = Constants.Colors.pmCheckGreenColor
         } else if status == 3 {
             statusLabel.text = "Inactive"
             statusLabel.textColor = UIColor.redColor()

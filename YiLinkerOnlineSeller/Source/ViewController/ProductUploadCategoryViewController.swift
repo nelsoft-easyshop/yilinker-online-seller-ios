@@ -131,6 +131,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
             let productUploadCategoryViewController: ProductUploadCategoryViewController = ProductUploadCategoryViewController(nibName: "ProductUploadCategoryViewController", bundle: nil)
             productUploadCategoryViewController.pageTitle = categoryModel.name
             productUploadCategoryViewController.parentID = categoryModel.uid
+            productUploadCategoryViewController.userType = self.userType
             self.navigationController!.pushViewController(productUploadCategoryViewController, animated: true)
         } else {
             if self.userType == UserType.Seller {

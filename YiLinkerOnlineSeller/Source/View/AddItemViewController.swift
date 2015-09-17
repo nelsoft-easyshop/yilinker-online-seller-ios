@@ -9,7 +9,7 @@
 import UIKit
 
 protocol AddItemViewControllerDelegate {
-    func addProductItems(productModel: ProductManagementProductModel, itemIndexes: [Int], products: [Int])
+    func addProductItems(productModel: ProductManagementProductModel, itemIndexes: [Int], products: [ProductManagementProductsModel])
 }
 
 class AddItemViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -21,7 +21,8 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var searchBarTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
 
-    var selectedItemIDs: [Int] = []
+    var selectedItemIDs: [String] = []
+    var selectedProductsModel: [ProductManagementProductsModel] = []
     var selectedItemIDsIndex: [Int] = []
     
     var hud: MBProgressHUD?
@@ -30,9 +31,13 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        if selectedItemIDsIndex.count == 0 {
+//        if selectedItemIDsIndex.count == 0 {
+//            requestGetProductList("")
+//        }
+        
+//        if selectedProductsModel.count == 0 {
             requestGetProductList("")
-        }
+//        }
         customizedNavigationBar()
         customizedViews()
         
@@ -43,7 +48,7 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        println(self.selectedItemIDs)
+//        println(self.selectedItemIDs)
     }
     
     // MARK: - Methods
@@ -76,7 +81,7 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: - Actions
     
     func closeAction() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController?.popViewControllerAnimated(false)
     }
     
     func checkAction() {
@@ -84,8 +89,18 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
 //            delegate?.updateCategoryImages(self.productModel, itemIDs: self.selectedItemIDs)
 //        }
 
-        if self.selectedItemIDsIndex.count != 0 {
-            delegate?.addProductItems(self.productModel, itemIndexes: self.selectedItemIDsIndex, products: selectedItemIDs)
+//        if self.selectedItemIDsIndex.count != 0 {
+//            delegate?.addProductItems(self.productModel, itemIndexes: self.selectedItemIDsIndex, products: selectedItemIDs)
+//        }
+        
+        if selectedItemIDs.count != 0 {
+//            delegate?.addProductItems(self.productModel, itemIndexes: self.selectedItemIDsIndex, products: selectedItemIDs)
+            for i in 0..<self.productModel.products.count {
+                if contains(self.selectedItemIDs, self.productModel.products[i].id) {
+                    selectedProductsModel.append(self.productModel.products[i])
+                }
+            }
+            delegate?.addProductItems(self.productModel, itemIndexes: selectedItemIDsIndex, products: selectedProductsModel)
         }
         
         closeAction()
@@ -111,7 +126,7 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
         
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-                                        "status": "5",
+                                        "status": "2",
                                         "keyword": key]
         
         manager.POST(APIAtlas.managementGetProductList, parameters: parameters, success: {
@@ -153,32 +168,37 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
         cell.itemNameLabel.text = self.productModel.products[indexPath.row].name
 //        cell.vendorLabel.text = self.productModel.products[indexPath.row].category
         
-        if (find(selectedItemIDsIndex, indexPath.row) != nil) {
+//        if (find(selectedItemIDsIndex, indexPath.row) != nil) {
+//            cell.updateStatusImage(true)
+//        } else {
+//            cell.updateStatusImage(false)
+//        }
+        
+        if (find(selectedItemIDs, productModel.products[indexPath.row].id) != nil) {
             cell.updateStatusImage(true)
         } else {
             cell.updateStatusImage(false)
         }
-        
-        
         
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell: AddItemTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! AddItemTableViewCell
-        let productId: Int = self.productModel.products[indexPath.row].id.toInt()!
+//        let productId: Int = self.productModel.products[indexPath.row].id.toInt()!
+
         if cell.addImageView?.image == UIImage(named: "addItem") {
             cell.updateStatusImage(true)
-            selectedItemIDs.append(productId)
-            selectedItemIDsIndex.append(indexPath.row)
+            selectedItemIDs.append(self.productModel.products[indexPath.row].id)
+//            selectedItemIDsIndex.append(indexPath.row)
         } else {
             cell.updateStatusImage(false)
-            selectedItemIDs = selectedItemIDs.filter({$0 != productId})
-            selectedItemIDsIndex = selectedItemIDsIndex.filter({$0 != indexPath.row})
+            selectedItemIDs = selectedItemIDs.filter({$0 != self.productModel.products[indexPath.row].id})
+//            selectedItemIDsIndex = selectedItemIDsIndex.filter({$0 != indexPath.row})
         }
         
-//        println(selectedItemIDs)
-        println(selectedItemIDsIndex)
+        println(selectedItemIDs)
+//        println(selectedItemIDsIndex)
 
     }
     
