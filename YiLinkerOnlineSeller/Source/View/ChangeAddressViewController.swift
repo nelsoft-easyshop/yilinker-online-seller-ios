@@ -133,17 +133,11 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                //let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                /* if task.statusCode == 401 {
-                    self.requestRefreshToken(AddressRefreshType.Get, uid: 0, indexPath: nil)
-                }  else if error.userInfo != nil {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: errorModel.title)
-                } else {
-                    self.addEmptyView()
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 401 {
+                    //self.requestRefreshToken(AddressRefreshType.Get, uid: 0, indexPath: nil)
                 }
-                */
+                
                 self.hud?.hide(true)
         })
     }

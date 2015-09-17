@@ -135,23 +135,23 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.signInButton.setTitle("SIGN IN", forState: .Normal)
                 
-//                if error.userInfo != nil {
-//                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-//                        if jsonResult["error_description"] != nil {
-//                            let errorDescription: String = jsonResult["error_description"] as! String
-//                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
-//                        } else {
-//                            self.showAlert(title: "Error", message: "Something went wrong")
-//                        }
-//                    }
-//                } else {
-//                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-//                    if task.statusCode == 1011 {
-//                        self.showAlert(title: "Error", message: "Email and Password did not match.")
-//                    } else {
-//                        self.showAlert(title: "Error", message: "Something went wrong")
-//                    }
-//                }
+                if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                    print(jsonResult)
+                    if jsonResult["error_description"] as! String != "" {
+                        let errorDescription: String = jsonResult["error_description"] as! String
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
+                    } else {
+                        self.showAlert(title: "Error", message: "Something went wrong")
+                    }
+                    
+                } else {
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    if task.statusCode == 1011 {
+                        self.showAlert(title: "Error", message: "Email and Password did not match.")
+                    } else {
+                        self.showAlert(title: "Error", message: "Something went wrong")
+                    }
+                }
                 
                 self.hud?.hide(true)
         })
@@ -245,19 +245,23 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.signInButton.setTitle("SIGN IN", forState: .Normal)
                 
-//                if error.userInfo != nil {
-//                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-//                        let errorDescription: String = jsonResult["error_description"] as! String
-//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
-//                    }
-//                } else {
-//                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-//                    if task.statusCode == 1011 {
-//                        self.showAlert(title: "Error", message: "Email and Password did not match.")
-//                    } else {
-//                        self.showAlert(title: "Error", message: "Something went wrong")
-//                    }
-//                }
+                if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                    print(jsonResult)
+                    if jsonResult["error_description"] as! String != "" {
+                        let errorDescription: String = jsonResult["error_description"] as! String
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
+                    } else {
+                        self.showAlert(title: "Error", message: "Something went wrong")
+                    }
+                    
+                } else {
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    if task.statusCode == 1011 {
+                        self.showAlert(title: "Error", message: "Email and Password did not match.")
+                    } else {
+                        self.showAlert(title: "Error", message: "Something went wrong")
+                    }
+                }
                 
                 self.hud?.hide(true)
         })

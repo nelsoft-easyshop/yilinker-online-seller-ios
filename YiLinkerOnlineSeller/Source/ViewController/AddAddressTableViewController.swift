@@ -335,13 +335,15 @@ class AddAddressTableViewController: UITableViewController, NewAddressTableViewC
             self.delegate!.addAddressTableViewController(didAddAddressSucceed: self)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                /*let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
                 if task.statusCode == 401 {
                     self.requestRefreshToken(AddressRefreshType.Create)
                 } else {
                     self.showAlert(title: "Something went wrong", message: nil)
                     self.hud?.hide(true)
-                }*/
+                }
         })
     }
     
@@ -373,22 +375,24 @@ class AddAddressTableViewController: UITableViewController, NewAddressTableViewC
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                do {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: "Something went wrong")
-                } catch _ {
-                    print("Something went wrong!")
-                    
-                    if task.statusCode == 401 {
-                        self.requestRefreshToken(AddressRefreshType.Edit)
+                
+                if Reachability.isConnectedToNetwork() {
+                    if  let dictionary = (error.userInfo as? Dictionary<String, AnyObject>) {
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: "Something went wrong")
                     } else {
-                        self.showAlert(title: "Something went wrong", message: nil)
-                        self.hud?.hide(true)
+                        if task.statusCode == 401 {
+                            self.requestRefreshToken(AddressRefreshType.Edit)
+                        } else {
+                            self.showAlert(title: "Something went wrong", message: nil)
+                            self.hud?.hide(true)
+                        }
                     }
+                } else {
+                    self.showAlert(title: "No Internet Connection", message: nil)
                 }
                 
-                
+                self.hud?.hide(true)
 
         })
     }

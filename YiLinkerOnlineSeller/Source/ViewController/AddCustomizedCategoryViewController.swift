@@ -556,17 +556,13 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 
-                do {
-                    print(error.userInfo)
-                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                        if jsonResult["message"] != nil {
-                            self.showAlert(title: jsonResult["message"] as! String, message: nil)
-                        } else {
-                            self.showAlert(title: "Something went wrong", message: nil)
-                        }
+                if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                    if jsonResult["message"] as! String != "" {
+                        self.showAlert(title: jsonResult["message"] as! String, message: nil)
+                    } else {
+                        self.showAlert(title: "Something went wrong", message: nil)
                     }
-
-                } catch _ {
+                } else {
                     self.showAlert(title: "Something went wrong", message: nil)
                 }
                 
@@ -593,16 +589,10 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 
-                do {
-                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                        if jsonResult["message"] != nil {
-                            self.showAlert(title: jsonResult["message"] as! String, message: nil)
-                        } else {
-                            self.showAlert(title: "Something went wrong", message: nil)
-                        }
-                    }
-
-                } catch _ {
+                if Reachability.isConnectedToNetwork() {
+                    let jsonResult = error.userInfo as! Dictionary<String, AnyObject>
+                    self.showAlert(title: jsonResult["message"] as! String, message: nil)
+                } else {
                     self.showAlert(title: "Something went wrong", message: nil)
                 }
                 
