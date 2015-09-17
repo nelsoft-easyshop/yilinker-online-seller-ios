@@ -18,7 +18,7 @@ class ProductManagementProductsModel {
     
     class func parseDataWithDictionary(products: AnyObject) -> ProductManagementProductsModel {
         
-        var model = ProductManagementProductsModel()
+        let model = ProductManagementProductsModel()
         if products.isKindOfClass(NSDictionary) {
             
             model.id = products["id"] as! String

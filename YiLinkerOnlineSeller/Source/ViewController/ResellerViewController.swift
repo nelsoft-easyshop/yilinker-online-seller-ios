@@ -82,7 +82,7 @@ class ResellerViewController: UIViewController, UICollectionViewDataSource, Rese
     }
     
     func backButton() {
-        var customBackButton:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "back")
+        let customBackButton:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "back")
         customBackButton.tintColor = UIColor.whiteColor()
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
@@ -94,11 +94,11 @@ class ResellerViewController: UIViewController, UICollectionViewDataSource, Rese
     }
     
     func checkButton() {
-        var checkButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let checkButton:UIButton = UIButton(type: UIButtonType.Custom)
         checkButton.frame = CGRectMake(0, 0, 45, 45)
         checkButton.addTarget(self, action: "check", forControlEvents: UIControlEvents.TouchUpInside)
         checkButton.setImage(UIImage(named: "check"), forState: UIControlState.Normal)
-        var customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: checkButton)
+        let customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: checkButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20

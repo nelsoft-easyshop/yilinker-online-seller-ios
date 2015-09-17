@@ -45,9 +45,9 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
             UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Please insert Retail Price.", title: "Incomplete Product Details")
         } else if self.quantityTextField.text == "" {
             UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Please insert quantity.", title: "Incomplete Product Details")
-        } else if (self.retailPriceTextField.text as NSString).doubleValue < (self.discountedPriceTextField.text as NSString).doubleValue {
+        } else if (self.retailPriceTextField.text! as NSString).doubleValue < (self.discountedPriceTextField.text! as NSString).doubleValue {
             UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Retail price must be greater than discount price.", title: "Incomplete Product Details")
-        } else if(quantityTextField.text as NSString).doubleValue == 0 {
+        } else if(quantityTextField.text! as NSString).doubleValue == 0 {
             UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Please insert quanity.", title: "Incomplete Product Details")
         } else {
             if self.viewController != nil {
@@ -56,7 +56,7 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
             
             let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.3 * Double(NSEC_PER_SEC)))
             dispatch_after(delayTime, dispatch_get_main_queue()) {
-                self.delegate!.productUploadCombinationFooterTableViewCell(didClickDoneButton: self, sku: self.skuTextField.text, quantity: self.quantityTextField.text, discountedPrice: self.discountedPriceTextField.text, retailPrice: self.retailPriceTextField.text, uploadImages: self.images)
+                self.delegate!.productUploadCombinationFooterTableViewCell(didClickDoneButton: self, sku: self.skuTextField.text!, quantity: self.quantityTextField.text!, discountedPrice: self.discountedPriceTextField.text!, retailPrice: self.retailPriceTextField.text!, uploadImages: self.images)
             }
         }
     }

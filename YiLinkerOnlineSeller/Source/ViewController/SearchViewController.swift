@@ -65,9 +65,9 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.filterByTableView.separatorInset = UIEdgeInsetsZero
         self.filterByTableView.layoutMargins = UIEdgeInsetsZero
         // Do any additional setup after loading the view.
-        let titleDict = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        /*let titleDict = [NSForegroundColorAttributeName: UIColor.whiteColor()]
             as [NSObject : AnyObject]
-        self.navigationController!.navigationBar.titleTextAttributes = titleDict
+        self.navigationController!.navigationBar.titleTextAttributes = titleDict*/
         
         // Remove trailing cells
         self.searchResultTableView.tableFooterView = UIView(frame: CGRectZero)
@@ -76,13 +76,13 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
         
         //Register Nib to Tableview
-        var nibCategory = UINib(nibName: "CategoryTableViewCell", bundle: nil)
+        let nibCategory = UINib(nibName: "CategoryTableViewCell", bundle: nil)
         searchResultTableView.registerNib(nibCategory, forCellReuseIdentifier: "CategoryTableViewCell")
         
-        var nibSearch = UINib(nibName: "SearchTableViewCell", bundle: nil)
+        let nibSearch = UINib(nibName: "SearchTableViewCell", bundle: nil)
         searchResultTableView.registerNib(nibSearch, forCellReuseIdentifier: "SearchTableViewCell")
         
-        var nibFilter = UINib(nibName: "FilterByTableViewCell", bundle: nil)
+        let nibFilter = UINib(nibName: "FilterByTableViewCell", bundle: nil)
         filterByTableView.registerNib(nibFilter, forCellReuseIdentifier: "FilterByTableViewCell")
         
         
@@ -147,17 +147,17 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.arrowView.backgroundColor = UIColor.whiteColor()
             self.filterByButton.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Normal)
             
-            let indexPath = tableView.indexPathForSelectedRow();
+            let indexPath = tableView.indexPathForSelectedRow;
             let currentCell = tableView.cellForRowAtIndexPath(indexPath!) as UITableViewCell!;
             self.filterByButton.setTitle(filterBy[indexPath!.row], forState: UIControlState.Normal)
             filterBySelected = indexPath!.row
             
-            println(filterBySelected)
+            print(filterBySelected)
         }
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        println(indexPath.row)
+        print(indexPath.row)
         nextpage = elements.count - 5
         if indexPath.row == nextpage {
             currentPage++
@@ -212,7 +212,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 }
                 self.elements.addObjectsFromArray(self.allObjectArray.subarrayWithRange(NSMakeRange(0, 20)))
                 
-                var storeInfoViewController = FilterResultsViewController(nibName: "FilterResultsViewController", bundle: nil)
+                let storeInfoViewController = FilterResultsViewController(nibName: "FilterResultsViewController", bundle: nil)
                 storeInfoViewController.edgesForExtendedLayout = .None
                 storeInfoViewController.searchModel = self.searchModel
                 self.navigationController?.pushViewController(storeInfoViewController, animated: true)
@@ -222,10 +222,10 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 self.hud?.hide(true)
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                     self.hud?.hide(true)
-                    println(error)
+                    print(error)
             })
         } else {
-            println("Search not available.")
+            print("Search not available.")
         }
     }
     

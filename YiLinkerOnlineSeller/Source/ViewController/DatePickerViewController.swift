@@ -57,21 +57,21 @@ class DatePickerViewController: UIViewController {
     func initializeNavigationBar() {
         self.title = "Select Date"
         
-        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let backButton:UIButton = UIButton(type: UIButtonType.Custom)
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
-        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        let customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
         
-        var checkButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let checkButton:UIButton = UIButton(type: UIButtonType.Custom)
         checkButton.frame = CGRectMake(0, 0, 25, 25)
         checkButton.addTarget(self, action: "done", forControlEvents: UIControlEvents.TouchUpInside)
         checkButton.setImage(UIImage(named: "check-white"), forState: UIControlState.Normal)
-        var customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: checkButton)
+        let customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: checkButton)
         
         let navigationSpacer2: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer2.width = -10
@@ -121,7 +121,7 @@ class DatePickerViewController: UIViewController {
     }
     
     @IBAction func datePicked(sender: AnyObject) {
-        var dateString = formatDate(datePicker.date)
+        let dateString = formatDate(datePicker.date)
         if currentView == "startView" {
             startDateLabel.text = dateString
             startDate = datePicker.date
@@ -134,7 +134,7 @@ class DatePickerViewController: UIViewController {
     }
     
     func formatDate(date: NSDate) -> String {
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MMMM d, yyyy"
         return dateFormatter.stringFromDate(date)
     }

@@ -37,7 +37,7 @@ class ProductUploadDimensionsAndWeightTableViewCell: UITableViewCell, UITextFiel
     }
     
     func textFieldDidChange(sender: UITextField) {
-        self.delegate!.productUploadDimensionsAndWeightTableViewCell(textFieldDidChange: sender, text: sender.text, cell: self)
+        self.delegate!.productUploadDimensionsAndWeightTableViewCell(textFieldDidChange: sender, text: sender.text!, cell: self)
     }
     
     override func setSelected(selected: Bool, animated: Bool) {

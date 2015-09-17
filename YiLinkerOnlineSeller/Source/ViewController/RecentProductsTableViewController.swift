@@ -44,7 +44,7 @@ class RecentProductsTableViewController: UITableViewController {
     }
     
     func registerNibs() {
-        var nib = UINib(nibName: recentOrderCellIdentifier, bundle: nil)
+        let nib = UINib(nibName: recentOrderCellIdentifier, bundle: nil)
         tableView.registerNib(nib, forCellReuseIdentifier: recentOrderCellIdentifier)
     }
 
@@ -66,7 +66,7 @@ class RecentProductsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(recentOrderCellIdentifier, forIndexPath: indexPath) as! RecentProductsTableViewCell
 
-        var temp: TransactionModel = tableData[indexPath.row]
+        let temp: TransactionModel = tableData[indexPath.row]
         cell.setProductImage("")
         cell.setProductName(temp.invoice_number)
         cell.setModeOfPayment(temp.payment_type)
@@ -81,14 +81,14 @@ class RecentProductsTableViewController: UITableViewController {
     }
     
     override func scrollViewDidEndDragging(aScrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        var offset: CGPoint = aScrollView.contentOffset
-        var bounds: CGRect = aScrollView.bounds
-        var size: CGSize = aScrollView.contentSize
-        var inset: UIEdgeInsets = aScrollView.contentInset
-        var y: CGFloat = offset.y + bounds.size.height - inset.bottom
-        var h: CGFloat = size.height
-        var reload_distance: CGFloat = 50
-        var temp: CGFloat = h + reload_distance
+        let offset: CGPoint = aScrollView.contentOffset
+        let bounds: CGRect = aScrollView.bounds
+        let size: CGSize = aScrollView.contentSize
+        let inset: UIEdgeInsets = aScrollView.contentInset
+        let y: CGFloat = offset.y + bounds.size.height - inset.bottom
+        let h: CGFloat = size.height
+        let reload_distance: CGFloat = 50
+        let temp: CGFloat = h + reload_distance
         if y > temp {
             fireGetRecentOrders()
         }
@@ -120,7 +120,7 @@ class RecentProductsTableViewController: UITableViewController {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 let transactionModel: TransactionsModel = TransactionsModel.parseDataWithDictionary(responseObject)
                 
-                println(responseObject)
+                print(responseObject)
                 
                 if transactionModel.transactions.count < 15 {
                     self.isProductsEnd = true
@@ -147,7 +147,7 @@ class RecentProductsTableViewController: UITableViewController {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                     }
                     
-                    println(error)
+                    print(error)
             })
         } else {
             self.hud?.hide(true)

@@ -95,7 +95,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             self.storeAddressModel = StoreAddressModel.parseStoreAddressDataFromDictionary(responseObject as! NSDictionary)
             
             self.cellCount = self.storeAddressModel!.title.count
-            println(self.storeAddressModel!.store_address.count)
+            print(self.storeAddressModel!.store_address.count)
             for var num  = 0; num < self.storeAddressModel?.title.count; num++ {
                 if self.storeAddressModel.is_default[num]{
                     //self.selectedIndex = num
@@ -107,7 +107,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                println(error)
+                print(error)
         })
     }
     
@@ -116,7 +116,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         
         let params = ["access_token": SessionManager.accessToken()]
         
-        var manager = APIManager.sharedInstance
+        let manager = APIManager.sharedInstance
         
         manager.POST(APIAtlas.sellerStoreAddresses, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -149,21 +149,21 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     }
     
     func backButton() {
-        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let backButton:UIButton = UIButton(type: UIButtonType.Custom)
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
-        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        let customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]        
         
-        var checkButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let checkButton:UIButton = UIButton(type: UIButtonType.Custom)
         checkButton.frame = CGRectMake(0, 0, 25, 25)
         checkButton.addTarget(self, action: "done", forControlEvents: UIControlEvents.TouchUpInside)
         checkButton.setImage(UIImage(named: "check-white"), forState: UIControlState.Normal)
-        var customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: checkButton)
+        let customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: checkButton)
         
         let navigationSpacer2: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer2.width = -10
@@ -200,7 +200,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                println(error)
+                print(error)
         })
     }
 
@@ -219,7 +219,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell : ChangeAddressCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressCollectionViewCell
-        println("\(self.getAddressModel)")
+        print("\(self.getAddressModel)")
         if self.getAddressModel != nil {
                 /* cell.titleLabel.text = self.storeAddressModel!.title[indexPath.row]
                 
@@ -293,7 +293,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     }
 
     func checkAddressCollectionViewCell(checkAdressWithCell cell: ChangeAddressCollectionViewCell){
-        println("check address \(cell.titleLabel.text)")
+        print("check address \(cell.titleLabel.text)")
         let indexPath: NSIndexPath = self.changeAddressCollectionView.indexPathForCell(cell)!
         cell.layer.borderWidth = 1
         cell.layer.borderColor = Constants.Colors.selectedGreenColor.CGColor
@@ -329,7 +329,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                println(error)
+                print(error)
         })
     }
     

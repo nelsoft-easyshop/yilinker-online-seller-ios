@@ -55,10 +55,10 @@ class StoreInfoTableViewCell: UITableViewCell {
         
         self.mobilePhoneTextField.enabled = false
         
-        var tapProfilePhoto = UITapGestureRecognizer(target: self, action: "callUzyPicker")
+        let tapProfilePhoto = UITapGestureRecognizer(target: self, action: "callUzyPicker")
         self.profileCoverPhotoUploadView.addGestureRecognizer(tapProfilePhoto)
         
-        var tapCoverPhoto = UITapGestureRecognizer(target: self, action: "callUzyPickerCover")
+        let tapCoverPhoto = UITapGestureRecognizer(target: self, action: "callUzyPickerCover")
         self.coverPhotoUploadView.addGestureRecognizer(tapCoverPhoto)
         
     }

@@ -101,26 +101,26 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                println(error)
+                print(error)
         })
     }
     
     func backButton() {
-        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let backButton:UIButton = UIButton(type: UIButtonType.Custom)
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
-        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        let customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
         
-        var checkButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let checkButton:UIButton = UIButton(type: UIButtonType.Custom)
         checkButton.frame = CGRectMake(0, 0, 25, 25)
         checkButton.addTarget(self, action: "done", forControlEvents: UIControlEvents.TouchUpInside)
         checkButton.setImage(UIImage(named: "check-white"), forState: UIControlState.Normal)
-        var customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: checkButton)
+        let customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: checkButton)
         
         let navigationSpacer2: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer2.width = -10
@@ -139,7 +139,7 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
     func fireSetDefaultBankAccount(){
         self.showHUD()
         let manager = APIManager.sharedInstance
-        println("\(self.bankAccountModel.bank_account_id.count)")
+        print("\(self.bankAccountModel.bank_account_id.count)")
         let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "bankAccountId" : self.selectedBankId]
         
         manager.POST(APIAtlas.sellerSetDefaultBankAccount, parameters: parameters, success: {
@@ -153,7 +153,7 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                self.hud?.hide(true)
-                println(error)
+                print(error)
         })
     }
 
@@ -177,7 +177,7 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
         
         let cell : ChangeAddressCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressCollectionViewCell
         
-        println(self.bankAccountModel!.account_title[indexPath.row])
+        print(self.bankAccountModel!.account_title[indexPath.row])
         if self.bankAccountModel != nil {
             cell.titleLabel.text = self.bankAccountModel!.account_title[indexPath.row]
             cell.subTitleLabel.text = "\(self.bankAccountModel!.account_number[indexPath.row])"+"\n"+self.bankAccountModel!.account_name[indexPath.row]+"\n"+self.bankAccountModel!.bank_name[indexPath.row]
@@ -210,9 +210,9 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        println("selected bank for edit \(indexPath.row)")
+        print("selected bank for edit \(indexPath.row)")
         self.showView()
-        var attributeModal = CreateNewBankAccountViewController(nibName: "CreateNewBankAccountViewController", bundle: nil)
+        let attributeModal = CreateNewBankAccountViewController(nibName: "CreateNewBankAccountViewController", bundle: nil)
         attributeModal.delegate = self
         attributeModal.edit = true
         attributeModal.accountTitle = self.bankAccountModel.account_title[indexPath.row]
@@ -220,7 +220,7 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
         attributeModal.accountNumber = self.bankAccountModel.account_number[indexPath.row]
         attributeModal.bankName = self.bankAccountModel.bank_name[indexPath.row]
         attributeModal.editBankId = self.bankAccountModel.bank_account_id[indexPath.row]
-        println("bank account id \(self.bankAccountModel.bank_account_id[indexPath.row])")
+        print("bank account id \(self.bankAccountModel.bank_account_id[indexPath.row])")
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         attributeModal.providesPresentationContextTransitionStyle = true
         attributeModal.definesPresentationContext = true
@@ -249,11 +249,11 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
     func changeAddressCollectionViewCell(deleteAddressWithCell cell: ChangeAddressCollectionViewCell) {
         let indexPath: NSIndexPath = self.changeBankAccountCollectionView.indexPathForCell(cell)!
         fireDeleteBankAccount(cell.titleLabel.tag, indexPath: indexPath)
-        println("deleted bank account \(cell.titleLabel.tag)")
+        print("deleted bank account \(cell.titleLabel.tag)")
     }
     
     func checkAddressCollectionViewCell(checkAdressWithCell cell: ChangeAddressCollectionViewCell){
-         println("check bank account \(cell.titleLabel.text)")
+         print("check bank account \(cell.titleLabel.text)")
         let indexPath: NSIndexPath = self.changeBankAccountCollectionView.indexPathForCell(cell)!
     
         cell.layer.borderWidth = 1
@@ -282,7 +282,7 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                println(error)
+                print(error)
         })
     }
     
@@ -304,7 +304,7 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
         self.navigationController!.presentViewController(addAddressTableViewController, animated: true, completion: nil)
         */
         self.showView()
-        var attributeModal = CreateNewBankAccountViewController(nibName: "CreateNewBankAccountViewController", bundle: nil)
+        let attributeModal = CreateNewBankAccountViewController(nibName: "CreateNewBankAccountViewController", bundle: nil)
         attributeModal.delegate = self
         attributeModal.edit = false
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
@@ -313,7 +313,7 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
         attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
         self.navigationController?.presentViewController(attributeModal, animated: true, completion: nil)
     
-        println("footer")
+        print("footer")
     }
     
     

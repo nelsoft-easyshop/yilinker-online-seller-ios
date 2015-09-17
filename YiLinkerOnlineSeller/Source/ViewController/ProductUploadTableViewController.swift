@@ -439,18 +439,18 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                             title = title + value + ", "
                         }
                         
-                        title = dropLast(title)
+                        title = String(title.characters.dropLast())
                         cell.cellTitleLabel.text = title
                     } else {
                         var totalQuantity: Int = 0
                         
                         for combination in self.productModel.validCombinations as [CombinationModel] {
-                            totalQuantity = totalQuantity + combination.quantity.toInt()!
+                            totalQuantity = totalQuantity + Int(combination.quantity)!
                         }
                         
                         cell.cellQuantityLabel.text = "x" + "\(totalQuantity)"
                         
-                        var title: String = "TOTAL QUANTITY"
+                        let title: String = "TOTAL QUANTITY"
                         cell.cellTitleLabel.text = title
                         let defaultFontSize: CGFloat = 14
                         cell.cellTitleLabel.font = UIFont(name:"Panton-Bold", size: defaultFontSize)
@@ -532,11 +532,11 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     func productUploadCategoryViewController(didSelectCategory category: String) {
-        println(category)
+        print(category)
     }
     
     func backButton() {
-        var customBackButton:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "back")
+        let customBackButton:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "back")
         customBackButton.tintColor = UIColor.whiteColor()
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
@@ -589,7 +589,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         let alaSset: ALAsset = assets[0] as! ALAsset
 
         for allaSset in assets as! [ALAsset] {
-            let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!
+            let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())
             self.uploadImages.insert(image, atIndex: 0)
         }
         
@@ -681,12 +681,12 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         } else if textFieldType == ProductTextFieldType.Condition {
             var selectedIndex: Int = 0
             
-            for (index, condition) in enumerate(self.conditions) {
+            for (index, condition) in self.conditions.enumerate() {
                 if condition.name == text {
                     selectedIndex = index
                 }
             }
-            println("selected condition: \(self.conditions[selectedIndex].name)")
+            print("selected condition: \(self.conditions[selectedIndex].name)")
             self.productModel.condition = self.conditions[selectedIndex]
         } else if textFieldType == ProductTextFieldType.Brand {
             self.brand()
@@ -724,9 +724,9 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     func productUploadQuantityTableViewCell(textFieldDidChange text: String, cell: ProductUploadQuantityTableViewCell) {
-        if let val = text.toInt() {
-           self.productModel.quantity = text.toInt()!
-            println(text.toInt())
+        if let val = Int(text) {
+           self.productModel.quantity = Int(text)!
+            print(Int(text))
         }
     }
     
@@ -756,7 +756,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
         
         for image in self.productModel.images as [UIImage] {
-            let data: NSData = UIImageJPEGRepresentation(image, 1)
+            let data: NSData = UIImageJPEGRepresentation(image, 1)!
             datas.append(data)
         }
         
@@ -787,8 +787,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         self.showHUD()
         let url: String = "\(APIAtlas.uploadUrl)?access_token=\(SessionManager.accessToken())"
         manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
-            for (index, data) in enumerate(datas) {
-                println("index: \(index)")
+            for (index, data) in datas.enumerate() {
+                print("index: \(index)")
                 formData.appendPartWithFileData(data, name: "images[]", fileName: "\(index)", mimeType: "image/jpeg")
             }
             
@@ -803,10 +803,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 }
                 
                 
-                println(response)
+                print(response)
         }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
             let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-            println(error.userInfo)
+            print(error.userInfo)
             if task.statusCode == 401 {
                self.fireRefreshToken2()
             } else {
@@ -828,7 +828,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     func successUploadViewController(didTapUploadAgain viewController: SuccessUploadViewController) {
-        for (index, images) in enumerate(self.uploadImages) {
+        for (index, images) in self.uploadImages.enumerate() {
             self.uploadImages.removeLast()
         }
         
@@ -846,13 +846,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             dictionary["attribute"] = combination.attributes
             dictionary["price"] = (combination.retailPrice as NSString).doubleValue
             dictionary["discountedPrice"] = (combination.discountedPrice as NSString).doubleValue
-            dictionary["quantity"] = combination.quantity.toInt()
+            dictionary["quantity"] = Int(combination.quantity)
             dictionary["sku"] = combination.sku
             
             var arrayNumber: [String] = []
             
-            for (index, image) in enumerate(combination.images) {
-                var x: Int = counter
+            for (index, image) in combination.images.enumerate() {
+                let x: Int = counter
                 counter++
                 arrayNumber.append("\(x)")
             }
@@ -862,9 +862,9 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
         
        
-        let data = NSJSONSerialization.dataWithJSONObject(array, options: nil, error: nil)
+        let data = try? NSJSONSerialization.dataWithJSONObject(array, options: [])
         let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
-        println(string)
+        print(string)
         return string!
     }
     

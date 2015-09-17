@@ -49,7 +49,7 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        println("Edit Items > \(self.subCategoriesProducts)")
+        print("Edit Items > \(self.subCategoriesProducts)")
     }
     
     // MARK: - Methods
@@ -238,7 +238,7 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
     // MARK: - Add Item View Controller Delegate
     
     func addProductItems(productModel: ProductManagementProductModel, itemIndexes: [Int], products: [ProductManagementProductsModel]) {
-        println("From Add Item to Edit Item \(products)")
+        print("From Add Item to Edit Item \(products)")
         self.selectedItemIDsIndex = itemIndexes
         self.subCategoriesProducts = products
         self.tableView.reloadData()

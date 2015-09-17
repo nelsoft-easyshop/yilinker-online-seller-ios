@@ -55,19 +55,19 @@ class SalesReportTableViewCell: UITableViewCell {
         largeLineChart.noDataText = "No data available"
         largeLineChart.descriptionText = ""
         
-        var xAxis: ChartXAxis = largeLineChart.xAxis
+        let xAxis: ChartXAxis = largeLineChart.xAxis
         xAxis.labelPosition = ChartXAxis.XAxisLabelPosition.Bottom
         xAxis.labelFont = UIFont(name: "Panton-Semibold", size: 12)!
         xAxis.setLabelsToSkip(0)
         
-        var yAxisRight: ChartYAxis = largeLineChart.rightAxis
+        let yAxisRight: ChartYAxis = largeLineChart.rightAxis
         yAxisRight.enabled = false
         
-        var yAxisLeft: ChartYAxis = largeLineChart.leftAxis
+        let yAxisLeft: ChartYAxis = largeLineChart.leftAxis
         yAxisLeft.labelPosition = ChartYAxis.YAxisLabelPosition.OutsideChart
         yAxisLeft.labelFont = UIFont(name: "Panton-Semibold", size: 12)!
 
-        var legend: ChartLegend = largeLineChart.legend
+        let legend: ChartLegend = largeLineChart.legend
         legend.enabled = false
         
         largeLineChart.pinchZoomEnabled = false
@@ -84,16 +84,16 @@ class SalesReportTableViewCell: UITableViewCell {
         //preview
         smallLineChart.noDataText = "No data available"
         
-        var xAxis1: ChartXAxis = smallLineChart.xAxis
+        let xAxis1: ChartXAxis = smallLineChart.xAxis
         xAxis1.enabled = false
         
-        var yAxisRight1: ChartYAxis = smallLineChart.rightAxis
+        let yAxisRight1: ChartYAxis = smallLineChart.rightAxis
         yAxisRight1.enabled = false
         
-        var yAxisLeft1: ChartYAxis = smallLineChart.leftAxis
+        let yAxisLeft1: ChartYAxis = smallLineChart.leftAxis
         yAxisLeft1.enabled = false
         
-        var legend1: ChartLegend = smallLineChart.legend
+        let legend1: ChartLegend = smallLineChart.legend
         legend1.enabled = false
         
         
@@ -116,9 +116,9 @@ class SalesReportTableViewCell: UITableViewCell {
         let cal = NSCalendar.currentCalendar()
         
         
-        let unit:NSCalendarUnit = .CalendarUnitDay
+        let unit:NSCalendarUnit = .Day
         
-        let difference = cal.components(unit, fromDate: startDate, toDate: endDate, options: nil)
+        let difference = cal.components(unit, fromDate: startDate, toDate: endDate, options: [])
         
 
         for var i = 0; i < difference.day; i++ {
@@ -142,11 +142,11 @@ class SalesReportTableViewCell: UITableViewCell {
         var maximumYVals: Int = 0
      
         for var i = 0; i < xValues.count; i++ {
-            var date: String = xValues[i] as String
+            let date: String = xValues[i] as String
             
-            if contains(confirmedOrder, date) {
+            if confirmedOrder.contains(date) {
                 let tempNumber = salesReportModel.confirmedTransactionPerDay[soldItemIndex].numberOfOrders as NSString
-                println("tempNumber\(i) \(tempNumber)")
+                print("tempNumber\(i) \(tempNumber)")
                 soldItemEntries.append(ChartDataEntry(value: tempNumber.doubleValue, xIndex: i))
                 soldItemIndex++
                 
@@ -158,9 +158,9 @@ class SalesReportTableViewCell: UITableViewCell {
                 soldItemEntries.append(ChartDataEntry(value: 0, xIndex: i))
             }
             
-            if contains(cancelledOrder, date) {
+            if cancelledOrder.contains(date) {
                 let tempNumber = salesReportModel.cancelledTransactionPerDay[cancelledItemIndex].numberOfOrders as NSString
-                println("tempNumber\(i) \(tempNumber)")
+                print("tempNumber\(i) \(tempNumber)")
                 cancelledItemEntries.append(ChartDataEntry(value: tempNumber.doubleValue, xIndex: i))
                 cancelledItemIndex++
                 
@@ -172,7 +172,7 @@ class SalesReportTableViewCell: UITableViewCell {
             }
         }
         
-        var soldItemDataSet: LineChartDataSet = LineChartDataSet(yVals: soldItemEntries, label: "Sold Items")
+        let soldItemDataSet: LineChartDataSet = LineChartDataSet(yVals: soldItemEntries, label: "Sold Items")
         soldItemDataSet.axisDependency = ChartYAxis.AxisDependency.Left
         soldItemDataSet.lineWidth = 5
         soldItemDataSet.setColor(Constants.Colors.soldLineColor)
@@ -182,7 +182,7 @@ class SalesReportTableViewCell: UITableViewCell {
         soldItemDataSet.drawCircleHoleEnabled = false
         soldItemDataSet.valueTextColor = Constants.Colors.soldColor
         
-        var cancelledItemDataSet: LineChartDataSet = LineChartDataSet(yVals: cancelledItemEntries, label: "Cancelled Items")
+        let cancelledItemDataSet: LineChartDataSet = LineChartDataSet(yVals: cancelledItemEntries, label: "Cancelled Items")
         cancelledItemDataSet.axisDependency = ChartYAxis.AxisDependency.Left
         cancelledItemDataSet.lineWidth = 5
         cancelledItemDataSet.setColor(Constants.Colors.cancelledLineColor)
@@ -196,11 +196,11 @@ class SalesReportTableViewCell: UITableViewCell {
         lineDataSets.append(soldItemDataSet)
         lineDataSets.append(cancelledItemDataSet)
         
-        var data: LineChartData = LineChartData(xVals: xValues, dataSets: lineDataSets)
+        let data: LineChartData = LineChartData(xVals: xValues, dataSets: lineDataSets)
         largeLineChart.data = data
         
         //preview
-        var soldItemDataSet1: LineChartDataSet = LineChartDataSet(yVals: soldItemEntries, label: "Sold Items")
+        let soldItemDataSet1: LineChartDataSet = LineChartDataSet(yVals: soldItemEntries, label: "Sold Items")
         soldItemDataSet1.axisDependency = ChartYAxis.AxisDependency.Left
         soldItemDataSet1.lineWidth = 1
         soldItemDataSet1.setColor(Constants.Colors.soldLineColor)
@@ -210,7 +210,7 @@ class SalesReportTableViewCell: UITableViewCell {
         soldItemDataSet1.drawCircleHoleEnabled = false
         soldItemDataSet1.drawValuesEnabled = false
         
-        var cancelledItemDataSet1: LineChartDataSet = LineChartDataSet(yVals: cancelledItemEntries, label: "Cancelled Items")
+        let cancelledItemDataSet1: LineChartDataSet = LineChartDataSet(yVals: cancelledItemEntries, label: "Cancelled Items")
         cancelledItemDataSet1.axisDependency = ChartYAxis.AxisDependency.Left
         cancelledItemDataSet1.lineWidth = 1
         cancelledItemDataSet1.setColor(Constants.Colors.cancelledLineColor)
@@ -234,7 +234,7 @@ class SalesReportTableViewCell: UITableViewCell {
         lineDataSets1.append(soldItemDataSet1)
         lineDataSets1.append(cancelledItemDataSet1)
         
-        var data1: LineChartData = LineChartData(xVals: xValues, dataSets: lineDataSets1)
+        let data1: LineChartData = LineChartData(xVals: xValues, dataSets: lineDataSets1)
         smallLineChart.data = data1
 
         largeLineChart.zoom(0, scaleY: 0, x: 0, y: 0)
@@ -261,13 +261,13 @@ class SalesReportTableViewCell: UITableViewCell {
     }
     
     func formatDateToString(date: NSDate) -> String {
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "dd MMM"
         return dateFormatter.stringFromDate(date)
     }
     
     func formatStringToDate(date: String) -> NSDate {
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
         return dateFormatter.dateFromString(date)!

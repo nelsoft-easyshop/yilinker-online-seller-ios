@@ -57,13 +57,13 @@ class CreateNewAddressViewController: UIViewController {
         
         manager.POST(APIAtlas.sellerAddBankAccount, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println("\(parameters)")
+            print("\(parameters)")
             //self.dismissViewControllerAnimated(true, completion: nil)
             self.hud?.hide(true)
             self.delegate?.updateCollectionView()
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                println(error)
+                print(error)
         })
 
         

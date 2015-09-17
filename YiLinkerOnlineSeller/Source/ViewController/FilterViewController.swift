@@ -28,10 +28,10 @@ class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate 
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        var nib = UINib(nibName: "FilterTableViewCell", bundle: nil)
+        let nib = UINib(nibName: "FilterTableViewCell", bundle: nil)
         filterTableView.registerNib(nib, forCellReuseIdentifier: "FilterTableViewCell")
         
-        var nibCalendar = UINib(nibName: "FilterCalendarTableViewCell", bundle: nil)
+        let nibCalendar = UINib(nibName: "FilterCalendarTableViewCell", bundle: nil)
         filterTableView.registerNib(nibCalendar, forCellReuseIdentifier: "FilterCalendarTableViewCell")
         
         let filterFooterNib: UINib = UINib(nibName: "FilterFooterTableViewCell", bundle: nil)
@@ -87,7 +87,7 @@ class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
          if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("FilterTableViewCell", forIndexPath: indexPath) as! FilterTableViewCell
-            println("\(tableData.count)")
+            print("\(tableData.count)")
             //if !tableData.isEmpty {
                 cell.passModel(tableData[0])
             //}
@@ -95,7 +95,7 @@ class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate 
             return cell
         } else if indexPath.row == 1{
             let cell = tableView.dequeueReusableCellWithIdentifier("FilterTableViewCell", forIndexPath: indexPath) as! FilterTableViewCell
-            println("\(tableData.count)")
+            print("\(tableData.count)")
             //if !tableData.isEmpty {
             cell.passModel(tableData[1])
             //}

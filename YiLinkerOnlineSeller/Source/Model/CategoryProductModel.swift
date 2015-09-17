@@ -16,7 +16,7 @@ class CategoryProductModel: NSObject {
     
     class func parseCategoryProducts(products: AnyObject) -> CategoryProductModel {
         
-        var model = CategoryProductModel()
+        let model = CategoryProductModel()
         
         if products.isKindOfClass(NSDictionary) {
             model.productId = products["productId"] as! String

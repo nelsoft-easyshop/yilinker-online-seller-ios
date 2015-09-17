@@ -126,7 +126,7 @@ class ResolutionCenterViewController
         
         
         
-        var attributeModal = DisputeViewController(nibName: "DisputeViewController", bundle: nil)
+        let attributeModal = DisputeViewController(nibName: "DisputeViewController", bundle: nil)
         attributeModal.delegate = self
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         attributeModal.providesPresentationContextTransitionStyle = true

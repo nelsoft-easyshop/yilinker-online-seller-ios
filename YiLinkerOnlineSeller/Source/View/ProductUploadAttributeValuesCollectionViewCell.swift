@@ -26,7 +26,7 @@ class ProductUploadAttributeValuesCollectionViewCell: UICollectionViewCell, UIPi
         pickerView.delegate = self
         pickerView.dataSource = self
         
-        let index: Int = find(self.values, self.attributeTextField.text)!
+        let index: Int = self.values.indexOf(self.attributeTextField.text!)!
         pickerView.selectRow(index, inComponent: 0, animated: false)
         self.attributeTextField.inputView = pickerView
         self.attributeTextField.addToolBarWithDoneTarget(self, done: "done")
@@ -48,7 +48,7 @@ class ProductUploadAttributeValuesCollectionViewCell: UICollectionViewCell, UIPi
         return values.count
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return self.values[row]
     }
 }

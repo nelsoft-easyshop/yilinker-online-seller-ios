@@ -54,16 +54,16 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
         self.dimView.hidden = true
         self.noResultsLabel.hidden = true
         // Do any additional setup after loading the view.
-        var tapSort = UITapGestureRecognizer(target: self, action: "sort");
+        let tapSort = UITapGestureRecognizer(target: self, action: "sort");
         self.sortView.addGestureRecognizer(tapSort)
         
-        var tapFilter = UITapGestureRecognizer(target: self, action: "filter")
+        let tapFilter = UITapGestureRecognizer(target: self, action: "filter")
         self.filterView.addGestureRecognizer(tapFilter)
         
-        var nibFilter = UINib(nibName: "FilterByTableViewCell", bundle: nil)
+        let nibFilter = UINib(nibName: "FilterByTableViewCell", bundle: nil)
         self.filterTableView.registerNib(nibFilter, forCellReuseIdentifier: "FilterByTableViewCell")
         
-        println("search model \(self.searchModel?.invoiceNumber.count)")
+        print("search model \(self.searchModel?.invoiceNumber.count)")
         
     }
 
@@ -90,7 +90,7 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
     
     func filter(){
         self.showView()
-        var filterViewController = FilterViewController(nibName: "FilterViewController", bundle: nil)
+        let filterViewController = FilterViewController(nibName: "FilterViewController", bundle: nil)
         filterViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         filterViewController.providesPresentationContextTransitionStyle = true
         filterViewController.definesPresentationContext = true
@@ -124,10 +124,10 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         self.dimView.hidden = true
-        let indexPath = tableView.indexPathForSelectedRow();
+        let indexPath = tableView.indexPathForSelectedRow;
         filterBySelected = filterBy[indexPath!.row]
         //Add filto call filter collection view and reload
-        println(filterBySelected)
+        print(filterBySelected)
     
     }
 

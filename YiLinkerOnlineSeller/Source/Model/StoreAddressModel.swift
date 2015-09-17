@@ -178,7 +178,7 @@ class StoreAddressModel: NSObject {
                 }
             }
         }
-        var storeAddressModel = StoreAddressModel(user_address_id: user_address_id, location_id: location_id, title: title, unit_number: unit_number, building_name: building_name, street_number: street_number, street_name: street_name, subdivision: subdivision, zip_code: zip_code, street_address: street_address, country: country, island: island, region: region, province: province, city: city, municipality: municipality, barangay: barangay, longitude: longitude, latitude: latitude, landline: landline, is_default: is_default, store_address: store_address)
+        let storeAddressModel = StoreAddressModel(user_address_id: user_address_id, location_id: location_id, title: title, unit_number: unit_number, building_name: building_name, street_number: street_number, street_name: street_name, subdivision: subdivision, zip_code: zip_code, street_address: street_address, country: country, island: island, region: region, province: province, city: city, municipality: municipality, barangay: barangay, longitude: longitude, latitude: latitude, landline: landline, is_default: is_default, store_address: store_address)
         
         return storeAddressModel
     }

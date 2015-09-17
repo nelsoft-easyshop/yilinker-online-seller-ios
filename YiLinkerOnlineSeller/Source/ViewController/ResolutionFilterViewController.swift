@@ -105,8 +105,6 @@ class ResolutionFilterViewController: UITableViewController {
             self.buttonThisMonth.setChecked()
         case .Total:
             self.buttonTotal.setChecked()
-        default:
-            ()
         }
     }
     func todayPressed() {
