@@ -80,6 +80,7 @@ struct APIAtlas {
     
     //Resolution Center
     static let getResolutionCenterCases = "/api/v1/auth/dispute/get-case"
+    static let getResolutionCenterCaseDetails = "/api/v1/auth/dispute/get-case-detail"
     
     static let baseUrl = APIEnvironment.baseUrl()
 }

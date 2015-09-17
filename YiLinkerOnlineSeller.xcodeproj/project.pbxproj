@@ -399,6 +399,7 @@
 		961F70341B97F7A5007D0EA5 /* ResolutionCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961F70331B97F7A5007D0EA5 /* ResolutionCenterViewController.swift */; };
 		961F70361B983E50007D0EA5 /* ResolutionFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961F70351B983E50007D0EA5 /* ResolutionFilterViewController.swift */; };
 		961F70381B983ECF007D0EA5 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961F70371B983ECF007D0EA5 /* CheckBox.swift */; };
+		962653571BAA797800CAEA1C /* CaseDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962653561BAA797800CAEA1C /* CaseDetailsModel.swift */; };
 		9628AC961B9848E700734551 /* DisputeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9628AC951B9848E600734551 /* DisputeViewController.xib */; };
 		967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 967EE1C01B8AEA25000591AC /* Images.xcassets */; };
 		967EE1D01B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */; };
@@ -928,6 +929,7 @@
 		961F70331B97F7A5007D0EA5 /* ResolutionCenterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionCenterViewController.swift; sourceTree = "<group>"; };
 		961F70351B983E50007D0EA5 /* ResolutionFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionFilterViewController.swift; sourceTree = "<group>"; };
 		961F70371B983ECF007D0EA5 /* CheckBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
+		962653561BAA797800CAEA1C /* CaseDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaseDetailsModel.swift; sourceTree = "<group>"; };
 		9628AC951B9848E600734551 /* DisputeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DisputeViewController.xib; sourceTree = "<group>"; };
 		967EE1B41B8AEA25000591AC /* YiLinkerOnlineSeller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YiLinkerOnlineSeller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		967EE1B81B8AEA25000591AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1108,12 +1110,13 @@
 		0CF28EC21B8C85E4005B2E54 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				962653561BAA797800CAEA1C /* CaseDetailsModel.swift */,
+				96FBF6801BA06C94009DDD29 /* ResolutionCenterModel.swift */,
 				260725F91BA0A41000C24DDB /* ProductUnitsModel.swift */,
 				260725F71BA0A40200C24DDB /* ProductImagesModel.swift */,
 				260725F11BA0A2B900C24DDB /* ProductAttributeModel.swift */,
 				260725F21BA0A2B900C24DDB /* ProductAvailableAttributeCombinationModel.swift */,
 				260725F31BA0A2B900C24DDB /* ProductDetailsModel.swift */,
-				96FBF6801BA06C94009DDD29 /* ResolutionCenterModel.swift */,
 				79EFF76E1B8D6E35008A9E7D /* ActivityLogModel.swift */,
 				79EF7AB71B9994320082CD35 /* TransactionsFilterItemModel.swift */,
 				79EFF76F1B8D6E35008A9E7D /* ActivityModel.swift */,
@@ -1274,11 +1277,11 @@
 			isa = PBXGroup;
 			children = (
 				960374931BA7F4050028DA96 /* NewDisputeTableViewController.swift */,
+				961F702B1B97F057007D0EA5 /* CaseDetailsTableViewController.swift */,
 				79EFF75A1B8D6DC1008A9E7D /* ActivityLogTableViewController.swift */,
 				F7AC5F5D1B9A9C8C00227D18 /* AddAddressTableViewController.swift */,
 				26B5B23F1B94DE4200CBDDE5 /* AddCustomizedCategoryViewController.swift */,
 				2618DD6F1B970E210030C6D2 /* AddSubCategoriesViewController.swift */,
-				961F702B1B97F057007D0EA5 /* CaseDetailsTableViewController.swift */,
 				F7C40F621B983ACD0091C16C /* ChangeAddressViewController.swift */,
 				F7C40F641B983AD10091C16C /* ChangeBankAccountViewController.swift */,
 				F7C40F661B983AD60091C16C /* ChangeEmailViewController.swift */,
@@ -2185,6 +2188,7 @@
 				792875F51B8DF89F00762A39 /* BarChartView.swift in Sources */,
 				F7AC5F5E1B9A9C8C00227D18 /* AddAddressTableViewController.swift in Sources */,
 				260725F41BA0A2B900C24DDB /* ProductAttributeModel.swift in Sources */,
+				962653571BAA797800CAEA1C /* CaseDetailsModel.swift in Sources */,
 				792876321B8DF89F00762A39 /* ChartXAxisRendererRadarChart.swift in Sources */,
 				79E633A11B9B27E70062DB14 /* FSCalendarAppearance.m in Sources */,
 				7928762E1B8DF89F00762A39 /* ChartRendererBase.swift in Sources */,

@@ -18,9 +18,7 @@ class NewDisputeTableViewController: UITableViewController {
         super.viewDidLoad()
         
         setupRoundedCorners()
-
-        // Back button
-        setupNavigationWhiteBackButton()
+        setupNavigationBar()
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,7 +32,11 @@ class NewDisputeTableViewController: UITableViewController {
         self.submitButton.layer.cornerRadius = 5
     }
     
-    func setupNavigationWhiteBackButton() {
+    func setupNavigationBar() {
+        // white Title on Navigation Bar
+        //self.navigationController!.navigationBar.barStyle = UIBarStyle.Black
+        self.navigationItem.title = "Case Details"
+
         let backButton = UIBarButtonItem(title:" ", style:.Plain, target: self, action:"goBackButton")
         backButton.image = UIImage(named: "back-white")
         backButton.tintColor = UIColor.whiteColor()

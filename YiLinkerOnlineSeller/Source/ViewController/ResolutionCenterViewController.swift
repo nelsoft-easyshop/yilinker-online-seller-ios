@@ -139,10 +139,6 @@ class ResolutionCenterViewController
     
     // Mark: - OLD VERSION FOR MODAL File a Dispute
     private func disputeOldPressed() {
-      //NSBundle.mainBundle().loadNibNamed("DisputeViewController", owner: self, options: nil)
-        
-        
-        
         var attributeModal = DisputeViewController(nibName: "DisputeViewController", bundle: nil)
         attributeModal.delegate = self
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
@@ -216,7 +212,9 @@ class ResolutionCenterViewController
     func fireGetCases() {
         self.showHUD()
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
+        var parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
+        // add filters to parameter
+        //parameters.append("filter","Open")
         
         manager.GET(APIAtlas.getResolutionCenterCases, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -235,18 +233,19 @@ class ResolutionCenterViewController
             
             self.hud?.hide(true)
             
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
-                
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    self.fireRefreshToken()
-                } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error Refreshing Token", title: "Refresh Token Error")
-                }
-                
-                println(error)
+        }, failure: {
+            (task: NSURLSessionDataTask!, error: NSError!) in
+            self.hud?.hide(true)
+            
+            let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+            
+            if task.statusCode == 401 {
+                self.fireRefreshToken()
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error Refreshing Token", title: "Refresh Token Error")
+            }
+            
+            println(error)
         })
     }
     
