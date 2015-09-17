@@ -399,6 +399,8 @@
 		79F107651BA18E5800B6CE51 /* TransactionCancelReasonOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F107631BA18E5800B6CE51 /* TransactionCancelReasonOrderViewController.swift */; };
 		79F107661BA18E5800B6CE51 /* TransactionCancelReasonOrderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79F107641BA18E5800B6CE51 /* TransactionCancelReasonOrderViewController.xib */; };
 		79F107681BA1C46500B6CE51 /* TransactionCancellationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F107671BA1C46500B6CE51 /* TransactionCancellationModel.swift */; };
+		79F20E4E1BAA878A0008A2E8 /* TransactionProductDetailsFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79F20E4D1BAA878A0008A2E8 /* TransactionProductDetailsFooterView.xib */; };
+		79F20E501BAA88A80008A2E8 /* TransactionProductDetailsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F20E4F1BAA88A80008A2E8 /* TransactionProductDetailsFooterView.swift */; };
 		961F702A1B97EEEC007D0EA5 /* ButtonToTabBehaviorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961F70291B97EEEC007D0EA5 /* ButtonToTabBehaviorizer.swift */; };
 		961F702C1B97F057007D0EA5 /* CaseDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961F702B1B97F057007D0EA5 /* CaseDetailsTableViewController.swift */; };
 		961F702E1B97F077007D0EA5 /* DisputeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961F702D1B97F077007D0EA5 /* DisputeViewController.swift */; };
@@ -938,6 +940,8 @@
 		79F107631BA18E5800B6CE51 /* TransactionCancelReasonOrderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCancelReasonOrderViewController.swift; sourceTree = "<group>"; };
 		79F107641BA18E5800B6CE51 /* TransactionCancelReasonOrderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionCancelReasonOrderViewController.xib; sourceTree = "<group>"; };
 		79F107671BA1C46500B6CE51 /* TransactionCancellationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCancellationModel.swift; sourceTree = "<group>"; };
+		79F20E4D1BAA878A0008A2E8 /* TransactionProductDetailsFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionProductDetailsFooterView.xib; sourceTree = "<group>"; };
+		79F20E4F1BAA88A80008A2E8 /* TransactionProductDetailsFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionProductDetailsFooterView.swift; sourceTree = "<group>"; };
 		961F70291B97EEEC007D0EA5 /* ButtonToTabBehaviorizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonToTabBehaviorizer.swift; sourceTree = "<group>"; };
 		961F702B1B97F057007D0EA5 /* CaseDetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaseDetailsTableViewController.swift; sourceTree = "<group>"; };
 		961F702D1B97F077007D0EA5 /* DisputeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisputeViewController.swift; sourceTree = "<group>"; };
@@ -1293,6 +1297,7 @@
 				79E633AC1B9B328E0062DB14 /* TransactionShipItemTableViewCell.swift */,
 				F7E465821B9F2D7B00FAB97D /* SearchTableViewCell.swift */,
 				F7E465831B9F2D7B00FAB97D /* SearchTableViewCell.xib */,
+				79F20E4F1BAA88A80008A2E8 /* TransactionProductDetailsFooterView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1511,6 +1516,7 @@
 				F7C40F8C1B983B9D0091C16C /* VerifyViewController.xib */,
 				79E633781B9AE9AA0062DB14 /* TransactionDetailsFooterView.xib */,
 				79E633AA1B9B2AC10062DB14 /* TransactionShipItemTableViewCell.xib */,
+				79F20E4D1BAA878A0008A2E8 /* TransactionProductDetailsFooterView.xib */,
 			);
 			path = Xib;
 			sourceTree = "<group>";
@@ -1866,6 +1872,7 @@
 		967EE1AC1B8AEA25000591AC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = YiLinker;
 				TargetAttributes = {
@@ -2053,6 +2060,7 @@
 				79EDA4151B9205080037558A /* PointsEarnedTableViewCell.xib in Resources */,
 				0CF28EF81B8CA2E9005B2E54 /* Panton ExtraBold Italic.otf in Resources */,
 				2618DD721B970E210030C6D2 /* AddSubCategoriesViewController.xib in Resources */,
+				79F20E4E1BAA878A0008A2E8 /* TransactionProductDetailsFooterView.xib in Resources */,
 				F7C40FD51B983CD90091C16C /* dropdown.png in Resources */,
 				F7C40FA71B983C020091C16C /* CreateNewBankAccountViewController.xib in Resources */,
 				F7C40FAD1B983C200091C16C /* ChangeMobileNumberViewController.xib in Resources */,
@@ -2280,6 +2288,7 @@
 				79F107651BA18E5800B6CE51 /* TransactionCancelReasonOrderViewController.swift in Sources */,
 				79E633A21B9B27E70062DB14 /* FSCalendarCell.m in Sources */,
 				79EF7AB61B998A8B0082CD35 /* TransactionFilterTableViewCell.swift in Sources */,
+				79F20E501BAA88A80008A2E8 /* TransactionProductDetailsFooterView.swift in Sources */,
 				96FBF6811BA06C94009DDD29 /* ResolutionCenterModel.swift in Sources */,
 				0C8D7F951B8F12C200B3FA4E /* ProductUploadAttributeListTableViewController.swift in Sources */,
 				0C8D7FAA1B8F577300B3FA4E /* ProductUploadAddFooterView.swift in Sources */,

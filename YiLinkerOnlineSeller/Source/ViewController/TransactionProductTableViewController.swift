@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TransactionProductTableViewController: UITableViewController {
+class TransactionProductTableViewController: UITableViewController, TransactionProductDetailsFooterViewDelegate, TransactionCancelOrderViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate, TransactionCancelReasonOrderViewControllerDelegate {
     var purchaseCellIdentifier: String = "TransactionProductPurchaseTableViewCell"
     var productCellIdentifier: String = "TransactionProductDetailsTableViewCell"
     var descriptionCellIdentifier: String = "TransactionProductDescriptionTableViewCell"
@@ -18,8 +18,12 @@ class TransactionProductTableViewController: UITableViewController {
     var productAttributeValueData: [String] = ["ABCD-123-5678-90122", "Beats Studio Version", "0.26", "203mm", "3.5mm"]
     
     var tableHeaderView: TransactionProductDetailsHeaderView!
+    var tableFooterView: TransactionProductDetailsFooterView!
     
     var productModel: TransactionOrderProductModel!
+    
+    var dimView: UIView?
+    var hud: MBProgressHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +31,7 @@ class TransactionProductTableViewController: UITableViewController {
         initializeNavigationBar()
         initializeTableView()
         registerNibs()
+        initializeViews()
     }
 
     override func didReceiveMemoryWarning() {
@@ -53,8 +58,14 @@ class TransactionProductTableViewController: UITableViewController {
             tableHeaderView.productDescriptionLabel.text = ""
         }
         
+        if tableFooterView == nil {
+            tableFooterView = XibHelper.puffViewWithNibName("TransactionProductDetailsFooterView", index: 0) as! TransactionProductDetailsFooterView
+            tableFooterView.delegate = self
+            tableFooterView.frame.size.width = self.view.frame.size.width
+        }
+        
         self.tableView.tableHeaderView = tableHeaderView
-        self.tableView.tableFooterView = UIView(frame: CGRectZero)
+        self.tableView.tableFooterView = tableFooterView
     }
     
     func initializeNavigationBar() {
@@ -69,6 +80,15 @@ class TransactionProductTableViewController: UITableViewController {
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    func initializeViews(){
+        dimView = UIView(frame: self.view.bounds)
+        dimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        self.navigationController?.view.addSubview(dimView!)
+        //self.view.addSubview(dimView!)
+        dimView?.hidden = true
+        dimView?.alpha = 0
     }
     
     func back() {
@@ -152,6 +172,94 @@ class TransactionProductTableViewController: UITableViewController {
         }
     }
     
+    
+   // MARK : TransactionProductDetailsFooterViewDelegate
+    func cancelButtonOrderAction() {
+        showDimView()
+        
+        var cancelOrderController = TransactionCancelOrderViewController(nibName: "TransactionCancelOrderViewController", bundle: nil)
+        cancelOrderController.delegate = self
+        cancelOrderController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        cancelOrderController.providesPresentationContextTransitionStyle = true
+        cancelOrderController.definesPresentationContext = true
+        cancelOrderController.view.backgroundColor = UIColor.clearColor()
+        self.tabBarController?.presentViewController(cancelOrderController, animated: true, completion: nil)
+    }
+
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.navigationController?.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    func showDimView() {
+        self.dimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 1
+            }, completion: { finished in
+        })
+    }
+    
+    func hideDimView() {
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 0
+            }, completion: { finished in
+                self.dimView!.hidden = true
+        })
+    }
+    
+    // MARK: - TransactionCancelOrderViewControllerDelegate
+    func closeCancelOrderViewController() {
+        hideDimView()
+    }
+    
+    func yesCancelOrderAction() {
+        var reasonController = TransactionCancelReasonOrderViewController(nibName: "TransactionCancelReasonOrderViewController", bundle: nil)
+        reasonController.delegate = self
+        reasonController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        reasonController.providesPresentationContextTransitionStyle = true
+        reasonController.definesPresentationContext = true
+        reasonController.view.backgroundColor = UIColor.clearColor()
+        self.tabBarController?.presentViewController(reasonController, animated: true, completion: nil)
+    }
+    
+    func noCancelOrderAction() {
+        hideDimView()
+    }
+    
+    
+    // MARK: - TransactionCancelOrderSuccessViewControllerDelegate
+    func closeCancelOrderSuccessViewController() {
+        hideDimView()
+    }
+    
+    func returnToDashboardAction() {
+        hideDimView()
+        self.navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
+    // MARK: TransactionCancelReasonOrderViewControllerDelegate
+    func closeTransactionCancelReasonOrderViewController() {
+        hideDimView()
+    }
+    
+    func submitTransactionCancelReason() {
+        var successController = TransactionCancelOrderSuccessViewController(nibName: "TransactionCancelOrderSuccessViewController", bundle: nil)
+        successController.delegate = self
+        successController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        successController.providesPresentationContextTransitionStyle = true
+        successController.definesPresentationContext = true
+        successController.view.backgroundColor = UIColor.clearColor()
+        self.tabBarController?.presentViewController(successController, animated: true, completion: nil)
+    }
 
     
 }
