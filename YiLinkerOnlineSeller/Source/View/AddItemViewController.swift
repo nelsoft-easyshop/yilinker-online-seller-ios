@@ -126,7 +126,7 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
         
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-                                        "status": "5",
+                                        "status": "2",
                                         "keyword": key]
         
         manager.POST(APIAtlas.managementGetProductList, parameters: parameters, success: {

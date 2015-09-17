@@ -367,8 +367,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                         for j in 0..<self.subCategories2[i].products.count {
                             subProducts.append(self.subCategories2[i].products[j].productId.toInt()!)
                         }
-                        subs.append(["categoryId": self.subCategories2[i].categoryId,
-                                   "categoryName": self.subCategories2[i].categoryName,
+                        subs.append(["categoryName": self.subCategories2[i].categoryName,
                                        "products": subProducts])
                     }
                     
