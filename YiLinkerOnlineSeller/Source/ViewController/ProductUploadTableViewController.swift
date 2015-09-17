@@ -558,7 +558,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             let picker: UzysAssetsPickerController = UzysAssetsPickerController()
             let maxCount: Int = 6
             
-            let imageLimit: Int = maxCount - self.uploadImages.count
             picker.delegate = self
             picker.maximumNumberOfSelectionVideo = 0
             picker.maximumNumberOfSelectionPhoto = 100
@@ -585,9 +584,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     //UzzyPickerDelegate
     
     func uzysAssetsPickerController(picker: UzysAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) {
-        let assetsLibrary = ALAssetsLibrary()
-        let alaSset: ALAsset = assets[0] as! ALAsset
-
         for allaSset in assets as! [ALAsset] {
             let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())
             self.uploadImages.insert(image, atIndex: 0)

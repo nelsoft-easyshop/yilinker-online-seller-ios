@@ -188,7 +188,7 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
             
         } else {
             if self.productModel.validCombinations.count != 0 {
-                for (index, combination) in self.productModel.validCombinations.enumerate() {
+                for _ in self.productModel.validCombinations {
                     self.productModel.validCombinations.removeAtIndex(0)
                 }
             }

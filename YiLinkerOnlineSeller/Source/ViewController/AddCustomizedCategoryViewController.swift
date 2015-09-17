@@ -358,7 +358,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                     productIds.append(Int(self.selectedProductsModel[i].id)!)
                 }
                 
-                var formattedCategories: String = ""
+                let formattedCategories: String = ""
 
                 if self.parentId == 0 {
                     var subs: [NSDictionary] = []
@@ -372,7 +372,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                     }
                     
                     let data = try? NSJSONSerialization.dataWithJSONObject(subs, options: [])
-                    var formattedCategories: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+                    let formattedCategories: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
                     print("> \(formattedCategories)")
                     let parameters: Dictionary<String, AnyObject> = ["access_token": SessionManager.accessToken(),
                         "categoryName": self.categoryDetailsView.categoryNameTextField.text!,
@@ -386,7 +386,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                         "categoryName": self.categoryDetailsView.categoryNameTextField.text!,
                         "parentId": self.parentId,
                         "products": productIds.description,
-                        "subcategories": formattedCategories] as! NSDictionary
+                        "subcategories": formattedCategories] 
                     
                     print(parameters)
                     requestAddCustomizedCategory(parameters)
@@ -420,7 +420,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                                 "subcategories": subs])
                 
                 let data = try? NSJSONSerialization.dataWithJSONObject(parameters, options: [])
-                var formattedCategory: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+                let formattedCategory: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
 
                 let params: NSDictionary = ["access_token": SessionManager.accessToken(),
                                               "categories": formattedCategory]
@@ -540,7 +540,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     
     func requestAddCustomizedCategory(parameter: NSDictionary) {
         self.showHUD()
-        var manager = APIManager.sharedInstance
+        let manager = APIManager.sharedInstance
             
         manager.POST(APIAtlas.addCustomizedCategory, parameters: parameter, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in

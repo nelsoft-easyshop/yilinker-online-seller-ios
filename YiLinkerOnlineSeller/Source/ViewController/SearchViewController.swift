@@ -148,7 +148,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.filterByButton.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Normal)
             
             let indexPath = tableView.indexPathForSelectedRow;
-            let currentCell = tableView.cellForRowAtIndexPath(indexPath!) as UITableViewCell!;
             self.filterByButton.setTitle(filterBy[indexPath!.row], forState: UIControlState.Normal)
             filterBySelected = indexPath!.row
             
@@ -200,7 +199,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if filterBySelected == 1 {
             self.showHUD()
             let manager = APIManager.sharedInstance
-            let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
             
             manager.GET(APIAtlas.transaction+"\(SessionManager.accessToken())&query=\(self.searchTextField.text)", parameters: nil, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in

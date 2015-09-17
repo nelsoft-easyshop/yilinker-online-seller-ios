@@ -20,7 +20,7 @@ public class Reachability {
         request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalAndRemoteCacheData
         request.timeoutInterval = 10.0
         
-        var response: NSURLResponse?
+        let response: NSURLResponse = NSURLResponse()
         
         if let httpResponse = response as? NSHTTPURLResponse {
             if httpResponse.statusCode == 200 {

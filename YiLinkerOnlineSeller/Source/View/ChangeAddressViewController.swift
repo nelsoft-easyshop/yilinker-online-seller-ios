@@ -133,7 +133,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                //let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 /* if task.statusCode == 401 {
                     self.requestRefreshToken(AddressRefreshType.Get, uid: 0, indexPath: nil)
                 }  else if error.userInfo != nil {

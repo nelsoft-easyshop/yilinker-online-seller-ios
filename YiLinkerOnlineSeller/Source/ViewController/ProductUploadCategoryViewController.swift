@@ -212,7 +212,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
             self.fireCategoryWithParentID(parentID)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                //let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 self.hud?.hide(true)
         })
         
