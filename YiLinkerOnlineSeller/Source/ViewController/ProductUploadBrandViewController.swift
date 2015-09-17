@@ -42,11 +42,11 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
     }
     
     func backButton() {
-        let backButton:UIButton = UIButton(type: UIButtonType.Custom)
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
-        let customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
@@ -56,11 +56,11 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
     
     
     func checkButton() {
-        let checkButton:UIButton = UIButton(type: UIButtonType.Custom)
+        var checkButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         checkButton.frame = CGRectMake(0, 0, 40, 40)
         checkButton.addTarget(self, action: "check", forControlEvents: UIControlEvents.TouchUpInside)
         checkButton.setImage(UIImage(named: "check"), forState: UIControlState.Normal)
-        let customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: checkButton)
+        var customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: checkButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
@@ -110,7 +110,7 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
     
     
     func textFieldDidChange(sender: UITextField) {
-        self.fireBrandWithKeyWord(sender.text!)
+        self.fireBrandWithKeyWord(sender.text)
     }
     
     func registerCell() {
@@ -123,7 +123,7 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
     }
     
     func check() {
-        self.delegate!.productUploadBrandViewController(didSelectBrand: self.brandTextField.text!, brandModel: self.selectedBrandModel)
+        self.delegate!.productUploadBrandViewController(didSelectBrand: self.brandTextField.text, brandModel: self.selectedBrandModel)
         self.back()
     }
     

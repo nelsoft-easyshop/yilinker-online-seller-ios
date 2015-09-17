@@ -48,11 +48,11 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
         self.title = "Customized Category"
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
-        let backButton:UIButton = UIButton(type: UIButtonType.Custom)
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "backAction", forControlEvents: UIControlEvents.TouchUpInside)
         backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
-        let customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
@@ -106,7 +106,7 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                print(error)
+                println(error)
                 self.hud?.hide(true)
         })
     }
@@ -124,7 +124,7 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
             self.tableView.reloadData()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                print(error)
+                println(error)
                 self.hud?.hide(true)
         })
     }

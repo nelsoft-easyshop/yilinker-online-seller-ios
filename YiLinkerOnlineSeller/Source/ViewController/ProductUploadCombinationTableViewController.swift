@@ -52,11 +52,11 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
     }
 
     func backButton() {
-        let backButton:UIButton = UIButton(type: UIButtonType.Custom)
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
-        let customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
@@ -157,7 +157,9 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
     
     func productUploadCombinationFooterTableViewCell(didClickUploadImage cell: ProductUploadCombinationFooterTableViewCell) {
         let picker: UzysAssetsPickerController = UzysAssetsPickerController()
-
+        let maxCount: Int = 6
+        
+        let imageLimit: Int = maxCount - self.images.count
         picker.delegate = self
         picker.maximumNumberOfSelectionVideo = 0
         picker.maximumNumberOfSelectionPhoto = 100
@@ -174,8 +176,11 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
     //UzzyPickerDelegate
     
     func uzysAssetsPickerController(picker: UzysAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) {
+        let assetsLibrary = ALAssetsLibrary()
+        let alaSset: ALAsset = assets[0] as! ALAsset
+        
         for allaSset in assets as! [ALAsset] {
-            let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())
+            let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!
             self.images.insert(image, atIndex: 0)
         }
         
@@ -213,9 +218,9 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
                 numberOfRows++
             }
             
-            let dynamicHeight: CGFloat = floor(numberOfRows) * rowHeight
+            var dynamicHeight: CGFloat = floor(numberOfRows) * rowHeight
             
-            let cellHeight: CGFloat = rowInitialHeight + dynamicHeight
+            var cellHeight: CGFloat = rowInitialHeight + dynamicHeight
             
             
             return cellHeight

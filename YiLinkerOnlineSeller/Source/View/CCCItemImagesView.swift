@@ -47,7 +47,7 @@ class CCCItemImagesView: UIView, UICollectionViewDataSource {
     
     // MARK: - 
     
-    func setProductsCategory(products products: [CategoryProductModel]) {
+    func setProductsCategory(#products: [CategoryProductModel]) {
         
         if products.count != 0 {
             self.categoryProducts = products
@@ -66,7 +66,7 @@ class CCCItemImagesView: UIView, UICollectionViewDataSource {
 //        self.collectionView.reloadData()
 //    }
 
-    func setProductsManagement(products products: [ProductManagementProductsModel]) {
+    func setProductsManagement(#products: [ProductManagementProductsModel]) {
         
         self.selectedItems = products
         self.collectionView.reloadData()

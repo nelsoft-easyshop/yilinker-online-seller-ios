@@ -57,7 +57,7 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         super.viewDidLoad()
         self.bankTableView.hidden = true
         self.bankNameTextField.delegate = self
-        self.bankTableView.tableFooterView = UIView()
+        self.bankTableView.tableFooterView = UIView.new()
         self.bankTableView.layer.masksToBounds = false
         self.bankTableView.layer.shadowColor = UIColor.blackColor().CGColor
         self.bankTableView.layer.shadowOffset = CGSizeMake(0.0, 5.0)
@@ -67,7 +67,7 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         self.bankTableView.separatorInset = UIEdgeInsetsZero
         self.bankTableView.layoutMargins = UIEdgeInsetsZero
        
-        let storeInfo = UINib(nibName: "FilterByTableViewCell", bundle: nil)
+        var storeInfo = UINib(nibName: "FilterByTableViewCell", bundle: nil)
         self.bankTableView.registerNib(storeInfo, forCellReuseIdentifier: "FilterByTableViewCell")
     
         self.fireEnabledBanks()
@@ -97,14 +97,14 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         let manager = APIManager.sharedInstance
         var bankId2: Int = 0
         var url: String = ""
-        let accountNumber = self.accountNumberTextField.text
+        var accountNumber = self.accountNumberTextField.text
         if edit {
-            bankId2 = self.bankDictionary[self.bankNameTextField.text!]!
+            bankId2 = self.bankDictionary[self.bankNameTextField.text]!
             url = APIAtlas.sellerEditBankAccount
-            let parameters: Dictionary<String, AnyObject> = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text!, "accountNumber" : accountNumber!, "accountName" : self.accountNameTextField.text!, "bankId" : NSNumber(integer: bankId2), "bankAccountId" : self.editBankId]
+            var parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : accountNumber, "accountName" : self.accountNameTextField.text, "bankId" : NSNumber(integer: bankId2), "bankAccountId" : self.editBankId]
             manager.POST(url, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                print("edited bank account")
+                println("edited bank account")
                 //self.dismissViewControllerAnimated(true, completion: nil)
                 
                 self.hud?.hide(true)
@@ -114,15 +114,15 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
                     
                     self.dismissViewControllerAnimated(true, completion: nil)
                     self.hud?.hide(true)
-                    print(error)
+                    println(error)
             })
         } else {
             bankId2 = self.bankId
             url = APIAtlas.sellerAddBankAccount
-            let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text!, "accountNumber" : accountNumber!, "accountName" : self.accountNameTextField.text!, "bankId" : NSNumber(integer: bankId2)]
+            var parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : accountNumber, "accountName" : self.accountNameTextField.text, "bankId" : NSNumber(integer: bankId2)]
             manager.POST(url, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                print("created bank account")
+                println("created bank account")
                 //self.dismissViewControllerAnimated(true, completion: nil)
                 
                 self.hud?.hide(true)
@@ -132,7 +132,7 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
                     
                     self.dismissViewControllerAnimated(true, completion: nil)
                     self.hud?.hide(true)
-                    print(error)
+                    println(error)
             })
         }
         
@@ -171,14 +171,14 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         //UITableViewCell *ell = [tableView dequeueReusableHeaderFooterViewWithIdentifier:nil];
         let cell: FilterByTableViewCell = self.bankTableView.dequeueReusableCellWithIdentifier("FilterByTableViewCell") as! FilterByTableViewCell
         cell.delegate = self
-        print(self.bankModel)
+        println(self.bankModel)
         if(self.bankModel != nil){
             //autoCompleteArray?.addObject(self.bankModel.bankName[indexPath.row])
             //autoCompleteArray = NSMutableArray(array: self.bankModel.bankName as NSArray)
             if(autoCompleteFilterArray != nil){
                 cell.filterByLabel?.text = autoCompleteFilterArray!.objectAtIndex(indexPath.row) as? String
                 
-                print("complete array 1 \(autoCompleteArray)")
+                println("complete array 1 \(autoCompleteArray)")
             }
         }
        
@@ -221,20 +221,20 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
             for var num = 0 ; num < self.bankModel.bankName.count; num++ {
                 self.bankDictionary[self.bankModel.bankName[num]] = self.bankModel.bankId[num]
             }
-            print("autocompletearray \(self.autoCompleteArray)")
+            println("autocompletearray \(self.autoCompleteArray)")
             self.hud?.hide(true)
             self.bankTableView.reloadData()
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                print(error)
+                println(error)
         })
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        let passcode = (self.bankNameTextField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
+        var passcode = (self.bankNameTextField.text as NSString).stringByReplacingCharactersInRange(range, withString: string)
 
-        let predicate = NSPredicate(format: "SELF CONTAINS %@", passcode.uppercaseString)
-        print(passcode)
+        var predicate = NSPredicate(format: "SELF CONTAINS %@", passcode.uppercaseString)
+        println(passcode)
         
         autoCompleteFilterArray = (autoCompleteArray!).filteredArrayUsingPredicate(predicate)
         if autoCompleteFilterArray?.count != 0 {

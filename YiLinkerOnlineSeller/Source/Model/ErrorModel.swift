@@ -23,7 +23,7 @@ class ErrorModel: NSObject {
         var message: String = ""
         var title: String = ""
         var isSuccessful: Bool = false
-        print(dictionary)
+        println(dictionary)
         if let value: AnyObject = dictionary["errorTitle"] {
             if (value as! NSObject != NSNull() && value as? String != nil) {
                 title = value as! String
@@ -37,7 +37,7 @@ class ErrorModel: NSObject {
         }
         
         if let values: AnyObject = dictionary["data"] {
-            if let temp = values as? NSDictionary {
+            if let temp = dictionary["data"] as? NSDictionary {
                 let errors: [String] = temp["errors"] as! [String]
                 for error in errors {
                     message = "\(message) \(error)"

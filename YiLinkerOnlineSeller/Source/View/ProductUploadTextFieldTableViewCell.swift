@@ -53,7 +53,7 @@ class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate,
     }
     
     func textFieldDidChange(sender: UITextField) {
-        self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: sender.text!, cell: self, textFieldType: self.textFieldType!)
+        self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: sender.text, cell: self, textFieldType: self.textFieldType!)
     }
     
     func addPicker() {
@@ -72,7 +72,7 @@ class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate,
     
     func done() {
         self.cellTexField.endEditing(true)
-        self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: self.cellTexField.text!, cell: self, textFieldType: self.textFieldType!)
+        self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: self.cellTexField.text, cell: self, textFieldType: self.textFieldType!)
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -87,7 +87,7 @@ class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate,
         return values.count
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
         return self.values[row]
     }
     

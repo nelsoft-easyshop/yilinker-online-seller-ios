@@ -28,7 +28,7 @@ class ProductUploadDetailHeaderViewCollectionViewCell: UICollectionViewCell, UIT
     }
     
     func textFieldDidChange(sender: UITextField) {
-        self.delegate!.productUploadDetailHeaderViewCollectionViewCell(editingCellTextFieldWithText: sender.text!)
+        self.delegate!.productUploadDetailHeaderViewCollectionViewCell(editingCellTextFieldWithText: sender.text)
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {

@@ -22,7 +22,7 @@ extension UITextField {
         
         let nextItem = UIBarButtonItem(image: UIImage(named: "next"), landscapeImagePhone: nil, style: UIBarButtonItemStyle.Plain, target: target, action: next)
         
-        let toolbarButtons = [previousItem, nextItem,flexibleSpace, doneItem]
+        var toolbarButtons = [previousItem, nextItem,flexibleSpace, doneItem]
         
         //Put the buttons into the ToolBar and display the tool bar
         toolBar.setItems(toolbarButtons, animated: false)
@@ -42,7 +42,7 @@ extension UITextField {
         
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: self, action: nil)
         
-        let toolbarButtons = [flexibleSpace, doneItem]
+        var toolbarButtons = [flexibleSpace, doneItem]
         
         //Put the buttons into the ToolBar and display the tool bar
         toolBar.setItems(toolbarButtons, animated: false)
@@ -75,7 +75,7 @@ extension UITextField {
     
     func isGreaterThanEightCharacters() -> Bool {
         var result: Bool = false
-        if self.text!.characters.count >= 8 {
+        if count(self.text) >= 8 {
             result = true
         }
         
@@ -84,7 +84,7 @@ extension UITextField {
     
     func isNotEmpty() -> Bool {
         var result: Bool = false
-        if self.text!.characters.count != 0 {
+        if count(self.text) != 0 {
             result = true
         }
         return result
@@ -92,10 +92,10 @@ extension UITextField {
     
     func isGreaterThanOrEqualEightCharacters() -> Bool {
         var result: Bool = true
-        if self.text!.characters.count < 11 {
+        if count(self.text) < 11 {
             result = false
         }
-        return result
+        return true
     }
 
     
@@ -120,7 +120,7 @@ extension UITextView {
         
         let nextItem = UIBarButtonItem(image: UIImage(named: "next"), landscapeImagePhone: nil, style: UIBarButtonItemStyle.Plain, target: target, action: next)
         
-        let toolbarButtons = [previousItem, nextItem,flexibleSpace, doneItem]
+        var toolbarButtons = [previousItem, nextItem,flexibleSpace, doneItem]
         
         //Put the buttons into the ToolBar and display the tool bar
         toolBar.setItems(toolbarButtons, animated: false)
@@ -205,15 +205,15 @@ extension NSDate {
     
     
     func addDays(daysToAdd : Int) -> NSDate {
-        let secondsInDays : NSTimeInterval = Double(daysToAdd) * 60 * 60 * 24
-        let dateWithDaysAdded : NSDate = self.dateByAddingTimeInterval(secondsInDays)
+        var secondsInDays : NSTimeInterval = Double(daysToAdd) * 60 * 60 * 24
+        var dateWithDaysAdded : NSDate = self.dateByAddingTimeInterval(secondsInDays)
         return dateWithDaysAdded
     }
     
     
     func addHours(hoursToAdd : Int) -> NSDate {
-        let secondsInHours : NSTimeInterval = Double(hoursToAdd) * 60 * 60
-        let dateWithHoursAdded : NSDate = self.dateByAddingTimeInterval(secondsInHours)
+        var secondsInHours : NSTimeInterval = Double(hoursToAdd) * 60 * 60
+        var dateWithHoursAdded : NSDate = self.dateByAddingTimeInterval(secondsInHours)
         return dateWithHoursAdded
     }
 }

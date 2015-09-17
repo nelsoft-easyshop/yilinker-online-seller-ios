@@ -126,7 +126,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         //self.delegate!.productUploadCategoryViewController(didSelectCategory: self.titles[indexPath.row])
         
-        let categoryModel: CategoryModel = self.categories[indexPath.row]
+        var categoryModel: CategoryModel = self.categories[indexPath.row]
         if categoryModel.hasChildren == "1" {
             let productUploadCategoryViewController: ProductUploadCategoryViewController = ProductUploadCategoryViewController(nibName: "ProductUploadCategoryViewController", bundle: nil)
             productUploadCategoryViewController.pageTitle = categoryModel.name
@@ -153,11 +153,11 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
     
     
     func backButton() {
-        let backButton:UIButton = UIButton(type: UIButtonType.Custom)
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
-        let customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
@@ -170,7 +170,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
     }
     
     func searchButton() {
-        let searchButton:UIButton = UIButton(type: UIButtonType.Custom)
+        var searchButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         searchButton.frame = CGRectMake(0, 0, 40, 40)
         searchButton.addTarget(self, action: "search", forControlEvents: UIControlEvents.TouchUpInside)
         let image: UIImage = UIImage(named: "search")!
@@ -178,7 +178,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         searchButton.setImage(tintedImage, forState: UIControlState.Normal)
         searchButton.tintColor = UIColor.whiteColor()
         
-        let customSearchButton:UIBarButtonItem = UIBarButtonItem(customView: searchButton)
+        var customSearchButton:UIBarButtonItem = UIBarButtonItem(customView: searchButton)
         customSearchButton.tintColor = UIColor.whiteColor()
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
@@ -212,7 +212,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
             self.fireCategoryWithParentID(parentID)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                //let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 self.hud?.hide(true)
         })
         

@@ -38,11 +38,11 @@ class SubCategoryModel: NSObject {
         var isSuccessful: Bool = false
         var categoryId: Int = 0
         var categoryName: String = ""
-        let parentName: String = ""
+        var parentName: String = ""
         var parentId: Int = 0
         var sortOrder: Int = 0
         var products: [CategoryProductModel] = []
-        let local: Bool = false
+        var local: Bool = false
         
         if subCategories.isKindOfClass(NSDictionary) {
 

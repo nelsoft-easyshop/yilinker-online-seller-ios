@@ -10,7 +10,7 @@ import UIKit
 
 struct XibHelper {
     static func puffViewWithNibName(nibName: String!, index: Int) -> UIView {
-        let views: NSArray = NSBundle.mainBundle().loadNibNamed(nibName, owner: nil, options: nil)
+        var views: NSArray = NSBundle.mainBundle().loadNibNamed(nibName, owner: nil, options: nil)
         return views.objectAtIndex(index) as! UIView
     }
 }

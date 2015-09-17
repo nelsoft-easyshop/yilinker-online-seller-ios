@@ -38,7 +38,7 @@ class ProductUploadDetailHeaderViewTableViewCell: UITableViewCell, UITextFieldDe
     
     func textFieldDidEndEditing(textField: UITextField) {
         if !edited {
-            self.delegate?.productUploadDetailHeaderViewTableViewCell(didEndEditing: self, text: self.cellTextField.text!)
+            self.delegate?.productUploadDetailHeaderViewTableViewCell(didEndEditing: self, text: self.cellTextField.text)
         }
     }
 }

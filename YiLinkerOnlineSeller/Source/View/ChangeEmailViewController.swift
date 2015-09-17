@@ -58,21 +58,20 @@ class ChangeEmailViewController: UIViewController {
     @IBAction func sumbitAction(sender: AnyObject) {
         self.delegate?.dismissView()
         if type == "email" {
-            print("Submit email")
+            println("Submit email")
         } else {
-            print("Submit password")
+            println("Submit password")
             self.showHUD()
             let manager = APIManager.sharedInstance
-            let parameters: Dictionary<String, String> = ["access_token" : SessionManager.accessToken(), "oldPassword" : self.oldEmailAddressTextField.text!, "newPassword" : self.newEmailAddressTextField.text!, "newPasswordConfirm" : self.confirmEmailAddressTextField.text!]
-            
+            let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldPassword" : self.oldEmailAddressTextField.text, "newPassword" : self.newEmailAddressTextField.text, "newPasswordConfirm" : self.confirmEmailAddressTextField.text];
             self.showHUD()
             manager.POST(APIAtlas.sellerChangePassword, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                print("SUCCESS!")
+                println("SUCCESS!")
                 self.hud?.hide(true)
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                     self.hud?.hide(true)
-                    print(error)
+                    println(error)
             })
         }
         self.dismissViewControllerAnimated(true, completion: nil)

@@ -30,7 +30,7 @@ class ProductUnitsModel {
     
     class func parseProductUnits(dictionary: NSDictionary) -> ProductUnitsModel {
         
-        let model = ProductUnitsModel()
+        var model = ProductUnitsModel()
         
         if dictionary.isKindOfClass(NSDictionary) {
             

@@ -37,7 +37,7 @@ public class LineScatterCandleChartDataSet: BarLineScatterCandleChartDataSet
     
     public override func copyWithZone(zone: NSZone) -> AnyObject
     {
-        let copy = super.copyWithZone(zone) as! LineScatterCandleChartDataSet
+        var copy = super.copyWithZone(zone) as! LineScatterCandleChartDataSet
         copy.drawHorizontalHighlightIndicatorEnabled = drawHorizontalHighlightIndicatorEnabled
         copy.drawVerticalHighlightIndicatorEnabled = drawVerticalHighlightIndicatorEnabled
         return copy

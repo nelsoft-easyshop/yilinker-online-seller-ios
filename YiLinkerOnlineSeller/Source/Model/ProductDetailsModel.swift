@@ -67,7 +67,7 @@ class ProductDetailsModel {
         //BADGES  ???
         
         // ----
-        //var combinations: [ProductAvailableAttributeCombinationModel] = []
+        var combinations: [ProductAvailableAttributeCombinationModel] = []
         
         if dictionary.isKindOfClass(NSDictionary) {
 

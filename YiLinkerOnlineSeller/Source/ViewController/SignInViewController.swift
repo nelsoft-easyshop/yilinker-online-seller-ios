@@ -76,7 +76,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     }
     
     func addCheckInTextField(field: UITextField) {
-        let check = UIImageView(image: UIImage(named: "valid"))
+        var check = UIImageView(image: UIImage(named: "valid"))
         check.frame = CGRectMake(0.0, 0.0, check.image!.size.width + 10.0, check.image!.size.height)
         check.contentMode = UIViewContentMode.Center
         field.rightView = check
@@ -84,7 +84,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         field.rightView?.hidden = true
     }
     
-    func showAlert(title title: String!, message: String!) {
+    func showAlert(#title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
         alertController.addAction(defaultAction)
@@ -135,15 +135,15 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.signInButton.setTitle("SIGN IN", forState: .Normal)
                 
-                if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                    print(jsonResult)
-                    if jsonResult["error_description"] as! String != "" {
-                        let errorDescription: String = jsonResult["error_description"] as! String
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
-                    } else {
-                        self.showAlert(title: "Error", message: "Something went wrong")
+                if error.userInfo != nil {
+                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                        if jsonResult["error_description"] != nil {
+                            let errorDescription: String = jsonResult["error_description"] as! String
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
+                        } else {
+                            self.showAlert(title: "Error", message: "Something went wrong")
+                        }
                     }
-                    
                 } else {
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     if task.statusCode == 1011 {
@@ -215,7 +215,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     }
     
     func passwordDidTextChanged() {
-        if self.passwordTextField.isAlphaNumeric() && self.passwordTextField.text!.characters.count > 5 {
+        if self.passwordTextField.isAlphaNumeric() && count(self.passwordTextField.text) > 5 {
             self.passwordTextField.rightView?.hidden = false
         } else {
             self.passwordTextField.rightView?.hidden = true
@@ -227,8 +227,8 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     func requestSignin() {
         self.showHUD()
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["email": self.emailAddressTextField.text!,
-            "password": self.passwordTextField.text!,
+        let parameters: NSDictionary = ["email": self.emailAddressTextField.text,
+            "password": self.passwordTextField.text,
             "client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
             "grant_type": Constants.Credentials.grantSeller]
@@ -245,15 +245,11 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.signInButton.setTitle("SIGN IN", forState: .Normal)
                 
-                if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                    print(jsonResult)
-                    if jsonResult["error_description"] as! String != "" {
+                if error.userInfo != nil {
+                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
                         let errorDescription: String = jsonResult["error_description"] as! String
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
-                    } else {
-                        self.showAlert(title: "Error", message: "Something went wrong")
                     }
-                    
                 } else {
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     if task.statusCode == 1011 {
@@ -304,7 +300,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             NSUserDefaults.standardUserDefaults().synchronize()
             
             let delay = 1.0 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
-            let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+            var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
             dispatch_after(dispatchTime, dispatch_get_main_queue(), {
                 
                 self.dismissViewControllerAnimated(true, completion: nil)
@@ -315,7 +311,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                print(error)
+                println(error)
         })
     }
     

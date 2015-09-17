@@ -81,7 +81,7 @@ class ProductUploadAttributeTableViewCell: UITableViewCell, UICollectionViewData
         let attributeValue: String = cell.attributeLabel.text!
         
         if self.parentViewController!.productModel != nil {
-            for (index, combination) in self.parentViewController!.productModel!.validCombinations.enumerate(){
+            for (index, combination) in enumerate(self.parentViewController!.productModel!.validCombinations){
                 for dictionary in combination.attributes as [NSMutableDictionary] {
                     if attributeValue == dictionary["value"] as! String {
                         isValidToDelete = false
@@ -114,9 +114,9 @@ class ProductUploadAttributeTableViewCell: UITableViewCell, UICollectionViewData
                 self.delegate!.productUploadAttributeTableViewCell(didTapCell: self, indexPath: indexPath)
                 self.attributes.removeAtIndex(indexPath.row)
                 self.collectionView.deleteItemsAtIndexPaths([indexPath])
-                print(self.parentViewController!.productModel!.validCombinations.count)
+                println(self.parentViewController!.productModel!.validCombinations.count)
                 self.parentViewController!.productModel!.validCombinations.removeAtIndex(combinationNumber)
-                print(self.parentViewController!.productModel!.validCombinations.count)
+                println(self.parentViewController!.productModel!.validCombinations.count)
             }
             
             alertController.addAction(OKAction)

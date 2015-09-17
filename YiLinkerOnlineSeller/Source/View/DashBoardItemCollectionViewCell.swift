@@ -23,6 +23,7 @@ class DashBoardItemCollectionViewCell: UICollectionViewCell {
     func initializeViews() {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let screenWidth = screenSize.width
+        let screenHeight = screenSize.height
         
         //iconView.layer.cornerRadius = iconView.frame.height / 2
         

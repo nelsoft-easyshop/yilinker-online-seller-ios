@@ -60,22 +60,22 @@ class SalesReportViewController: UIViewController, UISearchBarDelegate {
     func initializeNavigationBar() {
         self.title = "Report"
         
-        let backButton:UIButton = UIButton(type: UIButtonType.Custom)
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
-        let customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
         
-        searchButton = UIButton(type: UIButtonType.Custom)
+        searchButton = UIButton.buttonWithType(UIButtonType.Custom) as? UIButton
         searchButton.frame = CGRectMake(0, 0, 25, 25)
         searchButton.addTarget(self, action: "search", forControlEvents: UIControlEvents.TouchUpInside)
         searchButton.setImage(UIImage(named: "search-white"), forState: UIControlState.Normal)
         searchButton.hidden = true
-        let customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: searchButton)
+        var customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: searchButton)
         
         let navigationSpacer2: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer2.width = -10

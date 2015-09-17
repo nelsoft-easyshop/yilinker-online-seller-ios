@@ -51,7 +51,7 @@ public class RadarChartView: PieRadarChartViewBase
         super.init(frame: frame)
     }
     
-    public required init?(coder aDecoder: NSCoder)
+    public required init(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
     }
@@ -74,16 +74,16 @@ public class RadarChartView: PieRadarChartViewBase
     {
         super.calcMinMax()
         
-        let minLeft = _data.getYMin(.Left)
-        let maxLeft = _data.getYMax(.Left)
+        var minLeft = _data.getYMin(.Left)
+        var maxLeft = _data.getYMax(.Left)
         
         _chartXMax = Double(_data.xVals.count) - 1.0
         _deltaX = CGFloat(abs(_chartXMax - _chartXMin))
         
-        let leftRange = CGFloat(abs(maxLeft - (_yAxis.isStartAtZeroEnabled ? 0.0 : minLeft)))
+        var leftRange = CGFloat(abs(maxLeft - (_yAxis.isStartAtZeroEnabled ? 0.0 : minLeft)))
         
-        let topSpaceLeft = Double(leftRange * _yAxis.spaceTop)
-        let bottomSpaceLeft = Double(leftRange * _yAxis.spaceBottom)
+        var topSpaceLeft = Double(leftRange * _yAxis.spaceTop)
+        var bottomSpaceLeft = Double(leftRange * _yAxis.spaceBottom)
         
         // Consider sticking one of the edges of the axis to zero (0.0)
         
@@ -98,9 +98,9 @@ public class RadarChartView: PieRadarChartViewBase
             else if minLeft >= 0.0
             {
                 // We have positive values only, stay in the positive zone
-            _yAxis.axisMinimum = 0.0
+                _yAxis.axisMinimum = 0.0
                 _yAxis.axisMaximum = max(0.0, !isnan(_yAxis.customAxisMax) ? _yAxis.customAxisMax : (maxLeft + topSpaceLeft))
-        }
+            }
             else
             {
                 // Stick the minimum to 0.0 or less, and maximum to 0.0 or more (startAtZero for negative/positive at the same time)
@@ -121,13 +121,13 @@ public class RadarChartView: PieRadarChartViewBase
         _yAxis.axisRange = abs(_yAxis.axisMaximum - _yAxis.axisMinimum)
     }
 
-    public override func getMarkerPosition(entry entry: ChartDataEntry, highlight: ChartHighlight) -> CGPoint
+    public override func getMarkerPosition(#entry: ChartDataEntry, highlight: ChartHighlight) -> CGPoint
     {
-        let angle = self.sliceAngle * CGFloat(entry.xIndex) + self.rotationAngle
-        let val = CGFloat(entry.value) * self.factor
-        let c = self.centerOffsets
+        var angle = self.sliceAngle * CGFloat(entry.xIndex) + self.rotationAngle
+        var val = CGFloat(entry.value) * self.factor
+        var c = self.centerOffsets
         
-        let p = CGPoint(x: c.x + val * cos(angle * ChartUtils.Math.FDEG2RAD),
+        var p = CGPoint(x: c.x + val * cos(angle * ChartUtils.Math.FDEG2RAD),
             y: c.y + val * sin(angle * ChartUtils.Math.FDEG2RAD))
         
         return p
@@ -195,15 +195,15 @@ public class RadarChartView: PieRadarChartViewBase
         drawMarkers(context: context)
     }
 
-    /// - returns: the factor that is needed to transform values into pixels.
+    /// Returns the factor that is needed to transform values into pixels.
     public var factor: CGFloat
     {
-        let content = _viewPortHandler.contentRect
+        var content = _viewPortHandler.contentRect
         return min(content.width / 2.0, content.height / 2.0)
                 / CGFloat(_yAxis.axisRange)
     }
 
-    /// - returns: the angle that each slice in the radar chart occupies.
+    /// Returns the angle that each slice in the radar chart occupies.
     public var sliceAngle: CGFloat
     {
         return 360.0 / CGFloat(_data.xValCount)
@@ -212,9 +212,9 @@ public class RadarChartView: PieRadarChartViewBase
     public override func indexForAngle(angle: CGFloat) -> Int
     {
         // take the current angle of the chart into consideration
-        let a = ChartUtils.normalizedAngleFromAngle(angle - self.rotationAngle)
+        var a = ChartUtils.normalizedAngleFromAngle(angle - self.rotationAngle)
         
-        let sliceAngle = self.sliceAngle
+        var sliceAngle = self.sliceAngle
         
         for (var i = 0; i < _data.xValCount; i++)
         {
@@ -227,13 +227,13 @@ public class RadarChartView: PieRadarChartViewBase
         return 0
     }
 
-    /// - returns: the object that represents all y-labels of the RadarChart.
+    /// Returns the object that represents all y-labels of the RadarChart.
     public var yAxis: ChartYAxis
     {
         return _yAxis
     }
 
-    /// - returns: the object that represents all x-labels that are placed around the RadarChart.
+    /// Returns the object that represents all x-labels that are placed around the RadarChart.
     public var xAxis: ChartXAxis
     {
         return _xAxis
@@ -251,16 +251,16 @@ public class RadarChartView: PieRadarChartViewBase
 
     public override var radius: CGFloat
     {
-        let content = _viewPortHandler.contentRect
+        var content = _viewPortHandler.contentRect
         return min(content.width / 2.0, content.height / 2.0)
     }
 
-    /// - returns: the maximum value this chart can display on it's y-axis.
+    /// Returns the maximum value this chart can display on it's y-axis.
     public override var chartYMax: Double { return _yAxis.axisMaximum; }
     
-    /// - returns: the minimum value this chart can display on it's y-axis.
+    /// Returns the minimum value this chart can display on it's y-axis.
     public override var chartYMin: Double { return _yAxis.axisMinimum; }
     
-    /// - returns: the range of y-values this chart can display.
+    /// Returns the range of y-values this chart can display.
     public var yRange: Double { return _yAxis.axisRange}
 }
