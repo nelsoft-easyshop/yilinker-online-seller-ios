@@ -36,7 +36,7 @@ class ProductUploadPriceTableViewCell: UITableViewCell {
     }
     
     func textFieldDidChange(sender: UITextField) {
-        self.delegate!.productUploadPriceTableViewCell(textFieldDidChange: sender.text, cell: self, textFieldType: self.textFieldType!)
+        self.delegate!.productUploadPriceTableViewCell(textFieldDidChange: sender.text!, cell: self, textFieldType: self.textFieldType!)
     }
     
 }

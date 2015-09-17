@@ -17,7 +17,7 @@ class ProductImagesModel {
     
     class func parseProductImagesModel(images: NSDictionary) -> ProductImagesModel! {
         
-        var model = ProductImagesModel()
+        let model = ProductImagesModel()
         if images.isKindOfClass(NSDictionary) {
             
             model.id = images["id"] as! String

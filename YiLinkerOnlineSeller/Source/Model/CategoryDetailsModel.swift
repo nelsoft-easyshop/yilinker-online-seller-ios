@@ -35,7 +35,7 @@ class CategoryDetailsModel: NSObject {
         var isSuccessful: Bool = false
         var categoryId: Int = 0
         var categoryName: String = ""
-        var parentId: String = ""
+        let parentId: String = ""
         var sortOrder: Int = 0
         var subcategories: [SubCategoryModel] = []
         var products: [CategoryProductModel] = []

@@ -51,11 +51,11 @@ class ActivityLogTableViewController: UITableViewController {
     func initializeNavigationBar() {
         self.title = "Activity Log"
         
-        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let backButton:UIButton = UIButton(type: UIButtonType.Custom)
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
-        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        let customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
@@ -68,7 +68,7 @@ class ActivityLogTableViewController: UITableViewController {
 
     
     func registerNibs() {
-        var nib = UINib(nibName: "ActivityLogTableViewCell", bundle: nil)
+        let nib = UINib(nibName: "ActivityLogTableViewCell", bundle: nil)
         tableView.registerNib(nib, forCellReuseIdentifier: "ActivityLogTableViewCell")
     }
     
@@ -106,14 +106,14 @@ class ActivityLogTableViewController: UITableViewController {
     }
     
     override func scrollViewDidEndDragging(aScrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        var offset: CGPoint = aScrollView.contentOffset
-        var bounds: CGRect = aScrollView.bounds
-        var size: CGSize = aScrollView.contentSize
-        var inset: UIEdgeInsets = aScrollView.contentInset
-        var y: CGFloat = offset.y + bounds.size.height - inset.bottom
-        var h: CGFloat = size.height
-        var reload_distance: CGFloat = 10
-        var temp: CGFloat = h + reload_distance
+        let offset: CGPoint = aScrollView.contentOffset
+        let bounds: CGRect = aScrollView.bounds
+        let size: CGSize = aScrollView.contentSize
+        let inset: UIEdgeInsets = aScrollView.contentInset
+        let y: CGFloat = offset.y + bounds.size.height - inset.bottom
+        let h: CGFloat = size.height
+        let reload_distance: CGFloat = 10
+        let temp: CGFloat = h + reload_distance
         if y > temp {
             fireGetActivityLogs()
         }
@@ -122,14 +122,14 @@ class ActivityLogTableViewController: UITableViewController {
     // MARK: - Methods
     
     func setSectionHeader(date: String) -> UIView {
-        var sectionHeaderView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, self.tableView.sectionHeaderHeight))
+        let sectionHeaderView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, self.tableView.sectionHeaderHeight))
         sectionHeaderView.backgroundColor = UIColor(red: 225/255.0, green: 225/255.0, blue: 225/255.0, alpha: 1.0)
-        var middleLine: UIView = UIView(frame: CGRectMake(0, 0, sectionHeaderView.frame.size.width, 0.5))
+        let middleLine: UIView = UIView(frame: CGRectMake(0, 0, sectionHeaderView.frame.size.width, 0.5))
         middleLine.backgroundColor = .grayColor()
         middleLine.center.y = sectionHeaderView.center.y + (15 / 2)
         sectionHeaderView.addSubview(middleLine)
         
-        var dateLabel: UILabel = UILabel(frame: CGRectMake(0, 0, sectionHeaderView.frame.size.width, 20))
+        let dateLabel: UILabel = UILabel(frame: CGRectMake(0, 0, sectionHeaderView.frame.size.width, 20))
         dateLabel.textAlignment = .Center
         dateLabel.font = UIFont.systemFontOfSize(12.0)
         dateLabel.textColor = .grayColor()
@@ -163,13 +163,13 @@ class ActivityLogTableViewController: UITableViewController {
         var tempDates: [String] = []
     
         for subValue in activities.activities {
-            if !contains(tempDates, formatDateToCompleteString(formatStringToDate(subValue.date))) {
+            if !tempDates.contains(formatDateToCompleteString(formatStringToDate(subValue.date))) {
                 tempDates.append(formatDateToCompleteString(formatStringToDate(subValue.date)))
                 tableData.append(ActivityLogModel(date: formatDateToCompleteString(formatStringToDate(subValue.date)), activities: []))
             }
         }
         
-        println(tempDates)
+        print(tempDates)
         
         for var i = 0; i < tableData.count; i++ {
             for subValue in activities.activities {
@@ -221,7 +221,7 @@ class ActivityLogTableViewController: UITableViewController {
                         } else {
                             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
                         }
-                        println(error)
+                        print(error)
                     }
             })
         } else {
@@ -248,7 +248,6 @@ class ActivityLogTableViewController: UITableViewController {
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 self.hud?.hide(true)
         })
         
@@ -256,26 +255,26 @@ class ActivityLogTableViewController: UITableViewController {
     
     
     func formatStringToDate(date: String) -> NSDate {
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
         
         return dateFormatter.dateFromString(date)!
     }
     
     func formatDateToString(date: NSDate) -> String {
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
         return dateFormatter.stringFromDate(date)
     }
     
     func formatDateToTimeString(date: NSDate) -> String {
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "KK:mm aa"
         return dateFormatter.stringFromDate(date)
     }
     
     func formatDateToCompleteString(date: NSDate) -> String {
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MMMM dd, yyyy"
         return dateFormatter.stringFromDate(date)
     }

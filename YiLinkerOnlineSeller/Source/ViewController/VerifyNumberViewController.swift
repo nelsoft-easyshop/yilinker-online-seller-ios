@@ -72,13 +72,13 @@ class VerifyNumberViewController: UIViewController {
     @IBAction func requestNewVerificationCode(sender: AnyObject){
         //Set action to send new verification code
         self.fireResendVerificationCode()
-        println("Resending verification code")
+        print("Resending verification code")
     }
     
     @IBAction func verifyContinueRequest(sender: AnyObject){
-        println("fire verify")
-        if !self.verificationCodeTextField.text.isEmpty {
-            if self.verificationCodeTextField.text.toInt() < 6 || self.verificationCodeTextField.text.toInt() > 6 {
+        print("fire verify")
+        if !self.verificationCodeTextField.text!.isEmpty {
+            if Int(self.verificationCodeTextField.text!)! < 6 || Int(self.verificationCodeTextField.text!)! > 6 {
                 self.showAlert("Error", message: "You have entered an invalid verification code.")
             } else {
                 self.fireVerify(self.verificationCodeTextField.text!)
@@ -100,7 +100,7 @@ class VerifyNumberViewController: UIViewController {
                 } else {
                     self.showAlert("Error", message: "Something went wrong.")
                 }
-                println(responseObject.description)
+                print(responseObject.description)
                 //self.setSelectedViewControllerWithIndex(0)
                 self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
@@ -114,7 +114,7 @@ class VerifyNumberViewController: UIViewController {
         if self.verifyViewController?.timerLabel.text != "00:00" {
             self.showHUD()
             let manager = APIManager.sharedInstance
-            let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "code" : NSNumber(integer: verificationCode.toInt()!)];
+            let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "code" : NSNumber(integer: Int(verificationCode)!)];
     
             manager.POST(APIAtlas.sellerMobileNumberVerification, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -133,7 +133,7 @@ class VerifyNumberViewController: UIViewController {
                 //self.delegate?.dismissView()
                 self.delegate?.congratulationsViewController(false)
                 self.showAlert("Error", message: "Something went wrong.")
-                println(error)
+                print(error)
             })
         } else {
              self.showAlert("Error", message: "Your verification code has expired.")
@@ -158,8 +158,8 @@ class VerifyNumberViewController: UIViewController {
     //MARK: Starts the timer
     func subtractTime() {
         seconds--
-        var secondsTemp: Int = seconds % 60
-        var minutes: Int = Int(seconds / 60)
+        let secondsTemp: Int = seconds % 60
+        let minutes: Int = Int(seconds / 60)
         if secondsTemp < 10 {
             timerLabel.text = "0\(minutes):0\(secondsTemp)"
         } else {

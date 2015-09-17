@@ -111,7 +111,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
         self.seeAllItemsView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 45))
         self.seeAllItemsView.backgroundColor = UIColor.whiteColor()
         
-        var seeAllItemsLabel = UILabel(frame: CGRectZero)
+        let seeAllItemsLabel = UILabel(frame: CGRectZero)
         seeAllItemsLabel.text = "See all " + String(subCategoriesProducts.count) + " items   "
         seeAllItemsLabel.font = UIFont(name: "Panton-Bold", size: 12.0)
         seeAllItemsLabel.textColor = UIColor.darkGrayColor()
@@ -119,7 +119,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
         seeAllItemsLabel.center = self.seeAllItemsView.center
         self.seeAllItemsView.addSubview(seeAllItemsLabel)
         
-        var arrowImageView = UIImageView(frame: CGRectMake(CGRectGetMaxX(seeAllItemsLabel.frame), 18, 7, 10))
+        let arrowImageView = UIImageView(frame: CGRectMake(CGRectGetMaxX(seeAllItemsLabel.frame), 18, 7, 10))
         arrowImageView.image = UIImage(named: "right2")
         self.seeAllItemsView.addSubview(arrowImageView)
         
@@ -210,7 +210,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
         self.hud?.show(true)
     }
     
-    func showAlert(#title: String!, message: String!) {
+    func showAlert(title title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
         alertController.addAction(defaultAction)
@@ -227,7 +227,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
         
         var products: [CategoryProductModel] = []
         for i in 0..<self.subCategoriesProducts.count {
-            var product = CategoryProductModel()
+            let product = CategoryProductModel()
             product.productId = self.subCategoriesProducts[i].id
             product.productName = self.subCategoriesProducts[i].name
             product.image = self.subCategoriesProducts[i].image
@@ -235,7 +235,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
         }
         
         if self.title == "Edit Category" {
-            self.subCategoryDetailModel.categoryName = self.categoryDetailsView.categoryNameTextField.text
+            self.subCategoryDetailModel.categoryName = self.categoryDetailsView.categoryNameTextField.text!
             self.subCategoryDetailModel.parentName = self.categoryDetailsView.parentCategoryLabel.text!
             self.subCategoryDetailModel.products = products
             self.subCategoryDetailModel.local = true
@@ -244,7 +244,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
             subCategoryDetailModel = SubCategoryModel(message: "",
                 isSuccessful: true,
                 categoryId: 0,
-                categoryName: self.categoryDetailsView.categoryNameTextField.text,
+                categoryName: self.categoryDetailsView.categoryNameTextField.text!,
                 parentName: self.parentName,
                 parentId: 0,
                 sortOrder: 0,
@@ -302,7 +302,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
     
     // MARK: - Request
     
-    func requestGetSubCategoryDetails(#parentName: String, categoryId: Int) {
+    func requestGetSubCategoryDetails(parentName parentName: String, categoryId: Int) {
         self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
@@ -311,7 +311,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
         manager.POST(APIAtlas.getCategoryDetails, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            println(responseObject)
+            print(responseObject)
             
 //            let subCategoryDetail: SubCategoryModel = SubCategoryModel.parseSubCategories(responseObject as! NSDictionary)
             self.subCategoryDetailModel = SubCategoryModel.parseSubCategories(responseObject as! NSDictionary)
@@ -327,7 +327,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
 //                products: subCategoryDetail.products))
             
             for i in 0..<self.subCategoryDetailModel.products.count {
-                println(self.subCategoryDetailModel.products[i].image)
+                print(self.subCategoryDetailModel.products[i].image)
                 let categoryProducts = ProductManagementProductsModel()
                 categoryProducts.id = self.subCategoryDetailModel.products[i].productId
                 categoryProducts.name = self.subCategoryDetailModel.products[i].productName
@@ -358,7 +358,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                println(error)
+                print(error)
                 self.hud?.hide(true)
         })
     }

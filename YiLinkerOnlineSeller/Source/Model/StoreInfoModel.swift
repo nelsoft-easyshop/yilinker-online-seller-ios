@@ -109,7 +109,7 @@ class StoreInfoModel: NSObject {
         var transactionCount: Int = 0
         var totalSales: String = ""
         
-        println(dictionary["data"])
+        print(dictionary["data"])
         if let value: AnyObject = dictionary["data"] {
             
             if let sellerName = value["fullName"] as? String {
@@ -145,7 +145,7 @@ class StoreInfoModel: NSObject {
             if let sellerSpecialty = value["specialty"] as? String {
                 specialty = sellerSpecialty
             } else {
-                specialty = ""
+                specialty  = ""
             }
             
             if let sellerBirthdate = value["birthdate"] as? String {
@@ -267,8 +267,8 @@ class StoreInfoModel: NSObject {
             
         }
         
-        let storeInfo: StoreInfoModel = StoreInfoModel(name: name, email: email, gender: gender, nickname: nickname, contact_number: contact_number, specialty: contact_number, birthdate: birthdate, store_name: store_name, store_description: store_description, avatar: avatar, cover_photo: cover_photo, is_allowed: is_followed, title: title, unit_number: unit_number, bldg_name: bldg_name, street_number: street_number, street_name: street_name, subdivision: subdivision, zip_code: zip_code, full_address: store_address, account_title: account_title, account_number: account_number,bank_account: bank_account, bank_id: bank_id, productCount: productCount, transactionCount: transactionCount, totalSales: totalSales)
-        println("\(store_address)")
+        let storeInfo: StoreInfoModel = StoreInfoModel(name: name, email: email, gender: gender, nickname: nickname, contact_number: contact_number, specialty: specialty, birthdate: birthdate, store_name: store_name, store_description: store_description, avatar: avatar, cover_photo: cover_photo, is_allowed: is_followed, title: title, unit_number: unit_number, bldg_name: bldg_name, street_number: street_number, street_name: street_name, subdivision: subdivision, zip_code: zip_code, full_address: store_address, account_title: account_title, account_number: account_number,bank_account: bank_account, bank_id: bank_id, productCount: productCount, transactionCount: transactionCount, totalSales: totalSales)
+        print("\(store_address)")
         return storeInfo
     }
     

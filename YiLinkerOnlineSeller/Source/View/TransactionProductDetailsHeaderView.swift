@@ -15,7 +15,7 @@ class TransactionProductDetailsHeaderView: UIView, UICollectionViewDataSource {
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func awakeFromNib() {
-        var nib = UINib(nibName: "TransactionImageCollectionViewCell", bundle:nil)
+        let nib = UINib(nibName: "TransactionImageCollectionViewCell", bundle:nil)
         self.collectionView.registerNib(nib, forCellWithReuseIdentifier: "TransactionImageCollectionViewCell")
         
         self.collectionView.dataSource = self

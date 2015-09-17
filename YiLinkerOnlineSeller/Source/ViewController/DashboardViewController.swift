@@ -100,7 +100,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         let screenWidth = screenSize.width
         let screenHeight = screenSize.height
         
-        var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         layout.headerReferenceSize = CGSize(width: screenWidth, height: 340.0)
@@ -117,17 +117,17 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         collectionView?.bounces = false
         collectionView?.alwaysBounceVertical = true
         
-        var gradient: CAGradientLayer = CAGradientLayer()
+        let gradient: CAGradientLayer = CAGradientLayer()
         gradient.frame = CGRectMake(0, 0, view.frame.width, 20)
         gradient.colors = [UIColor.grayColor().CGColor, UIColor.clearColor().CGColor]
         self.view.layer.insertSublayer(gradient, atIndex: 1)
     }
     
     func registerNibs() {
-        var cellHeaderNib = UINib(nibName: dashBoardHeaderIdentifier, bundle: nil)
+        let cellHeaderNib = UINib(nibName: dashBoardHeaderIdentifier, bundle: nil)
         self.collectionView?.registerNib(cellHeaderNib, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: dashBoardHeaderIdentifier)
         
-        var cellNib = UINib(nibName: dashBoardItemIdentifier, bundle: nil)
+        let cellNib = UINib(nibName: dashBoardItemIdentifier, bundle: nil)
         self.collectionView?.registerNib(cellNib, forCellWithReuseIdentifier: dashBoardItemIdentifier)
     }
     
@@ -184,7 +184,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                 headerView.setTotalSales(totalSales)
                 headerView.setTotalTransactions(totalTransactions)
                 
-                println("totalTransactions \(totalTransactions)")
+                print("totalTransactions \(totalTransactions)")
             }
             
             return headerView
@@ -203,12 +203,12 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
 //        println("Clicked item \(tableData[indexPath.row])")
         if indexPath.row == 0 {
-            var storeInfoViewController = StoreInfoViewController(nibName: "StoreInfoViewController", bundle: nil)
+            let storeInfoViewController = StoreInfoViewController(nibName: "StoreInfoViewController", bundle: nil)
             self.navigationController?.pushViewController(storeInfoViewController, animated:true)
         } else if indexPath.row == 0 {
            
         } else if indexPath.row == 1 {
-            var salesViewController = SalesReportViewController(nibName: "SalesReportViewController", bundle: nil)
+            let salesViewController = SalesReportViewController(nibName: "SalesReportViewController", bundle: nil)
             self.navigationController?.pushViewController(salesViewController, animated:true)
         } else if indexPath.row == 2 {
             let transaction = TransactionViewController(nibName: "TransactionViewController", bundle: nil)
@@ -219,7 +219,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             productManagement.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(productManagement, animated: true)
         } else if indexPath.row == 4 {
-            var customizedCategory = CustomizedCategoryViewController(nibName: "CustomizedCategoryViewController", bundle: nil)
+            let customizedCategory = CustomizedCategoryViewController(nibName: "CustomizedCategoryViewController", bundle: nil)
             self.navigationController?.pushViewController(customizedCategory, animated:true)
         } else if indexPath.row == 5 {
             let productUploadTableViewController: ProductUploadTableViewController = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
@@ -227,13 +227,13 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
             self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
         } else if indexPath.row == 6 {
-            var followerController = FollowersViewController(nibName: "FollowersViewController", bundle: nil)
+            let followerController = FollowersViewController(nibName: "FollowersViewController", bundle: nil)
             self.navigationController?.pushViewController(followerController, animated:true)
         } else if indexPath.row == 7 {
-            var activityViewController = ActivityLogTableViewController(nibName: "ActivityLogTableViewController", bundle: nil)
+            let activityViewController = ActivityLogTableViewController(nibName: "ActivityLogTableViewController", bundle: nil)
             self.navigationController?.pushViewController(activityViewController, animated:true)
         } else if indexPath.row == 8 {
-            var myPointsViewController = MyPointsTableViewController(nibName: "MyPointsTableViewController", bundle: nil)
+            let myPointsViewController = MyPointsTableViewController(nibName: "MyPointsTableViewController", bundle: nil)
             self.navigationController?.pushViewController(myPointsViewController, animated:true)
             
         } else if indexPath.row == 9 {
@@ -244,14 +244,14 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         } else if indexPath.row == 10 {
             
         } else if indexPath.row == 11 {
-            var alert = UIAlertController(title: nil, message: "Are you sure you want to logout?", preferredStyle: .ActionSheet)
+            let alert = UIAlertController(title: nil, message: "Are you sure you want to logout?", preferredStyle: .ActionSheet)
             alert.addAction(UIAlertAction(title: "Logout", style: .Destructive, handler: { action in
                 switch action.style{
                 case .Default:
-                    println("default")
+                    print("default")
                     
                 case .Cancel:
-                    println("cancel")
+                    print("cancel")
                     
                 case .Destructive:
                     NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
@@ -299,8 +299,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                     self.storeInfo = StoreInfoModel(name: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", account_number: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "")
                     
                     
-                    var store_name1 = NSUserDefaults.standardUserDefaults().stringForKey("storeName")
-                    println("Store name \(store_name1)")
+                    let store_name1 = NSUserDefaults.standardUserDefaults().stringForKey("storeName")
+                    print("Store name \(store_name1)")
                     self.storeInfo.store_name = NSUserDefaults.standardUserDefaults().stringForKey("storeName")!
                     self.storeInfo.store_address = NSUserDefaults.standardUserDefaults().stringForKey("storeAddress")!
                     self.storeInfo.totalSales = NSUserDefaults.standardUserDefaults().stringForKey("totalSales")!
@@ -310,7 +310,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                     self.collectionView.reloadData()
                 }
                 
-                println(error)
+                print(error)
         })
     }
     
@@ -330,7 +330,6 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             self.fireStoreInfo()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 self.hud?.hide(true)
         })
         

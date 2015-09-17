@@ -218,7 +218,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         self.seeAllItemsView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 45))
         self.seeAllItemsView.backgroundColor = UIColor.whiteColor()
         
-        var seeAllItemsLabel = UILabel(frame: CGRectZero)
+        let seeAllItemsLabel = UILabel(frame: CGRectZero)
 //        if customizedCategoryProducts.count != 0 {
 //            seeAllItemsLabel.text = "See all " + String(self.customizedCategoryProducts.count) + " items   "
 //        } else if selectedProductsModel.count != 0 {
@@ -233,7 +233,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         seeAllItemsLabel.center = self.seeAllItemsView.center
         self.seeAllItemsView.addSubview(seeAllItemsLabel)
         
-        var arrowImageView = UIImageView(frame: CGRectMake(CGRectGetMaxX(seeAllItemsLabel.frame), 18, 7, 10))
+        let arrowImageView = UIImageView(frame: CGRectMake(CGRectGetMaxX(seeAllItemsLabel.frame), 18, 7, 10))
         arrowImageView.image = UIImage(named: "right2")
         self.seeAllItemsView.addSubview(arrowImageView)
         
@@ -334,7 +334,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         self.hud?.show(true)
     }
     
-    func showAlert(#title: String!, message: String!) {
+    func showAlert(title title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
         alertController.addAction(defaultAction)
@@ -355,47 +355,47 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             if self.title == "Add Customized Category" {
                 var productIds: [Int] = []
                 for i in 0..<self.selectedProductsModel.count {
-                    productIds.append(self.selectedProductsModel[i].id.toInt()!)
+                    productIds.append(Int(self.selectedProductsModel[i].id)!)
                 }
                 
-                var formattedCategories: String = ""
+                let formattedCategories: String = ""
 
                 if self.parentId == 0 {
                     var subs: [NSDictionary] = []
                     for i in 0..<self.subCategories2.count {
                         var subProducts: [Int] = []
                         for j in 0..<self.subCategories2[i].products.count {
-                            subProducts.append(self.subCategories2[i].products[j].productId.toInt()!)
+                            subProducts.append(Int(self.subCategories2[i].products[j].productId)!)
                         }
                         subs.append(["categoryName": self.subCategories2[i].categoryName,
                                        "products": subProducts])
                     }
                     
-                    let data = NSJSONSerialization.dataWithJSONObject(subs, options: nil, error: nil)
-                    var formattedCategories: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
-                    println("> \(formattedCategories)")
-                    let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-                        "categoryName": self.categoryDetailsView.categoryNameTextField.text,
+                    let data = try? NSJSONSerialization.dataWithJSONObject(subs, options: [])
+                    let formattedCategories: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+                    print("> \(formattedCategories)")
+                    let parameters: Dictionary<String, AnyObject> = ["access_token": SessionManager.accessToken(),
+                        "categoryName": self.categoryDetailsView.categoryNameTextField.text!,
                         "parentId": self.parentId,
                         "products": productIds.description,
                         "subcategories": formattedCategories]
-                    println(parameters)
+                    print(parameters)
                     requestAddCustomizedCategory(parameters)
                 } else {
                     let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-                        "categoryName": self.categoryDetailsView.categoryNameTextField.text,
+                        "categoryName": self.categoryDetailsView.categoryNameTextField.text!,
                         "parentId": self.parentId,
                         "products": productIds.description,
-                        "subcategories": formattedCategories]
+                        "subcategories": formattedCategories] 
                     
-                    println(parameters)
+                    print(parameters)
                     requestAddCustomizedCategory(parameters)
                 }
             } else if self.title == "Edit Customized Category" {
 
                 var productIds: [Int] = []
                 for i in 0..<self.selectedProductsModel.count {
-                    productIds.append(self.selectedProductsModel[i].id.toInt()!)
+                    productIds.append(Int(self.selectedProductsModel[i].id)!)
                 }
 
                 var subs: [NSDictionary] = []
@@ -403,7 +403,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                     for i in 0..<self.subCategories2.count {
                         var subProducts: [Int] = []
                         for j in 0..<self.subCategories2[i].products.count {
-                            subProducts.append(self.subCategories2[i].products[j].productId.toInt()!)
+                            subProducts.append(Int(self.subCategories2[i].products[j].productId)!)
                         }
                         subs.append(["categoryId": self.subCategories2[i].categoryId,
                             "categoryName": self.subCategories2[i].categoryName,
@@ -414,18 +414,18 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                 
                 var parameters: [NSDictionary] = []
                 parameters.append(["categoryId": self.categoryDetailsModel.categoryId,
-                                 "categoryName": self.categoryDetailsView.categoryNameTextField.text,
+                                 "categoryName": self.categoryDetailsView.categoryNameTextField.text!,
                                      "parentId": self.parentId,
                                      "products": productIds,
                                 "subcategories": subs])
                 
-                let data = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
-                var formattedCategory: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+                let data = try? NSJSONSerialization.dataWithJSONObject(parameters, options: [])
+                let formattedCategory: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
 
                 let params: NSDictionary = ["access_token": SessionManager.accessToken(),
                                               "categories": formattedCategory]
 
-                println(params)
+                print(params)
                 requestEditCustomizedCategory(params)
             }
 
@@ -434,47 +434,47 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     
     func formattedString(dictionary: String) -> String {
         var stringCategories: String = dictionary
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("\"", withString: "", options: nil, range: nil)
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("\n", withString: "\"", options: nil, range: nil)
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString(" = ", withString: "\":\"", options: nil, range: nil)
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString(";", withString: "", options: nil, range: nil)
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("products", withString: ",\"products", options: nil,
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("\"", withString: "", options: [], range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("\n", withString: "\"", options: [], range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString(" = ", withString: "\":\"", options: [], range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString(";", withString: "", options: [], range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("products", withString: ",\"products", options: [],
             range: nil)
         
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("categoryId", withString: ",\"categoryId", options: nil,
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("categoryId", withString: ",\"categoryId", options: [],
             range: nil)
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("categoryName", withString: ",\"categoryName", options: nil,
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("categoryName", withString: ",\"categoryName", options: [],
             range: nil)
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("parentId", withString: ",\"parentId", options: nil,
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("parentId", withString: ",\"parentId", options: [],
             range: nil)
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("sortOrder", withString: ",\"sortOrder", options: nil,
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("sortOrder", withString: ",\"sortOrder", options: [],
             range: nil)
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("subcategories", withString: ",\"subcategories", options: nil,
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("subcategories", withString: ",\"subcategories", options: [],
             range: nil)
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("    ", withString: "", options: nil, range: nil)
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("\"[", withString: "[", options: nil, range: nil)
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("]\"", withString: "]", options: nil, range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("    ", withString: "", options: [], range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("\"[", withString: "[", options: [], range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("]\"", withString: "]", options: [], range: nil)
         
         return stringCategories
     }
     
     func formattedEditCategory(dictionary: String) -> String {
         var stringCategories: String = dictionary
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString(";\n", withString: "", options: nil, range: nil)
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("\"", withString: "", options: nil, range: nil)
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("\n", withString: "\"", options: nil, range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString(";\n", withString: "", options: [], range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("\"", withString: "", options: [], range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("\n", withString: "\"", options: [], range: nil)
 //        stringCategories = stringCategories.stringByReplacingOccurrencesOfString(" = ", withString: "\":\"", options: nil, range: nil)
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("categoryId = ", withString: "\"categoryId\": ", options: nil, range: nil)
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("categoryName = ", withString: ",\"categoryName\": \"", options: nil, range: nil)
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("parentId = ", withString: "\",\"parentId\": ", options: nil, range: nil)
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("sortOrder = ", withString: ",\"sortOrder\": ", options: nil, range: nil)
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("products = ", withString: ",\"products\": ", options: nil, range: nil)
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("subcategories = ", withString: ",\"subcategories\": ", options: nil, range: nil)
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("    ", withString: "", options: nil, range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("categoryId = ", withString: "\"categoryId\": ", options: [], range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("categoryName = ", withString: ",\"categoryName\": \"", options: [], range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("parentId = ", withString: "\",\"parentId\": ", options: [], range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("sortOrder = ", withString: ",\"sortOrder\": ", options: [], range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("products = ", withString: ",\"products\": ", options: [], range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("subcategories = ", withString: ",\"subcategories\": ", options: [], range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("    ", withString: "", options: [], range: nil)
 //        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("\"[", withString: "[", options: nil, range: nil)
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("\\", withString: "\"", options: nil, range: nil)
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("[{\"", withString: "[{", options: nil, range: nil)
-        stringCategories = stringCategories.stringByReplacingOccurrencesOfString(": [{,\"", withString: ": [{\"", options: nil, range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("\\", withString: "\"", options: [], range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("[{\"", withString: "[{", options: [], range: nil)
+        stringCategories = stringCategories.stringByReplacingOccurrencesOfString(": [{,\"", withString: ": [{\"", options: [], range: nil)
 //        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("]\"", withString: "]", options: nil, range: nil)
 //        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("]\"", withString: "]", options: nil, range: nil)
 //        }\")}]
@@ -533,14 +533,14 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                println(error)
+                print(error)
                 self.hud?.hide(true)
         })
             }
     
     func requestAddCustomizedCategory(parameter: NSDictionary) {
         self.showHUD()
-        var manager = APIManager.sharedInstance
+        let manager = APIManager.sharedInstance
             
         manager.POST(APIAtlas.addCustomizedCategory, parameters: parameter, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -555,20 +555,19 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-
-                if error.userInfo != nil {
-                    println(error.userInfo)
-                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                        if jsonResult["message"] != nil {
-                            self.showAlert(title: jsonResult["message"] as! String, message: nil)
-                        } else {
-                            self.showAlert(title: "Something went wrong", message: nil)
-                        }
+                
+                if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                    if jsonResult["message"] as! String != "" {
+                        self.showAlert(title: jsonResult["message"] as! String, message: nil)
+                    } else {
+                        self.showAlert(title: "Something went wrong", message: nil)
                     }
                 } else {
                     self.showAlert(title: "Something went wrong", message: nil)
                 }
+                
                 self.hud?.hide(true)
+                
         })
     }
     
@@ -590,18 +589,13 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 
-                if error.userInfo != nil {
-                    println(error.userInfo)
-                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                        if jsonResult["message"] != nil {
-                            self.showAlert(title: jsonResult["message"] as! String, message: nil)
-                        } else {
-                            self.showAlert(title: "Something went wrong", message: nil)
-                        }
-                    }
+                if Reachability.isConnectedToNetwork() {
+                    let jsonResult = error.userInfo as! Dictionary<String, AnyObject>
+                    self.showAlert(title: jsonResult["message"] as! String, message: nil)
                 } else {
                     self.showAlert(title: "Something went wrong", message: nil)
                 }
+                
                 self.hud?.hide(true)
         })
     }

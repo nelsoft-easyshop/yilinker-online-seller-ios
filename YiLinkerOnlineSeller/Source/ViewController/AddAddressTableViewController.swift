@@ -12,7 +12,7 @@ protocol AddAddressTableViewControllerDelegate {
     func addAddressTableViewController(didAddAddressSucceed addAddressTableViewController: AddAddressTableViewController)
 }
 
-class AddAddressTableViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, NewAddressTableViewCellDelegate {
+class AddAddressTableViewController: UITableViewController, NewAddressTableViewCellDelegate {
     
     let titles: [String] = ["Address Title:", "Unit No.:", "Building Name:", "Street No.:", "Street Name:", "Subdivision:", "Province:", "City:", "Barangay:", "Zip Code:", "Additional Info:"]
     
@@ -45,7 +45,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         self.backButton()
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
        
-        var addAddressHeader: NewAddressHeaderTableViewCell = XibHelper.puffViewWithNibName("NewAddressHeaderTableViewCell", index: 0) as! NewAddressHeaderTableViewCell
+        let addAddressHeader: NewAddressHeaderTableViewCell = XibHelper.puffViewWithNibName("NewAddressHeaderTableViewCell", index: 0) as! NewAddressHeaderTableViewCell
         self.tableView.tableHeaderView = addAddressHeader
         if self.isEdit2 {
             addAddressHeader.addressLabel.text = "Edit Address"
@@ -146,7 +146,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             var titles: [String] = []
             if indexPath.row == 6 {
                 if self.provinceModel.location.count != 0 {
-                    for (index, uid) in enumerate(self.provinceModel.provinceId) {
+                    for (index, uid) in self.provinceModel.provinceId.enumerate() {
                         if uid == self.addressModel.provinceId {
                             selected = index
                             titles = self.provinceModel.location
@@ -156,7 +156,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 }
             } else if indexPath.row == 7 {
                 if self.cityModel.location.count != 0 {
-                    for (index, uid) in enumerate(self.cityModel.cityId) {
+                    for (index, uid) in self.cityModel.cityId.enumerate() {
                         if uid == self.addressModel.cityId {
                             selected = index
                             titles = self.cityModel.location
@@ -166,7 +166,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 }
             } else if indexPath.row == 8 {
                 if self.cityModel.location.count != 0 {
-                    for (index, uid) in enumerate(self.barangayModel.barangayId) {
+                    for (index, uid) in self.barangayModel.barangayId.enumerate() {
                         if uid == self.addressModel.barangayId {
                             selected = index
                             titles = self.barangayModel.location
@@ -235,21 +235,21 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     }
     
     func backButton() {
-        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let backButton:UIButton = UIButton(type: UIButtonType.Custom)
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
-        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        let customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
         
-        var checkButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let checkButton:UIButton = UIButton(type: UIButtonType.Custom)
         checkButton.frame = CGRectMake(0, 0, 25, 25)
         checkButton.addTarget(self, action: "check", forControlEvents: UIControlEvents.TouchUpInside)
         checkButton.setImage(UIImage(named: "check-white"), forState: UIControlState.Normal)
-        var customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: checkButton)
+        let customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: checkButton)
         
         let navigationSpacer2: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer2.width = -10
@@ -292,7 +292,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     func getTextAtIndex(index: Int) -> String {
         let row = NSIndexPath(forItem: index, inSection: 0)
         let cell: NewAddressTableViewCell = tableView.cellForRowAtIndexPath(row) as! NewAddressTableViewCell
-        return cell.rowTextField.text
+        return cell.rowTextField.text!
     }
     
     func setTextAtIndex(index: Int, text: String) {
@@ -301,7 +301,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         cell.rowTextField.text = text
     }
     
-    func showAlert(#title: String!, message: String!) {
+    func showAlert(title title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
         alertController.addAction(defaultAction)
@@ -335,13 +335,15 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             self.delegate!.addAddressTableViewController(didAddAddressSucceed: self)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                /*let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
                 if task.statusCode == 401 {
                     self.requestRefreshToken(AddressRefreshType.Create)
                 } else {
                     self.showAlert(title: "Something went wrong", message: nil)
                     self.hud?.hide(true)
-                }*/
+                }
         })
     }
     
@@ -372,16 +374,26 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if error.userInfo != nil {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: "Something went wrong")
-                } else if task.statusCode == 401 {
-                    self.requestRefreshToken(AddressRefreshType.Edit)
+                
+                
+                if Reachability.isConnectedToNetwork() {
+                    if  let dictionary = (error.userInfo as? Dictionary<String, AnyObject>) {
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: "Something went wrong")
+                    } else {
+                        if task.statusCode == 401 {
+                            self.requestRefreshToken(AddressRefreshType.Edit)
+                        } else {
+                            self.showAlert(title: "Something went wrong", message: nil)
+                            self.hud?.hide(true)
+                        }
+                    }
                 } else {
-                    self.showAlert(title: "Something went wrong", message: nil)
-                    self.hud?.hide(true)
+                    self.showAlert(title: "No Internet Connection", message: nil)
                 }
+                
+                self.hud?.hide(true)
+
         })
     }
     
@@ -415,7 +427,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     func requestGetProvince() {
         let manager = APIManager.sharedInstance
         self.showHUD()
-        var parameters: NSDictionary = ["access_token" : SessionManager.accessToken()]
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()]
         manager.POST(APIAtlas.provinceUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)
@@ -437,7 +449,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                println("\(error)")
+                print("\(error)")
                 self.showAlert(title: "Something went wrong", message: nil)
         })
     }
@@ -447,7 +459,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         let manager = APIManager.sharedInstance
         //let params = ["provinceId": String(id)]
         
-        var parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "provinceId": String(id)]
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "provinceId": String(id)]
         manager.POST(APIAtlas.citiesUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
@@ -480,7 +492,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     func requestGetBarangay(id: Int) {
         let manager = APIManager.sharedInstance
         //let params = ["cityId": String(id)]
-        var parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "cityId": String(id)]
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "cityId": String(id)]
         self.showHUD()
         manager.POST(APIAtlas.barangay, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in

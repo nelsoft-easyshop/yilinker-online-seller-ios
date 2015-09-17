@@ -25,7 +25,7 @@ class StoreInfoAddressTableViewCell: UITableViewCell {
         // Initialization code
         //var tapAddressView = UITapGestureRecognizer(target: self, action: "changeMobileAddress")
         //self.addressView.addGestureRecognizer(<#gestureRecognizer: UIGestureRecognizer#>)(tapAddressView)
-        var tapAddressView = UITapGestureRecognizer(target: self, action: "changeMobileAddress")
+        let tapAddressView = UITapGestureRecognizer(target: self, action: "changeMobileAddress")
         addressView.addGestureRecognizer(tapAddressView)
     }
 
@@ -36,7 +36,7 @@ class StoreInfoAddressTableViewCell: UITableViewCell {
     }
     
     func changeMobileAddress(){
-        println("tap")
+        print("tap")
         self.delegate?.changeToNewAddress()
     }
     

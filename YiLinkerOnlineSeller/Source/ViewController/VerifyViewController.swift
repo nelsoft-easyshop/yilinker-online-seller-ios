@@ -37,8 +37,8 @@ class VerifyViewController: UIViewController {
     //MARK: Start countdown timer
     func subtractTime() {
         seconds--
-        var secondsTemp: Int = seconds % 60
-        var minutes: Int = Int(seconds / 60)
+        let secondsTemp: Int = seconds % 60
+        let minutes: Int = Int(seconds / 60)
         if secondsTemp < 10 {
             timeLabel.text = "0\(minutes):0\(secondsTemp)"
         } else {

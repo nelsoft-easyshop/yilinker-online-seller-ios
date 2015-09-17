@@ -31,7 +31,7 @@ class ProductUploadQuantityTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     func textFieldDidChange(sender: UITextField) {
-        self.delegate!.productUploadQuantityTableViewCell(textFieldDidChange: sender.text, cell: self)
+        self.delegate!.productUploadQuantityTableViewCell(textFieldDidChange: sender.text!, cell: self)
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {

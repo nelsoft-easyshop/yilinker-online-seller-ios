@@ -25,7 +25,7 @@ class StoreInfoBankAccountTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        var tapBankView = UITapGestureRecognizer(target: self, action: "tapBankAccount")
+        let tapBankView = UITapGestureRecognizer(target: self, action: "tapBankAccount")
         bankAccountView.addGestureRecognizer(tapBankView)
     }
 
@@ -37,6 +37,6 @@ class StoreInfoBankAccountTableViewCell: UITableViewCell {
     
     func tapBankAccount(){
         self.delegate?.newBankAccount()
-        println("new bank account")
+        print("new bank account")
     }
 }

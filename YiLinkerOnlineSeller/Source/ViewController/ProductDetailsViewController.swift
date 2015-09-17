@@ -88,8 +88,8 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         self.title = "Product Details"
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
-        var backButton = UIBarButtonItem(image: UIImage(named: "back-white"), style: .Plain, target: self, action: "backAction")
-        var editButton = UIBarButtonItem(image: UIImage(named: "edit"), style: .Plain, target: self, action: "editAction")
+        let backButton = UIBarButtonItem(image: UIImage(named: "back-white"), style: .Plain, target: self, action: "backAction")
+        let editButton = UIBarButtonItem(image: UIImage(named: "edit"), style: .Plain, target: self, action: "editAction")
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -10
         
@@ -121,16 +121,16 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func sectionHeaderView() -> UIView {
-        var sectionView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 45.0))
+        let sectionView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 45.0))
         sectionView.backgroundColor = UIColor.whiteColor()
         
-        var titleLabel = UILabel(frame: CGRectMake(10.0, 0, self.view.frame.size.width - 10.0, sectionView.frame.size.height))
+        let titleLabel = UILabel(frame: CGRectMake(10.0, 0, self.view.frame.size.width - 10.0, sectionView.frame.size.height))
         titleLabel.text = "Title"
         titleLabel.font = UIFont(name: "Panton-SemoBold", size: 17.0)
         titleLabel.textColor = UIColor.darkGrayColor()
         sectionView.addSubview(titleLabel)
         
-        var underlineView = UIView(frame: CGRectMake(0, sectionView.frame.size.height - 1, self.view.frame.size.width, 1))
+        let underlineView = UIView(frame: CGRectMake(0, sectionView.frame.size.height - 1, self.view.frame.size.width, 1))
         underlineView.backgroundColor = Constants.Colors.backgroundGray
 //        sectionView.addSubview(underlineView)
         
@@ -150,7 +150,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         self.hud?.show(true)
     }
     
-    func showAlert(#title: String!, message: String!) {
+    func showAlert(title title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
         alertController.addAction(defaultAction)
@@ -185,13 +185,13 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     func localJson() {
         if let path = NSBundle.mainBundle().pathForResource("productDetailsItemsJson", ofType: "json") {
-            if let jsonData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil) {
-                if let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers, error: nil) as? NSDictionary {
+            if let jsonData = try? NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe) {
+                if let jsonResult: NSDictionary = (try? NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers)) as? NSDictionary {
                     if let data : NSDictionary = jsonResult["data"] as? NSDictionary {
                         if let items : NSArray = data["items"] as? NSArray {
                             for item in items as NSArray {
                                 if let tempVar = item["items"] as? NSDictionary {
-                                    println(tempVar)
+                                    print(tempVar)
 //                                    for tempVar2 in tempVar as NSArray {
 //                                        
 //                                    }
@@ -232,7 +232,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
             self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                println(error)
+                print(error)
                 self.hud?.hide(true)
         })
     }
@@ -274,7 +274,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        var footerView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 10.0))
+        let footerView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 10.0))
         footerView.backgroundColor = Constants.Colors.backgroundGray
         
         return footerView

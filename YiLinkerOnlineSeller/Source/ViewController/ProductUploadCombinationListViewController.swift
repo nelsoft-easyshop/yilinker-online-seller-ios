@@ -81,9 +81,9 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
                 numberOfRows++
             }
             
-            var dynamicHeight: CGFloat = floor(numberOfRows) * rowHeight
+            let dynamicHeight: CGFloat = floor(numberOfRows) * rowHeight
             
-            var cellHeight: CGFloat = rowInitialHeight + dynamicHeight
+            let cellHeight: CGFloat = rowInitialHeight + dynamicHeight
             
             return cellHeight
         } else {
@@ -142,11 +142,11 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
     }
     
     func backButton() {
-        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let backButton:UIButton = UIButton(type: UIButtonType.Custom)
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
-        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        let customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20

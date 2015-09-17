@@ -17,7 +17,7 @@ class ProductAttributeModel {
     
     class func parseAttribute(attributes: NSDictionary) -> ProductAttributeModel {
         
-        var model = ProductAttributeModel()
+        let model = ProductAttributeModel()
         
         if attributes.isKindOfClass(NSDictionary) {
             

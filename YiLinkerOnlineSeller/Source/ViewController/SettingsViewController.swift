@@ -35,13 +35,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func registerNibs() {
-        var nibHeader = UINib(nibName: settingsHeaderIdentifier, bundle: nil)
+        let nibHeader = UINib(nibName: settingsHeaderIdentifier, bundle: nil)
         tableView.registerNib(nibHeader, forCellReuseIdentifier: settingsHeaderIdentifier)
         
-        var nibItem = UINib(nibName: settingsItemIdentifier, bundle: nil)
+        let nibItem = UINib(nibName: settingsItemIdentifier, bundle: nil)
         tableView.registerNib(nibItem, forCellReuseIdentifier: settingsItemIdentifier)
         
-        var nibDeactivate = UINib(nibName: settingsDeactivateIdentifier, bundle: nil)
+        let nibDeactivate = UINib(nibName: settingsDeactivateIdentifier, bundle: nil)
         tableView.registerNib(nibDeactivate, forCellReuseIdentifier: settingsDeactivateIdentifier)
     }
     
@@ -163,12 +163,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: - SettingsItemTableViewCellDelegate : Switch Value CHanged
 
     func settingSwitchChanged(sender: AnyObject, isOn: Bool) {
-        println(isOn)
+        print(isOn)
     }
     
     // MARK: - SettingDeactivateTableViewCellDelegate : Deactivate My Account is Tapped
     func deactivateTapped(sender: AnyObject) {
-        println("Deactivate account tapped!")
+        print("Deactivate account tapped!")
     }
 
 }

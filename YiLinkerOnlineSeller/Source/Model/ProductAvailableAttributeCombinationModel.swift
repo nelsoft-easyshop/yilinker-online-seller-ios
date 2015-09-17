@@ -16,7 +16,7 @@ class ProductAvailableAttributeCombinationModel {
     
     class func parseCombination(value: NSDictionary) -> ProductAvailableAttributeCombinationModel {
         
-        var model = ProductAvailableAttributeCombinationModel()
+        let model = ProductAvailableAttributeCombinationModel()
         
         if value.isKindOfClass(NSDictionary) {
             

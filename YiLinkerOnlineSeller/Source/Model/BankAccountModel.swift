@@ -65,8 +65,8 @@ class BankAccountModel: NSObject {
             }
         }
         
-        var bank_account_model = BankAccountModel(account_title: account_title, account_name: account_name, account_number: account_number, bank_name: bank_name, bank_account_id: bank_account_id, is_default: is_default)
-        println(account_name.count)
+        let bank_account_model = BankAccountModel(account_title: account_title, account_name: account_name, account_number: account_number, bank_name: bank_name, bank_account_id: bank_account_id, is_default: is_default)
+        print(account_name.count)
         return bank_account_model
     }
 }

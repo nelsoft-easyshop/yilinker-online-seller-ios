@@ -42,13 +42,13 @@ class StoreInfoAccountInformationTableViewCell: UITableViewCell{
     
     
     @IBAction func changePassword(sender: AnyObject){
-        println("Change password")
+        print("Change password")
         self.delegate?.changePassword()
     }
     
     
     @IBAction func saveAccountInfo(sender: AnyObject){
-        println("Save Account Info")
+        print("Save Account Info")
         self.delegate?.saveAccountInfo()
     }
     @IBAction func dismissKeyboard(sender: AnyObject) {

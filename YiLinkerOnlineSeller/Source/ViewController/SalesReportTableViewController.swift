@@ -47,7 +47,7 @@ class SalesReportTableViewController: UITableViewController, SalesReportTableVie
     }
     
     func registerNibs() {
-        var nibHeader = UINib(nibName: cellIdentifier, bundle: nil)
+        let nibHeader = UINib(nibName: cellIdentifier, bundle: nil)
         tableView.registerNib(nibHeader, forCellReuseIdentifier: cellIdentifier)
     }
 
@@ -98,7 +98,7 @@ class SalesReportTableViewController: UITableViewController, SalesReportTableVie
     }
     
     func formatDate(date: NSDate) -> String {
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MMM d"
         return dateFormatter.stringFromDate(date)
     }
@@ -126,8 +126,8 @@ class SalesReportTableViewController: UITableViewController, SalesReportTableVie
             }
             
             if  salesReportModel.cancelledTransactionPerDay.count != 0 {
-                var tempDateStart = formatStringToDate(salesReportModel.cancelledTransactionPerDay[0].date)
-                var tempDateEnd = formatStringToDate(salesReportModel.cancelledTransactionPerDay[salesReportModel.cancelledTransactionPerDay.count - 1].date)
+                let tempDateStart = formatStringToDate(salesReportModel.cancelledTransactionPerDay[0].date)
+                let tempDateEnd = formatStringToDate(salesReportModel.cancelledTransactionPerDay[salesReportModel.cancelledTransactionPerDay.count - 1].date)
                 
                 if tempStartDate.isGreaterThanDate(tempDateStart) {
                     tempStartDate = tempDateStart
@@ -143,14 +143,14 @@ class SalesReportTableViewController: UITableViewController, SalesReportTableVie
     
     
     func formatStringToDate(date: String) -> NSDate {
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
         return dateFormatter.dateFromString(date)!
     }
     
     func formatDateToString(date: NSDate) -> String {
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return dateFormatter.stringFromDate(date)
     }
@@ -170,7 +170,7 @@ class SalesReportTableViewController: UITableViewController, SalesReportTableVie
         manager.POST(APIAtlas.getSalesReport, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            println("RESPONSE \(responseObject)")
+            print("RESPONSE \(responseObject)")
             self.salesReportModel = SalesReportModel.parseDataWithDictionary(responseObject as! NSDictionary)
             
             if self.salesReportModel.isSuccessful {
@@ -192,7 +192,7 @@ class SalesReportTableViewController: UITableViewController, SalesReportTableVie
                     } else {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
                     }
-                    println(error)
+                    print(error)
                 }
         })
     }
@@ -214,7 +214,6 @@ class SalesReportTableViewController: UITableViewController, SalesReportTableVie
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 self.hud?.hide(true)
         })
         

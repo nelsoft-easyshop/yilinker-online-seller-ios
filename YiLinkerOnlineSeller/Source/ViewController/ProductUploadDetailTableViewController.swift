@@ -28,7 +28,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
     var delegate: ProductUploadDetailTableViewControllerDelegate?
     var productModel: ProductModel?
     var deletedCells: [NSIndexPath] = []
-    var selectedIndexPath: NSIndexPath = NSIndexPath.new()
+    var selectedIndexPath: NSIndexPath = NSIndexPath()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,11 +43,11 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
     }
     
     func backButton() {
-        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let backButton:UIButton = UIButton(type: UIButtonType.Custom)
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
-        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        let customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
@@ -145,9 +145,9 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
                     numberOfRows++
                 }
                 
-                var dynamicHeight: CGFloat = floor(numberOfRows) * rowHeight
+                let dynamicHeight: CGFloat = floor(numberOfRows) * rowHeight
                 
-                var cellHeight: CGFloat = rowInitialHeight + dynamicHeight
+                let cellHeight: CGFloat = rowInitialHeight + dynamicHeight
                 
                 return cellHeight
             }
@@ -163,7 +163,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
     
     func productUploadDetailFooterTableViewCell(didPressSaveButton cell: ProductUploadDetailFooterTableViewCell) {
         if self.productModel != nil {
-            for (index, path) in enumerate(self.deletedCells) {
+            for path in self.deletedCells {
                 if self.productModel!.attributes.count != 0 && self.productModel!.attributes.count < path.section && self.productModel!.attributes[selectedIndexPath.section].values.count < path.row {
                     self.productModel!.attributes[selectedIndexPath.section].values.removeAtIndex(path.row)
                 }
@@ -178,8 +178,8 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         let attributeCell: ProductUploadAttributeTableViewCell = self.tableView.cellForRowAtIndexPath(collectionViewIndexPath) as! ProductUploadAttributeTableViewCell
         
         if attributeCell.attributes.count != 0 && cell.cellTextField.text != "" {
-            var attributeModel: AttributeModel = AttributeModel()
-            attributeModel.definition = CommonHelper.firstCharacterUppercaseString(cell.cellTextField.text)
+            let attributeModel: AttributeModel = AttributeModel()
+            attributeModel.definition = CommonHelper.firstCharacterUppercaseString(cell.cellTextField.text!)
             attributeModel.values = attributeCell.attributes
             if self.productModel != nil {
                 self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: attributeModel, indexPath: self.selectedIndexPath, productModel: self.productModel!)
@@ -210,11 +210,11 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         }
         
         if isValid {
-            let value: String = CommonHelper.firstCharacterUppercaseString(cell.cellTextField.text)
+            let value: String = CommonHelper.firstCharacterUppercaseString(cell.cellTextField.text!)
             attributeCell.attributes.append(value)
             
             if self.productModel != nil {
-                let value: String = CommonHelper.firstCharacterUppercaseString(cell.cellTextField.text)
+                let value: String = CommonHelper.firstCharacterUppercaseString(cell.cellTextField.text!)
                 self.productModel!.attributes[self.selectedIndexPath.section].values.append(value)
             }
             

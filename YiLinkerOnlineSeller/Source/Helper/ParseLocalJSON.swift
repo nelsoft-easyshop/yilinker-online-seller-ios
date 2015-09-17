@@ -13,7 +13,7 @@ struct ParseLocalJSON {
     static func fileName(fileName : String) -> NSDictionary {
         
         let path = NSBundle.mainBundle().pathForResource(fileName, ofType: "json")
-        var text = String(contentsOfFile: path!, encoding: NSUTF8StringEncoding, error: nil)!
+        let text = try! String(contentsOfFile: path!, encoding: NSUTF8StringEncoding)
         
         let dictionary = text.parseJSONString as! NSDictionary
         return dictionary
@@ -22,7 +22,7 @@ struct ParseLocalJSON {
     static func fileNameWithArray(fileName : String) -> NSArray {
         
         let path = NSBundle.mainBundle().pathForResource(fileName, ofType: "json")
-        var text = String(contentsOfFile: path!, encoding: NSUTF8StringEncoding, error: nil)!
+        let text = try! String(contentsOfFile: path!, encoding: NSUTF8StringEncoding)
         
         let dictionary = text.parseJSONString as! NSArray
         return dictionary
@@ -38,7 +38,7 @@ extension String {
         
         if let jsonData = data {
             // Will return an object or nil if JSON decoding fails
-            return NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers, error: nil)
+            return try? NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers)
         } else {
             // Lossless conversion of the string was not possible
             return nil

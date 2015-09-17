@@ -29,7 +29,7 @@ class TransactionTableViewController: UITableViewController {
     }
     
     func registerNibs() {
-        var nib = UINib(nibName: filterTableViewCellIdentifier, bundle: nil)
+        let nib = UINib(nibName: filterTableViewCellIdentifier, bundle: nil)
         tableView.registerNib(nib, forCellReuseIdentifier: filterTableViewCellIdentifier)
     }
     
@@ -62,20 +62,20 @@ class TransactionTableViewController: UITableViewController {
     
     func initializesViews() {
         
-        var footerView: UIView = UIView(frame: CGRectMake(0, 0, self.view.bounds.width, 60))
+        let footerView: UIView = UIView(frame: CGRectMake(0, 0, self.view.bounds.width, 60))
         footerView.backgroundColor = Constants.Colors.selectedCellColor
         
-        var clearFilterView: UIView = UIView(frame: CGRectMake(0, 20, self.view.bounds.width, 35))
+        let clearFilterView: UIView = UIView(frame: CGRectMake(0, 20, self.view.bounds.width, 35))
         clearFilterView.backgroundColor = UIColor.whiteColor()
         
-        var clearTextLabel: UILabel = UILabel(frame: CGRectMake(16, 8, (self.view.bounds.width - 32), 20))
+        let clearTextLabel: UILabel = UILabel(frame: CGRectMake(16, 8, (self.view.bounds.width - 32), 20))
         clearTextLabel.textColor = Constants.Colors.productPrice
         clearTextLabel.font = UIFont(name: "Panton-Regular", size: CGFloat(14))
         clearTextLabel.text = "Clear Filter"
         clearFilterView.addSubview(clearTextLabel)
         footerView.addSubview(clearFilterView)
         
-        var tapGesture = UITapGestureRecognizer(target: self, action: "populateData")
+        let tapGesture = UITapGestureRecognizer(target: self, action: "populateData")
         footerView.addGestureRecognizer(tapGesture)
         
         tableView.tableFooterView = footerView
@@ -84,23 +84,23 @@ class TransactionTableViewController: UITableViewController {
     func initializeNavigationBar() {
         self.title = "Filter"
         
-        var closeButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let closeButton:UIButton = UIButton(type: UIButtonType.Custom)
         closeButton.frame = CGRectMake(0, 0, 25, 20)
         closeButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
         closeButton.addTarget(self, action: "check", forControlEvents: UIControlEvents.TouchUpInside)
         closeButton.setImage(UIImage(named: "check-1"), forState: UIControlState.Normal)
-        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: closeButton)
+        let customBackButton:UIBarButtonItem = UIBarButtonItem(customView: closeButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = 0
         self.navigationItem.rightBarButtonItems = [navigationSpacer, customBackButton]
         
-        var checkButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let checkButton = UIButton(type: UIButtonType.Custom)
         checkButton.frame = CGRectMake(0, 0, 25, 20)
         checkButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
         checkButton.addTarget(self, action: "close", forControlEvents: UIControlEvents.TouchUpInside)
         checkButton.setImage(UIImage(named: "close-1"), forState: UIControlState.Normal)
-        var customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: checkButton)
+        let customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: checkButton)
         
         let navigationSpacer2: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer2.width = 0
@@ -128,9 +128,9 @@ class TransactionTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        var headerView: UIView = UIView(frame: CGRectMake(0, 0, self.view.bounds.width, 40))
+        let headerView: UIView = UIView(frame: CGRectMake(0, 0, self.view.bounds.width, 40))
         headerView.backgroundColor = Constants.Colors.selectedCellColor
-        var headerTextLabel: UILabel = UILabel(frame: CGRectMake(16, 15, (self.view.bounds.width - 32), 20))
+        let headerTextLabel: UILabel = UILabel(frame: CGRectMake(16, 15, (self.view.bounds.width - 32), 20))
         headerTextLabel.textColor = Constants.Colors.grayText
         headerTextLabel.font = UIFont(name: "Panton-Regular", size: CGFloat(12))
         headerTextLabel.text = tableData[section].headerText
@@ -148,7 +148,7 @@ class TransactionTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(filterTableViewCellIdentifier, forIndexPath: indexPath) as! TransactionFilterTableViewCell
         
-        var tempModel = tableData[indexPath.section]
+        let tempModel = tableData[indexPath.section]
         if indexPath.section == 0 {
             cell.setType(0)
         } else {
@@ -167,7 +167,7 @@ class TransactionTableViewController: UITableViewController {
         if indexPath.section == 0 {
             for var i: Int = 0; i < tableData[0].items.count; i++ {
                 tableData[0].items[i].isChecked = false
-                println(tableData[0].items[i].isChecked)
+                print(tableData[0].items[i].isChecked)
             }
             tableData[indexPath.section].items[indexPath.row].isChecked = true
             self.tableView.reloadData()

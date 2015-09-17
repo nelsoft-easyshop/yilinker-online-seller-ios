@@ -130,7 +130,7 @@ class DisputeViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     }
     
     func adjustVerticalInset(inset: CGFloat) {
-        UIView.animateWithDuration(0.5, delay: 0.0, options: nil, animations: {
+        UIView.animateWithDuration(0.5, delay: 0.0, options: [], animations: {
             self.verticalSpaceInset.constant = inset
             self.view.layoutIfNeeded()
             }, completion: {(value: Bool) in

@@ -61,7 +61,7 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
     }
     
     func registerNibs() {
-        var nib = UINib(nibName: "FollowerTableViewCell", bundle: nil)
+        let nib = UINib(nibName: "FollowerTableViewCell", bundle: nil)
         tableView.registerNib(nib, forCellReuseIdentifier: "FollowerTableViewCell")
     }
     
@@ -70,11 +70,11 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
     }
     
     func backButton() {
-        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let backButton:UIButton = UIButton(type: UIButtonType.Custom)
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
-        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        let customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
@@ -94,7 +94,7 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        if count(searchText) > 1 {
+        if searchText.characters.count > 1 {
             fireGetFollower(searchText)
         } else {
             fireGetFollower("")
@@ -108,7 +108,7 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        fireGetFollower(searchBar.text)
+        fireGetFollower(searchBar.text!)
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
@@ -130,7 +130,7 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
         let cell = tableView.dequeueReusableCellWithIdentifier("FollowerTableViewCell", forIndexPath: indexPath) as! FollowerTableViewCell
         cell.delegate = self
         
-        var temp: FollowerModel = followersModel.data[indexPath.row]
+        let temp: FollowerModel = followersModel.data[indexPath.row]
         
         cell.setFollowerImage(NSURL(string: temp.profileImageUrl)!)
         cell.setFollowerName(temp.fullName)
@@ -150,7 +150,7 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
     
     // MARK: - Cell message button action
     func messageButtonAction(sender: AnyObject) {
-        println("Message button clicked!")
+        print("Message button clicked!")
     }
     
     func showHUD() {
@@ -216,7 +216,7 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
                         } else {
                             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
                         }
-                        println(error)
+                        print(error)
                     }
                 }
         })
@@ -239,7 +239,6 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 self.hud?.hide(true)
         })
         
