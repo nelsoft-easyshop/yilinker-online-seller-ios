@@ -30,17 +30,16 @@ class ResolutionCenterViewController
     var currentSelectedFilter = SelectedFilters(time:.Total,status:.Both)
     
     var hud: MBProgressHUD?
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        fireGetCases()
-    }
+
+    /// Don't Call fireGetCases() everytime this screen is shown
+    /// Call it intentionally from inside the completion: from screens
+    //override func viewDidAppear(animated: Bool) {
+    //    super.viewDidAppear(animated)
+    //    fireGetCases()
+    //}
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Title text in Navigation Bar will now turn WHITE
-        self.navigationController!.navigationBar.barStyle = UIBarStyle.Black
-        
         // Initialize tab-behavior for buttons
         tabSelector.viewDidLoadInitialize(casesTab, second: openTab, third: closedTab)
         
@@ -53,6 +52,25 @@ class ResolutionCenterViewController
         resolutionTableView.registerNib(nib, forCellReuseIdentifier: "RcCell")
         resolutionTableView.rowHeight = 108
         
+        setupNavigationBar()
+        
+        // Dispute button
+        disputeButton.addTarget(self, action:"disputePressed", forControlEvents:.TouchUpInside)
+        
+        // Initial data load
+        fireGetCases()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: initialization functions
+    func setupNavigationBar() {
+        // Title text in Navigation Bar will now turn WHITE
+        self.navigationController!.navigationBar.barStyle = UIBarStyle.Black
+        
         // Back button
         let backButton = UIBarButtonItem(title:" ", style:.Plain, target: self, action:"goBackButton")
         backButton.image = UIImage(named: "back-white")
@@ -64,26 +82,15 @@ class ResolutionCenterViewController
         filterButton.image = UIImage(named: "filter-resolution")
         filterButton.tintColor = UIColor.whiteColor()
         self.navigationItem.rightBarButtonItem = filterButton
-        
-        // Dispute button
-        disputeButton.addTarget(self, action:"disputePressed", forControlEvents:.TouchUpInside)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // MARK: UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let caseDetails = self.storyboard?.instantiateViewControllerWithIdentifier("CaseDetailsTableViewController")
             as! CaseDetailsTableViewController
-        
-        // PASS DATA
         caseDetails.passData(tableData[indexPath.row])
         
         self.navigationController?.pushViewController(caseDetails, animated:true);
-    
     }
 
     
@@ -93,13 +100,10 @@ class ResolutionCenterViewController
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        // TODO complete the code below
         let cell = resolutionTableView.dequeueReusableCellWithIdentifier("RcCell") as! ResolutionCenterCell
         
-        // put values here
         let currentDataId:(ResolutionCenterElement) = tableData[indexPath.item]
         cell.setData(currentDataId)
-        //cell.setData(currentData.id, status:currentData.status, date:currentData.date, type:currentData.type )
         
         return cell
     }
@@ -109,24 +113,27 @@ class ResolutionCenterViewController
         if self.tabSelector.didSelectTheSameTab(sender) {
             return
         }
-
         self.tabSelector.setSelection(.TabOne)
+        self.currentSelectedFilter.status = .Both
+        fireGetCases()
     }
 
     @IBAction func openPressed(sender: AnyObject) {
         if self.tabSelector.didSelectTheSameTab(sender) {
             return
         }
-        
         self.tabSelector.setSelection(.TabTwo)
+        self.currentSelectedFilter.status = .Open
+        fireGetCases()
     }
     
     @IBAction func closedPressed(sender: AnyObject) {
         if self.tabSelector.didSelectTheSameTab(sender) {
             return
         }
-        
         self.tabSelector.setSelection(.TabThree)
+        self.currentSelectedFilter.status = .Closed
+        fireGetCases()
     }
     
     // Mark: - New Dispute View Controller
@@ -190,10 +197,23 @@ class ResolutionCenterViewController
             self.storyboard?.instantiateViewControllerWithIdentifier("FilterNavigationController")
                 as! UINavigationController
         let filtrationView = filtrationNav.viewControllers[0] as! ResolutionFilterViewController
-        filtrationView.currentFilter = self.currentSelectedFilter
+        filtrationView.delegate = self
 
         self.navigationController?.presentViewController(filtrationNav, animated: true, completion: nil)
-            //completion: (() -> Void)?
+    }
+    
+    func applyFilter() {
+        switch self.currentSelectedFilter.status {
+        case .Both:
+            tabSelector.setSelection(.TabOne)
+        case .Open:
+            tabSelector.setSelection(.TabTwo)
+        case .Closed:
+            tabSelector.setSelection(.TabThree)
+        default:
+            tabSelector.setSelection(.TabOne)
+        }
+        fireGetCases()
     }
 
     func showHUD() {
@@ -212,22 +232,45 @@ class ResolutionCenterViewController
     func fireGetCases() {
         self.showHUD()
         let manager = APIManager.sharedInstance
-        var parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
+        var parameters: NSDictionary = NSDictionary();
+        var urlString: String = APIAtlas.getResolutionCenterCases
+
         // add filters to parameter
-        //parameters.append("filter","Open")
+        if self.currentSelectedFilter.isDefault() {
+            parameters = ["access_token" : SessionManager.accessToken()]
+        } else {
+            let statusFilter = self.currentSelectedFilter.getStatusFilter()
+            let timeFilter = self.currentSelectedFilter.getTimeFilter()
+            if timeFilter == ""  {
+                parameters = [ "access_token" : SessionManager.accessToken()
+                             , "disputeStatusType" : statusFilter]
+            } else if statusFilter == "0" {
+                parameters = [ "access_token" : SessionManager.accessToken()
+                             , "dateFrom" : timeFilter]
+            } else {
+                parameters = [ "access_token" : SessionManager.accessToken()
+                             , "disputeStatusType" : statusFilter
+                             , "dateFrom" : timeFilter]
+            }
+        }
+        println("url: " + urlString)
+        println(parameters)
         
-        manager.GET(APIAtlas.getResolutionCenterCases, parameters: parameters, success: {
+        manager.GET(urlString, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             let resolutionCenterModel: ResolutionCenterModel = ResolutionCenterModel.parseDataWithDictionary(responseObject)
             
-            println(responseObject)
+            //println(responseObject)
             
             if resolutionCenterModel.isSuccessful {
                 self.tableData.removeAll(keepCapacity: false)
                 self.tableData = resolutionCenterModel.resolutionArray
                 self.resolutionTableView.reloadData()
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error while reading Resolution Center table", title: "Data Loading Error")
+                //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error while reading Resolution Center table", title: "Data Loading Error")
+                self.tableData.removeAll(keepCapacity: false)
+                self.tableData = resolutionCenterModel.resolutionArray
+                self.resolutionTableView.reloadData()
             }
             
             
