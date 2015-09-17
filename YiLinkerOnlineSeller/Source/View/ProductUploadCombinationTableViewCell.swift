@@ -71,7 +71,7 @@ class ProductUploadCombinationTableViewCell: UITableViewCell {
         let combinationModel: CombinationModel = CombinationModel()
         let numberOfItems: Int = self.collectionView.numberOfItemsInSection(0)
         for var item = 0; item < numberOfItems; item++ {
-            let dictionary: NSMutableDictionary = NSMutableDictionary()
+            var dictionary: NSMutableDictionary = NSMutableDictionary()
             let indexPath: NSIndexPath = NSIndexPath(forItem: item, inSection: 0)
             let cell: ProductUploadAttributeValuesCollectionViewCell = self.collectionView.cellForItemAtIndexPath(indexPath) as! ProductUploadAttributeValuesCollectionViewCell
             

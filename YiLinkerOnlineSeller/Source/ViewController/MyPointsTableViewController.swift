@@ -53,7 +53,7 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
 
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         
-        let headerView = UIView(frame: CGRectMake(0, 0, self.view.frame.width, 1))
+        var headerView = UIView(frame: CGRectMake(0, 0, self.view.frame.width, 1))
         headerView.backgroundColor = UIColor(red: 70/255, green: 35/255, blue: 103/255, alpha: 1)
         
         self.tableView.tableHeaderView = headerView
@@ -64,11 +64,11 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
     }
     
     func backButton() {
-        let backButton:UIButton = UIButton(type: UIButtonType.Custom)
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
-        let customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
@@ -80,16 +80,16 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
     }
     
     func registerNibs() {
-        let nibEarned = UINib(nibName: cellPointsEarned, bundle: nil)
+        var nibEarned = UINib(nibName: cellPointsEarned, bundle: nil)
         self.tableView.registerNib(nibEarned, forCellReuseIdentifier: cellPointsEarned)
         
-        let nibDetails = UINib(nibName: cellPointsDetails, bundle: nil)
+        var nibDetails = UINib(nibName: cellPointsDetails, bundle: nil)
         self.tableView.registerNib(nibDetails, forCellReuseIdentifier: cellPointsDetails)
         
-        let nibHeader = UINib(nibName: cellPointsBreakDownHeader, bundle: nil)
+        var nibHeader = UINib(nibName: cellPointsBreakDownHeader, bundle: nil)
         self.tableView.registerNib(nibHeader, forCellReuseIdentifier: cellPointsBreakDownHeader)
         
-        let nibPoints = UINib(nibName: cellPoints, bundle: nil)
+        var nibPoints = UINib(nibName: cellPoints, bundle: nil)
         self.tableView.registerNib(nibPoints, forCellReuseIdentifier: cellPoints)
     }
 
@@ -135,8 +135,8 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
         }else {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellPoints, forIndexPath: indexPath) as! PointsTableViewCell
             
-            print("Index \(indexPath.row)")
-            print("Count \(myPointsHistory.data.count)")
+            println("Index \(indexPath.row)")
+            println("Count \(myPointsHistory.data.count)")
             
             let tempModel: MyPointsModel = myPointsHistory.data[indexPath.row - 3]
             
@@ -154,7 +154,7 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
         
             var points: String = tempModel.points
             
-            if Array(tempModel.points.characters)[0] != "-" {
+            if Array(tempModel.points)[0] != "-" {
                 points = "+\(tempModel.points)"
             }
             
@@ -173,14 +173,14 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
     }
     
     override func scrollViewDidEndDragging(aScrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        let offset: CGPoint = aScrollView.contentOffset
-        let bounds: CGRect = aScrollView.bounds
-        let size: CGSize = aScrollView.contentSize
-        let inset: UIEdgeInsets = aScrollView.contentInset
-        let y: CGFloat = offset.y + bounds.size.height - inset.bottom
-        let h: CGFloat = size.height
-        let reload_distance: CGFloat = 10
-        let temp: CGFloat = h + reload_distance
+        var offset: CGPoint = aScrollView.contentOffset
+        var bounds: CGRect = aScrollView.bounds
+        var size: CGSize = aScrollView.contentSize
+        var inset: UIEdgeInsets = aScrollView.contentInset
+        var y: CGFloat = offset.y + bounds.size.height - inset.bottom
+        var h: CGFloat = size.height
+        var reload_distance: CGFloat = 10
+        var temp: CGFloat = h + reload_distance
         if y > temp {
             fireGetPointsHistory()
         }
@@ -292,7 +292,7 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
                     } else {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
                     }
-                    print(error)
+                    println(error)
                 }
                 
                 
@@ -315,7 +315,7 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
                 //self.myPointsHistory = MyPointsHistoryModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 
                 let pointHistory: MyPointsHistoryModel = MyPointsHistoryModel.parseDataWithDictionary(responseObject as! NSDictionary)
-                print("Count 1 \(self.myPointsHistory.data.count)")
+                println("Count 1 \(self.myPointsHistory.data.count)")
                 
                 if pointHistory.data.count < 15 {
                     self.isMyPointsEnd = true
@@ -340,7 +340,7 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
                         } else {
                             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
                         }
-                        print(error)
+                        println(error)
                     }
             })
         } else {
@@ -371,6 +371,7 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 self.hud?.hide(true)
         })
         

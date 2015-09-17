@@ -69,7 +69,7 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
     func customizedViews() {
         self.searchBarTextField.layer.cornerRadius = searchBarTextField.frame.size.height / 2
         
-        let searchImage = UIImageView(image: UIImage(named: "search2"))
+        var searchImage = UIImageView(image: UIImage(named: "search2"))
         searchImage.frame = CGRectMake(0.0, 0.0,40.0, 40.0)
         searchImage.contentMode = UIViewContentMode.Center
         searchBarTextField.leftView = searchImage
@@ -96,7 +96,7 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
         if selectedItemIDs.count != 0 {
 //            delegate?.addProductItems(self.productModel, itemIndexes: self.selectedItemIDsIndex, products: selectedItemIDs)
             for i in 0..<self.productModel.products.count {
-                if self.selectedItemIDs.contains(self.productModel.products[i].id) {
+                if contains(self.selectedItemIDs, self.productModel.products[i].id) {
                     selectedProductsModel.append(self.productModel.products[i])
                 }
             }
@@ -174,7 +174,7 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
 //            cell.updateStatusImage(false)
 //        }
         
-        if (selectedItemIDs.indexOf(productModel.products[indexPath.row].id) != nil) {
+        if (find(selectedItemIDs, productModel.products[indexPath.row].id) != nil) {
             cell.updateStatusImage(true)
         } else {
             cell.updateStatusImage(false)
@@ -197,7 +197,7 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
 //            selectedItemIDsIndex = selectedItemIDsIndex.filter({$0 != indexPath.row})
         }
         
-        print(selectedItemIDs)
+        println(selectedItemIDs)
 //        println(selectedItemIDsIndex)
 
     }

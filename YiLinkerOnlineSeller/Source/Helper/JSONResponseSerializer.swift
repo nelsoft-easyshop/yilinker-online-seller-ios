@@ -9,22 +9,21 @@
 import UIKit
 
 class JSONResponseSerializer: AFJSONResponseSerializer {
-    override func responseObjectForResponse(response: NSURLResponse?, data: NSData?) throws -> AnyObject {
-        var error: NSError! = NSError(domain: "Migrator", code: 0, userInfo: nil)
+    override func responseObjectForResponse(response: NSURLResponse?, data: NSData?, error: NSErrorPointer) -> AnyObject? {
         
         var json: NSMutableDictionary = NSMutableDictionary()
         
-        do {
-            json = try super.responseObjectForResponse(response, data: data) as! NSMutableDictionary
-            
-            let errorValue = error!
-            let userInfo: NSDictionary = errorValue.userInfo
-            let copy: NSMutableDictionary = userInfo.mutableCopy() as! NSMutableDictionary
+        if let val =  super.responseObjectForResponse(response, data: data, error: error) as? NSMutableDictionary {
+            json = val
+        }
+        
+        if (error.memory != nil) {
+            var errorValue = error.memory!
+            var userInfo: NSDictionary = errorValue.userInfo!
+            var copy: NSMutableDictionary = userInfo.mutableCopy() as! NSMutableDictionary
             copy["data"] = json
             
-            error = NSError(domain: errorValue.domain, code: errorValue.code, userInfo: json as! [NSObject : AnyObject])
-            
-        } catch _ {
+            error.memory = NSError(domain: errorValue.domain, code: errorValue.code, userInfo: json as [NSObject : AnyObject])
             
         }
         

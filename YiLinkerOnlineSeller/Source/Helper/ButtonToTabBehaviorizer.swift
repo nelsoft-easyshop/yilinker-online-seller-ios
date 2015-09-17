@@ -51,6 +51,8 @@ class ButtonToTabBehaviorizer  {
         case .TabThree:
             selectedButtonTab = self.tabTre!
             selectedButtonImage = "tab2-close-p"
+        default:
+            ()
         }
         
         self.setSelectedButtonColor( selectedButtonTab )

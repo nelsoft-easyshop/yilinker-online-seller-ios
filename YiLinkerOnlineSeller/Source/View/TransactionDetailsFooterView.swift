@@ -28,10 +28,10 @@ class TransactionDetailsFooterView: UIView {
         shipItemView.layer.cornerRadius = shipItemView.frame.height / 2
         cancelOrderView.layer.cornerRadius = cancelOrderView.frame.height / 2
         
-        let shipItem = UITapGestureRecognizer(target:self, action:"shipItemAction")
+        var shipItem = UITapGestureRecognizer(target:self, action:"shipItemAction")
         shipItemView.addGestureRecognizer(shipItem)
         
-        let cancelOrder = UITapGestureRecognizer(target:self, action:"cancelOrderAction")
+        var cancelOrder = UITapGestureRecognizer(target:self, action:"cancelOrderAction")
         cancelOrderView.addGestureRecognizer(cancelOrder)
     }
     

@@ -591,7 +591,7 @@ static BOOL FSCalendarInInterfaceBuilder = NO;
 - (void)setSelectedDate:(NSDate *)selectedDate animate:(BOOL)animate forPlaceholder:(BOOL)forPlaceholder
 {
     if (![self isDateInRange:selectedDate]) {
-        [NSException raise:@"selectedDate out of range" format:@""];
+        [NSException raise:@"selectedDate out of range" format:nil];
     }
     NSDate *targetDate = selectedDate;
     targetDate = [selectedDate fs_daysFrom:_minimumDate] < 0 ? _minimumDate.copy : selectedDate;
@@ -624,7 +624,7 @@ static BOOL FSCalendarInInterfaceBuilder = NO;
 - (void)setToday:(NSDate *)today
 {
     if (![self isDateInRange:today]) {
-        [NSException raise:@"currentDate out of range" format:@""];
+        [NSException raise:@"currentDate out of range" format:nil];
     }
     if (![_today fs_isEqualToDateForDay:today]) {
         today = today.fs_dateByIgnoringTimeComponents;
@@ -650,7 +650,7 @@ static BOOL FSCalendarInInterfaceBuilder = NO;
 - (void)setCurrentPage:(NSDate *)currentPage
 {
     if (![self isDateInRange:currentPage]) {
-        [NSException raise:@"currentMonth out of range" format:@""];
+        [NSException raise:@"currentMonth out of range" format:nil];
     }
     if (![_currentPage fs_isEqualToDateForMonth:currentPage]) {
         currentPage = currentPage.fs_dateByIgnoringTimeComponents;

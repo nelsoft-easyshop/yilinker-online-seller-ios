@@ -60,7 +60,7 @@ class OrderModel: NSObject {
         var total_handling_fee: String = ""
         var total_quantity: String = ""
         var product_names: String = ""
-        let product_count: String = ""
+        var product_count: String = ""
         
         if dictionary.isKindOfClass(NSDictionary) {
             if dictionary["order_id"] != nil {

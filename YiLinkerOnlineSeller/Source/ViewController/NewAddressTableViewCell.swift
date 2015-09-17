@@ -57,7 +57,7 @@ class NewAddressTableViewCell: UITableViewCell, UITextFieldDelegate, UIPickerVie
         return titles.count
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
         
         return self.titles[row]
     }

@@ -21,7 +21,7 @@ class CategoryProductsModel: NSObject {
         
         var message: String = ""
         var isSuccessful: Bool = false
-        let products: [CategoryProductModel] = []
+        var products: [CategoryProductModel] = []
         
         if dictionary.isKindOfClass(NSDictionary) {
             if dictionary["message"] != nil {

@@ -31,19 +31,19 @@ class ConditionParserModel: NSObject {
         var message: String = ""
         
         if let val: AnyObject = dictionary[ConditionParseModelKey.isSuccessfulKey] {
-            if let tempVal = val as? Bool {
+            if let tempVal = dictionary[ConditionParseModelKey.isSuccessfulKey] as? Bool {
                 isSuccessful = tempVal
             }
         }
         
         if let val: AnyObject = dictionary[ConditionParseModelKey.dataKey] {
-            if let tempVal = val as? NSArray {
+            if let tempVal = dictionary[ConditionParseModelKey.dataKey] as? NSArray {
                 data = tempVal as! [NSDictionary]
             }
         }
         
         if let val: AnyObject = dictionary[ConditionParseModelKey.messageKey] {
-            if let tempVal = val as? String {
+            if let tempVal = dictionary[ConditionParseModelKey.messageKey] as? String {
                 message = tempVal
             }
         }

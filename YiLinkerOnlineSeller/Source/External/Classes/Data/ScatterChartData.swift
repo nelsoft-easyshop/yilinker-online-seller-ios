@@ -30,7 +30,7 @@ public class ScatterChartData: BarLineScatterCandleChartData
         super.init(xVals: xVals, dataSets: dataSets)
     }
     
-    /// - returns: the maximum shape-size across all DataSets.
+    /// Returns the maximum shape-size across all DataSets.
     public func getGreatestShapeSize() -> CGFloat
     {
         var max = CGFloat(0.0)
@@ -41,7 +41,7 @@ public class ScatterChartData: BarLineScatterCandleChartData
             
             if (scatterDataSet == nil)
             {
-                print("ScatterChartData: Found a DataSet which is not a ScatterChartDataSet", terminator: "\n")
+                println("ScatterChartData: Found a DataSet which is not a ScatterChartDataSet")
             }
             else
             {

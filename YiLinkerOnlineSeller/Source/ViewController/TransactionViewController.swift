@@ -55,11 +55,11 @@ class TransactionViewController: UIViewController {
         self.title = "Transaction"
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
-        let backButton:UIButton = UIButton(type: UIButtonType.Custom)
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "backAction", forControlEvents: UIControlEvents.TouchUpInside)
         backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
-        let customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
@@ -80,7 +80,7 @@ class TransactionViewController: UIViewController {
     
     func filterAction() {        
         let filterController = TransactionTableViewController(nibName: "TransactionTableViewController", bundle: nil)
-        let navigation = UINavigationController(rootViewController: filterController)
+        var navigation = UINavigationController(rootViewController: filterController)
         navigation.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
         navigation.navigationBar.barTintColor = Constants.Colors.appTheme
         self.navigationController?.presentViewController(navigation, animated: true, completion: nil)
@@ -152,11 +152,11 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         dateFormatter1.dateFormat = "MMMM dd, yyyy"
         let dateAdded = dateFormatter1.stringFromDate(date)
         
-        cell.setStatus(Int(tempModel.order_status_id)!)
+        cell.setStatus(tempModel.order_status_id.toInt()!)
         cell.setTID(tempModel.order_id)
         //cell.setPrice("P \(tempModel.total_price)"
             
-        if Int(tempModel.total_quantity) < 2 {
+        if tempModel.total_quantity.toInt() < 2 {
             cell.setProductDate("\(tempModel.total_quantity) product\t\t\(dateAdded)")
         } else {
             cell.setProductDate("\(tempModel.total_quantity) products\t\t\(dateAdded)")
@@ -168,7 +168,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
     // MARK: Table View Delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let transactionDetailsController = TransactionDetailsTableViewController(nibName: "TransactionDetailsTableViewController", bundle: nil)
+        var transactionDetailsController = TransactionDetailsTableViewController(nibName: "TransactionDetailsTableViewController", bundle: nil)
         self.navigationController?.pushViewController(transactionDetailsController, animated:true)
 
     }
@@ -182,7 +182,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             let transactionModel: TransactionsModel = TransactionsModel.parseDataWithDictionary(responseObject)
             
-            print(responseObject)
+            println(responseObject)
             
             if transactionModel.isSuccessful {
                 self.tableData.removeAll(keepCapacity: false)
@@ -206,7 +206,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 }
                 
-                print(error)
+                println(error)
         })
     }
     
@@ -226,7 +226,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
             self.fireGetTransaction()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                //let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 self.hud?.hide(true)
         })
         

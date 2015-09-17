@@ -117,7 +117,7 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     }
     
     func checkAction() {
-        print(subCategories)
+        println(subCategories)
         delegate?.addSubCategories(self, subCategories: subCategories)
         closeAction()
     }
@@ -247,7 +247,7 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     func gotoAddItem() {
         let addItem = AddItemViewController(nibName: "AddItemViewController", bundle: nil)
         //        addItem.delegate = self
-        let root = UINavigationController(rootViewController: addItem)
+        var root = UINavigationController(rootViewController: addItem)
         self.navigationController?.presentViewController(root, animated: true, completion: nil)
     }
     

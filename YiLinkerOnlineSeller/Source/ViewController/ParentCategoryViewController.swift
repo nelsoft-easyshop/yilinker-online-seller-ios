@@ -52,7 +52,7 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
     func customizedViews() {
         self.searchBarTextField.layer.cornerRadius = searchBarTextField.frame.size.height / 2
         
-        let searchImage = UIImageView(image: UIImage(named: "search2"))
+        var searchImage = UIImageView(image: UIImage(named: "search2"))
         searchImage.frame = CGRectMake(0.0, 0.0,40.0, 40.0)
         searchImage.contentMode = UIViewContentMode.Center
         searchBarTextField.leftView = searchImage
@@ -91,7 +91,7 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                print(error)
+                println(error)
                 self.hud?.hide(true)
         })
     }
@@ -135,7 +135,7 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
         cell.textLabel?.font = UIFont(name: "Panton", size: 12.0)
         
         if selectedParentId == customizedCategoriesModel.customizedCategories[indexPath.row].categoryId {
-            let check = UIImageView(frame: CGRectMake(0, 0, 10, 10))
+            var check = UIImageView(frame: CGRectMake(0, 0, 10, 10))
             check.image = UIImage(named: "checkCategory")
             cell.accessoryView = check
         }

@@ -41,16 +41,16 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     }
     
     func registerNibs() {
-        let detailsNib = UINib(nibName: detailsCellIdentifier, bundle: nil)
+        var detailsNib = UINib(nibName: detailsCellIdentifier, bundle: nil)
         tableView.registerNib(detailsNib, forCellReuseIdentifier: detailsCellIdentifier)
         
-        let productsNib = UINib(nibName: productsCellIdentifier, bundle: nil)
+        var productsNib = UINib(nibName: productsCellIdentifier, bundle: nil)
         tableView.registerNib(productsNib, forCellReuseIdentifier: productsCellIdentifier)
         
-        let consigneeNib = UINib(nibName: consigneeCellIdentifier, bundle: nil)
+        var consigneeNib = UINib(nibName: consigneeCellIdentifier, bundle: nil)
         tableView.registerNib(consigneeNib, forCellReuseIdentifier: consigneeCellIdentifier)
         
-        let deliveryNib = UINib(nibName: deliveryCellIdentifier, bundle: nil)
+        var deliveryNib = UINib(nibName: deliveryCellIdentifier, bundle: nil)
         tableView.registerNib(deliveryNib, forCellReuseIdentifier: deliveryCellIdentifier)
     }
     
@@ -84,11 +84,11 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     func initializeNavigationBar() {
         self.title = "Transaction Details"
         
-        let backButton:UIButton = UIButton(type: UIButtonType.Custom)
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
-        let customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
@@ -161,9 +161,9 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView: UIView = UIView(frame: CGRectMake(0, 0, self.view.bounds.width, 40))
+        var headerView: UIView = UIView(frame: CGRectMake(0, 0, self.view.bounds.width, 40))
         headerView.backgroundColor = Constants.Colors.selectedCellColor
-        let headerTextLabel: UILabel = UILabel(frame: CGRectMake(16, 15, (self.view.bounds.width - 32), 20))
+        var headerTextLabel: UILabel = UILabel(frame: CGRectMake(16, 15, (self.view.bounds.width - 32), 20))
         headerTextLabel.textColor = Constants.Colors.grayText
         headerTextLabel.font = UIFont(name: "Panton-Regular", size: CGFloat(12))
         headerTextLabel.text = sectionHeader[section]
@@ -194,7 +194,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 1 {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            let productDetailsController = TransactionProductTableViewController(nibName: "TransactionProductTableViewController", bundle: nil)
+            var productDetailsController = TransactionProductTableViewController(nibName: "TransactionProductTableViewController", bundle: nil)
             self.navigationController?.pushViewController(productDetailsController, animated:true)
         }
         
@@ -263,14 +263,14 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     
     // MARK: - TransactionDetailsFooterViewDelegate
     func shipItemAction() {
-        let shipItemController = TransactionShipItemTableViewController(nibName: "TransactionShipItemTableViewController", bundle: nil)
+        var shipItemController = TransactionShipItemTableViewController(nibName: "TransactionShipItemTableViewController", bundle: nil)
         self.navigationController?.pushViewController(shipItemController, animated:true)
     }
     
     func cancelOrderAction() {
         showDimView()
         
-        let cancelOrderController = TransactionCancelOrderViewController(nibName: "TransactionCancelOrderViewController", bundle: nil)
+        var cancelOrderController = TransactionCancelOrderViewController(nibName: "TransactionCancelOrderViewController", bundle: nil)
         cancelOrderController.delegate = self
         cancelOrderController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         cancelOrderController.providesPresentationContextTransitionStyle = true
@@ -285,7 +285,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     }
     
     func yesCancelOrderAction() {
-        let successController = TransactionCancelOrderSuccessViewController(nibName: "TransactionCancelOrderSuccessViewController", bundle: nil)
+        var successController = TransactionCancelOrderSuccessViewController(nibName: "TransactionCancelOrderSuccessViewController", bundle: nil)
         successController.delegate = self
         successController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         successController.providesPresentationContextTransitionStyle = true

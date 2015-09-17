@@ -15,7 +15,7 @@ class TransactionShipItemTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let nib = UINib(nibName: cellIdentifier, bundle: nil)
+        var nib = UINib(nibName: cellIdentifier, bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: cellIdentifier)
     }
 

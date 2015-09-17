@@ -33,13 +33,13 @@ class TransactionProductTableViewController: UITableViewController {
     }
     
     func registerNibs() {
-        let purchaseNib = UINib(nibName: purchaseCellIdentifier, bundle: nil)
+        var purchaseNib = UINib(nibName: purchaseCellIdentifier, bundle: nil)
         tableView.registerNib(purchaseNib, forCellReuseIdentifier: purchaseCellIdentifier)
         
-        let productNib = UINib(nibName: productCellIdentifier, bundle: nil)
+        var productNib = UINib(nibName: productCellIdentifier, bundle: nil)
         tableView.registerNib(productNib, forCellReuseIdentifier: productCellIdentifier)
         
-        let descriptionNib = UINib(nibName: descriptionCellIdentifier, bundle: nil)
+        var descriptionNib = UINib(nibName: descriptionCellIdentifier, bundle: nil)
         tableView.registerNib(descriptionNib, forCellReuseIdentifier: descriptionCellIdentifier)
     }
     
@@ -56,11 +56,11 @@ class TransactionProductTableViewController: UITableViewController {
     func initializeNavigationBar() {
         self.title = "Product Details"
         
-        let backButton:UIButton = UIButton(type: UIButtonType.Custom)
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
-        let customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
@@ -87,14 +87,14 @@ class TransactionProductTableViewController: UITableViewController {
     
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView: UIView = UIView(frame: CGRectMake(0, 0, self.view.bounds.width, 45))
+        var headerView: UIView = UIView(frame: CGRectMake(0, 0, self.view.bounds.width, 45))
         headerView.backgroundColor = Constants.Colors.selectedCellColor
         
         
-        let headerSubView: UIView = UIView(frame: CGRectMake(0, 10, self.view.bounds.width, 35))
+        var headerSubView: UIView = UIView(frame: CGRectMake(0, 10, self.view.bounds.width, 35))
         headerSubView.backgroundColor = UIColor.whiteColor()
         
-        let headerTextLabel: UILabel = UILabel(frame: CGRectMake(16, 8, (self.view.bounds.width - 32), 20))
+        var headerTextLabel: UILabel = UILabel(frame: CGRectMake(16, 8, (self.view.bounds.width - 32), 20))
         headerTextLabel.textColor = Constants.Colors.grayText
         headerTextLabel.font = UIFont(name: "Panton-Bold", size: CGFloat(14))
         headerTextLabel.text = sectionHeader[section]
@@ -102,7 +102,7 @@ class TransactionProductTableViewController: UITableViewController {
         
         headerView.addSubview(headerSubView)
         
-        let line: UIView = UIView(frame: CGRectMake(0, 44, self.view.bounds.width, 1))
+        var line: UIView = UIView(frame: CGRectMake(0, 44, self.view.bounds.width, 1))
         line.backgroundColor = Constants.Colors.selectedCellColor
         
         headerView.addSubview(line)

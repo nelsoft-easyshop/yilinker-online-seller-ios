@@ -33,6 +33,6 @@ class ChangeAddressCollectionViewCell: UICollectionViewCell {
     
     @IBAction func selectAddress(sender: AnyObject) {
         self.delegate?.checkAddressCollectionViewCell(checkAdressWithCell: self)
-        print("check")
+        println("check")
     }
 }

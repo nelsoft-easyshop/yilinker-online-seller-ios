@@ -67,7 +67,7 @@ class SessionManager {
     }
     
     class func isLoggedIn() -> Bool {
-        print(self.accessToken())
+        println(self.accessToken())
         if self.accessToken() != "" {
             return true
         } else {
@@ -81,13 +81,13 @@ class SessionManager {
             var refreshToken: String = ""
             
             if let val: AnyObject = dictionary["access_token"] {
-                if let tempAccessToken = val as? String {
+                if let tempAccessToken = dictionary["access_token"] as? String {
                     accessToken = tempAccessToken
                 }
             }
             
             if let val: AnyObject = dictionary["refresh_token"] {
-                if let tempRefreshAccessToken = val as? String {
+                if let tempRefreshAccessToken = dictionary["refresh_token"] as? String {
                     refreshToken = tempRefreshAccessToken
                 }
             }
@@ -110,7 +110,7 @@ class SessionManager {
         if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("messageCount") as? String {
             let result = val as! String
             if result != "" {
-                messageCount = Int(result)!
+                messageCount = result.toInt()!
             } else {
                 messageCount = 0
             }
@@ -141,7 +141,7 @@ class SessionManager {
         if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("addressId") as? String {
             result = val as! String
         }
-        return Int(result)!
+        return result.toInt()!
     }
     
     class func userFullName() -> String {

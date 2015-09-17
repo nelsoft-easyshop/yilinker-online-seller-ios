@@ -106,11 +106,11 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         self.title = "Product Management"
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
-        let backButton:UIButton = UIButton(type: UIButtonType.Custom)
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "backAction", forControlEvents: UIControlEvents.TouchUpInside)
         backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
-        let customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
@@ -134,13 +134,13 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     }
     
     func sectionHeaderView() -> UIView {
-        let sectionHeaderContainverView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 40))
+        var sectionHeaderContainverView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 40))
         sectionHeaderContainverView.backgroundColor = UIColor.whiteColor()
         
         let buttonWidth: CGFloat = 80.0
         let lineThin: CGFloat = 0.5
         
-        let tabLabel = UILabel(frame: CGRectZero)
+        var tabLabel = UILabel(frame: CGRectZero)
         tabLabel.text = pageTitle[selectedIndex]
         tabLabel.textColor = UIColor.darkGrayColor()
         tabLabel.font = UIFont.systemFontOfSize(13.0)
@@ -149,7 +149,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         tabLabel.frame.origin.x = 10.0
         sectionHeaderContainverView.addSubview(tabLabel)
         
-        let button1 = UIButton(frame: CGRectMake(self.view.frame.size.width - buttonWidth, 0, buttonWidth, sectionHeaderContainverView.frame.size.height))
+        var button1 = UIButton(frame: CGRectMake(self.view.frame.size.width - buttonWidth, 0, buttonWidth, sectionHeaderContainverView.frame.size.height))
         button1.titleLabel?.font = UIFont.systemFontOfSize(11.0)
         button1.setTitleColor(Constants.Colors.appTheme, forState: .Normal)
         button1.addTarget(self, action: "tabAction:", forControlEvents: .TouchUpInside)
@@ -161,12 +161,12 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             button1.setTitle("Delete All", forState: .Normal)
             
             if selectedIndex == 2 {
-                let separatorLineView = UIView(frame: CGRectMake(button1.frame.origin.x - lineThin, 0, lineThin, sectionHeaderContainverView.frame.size.height - 10))
+                var separatorLineView = UIView(frame: CGRectMake(button1.frame.origin.x - lineThin, 0, lineThin, sectionHeaderContainverView.frame.size.height - 10))
                 separatorLineView.center.y = sectionHeaderContainverView.center.y
                 separatorLineView.backgroundColor = UIColor.lightGrayColor()
                 sectionHeaderContainverView.addSubview(separatorLineView)
                 
-                let restoreAllButton = UIButton(frame: CGRectMake(separatorLineView.frame.origin.x - buttonWidth, 0, buttonWidth, sectionHeaderContainverView.frame.size.height))
+                var restoreAllButton = UIButton(frame: CGRectMake(separatorLineView.frame.origin.x - buttonWidth, 0, buttonWidth, sectionHeaderContainverView.frame.size.height))
                 restoreAllButton.setTitle("Restore All", forState: .Normal)
                 restoreAllButton.titleLabel?.font = UIFont.systemFontOfSize(11.0)
                 restoreAllButton.setTitleColor(Constants.Colors.appTheme, forState: .Normal)
@@ -175,15 +175,15 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             }
         }
         
-        let underlineView = UIView(frame: CGRectMake(0, sectionHeaderContainverView.frame.size.height - lineThin, sectionHeaderContainverView.frame.size.width, lineThin))
+        var underlineView = UIView(frame: CGRectMake(0, sectionHeaderContainverView.frame.size.height - lineThin, sectionHeaderContainverView.frame.size.width, lineThin))
         underlineView.backgroundColor = UIColor.lightGrayColor()
         sectionHeaderContainverView.addSubview(underlineView)
         
         return sectionHeaderContainverView
     }
     
-    func showModal(title title: String, message: String, status: Int) {
-        let productManagementModel = ProductManagementModelViewController(nibName: "ProductManagementModelViewController", bundle: nil)
+    func showModal(#title: String, message: String, status: Int) {
+        var productManagementModel = ProductManagementModelViewController(nibName: "ProductManagementModelViewController", bundle: nil)
         productManagementModel.delegate = self
         productManagementModel.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         productManagementModel.providesPresentationContextTransitionStyle = true
@@ -352,11 +352,11 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             self.selectedItems = []
             self.updateSelectedItems(0, selected: false)
 
-            self.requestGetProductList(self.statusId[self.selectedIndex], key: self.searchBarTextField.text!)
+            self.requestGetProductList(self.statusId[self.selectedIndex], key: self.searchBarTextField.text)
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                print(error)
+                println(error)
                 self.hud?.hide(true)
                 self.loaderContainerView.hidden = true
         })
@@ -365,13 +365,13 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
 } // ProductManagementViewController
 
 
-extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ProductManagementTableViewCellDelegate {
+extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ProductManagementTableViewCellDelegate, ProductManagementModelViewControllerDelegate {
     
     // MARK: - Search Bar Delegate
     
     func searchBarTextDidChanged(textField: UITextField) {
-        if self.searchBarTextField.text!.characters.count > 2 || self.searchBarTextField.text == "" {
-            requestGetProductList(statusId[selectedIndex], key: searchBarTextField.text!)
+        if count(self.searchBarTextField.text) > 2 || self.searchBarTextField.text == "" {
+            requestGetProductList(statusId[selectedIndex], key: searchBarTextField.text)
         }
     }
     
@@ -411,7 +411,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             cell.index = selectedIndex
             cell.clearCheckImage()
             
-            if selectedItems.contains(self.productModel.products[indexPath.row].id) {
+            if contains(selectedItems, self.productModel.products[indexPath.row].id) {
                 cell.selected()
             } else {
                 cell.deselected()
@@ -440,7 +440,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print("product id >  + \(self.productModel.products[indexPath.row].id)")
+        println("product id >  + \(self.productModel.products[indexPath.row].id)")
         let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
         self.navigationController?.pushViewController(productDetails, animated: true)
     }
@@ -480,7 +480,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
         if selectedIndex != indexPath.row {
             self.selectedItems = []
             self.productModel = nil
-            requestGetProductList(statusId[indexPath.row], key: searchBarTextField.text!)
+            requestGetProductList(statusId[indexPath.row], key: searchBarTextField.text)
             selectedIndex = indexPath.row
             
             if selectedIndex == 0 {

@@ -47,13 +47,13 @@ public class CandleChartDataEntry: ChartDataEntry
         self.close = close
     }
     
-    /// - returns: the overall range (difference) between shadow-high and shadow-low.
+    /// Returns the overall range (difference) between shadow-high and shadow-low.
     public var shadowRange: Double
     {
         return abs(high - low)
     }
     
-    /// - returns: the body size (difference between open and close).
+    /// Returns the body size (difference between open and close).
     public var bodyRange: Double
     {
         return abs(open - close)
@@ -76,7 +76,7 @@ public class CandleChartDataEntry: ChartDataEntry
     
     public override func copyWithZone(zone: NSZone) -> AnyObject
     {
-        let copy = super.copyWithZone(zone) as! CandleChartDataEntry
+        var copy = super.copyWithZone(zone) as! CandleChartDataEntry
         copy.high = high
         copy.high = low
         copy.high = open

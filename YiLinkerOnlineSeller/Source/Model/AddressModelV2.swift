@@ -41,7 +41,7 @@ class AddressModelV2 {
     
     class func parseAddressFromDictionary(reviews: NSDictionary) -> AddressModelV2 {
         
-        let model = AddressModelV2()
+        var model = AddressModelV2()
         
         if reviews.isKindOfClass(NSDictionary) {
             

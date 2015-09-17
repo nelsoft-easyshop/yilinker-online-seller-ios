@@ -95,7 +95,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             self.storeAddressModel = StoreAddressModel.parseStoreAddressDataFromDictionary(responseObject as! NSDictionary)
             
             self.cellCount = self.storeAddressModel!.title.count
-            print(self.storeAddressModel!.store_address.count)
+            println(self.storeAddressModel!.store_address.count)
             for var num  = 0; num < self.storeAddressModel?.title.count; num++ {
                 if self.storeAddressModel.is_default[num]{
                     //self.selectedIndex = num
@@ -107,7 +107,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                print(error)
+                println(error)
         })
     }
     
@@ -116,7 +116,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         
         let params = ["access_token": SessionManager.accessToken()]
         
-        let manager = APIManager.sharedInstance
+        var manager = APIManager.sharedInstance
         
         manager.POST(APIAtlas.sellerStoreAddresses, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -134,30 +134,36 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 401 {
-                    //self.requestRefreshToken(AddressRefreshType.Get, uid: 0, indexPath: nil)
+                /* if task.statusCode == 401 {
+                    self.requestRefreshToken(AddressRefreshType.Get, uid: 0, indexPath: nil)
+                }  else if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: errorModel.title)
+                } else {
+                    self.addEmptyView()
                 }
-                
+                */
                 self.hud?.hide(true)
         })
     }
     
     func backButton() {
-        let backButton:UIButton = UIButton(type: UIButtonType.Custom)
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
-        let customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]        
         
-        let checkButton:UIButton = UIButton(type: UIButtonType.Custom)
+        var checkButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         checkButton.frame = CGRectMake(0, 0, 25, 25)
         checkButton.addTarget(self, action: "done", forControlEvents: UIControlEvents.TouchUpInside)
         checkButton.setImage(UIImage(named: "check-white"), forState: UIControlState.Normal)
-        let customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: checkButton)
+        var customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: checkButton)
         
         let navigationSpacer2: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer2.width = -10
@@ -194,7 +200,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                print(error)
+                println(error)
         })
     }
 
@@ -213,7 +219,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell : ChangeAddressCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressCollectionViewCell
-        print("\(self.getAddressModel)")
+        println("\(self.getAddressModel)")
         if self.getAddressModel != nil {
                 /* cell.titleLabel.text = self.storeAddressModel!.title[indexPath.row]
                 
@@ -287,7 +293,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     }
 
     func checkAddressCollectionViewCell(checkAdressWithCell cell: ChangeAddressCollectionViewCell){
-        print("check address \(cell.titleLabel.text)")
+        println("check address \(cell.titleLabel.text)")
         let indexPath: NSIndexPath = self.changeAddressCollectionView.indexPathForCell(cell)!
         cell.layer.borderWidth = 1
         cell.layer.borderColor = Constants.Colors.selectedGreenColor.CGColor
@@ -323,7 +329,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                print(error)
+                println(error)
         })
     }
     
