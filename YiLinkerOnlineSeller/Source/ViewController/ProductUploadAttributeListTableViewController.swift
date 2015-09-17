@@ -226,7 +226,8 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
         for combination in self.productModel.validCombinations {
             for dictionary in combination.attributes {
                 if attributeTitle == dictionary["name"] as! String {
-                    for (index, c) in self.productModel.validCombinations.enumerate() {
+                    for c in self.productModel.validCombinations {
+                        print(c)
                         self.productModel.validCombinations.removeAtIndex(0)
                     }
                 }

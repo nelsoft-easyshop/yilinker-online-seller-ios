@@ -555,9 +555,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     //Upload Delegate
     func productUploadUploadImageTableViewCell(didSelecteRowAtIndexPath indexPath: NSIndexPath, cell: ProductUploadUploadImageTableViewCell) {
         if indexPath.row == self.uploadImages.count - 1 && self.uploadImages.count <= 5 {
-            let picker: UzysAssetsPickerController = UzysAssetsPickerController()
-            let maxCount: Int = 6
-            
+            let picker: UzysAssetsPickerController = UzysAssetsPickerController() 
             picker.delegate = self
             picker.maximumNumberOfSelectionVideo = 0
             picker.maximumNumberOfSelectionPhoto = 100
@@ -721,7 +719,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     
     func productUploadQuantityTableViewCell(textFieldDidChange text: String, cell: ProductUploadQuantityTableViewCell) {
         if let val = Int(text) {
-           self.productModel.quantity = Int(text)!
+           self.productModel.quantity = val
             print(Int(text))
         }
     }
@@ -735,7 +733,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     func fireUpload() {
         var datas: [NSData] = []
         
-        var productUploadedImagesCount: Int = 0
         self.productModel.images.removeLast()
         let mainImageCount: Int = self.productModel.images.count
         
@@ -824,7 +821,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     func successUploadViewController(didTapUploadAgain viewController: SuccessUploadViewController) {
-        for (index, images) in self.uploadImages.enumerate() {
+        for images in self.uploadImages {
+            print(images)
             self.uploadImages.removeLast()
         }
         
@@ -847,7 +845,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             
             var arrayNumber: [String] = []
             
-            for (index, image) in combination.images.enumerate() {
+            for image in combination.images {
+                print(image)
                 let x: Int = counter
                 counter++
                 arrayNumber.append("\(x)")
@@ -881,7 +880,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             self.fireCondition()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 self.hud?.hide(true)
         })
 
@@ -903,7 +901,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             self.fireUpload()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 self.hud?.hide(true)
         })
     }

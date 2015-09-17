@@ -10,6 +10,9 @@ import UIKit
 
 class FilterResultsCollectionViewCell: UICollectionViewCell {
 
+    
+    @IBOutlet weak var transactionLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

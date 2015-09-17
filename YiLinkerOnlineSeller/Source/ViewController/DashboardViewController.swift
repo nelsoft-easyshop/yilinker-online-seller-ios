@@ -330,7 +330,6 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             self.fireStoreInfo()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 self.hud?.hide(true)
         })
         

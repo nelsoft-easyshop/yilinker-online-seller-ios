@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FilterResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource , FilterViewControllerDelegate {
+class FilterResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, FilterViewControllerDelegate {
 
     @IBOutlet weak var dimView: UIView!
     
@@ -63,8 +63,34 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
         let nibFilter = UINib(nibName: "FilterByTableViewCell", bundle: nil)
         self.filterTableView.registerNib(nibFilter, forCellReuseIdentifier: "FilterByTableViewCell")
         
-        print("search model \(self.searchModel?.invoiceNumber.count)")
+        let collectionViewNib: UINib = UINib(nibName: "FilterResultsCollectionViewCell", bundle: nil)
+        self.searchFilterCollectionView.registerNib(collectionViewNib, forCellWithReuseIdentifier: "FilterResultsCollectionViewCell")
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         
+        if IphoneType.isIphone4()  {
+            layout.itemSize = CGSize(width: self.view.frame.size.width - 100, height: 79)
+        } else if IphoneType.isIphone5() {
+            layout.itemSize = CGSize(width: self.view.frame.size.width - 80, height: 79)
+        } else {
+            layout.itemSize = CGSize(width: self.view.frame.size.width - 20, height: 79)
+        }
+        
+        layout.minimumLineSpacing = 20
+        layout.footerReferenceSize = CGSizeMake(self.searchFilterCollectionView.frame.size.width, 38)
+        searchFilterCollectionView.collectionViewLayout = layout
+        searchFilterCollectionView.dataSource = self
+        searchFilterCollectionView.delegate = self
+
+        /*
+        for var i = 0; i < self.searchModel!.invoiceNumber.count; i++ {
+            self.allObjectArray.addObject(i)
+        }
+        self.elements.addObjectsFromArray(self.allObjectArray.subarrayWithRange(NSMakeRange(0, 20)))
+        */
+        
+        self.title = "\(self.searchModel!.invoiceNumber.count) Results"
+        
+        self.backButton()
     }
 
     override func didReceiveMemoryWarning() {
@@ -130,7 +156,68 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
         print(filterBySelected)
     
     }
+    
+    //MARK: Collection view delegate methods
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.searchModel!.invoiceNumber.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        let cell : FilterResultsCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("FilterResultsCollectionViewCell", forIndexPath: indexPath) as! FilterResultsCollectionViewCell
+        
+        if self.searchModel != nil {
+            cell.transactionLabel.text = self.searchModel?.invoiceNumber[indexPath.row]
+        }
+        
+        return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        //self.showView()
+        
+    }
+    
+    func collectionView(collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+            return CGSizeMake(collectionView.bounds.size.width, CGFloat(50.0))
+    }
+    
+    /*
+    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        nextpage = elements.count - 5
+        if indexPath.row == nextpage {
+            currentPage++
+            nextpage = elements.count  - 5
+            elements.addObjectsFromArray(allObjectArray.subarrayWithRange(NSMakeRange(currentPage, 20)))
+            self.searchFilterCollectionView.reloadData()
+        }
 
+    }
+    */
+    
+    //MARK: Navigation bar
+    func backButton() {
+        let backButton: UIButton = UIButton(type: UIButtonType.Custom)
+        backButton.frame = CGRectMake(0, 0, 40, 40)
+        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        
+        let customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    func back() {
+        self.navigationController!.popViewControllerAnimated(true)
+    }
+    
     func dismissView() {
         UIView.animateWithDuration(0.25, animations: {
             self.dimView2.alpha = 0
