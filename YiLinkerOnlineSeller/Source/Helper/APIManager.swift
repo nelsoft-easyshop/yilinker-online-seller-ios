@@ -78,6 +78,9 @@ struct APIAtlas {
     //Search
     static let transaction = "auth/transaction/searchKeyword?access_token="
     
+    //Resolution Center
+    static let getResolutionCenterCases = "/api/v1/auth/dispute/get-case"
+    
     static let baseUrl = APIEnvironment.baseUrl()
 }
 

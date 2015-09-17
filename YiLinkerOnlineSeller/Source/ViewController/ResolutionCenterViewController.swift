@@ -18,14 +18,23 @@ class ResolutionCenterViewController
     var dimView: UIView? = nil
     
     @IBOutlet weak var resolutionTableView: UITableView!
-    var tableData : [(ResolutionCenterData)] =
+    var tableData = [ResolutionCenterElement]()
+    /*: [(ResolutionCenterElement)] =
     [ ("7889360001", "Open"  , "December 12, 2015", "Seller", "Not Happy", "It's okay")
      ,("7889360002", "Closed", "January 2, 2016"  , "Buyer" , "Yo wassup", "Go voltron!")
      ,("7889360003", "Open"  , "February 4, 2016" , "Seller", "hmm...", "hack'd'planet")
      ,("2345647856", "Open"  , "January 21, 2016" , "Seller", "Numbers game", "13")
      ,("2345647856", "Closed", "January 21, 2016" , "Buyer" , "On-start", "What's goin on")]
+    **/
 
     var currentSelectedFilter = SelectedFilters(time:.Total,status:.Both)
+    
+    var hud: MBProgressHUD?
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        fireGetCases()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,7 +97,7 @@ class ResolutionCenterViewController
         let cell = resolutionTableView.dequeueReusableCellWithIdentifier("RcCell") as! ResolutionCenterCell
         
         // put values here
-        let currentDataId:(ResolutionCenterData) = tableData[indexPath.item]
+        let currentDataId:(ResolutionCenterElement) = tableData[indexPath.item]
         cell.setData(currentDataId)
         //cell.setData(currentData.id, status:currentData.status, date:currentData.date, type:currentData.type )
         
@@ -120,8 +129,16 @@ class ResolutionCenterViewController
         self.tabSelector.setSelection(.TabThree)
     }
     
-    // Mark: - File a Dispute
+    // Mark: - New Dispute View Controller
     func disputePressed() {
+        let newDispute = self.storyboard?.instantiateViewControllerWithIdentifier("NewDisputeTableViewController")
+            as! NewDisputeTableViewController
+        
+        self.navigationController?.pushViewController(newDispute, animated:true);
+    }
+    
+    // Mark: - OLD VERSION FOR MODAL File a Dispute
+    private func disputeOldPressed() {
       //NSBundle.mainBundle().loadNibNamed("DisputeViewController", owner: self, options: nil)
         
         
@@ -183,12 +200,75 @@ class ResolutionCenterViewController
             //completion: (() -> Void)?
     }
 
-    /*
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
-    */
-
+    
+    func fireGetCases() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
+        
+        manager.GET(APIAtlas.getResolutionCenterCases, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            let resolutionCenterModel: ResolutionCenterModel = ResolutionCenterModel.parseDataWithDictionary(responseObject)
+            
+            println(responseObject)
+            
+            if resolutionCenterModel.isSuccessful {
+                self.tableData.removeAll(keepCapacity: false)
+                self.tableData = resolutionCenterModel.resolutionArray
+                self.resolutionTableView.reloadData()
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error while reading Resolution Center table", title: "Data Loading Error")
+            }
+            
+            
+            self.hud?.hide(true)
+            
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.fireRefreshToken()
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error Refreshing Token", title: "Refresh Token Error")
+                }
+                
+                println(error)
+        })
+    }
+    
+    func fireRefreshToken() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.fireGetCases()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+        })
+        
+    }
 }

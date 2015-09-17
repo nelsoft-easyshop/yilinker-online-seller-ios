@@ -18,7 +18,7 @@ class CaseDetailsTableViewController: UITableViewController {
     @IBOutlet weak var complainRemarksCell: UITableViewCell!
     @IBOutlet weak var csrRemarks: UILabel!
     
-    var data = ResolutionCenterData("","","","","","")
+    var data = ResolutionCenterElement("","","","","","")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +69,7 @@ class CaseDetailsTableViewController: UITableViewController {
         self.navigationController?.popViewControllerAnimated(true)
     }
 
-    func passData(data: ResolutionCenterData) {
+    func passData(data: ResolutionCenterElement) {
         self.data = data
     }
     
