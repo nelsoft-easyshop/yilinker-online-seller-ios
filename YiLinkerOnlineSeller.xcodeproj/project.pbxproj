@@ -511,13 +511,6 @@
 			remoteGlobalIDString = 967EE1B31B8AEA25000591AC;
 			remoteInfo = YiLinkerOnlineSeller;
 		};
-		F7E175721BA3F0B300A3820B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 967EE1AC1B8AEA25000591AC /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 967EE1C81B8AEA25000591AC;
-			remoteInfo = YiLinkerOnlineSellerTests;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -1826,7 +1819,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				F7E175731BA3F0B300A3820B /* PBXTargetDependency */,
 			);
 			name = YiLinkerOnlineSeller;
 			productName = YiLinkerOnlineSeller;
@@ -2456,11 +2448,6 @@
 			isa = PBXTargetDependency;
 			target = 967EE1B31B8AEA25000591AC /* YiLinkerOnlineSeller */;
 			targetProxy = 967EE1CA1B8AEA25000591AC /* PBXContainerItemProxy */;
-		};
-		F7E175731BA3F0B300A3820B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 967EE1C81B8AEA25000591AC /* YiLinkerOnlineSellerTests */;
-			targetProxy = F7E175721BA3F0B300A3820B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
