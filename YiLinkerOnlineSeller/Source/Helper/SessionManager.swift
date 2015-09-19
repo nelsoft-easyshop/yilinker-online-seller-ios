@@ -163,6 +163,7 @@ class SessionManager {
     }
     
     class func isSeller() -> Bool {
-        return false
+        let isSeller: Bool = NSUserDefaults.standardUserDefaults().objectForKey("isSeller") as! Bool
+        return isSeller
     }
 }
