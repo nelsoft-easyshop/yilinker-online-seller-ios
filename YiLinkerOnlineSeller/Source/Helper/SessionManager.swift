@@ -161,5 +161,8 @@ class SessionManager {
         
         return result
     }
-
+    
+    class func isSeller() -> Bool {
+        return false
+    }
 }

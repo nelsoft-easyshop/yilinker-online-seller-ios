@@ -10,6 +10,7 @@ import UIKit
 
 class ResellerItemTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var cellImageView: UIImageView!
     @IBOutlet weak var statusImageView: UIImageView!
     @IBOutlet weak var cellSellerLabel: UILabel!
     @IBOutlet weak var cellTitleLabel: UILabel!
