@@ -117,6 +117,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     }
     
     func instantSignin(gesture: UIGestureRecognizer) {
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isSeller")
         self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["email": "seller@easyshop.ph",
@@ -225,6 +226,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     // MARK: - Requests
     
     func requestSignin() {
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isSeller")
         self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["email": self.emailAddressTextField.text,

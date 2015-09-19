@@ -78,6 +78,10 @@ struct APIAtlas {
     //Search
     static let transaction = "auth/transaction/searchKeyword?access_token="
     
+    //Reseller
+    static let resellerUrl = "auth/reseller/products"
+    static let resellerUploadUrl = "auth/reseller/upload"
+    
     static let baseUrl = APIEnvironment.baseUrl()
 }
 
