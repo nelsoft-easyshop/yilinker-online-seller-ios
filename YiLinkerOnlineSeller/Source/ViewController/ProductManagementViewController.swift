@@ -426,6 +426,12 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             if selectedIndex == 4 {
                 cell.decreaseAlpha()
             }
+                
+            if selectedIndex == 5 {
+                cell.checkTapView.hidden = true
+            } else {
+                cell.checkTapView.hidden = false
+            }
             
             return cell
         }
