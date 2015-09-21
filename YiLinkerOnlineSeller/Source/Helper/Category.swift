@@ -218,4 +218,12 @@ extension NSDate {
     }
 }
 
-
+extension UILabel {
+    func required() {
+        self.text = "\(self.text!)*"
+        var myMutableString = NSMutableAttributedString(string: self.text!)
+        let stringCount: Int = count(self.text!)
+        myMutableString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSRange(location: stringCount - 1,length:1))
+        self.attributedText = myMutableString
+    }
+}

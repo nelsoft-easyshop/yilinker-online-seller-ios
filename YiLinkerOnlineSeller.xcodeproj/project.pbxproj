@@ -11,6 +11,8 @@
 		0C1179541BA9A58F00AA1554 /* LocalizableString.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0C1179561BA9A58F00AA1554 /* LocalizableString.strings */; };
 		0C11795C1BA9A5C900AA1554 /* StringHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11795B1BA9A5C900AA1554 /* StringHelper.swift */; };
 		0C1C3A871B9453BE00E6180D /* ProductUploadTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C1C3A861B9453BE00E6180D /* ProductUploadTableHeaderView.xib */; };
+		0C51C2F01BB00A6800F4D2D6 /* AddProductHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C51C2EF1BB00A6800F4D2D6 /* AddProductHeaderView.swift */; };
+		0C51C2F21BB00A7900F4D2D6 /* AddProductHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C51C2F11BB00A7900F4D2D6 /* AddProductHeaderView.xib */; };
 		0C5E9D8E1B91E2E200F32CFE /* ProductUploadFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5E9D8D1B91E2E200F32CFE /* ProductUploadFooterView.swift */; };
 		0C5E9D901B91E2F700F32CFE /* ProductUploadFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C5E9D8F1B91E2F700F32CFE /* ProductUploadFooterView.xib */; };
 		0C65F8A51B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C65F8A31B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.xib */; };
@@ -529,6 +531,8 @@
 		0C11795A1BA9A5AF00AA1554 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LocalizableString.strings"; sourceTree = "<group>"; };
 		0C11795B1BA9A5C900AA1554 /* StringHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringHelper.swift; sourceTree = "<group>"; };
 		0C1C3A861B9453BE00E6180D /* ProductUploadTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductUploadTableHeaderView.xib; sourceTree = "<group>"; };
+		0C51C2EF1BB00A6800F4D2D6 /* AddProductHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProductHeaderView.swift; sourceTree = "<group>"; };
+		0C51C2F11BB00A7900F4D2D6 /* AddProductHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddProductHeaderView.xib; sourceTree = "<group>"; };
 		0C5E9D8D1B91E2E200F32CFE /* ProductUploadFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadFooterView.swift; sourceTree = "<group>"; };
 		0C5E9D8F1B91E2F700F32CFE /* ProductUploadFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadFooterView.xib; path = ../View/ProductUploadFooterView.xib; sourceTree = "<group>"; };
 		0C65F8A21B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadTextFieldTableViewCell.swift; sourceTree = "<group>"; };
@@ -1297,6 +1301,8 @@
 				F7E465831B9F2D7B00FAB97D /* SearchTableViewCell.xib */,
 				0C942BB91BAFF8F10049A6B0 /* DisputeTextFieldTableViewCell.swift */,
 				0C942BBA1BAFF8F10049A6B0 /* DisputeTextFieldTableViewCell.xib */,
+				0C51C2EF1BB00A6800F4D2D6 /* AddProductHeaderView.swift */,
+				0C51C2F11BB00A7900F4D2D6 /* AddProductHeaderView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2016,6 +2022,7 @@
 				F7C40FB31B983C310091C16C /* ChangeAddressViewController.xib in Resources */,
 				26378F521B8CEE82008533B6 /* ProductManagementTableViewCell.xib in Resources */,
 				79E633871B9B15FD0062DB14 /* TransactionShipItemTableViewController.xib in Resources */,
+				0C51C2F21BB00A7900F4D2D6 /* AddProductHeaderView.xib in Resources */,
 				0CF28EFE1B8CA2E9005B2E54 /* Panton Light Italic.otf in Resources */,
 				79E633831B9B07670062DB14 /* TransactionCancelOrderSuccessViewController.xib in Resources */,
 				F7C40F9B1B983BD90091C16C /* FilterViewController.xib in Resources */,
@@ -2144,6 +2151,7 @@
 				0C8D7F901B8F0A6400B3FA4E /* AttributeModel.swift in Sources */,
 				0C65F8AE1B8DBC3400504D86 /* ProductUploadTextViewTableViewCell.swift in Sources */,
 				795B0D281BA3093000FC373C /* ActivityLogItemsModel.swift in Sources */,
+				0C51C2F01BB00A6800F4D2D6 /* AddProductHeaderView.swift in Sources */,
 				0C8D7FBD1B8FCC5800B3FA4E /* ProductUploadCombinationHeaderTableViewCell.swift in Sources */,
 				F7C40F6D1B983B210091C16C /* CreateNewAddressViewController.swift in Sources */,
 				F7C40F651B983AD10091C16C /* ChangeBankAccountViewController.swift in Sources */,

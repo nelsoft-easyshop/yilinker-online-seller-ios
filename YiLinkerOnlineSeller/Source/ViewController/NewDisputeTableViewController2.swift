@@ -37,7 +37,7 @@ class NewDisputeTableViewController2: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return 1
+        return 2
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -48,15 +48,23 @@ class NewDisputeTableViewController2: UITableViewController {
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: DisputeTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.cellTextFieldIdentifier) as! DisputeTextFieldTableViewCell
-        
-        if indexPath.row == 0 {
+        if indexPath.section == 0 {
+            let cell: DisputeTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.cellTextFieldIdentifier) as! DisputeTextFieldTableViewCell
+            if indexPath.row == 0 {
+                cell.titleLabel.text = "Dispute Title."
+                cell.titleLabel.required()
+            } else if indexPath.row == 1 {
+                cell.titleLabel.text = "Transaction No."
+                cell.titleLabel.required()
+            }
+            
+            return cell
+        } else {
+            let cell: DisputeTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.cellTextFieldIdentifier) as! DisputeTextFieldTableViewCell
             cell.titleLabel.text = "Dispute Title."
-        } else if indexPath.row == 1 {
-            cell.titleLabel.text = "Transaction No."
+            
+            return cell
         }
-
-        return cell
     }
 
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
