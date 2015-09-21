@@ -387,7 +387,7 @@ class MessageThreadVC: UIViewController {
         var recipientId = recipient?.userId ?? "0"
         var senderId = self.sender?.userId ?? "0"
         
-        self.messages.append(W_Messages(message_id: 0, senderId: senderId.toInt()! , recipientId: recipientId.toInt()!, message: lastMessage, isImage: isImage, timeSent: NSDate(), isSeen: "0", timeSeen: dateSeen, isSent : "1"))
+        self.messages.append(W_Messages(message_id: 0, senderId: 0 , recipientId: recipientId.toInt()!, message: lastMessage, isImage: isImage, timeSent: NSDate(), isSeen: "0", timeSeen: dateSeen, isSent : "1"))
         self.threadTableView.reloadData()
         self.goToBottomTableView()
         self.sendMessageToEndpoint(lastMessage, recipientId: recipientId, isImage: isImage)
