@@ -80,8 +80,16 @@ struct APIAtlas {
     
     static let getActivityLogs = "auth/user/activityLog"
     
+    static let postEmailNotif = "auth/email/subscription"
+    static let postSMSNotif = "auth/sms/subscription"
+    static let deactivate = "auth/account/disable"
+    
     //Search
     static let transaction = "auth/transaction/searchKeyword?access_token="
+    
+    //Reseller
+    static let resellerUrl = "auth/reseller/products"
+    static let resellerUploadUrl = "auth/reseller/upload"
     
     static let baseUrl = APIEnvironment.baseUrl()
 }

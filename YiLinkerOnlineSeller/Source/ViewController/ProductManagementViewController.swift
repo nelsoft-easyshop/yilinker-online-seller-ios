@@ -269,9 +269,11 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 action = Status.deleted
             }
             
-            showModal(title: "You're about to " + sender.titleLabel!!.text!.lowercaseString + " active products.",
+            if sender.titleLabel!.text != nil {
+                showModal(title: "You're about to " + sender.titleLabel!!.text!.lowercaseString + " active products.",
                     message: "Are you sure you want to " + sender.titleLabel!!.text!.lowercaseString + " products?",
-                     status: action)
+                    status: action)
+            }
         }
     }
     
@@ -423,6 +425,12 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             
             if selectedIndex == 4 {
                 cell.decreaseAlpha()
+            }
+                
+            if selectedIndex == 5 {
+                cell.checkTapView.hidden = true
+            } else {
+                cell.checkTapView.hidden = false
             }
             
             return cell

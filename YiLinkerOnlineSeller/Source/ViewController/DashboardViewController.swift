@@ -236,10 +236,17 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             var customizedCategory = CustomizedCategoryViewController(nibName: "CustomizedCategoryViewController", bundle: nil)
             self.navigationController?.pushViewController(customizedCategory, animated:true)
         } else if indexPath.row == 5 {
-            let productUploadTableViewController: ProductUploadTableViewController = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
-            let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadTableViewController)
-            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-            self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
+            if SessionManager.isSeller() {
+                let productUploadTableViewController: ProductUploadTableViewController = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
+                let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadTableViewController)
+                navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+                self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
+            } else {
+                let resellerViewController: ResellerViewController = ResellerViewController(nibName: "ResellerViewController", bundle: nil)
+                let navigationController: UINavigationController = UINavigationController(rootViewController: resellerViewController)
+                navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+                self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
+            }
         } else if indexPath.row == 6 {
             var followerController = FollowersViewController(nibName: "FollowersViewController", bundle: nil)
             self.navigationController?.pushViewController(followerController, animated:true)

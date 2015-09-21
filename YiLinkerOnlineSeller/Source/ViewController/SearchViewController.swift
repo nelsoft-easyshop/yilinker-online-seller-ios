@@ -85,7 +85,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         var nibFilter = UINib(nibName: "FilterByTableViewCell", bundle: nil)
         filterByTableView.registerNib(nibFilter, forCellReuseIdentifier: "FilterByTableViewCell")
         
-        
     }
     
     //    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
@@ -187,12 +186,16 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
-    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         //self.searchTextField.resignFirstResponder()
         self.searchTextField.endEditing(true)
         
-        self.fireSearch()
+        if filterBySelected == 0 || filterBySelected == 2 || filterBySelected == 3 {
+            self.showAlert(title: "Information", message: "Search by \(filterBy[filterBySelected]) is not yet available.")
+        } else {
+            self.fireSearch()
+        }
+        
         return true
     }
     
@@ -241,6 +244,14 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.navigationController?.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
+    
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
     

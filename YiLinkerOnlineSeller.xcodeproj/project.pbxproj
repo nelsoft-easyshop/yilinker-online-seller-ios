@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C11794E1BA9A49700AA1554 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C1179501BA9A49700AA1554 /* LaunchScreen.xib */; };
+		0C1179541BA9A58F00AA1554 /* LocalizableString.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0C1179561BA9A58F00AA1554 /* LocalizableString.strings */; };
+		0C11795C1BA9A5C900AA1554 /* StringHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11795B1BA9A5C900AA1554 /* StringHelper.swift */; };
 		0C1C3A871B9453BE00E6180D /* ProductUploadTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C1C3A861B9453BE00E6180D /* ProductUploadTableHeaderView.xib */; };
 		0C5E9D8E1B91E2E200F32CFE /* ProductUploadFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5E9D8D1B91E2E200F32CFE /* ProductUploadFooterView.swift */; };
 		0C5E9D901B91E2F700F32CFE /* ProductUploadFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C5E9D8F1B91E2F700F32CFE /* ProductUploadFooterView.xib */; };
@@ -43,6 +46,7 @@
 		0C6661A91B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C6661A71B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.xib */; };
 		0C6661AC1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6661AA1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.swift */; };
 		0C6661AD1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C6661AB1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.xib */; };
+		0C6E7D391BAD67420079EF78 /* ResellerGetProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6E7D381BAD67420079EF78 /* ResellerGetProductModel.swift */; };
 		0C8739D71B96CFA5005D2EF8 /* CommonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8739D61B96CFA5005D2EF8 /* CommonHelper.swift */; };
 		0C8739DA1B96E172005D2EF8 /* SuccessUploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8739D81B96E172005D2EF8 /* SuccessUploadViewController.swift */; };
 		0C8739DB1B96E172005D2EF8 /* SuccessUploadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C8739D91B96E172005D2EF8 /* SuccessUploadViewController.xib */; };
@@ -95,7 +99,6 @@
 		0CF28ED41B8C85E5005B2E54 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EBF1B8C85E4005B2E54 /* Reachability.swift */; };
 		0CF28ED51B8C85E5005B2E54 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EC01B8C85E4005B2E54 /* SessionManager.swift */; };
 		0CF28ED61B8C85E5005B2E54 /* XibHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EC11B8C85E4005B2E54 /* XibHelper.swift */; };
-		0CF28ED71B8C85E5005B2E54 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EC41B8C85E5005B2E54 /* LaunchScreen.xib */; };
 		0CF28ED81B8C85E5005B2E54 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0CF28EC51B8C85E5005B2E54 /* Main.storyboard */; };
 		0CF28ED91B8C85E5005B2E54 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EC81B8C85E5005B2E54 /* DashboardViewController.swift */; };
 		0CF28EDA1B8C85E5005B2E54 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF28EC91B8C85E5005B2E54 /* MessageViewController.swift */; };
@@ -306,6 +309,9 @@
 		795B0D261BA307CB00FC373C /* ActivityLogItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795B0D251BA307CB00FC373C /* ActivityLogItemModel.swift */; };
 		795B0D281BA3093000FC373C /* ActivityLogItemsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795B0D271BA3093000FC373C /* ActivityLogItemsModel.swift */; };
 		797777A31BA924AD004D48FC /* TransactionItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797777A21BA924AD004D48FC /* TransactionItemModel.swift */; };
+
+		7985D35D1BB0259F0060E5F5 /* DeactivateModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7985D35B1BB0259F0060E5F5 /* DeactivateModalViewController.swift */; };
+		7985D35E1BB0259F0060E5F5 /* DeactivateModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7985D35C1BB0259F0060E5F5 /* DeactivateModalViewController.xib */; };
 		799892F31B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */; };
 		799892F51B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */; };
 		799892F71B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */; };
@@ -523,6 +529,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C11794F1BA9A49700AA1554 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		0C1179551BA9A58F00AA1554 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/LocalizableString.strings; sourceTree = "<group>"; };
+		0C1179571BA9A5AA00AA1554 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		0C1179581BA9A5AA00AA1554 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LocalizableString.strings"; sourceTree = "<group>"; };
+		0C1179591BA9A5AF00AA1554 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		0C11795A1BA9A5AF00AA1554 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LocalizableString.strings"; sourceTree = "<group>"; };
+		0C11795B1BA9A5C900AA1554 /* StringHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringHelper.swift; sourceTree = "<group>"; };
 		0C1C3A861B9453BE00E6180D /* ProductUploadTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductUploadTableHeaderView.xib; sourceTree = "<group>"; };
 		0C5E9D8D1B91E2E200F32CFE /* ProductUploadFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadFooterView.swift; sourceTree = "<group>"; };
 		0C5E9D8F1B91E2F700F32CFE /* ProductUploadFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadFooterView.xib; path = ../View/ProductUploadFooterView.xib; sourceTree = "<group>"; };
@@ -560,6 +573,7 @@
 		0C6661A71B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadPlainDetailCombinationTableViewCell.xib; path = ../View/ProductUploadPlainDetailCombinationTableViewCell.xib; sourceTree = "<group>"; };
 		0C6661AA1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadAttributeSummaryTableViewCell.swift; sourceTree = "<group>"; };
 		0C6661AB1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadAttributeSummaryTableViewCell.xib; path = ../View/ProductUploadAttributeSummaryTableViewCell.xib; sourceTree = "<group>"; };
+		0C6E7D381BAD67420079EF78 /* ResellerGetProductModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResellerGetProductModel.swift; sourceTree = "<group>"; };
 		0C8739D61B96CFA5005D2EF8 /* CommonHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonHelper.swift; sourceTree = "<group>"; };
 		0C8739D81B96E172005D2EF8 /* SuccessUploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessUploadViewController.swift; sourceTree = "<group>"; };
 		0C8739D91B96E172005D2EF8 /* SuccessUploadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SuccessUploadViewController.xib; path = ../ViewController/SuccessUploadViewController.xib; sourceTree = "<group>"; };
@@ -613,7 +627,6 @@
 		0CF28EBF1B8C85E4005B2E54 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		0CF28EC01B8C85E4005B2E54 /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		0CF28EC11B8C85E4005B2E54 /* XibHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XibHelper.swift; sourceTree = "<group>"; };
-		0CF28EC41B8C85E5005B2E54 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		0CF28EC51B8C85E5005B2E54 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0CF28EC81B8C85E5005B2E54 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		0CF28EC91B8C85E5005B2E54 /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
@@ -828,6 +841,8 @@
 		795B0D251BA307CB00FC373C /* ActivityLogItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLogItemModel.swift; sourceTree = "<group>"; };
 		795B0D271BA3093000FC373C /* ActivityLogItemsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLogItemsModel.swift; sourceTree = "<group>"; };
 		797777A21BA924AD004D48FC /* TransactionItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionItemModel.swift; sourceTree = "<group>"; };
+		7985D35B1BB0259F0060E5F5 /* DeactivateModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeactivateModalViewController.swift; sourceTree = "<group>"; };
+		7985D35C1BB0259F0060E5F5 /* DeactivateModalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeactivateModalViewController.xib; sourceTree = "<group>"; };
 		799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardHeaderCollectionViewCell.xib; sourceTree = "<group>"; };
 		799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashBoardHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardItemCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -1066,9 +1081,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C1179511BA9A56200AA1554 /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				0C1179561BA9A58F00AA1554 /* LocalizableString.strings */,
+			);
+			path = Strings;
+			sourceTree = "<group>";
+		};
 		0CF28EB51B8C85E4005B2E54 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				0C1179511BA9A56200AA1554 /* Strings */,
 				0CF28EDD1B8C8614005B2E54 /* YiLinkerOnlineSeller-Bridging-Header.h */,
 				0CF28EB61B8C85E4005B2E54 /* AppDelegate */,
 				0CF28EB81B8C85E4005B2E54 /* External */,
@@ -1103,6 +1127,7 @@
 		0CF28EB91B8C85E4005B2E54 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				0C11795B1BA9A5C900AA1554 /* StringHelper.swift */,
 				961F70371B983ECF007D0EA5 /* CheckBox.swift */,
 				961F70291B97EEEC007D0EA5 /* ButtonToTabBehaviorizer.swift */,
 				F7C40FDC1B9840490091C16C /* FilterAttributeModel.swift */,
@@ -1174,6 +1199,8 @@
 				F7C40F4F1B983A590091C16C /* StoreAddressModel.swift */,
 				F7C40F501B983A590091C16C /* StoreInfoModel.swift */,
 				26B35CAF1B9B06800067793A /* SubCategoryModel.swift */,
+				0CAACCC61B9D950C00BE5EF3 /* ResellerItemModel.swift */,
+				0C6E7D381BAD67420079EF78 /* ResellerGetProductModel.swift */,
 				792F6E4F1B9D438B00F0CB03 /* TotalPointsModel.swift */,
 				79F107671BA1C46500B6CE51 /* TransactionCancellationModel.swift */,
 				794AFD9F1BA3D3190063976E /* TransactionConsigneeModel.swift */,
@@ -1191,7 +1218,7 @@
 		0CF28EC31B8C85E5005B2E54 /* StoryBoard */ = {
 			isa = PBXGroup;
 			children = (
-				0CF28EC41B8C85E5005B2E54 /* LaunchScreen.xib */,
+				0C1179501BA9A49700AA1554 /* LaunchScreen.xib */,
 				0CF28EC51B8C85E5005B2E54 /* Main.storyboard */,
 			);
 			path = StoryBoard;
@@ -1375,6 +1402,12 @@
 				26DB06331B98BF2C00D38EA8 /* TransactionViewController.swift */,
 				F7C40F881B983B860091C16C /* VerifyNumberViewController.swift */,
 				F7C40F8A1B983B8D0091C16C /* VerifyViewController.swift */,
+				F7CB78411B9D822C001AF766 /* FilterCalendarTableViewCell.swift */,
+				F7CB78421B9D822C001AF766 /* FilterCalendarTableViewCell.xib */,
+				F7E739F11BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.swift */,
+				F7E739F21BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.xib */,
+				7985D35B1BB0259F0060E5F5 /* DeactivateModalViewController.swift */,
+				7985D35C1BB0259F0060E5F5 /* DeactivateModalViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1885,6 +1918,8 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
+				"zh-Hant",
 			);
 			mainGroup = 967EE1AB1B8AEA25000591AC;
 			productRefGroup = 967EE1B51B8AEA25000591AC /* Products */;
@@ -1962,7 +1997,7 @@
 				2625FEA61B96A92500DD24AF /* EditSubCategoriesViewController.xib in Resources */,
 				26B5B2501B94E93F00CBDDE5 /* AddCustomizedCategoryTableViewCell.xib in Resources */,
 				2671424D1B94C6AF00B66458 /* CustomizedCategoryViewController.xib in Resources */,
-				0CF28ED71B8C85E5005B2E54 /* LaunchScreen.xib in Resources */,
+				0C11794E1BA9A49700AA1554 /* LaunchScreen.xib in Resources */,
 				0CF28EFD1B8CA2E9005B2E54 /* Panton Heavy.otf in Resources */,
 				26B5B2461B94DE6700CBDDE5 /* CustomizedCategoryViews.xib in Resources */,
 				0C65F8E91B8E34C200504D86 /* ProductUploadDetailHeaderViewCollectionViewCell.xib in Resources */,
@@ -1993,6 +2028,7 @@
 				26BD5E5C1B8DCF9B00739488 /* ProductImagesCollectionViewCell.xib in Resources */,
 				799892F31B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib in Resources */,
 				26B5B2561B94F3AC00CBDDE5 /* CustomizedCategoryViewsViewController.xib in Resources */,
+				0C1179541BA9A58F00AA1554 /* LocalizableString.strings in Resources */,
 				26DB062C1B97F9EB00D38EA8 /* RemovedItemTableViewCell.xib in Resources */,
 				F7C40F9D1B983BDF0091C16C /* FilterTableViewCell.xib in Resources */,
 				0CF28F031B8CA2E9005B2E54 /* Panton Thin Italic.otf in Resources */,
@@ -2065,6 +2101,7 @@
 				79EF7ABE1B99C3F60082CD35 /* TransactionDetailsTableViewController.xib in Resources */,
 				F7C40FDB1B983CD90091C16C /* truck.png in Resources */,
 				0C65F8F91B8E3EC200504D86 /* ProductUploadDetailFooterTableViewCell.xib in Resources */,
+				7985D35E1BB0259F0060E5F5 /* DeactivateModalViewController.xib in Resources */,
 				2686E37B1B9585D600E8FA80 /* ParentCategoryViewController.xib in Resources */,
 				F7C40FD21B983CD90091C16C /* checkBox.png in Resources */,
 				0C8D7FBA1B8FC79E00B3FA4E /* ProductUploadCombinationFooterTableViewCell.xib in Resources */,
@@ -2143,6 +2180,8 @@
 				0CAB52A51B92023E00EA441A /* CategoryModel.swift in Sources */,
 				F7C40F691B983B120091C16C /* ChangeMobileNumberViewController.swift in Sources */,
 				0CAB52A11B91F42300EA441A /* ConditionModel.swift in Sources */,
+				7985D35D1BB0259F0060E5F5 /* DeactivateModalViewController.swift in Sources */,
+				0C6E7D391BAD67420079EF78 /* ResellerGetProductModel.swift in Sources */,
 				79E633771B9AD2570062DB14 /* TransactionProductDescriptionTableViewCell.swift in Sources */,
 				26B282FC1B929BE300A7C2B1 /* APIManager.swift in Sources */,
 				26378F511B8CEE82008533B6 /* ProductManagementTableViewCell.swift in Sources */,
@@ -2153,6 +2192,7 @@
 				79E633671B9AB22F0062DB14 /* TransactionImageCollectionViewCell.swift in Sources */,
 				2618DD751B975E910030C6D2 /* EditSubCategoriesRemovedTableViewCell.swift in Sources */,
 				79E633A01B9B27E70062DB14 /* FSCalendar.m in Sources */,
+				0C11795C1BA9A5C900AA1554 /* StringHelper.swift in Sources */,
 				26BD5E5E1B8DFA5200739488 /* ProductImagesView.swift in Sources */,
 				79E633861B9B15FD0062DB14 /* TransactionShipItemTableViewController.swift in Sources */,
 				26378F211B8CC45A008533B6 /* ProductManagementViewController.swift in Sources */,
@@ -2473,6 +2513,29 @@
 			targetProxy = 967EE1CA1B8AEA25000591AC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		0C1179501BA9A49700AA1554 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0C11794F1BA9A49700AA1554 /* Base */,
+				0C1179571BA9A5AA00AA1554 /* zh-Hans */,
+				0C1179591BA9A5AF00AA1554 /* zh-Hant */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		0C1179561BA9A58F00AA1554 /* LocalizableString.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0C1179551BA9A58F00AA1554 /* Base */,
+				0C1179581BA9A5AA00AA1554 /* zh-Hans */,
+				0C11795A1BA9A5AF00AA1554 /* zh-Hant */,
+			);
+			name = LocalizableString.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		967EE1D11B8AEA25000591AC /* Debug */ = {
