@@ -26,6 +26,9 @@ class TransactionViewController: UIViewController {
     
     var hud: MBProgressHUD?
     
+    var page: Int = 1
+    var isRefreshable: Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,11 +36,11 @@ class TransactionViewController: UIViewController {
         registerNibs()
         customizedNavigationBar()
         customizedVies()
+        fireGetTransaction()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        fireGetTransaction()
     }
 
     // MARK: - Methods
@@ -153,7 +156,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         let dateAdded = dateFormatter1.stringFromDate(date)
         
         cell.setStatus(tempModel.order_status_id.toInt()!)
-        cell.setTID(tempModel.order_id)
+        cell.setTID(tempModel.invoice_number)
         //cell.setPrice("P \(tempModel.total_price)"
             
         if tempModel.total_quantity.toInt() < 2 {
@@ -168,46 +171,72 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
     // MARK: Table View Delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var transactionDetailsController = TransactionDetailsTableViewController(nibName: "TransactionDetailsTableViewController", bundle: nil)
-        self.navigationController?.pushViewController(transactionDetailsController, animated:true)
+        if !tableData[indexPath.row].invoice_number.isEmpty {
+            var transactionDetailsController = TransactionDetailsTableViewController(nibName: "TransactionDetailsTableViewController", bundle: nil)
+            transactionDetailsController.invoiceNumber = tableData[indexPath.row].invoice_number
+            self.navigationController?.pushViewController(transactionDetailsController, animated:true)
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "No ivoice number!", title: "Error")
+        }
 
     }
     
+    func scrollViewDidEndDragging(aScrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        var offset: CGPoint = aScrollView.contentOffset
+        var bounds: CGRect = aScrollView.bounds
+        var size: CGSize = aScrollView.contentSize
+        var inset: UIEdgeInsets = aScrollView.contentInset
+        var y: CGFloat = offset.y + bounds.size.height - inset.bottom
+        var h: CGFloat = size.height
+        var reload_distance: CGFloat = 10
+        var temp: CGFloat = h + reload_distance
+        if y > temp {
+            fireGetTransaction()
+        }
+    }
+    
     func fireGetTransaction(){
-        self.showHUD()
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
-        
-        manager.GET(APIAtlas.transactionList, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            let transactionModel: TransactionsModel = TransactionsModel.parseDataWithDictionary(responseObject)
+        if isRefreshable {
+            self.showHUD()
+            let manager = APIManager.sharedInstance
+            let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "page" : page];
             
-            println(responseObject)
-            
-            if transactionModel.isSuccessful {
-                self.tableData.removeAll(keepCapacity: false)
-                self.tableData = transactionModel.transactions
-                self.tableView.reloadData()
-            } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
-            }
-            
-            
-            self.hud?.hide(true)
-            
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
+            manager.GET(APIAtlas.transactionList, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                let transactionModel: TransactionsModel = TransactionsModel.parseDataWithDictionary(responseObject)
                 
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                println(responseObject)
                 
-                if task.statusCode == 401 {
-                    self.fireRefreshToken()
+                if transactionModel.isSuccessful {
+                    self.tableData += transactionModel.transactions
+                    self.tableView.reloadData()
+                    
+                    self.page++
+                    
+                    if transactionModel.transactions.count == 0 {
+                        self.isRefreshable = false
+                    }
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 }
                 
-                println(error)
-        })
+                
+                self.hud?.hide(true)
+                
+                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                    self.hud?.hide(true)
+                    
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.fireRefreshToken()
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    }
+                    
+                    println(error)
+            })
+        }
     }
     
     func fireRefreshToken() {

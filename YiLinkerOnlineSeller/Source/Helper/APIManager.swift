@@ -42,6 +42,11 @@ struct APIAtlas {
     static let sellerSetDefaultStoreAddress = "auth/address/setDefaultAddress"
     static let sellerDeleteStoreAddress = "auth/address/deleteUserAddress"
     static let transactionList = "auth/getTransactionList"
+    static let transactionDetails = "auth/getTransaction"
+    static let transactionCancellation = "auth/cancellation/reasons"
+    static let transactionConsignee = "auth/getTransactionConsignee"
+    static let postTransactionCancellation = "auth/transaction/cancel"
+    static let shipItem = "auth/transaction/pickup"
     static let sellerChangeMobileNumber = "auth/user/changeContactNumber"
     static let sellerResendVerification = "auth/sms/getCode?access_token="
     static let sellerMobileNumberVerification = "auth/sms/verify"
@@ -75,8 +80,16 @@ struct APIAtlas {
     
     static let getActivityLogs = "auth/user/activityLog"
     
+    static let postEmailNotif = "auth/email/subscription"
+    static let postSMSNotif = "auth/sms/subscription"
+    static let deactivate = "auth/account/disable"
+    
     //Search
     static let transaction = "auth/transaction/searchKeyword?access_token="
+    
+    //Reseller
+    static let resellerUrl = "auth/reseller/products"
+    static let resellerUploadUrl = "auth/reseller/upload"
     
     static let baseUrl = APIEnvironment.baseUrl()
 }

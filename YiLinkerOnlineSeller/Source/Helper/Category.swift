@@ -113,6 +113,30 @@ extension UILabel {
 }
 
 extension UITextView {
+    func addToolBarWithDoneTarget(target: AnyObject, done: Selector) {
+        let toolBar = UIToolbar()
+        toolBar.sizeToFit()
+        toolBar.barStyle = UIBarStyle.Black
+        toolBar.barTintColor = Constants.Colors.appTheme
+        toolBar.tintColor = UIColor.whiteColor()
+        
+        let doneItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: target, action: done)
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: self, action: nil)
+        
+        var toolbarButtons = [flexibleSpace, doneItem]
+        
+        //Put the buttons into the ToolBar and display the tool bar
+        toolBar.setItems(toolbarButtons, animated: false)
+        
+        self.inputAccessoryView = toolBar
+        
+    }
+}
+
+>>>>>>> 76eabc44e091e70159f964193ee86fef7500499c
+
+extension UITextView {
     
     func addToolBarWithTarget(target: AnyObject, next: Selector, previous: Selector, done: Selector) {
         let toolBar = UIToolbar()

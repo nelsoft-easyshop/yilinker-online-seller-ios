@@ -8,23 +8,40 @@
 
 import UIKit
 
-class TransactionProductTableViewController: UITableViewController {
+class TransactionProductTableViewController: UITableViewController, TransactionProductDetailsFooterViewDelegate, TransactionCancelOrderViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate, TransactionCancelReasonOrderViewControllerDelegate, TransactionDeliveryTableViewCellDelegate {
+    
     var purchaseCellIdentifier: String = "TransactionProductPurchaseTableViewCell"
     var productCellIdentifier: String = "TransactionProductDetailsTableViewCell"
     var descriptionCellIdentifier: String = "TransactionProductDescriptionTableViewCell"
+    var deliveryCellIdentifier: String = "TransactionDeliveryTableViewCell"
     
-    var sectionHeader: [String] = ["Purchase Details", "Product Details", "Description"]
-    var productAttributeData: [String] = ["SKU", "Brand", "Weight (kg)", "Height (mm)", "Type of Jack"]
-    var productAttributeValueData: [String] = ["ABCD-123-5678-90122", "Beats Studio Version", "0.26", "203mm", "3.5mm"]
+    var sectionHeader: [String] = ["Purchase Details", "Product Details", "Description", "Delivery Status"]
+    var productAttributeData: [String] = ["SKU", "Color", "Size", "Width", "Length", "Weight (kg)", "Height (mm)"]
+    var productAttributeValueData: [String] = ["", "", "", "", "", "", ""]
     
     var tableHeaderView: TransactionProductDetailsHeaderView!
+    var tableFooterView: TransactionProductDetailsFooterView!
+    
+    var productModel: TransactionOrderProductModel!
+    
+    var dimView: UIView?
+    var hud: MBProgressHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        productAttributeValueData[0] = productModel.sku
+        productAttributeValueData[1] = productModel.color
+        productAttributeValueData[2] = productModel.size
+        productAttributeValueData[3] = productModel.width
+        productAttributeValueData[4] = productModel.length
+        productAttributeValueData[5] = productModel.weight
+        productAttributeValueData[6] = productModel.height
 
         initializeNavigationBar()
         initializeTableView()
         registerNibs()
+        initializeViews()
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,16 +58,27 @@ class TransactionProductTableViewController: UITableViewController {
         
         var descriptionNib = UINib(nibName: descriptionCellIdentifier, bundle: nil)
         tableView.registerNib(descriptionNib, forCellReuseIdentifier: descriptionCellIdentifier)
+        
+        var deliveryNib = UINib(nibName: deliveryCellIdentifier, bundle: nil)
+        tableView.registerNib(deliveryNib, forCellReuseIdentifier: deliveryCellIdentifier)
     }
     
     func initializeTableView() {
         if tableHeaderView == nil {
             tableHeaderView = XibHelper.puffViewWithNibName("TransactionProductDetailsHeaderView", index: 0) as! TransactionProductDetailsHeaderView
             tableHeaderView.frame.size.width = self.view.frame.size.width
+            tableHeaderView.productNameLabel.text = productModel.productName
+            tableHeaderView.productDescriptionLabel.text = productModel.shortDescription
+        }
+        
+        if tableFooterView == nil {
+            tableFooterView = XibHelper.puffViewWithNibName("TransactionProductDetailsFooterView", index: 0) as! TransactionProductDetailsFooterView
+            tableFooterView.delegate = self
+            tableFooterView.frame.size.width = self.view.frame.size.width
         }
         
         self.tableView.tableHeaderView = tableHeaderView
-        self.tableView.tableFooterView = UIView(frame: CGRectZero)
+        self.tableView.tableFooterView = tableFooterView
     }
     
     func initializeNavigationBar() {
@@ -65,6 +93,15 @@ class TransactionProductTableViewController: UITableViewController {
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    func initializeViews(){
+        dimView = UIView(frame: self.view.bounds)
+        dimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        self.navigationController?.view.addSubview(dimView!)
+        //self.view.addSubview(dimView!)
+        dimView?.hidden = true
+        dimView?.alpha = 0
     }
     
     func back() {
@@ -121,6 +158,8 @@ class TransactionProductTableViewController: UITableViewController {
             return 35
         } else if indexPath.section == 2 {    //Consignee
             return 100
+        } else if indexPath.section == 3 {    //Delivery Status
+            return 155
         } else {
             return 0
         }
@@ -131,64 +170,147 @@ class TransactionProductTableViewController: UITableViewController {
         
         if indexPath.section == 0 {
             let cell: TransactionProductPurchaseTableViewCell = tableView.dequeueReusableCellWithIdentifier(purchaseCellIdentifier, forIndexPath: indexPath) as! TransactionProductPurchaseTableViewCell
+            cell.quantityLabel.text = "\(productModel.quantity)"
+            cell.priceLabel.text = productModel.unitPrice
+            cell.totalCostLabel.text = productModel.totalPrice
             return cell
         } else if indexPath.section == 1 {
             let cell: TransactionProductDetailsTableViewCell = tableView.dequeueReusableCellWithIdentifier(productCellIdentifier, forIndexPath: indexPath) as! TransactionProductDetailsTableViewCell
             
             cell.productAttributeLabel.text = productAttributeData[indexPath.row]
-            cell.productDeatilsLabel.text = productAttributeValueData[indexPath.row]
+            if productAttributeValueData[indexPath.row].isEmpty {
+                cell.productDeatilsLabel.text = "-"
+            } else {
+                cell.productDeatilsLabel.text = productAttributeValueData[indexPath.row]
+            }
             
             return cell
-        } else {
+        } else if indexPath.section == 2{
             let cell: TransactionProductDescriptionTableViewCell = tableView.dequeueReusableCellWithIdentifier(descriptionCellIdentifier, forIndexPath: indexPath) as! TransactionProductDescriptionTableViewCell
+            cell.productDescriptionLabel.text = productModel.fullDescription
+            return cell
+        }  else if indexPath.section == 3 {
+            let cell: TransactionDeliveryTableViewCell = tableView.dequeueReusableCellWithIdentifier(deliveryCellIdentifier, forIndexPath: indexPath) as! TransactionDeliveryTableViewCell
+            cell.selectionStyle = .None;
+            cell.delegate = self
+            return cell
+        } else {
+            let cell: TransactionDeliveryTableViewCell = tableView.dequeueReusableCellWithIdentifier(deliveryCellIdentifier, forIndexPath: indexPath) as! TransactionDeliveryTableViewCell
+            cell.selectionStyle = .None;
+            cell.delegate = self
             return cell
         }
     }
     
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
+    
+   // MARK : TransactionProductDetailsFooterViewDelegate
+    func cancelButtonOrderAction() {
+        showDimView()
+        
+        var cancelOrderController = TransactionCancelOrderViewController(nibName: "TransactionCancelOrderViewController", bundle: nil)
+        cancelOrderController.delegate = self
+        cancelOrderController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        cancelOrderController.providesPresentationContextTransitionStyle = true
+        cancelOrderController.definesPresentationContext = true
+        cancelOrderController.view.backgroundColor = UIColor.clearColor()
+        self.tabBarController?.presentViewController(cancelOrderController, animated: true, completion: nil)
     }
-    */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.navigationController?.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
+    
+    func showDimView() {
+        self.dimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 1
+            }, completion: { finished in
+        })
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
+    
+    func hideDimView() {
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 0
+            }, completion: { finished in
+                self.dimView!.hidden = true
+        })
     }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+    
+    // MARK: - TransactionCancelOrderViewControllerDelegate
+    func closeCancelOrderViewController() {
+        hideDimView()
     }
-    */
+    
+    func yesCancelOrderAction() {
+        var reasonController = TransactionCancelReasonOrderViewController(nibName: "TransactionCancelReasonOrderViewController", bundle: nil)
+        reasonController.delegate = self
+        reasonController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        reasonController.providesPresentationContextTransitionStyle = true
+        reasonController.definesPresentationContext = true
+        reasonController.view.backgroundColor = UIColor.clearColor()
+        self.tabBarController?.presentViewController(reasonController, animated: true, completion: nil)
+    }
+    
+    func noCancelOrderAction() {
+        hideDimView()
+    }
+    
+    
+    // MARK: - TransactionCancelOrderSuccessViewControllerDelegate
+    func closeCancelOrderSuccessViewController() {
+        hideDimView()
+    }
+    
+    func returnToDashboardAction() {
+        hideDimView()
+        self.navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
+    // MARK: TransactionCancelReasonOrderViewControllerDelegate
+    func closeTransactionCancelReasonOrderViewController() {
+        hideDimView()
+    }
+    
+    func submitTransactionCancelReason() {
+        var successController = TransactionCancelOrderSuccessViewController(nibName: "TransactionCancelOrderSuccessViewController", bundle: nil)
+        successController.delegate = self
+        successController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        successController.providesPresentationContextTransitionStyle = true
+        successController.definesPresentationContext = true
+        successController.view.backgroundColor = UIColor.clearColor()
+        self.tabBarController?.presentViewController(successController, animated: true, completion: nil)
+    }
+
+    // MARK: - TransactionDeliveryTableViewCellDelegate {
+    func smsPickupRiderAction() {
+        
+    }
+    
+    func callPickupRiderAction() {
+        
+    }
+    
+    func smsDeliveryRiderAction() {
+        
+    }
+    
+    func callDeliveryRiderAction() {
+        
+    }
+    
+    func lastCheckinAction() {
+        var transactionDetailsController = TransactionDeliveryLogTableViewController(nibName: "TransactionDeliveryLogTableViewController", bundle: nil)
+        self.navigationController?.pushViewController(transactionDetailsController, animated:true)
+    }
     
 }
