@@ -9,7 +9,7 @@
 import UIKit
 
 class W_Contact: NSObject {
-
+    
     var fullName  : String
     var userRegistrationIds : String
     var userIdleRegistrationIds : String
@@ -37,7 +37,7 @@ class W_Contact: NSObject {
         self.fullName = ""
         self.userRegistrationIds = ""
         self.userIdleRegistrationIds = ""
-        self.userId = ""
+        self.userId = "0"
         self.profileImageUrl = ""
         self.isOnline = "0"
     }
@@ -57,7 +57,7 @@ class W_Contact: NSObject {
                     var userIdleRegistrationIds : String = ""
                     var userId                  : String = ""
                     var profileImageUrl         : String = ""
-                    var isOnline                : String = "0"
+                    var isOnline                : String = ""
                     
                     if let tempVar = contact["fullName"] as? String {
                         fullName = tempVar
@@ -86,20 +86,12 @@ class W_Contact: NSObject {
                     parsedContacts.append(W_Contact(fullName: fullName, userRegistrationIds: userRegistrationIds, userIdleRegistrationIds: userIdleRegistrationIds, userId: userId, profileImageUrl: profileImageUrl, isOnline: isOnline
                         ))
                 }
-
+                
             }
             
         } // dictionary
         
         return parsedContacts
     } // parse
-    
-    func testData() -> Array<W_Contact>{
-        return [
-            W_Contact(fullName : "Jan Dennis Nora", userRegistrationIds : "", userIdleRegistrationIds : "", userId : "1", profileImageUrl: "http://someurl/api/method", isOnline : "0"),
-            W_Contact(fullName : "Bogs Borja", userRegistrationIds : "", userIdleRegistrationIds : "",userId : "2", profileImageUrl: "http://someurl/api/method", isOnline : "1"),
-            W_Contact(fullName : "John Doe", userRegistrationIds : "", userIdleRegistrationIds : "", userId : "3", profileImageUrl: "http://someurl/api/method", isOnline : "1")
-        ]
-    }
     
 }

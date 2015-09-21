@@ -45,6 +45,7 @@ class ContactListVC: UIViewController, EmptyViewDelegate{
                 isOnline = "0"
             }
             
+            //messageThreadVC.sender = W_Contact(fullName: SessionManager.userFullName(), userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken() , profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
             messageThreadVC.sender = W_Contact(fullName: SessionManager.userFullName(), userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken() , profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
             messageThreadVC.recipient = selectedContact
             

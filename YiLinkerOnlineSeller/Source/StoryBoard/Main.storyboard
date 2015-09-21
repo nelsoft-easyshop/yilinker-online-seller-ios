@@ -919,7 +919,7 @@
                                     <outlet property="delegate" destination="nOb-Vl-TXr" id="7Gh-fd-Ggt"/>
                                 </connections>
                             </tableView>
-                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wyL-yh-FrS">
+                            <view alpha="0.5" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wyL-yh-FrS">
                                 <rect key="frame" x="0.0" y="34" width="375" height="600"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>

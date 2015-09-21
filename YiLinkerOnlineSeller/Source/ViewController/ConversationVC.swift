@@ -44,6 +44,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
             }
             
             println("IMAGE URL \(SessionManager.profileImageStringUrl())")
+            //messageThreadVC.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
             messageThreadVC.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
             messageThreadVC.recipient = selectedContact
         }
@@ -125,6 +126,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
     override func viewWillAppear(animated: Bool) {
         //self.fireLogin()
         self.getConversationsFromEndpoint("1", limit: "10")
+        SessionManager.setUnReadMessagesCount(0)
     }
     
     func addEmptyView() {

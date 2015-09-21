@@ -42,6 +42,83 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
 //        println(SessionManager.accessToken())
         registerNibs()
         initializeViews()
+        setupGCM()
+    }
+    
+    func setupGCM(){
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistration:",
+            name: appDelegate.registrationKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "onNewMessage:",
+            name: appDelegate.messageKey, object: nil)
+        
+    }
+    
+    func onRegistration(notification: NSNotification){
+        if let info = notification.userInfo as? Dictionary<String,String> {
+            if let error = info["error"] {
+                showAlert("Error registering with GCM", message: error)
+            } else if let registrationToken = info["registrationToken"] {
+                let message = "Check the xcode debug console for the registration token for the server to send notifications to your device"
+                self.fireCreateRegistration(registrationToken)
+                println("Registration Successful! \(message)")
+            }
+        }
+    }
+    
+    func showAlert(title:String, message:String) {
+        let alert = UIAlertController(title: title,
+            message: message, preferredStyle: .Alert)
+        let dismissAction = UIAlertAction(title: "Dismiss", style: .Destructive, handler: nil)
+        alert.addAction(dismissAction)
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func onNewMessage(notification : NSNotification){
+        var newCount = SessionManager.getUnReadMessagesCount() + 1
+        SessionManager.setUnReadMessagesCount(newCount)
+    }
+    
+    func fireCreateRegistration(registrationID : String) {
+        
+        self.showHUD()
+        
+        let manager: APIManager = APIManager.sharedInstance
+        //seller@easyshop.ph
+        //password
+        let parameters: NSDictionary = [
+            "registrationId": "\(registrationID)",
+            "access_token"  : SessionManager.accessToken()
+            ]   as Dictionary<String, String>
+        
+        let url = APIAtlas.baseUrl + APIAtlas.ACTION_GCM_CREATE
+        
+        manager.POST(url, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            //SVProgressHUD.dismiss()
+            self.hud?.hide(true)
+            //self.showSuccessMessage()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                
+                println(task.response?.description)
+                
+                println(error.description)
+                if (Reachability.isConnectedToNetwork()) {
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.fireRefreshToken()
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    }
+                }
+                //SVProgressHUD.dismiss()
+                self.hud?.hide(true)
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -242,7 +319,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             resolutionCenter.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(resolutionCenter, animated:true)
         } else if indexPath.row == 10 {
-            
+            let mainStoryBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            var messagingViewController = mainStoryBoard.instantiateViewControllerWithIdentifier("ConversationVC") as? ConversationVC
         } else if indexPath.row == 11 {
             var alert = UIAlertController(title: nil, message: "Are you sure you want to logout?", preferredStyle: .ActionSheet)
             alert.addAction(UIAlertAction(title: "Logout", style: .Destructive, handler: { action in
