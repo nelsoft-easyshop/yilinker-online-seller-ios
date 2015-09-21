@@ -305,6 +305,8 @@
 		794A965B1B9EAAEA002F32A0 /* FollowersModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A965A1B9EAAEA002F32A0 /* FollowersModel.swift */; };
 		795B0D261BA307CB00FC373C /* ActivityLogItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795B0D251BA307CB00FC373C /* ActivityLogItemModel.swift */; };
 		795B0D281BA3093000FC373C /* ActivityLogItemsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795B0D271BA3093000FC373C /* ActivityLogItemsModel.swift */; };
+		7985D35D1BB0259F0060E5F5 /* DeactivateModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7985D35B1BB0259F0060E5F5 /* DeactivateModalViewController.swift */; };
+		7985D35E1BB0259F0060E5F5 /* DeactivateModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7985D35C1BB0259F0060E5F5 /* DeactivateModalViewController.xib */; };
 		799892F31B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */; };
 		799892F51B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */; };
 		799892F71B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */; };
@@ -823,6 +825,8 @@
 		794A965A1B9EAAEA002F32A0 /* FollowersModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowersModel.swift; sourceTree = "<group>"; };
 		795B0D251BA307CB00FC373C /* ActivityLogItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLogItemModel.swift; sourceTree = "<group>"; };
 		795B0D271BA3093000FC373C /* ActivityLogItemsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLogItemsModel.swift; sourceTree = "<group>"; };
+		7985D35B1BB0259F0060E5F5 /* DeactivateModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeactivateModalViewController.swift; sourceTree = "<group>"; };
+		7985D35C1BB0259F0060E5F5 /* DeactivateModalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeactivateModalViewController.xib; sourceTree = "<group>"; };
 		799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardHeaderCollectionViewCell.xib; sourceTree = "<group>"; };
 		799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashBoardHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardItemCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -1367,6 +1371,8 @@
 				F7CB78421B9D822C001AF766 /* FilterCalendarTableViewCell.xib */,
 				F7E739F11BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.swift */,
 				F7E739F21BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.xib */,
+				7985D35B1BB0259F0060E5F5 /* DeactivateModalViewController.swift */,
+				7985D35C1BB0259F0060E5F5 /* DeactivateModalViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2053,6 +2059,7 @@
 				79EF7ABE1B99C3F60082CD35 /* TransactionDetailsTableViewController.xib in Resources */,
 				F7C40FDB1B983CD90091C16C /* truck.png in Resources */,
 				0C65F8F91B8E3EC200504D86 /* ProductUploadDetailFooterTableViewCell.xib in Resources */,
+				7985D35E1BB0259F0060E5F5 /* DeactivateModalViewController.xib in Resources */,
 				2686E37B1B9585D600E8FA80 /* ParentCategoryViewController.xib in Resources */,
 				F7C40FD21B983CD90091C16C /* checkBox.png in Resources */,
 				0C8D7FBA1B8FC79E00B3FA4E /* ProductUploadCombinationFooterTableViewCell.xib in Resources */,
@@ -2131,6 +2138,7 @@
 				0CAB52A51B92023E00EA441A /* CategoryModel.swift in Sources */,
 				F7C40F691B983B120091C16C /* ChangeMobileNumberViewController.swift in Sources */,
 				0CAB52A11B91F42300EA441A /* ConditionModel.swift in Sources */,
+				7985D35D1BB0259F0060E5F5 /* DeactivateModalViewController.swift in Sources */,
 				0C6E7D391BAD67420079EF78 /* ResellerGetProductModel.swift in Sources */,
 				79E633771B9AD2570062DB14 /* TransactionProductDescriptionTableViewCell.swift in Sources */,
 				26B282FC1B929BE300A7C2B1 /* APIManager.swift in Sources */,
