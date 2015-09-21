@@ -288,6 +288,7 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         let footerView: ChangeAddressFooterCollectionViewCell = self.changeBankAccountCollectionView?.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: Constants.Checkout.changeAddressFooterCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressFooterCollectionViewCell
+        footerView.newAddressButton.setTitle("+ NEW ACCOUNT", forState: UIControlState.Normal)
         
         footerView.delegate = self
         

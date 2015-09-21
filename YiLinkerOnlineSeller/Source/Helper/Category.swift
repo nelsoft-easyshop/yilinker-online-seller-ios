@@ -134,8 +134,6 @@ extension UITextView {
     }
 }
 
->>>>>>> 76eabc44e091e70159f964193ee86fef7500499c
-
 extension UITextView {
     
     func addToolBarWithTarget(target: AnyObject, next: Selector, previous: Selector, done: Selector) {

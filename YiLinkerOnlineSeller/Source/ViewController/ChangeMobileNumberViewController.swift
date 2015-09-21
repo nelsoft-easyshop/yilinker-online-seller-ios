@@ -42,9 +42,21 @@ class ChangeMobileNumberViewController: UIViewController {
     }
     
     @IBAction func submit(sender: AnyObject){
-        self.delegate?.setMobileNumber(newNumberTextField.text, oldNumber: oldNumberTextField.text)
-        //self.delegate?.dismissView()
-        self.dismissViewControllerAnimated(true, completion: nil)
+        var newNumber: String = newNumberTextField.text
+        var oldNumber:String = oldNumberTextField.text
+        println(count("\(newNumber)"))
+        if count("\(newNumber)") < 11 || count("\(oldNumber)") < 11 {
+            self.showAlert(title: "Error", message: "Mobile number is invalid/empty. Please follow the format 09XXXXXXXXX.")
+        } else {
+            if newNumberTextField.text == oldNumberTextField.text {
+                self.showAlert(title: "Error", message: "Your new mobile number and old number is the same.")
+            } else {
+                self.delegate?.setMobileNumber(newNumberTextField.text, oldNumber: oldNumberTextField.text)
+                //self.delegate?.dismissView()
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        }
+        
     }
     
     @IBAction func textFieldDidBeginEditing(sender: AnyObject) {
@@ -56,6 +68,13 @@ class ChangeMobileNumberViewController: UIViewController {
              topConstraint.constant = 100
         }
        
+    }
+    
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
     }
     
     /*
