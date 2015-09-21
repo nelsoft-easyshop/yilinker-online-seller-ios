@@ -10,6 +10,7 @@ import UIKit
 
 protocol DisputeTextFieldTableViewCellDelegate {
     func disputeTextFieldTableViewCell(disputeTextFieldTableViewCell: DisputeTextFieldTableViewCell, didStartEditingAtTextField textField: UITextField)
+    func disputeTextFieldTableViewCell(disputeTextFieldTableViewCell: DisputeTextFieldTableViewCell, editingAtTextField textField: UITextField)
 }
 
 class DisputeTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
@@ -22,7 +23,15 @@ class DisputeTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
         super.awakeFromNib()
         self.textField.delegate = self
     }
-
+    
+    func addTracker() {
+        self.textField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+    }
+    
+    func textFieldDidChange(sender: UITextField) {
+        self.delegate?.disputeTextFieldTableViewCell(self, editingAtTextField: self.textField)
+    }
+    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

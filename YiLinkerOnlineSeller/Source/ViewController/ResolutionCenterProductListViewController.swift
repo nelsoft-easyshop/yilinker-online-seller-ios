@@ -8,11 +8,17 @@
 
 import UIKit
 
-class ResolutionCenterProductListViewController: UIViewController {
+protocol ResolutionCenterProductListViewControllereDelegate {
+    func resolutionCenterProductListViewController(resolutionCenterProductListViewController: ResolutionCenterProductListViewController, didSelecteProducts products: [TransactionOrderProductModel])
+}
 
+class ResolutionCenterProductListViewController: UIViewController {
+    
+    var delegate: ResolutionCenterProductListViewControllereDelegate?
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
+    var transactionDetails: TransactionDetailsModel = TransactionDetailsModel()
     
     let cellIdentifier: String = "ResellerItemTableViewCell"
     let cellNibName: String = "ResellerItemTableViewCell"
@@ -24,13 +30,17 @@ class ResolutionCenterProductListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        if self.respondsToSelector("edgesForExtendedLayout") {
+            self.edgesForExtendedLayout = UIRectEdge.None
+        }
+        
         self.registerCell()
         self.title = "Add Item"
         self.backButton()
         self.checkButton()
         self.footerView()
-
+        self.fireGetTransactionItems()
     }
     
     func footerView() {
@@ -95,7 +105,16 @@ class ResolutionCenterProductListViewController: UIViewController {
     }
     
     func check() {
+        var products: [TransactionOrderProductModel] = []
         
+        for product in self.transactionDetails.transactionItems[0].products {
+            if product.transactionOrderItemStatus == TransactionOrderItemStatus.Selected {
+                products.append(product)
+            }
+        }
+        
+        self.delegate!.resolutionCenterProductListViewController(self, didSelecteProducts: products)
+        self.navigationController?.popViewControllerAnimated(true)
     }
 
     func fireGetTransactionItems() {
@@ -112,12 +131,58 @@ class ResolutionCenterProductListViewController: UIViewController {
         manager.GET(APIAtlas.resolutionCenterGetTransactionItems, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)
-            
+            self.transactionDetails = TransactionDetailsModel.parseDataWithDictionary(responseObject as! NSDictionary)
+            self.tableView.reloadData()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 self.hud?.hide(true)
         })
+    }
+    
+    // MARK: - Table view data source
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if self.transactionDetails.transactionItems.count != 0 {
+            return self.transactionDetails.transactionItems[0].products.count
+        } else {
+            return 0
+        }
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return self.cellHeight
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let transactionProductModel: TransactionOrderProductModel =  self.transactionDetails.transactionItems[0].products[indexPath.row]
+        let cell: ResellerItemTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.cellIdentifier) as! ResellerItemTableViewCell
+        cell.cellTitleLabel.text = transactionProductModel.productName
+        cell.cellSellerLabel.text = self.transactionDetails.transactionItems[0].sellerStore
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
+        
+        cell.cellImageView.sd_setImageWithURL(NSURL(string: transactionProductModel.productImage), placeholderImage: UIImage(named: "dummy-placeholder"))
+        
+        if transactionProductModel.transactionOrderItemStatus == TransactionOrderItemStatus.Selected {
+            cell.checkImage()
+        } else {
+            cell.addImage()
+        }
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        let transactionProductModel: TransactionOrderProductModel =  self.transactionDetails.transactionItems[0].products[indexPath.row]
+        if transactionProductModel.transactionOrderItemStatus == TransactionOrderItemStatus.Selected {
+            transactionProductModel.transactionOrderItemStatus = TransactionOrderItemStatus.UnSelected
+        } else {
+            transactionProductModel.transactionOrderItemStatus = TransactionOrderItemStatus.Selected
+        }
+        self.tableView.reloadData()
     }
 
 }

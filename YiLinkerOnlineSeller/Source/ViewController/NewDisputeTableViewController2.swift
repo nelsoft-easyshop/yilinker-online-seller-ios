@@ -8,14 +8,21 @@
 
 import UIKit
 
-class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, DisputeTextFieldTableViewCellDelegate, AddProductHeaderViewDelegate {
+class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, DisputeTextFieldTableViewCellDelegate, AddProductHeaderViewDelegate, ResolutionCenterProductListViewControllereDelegate, SelectedProductTableViewCellDelegate, RemarksTableViewCellDelegate {
     
     let cellTextFieldIdentifier: String = "DisputeTextFieldTableViewCell"
     let cellTextFieldNibName: String = "DisputeTextFieldTableViewCell"
     
-    let textFieldRowHeight: CGFloat = 72
-    var hud: MBProgressHUD?
+    let productCellIdentifier: String = "SelectedProductTableViewCell"
+    let productCellNibName: String = "SelectedProductTableViewCell"
     
+    let remarksCellNibName: String = "RemarksTableViewCell"
+    let remarksIdentifier: String = "RemarksTableViewCell"
+    
+    let textFieldRowHeight: CGFloat = 72
+    let remarksHeight: CGFloat = 194
+    
+    var hud: MBProgressHUD?
     var transactionsModel: TransactionsModel = TransactionsModel()
     var transactionDefaultIndex: Int = 0
     var disputeTypeDefaultIndex: Int = 0
@@ -25,17 +32,63 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     
     var disputePickerType: DisputePickerType = DisputePickerType.TransactionList
     
+    var products: [TransactionOrderProductModel] = []
+    
+    var resolutiontitle: String = ""
+    var remarks: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.fireRegisterCell()
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         self.fireGetTransactions()
+        
+        self.title = "Add Case"
+        self.backButton()
     }
-
+    
+    
+    func backButton() {
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButton.frame = CGRectMake(0, 0, 40, 40)
+        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    func back() {
+        self.navigationController!.popViewControllerAnimated(true)
+    }
+    
+    
+    func checkButton() {
+        var checkButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        checkButton.frame = CGRectMake(0, 0, 45, 45)
+        checkButton.addTarget(self, action: "check", forControlEvents: UIControlEvents.TouchUpInside)
+        checkButton.setImage(UIImage(named: "check"), forState: UIControlState.Normal)
+        var customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: checkButton)
+        
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        
+        self.navigationItem.rightBarButtonItems = [navigationSpacer, customCheckButton]
+    }
+    
     func fireRegisterCell() {
         let textFieldCellNib: UINib = UINib(nibName: self.cellTextFieldNibName, bundle: nil)
         self.tableView.registerNib(textFieldCellNib, forCellReuseIdentifier: self.cellTextFieldIdentifier)
+        
+        let productCellNib: UINib = UINib(nibName: self.productCellNibName, bundle: nil)
+        self.tableView.registerNib(productCellNib, forCellReuseIdentifier: self.productCellIdentifier)
+        
+        let remarksCellNib: UINib = UINib(nibName: self.remarksCellNibName, bundle: nil)
+        self.tableView.registerNib(remarksCellNib, forCellReuseIdentifier: self.remarksIdentifier)
     }
     
     override func didReceiveMemoryWarning() {
@@ -56,31 +109,48 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         // Return the number of rows in the section.
         if section == 0 {
             return 3
+        } else if section == 1 {
+            return self.products.count
         } else {
-            return 0
+            return 1
         }
     }
 
-    
+    //10: refund
+    //16: replacement
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell: DisputeTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.cellTextFieldIdentifier) as! DisputeTextFieldTableViewCell
             if indexPath.row == 0 {
                 cell.titleLabel.text = "Dispute Title."
                 cell.titleLabel.required()
+                cell.textField.text = self.resolutiontitle
+                cell.addTracker()
             } else if indexPath.row == 1 {
                 cell.titleLabel.text = "Transaction No."
+                if self.transactionsModel.transactions.count != 0 {
+                   cell.textField.text = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
+                }
                 cell.titleLabel.required()
             } else if indexPath.row == 2 {
+                cell.textField.text = self.disputeType[self.disputeTypeDefaultIndex]
                 cell.titleLabel.text = "Dispute Type."
                 cell.titleLabel.required()
             }
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell.delegate = self
+            return cell
+        } else if indexPath.section == 1 {
+            let cell: SelectedProductTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.productCellIdentifier) as! SelectedProductTableViewCell
+            cell.productName.text = self.products[indexPath.row].productName
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.delegate = self
             return cell
         } else {
-            let cell: DisputeTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.cellTextFieldIdentifier) as! DisputeTextFieldTableViewCell
-            cell.titleLabel.text = "Dispute Title."
-            
+            let cell: RemarksTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.remarksIdentifier) as! RemarksTableViewCell
+            cell.delegate = self
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell.textView.addToolBarWithDoneTarget(self, done: "done")
             return cell
         }
     }
@@ -93,8 +163,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             headerView.delegate = self
             return headerView
         } else {
-            let headerView: RemarksTableViewCell = XibHelper.puffViewWithNibName("RemarksTableViewCell", index: 0) as! RemarksTableViewCell
-            return headerView
+            return UIView(frame: CGRectZero)
         }
     }
     
@@ -102,15 +171,19 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         var height: CGFloat = 0
         if section == 1 {
             height = 66
-        } else if section == 2 {
-            height = 194
         }
         
         return height
     }
 
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return self.textFieldRowHeight
+        if indexPath.section == 0 {
+            return self.textFieldRowHeight
+        } else if indexPath.section == 1 {
+            return 41
+        } else {
+            return self.remarksHeight
+        }
     }
     
     func fireGetTransactions() {
@@ -128,7 +201,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 if task.statusCode == 401 {
-                    self.fireRefreshToken()
+                    self.fireRefreshToken(DisputeRefreshType.Transaction)
                 }
                 
                 self.hud?.hide(true)
@@ -136,7 +209,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
 
     }
     
-    func fireRefreshToken() {
+    func fireRefreshToken(disputeRefreshType: DisputeRefreshType) {
         self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = [
@@ -149,7 +222,13 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.fireGetTransactions()
+            
+            if disputeRefreshType == DisputeRefreshType.Transaction {
+                self.fireGetTransactions()
+            } else {
+                self.fireAddCase(self.remarks)
+            }
+
             self.hud?.hide(true)
             
             }, failure: {
@@ -187,6 +266,12 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             pickerView.selectRow(self.disputeTypeDefaultIndex, inComponent: 0, animated: false)
         }
         
+        if self.disputePickerType == DisputePickerType.TransactionList {
+            self.currentTextField.text = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
+        } else {
+            self.currentTextField.text = self.disputeType[self.disputeTypeDefaultIndex]
+        }
+        
         textField.inputView = pickerView
         textField.addToolBarWithDoneTarget(self, done: "done")
     }
@@ -196,7 +281,6 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
         if self.disputePickerType == DisputePickerType.TransactionList {
             self.transactionDefaultIndex = row
             self.currentTextField.text = self.transactionsModel.transactions[row].invoice_number
@@ -220,7 +304,6 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
         if self.disputePickerType == DisputePickerType.TransactionList {
-            println(self.transactionsModel.transactions[row].invoice_number)
             return self.transactionsModel.transactions[row].invoice_number
         } else {
             return self.disputeType[row]
@@ -228,14 +311,18 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
 
     }
 
+    func disputeTextFieldTableViewCell(disputeTextFieldTableViewCell: DisputeTextFieldTableViewCell, editingAtTextField textField: UITextField) {
+        self.resolutiontitle = textField.text
+    }
+    
     func disputeTextFieldTableViewCell(disputeTextFieldTableViewCell: DisputeTextFieldTableViewCell, didStartEditingAtTextField textField: UITextField) {
         let indexPath: NSIndexPath = self.tableView.indexPathForCell(disputeTextFieldTableViewCell)!
         
-        if indexPath.row == 1 {
+        if indexPath.row == 1 && indexPath.section == 0 {
             self.currentTextField = disputeTextFieldTableViewCell.textField
             self.disputePickerType = DisputePickerType.TransactionList
             self.addPicker(disputeTextFieldTableViewCell.textField)
-        } else if indexPath.row == 2 {
+        } else if indexPath.row == 2 && indexPath.section == 0 {
             self.currentTextField = disputeTextFieldTableViewCell.textField
             self.disputePickerType = DisputePickerType.DisputeType
             self.addPicker(disputeTextFieldTableViewCell.textField)
@@ -244,6 +331,90 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     
     func addProductHeaderView(addProductHeaderView: AddProductHeaderView, didClickButtonAdd button: UIButton) {
         let resolutionCenterProductListViewController: ResolutionCenterProductListViewController = ResolutionCenterProductListViewController(nibName: "ResolutionCenterProductListViewController", bundle: nil)
+        resolutionCenterProductListViewController.transactionId = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
+        resolutionCenterProductListViewController.delegate = self
         self.navigationController?.pushViewController(resolutionCenterProductListViewController, animated: true)
+    }
+    
+    func resolutionCenterProductListViewController(resolutionCenterProductListViewController: ResolutionCenterProductListViewController, didSelecteProducts products: [TransactionOrderProductModel]) {
+        for (index, product) in enumerate(products) {
+            for p in self.products {
+                if p.productId == product.productId {
+                    self.navigationController?.view.makeToast("Some Item/s has been selected twice.")
+                } else {
+                    self.products.append(product)
+                }
+            }
+            
+            if self.products.count == 0 {
+                self.products.append(product)
+            }
+        }
+        
+        self.tableView.reloadData()
+    }
+    
+    func selectedProductTableViewCell(selectedProductTableViewCell: SelectedProductTableViewCell, didTapDeleteButton button: UIButton) {
+        let indexPath: NSIndexPath = self.tableView.indexPathForCell(selectedProductTableViewCell)!
+        self.products.removeAtIndex(indexPath.row)
+        self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: indexPath.row, inSection: 1)], withRowAnimation: UITableViewRowAnimation.Left)
+    }
+    
+    func remarksTableViewCellDelegate(remarksTableViewCell: RemarksTableViewCell, didTapSubmit button: UIButton) {
+        if self.resolutiontitle == "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Title is required")
+        } else if self.products.count == 0 {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Selecting a product is required")
+        } else {
+            self.fireAddCase(remarksTableViewCell.textView.text)
+        }
+    }
+    
+    func fireAddCase(remarks: String) {
+        self.showHUD()
+        self.remarks = remarks
+        let manager = APIManager.sharedInstance
+        
+        var ids: [String] = []
+        
+        for product in self.products {
+            ids.append(product.productId)
+        }
+        
+        var status: Int = 0
+        
+        if self.disputeType[self.disputeTypeDefaultIndex] == "Refund" {
+            status = 10
+        } else {
+            status = 16
+        }
+        
+        
+        let parameters: NSDictionary = [
+            "access_token": SessionManager.accessToken(),
+            "disputeTitle": self.resolutiontitle,
+            "remarks": remarks,
+            "orderProductStatus": "10",
+            "orderProductIds": ids.description]
+        
+        println(parameters)
+        
+        manager.POST(APIAtlas.resolutionCenterAddCaseUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.hud?.hide(true)
+            self.navigationController?.popViewControllerAnimated(true)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.fireRefreshToken(DisputeRefreshType.AddCase)
+                } else {
+                    self.navigationController?.view.makeToast("Something went wrong.")
+                }
+                
+                self.hud?.hide(true)
+        })
+        
     }
 }

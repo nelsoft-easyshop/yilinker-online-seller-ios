@@ -65,7 +65,13 @@ enum DisputePickerType {
     case DisputeType
 }
 
-enum ResellerItemViewType {
-    case Reseller
-    case ResolutionCenter
+enum TransactionOrderItemStatus {
+    case Selected
+    case UnSelected
+}
+
+enum DisputeRefreshType {
+    case Transaction
+    case AddCase
+    case OrderType
 }

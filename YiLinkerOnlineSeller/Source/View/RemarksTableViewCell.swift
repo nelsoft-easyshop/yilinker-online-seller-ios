@@ -8,11 +8,19 @@
 
 import UIKit
 
+protocol RemarksTableViewCellDelegate {
+    func remarksTableViewCellDelegate(remarksTableViewCell: RemarksTableViewCell, didTapSubmit button: UIButton)
+}
+
 class RemarksTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var submitButton: UIButton!
+    var delegate: RemarksTableViewCellDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.submitButton.layer.cornerRadius = 5
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -21,4 +29,7 @@ class RemarksTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    @IBAction func submit(sender: AnyObject) {
+        self.delegate?.remarksTableViewCellDelegate(self, didTapSubmit: self.submitButton)
+    }
 }
