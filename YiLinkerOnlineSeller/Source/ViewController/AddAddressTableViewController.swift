@@ -44,7 +44,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         self.registerNib()
         self.backButton()
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-       
+        
         var addAddressHeader: NewAddressHeaderTableViewCell = XibHelper.puffViewWithNibName("NewAddressHeaderTableViewCell", index: 0) as! NewAddressHeaderTableViewCell
         self.tableView.tableHeaderView = addAddressHeader
         if self.isEdit2 {
@@ -337,10 +337,10 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 /*let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 if task.statusCode == 401 {
-                    self.requestRefreshToken(AddressRefreshType.Create)
+                self.requestRefreshToken(AddressRefreshType.Create)
                 } else {
-                    self.showAlert(title: "Something went wrong", message: nil)
-                    self.hud?.hide(true)
+                self.showAlert(title: "Something went wrong", message: nil)
+                self.hud?.hide(true)
                 }*/
         })
     }
