@@ -79,8 +79,10 @@ struct APIAtlas {
     static let transaction = "auth/transaction/searchKeyword?access_token="
     
     //Resolution Center
-    static let getResolutionCenterCases = "/api/v1/auth/dispute/get-case"
-    static let getResolutionCenterCaseDetails = "/api/v1/auth/dispute/get-case-detail"
+    static let getResolutionCenterCases = "auth/dispute/get-case"
+    static let getResolutionCenterCaseDetails = "auth/dispute/get-case-detail"
+    static let resolutionCenterProductListUrl = "auth/getTransactionList"
+    static let resolutionCenterGetTransactionItems = "auth/getTransaction"
 
     //Reseller
     static let resellerUrl = "auth/reseller/products"

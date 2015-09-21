@@ -283,6 +283,7 @@ class ResolutionCenterViewController
             if task.statusCode == 401 {
                 self.fireRefreshToken()
             } else {
+                println(error.userInfo)
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error Refreshing Token", title: "Refresh Token Error")
             }
             

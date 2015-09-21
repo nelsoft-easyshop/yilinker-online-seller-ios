@@ -15,6 +15,8 @@
 		0C51C2F21BB00A7900F4D2D6 /* AddProductHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C51C2F11BB00A7900F4D2D6 /* AddProductHeaderView.xib */; };
 		0C51C2F51BB0138C00F4D2D6 /* RemarksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C51C2F31BB0138C00F4D2D6 /* RemarksTableViewCell.swift */; };
 		0C51C2F61BB0138C00F4D2D6 /* RemarksTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C51C2F41BB0138C00F4D2D6 /* RemarksTableViewCell.xib */; };
+		0C51C2FD1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C51C2FB1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.swift */; };
+		0C51C2FE1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C51C2FC1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.xib */; };
 		0C5E9D8E1B91E2E200F32CFE /* ProductUploadFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5E9D8D1B91E2E200F32CFE /* ProductUploadFooterView.swift */; };
 		0C5E9D901B91E2F700F32CFE /* ProductUploadFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C5E9D8F1B91E2F700F32CFE /* ProductUploadFooterView.xib */; };
 		0C65F8A51B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C65F8A31B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.xib */; };
@@ -537,6 +539,8 @@
 		0C51C2F11BB00A7900F4D2D6 /* AddProductHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddProductHeaderView.xib; sourceTree = "<group>"; };
 		0C51C2F31BB0138C00F4D2D6 /* RemarksTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemarksTableViewCell.swift; sourceTree = "<group>"; };
 		0C51C2F41BB0138C00F4D2D6 /* RemarksTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemarksTableViewCell.xib; sourceTree = "<group>"; };
+		0C51C2FB1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionCenterProductListViewController.swift; sourceTree = "<group>"; };
+		0C51C2FC1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResolutionCenterProductListViewController.xib; sourceTree = "<group>"; };
 		0C5E9D8D1B91E2E200F32CFE /* ProductUploadFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadFooterView.swift; sourceTree = "<group>"; };
 		0C5E9D8F1B91E2F700F32CFE /* ProductUploadFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadFooterView.xib; path = ../View/ProductUploadFooterView.xib; sourceTree = "<group>"; };
 		0C65F8A21B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadTextFieldTableViewCell.swift; sourceTree = "<group>"; };
@@ -1397,6 +1401,8 @@
 				F7E739F21BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.xib */,
 				0C942BB51BAFF8700049A6B0 /* NewDisputeTableViewController2.swift */,
 				0C942BB61BAFF8700049A6B0 /* NewDisputeTableViewController2.xib */,
+				0C51C2FB1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.swift */,
+				0C51C2FC1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2086,6 +2092,7 @@
 				F7C40FAB1B983C190091C16C /* CongratulationsViewController.xib in Resources */,
 				79EF7ABE1B99C3F60082CD35 /* TransactionDetailsTableViewController.xib in Resources */,
 				F7C40FDB1B983CD90091C16C /* truck.png in Resources */,
+				0C51C2FE1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.xib in Resources */,
 				0C65F8F91B8E3EC200504D86 /* ProductUploadDetailFooterTableViewCell.xib in Resources */,
 				2686E37B1B9585D600E8FA80 /* ParentCategoryViewController.xib in Resources */,
 				F7C40FD21B983CD90091C16C /* checkBox.png in Resources */,
@@ -2158,6 +2165,7 @@
 				0C8D7F901B8F0A6400B3FA4E /* AttributeModel.swift in Sources */,
 				0C65F8AE1B8DBC3400504D86 /* ProductUploadTextViewTableViewCell.swift in Sources */,
 				795B0D281BA3093000FC373C /* ActivityLogItemsModel.swift in Sources */,
+				0C51C2FD1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.swift in Sources */,
 				0C51C2F01BB00A6800F4D2D6 /* AddProductHeaderView.swift in Sources */,
 				0C8D7FBD1B8FCC5800B3FA4E /* ProductUploadCombinationHeaderTableViewCell.swift in Sources */,
 				F7C40F6D1B983B210091C16C /* CreateNewAddressViewController.swift in Sources */,

@@ -8,21 +8,29 @@
 
 import UIKit
 
-class DisputeTextFieldTableViewCell: UITableViewCell {
+protocol DisputeTextFieldTableViewCellDelegate {
+    func disputeTextFieldTableViewCell(disputeTextFieldTableViewCell: DisputeTextFieldTableViewCell, didStartEditingAtTextField textField: UITextField)
+}
+
+class DisputeTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
     
-    
+    var delegate: DisputeTextFieldTableViewCellDelegate?
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.textField.delegate = self
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        self.delegate?.disputeTextFieldTableViewCell(self, didStartEditingAtTextField: self.textField)
     }
     
 }

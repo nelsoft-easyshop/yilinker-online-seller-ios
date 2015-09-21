@@ -59,3 +59,13 @@ enum ResellerItemStatus {
     case Selected
     case Unselected
 }
+
+enum DisputePickerType {
+    case TransactionList
+    case DisputeType
+}
+
+enum ResellerItemViewType {
+    case Reseller
+    case ResolutionCenter
+}
