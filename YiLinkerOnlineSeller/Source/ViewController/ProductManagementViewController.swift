@@ -18,7 +18,6 @@ struct Status {
 
 class ProductManagementViewController: UIViewController, ProductManagementModelViewControllerDelegate {
     
-
     @IBOutlet weak var searchBarContainerView: UIView!
     @IBOutlet weak var searchBarTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
@@ -242,7 +241,6 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 44, 0)
             self.loaderContainerView.transform = CGAffineTransformMakeTranslation(0.0, 44.0)
         } else {
-            self.searchBarTextField.text = ""
             self.searchBarTextField.endEditing(true)
             self.searchBarContainerView.hidden = true
             self.collectionView.transform = CGAffineTransformMakeTranslation(0.0, 0.0)
@@ -271,9 +269,11 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 action = Status.deleted
             }
             
-            showModal(title: "You're about to " + sender.titleLabel!!.text!.lowercaseString + " active products.",
+            if sender.titleLabel!.text != nil {
+                showModal(title: "You're about to " + sender.titleLabel!!.text!.lowercaseString + " active products.",
                     message: "Are you sure you want to " + sender.titleLabel!!.text!.lowercaseString + " products?",
-                     status: action)
+                    status: action)
+            }
         }
     }
     
@@ -425,6 +425,12 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             
             if selectedIndex == 4 {
                 cell.decreaseAlpha()
+            }
+                
+            if selectedIndex == 5 {
+                cell.checkTapView.hidden = true
+            } else {
+                cell.checkTapView.hidden = false
             }
             
             return cell

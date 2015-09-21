@@ -48,6 +48,7 @@ PODS:
   - SDWebImage (3.7.3):
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
+  - Toast (2.4)
   - UzysAssetsPickerController (0.9.9)
 
 DEPENDENCIES:
@@ -55,6 +56,7 @@ DEPENDENCIES:
   - Google/CloudMessaging
   - MBProgressHUD
   - SDWebImage
+  - Toast
   - UzysAssetsPickerController
 
 SPEC CHECKSUMS:
@@ -68,6 +70,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: e3475cd4d45134221d2f3f3626095a1c49b62041
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
+  Toast: 0773b8fc0e97352ca6054517bec7ebdd4110029d
   UzysAssetsPickerController: 47c27bd96955467925f3d4d80b1e2e8aaeff766d
 
 COCOAPODS: 0.38.2

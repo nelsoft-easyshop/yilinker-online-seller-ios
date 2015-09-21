@@ -24,10 +24,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     
     var hud: MBProgressHUD?
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
-    }
+    var ctr: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,7 +108,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     
                     if task.statusCode == 401 {
-                        self.fireRefreshToken()
+                        self.fireRefreshToken(true)
                     } else {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                     }
@@ -119,6 +116,35 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                 //SVProgressHUD.dismiss()
                 self.hud?.hide(true)
         })
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+        
+        if SessionManager.isLoggedIn() {
+            self.loginBlockerView.hidden = true
+        } else {
+            self.loginBlockerView.hidden = false
+        }
+        
+        
+        if NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
+            if ctr == 0{
+                fireStoreInfo(true)
+            } else {
+                fireStoreInfo(false)
+            }
+        } else {
+            if ctr == 1{
+                fireStoreInfo(true)
+            } else {
+                fireStoreInfo(false)
+            }
+        }
+        
+        
+        ctr++
     }
 
     override func didReceiveMemoryWarning() {
@@ -134,18 +160,6 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBarHidden = true
-
-        if SessionManager.isLoggedIn() {
-            self.loginBlockerView.hidden = true
-        } else {
-            self.loginBlockerView.hidden = false
-        }
-        
-        if NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
-            if storeInfo == nil {
-                fireStoreInfo()
-            }
-        }
 
         self.tabBarController?.tabBar.hidden = false
     }
@@ -299,10 +313,17 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             var customizedCategory = CustomizedCategoryViewController(nibName: "CustomizedCategoryViewController", bundle: nil)
             self.navigationController?.pushViewController(customizedCategory, animated:true)
         } else if indexPath.row == 5 {
-            let productUploadTableViewController: ProductUploadTableViewController = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
-            let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadTableViewController)
-            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-            self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
+            if SessionManager.isSeller() {
+                let productUploadTableViewController: ProductUploadTableViewController = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
+                let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadTableViewController)
+                navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+                self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
+            } else {
+                let resellerViewController: ResellerViewController = ResellerViewController(nibName: "ResellerViewController", bundle: nil)
+                let navigationController: UINavigationController = UINavigationController(rootViewController: resellerViewController)
+                navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+                self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
+            }
         } else if indexPath.row == 6 {
             var followerController = FollowersViewController(nibName: "FollowersViewController", bundle: nil)
             self.navigationController?.pushViewController(followerController, animated:true)
@@ -341,8 +362,11 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         }
     }
     
-    func fireStoreInfo(){
-        self.showHUD()
+    func fireStoreInfo(showHUD: Bool){
+        if showHUD {
+            self.showHUD()
+        }
+        
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
         
@@ -352,6 +376,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             
             SessionManager.setFullAddress(self.storeInfo.store_address)
             SessionManager.setUserFullName(self.storeInfo.name)
+
             
             NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.store_name, forKey: "storeName")
             NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.store_address, forKey: "storeAddress")
@@ -370,7 +395,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
                 if task.statusCode == 401 {
-                    self.fireRefreshToken()
+                    self.fireRefreshToken(showHUD)
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                     self.storeInfo = StoreInfoModel(name: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", account_number: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "")
@@ -391,7 +416,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         })
     }
     
-    func fireRefreshToken() {
+    func fireRefreshToken(showHud: Bool) {
         self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = [
@@ -404,7 +429,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.fireStoreInfo()
+            self.fireStoreInfo(showHud)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ResellerItemViewController: UIViewController {
+class ResellerItemViewController: UIViewController, UIScrollViewDelegate, UISearchBarDelegate {
     
     let cellIdentifier: String = "ResellerItemTableViewCell"
     let cellNibName: String = "ResellerItemTableViewCell"
@@ -16,11 +16,16 @@ class ResellerItemViewController: UIViewController {
     
     var items: [ResellerItemModel] = []
     var hud: MBProgressHUD?
+    var page: Int = 1
+    
+    var resellerGetProductModel: ResellerGetProductModel = ResellerGetProductModel()
+    
+    @IBOutlet weak var searchBar: UISearchBar!
     
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.searchBar.delegate = self
         if self.respondsToSelector("edgesForExtendedLayout") {
             self.edgesForExtendedLayout = UIRectEdge.None
         }
@@ -29,12 +34,13 @@ class ResellerItemViewController: UIViewController {
         self.title = "Add Item"
         self.backButton()
         self.checkButton()
-        for var x = 0; x < 10; x++ {
-            let resellerItemModel: ResellerItemModel = ResellerItemModel()
-            resellerItemModel.name = "Picolo HeadPhones"
-            resellerItemModel.brand = BrandModel(name: "DBZ Electronics", brandId: 1)
-            self.items.append(resellerItemModel)
-        }
+        self.footerView()
+        self.fireGetProductList()
+    }
+    
+    func footerView() {
+        let footerView: UIView = UIView(frame: CGRectZero)
+        self.tableView.tableFooterView = footerView
     }
     
     //Show HUD
@@ -88,7 +94,32 @@ class ResellerItemViewController: UIViewController {
     }
     
     func check() {
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        
+        var productIds: [Int] = []
+        
+        for item in self.resellerGetProductModel.resellerItems {
+            if item.status == ResellerItemStatus.Selected {
+                productIds.append(item.uid)
+            }
+        }
+        
+        let parameters: NSDictionary = [
+            "access_token": SessionManager.accessToken(),
+            "productIds[]": productIds]
+        
+        manager.POST(APIAtlas.resellerUploadUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                let message: String = responseObject["message"] as! String
+                self.navigationController?.view.makeToast(message)
+                self.hud?.hide(true)
+                self.navigationController?.popToRootViewControllerAnimated(true)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -103,15 +134,17 @@ class ResellerItemViewController: UIViewController {
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.items.count
+        return self.resellerGetProductModel.resellerItems.count
     }
 
 
      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let resellerItemModel: ResellerItemModel = self.items[indexPath.row]
+        let resellerItemModel: ResellerItemModel = self.resellerGetProductModel.resellerItems[indexPath.row]
         let cell: ResellerItemTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.cellIdentifier) as! ResellerItemTableViewCell
-        cell.cellTitleLabel.text = resellerItemModel.name
-        cell.cellSellerLabel.text = resellerItemModel.brand.name
+        cell.cellTitleLabel.text = resellerItemModel.productName
+        cell.cellSellerLabel.text = resellerItemModel.manufacturer
+        println(resellerItemModel.imageUrl)
+        cell.cellImageView.sd_setImageWithURL(NSURL(string: resellerItemModel.imageUrl), placeholderImage: UIImage(named: "dummy-placeholder"))
         
         if resellerItemModel.status == ResellerItemStatus.Selected {
             cell.checkImage()
@@ -128,12 +161,127 @@ class ResellerItemViewController: UIViewController {
     
      func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let resellerItemModel: ResellerItemModel = self.items[indexPath.row]
+        let resellerItemModel: ResellerItemModel = self.resellerGetProductModel.resellerItems[indexPath.row]
         if resellerItemModel.status == ResellerItemStatus.Selected {
             resellerItemModel.status = ResellerItemStatus.Unselected
         } else {
             resellerItemModel.status = ResellerItemStatus.Selected
         }
         self.tableView.reloadData()
+    }
+    
+    func fireGetProductList() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "access_token": SessionManager.accessToken(),
+            "categoryId": 1,
+            "page": self.page]
+        
+        manager.GET(APIAtlas.resellerUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            if self.page == 1 {
+                self.resellerGetProductModel = ResellerGetProductModel.parseDataFromDictionary(responseObject as! NSDictionary)
+            } else {
+                let resellerAppendGetProductModel: ResellerGetProductModel = ResellerGetProductModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                
+                for item in resellerAppendGetProductModel.resellerItems {
+                    self.resellerGetProductModel.resellerItems.append(item)
+                }
+            }
+            self.page++
+            self.tableView.reloadData()
+            self.hud?.hide(true)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.fireRefreshToken()
+                }
+                
+                self.hud?.hide(true)
+        })
+    }
+    
+    func fireGetProductListWithQuery(query: String) {
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "access_token": SessionManager.accessToken(),
+            "categoryId": 1,
+            "page": 1,
+            "query": query]
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        manager.operationQueue.cancelAllOperations()
+        manager.GET(APIAtlas.resellerUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            if self.page == 1 {
+                self.resellerGetProductModel = ResellerGetProductModel.parseDataFromDictionary(responseObject as! NSDictionary)
+            } else {
+                let resellerAppendGetProductModel: ResellerGetProductModel = ResellerGetProductModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                self.resellerGetProductModel.resellerItems.removeAll(keepCapacity: true)
+                for item in resellerAppendGetProductModel.resellerItems {
+                    self.resellerGetProductModel.resellerItems.append(item)
+                }
+            }
+            
+            self.tableView.reloadData()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.fireRefreshToken()
+                }
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        })
+    }
+    
+    func fireRefreshToken() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.fireGetProductList()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+        })
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let offset: CGPoint = scrollView.contentOffset
+        let bounds: CGRect = scrollView.bounds
+        
+        let size: CGSize = scrollView.contentSize
+        let inset: UIEdgeInsets = scrollView.contentInset;
+        let y: CGFloat = offset.y + bounds.size.height - inset.bottom
+        let h: CGFloat = size.height
+  
+    
+        let reload_distance: CGFloat = 10
+        
+        if(y > h + reload_distance) {
+            self.fireGetProductList()
+        }
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        self.fireGetProductListWithQuery(searchText)
+        
+        if searchText == "" {
+            self.page = 1
+            self.fireGetProductList()
+        }
     }
 }

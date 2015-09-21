@@ -102,6 +102,37 @@ extension UITextField {
     
 }
 
+extension UILabel {
+    func required() {
+        self.text = "\(self.text!)*"
+        var myMutableString = NSMutableAttributedString(string: self.text!)
+        let stringCount: Int = count(self.text!)
+        myMutableString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSRange(location: stringCount - 1,length:1))
+        self.attributedText = myMutableString
+    }
+}
+
+extension UITextView {
+    func addToolBarWithDoneTarget(target: AnyObject, done: Selector) {
+        let toolBar = UIToolbar()
+        toolBar.sizeToFit()
+        toolBar.barStyle = UIBarStyle.Black
+        toolBar.barTintColor = Constants.Colors.appTheme
+        toolBar.tintColor = UIColor.whiteColor()
+        
+        let doneItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: target, action: done)
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: self, action: nil)
+        
+        var toolbarButtons = [flexibleSpace, doneItem]
+        
+        //Put the buttons into the ToolBar and display the tool bar
+        toolBar.setItems(toolbarButtons, animated: false)
+        
+        self.inputAccessoryView = toolBar
+        
+    }
+}
 
 extension UITextView {
     
@@ -210,12 +241,9 @@ extension NSDate {
         return dateWithDaysAdded
     }
     
-    
     func addHours(hoursToAdd : Int) -> NSDate {
         var secondsInHours : NSTimeInterval = Double(hoursToAdd) * 60 * 60
         var dateWithHoursAdded : NSDate = self.dateByAddingTimeInterval(secondsInHours)
         return dateWithHoursAdded
     }
 }
-
-
