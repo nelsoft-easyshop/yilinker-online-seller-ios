@@ -37,13 +37,17 @@ class NewDisputeTableViewController2: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return 2
+        return 3
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 2
+        if section == 0 {
+            return 3
+        } else {
+            return 0
+        }
     }
 
     
@@ -56,6 +60,9 @@ class NewDisputeTableViewController2: UITableViewController {
             } else if indexPath.row == 1 {
                 cell.titleLabel.text = "Transaction No."
                 cell.titleLabel.required()
+            } else if indexPath.row == 2 {
+                cell.titleLabel.text = "Dispute Type."
+                cell.titleLabel.required()
             }
             
             return cell
@@ -65,6 +72,29 @@ class NewDisputeTableViewController2: UITableViewController {
             
             return cell
         }
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0 {
+            return UIView(frame: CGRectZero)
+        } else if section == 1 {
+            let headerView: AddProductHeaderView = XibHelper.puffViewWithNibName("AddProductHeaderView", index: 0) as! AddProductHeaderView
+            return headerView
+        } else {
+            let headerView: RemarksTableViewCell = XibHelper.puffViewWithNibName("RemarksTableViewCell", index: 0) as! RemarksTableViewCell
+            return headerView
+        }
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        var height: CGFloat = 0
+        if section == 1 {
+            height = 66
+        } else if section == 2 {
+            height = 194
+        }
+        
+        return height
     }
 
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
