@@ -78,7 +78,8 @@ class VerifyNumberViewController: UIViewController {
     @IBAction func verifyContinueRequest(sender: AnyObject){
         println("fire verify")
         if !self.verificationCodeTextField.text.isEmpty {
-            if self.verificationCodeTextField.text.toInt() < 6 || self.verificationCodeTextField.text.toInt() > 6 {
+            println(self.verificationCodeTextField.text.toInt())
+            if count(self.verificationCodeTextField.text) < 6 || count(self.verificationCodeTextField.text) > 6 {
                 self.showAlert("Error", message: "You have entered an invalid verification code.")
             } else {
                 self.fireVerify(self.verificationCodeTextField.text!)
@@ -115,7 +116,7 @@ class VerifyNumberViewController: UIViewController {
             self.showHUD()
             let manager = APIManager.sharedInstance
             let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "code" : NSNumber(integer: verificationCode.toInt()!)];
-    
+            
             manager.POST(APIAtlas.sellerMobileNumberVerification, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 if responseObject["isSuccessful"] as! Bool {
@@ -124,13 +125,14 @@ class VerifyNumberViewController: UIViewController {
                     //self.delegate?.dismissView()
                     self.delegate?.congratulationsViewController(true)
                 } else {
+                    println("\(responseObject)")
                     self.showAlert("Error", message: "Something went wrong.")
                 }
-                        
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.dismissViewControllerAnimated(true, completion: nil)
                 self.hud?.hide(true)
                 //self.delegate?.dismissView()
+                println(error.userInfo)
                 self.delegate?.congratulationsViewController(false)
                 self.showAlert("Error", message: "Something went wrong.")
                 println(error)
