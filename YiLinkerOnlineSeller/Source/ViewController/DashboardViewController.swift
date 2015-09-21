@@ -319,8 +319,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             resolutionCenter.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(resolutionCenter, animated:true)
         } else if indexPath.row == 10 {
-            let mainStoryBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            var messagingViewController = mainStoryBoard.instantiateViewControllerWithIdentifier("ConversationVC") as? ConversationVC
+            
         } else if indexPath.row == 11 {
             var alert = UIAlertController(title: nil, message: "Are you sure you want to logout?", preferredStyle: .ActionSheet)
             alert.addAction(UIAlertAction(title: "Logout", style: .Destructive, handler: { action in

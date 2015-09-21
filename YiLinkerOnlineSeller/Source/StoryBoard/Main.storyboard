@@ -112,26 +112,6 @@
             </objects>
             <point key="canvasLocation" x="4245.6000000000004" y="2567.8333333333335"/>
         </scene>
-        <!--Message View Controller-->
-        <scene sceneID="kgL-JC-khp">
-            <objects>
-                <viewController id="sqm-ZX-nWN" customClass="MessageViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="LVv-B0-Uwc"/>
-                        <viewControllerLayoutGuide type="bottom" id="jCa-8o-Oju"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="AKz-kT-HRY">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.21960784310000001" green="0.32156862749999998" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="OsM-dQ-1b1"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="x6U-tr-OjG" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5001.333333333333" y="2582.98"/>
-        </scene>
         <!--Settings View Controller-->
         <scene sceneID="mjd-HP-rnW">
             <objects>
@@ -246,7 +226,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="sqm-ZX-nWN" kind="relationship" relationship="rootViewController" id="0Wc-Se-1zH"/>
+                        <segue destination="zuD-Wi-iVO" kind="relationship" relationship="rootViewController" id="wNB-e3-Z8u"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YCJ-gO-BTr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1064,22 +1044,6 @@
             </objects>
             <point key="canvasLocation" x="7176.5" y="2669.5"/>
         </scene>
-        <!--Dummy Navigation Controller-->
-        <scene sceneID="eOr-tV-19r">
-            <objects>
-                <navigationController storyboardIdentifier="DummyNavigationController" id="QNq-cO-1WF" customClass="DummyNavigationController" customModule="YiLinkerOnlineBuyer" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="WAm-jo-Xi3">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="zuD-Wi-iVO" kind="relationship" relationship="rootViewController" id="GU5-tJ-F34"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qLk-qs-NQM" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4780" y="3481"/>
-        </scene>
         <!--Message-->
         <scene sceneID="TIG-sW-NPB">
             <objects>
@@ -1093,7 +1057,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="A9z-yb-gOk">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageCell" rowHeight="80" id="oaG-jN-rxI" customClass="ConversationTVC" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
@@ -1187,7 +1151,6 @@
                             <constraint firstAttribute="centerX" secondItem="A9z-yb-gOk" secondAttribute="centerX" id="Cie-ma-tor"/>
                             <constraint firstItem="yg7-xh-L6b" firstAttribute="top" secondItem="A9z-yb-gOk" secondAttribute="bottom" id="GcF-kg-xNk"/>
                             <constraint firstItem="A9z-yb-gOk" firstAttribute="top" secondItem="FXL-sz-NIS" secondAttribute="bottom" constant="-64" id="ZfP-bD-Qrd"/>
-                            <constraint firstAttribute="centerY" secondItem="A9z-yb-gOk" secondAttribute="centerY" id="dtL-sL-3zZ"/>
                             <constraint firstItem="yg7-xh-L6b" firstAttribute="top" secondItem="A9z-yb-gOk" secondAttribute="bottom" id="jty-pk-ouC"/>
                             <constraint firstAttribute="trailing" secondItem="A9z-yb-gOk" secondAttribute="trailing" id="mIx-Fl-SHQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="A9z-yb-gOk" secondAttribute="trailing" constant="-16" id="s3N-BJ-NO6"/>
@@ -1689,7 +1652,7 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lcu-6X-Jzu">
-                                <rect key="frame" x="0.0" y="518" width="320" height="50"/>
+                                <rect key="frame" x="0.0" y="469" width="320" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T27-ey-FVA">
                                         <rect key="frame" x="220" y="0.0" width="100" height="50"/>
@@ -1909,7 +1872,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="WNc-Qe-7Ri">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="contactCell" id="Cp4-Rf-JB7" customClass="ContactListTVC" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
@@ -1996,7 +1959,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="WNc-Qe-7Ri" firstAttribute="leading" secondItem="WWp-eL-X2r" secondAttribute="leading" id="2FN-cQ-gHe"/>
-                            <constraint firstAttribute="centerY" secondItem="WNc-Qe-7Ri" secondAttribute="centerY" id="MG4-Sv-2rg"/>
                             <constraint firstAttribute="centerX" secondItem="WNc-Qe-7Ri" secondAttribute="centerX" id="iDA-rQ-j95"/>
                             <constraint firstAttribute="trailing" secondItem="WNc-Qe-7Ri" secondAttribute="trailing" id="lRH-Zt-Yps"/>
                             <constraint firstItem="WNc-Qe-7Ri" firstAttribute="top" secondItem="WWp-eL-X2r" secondAttribute="top" id="q4N-lR-rau"/>
@@ -2025,7 +1987,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="5292" y="4141"/>
+            <point key="canvasLocation" x="5300" y="4175"/>
         </scene>
     </scenes>
     <resources>
