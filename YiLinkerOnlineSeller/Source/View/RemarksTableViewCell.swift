@@ -14,6 +14,7 @@ protocol RemarksTableViewCellDelegate {
 
 class RemarksTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var remarksLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var submitButton: UIButton!
     var delegate: RemarksTableViewCellDelegate?

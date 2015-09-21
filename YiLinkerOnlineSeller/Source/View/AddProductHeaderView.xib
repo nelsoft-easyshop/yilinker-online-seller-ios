@@ -54,7 +54,7 @@
                                 <constraint firstAttribute="height" constant="12" id="Ys8-pp-mqu"/>
                             </constraints>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <state key="normal" image="addItem">
+                            <state key="normal" image="add">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
@@ -85,6 +85,6 @@
         </view>
     </objects>
     <resources>
-        <image name="addItem" width="200" height="200"/>
+        <image name="add" width="195" height="195"/>
     </resources>
 </document>

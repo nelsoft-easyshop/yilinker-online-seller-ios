@@ -149,6 +149,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         } else {
             let cell: RemarksTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.remarksIdentifier) as! RemarksTableViewCell
             cell.delegate = self
+            cell.remarksLabel.required()
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.textView.addToolBarWithDoneTarget(self, done: "done")
             return cell
@@ -362,9 +363,11 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     
     func remarksTableViewCellDelegate(remarksTableViewCell: RemarksTableViewCell, didTapSubmit button: UIButton) {
         if self.resolutiontitle == "" {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Title is required")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Title is required.")
         } else if self.products.count == 0 {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Selecting a product is required")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Selecting a product is required.")
+        } else if remarksTableViewCell.textView.text == "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Remarks is required.")
         } else {
             self.fireAddCase(remarksTableViewCell.textView.text)
         }

@@ -68,6 +68,7 @@
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
+                <outlet property="remarksLabel" destination="zaK-Ti-Z1e" id="M3l-TA-kWF"/>
                 <outlet property="submitButton" destination="naS-9W-5ZF" id="Ezi-HV-d0g"/>
                 <outlet property="textView" destination="JhO-NG-FXP" id="E9C-Kj-hDc"/>
             </connections>
