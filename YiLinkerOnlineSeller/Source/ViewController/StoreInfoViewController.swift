@@ -42,6 +42,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
        
+        self.title = "Store Info"
         self.edgesForExtendedLayout = .None
         dimView = UIView(frame: UIScreen.mainScreen().bounds)
         dimView.backgroundColor=UIColor.blackColor()
