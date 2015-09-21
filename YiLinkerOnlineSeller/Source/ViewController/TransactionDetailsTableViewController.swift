@@ -8,14 +8,13 @@
 
 import UIKit
 
-class TransactionDetailsTableViewController: UITableViewController, TransactionDetailsFooterViewDelegate, TransactionConsigneeTableViewCellDelegate, TransactionCancelOrderViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate, TransactionCancelReasonOrderViewControllerDelegate, TransactionDeliveryTableViewCellDelegate {
+class TransactionDetailsTableViewController: UITableViewController, TransactionDetailsFooterViewDelegate, TransactionConsigneeTableViewCellDelegate, TransactionCancelOrderViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate, TransactionCancelReasonOrderViewControllerDelegate {
     
     var detailsCellIdentifier: String = "TransactionDetailsTableViewCell"
     var productsCellIdentifier: String = "TransactionProductTableViewCell"
     var consigneeCellIdentifier: String = "TransactionConsigneeTableViewCell"
-    var deliveryCellIdentifier: String = "TransactionDeliveryTableViewCell"
     
-    var sectionHeader: [String] = ["DETAILS", "PRODUCT LIST", "CONSIGNEE", "DELIVERY STATUS"]
+    var sectionHeader: [String] = ["DETAILS", "PRODUCT LIST", "CONSIGNEE"]
     var productList: [String] = ["North Face Super Uber Travel Bag", "Beats Studio Type 20 Headphones", "Sony Super Bass"]
     
     var tableHeaderView: UIView!
@@ -67,9 +66,6 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         
         var consigneeNib = UINib(nibName: consigneeCellIdentifier, bundle: nil)
         tableView.registerNib(consigneeNib, forCellReuseIdentifier: consigneeCellIdentifier)
-        
-        var deliveryNib = UINib(nibName: deliveryCellIdentifier, bundle: nil)
-        tableView.registerNib(deliveryNib, forCellReuseIdentifier: deliveryCellIdentifier)
     }
     
     func initializeTableView() {
@@ -138,7 +134,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {           //Details
             return 1
-        } else if section == 1 {    //Product Lis
+        } else if section == 1 {    //Product List
             if transactionDetailsModel.transactionItems.count != 0 {
                 return transactionDetailsModel.transactionItems[0].products.count
             } else {
@@ -186,11 +182,6 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             
             cell.delegate = self
             return cell
-        }  else if indexPath.section == 3 {
-            let cell: TransactionDeliveryTableViewCell = tableView.dequeueReusableCellWithIdentifier(deliveryCellIdentifier, forIndexPath: indexPath) as! TransactionDeliveryTableViewCell
-            cell.selectionStyle = .None;
-            cell.delegate = self
-            return cell
         } else {
             let cell: TransactionDetailsTableViewCell = tableView.dequeueReusableCellWithIdentifier(detailsCellIdentifier, forIndexPath: indexPath) as! TransactionDetailsTableViewCell
             cell.selectionStyle = .None;
@@ -220,9 +211,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             return 35
         } else if indexPath.section == 2 {    //Consignee
             return 190
-        }  else if indexPath.section == 3 {    //Delivery Status
-            return 155
-        } else {
+        }else {
             return 0
         }
     }
@@ -462,28 +451,6 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         if !transactionConsigneeModel.consigneeContactNumber.isEmpty {
             UIApplication.sharedApplication().openURL(NSURL(string: "tel:\(transactionConsigneeModel.consigneeContactNumber)")!)
         }
-    }
-    
-    // MARK: - TransactionDeliveryTableViewCellDelegate {
-    func smsPickupRiderAction() {
-        
-    }
-    
-    func callPickupRiderAction() {
-        
-    }
-    
-    func smsDeliveryRiderAction() {
-        
-    }
-    
-    func callDeliveryRiderAction() {
-        
-    }
-    
-    func lastCheckinAction() {
-        var transactionDetailsController = TransactionDeliveryLogTableViewController(nibName: "TransactionDeliveryLogTableViewController", bundle: nil)
-        self.navigationController?.pushViewController(transactionDetailsController, animated:true)
     }
     
     

@@ -8,14 +8,16 @@
 
 import UIKit
 
-class TransactionProductTableViewController: UITableViewController, TransactionProductDetailsFooterViewDelegate, TransactionCancelOrderViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate, TransactionCancelReasonOrderViewControllerDelegate {
+class TransactionProductTableViewController: UITableViewController, TransactionProductDetailsFooterViewDelegate, TransactionCancelOrderViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate, TransactionCancelReasonOrderViewControllerDelegate, TransactionDeliveryTableViewCellDelegate {
+    
     var purchaseCellIdentifier: String = "TransactionProductPurchaseTableViewCell"
     var productCellIdentifier: String = "TransactionProductDetailsTableViewCell"
     var descriptionCellIdentifier: String = "TransactionProductDescriptionTableViewCell"
+    var deliveryCellIdentifier: String = "TransactionDeliveryTableViewCell"
     
-    var sectionHeader: [String] = ["Purchase Details", "Product Details", "Description"]
-    var productAttributeData: [String] = ["SKU", "Brand", "Weight (kg)", "Height (mm)", "Type of Jack"]
-    var productAttributeValueData: [String] = ["ABCD-123-5678-90122", "Beats Studio Version", "0.26", "203mm", "3.5mm"]
+    var sectionHeader: [String] = ["Purchase Details", "Product Details", "Description", "Delivery Status"]
+    var productAttributeData: [String] = ["SKU", "Color", "Size", "Width", "Length", "Weight (kg)", "Height (mm)"]
+    var productAttributeValueData: [String] = ["", "", "", "", "", "", ""]
     
     var tableHeaderView: TransactionProductDetailsHeaderView!
     var tableFooterView: TransactionProductDetailsFooterView!
@@ -27,6 +29,14 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        productAttributeValueData[0] = productModel.sku
+        productAttributeValueData[1] = productModel.color
+        productAttributeValueData[2] = productModel.size
+        productAttributeValueData[3] = productModel.width
+        productAttributeValueData[4] = productModel.length
+        productAttributeValueData[5] = productModel.weight
+        productAttributeValueData[6] = productModel.height
 
         initializeNavigationBar()
         initializeTableView()
@@ -48,6 +58,9 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
         
         var descriptionNib = UINib(nibName: descriptionCellIdentifier, bundle: nil)
         tableView.registerNib(descriptionNib, forCellReuseIdentifier: descriptionCellIdentifier)
+        
+        var deliveryNib = UINib(nibName: deliveryCellIdentifier, bundle: nil)
+        tableView.registerNib(deliveryNib, forCellReuseIdentifier: deliveryCellIdentifier)
     }
     
     func initializeTableView() {
@@ -55,7 +68,7 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
             tableHeaderView = XibHelper.puffViewWithNibName("TransactionProductDetailsHeaderView", index: 0) as! TransactionProductDetailsHeaderView
             tableHeaderView.frame.size.width = self.view.frame.size.width
             tableHeaderView.productNameLabel.text = productModel.productName
-            tableHeaderView.productDescriptionLabel.text = ""
+            tableHeaderView.productDescriptionLabel.text = productModel.shortDescription
         }
         
         if tableFooterView == nil {
@@ -145,6 +158,8 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
             return 35
         } else if indexPath.section == 2 {    //Consignee
             return 100
+        } else if indexPath.section == 3 {    //Delivery Status
+            return 155
         } else {
             return 0
         }
@@ -163,11 +178,26 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
             let cell: TransactionProductDetailsTableViewCell = tableView.dequeueReusableCellWithIdentifier(productCellIdentifier, forIndexPath: indexPath) as! TransactionProductDetailsTableViewCell
             
             cell.productAttributeLabel.text = productAttributeData[indexPath.row]
-            cell.productDeatilsLabel.text = productAttributeValueData[indexPath.row]
+            if productAttributeValueData[indexPath.row].isEmpty {
+                cell.productDeatilsLabel.text = "-"
+            } else {
+                cell.productDeatilsLabel.text = productAttributeValueData[indexPath.row]
+            }
             
             return cell
-        } else {
+        } else if indexPath.section == 2{
             let cell: TransactionProductDescriptionTableViewCell = tableView.dequeueReusableCellWithIdentifier(descriptionCellIdentifier, forIndexPath: indexPath) as! TransactionProductDescriptionTableViewCell
+            cell.productDescriptionLabel.text = productModel.fullDescription
+            return cell
+        }  else if indexPath.section == 3 {
+            let cell: TransactionDeliveryTableViewCell = tableView.dequeueReusableCellWithIdentifier(deliveryCellIdentifier, forIndexPath: indexPath) as! TransactionDeliveryTableViewCell
+            cell.selectionStyle = .None;
+            cell.delegate = self
+            return cell
+        } else {
+            let cell: TransactionDeliveryTableViewCell = tableView.dequeueReusableCellWithIdentifier(deliveryCellIdentifier, forIndexPath: indexPath) as! TransactionDeliveryTableViewCell
+            cell.selectionStyle = .None;
+            cell.delegate = self
             return cell
         }
     }
@@ -261,5 +291,26 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
         self.tabBarController?.presentViewController(successController, animated: true, completion: nil)
     }
 
+    // MARK: - TransactionDeliveryTableViewCellDelegate {
+    func smsPickupRiderAction() {
+        
+    }
+    
+    func callPickupRiderAction() {
+        
+    }
+    
+    func smsDeliveryRiderAction() {
+        
+    }
+    
+    func callDeliveryRiderAction() {
+        
+    }
+    
+    func lastCheckinAction() {
+        var transactionDetailsController = TransactionDeliveryLogTableViewController(nibName: "TransactionDeliveryLogTableViewController", bundle: nil)
+        self.navigationController?.pushViewController(transactionDetailsController, animated:true)
+    }
     
 }
