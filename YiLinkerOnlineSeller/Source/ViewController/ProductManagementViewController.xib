@@ -54,7 +54,7 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="eHt-xX-cr9"/>
                             </connections>

@@ -81,6 +81,10 @@ struct APIAtlas {
     //Resolution Center
     static let getResolutionCenterCases = "/api/v1/auth/dispute/get-case"
     static let getResolutionCenterCaseDetails = "/api/v1/auth/dispute/get-case-detail"
+
+    //Reseller
+    static let resellerUrl = "auth/reseller/products"
+    static let resellerUploadUrl = "auth/reseller/upload"
     
     static let baseUrl = APIEnvironment.baseUrl()
 }

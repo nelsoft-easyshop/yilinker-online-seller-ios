@@ -85,7 +85,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         var nibFilter = UINib(nibName: "FilterByTableViewCell", bundle: nil)
         filterByTableView.registerNib(nibFilter, forCellReuseIdentifier: "FilterByTableViewCell")
         
-        
     }
     
     //    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
@@ -120,7 +119,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if (tableView .isEqual(self.searchResultTableView)){
+        if (tableView.isEqual(self.searchResultTableView)){
             let cell = searchResultTableView.dequeueReusableCellWithIdentifier("SearchTableViewCell") as! SearchTableViewCell
             if self.searchModel != nil {
                 cell.invoiceNumberLabel.text = self.searchModel?.invoiceNumber[indexPath.row]
@@ -187,15 +186,16 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
-    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         //self.searchTextField.resignFirstResponder()
         self.searchTextField.endEditing(true)
-        /*var storeInfoViewController = FilterResultsViewController(nibName: "FilterResultsViewController", bundle: nil)
-        storeInfoViewController.edgesForExtendedLayout = .None
-        self.navigationController?.pushViewController(storeInfoViewController, animated: true)
-        */
-        self.fireSearch()
+        
+        if filterBySelected == 0 || filterBySelected == 2 || filterBySelected == 3 {
+            self.showAlert(title: "Information", message: "Search by \(filterBy[filterBySelected]) is not yet available.")
+        } else {
+            self.fireSearch()
+        }
+        
         return true
     }
     
@@ -215,8 +215,13 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 }
                 self.elements.addObjectsFromArray(self.allObjectArray.subarrayWithRange(NSMakeRange(0, 20)))
                 
-                //println(self.searchModel?.invoiceNumber[0])
-                self.searchResultTableView.reloadData()
+                var storeInfoViewController = FilterResultsViewController(nibName: "FilterResultsViewController", bundle: nil)
+                storeInfoViewController.edgesForExtendedLayout = .None
+                storeInfoViewController.searchModel = self.searchModel
+                self.navigationController?.pushViewController(storeInfoViewController, animated: true)
+
+                
+                //self.searchResultTableView.reloadData()
                 self.hud?.hide(true)
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                     self.hud?.hide(true)
@@ -239,6 +244,14 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.navigationController?.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
+    
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
     
