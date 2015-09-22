@@ -309,9 +309,14 @@
 		795B0D261BA307CB00FC373C /* ActivityLogItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795B0D251BA307CB00FC373C /* ActivityLogItemModel.swift */; };
 		795B0D281BA3093000FC373C /* ActivityLogItemsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795B0D271BA3093000FC373C /* ActivityLogItemsModel.swift */; };
 		797777A31BA924AD004D48FC /* TransactionItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797777A21BA924AD004D48FC /* TransactionItemModel.swift */; };
-
 		7985D35D1BB0259F0060E5F5 /* DeactivateModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7985D35B1BB0259F0060E5F5 /* DeactivateModalViewController.swift */; };
 		7985D35E1BB0259F0060E5F5 /* DeactivateModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7985D35C1BB0259F0060E5F5 /* DeactivateModalViewController.xib */; };
+		7985D3641BB048A90060E5F5 /* TransactionDeliveryLogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7985D3631BB048A90060E5F5 /* TransactionDeliveryLogTableViewCell.xib */; };
+		7985D3661BB050F40060E5F5 /* TransactionDeliveryLogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7985D3651BB050F40060E5F5 /* TransactionDeliveryLogTableViewCell.swift */; };
+		7985D3681BB0556B0060E5F5 /* TransactionDeliveryLogSignatureTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7985D3671BB0556B0060E5F5 /* TransactionDeliveryLogSignatureTableViewCell.xib */; };
+		7985D36A1BB056E90060E5F5 /* TransactionDeliveryLogSignatureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7985D3691BB056E90060E5F5 /* TransactionDeliveryLogSignatureTableViewCell.swift */; };
+		7985D36C1BB05C500060E5F5 /* DeliveryLogsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7985D36B1BB05C500060E5F5 /* DeliveryLogsModel.swift */; };
+		7985D36E1BB071F60060E5F5 /* DeliveryLogsSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7985D36D1BB071F60060E5F5 /* DeliveryLogsSectionModel.swift */; };
 		799892F31B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */; };
 		799892F51B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */; };
 		799892F71B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */; };
@@ -843,6 +848,12 @@
 		797777A21BA924AD004D48FC /* TransactionItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionItemModel.swift; sourceTree = "<group>"; };
 		7985D35B1BB0259F0060E5F5 /* DeactivateModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeactivateModalViewController.swift; sourceTree = "<group>"; };
 		7985D35C1BB0259F0060E5F5 /* DeactivateModalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeactivateModalViewController.xib; sourceTree = "<group>"; };
+		7985D3631BB048A90060E5F5 /* TransactionDeliveryLogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionDeliveryLogTableViewCell.xib; sourceTree = "<group>"; };
+		7985D3651BB050F40060E5F5 /* TransactionDeliveryLogTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionDeliveryLogTableViewCell.swift; sourceTree = "<group>"; };
+		7985D3671BB0556B0060E5F5 /* TransactionDeliveryLogSignatureTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionDeliveryLogSignatureTableViewCell.xib; sourceTree = "<group>"; };
+		7985D3691BB056E90060E5F5 /* TransactionDeliveryLogSignatureTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionDeliveryLogSignatureTableViewCell.swift; sourceTree = "<group>"; };
+		7985D36B1BB05C500060E5F5 /* DeliveryLogsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryLogsModel.swift; sourceTree = "<group>"; };
+		7985D36D1BB071F60060E5F5 /* DeliveryLogsSectionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryLogsSectionModel.swift; sourceTree = "<group>"; };
 		799892F21B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardHeaderCollectionViewCell.xib; sourceTree = "<group>"; };
 		799892F41B8CB82000F4CFE2 /* DashBoardHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashBoardHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		799892F61B8CC39E00F4CFE2 /* DashBoardItemCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashBoardItemCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -1191,7 +1202,6 @@
 				260725F91BA0A41000C24DDB /* ProductUnitsModel.swift */,
 				F7AC5F701B9AA2DC00227D18 /* ProvinceModel.swift */,
 				79EFF7821B8DB809008A9E7D /* RecentOrderModel.swift */,
-				0CAACCC61B9D950C00BE5EF3 /* ResellerItemModel.swift */,
 				96FBF6801BA06C94009DDD29 /* ResolutionCenterModel.swift */,
 				792F6E571B9D7F2300F0CB03 /* SalesReportModel.swift */,
 				792F6E551B9D7E5000F0CB03 /* SalesReportTransactionModel.swift */,
@@ -1211,6 +1221,8 @@
 				79EF7AB71B9994320082CD35 /* TransactionsFilterItemModel.swift */,
 				79EF7AB91B99950E0082CD35 /* TransactionsFilterModel.swift */,
 				79ED2F631B9BF2CA00C5BC0A /* TransactionsModel.swift */,
+				7985D36B1BB05C500060E5F5 /* DeliveryLogsModel.swift */,
+				7985D36D1BB071F60060E5F5 /* DeliveryLogsSectionModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1318,6 +1330,8 @@
 				79E6336E1B9AC3640062DB14 /* TransactionProductPurchaseTableViewCell.swift */,
 				79EF7AC51B99F8980082CD35 /* TransactionProductTableViewCell.swift */,
 				79E633AC1B9B328E0062DB14 /* TransactionShipItemTableViewCell.swift */,
+				7985D3651BB050F40060E5F5 /* TransactionDeliveryLogTableViewCell.swift */,
+				7985D3691BB056E90060E5F5 /* TransactionDeliveryLogSignatureTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1345,10 +1359,6 @@
 				961F702D1B97F077007D0EA5 /* DisputeViewController.swift */,
 				2618DD731B975E910030C6D2 /* EditSubCategoriesRemovedTableViewCell.swift */,
 				2625FEA31B96A92500DD24AF /* EditSubCategoriesViewController.swift */,
-				F7CB78411B9D822C001AF766 /* FilterCalendarTableViewCell.swift */,
-				F7CB78421B9D822C001AF766 /* FilterCalendarTableViewCell.xib */,
-				F7E739F11BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.swift */,
-				F7E739F21BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.xib */,
 				F7C40F761B983B490091C16C /* FilterResultsViewController.swift */,
 				F7C40F7A1B983B570091C16C /* FilterViewController.swift */,
 				794880791B94D9BD0090B259 /* FollowersViewController.swift */,
@@ -1543,6 +1553,8 @@
 				26DB06341B98BF2C00D38EA8 /* TransactionViewController.xib */,
 				F7C40F8E1B983BA10091C16C /* VerifyNumberViewController.xib */,
 				F7C40F8C1B983B9D0091C16C /* VerifyViewController.xib */,
+				7985D3631BB048A90060E5F5 /* TransactionDeliveryLogTableViewCell.xib */,
+				7985D3671BB0556B0060E5F5 /* TransactionDeliveryLogSignatureTableViewCell.xib */,
 			);
 			path = Xib;
 			sourceTree = "<group>";
@@ -1964,6 +1976,7 @@
 				26BD5E641B8E1A3500739488 /* ProductDescriptionViewController.xib in Resources */,
 				79E633791B9AE9AA0062DB14 /* TransactionDetailsFooterView.xib in Resources */,
 				F727FF591B99C94700872E11 /* edit.png in Resources */,
+				7985D3641BB048A90060E5F5 /* TransactionDeliveryLogTableViewCell.xib in Resources */,
 				26B282F61B91E92B00A7C2B1 /* ProductManagementAllTableViewCell.xib in Resources */,
 				79EF7ACC1B9A092E0082CD35 /* TransactionDeliveryTableViewCell.xib in Resources */,
 				F7C40F8D1B983B9D0091C16C /* VerifyViewController.xib in Resources */,
@@ -2008,6 +2021,7 @@
 				F7C40FD61B983CD90091C16C /* dummy-placeholder.jpg in Resources */,
 				0C6661AD1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.xib in Resources */,
 				7948807E1B94DAA50090B259 /* FollowerTableViewCell.xib in Resources */,
+				7985D3681BB0556B0060E5F5 /* TransactionDeliveryLogSignatureTableViewCell.xib in Resources */,
 				0C65F8B31B8DC9AC00504D86 /* ProductUploadCategoryViewController.xib in Resources */,
 				F7C40FAF1B983C250091C16C /* ChangeEmailViewController.xib in Resources */,
 				0C8D7FA01B8F1B7800B3FA4E /* PUAttributeSetHeaderTableViewCell.xib in Resources */,
@@ -2193,6 +2207,7 @@
 				2618DD751B975E910030C6D2 /* EditSubCategoriesRemovedTableViewCell.swift in Sources */,
 				79E633A01B9B27E70062DB14 /* FSCalendar.m in Sources */,
 				0C11795C1BA9A5C900AA1554 /* StringHelper.swift in Sources */,
+				7985D3661BB050F40060E5F5 /* TransactionDeliveryLogTableViewCell.swift in Sources */,
 				26BD5E5E1B8DFA5200739488 /* ProductImagesView.swift in Sources */,
 				79E633861B9B15FD0062DB14 /* TransactionShipItemTableViewController.swift in Sources */,
 				26378F211B8CC45A008533B6 /* ProductManagementViewController.swift in Sources */,
@@ -2267,6 +2282,7 @@
 				F7AC5F761B9AA3B400227D18 /* ErrorModel.swift in Sources */,
 				26B5B2411B94DE4200CBDDE5 /* AddCustomizedCategoryViewController.swift in Sources */,
 				792876351B8DF89F00762A39 /* ChartYAxisRendererRadarChart.swift in Sources */,
+				7985D36C1BB05C500060E5F5 /* DeliveryLogsModel.swift in Sources */,
 				F7AC5F741B9AA32D00227D18 /* AddressModelV2.swift in Sources */,
 				7928763F1B8DF89F00762A39 /* ChartSelectionDetail.swift in Sources */,
 				7928760B1B8DF89F00762A39 /* BarLineScatterCandleChartData.swift in Sources */,
@@ -2274,6 +2290,7 @@
 				7928762D1B8DF89F00762A39 /* ChartLegendRenderer.swift in Sources */,
 				F7C40F5D1B983AB10091C16C /* CategoryTableViewCell.swift in Sources */,
 				79EF7ABD1B99C3F60082CD35 /* TransactionDetailsTableViewController.swift in Sources */,
+				7985D36A1BB056E90060E5F5 /* TransactionDeliveryLogSignatureTableViewCell.swift in Sources */,
 				0CF28ED31B8C85E5005B2E54 /* ParseLocalJSON.swift in Sources */,
 				2625FEA11B95F5E800DD24AF /* AddItemTableViewCell.swift in Sources */,
 				79E633B01B9B3C330062DB14 /* TransactionDeliveryLogTableViewController.swift in Sources */,
@@ -2432,6 +2449,7 @@
 				7928761E1B8DF89F00762A39 /* RadarChartDataSet.swift in Sources */,
 				79E6337B1B9AEDA50062DB14 /* TransactionDetailsFooterView.swift in Sources */,
 				F7C40F531B983A590091C16C /* StoreInfoModel.swift in Sources */,
+				7985D36E1BB071F60060E5F5 /* DeliveryLogsSectionModel.swift in Sources */,
 				792875FE1B8DF89F00762A39 /* PieRadarChartViewBase.swift in Sources */,
 				0CAACCC41B9D8EA500BE5EF3 /* ResellerItemViewController.swift in Sources */,
 				26DB062B1B97F9EB00D38EA8 /* RemovedItemTableViewCell.swift in Sources */,

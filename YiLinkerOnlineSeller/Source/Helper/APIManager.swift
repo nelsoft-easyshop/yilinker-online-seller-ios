@@ -80,6 +80,8 @@ struct APIAtlas {
     
     static let getActivityLogs = "auth/user/activityLog"
     
+    static let getDeliveryLogs = "auth/getTransactionDeliveryLogs"
+    
     static let postEmailNotif = "auth/email/subscription"
     static let postSMSNotif = "auth/sms/subscription"
     static let deactivate = "auth/account/disable"
