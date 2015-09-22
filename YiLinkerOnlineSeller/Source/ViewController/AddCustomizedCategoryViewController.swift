@@ -258,12 +258,20 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
 //        } else {
 //            newFrame.size.height = CGRectGetMaxY(self.categoryDetailsView.frame) + 1.0
 //        }
-        if self.parentId == 0 {
+        
+        if self.parentId != 0 && self.subCategories2.count == 0 {
+            newFrame.size.height = CGRectGetMaxY(self.categoryDetailsView.frame) + 1.0
+        } else {
             setPosition(self.subCategoriesView, from: self.categoryDetailsView)
             newFrame.size.height = CGRectGetMaxY(self.subCategoriesView.frame) + 1.0
-        } else {
-            newFrame.size.height = CGRectGetMaxY(self.categoryDetailsView.frame) + 1.0
         }
+        
+//        if self.parentId == 0 {
+//            setPosition(self.subCategoriesView, from: self.categoryDetailsView)
+//            newFrame.size.height = CGRectGetMaxY(self.subCategoriesView.frame) + 1.0
+//        } else {
+//            newFrame.size.height = CGRectGetMaxY(self.categoryDetailsView.frame) + 1.0
+//        }
 
         self.headerView.frame = newFrame
         
@@ -626,7 +634,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
 //            }
 //        }
 //
-        if self.categoryDetailsView.parentCategoryLabel.text != "NONE" {
+        if self.categoryDetailsView.parentCategoryLabel.text != "NONE" && self.subCategories2.count == 0{
             return 0
         }
         
