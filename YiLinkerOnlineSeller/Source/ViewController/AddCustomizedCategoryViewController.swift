@@ -258,12 +258,20 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
 //        } else {
 //            newFrame.size.height = CGRectGetMaxY(self.categoryDetailsView.frame) + 1.0
 //        }
-        if self.parentId == 0 {
+        
+        if self.parentId != 0 && self.subCategories2.count == 0 {
+            newFrame.size.height = CGRectGetMaxY(self.categoryDetailsView.frame) + 1.0
+        } else {
             setPosition(self.subCategoriesView, from: self.categoryDetailsView)
             newFrame.size.height = CGRectGetMaxY(self.subCategoriesView.frame) + 1.0
-        } else {
-            newFrame.size.height = CGRectGetMaxY(self.categoryDetailsView.frame) + 1.0
         }
+        
+//        if self.parentId == 0 {
+//            setPosition(self.subCategoriesView, from: self.categoryDetailsView)
+//            newFrame.size.height = CGRectGetMaxY(self.subCategoriesView.frame) + 1.0
+//        } else {
+//            newFrame.size.height = CGRectGetMaxY(self.categoryDetailsView.frame) + 1.0
+//        }
 
         self.headerView.frame = newFrame
         
@@ -393,40 +401,44 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                 }
             } else if self.title == "Edit Customized Category" {
 
-                var productIds: [Int] = []
-                for i in 0..<self.selectedProductsModel.count {
-                    productIds.append(self.selectedProductsModel[i].id.toInt()!)
-                }
-
-                var subs: [NSDictionary] = []
-                if self.parentId == 0 {
-                    for i in 0..<self.subCategories2.count {
-                        var subProducts: [Int] = []
-                        for j in 0..<self.subCategories2[i].products.count {
-                            subProducts.append(self.subCategories2[i].products[j].productId.toInt()!)
-                        }
-                        subs.append(["categoryId": self.subCategories2[i].categoryId,
-                            "categoryName": self.subCategories2[i].categoryName,
-                            "parentId": self.subCategories2[i].parentId,
-                            "products": subProducts])
+                if self.parentId != 0 && self.subCategories2.count != 0 {
+                    self.showAlert(title: "Failed", message: "Cannot save as sub category if it have sub categories.")
+                } else {
+                    var productIds: [Int] = []
+                    for i in 0..<self.selectedProductsModel.count {
+                        productIds.append(self.selectedProductsModel[i].id.toInt()!)
                     }
+                    
+                    var subs: [NSDictionary] = []
+                    if self.parentId == 0 {
+                        for i in 0..<self.subCategories2.count {
+                            var subProducts: [Int] = []
+                            for j in 0..<self.subCategories2[i].products.count {
+                                subProducts.append(self.subCategories2[i].products[j].productId.toInt()!)
+                            }
+                            subs.append(["categoryId": self.subCategories2[i].categoryId,
+                                "categoryName": self.subCategories2[i].categoryName,
+                                "parentId": self.subCategories2[i].parentId,
+                                "products": subProducts])
+                        }
+                    }
+                    
+                    var parameters: [NSDictionary] = []
+                    parameters.append(["categoryId": self.categoryDetailsModel.categoryId,
+                        "categoryName": self.categoryDetailsView.categoryNameTextField.text,
+                        "parentId": self.parentId,
+                        "products": productIds,
+                        "subcategories": subs])
+                    
+                    let data = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
+                    var formattedCategory: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+                    
+                    let params: NSDictionary = ["access_token": SessionManager.accessToken(),
+                        "categories": formattedCategory]
+                    
+                    println(params)
+                    requestEditCustomizedCategory(params)
                 }
-                
-                var parameters: [NSDictionary] = []
-                parameters.append(["categoryId": self.categoryDetailsModel.categoryId,
-                                 "categoryName": self.categoryDetailsView.categoryNameTextField.text,
-                                     "parentId": self.parentId,
-                                     "products": productIds,
-                                "subcategories": subs])
-                
-                let data = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
-                var formattedCategory: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
-
-                let params: NSDictionary = ["access_token": SessionManager.accessToken(),
-                                              "categories": formattedCategory]
-
-                println(params)
-                requestEditCustomizedCategory(params)
             }
 
         }
@@ -488,7 +500,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
             "categoryId": String(categoryId)]
-        
+
         manager.POST(APIAtlas.getCategoryDetails, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
@@ -622,7 +634,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
 //            }
 //        }
 //
-        if self.categoryDetailsView.parentCategoryLabel.text != "NONE" {
+        if self.categoryDetailsView.parentCategoryLabel.text != "NONE" && self.subCategories2.count == 0{
             return 0
         }
         
