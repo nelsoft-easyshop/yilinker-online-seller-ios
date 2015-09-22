@@ -12,7 +12,15 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var gcmSenderID = "976304473940"
+    var connectedToGCM = false
+    var registrationToken: String?
+    var registrationOptions = [String: AnyObject]()
+    
+    var registrationKey = "onRegistration"
+    var messageKey = "onMessage"
+    var seenMessageKey = "seenMessage"
+    
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
@@ -30,7 +38,149 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.whiteColor()]
         }
         
+        var configureError: NSError?
+        GGLContext.sharedInstance().configureWithError(&configureError)
+        assert(configureError == nil, "Error configuring Google services: \(configureError)")
+        gcmSenderID = GGLContext.sharedInstance().configuration.gcmSenderID
+        println(gcmSenderID)
+        //GIDSignIn.sharedInstance().clientID = "613594712632-q9iak1vgc6ua44fkc9kg5tut0s5vuo5m.apps.googleusercontent.com"
+        
+        if let font = UIFont(name: "Panton-Regular", size: 20) {
+            UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.whiteColor()]
+        }
+        
+        var types : UIUserNotificationType = UIUserNotificationType.Badge | UIUserNotificationType.Alert | UIUserNotificationType.Sound
+        var settings : UIUserNotificationSettings = UIUserNotificationSettings(forTypes: types, categories: nil)
+        
+        application.registerUserNotificationSettings(settings)
+        application.registerForRemoteNotifications()
+        
+        GCMService.sharedInstance().startWithConfig(GCMConfig.defaultConfig())
+        
         return true
+    }
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        GGLInstanceID.sharedInstance().startWithConfig(GGLInstanceIDConfig.defaultConfig())
+        registrationOptions = [kGGLInstanceIDRegisterAPNSOption:deviceToken,
+            kGGLInstanceIDAPNSServerTypeSandboxOption:true]
+        GGLInstanceID.sharedInstance().tokenWithAuthorizedEntity(gcmSenderID,
+            scope: kGGLInstanceIDScopeGCM, options: registrationOptions, handler: registrationHandler)
+    }
+    
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        
+        println("Registration for remote notification failed with error: \(error.localizedDescription)")
+        
+        let userInfo = ["error": error.localizedDescription]
+        NSNotificationCenter.defaultCenter().postNotificationName(
+            self.registrationKey, object: nil, userInfo: userInfo)
+    }
+    
+    func registrationHandler(registrationToken: String!, error: NSError!) {
+        if (registrationToken != nil) {
+            self.registrationToken = registrationToken
+            println("Registration Token: \(registrationToken)")
+            let userInfo = ["registrationToken": registrationToken]
+            NSNotificationCenter.defaultCenter().postNotificationName(
+                self.registrationKey, object: nil, userInfo: userInfo)
+        } else {
+            println("Registration to GCM failed with error: \(error.localizedDescription)")
+            let userInfo = ["error": error.localizedDescription]
+            NSNotificationCenter.defaultCenter().postNotificationName(
+                self.registrationKey, object: nil, userInfo: userInfo)
+        }
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        println("Notification received \(userInfo)")
+        
+        GCMService.sharedInstance().appDidReceiveMessage(userInfo);
+        
+        if let info = userInfo["aps"] as? NSDictionary {
+            if let alert = info["alert"] as? NSDictionary{
+                if let error = alert["error"] as? NSString{
+                    println("Notification failed with error: \(error)")
+                } else if let title = alert["title"] as? NSString{
+                    /* title will dictate what type of notification this will be */
+                    /* title value should be aligned to backend */
+                    println("Notification received with title: \(title)")
+                    if(title == "seenMessage") {
+                        NSNotificationCenter.defaultCenter().postNotificationName(seenMessageKey, object: nil,
+                            userInfo: userInfo)
+                    } else if (title == "newMessage") {
+                        NSNotificationCenter.defaultCenter().postNotificationName(messageKey, object: nil, userInfo: userInfo)
+                    }
+                }
+            }
+        } else {
+            println("userInfo not a dictionary")
+        }
+        
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        GCMService.sharedInstance().appDidReceiveMessage(userInfo);
+        
+        /*
+        TO TEST:
+        
+        IN HEADER:
+        
+        POST : https://gcm-http.googleapis.com/gcm/send
+        Authorization : key=AIzaSyDAlP85iUepL1LEhvB4tVrkyTnINCZTv7Q
+        Content-Type  : application/json
+        
+        IN BODY:
+        
+        {
+        
+        "collapse_key" : "dennis",
+        "delay_while_idle" : true,
+        "notification" : {
+        "title" : "seenMessage",
+        OR
+        "title" : "newMessage",
+        BODY CONTAINS THE RECIPIENT ID
+        "body" : "68"
+        },
+        
+        place registration token generated in console here
+        "to" :
+        <registration token>
+        sample: "lhdfgScdMso:APA91bFFtTz3yzMTP5ObsTGMrtOqMtV1dtMImOCJ16ARJCixgwmX0NTOAogiwMjwhtBHOAKjBGbzRzAdGfcO4MelzpJ2DUxC4GXFr7eb7z-uwZjNLTv9L61ooAcY2wQfznEkT3Mey7Gr"
+        
+        }
+        
+        */
+        
+        if let info = userInfo["aps"] as? NSDictionary {
+            if let alert = info["alert"] as? NSDictionary {
+                if let error = alert["error"] as? NSString {
+                    println("Notification failed with error: \(error)")
+                } else if let title = alert["title"] as? NSString {
+                    /* title will dictate what type of notification this will be */
+                    /* title value should be aligned to backend */
+                    println("Notification received with title: \(title)")
+                    /* THIS IS STILL SUBJECT FOR CHANGE - FOR ALIGNMENT WITH BACKEND */
+                    if(title == "seenMessage") {
+                        NSNotificationCenter.defaultCenter().postNotificationName(seenMessageKey, object: nil,
+                            userInfo: userInfo)
+                        /* THIS IS STILL SUBJECT FOR CHANGE - FOR ALIGNMENT WITH BACKEND */
+                    } else if (title == "newMessage") {
+                        NSNotificationCenter.defaultCenter().postNotificationName(messageKey, object: nil, userInfo: userInfo)
+                    }
+                }
+            }
+        } else {
+            println("userInfo not a dictionary")
+        }
+        completionHandler(UIBackgroundFetchResult.NoData);
+    }
+    
+    func onTokenRefresh(){
+        // for messaging
+        GGLInstanceID.sharedInstance().tokenWithAuthorizedEntity(gcmSenderID, scope: kGGLInstanceIDScopeGCM, options: registrationOptions, handler: registrationHandler)
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -41,6 +191,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        GCMService.sharedInstance().disconnect()
+        self.connectedToGCM = false
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
@@ -49,6 +202,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        GCMService.sharedInstance().connectWithHandler({
+            (NSError error) -> Void in
+            if error != nil {
+                println("Could not connect to GCM: \(error.localizedDescription)")
+            } else {
+                self.connectedToGCM = true
+                println("Connected to GCM")
+            }
+        })
     }
 
     func applicationWillTerminate(application: UIApplication) {

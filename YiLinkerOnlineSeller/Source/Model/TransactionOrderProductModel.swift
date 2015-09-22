@@ -34,6 +34,7 @@ class TransactionOrderProductModel: NSObject {
     var weight: String = ""
     var fullDescription: String = ""
     var shortDescription: String = ""
+    var transactionOrderItemStatus: TransactionOrderItemStatus = TransactionOrderItemStatus.UnSelected
     
     init(orderProductId: String, productId: String, quantity: Int, unitPrice: String, totalPrice: String, productName: String, handlingFee: String, dateAdded: String, lastDateModified: String, orderProductStatusId: Int, orderProductStatusName: String, orderProductStatusDescription: String, productImage: String, sku: String, color: String, size: String, originalUnitPrice: String, discount: String, width: String, height: String, length: String, weight: String, fullDescription: String, shortDescription: String) {
         

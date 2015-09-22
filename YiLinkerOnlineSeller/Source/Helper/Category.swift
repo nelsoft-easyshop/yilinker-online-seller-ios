@@ -241,12 +241,9 @@ extension NSDate {
         return dateWithDaysAdded
     }
     
-    
     func addHours(hoursToAdd : Int) -> NSDate {
         var secondsInHours : NSTimeInterval = Double(hoursToAdd) * 60 * 60
         var dateWithHoursAdded : NSDate = self.dateByAddingTimeInterval(secondsInHours)
         return dateWithHoursAdded
     }
 }
-
-
