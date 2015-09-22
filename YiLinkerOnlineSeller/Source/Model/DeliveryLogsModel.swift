@@ -58,9 +58,11 @@ class DeliveryLogsModel: NSObject {
                         }
                     }
                     
-                    for subValue in tempDict["deliveryLogs"] as! NSArray {
-                        let model: DeliveryLogsItemModel = DeliveryLogsItemModel.parseDataWithDictionary(subValue as! NSDictionary)
-                        deliveryLogs.append(model)
+                    if tempDict["deliveryLogs"] != nil {
+                        for subValue in tempDict["deliveryLogs"] as! NSArray {
+                            let model: DeliveryLogsItemModel = DeliveryLogsItemModel.parseDataWithDictionary(subValue as! NSDictionary)
+                            deliveryLogs.append(model)
+                        }
                     }
                 }
             }

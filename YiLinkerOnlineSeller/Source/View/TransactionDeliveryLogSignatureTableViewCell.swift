@@ -27,5 +27,21 @@ class TransactionDeliveryLogSignatureTableViewCell: UITableViewCell {
     func initializeViews() {
         mainView.layer.cornerRadius = 8
     }
+    
+    func setActionType(type: String) {
+        if type == "pickup-product" {
+            typeLabel.text = "Pickup Product"
+            iconImageView.image = UIImage(named: "product-1")
+        } else if type == "in-transit" {
+            typeLabel.text = "In Transit"
+            iconImageView.image = UIImage(named: "transit")
+        } else if type == "warehouse-checkin" {
+            typeLabel.text = "Warehouse Checkin"
+            iconImageView.image = UIImage(named: "warehouse")
+        } else if type == "delivery-complete" {
+            typeLabel.text = "Delivery Complete"
+            iconImageView.image = UIImage(named: "complete")
+        }
+    }
 
 }

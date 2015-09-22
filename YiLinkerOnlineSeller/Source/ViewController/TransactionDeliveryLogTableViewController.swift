@@ -30,7 +30,9 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
         initializeNavigationBar()
         registerNibs()
         initializeTableView()
+        fireGetDeliveryLogs()
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -50,10 +52,10 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
         tableHeaderView = UIView(frame: CGRectMake(0, 0, self.view.bounds.width, 35))
         tableHeaderView.backgroundColor = UIColor.whiteColor()
         
-        tidLabel = UILabel(frame: CGRectMake(16, 20, (self.view.bounds.width - 32), 20))
+        tidLabel = UILabel(frame: CGRectMake(16, 10, (self.view.bounds.width - 32), 20))
         tidLabel.textColor = Constants.Colors.grayText
         tidLabel.font = UIFont(name: "Panton-Bold", size: CGFloat(14))
-        tidLabel.text = ""
+        tidLabel.text = orderProductId
         tableHeaderView.addSubview(tidLabel)
         
         self.tableView.tableHeaderView = tableHeaderView
@@ -92,12 +94,45 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let model: DeliveryLogsItemModel = tableData[indexPath.section].deliveryLogs[indexPath.row]
         
-        if model.clientSignature.isEmpty{
+        if !model.clientSignature.isEmpty{
             let cell: TransactionDeliveryLogSignatureTableViewCell = tableView.dequeueReusableCellWithIdentifier(signatureCellIdentifier, forIndexPath: indexPath) as! TransactionDeliveryLogSignatureTableViewCell
+            
+            cell.signatureImageView.sd_setImageWithURL(NSURL(string: model.clientSignature), placeholderImage: UIImage(named: "dummy-placeholder"))
+            cell.setActionType(model.actionType)
+            cell.timeLabel.text = formatDateToTimeString(formatStringToDate(model.date))
+            cell.dateLabel.text = formatDateToCompleteString(formatStringToDate(model.date))
+            cell.locationLabel.text = model.location
+            cell.riderLabel.text = model.riderName
+            
             return cell
         } else {
             let cell: TransactionDeliveryLogTableViewCell = tableView.dequeueReusableCellWithIdentifier(deliveryLogCellIdentifier, forIndexPath: indexPath) as! TransactionDeliveryLogTableViewCell
+    
+            cell.setActionType(model.actionType)
+            cell.timeLabel.text = formatDateToTimeString(formatStringToDate(model.date))
+            cell.dateLabel.text = formatDateToCompleteString(formatStringToDate(model.date))
+            cell.locationLabel.text = model.location
+            cell.riderLabel.text = model.riderName
+            
             return cell
+        }
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return setSectionHeader(tableData[section].date)
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30.0
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let model: DeliveryLogsItemModel = tableData[indexPath.section].deliveryLogs[indexPath.row]
+        
+        if model.clientSignature.isEmpty{
+            return 160
+        } else {
+            return 275
         }
     }
     
@@ -140,7 +175,7 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
         self.hud?.show(true)
     }
     
-    func initializeActivityLogsItem() {
+    func initializeDeliveryLogsItem() {
         tableData.removeAll(keepCapacity: false)
         var tempDates: [String] = []
         
@@ -156,7 +191,7 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
         for var i = 0; i < tableData.count; i++ {
             for subValue in deliveryLogs.deliveryLogs {
                 if formatDateToCompleteString(formatStringToDate(subValue.date)) == tableData[i].date {
-                    tableData[i].deliveryLogs.append(DeliveryLogsItemModel(actionType: subValue.actionType, date: formatDateToCompleteString(formatStringToDate(subValue.date)), location: subValue.location, riderName: subValue.riderName, clientSignature: subValue.clientSignature))
+                    tableData[i].deliveryLogs.append(DeliveryLogsItemModel(actionType: subValue.actionType, date: subValue.date, location: subValue.location, riderName: subValue.riderName, clientSignature: subValue.clientSignature))
                 }
             }
         }
@@ -171,15 +206,16 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
         
         var parameters: NSDictionary = NSDictionary(dictionary: ["access_token": SessionManager.accessToken(), "orderProductId": orderProductId])
         
-        manager.GET(APIAtlas.getActivityLogs, parameters: parameters, success: {
+        manager.GET(APIAtlas.getDeliveryLogs, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            let model: DeliveryLogsModel = DeliveryLogsModel.parseDataWithDictionary(responseObject as! NSDictionary)
+            print(responseObject)
+            self.deliveryLogs = DeliveryLogsModel.parseDataWithDictionary(responseObject as! NSDictionary)
             
-            if model.isSuccessful {
-                
+            if self.deliveryLogs.isSuccessful {
+                self.initializeDeliveryLogsItem()
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: model.message, title: "Error")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.deliveryLogs.message, title: "Error")
             }
             
             self.hud?.hide(true)
@@ -241,7 +277,7 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
     
     func formatDateToTimeString(date: NSDate) -> String {
         var dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "KK:mm aa"
+        dateFormatter.dateFormat = "kk:mm aa"
         return dateFormatter.stringFromDate(date)
     }
     
