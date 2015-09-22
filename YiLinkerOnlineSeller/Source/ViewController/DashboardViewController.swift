@@ -39,7 +39,6 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
 //        println(SessionManager.accessToken())
         registerNibs()
         initializeViews()
-        setupGCM()
     }
     
     func setupGCM(){
@@ -122,6 +121,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         super.viewDidAppear(animated)
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         
+        initializeViews()
+        
         if SessionManager.isLoggedIn() {
             self.loginBlockerView.hidden = true
         } else {
@@ -132,6 +133,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         if NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
             if ctr == 0{
                 fireStoreInfo(true)
+                setupGCM()
             } else {
                 fireStoreInfo(false)
             }
@@ -247,13 +249,12 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         
         cell.setText(tableData[indexPath.row])
         cell.setIconImage(UIImage(named: tableImages[indexPath.row])!)
-        
         if tableImages[indexPath.row] == "uploadItem" {
             cell.iconView.backgroundColor = Constants.Colors.uploadViewColor
         } else {
             cell.iconView.backgroundColor = Constants.Colors.productPrice
         }
-        
+        cell.layoutIfNeeded()
         return cell
     }
     
@@ -386,7 +387,9 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             
             NSUserDefaults.standardUserDefaults().synchronize()
             
-            self.collectionView.reloadData()
+            if !showHUD{
+                self.collectionView.reloadData()
+            }
             self.hud?.hide(true)
             
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
