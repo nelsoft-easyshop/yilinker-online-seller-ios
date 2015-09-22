@@ -138,7 +138,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         } else {
             if ctr == 1{
                 fireStoreInfo(true)
-            } else {
+            } else if ctr != 0 {
                 fireStoreInfo(false)
             }
         }
