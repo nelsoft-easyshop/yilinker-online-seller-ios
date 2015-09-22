@@ -111,8 +111,8 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             self.rememberMeImageView.image = nil
             self.rememberMeImageContainerView.backgroundColor = UIColor.clearColor()
         } else {
-            self.rememberMeImageView.image = UIImage(named: "check2")
-            self.rememberMeImageContainerView.backgroundColor = .greenColor()
+            self.rememberMeImageView.image = UIImage(named: "check")
+            self.rememberMeImageContainerView.backgroundColor = HexaColor.colorWithHexa(0x54b6a7)
         }
     }
     

@@ -89,11 +89,31 @@ struct APIAtlas {
     //Search
     static let transaction = "auth/transaction/searchKeyword?access_token="
     
+    //Resolution Center
+    static let getResolutionCenterCases = "auth/dispute/get-case"
+    static let getResolutionCenterCaseDetails = "auth/dispute/get-case-detail"
+    static let resolutionCenterProductListUrl = "auth/getTransactionList"
+    static let resolutionCenterGetTransactionItems = "auth/getTransaction"
+    static let resolutionCenterAddCaseUrl = "auth/dispute/add-case"
+
     //Reseller
     static let resellerUrl = "auth/reseller/products"
     static let resellerUploadUrl = "auth/reseller/upload"
     
     static let baseUrl = APIEnvironment.baseUrl()
+    
+    
+    /* MESSAGING CONSTANTS */
+    static let ACTION_SEND_MESSAGE          = "/message/sendMessage"
+    static let ACTION_GET_CONVERSATION_HEAD = "/message/getConversationHead"
+    static let ACTION_GET_CONTACTS          = "/message/getContacts"
+    static let ACTION_GET_CONVERSATION_MESSAGES = "/message/getConversationMessages"
+    static let ACTION_SET_AS_READ           = "/message/setConversationAsRead"
+    static let ACTION_IMAGE_ATTACH          = "/message/imageAttach"
+    static let ACTION_GCM_CREATE            = "/auth/device/addRegistrationId"
+    static let ACTION_GCM_DELETE            = "/auth/device/deleteRegistrationId"
+    static let ACTION_GCM_UPDATE            = "/device/auth/updateRegistrationId"
+    static let uploadFileType = "jpeg"
 }
 
 class APIManager: AFHTTPSessionManager {

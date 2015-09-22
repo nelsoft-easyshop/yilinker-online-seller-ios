@@ -19,6 +19,10 @@ class TransactionsModel: NSObject {
         self.transactions = transactions
     }
     
+    override init() {
+        
+    }
+    
     class func parseDataWithDictionary(dictionary: AnyObject) -> TransactionsModel {
         
         var message: String = ""

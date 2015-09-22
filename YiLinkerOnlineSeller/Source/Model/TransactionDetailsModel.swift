@@ -22,6 +22,10 @@ class TransactionDetailsModel: NSObject {
     var transactionPayment: String = ""
     var transactionItems: [TransactionItemModel] = []
     
+    override init() {
+        
+    }
+    
     init(isSuccessful: Bool, message: String, transactionInvoice: String, transactionShippingFee: String, transactionDate: String, transactionPrice: String, transactionQuantity: Int, transactionStatusId: Int, transactionStatusName: String, transactionPayment: String, transactionItems: [TransactionItemModel]) {
         self.isSuccessful = isSuccessful
         self.message = message
