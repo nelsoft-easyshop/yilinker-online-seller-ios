@@ -429,8 +429,10 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
                 
             if selectedIndex == 5 {
                 cell.checkTapView.hidden = true
+                cell.arrowImageView.hidden = true
             } else {
                 cell.checkTapView.hidden = false
+                cell.arrowImageView.hidden = false
             }
             
             return cell
@@ -448,9 +450,10 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        println("product id >  + \(self.productModel.products[indexPath.row].id)")
-        let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
-        self.navigationController?.pushViewController(productDetails, animated: true)
+        if selectedIndex == 1 || selectedIndex == 2 || selectedIndex == 3 || selectedIndex == 4 {
+            let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
+            self.navigationController?.pushViewController(productDetails, animated: true)
+        }
     }
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
