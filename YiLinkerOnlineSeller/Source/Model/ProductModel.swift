@@ -23,7 +23,7 @@ class ProductModel {
     var completeDescription: String = ""
     var sku: String = ""
     var retailPrice: String = ""
-    var discoutedPrice: String = ""
+    var discoutedPrice: String = "0"
     var width = ""
     var height = ""
     var length = ""
