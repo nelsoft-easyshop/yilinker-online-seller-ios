@@ -131,6 +131,7 @@ class ResolutionCenterProductListViewController: UIViewController {
         manager.GET(APIAtlas.resolutionCenterGetTransactionItems, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)
+            println(responseObject)
             self.transactionDetails = TransactionDetailsModel.parseDataWithDictionary(responseObject as! NSDictionary)
             self.tableView.reloadData()
             }, failure: {
