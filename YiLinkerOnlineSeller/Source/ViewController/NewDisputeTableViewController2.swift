@@ -198,6 +198,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)
             self.transactionsModel = TransactionsModel.parseDataWithDictionary(responseObject as! NSDictionary)
+            self.tableView.reloadData()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -381,7 +382,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         var ids: [String] = []
         
         for product in self.products {
-            ids.append(product.productId)
+            ids.append(product.orderProductId)
         }
         
         var status: Int = 0
@@ -397,10 +398,10 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             "access_token": SessionManager.accessToken(),
             "disputeTitle": self.resolutiontitle,
             "remarks": remarks,
-            "orderProductStatus": "10",
+            "orderProductStatus": "\(status)",
             "orderProductIds": ids.description]
-        
-        println(parameters)
+        //[153, 486]
+        println(ids.description)
         
         manager.POST(APIAtlas.resolutionCenterAddCaseUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in

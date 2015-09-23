@@ -19,6 +19,7 @@ class ResolutionCenterViewController
     
     @IBOutlet weak var resolutionTableView: UITableView!
     var tableData = [ResolutionCenterElement]()
+    
     /*: [(ResolutionCenterElement)] =
     [ ("7889360001", "Open"  , "December 12, 2015", "Seller", "Not Happy", "It's okay")
      ,("7889360002", "Closed", "January 2, 2016"  , "Buyer" , "Yo wassup", "Go voltron!")
@@ -27,7 +28,7 @@ class ResolutionCenterViewController
      ,("2345647856", "Closed", "January 21, 2016" , "Buyer" , "On-start", "What's goin on")]
     **/
 
-    var currentSelectedFilter = SelectedFilters(time:.Total,status:.Both)
+    var currentSelectedFilter = SelectedFilters(time:.Total, status:.Both)
     
     var hud: MBProgressHUD?
 
@@ -244,11 +245,12 @@ class ResolutionCenterViewController
                              , "disputeStatusType" : statusFilter]
             } else if statusFilter == "0" {
                 parameters = [ "access_token" : SessionManager.accessToken()
-                             , "dateFrom" : timeFilter]
+                             , "dateFrom" : timeFilter,
+                               "dateTo": timeFilter]
             } else {
                 parameters = [ "access_token" : SessionManager.accessToken()
                              , "disputeStatusType" : statusFilter
-                             , "dateFrom" : timeFilter]
+                             , "dateFrom" : self.currentSelectedFilter.getTimeFilter()]
             }
         }
         println("url: " + urlString)
