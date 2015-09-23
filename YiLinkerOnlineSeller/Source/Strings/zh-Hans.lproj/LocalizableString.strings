@@ -9,6 +9,7 @@
 // Global
 SOMETHINGWENTWRONG_LOCALIZE_KEY = "登录";
 OKBUTTON_LOCALIZE_KEY = "登录";
+CANCEL_BUTTON_LOCALIZE_KEY = "登录";
 ERROR_LOCALIZE_KEY = "登录";
 FAILED_LOCALIZE_KEY = "登录";
 TOOLBAR_DONE_LOCALIZE_KEY = "登录";
@@ -17,11 +18,12 @@ TOOLBAR_DONE_LOCALIZE_KEY = "登录";
 
 // MARK: - SIGN IN
 MOTTO_LOCALIZE_KEY = "登录. 登录";
-EMAIL_PLACEHOLDER_LK = "登录 登录 登录";
-PASSWORD_PLACEHOLDER_LK = "登录 登录";
-REMEMBER_ME_LK = "登录 登录";
-FORGOT_LK = "登录 登录 登录 登录?";
-SIGN_IN_LK = "登录 登录";
-SIGNING_IN_LK = "登录 登录...";
-WELCOME_LK = "登录 登录 登录!";
-PLEASE_INPUT_LK = "登录 登录 登录 登录 登录 登录";
+EMAIL_PLACEHOLDER_LOCALIZE_KEY = "登录 登录 登录";
+PASSWORD_PLACEHOLDER_LOCALIZE_KEY = "登录 登录";
+REMEMBER_ME_LOCALIZE_KEY = "登录 登录";
+FORGOT_LOCALIZE_KEY = "登录 登录 登录 登录?";
+SIGN_IN_LOCALIZE_KEY = "登录 登录";
+SIGNING_IN_LOCALIZE_KEY = "登录 登录 ....";
+WELCOME_LOCALIZE_KEY = "登录 登录 登录!";
+PLEASE_INPUT_LOCALIZE_KEY = "登录 登录 登录 登录 登录 登录.";
+NOT_MATCH_LOCALIZE_KEY = "登录 登录 登录 登录 登录 登录.";

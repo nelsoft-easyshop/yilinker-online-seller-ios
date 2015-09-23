@@ -9,6 +9,7 @@
 // Global
 SOMETHING_WENT_WRONG_LOCALIZE_KEY = "Something Went Wrong";
 OK_BUTTON_LOCALIZE_KEY = "OK";
+CANCEL_BUTTON_LOCALIZE_KEY = "Cancel";
 ERROR_LOCALIZE_KEY = "Error";
 FAILED_LOCALIZE_KEY = "Failed";
 TOOLBAR_DONE_LOCALIZE_KEY = "Done";
@@ -17,11 +18,12 @@ TOOLBAR_DONE_LOCALIZE_KEY = "Done";
 
 // MARK: - SIGN IN
 MOTTO_LOCALIZE_KEY = "YOUR SUCCESS. IS OUR SUCCESS";
-EMAIL_PLACEHOLDER_LK = "Enter email address";
-PASSWORD_PLACEHOLDER_LK = "Enter Password";
-REMEMBER_ME_LK = "Remember me";
-FORGOT_LK = "for got your password?";
-SIGN_IN_LK = "SIGN IN";
-SIGNING_IN_LK = "SIGNING IN...";
-WELCOME_LK = "Welcome to YiLinker!";
-PLEASE_INPUT_LK = "Please input valid email and password";
+EMAIL_PLACEHOLDER_LOCALIZE_KEY = "Enter email address";
+PASSWORD_PLACEHOLDER_LOCALIZE_KEY = "Enter Password";
+REMEMBER_ME_LOCALIZE_KEY = "Remember me";
+FORGOT_LOCALIZE_KEY = "for got your password?";
+SIGN_IN_LOCALIZE_KEY = "SIGN IN";
+SIGNING_IN_LOCALIZE_KEY = "SIGNING IN ....";
+WELCOME_LOCALIZE_KEY = "Welcome to YiLinker!";
+PLEASE_INPUT_LOCALIZE_KEY = "Please input valid email and password.";
+NOT_MATCH_LOCALIZE_KEY = "Email and Password did not match.";

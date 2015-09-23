@@ -65,3 +65,15 @@ struct Constants {
         
     }
 }
+
+struct AlertStrings {
+    static let alertWishlist = StringHelper.localizedStringWithKey("ALERT_ADDED_TO_WISHLIST_LOCALIZE_KEY")
+    static let alertCart = StringHelper.localizedStringWithKey("ALERT_ADDED_TO_CART_LOCALIZE_KEY")
+    static let alertLogin = StringHelper.localizedStringWithKey("ALERT_PLEASE_LOGIN_LOCALIZE_KEY")
+    static let alertComplete = StringHelper.localizedStringWithKey("ALERT_PLEASE_COMPLETE_LOCALIZE_KEY")
+    static let wentWrong = StringHelper.localizedStringWithKey("SOMETHING_WENT_WRONG_LOCALIZE_KEY")
+    static let ok = StringHelper.localizedStringWithKey("OK_BUTTON_LOCALIZE_KEY")
+    static let cancel = StringHelper.localizedStringWithKey("OK_BUTTON_LOCALIZE_KEY")
+    static let error = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+    static let failed = StringHelper.localizedStringWithKey("FAILED_LOCALIZE_KEY")
+}

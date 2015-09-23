@@ -22,11 +22,13 @@
             <connections>
                 <outlet property="emailAddressTextField" destination="MX5-hB-w5c" id="Gfu-QV-y8N"/>
                 <outlet property="forgotPasswordButton" destination="r1J-ls-B5j" id="lsM-cD-GhO"/>
+                <outlet property="mottoLabel" destination="Ee5-Z4-QpK" id="gxG-bX-HG3"/>
                 <outlet property="passwordTextField" destination="O6t-ug-bEx" id="jxV-iz-Nx0"/>
                 <outlet property="profileContainerView" destination="Mtg-Gz-CPJ" id="aDj-hM-2HA"/>
                 <outlet property="profileImageView" destination="tBZ-cE-9j9" id="MMh-uj-Dko"/>
                 <outlet property="rememberMeImageContainerView" destination="Cdf-H9-c3X" id="3wZ-qJ-HsN"/>
                 <outlet property="rememberMeImageView" destination="OBf-dA-JrZ" id="fIV-1v-9Sr"/>
+                <outlet property="rememberMeLabel" destination="mUq-i6-JGa" id="5yg-lE-jHn"/>
                 <outlet property="rememberMeView" destination="Hwr-XN-vWq" id="VA9-Jq-1G4"/>
                 <outlet property="signInButton" destination="Nh8-ww-ecD" id="gwh-Rk-2NL"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
