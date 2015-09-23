@@ -16,22 +16,21 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var closeButton: UIButton!
-    
     @IBOutlet weak var createButton: UIButton!
     
     @IBOutlet weak var accountTitleTextField: UITextField!
-    
     @IBOutlet weak var accountNameTextField: UITextField!
-    
     @IBOutlet weak var accountNumberTextField: UITextField!
-    
     @IBOutlet weak var bankNameTextField: UITextField!
     
     @IBOutlet weak var bankTableView: UITableView!
     
     @IBOutlet weak var bankAccountTitleLabel: UILabel!
-    
     @IBOutlet weak var bankAccountDetailLabel: UILabel!
+    @IBOutlet weak var accountTitleLabel: UILabel!
+    @IBOutlet weak var accountNameLabel: UILabel!
+    @IBOutlet weak var accountNumberLabel: UILabel!
+    @IBOutlet weak var bankNameLabel: UILabel!
     
     var storeInfoModel: StoreInfoModel!
     var bankModel: BankModel!
@@ -53,6 +52,14 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
     var accountNumber: String = ""
     var bankName: String = ""
     
+    let editBankTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_EDIT_LOCALIZE_KEY")
+    let addBankTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_ADD_LOCALIZE_KEY")
+    let account: String = StringHelper.localizedStringWithKey("CHANGE_BANK_ACCOUNT_TITLE_LOCALIZE_KEY")
+    let accountNameTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_ACCOUNT_NAME_LOCALIZE_KEY")
+    let accountNumberTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_ACCOUNT_NUMBER_LOCALIZE_KEY")
+    let bankNameTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_BANK_NAME_LOCALIZE_KEY")
+    let submitTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_SUBMIT_LOCALIZE_KEY")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.bankTableView.hidden = true
@@ -66,6 +73,13 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         self.bankTableView.dataSource = self
         self.bankTableView.separatorInset = UIEdgeInsetsZero
         self.bankTableView.layoutMargins = UIEdgeInsetsZero
+        
+        self.accountTitleLabel.text = self.account
+        self.accountNameLabel.text = self.accountNameTitle
+        self.accountNumberLabel.text = self.accountNumberTitle
+        self.bankNameLabel.text = self.bankNameTitle
+        
+        self.createButton.setTitle(self.submitTitle, forState: UIControlState.Normal)
        
         var storeInfo = UINib(nibName: "FilterByTableViewCell", bundle: nil)
         self.bankTableView.registerNib(storeInfo, forCellReuseIdentifier: "FilterByTableViewCell")
@@ -73,10 +87,10 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         self.fireEnabledBanks()
         
         if self.edit {
-            self.bankAccountTitleLabel.text = "Edit Bank Account"
+            self.bankAccountTitleLabel.text = self.editBankTitle
             self.fillBankDetails(accountTitle, accountName: accountName, accountNumber: accountNumber, bankName: bankName, bankAccountId: editBankId)
         } else {
-            self.bankAccountTitleLabel.text = "Create Bank Account"
+            self.bankAccountTitleLabel.text = self.addBankTitle
         }
       
         // Do any additional setup after loading the view.
