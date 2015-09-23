@@ -198,6 +198,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)
             self.transactionsModel = TransactionsModel.parseDataWithDictionary(responseObject as! NSDictionary)
+            self.tableView.reloadData()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
