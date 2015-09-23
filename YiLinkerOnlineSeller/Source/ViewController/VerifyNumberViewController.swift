@@ -19,11 +19,14 @@ class VerifyNumberViewController: UIViewController {
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var verifyButton: UIButton!
     @IBOutlet weak var requestNewVerificationButton: UIButton!
-    @IBOutlet weak var verifyTitleLabel: UILabel!
     @IBOutlet weak var viewContainer: UIView!
     @IBOutlet weak var successFailView: UIView!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var verificationCodeTextField: UITextField!
+    
+    @IBOutlet weak var verifyTitleLabel: UILabel!
+    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var timeLeftLabel: UILabel!
     
     var viewControllers = [UIViewController]()
     var congratulationsViewController: CongratulationsViewController?
@@ -44,6 +47,18 @@ class VerifyNumberViewController: UIViewController {
     var seconds: Int = 300
     var timer = NSTimer()
     
+    let verifyTitle: String = StringHelper.localizedStringWithKey("VERIFY_NUMBER_TITLE_LOCALIZE_KEY")
+    let message: String = StringHelper.localizedStringWithKey("VERIFY_NUMBER_MESSAGE_LOCALIZE_KEY")
+    let timeLeft: String = StringHelper.localizedStringWithKey("VERIFY_NUMBER_TIME_LOCALIZE_KEY")
+    let verify: String = StringHelper.localizedStringWithKey("VERIFY_NUMBER_VERIFY_LOCALIZE_KEY")
+    let requestNew: String = StringHelper.localizedStringWithKey("VERIFY_NUMBER_REQUEST_NEW_LOCALIZE_KEY")
+    let error: String = StringHelper.localizedStringWithKey("CHANGE_MOBILE_ERROR_LOCALIZE_KEY")
+    let invalid: String = StringHelper.localizedStringWithKey("VERIFY_NUMBER_INVALID_LOCALIZE_KEY")
+    let empty: String = StringHelper.localizedStringWithKey("VERIFY_NUMBER_EMPTY_LOCALIZE_KEY")
+    let ok: String = StringHelper.localizedStringWithKey("CHANGE_MOBILE_OK_LOCALIZE_KEY")
+    let somethingWentWrong: String = StringHelper.localizedStringWithKey("ERROR_SOMETHING_WENT_WRONG_LOCALIZE_KEY")
+    let expired: String = StringHelper.localizedStringWithKey("VERIFY_NUMBER_EXPIRED_LOCALIZE_KEY")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -53,6 +68,12 @@ class VerifyNumberViewController: UIViewController {
 
         self.verifyButton.layer.cornerRadius = 4.0
         self.verifyButton.clipsToBounds = true
+        
+        self.verifyTitleLabel.text = self.verifyTitle
+        self.messageLabel.text = self.message
+        self.timeLeftLabel.text = self.timeLeft
+        self.verifyButton.setTitle(self.verify, forState: UIControlState.Normal)
+        self.requestNewVerificationButton.setTitle(self.requestNew, forState: UIControlState.Normal)
         
         timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("subtractTime"), userInfo: nil, repeats: true)
         
@@ -80,12 +101,12 @@ class VerifyNumberViewController: UIViewController {
         if !self.verificationCodeTextField.text.isEmpty {
             println(self.verificationCodeTextField.text.toInt())
             if count(self.verificationCodeTextField.text) < 6 || count(self.verificationCodeTextField.text) > 6 {
-                self.showAlert("Error", message: "You have entered an invalid verification code.")
+                self.showAlert(self.error, message: self.invalid)
             } else {
                 self.fireVerify(self.verificationCodeTextField.text!)
             }
         } else {
-            self.showAlert("Error", message: "Please enter the 6 digit verification code.")
+            self.showAlert(self.error, message: self.empty)
         }
     }
     
@@ -99,14 +120,14 @@ class VerifyNumberViewController: UIViewController {
                     self.seconds = 300
                     self.invalidateTimer()
                 } else {
-                    self.showAlert("Error", message: "Something went wrong.")
+                    self.showAlert(self.error, message: self.somethingWentWrong)
                 }
                 println(responseObject.description)
                 //self.setSelectedViewControllerWithIndex(0)
                 self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                self.showAlert("Error", message: "Something went wrong.")
+                self.showAlert(self.error, message: self.somethingWentWrong)
         })
     }
     
@@ -126,7 +147,7 @@ class VerifyNumberViewController: UIViewController {
                     self.delegate?.congratulationsViewController(true)
                 } else {
                     println("\(responseObject)")
-                    self.showAlert("Error", message: "Something went wrong.")
+                    self.showAlert(self.error, message: self.somethingWentWrong)
                 }
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.dismissViewControllerAnimated(true, completion: nil)
@@ -134,11 +155,11 @@ class VerifyNumberViewController: UIViewController {
                 //self.delegate?.dismissView()
                 println(error.userInfo)
                 self.delegate?.congratulationsViewController(false)
-                self.showAlert("Error", message: "Something went wrong.")
+                self.showAlert(self.error, message: self.somethingWentWrong)
                 println(error)
             })
         } else {
-             self.showAlert("Error", message: "Your verification code has expired.")
+             self.showAlert(self.error, message: self.expired)
         }
        
     }
@@ -187,7 +208,7 @@ class VerifyNumberViewController: UIViewController {
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+        let OKAction = UIAlertAction(title: self.ok, style: .Default) { (action) in
             alertController.dismissViewControllerAnimated(true, completion: nil)
         }
         
