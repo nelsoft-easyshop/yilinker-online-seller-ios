@@ -53,9 +53,8 @@ class SelectedFilters {
         case .Today:
             return formatter.stringFromDate(now)
         case .ThisWeek:
-            let oneWeek: NSTimeInterval = 60*60*24*7
-            let lastWeek = now.dateByAddingTimeInterval(-oneWeek)
-            return formatter.stringFromDate(lastWeek)
+            let day: Int = self.dayOfWeek(self.getTimeNow())
+            return formatter.stringFromDate(NSDate())
         case .ThisMonth:
             let oneMonth: NSTimeInterval = 60*60*24*30
             let lastMonth = now.dateByAddingTimeInterval(-oneMonth)
@@ -65,6 +64,29 @@ class SelectedFilters {
         default:
             return ""
         }
+    }
+    
+    func sundayDate() -> String {
+        let day: Int = self.dayOfWeek(self.getTimeNow())
+       return self.fromDateWeek(day)
+    }
+    
+    func dayOfWeek(today:String) -> Int {
+        let formatter  = NSDateFormatter()
+        formatter.dateFormat = "MM/dd/YYYY"
+        let todayDate = formatter.dateFromString(today)!
+        let myCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+        let myComponents = myCalendar.components(.CalendarUnitWeekday, fromDate: todayDate)
+        let weekDay = myComponents.weekday
+        return weekDay
+    }
+    
+    func fromDateWeek(numberOfDays: Int) -> String {
+        let userCalendar = NSCalendar.currentCalendar()
+        let sundayDate = userCalendar.dateByAddingUnit(NSCalendarUnit.CalendarUnitDay, value: -numberOfDays, toDate: NSDate(), options: nil)!
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "MM/dd/YYYY"
+       return formatter.stringFromDate(sundayDate)
     }
     
     func getTimeNow() -> String {
