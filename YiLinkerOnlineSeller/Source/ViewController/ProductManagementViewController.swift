@@ -8,8 +8,27 @@
 
 import UIKit
 
-struct ManagementStrings {
+private struct ManagementStrings {
+    static let title = StringHelper.localizedStringWithKey("MANAGEMENT_TITLE_LOCALIZE_KEY")
+    static let all = StringHelper.localizedStringWithKey("MANAGEMENT_ALL_LOCALIZE_KEY")
+    static let active = StringHelper.localizedStringWithKey("MANAGEMENT_ACTIVE_LOCALIZE_KEY")
+    static let inactive = StringHelper.localizedStringWithKey("MANAGEMENT_INACTIVE_LOCALIZE_KEY")
+    static let drafts = StringHelper.localizedStringWithKey("MANAGEMENT_DRAFTS_LOCALIZE_KEY")
+    static let deleted = StringHelper.localizedStringWithKey("MANAGEMENT_DELETED_LOCALIZE_KEY")
+    static let underReview = StringHelper.localizedStringWithKey("MANAGEMENT_UNDER_REVIEW_LOCALIZE_KEY")
     
+    static let disableAll = StringHelper.localizedStringWithKey("MANAGEMENT_DISABLE_ALL_LOCALIZE_KEY")
+    static let restoreAll = StringHelper.localizedStringWithKey("MANAGEMENT_RESTORE_ALL_LOCALIZE_KEY")
+    static let deleteAll = StringHelper.localizedStringWithKey("MANAGEMENT_DELETE_ALL_LOCALIZE_KEY")
+    
+    static let moveActive = StringHelper.localizedStringWithKey("MANAGEMENT_MOVE_ACTIVE_LOCALIZE_KEY")
+    static let moveInactive = StringHelper.localizedStringWithKey("MANAGEMENT_MOVE_INACTIVE_LOCALIZE_KEY")
+    static let delete = StringHelper.localizedStringWithKey("MANAGEMENT_DELETE_LOCALIZE_KEY")
+    
+    static let modalTitle = StringHelper.localizedStringWithKey("MANAGEMENT_MODAL_TITLE_LOCALIZE_KEY")
+    static let modalTitle2 = StringHelper.localizedStringWithKey("MANAGEMENT_MODAL_TITLE2_LOCALIZE_KEY")
+    static let modalSubtitle = StringHelper.localizedStringWithKey("MANAGEMENT_MODAL_SUBTITLE_LOCALIZE_KEY")
+    static let modalSubtitle2 = StringHelper.localizedStringWithKey("MANAGEMENT_MODAL_SUBTITLE2_LOCALIZE_KEY")
 }
 
 private struct Status {
@@ -37,10 +56,11 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     @IBOutlet weak var activeInactiveView: UIView!
     @IBOutlet weak var delete2View: UIView!
     @IBOutlet weak var activeInactiveLabel: UILabel!
+    @IBOutlet weak var deleteLabel: UILabel!
     
     @IBOutlet weak var dimView: UIView!
     
-    var pageTitle: [String] = ["All", "Active", "Inactive", "Drafts", "Deleted", "Under Review"]
+    var pageTitle: [String] = [ManagementStrings.all, ManagementStrings.active, ManagementStrings.inactive, ManagementStrings.drafts, ManagementStrings.deleted, ManagementStrings.underReview]
     var selectedImage: [String] = ["all2", "active2", "inactive2", "drafts2", "deleted2", "review2"]
     var deSelectedImage: [String] = ["all", "active", "inactive", "drafts", "deleted", "review"]
 
@@ -102,12 +122,13 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         self.delete2View.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "delete2Action:"))
         
         self.dimView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "dimAction"))
+        self.deleteLabel.text = ManagementStrings.delete
     }
     
     func customizeNavigationBar() {
         
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.title = "Product Management"
+        self.title = ManagementStrings.title
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
@@ -160,9 +181,9 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         sectionHeaderContainverView.addSubview(button1)
         
         if selectedIndex == 1 {
-            button1.setTitle("Disable All", forState: .Normal)
+            button1.setTitle(ManagementStrings.disableAll, forState: .Normal)
         } else if selectedIndex == 2 || selectedIndex == 3 {
-            button1.setTitle("Delete All", forState: .Normal)
+            button1.setTitle(ManagementStrings.deleteAll, forState: .Normal)
             
             if selectedIndex == 2 {
                 var separatorLineView = UIView(frame: CGRectMake(button1.frame.origin.x - lineThin, 0, lineThin, sectionHeaderContainverView.frame.size.height - 10))
@@ -171,7 +192,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 sectionHeaderContainverView.addSubview(separatorLineView)
                 
                 var restoreAllButton = UIButton(frame: CGRectMake(separatorLineView.frame.origin.x - buttonWidth, 0, buttonWidth, sectionHeaderContainverView.frame.size.height))
-                restoreAllButton.setTitle("Restore All", forState: .Normal)
+                restoreAllButton.setTitle(ManagementStrings.restoreAll, forState: .Normal)
                 restoreAllButton.titleLabel?.font = UIFont.systemFontOfSize(11.0)
                 restoreAllButton.setTitleColor(Constants.Colors.appTheme, forState: .Normal)
                 restoreAllButton.addTarget(self, action: "tabAction:", forControlEvents: .TouchUpInside)
@@ -264,9 +285,9 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             if selectedIndex == 1 {
                 action = Status.inactive
             } else if selectedIndex == 2 {
-                if sender.titleLabel!!.text == "Delete All" {
+                if sender.titleLabel!!.text == ManagementStrings.deleteAll {
                     action = Status.deleted
-                } else if sender.titleLabel!!.text == "Restore All" {
+                } else if sender.titleLabel!!.text == ManagementStrings.restoreAll {
                     action = Status.active
                 }
             } else if selectedIndex == 3 {
@@ -274,8 +295,8 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             }
             
             if sender.titleLabel!.text != nil {
-                showModal(title: "You're about to " + sender.titleLabel!!.text!.lowercaseString + " active products.",
-                    message: "Are you sure you want to " + sender.titleLabel!!.text!.lowercaseString + " products?",
+                showModal(title: ManagementStrings.modalTitle + sender.titleLabel!!.text!.lowercaseString + ManagementStrings.modalTitle2,
+                    message: ManagementStrings.modalSubtitle + sender.titleLabel!!.text!.lowercaseString + ManagementStrings.modalSubtitle2,
                     status: action)
             }
         }
@@ -538,9 +559,9 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
         if selectedIndex == 1 || selectedIndex == 2 {
             self.activeInactiveDeleteContainerView.hidden = false
             if selectedIndex == 1 {
-                self.activeInactiveLabel.text = "MOVE TO INACTIVE"
+                self.activeInactiveLabel.text = ManagementStrings.moveInactive
             } else {
-                self.activeInactiveLabel.text = "MOVE TO ACTIVE"
+                self.activeInactiveLabel.text = ManagementStrings.moveActive
             }
             
             self.deleteView.hidden = true

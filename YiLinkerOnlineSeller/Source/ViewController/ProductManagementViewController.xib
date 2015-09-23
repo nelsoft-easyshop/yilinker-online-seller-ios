@@ -27,6 +27,7 @@
                 <outlet property="buttonsContainer" destination="zrT-wQ-HdY" id="97g-S5-LIN"/>
                 <outlet property="collectionView" destination="vPo-r1-Ubn" id="aO0-eq-XVX"/>
                 <outlet property="delete2View" destination="Y4h-6r-cj3" id="Rns-lv-BAG"/>
+                <outlet property="deleteLabel" destination="UyK-yn-GHc" id="ilX-ib-jrh"/>
                 <outlet property="deleteView" destination="Wfh-2c-ify" id="9bR-K1-YjN"/>
                 <outlet property="dimView" destination="LTb-gA-wY0" id="TPR-i5-XVe"/>
                 <outlet property="inactiveView" destination="Nzf-ql-uSX" id="ss7-Xo-WfY"/>
