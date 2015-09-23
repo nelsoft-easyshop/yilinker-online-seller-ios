@@ -205,9 +205,9 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let manager = APIManager.sharedInstance
             let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
             
-            manager.GET(APIAtlas.transaction+"\(SessionManager.accessToken())&query=\(self.searchTextField.text)", parameters: nil, success: {
+            manager.GET(APIAtlas.transaction+"\(SessionManager.accessToken())&query=\(self.searchTextField.text)", parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                
+           
                 self.searchModel = SearchModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 
                 for var i = 0; i < self.searchModel!.invoiceNumber.count; i++ {
