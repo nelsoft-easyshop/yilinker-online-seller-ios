@@ -102,7 +102,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             if self.searchModel != nil {
                 return self.searchModel!.invoiceNumber.count
             } else {
-                return 1
+                return 0
             }
         } else {
                return 4
