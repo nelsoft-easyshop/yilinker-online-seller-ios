@@ -367,7 +367,6 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         if showHUD {
             self.showHUD()
         }
-        
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
         

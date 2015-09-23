@@ -8,7 +8,11 @@
 
 import UIKit
 
-struct Status {
+struct ManagementStrings {
+    
+}
+
+private struct Status {
     static let active = 2
     static let inactive = 3
     static let draft = 0
