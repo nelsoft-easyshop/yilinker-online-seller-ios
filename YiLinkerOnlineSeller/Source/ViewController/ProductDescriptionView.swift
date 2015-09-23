@@ -14,14 +14,16 @@ protocol ProductDescriptionViewDelegate {
 
 class ProductDescriptionView: UIView {
 
+    var delegate: ProductDescriptionViewDelegate?
+    
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var seeMoreView: UIView!
-    
-    var delegate: ProductDescriptionViewDelegate?
     
     override func awakeFromNib() {
         seeMoreView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "seeMoreAction:"))
     }
+    
+    // MARK: - Methods
     
     // MARK: - Actions
     

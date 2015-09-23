@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol FilterViewControllerDelegate {
+    func dismissView()
+}
+
 class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate {
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var resetButton: UIButton!
@@ -18,6 +22,8 @@ class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate 
         FilterAttributeModel(title: "Search By", attributes: ["Product Name", "Transaction Id", "Rider"]),
         FilterAttributeModel(title: "Date", attributes: ["All", "Today", "Day Ago", "Week", "New"])]
     
+    var delegate: FilterViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,10 +31,12 @@ class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate 
         var nib = UINib(nibName: "FilterTableViewCell", bundle: nil)
         filterTableView.registerNib(nib, forCellReuseIdentifier: "FilterTableViewCell")
         
+        var nibCalendar = UINib(nibName: "FilterCalendarTableViewCell", bundle: nil)
+        filterTableView.registerNib(nibCalendar, forCellReuseIdentifier: "FilterCalendarTableViewCell")
+        
         let filterFooterNib: UINib = UINib(nibName: "FilterFooterTableViewCell", bundle: nil)
         self.filterTableView.registerNib(filterFooterNib, forCellReuseIdentifier: "FilterFooterTableViewCell")
         
-        self.filterTableView.estimatedRowHeight = 262
         self.filterTableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, -5)
         self.filterTableView.rowHeight = UITableViewAutomaticDimension
         self.filterTableView.layoutIfNeeded()
@@ -43,6 +51,7 @@ class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate 
     
     @IBAction func cancelAction(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
+        self.delegate?.dismissView()
     }
     
     @IBAction func resetAction(sender: AnyObject) {
@@ -62,16 +71,41 @@ class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 2
+        return 3
     }
     
-    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.row == 2 {
+            return 298
+        } else if indexPath.row == 0{
+            return 95
+        } else {
+            return 95
+        }
+    }
+
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("FilterTableViewCell", forIndexPath: indexPath) as! FilterTableViewCell
-        cell.passModel(tableData[indexPath.row])
-        // Configure the cell...
+         if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier("FilterTableViewCell", forIndexPath: indexPath) as! FilterTableViewCell
+            println("\(tableData.count)")
+            //if !tableData.isEmpty {
+                cell.passModel(tableData[0])
+            //}
+            
+            return cell
+        } else if indexPath.row == 1{
+            let cell = tableView.dequeueReusableCellWithIdentifier("FilterTableViewCell", forIndexPath: indexPath) as! FilterTableViewCell
+            println("\(tableData.count)")
+            //if !tableData.isEmpty {
+            cell.passModel(tableData[1])
+            //}
+            
+            return cell
+        }  else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("FilterCalendarTableViewCell", forIndexPath: indexPath) as! FilterCalendarTableViewCell
+            return cell
+        }
         
-        return cell
     }
     
     func tableFooterView() -> UIView {

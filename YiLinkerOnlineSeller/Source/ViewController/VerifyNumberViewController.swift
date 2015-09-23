@@ -9,17 +9,21 @@
 import UIKit
 
 protocol VerifyViewControllerDelegate {
+    func congratulationsViewController(isSuccessful: Bool)
     func dismissView()
 }
 
 class VerifyNumberViewController: UIViewController {
 
+    @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var verifyButton: UIButton!
     @IBOutlet weak var requestNewVerificationButton: UIButton!
     @IBOutlet weak var verifyTitleLabel: UILabel!
     @IBOutlet weak var viewContainer: UIView!
     @IBOutlet weak var successFailView: UIView!
+    @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var verificationCodeTextField: UITextField!
     
     var viewControllers = [UIViewController]()
     var congratulationsViewController: CongratulationsViewController?
@@ -33,63 +37,24 @@ class VerifyNumberViewController: UIViewController {
     
     var hud: MBProgressHUD?
     
+    var isSuccessful = false
+    
+    var mobileNumber: String = ""
+    
+    var seconds: Int = 300
+    var timer = NSTimer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         self.viewContainer.layer.cornerRadius = 5.0
         self.viewContainer.clipsToBounds = true
-    
-        initViewController()
-        self.setSelectedViewControllerWithIndex(0)
-    }
-    
-    func initViewController() {
+
+        self.verifyButton.layer.cornerRadius = 4.0
+        self.verifyButton.clipsToBounds = true
         
-        verifyViewController = VerifyViewController(nibName: "VerifyViewController", bundle: nil)
-        congratulationsViewController = CongratulationsViewController(nibName: "CongratulationsViewController", bundle: nil)
-        
-        self.viewControllers.append(verifyViewController!)
-        self.viewControllers.append(congratulationsViewController!)
-        
-    }
-    
-    func setSelectedViewControllerWithIndex(index: Int) {
-        if index == 0 {
-            let viewController: UIViewController = viewControllers[index]
-            self.verifyTitleLabel.hidden  = false
-            self.verifyButton.setTitle("Verify", forState: UIControlState.Normal)
-            self.requestNewVerificationButton.hidden = false
-            setSelectedViewController(viewController)
-        } else if index == 1 {
-            let viewController: UIViewController = viewControllers[index]
-            setSelectedViewController(viewController)
-            self.verifyTitleLabel.hidden  = true
-            self.congratulationsViewController?.successFailView.backgroundColor = Constants.Colors.appTheme
-            //Set condition to check if fail or not
-            self.verifyButton.setTitle("Continue", forState: UIControlState.Normal)
-            self.requestNewVerificationButton.hidden = true
-        }
-    }
-    
-    func setSelectedViewController(viewController: UIViewController) {
-        if !(selectedChildViewController == viewController) {
-            if self.isViewLoaded() {
-                selectedChildViewController?.willMoveToParentViewController(self)
-                selectedChildViewController?.view.removeFromSuperview()
-                selectedChildViewController?.removeFromParentViewController()
-            }
-        }
-        self.view.layoutIfNeeded()
-        self.addChildViewController(viewController)
-        viewController.view.frame = self.contentViewFrame!
-        successFailView.addSubview(viewController.view)
-        viewController.didMoveToParentViewController(self)
-        selectedChildViewController = viewController
-    }
-    
-    override func viewDidLayoutSubviews() {
-        self.contentViewFrame = successFailView.bounds
+        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("subtractTime"), userInfo: nil, repeats: true)
         
     }
     
@@ -98,43 +63,87 @@ class VerifyNumberViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: Button functions
     @IBAction func cancelAction(sender: AnyObject!) {
         self.dismissViewControllerAnimated(true, completion: nil)
         self.delegate?.dismissView()
-      
     }
     
     @IBAction func requestNewVerificationCode(sender: AnyObject){
         //Set action to send new verification code
+        self.fireResendVerificationCode()
+        println("Resending verification code")
     }
     
     @IBAction func verifyContinueRequest(sender: AnyObject){
-        //Set action to send verification/continue/request new code
-        if self.verifyButton.titleLabel?.text == "Verify" {
-            println("fire verify")
-            self.fireVerify(self.verifyViewController!.verificationCodeTextField.text!)
-        } else if self.verifyButton.titleLabel?.text == "Continue" {
-            println("Continue")
+        println("fire verify")
+        if !self.verificationCodeTextField.text.isEmpty {
+            println(self.verificationCodeTextField.text.toInt())
+            if count(self.verificationCodeTextField.text) < 6 || count(self.verificationCodeTextField.text) > 6 {
+                self.showAlert("Error", message: "You have entered an invalid verification code.")
+            } else {
+                self.fireVerify(self.verificationCodeTextField.text!)
+            }
+        } else {
+            self.showAlert("Error", message: "Please enter the 6 digit verification code.")
         }
-        
-        self.delegate?.dismissView()
-        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func fireVerify(verificationCode: String){
+    //MARK: Resend verification code
+    func fireResendVerificationCode() {
         self.showHUD()
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "code" : NSNumber(integer: verificationCode.toInt()!)];
-        
-        manager.POST(APIAtlas.sellerMobileNumberVerification, parameters: parameters, success: {
+        manager.POST(APIAtlas.sellerResendVerification+"\(SessionManager.accessToken())&mobileNumber=\(self.mobileNumber)", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.hud?.hide(true)
+                if responseObject["isSuccessful"] as! Bool {
+                    self.seconds = 300
+                    self.invalidateTimer()
+                } else {
+                    self.showAlert("Error", message: "Something went wrong.")
+                }
+                println(responseObject.description)
+                //self.setSelectedViewControllerWithIndex(0)
+                self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                println(error)
+                self.showAlert("Error", message: "Something went wrong.")
         })
     }
     
+    //MARK: Send verification code
+    func fireVerify(verificationCode: String){
+        if self.verifyViewController?.timerLabel.text != "00:00" {
+            self.showHUD()
+            let manager = APIManager.sharedInstance
+            let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "code" : NSNumber(integer: verificationCode.toInt()!)];
+            
+            manager.POST(APIAtlas.sellerMobileNumberVerification, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                if responseObject["isSuccessful"] as! Bool {
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.hud?.hide(true)
+                    //self.delegate?.dismissView()
+                    self.delegate?.congratulationsViewController(true)
+                } else {
+                    println("\(responseObject)")
+                    self.showAlert("Error", message: "Something went wrong.")
+                }
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.dismissViewControllerAnimated(true, completion: nil)
+                self.hud?.hide(true)
+                //self.delegate?.dismissView()
+                println(error.userInfo)
+                self.delegate?.congratulationsViewController(false)
+                self.showAlert("Error", message: "Something went wrong.")
+                println(error)
+            })
+        } else {
+             self.showAlert("Error", message: "Your verification code has expired.")
+        }
+       
+    }
+    
+    //MARK: Show MBProgressHUD bar
     func showHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
@@ -146,6 +155,59 @@ class VerifyNumberViewController: UIViewController {
         self.hud?.dimBackground = false
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
+    }
+    
+    //MARK: Starts the timer
+    func subtractTime() {
+        seconds--
+        var secondsTemp: Int = seconds % 60
+        var minutes: Int = Int(seconds / 60)
+        if secondsTemp < 10 {
+            timerLabel.text = "0\(minutes):0\(secondsTemp)"
+        } else {
+            timerLabel.text = "0\(minutes):\(secondsTemp)"
+        }
+        
+        if(seconds == 0)  {
+            timer.invalidate()
+            timerLabel.text = "00:00"
+            //self.dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
+    
+    //MARK: Invalidate timer - sets to 05:00
+    func invalidateTimer() {
+        timer.invalidate()
+        seconds = 300
+        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("subtractTime"), userInfo: nil, repeats: true)
+        verificationCodeTextField.text = ""
+    }
+    
+    //MARK: Show alert view
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            
+        }
+    }
+    
+    //MARK: Textfield
+    @IBAction func textFieldDidBeginEditing(sender: AnyObject) {
+        if IphoneType.isIphone4() {
+            topConstraint.constant = 40
+        } else if IphoneType.isIphone5() {
+            topConstraint.constant = 60
+        } else {
+            topConstraint.constant = 100
+        }
+        
     }
     /*
     // MARK: - Navigation

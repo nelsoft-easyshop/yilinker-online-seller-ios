@@ -20,8 +20,8 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var searchBarTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
 
-    var selectedIndex: Int = -1
-
+    var selectedParentId: Int = 0
+    
     var hud: MBProgressHUD?
     
     override func viewDidLoad() {
@@ -85,6 +85,7 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.customizedCategoriesModel = CustomizedCategoriesModel.parseDataWithDictionary(responseObject as! NSDictionary)
+            
             self.tableView.reloadData()
             self.hud?.hide(true)
             
@@ -98,11 +99,22 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
     // MARK: - Actions
     
     func closeAction() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController?.popViewControllerAnimated(false)
     }
     
     func checkAction() {
-        delegate?.updateParentCategory(customizedCategoriesModel.customizedCategories[selectedIndex].name, parentId: customizedCategoriesModel.customizedCategories[selectedIndex].parentId)
+        if self.selectedParentId != 0 {
+            for i in 0..<customizedCategoriesModel.customizedCategories.count {
+                if self.selectedParentId == customizedCategoriesModel.customizedCategories[i].categoryId {
+                    delegate?.updateParentCategory(customizedCategoriesModel.customizedCategories[i].name,
+                                         parentId: customizedCategoriesModel.customizedCategories[i].categoryId)
+                    break
+                }
+            }
+        } else {
+            delegate?.updateParentCategory("NONE", parentId: 0)
+        }
+        
         closeAction()
     }
     
@@ -122,7 +134,7 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
         cell.textLabel?.text = customizedCategoriesModel.customizedCategories[indexPath.row].name
         cell.textLabel?.font = UIFont(name: "Panton", size: 12.0)
         
-        if selectedIndex == indexPath.row {
+        if selectedParentId == customizedCategoriesModel.customizedCategories[indexPath.row].categoryId {
             var check = UIImageView(frame: CGRectMake(0, 0, 10, 10))
             check.image = UIImage(named: "checkCategory")
             cell.accessoryView = check
@@ -132,10 +144,12 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.selectedIndex = indexPath.row
+        if self.selectedParentId == customizedCategoriesModel.customizedCategories[indexPath.row].categoryId {
+            self.selectedParentId = 0
+        } else {
+            self.selectedParentId = customizedCategoriesModel.customizedCategories[indexPath.row].categoryId
+        }
         self.tableView.reloadData()
     }
-    
-        
     
 }

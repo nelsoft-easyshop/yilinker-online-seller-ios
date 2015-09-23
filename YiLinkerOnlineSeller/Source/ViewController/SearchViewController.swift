@@ -24,9 +24,18 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var arrowView: UIView!
     
-    var filterBySelected: String = ""
+    var filterBySelected: Int = 0
+    var currentPage: Int = 0
+    var nextpage: Int = 0
+    
+    var allObjectArray: NSMutableArray = []
+    var elements: NSMutableArray = []
     
     var filterBy = ["All", "Transaction Id", "Product Name", "Rider"]
+    
+    var hud: MBProgressHUD?
+    
+    var searchModel: SearchModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +45,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.searchFilterByView.hidden = true
         self.filterByButton.setTitle(filterBy[0], forState: UIControlState.Normal)
         self.searchTextField.delegate = self
+        self.searchResultTableView.separatorInset = UIEdgeInsetsZero
+        self.searchResultTableView.layoutMargins = UIEdgeInsetsZero
         //self.searchTextField.becomeFirstResponder()
         
     }
@@ -68,9 +79,11 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         var nibCategory = UINib(nibName: "CategoryTableViewCell", bundle: nil)
         searchResultTableView.registerNib(nibCategory, forCellReuseIdentifier: "CategoryTableViewCell")
         
+        var nibSearch = UINib(nibName: "SearchTableViewCell", bundle: nil)
+        searchResultTableView.registerNib(nibSearch, forCellReuseIdentifier: "SearchTableViewCell")
+        
         var nibFilter = UINib(nibName: "FilterByTableViewCell", bundle: nil)
         filterByTableView.registerNib(nibFilter, forCellReuseIdentifier: "FilterByTableViewCell")
-        
         
     }
     
@@ -84,16 +97,21 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         if (tableView.isEqual(self.searchResultTableView)){
-            return 3
+            if self.searchModel != nil {
+                return self.searchModel!.invoiceNumber.count
+            } else {
+                return 1
+            }
         } else {
-            return 4
+               return 4
         }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if(tableView .isEqual(self.searchResultTableView)){
-            return 144
+            return 46
         } else {
             return 30
         }
@@ -101,8 +119,11 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if (tableView .isEqual(self.searchResultTableView)){
-            let cell = searchResultTableView.dequeueReusableCellWithIdentifier("CategoryTableViewCell") as! CategoryTableViewCell
+        if (tableView.isEqual(self.searchResultTableView)){
+            let cell = searchResultTableView.dequeueReusableCellWithIdentifier("SearchTableViewCell") as! SearchTableViewCell
+            if self.searchModel != nil {
+                cell.invoiceNumberLabel.text = self.searchModel?.invoiceNumber[indexPath.row]
+            }
             
             return cell
         } else {
@@ -128,9 +149,20 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let indexPath = tableView.indexPathForSelectedRow();
             let currentCell = tableView.cellForRowAtIndexPath(indexPath!) as UITableViewCell!;
             self.filterByButton.setTitle(filterBy[indexPath!.row], forState: UIControlState.Normal)
-            filterBySelected = filterBy[indexPath!.row]
+            filterBySelected = indexPath!.row
             
             println(filterBySelected)
+        }
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        println(indexPath.row)
+        nextpage = elements.count - 5
+        if indexPath.row == nextpage {
+            currentPage++
+            nextpage = elements.count  - 5
+            elements.addObjectsFromArray(allObjectArray.subarrayWithRange(NSMakeRange(currentPage, 20)))
+            self.searchResultTableView.reloadData()
         }
     }
     
@@ -154,16 +186,71 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
-    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         //self.searchTextField.resignFirstResponder()
         self.searchTextField.endEditing(true)
-        var storeInfoViewController = FilterResultsViewController(nibName: "FilterResultsViewController", bundle: nil)
-        storeInfoViewController.edgesForExtendedLayout = .None
-        self.navigationController?.pushViewController(storeInfoViewController, animated: true)
+        
+        if filterBySelected == 0 || filterBySelected == 2 || filterBySelected == 3 {
+            self.showAlert(title: "Information", message: "Search by \(filterBy[filterBySelected]) is not yet available.")
+        } else {
+            self.fireSearch()
+        }
+        
         return true
     }
     
+    func fireSearch(){
+        if filterBySelected == 1 {
+            self.showHUD()
+            let manager = APIManager.sharedInstance
+            let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
+            
+            manager.GET(APIAtlas.transaction+"\(SessionManager.accessToken())&query=\(self.searchTextField.text)", parameters: nil, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                
+                self.searchModel = SearchModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                
+                for var i = 0; i < self.searchModel!.invoiceNumber.count; i++ {
+                    self.allObjectArray.addObject(i)
+                }
+                self.elements.addObjectsFromArray(self.allObjectArray.subarrayWithRange(NSMakeRange(0, 20)))
+                
+                var storeInfoViewController = FilterResultsViewController(nibName: "FilterResultsViewController", bundle: nil)
+                storeInfoViewController.edgesForExtendedLayout = .None
+                storeInfoViewController.searchModel = self.searchModel
+                self.navigationController?.pushViewController(storeInfoViewController, animated: true)
+
+                
+                //self.searchResultTableView.reloadData()
+                self.hud?.hide(true)
+                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                    self.hud?.hide(true)
+                    println(error)
+            })
+        } else {
+            println("Search not available.")
+        }
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
+    }
     
     /*
     // MARK: - Navigation

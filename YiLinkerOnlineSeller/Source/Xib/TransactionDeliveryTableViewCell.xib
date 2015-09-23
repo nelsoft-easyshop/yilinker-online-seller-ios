@@ -31,14 +31,11 @@
                         <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C5J-Ho-YQY" userLabel="Last check-in Value">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C5J-Ho-YQY" userLabel="Last check-in Value">
                         <rect key="frame" x="16" y="22" width="328" height="35"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="35" id="2V2-M4-sIO"/>
                         </constraints>
-                        <string key="text" base64-UTF8="YES">
-SmFudWFyeSAxNSwgMjAxNSBhdCAxMTo1OSBQTQPigKgDQm9ncyBCb3JqYSwgTWFuaWxhA
-</string>
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -66,7 +63,7 @@ SmFudWFyeSAxNSwgMjAxNSBhdCAxMTo1OSBQTQPigKgDQm9ncyBCb3JqYSwgTWFuaWxhA
                         <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apo Lario ni Mabini" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="agY-sI-jcb" userLabel="Picku rider Value">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="agY-sI-jcb" userLabel="Picku rider Value">
                         <rect key="frame" x="16" y="88" width="285" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="6Iv-s0-iS9"/>
@@ -84,6 +81,9 @@ SmFudWFyeSAxNSwgMjAxNSBhdCAxMTo1OSBQTQPigKgDQm9ncyBCb3JqYSwgTWFuaWxhA
                         <state key="normal" image="sms">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="buttonAction:" destination="TH2-lw-L4C" eventType="touchUpInside" id="9uY-vc-YQu"/>
+                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xEL-7A-hDc" userLabel="Call Button">
                         <rect key="frame" x="339" y="80" width="20" height="20"/>
@@ -94,6 +94,9 @@ SmFudWFyeSAxNSwgMjAxNSBhdCAxMTo1OSBQTQPigKgDQm9ncyBCb3JqYSwgTWFuaWxhA
                         <state key="normal" image="call">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="buttonAction:" destination="TH2-lw-L4C" eventType="touchUpInside" id="84p-Rr-O6a"/>
+                        </connections>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bdf-QG-vdB" userLabel="Separator 2">
                         <rect key="frame" x="0.0" y="110" width="375" height="1"/>
@@ -111,7 +114,7 @@ SmFudWFyeSAxNSwgMjAxNSBhdCAxMTo1OSBQTQPigKgDQm9ncyBCb3JqYSwgTWFuaWxhA
                         <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tata Lino" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ULr-I1-HjE" userLabel="Contact Number Value">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ULr-I1-HjE" userLabel="Contact Number Value">
                         <rect key="frame" x="16" y="131" width="285" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="00B-BM-Gh6"/>
@@ -129,6 +132,9 @@ SmFudWFyeSAxNSwgMjAxNSBhdCAxMTo1OSBQTQPigKgDQm9ncyBCb3JqYSwgTWFuaWxhA
                         <state key="normal" image="sms">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="buttonAction:" destination="TH2-lw-L4C" eventType="touchUpInside" id="Aop-49-Smj"/>
+                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NwV-KF-LLM" userLabel="Call Button">
                         <rect key="frame" x="339" y="123" width="20" height="20"/>
@@ -139,6 +145,16 @@ SmFudWFyeSAxNSwgMjAxNSBhdCAxMTo1OSBQTQPigKgDQm9ncyBCb3JqYSwgTWFuaWxhA
                         <state key="normal" image="call">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="buttonAction:" destination="TH2-lw-L4C" eventType="touchUpInside" id="lFe-yh-6UA"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dpp-i3-lYc">
+                        <rect key="frame" x="16" y="8" width="343" height="49"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                        <connections>
+                            <action selector="buttonAction:" destination="TH2-lw-L4C" eventType="touchUpInside" id="nb3-j2-T8c"/>
+                        </connections>
                     </button>
                 </subviews>
                 <constraints>
@@ -182,6 +198,7 @@ SmFudWFyeSAxNSwgMjAxNSBhdCAxMTo1OSBQTQPigKgDQm9ncyBCb3JqYSwgTWFuaWxhA
                 <outlet property="deliveryRiderCallButton" destination="NwV-KF-LLM" id="jEE-D9-Pfb"/>
                 <outlet property="deliveryRiderLabel" destination="ULr-I1-HjE" id="xEp-Yw-Mzb"/>
                 <outlet property="deliveryRiderSMSButton" destination="KQx-ox-4tH" id="gb3-RD-tx5"/>
+                <outlet property="lastCheckinButton" destination="dpp-i3-lYc" id="wSS-eB-7ix"/>
                 <outlet property="lastCheckinLabel" destination="C5J-Ho-YQY" id="0hb-s4-pUZ"/>
                 <outlet property="pickupRiderCallButton" destination="xEL-7A-hDc" id="2r1-6U-vHF"/>
                 <outlet property="pickupRiderLabel" destination="agY-sI-jcb" id="CSs-68-9sN"/>

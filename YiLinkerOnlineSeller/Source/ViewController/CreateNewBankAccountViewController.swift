@@ -98,8 +98,9 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         var bankId2: Int = 0
         var url: String = ""
         var accountNumber: String = self.accountNumberTextField.text
+        
         if edit {
-            bankId2 = self.bankDictionary[self.bankName]!
+            bankId2 = self.bankDictionary[self.bankNameTextField.text]!
             url = APIAtlas.sellerEditBankAccount
             var parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : accountNumber, "accountName" : self.accountNameTextField.text, "bankId" : NSNumber(integer: bankId2), "bankAccountId" : self.editBankId]
             manager.POST(url, parameters: parameters, success: {

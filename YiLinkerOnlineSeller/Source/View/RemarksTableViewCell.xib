@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton SemiBold.otf">
+            <string>Panton-SemiBold</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RemarksTableViewCell" rowHeight="194" id="KGk-i7-Jjw" customClass="RemarksTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="194"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remarks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zaK-Ti-Z1e">
+                        <rect key="frame" x="3" y="18" width="65" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="65" id="6Mf-GK-8oR"/>
+                            <constraint firstAttribute="height" constant="21" id="uuR-ib-Png"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JhO-NG-FXP">
+                        <rect key="frame" x="2" y="42" width="317" height="87"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="87" id="IoW-73-TeV"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="naS-9W-5ZF">
+                        <rect key="frame" x="94" y="142" width="132" height="33"/>
+                        <color key="backgroundColor" red="0.27450980390000002" green="0.66274509800000003" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="33" id="Qf4-4x-sC6"/>
+                            <constraint firstAttribute="width" constant="132" id="wez-sC-5qy"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <state key="normal" title="SUBMIT CASE">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="submit:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wHb-9s-orB"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstItem="zaK-Ti-Z1e" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="7DH-Bo-WY2"/>
+                    <constraint firstItem="JhO-NG-FXP" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="7" id="Efa-ix-9VQ"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="naS-9W-5ZF" secondAttribute="bottom" constant="10" id="LZy-zC-Cgg"/>
+                    <constraint firstItem="JhO-NG-FXP" firstAttribute="top" secondItem="zaK-Ti-Z1e" secondAttribute="bottom" constant="3" id="bTa-fD-NdZ"/>
+                    <constraint firstAttribute="centerX" secondItem="naS-9W-5ZF" secondAttribute="centerX" id="eks-ee-ujP"/>
+                    <constraint firstItem="JhO-NG-FXP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-6" id="gbH-C1-DHI"/>
+                    <constraint firstItem="zaK-Ti-Z1e" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-5" id="yeF-JA-Yq1"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="remarksLabel" destination="zaK-Ti-Z1e" id="M3l-TA-kWF"/>
+                <outlet property="submitButton" destination="naS-9W-5ZF" id="Ezi-HV-d0g"/>
+                <outlet property="textView" destination="JhO-NG-FXP" id="E9C-Kj-hDc"/>
+            </connections>
+            <point key="canvasLocation" x="479" y="419"/>
+        </tableViewCell>
+    </objects>
+</document>

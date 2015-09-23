@@ -12,7 +12,7 @@ protocol StoreInfoViewControllerDelegate {
     
 }
 
-class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate , UzysAssetsPickerControllerDelegate{
+class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate, CongratulationsViewControllerDelegate, UzysAssetsPickerControllerDelegate{
     
     var storeInfoModel: StoreInfoModel?
     var storeAddressModel: StoreAddressModel?
@@ -22,28 +22,27 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     let storeInfoAddressTableViewCellIdentifier: String = "StoreInfoAddressTableViewCell"
     let storeInfoBankAccountTableViewCellIdentifier: String = "StoreInfoBankAccountTableViewCell"
     let storeInfoAccountInformationTableViewCellIdentifier: String = "StoreInfoAccountInformationTableViewCell"
-    
-    //var storeInfoHeader: StoreInfoTableViewCell = XibHelper.puffViewWithNibName("StoreInfoTableViewCell", index: 0) as! StoreInfoTableViewCell
-    
-    var newContactNumber: String = ""
+
+    var hud: MBProgressHUD?
     
     var dimView: UIView = UIView()
-    
-    var verifyOrChange: Int = 0
-    
-    var hud: MBProgressHUD?
     
     var index: NSIndexPath?
     
     var uploadImages: [UIImage] = []
+    
     var image: UIImage?
     var imageCover: UIImage?
+    
+    var verifyOrChange: Int = 0
     var imageType: String = ""
+    var mobileNumber: String = ""
+    var newContactNumber: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        //storeInfoHeader.delegate = self
+        self.title = "Store Info"
         self.edgesForExtendedLayout = .None
         dimView = UIView(frame: UIScreen.mainScreen().bounds)
         dimView.backgroundColor=UIColor.blackColor()
@@ -51,10 +50,10 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         self.navigationController?.view.addSubview(dimView)
         dimView.hidden = true
         
-        //self.storeInfoTableView.tableHeaderView = storeInfoHeader
         self.initializeViews()
         self.registerNibs()
         self.fireStoreInfo()
+        self.backButton()
         
         var tap = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         tap.cancelsTouchesInView = false
@@ -68,25 +67,14 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: Initialize views
     func initializeViews() {
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         self.tableView.delegate = self
         self.tableView.dataSource = self
     }
     
-    func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.navigationController?.view.addSubview(self.hud!)
-        self.hud?.show(true)
-    }
-
+    //MARK: Register nib file
     func registerNibs() {
         
         let storeInfoHeader = UINib(nibName: storeInfoHeaderTableViewCellIndentifier, bundle: nil)
@@ -105,6 +93,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         self.tableView.registerNib(storeInfoAccountInformation, forCellReuseIdentifier: storeInfoAccountInformationTableViewCellIdentifier)
     }
     
+    //MARK: Get store info
     func fireStoreInfo(){
         self.showHUD()
         let manager = APIManager.sharedInstance
@@ -113,21 +102,38 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         manager.POST(APIAtlas.sellerStoreInfo, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.storeInfoModel = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
-            //self.populateData()
-            /*
-            if self.storeInfoModel?.contact_number == nil {
-            
+            if responseObject["isSuccessful"] as! Bool {
+                self.tableView.reloadData()
+                
             } else {
-            
-            } */
-            self.tableView.reloadData()
+                self.showAlert("Error", message: "Something went wrong.")
+            }
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
+                self.showAlert("Error", message: "Something went wrong.")
                 println(error)
             })
     }
     
+    //MARK: Navigation bar
+    func backButton() {
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButton.frame = CGRectMake(0, 0, 40, 40)
+        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    func back() {
+        self.navigationController!.popViewControllerAnimated(true)
+    }
+    
+    //MARK: Tableview delegate methods
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
        return 5
     }
@@ -152,11 +158,11 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 cell.coverEditImageView.image = UIImage(named: "edit.png")
                 cell.profileEditLabel.text = "Edit Profile Photo"
                 cell.coverEditLabel.text = "Edit Cover Photo"
-                if(self.verifyOrChange == 1) {
-                    cell.verifyButton.setTitle("Verify", forState: UIControlState.Normal)
-                } else {
-                    cell.verifyButton.setTitle("Change", forState: UIControlState.Normal)
-                }
+                //if(self.verifyOrChange == 1) {
+                //    cell.verifyButton.setTitle("Verify", forState: UIControlState.Normal)
+                //} else {
+                cell.verifyButton.setTitle("Change", forState: UIControlState.Normal)
+                //}
                 cell.verifyButton.tag = 2
             } else {
                 cell.profileEditImageView.image = UIImage(named: "dummy-placeholder.jpg")
@@ -211,7 +217,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         }
     }
     
-    //Store Details Function
+    //MARK: Store Details Function
     func storeInfoVerify() {
         println("verify " + "\(self.verifyOrChange)")
         self.showView()
@@ -225,6 +231,9 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             verifyNumberViewController.view.frame.origin.y = verifyNumberViewController.view.frame.size.height
             self.navigationController?.presentViewController(verifyNumberViewController, animated: true, completion:
                 nil)
+            self.verifyOrChange = 2
+            verifyNumberViewController.mobileNumber = self.mobileNumber
+            println(verifyNumberViewController.mobileNumber)
         } else {
             var changeMobileNumber = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
             changeMobileNumber.delegate = self
@@ -235,19 +244,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             self.navigationController?.presentViewController(changeMobileNumber, animated: true, completion:
                 nil)
             self.verifyOrChange = 2
-
         }
 
-    }
-    
-    func changeAddress() {
-        var changeAddressViewController = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
-        self.navigationController?.pushViewController(changeAddressViewController, animated:true)
-    }
-    
-    func newAddress() {
-        var changeAddressViewController = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
-        self.navigationController?.pushViewController(changeAddressViewController, animated:true)
     }
 
     func newBankAccount() {
@@ -262,8 +260,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         changeAddressViewController.delegate = self
         self.navigationController?.pushViewController(changeAddressViewController, animated:true)
     }
-    
-    
+
     func changePassword() {
         println("Email Password")
         var changeEmailViewController = ChangeEmailViewController(nibName: "ChangeEmailViewController", bundle: nil)
@@ -300,6 +297,50 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             nil)
     }
     
+    //MARK: CongratulationsViewController protocol method
+    func congratulationsViewController(isSuccessful: Bool) {
+        var congratulations = CongratulationsViewController(nibName: "CongratulationsViewController", bundle: nil)
+        congratulations.delegate = self
+        congratulations.isSuccessful = isSuccessful
+        congratulations.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        congratulations.providesPresentationContextTransitionStyle = true
+        congratulations.definesPresentationContext = true
+        congratulations.view.frame.origin.y = congratulations.view.frame.size.height
+        self.navigationController?.presentViewController(congratulations, animated: true, completion:
+            nil)
+        self.showView()
+    }
+    
+    //MARK: VerifyViewController protocol method
+    func verifyViewController() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        manager.POST(APIAtlas.sellerResendVerification+"\(SessionManager.accessToken())&mobileNumber=\(self.mobileNumber)", parameters: nil, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                println(responseObject.description)
+                if responseObject["isSuccessful"] as! Bool {
+                    var verifyNumberViewController = VerifyNumberViewController(nibName: "VerifyNumberViewController", bundle: nil)
+                    verifyNumberViewController.delegate = self
+                    verifyNumberViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+                    verifyNumberViewController.providesPresentationContextTransitionStyle = true
+                    verifyNumberViewController.definesPresentationContext = true
+                    verifyNumberViewController.view.frame.origin.y = verifyNumberViewController.view.frame.size.height
+                    self.navigationController?.presentViewController(verifyNumberViewController, animated: true, completion:
+                    nil)
+                //self.dismissView()
+                } else {
+                    self.showAlert("Error", message: "You have entered an invalid verification code.")
+                }
+                //self.setSelectedViewControllerWithIndex(0)
+                self.hud?.hide(true)
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                self.showAlert("Error", message: "Something went wrong.")
+                self.dismissView()
+        })
+        self.showView()
+    }
+    
     func saveAccountInfo() {
         self.showHUD()
 
@@ -307,8 +348,6 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         let cell: StoreInfoTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoHeaderTableViewCellIndentifier, forIndexPath: index!) as! StoreInfoTableViewCell
         cell.delegate = self
 
-        println("sample \(cell.storeNameTextField.text)")
-        
         let manager = APIManager.sharedInstance
         
         var datas: [NSData] = []
@@ -324,7 +363,6 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             imagesKeyCover.append("\(x)")
         }
     
-
         if self.image != nil && self.imageCover != nil {
             let data: NSData = UIImageJPEGRepresentation(self.image, 0)
             let dataCoverPhoto: NSData = UIImageJPEGRepresentation(self.imageCover, 1)
@@ -341,75 +379,115 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "storeName" : cell.storeNameTextField.text, "storeDescription" : cell.storeDescriptionTextView.text, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
 
         let url: String = "\(APIAtlas.sellerUpdateSellerInfo)?access_token=\(SessionManager.accessToken())"
-        manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
-            for (index, data) in enumerate(datas) {
-                println("index: \(index)")
-                if self.image != nil && self.imageCover != nil {
-                    if(index == 0){
-                        formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(0)", mimeType: "image/jpeg")
-                    } else {
-                         formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(1)", mimeType: "image/jpeg")
+        
+        if !cell.storeNameTextField.text.isEmpty && !cell.storeNameTextField.text.isEmpty {
+            manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
+                for (index, data) in enumerate(datas) {
+                    println("index: \(index)")
+                    if self.image != nil && self.imageCover != nil {
+                        if(index == 0){
+                            formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(0)", mimeType: "image/jpeg")
+                        } else {
+                            formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(1)", mimeType: "image/jpeg")
+                        }
+                    } else if self.image != nil && self.imageCover == nil{
+                        formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(index)", mimeType: "image/jpeg")
+                    } else if self.image == nil && self.imageCover != nil {
+                        formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(index)", mimeType: "image/jpeg")
                     }
-                } else if self.image != nil && self.imageCover == nil{
-                       formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(index)", mimeType: "image/jpeg")
-                } else if self.image == nil && self.imageCover != nil {
-                    formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(index)", mimeType: "image/jpeg")
                 }
+                
+                }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
+                    self.hud?.hide(true)
+                    
+                    println(response)
+                    self.fireStoreInfo()
+                    self.tableView.reloadData()
+                    //cell.coverPhotoImageView.image = self.image
+                    self.showAlert("Success", message: "You have successfully updated you store information.")
+                }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    println(error.userInfo)
+                    self.showAlert("Error", message: "Something went wrong.")
+                    self.hud?.hide(true)
             }
-            
-            }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
-                self.hud?.hide(true)
-                
-                println(response)
-                self.fireStoreInfo()
-                self.tableView.reloadData()
-                //cell.coverPhotoImageView.image = self.image
-                
-            }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                println(error.userInfo)
-                
-                self.hud?.hide(true)
+        } else {
+            self.showAlert("Error", message: "Either your store name or store description is empty.")
+            self.hud?.hide(true)
+            self.dismissView()
         }
-
+        
     }
     
     func generateQRCode() {
         println("QR Code")
     }
     
+    //MARK: ChangeBankAccountViewControllerDelegate protoco method
     func updateBankDetail(accountTitle: String, accountName: String, accountNumber: String, bankName: String) {
         self.storeInfoModel?.accountTitle = accountTitle
         self.storeInfoModel?.bankAccount = accountName + "\n"+accountNumber+"\n" + bankName
         self.tableView.reloadData()
     }
     
+    //MARK: ChangeStoreAddressViewControllerDelegate protoco method
     func updateStoreAddressDetail(title: String, storeAddress: String) {
-    
         self.storeInfoModel?.title = title
         self.storeInfoModel?.store_address = storeAddress
         self.tableView.reloadData()
-
     }
     
+    //MARK: ChangeMobileNumberViewControllerDelegate protocol method
     func setMobileNumber(newNumber: String, oldNumber: String) {
         self.showHUD()
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldNumber" : oldNumber, "newNumber" : newNumber];
-//        manager.responseSerializer.acceptableContentTypes = NSSet(objects: "application/json", "text/html", "text/json", "text/json", "charset=utf-8") as Set<NSObject>
-        manager.POST(APIAtlas.sellerChangeMobileNumber+"?access_token=\(SessionManager.accessToken())", parameters: parameters, success: {
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldContactNumber" : oldNumber, "newContactNumber" : newNumber];
+        manager.POST(APIAtlas.sellerChangeMobileNumber, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.storeInfoModel?.contact_number = newNumber
-            self.verifyOrChange = 1
-            println(self.verifyOrChange)
-            self.tableView.reloadData()
+            if responseObject["isSuccessful"] as! Bool {
+                self.storeInfoModel?.contact_number = newNumber
+                self.verifyOrChange = 1
+                self.storeInfoVerify()
+                println(self.verifyOrChange)
+                self.mobileNumber = newNumber
+                println(self.mobileNumber)
+                println(responseObject.description)
+                self.tableView.reloadData()
+                self.hud?.hide(true)
+            } else {
+                self.showAlert("Error", message: responseObject["message"] as! String)
+                self.dismissView()
+                self.hud?.hide(true)
+            }
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                println(error.userInfo)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 404 {
+                    let data = error.userInfo as! Dictionary<String, AnyObject>
+                    self.showAlert("Error", message: data["message"] as! String)
+                } else {
+                    self.showAlert("Error", message: "Something went wrong.")
+                }
+                self.dismissView()
         })
     }
     
+    //MARK: Show MBProgressHUD bar
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+
+    //MARK: Dismiss dim view
     func dismissView() {
         UIView.animateWithDuration(0.25, animations: {
             self.dimView.alpha = 0
@@ -418,6 +496,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         })
     }
     
+    //MARK: Show dim view
     func showView(){
         dimView.hidden = false
         UIView.animateWithDuration(0.25, animations: {
@@ -426,7 +505,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         })
     }
 
-    
+    //MARK: Open UzyPicker
     func callUzyPicker(imageType: String) {
         self.imageType = imageType
         let picker: UzysAssetsPickerController = UzysAssetsPickerController()
@@ -440,14 +519,14 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         self.presentViewController(picker, animated: true, completion: nil)
     }
     
+    //MARK: Configure UzyPicker appearance
     func uzyConfig() -> UzysAppearanceConfig {
         let config: UzysAppearanceConfig = UzysAppearanceConfig()
         config.finishSelectionButtonColor = Constants.Colors.appTheme
         return config
     }
     
-    //UzzyPickerDelegate
-    
+    //MARK: UzzyPickerDelegate
     func uzysAssetsPickerController(picker: UzysAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) {
         let assetsLibrary = ALAssetsLibrary()
         let alaSset: ALAsset = assets[0] as! ALAsset
@@ -463,6 +542,15 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         //self.storeInfoTableView.reloadData()
     }
     
+    func uzysAssetsPickerControllerDidCancel(picker: UzysAssetsPickerController!) {
+        
+    }
+    
+    func uzysAssetsPickerControllerDidExceedMaximumNumberOfSelection(picker: UzysAssetsPickerController!) {
+        
+    }
+    
+    //MARK: Set image/s for StoreInfoTableViewCell imageviews
     func setImageProfileCoverPhoto(image: UIImage){
         let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
         let cell: StoreInfoTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! StoreInfoTableViewCell
@@ -482,17 +570,27 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     func reloadUploadCellCollectionViewData() {
      
     }
-    func uzysAssetsPickerControllerDidCancel(picker: UzysAssetsPickerController!) {
-        
-    }
-    
-    func uzysAssetsPickerControllerDidExceedMaximumNumberOfSelection(picker: UzysAssetsPickerController!) {
-        
-    }
 
+    //MARK: Dismiss keyboard
     func dismissKeyboard(){
         self.view.endEditing(true)
     }
+    
+    //MARK: Alert view
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            
+        }
+    }
+    
     /*
     // MARK: - Navigation
 

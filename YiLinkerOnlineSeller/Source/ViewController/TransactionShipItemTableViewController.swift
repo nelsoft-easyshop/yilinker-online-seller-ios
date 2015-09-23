@@ -8,20 +8,46 @@
 
 import UIKit
 
-class TransactionShipItemTableViewController: UITableViewController {
+class TransactionShipItemTableViewController: UITableViewController, TransactionShipItemTableViewCellDelegate {
     
     var cellIdentifier: String = "TransactionShipItemTableViewCell"
+    
+    var hud: MBProgressHUD?
+    var invoiceNumber: String = ""
+    var selectedDate: String = ""
+    var remarks: String = ""
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
         var nib = UINib(nibName: cellIdentifier, bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: cellIdentifier)
+        
+        initializeNavigationBar()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    func initializeNavigationBar() {
+        self.title = "Ship your Items"
+        
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButton.frame = CGRectMake(0, 0, 40, 40)
+        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    func back() {
+        self.navigationController!.popViewControllerAnimated(true)
     }
 
     // MARK: - Table view data source
@@ -37,54 +63,102 @@ class TransactionShipItemTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TransactionShipItemTableViewCell
-
+        cell.delegate = self
 
         return cell
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
     
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 621.0
+    }
+
+    // MARK: TransactionShipItemTableViewCellDelegate
+    func cancelTransactionShipItem() {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func readyForPickupItem(date: String, remarks: String){
+        selectedDate = date
+        self.remarks = remarks
+        firePostCancellation()
+    }
+    
+    
+    func firePostCancellation(){
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(),
+            "transactionId": invoiceNumber,
+            "pickupSchedule": selectedDate,
+            "pickupRemark": remarks];
+        
+        manager.POST(APIAtlas.shipItem, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            println(responseObject)
+            var response: NSDictionary = responseObject as! NSDictionary
+            if response["isSuccessful"] as! Bool {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Successfully added item for pickup!", title: "Success")
+                self.navigationController?.popViewControllerAnimated(true)
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: response["message"] as! String, title: "Error")
+            }
+            
+            
+            self.hud?.hide(true)
+            
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                if Reachability.isConnectedToNetwork() {
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.fireRefreshToken()
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        
+                    }
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                }
+                
+                
+                println(error)
+        })
+    }
+    
+    func fireRefreshToken() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.firePostCancellation()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+        })
+        
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+
 }

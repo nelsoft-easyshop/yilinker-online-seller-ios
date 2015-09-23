@@ -9,25 +9,32 @@
 import UIKit
 
 class FollowersViewController: UIViewController, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, FollowerTableViewCellDelegate {
-
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var emptyLabel: UILabel!
     
-    var tableData: [FollowerModel] = [
-        FollowerModel(id: 1, name: "Yaya Dub", email: "email1@easyshop.ph", imageUrl: "http://ugc.pep.ph/peparazzi/media/Uripon/peparazzi_55ace885b518f.jpg"),
-        FollowerModel(id: 2, name: "Maine", email: "email1@easyshop.ph", imageUrl: "http://2.bp.blogspot.com/-DYeKx5euRDU/Va-kvu0pqPI/AAAAAAAAAOs/jRipWjYhT_k/s1600/yaya%2Bdub.PNG"),
-        FollowerModel(id: 3, name: "Yaya Dub", email: "email1@easyshop.ph", imageUrl: "http://ugc.pep.ph/peparazzi/media/Uripon/peparazzi_55ace885b518f.jpg"),
-        FollowerModel(id: 4, name: "Maine", email: "email1@easyshop.ph", imageUrl: "http://2.bp.blogspot.com/-DYeKx5euRDU/Va-kvu0pqPI/AAAAAAAAAOs/jRipWjYhT_k/s1600/yaya%2Bdub.PNG")]
+    var followersModel: FollowersModel = FollowersModel(isSuccessful: false, message: "", data: [])
+    
+    var hud: MBProgressHUD?
+    
+    var getCtr: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         initializeViews()
         titleView()
         backButton()
         registerNibs()
     }
-
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        getCtr = 0
+        fireGetFollower("")
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -45,6 +52,8 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
         self.tableView.estimatedRowHeight = 150.0
         
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
+        
+        emptyLabel.hidden = true
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -75,7 +84,7 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
-
+    
     // Mark: - UISearchBarDelegate
     func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
         self.searchBar.sizeToFit()
@@ -85,6 +94,11 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        if count(searchText) > 1 {
+            fireGetFollower(searchText)
+        } else {
+            fireGetFollower("")
+        }
     }
     
     func searchBarShouldEndEditing(searchBar: UISearchBar) -> Bool {
@@ -94,13 +108,14 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        fireGetFollower(searchBar.text)
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         self.searchBar.resignFirstResponder()
         self.searchBar.text = ""
     }
-
+    
     // MARK: - Table view data source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -108,17 +123,17 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableData.count
+        return followersModel.data.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FollowerTableViewCell", forIndexPath: indexPath) as! FollowerTableViewCell
         cell.delegate = self
         
-        var temp: FollowerModel = tableData[indexPath.row]
+        var temp: FollowerModel = followersModel.data[indexPath.row]
         
-        cell.setFollowerImage(NSURL(string: temp.imageUrl)!)
-        cell.setFollowerName(temp.name)
+        cell.setFollowerImage(NSURL(string: temp.profileImageUrl)!)
+        cell.setFollowerName(temp.fullName)
         cell.setFollowerEmail(temp.email)
         
         return cell
@@ -127,61 +142,110 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 70
-    }    
-    /*
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    
-    }*/
-    
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return NO if you do not want the specified item to be editable.
-    return true
     }
-    */
     
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    if editingStyle == .Delete {
-    // Delete the row from the data source
-    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-    } else if editingStyle == .Insert {
-    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        searchBar.resignFirstResponder()
     }
-    }
-    */
-    
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-    
-    }
-    */
-    
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return NO if you do not want the item to be re-orderable.
-    return true
-    }
-    */
-    
     
     // MARK: - Cell message button action
     func messageButtonAction(sender: AnyObject) {
         println("Message button clicked!")
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
-    */
-
+    
+    func fireGetFollower(searchKey: String) {
+        self.emptyLabel.hidden = true
+    
+        let manager = APIManager.sharedInstance
+        
+        var params: Dictionary = ["access_token" : SessionManager.accessToken()]
+        if searchKey.isEmpty {
+            if getCtr == 0{
+                showHUD()
+            }
+        } else {
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            params["searchKeyword"] = searchKey
+        }
+        
+        getCtr++
+        
+        manager.operationQueue.cancelAllOperations()
+        manager.GET(APIAtlas.getFollowers, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.followersModel = FollowersModel.parseDataWithDictionary(responseObject as! NSDictionary)
+            
+            if self.followersModel.isSuccessful {
+                if self.followersModel.data.count == 0 {
+                    self.emptyLabel.hidden = false
+                }
+                self.tableView.reloadData()
+                
+                
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.followersModel.message, title: "Error")
+            }
+            self.hud?.hide(true)
+            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                if Reachability.isConnectedToNetwork() {
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    if task.statusCode == 401 {
+                        self.fireRefreshToken(searchKey)
+                    } else {
+                        self.emptyLabel.hidden = false
+                        if Reachability.isConnectedToNetwork() {
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong!", title: "Error")
+                        } else {
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                        }
+                        println(error)
+                    }
+                }
+        })
+    }
+    
+    func fireRefreshToken(searchKey: String) {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.fireGetFollower(searchKey)
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+        })
+        
+    }
+    
 }
+
+
+

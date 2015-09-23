@@ -49,3 +49,29 @@ enum AddressRefreshType {
     case SetDefault
     case Get
 }
+
+enum UserType {
+    case Seller
+    case Reseller
+}
+
+enum ResellerItemStatus {
+    case Selected
+    case Unselected
+}
+
+enum DisputePickerType {
+    case TransactionList
+    case DisputeType
+}
+
+enum TransactionOrderItemStatus {
+    case Selected
+    case UnSelected
+}
+
+enum DisputeRefreshType {
+    case Transaction
+    case AddCase
+    case OrderType
+}

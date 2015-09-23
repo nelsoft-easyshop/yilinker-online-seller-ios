@@ -45,7 +45,7 @@
                 </subviews>
             </tableViewCellContentView>
             <connections>
-                <outlet property="productDescriptionLabel" destination="yjD-iQ-COt" id="heI-uH-Nmp"/>
+                <outlet property="productDescriptionLabel" destination="yjD-iQ-COt" id="yxj-Kf-3nl"/>
                 <outlet property="seeMoreView" destination="ZnW-0B-p5e" id="6Rm-iN-4dd"/>
             </connections>
             <point key="canvasLocation" x="307.5" y="184"/>
