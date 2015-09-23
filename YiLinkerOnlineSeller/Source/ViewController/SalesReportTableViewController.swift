@@ -23,6 +23,11 @@ class SalesReportTableViewController: UITableViewController, SalesReportTableVie
     
     var isFromDatePicker: Bool = false
     
+    var errorLocalizeString: String  = ""
+    var somethingWrongLocalizeString: String = ""
+    var connectionLocalizeString: String = ""
+    var connectionMessageLocalizeString: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -37,13 +42,20 @@ class SalesReportTableViewController: UITableViewController, SalesReportTableVie
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func initializeViews() {
         datePickerController = DatePickerViewController(nibName: "DatePickerViewController", bundle: nil)
         datePickerController!.delegate = self
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
+    }
+    
+    func initializeLocalizedString() {
+        //Initialized Localized String
+        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
+        connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONUNREACHABLE_LOCALIZE_KEY")
+        connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONERRORMESSAGE_LOCALIZE_KEY")
     }
     
     func registerNibs() {
@@ -54,14 +66,10 @@ class SalesReportTableViewController: UITableViewController, SalesReportTableVie
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
         return 0
     }
     
@@ -176,7 +184,7 @@ class SalesReportTableViewController: UITableViewController, SalesReportTableVie
             if self.salesReportModel.isSuccessful {
                 self.getStartAndEndDate()
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.salesReportModel.message, title: "Error")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.salesReportModel.message, title: self.errorLocalizeString)
             }
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
@@ -188,9 +196,9 @@ class SalesReportTableViewController: UITableViewController, SalesReportTableVie
                     self.fireRefreshToken("totalPoints")
                 } else {
                     if Reachability.isConnectedToNetwork() {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong!", title: "Error")
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.connectionMessageLocalizeString, title: self.connectionLocalizeString)
                     }
                     println(error)
                 }

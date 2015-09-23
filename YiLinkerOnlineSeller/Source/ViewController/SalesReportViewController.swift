@@ -32,6 +32,7 @@ class SalesReportViewController: UIViewController, UISearchBarDelegate {
         
         initializeViewControllers()
         initializeViews()
+        initializeLocalizedString()
         initializeNavigationBar()
         initializeTapGesture()
         
@@ -40,12 +41,10 @@ class SalesReportViewController: UIViewController, UISearchBarDelegate {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func initializeViewControllers() {
         recentProductsController = RecentProductsTableViewController(nibName: "RecentProductsTableViewController", bundle: nil)
-        
         salesReportController = SalesReportTableViewController(nibName: "SalesReportTableViewController", bundle: nil)
     }
     
@@ -58,7 +57,8 @@ class SalesReportViewController: UIViewController, UISearchBarDelegate {
     }
     
     func initializeNavigationBar() {
-        self.title = "Report"
+        let reportTitleString = StringHelper.localizedStringWithKey("REPORT_TITLE_LOCALIZE_KEY")
+        self.title = reportTitleString
         
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -81,6 +81,14 @@ class SalesReportViewController: UIViewController, UISearchBarDelegate {
         navigationSpacer2.width = -10
         
         self.navigationItem.rightBarButtonItems = [navigationSpacer2, customCheckButton]
+    }
+    
+    func initializeLocalizedString() {
+        let salesReportString = StringHelper.localizedStringWithKey("SALES_REPORT_BUTTON_LOCALIZE_KEY")
+        let recentOrderString = StringHelper.localizedStringWithKey("RECENT_ORDERS_BUTTON_LOCALIZE_KEY")
+        
+        salesReportLabel.text = salesReportString
+        recentOrdersLabel.text = recentOrderString
     }
     
     func back() {
@@ -185,6 +193,5 @@ class SalesReportViewController: UIViewController, UISearchBarDelegate {
             })
         }
     }
-    
     
 }
