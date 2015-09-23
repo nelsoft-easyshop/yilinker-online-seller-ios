@@ -343,8 +343,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         } else if indexPath.row == 10 {
             
         } else if indexPath.row == 11 {
-            var alert = UIAlertController(title: nil, message: "Are you sure you want to logout?", preferredStyle: .ActionSheet)
-            alert.addAction(UIAlertAction(title: "Logout", style: .Destructive, handler: { action in
+            var alert = UIAlertController(title: nil, message: SignInStrings.alertLogoutMessage, preferredStyle: .ActionSheet)
+            alert.addAction(UIAlertAction(title: SignInStrings.alertLogout, style: .Destructive, handler: { action in
                 switch action.style{
                 case .Default:
                     println("default")
@@ -358,7 +358,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                     self.presentViewController(signInViewController, animated: true, completion: nil)
                 }
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: AlertStrings.cancel, style: .Cancel, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
         }
     }

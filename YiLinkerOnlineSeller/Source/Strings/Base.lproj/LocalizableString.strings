@@ -27,3 +27,7 @@ SIGNING_IN_LOCALIZE_KEY = "SIGNING IN ....";
 WELCOME_LOCALIZE_KEY = "Welcome to YiLinker!";
 PLEASE_INPUT_LOCALIZE_KEY = "Please input valid email and password.";
 NOT_MATCH_LOCALIZE_KEY = "Email and Password did not match.";
+
+// LOG OUT
+LOGOUT_LOCALIZE_KEY = "Logout";
+LOGOUT_MESSAGE_LOCALIZE_KEY = "Are you sure you want to logout?";

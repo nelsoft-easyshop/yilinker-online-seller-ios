@@ -19,6 +19,8 @@ struct SignInStrings {
     static let welcome = StringHelper.localizedStringWithKey("WELCOME_LOCALIZE_KEY")
     static let please = StringHelper.localizedStringWithKey("PLEASE_INPUT_LOCALIZE_KEY")
     static let notMatch = StringHelper.localizedStringWithKey("NOT_MATCH_LOCALIZE_KEY")
+    static let alertLogout = StringHelper.localizedStringWithKey("LOGOUT_LOCALIZE_KEY")
+    static let alertLogoutMessage = StringHelper.localizedStringWithKey("LOGOUT_MESSAGE_LOCALIZE_KEY")
 }
 
 protocol SignInViewControllerDelegate{

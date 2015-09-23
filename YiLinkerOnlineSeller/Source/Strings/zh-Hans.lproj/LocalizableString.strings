@@ -27,3 +27,7 @@ SIGNING_IN_LOCALIZE_KEY = "登录 登录 ....";
 WELCOME_LOCALIZE_KEY = "登录 登录 登录!";
 PLEASE_INPUT_LOCALIZE_KEY = "登录 登录 登录 登录 登录 登录.";
 NOT_MATCH_LOCALIZE_KEY = "登录 登录 登录 登录 登录 登录.";
+
+// LOG OUT
+LOGOUT_LOCALIZE_KEY = "登录";
+LOGOUT_MESSAGE_LOCALIZE_KEY = "登录 登录 登录 登录 登录 登录 登录?";
