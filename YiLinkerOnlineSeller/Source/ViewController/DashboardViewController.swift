@@ -16,7 +16,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var loginBlockerView: UIView!
     
-    var tableData: [String] = ["My\nStore", "Sales\nReport", "Transactions", "Product\nManagement", "Customized\nCategory", "Upload\nItem", "Followers", "Activity\nLog", "My\nPoints", "Resolution\nCenter", "Help", "Logout"]
+    var tableData: [String] = []
     
     var tableImages: [String] = ["mystore", "report", "transaction", "product", "category", "uploadItem", "followers", "activityLog", "points", "resolution", "help", "logout"]
     
@@ -25,6 +25,11 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     var hud: MBProgressHUD?
     
     var ctr: Int = 0
+    
+    var errorLocalizeString: String  = ""
+    var somethingWrongLocalizeString: String = ""
+    var connectionLocalizeString: String = ""
+    var connectionMessageLocalizeString: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,9 +41,87 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             self.presentViewController(signInViewController, animated: false, completion: nil)
         }
         
-//        println(SessionManager.accessToken())
         registerNibs()
         initializeViews()
+        initializeLocalizedString()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.navigationBarHidden = false
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBarHidden = true
+        
+        self.tabBarController?.tabBar.hidden = false
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+        
+        if SessionManager.isLoggedIn() {
+            self.loginBlockerView.hidden = true
+        } else {
+            self.loginBlockerView.hidden = false
+        }
+        
+        if NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
+            if ctr == 0{
+                fireStoreInfo(true)
+                setupGCM()
+            } else {
+                fireStoreInfo(false)
+            }
+        } else {
+            if ctr == 1{
+                fireStoreInfo(true)
+            } else if ctr != 0 {
+                fireStoreInfo(false)
+            }
+        }
+        
+        ctr++
+    }
+    
+    func initializeLocalizedString() {
+        //Initialized Localized String
+        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHING_WENT_WRONG_LOCALIZE_KEY")
+        connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTION_UNREACHABLE_LOCALIZE_KEY")
+        connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTION_ERROR_MESSAGE_LOCALIZE_KEY")
+        
+        let myStoreString = StringHelper.localizedStringWithKey("MY_STORE_LOCALIZE_KEY")
+        let salesReportString = StringHelper.localizedStringWithKey("SALES_REPORT_LOCALIZE_KEY")
+        let transactionsString = StringHelper.localizedStringWithKey("TRANSACTIONS_LOCALIZE_KEY")
+        let productManagementString = StringHelper.localizedStringWithKey("PRODUCT_MANAGEMENT_LOCALIZE_KEY")
+        let customizedCategoryString = StringHelper.localizedStringWithKey("CUSTOMIZED_CATEGORY_LOCALIZE_KEY")
+        let uploadItemString = StringHelper.localizedStringWithKey("UPLOAD_ITEM_LOCALIZE_KEY")
+        let followersString = StringHelper.localizedStringWithKey("FOLLOWERS_LOCALIZE_KEY")
+        let activityLogsString = StringHelper.localizedStringWithKey("ACTIVITY_LOGS_LOCALIZE_KEY")
+        let myPointsString = StringHelper.localizedStringWithKey("MY_POINTS_LOCALIZE_KEY")
+        let resolutionCenterString = StringHelper.localizedStringWithKey("RESOLUTION_CENTER_LOCALIZE_KEY")
+        let helpString = StringHelper.localizedStringWithKey("HELP_LOCALIZE_KEY")
+        let logoutString = StringHelper.localizedStringWithKey("LOGOUT_LOCALIZE_KEY")
+        
+        tableData.append(myStoreString)
+        tableData.append(salesReportString)
+        tableData.append(transactionsString)
+        tableData.append(productManagementString)
+        tableData.append(customizedCategoryString)
+        tableData.append(uploadItemString)
+        tableData.append(followersString)
+        tableData.append(activityLogsString)
+        tableData.append(myPointsString)
+        tableData.append(resolutionCenterString)
+        tableData.append(helpString)
+        tableData.append(logoutString)
     }
     
     func setupGCM(){
@@ -109,63 +192,13 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                     if task.statusCode == 401 {
                         self.fireRefreshToken(true)
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
                     }
                 }
                 //SVProgressHUD.dismiss()
                 self.hud?.hide(true)
         })
     }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
-        
-        initializeViews()
-        
-        if SessionManager.isLoggedIn() {
-            self.loginBlockerView.hidden = true
-        } else {
-            self.loginBlockerView.hidden = false
-        }
-        
-        
-        if NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
-            if ctr == 0{
-                fireStoreInfo(true)
-                setupGCM()
-            } else {
-                fireStoreInfo(false)
-            }
-        } else {
-            if ctr == 1{
-                fireStoreInfo(true)
-            } else if ctr != 0 {
-                fireStoreInfo(false)
-            }
-        }
-        
-        
-        ctr++
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.navigationBarHidden = false
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.navigationBarHidden = true
-
-        self.tabBarController?.tabBar.hidden = false
-    }
-    
     
     // Show hud
     
@@ -232,15 +265,12 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     }
     
     // MARK: UICollectionViewDataSource
-    
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        //#warning Incomplete method implementation -- Return the number of sections
         return 1
     }
     
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //#warning Incomplete method implementation -- Return the number of items in the section
         return tableData.count
     }
     
@@ -275,8 +305,6 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                 headerView.setTotalProducts(totalProducts)
                 headerView.setTotalSales(totalSales)
                 headerView.setTotalTransactions(totalTransactions)
-                
-                println("totalTransactions \(totalTransactions)")
             }
             
             return headerView
@@ -286,14 +314,11 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     }
     
     // MARK: UICollectionViewDelegate
-    
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
         
     }
     
-    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-//        println("Clicked item \(tableData[indexPath.row])")
         if indexPath.row == 0 {
             var storeInfoViewController = StoreInfoViewController(nibName: "StoreInfoViewController", bundle: nil)
             self.navigationController?.pushViewController(storeInfoViewController, animated:true)
@@ -343,8 +368,13 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         } else if indexPath.row == 10 {
             
         } else if indexPath.row == 11 {
-            var alert = UIAlertController(title: nil, message: "Are you sure you want to logout?", preferredStyle: .ActionSheet)
-            alert.addAction(UIAlertAction(title: "Logout", style: .Destructive, handler: { action in
+            
+            let areYouSUreString = StringHelper.localizedStringWithKey("ARE_YOU_SURE_LOGOUT_LOCALIZE_KEY")
+            let logoutString = StringHelper.localizedStringWithKey("LOGOUT_LOCALIZE_KEY")
+            let cancelString = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
+            
+            var alert = UIAlertController(title: nil, message: areYouSUreString, preferredStyle: .ActionSheet)
+            alert.addAction(UIAlertAction(title: logoutString, style: .Destructive, handler: { action in
                 switch action.style{
                 case .Default:
                     println("default")
@@ -358,7 +388,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                     self.presentViewController(signInViewController, animated: true, completion: nil)
                 }
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: cancelString, style: .Cancel, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
         }
     }
@@ -400,7 +430,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                 if task.statusCode == 401 {
                     self.fireRefreshToken(showHUD)
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
                     self.storeInfo = StoreInfoModel(name: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", account_number: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "")
                     
                     
