@@ -48,3 +48,7 @@ ENDS_LOCALIZE_KEY = "ENDS";
 // MARK: - Followers
 FOLLOWERS_TITLE_LOCALIZE_KEY = "Followers";
 NO_FOLLOWER_LOCALIZE_KEY = "No followers found.";
+
+// MARK: - Activity Log
+ACTIVITY_LOGS_TITLE_LOCALIZE_KEY = "Activity Logs";
+NO_MORE_DATA_LOCALIZE_KEY = "No more data!";
