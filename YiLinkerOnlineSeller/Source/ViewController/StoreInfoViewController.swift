@@ -184,8 +184,15 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             cell.verifyButton.setTitle(self.changeTitle, forState: UIControlState.Normal)
             
             if(self.storeInfoModel?.store_name != nil){
-                cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
-                cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+               
+                if self.image != nil || self.imageCover != nil {
+                    cell.coverEditImageView.image = self.imageCover
+                    cell.profilePictureImageView.image = self.image
+                } else {
+                    cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                    cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                }
+                
                 cell.storeNameTextField.text = self.storeInfoModel?.store_name
                 cell.mobilePhoneTextField.text = self.storeInfoModel?.contact_number
                 cell.storeDescriptionTextView.text = self.storeInfoModel?.store_description
@@ -272,6 +279,10 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         }
     }
     
+    func storeNameAndDescription(storeName: String, storeDescription: String) {
+        self.storeInfoModel?.store_name = storeName
+        self.storeInfoModel?.store_description = storeDescription
+    }
     //MARK: Store Details Function
     func storeInfoVerify() {
         println("verify " + "\(self.verifyOrChange)")

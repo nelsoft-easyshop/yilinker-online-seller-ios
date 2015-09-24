@@ -10,10 +10,11 @@ import UIKit
 
 protocol StoreInfoTableViewCellDelegate {
     func storeInfoVerify()
+    func storeNameAndDescription(storeName: String, storeDescription: String)
     func callUzyPicker(imageType: String)
 }
 
-class StoreInfoTableViewCell: UITableViewCell {
+class StoreInfoTableViewCell: UITableViewCell, UITextFieldDelegate, UITextViewDelegate {
 
     var delegate: StoreInfoTableViewCellDelegate?
     
@@ -64,6 +65,8 @@ class StoreInfoTableViewCell: UITableViewCell {
         
         var tapCoverPhoto = UITapGestureRecognizer(target: self, action: "callUzyPickerCover")
         self.coverPhotoUploadView.addGestureRecognizer(tapCoverPhoto)
+        self.storeNameTextField.delegate = self
+        self.storeDescriptionTextView.delegate = self
         
     }
 
@@ -72,6 +75,27 @@ class StoreInfoTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    // UITextField Delegates
+    func textFieldDidBeginEditing(textField: UITextField) {
+        println("TextField did begin editing method called")
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        self.delegate?.storeNameAndDescription(self.storeNameTextField.text, storeDescription: self.storeDescriptionTextView.text)
+        println("TextField did end editing method called \(self.storeNameTextField.text)")
+    }
+    
+    // UITextField Delegates
+    func textViewDidBeginEditing(textField: UITextView) {
+        println("TextField did begin editing method called")
+    }
+    
+    func textViewDidEndEditing(textField: UITextView) {
+        self.delegate?.storeNameAndDescription(self.storeNameTextField.text, storeDescription: self.storeDescriptionTextView.text)
+       
+    }
+    
     @IBAction func callVerification(sender: AnyObject){
         self.delegate?.storeInfoVerify()
     }
