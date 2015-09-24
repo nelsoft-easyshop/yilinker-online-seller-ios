@@ -38,7 +38,7 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
     
     func customizedNavigationBar() {
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.title = "Parent Category"
+        self.title = CategoryStrings.categoryParent
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
         
@@ -51,7 +51,8 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
     
     func customizedViews() {
         self.searchBarTextField.layer.cornerRadius = searchBarTextField.frame.size.height / 2
-        
+        self.searchBarTextField.placeholder = CategoryStrings.search
+        	
         var searchImage = UIImageView(image: UIImage(named: "search2"))
         searchImage.frame = CGRectMake(0.0, 0.0,40.0, 40.0)
         searchImage.contentMode = UIViewContentMode.Center

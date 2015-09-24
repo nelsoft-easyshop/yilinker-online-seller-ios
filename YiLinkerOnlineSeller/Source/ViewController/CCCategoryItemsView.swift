@@ -17,11 +17,15 @@ class CCCategoryItemsView: UIView {
 
     var delegate: CCCategoryItemsViewDelegate?
     
+    @IBOutlet weak var categoryItemsLabel: UILabel!
     @IBOutlet weak var addNewItemButton: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func awakeFromNib() {
         self.addNewItemButton.layer.cornerRadius = self.addNewItemButton.frame.size.height / 2
+        
+        self.categoryItemsLabel.text = CategoryStrings.categoryItems
+        self.addNewItemButton.setTitle(CategoryStrings.categoryNewItems, forState: .Normal)
     }
     
     // MARK: - Methods

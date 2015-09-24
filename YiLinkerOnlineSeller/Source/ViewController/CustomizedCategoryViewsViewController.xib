@@ -163,8 +163,11 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="categoryDetailsLabel" destination="9A5-74-Rr8" id="Vjz-eA-hiO"/>
+                <outlet property="categoryNameLabel" destination="W7O-g0-qdP" id="rYF-PF-KwX"/>
                 <outlet property="categoryNameTextField" destination="hqR-19-n0f" id="Wnl-ib-MSb"/>
                 <outlet property="parentCategoryLabel" destination="EXc-nd-dxt" id="Hhu-Oy-p4c"/>
+                <outlet property="parentCategoryTextLabel" destination="U7d-My-lVb" id="OS3-v9-0ow"/>
             </connections>
             <point key="canvasLocation" x="447.5" y="20.5"/>
         </view>
@@ -209,6 +212,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="addSubCategoryButton" destination="YyV-rN-k1N" id="oq4-Ig-6yJ"/>
+                <outlet property="subCategoriesLabel" destination="OBv-nf-4rN" id="0bd-UN-Eiw"/>
             </connections>
             <point key="canvasLocation" x="447.5" y="196.5"/>
         </view>
@@ -264,6 +268,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="addNewItemButton" destination="prZ-Dr-rxx" id="x3C-eB-yB6"/>
+                <outlet property="categoryItemsLabel" destination="dyM-e8-Fcy" id="OeK-lu-pnQ"/>
                 <outlet property="collectionView" destination="rsG-wa-4Yq" id="ouC-00-Efd"/>
             </connections>
             <point key="canvasLocation" x="447.5" y="294.5"/>

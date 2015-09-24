@@ -99,7 +99,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             
             // Parent Category
             if self.categoryDetailsModel.parentId == "" {
-                self.categoryDetailsView.parentCategoryLabel.text = "NONE"
+                self.categoryDetailsView.parentCategoryLabel.text = CategoryStrings.none
             } else {
                 self.categoryDetailsView.parentCategoryLabel.text = self.categoryDetailsModel.parentId
             }
@@ -112,7 +112,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
 //                    self.subCategories.append(subCategoryDict)
 //                }
 
-                self.subCategoriesView.setTitle("EDIT")
+                self.subCategoriesView.setTitle(CategoryStrings.categoryEdit)
                 self.tableView.reloadData()
             }
             
@@ -122,7 +122,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
 //                    self.productIds.append(self.categoryDetailsModel.products[i].productId)
 //                }
                 
-                self.categoryItemsView.setItemButtonTitle("EDIT")
+                self.categoryItemsView.setItemButtonTitle(CategoryStrings.categoryEdit)
 //                self.itemImagesView.setProductsCategory(products: self.customizedCategoryProducts)
                 self.itemImagesView.setProductsManagement(products: selectedProductsModel)
                 self.itemImagesView.hidden = false
@@ -292,7 +292,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     func populateDetails() {
         
         if self.selectedProductsModel.count != 0 {
-            self.categoryItemsView.addNewItemButton.setTitle("EDIT", forState: .Normal)
+            self.categoryItemsView.addNewItemButton.setTitle(CategoryStrings.categoryEdit, forState: .Normal)
             if self.itemImagesView != nil {
                self.itemImagesView.hidden = false
             } else {
@@ -303,7 +303,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             self.itemImagesView.setProductsManagement(products: selectedProductsModel)
         } else if self.selectedProductsModel.count == 0 {
             
-            self.categoryItemsView.addNewItemButton.setTitle("ADD NEW ITEM", forState: .Normal)
+            self.categoryItemsView.addNewItemButton.setTitle(CategoryStrings.categoryNewItems, forState: .Normal)
             if self.itemImagesView != nil {
                 self.itemImagesView.removeFromSuperview()
             }
@@ -348,7 +348,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         
         if self.categoryDetailsView.categoryNameTextField.text != "" {
             
-            if self.title == "Add Customized Category" {
+            if self.title == CategoryStrings.titleAddCustomized {
                 var productIds: [Int] = []
                 for i in 0..<self.selectedProductsModel.count {
                     productIds.append(self.selectedProductsModel[i].id.toInt()!)
@@ -387,7 +387,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                     println(parameters)
                     requestAddCustomizedCategory(parameters)
                 }
-            } else if self.title == "Edit Customized Category" {
+            } else if self.title == CategoryStrings.titleEditCustomized {
 
                 if self.parentId != 0 && self.subCategories2.count != 0 {
                     self.showAlert(title: "Failed", message: "Cannot save as sub category if it have sub categories.")
@@ -696,9 +696,9 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         self.subCategories2 = subCategories
         
         if self.subCategories2.count != 0 {
-            self.subCategoriesView.setTitle("EDIT")
+            self.subCategoriesView.setTitle(CategoryStrings.categoryEdit)
         } else {
-            self.subCategoriesView.setTitle("ADD SUB CATEGORY")
+            self.subCategoriesView.setTitle(CategoryStrings.categoryAddSub)
         }
         
         self.tableView.reloadData()
