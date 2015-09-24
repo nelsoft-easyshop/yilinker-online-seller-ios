@@ -15,6 +15,7 @@ protocol CCSubCategoriesViewDelegate {
 class CCSubCategoriesView: UIView {
 
     var delegate: CCSubCategoriesViewDelegate?
+    @IBOutlet weak var subCategoriesLabel: UILabel!
     var sampleButton: UIButton!
     
     @IBOutlet weak var addSubCategoryButton: UIButton!
@@ -23,11 +24,14 @@ class CCSubCategoriesView: UIView {
         
         self.addSubCategoryButton.layer.cornerRadius = self.addSubCategoryButton.frame.size.height / 2
         self.addSubCategoryButton.sizeToFit()
+        
+        self.subCategoriesLabel.text = CategoryStrings.categorySubCategories
+        self.addSubCategoryButton.setTitle(CategoryStrings.categoryAddSub, forState: .Normal)
     }
 
     func setTitle(title: String) {
         self.addSubCategoryButton.setTitle(title, forState: .Normal)
-//        self.addSubCategoryButton.sizeToFit()
+        self.addSubCategoryButton.sizeToFit()
 //        self.addSubCategoryButton.setTitle(title, forState: .Normal)
 //        self.addSubCategoryButton.sizeToFit()
     }

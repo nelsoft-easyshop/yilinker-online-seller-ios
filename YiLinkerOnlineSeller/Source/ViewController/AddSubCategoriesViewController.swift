@@ -112,7 +112,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
         self.seeAllItemsView.backgroundColor = UIColor.whiteColor()
         
         var seeAllItemsLabel = UILabel(frame: CGRectZero)
-        seeAllItemsLabel.text = "See all " + String(subCategoriesProducts.count) + " items   "
+        seeAllItemsLabel.text = CategoryStrings.categorySeeAll + String(subCategoriesProducts.count) + CategoryStrings.categoryItems2
         seeAllItemsLabel.font = UIFont(name: "Panton-Bold", size: 12.0)
         seeAllItemsLabel.textColor = UIColor.darkGrayColor()
         seeAllItemsLabel.sizeToFit()

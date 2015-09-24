@@ -10,6 +10,9 @@ import UIKit
 
 struct myConstant {
     static let cellIdentifier = "ProductDetailsIdentifier"
+    static let title = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_TITLE_LOCALIZE_KEY")
+    static let description = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_DESCRIPTION_LOCALIZE_KEY")
+    static let seeMore = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_SEEMORE_LOCALIZE_KEY")
 }
 
 class ProductDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProductDescriptionViewDelegate {
@@ -76,6 +79,8 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
             self.productDescriptionView = XibHelper.puffViewWithNibName("ProductDetailViews", index: 1) as! ProductDescriptionView
             self.productDescriptionView.frame.size.width = self.view.frame.size.width
             self.productDescriptionView.delegate = self
+            self.productDescriptionView.titleLabel.text = myConstant.title
+            self.productDescriptionView.seeMoreLabel.text = myConstant.seeMore
         }
         return self.productDescriptionView
     }
@@ -85,7 +90,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     func customizeNavigationBar() {
         
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.title = "Product Details"
+        self.title = myConstant.title
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
         var backButton = UIBarButtonItem(image: UIImage(named: "back-white"), style: .Plain, target: self, action: "backAction")
