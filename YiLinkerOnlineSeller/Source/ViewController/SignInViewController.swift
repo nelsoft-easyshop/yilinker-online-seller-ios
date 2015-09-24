@@ -144,7 +144,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isSeller")
         self.showHUD()
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["email": "seller@easyshop.ph",
+        let parameters: NSDictionary = ["email": "reseller@easyshop.ph",
             "password": "password",
             "client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,

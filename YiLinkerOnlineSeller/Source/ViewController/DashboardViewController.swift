@@ -29,12 +29,6 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController!.tabBar.tintColor = Constants.Colors.appTheme
-        if !NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
-            SessionManager.setAccessToken("")
-            let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
-            signInViewController.delegate = self
-            self.presentViewController(signInViewController, animated: false, completion: nil)
-        }
         
 //        println(SessionManager.accessToken())
         registerNibs()
@@ -116,6 +110,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                 self.hud?.hide(true)
         })
     }
+
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -135,16 +130,13 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                 fireStoreInfo(true)
                 setupGCM()
             } else {
-                fireStoreInfo(false)
+                fireStoreInfo(true)
             }
         } else {
-            if ctr == 1{
+            if SessionManager.isLoggedIn() {
                 fireStoreInfo(true)
-            } else if ctr != 0 {
-                fireStoreInfo(false)
             }
         }
-        
         
         ctr++
     }
@@ -161,6 +153,15 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if !NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
+            if !SessionManager.isLoggedIn() {
+                SessionManager.setAccessToken("")
+                let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
+                signInViewController.delegate = self
+                self.presentViewController(signInViewController, animated: false, completion: nil)
+            }
+        }
         self.navigationController?.navigationBarHidden = true
 
         self.tabBarController?.tabBar.hidden = false
@@ -386,9 +387,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             
             NSUserDefaults.standardUserDefaults().synchronize()
             
-            if !showHUD{
-                self.collectionView.reloadData()
-            }
+            self.collectionView.reloadData()
+            
             self.hud?.hide(true)
             
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in

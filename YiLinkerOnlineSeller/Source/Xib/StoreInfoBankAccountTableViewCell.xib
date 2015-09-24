@@ -118,8 +118,10 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="bankAccountDetailLabel" destination="bxj-bM-2ur" id="zfx-x0-zTb"/>
-                <outlet property="bankAccountTitleLabel" destination="uBs-1U-8tg" id="Yns-Pz-SWo"/>
+                <outlet property="bankAccountInfoLabel" destination="5Ys-Dp-kcC" id="sIh-a7-HJP"/>
+                <outlet property="bankAccountTitleLabel" destination="5Ys-Dp-kcC" id="Bdd-1C-es8"/>
                 <outlet property="bankAccountView" destination="dof-UE-QQx" id="fZE-kV-Is9"/>
+                <outlet property="newAccountLabel" destination="QkY-nl-exk" id="uFz-81-Wvt"/>
             </connections>
             <point key="canvasLocation" x="319.5" y="355"/>
         </tableViewCell>

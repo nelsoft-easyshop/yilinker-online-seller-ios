@@ -16,21 +16,15 @@ class ChangeEmailViewController: UIViewController {
     
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var submitEmailAddressButton: DynamicRoundedButton!
-    
     @IBOutlet weak var closeButton: UIButton!
     
     @IBOutlet weak var oldEmailAddressTextField: UITextField!
-    
     @IBOutlet weak var newEmailAddressTextField: UITextField!
-    
     @IBOutlet weak var confirmEmailAddressTextField: UITextField!
     
     @IBOutlet weak var titleLabel: UILabel!
-    
     @IBOutlet weak var oldEmailLabel: UILabel!
-   
     @IBOutlet weak var newEmailLabel: UILabel!
-    
     @IBOutlet weak var confirmEmailLabel: UILabel!
     
     var type: String = ""
@@ -39,8 +33,29 @@ class ChangeEmailViewController: UIViewController {
     
     var delegate: ChangeEmailViewControllerDelegate?
     
+    let passwordTitle: String = StringHelper.localizedStringWithKey("CHANGE_PASSWORD_TITLE_LOCALIZE_KEY")
+    let oldPassword: String = StringHelper.localizedStringWithKey("CHANGE_PASSWORD_OLD_PASSWORD_LOCALIZE_KEY")
+    let enterOldPassword: String = StringHelper.localizedStringWithKey("CHANGE_PASSWORD_ENTER_OLD_LOCALIZE_KEY")
+    let newPassword: String = StringHelper.localizedStringWithKey("CHANGE_PASSWORD_NEW_PASSWORD_LOCALIZE_KEY")
+    let enterNewPassword: String = StringHelper.localizedStringWithKey("CHANGE_PASSWORD_ENTER_NEW_LOCALIZE_KEY")
+    let confirmPassword: String = StringHelper.localizedStringWithKey("CHANGE_PASSWORD_CONFIRM_PASSWORD_LOCALIZE_KEY")
+    let confirmNewPassword: String = StringHelper.localizedStringWithKey("CHANGE_PASSWORD_CONFIRM_NEW_LOCALIZE_KEY")
+    let submit: String = StringHelper.localizedStringWithKey("CHANGE_PASSWORD_SUBMIT_LOCALIZE_KEY")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.titleLabel.text = self.passwordTitle
+        self.oldEmailLabel.text = self.oldPassword
+        self.newEmailLabel.text = self.newPassword
+        self.confirmEmailLabel.text = self.confirmPassword
+        self.oldEmailAddressTextField.placeholder = self.enterOldPassword
+        self.newEmailAddressTextField.placeholder = self.enterNewPassword
+        self.confirmEmailAddressTextField.placeholder = self.confirmNewPassword
+        self.oldEmailAddressTextField.secureTextEntry = true
+        self.newEmailAddressTextField.secureTextEntry = true
+        self.confirmEmailAddressTextField.secureTextEntry = true
+        self.submitEmailAddressButton.setTitle(self.submit, forState: UIControlState.Normal)
         
         // Do any additional setup after loading the view.
     }
