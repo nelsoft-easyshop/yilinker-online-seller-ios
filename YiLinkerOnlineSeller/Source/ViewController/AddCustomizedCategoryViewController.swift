@@ -223,7 +223,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
 //        if customizedCategoryProducts.count != 0 {
 //            seeAllItemsLabel.text = "See all " + String(self.customizedCategoryProducts.count) + " items   "
 //        } else if selectedProductsModel.count != 0 {
-            seeAllItemsLabel.text = "See all " + String(self.selectedProductsModel.count) + " items   "
+            seeAllItemsLabel.text = CategoryStrings.categorySeeAll + String(self.selectedProductsModel.count) + CategoryStrings.categoryItems2
 //        } else {
 //            seeAllItemsLabel.text = "See all 0 items   "
 //            self.seeAllItemsView.hidden = false
