@@ -51,19 +51,26 @@ class SelectedFilters {
         formatter.dateFormat = "MM/dd/YYYY"
         switch time {
         case .Today:
+            self.time = ResolutionTimeFilter.Today
             return formatter.stringFromDate(now)
         case .ThisWeek:
+            self.time = ResolutionTimeFilter.ThisWeek
             let day: Int = self.dayOfWeek(self.getTimeNow())
             return formatter.stringFromDate(NSDate())
         case .ThisMonth:
-            let oneMonth: NSTimeInterval = 60*60*24*30
-            let lastMonth = now.dateByAddingTimeInterval(-oneMonth)
-            return formatter.stringFromDate(lastMonth)
+            self.time = ResolutionTimeFilter.ThisMonth
+            return formatter.stringFromDate(NSDate())
         case .Total:
             return ""
         default:
             return ""
         }
+    }
+    
+    
+    
+    func getFilterType() -> ResolutionTimeFilter {
+        return self.time
     }
     
     func sundayDate() -> String {

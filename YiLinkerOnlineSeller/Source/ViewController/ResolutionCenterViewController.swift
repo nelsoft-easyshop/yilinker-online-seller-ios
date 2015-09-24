@@ -240,27 +240,53 @@ class ResolutionCenterViewController
         } else {
             let statusFilter = self.currentSelectedFilter.getStatusFilter()
             let timeFilter = self.currentSelectedFilter.getTimeFilter()
+            
+            var fullDate = timeFilter.componentsSeparatedByString("/")
+            println("Status Filter: \(statusFilter)")
             if timeFilter == ""  {
                 parameters = [ "access_token" : SessionManager.accessToken()
                              , "disputeStatusType" : statusFilter]
             } else if statusFilter == "0" {
-                parameters = [ "access_token" : SessionManager.accessToken()
-                             , "dateFrom" : timeFilter,
-                               "dateTo": timeFilter]
+                if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisMonth {
+                    parameters = [ "access_token" : SessionManager.accessToken()
+                        , "dateFrom" : "\(fullDate[0])/1/\(fullDate[2])",
+                        "dateTo": timeFilter]
+
+                } else if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisWeek {
+                    parameters = [ "access_token" : SessionManager.accessToken()
+                        , "dateFrom" : self.currentSelectedFilter.sundayDate(),
+                        "dateTo": timeFilter,
+                        "disputeStatusType" : statusFilter]
+                } else {
+                    parameters = [ "access_token" : SessionManager.accessToken()
+                        , "dateFrom" : timeFilter,
+                        "disputeStatusType" : statusFilter]
+                }
+              
             } else {
-                parameters = [ "access_token" : SessionManager.accessToken()
-                             , "disputeStatusType" : statusFilter
-                             , "dateFrom" : self.currentSelectedFilter.getTimeFilter()]
+                if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisMonth {
+                    parameters = [ "access_token" : SessionManager.accessToken()
+                        , "dateFrom" : "\(fullDate[0])/1/\(fullDate[2])",
+                        "dateTo": timeFilter,
+                        "disputeStatusType" : statusFilter]
+                    
+                } else if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisWeek {
+                    parameters = [ "access_token" : SessionManager.accessToken()
+                        , "dateFrom" : self.currentSelectedFilter.sundayDate(),
+                        "dateTo": timeFilter,
+                        "disputeStatusType" : statusFilter]
+                } else {
+                    parameters = [ "access_token" : SessionManager.accessToken()
+                        , "dateFrom" : timeFilter,
+                        "disputeStatusType" : statusFilter]
+                }
             }
         }
-        println("url: " + urlString)
-        println(parameters)
+        
         
         manager.GET(urlString, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             let resolutionCenterModel: ResolutionCenterModel = ResolutionCenterModel.parseDataWithDictionary(responseObject)
-            
-            //println(responseObject)
             
             if resolutionCenterModel.isSuccessful {
                 self.tableData.removeAll(keepCapacity: false)
