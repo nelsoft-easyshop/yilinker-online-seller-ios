@@ -16,9 +16,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CongratulationsViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
             <connections>
-                <outlet property="continueButton" destination="jGH-4D-uVc" id="Bjj-84-5GZ"/>
+                <outlet property="continueButton" destination="jGH-4D-uVc" id="ige-FZ-XEJ"/>
                 <outlet property="iconImageView" destination="1VF-cQ-Xwp" id="qq3-lk-5cv"/>
-                <outlet property="requestNewButton" destination="nml-O9-DYR" id="jLz-WV-jo8"/>
+                <outlet property="requestNewButton" destination="nml-O9-DYR" id="6sG-Ix-HTV"/>
                 <outlet property="subTitleLabel" destination="8Sj-ni-GBj" id="4SA-bB-VR3"/>
                 <outlet property="successFailView" destination="vmr-Xt-M22" id="E9G-rm-aTg"/>
                 <outlet property="titleLabel" destination="tWF-hD-Yoe" id="nkb-g2-1rt"/>
@@ -115,7 +115,7 @@
                                         <constraint firstItem="tWF-hD-Yoe" firstAttribute="leading" secondItem="ch9-fS-rTf" secondAttribute="leading" id="vA2-qc-cMZ"/>
                                     </constraints>
                                 </view>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nml-O9-DYR">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nml-O9-DYR" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
                                     <rect key="frame" x="42" y="160" width="275" height="28"/>
                                     <color key="backgroundColor" red="0.20000000000000001" green="0.65098039220000004" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
@@ -126,11 +126,16 @@
                                     <state key="normal" title="REUEST NEW VERIFICATION CODE">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="5"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
                                     <connections>
                                         <action selector="requestNewVerificationAction:" destination="-1" eventType="touchUpInside" id="x3E-wK-B8h"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jGH-4D-uVc">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jGH-4D-uVc" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
                                     <rect key="frame" x="117" y="160" width="124" height="28"/>
                                     <color key="backgroundColor" red="0.20000000000000001" green="0.65098039220000004" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
@@ -141,6 +146,11 @@
                                     <state key="normal" title="CONTINUE">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="5"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
                                     <connections>
                                         <action selector="continueAction:" destination="-1" eventType="touchUpInside" id="js1-2N-PjP"/>
                                     </connections>

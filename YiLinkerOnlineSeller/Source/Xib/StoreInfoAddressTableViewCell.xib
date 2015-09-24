@@ -110,6 +110,8 @@
                 <outlet property="addressLabel" destination="bJJ-C5-EXD" id="zPX-Fv-SZx"/>
                 <outlet property="addressTitle" destination="Qvf-Dc-JZh" id="89K-Xl-z02"/>
                 <outlet property="addressView" destination="srs-wV-U41" id="fi7-zS-dz2"/>
+                <outlet property="newAddressLabel" destination="d8T-T9-3Hb" id="LDj-BC-3BG"/>
+                <outlet property="storeAddressTitleLabel" destination="WN0-8l-9FO" id="LiC-LD-aXj"/>
             </connections>
             <point key="canvasLocation" x="259.5" y="354.5"/>
         </tableViewCell>
