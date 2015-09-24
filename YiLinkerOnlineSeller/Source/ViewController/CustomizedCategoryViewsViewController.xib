@@ -75,7 +75,7 @@
                             </constraints>
                             <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
-                            <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
                         </textField>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -216,18 +216,26 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="trd-E6-0Ms">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="trd-E6-0Ms">
                     <rect key="frame" x="0.0" y="8" width="375" height="45"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Items under this Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dyM-e8-Fcy">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Items under this Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dyM-e8-Fcy">
                             <rect key="frame" x="8" y="12" width="193" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="NIc-SP-G2u"/>
+                                <constraint firstAttribute="width" priority="500" constant="193" id="pbH-we-4U7"/>
+                            </constraints>
                             <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="16"/>
                             <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="prZ-Dr-rxx">
+                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="prZ-Dr-rxx">
                             <rect key="frame" x="253" y="10" width="114" height="25"/>
                             <color key="backgroundColor" red="0.43529411759999997" green="0.20392156859999999" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" priority="500" constant="114" id="8bU-vD-sKx"/>
+                                <constraint firstAttribute="height" constant="25" id="tCL-uj-fJ6"/>
+                            </constraints>
                             <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="12"/>
                             <state key="normal" title="ADD NEW ITEM">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -239,8 +247,20 @@
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="prZ-Dr-rxx" secondAttribute="trailing" constant="8" id="3KU-0x-4Y6"/>
+                        <constraint firstItem="prZ-Dr-rxx" firstAttribute="top" secondItem="trd-E6-0Ms" secondAttribute="top" constant="10" id="ERZ-wd-PTO"/>
+                        <constraint firstItem="dyM-e8-Fcy" firstAttribute="top" secondItem="trd-E6-0Ms" secondAttribute="top" constant="12" id="UF2-9d-RDk"/>
+                        <constraint firstItem="dyM-e8-Fcy" firstAttribute="leading" secondItem="trd-E6-0Ms" secondAttribute="leading" constant="8" id="sW8-GJ-Nej"/>
+                    </constraints>
                 </view>
             </subviews>
+            <constraints>
+                <constraint firstItem="trd-E6-0Ms" firstAttribute="leading" secondItem="Diq-YZ-ZN8" secondAttribute="leading" id="5gF-Uh-S3I"/>
+                <constraint firstAttribute="bottom" secondItem="trd-E6-0Ms" secondAttribute="bottom" id="Mhs-JO-DKJ"/>
+                <constraint firstAttribute="trailing" secondItem="trd-E6-0Ms" secondAttribute="trailing" id="Y11-C4-J4c"/>
+                <constraint firstItem="trd-E6-0Ms" firstAttribute="top" secondItem="Diq-YZ-ZN8" secondAttribute="top" constant="8" id="t74-v4-nlw"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="addNewItemButton" destination="prZ-Dr-rxx" id="x3C-eB-yB6"/>
