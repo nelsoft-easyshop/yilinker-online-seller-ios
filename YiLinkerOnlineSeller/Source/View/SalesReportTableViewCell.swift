@@ -58,6 +58,8 @@ class SalesReportTableViewCell: UITableViewCell {
         var xAxis: ChartXAxis = largeLineChart.xAxis
         xAxis.labelPosition = ChartXAxis.XAxisLabelPosition.Bottom
         xAxis.labelFont = UIFont(name: "Panton-Semibold", size: 12)!
+        xAxis.wordWrapEnabled = true
+        xAxis.avoidFirstLastClippingEnabled = true
         xAxis.setLabelsToSkip(0)
         
         var yAxisRight: ChartYAxis = largeLineChart.rightAxis
@@ -85,6 +87,7 @@ class SalesReportTableViewCell: UITableViewCell {
         smallLineChart.noDataText = "No data available"
         
         var xAxis1: ChartXAxis = smallLineChart.xAxis
+        xAxis.wordWrapEnabled = true
         xAxis1.enabled = false
         
         var yAxisRight1: ChartYAxis = smallLineChart.rightAxis
