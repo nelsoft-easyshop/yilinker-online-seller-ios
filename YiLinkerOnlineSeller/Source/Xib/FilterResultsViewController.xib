@@ -8,10 +8,12 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FilterResultsViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
             <connections>
                 <outlet property="dimView" destination="I1w-UY-Dzd" id="Cfg-Lq-rMP"/>
+                <outlet property="filterLabel" destination="jZF-jZ-lYD" id="nks-I4-SlP"/>
                 <outlet property="filterTableView" destination="ZC5-9o-tkT" id="2Xi-22-Q5o"/>
                 <outlet property="filterView" destination="Zxp-al-mAM" id="Oer-zC-ISK"/>
                 <outlet property="noResultsLabel" destination="f2N-9r-sZ7" id="IeA-dt-W7j"/>
                 <outlet property="searchFilterCollectionView" destination="IOI-GE-zMC" id="rdH-Yq-WS6"/>
+                <outlet property="sortLabel" destination="ohX-Pb-v9U" id="naX-e1-bwq"/>
                 <outlet property="sortView" destination="v45-hB-CPT" id="9x5-pd-97J"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

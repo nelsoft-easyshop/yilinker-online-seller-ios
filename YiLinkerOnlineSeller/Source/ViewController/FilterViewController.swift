@@ -18,14 +18,33 @@ class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate 
     @IBOutlet weak var applyFilterButton: SemiRoundedButton!
     @IBOutlet weak var filterTableView: UITableView!
     
-    var tableData: [FilterAttributeModel] = [
-        FilterAttributeModel(title: "Search By", attributes: ["Product Name", "Transaction Id", "Rider"]),
-        FilterAttributeModel(title: "Date", attributes: ["All", "Today", "Day Ago", "Week", "New"])]
+    let cancelTitle: String = StringHelper.localizedStringWithKey("SEARCH_CANCEL_LOCALIZE_KEY")
+    let resetTitle: String = StringHelper.localizedStringWithKey("SEARCH_RESET_LOCALIZE_KEY")
+    let searchBy: String = StringHelper.localizedStringWithKey("SEARCH_SEARCH_BY_LOCALIZE_KEY")
+    let date: String = StringHelper.localizedStringWithKey("SEARCH_DATE_LOCALIZE_KEY")
+    let today: String = StringHelper.localizedStringWithKey("SEARCH_TODAY_LOCALIZE_KEY")
+    let dayAgo: String = StringHelper.localizedStringWithKey("SEARCH_DAY_AGO_LOCALIZE_KEY")
+    let week: String = StringHelper.localizedStringWithKey("SEARCH_WEEK_LOCALIZE_KEY")
+    let new: String = StringHelper.localizedStringWithKey("SEARCH_NEW_LOCALIZE_KEY")
+    let applyFilter: String = StringHelper.localizedStringWithKey("SEARCH_APPLY_FILTER_LOCALIZE_KEY")
+    let all: String = StringHelper.localizedStringWithKey("SEARCH_ALL_LOCALIZE_KEY")
+    let transaction: String = StringHelper.localizedStringWithKey("SEARCH_TRANSACTION_LOCALIZE_KEY")
+    let productName: String = StringHelper.localizedStringWithKey("SEARCH_PRODUCT_LOCALIZE_KEY")
+    let rider: String = StringHelper.localizedStringWithKey("SEARCH_RIDER_LOCALIZE_KEY")
+    
+    var tableData: [FilterAttributeModel] = []
     
     var delegate: FilterViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tableData =  [FilterAttributeModel(title: self.searchBy, attributes: [self.productName, self.transaction, self.rider]),
+        FilterAttributeModel(title: self.date, attributes: [self.all, self.today, self.dayAgo, self.week, self.new])]
+        
+        self.applyFilterButton.setTitle(self.applyFilter, forState: UIControlState.Normal)
+        self.cancelButton.setTitle(self.cancelTitle, forState: UIControlState.Normal)
+        self.resetButton.setTitle(self.resetTitle, forState: UIControlState.Normal)
         
         // Do any additional setup after loading the view.
         var nib = UINib(nibName: "FilterTableViewCell", bundle: nil)
