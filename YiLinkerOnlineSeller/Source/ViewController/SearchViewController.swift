@@ -200,7 +200,13 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if filterBySelected == 0 || filterBySelected == 2 || filterBySelected == 3 {
             self.showAlert(title: "Information", message: "Search by \(filterBy[filterBySelected]) is not yet available.")
         } else {
-            self.fireSearch()
+            if count(textField.text) < 3 {
+                self.showAlert(title: "Error", message: "Minimum character is 3. Please enter another transaction id.")
+                textField.text = ""
+            } else {
+                self.fireSearch()
+            }
+            
         }
         
         return true

@@ -187,7 +187,10 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         //self.showView()
-        
+        var transactionDetails = TransactionDetailsTableViewController(nibName: "TransactionDetailsTableViewController", bundle: nil)
+        transactionDetails.edgesForExtendedLayout = .None
+        transactionDetails.invoiceNumber = self.searchModel!.invoiceNumber[indexPath.row]
+        self.navigationController?.pushViewController(transactionDetails, animated: true)
     }
     
     func collectionView(collectionView: UICollectionView,
