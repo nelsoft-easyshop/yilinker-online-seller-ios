@@ -13,7 +13,7 @@ protocol AddSubCategoriesViewControllerDelegate {
     func updateSubCategory(subCategory: SubCategoryModel)
 }
 
-class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDelegate, CCCategoryItemsViewDelegate, AddItemViewControllerDelegate, EditItemsViewControllerDelegate, ParentCategoryViewControllerDelegate {
+class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDelegate, CCCategoryItemsViewDelegate, AddItemViewControllerDelegate, EditItemsViewControllerDelegate, ParentCategoryViewControllerDelegate, UITextFieldDelegate {
 
     var hud: MBProgressHUD?
     
@@ -37,6 +37,11 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
     var subCategoryDetailModel: SubCategoryModel!
     var parentName: String = ""
     
+    var isEditingSub: Bool = false
+    var parameterSubCategoryModal: SubCategoryModel!
+    var parameterParentName: String = ""
+    var parameterCategoryId: Int = -1
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -48,6 +53,16 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        loadViewsWithDetails()
+        
+        if isEditingSub {
+            if parameterSubCategoryModal != nil {
+                populateFromLocal(parameterSubCategoryModal)
+            } else {
+                requestGetSubCategoryDetails(parentName: parameterParentName, categoryId: parameterCategoryId)
+            }
+        }
     }
     
     // MARK: - Methods
@@ -82,6 +97,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
         if self.categoryDetailsView == nil {
             self.categoryDetailsView = XibHelper.puffViewWithNibName("CustomizedCategoryViewsViewController", index: 0) as! CCCategoryDetailsView
             self.categoryDetailsView.categoryNameTextField.becomeFirstResponder()
+            self.categoryDetailsView.categoryNameTextField.delegate = self
             self.categoryDetailsView.delegate = self
             self.categoryDetailsView.frame.size.width = self.view.frame.size.width
             self.categoryDetailsView.frame.size.height = 100.0
@@ -455,5 +471,12 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
         
         self.categoryDetailsView.parentCategoryLabel.text = parentCategory
 //        populateDetails()
+    }
+    
+    // MARK: - Text Field Delegate
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.categoryDetailsView.categoryNameTextField.resignFirstResponder()
+        return true
     }
 }

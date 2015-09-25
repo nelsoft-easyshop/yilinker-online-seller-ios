@@ -16,7 +16,7 @@ struct CategoryStrings {
     static let none = StringHelper.localizedStringWithKey("CATEGORY_NONE_LOCALIZE_KEY")
     static let categorySubCategories = StringHelper.localizedStringWithKey("CATEGORY_SUB_CATEGORIES_LOCALIZE_KEY")
     static let categoryAddSub = StringHelper.localizedStringWithKey("CATEGORY_ADD_SUB_LOCALIZE_KEY")
-    static let categoryItems = StringHelper.localizedStringWithKey("CATEGORY_ITEMS_LOCALIZE_KEY")
+    static let categoryItems = StringHelper.localizedStringWithKey("CATEGORY_ITEMS_UNDER_LOCALIZE_KEY")
     static let categoryNewItems = StringHelper.localizedStringWithKey("CATEGORY_NEW_ITEM_LOCALIZE_KEY")
     static let categoryEdit = StringHelper.localizedStringWithKey("CATEGORY_EDIT_LOCALIZE_KEY")
     static let categorySeeAll = StringHelper.localizedStringWithKey("CATEGORY_SEE_ALL_LOCALIZE_KEY")

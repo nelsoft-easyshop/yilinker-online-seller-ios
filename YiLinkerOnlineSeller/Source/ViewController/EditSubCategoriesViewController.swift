@@ -149,7 +149,8 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     @IBAction func addCategories(sender: AnyObject) {
         let addSubCategoryViewController = AddSubCategoriesViewController(nibName: "AddSubCategoriesViewController", bundle: nil)
         addSubCategoryViewController.delegate = self
-        addSubCategoryViewController.loadViewsWithDetails()
+//        addSubCategoryViewController.loadViewsWithDetails()
+        addSubCategoryViewController.isEditingSub = false
         addSubCategoryViewController.title = CategoryStrings.titleAddCategories
         addSubCategoryViewController.parentName = self.parentName
         addSubCategoryViewController.createdCategory = createdCategory
@@ -211,11 +212,15 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
         let editSubCategory = AddSubCategoriesViewController(nibName: "AddSubCategoriesViewController", bundle: nil)
         editSubCategory.delegate = self
         editSubCategory.title = CategoryStrings.subEditCategory
-        editSubCategory.loadViewsWithDetails()
+//        editSubCategory.loadViewsWithDetails()
+        editSubCategory.isEditingSub = true
         if subCategories[indexPath.row].local {
-            editSubCategory.populateFromLocal(subCategories[indexPath.row])
+            editSubCategory.parameterSubCategoryModal = subCategories[indexPath.row]
+//            editSubCategory.populateFromLocal(subCategories[indexPath.row])
         } else {
-            editSubCategory.requestGetSubCategoryDetails(parentName: subCategories[indexPath.row].parentName, categoryId: subCategories[indexPath.row].categoryId)
+            editSubCategory.parameterParentName = subCategories[indexPath.row].parentName
+            editSubCategory.parameterCategoryId = subCategories[indexPath.row].categoryId
+//            editSubCategory.requestGetSubCategoryDetails(parentName: subCategories[indexPath.row].parentName, categoryId: subCategories[indexPath.row].categoryId)
         }
         self.navigationController?.pushViewController(editSubCategory, animated: true)
     }
