@@ -127,7 +127,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
                 self.signInButton.setTitle(SignInStrings.signingin, forState: .Normal)
                 self.requestSignin()
             } else {
-                showAlert(title: AlertStrings.failed, message: "Please check your internet connection.")
+                showAlert(title: AlertStrings.failed, message: AlertStrings.checkInternet)
             }
         } else {
             showAlert(title: AlertStrings.error, message: SignInStrings.please)

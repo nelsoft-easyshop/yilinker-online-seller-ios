@@ -15,7 +15,7 @@ struct myConstant {
     static let seeMore = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_SEEMORE_LOCALIZE_KEY")
 }
 
-class ProductDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProductDescriptionViewDelegate {
+class ProductDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProductDescriptionViewDelegate, EmptyViewDelegate {
 
     // MARK: - Models
     var productDetailsModel: ProductDetailsModel!
@@ -33,6 +33,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     var productImagesView: ProductImagesView!
     var productDescriptionView: ProductDescriptionView!
     var hud: MBProgressHUD?
+    var emptyView: EmptyView?
     
     var newFrame: CGRect!
     
@@ -44,7 +45,12 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        requestProductDetails()
+        if Reachability.isConnectedToNetwork() {
+            requestProductDetails()
+        } else {
+//            addEmptyView()
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
+        }
         customizeNavigationBar()
         
         let nib = UINib(nibName: "ProductDetailsTableViewCell", bundle: nil)
@@ -213,6 +219,13 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
+    func addEmptyView() {
+        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+        self.emptyView!.delegate = self
+        self.emptyView!.frame = self.view.bounds
+        self.view.addSubview(self.emptyView!)
+    }
+    
     // MARK: - Request
     
     func requestProductDetails() {
@@ -254,6 +267,15 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         self.navigationController?.pushViewController(upload, animated: true)
     }
 
+    func didTapReload() {
+        if Reachability.isConnectedToNetwork() {
+            requestProductDetails()
+        } else {
+            addEmptyView()
+        }
+        self.emptyView?.removeFromSuperview()
+    }
+    
     // MARK: - Table View Data Source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

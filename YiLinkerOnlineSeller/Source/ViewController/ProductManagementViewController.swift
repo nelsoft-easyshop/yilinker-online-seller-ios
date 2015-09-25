@@ -39,7 +39,7 @@ private struct Status {
     static let review = 1
 }
 
-class ProductManagementViewController: UIViewController, ProductManagementModelViewControllerDelegate {
+class ProductManagementViewController: UIViewController, ProductManagementModelViewControllerDelegate, EmptyViewDelegate {
     
     @IBOutlet weak var searchBarContainerView: UIView!
     @IBOutlet weak var searchBarTextField: UITextField!
@@ -74,6 +74,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     var selectedItems: [String] = []
     
     var hud: MBProgressHUD?
+    var emptyView: EmptyView?
     
     var productModel: ProductManagementProductModel!
     var requestTask: NSURLSessionDataTask!
@@ -246,6 +247,24 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         self.hud?.show(true)
     }
     
+    // MARK: - Empty View
+    
+    func addEmptyView() {
+        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+        self.emptyView?.frame = self.view.frame
+        self.emptyView!.delegate = self
+        self.view.addSubview(self.emptyView!)
+    }
+    
+    func didTapReload() {
+        self.emptyView?.removeFromSuperview()
+        if Reachability.isConnectedToNetwork() {
+            self.requestGetProductList(self.statusId[self.selectedIndex], key: self.searchBarTextField.text)
+        } else {
+            addEmptyView()
+        }
+    }
+    
     // MARK: - Actions
     
     func dimAction() {
@@ -279,7 +298,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     }
     
     func tabAction(sender: AnyObject) {
-        if productModel.products.count != 0 {
+        if productModel != nil && productModel.products.count != 0 {
             var action: Int = 0
             
             if selectedIndex == 1 {
@@ -334,59 +353,68 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     // MARK: - Requests
     
     func requestGetProductList(status: Int, key: String) {
-        if self.requestTask != nil {
-            self.requestTask.cancel()
-            self.requestTask = nil
-        }
-        
-        self.showHUD()
-        
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-                                              "status": String(status),
-                                             "keyword": key]
-        
-        self.requestTask = manager.POST(APIAtlas.managementGetProductList, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+        if Reachability.isConnectedToNetwork() {
+            if self.requestTask != nil {
+                self.requestTask.cancel()
+                self.requestTask = nil
+            }
             
-            self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
-            self.tableView.reloadData()
-            self.hud?.hide(true)
-            self.loaderContainerView.hidden = true
-            self.searchBarTextField.userInteractionEnabled = true
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
+            self.showHUD()
+            
+            let manager = APIManager.sharedInstance
+            let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
+                "status": String(status),
+                "keyword": key]
+            
+            self.requestTask = manager.POST(APIAtlas.managementGetProductList, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 
-                if error.code != NSURLErrorCancelled {
-                    self.hud?.hide(true)
-                    self.loaderContainerView.hidden = true
-                    self.searchBarTextField.userInteractionEnabled = true
-                }
-                
-        })
+                self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                self.tableView.reloadData()
+                self.hud?.hide(true)
+                self.loaderContainerView.hidden = true
+                self.searchBarTextField.userInteractionEnabled = true
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    
+                    if error.code != NSURLErrorCancelled {
+                        self.hud?.hide(true)
+                        self.loaderContainerView.hidden = true
+                        self.searchBarTextField.userInteractionEnabled = true
+                    }
+                    
+            })
+        } else {
+//            addEmptyView()
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
+        }
     }
     
     func requestUpdateProductStatus(status: Int) {
-        self.showHUD()
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-                                           "productId": selectedItems.description,
-                                              "status": status]
-        
-        manager.POST(APIAtlas.managementUpdateProductStatus, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+        if Reachability.isConnectedToNetwork() {
+            self.showHUD()
+            let manager = APIManager.sharedInstance
+            let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
+                "productId": selectedItems.description,
+                "status": status]
             
-            self.selectedItems = []
-            self.updateSelectedItems(0, selected: false)
-
-            self.requestGetProductList(self.statusId[self.selectedIndex], key: self.searchBarTextField.text)
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                println(error)
-                self.hud?.hide(true)
-                self.loaderContainerView.hidden = true
-        })
+            manager.POST(APIAtlas.managementUpdateProductStatus, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                
+                self.selectedItems = []
+                self.updateSelectedItems(0, selected: false)
+                
+                self.requestGetProductList(self.statusId[self.selectedIndex], key: self.searchBarTextField.text)
+                
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    println(error)
+                    self.hud?.hide(true)
+                    self.loaderContainerView.hidden = true
+            })
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
+        }
     }
     
 } // ProductManagementViewController
@@ -475,9 +503,13 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if selectedIndex == 1 || selectedIndex == 2 || selectedIndex == 3 || selectedIndex == 4 {
-            let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
-            self.navigationController?.pushViewController(productDetails, animated: true)
+        if Reachability.isConnectedToNetwork() {
+            if selectedIndex == 1 || selectedIndex == 2 || selectedIndex == 3 || selectedIndex == 4 {
+                let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
+                self.navigationController?.pushViewController(productDetails, animated: true)
+            }
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
         }
     }
     
