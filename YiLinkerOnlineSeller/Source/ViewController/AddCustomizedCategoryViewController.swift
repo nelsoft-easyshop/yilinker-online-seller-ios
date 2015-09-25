@@ -345,90 +345,93 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     }   
     
     func checkAction() {
-        
-        if self.categoryDetailsView.categoryNameTextField.text != "" {
-            
-            if self.title == CategoryStrings.titleAddCustomized {
-                var productIds: [Int] = []
-                for i in 0..<self.selectedProductsModel.count {
-                    productIds.append(self.selectedProductsModel[i].id.toInt()!)
-                }
+        if Reachability.isConnectedToNetwork() {
+            if self.categoryDetailsView.categoryNameTextField.text != "" {
                 
-                var formattedCategories: String = ""
-
-                if self.parentId == 0 {
-                    var subs: [NSDictionary] = []
-                    for i in 0..<self.subCategories2.count {
-                        var subProducts: [Int] = []
-                        for j in 0..<self.subCategories2[i].products.count {
-                            subProducts.append(self.subCategories2[i].products[j].productId.toInt()!)
-                        }
-                        subs.append(["categoryName": self.subCategories2[i].categoryName,
-                                       "products": subProducts])
-                    }
-                    
-                    let data = NSJSONSerialization.dataWithJSONObject(subs, options: nil, error: nil)
-                    var formattedCategories: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
-                    println("> \(formattedCategories)")
-                    let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-                        "categoryName": self.categoryDetailsView.categoryNameTextField.text,
-                        "parentId": self.parentId,
-                        "products": productIds.description,
-                        "subcategories": formattedCategories]
-                    println(parameters)
-                    requestAddCustomizedCategory(parameters)
-                } else {
-                    let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-                        "categoryName": self.categoryDetailsView.categoryNameTextField.text,
-                        "parentId": self.parentId,
-                        "products": productIds.description,
-                        "subcategories": formattedCategories]
-                    
-                    println(parameters)
-                    requestAddCustomizedCategory(parameters)
-                }
-            } else if self.title == CategoryStrings.titleEditCustomized {
-
-                if self.parentId != 0 && self.subCategories2.count != 0 {
-                    self.showAlert(title: "Failed", message: "Cannot save as sub category if it have sub categories.")
-                } else {
+                if self.title == CategoryStrings.titleAddCustomized {
                     var productIds: [Int] = []
                     for i in 0..<self.selectedProductsModel.count {
                         productIds.append(self.selectedProductsModel[i].id.toInt()!)
                     }
                     
-                    var subs: [NSDictionary] = []
+                    var formattedCategories: String = ""
+                    
                     if self.parentId == 0 {
+                        var subs: [NSDictionary] = []
                         for i in 0..<self.subCategories2.count {
                             var subProducts: [Int] = []
                             for j in 0..<self.subCategories2[i].products.count {
                                 subProducts.append(self.subCategories2[i].products[j].productId.toInt()!)
                             }
-                            subs.append(["categoryId": self.subCategories2[i].categoryId,
-                                "categoryName": self.subCategories2[i].categoryName,
-                                "parentId": self.subCategories2[i].parentId,
+                            subs.append(["categoryName": self.subCategories2[i].categoryName,
                                 "products": subProducts])
                         }
+                        
+                        let data = NSJSONSerialization.dataWithJSONObject(subs, options: nil, error: nil)
+                        var formattedCategories: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+                        println("> \(formattedCategories)")
+                        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
+                            "categoryName": self.categoryDetailsView.categoryNameTextField.text,
+                            "parentId": self.parentId,
+                            "products": productIds.description,
+                            "subcategories": formattedCategories]
+                        println(parameters)
+                        requestAddCustomizedCategory(parameters)
+                    } else {
+                        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
+                            "categoryName": self.categoryDetailsView.categoryNameTextField.text,
+                            "parentId": self.parentId,
+                            "products": productIds.description,
+                            "subcategories": formattedCategories]
+                        
+                        println(parameters)
+                        requestAddCustomizedCategory(parameters)
                     }
+                } else if self.title == CategoryStrings.titleEditCustomized {
                     
-                    var parameters: [NSDictionary] = []
-                    parameters.append(["categoryId": self.categoryDetailsModel.categoryId,
-                        "categoryName": self.categoryDetailsView.categoryNameTextField.text,
-                        "parentId": self.parentId,
-                        "products": productIds,
-                        "subcategories": subs])
-                    
-                    let data = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
-                    var formattedCategory: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
-                    
-                    let params: NSDictionary = ["access_token": SessionManager.accessToken(),
-                        "categories": formattedCategory]
-                    
-                    println(params)
-                    requestEditCustomizedCategory(params)
+                    if self.parentId != 0 && self.subCategories2.count != 0 {
+                        self.showAlert(title: "Failed", message: "Cannot save as sub category if it have sub categories.")
+                    } else {
+                        var productIds: [Int] = []
+                        for i in 0..<self.selectedProductsModel.count {
+                            productIds.append(self.selectedProductsModel[i].id.toInt()!)
+                        }
+                        
+                        var subs: [NSDictionary] = []
+                        if self.parentId == 0 {
+                            for i in 0..<self.subCategories2.count {
+                                var subProducts: [Int] = []
+                                for j in 0..<self.subCategories2[i].products.count {
+                                    subProducts.append(self.subCategories2[i].products[j].productId.toInt()!)
+                                }
+                                subs.append(["categoryId": self.subCategories2[i].categoryId,
+                                    "categoryName": self.subCategories2[i].categoryName,
+                                    "parentId": self.subCategories2[i].parentId,
+                                    "products": subProducts])
+                            }
+                        }
+                        
+                        var parameters: [NSDictionary] = []
+                        parameters.append(["categoryId": self.categoryDetailsModel.categoryId,
+                            "categoryName": self.categoryDetailsView.categoryNameTextField.text,
+                            "parentId": self.parentId,
+                            "products": productIds,
+                            "subcategories": subs])
+                        
+                        let data = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
+                        var formattedCategory: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+                        
+                        let params: NSDictionary = ["access_token": SessionManager.accessToken(),
+                            "categories": formattedCategory]
+                        
+                        println(params)
+                        requestEditCustomizedCategory(params)
+                    }
                 }
+                
             }
-
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.failed)
         }
     }
     
@@ -664,10 +667,14 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     // MARK: - Category Details Delegate
     
     func gotoParentCategory() {
-        let parentCategory = ParentCategoryViewController(nibName: "ParentCategoryViewController", bundle: nil)
-        parentCategory.selectedParentId = self.parentId
-        parentCategory.delegate = self
-        self.navigationController?.pushViewController(parentCategory, animated: false)
+        if Reachability.isConnectedToNetwork() {
+            let parentCategory = ParentCategoryViewController(nibName: "ParentCategoryViewController", bundle: nil)
+            parentCategory.selectedParentId = self.parentId
+            parentCategory.delegate = self
+            self.navigationController?.pushViewController(parentCategory, animated: false)
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.failed)
+        }
     }
     
     // MARK: - Parent Category View Controller Delegate

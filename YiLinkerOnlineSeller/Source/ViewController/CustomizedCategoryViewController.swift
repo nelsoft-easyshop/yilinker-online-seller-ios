@@ -122,25 +122,30 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
     // MARK: - Requests
     
     func requestGetCustomizedCategories() {
-        if self.customizedCategoriesModel == nil {
-            self.showHUD()
+        if Reachability.isConnectedToNetwork() {
+            if self.customizedCategoriesModel == nil {
+                self.showHUD()
+            }
+            
+            let manager = APIManager.sharedInstance
+            let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
+            
+            manager.POST(APIAtlas.getCustomizedCategories, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                
+                self.customizedCategoriesModel = CustomizedCategoriesModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                self.tableView.reloadData()
+                self.hud?.hide(true)
+                
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    println(error)
+                    self.hud?.hide(true)
+            })
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.failed)
         }
         
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
-
-        manager.POST(APIAtlas.getCustomizedCategories, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            self.customizedCategoriesModel = CustomizedCategoriesModel.parseDataWithDictionary(responseObject as! NSDictionary)
-            self.tableView.reloadData()
-            self.hud?.hide(true)
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                println(error)
-                self.hud?.hide(true)
-        })
     }
     
     func requestDeleteCustomizedCategories(categoryId: Int) {
@@ -203,12 +208,15 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
     // MARK: - Table View Delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let addCustomizedCategory = AddCustomizedCategoryViewController(nibName: "AddCustomizedCategoryViewController", bundle: nil)
-        addCustomizedCategory.title = CategoryStrings.titleEditCustomized
-        addCustomizedCategory.requestGetCategoryDetails(self.customizedCategoriesModel.customizedCategories[indexPath.row].categoryId)
-        addCustomizedCategory.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(addCustomizedCategory, animated: true)
-        
+        if Reachability.isConnectedToNetwork() {
+            let addCustomizedCategory = AddCustomizedCategoryViewController(nibName: "AddCustomizedCategoryViewController", bundle: nil)
+            addCustomizedCategory.title = CategoryStrings.titleEditCustomized
+            addCustomizedCategory.requestGetCategoryDetails(self.customizedCategoriesModel.customizedCategories[indexPath.row].categoryId)
+            addCustomizedCategory.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(addCustomizedCategory, animated: true)
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.failed)
+        }
         // to delete categories
 //        requestDeleteCustomizedCategories(self.customizedCategoriesModel.customizedCategories[indexPath.row].categoryId)
     }

@@ -36,7 +36,12 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
 //        }
         
 //        if selectedProductsModel.count == 0 {
+        if Reachability.isConnectedToNetwork() {
             requestGetProductList("")
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.failed)
+        }
+        
 //        }
         customizedNavigationBar()
         customizedViews()
