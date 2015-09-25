@@ -123,8 +123,12 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     
     @IBAction func signInAction(sender: AnyObject) {
         if self.emailAddressTextField.rightView?.hidden == false && self.passwordTextField.rightView?.hidden == false {
-            self.signInButton.setTitle(SignInStrings.signingin, forState: .Normal)
-            self.requestSignin()
+            if Reachability.isConnectedToNetwork() {
+                self.signInButton.setTitle(SignInStrings.signingin, forState: .Normal)
+                self.requestSignin()
+            } else {
+                showAlert(title: AlertStrings.failed, message: AlertStrings.checkInternet)
+            }
         } else {
             showAlert(title: AlertStrings.error, message: SignInStrings.please)
         }

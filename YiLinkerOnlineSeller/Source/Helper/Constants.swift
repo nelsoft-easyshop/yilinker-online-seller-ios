@@ -76,4 +76,5 @@ struct AlertStrings {
     static let cancel = StringHelper.localizedStringWithKey("OK_BUTTON_LOCALIZE_KEY")
     static let error = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
     static let failed = StringHelper.localizedStringWithKey("FAILED_LOCALIZE_KEY")
+    static let checkInternet = StringHelper.localizedStringWithKey("PLEASE_CHECK_INTERNET_LOCALIZE_KEY")
 }

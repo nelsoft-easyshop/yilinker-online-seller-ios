@@ -13,6 +13,7 @@ CANCEL_BUTTON_LOCALIZE_KEY = "Cancel";
 ERROR_LOCALIZE_KEY = "Error";
 FAILED_LOCALIZE_KEY = "Failed";
 TOOLBAR_DONE_LOCALIZE_KEY = "Done";
+PLEASE_CHECK_INTERNET_LOCALIZE_KEY = "Please check your internet connection.";
 
 // MARK: - Modules by Rj
 

@@ -28,7 +28,11 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        requestGetCustomizedCategories()
+        if Reachability.isConnectedToNetwork() {
+            requestGetCustomizedCategories()
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.failed)
+        }
         customizedNavigationBar()
         customizedViews()
         
