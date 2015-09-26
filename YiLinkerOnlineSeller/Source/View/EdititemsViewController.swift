@@ -206,7 +206,8 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
             }
             
 //           cell.vendorLabel.text = self.productModel.products[indexPath.row].category
-            cell.addImageView.image = UIImage(named: "right2")
+//            cell.addImageView.image = UIImage(named: "right2")
+            cell.addImageView.hidden = true
             
             return cell
         }
