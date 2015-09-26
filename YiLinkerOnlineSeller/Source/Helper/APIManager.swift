@@ -77,6 +77,7 @@ struct APIAtlas {
     
     //Search
     static let transaction = "auth/transaction/searchKeyword?access_token="
+    static let searchNameSuggestion = "aauth/product/name-suggestion?access_token="
     
     static let baseUrl = APIEnvironment.baseUrl()
 }
