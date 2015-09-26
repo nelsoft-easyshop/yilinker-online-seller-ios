@@ -98,13 +98,7 @@ class SessionManager {
         }
     }
     
-    
-    class func setUnReadMessagesCount(messageCount: Int) {
-        NSUserDefaults.standardUserDefaults().setObject("\(messageCount)", forKey: "messageCount")
-        NSUserDefaults.standardUserDefaults().synchronize()
-    }
-    
-    class func unreadMessageCount() -> String {
+    class func getUnReadMessagesCount() -> Int{
         var messageCount: Int = 0
         
         if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("messageCount") as? String {
@@ -118,7 +112,16 @@ class SessionManager {
             messageCount = 0
         }
         
-        return "You have \(messageCount) unread messages"
+        return messageCount
+    }
+    
+    class func setUnReadMessagesCount(messageCount: Int) {
+        NSUserDefaults.standardUserDefaults().setObject("\(messageCount)", forKey: "messageCount")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func unreadMessageCount() -> String {
+        return "You have \(self.getUnReadMessagesCount()) unread messages"
     }
     
     class func setUserFullName(userFullName: String) {
@@ -161,5 +164,9 @@ class SessionManager {
         
         return result
     }
-
+    
+    class func isSeller() -> Bool {
+        let isSeller: Bool = NSUserDefaults.standardUserDefaults().objectForKey("isSeller") as! Bool
+        return isSeller
+    }
 }

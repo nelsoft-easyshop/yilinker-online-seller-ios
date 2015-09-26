@@ -1,4 +1,4 @@
-
+//
 //  AddAddressViewController.swift
 //  YiLinkerOnlineBuyer
 //
@@ -13,8 +13,28 @@ protocol AddAddressTableViewControllerDelegate {
 }
 
 class AddAddressTableViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, NewAddressTableViewCellDelegate {
+    let editAddressTitle: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_TITLE_EDIT_LOCALIZE_KEY")
+    let addAddressTitle: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_TITLE_ADD_LOCALIZE_KEY")
+    let addressTitle: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_ADDRESS_TITLE_LOCALIZE_KEY")
+    let unitNo: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_UNIT_NO_LOCALIZE_KEY")
+    let bldgName: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_BLDG_NAME_LOCALIZE_KEY")
+    let streetNo: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_STREET_NO_LOCALIZE_KEY")
+    let streetName: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_STREET_NAME_LOCALIZE_KEY")
+    let subdivision: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_SUBDIVISION_LOCALIZE_KEY")
+    let province: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_PROVINCE_LOCALIZE_KEY")
+    let city: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_CITY_LOCALIZE_KEY")
+    let barangay: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_BARANGAY_LOCALIZE_KEY")
+    let zipCode: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_ZIP_CODE_LOCALIZE_KEY")
+    let additionalInfo: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_ADDITIONAL_INFO_LOCALIZE_KEY")
+    let ok: String = StringHelper.localizedStringWithKey("CHANGE_MOBILE_OK_LOCALIZE_KEY")
+    let somethingWentWrong: String = StringHelper.localizedStringWithKey("ERROR_SOMETHING_WENT_WRONG_LOCALIZE_KEY")
     
-    let titles: [String] = ["Address Title:", "Unit No.:", "Building Name:", "Street No.:", "Street Name:", "Subdivision:", "Province:", "City:", "Barangay:", "Zip Code:", "Additional Info:"]
+    let error: String = StringHelper.localizedStringWithKey("CHANGE_MOBILE_ERROR_LOCALIZE_KEY")
+    let streetNameRequired: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_STREET_NAME_REQUIRED_LOCALIZE_KEY")
+    let streetNoRequired: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_STREET_NO_REQUIRED_LOCALIZE_KEY")
+    let zipCodeRequired: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_ZIP_CODE_REQUIRED_LOCALIZE_KEY")
+    
+    var titles: [String] = []
     
     var delegate: AddAddressTableViewControllerDelegate?
     
@@ -39,29 +59,21 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     var isEdit2: Bool = true
     
     var pickerView: UIPickerView = UIPickerView()
+    var addressCellReference = [NewAddressTableViewCell?]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.titles = [self.addressTitle, self.unitNo, self.bldgName, self.streetNo, self.streetName, self.subdivision, self.province, self.city, self.barangay, self.zipCode, self.additionalInfo]
         self.registerNib()
         self.backButton()
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-       
-        var addAddressHeader: NewAddressHeaderTableViewCell = XibHelper.puffViewWithNibName("NewAddressHeaderTableViewCell", index: 0) as! NewAddressHeaderTableViewCell
-        self.tableView.tableHeaderView = addAddressHeader
-        if self.isEdit2 {
-            addAddressHeader.addressLabel.text = "Edit Address"
-            addAddressHeader.addressDetailLabel.text = "Please make sure that you provide correct address."
-        } else {
-            addAddressHeader.addressLabel.text = "Create New Address"
-            addAddressHeader.addressDetailLabel.text = "Creating your store address held the user to locate yout store."
-        }
         self.requestGetProvince()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillAppear"), name: UIKeyboardDidShowNotification, object: nil)
-    }
-    
-    func keyboardWillAppear() {
-        self.pickerView.selectRow(2, inComponent: 0, animated: true)
-        self.pickerView.hidden = true
+        if self.isEdit {
+            self.title =  self.editAddressTitle
+        } else {
+            self.title = self.addressTitle
+        }
     }
     
     //Show HUD
@@ -108,11 +120,11 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             } else if indexPath.row == 3 {
                 
                 cell.rowTextField.text = self.addressModel.streetNumber
-                
+                cell.rowTitleLabel.required()
             } else if indexPath.row == 4 {
                 
                 cell.rowTextField.text = self.addressModel.streetName
-                
+                cell.rowTitleLabel.required()
             } else if indexPath.row == 5 {
                 
                 cell.rowTextField.text = self.addressModel.subdivision
@@ -132,7 +144,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             } else if indexPath.row == 9 {
                 
                 cell.rowTextField.text = self.addressModel.zipCode
-                
+                cell.rowTitleLabel.required()
             } else {
                 
                 cell.rowTextField.text = self.addressModel.additionalInfo
@@ -140,6 +152,13 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }
         }
         
+        if indexPath.row == 3 {
+            cell.rowTitleLabel.required()
+        } else if indexPath.row == 4 {
+            cell.rowTitleLabel.required()
+        } else if indexPath.row == 9 {
+            cell.rowTitleLabel.required()
+        }
         
         if indexPath.row == 6 || indexPath.row == 7 || indexPath.row == 8 {
             var selected: Int = 0
@@ -193,6 +212,9 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         if indexPath.row == self.activeTextField {
             cell.rowTextField.becomeFirstResponder()
         }
+        
+        addressCellReference.append(cell)
+        assert(addressCellReference[indexPath.row] == cell)
         
         return cell
     }
@@ -262,24 +284,46 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     }
     
     func check() {
-        //self.endEditing(true)
-        var filledUpAllFields: Bool = true
+        var index: Int = 0
         for i in 0..<10 {
-            if getTextAtIndex(i) == "" {
-                filledUpAllFields = false
+            if getTextAtIndex(i) == "" && i != 1 && i != 2 && i != 10 && i != 5 {
+                index = i
+                break
             }
         }
         
-        if filledUpAllFields {
+        if index == 3 {
+            self.activeTextField = index - 1
+            self.next()
+            showAlert(title: self.error, message: self.streetNoRequired)
+        } else if index == 4 {
+            self.activeTextField = index - 1
+            self.next()
+            showAlert(title: self.error, message: self.streetNameRequired)
+        } else if index == 9 {
+            self.activeTextField = index - 1
+            self.next()
+            showAlert(title: self.error, message: self.zipCodeRequired)
+        }
+        //If index is zero all required fields are filled up
+        if index == 0 {
             if self.isEdit2 {
                 self.fireEditAddress()
             } else {
                 requestAddAddress()
             }
-            
-        } else {
-            //showAlert(title: "Error", message: "All text fields must be filled up.")
         }
+        
+        /*if filledUpAllFields {
+        if self.isEdit2 {
+        self.fireEditAddress()
+        } else {
+        requestAddAddress()
+        }
+        
+        } else {
+        showAlert(title: "Error", message: "All text fields must be filled up.")
+        }*/
         
     }
     
@@ -290,8 +334,10 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     }
     
     func getTextAtIndex(index: Int) -> String {
-        let row = NSIndexPath(forItem: index, inSection: 0)
-        let cell: NewAddressTableViewCell = tableView.cellForRowAtIndexPath(row) as! NewAddressTableViewCell
+        // Fix for Issue #303
+        //let row = NSIndexPath(forItem: index, inSection: 0)
+        let cell: NewAddressTableViewCell = //tableView.cellForRowAtIndexPath(row) as! NewAddressTableViewCell
+        addressCellReference[index]!
         return cell.rowTextField.text
     }
     
@@ -303,7 +349,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     
     func showAlert(#title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let defaultAction = UIAlertAction(title: self.ok, style: .Default, handler: nil)
         alertController.addAction(defaultAction)
         presentViewController(alertController, animated: true, completion: nil)
     }
@@ -335,13 +381,13 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             self.delegate!.addAddressTableViewController(didAddAddressSucceed: self)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                /*let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 if task.statusCode == 401 {
                     self.requestRefreshToken(AddressRefreshType.Create)
                 } else {
-                    self.showAlert(title: "Something went wrong", message: nil)
+                    self.showAlert(title: self.somethingWentWrong, message: nil)
                     self.hud?.hide(true)
-                }*/
+                }
         })
     }
     
@@ -375,11 +421,11 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 if error.userInfo != nil {
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: "Something went wrong")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: self.somethingWentWrong)
                 } else if task.statusCode == 401 {
                     self.requestRefreshToken(AddressRefreshType.Edit)
                 } else {
-                    self.showAlert(title: "Something went wrong", message: nil)
+                    self.showAlert(title: self.somethingWentWrong, message: nil)
                     self.hud?.hide(true)
                 }
         })
@@ -390,7 +436,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             "client_secret": Constants.Credentials.clientSecret,
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
-        
+        self.showHUD()
         let manager = APIManager.sharedInstance
         manager.POST(APIAtlas.loginUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -403,10 +449,9 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                //SVProgressHUD.dismiss()
                 self.hud?.hide(true)
-                let alertController = UIAlertController(title: "Something went wrong", message: "", preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                let alertController = UIAlertController(title: self.somethingWentWrong, message: "", preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: self.ok, style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
         })
@@ -415,8 +460,8 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     func requestGetProvince() {
         let manager = APIManager.sharedInstance
         self.showHUD()
-        var parameters: NSDictionary = ["access_token" : SessionManager.accessToken()]
-        manager.POST(APIAtlas.provinceUrl, parameters: parameters, success: {
+        let params = ["access_token": SessionManager.accessToken()]
+        manager.POST(APIAtlas.provinceUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)
             self.provinceModel = ProvinceModel.parseDataWithDictionary(responseObject)
@@ -437,18 +482,16 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                println("\(error)")
-                self.showAlert(title: "Something went wrong", message: nil)
+                self.showAlert(title: self.somethingWentWrong, message: nil)
         })
     }
     
     func requestGetCities(id: Int) {
         self.showHUD()
         let manager = APIManager.sharedInstance
-        //let params = ["provinceId": String(id)]
+        let params = ["access_token": SessionManager.accessToken(), "provinceId": String(id)]
         
-        var parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "provinceId": String(id)]
-        manager.POST(APIAtlas.citiesUrl, parameters: parameters, success: {
+        manager.POST(APIAtlas.citiesUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.cityModel = CityModel.parseDataWithDictionary(responseObject)
@@ -473,16 +516,15 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                self.showAlert(title: "Something went wrong", message: nil)
+                self.showAlert(title: self.somethingWentWrong, message: nil)
         })
     }
     
     func requestGetBarangay(id: Int) {
         let manager = APIManager.sharedInstance
-        //let params = ["cityId": String(id)]
-        var parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "cityId": String(id)]
+        let params = ["access_token": SessionManager.accessToken(), "cityId": String(id)]
         self.showHUD()
-        manager.POST(APIAtlas.barangay, parameters: parameters, success: {
+        manager.POST(APIAtlas.barangay, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)
             self.barangayModel = BarangayModel.parseDataWithDictionary(responseObject)
@@ -496,7 +538,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                self.showAlert(title: "Something went wrong", message: nil)
+                self.showAlert(title: self.somethingWentWrong, message: nil)
         })
     }
     

@@ -20,8 +20,8 @@ class ResolutionCenterCell: UITableViewCell {
         // Initialization code
     }
     
-    func setData(data: ResolutionCenterData) {
-        self.idLabel.text = data.resolutionId
+    func setData(data: ResolutionCenterElement) {
+        self.idLabel.text = data.ticketId
         self.dateLabel.text = data.date
         self.userTypeLabel.text = data.type
         self.viewStatus.layer.cornerRadius = self.viewStatus.bounds.size.width / 2

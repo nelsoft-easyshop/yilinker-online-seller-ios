@@ -10,9 +10,12 @@ import UIKit
 
 struct myConstant {
     static let cellIdentifier = "ProductDetailsIdentifier"
+    static let title = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_TITLE_LOCALIZE_KEY")
+    static let description = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_DESCRIPTION_LOCALIZE_KEY")
+    static let seeMore = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_SEEMORE_LOCALIZE_KEY")
 }
 
-class ProductDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProductDescriptionViewDelegate {
+class ProductDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProductDescriptionViewDelegate, EmptyViewDelegate {
 
     // MARK: - Models
     var productDetailsModel: ProductDetailsModel!
@@ -30,6 +33,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     var productImagesView: ProductImagesView!
     var productDescriptionView: ProductDescriptionView!
     var hud: MBProgressHUD?
+    var emptyView: EmptyView?
     
     var newFrame: CGRect!
     
@@ -41,7 +45,12 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        requestProductDetails()
+        if Reachability.isConnectedToNetwork() {
+            requestProductDetails()
+        } else {
+//            addEmptyView()
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
+        }
         customizeNavigationBar()
         
         let nib = UINib(nibName: "ProductDetailsTableViewCell", bundle: nil)
@@ -76,6 +85,8 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
             self.productDescriptionView = XibHelper.puffViewWithNibName("ProductDetailViews", index: 1) as! ProductDescriptionView
             self.productDescriptionView.frame.size.width = self.view.frame.size.width
             self.productDescriptionView.delegate = self
+            self.productDescriptionView.titleLabel.text = myConstant.title
+            self.productDescriptionView.seeMoreLabel.text = myConstant.seeMore
         }
         return self.productDescriptionView
     }
@@ -85,7 +96,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     func customizeNavigationBar() {
         
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.title = "Product Details"
+        self.title = myConstant.title
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
         var backButton = UIBarButtonItem(image: UIImage(named: "back-white"), style: .Plain, target: self, action: "backAction")
@@ -208,6 +219,13 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
+    func addEmptyView() {
+        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+        self.emptyView!.delegate = self
+        self.emptyView!.frame = self.view.bounds
+        self.view.addSubview(self.emptyView!)
+    }
+    
     // MARK: - Request
     
     func requestProductDetails() {
@@ -249,6 +267,15 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         self.navigationController?.pushViewController(upload, animated: true)
     }
 
+    func didTapReload() {
+        if Reachability.isConnectedToNetwork() {
+            requestProductDetails()
+        } else {
+            addEmptyView()
+        }
+        self.emptyView?.removeFromSuperview()
+    }
+    
     // MARK: - Table View Data Source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

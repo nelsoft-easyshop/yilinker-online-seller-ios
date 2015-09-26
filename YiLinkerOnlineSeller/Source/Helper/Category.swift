@@ -102,6 +102,37 @@ extension UITextField {
     
 }
 
+extension UILabel {
+    func required() {
+        self.text = "\(self.text!)*"
+        var myMutableString = NSMutableAttributedString(string: self.text!)
+        let stringCount: Int = count(self.text!)
+        myMutableString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSRange(location: stringCount - 1,length:1))
+        self.attributedText = myMutableString
+    }
+}
+
+extension UITextView {
+    func addToolBarWithDoneTarget(target: AnyObject, done: Selector) {
+        let toolBar = UIToolbar()
+        toolBar.sizeToFit()
+        toolBar.barStyle = UIBarStyle.Black
+        toolBar.barTintColor = Constants.Colors.appTheme
+        toolBar.tintColor = UIColor.whiteColor()
+        
+        let doneItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: target, action: done)
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: self, action: nil)
+        
+        var toolbarButtons = [flexibleSpace, doneItem]
+        
+        //Put the buttons into the ToolBar and display the tool bar
+        toolBar.setItems(toolbarButtons, animated: false)
+        
+        self.inputAccessoryView = toolBar
+        
+    }
+}
 
 extension UITextView {
     
@@ -210,7 +241,6 @@ extension NSDate {
         return dateWithDaysAdded
     }
     
-    
     func addHours(hoursToAdd : Int) -> NSDate {
         var secondsInHours : NSTimeInterval = Double(hoursToAdd) * 60 * 60
         var dateWithHoursAdded : NSDate = self.dateByAddingTimeInterval(secondsInHours)
@@ -218,4 +248,71 @@ extension NSDate {
     }
 }
 
-
+extension String {
+    
+    func isValidEmail() -> Bool {
+        // println("validate calendar: \(testStr)")
+        let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluateWithObject(self)
+    }
+    
+    func isAlphaNumeric() -> Bool {
+        let passwordRegEx = "[A-Za-z0-9_]*"
+        let passwordTest = NSPredicate(format: "SELF MATCHES %@", passwordRegEx)
+        
+        return passwordTest.evaluateWithObject(self)
+    }
+    
+    func isValidName() -> Bool {
+        let nameRegex = "^[a-zA-Z ]*$"
+        let nameTest = NSPredicate(format: "SELF MATCHES %@", nameRegex)
+        
+        return nameTest.evaluateWithObject(self)
+    }
+    
+    func isGreaterThanEightCharacters() -> Bool {
+        var result: Bool = false
+        if count(self) >= 8 {
+            result = true
+        }
+        
+        return result
+    }
+    
+    func isNotEmpty() -> Bool {
+        var result: Bool = false
+        if count(self) != 0 {
+            result = true
+        }
+        return result
+    }
+    
+    func isGreaterThanOrEqualEightCharacters() -> Bool {
+        var result: Bool = true
+        if count(self) < 11 {
+            result = false
+        }
+        return true
+    }
+    
+    func contains(find: String) -> Bool {
+        return self.rangeOfString(find) != nil
+    }
+    
+    func formatToTwoDecimal() -> String {
+        let formatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
+        formatter.numberStyle = .CurrencyStyle
+        return "\(formatter.stringFromNumber((self as NSString).doubleValue)!)"
+    }
+    
+    func formatToTwoDecimalNoTrailling() -> String {
+        let formatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
+        return "\(formatter.stringFromNumber((self as NSString).doubleValue)!)"
+    }
+}

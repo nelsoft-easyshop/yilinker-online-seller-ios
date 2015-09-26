@@ -13,7 +13,7 @@ protocol AddSubCategoriesViewControllerDelegate {
     func updateSubCategory(subCategory: SubCategoryModel)
 }
 
-class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDelegate, CCCategoryItemsViewDelegate, AddItemViewControllerDelegate, EditItemsViewControllerDelegate, ParentCategoryViewControllerDelegate {
+class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDelegate, CCCategoryItemsViewDelegate, AddItemViewControllerDelegate, EditItemsViewControllerDelegate, ParentCategoryViewControllerDelegate, UITextFieldDelegate {
 
     var hud: MBProgressHUD?
     
@@ -37,6 +37,11 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
     var subCategoryDetailModel: SubCategoryModel!
     var parentName: String = ""
     
+    var isEditingSub: Bool = false
+    var parameterSubCategoryModal: SubCategoryModel!
+    var parameterParentName: String = ""
+    var parameterCategoryId: Int = -1
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -44,10 +49,22 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
         customizedNavigationBar()
         customizedViews()
         
+        loadViewsWithDetails()
+        
+        if isEditingSub {
+            if parameterSubCategoryModal != nil {
+                populateFromLocal(parameterSubCategoryModal)
+            } else {
+                requestGetSubCategoryDetails(parentName: parameterParentName, categoryId: parameterCategoryId)
+            }
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.categoryDetailsView.frame.size.width = self.view.frame.size.width
+        self.categoryItemsView.frame.size.width = self.view.frame.size.width
     }
     
     // MARK: - Methods
@@ -65,6 +82,9 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
     }
     
     func customizedViews() {
+        let nib = UINib(nibName: "AddItemTableViewCell", bundle: nil)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: "AddItemTableViewCell")
+        
         self.tableView.backgroundColor = Constants.Colors.backgroundGray
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
     }
@@ -82,6 +102,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
         if self.categoryDetailsView == nil {
             self.categoryDetailsView = XibHelper.puffViewWithNibName("CustomizedCategoryViewsViewController", index: 0) as! CCCategoryDetailsView
             self.categoryDetailsView.categoryNameTextField.becomeFirstResponder()
+            self.categoryDetailsView.categoryNameTextField.delegate = self
             self.categoryDetailsView.delegate = self
             self.categoryDetailsView.frame.size.width = self.view.frame.size.width
             self.categoryDetailsView.frame.size.height = 100.0
@@ -112,7 +133,7 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
         self.seeAllItemsView.backgroundColor = UIColor.whiteColor()
         
         var seeAllItemsLabel = UILabel(frame: CGRectZero)
-        seeAllItemsLabel.text = "See all " + String(subCategoriesProducts.count) + " items   "
+        seeAllItemsLabel.text = CategoryStrings.categorySeeAll + String(subCategoriesProducts.count) + CategoryStrings.categoryItems2
         seeAllItemsLabel.font = UIFont(name: "Panton-Bold", size: 12.0)
         seeAllItemsLabel.textColor = UIColor.darkGrayColor()
         seeAllItemsLabel.sizeToFit()
@@ -139,16 +160,17 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
         
         newFrame = self.headerView.frame
         
-        if self.subCategoriesProducts.count != 0 {
-            if self.subCategoriesProducts.count != 0 {
-                setPosition(self.itemImagesView, from: self.categoryItemsView)
-                setPosition(self.seeAllItemsView, from: self.itemImagesView)
-                newFrame.size.height = CGRectGetMaxY(self.seeAllItemsView.frame) + 20.0
-            }
-        } else {
-            newFrame.size.height = CGRectGetMaxY(self.categoryItemsView.frame)
-        }
+//        if self.subCategoriesProducts.count != 0 {
+//            if self.subCategoriesProducts.count != 0 {
+//                setPosition(self.itemImagesView, from: self.categoryItemsView)
+//                setPosition(self.seeAllItemsView, from: self.itemImagesView)
+//                newFrame.size.height = CGRectGetMaxY(self.seeAllItemsView.frame) + 20.0
+//            }
+//        } else {
+//            newFrame.size.height = CGRectGetMaxY(self.categoryItemsView.frame)
+//        }
         
+        newFrame.size.height = CGRectGetMaxY(self.categoryItemsView.frame) + 1
         self.headerView.frame = newFrame
         
         self.tableView.tableHeaderView = nil
@@ -188,9 +210,9 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
     func populateItems() {
         if self.subCategoriesProducts.count != 0 {
             self.categoryItemsView.addNewItemButton.setTitle("EDIT", forState: .Normal)
-            self.getHeaderView().addSubview(getItemImageView())
-            self.getHeaderView().addSubview(getSeeAllItemsView())
-            self.itemImagesView.setProductsManagement(products: subCategoriesProducts)
+//            self.getHeaderView().addSubview(getItemImageView())
+//            self.getHeaderView().addSubview(getSeeAllItemsView())
+//            self.itemImagesView.setProductsManagement(products: subCategoriesProducts)
         }
         
         setUpViews()
@@ -366,16 +388,24 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
     // MARK: - Table View Data Source and Delegates
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return numberOfList
+        return subCategoriesProducts.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .Default, reuseIdentifier: "identifier")
-        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+//        let cell = UITableViewCell(style: .Default, reuseIdentifier: "identifier")
+//        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+//        cell.selectionStyle = .None
+//        cell.textLabel?.text = subCategoriesProducts[indexPath.row].name
+//        cell.textLabel?.font = UIFont(name: "Panton-Bold", size: 12.0)
+//        cell.textLabel?.textColor = Constants.Colors.hex666666
+
+        let cell: AddItemTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("AddItemTableViewCell") as! AddItemTableViewCell
         cell.selectionStyle = .None
-        cell.textLabel?.text = "Sub Category " + String(indexPath.row)
-        cell.textLabel?.font = UIFont(name: "Panton-Bold", size: 12.0)
-        cell.textLabel?.textColor = Constants.Colors.hex666666
+        
+        cell.setProductImage(self.subCategoriesProducts[indexPath.row].image)
+        cell.itemNameLabel.text = self.subCategoriesProducts[indexPath.row].name
+//        cell.vendorLabel.text = self.subCategoriesProducts[indexPath.row].category
+        cell.addImageView.hidden = true
         
         return cell
     }
@@ -455,5 +485,12 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
         
         self.categoryDetailsView.parentCategoryLabel.text = parentCategory
 //        populateDetails()
+    }
+    
+    // MARK: - Text Field Delegate
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.categoryDetailsView.categoryNameTextField.resignFirstResponder()
+        return true
     }
 }

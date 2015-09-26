@@ -68,7 +68,9 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="generateLabel" destination="iz3-oe-xRY" id="Y4S-mC-coW"/>
                 <outlet property="generateQRCodeButton" destination="Ved-1A-3Tj" id="rFt-g3-ebA"/>
+                <outlet property="qrCodeLabel" destination="g88-Q9-kGf" id="nwB-xo-5ip"/>
             </connections>
             <point key="canvasLocation" x="297.5" y="351"/>
         </tableViewCell>

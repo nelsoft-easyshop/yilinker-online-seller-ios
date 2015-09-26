@@ -18,8 +18,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EditSubCategoriesViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
             <connections>
+                <outlet property="addCategoriesButton" destination="Q1v-7q-yr3" id="4cA-8G-vBw"/>
                 <outlet property="bottomBarView" destination="xRe-au-PFR" id="m9W-82-8tt"/>
+                <outlet property="cancelButton" destination="H3J-Ht-l4L" id="btI-BK-hYS"/>
                 <outlet property="clearAllButton" destination="zLX-1Q-EAn" id="t2o-DN-5Q8"/>
+                <outlet property="removeCategoriesButton" destination="JEc-Sq-XHf" id="Z1t-4O-DhH"/>
+                <outlet property="removeSelectedButton" destination="3nJ-uo-IDx" id="3TO-pc-sXN"/>
                 <outlet property="tableView" destination="osK-iK-X0p" id="OTL-La-1ai"/>
                 <outlet property="topBarView" destination="GxC-Lh-ZUb" id="mHe-7t-0Gk"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

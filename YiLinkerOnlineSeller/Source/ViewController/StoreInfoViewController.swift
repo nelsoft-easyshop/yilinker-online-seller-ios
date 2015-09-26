@@ -39,9 +39,38 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     var mobileNumber: String = ""
     var newContactNumber: String = ""
     
+    let storeInfoTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_TITLE_LOCALIZE_KEY")
+    let addPhoto: String = StringHelper.localizedStringWithKey("STORE_INFO_ADD_PHOTO_LOCALIZE_KEY")
+    let editPhoto: String = StringHelper.localizedStringWithKey("STORE_INFO_EDIT_PHOTO_LOCALIZE_KEY")
+    let addCover: String = StringHelper.localizedStringWithKey("STORE_INFO_ADD_COVER_LOCALIZE_KEY")
+    let editCover: String = StringHelper.localizedStringWithKey("STORE_INFO_EDIT_COVER_LOCALIZE_KEY")
+    let storeInfo: String = StringHelper.localizedStringWithKey("STORE_INFO_STORE_INFO_LOCALIZE_KEY")
+    let storeName: String = StringHelper.localizedStringWithKey("STORE_INFO_STORE_NAME_LOCALIZE_KEY")
+    let storeDesc: String = StringHelper.localizedStringWithKey("STORE_INFO_STORE_DESC_LOCALIZE_KEY")
+    let mobilePhone: String = StringHelper.localizedStringWithKey("STORE_INFO_MOBILE_LOCALIZE_KEY")
+    let changeTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_CHANGE_LOCALIZE_KEY")
+    let qrCode: String = StringHelper.localizedStringWithKey("STORE_INFO_QR_LOCALIZE_KEY")
+    let generate: String = StringHelper.localizedStringWithKey("STORE_INFO_GENERATE_LOCALIZE_KEY")
+    let generateQRCodeTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_GENERATE_QR_LOCALIZE_KEY")
+    let storeAddressTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_STORE_ADDRESS_LOCALIZE_KEY")
+    let newAddress: String = StringHelper.localizedStringWithKey("STORE_INFO_NEW_ADDRESS_LOCALIZE_KEY")
+    let bankAccountTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_BANK_ACCOUNT_LOCALIZE_KEY")
+    let newAccount: String = StringHelper.localizedStringWithKey("STORE_INFO_NEW_ACCOUNT_LOCALIZE_KEY")
+    let accountInfo: String = StringHelper.localizedStringWithKey("STORE_INFO_ACCOUNT_INFO_LOCALIZE_KEY")
+    let password: String = StringHelper.localizedStringWithKey("STORE_INFO_PASSWORD_LOCALIZE_KEY")
+    let save: String = StringHelper.localizedStringWithKey("STORE_INFO_SAVE_LOCALIZE_KEY")
+    let error: String = StringHelper.localizedStringWithKey("CHANGE_MOBILE_ERROR_LOCALIZE_KEY")
+    let ok: String = StringHelper.localizedStringWithKey("CHANGE_MOBILE_OK_LOCALIZE_KEY")
+    let somethingWentWrong: String = StringHelper.localizedStringWithKey("ERROR_SOMETHING_WENT_WRONG_LOCALIZE_KEY")
+    let invalid: String = StringHelper.localizedStringWithKey("VERIFY_NUMBER_INVALID_LOCALIZE_KEY")
+    let success: String = StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_LOCALIZE_KEY")
+    let empty: String = StringHelper.localizedStringWithKey("STORE_INFO_EMPTY_LOCALIZE_KEY")
+    let successTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TITLE_LOCALIZE_KEY")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
+        self.title = storeInfoTitle
         self.edgesForExtendedLayout = .None
         dimView = UIView(frame: UIScreen.mainScreen().bounds)
         dimView.backgroundColor=UIColor.blackColor()
@@ -147,30 +176,56 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             let cell: StoreInfoTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoHeaderTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoTableViewCell
             index = indexPath
             cell.delegate = self
+            
+            cell.storeInfoLabel.text = self.storeInfo
+            cell.storeNameLabel.text = self.storeName
+            cell.storeDescriptionLabel.text = self.storeDesc
+            cell.mobilePhoneLabel.text = self.mobilePhone
+            cell.verifyButton.setTitle(self.changeTitle, forState: UIControlState.Normal)
+            
             if(self.storeInfoModel?.store_name != nil){
-                cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
-                cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+               
+                if self.image != nil || self.imageCover != nil {
+                    cell.coverEditImageView.image = self.imageCover
+                    cell.profilePictureImageView.image = self.image
+                } else {
+                    cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                    cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                }
+                
                 cell.storeNameTextField.text = self.storeInfoModel?.store_name
                 cell.mobilePhoneTextField.text = self.storeInfoModel?.contact_number
                 cell.storeDescriptionTextView.text = self.storeInfoModel?.store_description
                 cell.profileEditImageView.image = UIImage(named: "edit.png")
                 cell.coverEditImageView.image = UIImage(named: "edit.png")
-                cell.profileEditLabel.text = "Edit Profile Photo"
-                cell.coverEditLabel.text = "Edit Cover Photo"
+                let url: NSString = NSString(string: (self.storeInfoModel?.avatar)!.absoluteString!)
+                if (!url.isEqual("")) {
+                    cell.profileEditLabel.text = editPhoto
+                    cell.coverEditLabel.text = editCover
+                } else {
+                    cell.profileEditLabel.text = addPhoto
+                    cell.coverEditLabel.text = addCover
+                }
+                
                 //if(self.verifyOrChange == 1) {
                 //    cell.verifyButton.setTitle("Verify", forState: UIControlState.Normal)
                 //} else {
-                cell.verifyButton.setTitle("Change", forState: UIControlState.Normal)
+                cell.verifyButton.setTitle(self.changeTitle, forState: UIControlState.Normal)
                 //}
                 cell.verifyButton.tag = 2
             } else {
                 cell.profileEditImageView.image = UIImage(named: "dummy-placeholder.jpg")
                 cell.coverEditImageView.image = UIImage(named: "dummy-placeholder.jpg")
+                cell.profileEditLabel.text = addPhoto
+                cell.coverEditLabel.text = addCover
             }
            
             return cell
         } else if indexPath.section == 1 {
             let cell: StoreInfoSectionTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoSectionTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoSectionTableViewCell
+            cell.qrCodeLabel.text = self.qrCode
+            cell.generateLabel.text = self.generate
+            cell.generateQRCodeButton.setTitle(self.generateQRCodeTitle, forState: UIControlState.Normal)
             cell.delegate = self
             return cell
        } else if indexPath.section == 2 {
@@ -179,6 +234,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             //Display current bank account
             cell.addressLabel.text = self.storeInfoModel?.store_address
             cell.addressTitle.text = self.storeInfoModel?.title
+            cell.storeAddressTitleLabel.text = self.storeAddressTitle
+            cell.newAddressLabel.text = self.newAddress
             return cell
         } else if indexPath.section == 3 {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoBankAccountTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoBankAccountTableViewCell
@@ -186,11 +243,17 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             //Display current bank account
             cell.bankAccountTitleLabel.text = self.storeInfoModel?.accountTitle
             cell.bankAccountDetailLabel.text = self.storeInfoModel?.bankAccount
+            cell.bankAccountInfoLabel.text = self.bankAccountTitle
+            cell.newAccountLabel.text = self.newAccount
             println(cell)
             return cell
         } else {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoAccountInformationTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAccountInformationTableViewCell
             cell.delegate = self
+            cell.accountInfoLabel.text = self.accountInfo
+            cell.passwordLabel.text = self.password
+            cell.changePasswordButton.setTitle(changeTitle, forState: UIControlState.Normal)
+            cell.saveButton.setTitle(save, forState: UIControlState.Normal)
             //cell.emailAddressTextField.text = self.storeInfoModel?.email
             return cell
         }
@@ -216,6 +279,10 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         }
     }
     
+    func storeNameAndDescription(storeName: String, storeDescription: String) {
+        self.storeInfoModel?.store_name = storeName
+        self.storeInfoModel?.store_description = storeDescription
+    }
     //MARK: Store Details Function
     func storeInfoVerify() {
         println("verify " + "\(self.verifyOrChange)")
@@ -268,16 +335,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         changeEmailViewController.providesPresentationContextTransitionStyle = true
         changeEmailViewController.definesPresentationContext = true
         changeEmailViewController.view.frame.origin.y = changeEmailViewController.view.frame.size.height
-        changeEmailViewController.titleLabel.text = "Change Password"
-        changeEmailViewController.oldEmailLabel.text = "Old Password"
-        changeEmailViewController.newEmailLabel.text = "New Password"
-        changeEmailViewController.confirmEmailLabel.text = "Confirm Password"
-        changeEmailViewController.oldEmailAddressTextField.placeholder = "Enter old password"
-        changeEmailViewController.newEmailAddressTextField.placeholder = "Enter new password"
-        changeEmailViewController.confirmEmailAddressTextField.placeholder = "Confirm new password"
-        changeEmailViewController.oldEmailAddressTextField.secureTextEntry = true
-        changeEmailViewController.newEmailAddressTextField.secureTextEntry = true
-        changeEmailViewController.confirmEmailAddressTextField.secureTextEntry = true
+       
         changeEmailViewController.type = "password"
         self.navigationController?.presentViewController(changeEmailViewController, animated:true, completion: nil)
         self.showView()
@@ -328,13 +386,13 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                     nil)
                 //self.dismissView()
                 } else {
-                    self.showAlert("Error", message: "You have entered an invalid verification code.")
+                    self.showAlert(self.error, message: self.invalid)
                 }
                 //self.setSelectedViewControllerWithIndex(0)
                 self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                self.showAlert("Error", message: "Something went wrong.")
+                self.showAlert(self.error, message: self.somethingWentWrong)
                 self.dismissView()
         })
         self.showView()
@@ -403,15 +461,15 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                     self.fireStoreInfo()
                     self.tableView.reloadData()
                     //cell.coverPhotoImageView.image = self.image
-                    self.showAlert("Success", message: "You have successfully updated you store information.")
+                    self.showAlert(self.successTitle, message: self.success)
                 }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     println(error.userInfo)
-                    self.showAlert("Error", message: "Something went wrong.")
+                    self.showAlert(self.error, message: self.somethingWentWrong)
                     self.hud?.hide(true)
             }
         } else {
-            self.showAlert("Error", message: "Either your store name or store description is empty.")
+            self.showAlert(self.error, message: self.empty)
             self.hud?.hide(true)
             self.dismissView()
         }
@@ -466,7 +524,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                     let data = error.userInfo as! Dictionary<String, AnyObject>
                     self.showAlert("Error", message: data["message"] as! String)
                 } else {
-                    self.showAlert("Error", message: "Something went wrong.")
+                    self.showAlert("Error", message: self.somethingWentWrong)
                 }
                 self.dismissView()
         })
@@ -579,7 +637,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+        let OKAction = UIAlertAction(title: self.ok, style: .Default) { (action) in
             alertController.dismissViewControllerAnimated(true, completion: nil)
         }
         

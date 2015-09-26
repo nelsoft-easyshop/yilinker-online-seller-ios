@@ -20,6 +20,9 @@ class StoreInfoAddressTableViewCell: UITableViewCell {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var addressView: UIView!
     
+    @IBOutlet weak var storeAddressTitleLabel: UILabel!
+    @IBOutlet weak var newAddressLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

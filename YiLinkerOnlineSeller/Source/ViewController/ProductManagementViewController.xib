@@ -27,6 +27,7 @@
                 <outlet property="buttonsContainer" destination="zrT-wQ-HdY" id="97g-S5-LIN"/>
                 <outlet property="collectionView" destination="vPo-r1-Ubn" id="aO0-eq-XVX"/>
                 <outlet property="delete2View" destination="Y4h-6r-cj3" id="Rns-lv-BAG"/>
+                <outlet property="deleteLabel" destination="UyK-yn-GHc" id="ilX-ib-jrh"/>
                 <outlet property="deleteView" destination="Wfh-2c-ify" id="9bR-K1-YjN"/>
                 <outlet property="dimView" destination="LTb-gA-wY0" id="TPR-i5-XVe"/>
                 <outlet property="inactiveView" destination="Nzf-ql-uSX" id="ss7-Xo-WfY"/>
@@ -54,7 +55,7 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="eHt-xX-cr9"/>
                             </connections>

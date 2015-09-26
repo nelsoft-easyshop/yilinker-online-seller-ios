@@ -30,6 +30,9 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     
     var hud: MBProgressHUD?
     
+    let changeAddressTitle: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_TITLE_LOCALIZE_KEY")
+    let newAddress: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_NEW_ADDRESS_LOCALIZE_KEY")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -67,7 +70,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     }
     
     func titleView() {
-        self.title = "Change Address"
+        self.title = self.changeAddressTitle
     }
     
     // Show hud
@@ -311,6 +314,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         let footerView: ChangeAddressFooterCollectionViewCell = self.changeAddressCollectionView?.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: Constants.Checkout.changeAddressFooterCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressFooterCollectionViewCell
+        footerView.newAddressButton.setTitle(self.newAddress, forState: UIControlState.Normal)
         
         footerView.delegate = self
         

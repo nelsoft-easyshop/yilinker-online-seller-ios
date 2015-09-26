@@ -42,13 +42,18 @@ struct APIAtlas {
     static let sellerSetDefaultStoreAddress = "auth/address/setDefaultAddress"
     static let sellerDeleteStoreAddress = "auth/address/deleteUserAddress"
     static let transactionList = "auth/getTransactionList"
+    static let transactionDetails = "auth/getTransaction"
+    static let transactionCancellation = "auth/cancellation/reasons"
+    static let transactionConsignee = "auth/getTransactionConsignee"
+    static let postTransactionCancellation = "auth/transaction/cancel"
+    static let shipItem = "auth/transaction/pickup"
     static let sellerChangeMobileNumber = "auth/user/changeContactNumber"
     static let sellerResendVerification = "auth/sms/getCode?access_token="
     static let sellerMobileNumberVerification = "auth/sms/verify"
     static let sellerChangePassword = "auth/user/changePassword"
     static let sellerUpdateSellerInfo = "auth/merchant/updateUserInfo"
     static let getCustomizedCategories   = "category/getCustomCategories"           // Applied
-    static let getCategoryDetails        = "auth/category/getCategoryDetails"       // Applied
+    static let getCategoryDetails        = "category/getCategoryDetails"            // Applied
     static let editCustomizedCategory    = "auth/category/updateCustomCategory"
     static let addCustomizedCategory     = "auth/category/addCustomCategory"        // Applied
     static let deleteCustomizedCategory  = "auth/category/deleteCustomCategory"     // Applied
@@ -75,11 +80,41 @@ struct APIAtlas {
     
     static let getActivityLogs = "auth/user/activityLog"
     
+    static let getDeliveryLogs = "auth/getTransactionDeliveryLogs"
+    
+    static let postEmailNotif = "auth/email/subscription"
+    static let postSMSNotif = "auth/sms/subscription"
+    static let deactivate = "auth/account/disable"
+    
     //Search
     static let transaction = "auth/transaction/searchKeyword?access_token="
     static let searchNameSuggestion = "aauth/product/name-suggestion?access_token="
     
+    //Resolution Center
+    static let getResolutionCenterCases = "auth/dispute/get-case"
+    static let getResolutionCenterCaseDetails = "auth/dispute/get-case-detail"
+    static let resolutionCenterProductListUrl = "auth/getTransactionList"
+    static let resolutionCenterGetTransactionItems = "auth/getTransaction"
+    static let resolutionCenterAddCaseUrl = "auth/dispute/add-case"
+
+    //Reseller
+    static let resellerUrl = "auth/reseller/products"
+    static let resellerUploadUrl = "auth/reseller/upload"
+    
     static let baseUrl = APIEnvironment.baseUrl()
+    
+    
+    /* MESSAGING CONSTANTS */
+    static let ACTION_SEND_MESSAGE          = "/message/sendMessage"
+    static let ACTION_GET_CONVERSATION_HEAD = "/message/getConversationHead"
+    static let ACTION_GET_CONTACTS          = "/message/getContacts"
+    static let ACTION_GET_CONVERSATION_MESSAGES = "/message/getConversationMessages"
+    static let ACTION_SET_AS_READ           = "/message/setConversationAsRead"
+    static let ACTION_IMAGE_ATTACH          = "/message/imageAttach"
+    static let ACTION_GCM_CREATE            = "/auth/device/addRegistrationId"
+    static let ACTION_GCM_DELETE            = "/auth/device/deleteRegistrationId"
+    static let ACTION_GCM_UPDATE            = "/device/auth/updateRegistrationId"
+    static let uploadFileType = "jpeg"
 }
 
 class APIManager: AFHTTPSessionManager {

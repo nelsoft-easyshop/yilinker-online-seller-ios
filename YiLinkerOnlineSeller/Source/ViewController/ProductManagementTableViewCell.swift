@@ -14,6 +14,7 @@ protocol ProductManagementTableViewCellDelegate {
 
 class ProductManagementTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var checkTapView: UIView!
     @IBOutlet weak var checkContainerView: UIView!
     @IBOutlet weak var checkImageView: UIImageView!
     @IBOutlet weak var productImageView: UIImageView!
@@ -48,7 +49,7 @@ class ProductManagementTableViewCell: UITableViewCell {
     
     func costumizeVies() {
         checkContainerView.layer.cornerRadius = 4.0
-        checkContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "checkAction:"))
+        checkTapView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "checkAction:"))
     }
     
     func clearCheckImage() {

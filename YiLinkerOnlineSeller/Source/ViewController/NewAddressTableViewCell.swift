@@ -17,7 +17,7 @@ protocol NewAddressTableViewCellDelegate {
 }
 
 class NewAddressTableViewCell: UITableViewCell, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
-   
+    
     @IBOutlet weak var rowTitleLabel: UILabel!
     @IBOutlet weak var rowTextField: UITextField!
     
@@ -30,15 +30,15 @@ class NewAddressTableViewCell: UITableViewCell, UITextFieldDelegate, UIPickerVie
         
         
         self.rowTextField.delegate = self
-//      self.rowTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
+        //      self.rowTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
     }
-
+    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
-
+    
     func textFieldDidBeginEditing(textField: UITextField) {
         delegate?.newAddressTableViewCell(didBeginEditing: self, index: self.tag)
     }
@@ -70,16 +70,8 @@ class NewAddressTableViewCell: UITableViewCell, UITextFieldDelegate, UIPickerVie
         self.delegate?.newAddressTableViewCell(didSelectRow: row, cell: self)
     }
     
-//    func next() {
-//        self.delegate!.newAddressTableViewCell(didClickNext: self)
-//    }
-//    
-//    func previous() {
-//        self.delegate!.newAddressTableViewCell(didClickPrevious: self)
-//    }
-//    
-//    func done() {
-//        self.endEditing(true)
-//    }
-    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.delegate?.newAddressTableViewCell(didClickNext: self)
+        return true
+    }
 }

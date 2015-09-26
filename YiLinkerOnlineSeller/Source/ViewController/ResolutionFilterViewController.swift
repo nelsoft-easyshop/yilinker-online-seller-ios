@@ -29,6 +29,79 @@ class SelectedFilters {
         self.time = time
         self.status = status
     }
+    
+    func getStatusFilter() -> String {
+        switch status {
+        case .Open:
+            return "1"
+        case .Closed:
+            return "2"
+        default:
+            return "0"
+        }
+    }
+    
+    func isDefault() -> Bool {
+        return self.time == .Total && self.status == .Both
+    }
+    
+    func getTimeFilter() -> String {
+        let formatter = NSDateFormatter()
+        let now = NSDate()
+        formatter.dateFormat = "MM/dd/YYYY"
+        switch time {
+        case .Today:
+            self.time = ResolutionTimeFilter.Today
+            return formatter.stringFromDate(now)
+        case .ThisWeek:
+            self.time = ResolutionTimeFilter.ThisWeek
+            let day: Int = self.dayOfWeek(self.getTimeNow())
+            return formatter.stringFromDate(NSDate())
+        case .ThisMonth:
+            self.time = ResolutionTimeFilter.ThisMonth
+            return formatter.stringFromDate(NSDate())
+        case .Total:
+            return ""
+        default:
+            return ""
+        }
+    }
+    
+    
+    
+    func getFilterType() -> ResolutionTimeFilter {
+        return self.time
+    }
+    
+    func sundayDate() -> String {
+        let day: Int = self.dayOfWeek(self.getTimeNow())
+       return self.fromDateWeek(day)
+    }
+    
+    func dayOfWeek(today:String) -> Int {
+        let formatter  = NSDateFormatter()
+        formatter.dateFormat = "MM/dd/YYYY"
+        let todayDate = formatter.dateFromString(today)!
+        let myCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+        let myComponents = myCalendar.components(.CalendarUnitWeekday, fromDate: todayDate)
+        let weekDay = myComponents.weekday
+        return weekDay
+    }
+    
+    func fromDateWeek(numberOfDays: Int) -> String {
+        let userCalendar = NSCalendar.currentCalendar()
+        let sundayDate = userCalendar.dateByAddingUnit(NSCalendarUnit.CalendarUnitDay, value: -numberOfDays, toDate: NSDate(), options: nil)!
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "MM/dd/YYYY"
+       return formatter.stringFromDate(sundayDate)
+    }
+    
+    func getTimeNow() -> String {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "MM/dd/YYYY"
+        let now = NSDate()
+        return formatter.stringFromDate(now)
+    }
 }
 
 class ResolutionFilterViewController: UITableViewController {
@@ -43,7 +116,8 @@ class ResolutionFilterViewController: UITableViewController {
 
     private var timeFilter: ResolutionTimeFilter = .Total
     private var statusFilter: ResolutionStatusFilter = .Both
-    weak var currentFilter: SelectedFilters?
+    //weak var currentFilter: SelectedFilters?
+    var delegate: ResolutionCenterViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,9 +133,9 @@ class ResolutionFilterViewController: UITableViewController {
         save.target = self
         save.action = "savePressed"
         
-        self.timeFilter = currentFilter!.time
+        self.timeFilter = self.delegate!.currentSelectedFilter.time
         selectTimeFilter(self.timeFilter)
-        self.statusFilter = currentFilter!.status
+        self.statusFilter = self.delegate!.currentSelectedFilter.status
         selectStatusFilter(self.statusFilter)
         
         self.buttonToday.addTarget(self, action: "todayPressed"
@@ -171,19 +245,12 @@ class ResolutionFilterViewController: UITableViewController {
     }
     
     func savePressed() {
-        //self.navigationController?.popViewControllerAnimated(true)
-        if currentFilter != nil {
-            self.currentFilter!.time = self.timeFilter
-            self.currentFilter!.status = self.statusFilter
-        }
+        self.delegate!.currentSelectedFilter.time = self.timeFilter
+        self.delegate!.currentSelectedFilter.status = self.statusFilter
         self.dismissViewControllerAnimated(true, completion: nil)
+        self.delegate!.applyFilter()
     }
-    /*
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
+    func noCompletionMethod() {
+    }
 }
