@@ -46,12 +46,6 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
         self.tableView.registerNib(removedCell, forCellReuseIdentifier: "RemovedItem")
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        println("Edit Items > \(self.subCategoriesProducts)")
-    }
-    
     // MARK: - Methods
     
     func customizedNavigationBar() {
