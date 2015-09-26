@@ -190,8 +190,10 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //self.searchTextField.resignFirstResponder()
         self.searchTextField.endEditing(true)
         
-        if filterBySelected == 0 || filterBySelected == 2 || filterBySelected == 3 {
+        if filterBySelected == 0 || filterBySelected == 3 {
             self.showAlert(title: "Information", message: "Search by \(filterBy[filterBySelected]) is not yet available.")
+        } else if filterBySelected == 2 {
+            self.fireSearchProduct()
         } else {
             self.fireSearch()
         }
@@ -230,6 +232,30 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         } else {
             println("Search not available.")
         }
+    }
+    
+    func fireSearchProduct(){
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        //let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
+        println(APIAtlas.searchNameSuggestion+"\(SessionManager.accessToken())&queryString=\(self.searchTextField.text)")
+        manager.GET(APIAtlas.searchNameSuggestion+"\(SessionManager.accessToken())&queryString=\(self.searchTextField.text)", parameters: nil, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                
+            println(responseObject.description)
+            /*var storeInfoViewController = FilterResultsViewController(nibName: "FilterResultsViewController", bundle: nil)
+            storeInfoViewController.edgesForExtendedLayout = .None
+            storeInfoViewController.searchModel = self.searchModel
+            self.navigationController?.pushViewController(storeInfoViewController, animated: true)
+            */
+                
+            //self.searchResultTableView.reloadData()
+            self.hud?.hide(true)
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                    self.hud?.hide(true)
+                    println(error.userInfo)
+        })
+        
     }
     
     func showHUD() {
