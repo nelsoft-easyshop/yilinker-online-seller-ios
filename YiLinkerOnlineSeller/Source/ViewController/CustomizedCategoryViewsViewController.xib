@@ -7,6 +7,8 @@
         <mutableArray key="Panton Bold.otf">
             <string>Panton-Bold</string>
             <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
         </mutableArray>
         <mutableArray key="Panton SemiBold.otf">
             <string>Panton-SemiBold</string>
@@ -201,17 +203,36 @@
                         <action selector="addSubCategoryAction:" destination="gex-5u-WJK" eventType="touchUpInside" id="KsL-BR-pzg"/>
                     </connections>
                 </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iIX-4H-dvk">
+                    <rect key="frame" x="302" y="11" width="65" height="24"/>
+                    <color key="backgroundColor" red="0.43529411759999997" green="0.20392156859999999" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="hCD-Zs-67Y"/>
+                        <constraint firstAttribute="width" constant="65" id="zlg-VC-GMx"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="12"/>
+                    <state key="normal" title="EDIT">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="addSubCategoryAction:" destination="gex-5u-WJK" eventType="touchUpInside" id="FgP-3j-CUh"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="YyV-rN-k1N" secondAttribute="trailing" constant="8" id="AFu-mg-xGW"/>
                 <constraint firstItem="OBv-nf-4rN" firstAttribute="leading" secondItem="gex-5u-WJK" secondAttribute="leading" constant="8" id="KM3-Vh-9yY"/>
+                <constraint firstAttribute="trailing" secondItem="iIX-4H-dvk" secondAttribute="trailing" constant="8" id="gko-hb-hqI"/>
                 <constraint firstItem="OBv-nf-4rN" firstAttribute="top" secondItem="gex-5u-WJK" secondAttribute="top" constant="12" id="s37-pH-eMN"/>
                 <constraint firstItem="YyV-rN-k1N" firstAttribute="top" secondItem="gex-5u-WJK" secondAttribute="top" constant="10" id="tiS-JT-hAB"/>
+                <constraint firstItem="iIX-4H-dvk" firstAttribute="top" secondItem="gex-5u-WJK" secondAttribute="top" constant="11" id="ukb-vf-F1T"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="addSubCategoryButton" destination="YyV-rN-k1N" id="oq4-Ig-6yJ"/>
+                <outlet property="editButton" destination="iIX-4H-dvk" id="gtV-2I-fHe"/>
                 <outlet property="subCategoriesLabel" destination="OBv-nf-4rN" id="0bd-UN-Eiw"/>
             </connections>
             <point key="canvasLocation" x="447.5" y="196.5"/>
@@ -249,11 +270,29 @@
                                 <action selector="addNewItemAction:" destination="Diq-YZ-ZN8" eventType="touchUpInside" id="YME-LT-UJ6"/>
                             </connections>
                         </button>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ff8-jq-fgc">
+                            <rect key="frame" x="302" y="11" width="65" height="24"/>
+                            <color key="backgroundColor" red="0.43529411759999997" green="0.20392156859999999" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="65" id="YEd-nr-YSJ"/>
+                                <constraint firstAttribute="height" constant="24" id="hg6-7r-abw"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="12"/>
+                            <state key="normal" title="EDIT">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="addNewItemAction:" destination="Diq-YZ-ZN8" eventType="touchUpInside" id="xpL-mn-rPt"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstAttribute="trailing" secondItem="Ff8-jq-fgc" secondAttribute="trailing" constant="8" id="2OT-oJ-2tl"/>
                         <constraint firstAttribute="trailing" secondItem="prZ-Dr-rxx" secondAttribute="trailing" constant="8" id="3KU-0x-4Y6"/>
                         <constraint firstItem="prZ-Dr-rxx" firstAttribute="top" secondItem="trd-E6-0Ms" secondAttribute="top" constant="10" id="ERZ-wd-PTO"/>
+                        <constraint firstItem="Ff8-jq-fgc" firstAttribute="top" secondItem="trd-E6-0Ms" secondAttribute="top" constant="11" id="Ebw-Pp-vgf"/>
                         <constraint firstItem="dyM-e8-Fcy" firstAttribute="top" secondItem="trd-E6-0Ms" secondAttribute="top" constant="12" id="UF2-9d-RDk"/>
                         <constraint firstItem="dyM-e8-Fcy" firstAttribute="leading" secondItem="trd-E6-0Ms" secondAttribute="leading" constant="8" id="sW8-GJ-Nej"/>
                     </constraints>
@@ -270,6 +309,7 @@
                 <outlet property="addNewItemButton" destination="prZ-Dr-rxx" id="x3C-eB-yB6"/>
                 <outlet property="categoryItemsLabel" destination="dyM-e8-Fcy" id="OeK-lu-pnQ"/>
                 <outlet property="collectionView" destination="rsG-wa-4Yq" id="ouC-00-Efd"/>
+                <outlet property="editButton" destination="Ff8-jq-fgc" id="mPx-ba-T80"/>
             </connections>
             <point key="canvasLocation" x="447.5" y="294.5"/>
         </view>

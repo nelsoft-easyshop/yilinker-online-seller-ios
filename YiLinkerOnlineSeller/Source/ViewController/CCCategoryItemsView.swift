@@ -19,10 +19,12 @@ class CCCategoryItemsView: UIView {
     
     @IBOutlet weak var categoryItemsLabel: UILabel!
     @IBOutlet weak var addNewItemButton: UIButton!
+    @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func awakeFromNib() {
         self.addNewItemButton.layer.cornerRadius = self.addNewItemButton.frame.size.height / 2
+        self.editButton.layer.cornerRadius = self.editButton.frame.size.height / 2
         
         self.categoryItemsLabel.text = CategoryStrings.categoryItems
         self.addNewItemButton.setTitle(CategoryStrings.categoryNewItems, forState: .Normal)
@@ -31,7 +33,14 @@ class CCCategoryItemsView: UIView {
     // MARK: - Methods
     
     func setItemButtonTitle(title: String) {
-        self.addNewItemButton.setTitle(title, forState: .Normal)
+        if title == CategoryStrings.categoryEdit {
+            editButton.hidden = false
+            addNewItemButton.hidden = true
+        } else {
+            editButton.hidden = true
+            addNewItemButton.hidden = false
+        }
+        
     }
     
     // MARK: - Actions
