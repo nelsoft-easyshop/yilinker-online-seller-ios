@@ -226,8 +226,17 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 //self.searchResultTableView.reloadData()
                 self.hud?.hide(true)
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                    } else if task.statusCode == 401 {
+                        self.fireRefreshToken(SearchRefreshType.TransactionId)
+                    } else {
+                        self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                    }
                     self.hud?.hide(true)
-                    println(error)
             })
         } else {
             println("Search not available.")
@@ -241,7 +250,48 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             println(">> \(responseObject)")
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                } else if task.statusCode == 401 {
+                    self.fireRefreshToken(SearchRefreshType.ProductName)
+                } else {
+                    self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                }
+                self.hud?.hide(true)
+        })
         
+    }
+    
+    func fireRefreshToken(type: SearchRefreshType) {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            if type == SearchRefreshType.ProductName {
+                self.fireSearchProduct()
+            } else if type == SearchRefreshType.All {
+                
+            } else if type == SearchRefreshType.TransactionId {
+                self.fireSearch()
+            } else {
+                
+            }
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
         })
         
     }
