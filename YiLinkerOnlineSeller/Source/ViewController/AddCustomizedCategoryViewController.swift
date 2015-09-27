@@ -238,6 +238,8 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         arrowImageView.image = UIImage(named: "right2")
         self.seeAllItemsView.addSubview(arrowImageView)
         
+        self.seeAllItemsView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "seeAllItemsAction:"))
+        
         return self.seeAllItemsView
     }
     
@@ -292,7 +294,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     func populateDetails() {
         
         if self.selectedProductsModel.count != 0 {
-            self.categoryItemsView.addNewItemButton.setTitle(CategoryStrings.categoryEdit, forState: .Normal)
+            self.categoryItemsView.setItemButtonTitle(CategoryStrings.categoryEdit)
             if self.itemImagesView != nil {
                self.itemImagesView.hidden = false
             } else {
@@ -303,7 +305,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             self.itemImagesView.setProductsManagement(products: selectedProductsModel)
         } else if self.selectedProductsModel.count == 0 {
             
-            self.categoryItemsView.addNewItemButton.setTitle(CategoryStrings.categoryNewItems, forState: .Normal)
+            self.categoryItemsView.setItemButtonTitle(CategoryStrings.categoryNewItems)
             if self.itemImagesView != nil {
                 self.itemImagesView.removeFromSuperview()
             }
@@ -482,6 +484,10 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
 //        stringCategories = stringCategories.stringByReplacingOccurrencesOfString("]\"", withString: "]", options: nil, range: nil)
 //        }\")}]
         return stringCategories
+    }
+    
+    func seeAllItemsAction(gesture: UIGestureRecognizer) {
+        gotoEditItem()
     }
     
     // MARK: - Requests
