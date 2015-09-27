@@ -15,8 +15,8 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
     var descriptionCellIdentifier: String = "TransactionProductDescriptionTableViewCell"
     var deliveryCellIdentifier: String = "TransactionDeliveryTableViewCell"
     
-    var sectionHeader: [String] = ["Purchase Details", "Product Details", "Description", "Delivery Status"]
-    var productAttributeData: [String] = ["SKU", "Color", "Size", "Width", "Length", "Weight (kg)", "Height (mm)"]
+    var sectionHeader: [String] = []
+    var productAttributeData: [String] = []
     var productAttributeValueData: [String] = ["", "", "", "", "", "", ""]
     
     var tableHeaderView: TransactionProductDetailsHeaderView!
@@ -42,6 +42,7 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
         initializeTableView()
         registerNibs()
         initializeViews()
+        initializeLocalizedStrings()
     }
 
     override func didReceiveMemoryWarning() {
@@ -79,10 +80,11 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
         
         self.tableView.tableHeaderView = tableHeaderView
         self.tableView.tableFooterView = tableFooterView
+        self.tableView.reloadData()
     }
     
     func initializeNavigationBar() {
-        self.title = "Product Details"
+        self.title = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_LOCALIZE_KEY")
         
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -102,6 +104,23 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
         //self.view.addSubview(dimView!)
         dimView?.hidden = true
         dimView?.alpha = 0
+    }
+    
+    func initializeLocalizedStrings() {
+        sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_PURCHASE_LOCALIZE_KEY"))
+        sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_LOCALIZE_KEY"))
+        sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DESCRIPTION_LOCALIZE_KEY"))
+        sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DELIVERY_LOCALIZE_KEY"))
+        
+        productAttributeData.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_SKU_LOCALIZE_KEY"))
+        productAttributeData.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_COLOR_LOCALIZE_KEY"))
+        productAttributeData.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_SIZE_LOCALIZE_KEY"))
+        productAttributeData.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_WIDTH_LOCALIZE_KEY"))
+        productAttributeData.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_LENGTH_LOCALIZE_KEY"))
+        productAttributeData.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_WEIGHT_LOCALIZE_KEY"))
+        productAttributeData.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_HEIGHT_LOCALIZE_KEY"))
+        
+        tableView.reloadData()
     }
     
     func back() {

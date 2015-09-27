@@ -72,6 +72,7 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="cancelOrderLabel" destination="98A-rc-F6U" id="rqj-1D-Brf"/>
                 <outlet property="cancelOrderView" destination="B9H-dW-atH" id="LvZ-0N-dCF"/>
             </connections>
             <point key="canvasLocation" x="232.5" y="283.5"/>
