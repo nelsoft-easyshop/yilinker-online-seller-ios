@@ -50,6 +50,13 @@ enum AddressRefreshType {
     case Get
 }
 
+enum SearchRefreshType {
+    case All
+    case ProductName
+    case TransactionId
+    case Rider
+}
+
 enum UserType {
     case Seller
     case Reseller
