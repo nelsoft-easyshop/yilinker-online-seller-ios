@@ -194,10 +194,11 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
             self.subCategoriesProducts.append(categoryProducts)
         }
         
-        self.populateDetails()
+        if self.subCategoryDetailModel.parentId != 0 {
+            self.categoryDetailsView.frame.size.height = 153.0
+        }
         
-        self.categoryDetailsView.frame.size.height = 153.0
-        self.setUpViews()
+        self.populateDetails()
     }
     
     func populateDetails() {
