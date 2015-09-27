@@ -237,23 +237,11 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func fireSearchProduct(){
         self.showHUD()
         let manager = APIManager.sharedInstance
-        //let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
-        println(APIAtlas.searchNameSuggestion+"\(SessionManager.accessToken())&queryString=\(self.searchTextField.text)")
-        manager.GET(APIAtlas.searchNameSuggestion+"\(SessionManager.accessToken())&queryString=\(self.searchTextField.text)", parameters: nil, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                
-            println(responseObject.description)
-            /*var storeInfoViewController = FilterResultsViewController(nibName: "FilterResultsViewController", bundle: nil)
-            storeInfoViewController.edgesForExtendedLayout = .None
-            storeInfoViewController.searchModel = self.searchModel
-            self.navigationController?.pushViewController(storeInfoViewController, animated: true)
-            */
-                
-            //self.searchResultTableView.reloadData()
+        manager.GET(APIAtlas.searchNameSuggestion+"\(SessionManager.accessToken())&queryString=\(self.searchTextField.text)", parameters: nil, success: { (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            println(">> \(responseObject)")
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                    self.hud?.hide(true)
-                    println(error.userInfo)
+        
         })
         
     }
