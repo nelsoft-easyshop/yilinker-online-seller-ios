@@ -122,6 +122,10 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
         self.tableView.reloadData()
     }
     
+    func sortFunc(num1: Int, num2: Int) -> Bool {
+        return num1 < num2
+    }
+    
     // MARK: - Actions
     
     func closeAction() {
@@ -159,8 +163,15 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     
     @IBAction func removedSelectedAction(sender: AnyObject) {
 
-        for i in 0..<categoriesToBeRemove.count {
-            self.subCategories = self.subCategories.filter({$0 != self.subCategories[self.categoriesToBeRemove[i]]})
+        let sortedNumbers = sorted(categoriesToBeRemove, sortFunc)
+        
+        var temp: [Int] = []
+        for item in reverse(sortedNumbers) {
+            temp.append(item)
+        }
+        
+        for i in 0..<temp.count {
+            self.subCategories = self.subCategories.filter({$0 != self.subCategories[temp[i]]})
         }
         
         showEditSubView()
