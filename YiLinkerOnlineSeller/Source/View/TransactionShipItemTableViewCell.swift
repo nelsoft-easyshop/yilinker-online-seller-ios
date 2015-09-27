@@ -24,6 +24,11 @@ class TransactionShipItemTableViewCell: UITableViewCell, FSCalendarDelegate, FSC
     @IBOutlet weak var pickupButton: UIButton!
     @IBOutlet weak var timeTextField: UITextField!
     
+    @IBOutlet weak var pickupScheduleLabel: UILabel!
+    @IBOutlet weak var pickupScheduleDescriptionLabel: UILabel!
+    @IBOutlet weak var timeTitleLabel: UILabel!
+    @IBOutlet weak var notesTitleLabel: UILabel!
+    
     var pickerView: UIDatePicker!
     
     var selectedDate: NSDate = NSDate()
@@ -32,6 +37,7 @@ class TransactionShipItemTableViewCell: UITableViewCell, FSCalendarDelegate, FSC
         super.awakeFromNib()
         
         initializeViews()
+        initializeLocalizedStrings()
         addPicker()
     }
 
@@ -56,6 +62,15 @@ class TransactionShipItemTableViewCell: UITableViewCell, FSCalendarDelegate, FSC
         calendarView.appearance.headerMinimumDissolvedAlpha = 0.25
         
         timeTextField.text = formatTime(selectedTime)
+    }
+    
+    func initializeLocalizedStrings() {
+        pickupScheduleLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_SHIP_PICKUP_SCHEDULE_LOCALIZE_KEY")
+        pickupScheduleDescriptionLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_SHIP_PICKUP_DESCRIPTION_LOCALIZE_KEY")
+        timeTitleLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_SHIP_TIME_LOCALIZE_KEY")
+        notesTitleLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_SHIP_NOTES_LOCALIZE_KEY")
+        cancelButton.setTitle(StringHelper.localizedStringWithKey("TRANSACTION_SHIP_CANCEL_LOCALIZE_KEY"), forState: UIControlState.Normal)
+        pickupButton.setTitle(StringHelper.localizedStringWithKey("TRANSACTION_SHIP_READY_LOCALIZE_KEY"), forState: UIControlState.Normal)
     }
     
     func addPicker() {
