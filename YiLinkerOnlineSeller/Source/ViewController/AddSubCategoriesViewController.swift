@@ -209,10 +209,12 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
     
     func populateItems() {
         if self.subCategoriesProducts.count != 0 {
-            self.categoryItemsView.addNewItemButton.setTitle("EDIT", forState: .Normal)
+            self.categoryItemsView.setItemButtonTitle(CategoryStrings.categoryEdit)
 //            self.getHeaderView().addSubview(getItemImageView())
 //            self.getHeaderView().addSubview(getSeeAllItemsView())
 //            self.itemImagesView.setProductsManagement(products: subCategoriesProducts)
+        } else {
+            self.categoryItemsView.setItemButtonTitle(CategoryStrings.categoryNewItems)
         }
         
         setUpViews()
