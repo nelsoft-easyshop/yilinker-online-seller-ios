@@ -301,13 +301,12 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                 self.getFooterView().addSubview(getItemImageView())
             }
             self.getFooterView().addSubview(getSeeAllItemsView())
-//            self.itemImagesView.setProductsManagement(products: self.productManagementProductModel.products, selectedItems: selectedProductsModel)
             self.itemImagesView.setProductsManagement(products: selectedProductsModel)
         } else if self.selectedProductsModel.count == 0 {
             
             self.categoryItemsView.setItemButtonTitle(CategoryStrings.categoryNewItems)
             if self.itemImagesView != nil {
-                self.itemImagesView.removeFromSuperview()
+                self.itemImagesView.hidden = true
             }
 
             if self.seeAllItemsView != nil {
