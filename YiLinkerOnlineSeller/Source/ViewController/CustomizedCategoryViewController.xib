@@ -3,9 +3,15 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Light.otf">
+            <string>Panton-Light</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomizedCategoryViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
             <connections>
+                <outlet property="emptyLabel" destination="omu-YN-3KU" id="cNz-K1-E9k"/>
                 <outlet property="tableView" destination="PgN-0R-N7C" id="S6D-uV-s6b"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -24,11 +30,22 @@
                         <outlet property="delegate" destination="-1" id="fOK-LG-5bx"/>
                     </connections>
                 </tableView>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="no category found" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="omu-YN-3KU">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" name="Panton-Light" family="Panton" pointSize="20"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="PgN-0R-N7C" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="EGI-dp-B3D"/>
+                <constraint firstItem="omu-YN-3KU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="JWn-BV-XYi"/>
+                <constraint firstAttribute="trailing" secondItem="omu-YN-3KU" secondAttribute="trailing" id="bnc-Ss-WeI"/>
+                <constraint firstAttribute="bottom" secondItem="omu-YN-3KU" secondAttribute="bottom" id="dt0-WV-7ou"/>
                 <constraint firstAttribute="bottom" secondItem="PgN-0R-N7C" secondAttribute="bottom" id="fE9-rV-oJK"/>
+                <constraint firstItem="omu-YN-3KU" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="qL9-Oo-vSG"/>
                 <constraint firstAttribute="trailing" secondItem="PgN-0R-N7C" secondAttribute="trailing" id="rPa-Sn-U0u"/>
                 <constraint firstItem="PgN-0R-N7C" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="vXo-TA-LJJ"/>
             </constraints>

@@ -4,6 +4,9 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <customFonts key="customFonts">
+        <mutableArray key="Panton Light.otf">
+            <string>Panton-Light</string>
+        </mutableArray>
         <mutableArray key="Panton.otf">
             <string>Panton-Regular</string>
         </mutableArray>
@@ -11,6 +14,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddItemViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
             <connections>
+                <outlet property="emptyLabel" destination="ker-v4-3Xo" id="Uxl-Mi-aXl"/>
                 <outlet property="searchBarTextField" destination="wDQ-5e-uLN" id="pTu-0r-BEg"/>
                 <outlet property="tableView" destination="Ts2-Jq-bZr" id="34v-IW-9OA"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -48,15 +52,26 @@
                         <outlet property="delegate" destination="-1" id="kxM-4X-DSy"/>
                     </connections>
                 </tableView>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="no products found" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ker-v4-3Xo">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" name="Panton-Light" family="Panton" pointSize="20"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="Ts2-Jq-bZr" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="08k-mA-gEE"/>
+                <constraint firstAttribute="bottom" secondItem="ker-v4-3Xo" secondAttribute="bottom" id="6vC-O2-1CO"/>
                 <constraint firstItem="Ts2-Jq-bZr" firstAttribute="top" secondItem="7og-SY-uEy" secondAttribute="bottom" id="D0x-Kw-cAg"/>
                 <constraint firstAttribute="trailing" secondItem="Ts2-Jq-bZr" secondAttribute="trailing" id="QFK-Dm-Kjh"/>
                 <constraint firstAttribute="bottom" secondItem="Ts2-Jq-bZr" secondAttribute="bottom" id="c8u-3h-hUQ"/>
+                <constraint firstAttribute="trailing" secondItem="ker-v4-3Xo" secondAttribute="trailing" id="ePj-Fe-V6H"/>
                 <constraint firstItem="7og-SY-uEy" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="egk-YC-o9V"/>
                 <constraint firstAttribute="trailing" secondItem="7og-SY-uEy" secondAttribute="trailing" id="gqe-Bb-cQ3"/>
+                <constraint firstItem="ker-v4-3Xo" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="j50-fk-MAX"/>
+                <constraint firstItem="ker-v4-3Xo" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="nvm-2d-pbW"/>
                 <constraint firstItem="7og-SY-uEy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="rjo-sf-nET"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
