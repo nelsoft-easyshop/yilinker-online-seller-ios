@@ -169,7 +169,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         
         cell.setStatus(tempModel.order_status_id.toInt()!)
         cell.setTID(tempModel.invoice_number)
-        cell.setPrice("P \(tempModel.total_price)")
+        cell.setPrice(tempModel.total_price.formatToTwoDecimal())
             
         if tempModel.total_quantity.toInt() < 2 {
             let productString = StringHelper.localizedStringWithKey("TRANSACTIONS_PRODUCT_LOCALIZE_KEY")
