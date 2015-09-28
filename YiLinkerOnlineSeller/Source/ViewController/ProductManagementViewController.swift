@@ -58,6 +58,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     @IBOutlet weak var activeInactiveLabel: UILabel!
     @IBOutlet weak var deleteLabel: UILabel!
     
+    @IBOutlet weak var emptyLabel: UILabel!
     @IBOutlet weak var dimView: UIView!
     
     var pageTitle: [String] = [ManagementStrings.all, ManagementStrings.active, ManagementStrings.inactive, ManagementStrings.drafts, ManagementStrings.deleted, ManagementStrings.underReview]
@@ -370,10 +371,14 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 
                 self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
-                self.tableView.reloadData()
-                self.hud?.hide(true)
+                if self.productModel.products.count != 0 {
+                    self.tableView.reloadData()
+                } else {
+                    self.emptyLabel.hidden = false
+                }
                 self.loaderContainerView.hidden = true
                 self.searchBarTextField.userInteractionEnabled = true
+                self.hud?.hide(true)
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
                     
