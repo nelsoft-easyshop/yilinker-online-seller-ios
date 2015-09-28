@@ -20,7 +20,7 @@ class ProductManagementModelViewController: UIViewController {
     @IBOutlet weak var modalView: UIView!
     
     @IBOutlet weak var closeButton: UIView!
-    @IBOutlet weak var yesButton: UIView!
+    @IBOutlet weak var yesButton: UIButton!
     @IBOutlet weak var noButton: UIButton!
     
     @IBOutlet weak var titleLabel: UILabel!
@@ -42,6 +42,9 @@ class ProductManagementModelViewController: UIViewController {
         modalView.layer.cornerRadius = 5
         yesButton.layer.cornerRadius = 3
         noButton.layer.cornerRadius = 3
+        
+        yesButton.setTitle(StringHelper.localizedStringWithKey("MANAGEMENT_MODAL_YES_LOCALIZE_KEY"), forState: .Normal)
+        noButton.setTitle(StringHelper.localizedStringWithKey("MANAGEMENT_MODAL_NO_LOCALIZE_KEY"), forState: .Normal)
         
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "selfAction:"))
     }

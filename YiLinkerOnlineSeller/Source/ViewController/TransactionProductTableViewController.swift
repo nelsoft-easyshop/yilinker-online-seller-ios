@@ -76,11 +76,11 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
             tableFooterView = XibHelper.puffViewWithNibName("TransactionProductDetailsFooterView", index: 0) as! TransactionProductDetailsFooterView
             tableFooterView.delegate = self
             tableFooterView.frame.size.width = self.view.frame.size.width
+            tableFooterView.frame.size.height = 65
         }
         
         self.tableView.tableHeaderView = tableHeaderView
         self.tableView.tableFooterView = tableFooterView
-        self.tableView.reloadData()
     }
     
     func initializeNavigationBar() {

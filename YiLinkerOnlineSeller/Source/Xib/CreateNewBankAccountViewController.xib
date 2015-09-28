@@ -19,11 +19,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CreateNewBankAccountViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
             <connections>
+                <outlet property="accountNameLabel" destination="jum-va-3hm" id="vmv-cU-UDD"/>
                 <outlet property="accountNameTextField" destination="hyD-MF-zWj" id="Gj1-mH-Vhq"/>
+                <outlet property="accountNumberLabel" destination="Z8h-WS-kui" id="Lsw-Em-fzL"/>
                 <outlet property="accountNumberTextField" destination="eyj-Ew-iqL" id="ts9-ho-c2j"/>
+                <outlet property="accountTitleLabel" destination="hVL-9a-bG2" id="6zT-hz-6Zc"/>
                 <outlet property="accountTitleTextField" destination="BLp-Ns-DAI" id="Wbv-pK-jEx"/>
                 <outlet property="bankAccountDetailLabel" destination="Txr-sg-MmE" id="HcB-gH-CqF"/>
                 <outlet property="bankAccountTitleLabel" destination="fcl-ew-Uj6" id="z4D-3j-XX4"/>
+                <outlet property="bankNameLabel" destination="QJq-vy-F1S" id="l1q-nz-Gg0"/>
                 <outlet property="bankNameTextField" destination="XYo-gd-QFh" id="BRT-qp-9ju"/>
                 <outlet property="bankTableView" destination="Yku-YD-pVK" id="imf-Ai-VSo"/>
                 <outlet property="closeButton" destination="W9d-zE-J1s" id="CE6-4i-Ndo"/>
@@ -46,7 +50,6 @@
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account Name:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jum-va-3hm">
                                     <rect key="frame" x="20" y="58" width="93" height="30"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="93" id="1Bc-qn-SGK"/>
                                         <constraint firstAttribute="height" constant="30" id="fWo-zU-hsf"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
@@ -61,21 +64,10 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                 </textField>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account Number:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z8h-WS-kui">
-                                    <rect key="frame" x="20" y="96" width="93" height="30"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="93" id="JdJ-0H-kqn"/>
-                                        <constraint firstAttribute="height" constant="30" id="ezw-Bv-Q1t"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bank Name:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QJq-vy-F1S">
                                     <rect key="frame" x="20" y="134" width="79" height="30"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="30" id="0Fc-4T-Ror"/>
-                                        <constraint firstAttribute="width" constant="79" id="lb7-U8-3HE"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -113,7 +105,6 @@
                                     <rect key="frame" x="20" y="20" width="93" height="30"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="30" id="N5p-wp-tnf"/>
-                                        <constraint firstAttribute="width" constant="93" id="fVV-CS-hlC"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -146,6 +137,15 @@
                                         <outlet property="delegate" destination="-1" id="hkg-5P-rB7"/>
                                     </connections>
                                 </tableView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account Number:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z8h-WS-kui">
+                                    <rect key="frame" x="20" y="96" width="93" height="30"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="30" id="ezw-Bv-Q1t"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>

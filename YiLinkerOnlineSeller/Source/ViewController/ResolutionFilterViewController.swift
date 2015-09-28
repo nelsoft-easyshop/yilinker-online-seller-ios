@@ -51,20 +51,49 @@ class SelectedFilters {
         formatter.dateFormat = "MM/dd/YYYY"
         switch time {
         case .Today:
+            self.time = ResolutionTimeFilter.Today
             return formatter.stringFromDate(now)
         case .ThisWeek:
-            let oneWeek: NSTimeInterval = 60*60*24*7
-            let lastWeek = now.dateByAddingTimeInterval(-oneWeek)
-            return formatter.stringFromDate(lastWeek)
+            self.time = ResolutionTimeFilter.ThisWeek
+            let day: Int = self.dayOfWeek(self.getTimeNow())
+            return formatter.stringFromDate(NSDate())
         case .ThisMonth:
-            let oneMonth: NSTimeInterval = 60*60*24*30
-            let lastMonth = now.dateByAddingTimeInterval(-oneMonth)
-            return formatter.stringFromDate(lastMonth)
+            self.time = ResolutionTimeFilter.ThisMonth
+            return formatter.stringFromDate(NSDate())
         case .Total:
             return ""
         default:
             return ""
         }
+    }
+    
+    
+    
+    func getFilterType() -> ResolutionTimeFilter {
+        return self.time
+    }
+    
+    func sundayDate() -> String {
+        let day: Int = self.dayOfWeek(self.getTimeNow())
+       return self.fromDateWeek(day)
+    }
+    
+    func dayOfWeek(today:String) -> Int {
+        let formatter  = NSDateFormatter()
+        formatter.dateFormat = "MM/dd/YYYY"
+        let todayDate = formatter.dateFromString(today)!
+        let myCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+        let myComponents = myCalendar.components(.CalendarUnitWeekday, fromDate: todayDate)
+        let weekDay = myComponents.weekday
+        return weekDay
+    }
+    
+    func fromDateWeek(numberOfDays: Int) -> String {
+        let userCalendar = NSCalendar.currentCalendar()
+        let sundayDate = userCalendar.dateByAddingUnit(NSCalendarUnit.CalendarUnitDay, value: -numberOfDays, toDate: NSDate(), options: nil)!
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "MM/dd/YYYY"
+       return formatter.stringFromDate(sundayDate)
     }
     
     func getTimeNow() -> String {

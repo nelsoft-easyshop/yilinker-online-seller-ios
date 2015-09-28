@@ -139,7 +139,9 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="descriptionLabel" destination="ehP-lJ-I5r" id="1Mt-Nf-bQC"/>
+                <outlet property="seeMoreLabel" destination="spi-nn-9Z3" id="HZM-HY-lvA"/>
                 <outlet property="seeMoreView" destination="kwn-db-AzY" id="uuM-kZ-boB"/>
+                <outlet property="titleLabel" destination="GnP-7v-HbZ" id="mQc-9R-Fim"/>
             </connections>
             <point key="canvasLocation" x="837.5" y="636"/>
         </view>

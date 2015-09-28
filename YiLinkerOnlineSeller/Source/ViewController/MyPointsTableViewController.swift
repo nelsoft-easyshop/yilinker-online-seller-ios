@@ -126,7 +126,7 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellPointsEarned, forIndexPath: indexPath) as! PointsEarnedTableViewCell
-            cell.pointsLabel.text = totalPointsModel.data
+            cell.pointsLabel.text = totalPointsModel.data.formatToTwoDecimalNoTrailling()
             return cell
         } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellPointsDetails, forIndexPath: indexPath) as! PointsDetailsTableViewCell
@@ -176,7 +176,19 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
                 cell.pointsTitleLabel.textColor = UIColor(red: 255/255.0, green: 59/255.0, blue: 48/255.0, alpha: 0.75)
             }
             
-            cell.pointsLabel.text = points
+            if points.toInt() < 1 {
+                if Array(tempModel.points)[0] != "-" {
+                    cell.pointsLabel.text = "+0" + points.formatToTwoDecimalNoTrailling()
+                } else {
+                    cell.pointsLabel.text = "-0" + points.formatToTwoDecimalNoTrailling()
+                }
+            } else {
+                if Array(tempModel.points)[0] != "-" {
+                    cell.pointsLabel.text = "+" + points.formatToTwoDecimalNoTrailling()
+                } else {
+                    cell.pointsLabel.text = "-" + points.formatToTwoDecimalNoTrailling()
+                }
+            }
             
             return cell
         }
@@ -211,7 +223,7 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
         self.hud = MBProgressHUD(view: self.view)
         self.hud?.removeFromSuperViewOnHide = true
         self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
+        self.navigationController?.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
 

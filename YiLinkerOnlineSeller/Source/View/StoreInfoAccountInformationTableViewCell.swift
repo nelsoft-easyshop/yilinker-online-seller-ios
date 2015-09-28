@@ -20,6 +20,8 @@ class StoreInfoAccountInformationTableViewCell: UITableViewCell{
     @IBOutlet weak var passwordTextField: UITextField!
     
     @IBOutlet weak var changePasswordButton: UIButton!
+    @IBOutlet weak var accountInfoLabel: UILabel!
+    @IBOutlet weak var passwordLabel: UILabel!
     
     var delegate: StoreInfoAccountInformationTableViewCellDelegate?
     

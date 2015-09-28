@@ -28,6 +28,9 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
     var hud: MBProgressHUD?
     var dimView: UIView = UIView()
     
+    let changeBankTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_TITLE_LOCALIZE_KEY")
+    let newAccount: String = StringHelper.localizedStringWithKey("CHANGE_BANK_NEW_ACCOUNT_LOCALIZE_KEY")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -61,7 +64,7 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
     }
     
     func titleView() {
-        self.title = "Change Bank Account"
+        self.title =  self.changeBankTitle
     }
     
     // Show hud
@@ -177,7 +180,6 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
         
         let cell : ChangeAddressCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressCollectionViewCell
         
-        println(self.bankAccountModel!.account_title[indexPath.row])
         if self.bankAccountModel != nil {
             cell.titleLabel.text = self.bankAccountModel!.account_title[indexPath.row]
             cell.subTitleLabel.text = "\(self.bankAccountModel!.account_number[indexPath.row])"+"\n"+self.bankAccountModel!.account_name[indexPath.row]+"\n"+self.bankAccountModel!.bank_name[indexPath.row]
@@ -288,7 +290,7 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         let footerView: ChangeAddressFooterCollectionViewCell = self.changeBankAccountCollectionView?.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: Constants.Checkout.changeAddressFooterCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressFooterCollectionViewCell
-        footerView.newAddressButton.setTitle("+ NEW ACCOUNT", forState: UIControlState.Normal)
+        footerView.newAddressButton.setTitle(self.newAccount, forState: UIControlState.Normal)
         
         footerView.delegate = self
         

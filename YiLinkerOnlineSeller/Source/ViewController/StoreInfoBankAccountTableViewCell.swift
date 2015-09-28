@@ -20,6 +20,8 @@ class StoreInfoBankAccountTableViewCell: UITableViewCell {
     
     @IBOutlet weak var bankAccountDetailLabel: UILabel!
     
+    @IBOutlet weak var bankAccountInfoLabel: UILabel!
+    @IBOutlet weak var newAccountLabel: UILabel!
     @IBOutlet weak var bankAccountView: UIView!
     
     override func awakeFromNib() {

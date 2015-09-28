@@ -34,12 +34,6 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController!.tabBar.tintColor = Constants.Colors.appTheme
-        if !NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
-            SessionManager.setAccessToken("")
-            let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
-            signInViewController.delegate = self
-            self.presentViewController(signInViewController, animated: false, completion: nil)
-        }
         
         registerNibs()
         initializeViews()
@@ -50,21 +44,11 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         super.didReceiveMemoryWarning()
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.navigationBarHidden = false
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.navigationBarHidden = true
-        
-        self.tabBarController?.tabBar.hidden = false
-    }
-    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+        
+        initializeViews()
         
         if SessionManager.isLoggedIn() {
             self.loginBlockerView.hidden = true
@@ -72,22 +56,42 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             self.loginBlockerView.hidden = false
         }
         
+        
         if NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
             if ctr == 0{
                 fireStoreInfo(true)
                 setupGCM()
             } else {
-                fireStoreInfo(false)
+                fireStoreInfo(true)
             }
         } else {
-            if ctr == 1{
+            if SessionManager.isLoggedIn() {
                 fireStoreInfo(true)
-            } else if ctr != 0 {
-                fireStoreInfo(false)
             }
         }
         
         ctr++
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.navigationBarHidden = false
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if !NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
+            if !SessionManager.isLoggedIn() {
+                SessionManager.setAccessToken("")
+                let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
+                signInViewController.delegate = self
+                self.presentViewController(signInViewController, animated: false, completion: nil)
+            }
+        }
+        self.navigationController?.navigationBarHidden = true
+        
+        self.tabBarController?.tabBar.hidden = false
     }
     
     func initializeLocalizedString() {
@@ -368,7 +372,6 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         } else if indexPath.row == 10 {
             
         } else if indexPath.row == 11 {
-            
             let areYouSUreString = StringHelper.localizedStringWithKey("ARE_YOU_SURE_LOGOUT_LOCALIZE_KEY")
             let logoutString = StringHelper.localizedStringWithKey("LOGOUT_LOCALIZE_KEY")
             let cancelString = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
@@ -397,7 +400,6 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         if showHUD {
             self.showHUD()
         }
-        
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
         
@@ -417,9 +419,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             
             NSUserDefaults.standardUserDefaults().synchronize()
             
-            if !showHUD{
-                self.collectionView.reloadData()
-            }
+            self.collectionView.reloadData()
+            
             self.hud?.hide(true)
             
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in

@@ -19,6 +19,7 @@ class ResolutionCenterViewController
     
     @IBOutlet weak var resolutionTableView: UITableView!
     var tableData = [ResolutionCenterElement]()
+    
     /*: [(ResolutionCenterElement)] =
     [ ("7889360001", "Open"  , "December 12, 2015", "Seller", "Not Happy", "It's okay")
      ,("7889360002", "Closed", "January 2, 2016"  , "Buyer" , "Yo wassup", "Go voltron!")
@@ -27,7 +28,7 @@ class ResolutionCenterViewController
      ,("2345647856", "Closed", "January 21, 2016" , "Buyer" , "On-start", "What's goin on")]
     **/
 
-    var currentSelectedFilter = SelectedFilters(time:.Total,status:.Both)
+    var currentSelectedFilter = SelectedFilters(time:.Total, status:.Both)
     
     var hud: MBProgressHUD?
 
@@ -239,26 +240,53 @@ class ResolutionCenterViewController
         } else {
             let statusFilter = self.currentSelectedFilter.getStatusFilter()
             let timeFilter = self.currentSelectedFilter.getTimeFilter()
+            
+            var fullDate = timeFilter.componentsSeparatedByString("/")
+            println("Status Filter: \(statusFilter)")
             if timeFilter == ""  {
                 parameters = [ "access_token" : SessionManager.accessToken()
                              , "disputeStatusType" : statusFilter]
             } else if statusFilter == "0" {
-                parameters = [ "access_token" : SessionManager.accessToken()
-                             , "dateFrom" : timeFilter]
+                if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisMonth {
+                    parameters = [ "access_token" : SessionManager.accessToken()
+                        , "dateFrom" : "\(fullDate[0])/1/\(fullDate[2])",
+                        "dateTo": timeFilter]
+
+                } else if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisWeek {
+                    parameters = [ "access_token" : SessionManager.accessToken()
+                        , "dateFrom" : self.currentSelectedFilter.sundayDate(),
+                        "dateTo": timeFilter,
+                        "disputeStatusType" : statusFilter]
+                } else {
+                    parameters = [ "access_token" : SessionManager.accessToken()
+                        , "dateFrom" : timeFilter,
+                        "disputeStatusType" : statusFilter]
+                }
+              
             } else {
-                parameters = [ "access_token" : SessionManager.accessToken()
-                             , "disputeStatusType" : statusFilter
-                             , "dateFrom" : timeFilter]
+                if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisMonth {
+                    parameters = [ "access_token" : SessionManager.accessToken()
+                        , "dateFrom" : "\(fullDate[0])/1/\(fullDate[2])",
+                        "dateTo": timeFilter,
+                        "disputeStatusType" : statusFilter]
+                    
+                } else if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisWeek {
+                    parameters = [ "access_token" : SessionManager.accessToken()
+                        , "dateFrom" : self.currentSelectedFilter.sundayDate(),
+                        "dateTo": timeFilter,
+                        "disputeStatusType" : statusFilter]
+                } else {
+                    parameters = [ "access_token" : SessionManager.accessToken()
+                        , "dateFrom" : timeFilter,
+                        "disputeStatusType" : statusFilter]
+                }
             }
         }
-        println("url: " + urlString)
-        println(parameters)
+        
         
         manager.GET(urlString, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             let resolutionCenterModel: ResolutionCenterModel = ResolutionCenterModel.parseDataWithDictionary(responseObject)
-            
-            //println(responseObject)
             
             if resolutionCenterModel.isSuccessful {
                 self.tableData.removeAll(keepCapacity: false)

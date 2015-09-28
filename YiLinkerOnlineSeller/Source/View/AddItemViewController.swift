@@ -36,7 +36,12 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
 //        }
         
 //        if selectedProductsModel.count == 0 {
+        if Reachability.isConnectedToNetwork() {
             requestGetProductList("")
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.failed)
+        }
+        
 //        }
         customizedNavigationBar()
         customizedViews()
@@ -55,7 +60,7 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func customizedNavigationBar() {
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.title = "Add Item"
+        self.title = CategoryStrings.titleAddItems
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
         
@@ -74,6 +79,7 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
         searchImage.contentMode = UIViewContentMode.Center
         searchBarTextField.leftView = searchImage
         searchBarTextField.leftViewMode = UITextFieldViewMode.Always
+        searchBarTextField.placeholder = CategoryStrings.search
         
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
     }

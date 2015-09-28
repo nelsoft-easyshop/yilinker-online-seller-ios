@@ -16,8 +16,10 @@ class ProductDescriptionView: UIView {
 
     var delegate: ProductDescriptionViewDelegate?
     
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var seeMoreView: UIView!
+    @IBOutlet weak var seeMoreLabel: UILabel!
     
     override func awakeFromNib() {
         seeMoreView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "seeMoreAction:"))
