@@ -20,6 +20,7 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @IBOutlet weak var searchBarTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var emptyLabel: UILabel!
 
     var selectedItemIDs: [String] = []
     var selectedProductsModel: [ProductManagementProductsModel] = []
@@ -139,7 +140,12 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
 
             self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
-            self.tableView.reloadData()
+            
+            if self.productModel.products.count != 0 {
+                self.tableView.reloadData()
+            } else {
+                self.emptyLabel.hidden = false
+            }
             self.hud?.hide(true)
             
             }, failure: {

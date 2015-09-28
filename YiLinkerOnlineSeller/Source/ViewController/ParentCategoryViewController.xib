@@ -53,7 +53,7 @@
                     </connections>
                 </tableView>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="no category found" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qnO-ab-WVR">
-                    <rect key="frame" x="0.0" y="43" width="375" height="624"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" name="Panton-Light" family="Panton" pointSize="20"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -64,7 +64,7 @@
             <constraints>
                 <constraint firstItem="pCh-DU-qbS" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="1CC-lI-CJd"/>
                 <constraint firstItem="Zo1-Ms-uBa" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="GyW-ll-7hJ"/>
-                <constraint firstItem="qnO-ab-WVR" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="43" id="Q3G-Ta-pfV"/>
+                <constraint firstItem="qnO-ab-WVR" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Q3G-Ta-pfV"/>
                 <constraint firstAttribute="trailing" secondItem="pCh-DU-qbS" secondAttribute="trailing" id="W7m-jT-I1E"/>
                 <constraint firstItem="qnO-ab-WVR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="WiZ-uF-bWo"/>
                 <constraint firstAttribute="bottom" secondItem="Zo1-Ms-uBa" secondAttribute="bottom" id="aQS-RZ-Swu"/>
