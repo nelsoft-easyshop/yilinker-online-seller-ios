@@ -17,6 +17,7 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
     var delegate: ParentCategoryViewControllerDelegate?
     var customizedCategoriesModel: CustomizedCategoriesModel!
     
+    @IBOutlet weak var emptyLabel: UILabel!
     @IBOutlet weak var searchBarTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
 
@@ -91,7 +92,11 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
             
             self.customizedCategoriesModel = CustomizedCategoriesModel.parseDataWithDictionary(responseObject as! NSDictionary)
             
-            self.tableView.reloadData()
+            if self.customizedCategoriesModel.customizedCategories.count != 0 {
+                self.tableView.reloadData()
+            } else {
+                self.emptyLabel.hidden = false
+            }
             self.hud?.hide(true)
             
             }, failure: {
