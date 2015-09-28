@@ -43,6 +43,7 @@ struct CategoryStrings {
 class CustomizedCategoryViewController: UIViewController, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var emptyLabel: UILabel!
     
     var parentCategory: [String] = []
     var subCategories: [NSArray] = []
@@ -134,7 +135,12 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 
                 self.customizedCategoriesModel = CustomizedCategoriesModel.parseDataWithDictionary(responseObject as! NSDictionary)
-                self.tableView.reloadData()
+                
+                if self.customizedCategoriesModel.customizedCategories.count != 0 {
+                    self.tableView.reloadData()
+                } else {
+                    self.emptyLabel.hidden = false
+                }   
                 self.hud?.hide(true)
                 
                 }, failure: {
