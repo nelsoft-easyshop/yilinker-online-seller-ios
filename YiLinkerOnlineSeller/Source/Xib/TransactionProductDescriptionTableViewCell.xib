@@ -20,14 +20,17 @@
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XOu-oL-bEo" id="Vie-eE-F69">
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjD-iQ-COt">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjD-iQ-COt">
                         <rect key="frame" x="16" y="8" width="343" height="55"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="55" id="zum-Nd-k7h"/>
+                        </constraints>
                         <string key="text">Silence the noise from your daily comut of the dram afrim your liud neighbors with our no-compromise dual-mode Adaptive Noise Cancelling. When your listening to music.</string>
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZnW-0B-p5e">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZnW-0B-p5e">
                         <rect key="frame" x="137" y="71" width="100" height="25"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SEE MORE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q0j-NQ-FOt">
@@ -41,11 +44,23 @@
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="Fhp-1O-agf"/>
+                            <constraint firstAttribute="height" constant="25" id="FjV-BY-gsG"/>
+                        </constraints>
                     </view>
                 </subviews>
+                <constraints>
+                    <constraint firstAttribute="centerX" secondItem="ZnW-0B-p5e" secondAttribute="centerX" id="ONx-lW-Gbx"/>
+                    <constraint firstAttribute="trailing" secondItem="yjD-iQ-COt" secondAttribute="trailing" constant="16" id="bf0-o6-FC5"/>
+                    <constraint firstItem="yjD-iQ-COt" firstAttribute="top" secondItem="Vie-eE-F69" secondAttribute="top" constant="8" id="cbL-M6-OJH"/>
+                    <constraint firstItem="yjD-iQ-COt" firstAttribute="leading" secondItem="Vie-eE-F69" secondAttribute="leading" constant="16" id="gCg-gw-wa7"/>
+                    <constraint firstItem="ZnW-0B-p5e" firstAttribute="top" secondItem="yjD-iQ-COt" secondAttribute="bottom" constant="8" id="jm1-cY-FRc"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="productDescriptionLabel" destination="yjD-iQ-COt" id="yxj-Kf-3nl"/>
+                <outlet property="seeMoreLabel" destination="Q0j-NQ-FOt" id="8Ue-He-MuT"/>
                 <outlet property="seeMoreView" destination="ZnW-0B-p5e" id="6Rm-iN-4dd"/>
             </connections>
             <point key="canvasLocation" x="307.5" y="184"/>

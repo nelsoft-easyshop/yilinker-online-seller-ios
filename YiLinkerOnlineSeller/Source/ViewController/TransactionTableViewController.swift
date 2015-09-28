@@ -37,25 +37,45 @@ class TransactionTableViewController: UITableViewController {
         
         tableData.removeAll(keepCapacity: false)
         
-        tableData.append(TransactionsFilterModel(headerText: "DATES", items:
-            [TransactionsFilterItemModel(title: "Today", isChecked: true),
-            TransactionsFilterItemModel(title: "This Week", isChecked: false),
-            TransactionsFilterItemModel(title: "This Month", isChecked: false),
-            TransactionsFilterItemModel(title: "Total", isChecked: false)]))
+        let datesString = StringHelper.localizedStringWithKey("TRANSACTIONS_DATES_LOCALIZE_KEY")
+        let todayString = StringHelper.localizedStringWithKey("TRANSACTIONS_TODAY_LOCALIZE_KEY")
+        let thisWeekString = StringHelper.localizedStringWithKey("TRANSACTIONS_THIS_WEEK_LOCALIZE_KEY")
+        let thisMonthString = StringHelper.localizedStringWithKey("TRANSACTIONS_THIS_MONTH_LOCALIZE_KEY")
+        let totalString = StringHelper.localizedStringWithKey("TRANSACTIONS_TOTAL_LOCALIZE_KEY")
         
-        tableData.append(TransactionsFilterModel(headerText: "STATUS", items:
-            [TransactionsFilterItemModel(title: "New Update", isChecked: false),
-                TransactionsFilterItemModel(title: "New Order", isChecked: false),
-                TransactionsFilterItemModel(title: "On-Going", isChecked: false),
-                TransactionsFilterItemModel(title: "Completed", isChecked: false),
-                TransactionsFilterItemModel(title: "Cancelled", isChecked: false),]))
+        tableData.append(TransactionsFilterModel(headerText: datesString, items:
+            [TransactionsFilterItemModel(title: todayString, isChecked: true),
+            TransactionsFilterItemModel(title: thisWeekString, isChecked: false),
+            TransactionsFilterItemModel(title: thisMonthString, isChecked: false),
+            TransactionsFilterItemModel(title: totalString, isChecked: false)]))
         
-        tableData.append(TransactionsFilterModel(headerText: "PAYMENT METHOD", items:
-            [TransactionsFilterItemModel(title: "Cash on Delivery", isChecked: false),
-                TransactionsFilterItemModel(title: "Credit/ Debit Card", isChecked: false),
-                TransactionsFilterItemModel(title: "DragonPay", isChecked: false),
-                TransactionsFilterItemModel(title: "PesoPay", isChecked: false),
-                TransactionsFilterItemModel(title: "Wallet", isChecked: false),]))
+        let statusString = StringHelper.localizedStringWithKey("TRANSACTIONS_STATUS_LOCALIZE_KEY")
+        let newUpdateString = StringHelper.localizedStringWithKey("TRANSACTIONS_NEW_UPDATE_LOCALIZE_KEY")
+        let newOrderString = StringHelper.localizedStringWithKey("TRANSACTIONS_NEW_ORDER_LOCALIZE_KEY")
+        let ongoingString = StringHelper.localizedStringWithKey("TRANSACTIONS_ONGOING_LOCALIZE_KEY")
+        let completedString = StringHelper.localizedStringWithKey("TRANSACTIONS_COMPLETED_LOCALIZE_KEY")
+        let cancelledString = StringHelper.localizedStringWithKey("TRANSACTIONS_CANCELLED_LOCALIZE_KEY")
+        
+        tableData.append(TransactionsFilterModel(headerText: statusString, items:
+            [TransactionsFilterItemModel(title: newUpdateString, isChecked: false),
+                TransactionsFilterItemModel(title: newOrderString, isChecked: false),
+                TransactionsFilterItemModel(title: ongoingString, isChecked: false),
+                TransactionsFilterItemModel(title: completedString, isChecked: false),
+                TransactionsFilterItemModel(title: cancelledString, isChecked: false),]))
+        
+        let paymentMethodString = StringHelper.localizedStringWithKey("TRANSACTIONS_PAYMENT_METHOD_LOCALIZE_KEY")
+        let codString = StringHelper.localizedStringWithKey("TRANSACTIONS_COD_LOCALIZE_KEY")
+        let creditDebitString = StringHelper.localizedStringWithKey("TRANSACTIONS_CREDIT_DEBIT_CARD_LOCALIZE_KEY")
+        let dragonPayString = StringHelper.localizedStringWithKey("TRANSACTIONS_DRAGONPAY_LOCALIZE_KEY")
+        let pesoPayString = StringHelper.localizedStringWithKey("TRANSACTIONS_PESOPAY_LOCALIZE_KEY")
+        let walletString = StringHelper.localizedStringWithKey("TRANSACTIONS_WALLET_LOCALIZE_KEY")
+        
+        tableData.append(TransactionsFilterModel(headerText: paymentMethodString, items:
+            [TransactionsFilterItemModel(title: codString, isChecked: false),
+                TransactionsFilterItemModel(title: creditDebitString, isChecked: false),
+                TransactionsFilterItemModel(title: dragonPayString, isChecked: false),
+                TransactionsFilterItemModel(title: pesoPayString, isChecked: false),
+                TransactionsFilterItemModel(title: walletString, isChecked: false),]))
         
         self.tableView.reloadData()
     }
@@ -71,7 +91,7 @@ class TransactionTableViewController: UITableViewController {
         var clearTextLabel: UILabel = UILabel(frame: CGRectMake(16, 8, (self.view.bounds.width - 32), 20))
         clearTextLabel.textColor = Constants.Colors.productPrice
         clearTextLabel.font = UIFont(name: "Panton-Regular", size: CGFloat(14))
-        clearTextLabel.text = "Clear Filter"
+        clearTextLabel.text = StringHelper.localizedStringWithKey("TRANSACTIONS_CLEAR_FILTER_LOCALIZE_KEY")
         clearFilterView.addSubview(clearTextLabel)
         footerView.addSubview(clearFilterView)
         
@@ -82,7 +102,7 @@ class TransactionTableViewController: UITableViewController {
     }
     
     func initializeNavigationBar() {
-        self.title = "Filter"
+        self.title = StringHelper.localizedStringWithKey("TRANSACTIONS_FILTER_TITLE_LOCALIZE_KEY")
         
         var closeButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         closeButton.frame = CGRectMake(0, 0, 25, 20)
@@ -176,50 +196,5 @@ class TransactionTableViewController: UITableViewController {
         }
         self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
     
 }

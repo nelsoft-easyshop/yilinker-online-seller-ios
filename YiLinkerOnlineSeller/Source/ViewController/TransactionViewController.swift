@@ -13,7 +13,7 @@ class TransactionViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView: UITableView!
     
-    var pageTitle: [String] = ["TRANSACTIONS", "NEW UPDATE", "ON-GOING", "COMPLETED", "CANCELLED"]
+    var pageTitle: [String] = []
     var selectedImage: [String] = ["transactions2", "newUpdates2", "onGoing2", "completed2", "cancelled3"]
     var deSelectedImage: [String] = ["transaction", "newUpdates", "onGoing", "completed", "cancelled"]
     var selectedItems: [Bool] = []
@@ -29,6 +29,8 @@ class TransactionViewController: UIViewController {
     var page: Int = 1
     var isRefreshable: Bool = true
     
+    var errorLocalizedString = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -37,6 +39,7 @@ class TransactionViewController: UIViewController {
         customizedNavigationBar()
         customizedVies()
         fireGetTransaction()
+        initializeLocalizedStrings()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -55,7 +58,7 @@ class TransactionViewController: UIViewController {
     
     func customizedNavigationBar() {
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.title = "Transaction"
+        self.title = StringHelper.localizedStringWithKey("TRANSACTIONS_TITLE_LOCALIZE_KEY")
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
@@ -89,7 +92,16 @@ class TransactionViewController: UIViewController {
         self.navigationController?.presentViewController(navigation, animated: true, completion: nil)
     }
     
-    
+    func initializeLocalizedStrings() {
+        pageTitle.append(StringHelper.localizedStringWithKey("TRANSACTIONS_TRANSACTIONS_LOCALIZE_KEY"))
+        pageTitle.append(StringHelper.localizedStringWithKey("TRANSACTIONS_NEW_UPDATE_LOCALIZE_KEY"))
+        pageTitle.append(StringHelper.localizedStringWithKey("TRANSACTIONS_ONGOING_LOCALIZE_KEY"))
+        pageTitle.append(StringHelper.localizedStringWithKey("TRANSACTIONS_COMPLETED_LOCALIZE_KEY"))
+        pageTitle.append(StringHelper.localizedStringWithKey("TRANSACTIONS_CANCELLED_LOCALIZE_KEY"))
+        errorLocalizedString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+        
+        collectionView.reloadData()
+    }
 }
 
 
@@ -100,7 +112,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
     // MARK: - Collection View Data Source
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return pageTitle.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -157,12 +169,14 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         
         cell.setStatus(tempModel.order_status_id.toInt()!)
         cell.setTID(tempModel.invoice_number)
-        //cell.setPrice("P \(tempModel.total_price)"
+        cell.setPrice("P \(tempModel.total_price)")
             
         if tempModel.total_quantity.toInt() < 2 {
-            cell.setProductDate("\(tempModel.total_quantity) product\t\t\(dateAdded)")
+            let productString = StringHelper.localizedStringWithKey("TRANSACTIONS_PRODUCT_LOCALIZE_KEY")
+            cell.setProductDate("\(tempModel.total_quantity) \(productString)\t\t\(dateAdded)")
         } else {
-            cell.setProductDate("\(tempModel.total_quantity) products\t\t\(dateAdded)")
+            let productString = StringHelper.localizedStringWithKey("TRANSACTIONS_PRODUCTS_LOCALIZE_KEY")
+            cell.setProductDate("\(tempModel.total_quantity) \(productString)\t\t\(dateAdded)")
         }
             
         return cell
@@ -176,7 +190,8 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
             transactionDetailsController.invoiceNumber = tableData[indexPath.row].invoice_number
             self.navigationController?.pushViewController(transactionDetailsController, animated:true)
         } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "No ivoice number!", title: "Error")
+            let noInvoiceString = StringHelper.localizedStringWithKey("TRANSACTIONS_NO_INVOCE_LOCALIZE_KEY")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noInvoiceString, title: errorLocalizedString)
         }
 
     }
@@ -217,7 +232,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
                         self.isRefreshable = false
                     }
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: transactionModel.message, title: self.errorLocalizedString)
                 }
                 
                 
@@ -231,7 +246,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
                     if task.statusCode == 401 {
                         self.fireRefreshToken()
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        UIAlertController.displaySomethingWentWrongError(self)
                     }
                     
                     println(error)

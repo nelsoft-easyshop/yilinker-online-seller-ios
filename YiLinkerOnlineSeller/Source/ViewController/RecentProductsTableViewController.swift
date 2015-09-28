@@ -18,11 +18,15 @@ class RecentProductsTableViewController: UITableViewController {
     var productPage: Int = 1
     
     var tableData: [TransactionModel] = []
+    
+    var errorLocalizeString: String  = ""
+    var somethingWrongLocalizeString: String = ""
         
     override func viewDidLoad() {
         super.viewDidLoad()
 
         initializeViews()
+        initializeLocalizedString()
         registerNibs()
     }
     
@@ -41,6 +45,12 @@ class RecentProductsTableViewController: UITableViewController {
     
     func initializeViews() {
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
+    }
+    
+    func initializeLocalizedString() {
+        //Initialized Localized String
+        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
     }
     
     func registerNibs() {
@@ -130,7 +140,7 @@ class RecentProductsTableViewController: UITableViewController {
                     self.tableData += transactionModel.transactions
                     self.tableView.reloadData()
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
                 }
                 
                 
@@ -144,7 +154,7 @@ class RecentProductsTableViewController: UITableViewController {
                     if task.statusCode == 401 {
                         self.fireRefreshToken()
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
                     }
                     
                     println(error)

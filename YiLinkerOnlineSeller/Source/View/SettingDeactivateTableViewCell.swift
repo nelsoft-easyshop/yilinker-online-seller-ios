@@ -16,11 +16,14 @@ class SettingDeactivateTableViewCell: UITableViewCell {
     
     var delegate: SettingDeactivateTableViewCellDelegate?
 
+    @IBOutlet weak var deactivateLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
         initializeTapGesture()
+        deactivateLabel.text = StringHelper.localizedStringWithKey("DEACTIVATE_MY_ACCOUNT_LOCALIZED_KEY")
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

@@ -164,8 +164,11 @@
                 <outlet property="storeAddressLabel" destination="t96-Yi-ecB" id="pN3-Zq-rrh"/>
                 <outlet property="storeNameLabel" destination="W6D-2e-c5E" id="ZlH-fl-JXa"/>
                 <outlet property="totalProductsLabel" destination="z2i-b1-0my" id="GGc-AY-xcz"/>
+                <outlet property="totalProductsTitleLabel" destination="gIn-1z-2qr" id="gNn-Ns-boa"/>
                 <outlet property="totalSalesLabel" destination="559-U0-hGc" id="sqF-UB-6dn"/>
+                <outlet property="totalSalesTitleLabel" destination="cs8-nW-8xe" id="zVU-1l-aTn"/>
                 <outlet property="totalTransactionsLabel" destination="s2E-aq-6T0" id="xtq-Vb-yam"/>
+                <outlet property="totalTransactionsTitleLabel" destination="reL-ih-1ZV" id="f4X-qp-Qla"/>
             </connections>
             <point key="canvasLocation" x="365.5" y="94"/>
         </collectionReusableView>

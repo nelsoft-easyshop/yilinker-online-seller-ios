@@ -14,8 +14,8 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     var productsCellIdentifier: String = "TransactionProductTableViewCell"
     var consigneeCellIdentifier: String = "TransactionConsigneeTableViewCell"
     
-    var sectionHeader: [String] = ["DETAILS", "PRODUCT LIST", "CONSIGNEE"]
-    var productList: [String] = ["North Face Super Uber Travel Bag", "Beats Studio Type 20 Headphones", "Sony Super Bass"]
+    var sectionHeader: [String] = []
+    var productList: [String] = []
     
     var tableHeaderView: UIView!
     var tidLabel: UILabel!
@@ -33,6 +33,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     var transactionConsigneeModel: TransactionConsigneeModel!
     
     var errorMessage: String = ""
+    var errorLocalizedString = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +43,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         transactionConsigneeModel = TransactionConsigneeModel(isSuccessful: false, message: "", deliveryAddress: "", consigneeName: "", consigneeContactNumber: "")
         
         initializeNavigationBar()
+        initializeLocalizedStrings()
         initializeTableView()
         initializeViews()
         registerNibs()
@@ -96,7 +98,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     }
     
     func initializeNavigationBar() {
-        self.title = "Transaction Details"
+        self.title = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_TITLE_LOCALIZE_KEY")
         
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -116,6 +118,15 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         //self.view.addSubview(dimView!)
         dimView?.hidden = true
         dimView?.alpha = 0
+    }
+    
+    func initializeLocalizedStrings() {
+        sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_DETAILS_LOCALIZE_KEY"))
+        sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_PRODUCT_LIST_LOCALIZE_KEY"))
+        sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_CONSIGNEE_LOCALIZE_KEY"))
+        errorLocalizedString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+        
+        self.tableView.reloadData()
     }
     
     func back() {
@@ -175,7 +186,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             cell.addressLabel.text = transactionConsigneeModel.deliveryAddress
             
             if transactionConsigneeModel.consigneeContactNumber.isEmpty {
-                cell.contactNumberLabel.text = "No contact number."
+                cell.contactNumberLabel.text = "-"
             } else {
                 cell.contactNumberLabel.text = transactionConsigneeModel.consigneeContactNumber
             }
@@ -243,14 +254,16 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             if self.transactionDetailsModel.isSuccessful {
                 self.tidLabel.text = self.transactionDetailsModel.transactionInvoice
                 if self.transactionDetailsModel.transactionQuantity > 1 {
-                    self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) Products"
+                    let productString = StringHelper.localizedStringWithKey("TRANSACTIONS_DETAILS_PRODUCT_LOCALIZE_KEY")
+                    self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) \(productString)"
                 } else {
-                    self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) Product"
+                    let productString = StringHelper.localizedStringWithKey("TRANSACTIONS_DETAILS_PRODUCTS_LOCALIZE_KEY")
+                    self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) \(productString)"
                 }
                 
                 self.fireGetConsigneeDetails()
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.transactionDetailsModel.message, title: "Error")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.transactionDetailsModel.message, title: self.errorLocalizedString)
                 self.navigationController!.popViewControllerAnimated(true)
                 self.hud?.hide(true)
             }
@@ -265,11 +278,11 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
                     if task.statusCode == 401 {
                         self.fireRefreshToken()
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        UIAlertController.displaySomethingWentWrongError(self)
                         self.navigationController!.popViewControllerAnimated(true)
                     }
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                    UIAlertController.displayNoInternetConnectionError(self)
                     self.navigationController!.popViewControllerAnimated(true)
                 }
                 println(error)
@@ -290,7 +303,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             if self.transactionConsigneeModel.isSuccessful {
                 self.tableView.reloadData()
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.transactionDetailsModel.message, title: "Error")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.transactionDetailsModel.message, title: self.errorLocalizedString)
                 self.navigationController!.popViewControllerAnimated(true)
             }
             
@@ -306,11 +319,11 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
                     if task.statusCode == 401 {
                         self.fireRefreshToken()
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        UIAlertController.displaySomethingWentWrongError(self)
                         self.navigationController!.popViewControllerAnimated(true)
                     }
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                    UIAlertController.displayNoInternetConnectionError(self)
                     self.navigationController!.popViewControllerAnimated(true)
                 }
                 

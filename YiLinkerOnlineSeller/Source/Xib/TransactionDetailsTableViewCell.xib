@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -290,12 +290,19 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="dateCreatedLabel" destination="2y7-RY-dPX" id="7Fx-lx-LsZ"/>
+                <outlet property="dateCreatedTitleLabel" destination="yKg-6m-MsB" id="Eck-e8-Joh"/>
                 <outlet property="paymentTypeLabel" destination="Wnz-Uu-0md" id="L3S-SO-soQ"/>
+                <outlet property="paymentTypeTitleLabel" destination="NxD-FS-bln" id="whz-Us-PT3"/>
                 <outlet property="shippingCostLabel" destination="EkK-z5-efI" id="wt0-Ms-V91"/>
+                <outlet property="shippingCostTitleLabel" destination="n4B-qs-Nrr" id="4su-yc-Jrm"/>
                 <outlet property="statusLabel" destination="08P-u8-vx6" id="7Mv-GQ-BFO"/>
+                <outlet property="statusTitleLabel" destination="q8x-dk-gTI" id="JEX-q6-aUp"/>
                 <outlet property="totalCostLabel" destination="jxQ-e9-htM" id="ps6-do-jAR"/>
+                <outlet property="totalCostTitleLabel" destination="XTW-dC-UDi" id="30K-qg-7A2"/>
                 <outlet property="totalQuantityLabel" destination="rUR-GD-bgJ" id="xNE-9O-ICl"/>
+                <outlet property="totalQuantityTitleLabel" destination="8Ee-DW-0hD" id="rGc-eJ-nO0"/>
                 <outlet property="totalUnitCostLabel" destination="mSU-gM-R0X" id="MQg-PF-1RY"/>
+                <outlet property="totalUnitCostTitleLabel" destination="Rd4-I0-Mdj" id="JqI-cS-Hpj"/>
             </connections>
             <point key="canvasLocation" x="291" y="207"/>
         </tableViewCell>

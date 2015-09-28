@@ -26,6 +26,12 @@ class SalesReportTableViewCell: UITableViewCell {
     @IBOutlet weak var totalProducts: UILabel!
     @IBOutlet weak var smallLineChart: LineChartView!
     
+    @IBOutlet weak var soldLabel: UILabel!
+    @IBOutlet weak var cancelledLabel: UILabel!
+    @IBOutlet weak var totalSalesTitleLabel: UILabel!
+    @IBOutlet weak var totalTransactionsTitleLabel: UILabel!
+    @IBOutlet weak var totalProductsTitleLabel: UILabel!
+    
     var salesReportModel: SalesReportModel!
     
     var startDate: NSDate = NSDate()
@@ -39,6 +45,7 @@ class SalesReportTableViewCell: UITableViewCell {
         valueFormater.numberStyle = NSNumberFormatterStyle.NoStyle
         
         initializeViews()
+        initializeLocalizedString()
     }
 
     func initializeViews() {
@@ -51,8 +58,28 @@ class SalesReportTableViewCell: UITableViewCell {
         calendarView.addGestureRecognizer(tapRec)
     }
     
+    func initializeLocalizedString() {
+        //Initialized Localized String
+        let salesLocalizeString = StringHelper.localizedStringWithKey("TOTAL_SALES_LOCALIZE_KEY")
+        let transactionsLocalizeString = StringHelper.localizedStringWithKey("TOTAL_TRANSACTIONS_LOCALIZE_KEY")
+        let productLocalizeString = StringHelper.localizedStringWithKey("TOTAL_PRODUCTS_LOCALIZE_KEY")
+        let soldLocalizeString = StringHelper.localizedStringWithKey("SOLD_LOCALIZE_KEY")
+        let cancelledLocalizeString = StringHelper.localizedStringWithKey("CANCELLED_LOCALIZE_KEY")
+        
+        totalSalesTitleLabel.text = salesLocalizeString
+        totalTransactionsTitleLabel.text = transactionsLocalizeString
+        totalProductsTitleLabel.text = productLocalizeString
+        soldLabel.text = soldLocalizeString
+        cancelledLabel.text = cancelledLocalizeString
+    }
+    
     func initializeGraph() {
-        largeLineChart.noDataText = "No data available"
+        
+        let noDataLocalizeString = StringHelper.localizedStringWithKey("NO_DATA_LOCALIZE_KEY")
+        let soldLocalizeString = StringHelper.localizedStringWithKey("SOLD_ITEMS_LOCALIZE_KEY")
+        let cancelledLocalizeString = StringHelper.localizedStringWithKey("CANCELLED_ITEMS_LOCALIZE_KEY")
+        
+        largeLineChart.noDataText = noDataLocalizeString
         largeLineChart.descriptionText = ""
         
         var xAxis: ChartXAxis = largeLineChart.xAxis
@@ -84,7 +111,7 @@ class SalesReportTableViewCell: UITableViewCell {
         
         
         //preview
-        smallLineChart.noDataText = "No data available"
+        smallLineChart.noDataText = noDataLocalizeString
         
         var xAxis1: ChartXAxis = smallLineChart.xAxis
         xAxis.wordWrapEnabled = true
@@ -175,7 +202,7 @@ class SalesReportTableViewCell: UITableViewCell {
             }
         }
         
-        var soldItemDataSet: LineChartDataSet = LineChartDataSet(yVals: soldItemEntries, label: "Sold Items")
+        var soldItemDataSet: LineChartDataSet = LineChartDataSet(yVals: soldItemEntries, label: soldLocalizeString)
         soldItemDataSet.axisDependency = ChartYAxis.AxisDependency.Left
         soldItemDataSet.lineWidth = 5
         soldItemDataSet.setColor(Constants.Colors.soldLineColor)
@@ -185,7 +212,7 @@ class SalesReportTableViewCell: UITableViewCell {
         soldItemDataSet.drawCircleHoleEnabled = false
         soldItemDataSet.valueTextColor = Constants.Colors.soldColor
         
-        var cancelledItemDataSet: LineChartDataSet = LineChartDataSet(yVals: cancelledItemEntries, label: "Cancelled Items")
+        var cancelledItemDataSet: LineChartDataSet = LineChartDataSet(yVals: cancelledItemEntries, label: cancelledLocalizeString)
         cancelledItemDataSet.axisDependency = ChartYAxis.AxisDependency.Left
         cancelledItemDataSet.lineWidth = 5
         cancelledItemDataSet.setColor(Constants.Colors.cancelledLineColor)
@@ -203,7 +230,7 @@ class SalesReportTableViewCell: UITableViewCell {
         largeLineChart.data = data
         
         //preview
-        var soldItemDataSet1: LineChartDataSet = LineChartDataSet(yVals: soldItemEntries, label: "Sold Items")
+        var soldItemDataSet1: LineChartDataSet = LineChartDataSet(yVals: soldItemEntries, label: soldLocalizeString)
         soldItemDataSet1.axisDependency = ChartYAxis.AxisDependency.Left
         soldItemDataSet1.lineWidth = 1
         soldItemDataSet1.setColor(Constants.Colors.soldLineColor)
@@ -213,7 +240,7 @@ class SalesReportTableViewCell: UITableViewCell {
         soldItemDataSet1.drawCircleHoleEnabled = false
         soldItemDataSet1.drawValuesEnabled = false
         
-        var cancelledItemDataSet1: LineChartDataSet = LineChartDataSet(yVals: cancelledItemEntries, label: "Cancelled Items")
+        var cancelledItemDataSet1: LineChartDataSet = LineChartDataSet(yVals: cancelledItemEntries, label: cancelledLocalizeString)
         cancelledItemDataSet1.axisDependency = ChartYAxis.AxisDependency.Left
         cancelledItemDataSet1.lineWidth = 1
         cancelledItemDataSet1.setColor(Constants.Colors.cancelledLineColor)

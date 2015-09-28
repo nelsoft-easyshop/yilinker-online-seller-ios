@@ -33,6 +33,9 @@
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="notificationLabel" destination="LAE-bo-v3w" id="VhR-8Q-SDI"/>
+            </connections>
             <point key="canvasLocation" x="286.5" y="118.5"/>
         </tableViewCell>
     </objects>
