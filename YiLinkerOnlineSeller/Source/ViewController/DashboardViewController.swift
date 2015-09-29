@@ -142,7 +142,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     func onRegistration(notification: NSNotification){
         if let info = notification.userInfo as? Dictionary<String,String> {
             if let error = info["error"] {
-                showAlert("Error registering with GCM", message: error)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: error, title: "Error registering with GCM")
             } else if let registrationToken = info["registrationToken"] {
                 let message = "Check the xcode debug console for the registration token for the server to send notifications to your device"
                 self.fireCreateRegistration(registrationToken)
@@ -150,14 +150,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             }
         }
     }
-    
-    func showAlert(title:String, message:String) {
-        let alert = UIAlertController(title: title,
-            message: message, preferredStyle: .Alert)
-        let dismissAction = UIAlertAction(title: "Dismiss", style: .Destructive, handler: nil)
-        alert.addAction(dismissAction)
-        self.presentViewController(alert, animated: true, completion: nil)
-    }
+
     
     func onNewMessage(notification : NSNotification){
         var newCount = SessionManager.getUnReadMessagesCount() + 1
@@ -196,7 +189,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                     if task.statusCode == 401 {
                         self.fireRefreshToken(true)
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
+                        UIAlertController.displaySomethingWentWrongError(self)
                     }
                 }
                 self.hideHud()
@@ -454,7 +447,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                 if task.statusCode == 401 {
                     self.fireRefreshToken(showHUD)
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
+                    UIAlertController.displaySomethingWentWrongError(self)
                     self.storeInfo = StoreInfoModel(name: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", account_number: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "")
                     
                     

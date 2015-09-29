@@ -252,9 +252,9 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
                     self.fireRefreshToken("totalPoints")
                 } else {
                     if Reachability.isConnectedToNetwork() {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
+                        UIAlertController.displaySomethingWentWrongError(self)
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.connectionMessageLocalizeString, title: self.connectionLocalizeString)
+                        UIAlertController.displayNoInternetConnectionError(self)
                     }
                     println(error)
                 }
@@ -300,9 +300,9 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
                         self.fireRefreshToken("pointsHistory")
                     } else {
                         if Reachability.isConnectedToNetwork() {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
+                            UIAlertController.displaySomethingWentWrongError(self)
                         } else {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.connectionMessageLocalizeString, title: self.connectionLocalizeString)
+                            UIAlertController.displayNoInternetConnectionError(self)
                         }
                         println(error)
                     }

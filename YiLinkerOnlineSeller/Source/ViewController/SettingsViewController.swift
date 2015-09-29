@@ -217,9 +217,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                     self.fireRefreshToken(type, isON: isOn)
                 } else {
                     if Reachability.isConnectedToNetwork() {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
+                        UIAlertController.displaySomethingWentWrongError(self)
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.connectionMessageLocalizeString, title: self.connectionLocalizeString)
+                        UIAlertController.displayNoInternetConnectionError(self)
                     }
                     println(error)
                 }
