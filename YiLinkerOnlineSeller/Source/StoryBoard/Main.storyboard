@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="PZ0-iH-fRI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="PZ0-iH-fRI">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -633,7 +633,13 @@
                         <outlet property="buttonToday" destination="U61-5W-Dm4" id="mAf-aZ-LIT"/>
                         <outlet property="buttonTotal" destination="3Bw-Gi-cDa" id="mbV-7x-wSk"/>
                         <outlet property="cancel" destination="59N-QT-bgc" id="Wgq-Ne-RCC"/>
+                        <outlet property="closedLabel" destination="3zq-7y-TNg" id="FiS-hM-j0P"/>
+                        <outlet property="monthLabel" destination="lEP-uQ-yp6" id="9fX-7Y-GOw"/>
+                        <outlet property="openLabel" destination="5FV-9E-GLK" id="yVM-dw-u3f"/>
                         <outlet property="save" destination="Hqc-Jb-oKH" id="VoK-7Q-GNC"/>
+                        <outlet property="todayLabel" destination="Yi4-t7-mgf" id="gsj-Ta-dIg"/>
+                        <outlet property="totalLabel" destination="pMa-in-ZNI" id="6HR-pa-hO5"/>
+                        <outlet property="weekLabel" destination="gsa-KE-SLH" id="SLB-Gd-pLC"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pQV-i7-TCh" userLabel="First Responder" sceneMemberID="firstResponder"/>
