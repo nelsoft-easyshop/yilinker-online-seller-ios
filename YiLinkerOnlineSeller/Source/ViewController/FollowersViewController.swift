@@ -228,9 +228,9 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
                     } else {
                         self.emptyLabel.hidden = false
                         if Reachability.isConnectedToNetwork() {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
+                            UIAlertController.displaySomethingWentWrongError(self)
                         } else {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.connectionMessageLocalizeString, title: self.connectionLocalizeString)
+                            UIAlertController.displayNoInternetConnectionError(self)
                         }
                         println(error)
                     }
@@ -256,6 +256,7 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                UIAlertController.displaySomethingWentWrongError(self)
                 self.hud?.hide(true)
         })
         
