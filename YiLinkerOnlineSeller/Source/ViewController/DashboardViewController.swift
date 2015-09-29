@@ -182,7 +182,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             //SVProgressHUD.dismiss()
-            self.hud?.hide(true)
+            self.hideHud()
             //self.showSuccessMessage()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -199,14 +199,31 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
                     }
                 }
-                //SVProgressHUD.dismiss()
-                self.hud?.hide(true)
+                self.hideHud()
         })
     }
     
     // Show hud
     
     func showHUD() {
+        
+        if NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
+            if ctr == 0{
+                displayHUD()
+            } else {
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            }
+        } else {
+            if ctr == 1 {
+                displayHUD()
+            } else if ctr != 0 {
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            }
+        }
+        
+    }
+
+    func displayHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
             self.hud = nil
@@ -217,6 +234,11 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         self.hud?.dimBackground = false
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
+    }
+    
+    func hideHud() {
+        self.hud?.hide(true)
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
     }
     
     func initializeViews() {
@@ -387,6 +409,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                     
                 case .Destructive:
                     NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
+                    SessionManager.setAccessToken("")
                     let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
                     self.presentViewController(signInViewController, animated: true, completion: nil)
                 }
@@ -421,10 +444,10 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             
             self.collectionView.reloadData()
             
-            self.hud?.hide(true)
+            self.hideHud()
             
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
+                self.hideHud()
                 
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
@@ -467,7 +490,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                self.hud?.hide(true)
+                self.hideHud()
         })
         
     }
