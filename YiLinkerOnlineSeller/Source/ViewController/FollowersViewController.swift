@@ -21,9 +21,6 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
     var getCtr: Int = 0
     
     var errorLocalizeString: String  = ""
-    var somethingWrongLocalizeString: String = ""
-    var connectionLocalizeString: String = ""
-    var connectionMessageLocalizeString: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,9 +46,6 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
     func initializeLocalizedString() {
         //Initialized Localized String
         errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
-        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
-        connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONUNREACHABLE_LOCALIZE_KEY")
-        connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONERRORMESSAGE_LOCALIZE_KEY")
     }
     
     
