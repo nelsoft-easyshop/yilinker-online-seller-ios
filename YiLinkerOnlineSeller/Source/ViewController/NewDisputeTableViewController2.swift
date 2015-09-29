@@ -128,9 +128,6 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
                 cell.addTracker()
             } else if indexPath.row == 1 {
                 cell.titleLabel.text = "Transaction No."
-                if self.transactionsModel.transactions.count != 0 {
-                   cell.textField.text = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
-                }
                 cell.titleLabel.required()
             } else if indexPath.row == 2 {
                 cell.textField.text = self.disputeType[self.disputeTypeDefaultIndex]
