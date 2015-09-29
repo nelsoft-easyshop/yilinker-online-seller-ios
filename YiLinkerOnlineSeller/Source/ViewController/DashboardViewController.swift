@@ -313,7 +313,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: dashBoardHeaderIdentifier, forIndexPath: indexPath) as! DashBoardHeaderCollectionViewCell
             
             if storeInfo != nil{
-                let totalSales: String = "P\(storeInfo.totalSales)"
+                let totalSales: String = "\(storeInfo.totalSales)"
                 let totalProducts: String = "\(storeInfo.productCount)"
                 let totalTransactions: String = "\(storeInfo.transactionCount)"
                 
@@ -322,7 +322,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                 headerView.setCoverPhotoUrl(storeInfo.coverPhoto)
                 headerView.setProfilePhotoUrl(storeInfo.avatar)
                 headerView.setTotalProducts(totalProducts)
-                headerView.setTotalSales(totalSales)
+                headerView.setTotalSales(totalSales.formatToTwoDecimal())
                 headerView.setTotalTransactions(totalTransactions)
             }
             
