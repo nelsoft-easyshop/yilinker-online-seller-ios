@@ -32,23 +32,14 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-//        if selectedItemIDsIndex.count == 0 {
-//            requestGetProductList("")
-//        }
-        
-//        if selectedProductsModel.count == 0 {
         if Reachability.isConnectedToNetwork() {
             requestGetProductList("")
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.failed)
         }
         
-//        }
         customizedNavigationBar()
         customizedViews()
-        
-        let nib = UINib(nibName: "AddItemTableViewCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: "AddItemTableViewCell")
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -81,8 +72,12 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
         searchBarTextField.leftView = searchImage
         searchBarTextField.leftViewMode = UITextFieldViewMode.Always
         searchBarTextField.placeholder = CategoryStrings.search
+        searchBarTextField.addTarget(self, action: "searchBarTextDidChanged:", forControlEvents: UIControlEvents.EditingChanged)
         
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
+        
+        let nib = UINib(nibName: "AddItemTableViewCell", bundle: nil)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: "AddItemTableViewCell")
     }
     
     // MARK: - Actions
@@ -242,6 +237,19 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
 //        println(selectedItemIDsIndex)
 
     }
-    
 
+    // MARK: - Text Field Delegates
+    
+    func searchBarTextDidChanged(textField: UITextField) {
+        if count(self.searchBarTextField.text) > 2 || self.searchBarTextField.text == "" {
+            requestGetProductList(self.searchBarTextField.text)
+        }
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.searchBarTextField.resignFirstResponder()
+        
+        return true
+    }
+    
 }
