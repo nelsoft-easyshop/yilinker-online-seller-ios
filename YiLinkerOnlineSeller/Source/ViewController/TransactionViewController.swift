@@ -18,6 +18,8 @@ class TransactionViewController: UIViewController {
     var deSelectedImage: [String] = ["transaction", "newUpdates", "onGoing", "completed", "cancelled"]
     var selectedItems: [Bool] = []
     
+    var types: [String] = ["", "newupdates", "ongoing", "completed", "cancelled"]
+    
     var selectedIndex: Int = 0
     var tableViewSectionHeight: CGFloat = 0
     var tableViewSectionTitle: String = ""
@@ -28,6 +30,7 @@ class TransactionViewController: UIViewController {
     
     var page: Int = 1
     var isRefreshable: Bool = true
+    var type: String = ""
     
     var errorLocalizedString = ""
     
@@ -139,7 +142,12 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         selectedIndex = indexPath.row
         
         self.collectionView.reloadData()
-//        self.tableView.reloadData()
+        tableData.removeAll(keepCapacity: false)
+        self.tableView.reloadData()
+        
+        type = types[indexPath.row]
+        page = 1
+        fireGetTransaction()
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -214,7 +222,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         if isRefreshable {
             self.showHUD()
             let manager = APIManager.sharedInstance
-            let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "page" : page];
+            let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "page" : page, "type" : type];
             
             manager.GET(APIAtlas.transactionList, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
