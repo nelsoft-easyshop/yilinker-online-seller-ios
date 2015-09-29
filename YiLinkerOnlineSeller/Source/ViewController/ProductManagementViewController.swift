@@ -480,15 +480,17 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             cell.setProductImage(self.productModel.products[indexPath.row].image)
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
             cell.subTitleLabel.text = self.productModel.products[indexPath.row].category
-                
-            if selectedIndex == 5 {
-                cell.checkTapView.hidden = true
+
+            if selectedIndex == 4 || selectedIndex == 5 {
                 cell.arrowImageView.hidden = true
-            }
-            
-            if selectedIndex == 4 {
-                cell.decreaseAlpha()
-                cell.arrowImageView.hidden = true
+                if selectedIndex == 4 {
+                    cell.decreaseAlpha()
+                } else {
+                    cell.checkTapView.hidden = true
+                }
+            } else {
+                cell.arrowImageView.hidden = false
+                cell.checkTapView.hidden = false   
             }
             
             return cell
