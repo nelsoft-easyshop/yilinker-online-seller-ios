@@ -511,6 +511,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
         if Reachability.isConnectedToNetwork() {
             if selectedIndex == 1 || selectedIndex == 2 || selectedIndex == 3 {
                 let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
+                productDetails.productId = self.productModel.products[indexPath.row].id
                 self.navigationController?.pushViewController(productDetails, animated: true)
             }
         } else {
