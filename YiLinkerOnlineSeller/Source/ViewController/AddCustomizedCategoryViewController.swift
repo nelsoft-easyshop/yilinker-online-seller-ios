@@ -574,20 +574,24 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-
-                if error.userInfo != nil {
-                    println(error.userInfo)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.requestRefreshToken("details")
+                } else if error.userInfo != nil {
+                    self.hud?.hide(true)
                     if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
                         if jsonResult["message"] != nil {
                             self.showAlert(title: jsonResult["message"] as! String, message: nil)
                         } else {
-                            self.showAlert(title: "Something went wrong", message: nil)
+                            self.showAlert(title: AlertStrings.wentWrong, message: nil)
                         }
                     }
                 } else {
-                    self.showAlert(title: "Something went wrong", message: nil)
+                    self.showAlert(title: AlertStrings.wentWrong, message: nil)
+                    self.hud?.hide(true)
                 }
-                self.hud?.hide(true)
+                
         })
     }
     
@@ -609,20 +613,24 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                if error.userInfo != nil {
+                if task.statusCode == 401 {
+                    self.requestRefreshToken("details")
+                } else if error.userInfo != nil {
+                    self.hud?.hide(true)
                     println(error.userInfo)
                     if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
                         if jsonResult["message"] != nil {
                             self.showAlert(title: jsonResult["message"] as! String, message: nil)
                         } else {
-                            self.showAlert(title: "Something went wrong", message: nil)
+                            self.showAlert(title: AlertStrings.wentWrong, message: nil)
                         }
                     }
                 } else {
-                    self.showAlert(title: "Something went wrong", message: nil)
+                    self.showAlert(title: AlertStrings.wentWrong, message: nil)
+                    self.hud?.hide(true)
                 }
-                self.hud?.hide(true)
         })
     }
     
