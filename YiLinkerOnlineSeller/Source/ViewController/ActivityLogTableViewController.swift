@@ -201,7 +201,7 @@ class ActivityLogTableViewController: UITableViewController {
                         self.activities.activities += activityLogs.activities
                         self.initializeActivityLogsItem()
                     } else {
-                    self.isPageEnd = true
+                        self.isPageEnd = true
                     }
                 
                     self.hud?.hide(true)
@@ -213,13 +213,9 @@ class ActivityLogTableViewController: UITableViewController {
                         self.fireRefreshToken()
                     } else {
                         if Reachability.isConnectedToNetwork() {
-                            let errorString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
-                            let somethingString = StringHelper.localizedStringWithKey("SOMETHING_WENT_WRONG_LOCALIZE_KEY")
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: somethingString, title: errorString)
+                            UIAlertController.displaySomethingWentWrongError(self)
                         } else {
-                            let connectionString = StringHelper.localizedStringWithKey("CONNECTION_UNREACHABLE_LOCALIZE_KEY")
-                            let connectionMessageString = StringHelper.localizedStringWithKey("CONNECTION_ERROR_MESSAGE_LOCALIZE_KEY")
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: connectionMessageString, title: connectionString)
+                            UIAlertController.displayNoInternetConnectionError(self)
                         }
                         println(error)
                     }
