@@ -64,6 +64,13 @@ struct Constants {
         static let newAddressTableViewCellNibNameAndIdentifier = "NewAddressTableViewCell"
         
     }
+    
+    // MARK: - View Controllers Title String
+    struct ViewControllersTitleString {
+        static let atttributeList: String = StringHelper.localizedStringWithKey("ATTRIBUTE_LIST_LOCALIZE_KEY")
+        static let addCombination: String = StringHelper.localizedStringWithKey("ADD_COMBINATION_LOCALIZE_KEY")
+        static let productUpload: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_LOCALIZE_KEY")
+    }
 }
 
 struct AlertStrings {

@@ -8,6 +8,86 @@
 
 import UIKit
 
+struct ProductUploadStrings {
+    static let uploadItem: String = StringHelper.localizedStringWithKey("UPLOAD_ITEM_LOCALIZE_KEY")
+    static let productPhotos: String = StringHelper.localizedStringWithKey("PRODUCT_PHOTOS_LOCALIZE_KEY")
+    static let addPhoto: String = StringHelper.localizedStringWithKey("ADD_PHOTO_LOCALIZE_KEY")
+    
+    static let productInformation: String = StringHelper.localizedStringWithKey("PRODUCT_INFORMATION_LOCALIZE_KEY")
+    
+    static let productName: String = StringHelper.localizedStringWithKey("PRODUCT_NAME_LOCALIZE_KEY")
+    static let shortDescription: String = StringHelper.localizedStringWithKey("SHORT_DESCRIPTION_LOCALIZE_KEY")
+    static let completeDescription: String = StringHelper.localizedStringWithKey("COMPLETE_DESCRIPTION_LOCALIZE_KEY")
+    
+    static let productDetails: String = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_LOCALIZE_KEY")
+    
+    static let category: String = StringHelper.localizedStringWithKey("CATEGORY_LOCALIZE_KEY")
+    static let brand: String = StringHelper.localizedStringWithKey("BRAND_LOCALIZE_KEY")
+    static let condition: String = StringHelper.localizedStringWithKey("CONDITION_LOCALIZE_KEY")
+    
+    static let addMore: String = StringHelper.localizedStringWithKey("ADD_MORE_DETAILS_LOCALIZE_KEY")
+
+    static let quantity: String = StringHelper.localizedStringWithKey("QUANTITY_LOCALIZE_KEY")
+    static let sku: String = StringHelper.localizedStringWithKey("SKU_LOCALIZE_KEY")
+    
+    static let price: String = StringHelper.localizedStringWithKey("PRICE_LOCALIZE_KEY")
+    
+    static let retailPrice: String = StringHelper.localizedStringWithKey("RETAIL_PRICE_LOCALIZE_KEY")
+    static let discountedPrice: String = StringHelper.localizedStringWithKey("DISCOUNTED_PRICE_LOCALIZE_KEY")
+    
+    static let dimensionsAndWeight: String = StringHelper.localizedStringWithKey("DIMENSIONS_AND_WEIGHT_LOCALIZE_KEY")
+    
+    static let dimensionsAndWieghtMessageOne: String = StringHelper.localizedStringWithKey("DIMENSIONS_AND_WEIGHT_MESSAGE_ONE_LOCALIZE_KEY")
+    static let dimensionsAndWieghtMessageTwo: String = StringHelper.localizedStringWithKey("DIMENSIONS_AND_WEIGHT_MESSAGE_TWO_LOCALIZE_KEY")
+    
+    static let length: String = StringHelper.localizedStringWithKey("LENGHT_LOCALIZE_KEY")
+    static let weight: String = StringHelper.localizedStringWithKey("WEIGHT_LOCALIZE_KEY")
+    static let width: String = StringHelper.localizedStringWithKey("WIDTH_LOCALIZE_KEY")
+    static let height: String = StringHelper.localizedStringWithKey("HEIGHT_LOCALIZE_KEY")
+    
+    static let saveProductDetails: String = StringHelper.localizedStringWithKey("SAVE_PRODUCT_DETAILS_LOCALIZE_KEY")
+
+    static let detailName: String = StringHelper.localizedStringWithKey("DETAIL_NAME_LOCALIZE_KEY")
+    static let values: String = StringHelper.localizedStringWithKey("VALUES_LOCALIZE_KEY")
+    static let valuesPlaceholder: String = StringHelper.localizedStringWithKey("VALUES_PLACEHODER_LOCALIZE_KEY")
+    
+    static let save: String = StringHelper.localizedStringWithKey("SAVE_LOCALIZE_KEY")
+    
+    static let proceedToCombination: String = StringHelper.localizedStringWithKey("PROCEED_TO_COMBINATION_LOCALIZE_KEY")
+    
+    static let saveDetails: String = StringHelper.localizedStringWithKey("SAVE_DETAILS_LOCALIZE_KEY")
+    static let combination: String = StringHelper.localizedStringWithKey("COMBINATION_LOCALIZE_KEY")
+    
+    static let totalQuantity: String = StringHelper.localizedStringWithKey("TOTAL_QUANTITY_LOCALIZE_KEY")
+    
+    static let searchCategory: String = StringHelper.localizedStringWithKey("SEARCH_CATEGORY_LOCALIZE_KEY")
+    
+    static let warning: String = StringHelper.localizedStringWithKey("WARNING_LOCALIZE_KEY")
+    static let warningRemoveAttribute: String = StringHelper.localizedStringWithKey("WARNING_REMOVE_ATTRIBUTE_LOCALIZE_KEY")
+    static let incompleteProductDetails: String = StringHelper.localizedStringWithKey("INC_PRODUCT_DETAILS_LOCALIZE_KEY")
+    
+    static let retailMustBeGreater: String = StringHelper.localizedStringWithKey("RETAIL_MUST_BE_GREATER_LOCALIZE_KEY")
+    
+    static let attributeDef: String = StringHelper.localizedStringWithKey("ATTRIBUTE_DEF_LOCALIZE_KEY")
+    static let alreadyExist: String = StringHelper.localizedStringWithKey("ALREADY_EXIST_LOCALIZE_KEY")
+    
+    static let combinationAlreadyExist: String = StringHelper.localizedStringWithKey("COMBINATION_ALREADY_EXIST_LOCALIZE_KEY")
+    static let combinationRequired: String = StringHelper.localizedStringWithKey("COMBINATION_REQUIRED_LOCALIZE_KEY")
+    static let attributeValuesRequired: String = StringHelper.localizedStringWithKey("ATTRIBUTE_VALUES_REQUIRED_LOCALIZE_KEY")
+    
+    static let insertOneImage: String = StringHelper.localizedStringWithKey("INSERT_ONE_IMAGE_LOCALIZE_KEY")
+    static let productNameRequired: String = StringHelper.localizedStringWithKey("PRODUCT_NAME_REQUIRED_LOCALIZE_KEY")
+    
+    static let shortDescriptionRquired: String = StringHelper.localizedStringWithKey("SHORT_DESCRIPTION_REQUIRED_LOCALIZE_KEY")
+    static let completeRequired: String = StringHelper.localizedStringWithKey("COMPLETE_DESCRIPTION_REQUIRED_LOCALIZE_KEY")
+    static let categoryRequired: String = StringHelper.localizedStringWithKey("CATEGORY_REQUIRED_LOCALIZE_KEY")
+    
+    static let conditionRequired: String = StringHelper.localizedStringWithKey("CONDITION_REQUIRED_LOCALIZE_KEY")
+    static let quantityRequired: String = StringHelper.localizedStringWithKey("QUANTITY_REQUIRED_LOCALIZE_KEY")
+    static let retailPriceRequired: String = StringHelper.localizedStringWithKey("RETAIL_PRICE_REQUIRED_LOCALIZE_KEY")
+    static let retailMustBeLarger: String = StringHelper.localizedStringWithKey("RETAIL_MUST_BE_LARGER_LOCALIZE_KEY")
+}
+
 struct ProductUploadTableViewControllerConstant {
     static let productUploadUploadImageTableViewCellNibNameAndIdentifier = "ProductUploadUploadImageTableViewCell"
     static let productUploadUploadImageTableViewCellHeight: CGFloat = 165
@@ -64,7 +144,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     override func viewDidLoad() {
         super.viewDidLoad()
         self.backButton()
-        self.title = "Product Upload"
+        self.title = Constants.ViewControllersTitleString.productUpload
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         
         self.register()
