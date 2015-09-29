@@ -551,6 +551,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         if selectedIndex != indexPath.row {
+            self.emptyLabel.hidden = true
             self.selectedItems = []
             self.productModel = nil
             requestGetProductList(statusId[indexPath.row], key: searchBarTextField.text)
