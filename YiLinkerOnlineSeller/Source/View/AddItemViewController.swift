@@ -150,8 +150,37 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
+                if task.statusCode == 401 {
+                    self.requestRefreshToken()
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+                    self.hud?.hide(true)
+                }
+        })
+    }
+    
+    func requestRefreshToken() {
+        
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        let manager = APIManager.sharedInstance
+        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.hud?.hide(true)
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.requestGetProductList(self.searchBarTextField.text)
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
         })
     }
     
