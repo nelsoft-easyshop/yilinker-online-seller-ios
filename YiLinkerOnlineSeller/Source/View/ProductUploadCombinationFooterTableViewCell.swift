@@ -47,6 +47,7 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
         self.skuTextField.delegate = self
         self.skuTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         
+        self.skuLabel.required()
         self.retailPriceLabel.required()
         self.quantityLabel.required()
     }
@@ -74,6 +75,8 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
             UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Retail price must be greater than discount price.", title: "Incomplete Product Details")
         } else if(quantityTextField.text as NSString).doubleValue == 0 {
             UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Please insert quanity.", title: "Incomplete Product Details")
+        } else if self.skuTextField.text == "" {
+            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Please insert sku.", title: "Incomplete Product Details")
         } else {
             if self.viewController != nil {
                 viewController!.view.endEditing(true)

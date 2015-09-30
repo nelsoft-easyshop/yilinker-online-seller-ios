@@ -43,10 +43,12 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         
         if self.productModel != nil {
             self.title = "Edit Combination"
+            let combination: CombinationModel = self.productModel!.validCombinations[self.selectedIndexpath!.section]
+            self.combination = combination
         } else {
             self.title = "Add Combination"
         }
-        
+    
         let headerView: ProductUploadCombinationHeaderTableViewCell = XibHelper.puffViewWithNibName("ProductUploadCombinationHeaderTableViewCell", index: 0) as! ProductUploadCombinationHeaderTableViewCell
         self.tableView.tableHeaderView = headerView
         headerView.combinationLabel.text = self.headerTitle
@@ -303,8 +305,9 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         
         let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.05 * Double(NSEC_PER_SEC)))
         dispatch_after(delayTime, dispatch_get_main_queue()) {
-        
-             if self.combination.length == "" {
+            if self.combination.sku == "" {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert product sku.", title: "Incomplete Product Details")
+            } else if self.combination.length == "" {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert product length.", title: "Incomplete Product Details")
             } else if self.combination.weight == "" {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert product weight.", title: "Incomplete Product Details")
