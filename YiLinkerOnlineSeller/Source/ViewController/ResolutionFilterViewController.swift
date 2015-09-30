@@ -56,10 +56,10 @@ class SelectedFilters {
         case .ThisWeek:
             self.time = ResolutionTimeFilter.ThisWeek
             let day: Int = self.dayOfWeek(self.getTimeNow())!
-            return formatter.stringFromDate(NSDate())
+            return formatter.stringFromDate(NSDate().addDays(1))
         case .ThisMonth:
             self.time = ResolutionTimeFilter.ThisMonth
-            return formatter.stringFromDate(NSDate())
+            return formatter.stringFromDate(NSDate().addDays(1))
         case .Total:
             return ""
         default:
@@ -102,7 +102,15 @@ class SelectedFilters {
     func getTimeNow() -> String {
         let formatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        let now = NSDate()
+        var now = NSDate()
+        return formatter.stringFromDate(now)
+    }
+    
+    func today() -> String {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        var now = NSDate()
+        now.addDays(1)
         return formatter.stringFromDate(now)
     }
 }
