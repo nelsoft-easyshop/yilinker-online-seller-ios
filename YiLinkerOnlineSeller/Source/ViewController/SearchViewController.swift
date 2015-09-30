@@ -36,6 +36,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var hud: MBProgressHUD?
     
     var searchModel: SearchModel?
+    var searchProductNameModel: SearchProductNameModel?
+    var tableData: [SearchProductNameModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,8 +101,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if (tableView.isEqual(self.searchResultTableView)){
-            if self.searchModel != nil {
-                return self.searchModel!.invoiceNumber.count
+            if !self.tableData.isEmpty {
+                return self.tableData.count
             } else {
                 return 0
             }
@@ -121,8 +123,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if (tableView.isEqual(self.searchResultTableView)){
             let cell = searchResultTableView.dequeueReusableCellWithIdentifier("SearchTableViewCell") as! SearchTableViewCell
-            if self.searchModel != nil {
-                cell.invoiceNumberLabel.text = self.searchModel?.invoiceNumber[indexPath.row]
+            if !self.tableData.isEmpty {
+                cell.invoiceNumberLabel.text = self.tableData[indexPath.row].name2
             }
             
             return cell
@@ -193,6 +195,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if filterBySelected == 0 || filterBySelected == 3 {
             self.showAlert(title: "Information", message: "Search by \(filterBy[filterBySelected]) is not yet available.")
         } else if filterBySelected == 2 {
+            self.tableData.removeAll(keepCapacity: false)
             self.fireSearchProduct()
         } else {
             self.fireSearch()
@@ -248,6 +251,12 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let manager = APIManager.sharedInstance
         manager.GET(APIAtlas.searchNameSuggestion+"\(SessionManager.accessToken())&queryString=\(self.searchTextField.text)", parameters: nil, success: { (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             println(">> \(responseObject)")
+            let searchProductNameModel: SearchProductNameModel = SearchProductNameModel.parseDataFromDictionary(responseObject as! NSDictionary)
+            println("\(searchProductNameModel.name.count)")
+            for var i = 0; i < searchProductNameModel.name.count; i++ {
+                self.tableData.append(SearchProductNameModel(name2: searchProductNameModel.name[i], productId2: searchProductNameModel.productId[i]))
+            }
+            self.searchResultTableView.reloadData()
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
