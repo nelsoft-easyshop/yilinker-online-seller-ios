@@ -413,6 +413,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     cell.selectionStyle = UITableViewCellSelectionStyle.None
                     cell.cellTitleLabel.text = "SKU"
                     cell.cellTexField.placeholder = "SKU"
+                    cell.cellTitleLabel.required()
                     cell.delegate = self
                     cell.textFieldType = ProductTextFieldType.ProductSKU
                     cell.cellTexField.text = self.productModel.sku
@@ -668,6 +669,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert Retail Price.", title: "Incomplete Product Details")
         } else if (self.productModel.retailPrice as NSString).doubleValue < (self.productModel.discoutedPrice as NSString).doubleValue {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Retail price must be larger than discount price.", title: "Incomplete Product Details")
+        } else if self.productModel.sku == "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert product sku.", title: "Incomplete Product Details")
         } else if self.productModel.length == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert product length.", title: "Incomplete Product Details")
         } else if self.productModel.weigth == "" {
