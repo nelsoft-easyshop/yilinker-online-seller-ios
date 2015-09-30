@@ -147,6 +147,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         
         type = types[indexPath.row]
         page = 1
+        isRefreshable = true
         fireGetTransaction()
     }
     
