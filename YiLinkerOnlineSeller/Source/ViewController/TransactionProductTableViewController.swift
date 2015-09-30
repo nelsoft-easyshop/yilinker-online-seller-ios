@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TransactionProductTableViewController: UITableViewController, TransactionProductDetailsFooterViewDelegate, TransactionCancelOrderViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate, TransactionCancelReasonOrderViewControllerDelegate, TransactionDeliveryTableViewCellDelegate {
+class TransactionProductTableViewController: UITableViewController, TransactionProductDetailsFooterViewDelegate, TransactionCancelOrderViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate, TransactionCancelReasonOrderViewControllerDelegate, TransactionDeliveryTableViewCellDelegate, TransactionProductDescriptionTableViewCellDelegate {
     
     var purchaseCellIdentifier: String = "TransactionProductPurchaseTableViewCell"
     var productCellIdentifier: String = "TransactionProductDetailsTableViewCell"
@@ -286,6 +286,7 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
         } else if indexPath.section == 2{
             let cell: TransactionProductDescriptionTableViewCell = tableView.dequeueReusableCellWithIdentifier(descriptionCellIdentifier, forIndexPath: indexPath) as! TransactionProductDescriptionTableViewCell
             cell.productDescriptionLabel.text = productModel.fullDescription
+            cell.delegate = self
             return cell
         }  else if indexPath.section == 3 {
             let cell: TransactionDeliveryTableViewCell = tableView.dequeueReusableCellWithIdentifier(deliveryCellIdentifier, forIndexPath: indexPath) as! TransactionDeliveryTableViewCell
@@ -312,6 +313,13 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
         cancelOrderController.definesPresentationContext = true
         cancelOrderController.view.backgroundColor = UIColor.clearColor()
         self.tabBarController?.presentViewController(cancelOrderController, animated: true, completion: nil)
+    }
+    
+    // MARK : TransactionProductDescriptionTableViewCellDelegate
+    func seeMoreAction() {
+        var descriptionController = TransactionProductDescriptionViewController(nibName: "TransactionProductDescriptionViewController", bundle: nil)
+        descriptionController.fullDescription = productModel.fullDescription
+        self.navigationController?.pushViewController(descriptionController, animated:true)
     }
 
     

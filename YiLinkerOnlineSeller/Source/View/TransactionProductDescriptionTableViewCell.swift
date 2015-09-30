@@ -8,8 +8,14 @@
 
 import UIKit
 
+protocol TransactionProductDescriptionTableViewCellDelegate {
+    func seeMoreAction()
+}
+
 class TransactionProductDescriptionTableViewCell: UITableViewCell {
 
+    var delegate: TransactionProductDescriptionTableViewCellDelegate?
+    
     @IBOutlet weak var productDescriptionLabel: UILabel!
     @IBOutlet weak var seeMoreView: UIView!
     @IBOutlet weak var seeMoreLabel: UILabel!
@@ -17,9 +23,16 @@ class TransactionProductDescriptionTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         initializeLocalizedStrings()
+        
+        var seeMore = UITapGestureRecognizer(target:self, action:"tapSeeMoreAction")
+        seeMoreView.addGestureRecognizer(seeMore)
     }
 
     func initializeLocalizedStrings() {
         seeMoreLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_SEE_MORE_LOCALIZE_KEY")
+    }
+    
+    func tapSeeMoreAction() {
+        delegate?.seeMoreAction()
     }
 }
