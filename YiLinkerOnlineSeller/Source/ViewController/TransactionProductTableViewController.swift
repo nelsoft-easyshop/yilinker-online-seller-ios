@@ -17,7 +17,7 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
     
     var sectionHeader: [String] = []
     var productAttributeData: [String] = []
-    var productAttributeValueData: [String] = ["", "", "", "", "", "", ""]
+    var productAttributeValueData: [String] = ["", "", "", "", ""]
     
     var tableHeaderView: TransactionProductDetailsHeaderView!
     var tableFooterView: TransactionProductDetailsFooterView!
@@ -31,18 +31,18 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
         super.viewDidLoad()
         
         productAttributeValueData[0] = productModel.sku
-        productAttributeValueData[1] = productModel.color
-        productAttributeValueData[2] = productModel.size
-        productAttributeValueData[3] = productModel.width
-        productAttributeValueData[4] = productModel.length
-        productAttributeValueData[5] = productModel.weight
-        productAttributeValueData[6] = productModel.height
+        productAttributeValueData[1] = productModel.width
+        productAttributeValueData[2] = productModel.length
+        productAttributeValueData[3] = productModel.weight
+        productAttributeValueData[4] = productModel.height
 
         initializeNavigationBar()
         initializeTableView()
         registerNibs()
         initializeViews()
         initializeLocalizedStrings()
+        initializeAttributes()
+        fireGetProductDetails()
     }
 
     override func didReceiveMemoryWarning() {
@@ -83,6 +83,15 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
         self.tableView.tableFooterView = tableFooterView
     }
     
+    func initializeAttributes() {
+        for subValue in productModel.attributes {
+            productAttributeValueData.insert(subValue.attributeValue, atIndex: 0)
+            productAttributeData.insert(subValue.attributeName, atIndex: 0)
+        }
+        
+        self.tableView.reloadData()
+    }
+    
     func initializeNavigationBar() {
         self.title = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_LOCALIZE_KEY")
         
@@ -113,8 +122,6 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
         sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DELIVERY_LOCALIZE_KEY"))
         
         productAttributeData.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_SKU_LOCALIZE_KEY"))
-        productAttributeData.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_COLOR_LOCALIZE_KEY"))
-        productAttributeData.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_SIZE_LOCALIZE_KEY"))
         productAttributeData.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_WIDTH_LOCALIZE_KEY"))
         productAttributeData.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_LENGTH_LOCALIZE_KEY"))
         productAttributeData.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_WEIGHT_LOCALIZE_KEY"))
@@ -125,6 +132,77 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
     
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
+    }
+    
+    func fireGetProductDetails(){
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "orderProductId": productModel.orderProductId];
+        
+        manager.GET(APIAtlas.orderProductDetails, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            println(responseObject)
+            self.hud?.hide(true)
+            if responseObject != nil {
+                if let tempVar = responseObject["isSuccessful"] as? Bool {
+                    if tempVar {
+                        if responseObject["data"] != nil {
+                            if let tempValue: AnyObject? = responseObject["data"] {
+                                self.productModel = TransactionOrderProductModel.parseDataWithDictionary(tempValue!)
+                                self.initializeTableView()
+                                self.initializeAttributes()
+                            }
+                        }
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String, title: StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY"))
+                        self.navigationController!.popViewControllerAnimated(true)
+                        self.hud?.hide(true)
+                    }
+                }
+            }
+            
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                
+                self.hud?.hide(true)
+                
+                if Reachability.isConnectedToNetwork() {
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.fireRefreshToken()
+                    } else {
+                        UIAlertController.displaySomethingWentWrongError(self)
+                        self.navigationController!.popViewControllerAnimated(true)
+                    }
+                } else {
+                    UIAlertController.displayNoInternetConnectionError(self)
+                    self.navigationController!.popViewControllerAnimated(true)
+                }
+                println(error)
+        })
+    }
+    
+    func fireRefreshToken() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.fireGetProductDetails()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+        })
+        
     }
 
     // MARK: - Table view data source
