@@ -71,7 +71,6 @@ class RecentProductsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier(recentOrderCellIdentifier, forIndexPath: indexPath) as! RecentProductsTableViewCell
 
         var temp: TransactionModel = tableData[indexPath.row]
-        cell.setProductImage("")
         cell.setProductName(temp.invoice_number)
         cell.setModeOfPayment(temp.payment_type)
         cell.setPrice(temp.total_price)
