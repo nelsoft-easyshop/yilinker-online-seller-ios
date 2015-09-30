@@ -303,7 +303,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
     func saveButtonView(didClickButtonWithView view: SaveButtonView) {
         self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         
-        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.05 * Double(NSEC_PER_SEC)))
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
         dispatch_after(delayTime, dispatch_get_main_queue()) {
             if self.combination.sku == "" {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert product sku.", title: "Incomplete Product Details")
