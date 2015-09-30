@@ -58,7 +58,7 @@ NO_MORE_DATA_LOCALIZE_KEY = "No more data!";
 // MARK: - My Points
 MY_POINTS_TITLE_LOCALIZE_KEY = "My Points";
 POINTS_EARNED_LOCALIZE_KEY = "POINTS EARNED";
-MY_POINTS_DESCRIPTION_LOCALIZE_KEY = "Maecenas tempus congue tortor at porttitor. Maecenas a lacus turpis. Aliquam vel massa eget lectus mattis suscipit vel non lectus. Sed quis turpis porta, ornare quam id, viverra tortor. Phasellus fringilla sollicitudin libero vitae tempus. Pellentesque non nisi sed neque porta iaculis iaculis in ante. Etiam sem magna, feugiat non ornare ac, commodo tempor nisi. Maecenas tempus congue tortor at porttitor. Maecenas a lacus turpis. Aliquam vel massa eget lectus mattis suscipit vel non lectus. ";
+MY_POINTS_DESCRIPTION_LOCALIZE_KEY = "Points are earned by certain activities in your account, e.g. increasing your Followers, receiving Feedback received from Buyers and by referring Buyers into YiLinker. Spending your points on our platform will be available soon, so watch out for that.";
 BREAKDOWN_LOCALIZE_KEY = "Breakdown";
 EARN_MORE_POINTS_LOCALIZE_KEY = "HOW TO EARN MORE POINTS";
 POINTS_LOCALIZE_KEY = "POINTS";
