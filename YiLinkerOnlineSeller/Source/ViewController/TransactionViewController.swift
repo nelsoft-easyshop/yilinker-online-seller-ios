@@ -12,6 +12,7 @@ class TransactionViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var noTransactionLabel: UILabel!
     
     var pageTitle: [String] = []
     var selectedImage: [String] = ["transactions2", "newUpdates2", "onGoing2", "completed2", "cancelled3"]
@@ -37,6 +38,7 @@ class TransactionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        noTransactionLabel.hidden = true
         // Do any additional setup after loading the view.
         registerNibs()
         customizedNavigationBar()
@@ -96,6 +98,7 @@ class TransactionViewController: UIViewController {
     }
     
     func initializeLocalizedStrings() {
+        noTransactionLabel.text = StringHelper.localizedStringWithKey("TRANSACTIONS_NO_TRANSACTIONS_LOCALIZE_KEY")
         pageTitle.append(StringHelper.localizedStringWithKey("TRANSACTIONS_TRANSACTIONS_LOCALIZE_KEY"))
         pageTitle.append(StringHelper.localizedStringWithKey("TRANSACTIONS_NEW_UPDATE_LOCALIZE_KEY"))
         pageTitle.append(StringHelper.localizedStringWithKey("TRANSACTIONS_ONGOING_LOCALIZE_KEY"))
@@ -147,6 +150,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         
         type = types[indexPath.row]
         page = 1
+        isRefreshable = true
         fireGetTransaction()
     }
     
@@ -235,8 +239,9 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
                     self.tableView.reloadData()
                     
                     self.page++
-                    
+                    self.noTransactionLabel.hidden = true
                     if transactionModel.transactions.count == 0 {
+                        self.noTransactionLabel.hidden = false
                         self.isRefreshable = false
                     }
                 } else {
