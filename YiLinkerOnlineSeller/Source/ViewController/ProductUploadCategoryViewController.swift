@@ -140,6 +140,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
                 self.navigationController!.popToRootViewControllerAnimated(true)
             } else {
                 let resellerViewController: ResellerItemViewController = ResellerItemViewController(nibName: "ResellerItemViewController", bundle: nil)
+                resellerViewController.categoryModel = categoryModel
                 self.navigationController?.pushViewController(resellerViewController, animated: true)
             }
         }

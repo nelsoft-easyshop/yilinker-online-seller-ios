@@ -258,8 +258,7 @@ class ResolutionCenterViewController
                         "dateTo": timeFilter]
                 } else {
                     parameters = [ "access_token" : SessionManager.accessToken()
-                        , "dateFrom" : timeFilter,
-                        "disputeStatusType" : statusFilter]
+                        , "dateFrom" : timeFilter]
                 }
             } else {
                 if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisMonth {

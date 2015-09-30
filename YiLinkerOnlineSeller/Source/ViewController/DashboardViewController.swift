@@ -52,25 +52,25 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         
         if SessionManager.isLoggedIn() {
             self.loginBlockerView.hidden = true
+            fireStoreInfo(true)
+            setupGCM()
         } else {
             self.loginBlockerView.hidden = false
         }
         
-        
-        if NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
-            if ctr == 0{
-                fireStoreInfo(true)
-                setupGCM()
-            } else {
-                fireStoreInfo(true)
-            }
-        } else {
-            if SessionManager.isLoggedIn() {
-                fireStoreInfo(true)
-            }
-        }
-        
-        ctr++
+//        if NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
+//            if ctr == 0{
+//                fireStoreInfo(true)
+//                setupGCM()
+//
+//            } else {
+//                fireStoreInfo(true)
+//            }
+//        } else {
+//        if SessionManager.isLoggedIn() {
+//            
+//        }
+//        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -81,14 +81,14 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if !NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
+//        if !NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
             if !SessionManager.isLoggedIn() {
                 SessionManager.setAccessToken("")
                 let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
                 signInViewController.delegate = self
                 self.presentViewController(signInViewController, animated: false, completion: nil)
             }
-        }
+//        }
         self.navigationController?.navigationBarHidden = true
         
         self.tabBarController?.tabBar.hidden = false
@@ -200,19 +200,27 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     
     func showHUD() {
         
-        if NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
-            if ctr == 0{
+        if SessionManager.isLoggedIn() {
+            if ctr == 0 {
                 displayHUD()
-            } else {
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-            }
-        } else {
-            if ctr == 1 {
-                displayHUD()
+                ctr++
             } else if ctr != 0 {
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             }
         }
+//        if NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
+//            if ctr == 0{
+//                displayHUD()
+//            } else {
+//                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+//            }
+//        } else {
+//            if ctr == 1 {
+//                displayHUD()
+//            } else if ctr != 0 {
+//                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+//            }
+//        }
         
     }
 
@@ -401,7 +409,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                     println("cancel")
                     
                 case .Destructive:
-                    NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
+//                    NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
+                    self.ctr = 0
                     SessionManager.setAccessToken("")
                     let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
                     self.presentViewController(signInViewController, animated: true, completion: nil)
