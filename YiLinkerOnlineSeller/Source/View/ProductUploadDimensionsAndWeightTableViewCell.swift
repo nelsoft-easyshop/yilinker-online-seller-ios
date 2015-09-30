@@ -18,13 +18,24 @@ class ProductUploadDimensionsAndWeightTableViewCell: UITableViewCell, UITextFiel
     @IBOutlet weak var widthTextField: UITextField!
     @IBOutlet weak var weightTextField: UITextField!
     @IBOutlet weak var lengthTextField: UITextField!
+   
+    @IBOutlet weak var lengthlabel: UILabel!
+    @IBOutlet weak var widthLabel: UILabel!
+    @IBOutlet weak var heightLabel: UILabel!
+    @IBOutlet weak var weightLabel: UILabel!
     
     var delegate: ProductUploadDimensionsAndWeightTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         self.addTextFieldDelegate()
+        
+        self.lengthlabel.required()
+        self.widthLabel.required()
+        self.heightLabel.required()
+        self.weightLabel.required()
     }
+    
     func addTextFieldDelegate() {
         self.heightTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         self.heightTextField.delegate = self
