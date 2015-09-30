@@ -295,12 +295,12 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     
     func signinSuccessful() {
         
-        if self.rememberMeImageView.image != nil {
-            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "rememberMe")
-        } else {
-            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
-        }
-        NSUserDefaults.standardUserDefaults().synchronize()
+//        if self.rememberMeImageView.image != nil {
+//            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "rememberMe")
+//        } else {
+//            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
+//        }
+//        NSUserDefaults.standardUserDefaults().synchronize()
         
         fireStoreInfo()
     }
