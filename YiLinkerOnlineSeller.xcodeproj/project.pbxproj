@@ -321,6 +321,8 @@
 		794A965B1B9EAAEA002F32A0 /* FollowersModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A965A1B9EAAEA002F32A0 /* FollowersModel.swift */; };
 		794AFDA01BA3D3190063976E /* TransactionConsigneeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794AFD9F1BA3D3190063976E /* TransactionConsigneeModel.swift */; };
 		794AFDA21BA405BF0063976E /* DeliveryLogsItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794AFDA11BA405BF0063976E /* DeliveryLogsItemModel.swift */; };
+		795111E71BBC0E7800ADDEE1 /* TransactionProductDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795111E51BBC0E7800ADDEE1 /* TransactionProductDescriptionViewController.swift */; };
+		795111E81BBC0E7800ADDEE1 /* TransactionProductDescriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 795111E61BBC0E7800ADDEE1 /* TransactionProductDescriptionViewController.xib */; };
 		795B0D261BA307CB00FC373C /* ActivityLogItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795B0D251BA307CB00FC373C /* ActivityLogItemModel.swift */; };
 		795B0D281BA3093000FC373C /* ActivityLogItemsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795B0D271BA3093000FC373C /* ActivityLogItemsModel.swift */; };
 		797777A31BA924AD004D48FC /* TransactionItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797777A21BA924AD004D48FC /* TransactionItemModel.swift */; };
@@ -890,6 +892,8 @@
 		794A965A1B9EAAEA002F32A0 /* FollowersModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowersModel.swift; sourceTree = "<group>"; };
 		794AFD9F1BA3D3190063976E /* TransactionConsigneeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionConsigneeModel.swift; sourceTree = "<group>"; };
 		794AFDA11BA405BF0063976E /* DeliveryLogsItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryLogsItemModel.swift; sourceTree = "<group>"; };
+		795111E51BBC0E7800ADDEE1 /* TransactionProductDescriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionProductDescriptionViewController.swift; sourceTree = "<group>"; };
+		795111E61BBC0E7800ADDEE1 /* TransactionProductDescriptionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionProductDescriptionViewController.xib; sourceTree = "<group>"; };
 		795B0D251BA307CB00FC373C /* ActivityLogItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLogItemModel.swift; sourceTree = "<group>"; };
 		795B0D271BA3093000FC373C /* ActivityLogItemsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLogItemsModel.swift; sourceTree = "<group>"; };
 		797777A21BA924AD004D48FC /* TransactionItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionItemModel.swift; sourceTree = "<group>"; };
@@ -1504,6 +1508,8 @@
 				0C51C2FC1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.xib */,
 				7985D35B1BB0259F0060E5F5 /* DeactivateModalViewController.swift */,
 				7985D35C1BB0259F0060E5F5 /* DeactivateModalViewController.xib */,
+				795111E51BBC0E7800ADDEE1 /* TransactionProductDescriptionViewController.swift */,
+				795111E61BBC0E7800ADDEE1 /* TransactionProductDescriptionViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2151,6 +2157,7 @@
 				0C8D7F961B8F12C200B3FA4E /* ProductUploadAttributeListTableViewController.xib in Resources */,
 				F7C40FD61B983CD90091C16C /* dummy-placeholder.jpg in Resources */,
 				0C6661AD1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.xib in Resources */,
+				795111E81BBC0E7800ADDEE1 /* TransactionProductDescriptionViewController.xib in Resources */,
 				7948807E1B94DAA50090B259 /* FollowerTableViewCell.xib in Resources */,
 				7985D3681BB0556B0060E5F5 /* TransactionDeliveryLogSignatureTableViewCell.xib in Resources */,
 				0CEB3AC21BB052BE00139AFE /* SelectedProductTableViewCell.xib in Resources */,
@@ -2504,6 +2511,7 @@
 				26DB06351B98BF2C00D38EA8 /* TransactionCollectionViewCell.swift in Sources */,
 				0C51C2F51BB0138C00F4D2D6 /* RemarksTableViewCell.swift in Sources */,
 				2671424C1B94C6AF00B66458 /* CustomizedCategoryViewController.swift in Sources */,
+				795111E71BBC0E7800ADDEE1 /* TransactionProductDescriptionViewController.swift in Sources */,
 				0C8D7FA71B8F573800B3FA4E /* PUAttributeAddFooterView.swift in Sources */,
 				0C6661A81B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.swift in Sources */,
 				793C41E11B98237F009CE671 /* CategoryProductModel.swift in Sources */,

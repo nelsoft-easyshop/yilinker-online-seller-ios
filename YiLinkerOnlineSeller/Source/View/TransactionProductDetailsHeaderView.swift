@@ -14,6 +14,8 @@ class TransactionProductDetailsHeaderView: UIView, UICollectionViewDataSource {
     @IBOutlet weak var productDescriptionLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
+    var images: [String] = []
+    
     override func awakeFromNib() {
         var nib = UINib(nibName: "TransactionImageCollectionViewCell", bundle:nil)
         self.collectionView.registerNib(nib, forCellWithReuseIdentifier: "TransactionImageCollectionViewCell")
@@ -25,13 +27,13 @@ class TransactionProductDetailsHeaderView: UIView, UICollectionViewDataSource {
     // MARK: - Collection View Data Source
 
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return images.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell: TransactionImageCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("TransactionImageCollectionViewCell", forIndexPath: indexPath) as! TransactionImageCollectionViewCell
-        
+        cell.productImageView.sd_setImageWithURL(NSURL(string: images[indexPath.row]), placeholderImage: UIImage(named: "dummy-placeholder"))
         return cell
     }
 
