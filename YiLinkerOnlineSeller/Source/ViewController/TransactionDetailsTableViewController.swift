@@ -165,7 +165,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         if indexPath.section == 0 {
             let cell: TransactionDetailsTableViewCell = tableView.dequeueReusableCellWithIdentifier(detailsCellIdentifier, forIndexPath: indexPath) as! TransactionDetailsTableViewCell
             cell.selectionStyle = .None;
-            cell.statusLabel.text = transactionDetailsModel.transactionStatusName
+            cell.statusLabel.text = "   \(transactionDetailsModel.transactionStatusName)     "
             cell.paymentTypeLabel.text = transactionDetailsModel.transactionPayment
             cell.dateCreatedLabel.text = formatDateToString(formatStringToDate(transactionDetailsModel.transactionDate))
             cell.totalQuantityLabel.text = "\(transactionDetailsModel.transactionQuantity)"
