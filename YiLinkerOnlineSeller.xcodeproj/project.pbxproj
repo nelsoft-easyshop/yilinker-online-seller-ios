@@ -550,6 +550,7 @@
 		F7C40FE11B9854B20091C16C /* SalesReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EFF7761B8D9274008A9E7D /* SalesReportViewController.swift */; };
 		F7CB78431B9D822C001AF766 /* FilterCalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CB78411B9D822C001AF766 /* FilterCalendarTableViewCell.swift */; };
 		F7CB78441B9D822C001AF766 /* FilterCalendarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CB78421B9D822C001AF766 /* FilterCalendarTableViewCell.xib */; };
+		F7D8C9011BBBC0AB00305EF2 /* SearchProductNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D8C9001BBBC0AB00305EF2 /* SearchProductNameModel.swift */; };
 		F7E175761BA3F32C00A3820B /* ProductUploadTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8A21B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.swift */; };
 		F7E465841B9F2D7B00FAB97D /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E465821B9F2D7B00FAB97D /* SearchTableViewCell.swift */; };
 		F7E465851B9F2D7B00FAB97D /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E465831B9F2D7B00FAB97D /* SearchTableViewCell.xib */; };
@@ -1136,6 +1137,7 @@
 		F7C40FDE1B98443B0091C16C /* StoreInfoSectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoSectionTableViewCell.xib; sourceTree = "<group>"; };
 		F7CB78411B9D822C001AF766 /* FilterCalendarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCalendarTableViewCell.swift; sourceTree = "<group>"; };
 		F7CB78421B9D822C001AF766 /* FilterCalendarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterCalendarTableViewCell.xib; sourceTree = "<group>"; };
+		F7D8C9001BBBC0AB00305EF2 /* SearchProductNameModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchProductNameModel.swift; sourceTree = "<group>"; };
 		F7E465821B9F2D7B00FAB97D /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		F7E465831B9F2D7B00FAB97D /* SearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
 		F7E465861B9F36C600FAB97D /* SearchModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
@@ -1280,6 +1282,7 @@
 				792F6E571B9D7F2300F0CB03 /* SalesReportModel.swift */,
 				792F6E551B9D7E5000F0CB03 /* SalesReportTransactionModel.swift */,
 				F7E465861B9F36C600FAB97D /* SearchModel.swift */,
+				F7D8C9001BBBC0AB00305EF2 /* SearchProductNameModel.swift */,
 				F7C40F4F1B983A590091C16C /* StoreAddressModel.swift */,
 				F7C40F501B983A590091C16C /* StoreInfoModel.swift */,
 				26B35CAF1B9B06800067793A /* SubCategoryModel.swift */,
@@ -2335,6 +2338,7 @@
 				0C65F8AE1B8DBC3400504D86 /* ProductUploadTextViewTableViewCell.swift in Sources */,
 				795B0D281BA3093000FC373C /* ActivityLogItemsModel.swift in Sources */,
 				0C51C2FD1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.swift in Sources */,
+				F7D8C9011BBBC0AB00305EF2 /* SearchProductNameModel.swift in Sources */,
 				0C51C2F01BB00A6800F4D2D6 /* AddProductHeaderView.swift in Sources */,
 				0C8D7FBD1B8FCC5800B3FA4E /* ProductUploadCombinationHeaderTableViewCell.swift in Sources */,
 				F7C40F6D1B983B210091C16C /* CreateNewAddressViewController.swift in Sources */,

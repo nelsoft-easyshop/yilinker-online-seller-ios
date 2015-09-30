@@ -36,6 +36,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var hud: MBProgressHUD?
     
     var searchModel: SearchModel?
+    var searchProductNameModel: SearchProductNameModel?
+    var tableData: [SearchProductNameModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,8 +101,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if (tableView.isEqual(self.searchResultTableView)){
-            if self.searchModel != nil {
-                return self.searchModel!.invoiceNumber.count
+            if !self.tableData.isEmpty {
+                return self.tableData.count
             } else {
                 return 0
             }
@@ -121,8 +123,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if (tableView.isEqual(self.searchResultTableView)){
             let cell = searchResultTableView.dequeueReusableCellWithIdentifier("SearchTableViewCell") as! SearchTableViewCell
-            if self.searchModel != nil {
-                cell.invoiceNumberLabel.text = self.searchModel?.invoiceNumber[indexPath.row]
+            if !self.tableData.isEmpty {
+                cell.invoiceNumberLabel.text = self.tableData[indexPath.row].name2
             }
             
             return cell
@@ -190,8 +192,11 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //self.searchTextField.resignFirstResponder()
         self.searchTextField.endEditing(true)
         
-        if filterBySelected == 0 || filterBySelected == 2 || filterBySelected == 3 {
+        if filterBySelected == 0 || filterBySelected == 3 {
             self.showAlert(title: "Information", message: "Search by \(filterBy[filterBySelected]) is not yet available.")
+        } else if filterBySelected == 2 {
+            self.tableData.removeAll(keepCapacity: false)
+            self.fireSearchProduct()
         } else {
             self.fireSearch()
         }
@@ -224,12 +229,80 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 //self.searchResultTableView.reloadData()
                 self.hud?.hide(true)
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                    } else if task.statusCode == 401 {
+                        self.fireRefreshToken(SearchRefreshType.TransactionId)
+                    } else {
+                        self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                    }
                     self.hud?.hide(true)
-                    println(error)
             })
         } else {
             println("Search not available.")
         }
+    }
+    
+    func fireSearchProduct(){
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        manager.GET(APIAtlas.searchNameSuggestion+"\(SessionManager.accessToken())&queryString=\(self.searchTextField.text)", parameters: nil, success: { (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            println(">> \(responseObject)")
+            let searchProductNameModel: SearchProductNameModel = SearchProductNameModel.parseDataFromDictionary(responseObject as! NSDictionary)
+            println("\(searchProductNameModel.name.count)")
+            for var i = 0; i < searchProductNameModel.name.count; i++ {
+                self.tableData.append(SearchProductNameModel(name2: searchProductNameModel.name[i], productId2: searchProductNameModel.productId[i]))
+            }
+            self.searchResultTableView.reloadData()
+            self.hud?.hide(true)
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                } else if task.statusCode == 401 {
+                    self.fireRefreshToken(SearchRefreshType.ProductName)
+                } else {
+                    self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                }
+                self.hud?.hide(true)
+        })
+        
+    }
+    
+    func fireRefreshToken(type: SearchRefreshType) {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            if type == SearchRefreshType.ProductName {
+                self.fireSearchProduct()
+            } else if type == SearchRefreshType.All {
+                
+            } else if type == SearchRefreshType.TransactionId {
+                self.fireSearch()
+            } else {
+                
+            }
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+        })
+        
     }
     
     func showHUD() {
