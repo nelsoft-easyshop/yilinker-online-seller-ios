@@ -19,6 +19,7 @@ class ResellerItemViewController: UIViewController, UIScrollViewDelegate, UISear
     var page: Int = 1
     
     var resellerGetProductModel: ResellerGetProductModel = ResellerGetProductModel()
+    var categoryModel: CategoryModel = CategoryModel()
     
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -175,7 +176,7 @@ class ResellerItemViewController: UIViewController, UIScrollViewDelegate, UISear
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = [
             "access_token": SessionManager.accessToken(),
-            "categoryId": 1,
+            "categoryId": self.categoryModel.uid,
             "page": self.page]
         
         manager.GET(APIAtlas.resellerUrl, parameters: parameters, success: {
@@ -271,7 +272,7 @@ class ResellerItemViewController: UIViewController, UIScrollViewDelegate, UISear
     
         let reload_distance: CGFloat = 10
         
-        if(y > h + reload_distance) {
+        if(y > h + reload_distance) && self.items.count != 0 {
             self.fireGetProductList()
         }
     }

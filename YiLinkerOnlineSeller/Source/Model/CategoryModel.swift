@@ -18,4 +18,8 @@ class CategoryModel: NSObject {
         self.name = name
         self.hasChildren = hasChildren
     }
+    
+    override init() {
+        
+    }
 }
