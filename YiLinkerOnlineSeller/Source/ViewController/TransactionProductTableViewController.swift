@@ -70,6 +70,7 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
             tableHeaderView.frame.size.width = self.view.frame.size.width
             tableHeaderView.productNameLabel.text = productModel.productName
             tableHeaderView.productDescriptionLabel.text = productModel.shortDescription
+            tableHeaderView.images.append(productModel.productImage)
         }
         
         if tableFooterView == nil {
@@ -267,7 +268,7 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
         
         if indexPath.section == 0 {
             let cell: TransactionProductPurchaseTableViewCell = tableView.dequeueReusableCellWithIdentifier(purchaseCellIdentifier, forIndexPath: indexPath) as! TransactionProductPurchaseTableViewCell
-            cell.quantityLabel.text = "\(productModel.quantity)"
+            cell.quantityLabel.text = "\(productModel.quantity)x"
             cell.priceLabel.text = productModel.unitPrice.formatToTwoDecimal()
             cell.totalCostLabel.text = productModel.totalPrice.formatToTwoDecimal()
             return cell
