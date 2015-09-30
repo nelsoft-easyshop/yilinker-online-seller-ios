@@ -16,7 +16,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var loginBlockerView: UIView!
     
-    var tableData: [String] = ["My\nStore", "Sales\nReport", "Transactions", "Product\nManagement", "Customized\nCategory", "Upload\nItem", "Followers", "Activity\nLog", "My\nPoints", "Resolution\nCenter", "Help", "Logout"]
+    var tableData: [String] = []
     
     var tableImages: [String] = ["mystore", "report", "transaction", "product", "category", "uploadItem", "followers", "activityLog", "points", "resolution", "help", "logout"]
     
@@ -26,20 +26,106 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     
     var ctr: Int = 0
     
+    var errorLocalizeString: String  = ""
+    var somethingWrongLocalizeString: String = ""
+    var connectionLocalizeString: String = ""
+    var connectionMessageLocalizeString: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController!.tabBar.tintColor = Constants.Colors.appTheme
-        if !NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
-            SessionManager.setAccessToken("")
-            let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
-            signInViewController.delegate = self
-            self.presentViewController(signInViewController, animated: false, completion: nil)
-        }
         
-//        println(SessionManager.accessToken())
         registerNibs()
         initializeViews()
-        setupGCM()
+        initializeLocalizedString()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+        
+        initializeViews()
+        
+        if SessionManager.isLoggedIn() {
+            self.loginBlockerView.hidden = true
+        } else {
+            self.loginBlockerView.hidden = false
+        }
+        
+        
+        if NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
+            if ctr == 0{
+                fireStoreInfo(true)
+                setupGCM()
+            } else {
+                fireStoreInfo(true)
+            }
+        } else {
+            if SessionManager.isLoggedIn() {
+                fireStoreInfo(true)
+            }
+        }
+        
+        ctr++
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.navigationBarHidden = false
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if !NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
+            if !SessionManager.isLoggedIn() {
+                SessionManager.setAccessToken("")
+                let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
+                signInViewController.delegate = self
+                self.presentViewController(signInViewController, animated: false, completion: nil)
+            }
+        }
+        self.navigationController?.navigationBarHidden = true
+        
+        self.tabBarController?.tabBar.hidden = false
+    }
+    
+    func initializeLocalizedString() {
+        //Initialized Localized String
+        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHING_WENT_WRONG_LOCALIZE_KEY")
+        connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTION_UNREACHABLE_LOCALIZE_KEY")
+        connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTION_ERROR_MESSAGE_LOCALIZE_KEY")
+        
+        let myStoreString = StringHelper.localizedStringWithKey("MY_STORE_LOCALIZE_KEY")
+        let salesReportString = StringHelper.localizedStringWithKey("SALES_REPORT_LOCALIZE_KEY")
+        let transactionsString = StringHelper.localizedStringWithKey("TRANSACTIONS_LOCALIZE_KEY")
+        let productManagementString = StringHelper.localizedStringWithKey("PRODUCT_MANAGEMENT_LOCALIZE_KEY")
+        let customizedCategoryString = StringHelper.localizedStringWithKey("CUSTOMIZED_CATEGORY_LOCALIZE_KEY")
+        let uploadItemString = StringHelper.localizedStringWithKey("UPLOAD_ITEM_LOCALIZE_KEY")
+        let followersString = StringHelper.localizedStringWithKey("FOLLOWERS_LOCALIZE_KEY")
+        let activityLogsString = StringHelper.localizedStringWithKey("ACTIVITY_LOGS_LOCALIZE_KEY")
+        let myPointsString = StringHelper.localizedStringWithKey("MY_POINTS_LOCALIZE_KEY")
+        let resolutionCenterString = StringHelper.localizedStringWithKey("RESOLUTION_CENTER_LOCALIZE_KEY")
+        let helpString = StringHelper.localizedStringWithKey("HELP_LOCALIZE_KEY")
+        let logoutString = StringHelper.localizedStringWithKey("LOGOUT_LOCALIZE_KEY")
+        
+        tableData.append(myStoreString)
+        tableData.append(salesReportString)
+        tableData.append(transactionsString)
+        tableData.append(productManagementString)
+        tableData.append(customizedCategoryString)
+        tableData.append(uploadItemString)
+        tableData.append(followersString)
+        tableData.append(activityLogsString)
+        tableData.append(myPointsString)
+        tableData.append(resolutionCenterString)
+        tableData.append(helpString)
+        tableData.append(logoutString)
     }
     
     func setupGCM(){
@@ -56,7 +142,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     func onRegistration(notification: NSNotification){
         if let info = notification.userInfo as? Dictionary<String,String> {
             if let error = info["error"] {
-                showAlert("Error registering with GCM", message: error)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: error, title: "Error registering with GCM")
             } else if let registrationToken = info["registrationToken"] {
                 let message = "Check the xcode debug console for the registration token for the server to send notifications to your device"
                 self.fireCreateRegistration(registrationToken)
@@ -64,14 +150,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             }
         }
     }
-    
-    func showAlert(title:String, message:String) {
-        let alert = UIAlertController(title: title,
-            message: message, preferredStyle: .Alert)
-        let dismissAction = UIAlertAction(title: "Dismiss", style: .Destructive, handler: nil)
-        alert.addAction(dismissAction)
-        self.presentViewController(alert, animated: true, completion: nil)
-    }
+
     
     func onNewMessage(notification : NSNotification){
         var newCount = SessionManager.getUnReadMessagesCount() + 1
@@ -96,7 +175,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             //SVProgressHUD.dismiss()
-            self.hud?.hide(true)
+            self.hideHud()
             //self.showSuccessMessage()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -110,64 +189,34 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                     if task.statusCode == 401 {
                         self.fireRefreshToken(true)
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        UIAlertController.displaySomethingWentWrongError(self)
                     }
                 }
-                //SVProgressHUD.dismiss()
-                self.hud?.hide(true)
+                self.hideHud()
         })
     }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
-        
-        if SessionManager.isLoggedIn() {
-            self.loginBlockerView.hidden = true
-        } else {
-            self.loginBlockerView.hidden = false
-        }
-        
-        
-        if NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
-            if ctr == 0{
-                fireStoreInfo(true)
-            } else {
-                fireStoreInfo(false)
-            }
-        } else {
-            if ctr == 1{
-                fireStoreInfo(true)
-            } else {
-                fireStoreInfo(false)
-            }
-        }
-        
-        
-        ctr++
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.navigationBarHidden = false
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.navigationBarHidden = true
-
-        self.tabBarController?.tabBar.hidden = false
-    }
-    
     
     // Show hud
     
     func showHUD() {
+        
+        if NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
+            if ctr == 0{
+                displayHUD()
+            } else {
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            }
+        } else {
+            if ctr == 1 {
+                displayHUD()
+            } else if ctr != 0 {
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            }
+        }
+        
+    }
+
+    func displayHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
             self.hud = nil
@@ -178,6 +227,11 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         self.hud?.dimBackground = false
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
+    }
+    
+    func hideHud() {
+        self.hud?.hide(true)
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
     }
     
     func initializeViews() {
@@ -230,15 +284,12 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     }
     
     // MARK: UICollectionViewDataSource
-    
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        //#warning Incomplete method implementation -- Return the number of sections
         return 1
     }
     
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //#warning Incomplete method implementation -- Return the number of items in the section
         return tableData.count
     }
     
@@ -247,13 +298,12 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         
         cell.setText(tableData[indexPath.row])
         cell.setIconImage(UIImage(named: tableImages[indexPath.row])!)
-        
         if tableImages[indexPath.row] == "uploadItem" {
             cell.iconView.backgroundColor = Constants.Colors.uploadViewColor
         } else {
             cell.iconView.backgroundColor = Constants.Colors.productPrice
         }
-        
+        cell.layoutIfNeeded()
         return cell
     }
     
@@ -263,7 +313,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: dashBoardHeaderIdentifier, forIndexPath: indexPath) as! DashBoardHeaderCollectionViewCell
             
             if storeInfo != nil{
-                let totalSales: String = "P\(storeInfo.totalSales)"
+                let totalSales: String = "\(storeInfo.totalSales)"
                 let totalProducts: String = "\(storeInfo.productCount)"
                 let totalTransactions: String = "\(storeInfo.transactionCount)"
                 
@@ -272,10 +322,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                 headerView.setCoverPhotoUrl(storeInfo.coverPhoto)
                 headerView.setProfilePhotoUrl(storeInfo.avatar)
                 headerView.setTotalProducts(totalProducts)
-                headerView.setTotalSales(totalSales)
+                headerView.setTotalSales(totalSales.formatToTwoDecimal())
                 headerView.setTotalTransactions(totalTransactions)
-                
-                println("totalTransactions \(totalTransactions)")
             }
             
             return headerView
@@ -285,14 +333,11 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     }
     
     // MARK: UICollectionViewDelegate
-    
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
         
     }
     
-    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-//        println("Clicked item \(tableData[indexPath.row])")
         if indexPath.row == 0 {
             var storeInfoViewController = StoreInfoViewController(nibName: "StoreInfoViewController", bundle: nil)
             self.navigationController?.pushViewController(storeInfoViewController, animated:true)
@@ -342,8 +387,12 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         } else if indexPath.row == 10 {
             
         } else if indexPath.row == 11 {
-            var alert = UIAlertController(title: nil, message: "Are you sure you want to logout?", preferredStyle: .ActionSheet)
-            alert.addAction(UIAlertAction(title: "Logout", style: .Destructive, handler: { action in
+            let areYouSUreString = StringHelper.localizedStringWithKey("ARE_YOU_SURE_LOGOUT_LOCALIZE_KEY")
+            let logoutString = StringHelper.localizedStringWithKey("LOGOUT_LOCALIZE_KEY")
+            let cancelString = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
+            
+            var alert = UIAlertController(title: nil, message: areYouSUreString, preferredStyle: .ActionSheet)
+            alert.addAction(UIAlertAction(title: logoutString, style: .Destructive, handler: { action in
                 switch action.style{
                 case .Default:
                     println("default")
@@ -353,11 +402,12 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                     
                 case .Destructive:
                     NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
+                    SessionManager.setAccessToken("")
                     let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
                     self.presentViewController(signInViewController, animated: true, completion: nil)
                 }
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: cancelString, style: .Cancel, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
         }
     }
@@ -366,7 +416,6 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         if showHUD {
             self.showHUD()
         }
-        
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
         
@@ -387,17 +436,18 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             NSUserDefaults.standardUserDefaults().synchronize()
             
             self.collectionView.reloadData()
-            self.hud?.hide(true)
+            
+            self.hideHud()
             
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
+                self.hideHud()
                 
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
                 if task.statusCode == 401 {
                     self.fireRefreshToken(showHUD)
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    UIAlertController.displaySomethingWentWrongError(self)
                     self.storeInfo = StoreInfoModel(name: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", account_number: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "")
                     
                     
@@ -433,7 +483,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                self.hud?.hide(true)
+                self.hideHud()
         })
         
     }

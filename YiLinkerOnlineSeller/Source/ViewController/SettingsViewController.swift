@@ -23,10 +23,19 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     var dimView: UIView?
     
+    var errorLocalizeString: String  = ""
+    var somethingWrongLocalizeString: String = ""
+    var connectionLocalizeString: String = ""
+    var connectionMessageLocalizeString: String = ""
+    var deactivateLocalizeString: String = ""
+    var deactivateAccountLocalizeString: String = ""
+    var cancelLocalizeString: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         initializeViews()
+        initializeLocalizedString()
         registerNibs()
     }
     
@@ -35,7 +44,20 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         // Dispose of any resources that can be recreated.
     }
     
+    func initializeLocalizedString() {
+        //Initialized Localized String
+        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
+        connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONUNREACHABLE_LOCALIZE_KEY")
+        connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONERRORMESSAGE_LOCALIZE_KEY")
+        deactivateLocalizeString = StringHelper.localizedStringWithKey("DEACTIVATE_LOCALIZED_KEY")
+        deactivateAccountLocalizeString = StringHelper.localizedStringWithKey("DEACTIVATE_ACCOUNT_LOCALIZED_KEY")
+        cancelLocalizeString = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
+    }
+    
     func initializeViews() {
+        self.title = StringHelper.localizedStringWithKey("SETTINGS_TITLE_LOCALIZED_KEY")
+        
         tableView.tableFooterView = UIView(frame: CGRectZero)
         tableView.delegate = self
         tableView.dataSource = self
@@ -80,10 +102,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             cell.delegate = self
             
             if indexPath.row == 0 {
-                cell.setTitleText("Email")
+                cell.setTitleText(StringHelper.localizedStringWithKey("SETTINGS_EMAIL_LOCALIZED_KEY"))
                 cell.setSettingSwitchStatus(isEmailOn)
             } else if indexPath.row == 1 {
-                cell.setTitleText("SMS")
+                cell.setTitleText(StringHelper.localizedStringWithKey("SETTINGS_SMS_LOCALIZED_KEY"))
                 cell.setSettingSwitchStatus(isSMSOn)
             }
             
@@ -137,7 +159,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             handleIOS8()
         } else {
             var actionSheet: UIActionSheet
-            actionSheet = UIActionSheet(title: "Deactivate Account", delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: "Deactivate")
+            actionSheet = UIActionSheet(title: deactivateAccountLocalizeString, delegate: self, cancelButtonTitle: self.cancelLocalizeString, destructiveButtonTitle: deactivateLocalizeString)
             
             actionSheet.delegate = self
             actionSheet.showInView(self.view)
@@ -181,9 +203,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             if let tempDict = responseObject as? NSDictionary {
                 let tempVar = tempDict["isSuccessful"] as! Bool
                 if !(tempVar){
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: tempDict["message"] as! String, title: "Error")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: tempDict["message"] as! String, title: self.errorLocalizeString)
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: tempDict["message"] as! String, title: "Notification")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: tempDict["message"] as! String, title: StringHelper.localizedStringWithKey("NOTIFICATIONS_LOCALIZED_KEY"))
                 }
             }
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
@@ -195,9 +217,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                     self.fireRefreshToken(type, isON: isOn)
                 } else {
                     if Reachability.isConnectedToNetwork() {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong!", title: "Error")
+                        UIAlertController.displaySomethingWentWrongError(self)
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                        UIAlertController.displayNoInternetConnectionError(self)
                     }
                     println(error)
                 }
@@ -229,12 +251,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     //Method for
     func handleIOS8(){
-        let alert = UIAlertController(title: "Deactivate Account", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
-        let libButton = UIAlertAction(title: "Deactivate", style: UIAlertActionStyle.Destructive) { (alert) -> Void in
+        let alert = UIAlertController(title: deactivateAccountLocalizeString, message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let libButton = UIAlertAction(title: deactivateLocalizeString, style: UIAlertActionStyle.Destructive) { (alert) -> Void in
             self.showDeactivateModal()
         }
         
-        let cancelButton = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alert) -> Void in
+        let cancelButton = UIAlertAction(title: self.cancelLocalizeString, style: UIAlertActionStyle.Cancel) { (alert) -> Void in
             println("Cancel Pressed")
         }
         

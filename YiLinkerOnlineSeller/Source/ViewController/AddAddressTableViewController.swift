@@ -13,8 +13,28 @@ protocol AddAddressTableViewControllerDelegate {
 }
 
 class AddAddressTableViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, NewAddressTableViewCellDelegate {
+    let editAddressTitle: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_TITLE_EDIT_LOCALIZE_KEY")
+    let addAddressTitle: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_TITLE_ADD_LOCALIZE_KEY")
+    let addressTitle: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_ADDRESS_TITLE_LOCALIZE_KEY")
+    let unitNo: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_UNIT_NO_LOCALIZE_KEY")
+    let bldgName: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_BLDG_NAME_LOCALIZE_KEY")
+    let streetNo: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_STREET_NO_LOCALIZE_KEY")
+    let streetName: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_STREET_NAME_LOCALIZE_KEY")
+    let subdivision: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_SUBDIVISION_LOCALIZE_KEY")
+    let province: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_PROVINCE_LOCALIZE_KEY")
+    let city: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_CITY_LOCALIZE_KEY")
+    let barangay: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_BARANGAY_LOCALIZE_KEY")
+    let zipCode: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_ZIP_CODE_LOCALIZE_KEY")
+    let additionalInfo: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_ADDITIONAL_INFO_LOCALIZE_KEY")
+    let ok: String = StringHelper.localizedStringWithKey("CHANGE_MOBILE_OK_LOCALIZE_KEY")
+    let somethingWentWrong: String = StringHelper.localizedStringWithKey("ERROR_SOMETHING_WENT_WRONG_LOCALIZE_KEY")
     
-    let titles: [String] = ["Address Title:", "Unit No.:", "Building Name:", "Street No.:", "Street Name:", "Subdivision:", "Province:", "City:", "Barangay:", "Zip Code:", "Additional Info:"]
+    let error: String = StringHelper.localizedStringWithKey("CHANGE_MOBILE_ERROR_LOCALIZE_KEY")
+    let streetNameRequired: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_STREET_NAME_REQUIRED_LOCALIZE_KEY")
+    let streetNoRequired: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_STREET_NO_REQUIRED_LOCALIZE_KEY")
+    let zipCodeRequired: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_ZIP_CODE_REQUIRED_LOCALIZE_KEY")
+    
+    var titles: [String] = []
     
     var delegate: AddAddressTableViewControllerDelegate?
     
@@ -43,15 +63,16 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.titles = [self.addressTitle, self.unitNo, self.bldgName, self.streetNo, self.streetName, self.subdivision, self.province, self.city, self.barangay, self.zipCode, self.additionalInfo]
         self.registerNib()
         self.backButton()
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         self.requestGetProvince()
         
         if self.isEdit {
-            self.title = "Edit Address"
+            self.title =  self.editAddressTitle
         } else {
-            self.title = "Add Address"
+            self.title = self.addressTitle
         }
     }
     
@@ -274,15 +295,15 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         if index == 3 {
             self.activeTextField = index - 1
             self.next()
-            showAlert(title: "Error", message: "Street number is required.")
+            showAlert(title: self.error, message: self.streetNoRequired)
         } else if index == 4 {
             self.activeTextField = index - 1
             self.next()
-            showAlert(title: "Error", message: "Street name is required.")
+            showAlert(title: self.error, message: self.streetNameRequired)
         } else if index == 9 {
             self.activeTextField = index - 1
             self.next()
-            showAlert(title: "Error", message: "Zip code is required.")
+            showAlert(title: self.error, message: self.zipCodeRequired)
         }
         //If index is zero all required fields are filled up
         if index == 0 {
@@ -328,7 +349,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     
     func showAlert(#title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let defaultAction = UIAlertAction(title: self.ok, style: .Default, handler: nil)
         alertController.addAction(defaultAction)
         presentViewController(alertController, animated: true, completion: nil)
     }
@@ -364,7 +385,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 if task.statusCode == 401 {
                     self.requestRefreshToken(AddressRefreshType.Create)
                 } else {
-                    self.showAlert(title: "Something went wrong", message: nil)
+                    self.showAlert(title: self.somethingWentWrong, message: nil)
                     self.hud?.hide(true)
                 }
         })
@@ -400,11 +421,11 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 if error.userInfo != nil {
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: "Something went wrong")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: self.somethingWentWrong)
                 } else if task.statusCode == 401 {
                     self.requestRefreshToken(AddressRefreshType.Edit)
                 } else {
-                    self.showAlert(title: "Something went wrong", message: nil)
+                    self.showAlert(title: self.somethingWentWrong, message: nil)
                     self.hud?.hide(true)
                 }
         })
@@ -429,8 +450,8 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                let alertController = UIAlertController(title: "Something went wrong", message: "", preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                let alertController = UIAlertController(title: self.somethingWentWrong, message: "", preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: self.ok, style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
         })
@@ -461,7 +482,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                self.showAlert(title: "Something went wrong", message: nil)
+                self.showAlert(title: self.somethingWentWrong, message: nil)
         })
     }
     
@@ -495,7 +516,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                self.showAlert(title: "Something went wrong", message: nil)
+                self.showAlert(title: self.somethingWentWrong, message: nil)
         })
     }
     
@@ -517,7 +538,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                self.showAlert(title: "Something went wrong", message: nil)
+                self.showAlert(title: self.somethingWentWrong, message: nil)
         })
     }
     

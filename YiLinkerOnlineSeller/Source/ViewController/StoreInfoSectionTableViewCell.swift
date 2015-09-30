@@ -16,6 +16,8 @@ class StoreInfoSectionTableViewCell: UITableViewCell {
 
     var delegate: StoreInfoSectionTableViewCellDelegate?
     
+    @IBOutlet weak var qrCodeLabel: UILabel!
+    @IBOutlet weak var generateLabel: UILabel!
     @IBOutlet weak var generateQRCodeButton: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()

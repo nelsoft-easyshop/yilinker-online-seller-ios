@@ -8,9 +8,42 @@
 
 import UIKit
 
+struct CategoryStrings {
+    static let titleCategory = StringHelper.localizedStringWithKey("CATEGORY_TITLE_LOCALIZE_KEY")
+    static let details = StringHelper.localizedStringWithKey("CATEGORY_DETAILS_LOCALIZE_KEY")
+    static let categoryName = StringHelper.localizedStringWithKey("CATEGORY_NAME_LOCALIZE_KEY")
+    static let categoryParent = StringHelper.localizedStringWithKey("CATEGORY_PARENT_LOCALIZE_KEY")
+    static let none = StringHelper.localizedStringWithKey("CATEGORY_NONE_LOCALIZE_KEY")
+    static let categorySubCategories = StringHelper.localizedStringWithKey("CATEGORY_SUB_CATEGORIES_LOCALIZE_KEY")
+    static let categoryAddSub = StringHelper.localizedStringWithKey("CATEGORY_ADD_SUB_LOCALIZE_KEY")
+    static let categoryItems = StringHelper.localizedStringWithKey("CATEGORY_ITEMS_UNDER_LOCALIZE_KEY")
+    static let categoryNewItems = StringHelper.localizedStringWithKey("CATEGORY_NEW_ITEM_LOCALIZE_KEY")
+    static let categoryEdit = StringHelper.localizedStringWithKey("CATEGORY_EDIT_LOCALIZE_KEY")
+    static let categorySeeAll = StringHelper.localizedStringWithKey("CATEGORY_SEE_ALL_LOCALIZE_KEY")
+    static let categoryItems2 = StringHelper.localizedStringWithKey("CATEGORY_ITEMS_LOCALIZE_KEY")
+    
+    
+    static let titleAddCustomized = StringHelper.localizedStringWithKey("CATEGORY_ADD_CUSTOMIZED_LOCALIZE_KEY")
+    static let search = StringHelper.localizedStringWithKey("CATEGORY_SEARCH_LOCALIZE_KEY")
+    
+    static let titleEditCustomized = StringHelper.localizedStringWithKey("CATEGORY_EDIT_SUB_TITLE_LOCALIZE_KEY")
+    static let subRemoveCategories = StringHelper.localizedStringWithKey("CATEGORY_REMOVE_CATEGORIES_LOCALIZE_KEY")
+    static let subAddCategories = StringHelper.localizedStringWithKey("CATEGORY_ADD_CATEGORIES_LOCALIZE_KEY")
+    static let subClearAll = StringHelper.localizedStringWithKey("CATEGORY_CLEAR_ALL_LOCALIZE_KEY")
+    static let subRemovedSelected = StringHelper.localizedStringWithKey("CATEGORY_REMOVED_SELECTED_LOCALIZE_KEY")
+    static let subCancel = StringHelper.localizedStringWithKey("CATEGORY_CANCEL_LOCALIZE_KEY")
+    static let titleAddCategories = StringHelper.localizedStringWithKey("CATEGORY_ADD_CATEGORY_TITLE_LOCALIZE_KEY")
+    static let subEditCategory = StringHelper.localizedStringWithKey("CATEGORY_EDIT_CATEGORY_TITLE_LOCALIZE_KEY")
+    
+    static let titleAddItems = StringHelper.localizedStringWithKey("CATEGORY_ADD_ITEMS_TITLE_LOCALIZE_KEY")
+    static let titleEditItems = StringHelper.localizedStringWithKey("CATEGORY_EDIT_ITEMS_TITLE_LOCALIZE_KEY")
+    static let itemRemoveItems = StringHelper.localizedStringWithKey("CATEGORY_REMOVE_ITEMS_LOCALIZE_KEY")
+}
+
 class CustomizedCategoryViewController: UIViewController, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var emptyLabel: UILabel!
     
     var parentCategory: [String] = []
     var subCategories: [NSArray] = []
@@ -45,7 +78,7 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
     
     func customizedNavigationBar() {
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.title = "Customized Category"
+        self.title = CategoryStrings.titleCategory
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
@@ -82,7 +115,7 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
     
     func addCategoryAction() {
         let addCustomizedCategory = AddCustomizedCategoryViewController(nibName: "AddCustomizedCategoryViewController", bundle: nil)
-        addCustomizedCategory.title = "Add Customized Category"
+        addCustomizedCategory.title = CategoryStrings.titleAddCustomized
         addCustomizedCategory.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(addCustomizedCategory, animated: true)
     }
@@ -90,24 +123,63 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
     // MARK: - Requests
     
     func requestGetCustomizedCategories() {
-        if self.customizedCategoriesModel == nil {
-            self.showHUD()
+        if Reachability.isConnectedToNetwork() {
+            if self.customizedCategoriesModel == nil {
+                self.showHUD()
+            }
+            
+            let manager = APIManager.sharedInstance
+            let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
+            
+            manager.POST(APIAtlas.getCustomizedCategories, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                
+                self.customizedCategoriesModel = CustomizedCategoriesModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                
+                if self.customizedCategoriesModel.customizedCategories.count != 0 {
+                    self.tableView.reloadData()
+                } else {
+                    self.emptyLabel.hidden = false
+                }   
+                self.hud?.hide(true)
+                
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.requestRefreshToken()
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+                        self.hud?.hide(true)
+                    }
+            })
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.failed)
         }
         
+    }
+    
+    func requestRefreshToken() {
+        
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
-
-        manager.POST(APIAtlas.getCustomizedCategories, parameters: parameters, success: {
+        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            self.customizedCategoriesModel = CustomizedCategoriesModel.parseDataWithDictionary(responseObject as! NSDictionary)
-            self.tableView.reloadData()
             self.hud?.hide(true)
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.requestGetCustomizedCategories()
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                println(error)
                 self.hud?.hide(true)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
         })
     }
     
@@ -171,26 +243,18 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
     // MARK: - Table View Delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let addCustomizedCategory = AddCustomizedCategoryViewController(nibName: "AddCustomizedCategoryViewController", bundle: nil)
-        addCustomizedCategory.title = "Edit Customized Category"
-        addCustomizedCategory.requestGetCategoryDetails(self.customizedCategoriesModel.customizedCategories[indexPath.row].categoryId)
-        addCustomizedCategory.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(addCustomizedCategory, animated: true)
-        
+        if Reachability.isConnectedToNetwork() {
+            let addCustomizedCategory = AddCustomizedCategoryViewController(nibName: "AddCustomizedCategoryViewController", bundle: nil)
+            addCustomizedCategory.title = CategoryStrings.titleEditCustomized
+            addCustomizedCategory.requestGetCategoryDetails(self.customizedCategoriesModel.customizedCategories[indexPath.row].categoryId)
+            addCustomizedCategory.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(addCustomizedCategory, animated: true)
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.failed)
+        }
         // to delete categories
 //        requestDeleteCustomizedCategories(self.customizedCategoriesModel.customizedCategories[indexPath.row].categoryId)
     }
-    
-    // MARK: - Add Customized Category View Controller Delegate
-    
-//    func addCategory(parent: String, sub: NSArray, items: NSArray) {
-//        
-//        self.parentCategory.append(parent)
-//        self.subCategories.append(sub)
-//        self.categoryItems.append(items)
-//        
-//        self.tableView.reloadData()
-//    }
     
     func passNewCategory(category: String) {
         

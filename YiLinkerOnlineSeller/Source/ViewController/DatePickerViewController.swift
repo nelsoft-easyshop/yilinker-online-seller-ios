@@ -27,6 +27,8 @@ class DatePickerViewController: UIViewController {
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var startDateLabel: UILabel!
     @IBOutlet weak var endDateLabel: UILabel!
+    @IBOutlet weak var startsLabel: UILabel!
+    @IBOutlet weak var endsLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +38,7 @@ class DatePickerViewController: UIViewController {
         initializeViews()
         initializeNavigationBar()
         initializeTapGesture()
+        initializeLocalizedString()
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,6 +55,14 @@ class DatePickerViewController: UIViewController {
         datePicker.date = startDate
         startDateLabel.text = formatDate(startDate)
         endDateLabel.text = formatDate(endDate)
+    }
+    
+    func initializeLocalizedString() {
+        let startsString = StringHelper.localizedStringWithKey("STARTS_LOCALIZE_KEY")
+        let endsString = StringHelper.localizedStringWithKey("ENDS_LOCALIZE_KEY")
+        
+        startsLabel.text = startsString
+        endsLabel.text = endsString
     }
     
     func initializeNavigationBar() {

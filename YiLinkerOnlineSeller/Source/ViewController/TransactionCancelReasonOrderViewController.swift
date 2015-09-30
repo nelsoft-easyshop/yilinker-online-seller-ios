@@ -24,6 +24,9 @@ class TransactionCancelReasonOrderViewController: UIViewController, UITextViewDe
     @IBOutlet weak var reasonTextField: UITextField!
     @IBOutlet weak var remarksTextView: UITextView!
     @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var reasonLabel: UILabel!
+    @IBOutlet weak var remarksLabel: UILabel!
     
     var mainViewOriginalFrame: CGRect?
     
@@ -38,6 +41,8 @@ class TransactionCancelReasonOrderViewController: UIViewController, UITextViewDe
     var selectedRow: Int = 0
     
     var invoiceNumber: String = ""
+    
+    var errorLocalizedString = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +75,16 @@ class TransactionCancelReasonOrderViewController: UIViewController, UITextViewDe
         screenHeight = screenSize.height
         
         topConstraint.constant = (screenHeight! / 2) - (mainView.frame.height / 2)
+    }
+    
+    func intializeLocalizeStrings() {
+        titleLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_MODAL_REASON_TITLE_LOCALIZE_KEY")
+        reasonLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_MODAL_REASON_TYPE_LOCALIZE_KEY")
+        reasonTextField.placeholder = StringHelper.localizedStringWithKey("TRANSACTION_MODAL_REASON_SELECT_LOCALIZE_KEY")
+        remarksLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_MODAL_REASON_REMARKS_LOCALIZE_KEY")
+        submitButton.setTitle(StringHelper.localizedStringWithKey("TRANSACTION_MODAL_REASON_SUBMIT_LOCALIZE_KEY"), forState: UIControlState.Normal)
+        
+        errorLocalizedString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
     }
     
     func tapMainAction() {
@@ -158,7 +173,7 @@ class TransactionCancelReasonOrderViewController: UIViewController, UITextViewDe
                     self.cancellationModels.append(TransactionCancellationModel.parseDataWithDictionary(subValue as! NSDictionary))
                 }
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: response["message"] as! String, title: "Error")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: response["message"] as! String, title: self.errorLocalizedString)
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
             
@@ -173,12 +188,11 @@ class TransactionCancelReasonOrderViewController: UIViewController, UITextViewDe
                     if task.statusCode == 401 {
                         self.fireRefreshToken()
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                        UIAlertController.displaySomethingWentWrongError(self)
 
                     }
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                    UIAlertController.displayNoInternetConnectionError(self)
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }
                 
@@ -203,7 +217,7 @@ class TransactionCancelReasonOrderViewController: UIViewController, UITextViewDe
                 self.dismissViewControllerAnimated(true, completion: nil)
                 self.delegate?.submitTransactionCancelReason()
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: response["message"] as! String, title: "Error")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: response["message"] as! String, title: self.errorLocalizedString)
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
             
@@ -218,12 +232,12 @@ class TransactionCancelReasonOrderViewController: UIViewController, UITextViewDe
                     if task.statusCode == 401 {
                         self.fireRefreshToken()
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        UIAlertController.displaySomethingWentWrongError(self)
                         self.dismissViewControllerAnimated(true, completion: nil)
                         
                     }
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                    UIAlertController.displayNoInternetConnectionError(self)
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }
                 

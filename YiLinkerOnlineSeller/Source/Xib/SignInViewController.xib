@@ -22,11 +22,13 @@
             <connections>
                 <outlet property="emailAddressTextField" destination="MX5-hB-w5c" id="Gfu-QV-y8N"/>
                 <outlet property="forgotPasswordButton" destination="r1J-ls-B5j" id="lsM-cD-GhO"/>
+                <outlet property="mottoLabel" destination="Ee5-Z4-QpK" id="gxG-bX-HG3"/>
                 <outlet property="passwordTextField" destination="O6t-ug-bEx" id="jxV-iz-Nx0"/>
                 <outlet property="profileContainerView" destination="Mtg-Gz-CPJ" id="aDj-hM-2HA"/>
                 <outlet property="profileImageView" destination="tBZ-cE-9j9" id="MMh-uj-Dko"/>
                 <outlet property="rememberMeImageContainerView" destination="Cdf-H9-c3X" id="3wZ-qJ-HsN"/>
                 <outlet property="rememberMeImageView" destination="OBf-dA-JrZ" id="fIV-1v-9Sr"/>
+                <outlet property="rememberMeLabel" destination="mUq-i6-JGa" id="5yg-lE-jHn"/>
                 <outlet property="rememberMeView" destination="Hwr-XN-vWq" id="VA9-Jq-1G4"/>
                 <outlet property="signInButton" destination="Nh8-ww-ecD" id="gwh-Rk-2NL"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -38,15 +40,6 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="YOUR SUCCESS. IS OUR SUCCESS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ee5-Z4-QpK">
-                    <rect key="frame" x="0.0" y="120" width="375" height="21"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="21" id="my3-Ec-d9c"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="14"/>
-                    <color key="textColor" red="0.43529411759999997" green="0.20392156859999999" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="YiLinkerLogo" translatesAutoresizingMaskIntoConstraints="NO" id="4uD-ez-kVV">
                     <rect key="frame" x="162" y="37" width="50" height="60"/>
                     <constraints>
@@ -81,7 +74,7 @@
                             </constraints>
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
-                            <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                            <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="Md3-WL-89g"/>
                             </connections>
@@ -173,6 +166,15 @@
                         <constraint firstItem="O6t-ug-bEx" firstAttribute="leading" secondItem="qW2-BF-QDF" secondAttribute="leading" id="xBd-1T-N5R"/>
                     </constraints>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="YOUR SUCCESS. IS OUR SUCCESS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ee5-Z4-QpK">
+                    <rect key="frame" x="0.0" y="120" width="375" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="my3-Ec-d9c"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="14"/>
+                    <color key="textColor" red="0.43529411759999997" green="0.20392156859999999" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>

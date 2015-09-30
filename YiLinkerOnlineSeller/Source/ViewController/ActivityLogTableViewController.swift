@@ -49,7 +49,7 @@ class ActivityLogTableViewController: UITableViewController {
     }
     
     func initializeNavigationBar() {
-        self.title = "Activity Log"
+        self.title = StringHelper.localizedStringWithKey("ACTIVITY_LOGS_TITLE_LOCALIZE_KEY")
         
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -75,14 +75,10 @@ class ActivityLogTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
         return tableData.count
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
         return tableData[section].activities.count
     }
 
@@ -205,7 +201,7 @@ class ActivityLogTableViewController: UITableViewController {
                         self.activities.activities += activityLogs.activities
                         self.initializeActivityLogsItem()
                     } else {
-                    self.isPageEnd = true
+                        self.isPageEnd = true
                     }
                 
                     self.hud?.hide(true)
@@ -217,16 +213,18 @@ class ActivityLogTableViewController: UITableViewController {
                         self.fireRefreshToken()
                     } else {
                         if Reachability.isConnectedToNetwork() {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong!", title: "Error")
+                            UIAlertController.displaySomethingWentWrongError(self)
                         } else {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                            UIAlertController.displayNoInternetConnectionError(self)
                         }
                         println(error)
                     }
             })
         } else {
             self.hud?.hide(true)
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "No more data!", title: "Activity Logs")
+            let titleString = StringHelper.localizedStringWithKey("ACTIVITY_LOGS_TITLE_LOCALIZE_KEY")
+            let noMoreDataString = StringHelper.localizedStringWithKey("NO_MORE_DATA_LOCALIZE_KEY")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noMoreDataString, title: titleString)
         }
         
     }

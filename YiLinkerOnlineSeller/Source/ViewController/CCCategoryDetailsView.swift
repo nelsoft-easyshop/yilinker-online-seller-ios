@@ -16,12 +16,20 @@ class CCCategoryDetailsView: UIView {
 
     var delegate: CCCategoryDetailsViewDelegate?
     
+    @IBOutlet weak var categoryDetailsLabel: UILabel!
+    @IBOutlet weak var categoryNameLabel: UILabel!
+    @IBOutlet weak var parentCategoryTextLabel: UILabel!
     @IBOutlet weak var categoryNameTextField: UITextField!
     @IBOutlet weak var parentCategoryLabel: UILabel!
 
     override func awakeFromNib() {
         self.parentCategoryLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "parentCategoryAction:"))
-//        self.categoryNameTextField.addTarget(self, action: "textDidChanged", forControlEvents: UIControlEvents.EditingChanged)
+
+        
+        self.categoryDetailsLabel.text = CategoryStrings.details
+        self.categoryNameLabel.text = CategoryStrings.categoryName
+        self.parentCategoryTextLabel.text = CategoryStrings.categoryParent
+        self.parentCategoryLabel.text = CategoryStrings.none
     }
     
     // MARK: - Actions

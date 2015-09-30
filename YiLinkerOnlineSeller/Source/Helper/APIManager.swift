@@ -53,7 +53,7 @@ struct APIAtlas {
     static let sellerChangePassword = "auth/user/changePassword"
     static let sellerUpdateSellerInfo = "auth/merchant/updateUserInfo"
     static let getCustomizedCategories   = "category/getCustomCategories"           // Applied
-    static let getCategoryDetails        = "auth/category/getCategoryDetails"       // Applied
+    static let getCategoryDetails        = "category/getCategoryDetails"            // Applied
     static let editCustomizedCategory    = "auth/category/updateCustomCategory"
     static let addCustomizedCategory     = "auth/category/addCustomCategory"        // Applied
     static let deleteCustomizedCategory  = "auth/category/deleteCustomCategory"     // Applied
@@ -79,6 +79,8 @@ struct APIAtlas {
     static let getFollowers = "auth/merchant/getFollowers"
     
     static let getActivityLogs = "auth/user/activityLog"
+    
+    static let getDeliveryLogs = "auth/getTransactionDeliveryLogs"
     
     static let postEmailNotif = "auth/email/subscription"
     static let postSMSNotif = "auth/sms/subscription"

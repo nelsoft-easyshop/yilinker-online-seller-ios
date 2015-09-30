@@ -8,6 +8,21 @@
 
 import UIKit
 
+struct SignInStrings {
+    static let motto = StringHelper.localizedStringWithKey("MOTTO_LOCALIZE_KEY")
+    static let emailPlaceholder = StringHelper.localizedStringWithKey("EMAIL_PLACEHOLDER_LOCALIZE_KEY")
+    static let passwordPlaceholder = StringHelper.localizedStringWithKey("PASSWORD_PLACEHOLDER_LOCALIZE_KEY")
+    static let rememberMe = StringHelper.localizedStringWithKey("REMEMBER_ME_LOCALIZE_KEY")
+    static let forgot = StringHelper.localizedStringWithKey("FORGOT_LOCALIZE_KEY")
+    static let signin = StringHelper.localizedStringWithKey("SIGN_IN_LOCALIZE_KEY")
+    static let signingin = StringHelper.localizedStringWithKey("SIGNING_IN_LOCALIZE_KEY")
+    static let welcome = StringHelper.localizedStringWithKey("WELCOME_LOCALIZE_KEY")
+    static let please = StringHelper.localizedStringWithKey("PLEASE_INPUT_LOCALIZE_KEY")
+    static let notMatch = StringHelper.localizedStringWithKey("NOT_MATCH_LOCALIZE_KEY")
+    static let alertLogout = StringHelper.localizedStringWithKey("LOGOUT_LOCALIZE_KEY")
+    static let alertLogoutMessage = StringHelper.localizedStringWithKey("LOGOUT_MESSAGE_LOCALIZE_KEY")
+}
+
 protocol SignInViewControllerDelegate{
     func passStoreInfoModel(storeInfoModel: StoreInfoModel)
 }
@@ -16,6 +31,8 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     
     var delegate: SignInViewControllerDelegate?
     
+    @IBOutlet weak var mottoLabel: UILabel!
+    @IBOutlet weak var rememberMeLabel: UILabel!
     @IBOutlet weak var profileContainerView: UIView!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var emailAddressTextField: UITextField!
@@ -73,6 +90,13 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         self.rememberMeImageContainerView.layer.borderWidth = 0.5
         
         self.signInButton.layer.cornerRadius = 2.0
+        
+        self.mottoLabel.text = SignInStrings.motto
+        self.emailAddressTextField.placeholder = SignInStrings.emailPlaceholder
+        self.passwordTextField.placeholder = SignInStrings.passwordPlaceholder
+        self.rememberMeLabel.text = SignInStrings.rememberMe
+        self.forgotPasswordButton.setTitle(SignInStrings.forgot, forState: .Normal)
+        self.signInButton.setTitle(SignInStrings.signin, forState: .Normal)
     }
     
     func addCheckInTextField(field: UITextField) {
@@ -99,10 +123,14 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     
     @IBAction func signInAction(sender: AnyObject) {
         if self.emailAddressTextField.rightView?.hidden == false && self.passwordTextField.rightView?.hidden == false {
-            self.signInButton.setTitle("SIGNING IN ....", forState: .Normal)
-            self.requestSignin()
+            if Reachability.isConnectedToNetwork() {
+                self.signInButton.setTitle(SignInStrings.signingin, forState: .Normal)
+                self.requestSignin()
+            } else {
+                showAlert(title: AlertStrings.failed, message: AlertStrings.checkInternet)
+            }
         } else {
-            showAlert(title: "Error", message: "Please input valid email and password.")
+            showAlert(title: AlertStrings.error, message: SignInStrings.please)
         }
     }
     
@@ -111,8 +139,8 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             self.rememberMeImageView.image = nil
             self.rememberMeImageContainerView.backgroundColor = UIColor.clearColor()
         } else {
-            self.rememberMeImageView.image = UIImage(named: "check2")
-            self.rememberMeImageContainerView.backgroundColor = .greenColor()
+            self.rememberMeImageView.image = UIImage(named: "check")
+            self.rememberMeImageContainerView.backgroundColor = HexaColor.colorWithHexa(0x54b6a7)
         }
     }
     
@@ -120,7 +148,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isSeller")
         self.showHUD()
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["email": "seller@easyshop.ph",
+        let parameters: NSDictionary = ["email": "reseller@easyshop.ph",
             "password": "password",
             "client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
@@ -134,7 +162,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             self.dismissViewControllerAnimated(true, completion: nil)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.signInButton.setTitle("SIGN IN", forState: .Normal)
+                self.signInButton.setTitle(SignInStrings.signin, forState: .Normal)
                 
                 if error.userInfo != nil {
                     if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
@@ -142,15 +170,15 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
                             let errorDescription: String = jsonResult["error_description"] as! String
                             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
                         } else {
-                            self.showAlert(title: "Error", message: "Something went wrong")
+                            self.showAlert(title: AlertStrings.error, message: AlertStrings.wentWrong)
                         }
                     }
                 } else {
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     if task.statusCode == 1011 {
-                        self.showAlert(title: "Error", message: "Email and Password did not match.")
+                        self.showAlert(title: AlertStrings.error, message: SignInStrings.notMatch)
                     } else {
-                        self.showAlert(title: "Error", message: "Something went wrong")
+                        self.showAlert(title: AlertStrings.error, message: AlertStrings.wentWrong)
                     }
                 }
                 
@@ -240,7 +268,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             
             self.hideKeyboard(UIGestureRecognizer())
-            self.signInButton.setTitle("Welcome to YiLinker!", forState: .Normal)
+            self.signInButton.setTitle(SignInStrings.welcome, forState: .Normal)
             self.signinSuccessful()
             
             }, failure: {
@@ -255,9 +283,9 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
                 } else {
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     if task.statusCode == 1011 {
-                        self.showAlert(title: "Error", message: "Email and Password did not match.")
+                        self.showAlert(title: AlertStrings.error, message: SignInStrings.notMatch)
                     } else {
-                        self.showAlert(title: "Error", message: "Something went wrong")
+                        self.showAlert(title: AlertStrings.error, message: AlertStrings.wentWrong)
                     }
                 }
                 

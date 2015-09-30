@@ -18,6 +18,7 @@ class PointsTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        pointsTitleLabel.text = StringHelper.localizedStringWithKey("POINTS_LOCALIZE_KEY")
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

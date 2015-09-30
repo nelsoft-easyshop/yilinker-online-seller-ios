@@ -27,13 +27,15 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VerifyNumberViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
             <connections>
                 <outlet property="closeButton" destination="cSQ-MZ-04i" id="Jxg-ar-UF9"/>
+                <outlet property="messageLabel" destination="hit-l2-mLb" id="mO8-6S-3Xb"/>
                 <outlet property="requestNewVerificationButton" destination="Lbj-za-7C8" id="ang-Ow-GYK"/>
                 <outlet property="successFailView" destination="WDP-Pg-9sB" id="CNp-Vd-tsM"/>
+                <outlet property="timeLeftLabel" destination="XLL-dM-DlX" id="8Hh-b0-awc"/>
                 <outlet property="timerLabel" destination="pEI-td-AnR" id="XWO-xp-aNP"/>
                 <outlet property="topConstraint" destination="hPI-yx-EC4" id="f23-1A-62j"/>
                 <outlet property="verificationCodeTextField" destination="lyc-vD-tX2" id="aiB-We-yd0"/>
                 <outlet property="verifyButton" destination="taH-J8-nQl" id="Hhs-W0-83I"/>
-                <outlet property="verifyTitleLabel" destination="jUX-Ol-BNf" id="0hd-fn-HlR"/>
+                <outlet property="verifyTitleLabel" destination="jUX-Ol-BNf" id="0pG-VF-wdq"/>
                 <outlet property="view" destination="5ri-ET-v5f" id="SwC-iI-fOx"/>
                 <outlet property="viewContainer" destination="eD7-zR-WuC" id="BVj-Ww-d3i"/>
             </connections>
@@ -94,11 +96,8 @@
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time Left: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XLL-dM-DlX">
-                                            <rect key="frame" x="22" y="9" width="59" height="16"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="59" id="hgq-VF-Wt5"/>
-                                            </constraints>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time Left: " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XLL-dM-DlX">
+                                            <rect key="frame" x="8" y="9" width="81" height="16"/>
                                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -108,12 +107,12 @@
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="XLL-dM-DlX" secondAttribute="bottom" constant="8" id="3Ju-6j-MKd"/>
                                         <constraint firstAttribute="height" constant="33" id="3qO-O2-Gxb"/>
-                                        <constraint firstItem="pEI-td-AnR" firstAttribute="leading" secondItem="XLL-dM-DlX" secondAttribute="trailing" constant="8" id="Kjg-vk-4iA"/>
+                                        <constraint firstItem="pEI-td-AnR" firstAttribute="leading" secondItem="XLL-dM-DlX" secondAttribute="trailing" id="Kjg-vk-4iA"/>
                                         <constraint firstAttribute="bottom" secondItem="pEI-td-AnR" secondAttribute="bottom" constant="8" id="QsY-fk-fZP"/>
                                         <constraint firstAttribute="trailing" secondItem="pEI-td-AnR" secondAttribute="trailing" constant="20" id="eI9-BF-D1x"/>
                                         <constraint firstAttribute="width" constant="161" id="iRz-Zk-3cZ"/>
                                         <constraint firstItem="pEI-td-AnR" firstAttribute="top" secondItem="qnF-vO-atp" secondAttribute="top" constant="9" id="krN-cg-U2r"/>
-                                        <constraint firstItem="XLL-dM-DlX" firstAttribute="leading" secondItem="qnF-vO-atp" secondAttribute="leading" constant="22" id="qi6-i9-Vsl"/>
+                                        <constraint firstItem="XLL-dM-DlX" firstAttribute="leading" secondItem="qnF-vO-atp" secondAttribute="leading" constant="8" id="qi6-i9-Vsl"/>
                                         <constraint firstItem="XLL-dM-DlX" firstAttribute="top" secondItem="qnF-vO-atp" secondAttribute="top" constant="9" id="vcc-nW-yUc"/>
                                     </constraints>
                                 </view>

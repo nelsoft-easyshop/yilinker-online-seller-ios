@@ -33,7 +33,7 @@ class TransactionShipItemTableViewController: UITableViewController, Transaction
     
     
     func initializeNavigationBar() {
-        self.title = "Ship your Items"
+        self.title = StringHelper.localizedStringWithKey("TRANSACTION_SHIP_ITEM_LOCALIZE_KEY")
         
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -97,10 +97,10 @@ class TransactionShipItemTableViewController: UITableViewController, Transaction
             println(responseObject)
             var response: NSDictionary = responseObject as! NSDictionary
             if response["isSuccessful"] as! Bool {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Successfully added item for pickup!", title: "Success")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("TRANSACTION_SHIP_SUCCESS_LOCALIZE_KEY"), title: StringHelper.localizedStringWithKey("TRANSACTION_SHIP_ITEM_LOCALIZE_KEY"))
                 self.navigationController?.popViewControllerAnimated(true)
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: response["message"] as! String, title: "Error")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: response["message"] as! String, title: StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY"))
             }
             
             
@@ -114,11 +114,11 @@ class TransactionShipItemTableViewController: UITableViewController, Transaction
                     if task.statusCode == 401 {
                         self.fireRefreshToken()
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        UIAlertController.displaySomethingWentWrongError(self)
                         
                     }
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                    UIAlertController.displayNoInternetConnectionError(self)
                 }
                 
                 

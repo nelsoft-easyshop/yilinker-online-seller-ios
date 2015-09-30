@@ -198,11 +198,14 @@
                 <outlet property="deliveryRiderCallButton" destination="NwV-KF-LLM" id="jEE-D9-Pfb"/>
                 <outlet property="deliveryRiderLabel" destination="ULr-I1-HjE" id="xEp-Yw-Mzb"/>
                 <outlet property="deliveryRiderSMSButton" destination="KQx-ox-4tH" id="gb3-RD-tx5"/>
+                <outlet property="deliveryRiderTitleLabel" destination="bgk-IB-06j" id="8al-h1-IUK"/>
                 <outlet property="lastCheckinButton" destination="dpp-i3-lYc" id="wSS-eB-7ix"/>
                 <outlet property="lastCheckinLabel" destination="C5J-Ho-YQY" id="0hb-s4-pUZ"/>
+                <outlet property="lastCheckinTitleLabel" destination="VoI-WQ-cV1" id="4Uo-1a-cPX"/>
                 <outlet property="pickupRiderCallButton" destination="xEL-7A-hDc" id="2r1-6U-vHF"/>
                 <outlet property="pickupRiderLabel" destination="agY-sI-jcb" id="CSs-68-9sN"/>
                 <outlet property="pickupRiderSMSButton" destination="del-Gb-4Xu" id="Pcg-kP-kaN"/>
+                <outlet property="pickupRiderTitleLabel" destination="Aen-RQ-hCd" id="Glp-Ka-8bo"/>
             </connections>
             <point key="canvasLocation" x="306.5" y="134.5"/>
         </tableViewCell>

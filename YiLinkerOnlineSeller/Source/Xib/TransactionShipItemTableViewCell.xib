@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -257,8 +257,12 @@
                 <outlet property="cancelButton" destination="ZgR-uL-JFn" id="AHn-Jz-Yus"/>
                 <outlet property="dateLabel" destination="pkk-UP-ey4" id="wzm-c1-NPT"/>
                 <outlet property="notesTextView" destination="JgG-SF-Z9n" id="igs-GK-Dap"/>
+                <outlet property="notesTitleLabel" destination="Jaw-BJ-E6B" id="QhG-4c-fwp"/>
                 <outlet property="pickupButton" destination="bBZ-8N-cOV" id="4yv-BW-Tsg"/>
+                <outlet property="pickupScheduleDescriptionLabel" destination="O9e-Ks-E7K" id="GDY-i7-aRg"/>
+                <outlet property="pickupScheduleLabel" destination="pqo-DC-hNj" id="kix-an-Lxb"/>
                 <outlet property="timeTextField" destination="Vv6-hI-LWG" id="MWQ-uv-RkM"/>
+                <outlet property="timeTitleLabel" destination="vxd-nq-2D0" id="nwC-zR-uDc"/>
             </connections>
             <point key="canvasLocation" x="282.5" y="137.5"/>
         </tableViewCell>

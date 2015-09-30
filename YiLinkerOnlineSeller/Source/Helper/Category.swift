@@ -185,6 +185,13 @@ extension UIAlertController {
         target.presentViewController(alert, animated: true, completion: nil)
     }
     
+    class func displaySomethingWentWrongError(target: AnyObject) {
+        let alert = UIAlertController(title: "Error", message: "Something went wrong.", preferredStyle: UIAlertControllerStyle.Alert)
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in }
+        alert.addAction(OKAction)
+        target.presentViewController(alert, animated: true, completion: nil)
+    }
+    
 }
 
 
@@ -245,5 +252,74 @@ extension NSDate {
         var secondsInHours : NSTimeInterval = Double(hoursToAdd) * 60 * 60
         var dateWithHoursAdded : NSDate = self.dateByAddingTimeInterval(secondsInHours)
         return dateWithHoursAdded
+    }
+}
+
+extension String {
+    
+    func isValidEmail() -> Bool {
+        // println("validate calendar: \(testStr)")
+        let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluateWithObject(self)
+    }
+    
+    func isAlphaNumeric() -> Bool {
+        let passwordRegEx = "[A-Za-z0-9_]*"
+        let passwordTest = NSPredicate(format: "SELF MATCHES %@", passwordRegEx)
+        
+        return passwordTest.evaluateWithObject(self)
+    }
+    
+    func isValidName() -> Bool {
+        let nameRegex = "^[a-zA-Z ]*$"
+        let nameTest = NSPredicate(format: "SELF MATCHES %@", nameRegex)
+        
+        return nameTest.evaluateWithObject(self)
+    }
+    
+    func isGreaterThanEightCharacters() -> Bool {
+        var result: Bool = false
+        if count(self) >= 8 {
+            result = true
+        }
+        
+        return result
+    }
+    
+    func isNotEmpty() -> Bool {
+        var result: Bool = false
+        if count(self) != 0 {
+            result = true
+        }
+        return result
+    }
+    
+    func isGreaterThanOrEqualEightCharacters() -> Bool {
+        var result: Bool = true
+        if count(self) < 11 {
+            result = false
+        }
+        return true
+    }
+    
+    func contains(find: String) -> Bool {
+        return self.rangeOfString(find) != nil
+    }
+    
+    func formatToTwoDecimal() -> String {
+        let formatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
+        formatter.numberStyle = .CurrencyStyle
+        return "\(formatter.stringFromNumber((self as NSString).doubleValue)!)"
+    }
+    
+    func formatToTwoDecimalNoTrailling() -> String {
+        let formatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
+        return "\(formatter.stringFromNumber((self as NSString).doubleValue)!)"
     }
 }

@@ -766,6 +766,9 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             customBrand = self.productModel.brand.name
         }
         
+        if self.productModel.discoutedPrice == "" {
+            self.productModel.discoutedPrice == "0"
+        }
     
         let parameters: NSDictionary = [ProductUploadTableViewControllerConstant.uploadPriceKey: self.productModel.retailPrice,
             ProductUploadTableViewControllerConstant.uploadShortDescriptionkey: self.productModel.shortDescription,

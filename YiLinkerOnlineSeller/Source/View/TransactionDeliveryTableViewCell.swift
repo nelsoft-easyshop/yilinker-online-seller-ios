@@ -31,13 +31,20 @@ class TransactionDeliveryTableViewCell: UITableViewCell {
     
     @IBOutlet weak var lastCheckinButton: UIButton!
     
+    @IBOutlet weak var lastCheckinTitleLabel: UILabel!
+    @IBOutlet weak var pickupRiderTitleLabel: UILabel!
+    @IBOutlet weak var deliveryRiderTitleLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        initializeLocalizedStrings()
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    func initializeLocalizedStrings() {
+        lastCheckinTitleLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_LAST_CHECKIN_LOCALIZE_KEY")
+        pickupRiderTitleLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_PICKUP_RIDER_LOCALIZE_KEY")
+        deliveryRiderTitleLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DELIVERY_RIDER_LOCALIZE_KEY")
     }
     
     @IBAction func buttonAction(sender: AnyObject) {
