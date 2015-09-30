@@ -319,6 +319,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     func submitDeactivateModal(password: String){
         hideDimView()
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
+        SessionManager.setAccessToken("")
+        let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
+        self.presentViewController(signInViewController, animated: true, completion: nil)
     }
     
 }
