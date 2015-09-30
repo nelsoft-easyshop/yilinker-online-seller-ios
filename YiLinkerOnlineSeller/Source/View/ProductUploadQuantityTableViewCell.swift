@@ -15,12 +15,14 @@ protocol ProductUploadQuantityTableViewCellDelegate {
 class ProductUploadQuantityTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var cellTextField: UITextField!
+    @IBOutlet weak var cellLabel: UILabel!
     
     var delegate: ProductUploadQuantityTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         self.cellTextField.delegate = self
+        self.cellLabel.required()
         self.cellTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
     }
 

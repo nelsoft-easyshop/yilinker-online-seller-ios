@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -66,7 +66,7 @@
                             <constraint firstAttribute="height" constant="30" id="evo-W5-7nG"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                        <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done"/>
                     </textField>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Width (CM)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pun-pp-H07">
                         <rect key="frame" x="12" y="179" width="105" height="16"/>
@@ -85,7 +85,7 @@
                             <constraint firstAttribute="width" priority="750" constant="160" id="GOJ-ay-DXh"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                        <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done"/>
                     </textField>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weight (KG)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pnq-zi-4Oz">
                         <rect key="frame" x="180" y="117" width="105" height="16"/>
@@ -114,7 +114,7 @@
                             <constraint firstAttribute="height" constant="30" id="tac-KC-qim"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                        <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done"/>
                     </textField>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="u4Z-br-Okt">
                         <rect key="frame" x="180" y="141" width="160" height="30"/>
@@ -123,7 +123,7 @@
                             <constraint firstAttribute="width" priority="750" constant="160" id="k18-Fn-N5a"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                        <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done"/>
                     </textField>
                 </subviews>
                 <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -162,9 +162,13 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="heightLabel" destination="rJN-qV-gyH" id="DHt-8e-IyV"/>
                 <outlet property="heightTextField" destination="hVz-4Q-UrQ" id="bqL-Hf-ehR"/>
                 <outlet property="lengthTextField" destination="7OP-Rl-qjY" id="9Px-Io-QYm"/>
+                <outlet property="lengthlabel" destination="9Hd-rd-87i" id="1U4-Cn-HiG"/>
+                <outlet property="weightLabel" destination="Pnq-zi-4Oz" id="aQs-w2-sxx"/>
                 <outlet property="weightTextField" destination="u4Z-br-Okt" id="vfO-87-RM8"/>
+                <outlet property="widthLabel" destination="Pun-pp-H07" id="SRT-hu-oeq"/>
                 <outlet property="widthTextField" destination="nuV-eU-pH2" id="TgI-Rb-OO3"/>
             </connections>
             <point key="canvasLocation" x="350.5" y="448.5"/>

@@ -12,6 +12,8 @@ protocol ProductUploadCombinationFooterTableViewCellDelegate {
     func productUploadCombinationFooterTableViewCell(didClickDoneButton cell: ProductUploadCombinationFooterTableViewCell, sku: String, quantity: String, discountedPrice: String, retailPrice: String, uploadImages: [UIImage])
     func productUploadCombinationFooterTableViewCell(didClickUploadImage cell: ProductUploadCombinationFooterTableViewCell)
     func productUploadCombinationFooterTableViewCell(didDeleteUploadImage cell: ProductUploadCombinationFooterTableViewCell, indexPath: NSIndexPath)
+    
+    func productUploadCombinationFooterTableViewCell(textFieldDidChange textField: UITextField, text: String, cell: ProductUploadCombinationFooterTableViewCell)
 }
 
 class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, ProductUploadImageCollectionViewCellDelegate, UITextFieldDelegate {
@@ -26,14 +28,37 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
     @IBOutlet weak var quantityTextField: UITextField!
     @IBOutlet weak var skuTextField: UITextField!
 
+    @IBOutlet weak var retailPriceLabel: UILabel!
+    @IBOutlet weak var discountedPriceLabel: UILabel!
+    @IBOutlet weak var quantityLabel: UILabel!
+    @IBOutlet weak var skuLabel: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.registerCell()
         
         self.retailPriceTextField.delegate = self
+        self.retailPriceTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         self.discountedPriceTextField.delegate = self
+        self.discountedPriceTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         self.quantityTextField.delegate = self
+        self.quantityTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         self.skuTextField.delegate = self
+        self.skuTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        
+        self.retailPriceLabel.required()
+        self.quantityLabel.required()
+    }
+    
+    func textFieldDidChange(sender: UITextField) {
+        self.delegate!.productUploadCombinationFooterTableViewCell(textFieldDidChange: sender, text: sender.text, cell: self)
+    }
+    
+    // MARK: - Images
+    func uploadedImages() -> [UIImage] {
+        self.images.removeLast()
+        return self.images
     }
     
     @IBAction func save(sender: AnyObject) {
