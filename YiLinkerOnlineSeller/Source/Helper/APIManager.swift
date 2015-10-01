@@ -104,6 +104,8 @@ struct APIAtlas {
     
     static let baseUrl = APIEnvironment.baseUrl()
     
+    static let uploadDraftUrl = "product/upload/draft"
+    
     
     /* MESSAGING CONSTANTS */
     static let ACTION_SEND_MESSAGE          = "/message/sendMessage"

@@ -82,3 +82,9 @@ enum DisputeRefreshType {
     case AddCase
     case OrderType
 }
+
+enum UploadType {
+    case NewProduct
+    case Draft
+    case EditProduct
+}

@@ -56,6 +56,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     var productUploadWeightAndHeightCellHeight: CGFloat = 244
     var dimensionsHeaderViewHeight: CGFloat = 41
     
+    var uploadType: UploadType = UploadType.NewProduct
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
@@ -542,7 +544,12 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     func back() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        if self.productModel.name != "" {
+            self.draft()
+        } else {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+
     }
     
     //Upload Cell Datasource
@@ -680,7 +687,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         } else if self.productModel.height == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert product height.", title: "Incomplete Product Details")
         } else {
-            self.fireUpload()
+            self.fireUploadWithUploadType(self.uploadType)
         }
     }
     
@@ -747,11 +754,15 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
     }
     
-    func fireUpload() {
+    func fireUploadWithUploadType(uploadType: UploadType) {
         var datas: [NSData] = []
         
         var productUploadedImagesCount: Int = 0
-        self.productModel.images.removeLast()
+
+        if self.productModel.images.count != 0 {
+            self.productModel.images.removeLast()
+        }
+
         let mainImageCount: Int = self.productModel.images.count
         
         var imagesKey: [String] = []
@@ -780,30 +791,68 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         if self.productModel.discoutedPrice == "" {
             self.productModel.discoutedPrice == "0"
         }
+        var categoryId: String = "\(self.productModel.category.uid)"
+    
+        var height: String = "\(self.productModel.height)"
+        var width: String = "\(self.productModel.width)"
+        var length: String = "\(self.productModel.length)"
+        var weight: String = "\(self.productModel.weigth)"
+    
+        if height == "" {
+            height = "0"
+        }
+        
+        if width == "" {
+            width = "0"
+        }
+        
+        if length == "" {
+            length = "0"
+        }
+        
+        if weight == "" {
+            weight = "0"
+        }
+    
+        if categoryId == "0" {
+            categoryId = ""
+        }
     
         let parameters: NSDictionary = [ProductUploadTableViewControllerConstant.uploadPriceKey: self.productModel.retailPrice,
-            ProductUploadTableViewControllerConstant.uploadShortDescriptionkey: self.productModel.shortDescription,
-            ProductUploadTableViewControllerConstant.uploadDescriptionKey: self.productModel.completeDescription,
-            ProductUploadTableViewControllerConstant.uploadPriceKey: self.productModel.retailPrice,
-            ProductUploadTableViewControllerConstant.uploadDiscountedPriceKey: self.productModel.discoutedPrice,
-            ProductUploadTableViewControllerConstant.uploadQuantityKey: self.productModel.quantity,
-            ProductUploadTableViewControllerConstant.uploadCategoryKey: self.productModel.category.uid,
-            ProductUploadTableViewControllerConstant.uploadBrandKey: self.productModel.brand.brandId,
-            ProductUploadTableViewControllerConstant.uploadTitleKey: self.productModel.name,
-            ProductUploadTableViewControllerConstant.uploadConditionKey: self.productModel.condition.uid,
-            ProductUploadTableViewControllerConstant.uploadPropertyKey: self.property(mainImageCount),
-            ProductUploadTableViewControllerConstant.uploadImagesKey: imagesKey,
-            "customBrand": customBrand,
-            "isFreeShipping": false,
-            "height": self.productModel.height,
-            "width": self.productModel.width,
-            "weight": self.productModel.weigth,
-            "length": self.productModel.length]
+        ProductUploadTableViewControllerConstant.uploadShortDescriptionkey: self.productModel.shortDescription,
+        ProductUploadTableViewControllerConstant.uploadDescriptionKey: self.productModel.completeDescription,
+        ProductUploadTableViewControllerConstant.uploadPriceKey: self.productModel.retailPrice,
+        ProductUploadTableViewControllerConstant.uploadDiscountedPriceKey: self.productModel.discoutedPrice,
+        ProductUploadTableViewControllerConstant.uploadQuantityKey: self.productModel.quantity,
+        ProductUploadTableViewControllerConstant.uploadCategoryKey: categoryId,
+        ProductUploadTableViewControllerConstant.uploadBrandKey: self.productModel.brand.brandId,
+        ProductUploadTableViewControllerConstant.uploadTitleKey: self.productModel.name,
+        ProductUploadTableViewControllerConstant.uploadConditionKey: self.productModel.condition.uid,
+        ProductUploadTableViewControllerConstant.uploadPropertyKey: self.property(mainImageCount),
+        ProductUploadTableViewControllerConstant.uploadImagesKey: imagesKey,
+        "customBrand": customBrand,
+        "isFreeShipping": false,
+        "height": height,
+        "width": width,
+        "weight": weight,
+        "length": length]
+
         
         let manager: APIManager = APIManager.sharedInstance
         
         self.showHUD()
-        let url: String = "\(APIAtlas.uploadUrl)?access_token=\(SessionManager.accessToken())"
+        
+        var url: String = ""
+        
+        if uploadType == UploadType.Draft {
+             url = "\(APIAtlas.uploadDraftUrl)?access_token=\(SessionManager.accessToken())"
+        } else if uploadType == UploadType.NewProduct {
+            url = "\(APIAtlas.uploadUrl)?access_token=\(SessionManager.accessToken())"
+        } else if uploadType == UploadType.EditProduct {
+            
+        }
+        
+        
         manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
             for (index, data) in enumerate(datas) {
                 println("index: \(index)")
@@ -815,7 +864,18 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 let dictionary: NSDictionary = response as! NSDictionary
                 
                 if dictionary["isSuccessful"] as! Bool == true {
-                    self.success()
+                    if uploadType == UploadType.Draft {
+                        self.navigationController?.view.makeToast("Successfully uploaded into draft.")
+
+                        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC)))
+                       
+                        dispatch_after(delayTime, dispatch_get_main_queue()) {
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                        }
+                        
+                    } else {
+                        self.success()
+                    }
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: dictionary["message"] as! String, title: "Server Error")
                 }
@@ -926,7 +986,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.fireUpload()
+            self.fireUploadWithUploadType(self.uploadType)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -938,5 +998,25 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     deinit {
         self.tableView.delegate = nil
         self.tableView.dataSource = nil
+    }
+    
+    // Mark: - Draft Alert 
+    
+    func draft() {
+        let alertController = UIAlertController(title: "Product Upload", message: "Save as draft?", preferredStyle: .Alert)
+        
+        let cancelAction = UIAlertAction(title: "NO", style: .Cancel) { (action) in
+            
+        }
+        alertController.addAction(cancelAction)
+        
+        let OKAction = UIAlertAction(title: "YES", style: .Default) { (action) in
+            self.fireUploadWithUploadType(UploadType.Draft)
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+        }
     }
 }
