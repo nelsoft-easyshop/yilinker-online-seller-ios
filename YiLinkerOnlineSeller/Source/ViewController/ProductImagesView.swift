@@ -14,7 +14,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource {
     @IBOutlet weak var subTitleLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
    
-    var images: [ProductImagesModel] = []
+    var images: [String] = []
     
     override func awakeFromNib() {
         let nib = UINib(nibName: "ProductImagesCollectionViewCell", bundle: nil)
@@ -30,7 +30,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource {
         self.titleLabel.text = product.name
         self.subTitleLabel.text = product.completeDescription
 
-//        self.images = images
+        self.images = product.imageUrls
         self.collectionView.reloadData()
     }
     
@@ -47,7 +47,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource {
         let cell: ProductImagesCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("ProductImagesIdentifier", forIndexPath: indexPath) as! ProductImagesCollectionViewCell
         
         if images.count != 0 {
-            cell.setItemImage(images[indexPath.row].imageLocation)
+            cell.setItemImage(images[indexPath.row])
         }
         
         return cell

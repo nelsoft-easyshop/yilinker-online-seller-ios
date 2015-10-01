@@ -114,8 +114,9 @@ class ProductModel {
                     completeDescription = tempVar
                 }
                 
-                images = ["", ""]
-//                images = value["images"] as! [String]
+                for subValue in value["images"] as! NSArray {
+                    images.append("http://online.api.easydeal.ph/assets/images/uploads/products/" + (subValue["image"] as! String))
+                }
                 
                 var attributeModel = AttributeModel()
                 for subValue in value["productVariants"] as! NSArray {

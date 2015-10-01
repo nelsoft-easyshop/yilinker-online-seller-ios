@@ -39,6 +39,25 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     var productId: String = "1"
     
+    let detailNames = ["Category", "Brand"]
+    let priceNames = ["Retail Price", "Discounted Price"]
+    let dimensionWeightNames = ["Length (CM)", "Width (CM)", "Weight (KG)", "Height (CM)"]
+    
+    var detailValues: [String] = []
+    var priceValues: [String] = []
+    var dimensionWeightValues: [String] = []
+    
+    var listNames: [String] = []
+    var listValues: [String] = []
+    
+    var listDetails: NSDictionary = [:]
+    var listPrice: NSDictionary = [:]
+    var listDimensionsWeight: NSDictionary = [:]
+    var listSections: [NSArray] = []
+    var listSectionTitle = ["Detail", "Price", "Dimensions & Weight"]
+    var names: [String] = []
+    var values: [String] = []
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -131,12 +150,12 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         view.frame = newFrame
     }
     
-    func sectionHeaderView() -> UIView {
+    func sectionHeaderView(index: Int) -> UIView {
         var sectionView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 45.0))
         sectionView.backgroundColor = UIColor.whiteColor()
         
         var titleLabel = UILabel(frame: CGRectMake(10.0, 0, self.view.frame.size.width - 10.0, sectionView.frame.size.height))
-        titleLabel.text = "Title"
+        titleLabel.text = self.listSectionTitle[index]
         titleLabel.font = UIFont(name: "Panton-SemoBold", size: 17.0)
         titleLabel.textColor = UIColor.darkGrayColor()
         sectionView.addSubview(titleLabel)
@@ -173,25 +192,29 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         self.productImagesView.setDetails(productModel)
         self.productDescriptionView.descriptionLabel.text = productModel.shortDescription
         
-//        self.productUploadModel.attributes        = uploadAttributeModel
-//        self.productUploadModel.validCombinations = uploadCombinationModel
-//        self.productUploadModel.images            = [UIImage]()
+        let def: CombinationModel = productModel.validCombinations[0]
         
-//        self.productUploadModel.category  = CategoryModel(uid: 0, name: "", hasChildren: "")
-//        self.productUploadModel.brand     = BrandModel(name: "", brandId: 1)
-//        self.productUploadModel.condition = ConditionModel(uid: 0, name: "")
-//        self.productUploadModel.quantity  = 0
+        self.detailValues.append(productModel.category.name)
+        self.detailValues.append(productModel.brand.name)
         
-//        self.productUploadModel.name                = ""
-//        self.productUploadModel.shortDescription    = ""
-//        self.productUploadModel.completeDescription = ""
-//        self.productUploadModel.sku                 = ""
-//        self.productUploadModel.retailPrice         = ""
-//        self.productUploadModel.discoutedPrice      = ""
-//        self.productUploadModel.width               = ""
-//        self.productUploadModel.height              = ""
-//        self.productUploadModel.length              = ""
-//        self.productUploadModel.weigth              = ""
+        self.priceValues.append(def.retailPrice)
+        self.priceValues.append(def.discountedPrice)
+        
+        self.dimensionWeightValues.append(def.length)
+        self.dimensionWeightValues.append(def.width)
+        self.dimensionWeightValues.append(def.weight)
+        self.dimensionWeightValues.append(def.height)
+        
+        self.listNames = ["Category", "Brand", "Retail Price", "Discounted Price", "Length (CM)", "Width (CM)", "Weight (KG)", "Height (CM)"]
+        self.listValues = [productModel.category.name, productModel.brand.name, "P " + def.retailPrice, "P " + def.discountedPrice,
+            def.length + "cm", def.width + "cm", def.weight + "kg", def.height + "cm"]
+        
+//        self.listDetails = ["Category": productModel.category.name, "Brand": productModel.brand.name]
+//        self.listPrice = ["Retail Price": def.retailPrice, "Discounted Price": def.discountedPrice]
+//        self.listDimensionsWeight = ["Length (CM)": def.length, "Width (CM)": def.width, "Weight (KG)": def.weight, "Height (CM)": def.height]
+        self.listSections = [detailValues, priceValues, dimensionWeightValues]
+        
+        self.tableView.reloadData()
     }
     
     func localJson() {
@@ -285,13 +308,18 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        if self.listSections.count != 0 {
+            return self.listSections[section].count
+        }
+        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: ProductDetailsTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(myConstant.cellIdentifier) as! ProductDetailsTableViewCell
-        
         cell.selectionStyle = .None
+        
+        cell.itemNameLabel.text = self.listNames[indexPath.row + (indexPath.section * 2)]
+        cell.itemValueLabel.text = self.listValues[indexPath.row + (indexPath.section * 2)]
         
         return cell
     }
@@ -299,7 +327,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     // MARK: - Table View Delegate
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return sectionHeaderView()
+        return sectionHeaderView(section)
     }
     
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -313,7 +341,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     func gotoDescriptionViewController(view: ProductDescriptionView) {
         let productDescription = ProductDescriptionViewController(nibName: "ProductDescriptionViewController", bundle: nil)
-        productDescription.fullDescription = self.productDetailsModel.fullDescription
+        productDescription.fullDescription = self.productModel.completeDescription
         self.navigationController?.presentViewController(productDescription, animated: true, completion: nil)
     }
     
