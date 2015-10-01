@@ -25,12 +25,12 @@ class ProductImagesView: UIView, UICollectionViewDataSource {
     
     // MARK: - Methods
     
-    func setDetails(product: ProductDetailsModel, images: [ProductImagesModel]) {
+    func setDetails(product: ProductModel) {
         
-        self.titleLabel.text = product.title
-        self.subTitleLabel.text = product.fullDescription
-        
-        self.images = images
+        self.titleLabel.text = product.name
+        self.subTitleLabel.text = product.completeDescription
+
+//        self.images = images
         self.collectionView.reloadData()
     }
     

@@ -23,7 +23,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     var productUnitsModel: [ProductUnitsModel]!
     var productImagesModel: [ProductImagesModel]!
     // Upload Models
-    var productUploadModel: ProductModel!
+    var productModel: ProductModel!
     var uploadAttributeModel: [AttributeModel] = []
     var uploadCombinationModel: [CombinationModel] = []
     
@@ -170,8 +170,8 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     func populateDetails() {
         
-        self.productImagesView.setDetails(productDetailsModel, images: productImagesModel)
-        self.productDescriptionView.descriptionLabel.text = productDetailsModel.shortDescription
+        self.productImagesView.setDetails(productModel)
+        self.productDescriptionView.descriptionLabel.text = productModel.shortDescription
         
 //        self.productUploadModel.attributes        = uploadAttributeModel
 //        self.productUploadModel.validCombinations = uploadCombinationModel
@@ -235,13 +235,15 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         let manager = APIManager.sharedInstance
         manager.GET(APIAtlas.getProductDetails + id, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+            println(responseObject)
             if responseObject["isSuccessful"] as! Bool {
-                self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
-                self.productAttributesModel = self.productDetailsModel.attributes
-                self.productUnitsModel = self.productDetailsModel.productUnits
-                self.productImagesModel = self.productDetailsModel.images
+                self.productModel = ProductModel.parseDataWithDictionary(responseObject)
                 
+//                self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
+//                self.productAttributesModel = self.productDetailsModel.attributes
+//                self.productUnitsModel = self.productDetailsModel.productUnits
+//                self.productImagesModel = self.productDetailsModel.images
+//                
                 self.populateDetails()
             } else {
                 self.showAlert(title: "Error", message: responseObject["message"] as! String)
