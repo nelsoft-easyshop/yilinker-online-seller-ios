@@ -22,7 +22,7 @@ class ProductModel {
     var shortDescription: String = ""
     var completeDescription: String = ""
     var sku: String = ""
-    var retailPrice: String = ""
+    var retailPrice: String = "0"
     var discoutedPrice: String = "0"
     var width = ""
     var height = ""
@@ -41,4 +41,5 @@ class ProductModel {
     func copy() -> ProductModel {
         return ProductModel(attributes: self.attributes, validCombinations: self.validCombinations)
     }
+    
 }
