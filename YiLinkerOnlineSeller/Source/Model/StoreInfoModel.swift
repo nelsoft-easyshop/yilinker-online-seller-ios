@@ -47,8 +47,11 @@ class StoreInfoModel: NSObject {
     var productCount: Int = 0
     var transactionCount: Int = 0
     var totalSales: String = ""
+    var isReseller: Bool = false
+    var isEmailSubscribed: Bool = false
+    var isSmsSubscribed: Bool = false
     
-    init(name : String, email : String, gender : String, nickname : String, contact_number : String, specialty : String, birthdate : String, store_name : String, store_description : String, avatar : NSURL, cover_photo : NSURL, is_allowed : Bool, title: String, unit_number: String, bldg_name: String, street_number: String, street_name: String, subdivision: String, zip_code: String, full_address: String, account_title: String, account_number: String, bank_account: String, bank_id: Int, productCount: Int, transactionCount: Int, totalSales: String) {
+    init(name : String, email : String, gender : String, nickname : String, contact_number : String, specialty : String, birthdate : String, store_name : String, store_description : String, avatar : NSURL, cover_photo : NSURL, is_allowed : Bool, title: String, unit_number: String, bldg_name: String, street_number: String, street_name: String, subdivision: String, zip_code: String, full_address: String, account_title: String, account_number: String, bank_account: String, bank_id: Int, productCount: Int, transactionCount: Int, totalSales: String, isReseller: Bool, isEmailSubscribed: Bool, isSmsSubscribed: Bool) {
         self.name = name
         self.email = email
         self.gender = gender
@@ -75,6 +78,9 @@ class StoreInfoModel: NSObject {
         self.productCount = productCount
         self.transactionCount = transactionCount
         self.totalSales = totalSales
+        self.isReseller = isReseller
+        self.isEmailSubscribed = isEmailSubscribed
+        self.isSmsSubscribed = isSmsSubscribed
     }
 
     class func parseSellerDataFromDictionary(dictionary: NSDictionary) -> StoreInfoModel {
@@ -108,6 +114,9 @@ class StoreInfoModel: NSObject {
         var productCount: Int = 0
         var transactionCount: Int = 0
         var totalSales: String = ""
+        var isReseller: Bool = false
+        var isEmailSubscribed: Bool = false
+        var isSmsSubscribed: Bool = false
         
         println(dictionary["data"])
         if let value: AnyObject = dictionary["data"] {
@@ -202,6 +211,29 @@ class StoreInfoModel: NSObject {
                 totalSales = ""
             }
             
+            if let tempVar = value["isReseller"] as? Bool {
+                isReseller = tempVar
+            } else {
+                isReseller = false
+            }
+            
+            if let tempVar = value["isEmailSubscribed"] as? Bool {
+                isEmailSubscribed = tempVar
+            } else {
+                isEmailSubscribed = false
+            }
+            
+            if let tempVar = value["isSmsSubscribed"] as? Bool {
+                isSmsSubscribed = tempVar
+            } else {
+                isSmsSubscribed = false
+            }
+            
+            SessionManager.setIsReseller(isReseller)
+            SessionManager.setIsSeller(!isReseller)
+            SessionManager.setIsEmailSubscribed(isEmailSubscribed)
+            SessionManager.setIsSmsSubscribed(isSmsSubscribed)
+            
             if let val: AnyObject = value["bankAccount"] {
                 
                 if let temBankId = val["bankId"] as? Int {
@@ -267,7 +299,7 @@ class StoreInfoModel: NSObject {
             
         }
         
-        let storeInfo: StoreInfoModel = StoreInfoModel(name: name, email: email, gender: gender, nickname: nickname, contact_number: contact_number, specialty: contact_number, birthdate: birthdate, store_name: store_name, store_description: store_description, avatar: avatar, cover_photo: cover_photo, is_allowed: is_followed, title: title, unit_number: unit_number, bldg_name: bldg_name, street_number: street_number, street_name: street_name, subdivision: subdivision, zip_code: zip_code, full_address: store_address, account_title: account_title, account_number: account_number,bank_account: bank_account, bank_id: bank_id, productCount: productCount, transactionCount: transactionCount, totalSales: totalSales)
+        let storeInfo: StoreInfoModel = StoreInfoModel(name: name, email: email, gender: gender, nickname: nickname, contact_number: contact_number, specialty: contact_number, birthdate: birthdate, store_name: store_name, store_description: store_description, avatar: avatar, cover_photo: cover_photo, is_allowed: is_followed, title: title, unit_number: unit_number, bldg_name: bldg_name, street_number: street_number, street_name: street_name, subdivision: subdivision, zip_code: zip_code, full_address: store_address, account_title: account_title, account_number: account_number,bank_account: bank_account, bank_id: bank_id, productCount: productCount, transactionCount: transactionCount, totalSales: totalSales, isReseller: isReseller, isEmailSubscribed: isEmailSubscribed, isSmsSubscribed: isSmsSubscribed)
         println("\(store_address)")
         return storeInfo
     }
