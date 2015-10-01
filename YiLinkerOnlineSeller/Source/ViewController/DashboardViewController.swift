@@ -48,8 +48,6 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         super.viewDidAppear(animated)
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         
-        initializeViews()
-        
         if SessionManager.isLoggedIn() {
             self.loginBlockerView.hidden = true
             fireStoreInfo(true)
