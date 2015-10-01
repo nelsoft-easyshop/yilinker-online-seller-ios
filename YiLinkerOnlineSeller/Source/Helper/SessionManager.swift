@@ -140,22 +140,22 @@ class SessionManager {
     }
     
     class func setIsSeller(isSeller: Bool) {
-        NSUserDefaults.standardUserDefaults().setObject("\(isSeller)", forKey: "isSeller")
+        NSUserDefaults.standardUserDefaults().setObject(isSeller, forKey: "isSeller")
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
     class func setIsReseller(isReseller: Bool) {
-        NSUserDefaults.standardUserDefaults().setObject("\(isReseller)", forKey: "isReseller")
+        NSUserDefaults.standardUserDefaults().setObject(isReseller, forKey: "isReseller")
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
     class func setIsEmailSubscribed(isEmailSubscribed: Bool) {
-        NSUserDefaults.standardUserDefaults().setObject("\(isEmailSubscribed)", forKey: "isEmailSubscribed")
+        NSUserDefaults.standardUserDefaults().setObject(isEmailSubscribed, forKey: "isEmailSubscribed")
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
     class func setIsSmsSubscribed(isSmsSubscribed: Bool) {
-        NSUserDefaults.standardUserDefaults().setObject("\(isSmsSubscribed)", forKey: "isSmsSubscribed")
+        NSUserDefaults.standardUserDefaults().setObject(isSmsSubscribed, forKey: "isSmsSubscribed")
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
