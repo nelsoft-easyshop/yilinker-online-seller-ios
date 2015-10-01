@@ -107,14 +107,14 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
     }
     
     @IBAction func createBankAcount(sender: AnyObject) {
-        self.showHUD()
         let manager = APIManager.sharedInstance
         var bankId2: Int = 0
         var url: String = ""
         var accountNumber: String = self.accountNumberTextField.text
         
         if edit {
-            if !self.bankNameTextField.text.isEmpty {
+            if !self.bankNameTextField.text.isEmpty && !self.accountNameTextField.text.isEmpty && !self.accountTitleTextField.text.isEmpty && !self.accountNumberTextField.text.isEmpty{
+                self.showHUD()
                 bankId2 = self.bankDictionary[self.bankNameTextField.text]!
                 url = APIAtlas.sellerEditBankAccount
                 var parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : accountNumber, "accountName" : self.accountNameTextField.text, "bankId" : NSNumber(integer: bankId2), "bankAccountId" : self.editBankId]
@@ -132,32 +132,36 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
                         self.hud?.hide(true)
                         println(error)
                 })
+                 self.delegate?.dismissDimView()
             } else {
-                
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "All fields are required.", title: "Error")
             }
         } else {
-            bankId2 = self.bankId
-            url = APIAtlas.sellerAddBankAccount
-            var parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : accountNumber, "accountName" : self.accountNameTextField.text, "bankId" : NSNumber(integer: bankId2)]
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                println("created bank account")
-                //self.dismissViewControllerAnimated(true, completion: nil)
-                
-                self.hud?.hide(true)
-                self.delegate?.updateCollectionView()
-                self.dismissViewControllerAnimated(true, completion: nil)
-                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+            if !self.bankNameTextField.text.isEmpty && !self.accountNameTextField.text.isEmpty && !self.accountTitleTextField.text.isEmpty && !self.accountNumberTextField.text.isEmpty{
+                self.showHUD()
+                bankId2 = self.bankId
+                url = APIAtlas.sellerAddBankAccount
+                var parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : accountNumber, "accountName" : self.accountNameTextField.text, "bankId" : NSNumber(integer: bankId2)]
+                manager.POST(url, parameters: parameters, success: {
+                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                    println("created bank account")
+                    //self.dismissViewControllerAnimated(true, completion: nil)
                     
-                    self.dismissViewControllerAnimated(true, completion: nil)
                     self.hud?.hide(true)
-                    println(error)
-            })
+                    self.delegate?.updateCollectionView()
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                        
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                        self.hud?.hide(true)
+                        println(error)
+                })
+                 self.delegate?.dismissDimView()
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "All fields are required.", title: "Error")
+            }
         }
-        
-        self.delegate?.dismissDimView()
-        
-        
+   
     }
     
     func showHUD() {
