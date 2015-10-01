@@ -38,7 +38,14 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         initializeLocalizedString()
         registerNibs()
     }
-    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        isEmailOn = SessionManager.isEmailSubscribed()
+        isSMSOn = SessionManager.isSmsSubscribed()
+        
+        tableView.reloadData()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -217,9 +224,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                     self.fireRefreshToken(type, isON: isOn)
                 } else {
                     if Reachability.isConnectedToNetwork() {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
+                        UIAlertController.displaySomethingWentWrongError(self)
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.connectionMessageLocalizeString, title: self.connectionLocalizeString)
+                        UIAlertController.displayNoInternetConnectionError(self)
                     }
                     println(error)
                 }
@@ -319,6 +326,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     func submitDeactivateModal(password: String){
         hideDimView()
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
+        SessionManager.setAccessToken("")
+        let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
+        self.presentViewController(signInViewController, animated: true, completion: nil)
     }
     
 }

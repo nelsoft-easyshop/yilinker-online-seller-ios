@@ -18,6 +18,11 @@ class ProductUploadPlainDetailCombinationTableViewCell: UITableViewCell, UITextF
     
     var images: [UIImage] = []
     
+    @IBOutlet weak var retailPriceLabel: UILabel!
+    @IBOutlet weak var discountLabel: UILabel!
+    @IBOutlet weak var quantityLabel: UILabel!
+    @IBOutlet weak var skuLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.skuTextField.delegate = self
@@ -25,8 +30,13 @@ class ProductUploadPlainDetailCombinationTableViewCell: UITableViewCell, UITextF
         self.discountedPriceTextField.delegate = self
         self.quantityTextField.delegate = self
         self.registerCell()
+        
+        self.retailPriceLabel.text = ProductUploadStrings.retailPrice
+        self.discountLabel.text = ProductUploadStrings.discountedPrice
+        self.quantityLabel.text = ProductUploadStrings.quantity
+        self.skuLabel.text = ProductUploadStrings.sku
+        self.skuTextField.placeholder = ProductUploadStrings.sku
     }
-    
     
     func registerCell() {
         let nib: UINib = UINib(nibName: ProductUploadUploadImageTableViewCellConstant.productUploadImageCollectionViewCellNibNameAndIdentifier, bundle: nil)

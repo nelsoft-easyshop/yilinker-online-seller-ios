@@ -98,6 +98,8 @@
             <connections>
                 <outlet property="cellButton" destination="Owr-2S-buI" id="GzO-i6-gQX"/>
                 <outlet property="cellTextField" destination="CEh-AE-rcE" id="os5-HC-Lsn"/>
+                <outlet property="saveButton" destination="Owr-2S-buI" id="nNT-Vh-NMT"/>
+                <outlet property="valuesLabel" destination="QAH-pk-ZtO" id="fz5-LB-xEG"/>
             </connections>
             <point key="canvasLocation" x="359" y="198"/>
         </tableViewCell>

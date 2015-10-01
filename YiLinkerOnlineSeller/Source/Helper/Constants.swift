@@ -8,6 +8,23 @@
 
 struct Constants {
     
+    struct Localized {
+        static let ok: String = StringHelper.localizedStringWithKey("OK_BUTTON_LOCALIZE_KEY")
+        static let someThingWentWrong: String = StringHelper.localizedStringWithKey("SOMETHING_WENT_WRONG_LOCALIZE_KEY")
+        static let error: String = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+        static let failed: String = StringHelper.localizedStringWithKey("FAILED_LOCALIZE_KEY")
+        static let done: String = StringHelper.localizedStringWithKey("TOOLBAR_DONE_LOCALIZE_KEY")
+        static let success: String = StringHelper.localizedStringWithKey("SUCCESS_LOGIN_LOCALIZE_KEY")
+        static let serverError: String = StringHelper.localizedStringWithKey("SERVER_ERROR_LOCALIZE_KEY")
+        static let next: String = StringHelper.localizedStringWithKey("NEXT_LOCALIZE_KEY")
+        static let previous: String = StringHelper.localizedStringWithKey("PREVIOUS_LOCALIZE_KEY")
+        static let no: String = StringHelper.localizedStringWithKey("NO_LOCALIZE_KEY")
+        static let yes: String = StringHelper.localizedStringWithKey("YES_LOCALIZE_KEY")
+        
+        static let noInternet: String = StringHelper.localizedStringWithKey("NO_INTERNET_LOCALIZE_KEY")
+        static let noInternetErrorMessage: String = StringHelper.localizedStringWithKey("NO_INTERNET_ERROR_MESSAGE_LOCALIZE_KEY")
+    }
+
     struct Colors {
         static let appTheme: UIColor = HexaColor.colorWithHexa(0x5A1F75)
         static let productDetails: UIColor = HexaColor.colorWithHexa(0xd52371)
@@ -70,6 +87,8 @@ struct Constants {
         static let atttributeList: String = StringHelper.localizedStringWithKey("ATTRIBUTE_LIST_LOCALIZE_KEY")
         static let addCombination: String = StringHelper.localizedStringWithKey("ADD_COMBINATION_LOCALIZE_KEY")
         static let productUpload: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_LOCALIZE_KEY")
+        static let addBrand: String = StringHelper.localizedStringWithKey("ADD_BRAND_DETAILS_LOCALIZE_KEY")
+        static let attributeCombination = StringHelper.localizedStringWithKey("ATTRIBUTE_COMBINATION_LOCALIZE_KEY")
     }
 }
 

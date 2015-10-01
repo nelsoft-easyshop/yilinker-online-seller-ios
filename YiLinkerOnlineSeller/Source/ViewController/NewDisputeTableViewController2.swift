@@ -36,6 +36,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     
     var resolutiontitle: String = ""
     var remarks: String = ""
+    var isValid: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,9 +129,6 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
                 cell.addTracker()
             } else if indexPath.row == 1 {
                 cell.titleLabel.text = "Transaction No."
-                if self.transactionsModel.transactions.count != 0 {
-                   cell.textField.text = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
-                }
                 cell.titleLabel.required()
             } else if indexPath.row == 2 {
                 cell.textField.text = self.disputeType[self.disputeTypeDefaultIndex]
@@ -257,7 +255,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     
     func addPicker(textField: UITextField) {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
-        
+
         let pickerView: UIPickerView = UIPickerView(frame:CGRectMake(0, 0, screenSize.width, 225))
         pickerView.delegate = self
         pickerView.dataSource = self
@@ -269,6 +267,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         }
         
         if self.disputePickerType == DisputePickerType.TransactionList {
+            self.isValid = true
             self.currentTextField.text = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
         } else {
             self.currentTextField.text = self.disputeType[self.disputeTypeDefaultIndex]
@@ -314,6 +313,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     }
 
     func disputeTextFieldTableViewCell(disputeTextFieldTableViewCell: DisputeTextFieldTableViewCell, editingAtTextField textField: UITextField) {
+        let indexPath: NSIndexPath = self.tableView.indexPathForCell(disputeTextFieldTableViewCell)!
         self.resolutiontitle = textField.text
     }
     
@@ -332,10 +332,14 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     }
     
     func addProductHeaderView(addProductHeaderView: AddProductHeaderView, didClickButtonAdd button: UIButton) {
-        let resolutionCenterProductListViewController: ResolutionCenterProductListViewController = ResolutionCenterProductListViewController(nibName: "ResolutionCenterProductListViewController", bundle: nil)
-        resolutionCenterProductListViewController.transactionId = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
-        resolutionCenterProductListViewController.delegate = self
-        self.navigationController?.pushViewController(resolutionCenterProductListViewController, animated: true)
+        if self.isValid {
+            let resolutionCenterProductListViewController: ResolutionCenterProductListViewController = ResolutionCenterProductListViewController(nibName: "ResolutionCenterProductListViewController", bundle: nil)
+            resolutionCenterProductListViewController.transactionId = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
+            resolutionCenterProductListViewController.delegate = self
+            self.navigationController?.pushViewController(resolutionCenterProductListViewController, animated: true)
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please select transaction number.", title: "Incomplete product details")
+        }
     }
     
     func resolutionCenterProductListViewController(resolutionCenterProductListViewController: ResolutionCenterProductListViewController, didSelecteProducts products: [TransactionOrderProductModel]) {

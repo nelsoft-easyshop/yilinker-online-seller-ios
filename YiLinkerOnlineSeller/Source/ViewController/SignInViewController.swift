@@ -57,7 +57,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         costumizeViews()
         
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "hideKeyboard:"))
-        self.profileContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "instantSignin:"))
+        //self.profileContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "instantSignin:"))
         self.rememberMeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "rememberMeAction:"))
         
         self.emailAddressTextField.addTarget(self, action: "emailDidTextChanged", forControlEvents: UIControlEvents.EditingChanged)
@@ -295,12 +295,12 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     
     func signinSuccessful() {
         
-        if self.rememberMeImageView.image != nil {
-            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "rememberMe")
-        } else {
-            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
-        }
-        NSUserDefaults.standardUserDefaults().synchronize()
+//        if self.rememberMeImageView.image != nil {
+//            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "rememberMe")
+//        } else {
+//            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
+//        }
+//        NSUserDefaults.standardUserDefaults().synchronize()
         
         fireStoreInfo()
     }

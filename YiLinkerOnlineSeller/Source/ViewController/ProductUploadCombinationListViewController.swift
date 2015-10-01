@@ -25,7 +25,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         super.viewDidLoad()
         self.footerView()
         self.backButton()
-        self.title = "Attribute Combination"
+        self.title = Constants.ViewControllersTitleString.attributeCombination
         self.registerCell()
     }
 
@@ -45,10 +45,12 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         let nib: UINib = UINib(nibName: PUALTVConstant.pUAttributeSetHeaderTableViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: PUALTVConstant.pUAttributeSetHeaderTableViewCellNibNameAndIdentifier)
         
+        let weightAndHeightNib: UINib = UINib(nibName: ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier, bundle: nil)
+        self.tableView.registerNib(weightAndHeightNib, forCellReuseIdentifier: ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier)
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 4
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -95,7 +97,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         if indexPath.row == 0 {
             let cell: PUAttributeSetHeaderTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(PUALTVConstant.pUAttributeSetHeaderTableViewCellNibNameAndIdentifier) as! PUAttributeSetHeaderTableViewCell
             cell.delegate = self
-            cell.attributeDefinitionLabel!.text = "Combination \(indexPath.section + 1)"
+            cell.attributeDefinitionLabel!.text = "\(ProductUploadStrings.combination) \(indexPath.section + 1)"
             return cell
         } else if indexPath.row == 1 {
             let cell: ProductUploadCombinationTableViewCell = tableView.dequeueReusableCellWithIdentifier(PUCTVCConstant.productUploadCombinationTableViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ProductUploadCombinationTableViewCell
@@ -110,7 +112,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             cell.collectionView.reloadData()
             cell.userInteractionEnabled = false
             return cell
-        } else {
+        } else if indexPath.row == 2 {
             let cell: ProductUploadPlainDetailCombinationTableViewCell = tableView.dequeueReusableCellWithIdentifier(PUCLVCConstant.productUploadPlainCombinationTableViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ProductUploadPlainDetailCombinationTableViewCell
             
             let combination: CombinationModel = self.productModel!.validCombinations[indexPath.section]
@@ -126,6 +128,21 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             cell.retailPriceTextField.enabled = false
             cell.discountedPriceTextField.enabled = false
             cell.userInteractionEnabled = false
+            return cell
+        } else {
+            let cell: ProductUploadDimensionsAndWeightTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier) as! ProductUploadDimensionsAndWeightTableViewCell
+            
+            if self.productModel != nil {
+                let combination: CombinationModel = self.productModel!.validCombinations[indexPath.section]
+                cell.userInteractionEnabled = false
+                
+                cell.selectionStyle = UITableViewCellSelectionStyle.None
+                cell.weightTextField.text = combination.weight
+                cell.lengthTextField.text = combination.length
+                cell.heightTextField.text = combination.height
+                cell.widthTextField.text = combination.width
+            }
+            
             return cell
         }
     }
@@ -167,7 +184,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
            counter = self.productModel!.validCombinations.count
         }
         
-        productUploadCombinationTableViewController.headerTitle = "Combination \(counter + 1)"
+        productUploadCombinationTableViewController.headerTitle = "\(ProductUploadStrings.combination) \(counter + 1)"
         self.navigationController?.pushViewController(productUploadCombinationTableViewController, animated: true)
     }
     
@@ -222,12 +239,12 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             
             self.tableView.reloadData()
         } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Combination already exist.", title: "Error")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.combinationAlreadyExist, title: Constants.Localized.error)
         }
     }
     @IBAction func saveDetails(sender: AnyObject) {
         if self.productModel!.validCombinations.count == 0 {
-             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Combinations are required.", title: "Incomplete Product Details")
+             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.combinationRequired, title: ProductUploadStrings.incompleteProductDetails)
         } else {
             let productUploadTableViewController: ProductUploadTableViewController
             = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
@@ -256,6 +273,14 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         productUploadCombinationTableViewController.productModel = self.productModel!.copy()
         productUploadCombinationTableViewController.selectedIndexpath = indexPath
         productUploadCombinationTableViewController.delegate = self
+    
+        var counter: Int = 0
+        if self.productModel != nil {
+            counter = self.productModel!.validCombinations.count
+        }
+
+        productUploadCombinationTableViewController.headerTitle = "\(ProductUploadStrings.combination) \(counter)"
+    
         self.navigationController?.pushViewController(productUploadCombinationTableViewController, animated: true)
     }
     

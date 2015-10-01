@@ -12,11 +12,14 @@ class TransactionViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var noTransactionLabel: UILabel!
     
     var pageTitle: [String] = []
     var selectedImage: [String] = ["transactions2", "newUpdates2", "onGoing2", "completed2", "cancelled3"]
     var deSelectedImage: [String] = ["transaction", "newUpdates", "onGoing", "completed", "cancelled"]
     var selectedItems: [Bool] = []
+    
+    var types: [String] = ["", "newupdates", "ongoing", "completed", "cancelled"]
     
     var selectedIndex: Int = 0
     var tableViewSectionHeight: CGFloat = 0
@@ -28,12 +31,14 @@ class TransactionViewController: UIViewController {
     
     var page: Int = 1
     var isRefreshable: Bool = true
+    var type: String = ""
     
     var errorLocalizedString = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        noTransactionLabel.hidden = true
         // Do any additional setup after loading the view.
         registerNibs()
         customizedNavigationBar()
@@ -93,6 +98,7 @@ class TransactionViewController: UIViewController {
     }
     
     func initializeLocalizedStrings() {
+        noTransactionLabel.text = StringHelper.localizedStringWithKey("TRANSACTIONS_NO_TRANSACTIONS_LOCALIZE_KEY")
         pageTitle.append(StringHelper.localizedStringWithKey("TRANSACTIONS_TRANSACTIONS_LOCALIZE_KEY"))
         pageTitle.append(StringHelper.localizedStringWithKey("TRANSACTIONS_NEW_UPDATE_LOCALIZE_KEY"))
         pageTitle.append(StringHelper.localizedStringWithKey("TRANSACTIONS_ONGOING_LOCALIZE_KEY"))
@@ -139,7 +145,13 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         selectedIndex = indexPath.row
         
         self.collectionView.reloadData()
-//        self.tableView.reloadData()
+        tableData.removeAll(keepCapacity: false)
+        self.tableView.reloadData()
+        
+        type = types[indexPath.row]
+        page = 1
+        isRefreshable = true
+        fireGetTransaction()
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -214,7 +226,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         if isRefreshable {
             self.showHUD()
             let manager = APIManager.sharedInstance
-            let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "page" : page];
+            let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "page" : page, "type" : type];
             
             manager.GET(APIAtlas.transactionList, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -227,8 +239,9 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
                     self.tableView.reloadData()
                     
                     self.page++
-                    
+                    self.noTransactionLabel.hidden = true
                     if transactionModel.transactions.count == 0 {
+                        self.noTransactionLabel.hidden = false
                         self.isRefreshable = false
                     }
                 } else {

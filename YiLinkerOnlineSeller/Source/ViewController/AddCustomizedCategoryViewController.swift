@@ -46,6 +46,9 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     
     var subCategories2: [SubCategoryModel] = []
     
+    var categoryId: Int = 0
+    var refreshParameter: NSDictionary!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -493,6 +496,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     
     func requestGetCategoryDetails(categoryId: Int) {
         self.showHUD()
+        self.categoryId = categoryId
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
             "categoryId": String(categoryId)]
@@ -541,12 +545,19 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                println(error)
-                self.hud?.hide(true)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.requestRefreshToken("details")
+                } else {
+                    println(error)
+                    self.hud?.hide(true)
+                }
         })
             }
     
     func requestAddCustomizedCategory(parameter: NSDictionary) {
+        self.refreshParameter = parameter
         self.showHUD()
         var manager = APIManager.sharedInstance
             
@@ -563,24 +574,29 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-
-                if error.userInfo != nil {
-                    println(error.userInfo)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.requestRefreshToken("details")
+                } else if error.userInfo != nil {
+                    self.hud?.hide(true)
                     if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
                         if jsonResult["message"] != nil {
                             self.showAlert(title: jsonResult["message"] as! String, message: nil)
                         } else {
-                            self.showAlert(title: "Something went wrong", message: nil)
+                            self.showAlert(title: AlertStrings.wentWrong, message: nil)
                         }
                     }
                 } else {
-                    self.showAlert(title: "Something went wrong", message: nil)
+                    self.showAlert(title: AlertStrings.wentWrong, message: nil)
+                    self.hud?.hide(true)
                 }
-                self.hud?.hide(true)
+                
         })
     }
     
     func requestEditCustomizedCategory(parameter: NSDictionary) {
+        self.refreshParameter = parameter
         self.showHUD()
         let manager = APIManager.sharedInstance
         
@@ -597,20 +613,55 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                if error.userInfo != nil {
+                if task.statusCode == 401 {
+                    self.requestRefreshToken("details")
+                } else if error.userInfo != nil {
+                    self.hud?.hide(true)
                     println(error.userInfo)
                     if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
                         if jsonResult["message"] != nil {
                             self.showAlert(title: jsonResult["message"] as! String, message: nil)
                         } else {
-                            self.showAlert(title: "Something went wrong", message: nil)
+                            self.showAlert(title: AlertStrings.wentWrong, message: nil)
                         }
                     }
                 } else {
-                    self.showAlert(title: "Something went wrong", message: nil)
+                    self.showAlert(title: AlertStrings.wentWrong, message: nil)
+                    self.hud?.hide(true)
                 }
+        })
+    }
+    
+    func requestRefreshToken(type: String) {
+        
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        let manager = APIManager.sharedInstance
+        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.hud?.hide(true)
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            if type == "details" {
+                self.requestGetCategoryDetails(self.categoryId)
+            } else if type == "add" {
+                self.requestAddCustomizedCategory(self.refreshParameter)
+            } else if type == "edit" {
+                self.requestEditCustomizedCategory(self.refreshParameter)
+            }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                self.showAlert(title: AlertStrings.wentWrong, message: nil)
+                
         })
     }
     

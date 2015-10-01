@@ -480,17 +480,17 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             cell.setProductImage(self.productModel.products[indexPath.row].image)
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
             cell.subTitleLabel.text = self.productModel.products[indexPath.row].category
-            
-            if selectedIndex == 4 {
-                cell.decreaseAlpha()
-            }
-                
-            if selectedIndex == 5 {
-                cell.checkTapView.hidden = true
+
+            if selectedIndex == 4 || selectedIndex == 5 {
                 cell.arrowImageView.hidden = true
+                if selectedIndex == 4 {
+                    cell.decreaseAlpha()
+                } else {
+                    cell.checkTapView.hidden = true
+                }
             } else {
-                cell.checkTapView.hidden = false
                 cell.arrowImageView.hidden = false
+                cell.checkTapView.hidden = false   
             }
             
             return cell
@@ -509,8 +509,9 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if Reachability.isConnectedToNetwork() {
-            if selectedIndex == 1 || selectedIndex == 2 || selectedIndex == 3 || selectedIndex == 4 {
+            if selectedIndex == 1 || selectedIndex == 2 || selectedIndex == 3 {
                 let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
+                productDetails.productId = self.productModel.products[indexPath.row].id
                 self.navigationController?.pushViewController(productDetails, animated: true)
             }
         } else {

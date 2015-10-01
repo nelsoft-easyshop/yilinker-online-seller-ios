@@ -48,29 +48,27 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         super.viewDidAppear(animated)
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         
-        initializeViews()
-        
         if SessionManager.isLoggedIn() {
             self.loginBlockerView.hidden = true
+            fireStoreInfo(true)
+            setupGCM()
         } else {
             self.loginBlockerView.hidden = false
         }
         
-        
-        if NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
-            if ctr == 0{
-                fireStoreInfo(true)
-                setupGCM()
-            } else {
-                fireStoreInfo(true)
-            }
-        } else {
-            if SessionManager.isLoggedIn() {
-                fireStoreInfo(true)
-            }
-        }
-        
-        ctr++
+//        if NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
+//            if ctr == 0{
+//                fireStoreInfo(true)
+//                setupGCM()
+//
+//            } else {
+//                fireStoreInfo(true)
+//            }
+//        } else {
+//        if SessionManager.isLoggedIn() {
+//            
+//        }
+//        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -81,14 +79,14 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if !NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
+//        if !NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
             if !SessionManager.isLoggedIn() {
                 SessionManager.setAccessToken("")
                 let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
                 signInViewController.delegate = self
                 self.presentViewController(signInViewController, animated: false, completion: nil)
             }
-        }
+//        }
         self.navigationController?.navigationBarHidden = true
         
         self.tabBarController?.tabBar.hidden = false
@@ -142,7 +140,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     func onRegistration(notification: NSNotification){
         if let info = notification.userInfo as? Dictionary<String,String> {
             if let error = info["error"] {
-                showAlert("Error registering with GCM", message: error)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: error, title: "Error registering with GCM")
             } else if let registrationToken = info["registrationToken"] {
                 let message = "Check the xcode debug console for the registration token for the server to send notifications to your device"
                 self.fireCreateRegistration(registrationToken)
@@ -150,14 +148,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             }
         }
     }
-    
-    func showAlert(title:String, message:String) {
-        let alert = UIAlertController(title: title,
-            message: message, preferredStyle: .Alert)
-        let dismissAction = UIAlertAction(title: "Dismiss", style: .Destructive, handler: nil)
-        alert.addAction(dismissAction)
-        self.presentViewController(alert, animated: true, completion: nil)
-    }
+
     
     func onNewMessage(notification : NSNotification){
         var newCount = SessionManager.getUnReadMessagesCount() + 1
@@ -182,7 +173,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             //SVProgressHUD.dismiss()
-            self.hud?.hide(true)
+            self.hideHud()
             //self.showSuccessMessage()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -196,17 +187,42 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                     if task.statusCode == 401 {
                         self.fireRefreshToken(true)
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
+                        UIAlertController.displaySomethingWentWrongError(self)
                     }
                 }
-                //SVProgressHUD.dismiss()
-                self.hud?.hide(true)
+                self.hideHud()
         })
     }
     
     // Show hud
     
     func showHUD() {
+        
+        if SessionManager.isLoggedIn() {
+            if ctr == 0 {
+                displayHUD()
+                ctr++
+            } else if ctr != 0 {
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            }
+        }
+//        if NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
+//            if ctr == 0{
+//                displayHUD()
+//            } else {
+//                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+//            }
+//        } else {
+//            if ctr == 1 {
+//                displayHUD()
+//            } else if ctr != 0 {
+//                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+//            }
+//        }
+        
+    }
+
+    func displayHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
             self.hud = nil
@@ -217,6 +233,11 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         self.hud?.dimBackground = false
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
+    }
+    
+    func hideHud() {
+        self.hud?.hide(true)
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
     }
     
     func initializeViews() {
@@ -298,7 +319,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: dashBoardHeaderIdentifier, forIndexPath: indexPath) as! DashBoardHeaderCollectionViewCell
             
             if storeInfo != nil{
-                let totalSales: String = "P\(storeInfo.totalSales)"
+                let totalSales: String = "\(storeInfo.totalSales)"
                 let totalProducts: String = "\(storeInfo.productCount)"
                 let totalTransactions: String = "\(storeInfo.transactionCount)"
                 
@@ -307,7 +328,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                 headerView.setCoverPhotoUrl(storeInfo.coverPhoto)
                 headerView.setProfilePhotoUrl(storeInfo.avatar)
                 headerView.setTotalProducts(totalProducts)
-                headerView.setTotalSales(totalSales)
+                headerView.setTotalSales(totalSales.formatToTwoDecimal())
                 headerView.setTotalTransactions(totalTransactions)
             }
             
@@ -386,7 +407,9 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                     println("cancel")
                     
                 case .Destructive:
-                    NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
+//                    NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
+                    self.ctr = 0
+                    SessionManager.setAccessToken("")
                     let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
                     self.presentViewController(signInViewController, animated: true, completion: nil)
                 }
@@ -421,18 +444,18 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             
             self.collectionView.reloadData()
             
-            self.hud?.hide(true)
+            self.hideHud()
             
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
+                self.hideHud()
                 
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
                 if task.statusCode == 401 {
                     self.fireRefreshToken(showHUD)
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
-                    self.storeInfo = StoreInfoModel(name: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", account_number: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "")
+                    UIAlertController.displaySomethingWentWrongError(self)
+                    self.storeInfo = StoreInfoModel(name: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", account_number: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "", isReseller: false, isEmailSubscribed: false, isSmsSubscribed: false)
                     
                     
                     var store_name1 = NSUserDefaults.standardUserDefaults().stringForKey("storeName")
@@ -467,7 +490,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                self.hud?.hide(true)
+                self.hideHud()
         })
         
     }

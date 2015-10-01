@@ -52,6 +52,9 @@
                 <constraint firstItem="f7U-SD-3nW" firstAttribute="leading" secondItem="LIl-R7-1YP" secondAttribute="trailing" constant="3" id="oy4-s8-jnv"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="addMoreButton" destination="LIl-R7-1YP" id="AyS-Ss-RK3"/>
+            </connections>
             <point key="canvasLocation" x="231" y="-120.5"/>
         </view>
     </objects>

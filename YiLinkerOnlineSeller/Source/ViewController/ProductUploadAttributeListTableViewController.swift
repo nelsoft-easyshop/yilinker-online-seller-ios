@@ -29,7 +29,7 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
             self.navigationController!.pushViewController(productUploadDetailViewController, animated: true)
         }
         
-        self.title = "Attribute List"
+        self.title = Constants.ViewControllersTitleString.atttributeList
         
         self.registerCell()
         self.backButton()
@@ -183,7 +183,7 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
             if self.productModel.attributes.count > indexPath.section {
                self.productModel.attributes[indexPath.section] = attribute
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error", title: "Attribute Definition \(attribute.definition) already exist.")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.error, title: "\(ProductUploadStrings.attributeDef) \(attribute.definition) \(ProductUploadStrings.alreadyExist)")
             }
             
         } else {
@@ -251,9 +251,9 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
     
     func changeButtonName() {
         if self.productModel.attributes.count == 0 {
-            self.footerButton.setTitle("SAVE PRODUCT DETAILS", forState: UIControlState.Normal)
+            self.footerButton.setTitle(ProductUploadStrings.saveProductDetails, forState: UIControlState.Normal)
         } else {
-            self.footerButton.setTitle("PROCEED TO COMBINATION", forState: UIControlState.Normal)
+            self.footerButton.setTitle(ProductUploadStrings.proceedToCombination, forState: UIControlState.Normal)
         }
     }
         

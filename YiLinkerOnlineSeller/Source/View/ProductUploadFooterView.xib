@@ -43,6 +43,9 @@
                 <constraint firstItem="tdG-WS-MnL" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="13" id="l9F-6G-MgP"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="uploadProductButton" destination="tdG-WS-MnL" id="LcO-aV-yyh"/>
+            </connections>
             <point key="canvasLocation" x="471" y="94"/>
         </view>
     </objects>
