@@ -47,7 +47,7 @@ struct ProductUploadTableViewControllerConstant {
 
 class ProductUploadTableViewController: UITableViewController, ProductUploadUploadImageTableViewCellDataSource, ProductUploadUploadImageTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadCategoryViewControllerDelegate, ProductUploadFooterViewDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadPriceTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadBrandViewControllerDelegate, ProductUploadQuantityTableViewCellDelegate, SuccessUploadViewControllerDelegate {
     
-    var uploadImages: [UIImage] = []
+    //var uploadImages: [UIImage] = []
     var productModel: ProductModel = ProductModel()
     var sectionFourRows: Int = 2
     var sectionPriceHeaderHeight: CGFloat = 41
@@ -146,7 +146,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     func addAddPhoto() {
-        self.uploadImages.append(UIImage(named: "addPhoto")!)
+        self.productModel.images.append(UIImage(named: "addPhoto")!)
     }
     
     func register() {
@@ -554,16 +554,16 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     
     //Upload Cell Datasource
     func productUploadUploadImageTableViewCell(numberOfCollectionViewRows cell: ProductUploadUploadImageTableViewCell) -> Int {
-        return self.uploadImages.count
+        return self.productModel.images.count
     }
     
     //Upload Delegate
     func productUploadUploadImageTableViewCell(didSelecteRowAtIndexPath indexPath: NSIndexPath, cell: ProductUploadUploadImageTableViewCell) {
-        if indexPath.row == self.uploadImages.count - 1 && self.uploadImages.count <= 5 {
+        if indexPath.row == self.productModel.images.count - 1 && self.productModel.images.count <= 5 {
             let picker: UzysAssetsPickerController = UzysAssetsPickerController()
             let maxCount: Int = 6
             
-            let imageLimit: Int = maxCount - self.uploadImages.count
+            let imageLimit: Int = maxCount - self.productModel.images.count
             picker.delegate = self
             picker.maximumNumberOfSelectionVideo = 0
             picker.maximumNumberOfSelectionPhoto = 100
@@ -573,7 +573,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     func productUploadUploadImageTableViewCell(didDeleteAtRowIndexPath indexPath: NSIndexPath, collectionView: UICollectionView) {
-        self.uploadImages.removeAtIndex(indexPath.row)
+        self.productModel.images.removeAtIndex(indexPath.row)
         collectionView.deleteItemsAtIndexPaths([indexPath])
     }
     
@@ -584,7 +584,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     func productUploadUploadImageTableViewCell(images cell: ProductUploadUploadImageTableViewCell) -> [UIImage] {
-        return self.uploadImages
+        return self.productModel.images
     }
     
     //UzzyPickerDelegate
@@ -595,7 +595,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
 
         for allaSset in assets as! [ALAsset] {
             let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!
-            self.uploadImages.insert(image, atIndex: 0)
+            self.productModel.images.insert(image, atIndex: 0)
         }
         
         self.reloadUploadCellCollectionViewData()
@@ -624,7 +624,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
 //            cell.isImageIsFull = false
 //        }
 //        
-        let lastIndexPath: NSIndexPath = NSIndexPath(forItem: self.uploadImages.count - 1, inSection: 0)
+        let lastIndexPath: NSIndexPath = NSIndexPath(forItem: self.productModel.images.count - 1, inSection: 0)
         cell.collectionView.scrollToItemAtIndexPath(lastIndexPath, atScrollPosition: UICollectionViewScrollPosition.Right, animated: true)
     }
     
@@ -657,7 +657,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     func productUploadFooterView(didClickUpload view: ProductUploadFooterView) {
-        self.productModel.images = self.uploadImages
         if self.productModel.images.count == 1 {
           UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert atleast one product image.", title: "Incomplete Product Details")
         } else if self.productModel.name == "" {
@@ -845,11 +844,11 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         var url: String = ""
         
         if uploadType == UploadType.Draft {
-             url = "\(APIAtlas.uploadDraftUrl)?access_token=\(SessionManager.accessToken())"
+            url = "\(APIAtlas.uploadDraftUrl)?access_token=\(SessionManager.accessToken())"
         } else if uploadType == UploadType.NewProduct {
             url = "\(APIAtlas.uploadUrl)?access_token=\(SessionManager.accessToken())"
         } else if uploadType == UploadType.EditProduct {
-            
+            url = "\(APIAtlas.uploadEditUrl)?access_token=\(SessionManager.accessToken())"
         }
         
         
@@ -865,14 +864,9 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 
                 if dictionary["isSuccessful"] as! Bool == true {
                     if uploadType == UploadType.Draft {
-                        self.navigationController?.view.makeToast("Successfully uploaded into draft.")
-
-                        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC)))
-                       
-                        dispatch_after(delayTime, dispatch_get_main_queue()) {
-                            self.dismissViewControllerAnimated(true, completion: nil)
-                        }
-                        
+                        self.dismissControllerWithToastMessage("Successfully uploaded into draft.")
+                    } else if uploadType == UploadType.EditProduct {
+                        self.dismissControllerWithToastMessage("Successfully edited the product.")
                     } else {
                         self.success()
                     }
@@ -894,6 +888,15 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
     }
     
+    func dismissControllerWithToastMessage(message: String) {
+        self.navigationController?.view.makeToast(message)
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC)))
+        
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
+    
     func success() {
         let successViewController: SuccessUploadViewController = SuccessUploadViewController(nibName: "SuccessUploadViewController", bundle: nil)
         successViewController.delegate = self
@@ -906,8 +909,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     func successUploadViewController(didTapUploadAgain viewController: SuccessUploadViewController) {
-        for (index, images) in enumerate(self.uploadImages) {
-            self.uploadImages.removeLast()
+        for (index, images) in enumerate(self.productModel.images) {
+            self.productModel.images.removeLast()
         }
         
         self.addAddPhoto()
