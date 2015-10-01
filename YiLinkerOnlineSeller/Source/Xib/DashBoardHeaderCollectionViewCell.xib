@@ -47,9 +47,9 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t96-Yi-ecB" userLabel="Store Address">
-                    <rect key="frame" x="8" y="225" width="359" height="17"/>
+                    <rect key="frame" x="8" y="225" width="359" height="35"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="17" id="0sE-kG-aLT"/>
+                        <constraint firstAttribute="height" constant="35" id="0sE-kG-aLT"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -150,7 +150,7 @@
                 <constraint firstItem="Pni-y6-s6M" firstAttribute="leading" secondItem="C88-bE-Jfk" secondAttribute="leading" constant="16" id="iLf-bW-3Jk"/>
                 <constraint firstAttribute="trailing" secondItem="Pol-Oy-NYN" secondAttribute="trailing" id="kFd-2z-beO"/>
                 <constraint firstItem="cs8-nW-8xe" firstAttribute="leading" secondItem="C88-bE-Jfk" secondAttribute="leading" constant="14" id="mO4-LN-JbK"/>
-                <constraint firstItem="Pni-y6-s6M" firstAttribute="top" secondItem="t96-Yi-ecB" secondAttribute="bottom" constant="25" id="mQS-FG-l7T"/>
+                <constraint firstItem="Pni-y6-s6M" firstAttribute="top" secondItem="t96-Yi-ecB" secondAttribute="bottom" constant="7" id="mQS-FG-l7T"/>
                 <constraint firstItem="t96-Yi-ecB" firstAttribute="leading" secondItem="C88-bE-Jfk" secondAttribute="leading" constant="8" id="o8B-WI-MuN"/>
                 <constraint firstItem="reL-ih-1ZV" firstAttribute="leading" secondItem="cs8-nW-8xe" secondAttribute="trailing" constant="8" id="qx4-12-L2A"/>
                 <constraint firstItem="559-U0-hGc" firstAttribute="top" secondItem="Pni-y6-s6M" secondAttribute="bottom" constant="15" id="tNh-im-bWT"/>
