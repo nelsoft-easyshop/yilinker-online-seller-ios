@@ -38,13 +38,11 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        transactionDetailsModel = TransactionDetailsModel(isSuccessful: false, message: "", transactionInvoice: "", transactionShippingFee: "", transactionDate: "2000-01-01 00:00:00.000000", transactionPrice: "", transactionQuantity: 0, transactionStatusId: 0, transactionStatusName: "", transactionPayment: "", transactionItems: [])
+        transactionDetailsModel = TransactionDetailsModel(isSuccessful: false, message: "", transactionInvoice: "", transactionShippingFee: "", transactionDate: "2000-01-01 00:00:00.000000", transactionPrice: "", transactionQuantity: 0, transactionUnitPrice: "",  transactionStatusId: 0, transactionStatusName: "", transactionPayment: "", transactionItems: [])
         
         transactionConsigneeModel = TransactionConsigneeModel(isSuccessful: false, message: "", deliveryAddress: "", consigneeName: "", consigneeContactNumber: "")
         
         initializeNavigationBar()
-        initializeLocalizedStrings()
-        initializeTableView()
         initializeViews()
         registerNibs()
         fireGetTransactionDetails()
@@ -92,9 +90,20 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             tableFooterView.frame.size.width = self.view.frame.size.width
         }
         
+        self.tidLabel.text = self.transactionDetailsModel.transactionInvoice
+        if self.transactionDetailsModel.transactionQuantity > 1 {
+            let productString = StringHelper.localizedStringWithKey("TRANSACTIONS_DETAILS_PRODUCT_LOCALIZE_KEY")
+            self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) \(productString)"
+        } else {
+            let productString = StringHelper.localizedStringWithKey("TRANSACTIONS_DETAILS_PRODUCTS_LOCALIZE_KEY")
+            self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) \(productString)"
+        }
+        
         
         self.tableView.tableHeaderView = tableHeaderView
         self.tableView.tableFooterView = tableFooterView
+        
+        self.tableView.reloadData()
     }
     
     func initializeNavigationBar() {
@@ -118,6 +127,8 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         //self.view.addSubview(dimView!)
         dimView?.hidden = true
         dimView?.alpha = 0
+        
+        tableView.tableFooterView = UIView(frame: CGRectZero)
     }
     
     func initializeLocalizedStrings() {
@@ -126,7 +137,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_CONSIGNEE_LOCALIZE_KEY"))
         errorLocalizedString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
         
-        self.tableView.reloadData()
+        initializeTableView()
     }
     
     func back() {
@@ -169,7 +180,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             cell.paymentTypeLabel.text = transactionDetailsModel.transactionPayment
             cell.dateCreatedLabel.text = formatDateToString(formatStringToDate(transactionDetailsModel.transactionDate))
             cell.totalQuantityLabel.text = "\(transactionDetailsModel.transactionQuantity)"
-            cell.totalUnitCostLabel.text = transactionDetailsModel.transactionPrice.formatToTwoDecimal()
+            cell.totalUnitCostLabel.text = transactionDetailsModel.transactionUnitPrice.formatToTwoDecimal()
             cell.shippingCostLabel.text = transactionDetailsModel.transactionShippingFee.formatToTwoDecimal()
             cell.totalCostLabel.text = transactionDetailsModel.transactionPrice.formatToTwoDecimal()
             return cell
@@ -252,15 +263,6 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             println(responseObject)
             
             if self.transactionDetailsModel.isSuccessful {
-                self.tidLabel.text = self.transactionDetailsModel.transactionInvoice
-                if self.transactionDetailsModel.transactionQuantity > 1 {
-                    let productString = StringHelper.localizedStringWithKey("TRANSACTIONS_DETAILS_PRODUCT_LOCALIZE_KEY")
-                    self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) \(productString)"
-                } else {
-                    let productString = StringHelper.localizedStringWithKey("TRANSACTIONS_DETAILS_PRODUCTS_LOCALIZE_KEY")
-                    self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) \(productString)"
-                }
-                
                 self.fireGetConsigneeDetails()
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.transactionDetailsModel.message, title: self.errorLocalizedString)
@@ -301,7 +303,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             println(responseObject)
             
             if self.transactionConsigneeModel.isSuccessful {
-                self.tableView.reloadData()
+                self.initializeLocalizedStrings()
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.transactionDetailsModel.message, title: self.errorLocalizedString)
                 self.navigationController!.popViewControllerAnimated(true)
