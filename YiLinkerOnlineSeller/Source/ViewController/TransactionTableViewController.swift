@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol TransactionTableViewControllerDelegate {
+    func doneWithFilter(dates: String, statuses: [String], paymentMethods: [String])
+}
+
 class TransactionTableViewController: UITableViewController {
+    
+    var delegate: TransactionTableViewControllerDelegate?
     
     var filterTableViewCellIdentifier: String = "TransactionFilterTableViewCell"
     
@@ -129,6 +135,28 @@ class TransactionTableViewController: UITableViewController {
     }
     
     func check() {
+        var dates: String = ""
+        for subValue in tableData[0].items {
+            if subValue.isChecked {
+                dates = subValue.title
+            }
+        }
+        
+        var statuses: [String] = []
+        for subValue in tableData[1].items {
+            if subValue.isChecked {
+                statuses.append(subValue.title)
+            }
+        }
+        
+        var paymentMethods: [String] = []
+        for subValue in tableData[2].items {
+            if subValue.isChecked {
+                paymentMethods.append(subValue.title)
+            }
+        }
+        
+        delegate?.doneWithFilter(dates, statuses: statuses, paymentMethods: paymentMethods)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
