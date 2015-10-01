@@ -57,7 +57,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         costumizeViews()
         
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "hideKeyboard:"))
-        self.profileContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "instantSignin:"))
+        //self.profileContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "instantSignin:"))
         self.rememberMeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "rememberMeAction:"))
         
         self.emailAddressTextField.addTarget(self, action: "emailDidTextChanged", forControlEvents: UIControlEvents.EditingChanged)
