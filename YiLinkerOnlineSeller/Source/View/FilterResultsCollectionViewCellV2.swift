@@ -11,7 +11,7 @@ import UIKit
 class FilterResultsCollectionViewCellV2: UICollectionViewCell {
 
     @IBOutlet weak var statusView: UIView!
-    @IBOutlet weak var statusImageView: UIView!
+    @IBOutlet weak var statusImageView: UIImageView!
     @IBOutlet weak var transactionIdLabel: UILabel!
     @IBOutlet weak var numberOfProductsLabel: UILabel!
     @IBOutlet weak var riderNameLabel: UILabel!

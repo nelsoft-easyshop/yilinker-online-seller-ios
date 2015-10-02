@@ -177,6 +177,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 var filterRiderNameViewController = FilterResultsRiderNameViewController(nibName: "FilterResultsRiderNameViewController", bundle: nil)
                 filterRiderNameViewController.edgesForExtendedLayout = .None
                 filterRiderNameViewController.riderName = self.riderNameArray[indexPath.row]
+                filterRiderNameViewController.searchType = 3
                 self.navigationController?.pushViewController(filterRiderNameViewController, animated: true)
             }
         }

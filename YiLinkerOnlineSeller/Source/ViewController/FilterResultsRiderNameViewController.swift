@@ -31,6 +31,7 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
     var isPageEnd: Bool = false
     var page: Int = 0
     var isSuccessful: Bool = false
+    var searchType: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -189,8 +190,26 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
             let dateFormatter1 = NSDateFormatter()
             dateFormatter1.dateFormat = "MMMM dd, yyyy"
             let dateAdded = dateFormatter1.stringFromDate(date)
+            cell.statusView.layer.cornerRadius = cell.statusView.frame.height/2
+            cell.statusView.layer.cornerRadius = cell.statusView.frame.size.height / 2
+            
+            if self.tableData[indexPath.row].order_status_id == "1" {
+                cell.statusView.backgroundColor = Constants.Colors.transactionNew
+                cell.statusImageView.image = UIImage(named: "exclamation")
+            } else if self.tableData[indexPath.row].order_status_id == "6" || self.tableData[indexPath.row].order_status_id == "7" || self.tableData[indexPath.row].order_status_id == "11" {
+                cell.statusView.backgroundColor = Constants.Colors.transactionOngoing
+                cell.statusImageView.image = UIImage(named: "onGoing")
+            } else if self.tableData[indexPath.row].order_status_id == "3" {
+                cell.statusView.backgroundColor = Constants.Colors.transactionCompleted
+                cell.statusImageView.image = UIImage(named: "completed3")
+            } else if self.tableData[indexPath.row].order_status_id == "8" {
+                cell.statusView.backgroundColor = Constants.Colors.transactionCancelled
+                cell.statusImageView.image = UIImage(named: "cancelled2")
+            }
+            
             cell.transactionIdLabel.text = self.tableData[indexPath.row].invoice_number
             cell.dateLabel.text = dateAdded
+           
             if self.tableData[indexPath.row].product_count.toInt() < 2 {
                 let productString = StringHelper.localizedStringWithKey("TRANSACTIONS_PRODUCT_LOCALIZE_KEY")
                 cell.numberOfProductsLabel.text = self.tableData[indexPath.row].product_count + " " + productString
@@ -199,10 +218,21 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
                  cell.numberOfProductsLabel.text = self.tableData[indexPath.row].product_count + " " + productString
             }
             
-            cell.riderNameLabel.text = self.riderName
+            let underlineAttribute = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue]
+            if self.searchType == 3 {
+                let underlineAttributedString = NSAttributedString(string: self.riderName, attributes: underlineAttribute)
+                cell.riderNameLabel.textColor = Constants.Colors.appTheme
+                cell.productNameLabel.textColor = Constants.Colors.grayText
+                cell.riderNameLabel.attributedText = underlineAttributedString
+            } else {
+                
+            }
+            cell.sellerNameLabel.textColor = Constants.Colors.grayText
+            cell.dateLabel.textColor = Constants.Colors.grayText
+            cell.numberOfProductsLabel.textColor = Constants.Colors.grayText
             cell.productNameLabel.text = self.tableData[indexPath.row].product_names
             //cell.sellerNameLabel.text = self.tableData[indexPath.row].
-            cell.priceLabel.text = ((self.tableData[indexPath.row].total_price as NSString).floatValue).stringToFormat(2)
+            cell.priceLabel.text = "P " + ((self.tableData[indexPath.row].total_price as NSString).floatValue).stringToFormat(2)
         }
         
         return cell
@@ -252,6 +282,8 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
                 println(responseObject)
                 let trans: TransactionsModel = TransactionsModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 self.isSuccessful = trans.isSuccessful
+                
+                self.title = "\(trans.transactions.count) Results"
                 if trans.transactions.count != 0 {
                     if trans.transactions.count < 15 {
                         self.isPageEnd = true
