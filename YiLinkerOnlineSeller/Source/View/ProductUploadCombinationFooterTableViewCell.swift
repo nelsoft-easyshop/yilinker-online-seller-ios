@@ -50,6 +50,11 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
         self.skuLabel.required()
         self.retailPriceLabel.required()
         self.quantityLabel.required()
+        
+        self.retailPriceLabel.text = ProductUploadStrings.retailPrice
+        self.discountedPriceLabel.text = ProductUploadStrings.discountedPrice
+        self.quantityLabel.text = ProductUploadStrings.quantity
+        self.skuLabel.text = ProductUploadStrings.sku
     }
     
     func textFieldDidChange(sender: UITextField) {
@@ -68,15 +73,15 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
         //}
         
         if self.retailPriceTextField.text == "" {
-            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Please insert Retail Price.", title: "Incomplete Product Details")
+            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: ProductUploadStrings.retailPriceRequired, title: ProductUploadStrings.incompleteProductDetails)
         } else if self.quantityTextField.text == "" {
-            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Please insert quantity.", title: "Incomplete Product Details")
+            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: ProductUploadStrings.quantityRequired, title: ProductUploadStrings.incompleteProductDetails)
         } else if (self.retailPriceTextField.text as NSString).doubleValue < (self.discountedPriceTextField.text as NSString).doubleValue {
-            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Retail price must be greater than discount price.", title: "Incomplete Product Details")
+            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: ProductUploadStrings.retailMustBeGreater, title: ProductUploadStrings.incompleteProductDetails)
         } else if(quantityTextField.text as NSString).doubleValue == 0 {
-            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Please insert quanity.", title: "Incomplete Product Details")
+            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: ProductUploadStrings.quantityRequired, title: ProductUploadStrings.incompleteProductDetails)
         } else if self.skuTextField.text == "" {
-            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Please insert sku.", title: "Incomplete Product Details")
+            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: ProductUploadStrings.skuRequried, title: ProductUploadStrings.incompleteProductDetails)
         } else {
             if self.viewController != nil {
                 viewController!.view.endEditing(true)

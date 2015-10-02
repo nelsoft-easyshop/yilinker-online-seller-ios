@@ -189,7 +189,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
             
             self.navigationController!.popViewControllerAnimated(true)
         } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Attribute defintion and values are required.")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.attributeValuesRequired)
         }
         
         
@@ -229,7 +229,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
             //self.tableView.reloadRowsAtIndexPaths([collectionViewIndexPath], withRowAnimation: UITableViewRowAnimation.None)
             self.tableView.endUpdates()
         } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error", title: "This attribute value already exist.")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.error, title: ProductUploadStrings.attributeAlreadyExist)
         }
     }
     

@@ -16,6 +16,7 @@ class ProductUploadDetailHeaderViewTableViewCell: UITableViewCell, UITextFieldDe
 
     @IBOutlet weak var cellTextField: UITextField!
     
+    @IBOutlet weak var detailNameLabel: UILabel!
     var delegate: ProductUploadDetailHeaderViewTableViewCellDelegate?
     var edited: Bool = true
     
@@ -23,6 +24,8 @@ class ProductUploadDetailHeaderViewTableViewCell: UITableViewCell, UITextFieldDe
         super.awakeFromNib()
         self.cellTextField.becomeFirstResponder()
         self.cellTextField.delegate = self
+        
+        self.detailNameLabel.text = ProductUploadStrings.detailName
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

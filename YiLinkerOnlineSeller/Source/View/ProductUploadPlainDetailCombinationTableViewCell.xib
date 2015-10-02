@@ -184,9 +184,13 @@
             <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="collectionView" destination="Nkr-de-PRW" id="MAO-79-S0I"/>
+                <outlet property="discountLabel" destination="inQ-kf-fFi" id="8cY-rd-rFh"/>
                 <outlet property="discountedPriceTextField" destination="kCh-xE-Lbb" id="a7A-cn-Vmx"/>
+                <outlet property="quantityLabel" destination="iRG-Fw-BSA" id="mWe-qy-yaQ"/>
                 <outlet property="quantityTextField" destination="sLp-nw-X6W" id="Sqp-vp-GWN"/>
+                <outlet property="retailPriceLabel" destination="odT-AS-EMQ" id="jdr-9U-Qnh"/>
                 <outlet property="retailPriceTextField" destination="gVK-Dd-HVh" id="a8D-gL-rtg"/>
+                <outlet property="skuLabel" destination="vPO-i6-g7e" id="msy-EZ-AP8"/>
                 <outlet property="skuTextField" destination="aGy-51-hQA" id="FO1-Ok-Chq"/>
             </connections>
             <point key="canvasLocation" x="250" y="303.5"/>
