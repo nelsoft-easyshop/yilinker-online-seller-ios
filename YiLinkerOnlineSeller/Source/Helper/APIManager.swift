@@ -32,7 +32,7 @@ struct APIAtlas {
     static let categoryUrl = "product/getCategories"
     static let brandUrl = "product/getBrands"
     static let uploadUrl = "product/upload"
-    static let getProductDetails = "auth/product/getProductDetail"
+    static let getProductDetails = "product/upload-details"
     static let sellerStoreInfo = "auth/merchant/getUserInfo"
     static let sellerBankAccountList = "auth/bank/account/getBankAccounts"
     static let sellerAddBankAccount = "auth/bank/account/addBankAccount"
@@ -107,7 +107,7 @@ struct APIAtlas {
     static let baseUrl = APIEnvironment.baseUrl()
     
     static let uploadDraftUrl = "product/upload/draft"
-    static let uploadEditUrl = "product/upload/edit"
+    static let uploadEditUrl = "product/edit"
     
     /* MESSAGING CONSTANTS */
     static let ACTION_SEND_MESSAGE          = "/message/sendMessage"

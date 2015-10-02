@@ -26,7 +26,8 @@ struct ProductUploadStrings {
     static let brand: String = StringHelper.localizedStringWithKey("BRAND_LOCALIZE_KEY")
     static let condition: String = StringHelper.localizedStringWithKey("CONDITION_LOCALIZE_KEY")
     
-    static let addMore: String = StringHelper.localizedStringWithKey("ADD_MORE_DETAILS_LOCALIZE_KEY")
+    static let addMore: String = StringHelper.localizedStringWithKey("ADD_MORE_LOCALIZE_KEY")
+    static let addMoreDtails: String = StringHelper.localizedStringWithKey("ADD_MORE_DETAILS_LOCALIZE_KEY")
     static let addEdit: String = StringHelper.localizedStringWithKey("ADD_EDIT_MORE_DETAILS_LOCALIZE_KEY")
     
     static let quantity: String = StringHelper.localizedStringWithKey("QUANTITY_LOCALIZE_KEY")
@@ -145,7 +146,6 @@ struct ProductUploadTableViewControllerConstant {
 
 class ProductUploadTableViewController: UITableViewController, ProductUploadUploadImageTableViewCellDataSource, ProductUploadUploadImageTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadCategoryViewControllerDelegate, ProductUploadFooterViewDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadPriceTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadBrandViewControllerDelegate, ProductUploadQuantityTableViewCellDelegate, SuccessUploadViewControllerDelegate {
     
-    //var uploadImages: [UIImage] = []
     var productModel: ProductModel = ProductModel()
     var sectionFourRows: Int = 2
     var sectionPriceHeaderHeight: CGFloat = 41
@@ -171,6 +171,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         self.addAddPhoto()
         self.footer()
         self.fireCondition()
+        
+        if self.uploadType == UploadType.EditProduct {
+            self.updateCombinationListRow()
+        }
     }
     
     func showHUD() {
@@ -462,7 +466,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.cellTitleLabel.text = ProductUploadStrings.brand
                 cell.cellTexField.placeholder = ProductUploadStrings.brand
                 cell.delegate = self
-                cell.cellTitleLabel.required()
                 cell.cellTexField.text = self.productModel.brand.name
                 cell.textFieldType = ProductTextFieldType.Brand
                 if self.productModel.brand.name != "" {
@@ -498,7 +501,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             if self.productModel.validCombinations.count == 0 {
                 if indexPath.row == 0 {
                     let cell: ProductUploadButtonTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadButtonTableViewCellNibNameAndIdentifier) as! ProductUploadButtonTableViewCell
-                    cell.cellButton.setTitle(ProductUploadStrings.addMore, forState: UIControlState.Normal)
+                    cell.cellButton.setTitle(ProductUploadStrings.addMoreDtails, forState: UIControlState.Normal)
                     cell.selectionStyle = UITableViewCellSelectionStyle.None
                     cell.cellButton.addTarget(self, action: "addMoreDetails:", forControlEvents: UIControlEvents.TouchUpInside)
                     return cell
@@ -507,6 +510,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     cell.selectionStyle = UITableViewCellSelectionStyle.None
                     cell.delegate = self
                     cell.cellTextField.text = "\(self.productModel.quantity)"
+                    cell.cellLabel.required()
                     return cell
                 } else {
                     let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
@@ -528,7 +532,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                         let combination: CombinationModel = self.productModel.validCombinations[indexPath.row]
                         
                         cell.cellQuantityLabel.text = "x" + combination.quantity
-                        
+
                         var title: String = ""
                         
                         for dictionary in self.productModel.validCombinations[indexPath.row].attributes as [NSMutableDictionary] {
@@ -536,7 +540,11 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                             title = title + value + ", "
                         }
                         
-                        title = dropLast(title)
+                        if title != "" {
+                            title = dropLast(title)
+                            title = dropLast(title)
+                        }
+                        
                         cell.cellTitleLabel.text = title
                     } else {
                         var totalQuantity: Int = 0
@@ -589,9 +597,20 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             cell.delegate = self
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.weightTextField.text = self.productModel.weigth
+            cell.weightLabel.required()
             cell.lengthTextField.text = self.productModel.length
+            cell.lengthlabel.required()
             cell.heightTextField.text = self.productModel.height
+            cell.heightLabel.required()
             cell.widthTextField.text = self.productModel.width
+            cell.widthLabel.required()
+            
+            if self.productModel.validCombinations.count != 0 {
+                cell.hidden = true
+            } else {
+                cell.hidden = false
+            }
+            
             return cell
         }
     }
@@ -693,7 +712,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
 
         for allaSset in assets as! [ALAsset] {
             let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!
-            self.productModel.images.insert(image, atIndex: 0)
+            self.productModel.images.insert(image, atIndex: self.productModel.images.count - 1)
         }
         
         self.reloadUploadCellCollectionViewData()
@@ -737,8 +756,11 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     func replaceProductAttributeWithAttribute(attributes: [AttributeModel], combinations: [CombinationModel]) {
         self.productModel.attributes = attributes
         self.productModel.validCombinations = combinations
-        
-
+        self.updateCombinationListRow()
+    }
+    
+    // MARK: - Update Combination List Row
+    func updateCombinationListRow() {
         if self.productModel.validCombinations.count == 0 {
             self.sectionFourRows = 2
             self.productUploadWeightAndHeightCellHeight = 244
@@ -748,9 +770,9 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             self.productUploadWeightAndHeightCellHeight = 0
             self.dimensionsHeaderViewHeight = 0
         }
-    
-        self.sectionPriceHeaderHeight = 0
         
+        self.sectionPriceHeaderHeight = 0
+        self.tableView.clipsToBounds = true
         self.tableView.reloadData()
     }
     
@@ -773,15 +795,15 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.retailPriceRequired, title: ProductUploadStrings.incompleteProductDetails)
         } else if (self.productModel.retailPrice as NSString).doubleValue < (self.productModel.discoutedPrice as NSString).doubleValue {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.retailMustBeLarger, title: ProductUploadStrings.incompleteProductDetails)
-        } else if self.productModel.sku == "" {
+        } else if self.productModel.sku == "" && self.productModel.validCombinations.count == 0 {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.skuRequried, title: ProductUploadStrings.incompleteProductDetails)
-        } else if self.productModel.length == "" {
+        } else if self.productModel.length == "" && self.productModel.validCombinations.count == 0 {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.lengthRequried, title: ProductUploadStrings.incompleteProductDetails)
-        } else if self.productModel.weigth == "" {
+        } else if self.productModel.weigth == "" && self.productModel.validCombinations.count == 0  {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.weightRequried, title: ProductUploadStrings.incompleteProductDetails)
-        } else if self.productModel.width == "" {
+        } else if self.productModel.width == "" && self.productModel.validCombinations.count == 0 {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.widthRequried, title: ProductUploadStrings.incompleteProductDetails)
-        } else if self.productModel.height == "" {
+        } else if self.productModel.height == "" && self.productModel.validCombinations.count == 0 {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.heightRequried, title: ProductUploadStrings.incompleteProductDetails)
         } else {
             self.fireUploadWithUploadType(self.uploadType)
@@ -853,13 +875,17 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     func fireUploadWithUploadType(uploadType: UploadType) {
         var datas: [NSData] = []
         
+        var uploadedImages: [UIImage] = []
+        
+        uploadedImages = self.productModel.images
+        
         var productUploadedImagesCount: Int = 0
 
-        if self.productModel.images.count != 0 {
-            self.productModel.images.removeLast()
+        if uploadedImages.count != 0 {
+            uploadedImages.removeLast()
         }
 
-        let mainImageCount: Int = self.productModel.images.count
+        let mainImageCount: Int = uploadedImages.count
         
         var imagesKey: [String] = []
         
@@ -869,11 +895,11 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         
         for combination in self.productModel.validCombinations {
             for image in combination.images {
-                self.productModel.images.append(image)
+                uploadedImages.append(image)
             }
         }
         
-        for image in self.productModel.images as [UIImage] {
+        for image in uploadedImages as [UIImage] {
             let data: NSData = UIImageJPEGRepresentation(image, 1)
             datas.append(data)
         }
@@ -914,7 +940,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             categoryId = ""
         }
     
-        let parameters: NSDictionary = [ProductUploadTableViewControllerConstant.uploadPriceKey: self.productModel.retailPrice,
+        let parameters: NSMutableDictionary = [ProductUploadTableViewControllerConstant.uploadPriceKey: self.productModel.retailPrice,
         ProductUploadTableViewControllerConstant.uploadShortDescriptionkey: self.productModel.shortDescription,
         ProductUploadTableViewControllerConstant.uploadDescriptionKey: self.productModel.completeDescription,
         ProductUploadTableViewControllerConstant.uploadPriceKey: self.productModel.retailPrice,
@@ -932,7 +958,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         "width": width,
         "weight": weight,
         "length": length]
-
+        
+        if self.productModel.uid != "0" {
+            parameters["productId"] = self.productModel.uid
+        }
         
         let manager: APIManager = APIManager.sharedInstance
         
@@ -947,7 +976,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         } else if uploadType == UploadType.EditProduct {
             url = "\(APIAtlas.uploadEditUrl)?access_token=\(SessionManager.accessToken())"
         }
-        
         
         manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
             for (index, data) in enumerate(datas) {
@@ -1010,8 +1038,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             self.productModel.images.removeLast()
         }
         
-        self.addAddPhoto()
         self.productModel = ProductModel()
+        self.addAddPhoto()
         self.tableView.reloadData()
         self.tableView.setContentOffset(CGPointZero, animated: true)
     }
@@ -1104,9 +1132,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     
     func draft() {
         let alertController = UIAlertController(title: ProductUploadStrings.uploadItem, message: ProductUploadStrings.saveAsDraft, preferredStyle: .Alert)
-        
         let cancelAction = UIAlertAction(title: Constants.Localized.no, style: .Cancel) { (action) in
-            
+            self.dismissViewControllerAnimated(true, completion: nil)
         }
         alertController.addAction(cancelAction)
         

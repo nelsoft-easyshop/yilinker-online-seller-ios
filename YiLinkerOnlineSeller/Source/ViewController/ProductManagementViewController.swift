@@ -285,6 +285,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 44, 0)
             self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 44, 0)
             self.loaderContainerView.transform = CGAffineTransformMakeTranslation(0.0, 44.0)
+            self.emptyLabel.transform = CGAffineTransformMakeTranslation(0.0, 44.0)
         } else {
             self.searchBarTextField.endEditing(true)
             self.searchBarContainerView.hidden = true
@@ -293,7 +294,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
             self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0)
             self.loaderContainerView.transform = CGAffineTransformMakeTranslation(0.0, 0.0)
-            
+            self.emptyLabel.transform = CGAffineTransformMakeTranslation(0.0, 0.0)
         }
         
     }
@@ -431,6 +432,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     
     func searchBarTextDidChanged(textField: UITextField) {
         if count(self.searchBarTextField.text) > 2 || self.searchBarTextField.text == "" {
+            self.emptyLabel.hidden = true
             requestGetProductList(statusId[selectedIndex], key: searchBarTextField.text)
         }
     }
@@ -552,6 +554,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         if selectedIndex != indexPath.row {
+            self.emptyLabel.hidden = true
             self.selectedItems = []
             self.productModel = nil
             requestGetProductList(statusId[indexPath.row], key: searchBarTextField.text)
