@@ -74,11 +74,11 @@
             <point key="canvasLocation" x="837.5" y="331"/>
         </view>
         <view contentMode="scaleToFill" id="Z65-YD-xsx" customClass="ProductDescriptionView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="116"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="136"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kwn-db-AzY">
-                    <rect key="frame" x="83" y="81" width="209" height="35"/>
+                    <rect key="frame" x="83" y="93" width="209" height="35"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SEE MORE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spi-nn-9Z3">
                             <rect key="frame" x="55" y="0.0" width="90" height="35"/>
@@ -113,13 +113,19 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Description Text Here" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehP-lJ-I5r">
-                    <rect key="frame" x="10" y="57" width="357" height="16"/>
+                    <rect key="frame" x="10" y="57" width="357" height="33"/>
                     <constraints>
-                        <constraint firstAttribute="height" priority="500" constant="16" id="ftV-J3-0ZA"/>
+                        <constraint firstAttribute="height" constant="33" id="1oM-o4-nPA"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="500" constant="16" id="ftV-J3-0ZA"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
                     <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="ftV-J3-0ZA"/>
+                        </mask>
+                    </variation>
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -130,7 +136,7 @@
                 <constraint firstItem="vQ5-c2-7Vg" firstAttribute="top" secondItem="Z65-YD-xsx" secondAttribute="top" constant="41" id="GO0-bp-uES"/>
                 <constraint firstItem="vQ5-c2-7Vg" firstAttribute="leading" secondItem="Z65-YD-xsx" secondAttribute="leading" id="Hp1-v0-pu0"/>
                 <constraint firstAttribute="trailing" secondItem="vQ5-c2-7Vg" secondAttribute="trailing" id="MxU-Y0-UMT"/>
-                <constraint firstAttribute="bottom" secondItem="kwn-db-AzY" secondAttribute="bottom" id="VPh-cK-iIy"/>
+                <constraint firstAttribute="bottom" secondItem="kwn-db-AzY" secondAttribute="bottom" constant="8" id="VPh-cK-iIy"/>
                 <constraint firstAttribute="trailing" secondItem="ehP-lJ-I5r" secondAttribute="trailing" constant="8" id="aYi-0t-wNY"/>
                 <constraint firstItem="ehP-lJ-I5r" firstAttribute="leading" secondItem="Z65-YD-xsx" secondAttribute="leading" constant="10" id="awO-T5-wUk"/>
                 <constraint firstAttribute="centerX" secondItem="kwn-db-AzY" secondAttribute="centerX" id="dqi-w9-bnU"/>
@@ -143,7 +149,7 @@
                 <outlet property="seeMoreView" destination="kwn-db-AzY" id="uuM-kZ-boB"/>
                 <outlet property="titleLabel" destination="GnP-7v-HbZ" id="mQc-9R-Fim"/>
             </connections>
-            <point key="canvasLocation" x="837.5" y="636"/>
+            <point key="canvasLocation" x="837.5" y="646"/>
         </view>
     </objects>
     <resources>
