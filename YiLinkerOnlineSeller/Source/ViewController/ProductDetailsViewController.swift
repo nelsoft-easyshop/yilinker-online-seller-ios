@@ -65,12 +65,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        if Reachability.isConnectedToNetwork() {
-            requestProductDetails()
-        } else {
-//            addEmptyView()
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
-        }
+        
         customizeNavigationBar()
         
         let nib = UINib(nibName: "ProductDetailsTableViewCell", bundle: nil)
@@ -79,6 +74,11 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        if Reachability.isConnectedToNetwork() {
+            requestProductDetails()
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
+        }
         loadloadViewsWithDetails()
     }
     
@@ -196,17 +196,19 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         self.productDescriptionView.descriptionLabel.text = productModel.completeDescription
         
         let def: CombinationModel = productModel.validCombinations[0]
+        self.detailValues = [productModel.category.name, productModel.brand.name]
+//        self.detailValues.append(productModel.category.name)
+//        self.detailValues.append(productModel.brand.name)
         
-        self.detailValues.append(productModel.category.name)
-        self.detailValues.append(productModel.brand.name)
+        self.priceValues = [def.retailPrice, def.discountedPrice]
+//        self.priceValues.append(def.retailPrice)
+//        self.priceValues.append(def.discountedPrice)
         
-        self.priceValues.append(def.retailPrice)
-        self.priceValues.append(def.discountedPrice)
-        
-        self.dimensionWeightValues.append(def.length)
-        self.dimensionWeightValues.append(def.width)
-        self.dimensionWeightValues.append(def.weight)
-        self.dimensionWeightValues.append(def.height)
+        self.dimensionWeightValues = [def.length, def.width, def.weight, def.height]
+//        self.dimensionWeightValues.append(def.length)
+//        self.dimensionWeightValues.append(def.width)
+//        self.dimensionWeightValues.append(def.weight)
+//        self.dimensionWeightValues.append(def.height)
         
         self.listNames = ["Category", "Brand", "Retail Price", "Discounted Price", "Length (CM)", "Width (CM)", "Weight (KG)", "Height (CM)"]
         self.listValues = [productModel.category.name, productModel.brand.name, "P " + def.retailPrice, "P " + def.discountedPrice,

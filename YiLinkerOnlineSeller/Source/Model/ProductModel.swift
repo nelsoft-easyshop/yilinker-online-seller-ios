@@ -17,7 +17,7 @@ class ProductModel {
     var brand: BrandModel = BrandModel(name: "", brandId:1)
     var condition: ConditionModel = ConditionModel(uid: 0, name: "")
     var quantity: Int = 0
-    var uid: Int = 0
+    var uid: String = "0"
     
     var name: String = ""
     var shortDescription: String = ""
@@ -39,7 +39,7 @@ class ProductModel {
         self.validCombinations = validCombinations
     }
     
-    init (isSuccessful: Bool, message: String, attributes: [AttributeModel], validCombinations: [CombinationModel], images: [String], category: CategoryModel, brand: BrandModel, condition: ConditionModel, name: String, shortDescription: String, completeDescription: String) {
+    init (isSuccessful: Bool, message: String, attributes: [AttributeModel], validCombinations: [CombinationModel], images: [String], category: CategoryModel, brand: BrandModel, condition: ConditionModel, name: String, shortDescription: String, completeDescription: String, productId: String) {
     
         self.isSuccessful = isSuccessful
         self.message = message
@@ -52,6 +52,8 @@ class ProductModel {
         self.name = name
         self.shortDescription = shortDescription
         self.completeDescription = completeDescription
+        self.uid = productId
+        println(">> \(self.uid)")
     }
     
     init() {
@@ -78,6 +80,7 @@ class ProductModel {
         var name: String = ""
         var shortDescription: String = ""
         var completeDescription: String = ""
+        var uid: String = "0"
         
         if dictionary.isKindOfClass(NSDictionary) {
             
@@ -105,6 +108,10 @@ class ProductModel {
                 
                 if let tempVar = value["title"] as? String {
                     name = tempVar
+                }
+                
+                if let tempVar = value["productId"] as? String {
+                    uid = tempVar
                 }
                 
                 if let tempVar = value["shortDescription"] as? String {
@@ -147,7 +154,7 @@ class ProductModel {
             } // data
         } // dictionary
         
-        return ProductModel(isSuccessful: isSuccessful, message: message, attributes: attributes, validCombinations: validCombinations, images: images, category: category, brand: brand, condition: condition, name: name, shortDescription: shortDescription, completeDescription: completeDescription)
+        return ProductModel(isSuccessful: isSuccessful, message: message, attributes: attributes, validCombinations: validCombinations, images: images, category: category, brand: brand, condition: condition, name: name, shortDescription: shortDescription, completeDescription: completeDescription, productId: uid)
         
     } // parseDataWithDictionary
 }
