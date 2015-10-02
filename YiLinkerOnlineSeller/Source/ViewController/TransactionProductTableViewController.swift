@@ -23,6 +23,7 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
     var tableFooterView: TransactionProductDetailsFooterView!
     
     var productModel: TransactionOrderProductModel!
+    var invoiceNumber: String = ""
     
     var dimView: UIView?
     var hud: MBProgressHUD?
@@ -364,6 +365,8 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
         reasonController.providesPresentationContextTransitionStyle = true
         reasonController.definesPresentationContext = true
         reasonController.view.backgroundColor = UIColor.clearColor()
+        reasonController.orderProductId = productModel.orderProductId
+        reasonController.invoiceNumber = invoiceNumber
         self.tabBarController?.presentViewController(reasonController, animated: true, completion: nil)
     }
     
