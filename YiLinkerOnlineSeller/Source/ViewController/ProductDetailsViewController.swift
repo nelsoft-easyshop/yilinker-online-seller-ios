@@ -24,6 +24,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     var productImagesModel: [ProductImagesModel]!
     // Upload Models
     var productModel: ProductModel!
+    var imagesToEdit: [UIImage] = []
     var uploadAttributeModel: [AttributeModel] = []
     var uploadCombinationModel: [CombinationModel] = []
     
@@ -124,7 +125,9 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         navigationSpacer.width = -10
         
         self.navigationItem.leftBarButtonItems = [navigationSpacer, backButton]
-        self.navigationItem.rightBarButtonItem = editButton
+        if SessionManager.isSeller() {
+            self.navigationItem.rightBarButtonItem = editButton
+        }
         
     }
     
@@ -190,7 +193,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     func populateDetails() {
         
         self.productImagesView.setDetails(productModel)
-        self.productDescriptionView.descriptionLabel.text = productModel.shortDescription
+        self.productDescriptionView.descriptionLabel.text = productModel.completeDescription
         
         let def: CombinationModel = productModel.validCombinations[0]
         
@@ -287,9 +290,30 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func editAction() {
-        let upload = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
-//        upload.productModel = productUploadModel
-        self.navigationController?.pushViewController(upload, animated: true)
+        self.showHUD()
+        
+        for i in 0..<self.productModel.imageUrls.count {
+            var imgURL: NSURL = NSURL(string: self.productModel.imageUrls[i])!
+            let request: NSURLRequest = NSURLRequest(URL: imgURL)
+            NSURLConnection.sendAsynchronousRequest(
+                request, queue: NSOperationQueue.mainQueue(),
+                completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
+                    if error == nil {
+                        
+                        self.productModel.images.append(UIImage(data: data)!)
+//                        self.imagesToEdit.append(UIImage(data: data)!)
+                        if self.productModel.images.count == self.productModel.imageUrls.count {
+                            self.hud?.hide(true)
+                            let upload = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
+                            upload.uploadType = UploadType.EditProduct
+                            upload.productModel = self.productModel
+                            let navigationController: UINavigationController = UINavigationController(rootViewController: upload)
+                            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+                            self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
+                        }
+                    }
+            })
+        }
     }
 
     func didTapReload() {
@@ -345,10 +369,24 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         self.navigationController?.presentViewController(productDescription, animated: true, completion: nil)
     }
     
+    func downloadImage(url: String) {
+        
+        var imgURL: NSURL = NSURL(string: url)!
+        let request: NSURLRequest = NSURLRequest(URL: imgURL)
+        NSURLConnection.sendAsynchronousRequest(
+            request, queue: NSOperationQueue.mainQueue(),
+            completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
+                if error == nil {
+                    self.imagesToEdit.append(UIImage(data: data)!)
+                }
+        })
+        
+    }
+    
     // Dealloc
     
-    deinit {
-        self.tableView.delegate = nil
-        self.tableView.dataSource = nil
-    }
+//    deinit {
+//        self.tableView.delegate = nil
+//        self.tableView.dataSource = nil
+//    }
 }

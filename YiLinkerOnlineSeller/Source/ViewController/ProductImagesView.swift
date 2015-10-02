@@ -9,12 +9,12 @@
 import UIKit
 
 class ProductImagesView: UIView, UICollectionViewDataSource {
-
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subTitleLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
    
-    var images: [String] = []
+    var imagesUrls: [String] = []
     
     override func awakeFromNib() {
         let nib = UINib(nibName: "ProductImagesCollectionViewCell", bundle: nil)
@@ -28,29 +28,28 @@ class ProductImagesView: UIView, UICollectionViewDataSource {
     func setDetails(product: ProductModel) {
         
         self.titleLabel.text = product.name
-        self.subTitleLabel.text = product.completeDescription
+        self.subTitleLabel.text = product.shortDescription
 
-        self.images = product.imageUrls
+        self.imagesUrls = product.imageUrls
         self.collectionView.reloadData()
     }
     
     // MARK: - Collection View Data Source
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if images.count == 0 {
+        if imagesUrls.count == 0 {
             return 5
         }
-        return images.count
+        return imagesUrls.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: ProductImagesCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("ProductImagesIdentifier", forIndexPath: indexPath) as! ProductImagesCollectionViewCell
         
-        if images.count != 0 {
-            cell.setItemImage(images[indexPath.row])
+        if imagesUrls.count != 0 {
+            cell.setItemImage(imagesUrls[indexPath.row])
         }
         
         return cell
     }
-
 }

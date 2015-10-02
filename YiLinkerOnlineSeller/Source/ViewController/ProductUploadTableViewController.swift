@@ -1009,7 +1009,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         let alertController = UIAlertController(title: "Product Upload", message: "Save as draft?", preferredStyle: .Alert)
         
         let cancelAction = UIAlertAction(title: "NO", style: .Cancel) { (action) in
-            
+            self.dismissViewControllerAnimated(true, completion: nil)
         }
         alertController.addAction(cancelAction)
         
