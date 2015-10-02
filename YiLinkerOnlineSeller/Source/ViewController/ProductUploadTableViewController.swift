@@ -596,6 +596,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             cell.lengthTextField.text = self.productModel.length
             cell.heightTextField.text = self.productModel.height
             cell.widthTextField.text = self.productModel.width
+            
+            if self.productModel.validCombinations.count != 0 {
+                cell.hidden = true
+            } else {
+                cell.hidden = false
+            }
+            
             return cell
         }
     }
@@ -757,7 +764,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
         
         self.sectionPriceHeaderHeight = 0
-        
+        self.tableView.clipsToBounds = true
         self.tableView.reloadData()
     }
     
@@ -921,7 +928,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             categoryId = ""
         }
     
-        let parameters: NSDictionary = [ProductUploadTableViewControllerConstant.uploadPriceKey: self.productModel.retailPrice,
+        let parameters: NSMutableDictionary = [ProductUploadTableViewControllerConstant.uploadPriceKey: self.productModel.retailPrice,
         ProductUploadTableViewControllerConstant.uploadShortDescriptionkey: self.productModel.shortDescription,
         ProductUploadTableViewControllerConstant.uploadDescriptionKey: self.productModel.completeDescription,
         ProductUploadTableViewControllerConstant.uploadPriceKey: self.productModel.retailPrice,
@@ -939,7 +946,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         "width": width,
         "weight": weight,
         "length": length]
-
+        
+        if self.productModel.uid != 0 {
+            parameters["productId"] = self.productModel.uid
+        }
         
         let manager: APIManager = APIManager.sharedInstance
         

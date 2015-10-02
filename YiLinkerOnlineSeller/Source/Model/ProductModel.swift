@@ -17,6 +17,7 @@ class ProductModel {
     var brand: BrandModel = BrandModel(name: "", brandId:1)
     var condition: ConditionModel = ConditionModel(uid: 0, name: "")
     var quantity: Int = 0
+    var uid: Int = 0
     
     var name: String = ""
     var shortDescription: String = ""
