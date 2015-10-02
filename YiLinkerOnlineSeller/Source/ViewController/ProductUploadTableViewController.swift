@@ -466,7 +466,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.cellTitleLabel.text = ProductUploadStrings.brand
                 cell.cellTexField.placeholder = ProductUploadStrings.brand
                 cell.delegate = self
-                cell.cellTitleLabel.required()
                 cell.cellTexField.text = self.productModel.brand.name
                 cell.textFieldType = ProductTextFieldType.Brand
                 if self.productModel.brand.name != "" {
@@ -511,6 +510,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     cell.selectionStyle = UITableViewCellSelectionStyle.None
                     cell.delegate = self
                     cell.cellTextField.text = "\(self.productModel.quantity)"
+                    cell.cellLabel.required()
                     return cell
                 } else {
                     let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
@@ -532,7 +532,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                         let combination: CombinationModel = self.productModel.validCombinations[indexPath.row]
                         
                         cell.cellQuantityLabel.text = "x" + combination.quantity
-                        
+
                         var title: String = ""
                         
                         for dictionary in self.productModel.validCombinations[indexPath.row].attributes as [NSMutableDictionary] {
@@ -597,9 +597,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             cell.delegate = self
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.weightTextField.text = self.productModel.weigth
+            cell.weightLabel.required()
             cell.lengthTextField.text = self.productModel.length
+            cell.lengthlabel.required()
             cell.heightTextField.text = self.productModel.height
+            cell.heightLabel.required()
             cell.widthTextField.text = self.productModel.width
+            cell.widthLabel.required()
             
             if self.productModel.validCombinations.count != 0 {
                 cell.hidden = true
