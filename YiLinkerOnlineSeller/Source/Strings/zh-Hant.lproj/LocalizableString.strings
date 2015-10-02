@@ -17,6 +17,10 @@ CONNECTION_UNREACHABLE_LOCALIZE_KEY = "Connection Unreachable";
 CONNECTION_ERROR_MESSAGE_LOCALIZE_KEY = "Cannot retrieve data. Please check your internet connection.";
 CANCEL_LOCALIZE_KEY = "CANCEL";
 
+DONE_LOCALIZE_KEY  = "DONE";
+INCOMPLETE_PRODUCT_DETAILS_LOCALIZE_KEY  = "Incomplete Product Details";
+SERVER_ERROR_LOCALIZE_KEY  = "Server Error";
+
 // MARK: - Dashboard
 TOTAL_SALES_LOCALIZE_KEY = "Total Sales (Gross)";
 TOTAL_PRODUCTS_LOCALIZE_KEY = "Total Products";
@@ -399,3 +403,112 @@ DISPUTE_PRODUCTS_LOCALIZE_KEY = "Products";
 DISPUTE_ADD_LOCALIZE_KEY = "  ADD";
 DISPUTE_REMARKS_LOCALIZE_KEY = "Remarks";
 DISPUTE_SUBMIT_CASE_LOCALIZE_KEY = "SUBMIT CASE";
+
+// MARK: - Product Upload
+UPLOAD_ITEM_LOCALIZE_KEY = "Upload Item";
+PRODUCT_PHOTOS_LOCALIZE_KEY = "PRODUCT PHOTOS";
+ADD_PHOTO_LOCALIZE_KEY = "ADD PHOTO";
+
+PRODUCT_INFORMATION_LOCALIZE_KEY = "Product Information";
+
+PRODUCT_NAME_LOCALIZE_KEY = "Edit Bank Account";
+SHORT_DESCRIPTION_LOCALIZE_KEY = "Edit Bank Account";
+COMPLETE_DESCRIPTION_LOCALIZE_KEY = "Complete Description";
+
+PRODUCT_DETAILS_LOCALIZE_KEY = "Product Details";
+
+CATEGORY_LOCALIZE_KEY = "Category";
+SELECT_CATEGORY_LOCALIZE_KEY = "Select Category";
+BRAND_LOCALIZE_KEY = "Brand";
+ADD_BRAND_DETAILS_LOCALIZE_KEY = "Add Brand";
+CONDITION_LOCALIZE_KEY = "Condition";
+
+ADD_MORE_DETAILS_LOCALIZE_KEY = "ADD MORE DETAILS";
+ADD_EDIT_MORE_DETAILS_LOCALIZE_KEY = "ADD/EDIT MORE DETAILS";
+
+QUANTITY_LOCALIZE_KEY = "Quantity";
+SKU_LOCALIZE_KEY = "SKU";
+
+PRICE_LOCALIZE_KEY = "Price";
+
+RETAIL_PRICE_LOCALIZE_KEY = "Retail Price";
+DISCOUNTED_PRICE_LOCALIZE_KEY = "Discounted Price";
+
+DIMENSIONS_AND_WEIGHT_LOCALIZE_KEY = "Dimension and Weight";
+
+DIMENSIONS_AND_WEIGHT_MESSAGE_ONE_LOCALIZE_KEY = "Please provide your package details as much as possible for a more accurate shipping fee.";
+DIMENSIONS_AND_WEIGHT_MESSAGE_TWO_LOCALIZE_KEY = "If your product has additional packaging material, e.g. box, bubble wrap, please use those details.";
+
+LENGHT_LOCALIZE_KEY = "Length(CM)";
+WEIGHT_LOCALIZE_KEY = "Weight(KG)";
+WIDTH_LOCALIZE_KEY = "Width(CM)";
+HEIGHT_LOCALIZE_KEY = "Hight(KG)";
+
+ADD_MORE_LOCALIZE_KEY = "ADD MORE";
+SAVE_PRODUCT_DETAILS_LOCALIZE_KEY = "SAVE PRODUCT DETAILS";
+
+DETAIL_NAME_LOCALIZE_KEY = "Detail Name:";
+VALUES_LOCALIZE_KEY = "Values:";
+VALUES_PLACEHODER_LOCALIZE_KEY = "Enter the values [Separated by DONE BUTTON]";
+
+SAVE_LOCALIZE_KEY = "SAVE";
+
+PROCEED_TO_COMBINATION_LOCALIZE_KEY = "PROCEED TO COMBINATION";
+
+SAVE_DETAILS_LOCALIZE_KEY= "SAVE DETAILS";
+COMBINATION_LOCALIZE_KEY = "Combination";
+
+TOTAL_QUANTITY_LOCALIZE_KEY = "Total Quantity";
+
+SEARCH_CATEGORY_LOCALIZE_KEY = "Search Category";
+
+SAVE_DRAFT_LOCALIZE_KEY = "Save as draft?";
+
+UPLOAD_AGAIN_LOCALIZE_KEY = "UPLOAD AGAIN";
+BACK_TO_DASHBOARD_LOCALIZE_KEY = "BACK TO DASHBOARD";
+
+// MARK: - Upload Error Messages
+WARNING_LOCALIZE_KEY  = "Warning";
+WARNING_REMOVE_ATTRIBUTE_LOCALIZE_KEY  = "This attribute item has an existing combination. Continue removing this item?";
+INC_PRODUCT_DETAILS_LOCALIZE_KEY = "Incomplete Product Details";
+
+RETAIL_MUST_BE_GREATER_LOCALIZE_KEY  = "This attribute item has an existing combination. Continue removing this item?";
+
+ATTRIBUTE_DEF_LOCALIZE_KEY = "Attribute Definition";
+ALREADY_EXIST_LOCALIZE_KEY = "already exist.";
+
+ATTRIBUTE_ALREADY_EXIST_LOCALIZE_KEY = "This attribute value already exist.";
+
+COMBINATION_ALREADY_EXIST_LOCALIZE_KEY = "Combination already exist.";
+COMBINATION_REQUIRED_LOCALIZE_KEY = "Combinations are required.";
+ATTRIBUTE_VALUES_REQUIRED_LOCALIZE_KEY = "Attribute defintion and values are required.";
+
+INSERT_ONE_IMAGE_LOCALIZE_KEY = "Please insert atleast one product image.";
+PRODUCT_NAME_REQUIRED_LOCALIZE_KEY = "Please insert product name.";
+
+SHORT_DESCRIPTION_REQUIRED_LOCALIZE_KEY = "Please insert short description.";
+COMPLETE_DESCRIPTION_REQUIRED_LOCALIZE_KEY = "Please insert complete description.";
+CATEGORY_REQUIRED_LOCALIZE_KEY = "Please select category.";
+
+CONDITION_REQUIRED_LOCALIZE_KEY = "Please select condition.";
+QUANTITY_REQUIRED_LOCALIZE_KEY = "Please insert quantity.";
+RETAIL_PRICE_REQUIRED_LOCALIZE_KEY = "Please insert Retail Price.";
+RETAIL_MUST_BE_LARGER_LOCALIZE_KEY = "Retail price must be larger than discount price.";
+SKU_REQUIRED_LOCALIZE_KEY = "Please insert sku.";
+
+LENGTH_REQUIRED_LOCALIZE_KEY = "Please insert sku.";
+WEIGHT_REQUIRED_LOCALIZE_KEY = "Please insert weight.";
+WIDTH_REQUIRED_LOCALIZE_KEY = "Please insert width.";
+HEIGHT_REQUIRED_LOCALIZE_KEY = "Please insert height.";
+
+//MARK: - Upload Success Message
+SUCCESSFULLY_EDITED_LOCALIZE_KEY = "Successfully edited the product.";
+SUCCESSFULLY_DRAFT_LOCALIZE_KEY = "Successfully uploaded into draft.";
+SUCCESSFULLY_UPLOADED_LOCALIZE_KEY = "Your product has been successfuly uploaded";
+
+
+// MARK: - View Controller Titles
+ATTRIBUTE_LIST_LOCALIZE_KEY = "Attribute List";
+ADD_COMBINATION_LOCALIZE_KEY = "Add Combination";
+PRODUCT_UPLOAD_LOCALIZE_KEY = "Product Upload";
+ATTRIBUTE_COMBINATION_LOCALIZE_KEY = "Attribute Combination";

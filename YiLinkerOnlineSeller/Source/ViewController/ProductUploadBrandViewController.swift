@@ -21,6 +21,8 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
     var brands: NSMutableArray = NSMutableArray()
     var selectedBrandModel: BrandModel = BrandModel(name: "", brandId: 0)
     var searchTask: NSURLSessionDataTask?
+    var hud: MBProgressHUD?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +33,7 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
         
         self.backButton()
         self.checkButton()
-        self.title = "Add Brand"
+        self.title = Constants.ViewControllersTitleString.addBrand
         
         self.registerCell()
         
@@ -100,7 +102,7 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     
                     if task.statusCode == 401 {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "RefreshToken Expired/ No available API for refershing accessToken", title: "Server Error")
+                        self.fireRefreshTokenWithKeyWord(keyWord)
                     } else {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                     }
@@ -108,6 +110,28 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
             })
     }
     
+    // MARK: - Fire Refresh Token
+    
+    func fireRefreshTokenWithKeyWord(keyWord: String) {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.fireBrandWithKeyWord(keyWord)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+        })
+        
+    }
     
     func textFieldDidChange(sender: UITextField) {
         self.fireBrandWithKeyWord(sender.text)
@@ -143,6 +167,20 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
         self.selectedBrandModel = brandModel
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         self.brandTextField.text = brandModel.name
+    }
+    
+    // MARK: - Show HUD
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
     
     override func didReceiveMemoryWarning() {

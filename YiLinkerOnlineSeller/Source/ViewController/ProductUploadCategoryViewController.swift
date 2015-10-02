@@ -93,7 +93,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
                 if task.statusCode == 401 {
                    self.fireRefreshToken(parentID)
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                 }
                 
                 self.hud?.hide(true)

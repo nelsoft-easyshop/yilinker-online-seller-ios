@@ -166,6 +166,8 @@
                 <outlet property="heightTextField" destination="hVz-4Q-UrQ" id="bqL-Hf-ehR"/>
                 <outlet property="lengthTextField" destination="7OP-Rl-qjY" id="9Px-Io-QYm"/>
                 <outlet property="lengthlabel" destination="9Hd-rd-87i" id="1U4-Cn-HiG"/>
+                <outlet property="messageOneLabel" destination="Wse-dO-BO4" id="ukF-9r-xfP"/>
+                <outlet property="messageTwoLabel" destination="QQO-Kf-KVW" id="JOT-2V-CwP"/>
                 <outlet property="weightLabel" destination="Pnq-zi-4Oz" id="aQs-w2-sxx"/>
                 <outlet property="weightTextField" destination="u4Z-br-Okt" id="vfO-87-RM8"/>
                 <outlet property="widthLabel" destination="Pun-pp-H07" id="SRT-hu-oeq"/>

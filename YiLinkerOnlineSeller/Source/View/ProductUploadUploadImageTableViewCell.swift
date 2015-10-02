@@ -25,6 +25,7 @@ protocol ProductUploadUploadImageTableViewCellDelegate {
 class ProductUploadUploadImageTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, ProductUploadImageCollectionViewCellDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var productPhotosLabel: UILabel!
     
     var dataSource: ProductUploadUploadImageTableViewCellDataSource?
     var delegate: ProductUploadUploadImageTableViewCellDelegate?
@@ -32,6 +33,8 @@ class ProductUploadUploadImageTableViewCell: UITableViewCell, UICollectionViewDa
     override func awakeFromNib() {
         super.awakeFromNib()
         self.registerCell()
+        
+        self.productPhotosLabel.text = ProductUploadStrings.productPhotos
     }
 
     func registerCell() {

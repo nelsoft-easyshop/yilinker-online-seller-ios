@@ -24,6 +24,8 @@ class ProductUploadQuantityTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.cellTextField.delegate = self
         self.cellLabel.required()
         self.cellTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        
+        self.cellLabel.text = ProductUploadStrings.quantity
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

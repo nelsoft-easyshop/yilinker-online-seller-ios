@@ -15,6 +15,12 @@ protocol ProductUploadFooterViewDelegate {
 class ProductUploadFooterView: UIView {
     var delegate: ProductUploadFooterViewDelegate?
     
+    @IBOutlet weak var uploadProductButton: DynamicRoundedButton!
+    
+    override func awakeFromNib() {
+        self.uploadProductButton.setTitle(ProductUploadStrings.uploadItem, forState: UIControlState.Normal)
+    }
+    
     @IBAction func productUpload(sender: AnyObject) {
         self.delegate!.productUploadFooterView(didClickUpload: self)
     }

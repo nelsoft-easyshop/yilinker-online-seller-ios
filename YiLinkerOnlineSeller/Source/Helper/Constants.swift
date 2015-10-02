@@ -18,6 +18,8 @@ struct Constants {
         static let serverError: String = StringHelper.localizedStringWithKey("SERVER_ERROR_LOCALIZE_KEY")
         static let next: String = StringHelper.localizedStringWithKey("NEXT_LOCALIZE_KEY")
         static let previous: String = StringHelper.localizedStringWithKey("PREVIOUS_LOCALIZE_KEY")
+        static let no: String = StringHelper.localizedStringWithKey("NO_LOCALIZE_KEY")
+        static let yes: String = StringHelper.localizedStringWithKey("YES_LOCALIZE_KEY")
         
         static let noInternet: String = StringHelper.localizedStringWithKey("NO_INTERNET_LOCALIZE_KEY")
         static let noInternetErrorMessage: String = StringHelper.localizedStringWithKey("NO_INTERNET_ERROR_MESSAGE_LOCALIZE_KEY")
@@ -78,6 +80,15 @@ struct Constants {
         
         static let newAddressTableViewCellNibNameAndIdentifier = "NewAddressTableViewCell"
         
+    }
+    
+    // MARK: - View Controllers Title String
+    struct ViewControllersTitleString {
+        static let atttributeList: String = StringHelper.localizedStringWithKey("ATTRIBUTE_LIST_LOCALIZE_KEY")
+        static let addCombination: String = StringHelper.localizedStringWithKey("ADD_COMBINATION_LOCALIZE_KEY")
+        static let productUpload: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_LOCALIZE_KEY")
+        static let addBrand: String = StringHelper.localizedStringWithKey("ADD_BRAND_DETAILS_LOCALIZE_KEY")
+        static let attributeCombination = StringHelper.localizedStringWithKey("ATTRIBUTE_COMBINATION_LOCALIZE_KEY")
     }
 }
 

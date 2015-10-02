@@ -15,12 +15,15 @@ protocol ProductUploadDetailHeaderViewCollectionViewCellDelegate {
 class ProductUploadDetailHeaderViewCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var cellTextField: UITextField!
+    @IBOutlet weak var detailNameLabel: UILabel!
     
     var delegate: ProductUploadDetailHeaderViewCollectionViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         self.cellTextField.delegate = self
+        
+        self.detailNameLabel.text = ProductUploadStrings.detailName
     }
     
     func trackEditingText() {

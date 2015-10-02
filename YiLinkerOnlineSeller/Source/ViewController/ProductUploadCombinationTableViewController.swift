@@ -306,15 +306,15 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
         dispatch_after(delayTime, dispatch_get_main_queue()) {
             if self.combination.sku == "" {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert product sku.", title: "Incomplete Product Details")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.skuRequried, title: ProductUploadStrings.incompleteProductDetails)
             } else if self.combination.length == "" {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert product length.", title: "Incomplete Product Details")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.lengthRequried, title: ProductUploadStrings.incompleteProductDetails)
             } else if self.combination.weight == "" {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert product weight.", title: "Incomplete Product Details")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.weightRequried, title: ProductUploadStrings.incompleteProductDetails)
             } else if self.combination.width == "" {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert product width.", title: "Incomplete Product Details")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.widthRequried, title: ProductUploadStrings.incompleteProductDetails)
             } else if self.combination.height == "" {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please insert product height.", title: "Incomplete Product Details")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.heightRequried, title: ProductUploadStrings.incompleteProductDetails)
             } else {
                 
                 let cell: ProductUploadCombinationFooterTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as! ProductUploadCombinationFooterTableViewCell
