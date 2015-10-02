@@ -198,7 +198,12 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.tableData.removeAll(keepCapacity: false)
             self.fireSearchProduct()
         } else {
-            self.fireSearch()
+            if count(textField.text) < 3 {
+                self.showAlert(title: "Error", message: "Minimum character is 3. Please enter another transaction id.")
+                textField.text = ""
+            } else {
+                self.fireSearch()
+            }
         }
         
         return true
