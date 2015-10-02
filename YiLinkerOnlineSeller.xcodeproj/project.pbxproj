@@ -553,6 +553,8 @@
 		F7CCEEF21BBE607100D876C2 /* FilterResultsCollectionViewCellV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCEEF01BBE607100D876C2 /* FilterResultsCollectionViewCellV2.swift */; };
 		F7CCEEF31BBE607100D876C2 /* FilterResultsCollectionViewCellV2.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCEEF11BBE607100D876C2 /* FilterResultsCollectionViewCellV2.xib */; };
 		F7CCEEF51BBE714A00D876C2 /* SearchRiderNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCEEF41BBE714A00D876C2 /* SearchRiderNameModel.swift */; };
+		F7CCEEFA1BBEC41D00D876C2 /* FilterResultsRiderNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCEEF81BBEC41D00D876C2 /* FilterResultsRiderNameViewController.swift */; };
+		F7CCEEFB1BBEC41D00D876C2 /* FilterResultsRiderNameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCEEF91BBEC41D00D876C2 /* FilterResultsRiderNameViewController.xib */; };
 		F7D8C9011BBBC0AB00305EF2 /* SearchProductNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D8C9001BBBC0AB00305EF2 /* SearchProductNameModel.swift */; };
 		F7E175761BA3F32C00A3820B /* ProductUploadTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8A21B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.swift */; };
 		F7E465841B9F2D7B00FAB97D /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E465821B9F2D7B00FAB97D /* SearchTableViewCell.swift */; };
@@ -1143,6 +1145,8 @@
 		F7CCEEF01BBE607100D876C2 /* FilterResultsCollectionViewCellV2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterResultsCollectionViewCellV2.swift; sourceTree = "<group>"; };
 		F7CCEEF11BBE607100D876C2 /* FilterResultsCollectionViewCellV2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterResultsCollectionViewCellV2.xib; sourceTree = "<group>"; };
 		F7CCEEF41BBE714A00D876C2 /* SearchRiderNameModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchRiderNameModel.swift; sourceTree = "<group>"; };
+		F7CCEEF81BBEC41D00D876C2 /* FilterResultsRiderNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterResultsRiderNameViewController.swift; sourceTree = "<group>"; };
+		F7CCEEF91BBEC41D00D876C2 /* FilterResultsRiderNameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterResultsRiderNameViewController.xib; sourceTree = "<group>"; };
 		F7D8C9001BBBC0AB00305EF2 /* SearchProductNameModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchProductNameModel.swift; sourceTree = "<group>"; };
 		F7E465821B9F2D7B00FAB97D /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		F7E465831B9F2D7B00FAB97D /* SearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
@@ -1522,6 +1526,8 @@
 				7985D35C1BB0259F0060E5F5 /* DeactivateModalViewController.xib */,
 				795111E51BBC0E7800ADDEE1 /* TransactionProductDescriptionViewController.swift */,
 				795111E61BBC0E7800ADDEE1 /* TransactionProductDescriptionViewController.xib */,
+				F7CCEEF81BBEC41D00D876C2 /* FilterResultsRiderNameViewController.swift */,
+				F7CCEEF91BBEC41D00D876C2 /* FilterResultsRiderNameViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2134,6 +2140,7 @@
 				26BD5E4E1B8DC49800739488 /* ProductDetailsTableViewCell.xib in Resources */,
 				79E633751B9AD0740062DB14 /* TransactionProductDescriptionTableViewCell.xib in Resources */,
 				26B5B2421B94DE4200CBDDE5 /* AddCustomizedCategoryViewController.xib in Resources */,
+				F7CCEEFB1BBEC41D00D876C2 /* FilterResultsRiderNameViewController.xib in Resources */,
 				799893031B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib in Resources */,
 				F7E465851B9F2D7B00FAB97D /* SearchTableViewCell.xib in Resources */,
 				2625FEA21B95F5E800DD24AF /* AddItemTableViewCell.xib in Resources */,
@@ -2450,6 +2457,7 @@
 				7928762E1B8DF89F00762A39 /* ChartRendererBase.swift in Sources */,
 				792876301B8DF89F00762A39 /* ChartXAxisRendererBarChart.swift in Sources */,
 				F7AC5F761B9AA3B400227D18 /* ErrorModel.swift in Sources */,
+				F7CCEEFA1BBEC41D00D876C2 /* FilterResultsRiderNameViewController.swift in Sources */,
 				26B5B2411B94DE4200CBDDE5 /* AddCustomizedCategoryViewController.swift in Sources */,
 				792876351B8DF89F00762A39 /* ChartYAxisRendererRadarChart.swift in Sources */,
 				7985D36C1BB05C500060E5F5 /* DeliveryLogsModel.swift in Sources */,
