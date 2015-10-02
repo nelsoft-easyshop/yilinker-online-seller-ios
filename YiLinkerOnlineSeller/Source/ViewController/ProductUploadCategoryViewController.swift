@@ -30,7 +30,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         self.backButton()
-        self.searchButton()
+        //self.searchButton()
         self.title = self.pageTitle
         
         if self.respondsToSelector("edgesForExtendedLayout") {
