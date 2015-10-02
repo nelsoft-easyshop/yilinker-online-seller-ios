@@ -91,6 +91,7 @@ struct APIAtlas {
     static let transaction = "auth/transaction/searchKeyword?access_token="
     static let searchNameSuggestion = "auth/product/name-suggestion?access_token="
     static let searchRiderSuggestion = "auth/suggestPackageHandler?access_token="
+    static let transactionLogs = "auth/getTransactionList?access_token="
     
     //Resolution Center
     static let getResolutionCenterCases = "auth/dispute/get-case"
