@@ -247,6 +247,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
             var productDetailsController = TransactionProductTableViewController(nibName: "TransactionProductTableViewController", bundle: nil)
             productDetailsController.productModel = transactionDetailsModel.transactionItems[0].products[indexPath.row]
+            productDetailsController.invoiceNumber = invoiceNumber
             self.navigationController?.pushViewController(productDetailsController, animated:true)
         }
     }
