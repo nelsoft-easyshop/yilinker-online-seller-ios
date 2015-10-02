@@ -82,43 +82,42 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     }
     
     func fireCreateRegistration(registrationID : String) {
-        
-        self.showHUD()
-        
-        let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
-        let parameters: NSDictionary = [
-            "registrationId": "\(registrationID)",
-            "access_token"  : SessionManager.accessToken()
-            ]   as Dictionary<String, String>
-        
-        let url = APIAtlas.baseUrl + APIAtlas.ACTION_GCM_CREATE
-        
-        manager.POST(url, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            //SVProgressHUD.dismiss()
-            self.hud?.hide(true)
-            //self.showSuccessMessage()
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                
-                println(task.response?.description)
-                
-                println(error.description)
-                if (Reachability.isConnectedToNetwork()) {
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    
-                    if task.statusCode == 401 {
-                        self.fireRefreshToken()
-                    } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
-                    }
-                }
+        println("fireCreateRegistration")
+        if(SessionManager.isLoggedIn()){
+            self.showHUD()
+            
+            let manager: APIManager = APIManager.sharedInstance
+            //seller@easyshop.ph
+            //password
+            let parameters: NSDictionary = [
+                "registrationId": "\(registrationID)",
+                "access_token"  : SessionManager.accessToken()
+                ]   as Dictionary<String, String>
+            
+            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GCM_CREATE
+            
+            manager.POST(url, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 //SVProgressHUD.dismiss()
                 self.hud?.hide(true)
-        })
+                //self.showSuccessMessage()
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    
+                    if (Reachability.isConnectedToNetwork()) {
+                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                        
+                        if task.statusCode == 401 {
+                            self.fireRefreshToken()
+                        } else {
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        }
+                    }
+                    //SVProgressHUD.dismiss()
+                    self.hud?.hide(true)
+            })
+        }
     }
 
     override func didReceiveMemoryWarning() {

@@ -73,8 +73,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         println("Registration for remote notification failed with error: \(error.localizedDescription)")
         
         let userInfo = ["error": error.localizedDescription]
-        NSNotificationCenter.defaultCenter().postNotificationName(
-            self.registrationKey, object: nil, userInfo: userInfo)
+        if let registrationToken = userInfo["registrationToken"] {
+        SessionManager.setGcmToken(registrationToken)
+            println("REGISTERED WITH : \(registrationToken)")
+        }
+        //NSNotificationCenter.defaultCenter().postNotificationName( self.registrationKey, object: nil, userInfo: userInfo)
     }
     
     func registrationHandler(registrationToken: String!, error: NSError!) {
@@ -82,13 +85,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.registrationToken = registrationToken
             println("Registration Token: \(registrationToken)")
             let userInfo = ["registrationToken": registrationToken]
-            NSNotificationCenter.defaultCenter().postNotificationName(
-                self.registrationKey, object: nil, userInfo: userInfo)
+            if let registrationToken = userInfo["registrationToken"] {
+                SessionManager.setGcmToken(registrationToken)
+                println("REGISTERED WITH : \(registrationToken)")
+            }
+            //NSNotificationCenter.defaultCenter().postNotificationName( self.registrationKey, object: nil, userInfo: userInfo)
         } else {
             println("Registration to GCM failed with error: \(error.localizedDescription)")
             let userInfo = ["error": error.localizedDescription]
-            NSNotificationCenter.defaultCenter().postNotificationName(
-                self.registrationKey, object: nil, userInfo: userInfo)
+            if let error = userInfo["error"] {
+                println("REGISTRATION WITH ERROR: \(error)")
+            }
+            //NSNotificationCenter.defaultCenter().postNotificationName( self.registrationKey, object: nil, userInfo: userInfo)
         }
     }
     
