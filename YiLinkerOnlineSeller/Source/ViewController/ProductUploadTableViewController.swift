@@ -947,7 +947,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         "weight": weight,
         "length": length]
         
-        if self.productModel.uid != 0 {
+        if self.productModel.uid != "0" {
             parameters["productId"] = self.productModel.uid
         }
         
@@ -964,7 +964,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         } else if uploadType == UploadType.EditProduct {
             url = "\(APIAtlas.uploadEditUrl)?access_token=\(SessionManager.accessToken())"
         }
-        
         
         manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
             for (index, data) in enumerate(datas) {
