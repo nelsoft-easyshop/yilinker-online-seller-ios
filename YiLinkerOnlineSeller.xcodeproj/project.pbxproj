@@ -552,6 +552,7 @@
 		F7CB78441B9D822C001AF766 /* FilterCalendarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CB78421B9D822C001AF766 /* FilterCalendarTableViewCell.xib */; };
 		F7CCEEF21BBE607100D876C2 /* FilterResultsCollectionViewCellV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCEEF01BBE607100D876C2 /* FilterResultsCollectionViewCellV2.swift */; };
 		F7CCEEF31BBE607100D876C2 /* FilterResultsCollectionViewCellV2.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCEEF11BBE607100D876C2 /* FilterResultsCollectionViewCellV2.xib */; };
+		F7CCEEF51BBE714A00D876C2 /* SearchRiderNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCEEF41BBE714A00D876C2 /* SearchRiderNameModel.swift */; };
 		F7D8C9011BBBC0AB00305EF2 /* SearchProductNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D8C9001BBBC0AB00305EF2 /* SearchProductNameModel.swift */; };
 		F7E175761BA3F32C00A3820B /* ProductUploadTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8A21B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.swift */; };
 		F7E465841B9F2D7B00FAB97D /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E465821B9F2D7B00FAB97D /* SearchTableViewCell.swift */; };
@@ -1141,6 +1142,7 @@
 		F7CB78421B9D822C001AF766 /* FilterCalendarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterCalendarTableViewCell.xib; sourceTree = "<group>"; };
 		F7CCEEF01BBE607100D876C2 /* FilterResultsCollectionViewCellV2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterResultsCollectionViewCellV2.swift; sourceTree = "<group>"; };
 		F7CCEEF11BBE607100D876C2 /* FilterResultsCollectionViewCellV2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterResultsCollectionViewCellV2.xib; sourceTree = "<group>"; };
+		F7CCEEF41BBE714A00D876C2 /* SearchRiderNameModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchRiderNameModel.swift; sourceTree = "<group>"; };
 		F7D8C9001BBBC0AB00305EF2 /* SearchProductNameModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchProductNameModel.swift; sourceTree = "<group>"; };
 		F7E465821B9F2D7B00FAB97D /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		F7E465831B9F2D7B00FAB97D /* SearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
@@ -1304,6 +1306,7 @@
 				79ED2F631B9BF2CA00C5BC0A /* TransactionsModel.swift */,
 				7985D36B1BB05C500060E5F5 /* DeliveryLogsModel.swift */,
 				7985D36D1BB071F60060E5F5 /* DeliveryLogsSectionModel.swift */,
+				F7CCEEF41BBE714A00D876C2 /* SearchRiderNameModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2472,6 +2475,7 @@
 				79E633A91B9B27E70062DB14 /* UIView+FSExtension.m in Sources */,
 				0C65F8F01B8E3CB000504D86 /* ProductUploadDetailTableViewController.swift in Sources */,
 				B7BADAE31BA56381005F59F9 /* DateUtility.swift in Sources */,
+				F7CCEEF51BBE714A00D876C2 /* SearchRiderNameModel.swift in Sources */,
 				0C65F8F81B8E3EC200504D86 /* ProductUploadDetailFooterTableViewCell.swift in Sources */,
 				F7CB78431B9D822C001AF766 /* FilterCalendarTableViewCell.swift in Sources */,
 				F7C40F791B983B510091C16C /* FilterTableViewCell.swift in Sources */,

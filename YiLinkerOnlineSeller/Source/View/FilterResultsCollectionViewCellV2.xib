@@ -92,7 +92,7 @@
                                     <constraint firstAttribute="trailing" secondItem="o3F-6f-djH" secondAttribute="trailing" constant="28" id="vPP-kn-nbZ"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 4,500" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2HX-9n-ZO1">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 4,500" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2HX-9n-ZO1" customClass="DynamicRoundedLabel" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
                                 <rect key="frame" x="8" y="86" width="118" height="28"/>
                                 <color key="backgroundColor" red="0.24398272169999999" green="0.071442124359999998" blue="0.4077493687" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -101,6 +101,11 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hq7-fJ-Khe">
                                 <rect key="frame" x="0.0" y="21" width="296" height="30"/>
