@@ -35,6 +35,7 @@ class ProductUploadUploadImageTableViewCell: UITableViewCell, UICollectionViewDa
         self.registerCell()
         
         self.productPhotosLabel.text = ProductUploadStrings.productPhotos
+        self.productPhotosLabel.required()
     }
 
     func registerCell() {

@@ -26,7 +26,8 @@ struct ProductUploadStrings {
     static let brand: String = StringHelper.localizedStringWithKey("BRAND_LOCALIZE_KEY")
     static let condition: String = StringHelper.localizedStringWithKey("CONDITION_LOCALIZE_KEY")
     
-    static let addMore: String = StringHelper.localizedStringWithKey("ADD_MORE_DETAILS_LOCALIZE_KEY")
+    static let addMore: String = StringHelper.localizedStringWithKey("ADD_MORE_LOCALIZE_KEY")
+    static let addMoreDtails: String = StringHelper.localizedStringWithKey("ADD_MORE_DETAILS_LOCALIZE_KEY")
     static let addEdit: String = StringHelper.localizedStringWithKey("ADD_EDIT_MORE_DETAILS_LOCALIZE_KEY")
     
     static let quantity: String = StringHelper.localizedStringWithKey("QUANTITY_LOCALIZE_KEY")
@@ -145,7 +146,6 @@ struct ProductUploadTableViewControllerConstant {
 
 class ProductUploadTableViewController: UITableViewController, ProductUploadUploadImageTableViewCellDataSource, ProductUploadUploadImageTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadCategoryViewControllerDelegate, ProductUploadFooterViewDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadPriceTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadBrandViewControllerDelegate, ProductUploadQuantityTableViewCellDelegate, SuccessUploadViewControllerDelegate {
     
-    //var uploadImages: [UIImage] = []
     var productModel: ProductModel = ProductModel()
     var sectionFourRows: Int = 2
     var sectionPriceHeaderHeight: CGFloat = 41
@@ -171,6 +171,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         self.addAddPhoto()
         self.footer()
         self.fireCondition()
+        
+        if self.uploadType == UploadType.EditProduct {
+            self.updateCombinationListRow()
+        }
     }
     
     func showHUD() {
@@ -498,7 +502,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             if self.productModel.validCombinations.count == 0 {
                 if indexPath.row == 0 {
                     let cell: ProductUploadButtonTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadButtonTableViewCellNibNameAndIdentifier) as! ProductUploadButtonTableViewCell
-                    cell.cellButton.setTitle(ProductUploadStrings.addMore, forState: UIControlState.Normal)
+                    cell.cellButton.setTitle(ProductUploadStrings.addMoreDtails, forState: UIControlState.Normal)
                     cell.selectionStyle = UITableViewCellSelectionStyle.None
                     cell.cellButton.addTarget(self, action: "addMoreDetails:", forControlEvents: UIControlEvents.TouchUpInside)
                     return cell
@@ -737,8 +741,11 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     func replaceProductAttributeWithAttribute(attributes: [AttributeModel], combinations: [CombinationModel]) {
         self.productModel.attributes = attributes
         self.productModel.validCombinations = combinations
-        
-
+        self.updateCombinationListRow()
+    }
+    
+    // MARK: - Update Combination List Row
+    func updateCombinationListRow() {
         if self.productModel.validCombinations.count == 0 {
             self.sectionFourRows = 2
             self.productUploadWeightAndHeightCellHeight = 244
@@ -748,7 +755,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             self.productUploadWeightAndHeightCellHeight = 0
             self.dimensionsHeaderViewHeight = 0
         }
-    
+        
         self.sectionPriceHeaderHeight = 0
         
         self.tableView.reloadData()
@@ -773,15 +780,15 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.retailPriceRequired, title: ProductUploadStrings.incompleteProductDetails)
         } else if (self.productModel.retailPrice as NSString).doubleValue < (self.productModel.discoutedPrice as NSString).doubleValue {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.retailMustBeLarger, title: ProductUploadStrings.incompleteProductDetails)
-        } else if self.productModel.sku == "" {
+        } else if self.productModel.sku == "" && self.productModel.validCombinations.count == 0 {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.skuRequried, title: ProductUploadStrings.incompleteProductDetails)
-        } else if self.productModel.length == "" {
+        } else if self.productModel.length == "" && self.productModel.validCombinations.count == 0 {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.lengthRequried, title: ProductUploadStrings.incompleteProductDetails)
-        } else if self.productModel.weigth == "" {
+        } else if self.productModel.weigth == "" && self.productModel.validCombinations.count == 0  {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.weightRequried, title: ProductUploadStrings.incompleteProductDetails)
-        } else if self.productModel.width == "" {
+        } else if self.productModel.width == "" && self.productModel.validCombinations.count == 0 {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.widthRequried, title: ProductUploadStrings.incompleteProductDetails)
-        } else if self.productModel.height == "" {
+        } else if self.productModel.height == "" && self.productModel.validCombinations.count == 0 {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.heightRequried, title: ProductUploadStrings.incompleteProductDetails)
         } else {
             self.fireUploadWithUploadType(self.uploadType)
