@@ -11,7 +11,7 @@ protocol CreateNewBankAccountViewControllerDelegate{
     func updateCollectionView()
     func dismissDimView()
 }
-class CreateNewBankAccountViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FilterByTableViewCellDelegate, UITextFieldDelegate {
+class CreateNewBankAccountViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FilterByTableViewCellDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     
@@ -84,6 +84,8 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         var storeInfo = UINib(nibName: "FilterByTableViewCell", bundle: nil)
         self.bankTableView.registerNib(storeInfo, forCellReuseIdentifier: "FilterByTableViewCell")
     
+        addPicker()
+        
         self.fireEnabledBanks()
         
         if self.edit {
@@ -126,13 +128,13 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
                     self.hud?.hide(true)
                     self.delegate?.updateCollectionView()
                     self.dismissViewControllerAnimated(true, completion: nil)
+                    self.delegate?.dismissDimView()
                     }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                         
                         self.dismissViewControllerAnimated(true, completion: nil)
                         self.hud?.hide(true)
                         println(error)
                 })
-                 self.delegate?.dismissDimView()
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "All fields are required.", title: "Error")
             }
@@ -150,13 +152,13 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
                     self.hud?.hide(true)
                     self.delegate?.updateCollectionView()
                     self.dismissViewControllerAnimated(true, completion: nil)
+                    self.delegate?.dismissDimView()
                     }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                         
                         self.dismissViewControllerAnimated(true, completion: nil)
                         self.hud?.hide(true)
                         println(error)
                 })
-                 self.delegate?.dismissDimView()
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "All fields are required.", title: "Error")
             }
@@ -252,7 +254,7 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
                 println(error)
         })
     }
-    
+    /*
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         var passcode = (self.bankNameTextField.text as NSString).stringByReplacingCharactersInRange(range, withString: string)
 
@@ -272,6 +274,49 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
     
     func textFieldDidEndEditing(textField: UITextField) {
         self.bankTableView.hidden = true
+    }
+    */
+    // MARK : UIPickerViewDelegate
+    func addPicker() {
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        let pickerView: UIPickerView = UIPickerView(frame:CGRectMake(0, 0, screenSize.width, 225))
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        self.bankNameTextField.inputView = pickerView
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        
+        return self.bankModel.bankName.count
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+        
+        return self.bankModel.bankName[row]
+    }
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        bankNameTextField.text = self.bankModel.bankName[row]
+        bankId = self.bankModel.bankId[row]
+    }
+    
+    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView!) -> UIView
+    {
+        var pickerLabel = UILabel()
+        pickerLabel.textColor = UIColor.blackColor()
+        pickerLabel.text = self.bankModel.bankName[row]
+        pickerLabel.numberOfLines = 0
+        pickerLabel.font = UIFont(name: "Panton-Regular", size: 12)
+        pickerLabel.textAlignment = NSTextAlignment.Center
+        return pickerLabel
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        return true
     }
     
     func fillBankDetails(accountTitle: String, accountName: String,  accountNumber: String, bankName: String, bankAccountId: Int){
