@@ -376,20 +376,6 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         self.navigationController?.presentViewController(productDescription, animated: true, completion: nil)
     }
     
-    func downloadImage(url: String) {
-        
-        var imgURL: NSURL = NSURL(string: url)!
-        let request: NSURLRequest = NSURLRequest(URL: imgURL)
-        NSURLConnection.sendAsynchronousRequest(
-            request, queue: NSOperationQueue.mainQueue(),
-            completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
-                if error == nil {
-                    self.imagesToEdit.append(UIImage(data: data)!)
-                }
-        })
-        
-    }
-    
     // Dealloc
     
 //    deinit {
