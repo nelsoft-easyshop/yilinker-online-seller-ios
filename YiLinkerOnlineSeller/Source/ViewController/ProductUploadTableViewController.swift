@@ -540,7 +540,11 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                             title = title + value + ", "
                         }
                         
-                        title = dropLast(title)
+                        if title != "" {
+                            title = dropLast(title)
+                            title = dropLast(title)
+                        }
+                        
                         cell.cellTitleLabel.text = title
                     } else {
                         var totalQuantity: Int = 0
