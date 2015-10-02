@@ -174,10 +174,10 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 
             } else {
               println("--\(self.riderNameArray[indexPath.row])")
-                var storeInfoViewController = FilterResultsViewController(nibName: "FilterResultsViewController", bundle: nil)
-                storeInfoViewController.edgesForExtendedLayout = .None
-                storeInfoViewController.searchModel = self.searchModel
-                self.navigationController?.pushViewController(storeInfoViewController, animated: true)
+                var filterRiderNameViewController = FilterResultsRiderNameViewController(nibName: "FilterResultsRiderNameViewController", bundle: nil)
+                filterRiderNameViewController.edgesForExtendedLayout = .None
+                filterRiderNameViewController.riderName = self.riderNameArray[indexPath.row]
+                self.navigationController?.pushViewController(filterRiderNameViewController, animated: true)
             }
         }
     }
