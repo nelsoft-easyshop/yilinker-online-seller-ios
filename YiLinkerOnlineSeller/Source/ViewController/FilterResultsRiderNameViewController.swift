@@ -1,25 +1,21 @@
 //
-//  FilterResultsViewController.swift
+//  FilterResultsRiderNameViewController.swift
 //  YiLinkerOnlineSeller
 //
-//  Created by Joriel Oller Fronda on 9/1/15.
+//  Created by Joriel Oller Fronda on 10/2/15.
 //  Copyright (c) 2015 YiLinker. All rights reserved.
 //
 
 import UIKit
 
-class FilterResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, FilterViewControllerDelegate {
-
+class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, FilterViewControllerDelegate {
+    
     @IBOutlet weak var dimView: UIView!
-    
     @IBOutlet weak var sortView: UIView!
-    
     @IBOutlet weak var filterView: UIView!
     
     @IBOutlet weak var filterTableView: UITableView!
-    
     @IBOutlet weak var noResultsLabel: UILabel!
-    
     @IBOutlet weak var searchFilterCollectionView: UICollectionView!
     
     var filterBySelected: String = ""
@@ -28,17 +24,18 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
     
     var dimView2: UIView!
     
-    var searchModel: SearchModel?
-    
-    var currentPage: Int = 0
-    var nextpage: Int = 0
-    
-    var allObjectArray: NSMutableArray = []
-    var elements: NSMutableArray = []
+    var hud: MBProgressHUD?
+
+    var tableData: [TransactionModel] = []
+    var riderName: String = ""
+    var isPageEnd: Bool = false
+    var page: Int = 0
+    var isSuccessful: Bool = false
+    var searchType: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.filterTableView.delegate = self
         self.filterTableView.dataSource = self
         self.filterTableView.separatorInset = UIEdgeInsetsZero
@@ -80,19 +77,19 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
         searchFilterCollectionView.collectionViewLayout = layout
         searchFilterCollectionView.dataSource = self
         searchFilterCollectionView.delegate = self
-
+        
         /*
         for var i = 0; i < self.searchModel!.invoiceNumber.count; i++ {
-            self.allObjectArray.addObject(i)
+        self.allObjectArray.addObject(i)
         }
         self.elements.addObjectsFromArray(self.allObjectArray.subarrayWithRange(NSMakeRange(0, 20)))
         */
         
-        self.title = "\(self.searchModel!.invoiceNumber.count) Results"
-        
+        //self.title = "\(self.searchModel!.invoiceNumber.count) Results"
+        self.fireSearchRiderName(riderName)
         self.backButton()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -111,7 +108,7 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
                     self.dimView.hidden = true
             })
         }
-
+        
     }
     
     func filter(){
@@ -122,6 +119,20 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
         filterViewController.definesPresentationContext = true
         filterViewController.delegate = self
         self.tabBarController?.presentViewController(filterViewController, animated: true, completion: nil)
+    }
+    
+    func scrollViewDidEndDragging(aScrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        var offset: CGPoint = aScrollView.contentOffset
+        var bounds: CGRect = aScrollView.bounds
+        var size: CGSize = aScrollView.contentSize
+        var inset: UIEdgeInsets = aScrollView.contentInset
+        var y: CGFloat = offset.y + bounds.size.height - inset.bottom
+        var h: CGFloat = size.height
+        var reload_distance: CGFloat = 10
+        var temp: CGFloat = h + reload_distance
+        if y > temp {
+            self.fireSearchRiderName(self.riderName)
+        }
     }
     
     // Mark: - UITableViewDataSource methods
@@ -154,20 +165,74 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
         filterBySelected = filterBy[indexPath!.row]
         //Add filto call filter collection view and reload
         println(filterBySelected)
-    
+        
     }
     
     //MARK: Collection view delegate methods
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.searchModel!.invoiceNumber.count
+        if !self.tableData.isEmpty {
+            return self.tableData.count
+        } else {
+            return 0
+        }
+        
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell : FilterResultsCollectionViewCellV2 = collectionView.dequeueReusableCellWithReuseIdentifier("FilterResultsCollectionViewCellV2", forIndexPath: indexPath) as! FilterResultsCollectionViewCellV2
         
-        if self.searchModel != nil {
-            cell.transactionIdLabel.text = self.searchModel?.invoiceNumber[indexPath.row]
+        if !self.tableData.isEmpty {
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let date: NSDate = dateFormatter.dateFromString(self.tableData[indexPath.row].date_added)!
+            
+            let dateFormatter1 = NSDateFormatter()
+            dateFormatter1.dateFormat = "MMMM dd, yyyy"
+            let dateAdded = dateFormatter1.stringFromDate(date)
+            cell.statusView.layer.cornerRadius = cell.statusView.frame.height/2
+            cell.statusView.layer.cornerRadius = cell.statusView.frame.size.height / 2
+            
+            if self.tableData[indexPath.row].order_status_id == "1" {
+                cell.statusView.backgroundColor = Constants.Colors.transactionNew
+                cell.statusImageView.image = UIImage(named: "exclamation")
+            } else if self.tableData[indexPath.row].order_status_id == "6" || self.tableData[indexPath.row].order_status_id == "7" || self.tableData[indexPath.row].order_status_id == "11" {
+                cell.statusView.backgroundColor = Constants.Colors.transactionOngoing
+                cell.statusImageView.image = UIImage(named: "onGoing")
+            } else if self.tableData[indexPath.row].order_status_id == "3" {
+                cell.statusView.backgroundColor = Constants.Colors.transactionCompleted
+                cell.statusImageView.image = UIImage(named: "completed3")
+            } else if self.tableData[indexPath.row].order_status_id == "8" {
+                cell.statusView.backgroundColor = Constants.Colors.transactionCancelled
+                cell.statusImageView.image = UIImage(named: "cancelled2")
+            }
+            
+            cell.transactionIdLabel.text = self.tableData[indexPath.row].invoice_number
+            cell.dateLabel.text = dateAdded
+           
+            if self.tableData[indexPath.row].product_count.toInt() < 2 {
+                let productString = StringHelper.localizedStringWithKey("TRANSACTIONS_PRODUCT_LOCALIZE_KEY")
+                cell.numberOfProductsLabel.text = self.tableData[indexPath.row].product_count + " " + productString
+            } else {
+                let productString = StringHelper.localizedStringWithKey("TRANSACTIONS_PRODUCTS_LOCALIZE_KEY")
+                 cell.numberOfProductsLabel.text = self.tableData[indexPath.row].product_count + " " + productString
+            }
+            
+            let underlineAttribute = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue]
+            if self.searchType == 3 {
+                let underlineAttributedString = NSAttributedString(string: self.riderName, attributes: underlineAttribute)
+                cell.riderNameLabel.textColor = Constants.Colors.appTheme
+                cell.productNameLabel.textColor = Constants.Colors.grayText
+                cell.riderNameLabel.attributedText = underlineAttributedString
+            } else {
+                
+            }
+            cell.sellerNameLabel.textColor = Constants.Colors.grayText
+            cell.dateLabel.textColor = Constants.Colors.grayText
+            cell.numberOfProductsLabel.textColor = Constants.Colors.grayText
+            cell.productNameLabel.text = self.tableData[indexPath.row].product_names
+            //cell.sellerNameLabel.text = self.tableData[indexPath.row].
+            cell.priceLabel.text = "P " + ((self.tableData[indexPath.row].total_price as NSString).floatValue).stringToFormat(2)
         }
         
         return cell
@@ -190,16 +255,54 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
     
     /*
     func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-        nextpage = elements.count - 5
-        if indexPath.row == nextpage {
-            currentPage++
-            nextpage = elements.count  - 5
-            elements.addObjectsFromArray(allObjectArray.subarrayWithRange(NSMakeRange(currentPage, 20)))
-            self.searchFilterCollectionView.reloadData()
-        }
-
+    nextpage = elements.count - 5
+    if indexPath.row == nextpage {
+    currentPage++
+    nextpage = elements.count  - 5
+    elements.addObjectsFromArray(allObjectArray.subarrayWithRange(NSMakeRange(currentPage, 20)))
+    self.searchFilterCollectionView.reloadData()
+    }
+    
     }
     */
+    
+    //MARK: Filter Rider Name
+    func fireSearchRiderName(riderName: String) {
+        if !isPageEnd {
+            //self.clearModel()
+            page++
+            self.showHUD()
+            let manager = APIManager.sharedInstance
+            
+            var url = APIAtlas.transactionLogs+"\(SessionManager.accessToken())&riderName=\(riderName)&perPage=15&page=\(page)" as NSString
+            let urlEncoded = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+            
+            manager.GET(urlEncoded!, parameters: nil, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                println(responseObject)
+                let trans: TransactionsModel = TransactionsModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                self.isSuccessful = trans.isSuccessful
+                
+                self.title = "\(trans.transactions.count) Results"
+                if trans.transactions.count != 0 {
+                    if trans.transactions.count < 15 {
+                        self.isPageEnd = true
+                        
+                    }
+                    if self.isSuccessful {
+                        self.tableData += trans.transactions
+                    } else {
+                        self.isPageEnd = true
+                    }
+                }
+                
+                self.searchFilterCollectionView.reloadData()
+                self.hud?.hide(true)
+                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                     self.hud?.hide(true)
+            })
+        }
+    }
     
     //MARK: Navigation bar
     func backButton() {
@@ -233,14 +336,38 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
             }, completion: { finished in
         })
     }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
     /*
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // Get the new view controller using segue.destinationViewController.
+    // Pass the selected object to the new view controller.
     }
     */
-
+    
+}
+//MARK: Number Formatter
+extension Float {
+    func stringToFormat(fractionDigits:Int) -> String {
+        let formatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = fractionDigits
+        formatter.maximumFractionDigits = fractionDigits
+        formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+        return formatter.stringFromNumber(self) ?? "\(self)"
+    }
 }

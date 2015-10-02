@@ -550,6 +550,11 @@
 		F7C40FE11B9854B20091C16C /* SalesReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EFF7761B8D9274008A9E7D /* SalesReportViewController.swift */; };
 		F7CB78431B9D822C001AF766 /* FilterCalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CB78411B9D822C001AF766 /* FilterCalendarTableViewCell.swift */; };
 		F7CB78441B9D822C001AF766 /* FilterCalendarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CB78421B9D822C001AF766 /* FilterCalendarTableViewCell.xib */; };
+		F7CCEEF21BBE607100D876C2 /* FilterResultsCollectionViewCellV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCEEF01BBE607100D876C2 /* FilterResultsCollectionViewCellV2.swift */; };
+		F7CCEEF31BBE607100D876C2 /* FilterResultsCollectionViewCellV2.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCEEF11BBE607100D876C2 /* FilterResultsCollectionViewCellV2.xib */; };
+		F7CCEEF51BBE714A00D876C2 /* SearchRiderNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCEEF41BBE714A00D876C2 /* SearchRiderNameModel.swift */; };
+		F7CCEEFA1BBEC41D00D876C2 /* FilterResultsRiderNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCEEF81BBEC41D00D876C2 /* FilterResultsRiderNameViewController.swift */; };
+		F7CCEEFB1BBEC41D00D876C2 /* FilterResultsRiderNameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCEEF91BBEC41D00D876C2 /* FilterResultsRiderNameViewController.xib */; };
 		F7D8C9011BBBC0AB00305EF2 /* SearchProductNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D8C9001BBBC0AB00305EF2 /* SearchProductNameModel.swift */; };
 		F7E175761BA3F32C00A3820B /* ProductUploadTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8A21B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.swift */; };
 		F7E465841B9F2D7B00FAB97D /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E465821B9F2D7B00FAB97D /* SearchTableViewCell.swift */; };
@@ -1137,6 +1142,11 @@
 		F7C40FDE1B98443B0091C16C /* StoreInfoSectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoSectionTableViewCell.xib; sourceTree = "<group>"; };
 		F7CB78411B9D822C001AF766 /* FilterCalendarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCalendarTableViewCell.swift; sourceTree = "<group>"; };
 		F7CB78421B9D822C001AF766 /* FilterCalendarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterCalendarTableViewCell.xib; sourceTree = "<group>"; };
+		F7CCEEF01BBE607100D876C2 /* FilterResultsCollectionViewCellV2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterResultsCollectionViewCellV2.swift; sourceTree = "<group>"; };
+		F7CCEEF11BBE607100D876C2 /* FilterResultsCollectionViewCellV2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterResultsCollectionViewCellV2.xib; sourceTree = "<group>"; };
+		F7CCEEF41BBE714A00D876C2 /* SearchRiderNameModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchRiderNameModel.swift; sourceTree = "<group>"; };
+		F7CCEEF81BBEC41D00D876C2 /* FilterResultsRiderNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterResultsRiderNameViewController.swift; sourceTree = "<group>"; };
+		F7CCEEF91BBEC41D00D876C2 /* FilterResultsRiderNameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterResultsRiderNameViewController.xib; sourceTree = "<group>"; };
 		F7D8C9001BBBC0AB00305EF2 /* SearchProductNameModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchProductNameModel.swift; sourceTree = "<group>"; };
 		F7E465821B9F2D7B00FAB97D /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		F7E465831B9F2D7B00FAB97D /* SearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
@@ -1300,6 +1310,7 @@
 				79ED2F631B9BF2CA00C5BC0A /* TransactionsModel.swift */,
 				7985D36B1BB05C500060E5F5 /* DeliveryLogsModel.swift */,
 				7985D36D1BB071F60060E5F5 /* DeliveryLogsSectionModel.swift */,
+				F7CCEEF41BBE714A00D876C2 /* SearchRiderNameModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1419,6 +1430,8 @@
 				0CEB3ABF1BB052BE00139AFE /* SelectedProductTableViewCell.swift */,
 				0CEB3AC01BB052BE00139AFE /* SelectedProductTableViewCell.xib */,
 				0CE2244B1BBAF89800853AC9 /* SaveButtonView.swift */,
+				F7CCEEF01BBE607100D876C2 /* FilterResultsCollectionViewCellV2.swift */,
+				F7CCEEF11BBE607100D876C2 /* FilterResultsCollectionViewCellV2.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1513,6 +1526,8 @@
 				7985D35C1BB0259F0060E5F5 /* DeactivateModalViewController.xib */,
 				795111E51BBC0E7800ADDEE1 /* TransactionProductDescriptionViewController.swift */,
 				795111E61BBC0E7800ADDEE1 /* TransactionProductDescriptionViewController.xib */,
+				F7CCEEF81BBEC41D00D876C2 /* FilterResultsRiderNameViewController.swift */,
+				F7CCEEF91BBEC41D00D876C2 /* FilterResultsRiderNameViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2096,6 +2111,7 @@
 				0CF28F121B8CAA31005B2E54 /* ProductUploadTableViewController.xib in Resources */,
 				0C8D7FB61B8FC4AC00B3FA4E /* ProductUploadCombinationTableViewCell.xib in Resources */,
 				79F107661BA18E5800B6CE51 /* TransactionCancelReasonOrderViewController.xib in Resources */,
+				F7CCEEF31BBE607100D876C2 /* FilterResultsCollectionViewCellV2.xib in Resources */,
 				F7C40FA91B983C0D0091C16C /* CreateNewAddressViewController.xib in Resources */,
 				0C65F8ED1B8E377500504D86 /* ProductUploadAttributeCollectionViewCell.xib in Resources */,
 				B70DD90F1BA727F400EC3A18 /* GoogleService-Info.plist in Resources */,
@@ -2124,6 +2140,7 @@
 				26BD5E4E1B8DC49800739488 /* ProductDetailsTableViewCell.xib in Resources */,
 				79E633751B9AD0740062DB14 /* TransactionProductDescriptionTableViewCell.xib in Resources */,
 				26B5B2421B94DE4200CBDDE5 /* AddCustomizedCategoryViewController.xib in Resources */,
+				F7CCEEFB1BBEC41D00D876C2 /* FilterResultsRiderNameViewController.xib in Resources */,
 				799893031B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib in Resources */,
 				F7E465851B9F2D7B00FAB97D /* SearchTableViewCell.xib in Resources */,
 				2625FEA21B95F5E800DD24AF /* AddItemTableViewCell.xib in Resources */,
@@ -2440,6 +2457,7 @@
 				7928762E1B8DF89F00762A39 /* ChartRendererBase.swift in Sources */,
 				792876301B8DF89F00762A39 /* ChartXAxisRendererBarChart.swift in Sources */,
 				F7AC5F761B9AA3B400227D18 /* ErrorModel.swift in Sources */,
+				F7CCEEFA1BBEC41D00D876C2 /* FilterResultsRiderNameViewController.swift in Sources */,
 				26B5B2411B94DE4200CBDDE5 /* AddCustomizedCategoryViewController.swift in Sources */,
 				792876351B8DF89F00762A39 /* ChartYAxisRendererRadarChart.swift in Sources */,
 				7985D36C1BB05C500060E5F5 /* DeliveryLogsModel.swift in Sources */,
@@ -2465,6 +2483,7 @@
 				79E633A91B9B27E70062DB14 /* UIView+FSExtension.m in Sources */,
 				0C65F8F01B8E3CB000504D86 /* ProductUploadDetailTableViewController.swift in Sources */,
 				B7BADAE31BA56381005F59F9 /* DateUtility.swift in Sources */,
+				F7CCEEF51BBE714A00D876C2 /* SearchRiderNameModel.swift in Sources */,
 				0C65F8F81B8E3EC200504D86 /* ProductUploadDetailFooterTableViewCell.swift in Sources */,
 				F7CB78431B9D822C001AF766 /* FilterCalendarTableViewCell.swift in Sources */,
 				F7C40F791B983B510091C16C /* FilterTableViewCell.swift in Sources */,
@@ -2551,6 +2570,7 @@
 				792876251B8DF89F00762A39 /* ChartHighlighter.swift in Sources */,
 				7928761F1B8DF89F00762A39 /* ScatterChartData.swift in Sources */,
 				792876231B8DF89F00762A39 /* BarChartHighlighter.swift in Sources */,
+				F7CCEEF21BBE607100D876C2 /* FilterResultsCollectionViewCellV2.swift in Sources */,
 				79EF7ACA1B9A06BC0082CD35 /* TransactionConsigneeTableViewCell.swift in Sources */,
 				0CF28EDB1B8C85E5005B2E54 /* SearchViewController.swift in Sources */,
 				F7C40F5A1B983A7B0091C16C /* DynamicRoundedView.swift in Sources */,
