@@ -130,6 +130,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         manager.POST(APIAtlas.sellerStoreInfo, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.storeInfoModel = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
+            
+            println("store info \(responseObject)")
             if responseObject["isSuccessful"] as! Bool {
                 self.tableView.reloadData()
                 
@@ -241,9 +243,9 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoBankAccountTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoBankAccountTableViewCell
             cell.delegate = self
             //Display current bank account
-            cell.bankAccountTitleLabel.text = self.storeInfoModel?.accountTitle
+            cell.bankAccountTitleLabel.text = self.bankAccountTitle
             cell.bankAccountDetailLabel.text = self.storeInfoModel?.bankAccount
-            cell.bankAccountInfoLabel.text = self.bankAccountTitle
+            cell.bankAccountInfoLabel.text = self.storeInfoModel?.accountTitle
             cell.newAccountLabel.text = self.newAccount
             println(cell)
             return cell
