@@ -457,7 +457,7 @@ RETAIL_PRICE_REQUIRED_LOCALIZE_KEY = "Please insert Retail Price.";
 RETAIL_MUST_BE_LARGER_LOCALIZE_KEY = "Retail price must be larger than discount price.";
 SKU_REQUIRED_LOCALIZE_KEY = "Please insert sku.";
 
-LENGTH_REQUIRED_LOCALIZE_KEY = "Please insert sku.";
+LENGTH_REQUIRED_LOCALIZE_KEY = "Please insert length.";
 WEIGHT_REQUIRED_LOCALIZE_KEY = "Please insert weight.";
 WIDTH_REQUIRED_LOCALIZE_KEY = "Please insert width.";
 HEIGHT_REQUIRED_LOCALIZE_KEY = "Please insert height.";
