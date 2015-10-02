@@ -291,28 +291,35 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     func editAction() {
         self.showHUD()
-        
-        for i in 0..<self.productModel.imageUrls.count {
-            var imgURL: NSURL = NSURL(string: self.productModel.imageUrls[i])!
-            let request: NSURLRequest = NSURLRequest(URL: imgURL)
-            NSURLConnection.sendAsynchronousRequest(
-                request, queue: NSOperationQueue.mainQueue(),
-                completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
-                    if error == nil {
-                        
-                        self.productModel.images.append(UIImage(data: data)!)
-//                        self.imagesToEdit.append(UIImage(data: data)!)
-                        if self.productModel.images.count == self.productModel.imageUrls.count {
-                            self.hud?.hide(true)
-                            let upload = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
-                            upload.uploadType = UploadType.EditProduct
-                            upload.productModel = self.productModel
-                            let navigationController: UINavigationController = UINavigationController(rootViewController: upload)
-                            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-                            self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
+        if self.productModel.imageUrls.count != self.productModel.images.count {
+            self.productModel.images = []
+            for i in 0..<self.productModel.imageUrls.count {
+                var imgURL: NSURL = NSURL(string: self.productModel.imageUrls[i])!
+                let request: NSURLRequest = NSURLRequest(URL: imgURL)
+                NSURLConnection.sendAsynchronousRequest(
+                    request, queue: NSOperationQueue.mainQueue(),
+                    completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
+                        if error == nil {
+                            self.productModel.images.append(UIImage(data: data)!)
+                            if self.productModel.images.count == self.productModel.imageUrls.count {
+                                self.hud?.hide(true)
+                                let upload = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
+                                upload.uploadType = UploadType.EditProduct
+                                upload.productModel = self.productModel
+                                let navigationController: UINavigationController = UINavigationController(rootViewController: upload)
+                                navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+                                self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
+                            }
                         }
-                    }
-            })
+                })
+            }
+        } else {
+            let upload = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
+            upload.uploadType = UploadType.EditProduct
+            upload.productModel = self.productModel
+            let navigationController: UINavigationController = UINavigationController(rootViewController: upload)
+            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+            self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
         }
     }
 
