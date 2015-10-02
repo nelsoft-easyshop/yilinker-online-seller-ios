@@ -875,13 +875,17 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     func fireUploadWithUploadType(uploadType: UploadType) {
         var datas: [NSData] = []
         
+        var uploadedImages: [UIImage] = []
+        
+        uploadedImages = self.productModel.images
+        
         var productUploadedImagesCount: Int = 0
 
-        if self.productModel.images.count != 0 {
-            self.productModel.images.removeLast()
+        if uploadedImages.count != 0 {
+            uploadedImages.removeLast()
         }
 
-        let mainImageCount: Int = self.productModel.images.count
+        let mainImageCount: Int = uploadedImages.count
         
         var imagesKey: [String] = []
         
@@ -891,11 +895,11 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         
         for combination in self.productModel.validCombinations {
             for image in combination.images {
-                self.productModel.images.append(image)
+                uploadedImages.append(image)
             }
         }
         
-        for image in self.productModel.images as [UIImage] {
+        for image in uploadedImages as [UIImage] {
             let data: NSData = UIImageJPEGRepresentation(image, 1)
             datas.append(data)
         }
@@ -1034,8 +1038,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             self.productModel.images.removeLast()
         }
         
-        self.addAddPhoto()
         self.productModel = ProductModel()
+        self.addAddPhoto()
         self.tableView.reloadData()
         self.tableView.setContentOffset(CGPointZero, animated: true)
     }
