@@ -305,6 +305,29 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         fireStoreInfo()
     }
     
+    func setSellerImage(imgURL: NSURL) {
+        
+        let request: NSURLRequest = NSURLRequest(URL: imgURL)
+        NSURLConnection.sendAsynchronousRequest(
+            request, queue: NSOperationQueue.mainQueue(),
+            completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
+                if error == nil {
+                    self.profileImageView.image = UIImage(data: data)
+                    self.profileImageView.frame = self.profileContainerView.bounds
+                    self.profileImageView.contentMode = .ScaleAspectFill
+
+                    let delay = 1.0 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+                    var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+                    dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+                        
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                        
+                    })
+                }
+        })
+        
+    }
+    
     func fireStoreInfo() {
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
@@ -314,9 +337,8 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             self.storeInfoModel = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
             //self.populateData()
             
-            self.profileImageView.sd_setImageWithURL(self.storeInfoModel?.avatar, placeholderImage: UIImage(named: "dummy-placeholder"))
-            self.profileImageView.frame = self.profileContainerView.bounds
-            self.profileImageView.contentMode = .ScaleAspectFill
+//            self.profileImageView.sd_setImageWithURL(self.storeInfoModel?.avatar, placeholderImage: UIImage(named: "dummy-placeholder"))
+            self.setSellerImage(self.storeInfoModel!.avatar)
             
             self.hud?.hide(true)
             
@@ -329,13 +351,13 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             
             NSUserDefaults.standardUserDefaults().synchronize()
             
-            let delay = 1.0 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
-            var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-            dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-                
-                self.dismissViewControllerAnimated(true, completion: nil)
-                
-            })
+//            let delay = 1.0 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+//            var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+//            dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+//                
+//                self.dismissViewControllerAnimated(true, completion: nil)
+//                
+//            })
             
             self.delegate?.passStoreInfoModel(self.storeInfoModel!)
             
