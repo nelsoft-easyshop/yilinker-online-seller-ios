@@ -712,7 +712,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
 
         for allaSset in assets as! [ALAsset] {
             let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!
-            self.productModel.images.insert(image, atIndex: 0)
+            self.productModel.images.insert(image, atIndex: self.productModel.images.count - 1)
         }
         
         self.reloadUploadCellCollectionViewData()
