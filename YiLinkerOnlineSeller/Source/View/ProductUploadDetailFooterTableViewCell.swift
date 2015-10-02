@@ -16,6 +16,8 @@ protocol ProductUploadDetailFooterTableViewCellDelegate {
 
 class ProductUploadDetailFooterTableViewCell: UITableViewCell, UITextFieldDelegate {
     
+    @IBOutlet weak var saveButton: DynamicRoundedButton!
+    @IBOutlet weak var valuesLabel: UILabel!
     @IBOutlet weak var cellTextField: UITextField!
     var delegate: ProductUploadDetailFooterTableViewCellDelegate?
     @IBOutlet weak var cellButton: DynamicRoundedButton!
@@ -23,6 +25,10 @@ class ProductUploadDetailFooterTableViewCell: UITableViewCell, UITextFieldDelega
     override func awakeFromNib() {
         super.awakeFromNib()
         self.cellTextField.delegate = self
+        
+        self.cellButton.setTitle(ProductUploadStrings.save, forState: UIControlState.Normal)
+        self.valuesLabel.text = ProductUploadStrings.values
+        self.cellTextField.placeholder = ProductUploadStrings.valuesPlaceholder
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

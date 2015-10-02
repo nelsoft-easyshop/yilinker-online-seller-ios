@@ -28,7 +28,7 @@ class ProductUploadSearchViewController: UIViewController, UISearchBarDelegate {
         self.searchBar = UISearchBar(frame: CGRectMake(0, 0, self.view.frame.size.width - 30, 44))
         self.searchBar!.becomeFirstResponder()
         self.searchBar!.tintColor = UIColor.whiteColor()
-        self.searchBar!.placeholder = "Search Category"
+        self.searchBar!.placeholder = ProductUploadStrings.searchCategory
         self.searchBar!.showsCancelButton = true
         self.searchBar!.delegate = self
         self.navigationItem.rightBarButtonItem =  UIBarButtonItem(customView: searchBar!)

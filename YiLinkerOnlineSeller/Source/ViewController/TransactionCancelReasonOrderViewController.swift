@@ -41,6 +41,7 @@ class TransactionCancelReasonOrderViewController: UIViewController, UITextViewDe
     var selectedRow: Int = 0
     
     var invoiceNumber: String = ""
+    var orderProductId: String = ""
     
     var errorLocalizedString = ""
     
@@ -99,6 +100,10 @@ class TransactionCancelReasonOrderViewController: UIViewController, UITextViewDe
             topConstraint.constant = screenHeight! / 20
         } else if IphoneType.isIphone5() {
             topConstraint.constant = screenHeight! / 10
+        }
+        
+        if sender as? UITextField == reasonTextField && reasonTextField.text.isEmpty {
+            reasonTextField.text = cancellationModels[0].cancellationReason
         }
     }
     
@@ -204,10 +209,21 @@ class TransactionCancelReasonOrderViewController: UIViewController, UITextViewDe
     func firePostCancellation(){
         self.showHUD()
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(),
-            "transactionId": invoiceNumber,
-            "reasonId": cancellationModels[selectedRow].cancellationId,
-            "remark": remarksTextView.text];
+        
+        var parameters: NSDictionary?
+        
+        if orderProductId == "" {
+            parameters = ["access_token" : SessionManager.accessToken(),
+                "transactionId": invoiceNumber,
+                "reasonId": cancellationModels[selectedRow].cancellationId,
+                "remark": remarksTextView.text];
+        } else {
+            parameters = ["access_token" : SessionManager.accessToken(),
+                "transactionId": invoiceNumber,
+                "orderProductId": orderProductId,
+                "reasonId": cancellationModels[selectedRow].cancellationId,
+                "remark": remarksTextView.text];
+        }
         
         manager.POST(APIAtlas.postTransactionCancellation, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -218,7 +234,7 @@ class TransactionCancelReasonOrderViewController: UIViewController, UITextViewDe
                 self.delegate?.submitTransactionCancelReason()
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: response["message"] as! String, title: self.errorLocalizedString)
-                self.dismissViewControllerAnimated(true, completion: nil)
+                //self.dismissViewControllerAnimated(true, completion: nil)
             }
             
             

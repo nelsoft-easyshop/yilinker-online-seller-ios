@@ -17,15 +17,21 @@ class SuccessUploadViewController: UIViewController {
 
     var delegate: SuccessUploadViewControllerDelegate?
     
+    @IBOutlet weak var successLabel: UILabel!
+    @IBOutlet weak var uploadAgainButton: UIButton!
+    @IBOutlet weak var backToDashboardButton: UIButton!
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.successLabel.text = ProductUploadStrings.successfullyUploaded
+        self.uploadAgainButton.setTitle(ProductUploadStrings.uploadAgain, forState: UIControlState.Normal)
+        self.backToDashboardButton.setTitle(ProductUploadStrings.backToDashboard, forState: UIControlState.Normal)
     }
 
     override func didReceiveMemoryWarning() {
