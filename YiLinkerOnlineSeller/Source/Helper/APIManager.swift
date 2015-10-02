@@ -32,7 +32,7 @@ struct APIAtlas {
     static let categoryUrl = "product/getCategories"
     static let brandUrl = "product/getBrands"
     static let uploadUrl = "product/upload"
-    static let getProductDetails = "auth/product/getProductDetail"
+    static let getProductDetails = "product/upload-details"
     static let sellerStoreInfo = "auth/merchant/getUserInfo"
     static let sellerBankAccountList = "auth/bank/account/getBankAccounts"
     static let sellerAddBankAccount = "auth/bank/account/addBankAccount"

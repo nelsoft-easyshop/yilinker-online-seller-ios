@@ -23,7 +23,8 @@ class ProductManagementProductsModel {
             
             model.id = products["id"] as! String
             model.name = products["name"] as! String
-            model.category = products["category"] as! String
+//            model.category = products["category"] as! String
+            model.category = "Not Available"
             model.image = products["image"] as! String
             model.status = products["status"] as! Int
             
