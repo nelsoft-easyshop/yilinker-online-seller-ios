@@ -245,7 +245,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             //Display current bank account
             cell.bankAccountTitleLabel.text = self.bankAccountTitle
             cell.bankAccountDetailLabel.text = self.storeInfoModel?.bankAccount
-            cell.bankAccountInfoLabel.text = self.bankAccountTitle
+            cell.bankAccountInfoLabel.text = self.storeInfoModel?.accountTitle
             cell.newAccountLabel.text = self.newAccount
             println(cell)
             return cell
