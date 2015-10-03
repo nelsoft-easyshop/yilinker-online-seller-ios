@@ -509,7 +509,11 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     let cell: ProductUploadQuantityTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadQuantityTableViewCellNibNameAndIdentifier) as! ProductUploadQuantityTableViewCell
                     cell.selectionStyle = UITableViewCellSelectionStyle.None
                     cell.delegate = self
-                    cell.cellTextField.text = "\(self.productModel.quantity)"
+                
+                    if self.productModel.quantity != 0 {
+                       cell.cellTextField.text = "\(self.productModel.quantity)"
+                    }
+                    
                     cell.cellLabel.required()
                     return cell
                 } else {
@@ -580,7 +584,11 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.cellTitleLabel.text = ProductUploadStrings.retailPrice
                 cell.cellTitleLabel.required()
                 cell.cellTextField.placeholder = "0.00"
-                cell.cellTextField.text = self.productModel.retailPrice
+              
+                if self.productModel.retailPrice != "0" {
+                    cell.cellTextField.text = self.productModel.retailPrice
+                }
+                
                 return cell
             } else {
                 let cell: ProductUploadPriceTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadPriceTableViewCellNibNameAndIdentifier) as! ProductUploadPriceTableViewCell

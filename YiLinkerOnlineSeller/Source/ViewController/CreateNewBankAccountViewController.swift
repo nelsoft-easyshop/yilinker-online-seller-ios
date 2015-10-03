@@ -73,7 +73,10 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         self.bankTableView.dataSource = self
         self.bankTableView.separatorInset = UIEdgeInsetsZero
         self.bankTableView.layoutMargins = UIEdgeInsetsZero
-        
+        self.accountTitleTextField.delegate = self
+        self.accountNumberTextField.delegate = self
+        self.accountNameTextField.delegate = self
+        self.bankNameTextField.delegate = self
         self.accountTitleLabel.text = self.account
         self.accountNameLabel.text = self.accountNameTitle
         self.accountNumberLabel.text = self.accountNumberTitle
@@ -272,8 +275,15 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         return true
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    @IBAction func textFieldDidEndEditing(textField: UITextField) {
         self.bankTableView.hidden = true
+        if IphoneType.isIphone4() {
+            self.topConstraint.constant = -150
+        } else if IphoneType.isIphone5() {
+            topConstraint.constant = -60
+        } else {
+            topConstraint.constant = 60
+        }
     }
     */
     // MARK : UIPickerViewDelegate
@@ -328,6 +338,7 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         }
       
     }
+    
     /*
     // MARK: - Navigation
 

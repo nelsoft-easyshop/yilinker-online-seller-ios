@@ -31,7 +31,13 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var allObjectArray: NSMutableArray = []
     var elements: NSMutableArray = []
     
-    var filterBy = ["All", "Transaction Id", "Product Name", "Rider"]
+    let searchTitle: String = StringHelper.localizedStringWithKey("SEARCH_TITLE_LOCALIZE_KEY")
+    let all: String = StringHelper.localizedStringWithKey("SEARCH_ALL_LOCALIZE_KEY")
+    let transaction: String = StringHelper.localizedStringWithKey("SEARCH_TRANSACTION_LOCALIZE_KEY")
+    let productName: String = StringHelper.localizedStringWithKey("SEARCH_PRODUCT_LOCALIZE_KEY")
+    let rider: String = StringHelper.localizedStringWithKey("SEARCH_RIDER_LOCALIZE_KEY")
+    
+    var filterBy: [String] = []
     
     var hud: MBProgressHUD?
     
@@ -45,6 +51,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        self.filterBy = [self.all, self.transaction, self.productName, self.rider]
         self.initializeViews()
         self.dimView.hidden = true
         self.searchFilterByView.hidden = true
@@ -53,7 +60,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.searchResultTableView.separatorInset = UIEdgeInsetsZero
         self.searchResultTableView.layoutMargins = UIEdgeInsetsZero
         //self.searchTextField.becomeFirstResponder()
-        
+        self.title = searchTitle
     }
     
     override func didReceiveMemoryWarning() {
@@ -227,7 +234,13 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.riderNameArray.removeAll(keepCapacity: false)
             self.fireSearchProduct(3)
         } else {
-            self.fireSearch()
+            if count(textField.text) < 3 {
+                self.showAlert(title: "Error", message: "Minimum character is 3. Please enter another transaction id.")
+                textField.text = ""
+            } else {
+                self.fireSearch()
+            }
+            
         }
         
         return true
