@@ -298,22 +298,14 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }
         }
         
-        if index == 8 {
+        if index == 0 {
             self.activeTextField = index - 1
             self.next()
-            showAlert(title: self.error, message: "Barangay required.")
+            showAlert(title: self.error, message: "Address title required.")
         } else if index == 4 {
             self.activeTextField = index - 1
             self.next()
             showAlert(title: self.error, message: self.streetNameRequired)
-        } else if index == 9 {
-            self.activeTextField = index - 1
-            self.next()
-            showAlert(title: self.error, message: self.zipCodeRequired)
-        } else if index == 0 {
-            self.activeTextField = index - 1
-            self.next()
-            showAlert(title: self.error, message: "Address title required.")
         } else if index == 6 {
             self.activeTextField = index - 1
             self.next()
@@ -322,6 +314,14 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             self.activeTextField = index - 1
             self.next()
             showAlert(title: self.error, message: "City required.")
+        } else if index == 8 {
+            self.activeTextField = index - 1
+            self.next()
+            showAlert(title: self.error, message: "Barangay required.")
+        } else if index == 9 {
+            self.activeTextField = index - 1
+            self.next()
+            showAlert(title: self.error, message: self.zipCodeRequired)
         }
         
         //If index is zero all required fields are filled up
