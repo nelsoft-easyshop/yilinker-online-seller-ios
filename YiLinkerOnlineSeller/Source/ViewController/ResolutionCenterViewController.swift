@@ -52,8 +52,8 @@ class ResolutionCenterViewController
     //Localize strings
     let caseTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_CASES_LOCALIZE_KEY")
     let openTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_OPEN_LOCALIZE_KEY")
-    let closedTitle: String = StringHelper.localizedStringWithKey("")
-    let resolutionTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_CLOSED_LOCALIZE_KEY")
+    let closedTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_CLOSED_LOCALIZE_KEY")
+    let resolutionTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_TITLE_LOCALIZE_KEY")
     let fileDisputeTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_FILE_LOCALIZE_KEY")
     let resTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_TITLE_LOCALIZE_KEY")
     
