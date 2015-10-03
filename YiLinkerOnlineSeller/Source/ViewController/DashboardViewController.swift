@@ -104,7 +104,12 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         let transactionsString = StringHelper.localizedStringWithKey("TRANSACTIONS_LOCALIZE_KEY")
         let productManagementString = StringHelper.localizedStringWithKey("PRODUCT_MANAGEMENT_LOCALIZE_KEY")
         let customizedCategoryString = StringHelper.localizedStringWithKey("CUSTOMIZED_CATEGORY_LOCALIZE_KEY")
-        let uploadItemString = StringHelper.localizedStringWithKey("UPLOAD_ITEM_LOCALIZE_KEY")
+        var uploadItemString: String = ""
+        if SessionManager.isReseller() {
+            uploadItemString = StringHelper.localizedStringWithKey("SELECT_PRODUCT_LOCALIZE_KEY")
+        } else {
+            uploadItemString = StringHelper.localizedStringWithKey("UPLOAD_ITEM_LOCALIZE_KEY")
+        }
         let followersString = StringHelper.localizedStringWithKey("FOLLOWERS_LOCALIZE_KEY")
         let activityLogsString = StringHelper.localizedStringWithKey("ACTIVITY_LOGS_LOCALIZE_KEY")
         let myPointsString = StringHelper.localizedStringWithKey("MY_POINTS_LOCALIZE_KEY")
@@ -112,6 +117,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         let helpString = StringHelper.localizedStringWithKey("HELP_LOCALIZE_KEY")
         let logoutString = StringHelper.localizedStringWithKey("LOGOUT_LOCALIZE_KEY")
         
+        tableData.removeAll(keepCapacity: false)
         tableData.append(myStoreString)
         tableData.append(salesReportString)
         tableData.append(transactionsString)
@@ -441,6 +447,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             
             NSUserDefaults.standardUserDefaults().synchronize()
             
+            self.initializeLocalizedString()
             self.collectionView.reloadData()
             
             self.hideHud()
