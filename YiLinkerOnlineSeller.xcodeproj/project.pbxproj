@@ -579,8 +579,6 @@
 		0C1179551BA9A58F00AA1554 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/LocalizableString.strings; sourceTree = "<group>"; };
 		0C1179571BA9A5AA00AA1554 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		0C1179581BA9A5AA00AA1554 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LocalizableString.strings"; sourceTree = "<group>"; };
-		0C1179591BA9A5AF00AA1554 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
-		0C11795A1BA9A5AF00AA1554 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LocalizableString.strings"; sourceTree = "<group>"; };
 		0C11795B1BA9A5C900AA1554 /* StringHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringHelper.swift; sourceTree = "<group>"; };
 		0C1C3A861B9453BE00E6180D /* ProductUploadTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductUploadTableHeaderView.xib; sourceTree = "<group>"; };
 		0C51C2EF1BB00A6800F4D2D6 /* AddProductHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProductHeaderView.swift; sourceTree = "<group>"; };
@@ -2083,7 +2081,6 @@
 				en,
 				Base,
 				"zh-Hans",
-				"zh-Hant",
 			);
 			mainGroup = 967EE1AB1B8AEA25000591AC;
 			productRefGroup = 967EE1B51B8AEA25000591AC /* Products */;
@@ -2731,7 +2728,6 @@
 			children = (
 				0C11794F1BA9A49700AA1554 /* Base */,
 				0C1179571BA9A5AA00AA1554 /* zh-Hans */,
-				0C1179591BA9A5AF00AA1554 /* zh-Hant */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
@@ -2741,7 +2737,6 @@
 			children = (
 				0C1179551BA9A58F00AA1554 /* Base */,
 				0C1179581BA9A5AA00AA1554 /* zh-Hans */,
-				0C11795A1BA9A5AF00AA1554 /* zh-Hant */,
 			);
 			name = LocalizableString.strings;
 			sourceTree = "<group>";
