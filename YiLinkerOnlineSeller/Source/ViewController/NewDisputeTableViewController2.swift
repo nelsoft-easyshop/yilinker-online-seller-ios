@@ -37,6 +37,20 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     var resolutiontitle: String = ""
     var remarks: String = ""
     var isValid: Bool = false
+
+    //Localize strings
+    let newDispute: String = StringHelper.localizedStringWithKey("RESOLUTION_CASES_LOCALIZE_KEY")
+    let disputeTitle: String = StringHelper.localizedStringWithKey("DISPUTE_TITLE_LOCALIZE_KEY")
+    let transactionNoTitle: String = StringHelper.localizedStringWithKey("DISPUTE_TRANSACTION_NO_LOCALIZE_KEY")
+    let disputeTypeTitle: String = StringHelper.localizedStringWithKey("DISPUTE_DISPUTE_TYPE_LOCALIZE_KEY")
+    let productsTitle: String = StringHelper.localizedStringWithKey("DISPUTE_PRODUCTS_LOCALIZE_KEY")
+    let addTitle: String = StringHelper.localizedStringWithKey("DISPUTE_ADD_LOCALIZE_KEY")
+    let transactionTitle: String = StringHelper.localizedStringWithKey("DISPUTE_TRANSACTION_NUMBER_LOCALIZE_KEY")
+    let enterTransactionTitle: String = StringHelper.localizedStringWithKey("DISPUTE_TRANSACTION_NUMBER_PLACEHOLDER_LOCALIZE_KEY")
+    let remarksTitle: String = StringHelper.localizedStringWithKey("DISPUTE_REMARKS_LOCALIZE_KEY")
+    let submitTitle: String = StringHelper.localizedStringWithKey("DISPUTE_SUBMIT_CASE_LOCALIZE_KEY")
+     let addCaseTitle: String = StringHelper.localizedStringWithKey("DISPUTE_ADD_CASE_LOCALIZE_KEY")
+    let addProductTitle: String = StringHelper.localizedStringWithKey("DISPUTE_ADD_LOCALIZE_KEY")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +59,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         self.fireGetTransactions()
         
-        self.title = "Add Case"
+        self.title = addCaseTitle
         self.backButton()
     }
     
@@ -123,16 +137,16 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         if indexPath.section == 0 {
             let cell: DisputeTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.cellTextFieldIdentifier) as! DisputeTextFieldTableViewCell
             if indexPath.row == 0 {
-                cell.titleLabel.text = "Dispute Title."
+                cell.titleLabel.text = disputeTitle
                 cell.titleLabel.required()
                 cell.textField.text = self.resolutiontitle
                 cell.addTracker()
             } else if indexPath.row == 1 {
-                cell.titleLabel.text = "Transaction No."
+                cell.titleLabel.text = transactionNoTitle
                 cell.titleLabel.required()
             } else if indexPath.row == 2 {
                 cell.textField.text = self.disputeType[self.disputeTypeDefaultIndex]
-                cell.titleLabel.text = "Dispute Type."
+                cell.titleLabel.text = disputeTypeTitle
                 cell.titleLabel.required()
             }
             cell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -148,6 +162,8 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             let cell: RemarksTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.remarksIdentifier) as! RemarksTableViewCell
             cell.delegate = self
             cell.remarksLabel.required()
+            cell.remarksLabel.text = remarksTitle
+            cell.submitButton.setTitle(submitTitle, forState: UIControlState.Normal)
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.textView.addToolBarWithDoneTarget(self, done: "done")
             return cell
@@ -159,6 +175,8 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             return UIView(frame: CGRectZero)
         } else if section == 1 {
             let headerView: AddProductHeaderView = XibHelper.puffViewWithNibName("AddProductHeaderView", index: 0) as! AddProductHeaderView
+            headerView.productsLabel.text = productsTitle
+            headerView.addButton.setTitle(addProductTitle, forState: UIControlState.Normal)
             headerView.delegate = self
             return headerView
         } else {
