@@ -281,7 +281,7 @@
                             <constraint firstAttribute="height" constant="30" id="Bix-Hp-M3S"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
-                        <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
+                        <textInputTraits key="textInputTraits" keyboardType="namePhonePad" returnKeyType="next"/>
                     </textField>
                 </subviews>
                 <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
