@@ -156,7 +156,6 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     }
     
     func fireCreateRegistration(registrationID : String) {
-        
         self.showHUD()
         
         let manager: APIManager = APIManager.sharedInstance
