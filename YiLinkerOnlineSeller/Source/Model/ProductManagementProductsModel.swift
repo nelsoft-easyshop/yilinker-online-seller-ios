@@ -23,7 +23,14 @@ class ProductManagementProductsModel {
             
             model.id = products["id"] as! String
             model.name = products["name"] as! String
-            model.category = products["category"] as! String
+            if let tempVar = products["category"] as? String {
+                if tempVar != "" {
+                    model.category = products["category"] as! String
+                } else {
+                    model.category = "Not Available"
+                }
+            }
+            
             model.image = products["image"] as! String
             model.status = products["status"] as! Int
             

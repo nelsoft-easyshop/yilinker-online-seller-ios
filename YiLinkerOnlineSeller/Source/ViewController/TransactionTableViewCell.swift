@@ -40,18 +40,15 @@ class TransactionTableViewCell: UITableViewCell {
         if status == 1 {
             self.imageContainer.backgroundColor = Constants.Colors.transactionNew
             self.statusImageVIew.image = UIImage(named: "exclamation")
-        } else if status == 2 {
-            self.imageContainer.backgroundColor = Constants.Colors.transactionNew
-            self.statusImageVIew.image = UIImage(named: "exclamation")
-        } else if status == 3 {
+        } else if status == 6 || status == 11 || status == 7  {
             self.imageContainer.backgroundColor = Constants.Colors.transactionOngoing
             self.statusImageVIew.image = UIImage(named: "onGoing")
-        } else if status == 4 {
+        } else if status == 3 {
             self.imageContainer.backgroundColor = Constants.Colors.transactionCompleted
-            self.statusImageVIew.image = UIImage(named: "completed")
-        } else if status == 5 {
+            self.statusImageVIew.image = UIImage(named: "completed3")
+        } else if status == 8 {
             self.imageContainer.backgroundColor = Constants.Colors.transactionCancelled
-            self.statusImageVIew.image = UIImage(named: "cancelled")
+            self.statusImageVIew.image = UIImage(named: "cancelled2")
         }
     }
     

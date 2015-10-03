@@ -50,6 +50,13 @@ enum AddressRefreshType {
     case Get
 }
 
+enum SearchRefreshType {
+    case All
+    case ProductName
+    case TransactionId
+    case Rider
+}
+
 enum UserType {
     case Seller
     case Reseller
@@ -74,4 +81,10 @@ enum DisputeRefreshType {
     case Transaction
     case AddCase
     case OrderType
+}
+
+enum UploadType {
+    case NewProduct
+    case Draft
+    case EditProduct
 }

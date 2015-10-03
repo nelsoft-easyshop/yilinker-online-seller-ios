@@ -85,7 +85,7 @@ class MessageThreadVC: UIViewController {
         println(recipient)
         println("recipient id \(r_temp)")
         self.getMessagesFromEndpoint("1", limit: "30", userId: r_temp)
-        configureTableView()
+        self.configureTableView()
         
         var imageStringRecipient = recipient!.profileImageUrl
         var urlRecipient : NSURL = NSURL(string: imageStringRecipient)!
@@ -189,6 +189,8 @@ class MessageThreadVC: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasShown:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasHidden:"), name: UIKeyboardWillHideNotification, object: nil)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasChanged:"), name: UIKeyboardDidChangeFrameNotification, object: nil)
+        
         self.placeCustomBackImage()
         self.placeRightNavigationControllerDetails()
         
@@ -207,6 +209,7 @@ class MessageThreadVC: UIViewController {
     override func viewWillDisappear(animated: Bool) {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardDidChangeFrameNotification, object: nil)
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
@@ -349,6 +352,44 @@ class MessageThreadVC: UIViewController {
         }
     }
     
+    func keyboardWasChanged(notification: NSNotification) {
+        if (keyboardIsShown){
+            var info = notification.userInfo!
+            var oldFrame : CGRect = (info [UIKeyboardFrameBeginUserInfoKey])!.CGRectValue()
+            var updatedFrame : CGRect = (info [UIKeyboardFrameEndUserInfoKey])!.CGRectValue()
+            
+            var updatedH = updatedFrame.height - oldFrame.height
+            
+            var newFrame : CGRect = self.composeView.frame
+            
+            println ( oldFrame )
+            println ( updatedFrame )
+            println (" HEIGHT: \(updatedH)")
+
+            /*
+            (0.0, 568.0, 320.0, 216.0)
+            (0.0, 352.0, 320.0, 216.0)
+            ORIGIN: -216.0
+            HEIGHT: 0.0
+            (0.0, 352.0, 320.0, 216.0)
+            (0.0, 315.0, 320.0, 253.0)
+            ORIGIN: -37.0
+            HEIGHT: 37.0
+            */
+
+            
+            UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                self.composeView.frame = CGRectMake(newFrame.origin.x, newFrame.origin.y - updatedH, newFrame.width, newFrame.height)
+                self.composeViewBottomLayout.constant += (updatedH)
+                self.threadTableView.contentInset = UIEdgeInsetsMake(60, 0, updatedFrame.size.height, 0)
+                self.goToBottomTableView()
+                
+                
+                }, completion: nil)
+            
+        }
+    }
+    
     func keyboardWasShown(notification: NSNotification) {
         if (!keyboardIsShown){
             keyboardIsShown = true
@@ -358,17 +399,11 @@ class MessageThreadVC: UIViewController {
             var keyFrame : CGRect = (info [UIKeyboardFrameEndUserInfoKey])!.CGRectValue()
             
             var newFrame : CGRect = self.composeView.frame
-            var newTableFrame : CGRect = self.threadTableView.frame
             
             UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 self.composeView.frame = CGRectMake(newFrame.origin.x, newFrame.origin.y - keyFrame.size.height, newFrame.width, newFrame.height)
                 self.composeViewBottomLayout.constant += (keyFrame.size.height - self.tabBarHeight)
                 self.threadTableView.contentInset = UIEdgeInsetsMake(60, 0, keyFrame.size.height, 0)
-                /*self.threadTableView.frame = CGRectMake(0, 0, newTableFrame.height - keyFrame.size.height, newTableFrame.width)
-                self.threadTableViewConstraint.constant = newTableFrame.height - keyFrame.size.height
-                self.view.setNeedsLayout()
-                self.view.setNeedsUpdateConstraints()
-                */
                 self.goToBottomTableView()
                 
                 
@@ -657,6 +692,8 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 
                 
                 if(!imagePlaced){
+                    cell.contact_image.layer.cornerRadius = cell.contact_image.bounds.width/2
+                    cell.contact_image.layer.masksToBounds = true
                     cell.contact_image.image = senderImage!.image
                     imagePlaced = true
                 }
@@ -693,6 +730,8 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 
                 
                 if(!imagePlaced){
+                    cell.contact_image.layer.cornerRadius = cell.contact_image.bounds.width/2
+                    cell.contact_image.layer.masksToBounds = true
                     cell.contact_image.image = recipientImage!.image
                     imagePlaced = true
                 }
@@ -717,6 +756,8 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 cell.message_label.text = messages[index].message as String
                 
                 if(!imagePlaced){
+                    cell.contact_image.layer.cornerRadius = cell.contact_image.bounds.width/2
+                    cell.contact_image.layer.masksToBounds = true
                     cell.contact_image.image = senderImage!.image
                     imagePlaced = true
                 }
@@ -750,6 +791,8 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 
                 cell.message_label.text = messages[index].message as String
                 if(!imagePlaced){
+                    cell.contact_image.layer.cornerRadius = cell.contact_image.bounds.width/2
+                    cell.contact_image.layer.masksToBounds = true
                     cell.contact_image.image = recipientImage!.image
                     imagePlaced = true
                 }

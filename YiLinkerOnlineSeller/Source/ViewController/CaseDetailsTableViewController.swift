@@ -110,7 +110,7 @@ class CaseDetailsTableViewController: UITableViewController {
             if caseDetailsModel.isSuccessful {
                 let caseDetails = caseDetailsModel.caseData
                 
-                self.caseID.text = self.disputeId
+                self.caseID.text = caseDetails.ticket
                 self.statusCase.text = caseDetails.statusType
                 self.dateOpen.text = caseDetails.dateAdded
                 // In Seller other is Disputer, In Buyer other is Disputee

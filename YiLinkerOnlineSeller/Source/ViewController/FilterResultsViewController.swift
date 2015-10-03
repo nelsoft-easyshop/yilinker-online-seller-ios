@@ -71,8 +71,8 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
         var nibFilter = UINib(nibName: "FilterByTableViewCell", bundle: nil)
         self.filterTableView.registerNib(nibFilter, forCellReuseIdentifier: "FilterByTableViewCell")
         
-        let collectionViewNib: UINib = UINib(nibName: "FilterResultsCollectionViewCell", bundle: nil)
-        self.searchFilterCollectionView.registerNib(collectionViewNib, forCellWithReuseIdentifier: "FilterResultsCollectionViewCell")
+        let collectionViewNib: UINib = UINib(nibName: "FilterResultsCollectionViewCellV2", bundle: nil)
+        self.searchFilterCollectionView.registerNib(collectionViewNib, forCellWithReuseIdentifier: "FilterResultsCollectionViewCellV2")
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         
         if IphoneType.isIphone4()  {
@@ -172,10 +172,10 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let cell : FilterResultsCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("FilterResultsCollectionViewCell", forIndexPath: indexPath) as! FilterResultsCollectionViewCell
+        let cell : FilterResultsCollectionViewCellV2 = collectionView.dequeueReusableCellWithReuseIdentifier("FilterResultsCollectionViewCellV2", forIndexPath: indexPath) as! FilterResultsCollectionViewCellV2
         
         if self.searchModel != nil {
-            cell.transactionLabel.text = self.searchModel?.invoiceNumber[indexPath.row]
+            cell.transactionIdLabel.text = self.searchModel?.invoiceNumber[indexPath.row]
         }
         
         return cell
@@ -196,7 +196,7 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
     func collectionView(collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-            return CGSizeMake(collectionView.bounds.size.width, CGFloat(50.0))
+            return CGSizeMake(collectionView.bounds.size.width, CGFloat(139.0))
     }
     
     /*

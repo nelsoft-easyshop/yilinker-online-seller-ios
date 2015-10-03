@@ -12,11 +12,14 @@ class TransactionViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var noTransactionLabel: UILabel!
     
-    var pageTitle: [String] = ["TRANSACTIONS", "NEW UPDATE", "ON-GOING", "COMPLETED", "CANCELLED"]
+    var pageTitle: [String] = []
     var selectedImage: [String] = ["transactions2", "newUpdates2", "onGoing2", "completed2", "cancelled3"]
     var deSelectedImage: [String] = ["transaction", "newUpdates", "onGoing", "completed", "cancelled"]
     var selectedItems: [Bool] = []
+    
+    var types: [String] = ["", "newupdates", "ongoing", "completed", "cancelled"]
     
     var selectedIndex: Int = 0
     var tableViewSectionHeight: CGFloat = 0
@@ -28,15 +31,24 @@ class TransactionViewController: UIViewController {
     
     var page: Int = 1
     var isRefreshable: Bool = true
+    var type: String = ""
+    var status: [String] = []
+    var paymentMethod: [Int] = []
+    var dateFrom: String = ""
+    var dateTo: String = ""
+    
+    var errorLocalizedString = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        noTransactionLabel.hidden = true
         // Do any additional setup after loading the view.
         registerNibs()
         customizedNavigationBar()
         customizedVies()
         fireGetTransaction()
+        initializeLocalizedStrings()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -55,7 +67,7 @@ class TransactionViewController: UIViewController {
     
     func customizedNavigationBar() {
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.title = "Transaction"
+        self.title = StringHelper.localizedStringWithKey("TRANSACTIONS_TITLE_LOCALIZE_KEY")
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
@@ -86,21 +98,32 @@ class TransactionViewController: UIViewController {
         var navigation = UINavigationController(rootViewController: filterController)
         navigation.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
         navigation.navigationBar.barTintColor = Constants.Colors.appTheme
+        filterController.delegate = self
         self.navigationController?.presentViewController(navigation, animated: true, completion: nil)
     }
     
-    
+    func initializeLocalizedStrings() {
+        noTransactionLabel.text = StringHelper.localizedStringWithKey("TRANSACTIONS_NO_TRANSACTIONS_LOCALIZE_KEY")
+        pageTitle.append(StringHelper.localizedStringWithKey("TRANSACTIONS_TRANSACTIONS_LOCALIZE_KEY"))
+        pageTitle.append(StringHelper.localizedStringWithKey("TRANSACTIONS_NEW_UPDATE_LOCALIZE_KEY"))
+        pageTitle.append(StringHelper.localizedStringWithKey("TRANSACTIONS_ONGOING_LOCALIZE_KEY"))
+        pageTitle.append(StringHelper.localizedStringWithKey("TRANSACTIONS_COMPLETED_LOCALIZE_KEY"))
+        pageTitle.append(StringHelper.localizedStringWithKey("TRANSACTIONS_CANCELLED_LOCALIZE_KEY"))
+        errorLocalizedString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+        
+        collectionView.reloadData()
+    }
 }
 
 
 
-extension TransactionViewController: UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate {
+extension TransactionViewController: UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate, TransactionTableViewControllerDelegate {
     
 
     // MARK: - Collection View Data Source
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return pageTitle.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -127,7 +150,17 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         selectedIndex = indexPath.row
         
         self.collectionView.reloadData()
-//        self.tableView.reloadData()
+        tableData.removeAll(keepCapacity: false)
+        self.tableView.reloadData()
+        
+        type = types[indexPath.row]
+        page = 1
+        isRefreshable = true
+        status.removeAll(keepCapacity: false)
+        paymentMethod.removeAll(keepCapacity: false)
+        dateFrom = ""
+        dateTo = ""
+        fireGetTransaction()
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -157,12 +190,14 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         
         cell.setStatus(tempModel.order_status_id.toInt()!)
         cell.setTID(tempModel.invoice_number)
-        //cell.setPrice("P \(tempModel.total_price)"
+        cell.setPrice(tempModel.total_price.formatToTwoDecimal())
             
         if tempModel.total_quantity.toInt() < 2 {
-            cell.setProductDate("\(tempModel.total_quantity) product\t\t\(dateAdded)")
+            let productString = StringHelper.localizedStringWithKey("TRANSACTIONS_PRODUCT_LOCALIZE_KEY")
+            cell.setProductDate("\(tempModel.total_quantity) \(productString)\t\t\(dateAdded)")
         } else {
-            cell.setProductDate("\(tempModel.total_quantity) products\t\t\(dateAdded)")
+            let productString = StringHelper.localizedStringWithKey("TRANSACTIONS_PRODUCTS_LOCALIZE_KEY")
+            cell.setProductDate("\(tempModel.total_quantity) \(productString)\t\t\(dateAdded)")
         }
             
         return cell
@@ -176,7 +211,8 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
             transactionDetailsController.invoiceNumber = tableData[indexPath.row].invoice_number
             self.navigationController?.pushViewController(transactionDetailsController, animated:true)
         } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "No ivoice number!", title: "Error")
+            let noInvoiceString = StringHelper.localizedStringWithKey("TRANSACTIONS_NO_INVOCE_LOCALIZE_KEY")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noInvoiceString, title: errorLocalizedString)
         }
 
     }
@@ -196,12 +232,41 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
     }
     
     func fireGetTransaction(){
+        self.noTransactionLabel.hidden = true
         if isRefreshable {
             self.showHUD()
             let manager = APIManager.sharedInstance
-            let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "page" : page];
+//            let parameters: NSMutableDictionary = ["access_token" : SessionManager.accessToken(), "page" : page, "type" : type];
             
-            manager.GET(APIAtlas.transactionList, parameters: parameters, success: {
+            var url: String = "\(APIAtlas.transactionList)?access_token=\(SessionManager.accessToken())&page=\(page)"
+            
+            if status.isEmpty {
+                url = "\(url)&type=\(type)"
+            } else {
+                if status.count < 5 {
+                    for subValue in status {
+                        url = "\(url)&type=\(subValue)"
+                    }
+                }
+            }
+            
+            if paymentMethod.count < 5 {
+                for subValue in paymentMethod {
+                    if subValue != 0 {
+                        url = "\(url)&paymentMethod=\(subValue)"
+                    }
+                }
+            }
+            
+            if !dateFrom.isEmpty {
+                url = "\(url)&dateFrom=\(dateFrom)"
+            }
+            
+            if !dateTo.isEmpty {
+                url = "\(url)&dateTo=\(dateTo)"
+            }
+            
+            manager.GET(url, parameters: nil, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 let transactionModel: TransactionsModel = TransactionsModel.parseDataWithDictionary(responseObject)
                 
@@ -212,12 +277,15 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
                     self.tableView.reloadData()
                     
                     self.page++
-                    
+                    self.noTransactionLabel.hidden = true
                     if transactionModel.transactions.count == 0 {
+                        if self.page == 2 {
+                            self.noTransactionLabel.hidden = false
+                        }
                         self.isRefreshable = false
                     }
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: transactionModel.message, title: self.errorLocalizedString)
                 }
                 
                 
@@ -231,7 +299,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
                     if task.statusCode == 401 {
                         self.fireRefreshToken()
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        UIAlertController.displaySomethingWentWrongError(self)
                     }
                     
                     println(error)
@@ -272,5 +340,100 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         self.hud?.dimBackground = false
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
+    }
+    
+    // MARK : TransactionTableViewControllerDelegate
+    func doneWithFilter(dates: String, statuses: [String], paymentMethods: [String]) {
+        if dates.isEmpty {
+            dateFrom = ""
+            dateTo = ""
+        } else {
+            var currentDate: NSDate = NSDate()
+            
+            if dates == StringHelper.localizedStringWithKey("TRANSACTIONS_TODAY_LOCALIZE_KEY") {
+                dateFrom = formatDateToString(NSDate())
+                dateTo = formatDateToString(NSDate())
+                
+            } else if dates == StringHelper.localizedStringWithKey("TRANSACTIONS_THIS_WEEK_LOCALIZE_KEY") {
+                var beginningOfWeek: NSDate = firstDateOfWeekWithDate(currentDate)
+                
+                dateFrom = formatDateToString(beginningOfWeek)
+                dateTo = formatDateToString(beginningOfWeek.addDays(6))
+                
+            }  else if dates == StringHelper.localizedStringWithKey("TRANSACTIONS_THIS_MONTH_LOCALIZE_KEY") {
+                var beginningOfMonth: NSDate = firstDateOfMonthWithDate(currentDate)
+                
+                dateFrom = formatDateToString(beginningOfMonth)
+                dateTo = formatDateToString(beginningOfMonth.addDays(30))
+                
+            } else {
+                dateFrom = ""
+                dateTo = ""
+            }
+        }
+        
+        status.removeAll(keepCapacity: false)
+        for subValue in statuses {
+            if subValue == StringHelper.localizedStringWithKey("TRANSACTIONS_NEW_UPDATE_LOCALIZE_KEY") {
+                status.append(types[1])
+            } else if subValue == StringHelper.localizedStringWithKey("TRANSACTIONS_NEW_UPDATE_LOCALIZE_KEY") {
+                status.append(types[1])
+            } else if subValue == StringHelper.localizedStringWithKey("TRANSACTIONS_ONGOING_LOCALIZE_KEY") {
+                status.append(types[2])
+            } else if subValue == StringHelper.localizedStringWithKey("TRANSACTIONS_COMPLETED_LOCALIZE_KEY") {
+                status.append(types[3])
+            }  else if subValue == StringHelper.localizedStringWithKey("TRANSACTIONS_CANCELLED_LOCALIZE_KEY") {
+                status.append(types[4])
+            }
+        }
+        
+        paymentMethod.removeAll(keepCapacity: false)
+        for subValue in paymentMethods {
+            if subValue == StringHelper.localizedStringWithKey("TRANSACTIONS_COD_LOCALIZE_KEY") {
+                paymentMethod.append(3)
+            } else if subValue == StringHelper.localizedStringWithKey("TRANSACTIONS_CREDIT_DEBIT_CARD_LOCALIZE_KEY") {
+                paymentMethod.append(1)
+            } else if subValue == StringHelper.localizedStringWithKey("TRANSACTIONS_DRAGONPAY_LOCALIZE_KEY") {
+                paymentMethod.append(2)
+            } else if subValue == StringHelper.localizedStringWithKey("TRANSACTIONS_PESOPAY_LOCALIZE_KEY") {
+                paymentMethod.append(1)
+            }  else if subValue == StringHelper.localizedStringWithKey("TRANSACTIONS_WALLET_LOCALIZE_KEY") {
+                paymentMethod.append(0)
+            }
+        }
+        isRefreshable = true
+        tableData.removeAll(keepCapacity: false)
+        page = 1
+        fireGetTransaction()
+    }
+    
+    func formatStringToDate(date: String) -> NSDate {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        return dateFormatter.dateFromString(date)!
+    }
+    
+    func formatDateToString(date: NSDate) -> String {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.stringFromDate(date)
+    }
+    
+    func firstDateOfWeekWithDate(date: NSDate) -> NSDate {
+        
+        var beginningOfWeek: NSDate?
+        var calendar: NSCalendar = NSCalendar.currentCalendar()
+        calendar.rangeOfUnit(.CalendarUnitWeekOfYear, startDate: &beginningOfWeek, interval: nil, forDate: date)
+        
+        return beginningOfWeek!
+        
+    }
+    
+    func firstDateOfMonthWithDate(date: NSDate) -> NSDate {
+        var calendar: NSCalendar = NSCalendar.currentCalendar()
+        let components = NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth, fromDate: date)
+        components.day = 1
+        return calendar.dateFromComponents(components)!
     }
 }

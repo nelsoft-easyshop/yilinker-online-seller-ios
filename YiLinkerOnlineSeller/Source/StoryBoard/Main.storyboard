@@ -633,7 +633,13 @@
                         <outlet property="buttonToday" destination="U61-5W-Dm4" id="mAf-aZ-LIT"/>
                         <outlet property="buttonTotal" destination="3Bw-Gi-cDa" id="mbV-7x-wSk"/>
                         <outlet property="cancel" destination="59N-QT-bgc" id="Wgq-Ne-RCC"/>
+                        <outlet property="closedLabel" destination="3zq-7y-TNg" id="FiS-hM-j0P"/>
+                        <outlet property="monthLabel" destination="lEP-uQ-yp6" id="9fX-7Y-GOw"/>
+                        <outlet property="openLabel" destination="5FV-9E-GLK" id="yVM-dw-u3f"/>
                         <outlet property="save" destination="Hqc-Jb-oKH" id="VoK-7Q-GNC"/>
+                        <outlet property="todayLabel" destination="Yi4-t7-mgf" id="gsj-Ta-dIg"/>
+                        <outlet property="totalLabel" destination="pMa-in-ZNI" id="6HR-pa-hO5"/>
+                        <outlet property="weekLabel" destination="gsa-KE-SLH" id="SLB-Gd-pLC"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pQV-i7-TCh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1360,15 +1366,15 @@
                                 <rect key="frame" x="0.0" y="114" width="375" height="551"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ytg-6M-24S">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ytg-6M-24S">
                                 <rect key="frame" x="0.0" y="114" width="375" height="481"/>
                                 <connections>
                                     <outlet property="dataSource" destination="nOb-Vl-TXr" id="1Er-Sj-o73"/>
                                     <outlet property="delegate" destination="nOb-Vl-TXr" id="7Gh-fd-Ggt"/>
                                 </connections>
                             </tableView>
-                            <view alpha="0.5" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wyL-yh-FrS">
-                                <rect key="frame" x="0.0" y="34" width="375" height="600"/>
+                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wyL-yh-FrS">
+                                <rect key="frame" x="0.0" y="114" width="375" height="520"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kw1-t8-18t">
@@ -1481,7 +1487,7 @@
                             <constraint firstItem="Kw1-t8-18t" firstAttribute="top" secondItem="P4i-u7-5FG" secondAttribute="bottom" constant="8" id="DpW-Ro-u4H"/>
                             <constraint firstItem="ytg-6M-24S" firstAttribute="leading" secondItem="nOb-Vl-TXr" secondAttribute="leading" id="HWb-o8-aab"/>
                             <constraint firstItem="P4i-u7-5FG" firstAttribute="top" secondItem="cKA-AC-DhN" secondAttribute="bottom" constant="8" id="IKj-iM-fgF"/>
-                            <constraint firstItem="wyL-yh-FrS" firstAttribute="top" secondItem="nOb-Vl-TXr" secondAttribute="top" id="IPq-7Z-swr"/>
+                            <constraint firstItem="wyL-yh-FrS" firstAttribute="top" secondItem="nOb-Vl-TXr" secondAttribute="top" constant="114" id="IPq-7Z-swr"/>
                             <constraint firstItem="3aD-Xm-eWu" firstAttribute="leading" secondItem="nOb-Vl-TXr" secondAttribute="leading" id="Iu7-0h-nvG"/>
                             <constraint firstItem="wyL-yh-FrS" firstAttribute="leading" secondItem="nOb-Vl-TXr" secondAttribute="leading" id="KNN-ck-mXl"/>
                             <constraint firstAttribute="trailing" secondItem="ytg-6M-24S" secondAttribute="trailing" id="M4m-vV-YYs"/>
@@ -1492,7 +1498,7 @@
                             <constraint firstItem="P4i-u7-5FG" firstAttribute="leading" secondItem="nOb-Vl-TXr" secondAttribute="leading" constant="8" id="kaf-bt-ize"/>
                             <constraint firstAttribute="trailing" secondItem="Kw1-t8-18t" secondAttribute="trailing" id="pLD-2X-85T"/>
                             <constraint firstAttribute="bottom" secondItem="ytg-6M-24S" secondAttribute="bottom" constant="72" id="t2R-Rc-V9K"/>
-                            <constraint firstItem="VdL-4l-7VO" firstAttribute="top" secondItem="wyL-yh-FrS" secondAttribute="bottom" constant="18" id="vj7-97-T1Q"/>
+                            <constraint firstItem="VdL-4l-7VO" firstAttribute="top" secondItem="wyL-yh-FrS" secondAttribute="bottom" constant="-16" id="vj7-97-T1Q"/>
                             <constraint firstAttribute="trailing" secondItem="ytg-6M-24S" secondAttribute="trailing" id="vkR-fW-jgU"/>
                         </constraints>
                     </view>
@@ -1527,6 +1533,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="A9z-yb-gOk">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="scrollIndicatorInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="60"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageCell" rowHeight="80" id="oaG-jN-rxI" customClass="ConversationTVC" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -2482,6 +2489,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="DxX-6E-EmK"/>
+        <segue reference="jee-jm-t66"/>
     </inferredMetricsTieBreakers>
 </document>

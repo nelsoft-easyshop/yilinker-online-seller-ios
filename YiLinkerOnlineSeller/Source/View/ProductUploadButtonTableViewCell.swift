@@ -14,7 +14,7 @@ class ProductUploadButtonTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.cellButton.setTitle(ProductUploadStrings.addMore, forState: UIControlState.Normal)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

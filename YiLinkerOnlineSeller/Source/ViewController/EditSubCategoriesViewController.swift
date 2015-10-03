@@ -23,6 +23,13 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     @IBOutlet weak var clearAllButton: UIButton!
     @IBOutlet weak var bottomBarView: UIView!
     
+
+    @IBOutlet weak var removeCategoriesButton: UIButton!
+    @IBOutlet weak var addCategoriesButton: UIButton!
+    @IBOutlet weak var removeSelectedButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
+    
+    
     var categories: [String] = []
     var categoriesToBeRemove: [Int] = []
 
@@ -49,7 +56,7 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     
     func customizedNavigationBar() {
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.title = "Edit Sub Categories"
+        self.title = CategoryStrings.subEditCategory
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
         
@@ -63,6 +70,12 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     func customizedViews() {
         self.tableView.backgroundColor = Constants.Colors.backgroundGray
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
+        
+        self.removeCategoriesButton.setTitle(CategoryStrings.subRemoveCategories, forState: .Normal)
+        self.addCategoriesButton.setTitle(CategoryStrings.subAddCategories, forState: .Normal)
+        self.clearAllButton.setTitle(CategoryStrings.subClearAll, forState: .Normal)
+        self.removeSelectedButton.setTitle(CategoryStrings.subRemovedSelected, forState: .Normal)
+        self.cancelButton.setTitle(CategoryStrings.subCancel, forState: .Normal)
     }
     
     func showHUD() {
@@ -109,6 +122,10 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
         self.tableView.reloadData()
     }
     
+    func sortFunc(num1: Int, num2: Int) -> Bool {
+        return num1 < num2
+    }
+    
     // MARK: - Actions
     
     func closeAction() {
@@ -136,8 +153,9 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     @IBAction func addCategories(sender: AnyObject) {
         let addSubCategoryViewController = AddSubCategoriesViewController(nibName: "AddSubCategoriesViewController", bundle: nil)
         addSubCategoryViewController.delegate = self
-        addSubCategoryViewController.loadViewsWithDetails()
-        addSubCategoryViewController.title = "Add Category"
+//        addSubCategoryViewController.loadViewsWithDetails()
+        addSubCategoryViewController.isEditingSub = false
+        addSubCategoryViewController.title = CategoryStrings.titleAddCategories
         addSubCategoryViewController.parentName = self.parentName
         addSubCategoryViewController.createdCategory = createdCategory
         self.navigationController?.pushViewController(addSubCategoryViewController, animated: false)
@@ -145,8 +163,15 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     
     @IBAction func removedSelectedAction(sender: AnyObject) {
 
-        for i in 0..<categoriesToBeRemove.count {
-            self.subCategories = self.subCategories.filter({$0 != self.subCategories[self.categoriesToBeRemove[i]]})
+        let sortedNumbers = sorted(categoriesToBeRemove, sortFunc)
+        
+        var temp: [Int] = []
+        for item in reverse(sortedNumbers) {
+            temp.append(item)
+        }
+        
+        for i in 0..<temp.count {
+            self.subCategories = self.subCategories.filter({$0 != self.subCategories[temp[i]]})
         }
         
         showEditSubView()
@@ -197,12 +222,16 @@ class EditSubCategoriesViewController: UIViewController, AddSubCategoriesViewCon
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let editSubCategory = AddSubCategoriesViewController(nibName: "AddSubCategoriesViewController", bundle: nil)
         editSubCategory.delegate = self
-        editSubCategory.title = "Edit Category"
-        editSubCategory.loadViewsWithDetails()
+        editSubCategory.title = CategoryStrings.subEditCategory
+//        editSubCategory.loadViewsWithDetails()
+        editSubCategory.isEditingSub = true
         if subCategories[indexPath.row].local {
-            editSubCategory.populateFromLocal(subCategories[indexPath.row])
+            editSubCategory.parameterSubCategoryModal = subCategories[indexPath.row]
+//            editSubCategory.populateFromLocal(subCategories[indexPath.row])
         } else {
-            editSubCategory.requestGetSubCategoryDetails(parentName: subCategories[indexPath.row].parentName, categoryId: subCategories[indexPath.row].categoryId)
+            editSubCategory.parameterParentName = subCategories[indexPath.row].parentName
+            editSubCategory.parameterCategoryId = subCategories[indexPath.row].categoryId
+//            editSubCategory.requestGetSubCategoryDetails(parentName: subCategories[indexPath.row].parentName, categoryId: subCategories[indexPath.row].categoryId)
         }
         self.navigationController?.pushViewController(editSubCategory, animated: true)
     }

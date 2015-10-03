@@ -13,8 +13,10 @@
             <connections>
                 <outlet property="closeButton" destination="fus-cm-icZ" id="b82-zl-5Oe"/>
                 <outlet property="mainView" destination="b8s-zl-jeQ" id="oKs-wu-tQV"/>
+                <outlet property="passwordLabel" destination="HTh-uh-pm1" id="ZXO-2h-KU8"/>
                 <outlet property="passwordTextField" destination="Tm5-Nc-brg" id="QOl-tA-unZ"/>
                 <outlet property="submitButton" destination="v9E-EN-z1s" id="wMh-kP-X0s"/>
+                <outlet property="titleLabel" destination="AxZ-Uy-BRT" id="Yo1-P1-GgE"/>
                 <outlet property="topConstraint" destination="YWX-3F-Sdv" id="Nhy-6v-hsq"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -58,15 +60,6 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IWV-rq-hmu" userLabel="Title View">
                             <rect key="frame" x="0.0" y="0.0" width="300" height="40"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deativate Account" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AxZ-Uy-BRT">
-                                    <rect key="frame" x="39" y="9" width="222" height="21"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="21" id="faI-cP-eYK"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
-                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fus-cm-icZ" userLabel="Close">
                                     <rect key="frame" x="16" y="12" width="15" height="15"/>
                                     <constraints>
@@ -90,6 +83,15 @@
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                 </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deativate Account" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AxZ-Uy-BRT">
+                                    <rect key="frame" x="39" y="9" width="222" height="21"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="21" id="faI-cP-eYK"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
+                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>

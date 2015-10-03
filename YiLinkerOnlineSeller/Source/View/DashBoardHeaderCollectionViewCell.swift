@@ -17,17 +17,32 @@ class DashBoardHeaderCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var totalSalesLabel: UILabel!
     @IBOutlet weak var totalTransactionsLabel: UILabel!
     @IBOutlet weak var totalProductsLabel: UILabel!
+    @IBOutlet weak var totalSalesTitleLabel: UILabel!
+    @IBOutlet weak var totalTransactionsTitleLabel: UILabel!
+    @IBOutlet weak var totalProductsTitleLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
         initializeViews()
+        initializeLocalizedString()
     }
     
     func initializeViews() {
         profilePhotoImageView.layer.cornerRadius = profilePhotoImageView.frame.height / 2
         profilePhotoImageView.layer.borderColor = UIColor.whiteColor().CGColor
         profilePhotoImageView.layer.borderWidth = 4
+    }
+    
+    func initializeLocalizedString() {
+        //Initialized Localized String
+        let salesLocalizeString = StringHelper.localizedStringWithKey("TOTAL_SALES_LOCALIZE_KEY")
+        let transactionsLocalizeString = StringHelper.localizedStringWithKey("TOTAL_TRANSACTIONS_LOCALIZE_KEY")
+        let productLocalizeString = StringHelper.localizedStringWithKey("TOTAL_PRODUCTS_LOCALIZE_KEY")
+        
+        totalSalesTitleLabel.text = salesLocalizeString
+        totalTransactionsTitleLabel.text = transactionsLocalizeString
+        totalProductsTitleLabel.text = productLocalizeString
     }
     
     func setCoverPhoto(url: String) {

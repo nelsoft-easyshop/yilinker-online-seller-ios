@@ -215,7 +215,7 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
             if self.deliveryLogs.isSuccessful {
                 self.initializeDeliveryLogsItem()
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.deliveryLogs.message, title: "Error")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.deliveryLogs.message, title: StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY"))
             }
             
             self.hud?.hide(true)
@@ -227,9 +227,9 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
                     self.fireRefreshToken()
                 } else {
                     if Reachability.isConnectedToNetwork() {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong!", title: "Error")
+                        UIAlertController.displaySomethingWentWrongError(self)
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                        UIAlertController.displayNoInternetConnectionError(self)
                     }
                     println(error)
                 }

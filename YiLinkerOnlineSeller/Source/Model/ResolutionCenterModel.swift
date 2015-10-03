@@ -13,7 +13,11 @@ typealias ResolutionCenterElement = (resolutionId: String, status: String, date:
 class ResolutionCenterModel {
     var message: String = ""
     var isSuccessful: Bool = false
-    var resolutionArray: [ResolutionCenterElement]
+    var resolutionArray: [ResolutionCenterElement] = []
+    
+    init() {
+        
+    }
     
     init(message: String, isSuccessful: Bool, resolutionArray: [ResolutionCenterElement]) {
         self.message = message

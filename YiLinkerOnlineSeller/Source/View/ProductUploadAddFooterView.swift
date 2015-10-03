@@ -14,6 +14,11 @@ protocol ProductUploadAddFooterViewDelegate {
 
 class ProductUploadAddFooterView: UIView {
     var delegate: ProductUploadAddFooterViewDelegate?
+    @IBOutlet weak var addMoreButton: UIButton!
+    
+    override func awakeFromNib() {
+        self.addMoreButton.setTitle(ProductUploadStrings.addMore, forState: UIControlState.Normal)
+    }
     
     @IBAction func addMore(sender: AnyObject) {
         self.delegate!.productUploadAddFooterView(didSelectAddMore: self)

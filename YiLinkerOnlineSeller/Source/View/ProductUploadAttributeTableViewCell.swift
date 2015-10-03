@@ -102,14 +102,14 @@ class ProductUploadAttributeTableViewCell: UITableViewCell, UICollectionViewData
             self.attributes.removeAtIndex(indexPath.row)
             self.collectionView.deleteItemsAtIndexPaths([indexPath])
         } else {
-            let alertController = UIAlertController(title: "Warning", message: "This attribute item has an existing combination. Continue removing this item?", preferredStyle: .Alert)
+            let alertController = UIAlertController(title: ProductUploadStrings.warning, message: ProductUploadStrings.warningRemoveAttribute, preferredStyle: .Alert)
             
-            let cancelAction = UIAlertAction(title: "NO", style: .Cancel) { (action) in
+            let cancelAction = UIAlertAction(title: Constants.Localized.no, style: .Cancel) { (action) in
                 
             }
             
             alertController.addAction(cancelAction)
-            let OKAction = UIAlertAction(title: "YES", style: .Default) { (action) in
+            let OKAction = UIAlertAction(title: Constants.Localized.yes, style: .Default) { (action) in
                 let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
                 self.delegate!.productUploadAttributeTableViewCell(didTapCell: self, indexPath: indexPath)
                 self.attributes.removeAtIndex(indexPath.row)

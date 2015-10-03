@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -16,10 +16,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TransactionCancelOrderViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
             <connections>
+                <outlet property="areYouSureLabel" destination="vBI-Lr-tyO" id="GUj-du-sRl"/>
                 <outlet property="closeButton" destination="pmf-eZ-rdH" id="QDH-Ir-F9T"/>
                 <outlet property="closeView" destination="Tcl-zb-Aqk" id="0pP-Ye-ZbE"/>
                 <outlet property="mainView" destination="EzY-TX-WaE" id="Ack-dv-gpM"/>
                 <outlet property="noButton" destination="J6o-Ld-tcw" id="lNm-9n-SO0"/>
+                <outlet property="oopsLabel" destination="Agc-tM-Yxg" id="uKl-6C-HeH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="yesButton" destination="Fyi-vA-oSl" id="5lG-w1-5zf"/>
             </connections>

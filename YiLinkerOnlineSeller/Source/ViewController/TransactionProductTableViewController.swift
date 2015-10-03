@@ -8,21 +8,22 @@
 
 import UIKit
 
-class TransactionProductTableViewController: UITableViewController, TransactionProductDetailsFooterViewDelegate, TransactionCancelOrderViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate, TransactionCancelReasonOrderViewControllerDelegate, TransactionDeliveryTableViewCellDelegate {
+class TransactionProductTableViewController: UITableViewController, TransactionProductDetailsFooterViewDelegate, TransactionCancelOrderViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate, TransactionCancelReasonOrderViewControllerDelegate, TransactionDeliveryTableViewCellDelegate, TransactionProductDescriptionTableViewCellDelegate {
     
     var purchaseCellIdentifier: String = "TransactionProductPurchaseTableViewCell"
     var productCellIdentifier: String = "TransactionProductDetailsTableViewCell"
     var descriptionCellIdentifier: String = "TransactionProductDescriptionTableViewCell"
     var deliveryCellIdentifier: String = "TransactionDeliveryTableViewCell"
     
-    var sectionHeader: [String] = ["Purchase Details", "Product Details", "Description", "Delivery Status"]
-    var productAttributeData: [String] = ["SKU", "Color", "Size", "Width", "Length", "Weight (kg)", "Height (mm)"]
-    var productAttributeValueData: [String] = ["", "", "", "", "", "", ""]
+    var sectionHeader: [String] = []
+    var productAttributeData: [String] = []
+    var productAttributeValueData: [String] = ["", "", "", "", ""]
     
     var tableHeaderView: TransactionProductDetailsHeaderView!
     var tableFooterView: TransactionProductDetailsFooterView!
     
     var productModel: TransactionOrderProductModel!
+    var invoiceNumber: String = ""
     
     var dimView: UIView?
     var hud: MBProgressHUD?
@@ -31,17 +32,18 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
         super.viewDidLoad()
         
         productAttributeValueData[0] = productModel.sku
-        productAttributeValueData[1] = productModel.color
-        productAttributeValueData[2] = productModel.size
-        productAttributeValueData[3] = productModel.width
-        productAttributeValueData[4] = productModel.length
-        productAttributeValueData[5] = productModel.weight
-        productAttributeValueData[6] = productModel.height
+        productAttributeValueData[1] = productModel.width
+        productAttributeValueData[2] = productModel.length
+        productAttributeValueData[3] = productModel.weight
+        productAttributeValueData[4] = productModel.height
 
         initializeNavigationBar()
         initializeTableView()
         registerNibs()
         initializeViews()
+        initializeLocalizedStrings()
+        initializeAttributes()
+        fireGetProductDetails()
     }
 
     override func didReceiveMemoryWarning() {
@@ -69,20 +71,31 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
             tableHeaderView.frame.size.width = self.view.frame.size.width
             tableHeaderView.productNameLabel.text = productModel.productName
             tableHeaderView.productDescriptionLabel.text = productModel.shortDescription
+            tableHeaderView.images.append(productModel.productImage)
         }
         
         if tableFooterView == nil {
             tableFooterView = XibHelper.puffViewWithNibName("TransactionProductDetailsFooterView", index: 0) as! TransactionProductDetailsFooterView
             tableFooterView.delegate = self
             tableFooterView.frame.size.width = self.view.frame.size.width
+            tableFooterView.frame.size.height = 65
         }
         
         self.tableView.tableHeaderView = tableHeaderView
         self.tableView.tableFooterView = tableFooterView
     }
     
+    func initializeAttributes() {
+        for subValue in productModel.attributes {
+            productAttributeValueData.insert(subValue.attributeValue, atIndex: 0)
+            productAttributeData.insert(subValue.attributeName, atIndex: 0)
+        }
+        
+        self.tableView.reloadData()
+    }
+    
     func initializeNavigationBar() {
-        self.title = "Product Details"
+        self.title = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_LOCALIZE_KEY")
         
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -104,8 +117,94 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
         dimView?.alpha = 0
     }
     
+    func initializeLocalizedStrings() {
+        sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_PURCHASE_LOCALIZE_KEY"))
+        sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_LOCALIZE_KEY"))
+        sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DESCRIPTION_LOCALIZE_KEY"))
+        sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DELIVERY_LOCALIZE_KEY"))
+        
+        productAttributeData.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_SKU_LOCALIZE_KEY"))
+        productAttributeData.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_WIDTH_LOCALIZE_KEY"))
+        productAttributeData.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_LENGTH_LOCALIZE_KEY"))
+        productAttributeData.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_WEIGHT_LOCALIZE_KEY"))
+        productAttributeData.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_HEIGHT_LOCALIZE_KEY"))
+        
+        tableView.reloadData()
+    }
+    
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
+    }
+    
+    func fireGetProductDetails(){
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "orderProductId": productModel.orderProductId];
+        
+        manager.GET(APIAtlas.orderProductDetails, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            println(responseObject)
+            self.hud?.hide(true)
+            if responseObject != nil {
+                if let tempVar = responseObject["isSuccessful"] as? Bool {
+                    if tempVar {
+                        if responseObject["data"] != nil {
+                            if let tempValue: AnyObject? = responseObject["data"] {
+                                self.productModel = TransactionOrderProductModel.parseDataWithDictionary(tempValue!)
+                                self.initializeTableView()
+                                self.initializeAttributes()
+                            }
+                        }
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String, title: StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY"))
+                        self.navigationController!.popViewControllerAnimated(true)
+                        self.hud?.hide(true)
+                    }
+                }
+            }
+            
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                
+                self.hud?.hide(true)
+                
+                if Reachability.isConnectedToNetwork() {
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.fireRefreshToken()
+                    } else {
+                        UIAlertController.displaySomethingWentWrongError(self)
+                        self.navigationController!.popViewControllerAnimated(true)
+                    }
+                } else {
+                    UIAlertController.displayNoInternetConnectionError(self)
+                    self.navigationController!.popViewControllerAnimated(true)
+                }
+                println(error)
+        })
+    }
+    
+    func fireRefreshToken() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.fireGetProductDetails()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+        })
+        
     }
 
     // MARK: - Table view data source
@@ -170,9 +269,9 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
         
         if indexPath.section == 0 {
             let cell: TransactionProductPurchaseTableViewCell = tableView.dequeueReusableCellWithIdentifier(purchaseCellIdentifier, forIndexPath: indexPath) as! TransactionProductPurchaseTableViewCell
-            cell.quantityLabel.text = "\(productModel.quantity)"
-            cell.priceLabel.text = productModel.unitPrice
-            cell.totalCostLabel.text = productModel.totalPrice
+            cell.quantityLabel.text = "\(productModel.quantity)x"
+            cell.priceLabel.text = productModel.unitPrice.formatToTwoDecimal()
+            cell.totalCostLabel.text = productModel.totalPrice.formatToTwoDecimal()
             return cell
         } else if indexPath.section == 1 {
             let cell: TransactionProductDetailsTableViewCell = tableView.dequeueReusableCellWithIdentifier(productCellIdentifier, forIndexPath: indexPath) as! TransactionProductDetailsTableViewCell
@@ -188,6 +287,7 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
         } else if indexPath.section == 2{
             let cell: TransactionProductDescriptionTableViewCell = tableView.dequeueReusableCellWithIdentifier(descriptionCellIdentifier, forIndexPath: indexPath) as! TransactionProductDescriptionTableViewCell
             cell.productDescriptionLabel.text = productModel.fullDescription
+            cell.delegate = self
             return cell
         }  else if indexPath.section == 3 {
             let cell: TransactionDeliveryTableViewCell = tableView.dequeueReusableCellWithIdentifier(deliveryCellIdentifier, forIndexPath: indexPath) as! TransactionDeliveryTableViewCell
@@ -214,6 +314,13 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
         cancelOrderController.definesPresentationContext = true
         cancelOrderController.view.backgroundColor = UIColor.clearColor()
         self.tabBarController?.presentViewController(cancelOrderController, animated: true, completion: nil)
+    }
+    
+    // MARK : TransactionProductDescriptionTableViewCellDelegate
+    func seeMoreAction() {
+        var descriptionController = TransactionProductDescriptionViewController(nibName: "TransactionProductDescriptionViewController", bundle: nil)
+        descriptionController.fullDescription = productModel.fullDescription
+        self.navigationController?.pushViewController(descriptionController, animated:true)
     }
 
     
@@ -258,6 +365,8 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
         reasonController.providesPresentationContextTransitionStyle = true
         reasonController.definesPresentationContext = true
         reasonController.view.backgroundColor = UIColor.clearColor()
+        reasonController.orderProductId = productModel.orderProductId
+        reasonController.invoiceNumber = invoiceNumber
         self.tabBarController?.presentViewController(reasonController, animated: true, completion: nil)
     }
     

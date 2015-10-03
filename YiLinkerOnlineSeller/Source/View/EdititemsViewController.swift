@@ -46,12 +46,6 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
         self.tableView.registerNib(removedCell, forCellReuseIdentifier: "RemovedItem")
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        println("Edit Items > \(self.subCategoriesProducts)")
-    }
-    
     // MARK: - Methods
     
     func customizedNavigationBar() {
@@ -105,6 +99,10 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
         self.tableView.reloadData()
     }
     
+    func sortFunc(num1: Int, num2: Int) -> Bool {
+        return num1 < num2
+    }
+    
     // MARK: - Actions
     
     func closeAction() {
@@ -151,9 +149,15 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
     }
     
     @IBAction func removedSelectedAction(sender: AnyObject) {
+        let sortedNumbers = sorted(itemsToRemoved, sortFunc)
         
-        for i in 0..<itemsToRemoved.count {
-            subCategoriesProducts.removeAtIndex(itemsToRemoved[i])
+        var temp: [Int] = []
+        for item in reverse(sortedNumbers) {
+            temp.append(item)
+        }
+        
+        for i in 0..<temp.count {
+            subCategoriesProducts.removeAtIndex(temp[i])
         }
         showEditItemView()
     }
@@ -212,7 +216,8 @@ class EdititemsViewController: UIViewController, AddItemViewControllerDelegate, 
             }
             
 //           cell.vendorLabel.text = self.productModel.products[indexPath.row].category
-            cell.addImageView.image = UIImage(named: "right2")
+//            cell.addImageView.image = UIImage(named: "right2")
+            cell.addImageView.hidden = true
             
             return cell
         }

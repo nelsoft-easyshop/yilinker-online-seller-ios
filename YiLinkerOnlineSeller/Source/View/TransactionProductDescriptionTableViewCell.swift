@@ -8,19 +8,31 @@
 
 import UIKit
 
+protocol TransactionProductDescriptionTableViewCellDelegate {
+    func seeMoreAction()
+}
+
 class TransactionProductDescriptionTableViewCell: UITableViewCell {
 
+    var delegate: TransactionProductDescriptionTableViewCellDelegate?
+    
     @IBOutlet weak var productDescriptionLabel: UILabel!
     @IBOutlet weak var seeMoreView: UIView!
+    @IBOutlet weak var seeMoreLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        initializeLocalizedStrings()
+        
+        var seeMore = UITapGestureRecognizer(target:self, action:"tapSeeMoreAction")
+        seeMoreView.addGestureRecognizer(seeMore)
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    func initializeLocalizedStrings() {
+        seeMoreLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_SEE_MORE_LOCALIZE_KEY")
     }
-
+    
+    func tapSeeMoreAction() {
+        delegate?.seeMoreAction()
+    }
 }

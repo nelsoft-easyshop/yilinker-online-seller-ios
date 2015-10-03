@@ -67,6 +67,7 @@
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.27450980392156865" green="0.13725490196078433" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
+                <outlet property="pointsEarnedLabel" destination="tH6-xz-fQx" id="AZ1-pz-vbo"/>
                 <outlet property="pointsLabel" destination="RDM-iM-ww7" id="hen-LA-2pB"/>
             </connections>
             <point key="canvasLocation" x="207.5" y="217.5"/>
