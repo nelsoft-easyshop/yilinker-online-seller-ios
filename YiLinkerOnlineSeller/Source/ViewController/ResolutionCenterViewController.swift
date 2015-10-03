@@ -88,11 +88,14 @@ class ResolutionCenterViewController
         disputeButton.addTarget(self, action:"disputePressed", forControlEvents:.TouchUpInside)
         
         caseImageView.image = UIImage(named: "cases2-b")
-        closedImageView.image = UIImage(named: "closed-a")
+        closedImageView.image = UIImage(named: "close4-a")
         openImageView.image = UIImage(named: "open2-a")
         casesView.backgroundColor = UIColor.whiteColor()
         closedView.backgroundColor = Constants.Colors.appTheme
         openVIew.backgroundColor = Constants.Colors.appTheme
+        casesLabel.textColor = Constants.Colors.appTheme
+        closedLabel.textColor = UIColor.whiteColor()
+        openLabel.textColor = UIColor.whiteColor()
         
         // Initial data load
         fireGetCases()
