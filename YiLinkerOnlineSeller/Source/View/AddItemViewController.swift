@@ -78,6 +78,8 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
         
         let nib = UINib(nibName: "AddItemTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "AddItemTableViewCell")
+        
+        self.emptyLabel.text = StringHelper.localizedStringWithKey("EMPTY_LABEL_NO_PRODUCTS_FOUND_LOCALIZE_KEY")
     }
     
     // MARK: - Actions

@@ -63,7 +63,7 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
         
         customizedNavigationBar()
         requestGetCustomizedCategories()
-
+        self.emptyLabel.text = StringHelper.localizedStringWithKey("EMPTY_LABEL_NO_CATEGORY_FOUND_LOCALIZE_KEY")
     }
 
     override func viewWillAppear(animated: Bool) {
