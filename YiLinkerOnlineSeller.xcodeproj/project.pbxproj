@@ -461,6 +461,9 @@
 		B7BADAFF1BA563FF005F59F9 /* TextViewAutoHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BADAF51BA563FF005F59F9 /* TextViewAutoHeight.swift */; };
 		E72BD5070233EC6FF42DDA3A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B825E81D3B27E563C7C3C53 /* libPods.a */; };
 		F727FF591B99C94700872E11 /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = F727FF581B99C94700872E11 /* edit.png */; };
+		F79403001BC00D6E00CD21DD /* FilterHeaderSectiionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79402FE1BC00D6E00CD21DD /* FilterHeaderSectiionViewController.swift */; };
+		F79403011BC00D6E00CD21DD /* FilterHeaderSectiionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F79402FF1BC00D6E00CD21DD /* FilterHeaderSectiionViewController.xib */; };
+		F79403031BC00E8D00CD21DD /* FilterSeactionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79403021BC00E8D00CD21DD /* FilterSeactionHeaderView.swift */; };
 		F7AC5F5E1B9A9C8C00227D18 /* AddAddressTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AC5F5D1B9A9C8C00227D18 /* AddAddressTableViewController.swift */; };
 		F7AC5F621B9A9CA400227D18 /* AddAddressTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7AC5F611B9A9CA400227D18 /* AddAddressTableViewController.xib */; };
 		F7AC5F6E1B9AA23E00227D18 /* BarangayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AC5F6D1B9AA23E00227D18 /* BarangayModel.swift */; };
@@ -579,8 +582,6 @@
 		0C1179551BA9A58F00AA1554 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/LocalizableString.strings; sourceTree = "<group>"; };
 		0C1179571BA9A5AA00AA1554 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		0C1179581BA9A5AA00AA1554 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LocalizableString.strings"; sourceTree = "<group>"; };
-		0C1179591BA9A5AF00AA1554 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
-		0C11795A1BA9A5AF00AA1554 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LocalizableString.strings"; sourceTree = "<group>"; };
 		0C11795B1BA9A5C900AA1554 /* StringHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringHelper.swift; sourceTree = "<group>"; };
 		0C1C3A861B9453BE00E6180D /* ProductUploadTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductUploadTableHeaderView.xib; sourceTree = "<group>"; };
 		0C51C2EF1BB00A6800F4D2D6 /* AddProductHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProductHeaderView.swift; sourceTree = "<group>"; };
@@ -1055,6 +1056,9 @@
 		B7BADAF51BA563FF005F59F9 /* TextViewAutoHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewAutoHeight.swift; sourceTree = "<group>"; };
 		D4D17EE114265F93B1630151 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F727FF581B99C94700872E11 /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
+		F79402FE1BC00D6E00CD21DD /* FilterHeaderSectiionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterHeaderSectiionViewController.swift; sourceTree = "<group>"; };
+		F79402FF1BC00D6E00CD21DD /* FilterHeaderSectiionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterHeaderSectiionViewController.xib; sourceTree = "<group>"; };
+		F79403021BC00E8D00CD21DD /* FilterSeactionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterSeactionHeaderView.swift; sourceTree = "<group>"; };
 		F7AC5F5D1B9A9C8C00227D18 /* AddAddressTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAddressTableViewController.swift; sourceTree = "<group>"; };
 		F7AC5F611B9A9CA400227D18 /* AddAddressTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddAddressTableViewController.xib; sourceTree = "<group>"; };
 		F7AC5F6D1B9AA23E00227D18 /* BarangayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarangayModel.swift; sourceTree = "<group>"; };
@@ -1526,6 +1530,9 @@
 				7985D35C1BB0259F0060E5F5 /* DeactivateModalViewController.xib */,
 				795111E51BBC0E7800ADDEE1 /* TransactionProductDescriptionViewController.swift */,
 				795111E61BBC0E7800ADDEE1 /* TransactionProductDescriptionViewController.xib */,
+				F79402FE1BC00D6E00CD21DD /* FilterHeaderSectiionViewController.swift */,
+				F79403021BC00E8D00CD21DD /* FilterSeactionHeaderView.swift */,
+				F79402FF1BC00D6E00CD21DD /* FilterHeaderSectiionViewController.xib */,
 				F7CCEEF81BBEC41D00D876C2 /* FilterResultsRiderNameViewController.swift */,
 				F7CCEEF91BBEC41D00D876C2 /* FilterResultsRiderNameViewController.xib */,
 			);
@@ -2083,7 +2090,6 @@
 				en,
 				Base,
 				"zh-Hans",
-				"zh-Hant",
 			);
 			mainGroup = 967EE1AB1B8AEA25000591AC;
 			productRefGroup = 967EE1B51B8AEA25000591AC /* Products */;
@@ -2212,6 +2218,7 @@
 				26B282FA1B921BAF00A7C2B1 /* ProductManagementModelViewController.xib in Resources */,
 				F7C40FB71B983C410091C16C /* ChangeAddressCollectionViewCell.xib in Resources */,
 				26DB06361B98BF2C00D38EA8 /* TransactionCollectionViewCell.xib in Resources */,
+				F79403011BC00D6E00CD21DD /* FilterHeaderSectiionViewController.xib in Resources */,
 				0CF28EF41B8CA2E9005B2E54 /* Black Italic.otf in Resources */,
 				79EF7AC41B99F7060082CD35 /* TransactionProductTableViewCell.xib in Resources */,
 				F7C40FB31B983C310091C16C /* ChangeAddressViewController.xib in Resources */,
@@ -2648,6 +2655,7 @@
 				F7C40F871B983B810091C16C /* StoreInfoViewController.swift in Sources */,
 				79EFF7711B8D6E35008A9E7D /* ActivityModel.swift in Sources */,
 				79E633AD1B9B328E0062DB14 /* TransactionShipItemTableViewCell.swift in Sources */,
+				F79403001BC00D6E00CD21DD /* FilterHeaderSectiionViewController.swift in Sources */,
 				792875F81B8DF89F00762A39 /* CandleStickChartView.swift in Sources */,
 				79E633821B9B07670062DB14 /* TransactionCancelOrderSuccessViewController.swift in Sources */,
 				792875F61B8DF89F00762A39 /* BarLineChartViewBase.swift in Sources */,
@@ -2698,6 +2706,7 @@
 				79EFF7831B8DB809008A9E7D /* RecentOrderModel.swift in Sources */,
 				792876021B8DF89F00762A39 /* ChartComponentBase.swift in Sources */,
 				792876161B8DF89F00762A39 /* CombinedChartData.swift in Sources */,
+				F79403031BC00E8D00CD21DD /* FilterSeactionHeaderView.swift in Sources */,
 				7928762A1B8DF89F00762A39 /* CandleStickChartRenderer.swift in Sources */,
 				F7C40F7B1B983B570091C16C /* FilterViewController.swift in Sources */,
 				79EF7ABA1B99950E0082CD35 /* TransactionsFilterModel.swift in Sources */,
@@ -2731,7 +2740,6 @@
 			children = (
 				0C11794F1BA9A49700AA1554 /* Base */,
 				0C1179571BA9A5AA00AA1554 /* zh-Hans */,
-				0C1179591BA9A5AF00AA1554 /* zh-Hant */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
@@ -2741,7 +2749,6 @@
 			children = (
 				0C1179551BA9A58F00AA1554 /* Base */,
 				0C1179581BA9A5AA00AA1554 /* zh-Hans */,
-				0C11795A1BA9A5AF00AA1554 /* zh-Hant */,
 			);
 			name = LocalizableString.strings;
 			sourceTree = "<group>";

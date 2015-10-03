@@ -125,6 +125,8 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         
         self.dimView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "dimAction"))
         self.deleteLabel.text = ManagementStrings.delete
+        
+        self.emptyLabel.text = StringHelper.localizedStringWithKey("EMPTY_LABEL_NO_PRODUCTS_FOUND_LOCALIZE_KEY")
     }
     
     func customizeNavigationBar() {
