@@ -65,6 +65,8 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
         searchBarTextField.leftViewMode = UITextFieldViewMode.Always
         
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
+        
+        self.emptyLabel.text = StringHelper.localizedStringWithKey("EMPTY_LABEL_NO_CATEGORY_FOUND_LOCALIZE_KEY")
     }
     
     func showHUD() {
