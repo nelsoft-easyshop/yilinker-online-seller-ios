@@ -33,7 +33,7 @@ class FilterTableViewCell: UITableViewCell {
         var contentWidth = 0
         println(filter.attributes.count)
         for var i = 0; i < filter.attributes.count; i++ {
-            var width = (count(filter.attributes[i]) * 10) + 20
+            var width = (count(filter.attributes[i]) * 10) + 50
             
             var button = UIButton(frame: CGRectMake(CGFloat(x), CGFloat(10), CGFloat(width), scrollView.frame.height/1.5))
             button.setTitle(filter.attributes[i] as String, forState: .Normal)
