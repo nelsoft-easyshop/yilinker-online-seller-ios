@@ -17,6 +17,7 @@ class TransactionDetailsModel: NSObject {
     var transactionDate: String = ""
     var transactionPrice: String = ""
     var transactionQuantity: Int = 0
+    var transactionUnitPrice: String = ""
     var transactionStatusId: Int = 0
     var transactionStatusName: String = ""
     var transactionPayment: String = ""
@@ -26,7 +27,7 @@ class TransactionDetailsModel: NSObject {
         
     }
     
-    init(isSuccessful: Bool, message: String, transactionInvoice: String, transactionShippingFee: String, transactionDate: String, transactionPrice: String, transactionQuantity: Int, transactionStatusId: Int, transactionStatusName: String, transactionPayment: String, transactionItems: [TransactionItemModel]) {
+    init(isSuccessful: Bool, message: String, transactionInvoice: String, transactionShippingFee: String, transactionDate: String, transactionPrice: String, transactionQuantity: Int, transactionUnitPrice: String, transactionStatusId: Int, transactionStatusName: String, transactionPayment: String, transactionItems: [TransactionItemModel]) {
         self.isSuccessful = isSuccessful
         self.message = message
         self.transactionInvoice = transactionInvoice
@@ -34,6 +35,7 @@ class TransactionDetailsModel: NSObject {
         self.transactionDate = transactionDate
         self.transactionPrice = transactionPrice
         self.transactionQuantity = transactionQuantity
+        self.transactionUnitPrice = transactionUnitPrice
         self.transactionStatusId = transactionStatusId
         self.transactionStatusName = transactionStatusName
         self.transactionPayment = transactionPayment
@@ -49,6 +51,7 @@ class TransactionDetailsModel: NSObject {
         var transactionDate: String = "2000-01-01 00:00:00.000000"
         var transactionPrice: String = ""
         var transactionQuantity: Int = 0
+        var transactionUnitPrice: String = ""
         var transactionStatusId: Int = 0
         var transactionStatusName: String = ""
         var transactionPayment: String = ""
@@ -82,8 +85,8 @@ class TransactionDetailsModel: NSObject {
                         }
                     }
                     
-                    if tempDict[" transactionDate"] != nil {
-                        if let tempDictInner = tempDict[" transactionDate"] as? NSDictionary {
+                    if tempDict["transactionDate"] != nil {
+                        if let tempDictInner = tempDict["transactionDate"] as? NSDictionary {
                             if tempDictInner["date"] != nil {
                                 if let tempVar = tempDictInner["date"] as? String {
                                     transactionDate = tempVar
@@ -101,6 +104,12 @@ class TransactionDetailsModel: NSObject {
                     if tempDict["transactionQuantity"] != nil {
                         if let tempVar = tempDict["transactionQuantity"] as? Int {
                             transactionQuantity = tempVar
+                        }
+                    }
+                    
+                    if tempDict["transactionUnitPrice"] != nil {
+                        if let tempVar = tempDict["transactionUnitPrice"] as? String {
+                            transactionUnitPrice = tempVar
                         }
                     }
                     
@@ -136,7 +145,7 @@ class TransactionDetailsModel: NSObject {
             }
         }
         
-        return TransactionDetailsModel(isSuccessful: isSuccessful, message: message, transactionInvoice: transactionInvoice, transactionShippingFee: transactionShippingFee, transactionDate: transactionDate, transactionPrice: transactionPrice, transactionQuantity: transactionQuantity, transactionStatusId: transactionStatusId, transactionStatusName: transactionStatusName, transactionPayment: transactionPayment, transactionItems: transactionItems)
+        return TransactionDetailsModel(isSuccessful: isSuccessful, message: message, transactionInvoice: transactionInvoice, transactionShippingFee: transactionShippingFee, transactionDate: transactionDate, transactionPrice: transactionPrice, transactionQuantity: transactionQuantity, transactionUnitPrice: transactionUnitPrice,  transactionStatusId: transactionStatusId, transactionStatusName: transactionStatusName, transactionPayment: transactionPayment, transactionItems: transactionItems)
     }
 
 }

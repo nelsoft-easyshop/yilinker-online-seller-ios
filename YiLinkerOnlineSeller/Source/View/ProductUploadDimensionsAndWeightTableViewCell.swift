@@ -14,17 +14,38 @@ protocol ProductUploadDimensionsAndWeightTableViewCellDelegate {
 
 class ProductUploadDimensionsAndWeightTableViewCell: UITableViewCell, UITextFieldDelegate {
 
+    @IBOutlet weak var messageOneLabel: UILabel!
+    @IBOutlet weak var messageTwoLabel: UILabel!
     @IBOutlet weak var heightTextField: UITextField!
     @IBOutlet weak var widthTextField: UITextField!
     @IBOutlet weak var weightTextField: UITextField!
     @IBOutlet weak var lengthTextField: UITextField!
+   
+    @IBOutlet weak var lengthlabel: UILabel!
+    @IBOutlet weak var widthLabel: UILabel!
+    @IBOutlet weak var heightLabel: UILabel!
+    @IBOutlet weak var weightLabel: UILabel!
     
     var delegate: ProductUploadDimensionsAndWeightTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         self.addTextFieldDelegate()
+        
+        self.lengthlabel.required()
+        self.widthLabel.required()
+        self.heightLabel.required()
+        self.weightLabel.required()
+        
+        self.messageOneLabel.text = ProductUploadStrings.dimensionsAndWieghtMessageOne
+        self.messageTwoLabel.text = ProductUploadStrings.dimensionsAndWieghtMessageTwo
+        
+        self.lengthlabel.text = ProductUploadStrings.length
+        self.heightLabel.text = ProductUploadStrings.height
+        self.widthLabel.text = ProductUploadStrings.width
+        self.weightLabel.text = ProductUploadStrings.weight
     }
+    
     func addTextFieldDelegate() {
         self.heightTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         self.heightTextField.delegate = self

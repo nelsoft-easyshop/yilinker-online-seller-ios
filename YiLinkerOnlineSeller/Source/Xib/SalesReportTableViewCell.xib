@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -230,13 +230,18 @@
             <connections>
                 <outlet property="calendarView" destination="44q-wB-k8q" id="GvE-qY-Lvm"/>
                 <outlet property="cancelledCircleView" destination="PvP-aI-emc" id="fzn-cN-2in"/>
+                <outlet property="cancelledLabel" destination="CZW-Kz-9jH" id="EXY-Hu-yhj"/>
                 <outlet property="dateLabel" destination="sJF-YJ-VdG" id="4Rf-qE-Cav"/>
                 <outlet property="largeLineChart" destination="5Qu-B2-7Tj" id="E7o-Tp-17e"/>
                 <outlet property="smallLineChart" destination="RE4-SQ-SIa" id="PWN-9j-K8i"/>
                 <outlet property="soldCircleView" destination="QiW-W6-icp" id="gc7-Ik-tpc"/>
+                <outlet property="soldLabel" destination="eTB-be-Xcn" id="Llh-GX-yrZ"/>
                 <outlet property="totalProducts" destination="mEQ-dp-HN3" id="N8x-x5-t5V"/>
+                <outlet property="totalProductsTitleLabel" destination="W0L-Ly-UDx" id="l7X-U6-nGW"/>
                 <outlet property="totalSalesLabel" destination="FqT-h7-b9d" id="6A7-c9-SKV"/>
+                <outlet property="totalSalesTitleLabel" destination="mzV-Zw-gr7" id="eda-76-7ZI"/>
                 <outlet property="totalTransactionsLabel" destination="6se-Wj-NFL" id="nua-5a-qcK"/>
+                <outlet property="totalTransactionsTitleLabel" destination="fmC-45-PJO" id="9t7-Vj-V2Z"/>
             </connections>
             <point key="canvasLocation" x="180.5" y="84"/>
         </tableViewCell>

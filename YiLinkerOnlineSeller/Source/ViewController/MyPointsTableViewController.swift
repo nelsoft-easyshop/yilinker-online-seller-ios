@@ -22,10 +22,16 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
     var isMyPointsEnd: Bool = false
     var myPointsPage: Int = 1
     
+    var errorLocalizeString: String  = ""
+    var somethingWrongLocalizeString: String = ""
+    var connectionLocalizeString: String = ""
+    var connectionMessageLocalizeString: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         initializeViews()
+        initializeLocalizedString()
         titleView()
         backButton()
         registerNibs()
@@ -39,6 +45,14 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    func initializeLocalizedString() {
+        //Initialized Localized String
+        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHING_WENT_WRONG_LOCALIZE_KEY")
+        connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTION_UNREACHABLE_LOCALIZE_KEY")
+        connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTION_ERROR_MESSAGE_LOCALIZE_KEY")
     }
     
     func initializeViews() {
@@ -60,7 +74,7 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
     }
     
     func titleView() {
-        self.title = "My Points"
+        self.title = StringHelper.localizedStringWithKey("MY_POINTS_TITLE_LOCALIZE_KEY")
     }
     
     func backButton() {
@@ -96,14 +110,10 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
         if myPointsHistory.data.count != 0 {
             
             return myPointsHistory.data.count + 3
@@ -116,7 +126,7 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellPointsEarned, forIndexPath: indexPath) as! PointsEarnedTableViewCell
-            cell.pointsLabel.text = totalPointsModel.data
+            cell.pointsLabel.text = totalPointsModel.data.formatToTwoDecimalNoTrailling()
             return cell
         } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellPointsDetails, forIndexPath: indexPath) as! PointsDetailsTableViewCell
@@ -166,7 +176,19 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
                 cell.pointsTitleLabel.textColor = UIColor(red: 255/255.0, green: 59/255.0, blue: 48/255.0, alpha: 0.75)
             }
             
-            cell.pointsLabel.text = points
+            if points.toInt() < 1 {
+                if Array(tempModel.points)[0] != "-" {
+                    cell.pointsLabel.text = "+0" + points.formatToTwoDecimalNoTrailling()
+                } else {
+                    cell.pointsLabel.text = "-0" + points.formatToTwoDecimalNoTrailling()
+                }
+            } else {
+                if Array(tempModel.points)[0] != "-" {
+                    cell.pointsLabel.text = "+" + points.formatToTwoDecimalNoTrailling()
+                } else {
+                    cell.pointsLabel.text = "-" + points.formatToTwoDecimalNoTrailling()
+                }
+            }
             
             return cell
         }
@@ -186,64 +208,6 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
         }
     }
     
-    /*
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return 65
-        } else if indexPath.row == 1 {
-            return 175
-        } else if indexPath.row == 2 {
-            return 40
-        }else {
-            return 65
-        }
-    }*/
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
     // MARK: - PointsBreakdownTableViewCellDelegate
     // Callback when how to earned points button is clicked
     func howToEarnActionForIndex(sender: AnyObject) {
@@ -259,7 +223,7 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
         self.hud = MBProgressHUD(view: self.view)
         self.hud?.removeFromSuperViewOnHide = true
         self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
+        self.navigationController?.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
 
@@ -277,7 +241,7 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
             if self.totalPointsModel.isSuccessful {
                 self.fireGetPointsHistory()
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.totalPointsModel.message, title: "Error")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.totalPointsModel.message, title: self.errorLocalizeString)
             }
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
@@ -288,9 +252,9 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
                     self.fireRefreshToken("totalPoints")
                 } else {
                     if Reachability.isConnectedToNetwork() {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong!", title: "Error")
+                        UIAlertController.displaySomethingWentWrongError(self)
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                        UIAlertController.displayNoInternetConnectionError(self)
                     }
                     println(error)
                 }
@@ -336,16 +300,18 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
                         self.fireRefreshToken("pointsHistory")
                     } else {
                         if Reachability.isConnectedToNetwork() {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong!", title: "Error")
+                            UIAlertController.displaySomethingWentWrongError(self)
                         } else {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                            UIAlertController.displayNoInternetConnectionError(self)
                         }
                         println(error)
                     }
             })
         } else {
             self.hud?.hide(true)
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "No more data!", title: "My Points")
+            let noMoreString = StringHelper.localizedStringWithKey("NO_MORE_DATA_LOCALIZE_KEY")
+            let myPointsString = StringHelper.localizedStringWithKey("MY_POINTS_TITLE_LOCALIZE_KEY")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noMoreString, title: myPointsString)
         }
 
     }

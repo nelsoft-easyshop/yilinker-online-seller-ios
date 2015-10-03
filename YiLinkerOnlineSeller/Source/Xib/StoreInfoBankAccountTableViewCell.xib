@@ -70,10 +70,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shop Account" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uBs-1U-8tg">
-                                <rect key="frame" x="12" y="44" width="123" height="21"/>
+                                <rect key="frame" x="12" y="44" width="271" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="RTe-LM-6JZ"/>
-                                    <constraint firstAttribute="width" constant="123" id="mkt-Hx-yLG"/>
+                                    <constraint firstAttribute="width" constant="271" id="mkt-Hx-yLG"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -118,8 +118,10 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="bankAccountDetailLabel" destination="bxj-bM-2ur" id="zfx-x0-zTb"/>
-                <outlet property="bankAccountTitleLabel" destination="uBs-1U-8tg" id="Yns-Pz-SWo"/>
+                <outlet property="bankAccountInfoLabel" destination="uBs-1U-8tg" id="mnz-4s-KFK"/>
+                <outlet property="bankAccountTitleLabel" destination="5Ys-Dp-kcC" id="Bdd-1C-es8"/>
                 <outlet property="bankAccountView" destination="dof-UE-QQx" id="fZE-kV-Is9"/>
+                <outlet property="newAccountLabel" destination="QkY-nl-exk" id="uFz-81-Wvt"/>
             </connections>
             <point key="canvasLocation" x="319.5" y="355"/>
         </tableViewCell>

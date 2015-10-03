@@ -10,9 +10,11 @@ import UIKit
 
 class SettingsHeaderTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var notificationLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        notificationLabel.text = StringHelper.localizedStringWithKey("NOTIFICATIONS_LOCALIZED_KEY")
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

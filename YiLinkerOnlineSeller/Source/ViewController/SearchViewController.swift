@@ -36,6 +36,11 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var hud: MBProgressHUD?
     
     var searchModel: SearchModel?
+    var searchProductNameModel: SearchProductNameModel?
+    var tableData: [SearchProductNameModel] = []
+    var transactionModel: TransactionModel?
+    
+    var riderNameArray: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,10 +104,16 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if (tableView.isEqual(self.searchResultTableView)){
-            if self.searchModel != nil {
-                return self.searchModel!.invoiceNumber.count
+            if self.filterBySelected == 2 {
+                if !self.tableData.isEmpty {
+                    return self.tableData.count
+                } else {
+                    return 0
+                }
+            } else if self.filterBySelected == 3 {
+                return self.riderNameArray.count
             } else {
-                return 1
+                return 0
             }
         } else {
                return 4
@@ -121,8 +132,14 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if (tableView.isEqual(self.searchResultTableView)){
             let cell = searchResultTableView.dequeueReusableCellWithIdentifier("SearchTableViewCell") as! SearchTableViewCell
-            if self.searchModel != nil {
-                cell.invoiceNumberLabel.text = self.searchModel?.invoiceNumber[indexPath.row]
+            if self.filterBySelected == 2 {
+                if !self.tableData.isEmpty {
+                    cell.invoiceNumberLabel.text = self.tableData[indexPath.row].name2
+                }
+            } else {
+                if !self.riderNameArray.isEmpty {
+                    cell.invoiceNumberLabel.text = self.riderNameArray[indexPath.row]
+                }
             }
             
             return cell
@@ -152,6 +169,17 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             filterBySelected = indexPath!.row
             
             println(filterBySelected)
+        } else {
+            if self.filterBySelected == 2 {
+                
+            } else {
+              println("--\(self.riderNameArray[indexPath.row])")
+                var filterRiderNameViewController = FilterResultsRiderNameViewController(nibName: "FilterResultsRiderNameViewController", bundle: nil)
+                filterRiderNameViewController.edgesForExtendedLayout = .None
+                filterRiderNameViewController.riderName = self.riderNameArray[indexPath.row]
+                filterRiderNameViewController.searchType = 3
+                self.navigationController?.pushViewController(filterRiderNameViewController, animated: true)
+            }
         }
     }
     
@@ -190,8 +218,14 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //self.searchTextField.resignFirstResponder()
         self.searchTextField.endEditing(true)
         
-        if filterBySelected == 0 || filterBySelected == 2 || filterBySelected == 3 {
+        if filterBySelected == 0 {
             self.showAlert(title: "Information", message: "Search by \(filterBy[filterBySelected]) is not yet available.")
+        } else if filterBySelected == 2 {
+            self.tableData.removeAll(keepCapacity: false)
+            self.fireSearchProduct(2)
+        } else if filterBySelected == 3 {
+            self.riderNameArray.removeAll(keepCapacity: false)
+            self.fireSearchProduct(3)
         } else {
             self.fireSearch()
         }
@@ -205,9 +239,9 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let manager = APIManager.sharedInstance
             let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
             
-            manager.GET(APIAtlas.transaction+"\(SessionManager.accessToken())&query=\(self.searchTextField.text)", parameters: nil, success: {
+            manager.GET(APIAtlas.transaction+"\(SessionManager.accessToken())&query=\(self.searchTextField.text)", parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                
+           
                 self.searchModel = SearchModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 
                 for var i = 0; i < self.searchModel!.invoiceNumber.count; i++ {
@@ -224,12 +258,96 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 //self.searchResultTableView.reloadData()
                 self.hud?.hide(true)
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                    } else if task.statusCode == 401 {
+                        self.fireRefreshToken(SearchRefreshType.TransactionId)
+                    } else {
+                        self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                    }
                     self.hud?.hide(true)
-                    println(error)
             })
         } else {
             println("Search not available.")
         }
+    }
+    
+    func fireSearchProduct(search: Int){
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        var url: String = ""
+        if search == 2 {
+            url = APIAtlas.searchNameSuggestion
+        } else {
+            url = APIAtlas.searchRiderSuggestion
+        }
+        manager.GET(url+"\(SessionManager.accessToken())&queryString=\(self.searchTextField.text)", parameters: nil, success: { (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            println(">> \(responseObject)")
+            
+            if search == 2 {
+                let searchProductNameModel: SearchProductNameModel = SearchProductNameModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                println("\(searchProductNameModel.name.count)")
+                for var i = 0; i < searchProductNameModel.name.count; i++ {
+                    self.tableData.append(SearchProductNameModel(name2: searchProductNameModel.name[i], productId2: searchProductNameModel.productId[i]))
+                }
+            } else {
+                var rider: NSArray = responseObject["data"] as! NSArray
+                println(responseObject["data"] as! NSArray)
+                for var i: Int = 0; i < rider.count; i++ {
+                    self.riderNameArray.append(rider[i] as! String)
+                }
+            }
+            
+            self.searchResultTableView.reloadData()
+            self.hud?.hide(true)
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                } else if task.statusCode == 401 {
+                    self.fireRefreshToken(SearchRefreshType.ProductName)
+                } else {
+                    self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                }
+                self.hud?.hide(true)
+        })
+        
+    }
+    
+    func fireRefreshToken(type: SearchRefreshType) {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            if type == SearchRefreshType.ProductName {
+                self.fireSearchProduct(2)
+            } else if type == SearchRefreshType.All {
+                
+            } else if type == SearchRefreshType.TransactionId {
+                self.fireSearch()
+            } else {
+                self.fireSearchProduct(3)
+            }
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+        })
+        
     }
     
     func showHUD() {

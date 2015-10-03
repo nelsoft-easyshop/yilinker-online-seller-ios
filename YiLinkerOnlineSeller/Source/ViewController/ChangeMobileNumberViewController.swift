@@ -23,11 +23,30 @@ class ChangeMobileNumberViewController: UIViewController {
     @IBOutlet weak var oldNumberTextField: UITextField!
     @IBOutlet weak var newNumberTextField: UITextField!
     
+    @IBOutlet weak var changeMobileTitle: UILabel!
+    @IBOutlet weak var oldNumberTitleLabel: UILabel!
+    @IBOutlet weak var newNumberTitleLabel: UILabel!
+    
     var delegate: ChangeMobileNumberViewControllerDelegate?
+    
+    let changeMobile: String = StringHelper.localizedStringWithKey("CHANGE_MOBILE_TITLE_LOCALIZE_KEY")
+    let oldNumber: String = StringHelper.localizedStringWithKey("CHANGE_MOBILE_OLD_PASSWORD_LOCALIZE_KEY")
+    let newNumber: String = StringHelper.localizedStringWithKey("CHANGE_MOBILE_NEW_PASSWORD_LOCALIZE_KEY")
+    let submit: String = StringHelper.localizedStringWithKey("CHANGE_MOBILE_SUBMIT_LOCALIZE_KEY")
+    let enterNewNumber: String = StringHelper.localizedStringWithKey("CHANGE_MOBILE_ENTER_NEW_NUMBER_LOCALIZE_KEY")
+    let error: String = StringHelper.localizedStringWithKey("CHANGE_MOBILE_ERROR_LOCALIZE_KEY")
+    let invalidNumber: String = StringHelper.localizedStringWithKey("CHANGE_MOBILE_INVALID_NUMBER_LOCALIZE_KEY")
+    let sameNumber: String = StringHelper.localizedStringWithKey("CHANGE_MOBILE_SAME_NUMBER_LOCALIZE_KEY")
+     let ok: String = StringHelper.localizedStringWithKey("CHANGE_MOBILE_OK_LOCALIZE_KEY")
+    let somethingWentWrong: String = StringHelper.localizedStringWithKey("ERROR_SOMETHING_WENT_WRONG_LOCALIZE_KEY")
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.changeMobileTitle.text = changeMobile
+        self.oldNumberTitleLabel.text = oldNumber
+        self.newNumberTitleLabel.text = newNumber
+        self.submitButton.setTitle(submit, forState: UIControlState.Normal)
+        self.newNumberTextField.placeholder = enterNewNumber
         // Do any additional setup after loading the view.
     }
 
@@ -42,9 +61,21 @@ class ChangeMobileNumberViewController: UIViewController {
     }
     
     @IBAction func submit(sender: AnyObject){
-        self.delegate?.setMobileNumber(newNumberTextField.text, oldNumber: oldNumberTextField.text)
-        //self.delegate?.dismissView()
-        self.dismissViewControllerAnimated(true, completion: nil)
+        var newNumber: String = newNumberTextField.text
+        var oldNumber:String = oldNumberTextField.text
+        println(count("\(newNumber)"))
+        if count("\(newNumber)") < 11 || count("\(oldNumber)") < 11 {
+            self.showAlert(title: self.error, message: self.invalidNumber)
+        } else {
+            if newNumberTextField.text == oldNumberTextField.text {
+                self.showAlert(title: self.error, message: self.sameNumber)
+            } else {
+                self.delegate?.setMobileNumber(newNumberTextField.text, oldNumber: oldNumberTextField.text)
+                //self.delegate?.dismissView()
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        }
+        
     }
     
     @IBAction func textFieldDidBeginEditing(sender: AnyObject) {
@@ -56,6 +87,13 @@ class ChangeMobileNumberViewController: UIViewController {
              topConstraint.constant = 100
         }
        
+    }
+    
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: self.ok, style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
     }
     
     /*

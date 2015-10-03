@@ -25,16 +25,28 @@ class TransactionConsigneeTableViewCell: UITableViewCell {
     @IBOutlet weak var smsButton: UIButton!
     @IBOutlet weak var callButton: UIButton!
     
+    @IBOutlet weak var nameTitleLabel: UILabel!
+    @IBOutlet weak var addressTitleLabel: UILabel!
+    @IBOutlet weak var contactNumberTitleLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
         initializeViews()
+        initializeLocalizedStrings()
     }
 
     func initializeViews() {
         messageButton.layer.cornerRadius = messageButton.frame.height / 2
         messageButton.layer.borderWidth = 2
         messageButton.layer.borderColor = Constants.Colors.productPrice.CGColor
+    }
+    
+    func initializeLocalizedStrings() {
+        messageButton.setTitle(StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_MESSAGE_LOCALIZE_KEY"), forState: UIControlState.Normal)
+        nameTitleLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_NAME_LOCALIZE_KEY")
+        addressTitleLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_ADDRESS_LOCALIZE_KEY")
+        contactNumberTitleLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_CONTACT_LOCALIZE_KEY")
     }
     
     @IBAction func messageAction(sender: AnyObject) {

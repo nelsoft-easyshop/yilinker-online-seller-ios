@@ -8,12 +8,16 @@
 
 import Foundation
 
-typealias ResolutionCenterElement = (resolutionId: String, status: String, date: String, type: String, complainantRemarks: String, csrRemarks: String)
+typealias ResolutionCenterElement = (resolutionId: String, status: String, date: String, type: String, complainantRemarks: String, csrRemarks: String, ticketId: String)
 
 class ResolutionCenterModel {
     var message: String = ""
     var isSuccessful: Bool = false
-    var resolutionArray: [ResolutionCenterElement]
+    var resolutionArray: [ResolutionCenterElement] = []
+    
+    init() {
+        
+    }
     
     init(message: String, isSuccessful: Bool, resolutionArray: [ResolutionCenterElement]) {
         self.message = message
@@ -67,6 +71,7 @@ class ResolutionCenterModel {
                         element.status = autocorrectStatus( element.status )
                         element.type = parseDictionaryString(currentElement, key:"orderProductStatus")
                         element.date = parseDictionaryString(currentElement, key:"dateAdded")
+                        element.ticketId = parseDictionaryString(currentElement, key:"ticketId")
                         // unused: "disputeeFullName"
                         // unused: "disputeeContactNumber"
                         element.complainantRemarks = ""

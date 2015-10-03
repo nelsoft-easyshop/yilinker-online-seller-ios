@@ -32,7 +32,7 @@ struct APIAtlas {
     static let categoryUrl = "product/getCategories"
     static let brandUrl = "product/getBrands"
     static let uploadUrl = "product/upload"
-    static let getProductDetails = "auth/product/getProductDetail"
+    static let getProductDetails = "product/upload-details"
     static let sellerStoreInfo = "auth/merchant/getUserInfo"
     static let sellerBankAccountList = "auth/bank/account/getBankAccounts"
     static let sellerAddBankAccount = "auth/bank/account/addBankAccount"
@@ -43,6 +43,7 @@ struct APIAtlas {
     static let sellerDeleteStoreAddress = "auth/address/deleteUserAddress"
     static let transactionList = "auth/getTransactionList"
     static let transactionDetails = "auth/getTransaction"
+    static let orderProductDetails = "auth/getOrderProductDetail"
     static let transactionCancellation = "auth/cancellation/reasons"
     static let transactionConsignee = "auth/getTransactionConsignee"
     static let postTransactionCancellation = "auth/transaction/cancel"
@@ -53,7 +54,7 @@ struct APIAtlas {
     static let sellerChangePassword = "auth/user/changePassword"
     static let sellerUpdateSellerInfo = "auth/merchant/updateUserInfo"
     static let getCustomizedCategories   = "category/getCustomCategories"           // Applied
-    static let getCategoryDetails        = "auth/category/getCategoryDetails"       // Applied
+    static let getCategoryDetails        = "category/getCategoryDetails"            // Applied
     static let editCustomizedCategory    = "auth/category/updateCustomCategory"
     static let addCustomizedCategory     = "auth/category/addCustomCategory"        // Applied
     static let deleteCustomizedCategory  = "auth/category/deleteCustomCategory"     // Applied
@@ -80,12 +81,17 @@ struct APIAtlas {
     
     static let getActivityLogs = "auth/user/activityLog"
     
+    static let getDeliveryLogs = "auth/getTransactionDeliveryLogs"
+    
     static let postEmailNotif = "auth/email/subscription"
     static let postSMSNotif = "auth/sms/subscription"
     static let deactivate = "auth/account/disable"
     
     //Search
     static let transaction = "auth/transaction/searchKeyword?access_token="
+    static let searchNameSuggestion = "auth/product/name-suggestion?access_token="
+    static let searchRiderSuggestion = "auth/suggestPackageHandler?access_token="
+    static let transactionLogs = "auth/getTransactionList?access_token="
     
     //Resolution Center
     static let getResolutionCenterCases = "auth/dispute/get-case"
@@ -100,6 +106,8 @@ struct APIAtlas {
     
     static let baseUrl = APIEnvironment.baseUrl()
     
+    static let uploadDraftUrl = "product/upload/draft"
+    static let uploadEditUrl = "product/edit"
     
     /* MESSAGING CONSTANTS */
     static let ACTION_SEND_MESSAGE          = "/message/sendMessage"

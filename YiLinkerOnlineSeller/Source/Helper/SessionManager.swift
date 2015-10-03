@@ -139,6 +139,26 @@ class SessionManager {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
+    class func setIsSeller(isSeller: Bool) {
+        NSUserDefaults.standardUserDefaults().setObject(isSeller, forKey: "isSeller")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func setIsReseller(isReseller: Bool) {
+        NSUserDefaults.standardUserDefaults().setObject(isReseller, forKey: "isReseller")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func setIsEmailSubscribed(isEmailSubscribed: Bool) {
+        NSUserDefaults.standardUserDefaults().setObject(isEmailSubscribed, forKey: "isEmailSubscribed")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func setIsSmsSubscribed(isSmsSubscribed: Bool) {
+        NSUserDefaults.standardUserDefaults().setObject(isSmsSubscribed, forKey: "isSmsSubscribed")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
     class func addressId() -> Int {
         var result: String = ""
         if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("addressId") as? String {
@@ -168,5 +188,20 @@ class SessionManager {
     class func isSeller() -> Bool {
         let isSeller: Bool = NSUserDefaults.standardUserDefaults().objectForKey("isSeller") as! Bool
         return isSeller
+    }
+    
+    class func isReseller() -> Bool {
+        let isReseller: Bool = NSUserDefaults.standardUserDefaults().objectForKey("isReseller") as! Bool
+        return isReseller
+    }
+    
+    class func isEmailSubscribed() -> Bool {
+        let isEmailSubscribed: Bool = NSUserDefaults.standardUserDefaults().objectForKey("isEmailSubscribed") as! Bool
+        return isEmailSubscribed
+    }
+    
+    class func isSmsSubscribed() -> Bool {
+        let isSmsSubscribed: Bool = NSUserDefaults.standardUserDefaults().objectForKey("isSmsSubscribed") as! Bool
+        return isSmsSubscribed
     }
 }

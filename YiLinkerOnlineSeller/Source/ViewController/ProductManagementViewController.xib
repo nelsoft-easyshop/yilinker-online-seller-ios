@@ -12,6 +12,9 @@
             <string>Panton-Bold</string>
             <string>Panton-Bold</string>
         </mutableArray>
+        <mutableArray key="Panton Light.otf">
+            <string>Panton-Light</string>
+        </mutableArray>
         <mutableArray key="Panton.otf">
             <string>Panton-Regular</string>
         </mutableArray>
@@ -27,8 +30,10 @@
                 <outlet property="buttonsContainer" destination="zrT-wQ-HdY" id="97g-S5-LIN"/>
                 <outlet property="collectionView" destination="vPo-r1-Ubn" id="aO0-eq-XVX"/>
                 <outlet property="delete2View" destination="Y4h-6r-cj3" id="Rns-lv-BAG"/>
+                <outlet property="deleteLabel" destination="UyK-yn-GHc" id="ilX-ib-jrh"/>
                 <outlet property="deleteView" destination="Wfh-2c-ify" id="9bR-K1-YjN"/>
                 <outlet property="dimView" destination="LTb-gA-wY0" id="TPR-i5-XVe"/>
+                <outlet property="emptyLabel" destination="FUn-ar-xOV" id="tHx-TH-fYG"/>
                 <outlet property="inactiveView" destination="Nzf-ql-uSX" id="ss7-Xo-WfY"/>
                 <outlet property="loaderContainerView" destination="uuA-ht-XIf" id="Pr7-yd-csl"/>
                 <outlet property="searchBarContainerView" destination="3F0-RF-3Em" id="wou-Sq-ffW"/>
@@ -291,14 +296,23 @@
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uuA-ht-XIf">
                     <rect key="frame" x="0.0" y="60" width="375" height="607"/>
                 </view>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No products found" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FUn-ar-xOV">
+                    <rect key="frame" x="0.0" y="60" width="375" height="607"/>
+                    <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" name="Panton-Light" family="Panton" pointSize="20"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="FUn-ar-xOV" secondAttribute="bottom" id="3DK-FZ-zEV"/>
                 <constraint firstAttribute="trailing" secondItem="zrT-wQ-HdY" secondAttribute="trailing" id="Bvb-Jd-yaS"/>
                 <constraint firstItem="NPe-9O-VXY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="60" id="Cam-tf-LKG"/>
                 <constraint firstAttribute="trailing" secondItem="LTb-gA-wY0" secondAttribute="trailing" id="Cgi-tk-iVn"/>
                 <constraint firstItem="uuA-ht-XIf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Icn-NY-dIo"/>
                 <constraint firstAttribute="trailing" secondItem="vPo-r1-Ubn" secondAttribute="trailing" id="VdR-Sx-NJk"/>
+                <constraint firstItem="FUn-ar-xOV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="f7U-A2-yrZ"/>
                 <constraint firstAttribute="trailing" secondItem="3F0-RF-3Em" secondAttribute="trailing" id="gJy-QD-hbU"/>
                 <constraint firstItem="uuA-ht-XIf" firstAttribute="top" secondItem="3F0-RF-3Em" secondAttribute="bottom" constant="16" id="iO4-Ev-KdX"/>
                 <constraint firstAttribute="bottom" secondItem="NPe-9O-VXY" secondAttribute="bottom" id="k2S-kq-K4t"/>
@@ -313,8 +327,10 @@
                 <constraint firstItem="LTb-gA-wY0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="r2X-zM-fjv"/>
                 <constraint firstItem="3F0-RF-3Em" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="rUn-CX-ohR"/>
                 <constraint firstItem="LTb-gA-wY0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="tAO-2f-UqU"/>
+                <constraint firstItem="FUn-ar-xOV" firstAttribute="top" secondItem="3F0-RF-3Em" secondAttribute="bottom" constant="16" id="vBW-63-IIQ"/>
                 <constraint firstItem="vPo-r1-Ubn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="x2F-Y3-GDh"/>
                 <constraint firstAttribute="trailing" secondItem="NPe-9O-VXY" secondAttribute="trailing" id="yms-he-yRW"/>
+                <constraint firstAttribute="trailing" secondItem="FUn-ar-xOV" secondAttribute="trailing" id="zrO-IE-nYx"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="367.5" y="213.5"/>

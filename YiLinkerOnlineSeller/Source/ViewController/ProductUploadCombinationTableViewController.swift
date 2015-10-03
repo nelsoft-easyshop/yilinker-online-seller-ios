@@ -14,14 +14,14 @@ struct PUCTVCConstant {
     static let productUploadCombinationFooterTableViewCellNibNameAndIdentifier = "ProductUploadCombinationFooterTableViewCell"
     static let productUploadAttributeValluesCollectionViewCellNibNameAndIdentifier = "ProductUploadAttributeValuesCollectionViewCell"
    
-    static let footerHeight: CGFloat = 331
+    static let footerHeight: CGFloat = 261
 }
 
 protocol ProductUploadCombinationTableViewControllerDelegate {
     func productUploadCombinationTableViewController(appendCombination combination: CombinationModel, isEdit: Bool, indexPath: NSIndexPath)
 }
 
-class ProductUploadCombinationTableViewController: UITableViewController, ProductUploadCombinationFooterTableViewCellDelegate, UzysAssetsPickerControllerDelegate {
+class ProductUploadCombinationTableViewController: UITableViewController, ProductUploadCombinationFooterTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, SaveButtonViewDelegate {
     
     var attributes: [AttributeModel]?
     var delegate: ProductUploadCombinationTableViewControllerDelegate?
@@ -29,12 +29,26 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
     var selectedIndexpath: NSIndexPath?
     var productModel: ProductModel?
     var headerTitle: String = ""
+    
+    var weight: String = ""
+    var height: String = ""
+    var length: String = ""
+    var width: String = ""
+    
+    var combination: CombinationModel = CombinationModel()
         
     override func viewDidLoad() {
         super.viewDidLoad()
         self.backButton()
-        self.title = "Add Combination"
         
+        if self.productModel != nil {
+            self.title = "Edit Combination"
+            let combination: CombinationModel = self.productModel!.validCombinations[self.selectedIndexpath!.section]
+            self.combination = combination
+        } else {
+            self.title = "Add Combination"
+        }
+    
         let headerView: ProductUploadCombinationHeaderTableViewCell = XibHelper.puffViewWithNibName("ProductUploadCombinationHeaderTableViewCell", index: 0) as! ProductUploadCombinationHeaderTableViewCell
         self.tableView.tableHeaderView = headerView
         headerView.combinationLabel.text = self.headerTitle
@@ -46,8 +60,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
             self.images.append(UIImage(named: "addPhoto")!)
         }
         
-        
-        
+        self.tableView.tableFooterView = self.footerView()
         self.registerCell()
     }
 
@@ -73,6 +86,9 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         
         let valuesNib: UINib = UINib(nibName: PUCTVCConstant.productUploadAttributeValluesCollectionViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(valuesNib, forCellReuseIdentifier: PUCTVCConstant.productUploadAttributeValluesCollectionViewCellNibNameAndIdentifier)
+        
+        let weightAndHeightNib: UINib = UINib(nibName: ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier, bundle: nil)
+        self.tableView.registerNib(weightAndHeightNib, forCellReuseIdentifier: ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier)
     }
     
     func back() {
@@ -98,7 +114,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 2
+        return 3
     }
 
    
@@ -112,7 +128,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
             }
             return cell
-        } else {
+        } else if indexPath.row == 1 {
             let cell: ProductUploadCombinationFooterTableViewCell = tableView.dequeueReusableCellWithIdentifier(PUCTVCConstant.productUploadCombinationFooterTableViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ProductUploadCombinationFooterTableViewCell
             cell.delegate = self
             
@@ -125,9 +141,24 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
                 cell.skuTextField.text = combination.sku
             } else {
                 cell.images = self.images
+                cell.quantityTextField.text = self.combination.quantity
             }
             cell.viewController = self
             cell.selectionStyle = UITableViewCellSelectionStyle.None
+            return cell
+        } else {
+            let cell: ProductUploadDimensionsAndWeightTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier) as! ProductUploadDimensionsAndWeightTableViewCell
+
+            if self.productModel != nil {
+                let combination: CombinationModel = self.productModel!.validCombinations[self.selectedIndexpath!.section]
+                cell.selectionStyle = UITableViewCellSelectionStyle.None
+                cell.weightTextField.text = combination.weight
+                cell.lengthTextField.text = combination.length
+                cell.heightTextField.text = combination.height
+                cell.widthTextField.text = combination.width
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell.delegate = self
             return cell
         }
     }
@@ -224,8 +255,10 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
             
             
             return cellHeight
-        } else {
+        } else if indexPath.row == 1 {
             return PUCTVCConstant.footerHeight
+        } else {
+            return 245
         }
     }
     
@@ -244,5 +277,76 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
     deinit {
         self.tableView.delegate = nil
         self.tableView.dataSource = nil
+    }
+    
+    // MARK: - Dimension's Delegate
+    
+    func productUploadDimensionsAndWeightTableViewCell(textFieldDidChange textField: UITextField, text: String, cell: ProductUploadDimensionsAndWeightTableViewCell) {
+        if textField.isEqual(cell.weightTextField) {
+            self.combination.weight = text
+        } else if textField.isEqual(cell.heightTextField) {
+            self.combination.height = text
+        } else if textField.isEqual(cell.lengthTextField) {
+            self.combination.length = text
+        } else if textField.isEqual(cell.widthTextField) {
+            self.combination.width = text
+        }
+    }
+    
+    // MARK: - Footer View
+    func footerView() -> SaveButtonView {
+        let saveButtonView: SaveButtonView = XibHelper.puffViewWithNibName("SaveButtonView", index: 0) as! SaveButtonView
+        saveButtonView.delegate = self
+        return saveButtonView
+    }
+    
+    func saveButtonView(didClickButtonWithView view: SaveButtonView) {
+        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+        
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+            if self.combination.sku == "" {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.skuRequried, title: ProductUploadStrings.incompleteProductDetails)
+            } else if self.combination.length == "" {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.lengthRequried, title: ProductUploadStrings.incompleteProductDetails)
+            } else if self.combination.weight == "" {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.weightRequried, title: ProductUploadStrings.incompleteProductDetails)
+            } else if self.combination.width == "" {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.widthRequried, title: ProductUploadStrings.incompleteProductDetails)
+            } else if self.combination.height == "" {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.heightRequried, title: ProductUploadStrings.incompleteProductDetails)
+            } else {
+                
+                let cell: ProductUploadCombinationFooterTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as! ProductUploadCombinationFooterTableViewCell
+                
+                self.combination.images = cell.uploadedImages()
+                
+                let cell2: ProductUploadCombinationTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! ProductUploadCombinationTableViewCell
+                
+                let combination2: CombinationModel = cell2.data()
+                self.combination.attributes = combination2.attributes
+                
+                if self.productModel == nil {
+                    self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: false, indexPath: NSIndexPath())
+                } else {
+                    self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: true, indexPath: self.selectedIndexpath!)
+                }
+            }
+            
+            self.navigationController?.popViewControllerAnimated(true)
+        }
+    }
+    
+    // MARK: - Product Upload Combination Footer
+    func productUploadCombinationFooterTableViewCell(textFieldDidChange textField: UITextField, text: String, cell: ProductUploadCombinationFooterTableViewCell) {
+        if textField.isEqual(cell.skuTextField) {
+            self.combination.sku = text
+        } else if textField.isEqual(cell.discountedPriceTextField) {
+            self.combination.discountedPrice = text
+        } else if textField.isEqual(cell.quantityTextField) {
+            self.combination.quantity = text
+        } else if textField.isEqual(cell.retailPriceTextField) {
+            self.combination.retailPrice = text
+        }
     }
 }

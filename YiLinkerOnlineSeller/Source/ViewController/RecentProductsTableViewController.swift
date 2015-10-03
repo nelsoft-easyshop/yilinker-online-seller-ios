@@ -18,11 +18,14 @@ class RecentProductsTableViewController: UITableViewController {
     var productPage: Int = 1
     
     var tableData: [TransactionModel] = []
+    
+    var errorLocalizeString: String  = ""
         
     override func viewDidLoad() {
         super.viewDidLoad()
 
         initializeViews()
+        initializeLocalizedString()
         registerNibs()
     }
     
@@ -43,6 +46,11 @@ class RecentProductsTableViewController: UITableViewController {
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
     }
     
+    func initializeLocalizedString() {
+        //Initialized Localized String
+        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+    }
+    
     func registerNibs() {
         var nib = UINib(nibName: recentOrderCellIdentifier, bundle: nil)
         tableView.registerNib(nib, forCellReuseIdentifier: recentOrderCellIdentifier)
@@ -51,14 +59,10 @@ class RecentProductsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
         return tableData.count
     }
 
@@ -67,7 +71,6 @@ class RecentProductsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier(recentOrderCellIdentifier, forIndexPath: indexPath) as! RecentProductsTableViewCell
 
         var temp: TransactionModel = tableData[indexPath.row]
-        cell.setProductImage("")
         cell.setProductName(temp.invoice_number)
         cell.setModeOfPayment(temp.payment_type)
         cell.setPrice(temp.total_price)
@@ -103,7 +106,7 @@ class RecentProductsTableViewController: UITableViewController {
         self.hud = MBProgressHUD(view: self.view)
         self.hud?.removeFromSuperViewOnHide = true
         self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
+        self.navigationController?.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
     
@@ -130,9 +133,8 @@ class RecentProductsTableViewController: UITableViewController {
                     self.tableData += transactionModel.transactions
                     self.tableView.reloadData()
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: transactionModel.message, title: self.errorLocalizeString)
                 }
-                
                 
                 self.hud?.hide(true)
                 
@@ -144,7 +146,7 @@ class RecentProductsTableViewController: UITableViewController {
                     if task.statusCode == 401 {
                         self.fireRefreshToken()
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        UIAlertController.displaySomethingWentWrongError(self)
                     }
                     
                     println(error)
@@ -173,6 +175,7 @@ class RecentProductsTableViewController: UITableViewController {
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                UIAlertController.displaySomethingWentWrongError(self)
                 self.hud?.hide(true)
         })
         

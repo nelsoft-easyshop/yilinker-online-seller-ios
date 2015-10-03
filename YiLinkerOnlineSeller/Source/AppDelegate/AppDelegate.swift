@@ -61,6 +61,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        
+        // Rj
+        
+        let trimEnds: String = deviceToken.description.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "<>"))
+        let cleanToken: String = trimEnds.stringByReplacingOccurrencesOfString(" ", withString: "", options: nil, range: nil)
+        println("Device Token > \(cleanToken)")
+        
+        //        // Register for Push Notitications, if running iOS 8
+        //        if application.respondsToSelector("registerUserNotificationSettings:") {
+        //
+        //            let types:UIUserNotificationType = (.Alert | .Badge | .Sound)
+        //            let settings:UIUserNotificationSettings = UIUserNotificationSettings(forTypes: types, categories: nil)
+        //
+        //            application.registerUserNotificationSettings(settings)
+        //            application.registerForRemoteNotifications()
+        //
+        //        } else {
+        //            // Register for Push Notifications before iOS 8
+        //            application.registerForRemoteNotificationTypes(.Alert | .Badge | .Sound)
+        //        }
+        
         GGLInstanceID.sharedInstance().startWithConfig(GGLInstanceIDConfig.defaultConfig())
         registrationOptions = [kGGLInstanceIDRegisterAPNSOption:deviceToken,
             kGGLInstanceIDAPNSServerTypeSandboxOption:true]
@@ -176,6 +197,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             println("userInfo not a dictionary")
         }
         completionHandler(UIBackgroundFetchResult.NoData);
+        
+        // Rj
+        if application.applicationState == UIApplicationState.Active {
+            UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+            var body: NSDictionary = userInfo["aps"] as! NSDictionary
+            let alertController = UIAlertController(title: "YiLinker", message: body["alert"] as? String, preferredStyle: .Alert)
+            alertController.addAction(UIAlertAction(title: AlertStrings.ok, style: .Default, handler: nil))
+            self.window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+        }
     }
     
     func onTokenRefresh(){
@@ -192,12 +222,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
+//        if !NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
+//            SessionManager.setAccessToken("")
+//        }
+        
         GCMService.sharedInstance().disconnect()
         self.connectedToGCM = false
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+//        if !NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
+//            changeRootToDashboard()
+//        }
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
@@ -215,6 +253,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+//        if !NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
+//            SessionManager.setAccessToken("")
+//        }
     }
 
     func changeRootToDashboard() {

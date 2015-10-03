@@ -3,10 +3,16 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton SemiBold.otf">
+            <string>Panton-SemiBold</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TransactionViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
             <connections>
                 <outlet property="collectionView" destination="TaD-PV-5Kk" id="egJ-bZ-oC6"/>
+                <outlet property="noTransactionLabel" destination="FBf-Do-zJY" id="nML-bP-p6Q"/>
                 <outlet property="tableView" destination="eI1-Ji-O4X" id="gt2-yw-hcF"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -41,6 +47,16 @@
                         <outlet property="delegate" destination="-1" id="iS2-wd-dBJ"/>
                     </connections>
                 </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No trasaction data available." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FBf-Do-zJY">
+                    <rect key="frame" x="78" y="323" width="219" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="219" id="ZUm-gx-CmK"/>
+                        <constraint firstAttribute="height" constant="21" id="z0o-xa-lJg"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="14"/>
+                    <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -49,6 +65,8 @@
                 <constraint firstItem="eI1-Ji-O4X" firstAttribute="top" secondItem="TaD-PV-5Kk" secondAttribute="bottom" id="IlX-ba-xbk"/>
                 <constraint firstAttribute="trailing" secondItem="eI1-Ji-O4X" secondAttribute="trailing" id="KYg-Yx-s5g"/>
                 <constraint firstAttribute="trailing" secondItem="TaD-PV-5Kk" secondAttribute="trailing" id="O4w-6r-nr3"/>
+                <constraint firstAttribute="centerY" secondItem="FBf-Do-zJY" secondAttribute="centerY" id="XkX-7d-jIM"/>
+                <constraint firstAttribute="centerX" secondItem="FBf-Do-zJY" secondAttribute="centerX" id="Z2W-Jv-Fjv"/>
                 <constraint firstAttribute="bottom" secondItem="eI1-Ji-O4X" secondAttribute="bottom" id="v6s-iY-pp6"/>
                 <constraint firstItem="TaD-PV-5Kk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="xQV-xE-p2G"/>
             </constraints>

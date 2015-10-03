@@ -11,27 +11,26 @@ protocol CreateNewBankAccountViewControllerDelegate{
     func updateCollectionView()
     func dismissDimView()
 }
-class CreateNewBankAccountViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FilterByTableViewCellDelegate, UITextFieldDelegate {
+class CreateNewBankAccountViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FilterByTableViewCellDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var closeButton: UIButton!
-    
     @IBOutlet weak var createButton: UIButton!
     
     @IBOutlet weak var accountTitleTextField: UITextField!
-    
     @IBOutlet weak var accountNameTextField: UITextField!
-    
     @IBOutlet weak var accountNumberTextField: UITextField!
-    
     @IBOutlet weak var bankNameTextField: UITextField!
     
     @IBOutlet weak var bankTableView: UITableView!
     
     @IBOutlet weak var bankAccountTitleLabel: UILabel!
-    
     @IBOutlet weak var bankAccountDetailLabel: UILabel!
+    @IBOutlet weak var accountTitleLabel: UILabel!
+    @IBOutlet weak var accountNameLabel: UILabel!
+    @IBOutlet weak var accountNumberLabel: UILabel!
+    @IBOutlet weak var bankNameLabel: UILabel!
     
     var storeInfoModel: StoreInfoModel!
     var bankModel: BankModel!
@@ -53,6 +52,14 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
     var accountNumber: String = ""
     var bankName: String = ""
     
+    let editBankTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_EDIT_LOCALIZE_KEY")
+    let addBankTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_ADD_LOCALIZE_KEY")
+    let account: String = StringHelper.localizedStringWithKey("CHANGE_BANK_ACCOUNT_TITLE_LOCALIZE_KEY")
+    let accountNameTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_ACCOUNT_NAME_LOCALIZE_KEY")
+    let accountNumberTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_ACCOUNT_NUMBER_LOCALIZE_KEY")
+    let bankNameTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_BANK_NAME_LOCALIZE_KEY")
+    let submitTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_SUBMIT_LOCALIZE_KEY")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.bankTableView.hidden = true
@@ -66,17 +73,26 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         self.bankTableView.dataSource = self
         self.bankTableView.separatorInset = UIEdgeInsetsZero
         self.bankTableView.layoutMargins = UIEdgeInsetsZero
+        
+        self.accountTitleLabel.text = self.account
+        self.accountNameLabel.text = self.accountNameTitle
+        self.accountNumberLabel.text = self.accountNumberTitle
+        self.bankNameLabel.text = self.bankNameTitle
+        
+        self.createButton.setTitle(self.submitTitle, forState: UIControlState.Normal)
        
         var storeInfo = UINib(nibName: "FilterByTableViewCell", bundle: nil)
         self.bankTableView.registerNib(storeInfo, forCellReuseIdentifier: "FilterByTableViewCell")
     
+        addPicker()
+        
         self.fireEnabledBanks()
         
         if self.edit {
-            self.bankAccountTitleLabel.text = "Edit Bank Account"
+            self.bankAccountTitleLabel.text = self.editBankTitle
             self.fillBankDetails(accountTitle, accountName: accountName, accountNumber: accountNumber, bankName: bankName, bankAccountId: editBankId)
         } else {
-            self.bankAccountTitleLabel.text = "Create Bank Account"
+            self.bankAccountTitleLabel.text = self.addBankTitle
         }
       
         // Do any additional setup after loading the view.
@@ -93,52 +109,61 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
     }
     
     @IBAction func createBankAcount(sender: AnyObject) {
-        self.showHUD()
         let manager = APIManager.sharedInstance
         var bankId2: Int = 0
         var url: String = ""
-        var accountNumber = self.accountNumberTextField.text
+        var accountNumber: String = self.accountNumberTextField.text
+        
         if edit {
-            bankId2 = self.bankDictionary[self.bankNameTextField.text]!
-            url = APIAtlas.sellerEditBankAccount
-            var parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : accountNumber, "accountName" : self.accountNameTextField.text, "bankId" : NSNumber(integer: bankId2), "bankAccountId" : self.editBankId]
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                println("edited bank account")
-                //self.dismissViewControllerAnimated(true, completion: nil)
-                
-                self.hud?.hide(true)
-                self.delegate?.updateCollectionView()
-                self.dismissViewControllerAnimated(true, completion: nil)
-                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+            if !self.bankNameTextField.text.isEmpty && !self.accountNameTextField.text.isEmpty && !self.accountTitleTextField.text.isEmpty && !self.accountNumberTextField.text.isEmpty{
+                self.showHUD()
+                bankId2 = self.bankDictionary[self.bankNameTextField.text]!
+                url = APIAtlas.sellerEditBankAccount
+                var parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : accountNumber, "accountName" : self.accountNameTextField.text, "bankId" : NSNumber(integer: bankId2), "bankAccountId" : self.editBankId]
+                manager.POST(url, parameters: parameters, success: {
+                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                    println("edited bank account")
+                    //self.dismissViewControllerAnimated(true, completion: nil)
                     
-                    self.dismissViewControllerAnimated(true, completion: nil)
                     self.hud?.hide(true)
-                    println(error)
-            })
+                    self.delegate?.updateCollectionView()
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.delegate?.dismissDimView()
+                    }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                        
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                        self.hud?.hide(true)
+                        println(error)
+                })
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "All fields are required.", title: "Error")
+            }
         } else {
-            bankId2 = self.bankId
-            url = APIAtlas.sellerAddBankAccount
-            var parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : accountNumber, "accountName" : self.accountNameTextField.text, "bankId" : NSNumber(integer: bankId2)]
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                println("created bank account")
-                //self.dismissViewControllerAnimated(true, completion: nil)
-                
-                self.hud?.hide(true)
-                self.delegate?.updateCollectionView()
-                self.dismissViewControllerAnimated(true, completion: nil)
-                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+            if !self.bankNameTextField.text.isEmpty && !self.accountNameTextField.text.isEmpty && !self.accountTitleTextField.text.isEmpty && !self.accountNumberTextField.text.isEmpty{
+                self.showHUD()
+                bankId2 = self.bankId
+                url = APIAtlas.sellerAddBankAccount
+                var parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "accountTitle" : self.accountTitleTextField.text, "accountNumber" : accountNumber, "accountName" : self.accountNameTextField.text, "bankId" : NSNumber(integer: bankId2)]
+                manager.POST(url, parameters: parameters, success: {
+                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                    println("created bank account")
+                    //self.dismissViewControllerAnimated(true, completion: nil)
                     
-                    self.dismissViewControllerAnimated(true, completion: nil)
                     self.hud?.hide(true)
-                    println(error)
-            })
+                    self.delegate?.updateCollectionView()
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.delegate?.dismissDimView()
+                    }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                        
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                        self.hud?.hide(true)
+                        println(error)
+                })
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "All fields are required.", title: "Error")
+            }
         }
-        
-        self.delegate?.dismissDimView()
-        
-        
+   
     }
     
     func showHUD() {
@@ -229,7 +254,7 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
                 println(error)
         })
     }
-    
+    /*
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         var passcode = (self.bankNameTextField.text as NSString).stringByReplacingCharactersInRange(range, withString: string)
 
@@ -249,6 +274,49 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
     
     func textFieldDidEndEditing(textField: UITextField) {
         self.bankTableView.hidden = true
+    }
+    */
+    // MARK : UIPickerViewDelegate
+    func addPicker() {
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        let pickerView: UIPickerView = UIPickerView(frame:CGRectMake(0, 0, screenSize.width, 225))
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        self.bankNameTextField.inputView = pickerView
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        
+        return self.bankModel.bankName.count
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+        
+        return self.bankModel.bankName[row]
+    }
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        bankNameTextField.text = self.bankModel.bankName[row]
+        bankId = self.bankModel.bankId[row]
+    }
+    
+    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView!) -> UIView
+    {
+        var pickerLabel = UILabel()
+        pickerLabel.textColor = UIColor.blackColor()
+        pickerLabel.text = self.bankModel.bankName[row]
+        pickerLabel.numberOfLines = 0
+        pickerLabel.font = UIFont(name: "Panton-Regular", size: 12)
+        pickerLabel.textAlignment = NSTextAlignment.Center
+        return pickerLabel
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        return true
     }
     
     func fillBankDetails(accountTitle: String, accountName: String,  accountNumber: String, bankName: String, bankAccountId: Int){

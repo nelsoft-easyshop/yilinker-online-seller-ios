@@ -23,11 +23,14 @@ class TransactionCancelOrderViewController: UIViewController {
     @IBOutlet weak var closeView: UIView!
     @IBOutlet weak var yesButton: UIButton!
     @IBOutlet weak var noButton: UIButton!
+    @IBOutlet weak var oopsLabel: UILabel!
+    @IBOutlet weak var areYouSureLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         initializeViews()
+        initializeLocalizedStrings()
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,6 +43,13 @@ class TransactionCancelOrderViewController: UIViewController {
         closeView.layer.cornerRadius = closeView.frame.height / 2
         yesButton.layer.cornerRadius = 5
         noButton.layer.cornerRadius = 5
+    }
+    
+    func initializeLocalizedStrings() {
+        oopsLabel.text  = StringHelper.localizedStringWithKey("TRANSACTION_MODAL_OOPS_LOCALIZE_KEY")
+        areYouSureLabel.text  = StringHelper.localizedStringWithKey("TRANSACTION_MODAL_ARE_YOU_SURE_CANCEL_LOCALIZE_KEY")
+        yesButton.setTitle(StringHelper.localizedStringWithKey("YES_LOCALIZE_KEY"), forState: UIControlState.Normal)
+        noButton.setTitle(StringHelper.localizedStringWithKey("NO_LOCALIZE_KEY"), forState: UIControlState.Normal)
     }
     
     @IBAction func buttonAction(sender: AnyObject) {

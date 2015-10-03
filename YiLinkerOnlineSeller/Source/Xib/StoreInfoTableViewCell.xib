@@ -69,7 +69,6 @@
                         <rect key="frame" x="8" y="246" width="68" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="8yG-ZY-Mx5"/>
-                            <constraint firstAttribute="width" constant="68" id="BZZ-Iv-1GV"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -78,7 +77,6 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mobile Phone" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YzL-6c-4jT">
                         <rect key="frame" x="8" y="431" width="77" height="16"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="77" id="RZd-2x-wbf"/>
                             <constraint firstAttribute="height" constant="16" id="ehN-Ty-hg8"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
@@ -93,24 +91,6 @@
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
                         <color key="textColor" red="1" green="0.2160583505" blue="0.20584909009999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your desired store name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EOO-H0-sgx">
-                        <rect key="frame" x="8" y="267" width="359" height="30"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="30" id="Bix-Hp-M3S"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
-                        <textInputTraits key="textInputTraits" returnKeyType="next"/>
-                    </textField>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Store Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZC7-7t-JPU">
-                        <rect key="frame" x="8" y="310" width="99" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="PQj-yg-RtM"/>
-                            <constraint firstAttribute="width" constant="99" id="Ze7-V3-HMk"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X2p-zv-8b7">
@@ -286,6 +266,23 @@
                             <action selector="callVerification:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="XXB-fN-i25"/>
                         </connections>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Store Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZC7-7t-JPU">
+                        <rect key="frame" x="8" y="310" width="99" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="PQj-yg-RtM"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your desired store name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EOO-H0-sgx">
+                        <rect key="frame" x="8" y="267" width="359" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="Bix-Hp-M3S"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
+                    </textField>
                 </subviews>
                 <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
@@ -330,15 +327,19 @@
                 <outlet property="coverPhotoImageView" destination="NfW-oq-T4e" id="JJ9-Ca-7J5"/>
                 <outlet property="coverPhotoUploadView" destination="2aH-Ud-5Hm" id="1yZ-f6-Iae"/>
                 <outlet property="coverPhotoView" destination="Pgz-Rm-cfh" id="kDO-Kr-r5c"/>
+                <outlet property="mobilePhoneLabel" destination="YzL-6c-4jT" id="Gjw-E0-lzM"/>
                 <outlet property="mobilePhoneTextField" destination="NSj-Ax-OOU" id="xQC-jy-gqP"/>
                 <outlet property="profileCoverPhotoUploadView" destination="bEn-jb-g2x" id="Z4w-Ye-QDW"/>
                 <outlet property="profileEditImageView" destination="k7O-nf-Elj" id="hkd-Ym-bpV"/>
                 <outlet property="profileEditLabel" destination="ndF-Ji-Zf3" id="hed-hj-r35"/>
                 <outlet property="profilePhotoView" destination="Y4y-e8-3DA" id="vl3-8E-tag"/>
                 <outlet property="profilePictureImageView" destination="CR1-8h-W6D" id="7mb-D7-2BQ"/>
+                <outlet property="storeDescriptionLabel" destination="ZC7-7t-JPU" id="kMy-gi-0dc"/>
                 <outlet property="storeDescriptionTextView" destination="eMS-mt-zX4" id="4LX-PA-jWu"/>
+                <outlet property="storeInfoLabel" destination="yBT-Xd-kFE" id="vXo-6h-tSr"/>
+                <outlet property="storeNameLabel" destination="UZP-mB-RkQ" id="kcF-y8-hnl"/>
                 <outlet property="storeNameTextField" destination="EOO-H0-sgx" id="mCF-bp-hVm"/>
-                <outlet property="verifyButton" destination="etO-Rh-HGV" id="mQ7-sj-06K"/>
+                <outlet property="verifyButton" destination="etO-Rh-HGV" id="g2P-Tf-ayw"/>
             </connections>
             <point key="canvasLocation" x="293.5" y="380"/>
         </tableViewCell>

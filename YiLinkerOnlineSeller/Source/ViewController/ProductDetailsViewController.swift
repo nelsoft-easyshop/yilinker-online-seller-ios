@@ -10,9 +10,12 @@ import UIKit
 
 struct myConstant {
     static let cellIdentifier = "ProductDetailsIdentifier"
+    static let title = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_TITLE_LOCALIZE_KEY")
+    static let description = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_DESCRIPTION_LOCALIZE_KEY")
+    static let seeMore = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_SEEMORE_LOCALIZE_KEY")
 }
 
-class ProductDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProductDescriptionViewDelegate {
+class ProductDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProductDescriptionViewDelegate, EmptyViewDelegate {
 
     // MARK: - Models
     var productDetailsModel: ProductDetailsModel!
@@ -20,7 +23,8 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     var productUnitsModel: [ProductUnitsModel]!
     var productImagesModel: [ProductImagesModel]!
     // Upload Models
-    var productUploadModel: ProductModel!
+    var productModel: ProductModel!
+    var imagesToEdit: [UIImage] = []
     var uploadAttributeModel: [AttributeModel] = []
     var uploadCombinationModel: [CombinationModel] = []
     
@@ -30,10 +34,30 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     var productImagesView: ProductImagesView!
     var productDescriptionView: ProductDescriptionView!
     var hud: MBProgressHUD?
+    var emptyView: EmptyView?
     
     var newFrame: CGRect!
     
     var productId: String = "1"
+    
+    let detailNames = ["Category", "Brand"]
+    let priceNames = ["Retail Price", "Discounted Price"]
+    let dimensionWeightNames = ["Length (CM)", "Width (CM)", "Weight (KG)", "Height (CM)"]
+    
+    var detailValues: [String] = []
+    var priceValues: [String] = []
+    var dimensionWeightValues: [String] = []
+    
+    var listNames: [String] = []
+    var listValues: [String] = []
+    
+    var listDetails: NSDictionary = [:]
+    var listPrice: NSDictionary = [:]
+    var listDimensionsWeight: NSDictionary = [:]
+    var listSections: [NSArray] = []
+    var listSectionTitle = ["Detail", "Price", "Dimensions & Weight"]
+    var names: [String] = []
+    var values: [String] = []
     
     // MARK: - View Life Cycle
     
@@ -41,7 +65,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        requestProductDetails()
+        
         customizeNavigationBar()
         
         let nib = UINib(nibName: "ProductDetailsTableViewCell", bundle: nil)
@@ -50,6 +74,11 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        if Reachability.isConnectedToNetwork() {
+            requestProductDetails()
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
+        }
         loadloadViewsWithDetails()
     }
     
@@ -76,6 +105,8 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
             self.productDescriptionView = XibHelper.puffViewWithNibName("ProductDetailViews", index: 1) as! ProductDescriptionView
             self.productDescriptionView.frame.size.width = self.view.frame.size.width
             self.productDescriptionView.delegate = self
+            self.productDescriptionView.titleLabel.text = myConstant.title
+            self.productDescriptionView.seeMoreLabel.text = myConstant.seeMore
         }
         return self.productDescriptionView
     }
@@ -85,7 +116,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     func customizeNavigationBar() {
         
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.title = "Product Details"
+        self.title = myConstant.title
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
         var backButton = UIBarButtonItem(image: UIImage(named: "back-white"), style: .Plain, target: self, action: "backAction")
@@ -120,12 +151,12 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         view.frame = newFrame
     }
     
-    func sectionHeaderView() -> UIView {
+    func sectionHeaderView(index: Int) -> UIView {
         var sectionView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 45.0))
         sectionView.backgroundColor = UIColor.whiteColor()
         
         var titleLabel = UILabel(frame: CGRectMake(10.0, 0, self.view.frame.size.width - 10.0, sectionView.frame.size.height))
-        titleLabel.text = "Title"
+        titleLabel.text = self.listSectionTitle[index]
         titleLabel.font = UIFont(name: "Panton-SemoBold", size: 17.0)
         titleLabel.textColor = UIColor.darkGrayColor()
         sectionView.addSubview(titleLabel)
@@ -159,28 +190,34 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     func populateDetails() {
         
-        self.productImagesView.setDetails(productDetailsModel, images: productImagesModel)
-        self.productDescriptionView.descriptionLabel.text = productDetailsModel.shortDescription
+        self.productImagesView.setDetails(productModel)
+        self.productDescriptionView.descriptionLabel.text = productModel.completeDescription
         
-//        self.productUploadModel.attributes        = uploadAttributeModel
-//        self.productUploadModel.validCombinations = uploadCombinationModel
-//        self.productUploadModel.images            = [UIImage]()
+        let def: CombinationModel = productModel.validCombinations[0]
+        self.detailValues = [productModel.category.name, productModel.brand.name]
+//        self.detailValues.append(productModel.category.name)
+//        self.detailValues.append(productModel.brand.name)
         
-//        self.productUploadModel.category  = CategoryModel(uid: 0, name: "", hasChildren: "")
-//        self.productUploadModel.brand     = BrandModel(name: "", brandId: 1)
-//        self.productUploadModel.condition = ConditionModel(uid: 0, name: "")
-//        self.productUploadModel.quantity  = 0
+        self.priceValues = [def.retailPrice, def.discountedPrice]
+//        self.priceValues.append(def.retailPrice)
+//        self.priceValues.append(def.discountedPrice)
         
-//        self.productUploadModel.name                = ""
-//        self.productUploadModel.shortDescription    = ""
-//        self.productUploadModel.completeDescription = ""
-//        self.productUploadModel.sku                 = ""
-//        self.productUploadModel.retailPrice         = ""
-//        self.productUploadModel.discoutedPrice      = ""
-//        self.productUploadModel.width               = ""
-//        self.productUploadModel.height              = ""
-//        self.productUploadModel.length              = ""
-//        self.productUploadModel.weigth              = ""
+        self.dimensionWeightValues = [def.length, def.width, def.weight, def.height]
+//        self.dimensionWeightValues.append(def.length)
+//        self.dimensionWeightValues.append(def.width)
+//        self.dimensionWeightValues.append(def.weight)
+//        self.dimensionWeightValues.append(def.height)
+        
+        self.listNames = ["Category", "Brand", "Retail Price", "Discounted Price", "Length (CM)", "Width (CM)", "Weight (KG)", "Height (CM)"]
+        self.listValues = [productModel.category.name, productModel.brand.name, "P " + def.retailPrice, "P " + def.discountedPrice,
+            def.length + "cm", def.width + "cm", def.weight + "kg", def.height + "cm"]
+        
+//        self.listDetails = ["Category": productModel.category.name, "Brand": productModel.brand.name]
+//        self.listPrice = ["Retail Price": def.retailPrice, "Discounted Price": def.discountedPrice]
+//        self.listDimensionsWeight = ["Length (CM)": def.length, "Width (CM)": def.width, "Weight (KG)": def.weight, "Height (CM)": def.height]
+        self.listSections = [detailValues, priceValues, dimensionWeightValues]
+        
+        self.tableView.reloadData()
     }
     
     func localJson() {
@@ -208,6 +245,13 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
+    func addEmptyView() {
+        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+        self.emptyView!.delegate = self
+        self.emptyView!.frame = self.view.bounds
+        self.view.addSubview(self.emptyView!)
+    }
+    
     // MARK: - Request
     
     func requestProductDetails() {
@@ -217,13 +261,15 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         let manager = APIManager.sharedInstance
         manager.GET(APIAtlas.getProductDetails + id, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+            println(responseObject)
             if responseObject["isSuccessful"] as! Bool {
-                self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
-                self.productAttributesModel = self.productDetailsModel.attributes
-                self.productUnitsModel = self.productDetailsModel.productUnits
-                self.productImagesModel = self.productDetailsModel.images
+                self.productModel = ProductModel.parseDataWithDictionary(responseObject)
                 
+//                self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
+//                self.productAttributesModel = self.productDetailsModel.attributes
+//                self.productUnitsModel = self.productDetailsModel.productUnits
+//                self.productImagesModel = self.productDetailsModel.images
+//                
                 self.populateDetails()
             } else {
                 self.showAlert(title: "Error", message: responseObject["message"] as! String)
@@ -244,11 +290,48 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func editAction() {
-        let upload = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
-//        upload.productModel = productUploadModel
-        self.navigationController?.pushViewController(upload, animated: true)
+        self.showHUD()
+        if self.productModel.imageUrls.count != self.productModel.images.count {
+            self.productModel.images = []
+            for i in 0..<self.productModel.imageUrls.count {
+                var imgURL: NSURL = NSURL(string: self.productModel.imageUrls[i])!
+                let request: NSURLRequest = NSURLRequest(URL: imgURL)
+                NSURLConnection.sendAsynchronousRequest(
+                    request, queue: NSOperationQueue.mainQueue(),
+                    completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
+                        if error == nil {
+                            self.productModel.images.append(UIImage(data: data)!)
+                            if self.productModel.images.count == self.productModel.imageUrls.count {
+                                self.hud?.hide(true)
+                                let upload = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
+                                upload.uploadType = UploadType.EditProduct
+                                upload.productModel = self.productModel
+                                let navigationController: UINavigationController = UINavigationController(rootViewController: upload)
+                                navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+                                self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
+                            }
+                        }
+                })
+            }
+        } else {
+            let upload = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
+            upload.uploadType = UploadType.EditProduct
+            upload.productModel = self.productModel
+            let navigationController: UINavigationController = UINavigationController(rootViewController: upload)
+            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+            self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
+        }
     }
 
+    func didTapReload() {
+        if Reachability.isConnectedToNetwork() {
+            requestProductDetails()
+        } else {
+            addEmptyView()
+        }
+        self.emptyView?.removeFromSuperview()
+    }
+    
     // MARK: - Table View Data Source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -256,13 +339,18 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        if self.listSections.count != 0 {
+            return self.listSections[section].count
+        }
+        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: ProductDetailsTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(myConstant.cellIdentifier) as! ProductDetailsTableViewCell
-        
         cell.selectionStyle = .None
+        
+        cell.itemNameLabel.text = self.listNames[indexPath.row + (indexPath.section * 2)]
+        cell.itemValueLabel.text = self.listValues[indexPath.row + (indexPath.section * 2)]
         
         return cell
     }
@@ -270,7 +358,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     // MARK: - Table View Delegate
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return sectionHeaderView()
+        return sectionHeaderView(section)
     }
     
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -284,14 +372,14 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     func gotoDescriptionViewController(view: ProductDescriptionView) {
         let productDescription = ProductDescriptionViewController(nibName: "ProductDescriptionViewController", bundle: nil)
-        productDescription.fullDescription = self.productDetailsModel.fullDescription
+        productDescription.fullDescription = self.productModel.completeDescription
         self.navigationController?.presentViewController(productDescription, animated: true, completion: nil)
     }
     
     // Dealloc
     
-    deinit {
-        self.tableView.delegate = nil
-        self.tableView.dataSource = nil
-    }
+//    deinit {
+//        self.tableView.delegate = nil
+//        self.tableView.dataSource = nil
+//    }
 }

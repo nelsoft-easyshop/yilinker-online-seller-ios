@@ -12,6 +12,8 @@ protocol ProductUploadCombinationFooterTableViewCellDelegate {
     func productUploadCombinationFooterTableViewCell(didClickDoneButton cell: ProductUploadCombinationFooterTableViewCell, sku: String, quantity: String, discountedPrice: String, retailPrice: String, uploadImages: [UIImage])
     func productUploadCombinationFooterTableViewCell(didClickUploadImage cell: ProductUploadCombinationFooterTableViewCell)
     func productUploadCombinationFooterTableViewCell(didDeleteUploadImage cell: ProductUploadCombinationFooterTableViewCell, indexPath: NSIndexPath)
+    
+    func productUploadCombinationFooterTableViewCell(textFieldDidChange textField: UITextField, text: String, cell: ProductUploadCombinationFooterTableViewCell)
 }
 
 class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, ProductUploadImageCollectionViewCellDelegate, UITextFieldDelegate {
@@ -26,14 +28,43 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
     @IBOutlet weak var quantityTextField: UITextField!
     @IBOutlet weak var skuTextField: UITextField!
 
+    @IBOutlet weak var retailPriceLabel: UILabel!
+    @IBOutlet weak var discountedPriceLabel: UILabel!
+    @IBOutlet weak var quantityLabel: UILabel!
+    @IBOutlet weak var skuLabel: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.registerCell()
         
         self.retailPriceTextField.delegate = self
+        self.retailPriceTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         self.discountedPriceTextField.delegate = self
+        self.discountedPriceTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         self.quantityTextField.delegate = self
+        self.quantityTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         self.skuTextField.delegate = self
+        self.skuTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        
+        self.skuLabel.required()
+        self.retailPriceLabel.required()
+        self.quantityLabel.required()
+        
+        self.retailPriceLabel.text = ProductUploadStrings.retailPrice
+        self.discountedPriceLabel.text = ProductUploadStrings.discountedPrice
+        self.quantityLabel.text = ProductUploadStrings.quantity
+        self.skuLabel.text = ProductUploadStrings.sku
+    }
+    
+    func textFieldDidChange(sender: UITextField) {
+        self.delegate!.productUploadCombinationFooterTableViewCell(textFieldDidChange: sender, text: sender.text, cell: self)
+    }
+    
+    // MARK: - Images
+    func uploadedImages() -> [UIImage] {
+        self.images.removeLast()
+        return self.images
     }
     
     @IBAction func save(sender: AnyObject) {
@@ -42,13 +73,15 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
         //}
         
         if self.retailPriceTextField.text == "" {
-            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Please insert Retail Price.", title: "Incomplete Product Details")
+            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: ProductUploadStrings.retailPriceRequired, title: ProductUploadStrings.incompleteProductDetails)
         } else if self.quantityTextField.text == "" {
-            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Please insert quantity.", title: "Incomplete Product Details")
+            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: ProductUploadStrings.quantityRequired, title: ProductUploadStrings.incompleteProductDetails)
         } else if (self.retailPriceTextField.text as NSString).doubleValue < (self.discountedPriceTextField.text as NSString).doubleValue {
-            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Retail price must be greater than discount price.", title: "Incomplete Product Details")
+            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: ProductUploadStrings.retailMustBeGreater, title: ProductUploadStrings.incompleteProductDetails)
         } else if(quantityTextField.text as NSString).doubleValue == 0 {
-            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: "Please insert quanity.", title: "Incomplete Product Details")
+            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: ProductUploadStrings.quantityRequired, title: ProductUploadStrings.incompleteProductDetails)
+        } else if self.skuTextField.text == "" {
+            UIAlertController.displayErrorMessageWithTarget(viewController!, errorMessage: ProductUploadStrings.skuRequried, title: ProductUploadStrings.incompleteProductDetails)
         } else {
             if self.viewController != nil {
                 viewController!.view.endEditing(true)

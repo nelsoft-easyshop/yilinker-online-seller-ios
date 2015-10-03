@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -22,9 +22,12 @@
             <connections>
                 <outlet property="closeButton" destination="HnZ-9g-0ZR" id="XeT-0S-C1X"/>
                 <outlet property="mainView" destination="v0t-41-zGQ" id="raP-9O-VKh"/>
+                <outlet property="reasonLabel" destination="rqS-vd-Uyf" id="XtN-du-mQ0"/>
                 <outlet property="reasonTextField" destination="cNt-Lh-Jqb" id="5ei-JS-uHc"/>
+                <outlet property="remarksLabel" destination="WWa-gp-iI0" id="hQX-G5-bd0"/>
                 <outlet property="remarksTextView" destination="QMa-bM-LRr" id="LrI-h5-iGN"/>
                 <outlet property="submitButton" destination="Vvc-RB-blf" id="YJi-O3-Wgi"/>
+                <outlet property="titleLabel" destination="k3a-HX-OOc" id="26M-aL-MFn"/>
                 <outlet property="topConstraint" destination="zXF-9C-gbe" id="vFN-EX-Hp0"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -53,15 +56,6 @@
                                         <action selector="buttonAction:" destination="-1" eventType="touchUpInside" id="YwP-4X-spS"/>
                                     </connections>
                                 </button>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reason of Cancellation" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k3a-HX-OOc">
-                                    <rect key="frame" x="39" y="9" width="265" height="21"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="21" id="k83-lX-Irm"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
-                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                                 <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0D5-Af-XkR" userLabel="Close">
                                     <rect key="frame" x="312" y="16" width="15" height="14"/>
                                     <constraints>
@@ -72,6 +66,15 @@
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                 </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reason of Cancellation" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k3a-HX-OOc">
+                                    <rect key="frame" x="39" y="9" width="265" height="21"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="21" id="k83-lX-Irm"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
+                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
