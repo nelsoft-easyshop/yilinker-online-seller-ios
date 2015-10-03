@@ -207,8 +207,11 @@ class SessionManager {
     }
     
     class func isReseller() -> Bool {
-        let isReseller: Bool = NSUserDefaults.standardUserDefaults().objectForKey("isReseller") as! Bool
-        return isReseller
+        if let isReseller: Bool = NSUserDefaults.standardUserDefaults().objectForKey("isReseller") as? Bool {
+            return isReseller
+        } else {
+            return false
+        }
     }
     
     class func isEmailSubscribed() -> Bool {
