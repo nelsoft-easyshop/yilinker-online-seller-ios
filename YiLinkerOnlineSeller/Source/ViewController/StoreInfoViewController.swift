@@ -521,10 +521,17 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
+                println(error.description)
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 404 {
+                if task.statusCode == 404 || task.statusCode == 400 || task.statusCode == 401{
                     let data = error.userInfo as! Dictionary<String, AnyObject>
-                    self.showAlert("Error", message: data["message"] as! String)
+                    var message = data["data"] as! NSArray
+                    if message.count != 0 {
+                        self.showAlert("Error", message: message[0] as! String)
+                    } else {
+                        self.showAlert("Error", message: data["message"] as! String)
+                    }
+                    
                 } else {
                     self.showAlert("Error", message: self.somethingWentWrong)
                 }

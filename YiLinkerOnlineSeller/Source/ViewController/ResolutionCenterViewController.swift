@@ -13,6 +13,16 @@ class ResolutionCenterViewController
     @IBOutlet weak var casesTab: UIButton!
     @IBOutlet weak var openTab: UIButton!
     @IBOutlet weak var closedTab: UIButton!
+    @IBOutlet weak var casesLabel: UILabel!
+    @IBOutlet weak var openLabel: UILabel!
+    @IBOutlet weak var closedLabel: UILabel!
+    @IBOutlet weak var caseImageView: UIImageView!
+    @IBOutlet weak var openImageView: UIImageView!
+    @IBOutlet weak var closedImageView: UIImageView!
+    
+    @IBOutlet weak var closedView: UIView!
+    @IBOutlet weak var openVIew: UIView!
+    @IBOutlet weak var casesView: UIView!
     var tabSelector = ButtonToTabBehaviorizer()
     @IBOutlet weak var disputeButton: UIButton!
     var dimView: UIView? = nil
@@ -39,10 +49,29 @@ class ResolutionCenterViewController
     //    fireGetCases()
     //}
 
+    //Localize strings
+    let caseTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_CASES_LOCALIZE_KEY")
+    let openTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_OPEN_LOCALIZE_KEY")
+    let closedTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_CLOSED_LOCALIZE_KEY")
+    let resolutionTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_TITLE_LOCALIZE_KEY")
+    let fileDisputeTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_FILE_LOCALIZE_KEY")
+    let resTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_TITLE_LOCALIZE_KEY")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Set localized string to buttons
+        //casesTab.setTitle(caseTitle, forState: UIControlState.Normal)
+        casesLabel.text = caseTitle
+        openLabel.text = openTitle
+        closedLabel.text = closedTitle
+        
+        //openTab.setTitle(openTitle, forState: UIControlState.Normal)
+        //closedTab.setTitle(closedTitle, forState: UIControlState.Normal)
+        disputeButton.setTitle(fileDisputeTitle, forState: UIControlState.Normal)
+        
         // Initialize tab-behavior for buttons
-        tabSelector.viewDidLoadInitialize(casesTab, second: openTab, third: closedTab)
+        //tabSelector.viewDidLoadInitialize(casesTab, second: openTab, third: closedTab)
+        self.title = resTitle
         
         // UITableViewDataSource initialization
         resolutionTableView.dataSource = self
@@ -57,6 +86,16 @@ class ResolutionCenterViewController
         
         // Dispute button
         disputeButton.addTarget(self, action:"disputePressed", forControlEvents:.TouchUpInside)
+        
+        caseImageView.image = UIImage(named: "cases2-b")
+        closedImageView.image = UIImage(named: "close4-a")
+        openImageView.image = UIImage(named: "open2-a")
+        casesView.backgroundColor = UIColor.whiteColor()
+        closedView.backgroundColor = Constants.Colors.appTheme
+        openVIew.backgroundColor = Constants.Colors.appTheme
+        casesLabel.textColor = Constants.Colors.appTheme
+        closedLabel.textColor = UIColor.whiteColor()
+        openLabel.textColor = UIColor.whiteColor()
         
         // Initial data load
         fireGetCases()
@@ -111,28 +150,56 @@ class ResolutionCenterViewController
     
     // MARK: Tab Selection Logic
     @IBAction func casesPressed(sender: AnyObject) {
-        if self.tabSelector.didSelectTheSameTab(sender) {
-            return
-        }
-        self.tabSelector.setSelection(.TabOne)
+        //if self.tabSelector.didSelectTheSameTab(sender) {
+        //    return
+       // }
+        //self.tabSelector.setSelection(.TabOne)
+        caseImageView.image = UIImage(named: "cases2-b")
+        closedImageView.image = UIImage(named: "close4-a")
+        openImageView.image = UIImage(named: "open2-a")
+        casesView.backgroundColor = UIColor.whiteColor()
+        closedView.backgroundColor = Constants.Colors.appTheme
+        openVIew.backgroundColor = Constants.Colors.appTheme
+        casesLabel.textColor = Constants.Colors.appTheme
+        closedLabel.textColor = UIColor.whiteColor()
+        openLabel.textColor = UIColor.whiteColor()
+        
         self.currentSelectedFilter.status = .Both
         fireGetCases()
     }
 
     @IBAction func openPressed(sender: AnyObject) {
-        if self.tabSelector.didSelectTheSameTab(sender) {
-            return
-        }
-        self.tabSelector.setSelection(.TabTwo)
+       // if self.tabSelector.didSelectTheSameTab(sender) {
+        //    return
+        //}
+        //self.tabSelector.setSelection(.TabTwo)
+        caseImageView.image = UIImage(named: "cases2-a")
+        closedImageView.image = UIImage(named: "close4-a")
+        openImageView.image = UIImage(named: "open2-b")
+        casesView.backgroundColor = Constants.Colors.appTheme
+        closedView.backgroundColor = Constants.Colors.appTheme
+        openVIew.backgroundColor = UIColor.whiteColor()
+        casesLabel.textColor = UIColor.whiteColor()
+        closedLabel.textColor = UIColor.whiteColor()
+        openLabel.textColor = Constants.Colors.appTheme
         self.currentSelectedFilter.status = .Open
         fireGetCases()
     }
     
     @IBAction func closedPressed(sender: AnyObject) {
-        if self.tabSelector.didSelectTheSameTab(sender) {
-            return
-        }
-        self.tabSelector.setSelection(.TabThree)
+        //if self.tabSelector.didSelectTheSameTab(sender) {
+        //    return
+        //}
+        //self.tabSelector.setSelection(.TabThree)
+        caseImageView.image = UIImage(named: "cases2-a")
+        closedImageView.image = UIImage(named: "close4-b")
+        openImageView.image = UIImage(named: "open2-a")
+        casesView.backgroundColor = Constants.Colors.appTheme
+        closedView.backgroundColor = UIColor.whiteColor()
+        openVIew.backgroundColor = Constants.Colors.appTheme
+        casesLabel.textColor = UIColor.whiteColor()
+        closedLabel.textColor = Constants.Colors.appTheme
+        openLabel.textColor = UIColor.whiteColor()
         self.currentSelectedFilter.status = .Closed
         fireGetCases()
     }

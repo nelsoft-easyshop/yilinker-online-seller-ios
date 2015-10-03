@@ -68,25 +68,25 @@ class ButtonToTabBehaviorizer  {
         switch selection {
         case .TabOne:
             selectedButtonTab = self.tabOne!
-            selectedButtonImage = "tab0-cases-p"
+            //selectedButtonImage = "tab0-cases-p"
         case .TabTwo:
             selectedButtonTab = self.tabTwo!
-            selectedButtonImage = "tab1-open-p"
+            //selectedButtonImage = "tab1-open-p"
         case .TabThree:
             selectedButtonTab = self.tabTre!
-            selectedButtonImage = "tab2-close-p"
+            //selectedButtonImage = "tab2-close-p"
         default:
             ()
         }
         
-        self.setSelectedButtonColor( selectedButtonTab )
-        self.deselectAllTabs()
-        self.setSelectedTabImage( selectedButtonImage )
+        //self.setSelectedButtonColor( selectedButtonTab )
+        //self.deselectAllTabs()
+        //self.setSelectedTabImage( selectedButtonImage )
     }
     
     private func setSelectedButtonColor(sender: UIButton!) {
         sender.backgroundColor = self.selectedColor
-        self.selectedTab.backgroundColor = self.unselectedColor
+        //self.selectedTab.backgroundColor = self.unselectedColor
         self.selectedTab = sender
     }
     

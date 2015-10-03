@@ -157,7 +157,6 @@ class ResolutionFilterViewController: UITableViewController {
         
         // White title text
         self.navigationController!.navigationBar.barStyle = UIBarStyle.Black
-        
         cancel.tintColor = UIColor.whiteColor()
         cancel.target = self
         cancel.action = "cancelPressed"
@@ -296,6 +295,44 @@ class ResolutionFilterViewController: UITableViewController {
         self.delegate!.currentSelectedFilter.status = self.statusFilter
         self.dismissViewControllerAnimated(true, completion: nil)
         self.delegate!.applyFilter()
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let headerView: FilterSeactionHeaderView = XibHelper.puffViewWithNibName("AddProductHeaderView", index: 1) as! FilterSeactionHeaderView
+        
+        if section == 0 {
+           headerView.sectionLabel.text = FilterStrings.dates
+           
+        } else {
+            headerView.sectionLabel.text = FilterStrings.status
+        }
+        
+        return headerView
+
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 38
+    }
+    
+    func setSectionHeader(date: String) -> UIView {
+        var sectionHeaderView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, self.tableView.sectionHeaderHeight))
+        
+        var dateLabel: UILabel = UILabel(frame: CGRectMake(0, 0, sectionHeaderView.frame.size.width, 20))
+        dateLabel.textAlignment = .Center
+        dateLabel.font = UIFont.systemFontOfSize(12.0)
+        dateLabel.textColor = .grayColor()
+        dateLabel.text = "  " + date + "  "
+        dateLabel.sizeToFit()
+        dateLabel.backgroundColor = UIColor(red: 225/255.0, green: 225/255.0, blue: 225/255.0, alpha: 1.0)
+        dateLabel.frame.size.width = dateLabel.frame.size.width + 10
+        dateLabel.center.x = sectionHeaderView.center.x
+        dateLabel.center.y = sectionHeaderView.center.y 
+        
+        sectionHeaderView.addSubview(dateLabel)
+        
+        return sectionHeaderView
     }
     
 }
