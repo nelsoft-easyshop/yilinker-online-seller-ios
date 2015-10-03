@@ -108,7 +108,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             if indexPath.row == 0 {
                 
                 cell.rowTextField.text = self.addressModel.title
-                
+                cell.rowTitleLabel.required()
             } else if indexPath.row == 1 {
                 
                 cell.rowTextField.text = self.addressModel.unitNumber
@@ -120,7 +120,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             } else if indexPath.row == 3 {
                 
                 cell.rowTextField.text = self.addressModel.streetNumber
-                cell.rowTitleLabel.required()
+                //cell.rowTitleLabel.required()
             } else if indexPath.row == 4 {
                 
                 cell.rowTextField.text = self.addressModel.streetName
@@ -132,17 +132,17 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             } else if indexPath.row == 6 {
                 
                 cell.rowTextField.text = self.addressModel.province
-                
+                cell.rowTitleLabel.required()
             } else if indexPath.row == 7 {
                 
                 cell.rowTextField.text = self.addressModel.city
-                
+                cell.rowTitleLabel.required()
             } else if indexPath.row == 8 {
                 
                 cell.rowTextField.text = self.addressModel.barangay
                 
             } else if indexPath.row == 9 {
-                
+                cell.rowTitleLabel.required()
                 cell.rowTextField.text = self.addressModel.zipCode
                 cell.rowTitleLabel.required()
             } else {
@@ -152,9 +152,15 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }
         }
         
-        if indexPath.row == 3 {
+        if indexPath.row == 8 {
+            cell.rowTitleLabel.required()
+        } else if indexPath.row == 0 {
             cell.rowTitleLabel.required()
         } else if indexPath.row == 4 {
+            cell.rowTitleLabel.required()
+        } else if indexPath.row == 6 {
+            cell.rowTitleLabel.required()
+        } else if indexPath.row == 7 {
             cell.rowTitleLabel.required()
         } else if indexPath.row == 9 {
             cell.rowTitleLabel.required()
@@ -292,10 +298,10 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }
         }
         
-        if index == 3 {
+        if index == 8 {
             self.activeTextField = index - 1
             self.next()
-            showAlert(title: self.error, message: self.streetNoRequired)
+            showAlert(title: self.error, message: "Barangay required.")
         } else if index == 4 {
             self.activeTextField = index - 1
             self.next()
@@ -304,7 +310,20 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             self.activeTextField = index - 1
             self.next()
             showAlert(title: self.error, message: self.zipCodeRequired)
+        } else if index == 0 {
+            self.activeTextField = index - 1
+            self.next()
+            showAlert(title: self.error, message: "Address title required.")
+        } else if index == 6 {
+            self.activeTextField = index - 1
+            self.next()
+            showAlert(title: self.error, message: "Province required.")
+        } else if index == 7 {
+            self.activeTextField = index - 1
+            self.next()
+            showAlert(title: self.error, message: "City required.")
         }
+        
         //If index is zero all required fields are filled up
         if index == 0 {
             if self.isEdit2 {
