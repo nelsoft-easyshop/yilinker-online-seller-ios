@@ -850,6 +850,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     func productUploadPriceTableViewCell(textFieldDidChange text: String, cell: ProductUploadPriceTableViewCell, textFieldType: ProductTextFieldType) {
         if textFieldType == ProductTextFieldType.ProductRetailPrice {
             self.productModel.retailPrice = text
+            self.productModel.discoutedPrice = text
+            
+            let indexPath: NSIndexPath = self.tableView.indexPathForCell(cell)!
+            let cell: ProductUploadPriceTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: indexPath.row + 1, inSection: indexPath.section)) as! ProductUploadPriceTableViewCell
+            
+            cell.cellTextField.text = text
+            
         } else if textFieldType == ProductTextFieldType.ProductDiscountPrice {
             self.productModel.discoutedPrice = text
         }

@@ -8,6 +8,11 @@
 
 import UIKit
 
+struct ResellerStrings {
+    static let reseller: String = StringHelper.localizedStringWithKey("RESELLER_LOCALIZE_KEY")
+    static let resellerAddItem: String = StringHelper.localizedStringWithKey("RESELLER_ADDITEMS_LOCALIZE_KEY")
+}
+
 class ResellerItemViewController: UIViewController, UIScrollViewDelegate, UISearchBarDelegate {
     
     let cellIdentifier: String = "ResellerItemTableViewCell"
@@ -32,7 +37,7 @@ class ResellerItemViewController: UIViewController, UIScrollViewDelegate, UISear
         }
         
         self.registerCell()
-        self.title = "Add Item"
+        self.title = ResellerStrings.resellerAddItem
         self.backButton()
         self.checkButton()
         self.footerView()
