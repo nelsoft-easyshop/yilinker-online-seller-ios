@@ -20,7 +20,7 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
     
     var filterBySelected: String = ""
     
-    var filterBy = ["Old to New", "New to Old", "A Week Ago", "A Month"]
+    var filterBy: [String] = []
     
     var dimView2: UIView!
     
@@ -33,9 +33,15 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
     var isSuccessful: Bool = false
     var searchType: Int = 0
     
+    let oldToNew: String = StringHelper.localizedStringWithKey("SEARCH_OLD_TO_NEW_LOCALIZE_KEY")
+    let newToOld: String = StringHelper.localizedStringWithKey("SEARCH_NEW_TO_OLD_LOCALIZE_KEY")
+    let aWeekAgo: String = StringHelper.localizedStringWithKey("SEARCH_A_WEEK_LOCALIZE_KEY")
+    let aMonth: String = StringHelper.localizedStringWithKey("SEARCH_A_MONTH_LOCALIZE_KEY")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.filterBy = [oldToNew, newToOld, aWeekAgo, aMonth]
         self.filterTableView.delegate = self
         self.filterTableView.dataSource = self
         self.filterTableView.separatorInset = UIEdgeInsetsZero
