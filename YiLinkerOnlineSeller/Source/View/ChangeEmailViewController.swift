@@ -71,27 +71,80 @@ class ChangeEmailViewController: UIViewController {
     }
     
     @IBAction func sumbitAction(sender: AnyObject) {
-        self.delegate?.dismissView()
+        
         if type == "email" {
             println("Submit email")
         } else {
             println("Submit password")
             self.showHUD()
-            let manager = APIManager.sharedInstance
-            let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldPassword" : self.oldEmailAddressTextField.text, "newPassword" : self.newEmailAddressTextField.text, "newPasswordConfirm" : self.confirmEmailAddressTextField.text];
-            self.showHUD()
-            manager.POST(APIAtlas.sellerChangePassword, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                println("SUCCESS!")
-                self.hud?.hide(true)
-                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                    self.hud?.hide(true)
-                    println(error)
-            })
+            self.fireChangePassword()
         }
-        self.dismissViewControllerAnimated(true, completion: nil)
+       
     }
     
+    func fireChangePassword(){
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldPassword" : self.oldEmailAddressTextField.text, "newPassword" : self.newEmailAddressTextField.text, "newPasswordConfirm" : self.confirmEmailAddressTextField.text];
+        self.showHUD()
+        manager.POST(APIAtlas.sellerChangePassword, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            println("SUCCESS!")
+            self.hud?.hide(true)
+             self.dismissViewControllerAnimated(true, completion: nil)
+            self.delegate?.dismissView()
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 401{
+                    self.requestRefreshToken()
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error Refreshing Token", title: "Refresh Token Error")
+                    self.hud?.hide(true)
+                     self.dismissViewControllerAnimated(true, completion: nil)
+                } else if task.statusCode == 404 || task.statusCode == 400 {
+                    let data = error.userInfo as! Dictionary<String, AnyObject>
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: data["message"] as! String, title: "Error")
+                     self.hud?.hide(true)
+                     self.dismissViewControllerAnimated(true, completion: nil)
+                }else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error", title: Constants.Localized.someThingWentWrong )
+                     self.hud?.hide(true)
+                     self.dismissViewControllerAnimated(true, completion: nil)
+                }
+               self.delegate?.dismissView()
+        })
+        
+    }
+    
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func requestRefreshToken() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.fireChangePassword()
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                self.hud?.hide(true)
+        })
+        
+    }
+
     func showHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
