@@ -22,7 +22,7 @@ INCOMPLETE_PRODUCT_DETAILS_LOCALIZE_KEY  = "Incomplete Product Details";
 SERVER_ERROR_LOCALIZE_KEY  = "Server Error";
 
 // MARK: - Dashboard
-TOTAL_SALES_LOCALIZE_KEY = "Total Sales (Gross)";
+TOTAL_SALES_LOCALIZE_KEY = "Gross Sales";
 TOTAL_PRODUCTS_LOCALIZE_KEY = "Total Products";
 TOTAL_TRANSACTIONS_LOCALIZE_KEY = "Total Transactions";
 MY_STORE_LOCALIZE_KEY = "My\nStore";
