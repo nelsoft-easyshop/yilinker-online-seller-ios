@@ -293,6 +293,7 @@ STORE_INFO_SAVE_LOCALIZE_KEY = "SAVE";
 STORE_INFO_SUCCESS_TITLE_LOCALIZE_KEY = "Success!";
 STORE_INFO_EMPTY_LOCALIZE_KEY = "Either your store name or store description is empty.";
 STORE_INFO_SUCCESS_LOCALIZE_KEY = "You have successfully updated you store information.";
+STORE_INFO_INFORMATION_TITLE_LOCALIZE_KEY = "Information";
 
 //CHANGE MOBILE NUMBER
 CHANGE_MOBILE_TITLE_LOCALIZE_KEY = "Change Mobile Number";
