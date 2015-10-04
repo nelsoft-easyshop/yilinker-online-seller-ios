@@ -33,6 +33,10 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     let streetNameRequired: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_STREET_NAME_REQUIRED_LOCALIZE_KEY")
     let streetNoRequired: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_STREET_NO_REQUIRED_LOCALIZE_KEY")
     let zipCodeRequired: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_ZIP_CODE_REQUIRED_LOCALIZE_KEY")
+    let addressTitleRequired: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_ADDRESS_TITLE_REQUIRED_LOCALIZE_KEY")
+    let provinceRequired: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_PROVINCE_REQUIRED_LOCALIZE_KEY")
+    let cityRequired: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_CITY_REQUIRED_LOCALIZE_KEY")
+    let barangayRequired: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_BARANGAY_REQUIRED_LOCALIZE_KEY")
     
     var titles: [String] = []
     
@@ -106,47 +110,32 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         
         if self.isEdit {
             if indexPath.row == 0 {
-                
                 cell.rowTextField.text = self.addressModel.title
                 cell.rowTitleLabel.required()
             } else if indexPath.row == 1 {
-                
                 cell.rowTextField.text = self.addressModel.unitNumber
-                
             } else if indexPath.row == 2 {
-                
                 cell.rowTextField.text = self.addressModel.buildingName
-                
             } else if indexPath.row == 3 {
-                
                 cell.rowTextField.text = self.addressModel.streetNumber
                 //cell.rowTitleLabel.required()
             } else if indexPath.row == 4 {
-                
                 cell.rowTextField.text = self.addressModel.streetName
                 cell.rowTitleLabel.required()
             } else if indexPath.row == 5 {
-                
                 cell.rowTextField.text = self.addressModel.subdivision
-                
             } else if indexPath.row == 6 {
-                
                 cell.rowTextField.text = self.addressModel.province
                 cell.rowTitleLabel.required()
             } else if indexPath.row == 7 {
-                
                 cell.rowTextField.text = self.addressModel.city
                 cell.rowTitleLabel.required()
             } else if indexPath.row == 8 {
-                
                 cell.rowTextField.text = self.addressModel.barangay
-                
             } else if indexPath.row == 9 {
-                cell.rowTitleLabel.required()
                 cell.rowTextField.text = self.addressModel.zipCode
                 cell.rowTitleLabel.required()
             } else {
-                
                 cell.rowTextField.text = self.addressModel.additionalInfo
                 isEdit = false
             }
@@ -290,9 +279,10 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     }
     
     func check() {
-        var index: Int = 0
+        var index: Int = -1
+        var index2: Int = 1001
         for i in 0..<10 {
-            if getTextAtIndex(i) == "" && i != 1 && i != 2 && i != 10 && i != 5 {
+            if getTextAtIndex(i) == "" && i != 1 && i != 2 && i != 3 && i != 10 && i != 5 {
                 index = i
                 break
             }
@@ -301,31 +291,37 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         if index == 0 {
             self.activeTextField = index - 1
             self.next()
-            showAlert(title: self.error, message: "Address title required.")
+            showAlert(title: self.error, message: self.addressTitleRequired)
+            index2 =  1002
         } else if index == 4 {
             self.activeTextField = index - 1
             self.next()
             showAlert(title: self.error, message: self.streetNameRequired)
+            index2 =  1002
         } else if index == 6 {
             self.activeTextField = index - 1
             self.next()
-            showAlert(title: self.error, message: "Province required.")
+            showAlert(title: self.error, message: self.provinceRequired)
+            index2 =  1002
         } else if index == 7 {
             self.activeTextField = index - 1
             self.next()
-            showAlert(title: self.error, message: "City required.")
+            showAlert(title: self.error, message: self.cityRequired)
+            index2 =  1002
         } else if index == 8 {
             self.activeTextField = index - 1
             self.next()
-            showAlert(title: self.error, message: "Barangay required.")
+            showAlert(title: self.error, message: self.barangayRequired)
+            index2 =  1002
         } else if index == 9 {
             self.activeTextField = index - 1
             self.next()
             showAlert(title: self.error, message: self.zipCodeRequired)
+            index2 =  1002
         }
         
         //If index is zero all required fields are filled up
-        if index == 0 {
+        if index2 == 1001 {
             if self.isEdit2 {
                 self.fireEditAddress()
             } else {
