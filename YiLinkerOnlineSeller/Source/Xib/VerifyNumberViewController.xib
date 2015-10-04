@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -10,14 +9,8 @@
             <string>Panton-Bold</string>
             <string>Panton-Bold</string>
             <string>Panton-Bold</string>
-            <string>Panton-Bold</string>
-            <string>Panton-Bold</string>
-            <string>Panton-Bold</string>
         </mutableArray>
         <mutableArray key="Panton.otf">
-            <string>Panton-Regular</string>
-            <string>Panton-Regular</string>
-            <string>Panton-Regular</string>
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
@@ -207,145 +200,6 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="208.5" y="272"/>
-        </view>
-        <view contentMode="scaleToFill" id="mpd-x4-LHu">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gyk-zG-SHI">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="46"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Verify Number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="75Y-Q6-igp">
-                            <rect key="frame" x="222" y="12" width="156" height="21"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="156" id="OfP-wg-Ufs"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
-                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6qb-5s-Ytc">
-                            <rect key="frame" x="13" y="12" width="19" height="21"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="19" id="KWO-M3-O2b"/>
-                            </constraints>
-                            <state key="normal" image="close2-2.png">
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstItem="75Y-Q6-igp" firstAttribute="top" secondItem="Gyk-zG-SHI" secondAttribute="top" constant="12" id="0J3-YL-2Pl"/>
-                        <constraint firstAttribute="bottom" secondItem="6qb-5s-Ytc" secondAttribute="bottom" constant="13" id="28N-Tw-WQD"/>
-                        <constraint firstItem="6qb-5s-Ytc" firstAttribute="top" secondItem="Gyk-zG-SHI" secondAttribute="top" constant="12" id="7fL-8T-A2d"/>
-                        <constraint firstAttribute="bottom" secondItem="75Y-Q6-igp" secondAttribute="bottom" constant="13" id="8Rc-iT-9sQ"/>
-                        <constraint firstAttribute="centerX" secondItem="75Y-Q6-igp" secondAttribute="centerX" id="NhX-RG-ICb"/>
-                        <constraint firstItem="6qb-5s-Ytc" firstAttribute="leading" secondItem="Gyk-zG-SHI" secondAttribute="leading" constant="13" id="sSr-KQ-IhP"/>
-                        <constraint firstAttribute="height" constant="46" id="zbd-xs-1k2"/>
-                    </constraints>
-                </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kbe-Nu-8pl">
-                    <rect key="frame" x="0.0" y="54" width="359" height="224"/>
-                    <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="axf-nf-kEO">
-                            <rect key="frame" x="8" y="11" width="343" height="131"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="05:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gv6-LE-Xsj">
-                                    <rect key="frame" x="174" y="53" width="62" height="21"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="62" id="UPw-Vc-1YH"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
-                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yeP-sk-sgD">
-                                    <rect key="frame" x="20" y="85" width="304" height="30"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="next"/>
-                                </textField>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter the 6 digit code that wast  sent to your mobile phone" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bge-UX-kOI">
-                                    <rect key="frame" x="16" y="18" width="312" height="27"/>
-                                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
-                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time Left: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bse-HI-78U">
-                                    <rect key="frame" x="80" y="53" width="93" height="21"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="93" id="Fe9-6F-dyD"/>
-                                        <constraint firstAttribute="height" constant="21" id="SEi-8n-fem"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
-                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstItem="bge-UX-kOI" firstAttribute="top" secondItem="axf-nf-kEO" secondAttribute="top" constant="18" id="5XU-lT-Uyz"/>
-                                <constraint firstItem="yeP-sk-sgD" firstAttribute="top" secondItem="gv6-LE-Xsj" secondAttribute="bottom" constant="11" id="7h6-Eh-QfC"/>
-                                <constraint firstItem="bge-UX-kOI" firstAttribute="leading" secondItem="axf-nf-kEO" secondAttribute="leading" constant="16" id="FJJ-5x-yZu"/>
-                                <constraint firstItem="yeP-sk-sgD" firstAttribute="leading" secondItem="axf-nf-kEO" secondAttribute="leading" constant="20" id="HCH-l6-veY"/>
-                                <constraint firstItem="gv6-LE-Xsj" firstAttribute="firstBaseline" secondItem="bse-HI-78U" secondAttribute="firstBaseline" id="HVb-wl-ILR"/>
-                                <constraint firstItem="gv6-LE-Xsj" firstAttribute="leading" secondItem="bse-HI-78U" secondAttribute="trailing" constant="1" id="NHd-mQ-9cX"/>
-                                <constraint firstAttribute="trailing" secondItem="bge-UX-kOI" secondAttribute="trailing" constant="15" id="Pk9-LI-zlR"/>
-                                <constraint firstAttribute="trailing" secondItem="gv6-LE-Xsj" secondAttribute="trailing" constant="107" id="Wn8-9i-h4i"/>
-                                <constraint firstItem="gv6-LE-Xsj" firstAttribute="top" secondItem="axf-nf-kEO" secondAttribute="top" constant="53" id="cU9-jg-V3T"/>
-                                <constraint firstItem="gv6-LE-Xsj" firstAttribute="baseline" secondItem="bse-HI-78U" secondAttribute="baseline" id="qvG-4H-pTx"/>
-                                <constraint firstAttribute="trailing" secondItem="yeP-sk-sgD" secondAttribute="trailing" constant="19" id="taR-7s-pGN"/>
-                                <constraint firstItem="gv6-LE-Xsj" firstAttribute="top" secondItem="bge-UX-kOI" secondAttribute="bottom" constant="8" symbolic="YES" id="xPm-G9-g4g"/>
-                            </constraints>
-                        </view>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hka-eq-EVT">
-                            <rect key="frame" x="89" y="186" width="180" height="28"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="28" id="w8n-mb-OnA"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
-                            <state key="normal" title="Request new verification code?">
-                                <color key="titleColor" red="0.089161771530000003" green="0.50208357029999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            </state>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rb6-cN-9xv">
-                            <rect key="frame" x="109" y="150" width="140" height="28"/>
-                            <color key="backgroundColor" red="0.20000000000000001" green="0.65098039220000004" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="28" id="1rI-jp-bRR"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
-                            <state key="normal" title="VERIFY">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="bottom" secondItem="hka-eq-EVT" secondAttribute="bottom" constant="10" id="JLu-Ju-x2r"/>
-                        <constraint firstItem="Rb6-cN-9xv" firstAttribute="top" secondItem="axf-nf-kEO" secondAttribute="bottom" constant="8" id="K5I-Pb-BVB"/>
-                        <constraint firstAttribute="trailing" secondItem="axf-nf-kEO" secondAttribute="trailing" constant="8" id="NQs-eL-VLe"/>
-                        <constraint firstItem="hka-eq-EVT" firstAttribute="leading" secondItem="Kbe-Nu-8pl" secondAttribute="leading" constant="89" id="X6J-kc-xzL"/>
-                        <constraint firstAttribute="trailing" secondItem="Rb6-cN-9xv" secondAttribute="trailing" constant="110" id="YMo-71-Zgd"/>
-                        <constraint firstAttribute="height" constant="224" id="add-yn-qYb"/>
-                        <constraint firstItem="axf-nf-kEO" firstAttribute="top" secondItem="Kbe-Nu-8pl" secondAttribute="top" constant="11" id="lMJ-Un-Pnt"/>
-                        <constraint firstItem="hka-eq-EVT" firstAttribute="centerX" secondItem="Rb6-cN-9xv" secondAttribute="centerX" id="ndX-FE-7sc"/>
-                        <constraint firstAttribute="trailing" secondItem="hka-eq-EVT" secondAttribute="trailing" constant="90" id="r0s-8q-ZJ2"/>
-                        <constraint firstItem="hka-eq-EVT" firstAttribute="top" secondItem="Rb6-cN-9xv" secondAttribute="bottom" constant="8" id="xJu-qp-YBt"/>
-                        <constraint firstItem="axf-nf-kEO" firstAttribute="leading" secondItem="Kbe-Nu-8pl" secondAttribute="leading" constant="8" id="xyc-HR-3vr"/>
-                        <constraint firstItem="Rb6-cN-9xv" firstAttribute="leading" secondItem="Kbe-Nu-8pl" secondAttribute="leading" constant="109" id="y8T-Ox-QCQ"/>
-                    </constraints>
-                </view>
-            </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstItem="Gyk-zG-SHI" firstAttribute="top" secondItem="mpd-x4-LHu" secondAttribute="top" id="1Yj-Lq-bkD"/>
-                <constraint firstItem="Kbe-Nu-8pl" firstAttribute="leading" secondItem="Gyk-zG-SHI" secondAttribute="leading" id="3Nl-CS-UY3"/>
-                <constraint firstItem="Gyk-zG-SHI" firstAttribute="leading" secondItem="mpd-x4-LHu" secondAttribute="leading" id="QJ1-qo-sbI"/>
-                <constraint firstItem="Kbe-Nu-8pl" firstAttribute="top" secondItem="Gyk-zG-SHI" secondAttribute="bottom" constant="8" symbolic="YES" id="lnf-af-ngJ"/>
-                <constraint firstAttribute="trailing" secondItem="Gyk-zG-SHI" secondAttribute="trailing" id="tcg-Lf-zSk"/>
-                <constraint firstAttribute="bottom" secondItem="Kbe-Nu-8pl" secondAttribute="bottom" id="wjl-oH-Sam"/>
-            </constraints>
         </view>
     </objects>
     <resources>
