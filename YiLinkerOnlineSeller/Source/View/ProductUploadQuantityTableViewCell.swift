@@ -22,10 +22,10 @@ class ProductUploadQuantityTableViewCell: UITableViewCell, UITextFieldDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.cellTextField.delegate = self
-        self.cellLabel.required()
         self.cellTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
-        
         self.cellLabel.text = ProductUploadStrings.quantity
+        
+        self.cellLabel.required()
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

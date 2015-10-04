@@ -509,12 +509,11 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     let cell: ProductUploadQuantityTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadQuantityTableViewCellNibNameAndIdentifier) as! ProductUploadQuantityTableViewCell
                     cell.selectionStyle = UITableViewCellSelectionStyle.None
                     cell.delegate = self
-                
+                    
                     if self.productModel.quantity != 0 {
                        cell.cellTextField.text = "\(self.productModel.quantity)"
                     }
                     
-                    cell.cellLabel.required()
                     return cell
                 } else {
                     let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
@@ -605,13 +604,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             cell.delegate = self
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.weightTextField.text = self.productModel.weigth
-            cell.weightLabel.required()
+            //cell.weightLabel.required()
             cell.lengthTextField.text = self.productModel.length
-            cell.lengthlabel.required()
+            //cell.lengthlabel.required()
             cell.heightTextField.text = self.productModel.height
-            cell.heightLabel.required()
+            //cell.heightLabel.required()
             cell.widthTextField.text = self.productModel.width
-            cell.widthLabel.required()
+            //cell.widthLabel.required()
             
             if self.productModel.validCombinations.count != 0 {
                 cell.hidden = true

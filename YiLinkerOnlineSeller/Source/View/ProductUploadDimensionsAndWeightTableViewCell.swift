@@ -32,11 +32,6 @@ class ProductUploadDimensionsAndWeightTableViewCell: UITableViewCell, UITextFiel
         super.awakeFromNib()
         self.addTextFieldDelegate()
         
-        self.lengthlabel.required()
-        self.widthLabel.required()
-        self.heightLabel.required()
-        self.weightLabel.required()
-        
         self.messageOneLabel.text = ProductUploadStrings.dimensionsAndWieghtMessageOne
         self.messageTwoLabel.text = ProductUploadStrings.dimensionsAndWieghtMessageTwo
         
@@ -44,6 +39,11 @@ class ProductUploadDimensionsAndWeightTableViewCell: UITableViewCell, UITextFiel
         self.heightLabel.text = ProductUploadStrings.height
         self.widthLabel.text = ProductUploadStrings.width
         self.weightLabel.text = ProductUploadStrings.weight
+        
+        self.lengthlabel.required()
+        self.widthLabel.required()
+        self.heightLabel.required()
+        self.weightLabel.required()
     }
     
     func addTextFieldDelegate() {
