@@ -47,14 +47,14 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
         self.skuTextField.delegate = self
         self.skuTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         
-        self.skuLabel.required()
-        self.retailPriceLabel.required()
-        self.quantityLabel.required()
-        
         self.retailPriceLabel.text = ProductUploadStrings.retailPrice
         self.discountedPriceLabel.text = ProductUploadStrings.discountedPrice
         self.quantityLabel.text = ProductUploadStrings.quantity
         self.skuLabel.text = ProductUploadStrings.sku
+        
+        self.skuLabel.required()
+        self.retailPriceLabel.required()
+        self.quantityLabel.required()
     }
     
     func textFieldDidChange(sender: UITextField) {

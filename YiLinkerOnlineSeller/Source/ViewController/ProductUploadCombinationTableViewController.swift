@@ -347,6 +347,8 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
             self.combination.quantity = text
         } else if textField.isEqual(cell.retailPriceTextField) {
             self.combination.retailPrice = text
+            self.combination.discountedPrice = text
+            cell.discountedPriceTextField.text = text
         }
     }
 }
