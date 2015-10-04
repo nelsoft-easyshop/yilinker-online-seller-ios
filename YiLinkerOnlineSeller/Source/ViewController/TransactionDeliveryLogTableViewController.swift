@@ -108,7 +108,7 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
         } else {
             let cell: TransactionDeliveryLogTableViewCell = tableView.dequeueReusableCellWithIdentifier(deliveryLogCellIdentifier, forIndexPath: indexPath) as! TransactionDeliveryLogTableViewCell
     
-            cell.setActionType(model.actionType)
+            cell.typeLabel.text = model.actionType
             cell.timeLabel.text = formatDateToTimeString(formatStringToDate(model.date))
             cell.dateLabel.text = formatDateToCompleteString(formatStringToDate(model.date))
             cell.locationLabel.text = model.location
