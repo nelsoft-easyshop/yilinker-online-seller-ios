@@ -49,6 +49,7 @@ class TransactionCancelReasonOrderViewController: UIViewController, UITextViewDe
         super.viewDidLoad()
 
         initializeViews()
+        intializeLocalizeStrings()
         addPicker()
     }
     
@@ -76,6 +77,7 @@ class TransactionCancelReasonOrderViewController: UIViewController, UITextViewDe
         screenHeight = screenSize.height
         
         topConstraint.constant = (screenHeight! / 2) - (mainView.frame.height / 2)
+        
     }
     
     func intializeLocalizeStrings() {
@@ -86,6 +88,9 @@ class TransactionCancelReasonOrderViewController: UIViewController, UITextViewDe
         submitButton.setTitle(StringHelper.localizedStringWithKey("TRANSACTION_MODAL_REASON_SUBMIT_LOCALIZE_KEY"), forState: UIControlState.Normal)
         
         errorLocalizedString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+        
+        reasonLabel.required()
+        remarksLabel.required()
     }
     
     func tapMainAction() {
