@@ -21,6 +21,9 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     var selectedIndex: Int = 0
     var defaultAddress: Int = 0
     var selectedAddressId: Int = 0
+    var userId: Int = 0
+    var index: NSIndexPath?
+    
     var delegate: ChangeAddressViewControllerDelegate?
     
     var storeAddressModel: StoreAddressModel!
@@ -32,6 +35,10 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     
     let changeAddressTitle: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_TITLE_LOCALIZE_KEY")
     let newAddress: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_NEW_ADDRESS_LOCALIZE_KEY")
+    let ok: String = StringHelper.localizedStringWithKey("CHANGE_MOBILE_OK_LOCALIZE_KEY")
+    let somethingWentWrong: String = StringHelper.localizedStringWithKey("ERROR_SOMETHING_WENT_WRONG_LOCALIZE_KEY")
+    let error: String = StringHelper.localizedStringWithKey("CHANGE_MOBILE_ERROR_LOCALIZE_KEY")
+    let information: String = StringHelper.localizedStringWithKey("STORE_INFO_INFORMATION_TITLE_LOCALIZE_KEY")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -137,6 +144,12 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 401 {
+                    self.requestRefreshToken(AddressRefreshType.Get)
+                } else {
+                    self.showAlert(title: self.somethingWentWrong, message: nil)
+                }
+
                 /* if task.statusCode == 401 {
                     self.requestRefreshToken(AddressRefreshType.Get, uid: 0, indexPath: nil)
                 }  else if error.userInfo != nil {
@@ -189,19 +202,28 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         
         manager.POST(APIAtlas.sellerSetDefaultStoreAddress, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+            if responseObject["isSuccessful"] as! Bool {
+                self.showAlert(title: self.information, message: responseObject["message"] as! String)
+                self.delegate?.updateStoreAddressDetail(self.getAddressModel.listOfAddress[self.defaultAddress].title, storeAddress:self.getAddressModel.listOfAddress[self.defaultAddress].fullLocation)
+                //self.changeBankAccountCollectionView.reloadData()
+                self.navigationController!.popViewControllerAnimated(true)
+            } else {
+                self.showAlert(title: self.error, message: self.somethingWentWrong)
+            }
             //self.delegate?.updateStoreAddressDetail(self.storeAddressModel.user_address_id[self.selectedIndex], location_id: self.storeAddressModel.location_id[self.selectedIndex], title: self.storeAddressModel.title[self.selectedIndex], unit_number: self.storeAddressModel.unit_number[self.selectedIndex], building_name: self.storeAddressModel.building_name[self.selectedIndex], street_number: self.storeAddressModel.street_number[self.selectedIndex], street_name: self.storeAddressModel.street_name[self.selectedIndex], subdivision: self.storeAddressModel.subdivision[self.selectedIndex], zip_code: self.storeAddressModel.zip_code[self.selectedIndex], street_address: self.storeAddressModel.street_address[self.selectedIndex], country: self.storeAddressModel.country[self.selectedIndex], island: self.storeAddressModel.island[self.selectedIndex], region: self.storeAddressModel.region[self.selectedIndex], province: self.storeAddressModel.province[self.selectedIndex], city: self.storeAddressModel.city[self.selectedIndex], municipality: self.storeAddressModel.municipality[self.selectedIndex], barangay: self.storeAddressModel.barangay[self.selectedIndex], longitude: self.storeAddressModel.longitude[self.selectedIndex], latitude: self.storeAddressModel.latitude[self.selectedIndex], landline: self.storeAddressModel.landline[self.selectedIndex], is_default: self.storeAddressModel.is_default[self.selectedIndex])
        
             //Old
             //self.delegate?.updateStoreAddressDetail(self.storeAddressModel.title[self.defaultAddress], storeAddress: self.storeAddressModel.store_address[self.defaultAddress])
             //New
-            self.delegate?.updateStoreAddressDetail(self.getAddressModel.listOfAddress[self.defaultAddress].title, storeAddress:self.getAddressModel.listOfAddress[self.defaultAddress].fullLocation)
-            //self.changeBankAccountCollectionView.reloadData()
             
-            
-            self.navigationController!.popViewControllerAnimated(true)
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 401 {
+                    self.requestRefreshToken(AddressRefreshType.Create)
+                } else {
+                    self.showAlert(title: self.somethingWentWrong, message: nil)
+                }
                 self.hud?.hide(true)
                 println(error)
         })
@@ -292,6 +314,8 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     
     func changeAddressCollectionViewCell(deleteAddressWithCell cell: ChangeAddressCollectionViewCell) {
         let indexPath: NSIndexPath = self.changeAddressCollectionView.indexPathForCell(cell)!
+        self.userId = cell.titleLabel.tag
+        self.index = indexPath
         fireDeleteStoreAddress(cell.titleLabel.tag, indexPath: indexPath)
     }
 
@@ -328,13 +352,57 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         
         manager.POST(APIAtlas.sellerDeleteStoreAddress, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.deleteCellInIndexPath(indexPath)
-            self.changeAddressCollectionView.reloadData()
+            if responseObject["isSuccessful"] as! Bool {
+                self.showAlert(title: self.information, message: responseObject["message"] as! String)
+                self.deleteCellInIndexPath(indexPath)
+                self.changeAddressCollectionView.reloadData()
+            } else {
+                self.showAlert(title: self.information, message: responseObject["message"] as! String)
+            }
+            
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
-                println(error)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 401 {
+                    self.requestRefreshToken(AddressRefreshType.Delete)
+                } else {
+                    self.showAlert(title: self.somethingWentWrong, message: nil)
+                    self.hud?.hide(true)
+                }
+
         })
+    }
+    
+    func requestRefreshToken(type: AddressRefreshType) {
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            if type == AddressRefreshType.Get {
+                self.requestGetAddressess()
+            } else if type == AddressRefreshType.Create {
+                self.fireSetDefaultStoreAddress()
+            } else {
+                self.fireDeleteStoreAddress(self.userId, indexPath: self.index!)
+            }
+            self.hud?.hide(true)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                self.showAlert(title: self.error, message: self.somethingWentWrong)
+        })
+    }
+    
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: self.ok, style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
     }
     
     func changeAddressFooterCollectionViewCell(didSelecteAddAddress cell: ChangeAddressFooterCollectionViewCell) {

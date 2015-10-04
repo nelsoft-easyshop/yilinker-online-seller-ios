@@ -465,10 +465,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                let alertController = UIAlertController(title: self.somethingWentWrong, message: "", preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: self.ok, style: .Default, handler: nil)
-                alertController.addAction(defaultAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
+                self.showAlert(title: self.somethingWentWrong, message: nil)
         })
     }
     
