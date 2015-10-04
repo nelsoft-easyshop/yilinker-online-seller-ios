@@ -122,7 +122,18 @@ class TransactionCancelReasonOrderViewController: UIViewController, UITextViewDe
             self.dismissViewControllerAnimated(true, completion: nil)
             delegate?.closeTransactionCancelReasonOrderViewController()
         } else if sender as! UIButton == submitButton {
-            firePostCancellation()
+            var errorString: String = ""
+            if !reasonTextField.isNotEmpty() {
+                errorString = StringHelper.localizedStringWithKey("TRANSACTION_MODAL_REASON_REQURED_LOCALIZE_KEY")
+            } else if remarksTextView.text == "" {
+                errorString = StringHelper.localizedStringWithKey("TRANSACTION_MODAL_REASON_REMARKS_LOCALIZE_KEY")
+            }
+            
+            if errorString.isNotEmpty() {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorString)
+            } else {
+                firePostCancellation()
+            }
         }
     }
     
