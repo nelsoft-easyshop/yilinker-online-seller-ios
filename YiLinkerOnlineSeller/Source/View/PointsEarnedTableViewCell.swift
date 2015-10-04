@@ -11,9 +11,12 @@ import UIKit
 class PointsEarnedTableViewCell: UITableViewCell {
 
     @IBOutlet weak var pointsLabel: UILabel!
+    @IBOutlet weak var pointsEarnedLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        pointsEarnedLabel.text = StringHelper.localizedStringWithKey("POINTS_EARNED_LOCALIZE_KEY")
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

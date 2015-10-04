@@ -130,6 +130,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         manager.POST(APIAtlas.sellerStoreInfo, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.storeInfoModel = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
+            
+            println("store info \(responseObject)")
             if responseObject["isSuccessful"] as! Bool {
                 self.tableView.reloadData()
                 
@@ -241,9 +243,9 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoBankAccountTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoBankAccountTableViewCell
             cell.delegate = self
             //Display current bank account
-            cell.bankAccountTitleLabel.text = self.storeInfoModel?.accountTitle
+            cell.bankAccountTitleLabel.text = self.bankAccountTitle
             cell.bankAccountDetailLabel.text = self.storeInfoModel?.bankAccount
-            cell.bankAccountInfoLabel.text = self.bankAccountTitle
+            cell.bankAccountInfoLabel.text = self.storeInfoModel?.accountTitle
             cell.newAccountLabel.text = self.newAccount
             println(cell)
             return cell
@@ -519,10 +521,18 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
+                println(error.description)
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 404 {
+                if task.statusCode == 401{
+                    //resfresh token
+                } else if task.statusCode == 404 || task.statusCode == 400 {
                     let data = error.userInfo as! Dictionary<String, AnyObject>
-                    self.showAlert("Error", message: data["message"] as! String)
+                    var message = data["data"] as! NSArray
+                    if message.count != 0 {
+                        self.showAlert("Error", message: message[0] as! String)
+                    } else {
+                        self.showAlert("Error", message: data["message"] as! String)
+                    }
                 } else {
                     self.showAlert("Error", message: self.somethingWentWrong)
                 }

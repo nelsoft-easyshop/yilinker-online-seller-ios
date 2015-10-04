@@ -194,10 +194,11 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
             self.subCategoriesProducts.append(categoryProducts)
         }
         
-        self.populateDetails()
+        if self.subCategoryDetailModel.parentId != 0 {
+            self.categoryDetailsView.frame.size.height = 153.0
+        }
         
-        self.categoryDetailsView.frame.size.height = 153.0
-        self.setUpViews()
+        self.populateDetails()
     }
     
     func populateDetails() {
@@ -209,10 +210,12 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
     
     func populateItems() {
         if self.subCategoriesProducts.count != 0 {
-            self.categoryItemsView.addNewItemButton.setTitle("EDIT", forState: .Normal)
+            self.categoryItemsView.setItemButtonTitle(CategoryStrings.categoryEdit)
 //            self.getHeaderView().addSubview(getItemImageView())
 //            self.getHeaderView().addSubview(getSeeAllItemsView())
 //            self.itemImagesView.setProductsManagement(products: subCategoriesProducts)
+        } else {
+            self.categoryItemsView.setItemButtonTitle(CategoryStrings.categoryNewItems)
         }
         
         setUpViews()

@@ -14,8 +14,8 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     var productsCellIdentifier: String = "TransactionProductTableViewCell"
     var consigneeCellIdentifier: String = "TransactionConsigneeTableViewCell"
     
-    var sectionHeader: [String] = ["DETAILS", "PRODUCT LIST", "CONSIGNEE"]
-    var productList: [String] = ["North Face Super Uber Travel Bag", "Beats Studio Type 20 Headphones", "Sony Super Bass"]
+    var sectionHeader: [String] = []
+    var productList: [String] = []
     
     var tableHeaderView: UIView!
     var tidLabel: UILabel!
@@ -33,16 +33,16 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     var transactionConsigneeModel: TransactionConsigneeModel!
     
     var errorMessage: String = ""
+    var errorLocalizedString = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        transactionDetailsModel = TransactionDetailsModel(isSuccessful: false, message: "", transactionInvoice: "", transactionShippingFee: "", transactionDate: "2000-01-01 00:00:00.000000", transactionPrice: "", transactionQuantity: 0, transactionStatusId: 0, transactionStatusName: "", transactionPayment: "", transactionItems: [])
+        transactionDetailsModel = TransactionDetailsModel(isSuccessful: false, message: "", transactionInvoice: "", transactionShippingFee: "", transactionDate: "2000-01-01 00:00:00.000000", transactionPrice: "", transactionQuantity: 0, transactionUnitPrice: "",  transactionStatusId: 0, transactionStatusName: "", transactionPayment: "", transactionItems: [])
         
         transactionConsigneeModel = TransactionConsigneeModel(isSuccessful: false, message: "", deliveryAddress: "", consigneeName: "", consigneeContactNumber: "")
         
         initializeNavigationBar()
-        initializeTableView()
         initializeViews()
         registerNibs()
         fireGetTransactionDetails()
@@ -90,13 +90,24 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             tableFooterView.frame.size.width = self.view.frame.size.width
         }
         
+        self.tidLabel.text = self.transactionDetailsModel.transactionInvoice
+        if self.transactionDetailsModel.transactionQuantity > 1 {
+            let productString = StringHelper.localizedStringWithKey("TRANSACTIONS_DETAILS_PRODUCT_LOCALIZE_KEY")
+            self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) \(productString)"
+        } else {
+            let productString = StringHelper.localizedStringWithKey("TRANSACTIONS_DETAILS_PRODUCTS_LOCALIZE_KEY")
+            self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) \(productString)"
+        }
+        
         
         self.tableView.tableHeaderView = tableHeaderView
         self.tableView.tableFooterView = tableFooterView
+        
+        self.tableView.reloadData()
     }
     
     func initializeNavigationBar() {
-        self.title = "Transaction Details"
+        self.title = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_TITLE_LOCALIZE_KEY")
         
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -116,6 +127,17 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         //self.view.addSubview(dimView!)
         dimView?.hidden = true
         dimView?.alpha = 0
+        
+        tableView.tableFooterView = UIView(frame: CGRectZero)
+    }
+    
+    func initializeLocalizedStrings() {
+        sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_DETAILS_LOCALIZE_KEY"))
+        sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_PRODUCT_LIST_LOCALIZE_KEY"))
+        sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_CONSIGNEE_LOCALIZE_KEY"))
+        errorLocalizedString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+        
+        initializeTableView()
     }
     
     func back() {
@@ -154,13 +176,13 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         if indexPath.section == 0 {
             let cell: TransactionDetailsTableViewCell = tableView.dequeueReusableCellWithIdentifier(detailsCellIdentifier, forIndexPath: indexPath) as! TransactionDetailsTableViewCell
             cell.selectionStyle = .None;
-            cell.statusLabel.text = transactionDetailsModel.transactionStatusName
+            cell.statusLabel.text = "   \(transactionDetailsModel.transactionStatusName)     "
             cell.paymentTypeLabel.text = transactionDetailsModel.transactionPayment
             cell.dateCreatedLabel.text = formatDateToString(formatStringToDate(transactionDetailsModel.transactionDate))
             cell.totalQuantityLabel.text = "\(transactionDetailsModel.transactionQuantity)"
-            cell.totalUnitCostLabel.text = transactionDetailsModel.transactionPrice
-            cell.shippingCostLabel.text = transactionDetailsModel.transactionShippingFee
-            cell.totalCostLabel.text = transactionDetailsModel.transactionPrice
+            cell.totalUnitCostLabel.text = transactionDetailsModel.transactionUnitPrice.formatToTwoDecimal()
+            cell.shippingCostLabel.text = transactionDetailsModel.transactionShippingFee.formatToTwoDecimal()
+            cell.totalCostLabel.text = transactionDetailsModel.transactionPrice.formatToTwoDecimal()
             return cell
         } else if indexPath.section == 1 {
             let cell: TransactionProductTableViewCell = tableView.dequeueReusableCellWithIdentifier(productsCellIdentifier, forIndexPath: indexPath) as! TransactionProductTableViewCell
@@ -175,7 +197,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             cell.addressLabel.text = transactionConsigneeModel.deliveryAddress
             
             if transactionConsigneeModel.consigneeContactNumber.isEmpty {
-                cell.contactNumberLabel.text = "No contact number."
+                cell.contactNumberLabel.text = "-"
             } else {
                 cell.contactNumberLabel.text = transactionConsigneeModel.consigneeContactNumber
             }
@@ -225,6 +247,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
             var productDetailsController = TransactionProductTableViewController(nibName: "TransactionProductTableViewController", bundle: nil)
             productDetailsController.productModel = transactionDetailsModel.transactionItems[0].products[indexPath.row]
+            productDetailsController.invoiceNumber = invoiceNumber
             self.navigationController?.pushViewController(productDetailsController, animated:true)
         }
     }
@@ -241,16 +264,9 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             println(responseObject)
             
             if self.transactionDetailsModel.isSuccessful {
-                self.tidLabel.text = self.transactionDetailsModel.transactionInvoice
-                if self.transactionDetailsModel.transactionQuantity > 1 {
-                    self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) Products"
-                } else {
-                    self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) Product"
-                }
-                
                 self.fireGetConsigneeDetails()
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.transactionDetailsModel.message, title: "Error")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.transactionDetailsModel.message, title: self.errorLocalizedString)
                 self.navigationController!.popViewControllerAnimated(true)
                 self.hud?.hide(true)
             }
@@ -265,11 +281,11 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
                     if task.statusCode == 401 {
                         self.fireRefreshToken()
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        UIAlertController.displaySomethingWentWrongError(self)
                         self.navigationController!.popViewControllerAnimated(true)
                     }
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                    UIAlertController.displayNoInternetConnectionError(self)
                     self.navigationController!.popViewControllerAnimated(true)
                 }
                 println(error)
@@ -288,9 +304,9 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             println(responseObject)
             
             if self.transactionConsigneeModel.isSuccessful {
-                self.tableView.reloadData()
+                self.initializeLocalizedStrings()
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.transactionDetailsModel.message, title: "Error")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.transactionDetailsModel.message, title: self.errorLocalizedString)
                 self.navigationController!.popViewControllerAnimated(true)
             }
             
@@ -306,11 +322,11 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
                     if task.statusCode == 401 {
                         self.fireRefreshToken()
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        UIAlertController.displaySomethingWentWrongError(self)
                         self.navigationController!.popViewControllerAnimated(true)
                     }
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                    UIAlertController.displayNoInternetConnectionError(self)
                     self.navigationController!.popViewControllerAnimated(true)
                 }
                 

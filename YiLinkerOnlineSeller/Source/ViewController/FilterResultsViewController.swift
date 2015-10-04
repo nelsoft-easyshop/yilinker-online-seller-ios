@@ -11,20 +11,25 @@ import UIKit
 class FilterResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, FilterViewControllerDelegate {
 
     @IBOutlet weak var dimView: UIView!
-    
     @IBOutlet weak var sortView: UIView!
-    
     @IBOutlet weak var filterView: UIView!
-    
     @IBOutlet weak var filterTableView: UITableView!
-    
     @IBOutlet weak var noResultsLabel: UILabel!
-    
+    @IBOutlet weak var sortLabel: UILabel!
+    @IBOutlet weak var filterLabel: UILabel!
     @IBOutlet weak var searchFilterCollectionView: UICollectionView!
+    
+    let searchResultTitle: String = StringHelper.localizedStringWithKey("SEARCH_RESULTS_LOCALIZE_KEY")
+    let sortTitle: String = StringHelper.localizedStringWithKey("SEARCH_SORT_LOCALIZE_KEY")
+    let filterTitle: String = StringHelper.localizedStringWithKey("SEARCH_FILTER_LOCALIZE_KEY")
+    let oldToNew: String = StringHelper.localizedStringWithKey("SEARCH_OLD_TO_NEW_LOCALIZE_KEY")
+    let newToOld: String = StringHelper.localizedStringWithKey("SEARCH_NEW_TO_OLD_LOCALIZE_KEY")
+    let aWeek: String = StringHelper.localizedStringWithKey("SEARCH_A_WEEK_LOCALIZE_KEY")
+    let aMonth: String = StringHelper.localizedStringWithKey("SEARCH_A_MONTH_LOCALIZE_KEY")
     
     var filterBySelected: String = ""
     
-    var filterBy = ["Old to New", "New to Old", "A Week Ago", "A Month"]
+    var filterBy: [String] = []
     
     var dimView2: UIView!
     
@@ -39,6 +44,9 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.filterBy = [self.oldToNew, self.newToOld, self.aWeek, self.aMonth]
+        self.sortLabel.text = self.sortTitle
+        self.filterLabel.text = self.filterTitle
         self.filterTableView.delegate = self
         self.filterTableView.dataSource = self
         self.filterTableView.separatorInset = UIEdgeInsetsZero
@@ -88,7 +96,7 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
         self.elements.addObjectsFromArray(self.allObjectArray.subarrayWithRange(NSMakeRange(0, 20)))
         */
         
-        self.title = "\(self.searchModel!.invoiceNumber.count) Results"
+        self.title = "\(self.searchModel!.invoiceNumber.count) \(self.searchResultTitle)"
         
         self.backButton()
     }
@@ -180,13 +188,16 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         //self.showView()
-        
+        var transactionDetails = TransactionDetailsTableViewController(nibName: "TransactionDetailsTableViewController", bundle: nil)
+        transactionDetails.edgesForExtendedLayout = .None
+        transactionDetails.invoiceNumber = self.searchModel!.invoiceNumber[indexPath.row]
+        self.navigationController?.pushViewController(transactionDetails, animated: true)
     }
     
     func collectionView(collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-            return CGSizeMake(collectionView.bounds.size.width, CGFloat(50.0))
+            return CGSizeMake(collectionView.bounds.size.width, CGFloat(139.0))
     }
     
     /*

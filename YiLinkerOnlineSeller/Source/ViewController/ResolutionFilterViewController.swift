@@ -48,18 +48,18 @@ class SelectedFilters {
     func getTimeFilter() -> String {
         let formatter = NSDateFormatter()
         let now = NSDate()
-        formatter.dateFormat = "MM/dd/YYYY"
+        formatter.dateFormat = "yyyy-MM-dd"
         switch time {
         case .Today:
             self.time = ResolutionTimeFilter.Today
             return formatter.stringFromDate(now)
         case .ThisWeek:
             self.time = ResolutionTimeFilter.ThisWeek
-            let day: Int = self.dayOfWeek(self.getTimeNow())
-            return formatter.stringFromDate(NSDate())
+            let day: Int = self.dayOfWeek(self.getTimeNow())!
+            return formatter.stringFromDate(NSDate().addDays(1))
         case .ThisMonth:
             self.time = ResolutionTimeFilter.ThisMonth
-            return formatter.stringFromDate(NSDate())
+            return formatter.stringFromDate(NSDate().addDays(1))
         case .Total:
             return ""
         default:
@@ -74,34 +74,57 @@ class SelectedFilters {
     }
     
     func sundayDate() -> String {
-        let day: Int = self.dayOfWeek(self.getTimeNow())
-       return self.fromDateWeek(day)
+        let day: Int = self.dayOfWeek(self.getTimeNow())!
+        return self.fromDateWeek(day)
     }
     
-    func dayOfWeek(today:String) -> Int {
+    func dayOfWeek(today:String) -> Int? {
         let formatter  = NSDateFormatter()
-        formatter.dateFormat = "MM/dd/YYYY"
-        let todayDate = formatter.dateFromString(today)!
-        let myCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-        let myComponents = myCalendar.components(.CalendarUnitWeekday, fromDate: todayDate)
-        let weekDay = myComponents.weekday
-        return weekDay
+        formatter.dateFormat = "yyyy-MM-dd"
+        if let todayDate = formatter.dateFromString(today) {
+            let myCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+            let myComponents = myCalendar.components(.CalendarUnitWeekday, fromDate: todayDate)
+            let weekDay = myComponents.weekday
+            return weekDay
+        } else {
+            return nil
+        }
     }
     
     func fromDateWeek(numberOfDays: Int) -> String {
         let userCalendar = NSCalendar.currentCalendar()
-        let sundayDate = userCalendar.dateByAddingUnit(NSCalendarUnit.CalendarUnitDay, value: -numberOfDays, toDate: NSDate(), options: nil)!
+        let sundayDate = userCalendar.dateByAddingUnit(NSCalendarUnit.CalendarUnitDay, value: -(numberOfDays - 1), toDate: NSDate(), options: nil)!
         let formatter = NSDateFormatter()
-        formatter.dateFormat = "MM/dd/YYYY"
-       return formatter.stringFromDate(sundayDate)
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.stringFromDate(sundayDate)
     }
     
     func getTimeNow() -> String {
         let formatter = NSDateFormatter()
-        formatter.dateFormat = "MM/dd/YYYY"
-        let now = NSDate()
+        formatter.dateFormat = "yyyy-MM-dd"
+        var now = NSDate()
         return formatter.stringFromDate(now)
     }
+    
+    func today() -> String {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        var now = NSDate()
+        now.addDays(1)
+        return formatter.stringFromDate(now)
+    }
+}
+
+struct FilterStrings {
+    static let title = StringHelper.localizedStringWithKey("FILTER_TITLE_LOCALIZE_KEY")
+    static let dates = StringHelper.localizedStringWithKey("FILTER_DATES_LOCALIZE_KEY")
+    static let today = StringHelper.localizedStringWithKey("FILTER_TODAY_LOCALIZE_KEY")
+    static let week = StringHelper.localizedStringWithKey("FILTER_WEEK_LOCALIZE_KEY")
+    static let month = StringHelper.localizedStringWithKey("FILTER_MONTH_LOCALIZE_KEY")
+    static let total = StringHelper.localizedStringWithKey("FILTER_TOTAL_LOCALIZE_KEY")
+    static let status = StringHelper.localizedStringWithKey("FILTER_STATUS_LOCALIZE_KEY")
+    static let open = StringHelper.localizedStringWithKey("FILTER_OPEN_LOCALIZE_KEY")
+    static let closed = StringHelper.localizedStringWithKey("FILTER_CLOSE_LOCALIZE_KEY")
 }
 
 class ResolutionFilterViewController: UITableViewController {
@@ -113,7 +136,17 @@ class ResolutionFilterViewController: UITableViewController {
     @IBOutlet weak var buttonTotal: CheckBox!
     @IBOutlet weak var buttonOpen: CheckBox!
     @IBOutlet weak var buttonClosed: CheckBox!
-
+    
+    //    @IBOutlet weak var dateSection: UITableViewSection!
+    @IBOutlet weak var todayLabel: UILabel!
+    @IBOutlet weak var weekLabel: UILabel!
+    @IBOutlet weak var monthLabel: UILabel!
+    @IBOutlet weak var totalLabel: UILabel!
+    //    @IBOutlet weak var statusSection: UITableViewSection!
+    @IBOutlet weak var openLabel: UILabel!
+    @IBOutlet weak var closedLabel: UILabel!
+    
+    
     private var timeFilter: ResolutionTimeFilter = .Total
     private var statusFilter: ResolutionStatusFilter = .Both
     //weak var currentFilter: SelectedFilters?
@@ -124,7 +157,6 @@ class ResolutionFilterViewController: UITableViewController {
         
         // White title text
         self.navigationController!.navigationBar.barStyle = UIBarStyle.Black
-
         cancel.tintColor = UIColor.whiteColor()
         cancel.target = self
         cancel.action = "cancelPressed"
@@ -150,8 +182,22 @@ class ResolutionFilterViewController: UITableViewController {
             , forControlEvents:.TouchUpInside)
         self.buttonClosed.addTarget(self, action: "closedPressed"
             , forControlEvents:.TouchUpInside)
+        
+        setStrings()
     }
-
+    
+    func setStrings() {
+        self.title = FilterStrings.title
+        
+        todayLabel.text = FilterStrings.today
+        weekLabel.text = FilterStrings.week
+        monthLabel.text = FilterStrings.month
+        totalLabel.text = FilterStrings.total
+        
+        openLabel.text = FilterStrings.open
+        closedLabel.text = FilterStrings.closed
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -195,7 +241,7 @@ class ResolutionFilterViewController: UITableViewController {
     func totalPressed() {
         selectTimeFilter(.Total)
     }
-
+    
     // MARK: - Status Filter Checkbox Selection
     private func selectStatusFilter(filterSelection: ResolutionStatusFilter) {
         if self.statusFilter == .Both {
@@ -250,7 +296,43 @@ class ResolutionFilterViewController: UITableViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
         self.delegate!.applyFilter()
     }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let headerView: FilterSeactionHeaderView = XibHelper.puffViewWithNibName("AddProductHeaderView", index: 1) as! FilterSeactionHeaderView
+        
+        if section == 0 {
+           headerView.sectionLabel.text = FilterStrings.dates
+           
+        } else {
+            headerView.sectionLabel.text = FilterStrings.status
+        }
+        
+        return headerView
 
-    func noCompletionMethod() {
     }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 38
+    }
+    
+    func setSectionHeader(date: String) -> UIView {
+        var sectionHeaderView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, self.tableView.sectionHeaderHeight))
+        
+        var dateLabel: UILabel = UILabel(frame: CGRectMake(0, 0, sectionHeaderView.frame.size.width, 20))
+        dateLabel.textAlignment = .Center
+        dateLabel.font = UIFont.systemFontOfSize(12.0)
+        dateLabel.textColor = .grayColor()
+        dateLabel.text = "  " + date + "  "
+        dateLabel.sizeToFit()
+        dateLabel.backgroundColor = UIColor(red: 225/255.0, green: 225/255.0, blue: 225/255.0, alpha: 1.0)
+        dateLabel.frame.size.width = dateLabel.frame.size.width + 10
+        dateLabel.center.x = sectionHeaderView.center.x
+        dateLabel.center.y = sectionHeaderView.center.y 
+        
+        sectionHeaderView.addSubview(dateLabel)
+        
+        return sectionHeaderView
+    }
+    
 }

@@ -16,6 +16,7 @@ class AddProductHeaderView: UIView {
 
     var delegate: AddProductHeaderViewDelegate?
     @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var productsLabel: UILabel!
    
     override func awakeFromNib() {
         self.addButton.layer.cornerRadius = 5

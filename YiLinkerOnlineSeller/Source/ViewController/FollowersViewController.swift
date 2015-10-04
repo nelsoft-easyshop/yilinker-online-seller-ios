@@ -20,10 +20,13 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
     
     var getCtr: Int = 0
     
+    var errorLocalizeString: String  = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         initializeViews()
+        initializeLocalizedString()
         titleView()
         backButton()
         registerNibs()
@@ -40,6 +43,11 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
         // Dispose of any resources that can be recreated.
     }
     
+    func initializeLocalizedString() {
+        //Initialized Localized String
+        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+    }
+    
     
     func initializeViews() {
         if self.respondsToSelector("edgesForExtendedLayout") {
@@ -54,10 +62,12 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         
         emptyLabel.hidden = true
+        emptyLabel.text = StringHelper.localizedStringWithKey("NO_FOLLOWER_LOCALIZE_KEY")
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
         searchBar.delegate = self
+        
     }
     
     func registerNibs() {
@@ -66,7 +76,7 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
     }
     
     func titleView() {
-        self.title = "Followers"
+        self.title = StringHelper.localizedStringWithKey("FOLLOWERS_TITLE_LOCALIZE_KEY")
     }
     
     func backButton() {
@@ -197,7 +207,7 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
                 
                 
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.followersModel.message, title: "Error")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.followersModel.message, title: self.errorLocalizeString)
             }
             self.hud?.hide(true)
             
@@ -212,9 +222,9 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
                     } else {
                         self.emptyLabel.hidden = false
                         if Reachability.isConnectedToNetwork() {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong!", title: "Error")
+                            UIAlertController.displaySomethingWentWrongError(self)
                         } else {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                            UIAlertController.displayNoInternetConnectionError(self)
                         }
                         println(error)
                     }
@@ -240,6 +250,7 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                UIAlertController.displaySomethingWentWrongError(self)
                 self.hud?.hide(true)
         })
         

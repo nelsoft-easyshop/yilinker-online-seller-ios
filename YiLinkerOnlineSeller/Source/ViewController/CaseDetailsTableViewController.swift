@@ -9,6 +9,15 @@
 import UIKit
 
 class CaseDetailsTableViewController: UITableViewController {
+    
+    @IBOutlet weak var caseIDTitleLabel: UILabel!
+    @IBOutlet weak var detailTitleLabel: UILabel!
+    @IBOutlet weak var statusTitleLabel: UILabel!
+    @IBOutlet weak var dateTitleLabel: UILabel!
+    @IBOutlet weak var otherPartyLabel: UILabel!
+    @IBOutlet weak var complaintLabel: UILabel!
+    @IBOutlet weak var csrLabel: UIView!
+    
     @IBOutlet weak var caseID: UILabel!
     @IBOutlet weak var statusCase: UILabel!
     @IBOutlet weak var dateOpen: UILabel!
@@ -24,8 +33,26 @@ class CaseDetailsTableViewController: UITableViewController {
 
     var hud: MBProgressHUD?
 
+    //Localize strings
+    let caseIdTitle: String = StringHelper.localizedStringWithKey("CASE_ID_LOCALIZE_KEY")
+    let detailsTitle: String = StringHelper.localizedStringWithKey("CASE_DETAILS_LOCALIZE_KEY")
+    let statusTitle: String = StringHelper.localizedStringWithKey("CASE_STATUS_LOCALIZE_KEY")
+    let dateTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_CLOSED_LOCALIZE_KEY")
+    let otherPartyTitle: String = StringHelper.localizedStringWithKey("CASE_OTHER_PARTY_LOCALIZE_KEY")
+    let complaintTitle: String = StringHelper.localizedStringWithKey("CASE_COMPLAINT_LOCALIZE_KEY")
+    let csrTitle: String = StringHelper.localizedStringWithKey("CASE_CSR_LOCALIZE_KEY")
+    let caseTitle: String = StringHelper.localizedStringWithKey("CASE_TITLE_LOCALIZE_KEY")
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Localized strings 
+        caseIDTitleLabel.text =  caseIdTitle
+        detailTitleLabel.text = detailsTitle
+        statusTitleLabel.text = statusTitle
+        dateTitleLabel.text = dateTitle
+        otherPartyLabel.text = otherPartyTitle
+        complaintLabel.text = complaintTitle
+        csrRemarks.text = csrTitle
         
         setupNavigationBar()
         setupClearFields()
@@ -57,7 +84,7 @@ class CaseDetailsTableViewController: UITableViewController {
         if self.navigationController != nil {
             // white Title on Navigation Bar
             self.navigationController!.navigationBar.barStyle = UIBarStyle.Black
-            self.navigationItem.title = "Case Details"
+            self.navigationItem.title = caseTitle
             
             // white back button, no text
             let backButton = UIBarButtonItem(title: "Back", style:.Plain, target: self, action:"goBackButton")
@@ -110,7 +137,7 @@ class CaseDetailsTableViewController: UITableViewController {
             if caseDetailsModel.isSuccessful {
                 let caseDetails = caseDetailsModel.caseData
                 
-                self.caseID.text = self.disputeId
+                self.caseID.text = caseDetails.ticket
                 self.statusCase.text = caseDetails.statusType
                 self.dateOpen.text = caseDetails.dateAdded
                 // In Seller other is Disputer, In Buyer other is Disputee

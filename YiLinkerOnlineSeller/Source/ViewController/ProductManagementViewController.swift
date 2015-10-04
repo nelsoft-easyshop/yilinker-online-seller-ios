@@ -58,6 +58,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     @IBOutlet weak var activeInactiveLabel: UILabel!
     @IBOutlet weak var deleteLabel: UILabel!
     
+    @IBOutlet weak var emptyLabel: UILabel!
     @IBOutlet weak var dimView: UIView!
     
     var pageTitle: [String] = [ManagementStrings.all, ManagementStrings.active, ManagementStrings.inactive, ManagementStrings.drafts, ManagementStrings.deleted, ManagementStrings.underReview]
@@ -124,6 +125,8 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         
         self.dimView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "dimAction"))
         self.deleteLabel.text = ManagementStrings.delete
+        
+        self.emptyLabel.text = StringHelper.localizedStringWithKey("EMPTY_LABEL_NO_PRODUCTS_FOUND_LOCALIZE_KEY")
     }
     
     func customizeNavigationBar() {
@@ -284,6 +287,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 44, 0)
             self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 44, 0)
             self.loaderContainerView.transform = CGAffineTransformMakeTranslation(0.0, 44.0)
+            self.emptyLabel.transform = CGAffineTransformMakeTranslation(0.0, 44.0)
         } else {
             self.searchBarTextField.endEditing(true)
             self.searchBarContainerView.hidden = true
@@ -292,7 +296,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
             self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0)
             self.loaderContainerView.transform = CGAffineTransformMakeTranslation(0.0, 0.0)
-            
+            self.emptyLabel.transform = CGAffineTransformMakeTranslation(0.0, 0.0)
         }
         
     }
@@ -370,10 +374,14 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 
                 self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
-                self.tableView.reloadData()
-                self.hud?.hide(true)
+                if self.productModel.products.count != 0 {
+                    self.tableView.reloadData()
+                } else {
+                    self.emptyLabel.hidden = false
+                }
                 self.loaderContainerView.hidden = true
                 self.searchBarTextField.userInteractionEnabled = true
+                self.hud?.hide(true)
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
                     
@@ -426,6 +434,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     
     func searchBarTextDidChanged(textField: UITextField) {
         if count(self.searchBarTextField.text) > 2 || self.searchBarTextField.text == "" {
+            self.emptyLabel.hidden = true
             requestGetProductList(statusId[selectedIndex], key: searchBarTextField.text)
         }
     }
@@ -475,17 +484,17 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             cell.setProductImage(self.productModel.products[indexPath.row].image)
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
             cell.subTitleLabel.text = self.productModel.products[indexPath.row].category
-            
-            if selectedIndex == 4 {
-                cell.decreaseAlpha()
-            }
-                
-            if selectedIndex == 5 {
-                cell.checkTapView.hidden = true
+
+            if selectedIndex == 4 || selectedIndex == 5 {
                 cell.arrowImageView.hidden = true
+                if selectedIndex == 4 {
+                    cell.decreaseAlpha()
+                } else {
+                    cell.checkTapView.hidden = true
+                }
             } else {
-                cell.checkTapView.hidden = false
                 cell.arrowImageView.hidden = false
+                cell.checkTapView.hidden = false   
             }
             
             return cell
@@ -504,8 +513,9 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if Reachability.isConnectedToNetwork() {
-            if selectedIndex == 1 || selectedIndex == 2 || selectedIndex == 3 || selectedIndex == 4 {
+            if selectedIndex == 1 || selectedIndex == 2 || selectedIndex == 3 {
                 let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
+                productDetails.productId = self.productModel.products[indexPath.row].id
                 self.navigationController?.pushViewController(productDetails, animated: true)
             }
         } else {
@@ -546,6 +556,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         if selectedIndex != indexPath.row {
+            self.emptyLabel.hidden = true
             self.selectedItems = []
             self.productModel = nil
             requestGetProductList(statusId[indexPath.row], key: searchBarTextField.text)

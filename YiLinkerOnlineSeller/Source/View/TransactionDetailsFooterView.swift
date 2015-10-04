@@ -19,9 +19,12 @@ class TransactionDetailsFooterView: UIView {
     
     @IBOutlet weak var shipItemView: UIView!
     @IBOutlet weak var cancelOrderView: UIView!
+    @IBOutlet weak var shipItemLabel: UILabel!
+    @IBOutlet weak var cancelOrderLabel: UILabel!
     
     override func awakeFromNib() {
         initializesViews()
+        intializeLocalizedStrings()
     }
     
     func initializesViews() {
@@ -33,6 +36,11 @@ class TransactionDetailsFooterView: UIView {
         
         var cancelOrder = UITapGestureRecognizer(target:self, action:"cancelOrderAction")
         cancelOrderView.addGestureRecognizer(cancelOrder)
+    }
+    
+    func intializeLocalizedStrings() {
+        shipItemLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_SHIP_ITEM_LOCALIZE_KEY")
+        cancelOrderLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_CANCEL_ORDER_LOCALIZE_KEY")
     }
     
     func shipItemAction() {

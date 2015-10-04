@@ -54,14 +54,14 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
         
         var test = W_Conversation()
         //conversations = test.testData()
-        self.placeCustomBackImage()
+        //self.placeCustomBackImage()
         
         conversationTableView.tableFooterView = UIView(frame: CGRectZero)
         
         super.viewDidLoad()
         
         var locX = UIScreen.mainScreen().bounds.size.width * 0.75
-        var locY = UIScreen.mainScreen().bounds.size.height * 0.65
+        var locY = UIScreen.mainScreen().bounds.size.height * 0.80
         
         let createMessageButton = UIButton()
         createMessageButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
@@ -160,8 +160,10 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
     }
     
     func goBack(){
-        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+        //self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

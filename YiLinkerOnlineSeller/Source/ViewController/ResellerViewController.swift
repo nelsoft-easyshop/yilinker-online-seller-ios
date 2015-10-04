@@ -21,7 +21,7 @@ class ResellerViewController: UIViewController, UICollectionViewDataSource, Rese
     override func viewDidLoad() {
         super.viewDidLoad()
         self.registerCell()
-        self.title = "Reseller"
+        self.title = ResellerStrings.reseller
         self.backButton()
         self.checkButton()
         self.layout()

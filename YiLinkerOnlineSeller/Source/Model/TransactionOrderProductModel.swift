@@ -9,6 +9,8 @@
 import UIKit
 
 class TransactionOrderProductModel: NSObject {
+    
+    typealias Attribute = (attributeName: String, attributeValue: String)
    
     var orderProductId: String = ""
     var productId: String = ""
@@ -24,8 +26,7 @@ class TransactionOrderProductModel: NSObject {
     var orderProductStatusDescription: String = ""
     var productImage: String = ""
     var sku: String = ""
-    var color: String = ""
-    var size: String = ""
+    var attributes: [Attribute] = []
     var originalUnitPrice: String = ""
     var discount: String = ""
     var width: String = ""
@@ -36,7 +37,7 @@ class TransactionOrderProductModel: NSObject {
     var shortDescription: String = ""
     var transactionOrderItemStatus: TransactionOrderItemStatus = TransactionOrderItemStatus.UnSelected
     
-    init(orderProductId: String, productId: String, quantity: Int, unitPrice: String, totalPrice: String, productName: String, handlingFee: String, dateAdded: String, lastDateModified: String, orderProductStatusId: Int, orderProductStatusName: String, orderProductStatusDescription: String, productImage: String, sku: String, color: String, size: String, originalUnitPrice: String, discount: String, width: String, height: String, length: String, weight: String, fullDescription: String, shortDescription: String) {
+    init(orderProductId: String, productId: String, quantity: Int, unitPrice: String, totalPrice: String, productName: String, handlingFee: String, dateAdded: String, lastDateModified: String, orderProductStatusId: Int, orderProductStatusName: String, orderProductStatusDescription: String, productImage: String, sku: String, attributes: [Attribute], originalUnitPrice: String, discount: String, width: String, height: String, length: String, weight: String, fullDescription: String, shortDescription: String) {
         
         self.orderProductId = orderProductId
         self.productId = productId
@@ -52,8 +53,7 @@ class TransactionOrderProductModel: NSObject {
         self.orderProductStatusDescription = orderProductStatusDescription
         self.productImage = productImage
         self.sku = sku
-        self.color = color
-        self.size = size
+        self.attributes = attributes
         self.originalUnitPrice = originalUnitPrice
         self.discount = discount
         self.width = width
@@ -81,8 +81,7 @@ class TransactionOrderProductModel: NSObject {
         var orderProductStatusDescription: String = ""
         var productImage: String = ""
         var sku: String = ""
-        var color: String = ""
-        var size: String = ""
+        var attributes: [Attribute] = []
         var originalUnitPrice: String = ""
         var discount: String = ""
         var width: String = ""
@@ -179,15 +178,21 @@ class TransactionOrderProductModel: NSObject {
                 }
             }
             
-            if dictionary["color"] != nil {
-                if let tempVar = dictionary["color"] as? String {
-                    color = tempVar
-                }
-            }
-            
-            if dictionary["size"] != nil {
-                if let tempVar = dictionary["size"] as? String {
-                    size = tempVar
+            if dictionary["attributes"] != nil {
+                if let tempDict = dictionary["attributes"] as? NSArray {
+                    for subValue in tempDict {
+                        if subValue["attributeName"] != nil {
+                            var attribute : Attribute = Attribute(attributeName: "", attributeValue: "")
+                            if let tempVar = subValue["attributeName"] as? String {
+                                attribute.attributeName = tempVar
+                            }
+                            
+                            if let tempVar = subValue["attributeValue"] as? String {
+                                attribute.attributeValue = tempVar
+                            }
+                            attributes.append(attribute)
+                        }
+                    }
                 }
             }
             
@@ -240,7 +245,7 @@ class TransactionOrderProductModel: NSObject {
             }
         }
         
-        return TransactionOrderProductModel(orderProductId: orderProductId, productId: productId, quantity: quantity, unitPrice: unitPrice, totalPrice: totalPrice, productName: productName, handlingFee: handlingFee, dateAdded: dateAdded, lastDateModified: lastDateModified, orderProductStatusId: orderProductStatusId, orderProductStatusName: orderProductStatusName, orderProductStatusDescription: orderProductStatusDescription, productImage: productImage, sku: sku, color: color, size: size, originalUnitPrice: originalUnitPrice, discount: discount, width: width, height: height, length: length, weight: weight, fullDescription: fullDescription, shortDescription: shortDescription)
+        return TransactionOrderProductModel(orderProductId: orderProductId, productId: productId, quantity: quantity, unitPrice: unitPrice, totalPrice: totalPrice, productName: productName, handlingFee: handlingFee, dateAdded: dateAdded, lastDateModified: lastDateModified, orderProductStatusId: orderProductStatusId, orderProductStatusName: orderProductStatusName, orderProductStatusDescription: orderProductStatusDescription, productImage: productImage, sku: sku, attributes: attributes, originalUnitPrice: originalUnitPrice, discount: discount, width: width, height: height, length: length, weight: weight, fullDescription: fullDescription, shortDescription: shortDescription)
     }
 
     

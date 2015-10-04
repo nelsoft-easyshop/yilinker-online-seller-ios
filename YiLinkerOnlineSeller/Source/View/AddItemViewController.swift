@@ -20,6 +20,7 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @IBOutlet weak var searchBarTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var emptyLabel: UILabel!
 
     var selectedItemIDs: [String] = []
     var selectedProductsModel: [ProductManagementProductsModel] = []
@@ -31,23 +32,14 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-//        if selectedItemIDsIndex.count == 0 {
-//            requestGetProductList("")
-//        }
-        
-//        if selectedProductsModel.count == 0 {
         if Reachability.isConnectedToNetwork() {
             requestGetProductList("")
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.failed)
         }
         
-//        }
         customizedNavigationBar()
         customizedViews()
-        
-        let nib = UINib(nibName: "AddItemTableViewCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: "AddItemTableViewCell")
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -80,8 +72,14 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
         searchBarTextField.leftView = searchImage
         searchBarTextField.leftViewMode = UITextFieldViewMode.Always
         searchBarTextField.placeholder = CategoryStrings.search
+        searchBarTextField.addTarget(self, action: "searchBarTextDidChanged:", forControlEvents: UIControlEvents.EditingChanged)
         
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
+        
+        let nib = UINib(nibName: "AddItemTableViewCell", bundle: nil)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: "AddItemTableViewCell")
+        
+        self.emptyLabel.text = StringHelper.localizedStringWithKey("EMPTY_LABEL_NO_PRODUCTS_FOUND_LOCALIZE_KEY")
     }
     
     // MARK: - Actions
@@ -139,13 +137,47 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
 
             self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
-            self.tableView.reloadData()
+            
+            if self.productModel.products.count != 0 {
+                self.tableView.reloadData()
+            } else {
+                self.emptyLabel.hidden = false
+            }
             self.hud?.hide(true)
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
+                if task.statusCode == 401 {
+                    self.requestRefreshToken()
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+                    self.hud?.hide(true)
+                }
+        })
+    }
+    
+    func requestRefreshToken() {
+        
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        let manager = APIManager.sharedInstance
+        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.hud?.hide(true)
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.requestGetProductList(self.searchBarTextField.text)
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
         })
     }
     
@@ -207,6 +239,19 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
 //        println(selectedItemIDsIndex)
 
     }
-    
 
+    // MARK: - Text Field Delegates
+    
+    func searchBarTextDidChanged(textField: UITextField) {
+        if count(self.searchBarTextField.text) > 2 || self.searchBarTextField.text == "" {
+            requestGetProductList(self.searchBarTextField.text)
+        }
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.searchBarTextField.resignFirstResponder()
+        
+        return true
+    }
+    
 }
