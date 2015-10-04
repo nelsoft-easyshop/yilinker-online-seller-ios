@@ -16,7 +16,7 @@ class ProductModel {
     var category: CategoryModel = CategoryModel(uid: 0, name: "", hasChildren: "")
     var brand: BrandModel = BrandModel(name: "", brandId:1)
     var condition: ConditionModel = ConditionModel(uid: 0, name: "")
-    var quantity: Int = 0
+    var quantity: Int = 1
     var uid: String = "0"
     
     var name: String = ""
