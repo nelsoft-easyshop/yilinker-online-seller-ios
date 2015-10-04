@@ -50,6 +50,11 @@ enum AddressRefreshType {
     case Get
 }
 
+enum VerifyType {
+    case Verify
+    case Resend
+}
+
 enum SearchRefreshType {
     case All
     case ProductName
