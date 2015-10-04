@@ -167,6 +167,7 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
         let cell : FilterResultsCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("FilterResultsCollectionViewCell", forIndexPath: indexPath) as! FilterResultsCollectionViewCell
         
         if self.searchModel != nil {
+            //cell.transactionIdLabel.text = self.searchModel?.invoiceNumber[indexPath.row]
             cell.transactionLabel.text = self.searchModel?.invoiceNumber[indexPath.row]
         }
         
