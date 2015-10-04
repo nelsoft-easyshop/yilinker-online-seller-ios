@@ -297,7 +297,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             verifyNumberViewController.providesPresentationContextTransitionStyle = true
             verifyNumberViewController.definesPresentationContext = true
             verifyNumberViewController.view.frame.origin.y = verifyNumberViewController.view.frame.size.height
-            self.navigationController?.presentViewController(verifyNumberViewController, animated: true, completion:
+            self.tabBarController?.presentViewController(verifyNumberViewController, animated: true, completion:
                 nil)
             self.verifyOrChange = 2
             verifyNumberViewController.mobileNumber = self.mobileNumber
@@ -309,7 +309,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             changeMobileNumber.providesPresentationContextTransitionStyle = true
             changeMobileNumber.definesPresentationContext = true
             changeMobileNumber.view.frame.origin.y = changeMobileNumber.view.frame.size.height
-            self.navigationController?.presentViewController(changeMobileNumber, animated: true, completion:
+            self.tabBarController?.presentViewController(changeMobileNumber, animated: true, completion:
                 nil)
             self.verifyOrChange = 2
         }
@@ -339,7 +339,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         changeEmailViewController.view.frame.origin.y = changeEmailViewController.view.frame.size.height
        
         changeEmailViewController.type = "password"
-        self.navigationController?.presentViewController(changeEmailViewController, animated:true, completion: nil)
+        self.tabBarController?.presentViewController(changeEmailViewController, animated:true, completion: nil)
         self.showView()
     }
     
@@ -352,7 +352,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         let transparent = black.colorWithAlphaComponent(0.5)
         changeMobileNumberViewController.view.backgroundColor = transparent
         changeMobileNumberViewController.view.frame.origin.y = changeMobileNumberViewController.view.frame.size.height
-        self.navigationController?.presentViewController(changeMobileNumberViewController, animated: true, completion:
+        self.tabBarController?.presentViewController(changeMobileNumberViewController, animated: true, completion:
             nil)
     }
     
@@ -365,7 +365,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         congratulations.providesPresentationContextTransitionStyle = true
         congratulations.definesPresentationContext = true
         congratulations.view.frame.origin.y = congratulations.view.frame.size.height
-        self.navigationController?.presentViewController(congratulations, animated: true, completion:
+        self.tabBarController?.presentViewController(congratulations, animated: true, completion:
             nil)
         self.showView()
     }
