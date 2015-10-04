@@ -12,6 +12,7 @@ protocol StoreInfoTableViewCellDelegate {
     func storeInfoVerify()
     func storeNameAndDescription(storeName: String, storeDescription: String)
     func callUzyPicker(imageType: String)
+    func textViewNextResponder(textView: UITextView)
 }
 
 class StoreInfoTableViewCell: UITableViewCell, UITextFieldDelegate, UITextViewDelegate {
@@ -94,6 +95,11 @@ class StoreInfoTableViewCell: UITableViewCell, UITextFieldDelegate, UITextViewDe
     func textViewDidEndEditing(textField: UITextView) {
         self.delegate?.storeNameAndDescription(self.storeNameTextField.text, storeDescription: self.storeDescriptionTextView.text)
        
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.delegate?.textViewNextResponder(self.storeDescriptionTextView)
+        return true
     }
     
     @IBAction func callVerification(sender: AnyObject){

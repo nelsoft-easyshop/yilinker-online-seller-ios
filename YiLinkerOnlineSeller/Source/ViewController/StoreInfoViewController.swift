@@ -617,6 +617,10 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
     }
     
+    func textViewNextResponder(textView: UITextView) {
+        textView.becomeFirstResponder()
+    }
+    
     //MARK: Set image/s for StoreInfoTableViewCell imageviews
     func setImageProfileCoverPhoto(image: UIImage){
         let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
