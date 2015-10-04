@@ -10,6 +10,8 @@ import UIKit
 
 class StoreInfoQrCodeTableViewCell: UITableViewCell {
 
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
