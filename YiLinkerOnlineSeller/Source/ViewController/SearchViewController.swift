@@ -285,17 +285,21 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
            
                 self.searchModel = SearchModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 
-                for var i = 0; i < self.searchModel!.invoiceNumber.count; i++ {
-                    self.allObjectArray.addObject(i)
+                if self.searchModel!.invoiceNumber.count == 0 {
+                    self.noResultLabel.hidden = false
+                } else {
+                    for var i = 0; i < self.searchModel!.invoiceNumber.count; i++ {
+                        self.allObjectArray.addObject(i)
+                    }
+                    self.elements.addObjectsFromArray(self.allObjectArray.subarrayWithRange(NSMakeRange(0, 20)))
+                    
+                    var storeInfoViewController = FilterResultsViewController(nibName: "FilterResultsViewController", bundle: nil)
+                    storeInfoViewController.edgesForExtendedLayout = .None
+                    storeInfoViewController.searchModel = self.searchModel
+                    self.navigationController?.pushViewController(storeInfoViewController, animated: true)
+                    self.noResultLabel.hidden = true
                 }
-                self.elements.addObjectsFromArray(self.allObjectArray.subarrayWithRange(NSMakeRange(0, 20)))
-                
-                var storeInfoViewController = FilterResultsViewController(nibName: "FilterResultsViewController", bundle: nil)
-                storeInfoViewController.edgesForExtendedLayout = .None
-                storeInfoViewController.searchModel = self.searchModel
-                self.navigationController?.pushViewController(storeInfoViewController, animated: true)
 
-                
                 //self.searchResultTableView.reloadData()
                 self.hud?.hide(true)
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
