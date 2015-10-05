@@ -551,6 +551,8 @@
 		F7C40FDF1B98443B0091C16C /* StoreInfoSectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C40FDE1B98443B0091C16C /* StoreInfoSectionTableViewCell.xib */; };
 		F7C40FE01B9854A80091C16C /* LineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792875A51B8DF89F00762A39 /* LineChartView.swift */; };
 		F7C40FE11B9854B20091C16C /* SalesReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EFF7761B8D9274008A9E7D /* SalesReportViewController.swift */; };
+		F7C6A94D1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C6A94B1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.swift */; };
+		F7C6A94E1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C6A94C1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.xib */; };
 		F7CB78431B9D822C001AF766 /* FilterCalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CB78411B9D822C001AF766 /* FilterCalendarTableViewCell.swift */; };
 		F7CB78441B9D822C001AF766 /* FilterCalendarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CB78421B9D822C001AF766 /* FilterCalendarTableViewCell.xib */; };
 		F7CCEEF21BBE607100D876C2 /* FilterResultsCollectionViewCellV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCEEF01BBE607100D876C2 /* FilterResultsCollectionViewCellV2.swift */; };
@@ -1144,6 +1146,8 @@
 		F7C40FCA1B983CD90091C16C /* truck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = truck.png; sourceTree = "<group>"; };
 		F7C40FDC1B9840490091C16C /* FilterAttributeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterAttributeModel.swift; sourceTree = "<group>"; };
 		F7C40FDE1B98443B0091C16C /* StoreInfoSectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoSectionTableViewCell.xib; sourceTree = "<group>"; };
+		F7C6A94B1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoQrCodeTableViewCell.swift; sourceTree = "<group>"; };
+		F7C6A94C1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoQrCodeTableViewCell.xib; sourceTree = "<group>"; };
 		F7CB78411B9D822C001AF766 /* FilterCalendarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCalendarTableViewCell.swift; sourceTree = "<group>"; };
 		F7CB78421B9D822C001AF766 /* FilterCalendarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterCalendarTableViewCell.xib; sourceTree = "<group>"; };
 		F7CCEEF01BBE607100D876C2 /* FilterResultsCollectionViewCellV2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterResultsCollectionViewCellV2.swift; sourceTree = "<group>"; };
@@ -1436,6 +1440,8 @@
 				0CE2244B1BBAF89800853AC9 /* SaveButtonView.swift */,
 				F7CCEEF01BBE607100D876C2 /* FilterResultsCollectionViewCellV2.swift */,
 				F7CCEEF11BBE607100D876C2 /* FilterResultsCollectionViewCellV2.xib */,
+				F7C6A94B1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.swift */,
+				F7C6A94C1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2197,6 +2203,7 @@
 				F7C40F951B983BC40091C16C /* StoreInfoBankAccountTableViewCell.xib in Resources */,
 				799893051B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib in Resources */,
 				0CF28EFA1B8CA2E9005B2E54 /* Panton ExtraLight Italic.otf in Resources */,
+				F7C6A94E1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.xib in Resources */,
 				79E633B11B9B3C330062DB14 /* TransactionDeliveryLogTableViewController.xib in Resources */,
 				79E633651B9AB1E60062DB14 /* TransactionImageCollectionViewCell.xib in Resources */,
 				0CF28F1B1B8CD079005B2E54 /* ProductUploadImageCollectionViewCell.xib in Resources */,
@@ -2433,6 +2440,7 @@
 				792876261B8DF89F00762A39 /* ChartRange.swift in Sources */,
 				792876001B8DF89F00762A39 /* ScatterChartView.swift in Sources */,
 				792875FF1B8DF89F00762A39 /* RadarChartView.swift in Sources */,
+				F7C6A94D1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.swift in Sources */,
 				B7BADAF61BA563FF005F59F9 /* ContactListTVC.swift in Sources */,
 				26B5B23D1B94D88D00CBDDE5 /* CustomizedCategoryTableViewCell.swift in Sources */,
 				799893011B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift in Sources */,

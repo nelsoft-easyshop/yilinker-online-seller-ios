@@ -19,6 +19,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     let storeInfoHeaderTableViewCellIndentifier: String = "StoreInfoTableViewCell"
     let storeInfoSectionTableViewCellIndentifier: String = "StoreInfoSectionTableViewCell"
+    let storeInfoQRCodeTableViewCellIndentifier: String = "StoreInfoQrCodeTableViewCell"
     let storeInfoAddressTableViewCellIdentifier: String = "StoreInfoAddressTableViewCell"
     let storeInfoBankAccountTableViewCellIdentifier: String = "StoreInfoBankAccountTableViewCell"
     let storeInfoAccountInformationTableViewCellIdentifier: String = "StoreInfoAccountInformationTableViewCell"
@@ -38,6 +39,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     var imageType: String = ""
     var mobileNumber: String = ""
     var newContactNumber: String = ""
+    var hasQRCode: Bool = false
     
     let storeInfoTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_TITLE_LOCALIZE_KEY")
     let addPhoto: String = StringHelper.localizedStringWithKey("STORE_INFO_ADD_PHOTO_LOCALIZE_KEY")
@@ -78,6 +80,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         self.navigationController?.view.addSubview(dimView)
         dimView.hidden = true
         
+        self.hasQRCode = true
+        
         self.initializeViews()
         self.registerNibs()
         self.fireStoreInfo()
@@ -107,6 +111,9 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         let storeInfoHeader = UINib(nibName: storeInfoHeaderTableViewCellIndentifier, bundle: nil)
         self.tableView.registerNib(storeInfoHeader, forCellReuseIdentifier: storeInfoHeaderTableViewCellIndentifier)
+        
+        let storeInfoQrCode = UINib(nibName: storeInfoQRCodeTableViewCellIndentifier, bundle: nil)
+        self.tableView.registerNib(storeInfoQrCode, forCellReuseIdentifier: storeInfoQRCodeTableViewCellIndentifier)
         
         var storeInfo = UINib(nibName: storeInfoSectionTableViewCellIndentifier, bundle: nil)
         self.tableView.registerNib(storeInfo, forCellReuseIdentifier: storeInfoSectionTableViewCellIndentifier)
@@ -224,12 +231,17 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
            
             return cell
         } else if indexPath.section == 1 {
-            let cell: StoreInfoSectionTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoSectionTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoSectionTableViewCell
-            cell.qrCodeLabel.text = self.qrCode
-            cell.generateLabel.text = self.generate
-            cell.generateQRCodeButton.setTitle(self.generateQRCodeTitle, forState: UIControlState.Normal)
-            cell.delegate = self
-            return cell
+            if self.hasQRCode {
+                let cell: StoreInfoQrCodeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoQRCodeTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoQrCodeTableViewCell
+                return cell
+            } else {
+                let cell: StoreInfoSectionTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoSectionTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoSectionTableViewCell
+                cell.qrCodeLabel.text = self.qrCode
+                cell.generateLabel.text = self.generate
+                cell.generateQRCodeButton.setTitle(self.generateQRCodeTitle, forState: UIControlState.Normal)
+                cell.delegate = self
+                return cell
+            }
        } else if indexPath.section == 2 {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoAddressTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAddressTableViewCell
             cell.delegate = self
@@ -271,7 +283,11 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         if indexPath.section == 0 {
             return 502
         } else if indexPath.section == 1 {
-            return 198
+            if self.hasQRCode {
+                return 322
+            } else {
+                return 198
+            }            
         } else if indexPath.section == 2 {
             return 163
         } else  if indexPath.section == 3 {

@@ -45,21 +45,31 @@
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iz3-oe-xRY">
-                        <rect key="frame" x="8" y="37" width="415" height="81"/>
+                        <rect key="frame" x="8" y="46" width="415" height="72"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="81" id="sgG-7g-dB8"/>
+                            <constraint firstAttribute="height" constant="72" id="sgG-7g-dB8"/>
                         </constraints>
                         <string key="text">Generate your store QR code and spread the word about yout store. Your QR code points to your store page can be scanned by most martphones for easier access.</string>
                         <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r9h-s5-l18">
+                        <rect key="frame" x="14" y="37" width="417" height="1"/>
+                        <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="eNa-rz-SZs"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="r9h-s5-l18" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="14" id="2TU-e7-c4T"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Ved-1A-3Tj" secondAttribute="trailing" constant="23" id="BZo-U2-9uX"/>
+                    <constraint firstItem="r9h-s5-l18" firstAttribute="top" secondItem="g88-Q9-kGf" secondAttribute="bottom" constant="8" id="BdC-jy-8si"/>
                     <constraint firstAttribute="bottomMargin" secondItem="Ved-1A-3Tj" secondAttribute="bottom" constant="10" id="GSi-TU-d13"/>
+                    <constraint firstItem="iz3-oe-xRY" firstAttribute="top" secondItem="r9h-s5-l18" secondAttribute="bottom" constant="8" id="Kop-wx-Cfi"/>
                     <constraint firstItem="g88-Q9-kGf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="NVk-CQ-L4e"/>
-                    <constraint firstItem="iz3-oe-xRY" firstAttribute="top" secondItem="g88-Q9-kGf" secondAttribute="bottom" constant="8" id="bmA-Oi-UoC"/>
+                    <constraint firstAttribute="trailing" secondItem="r9h-s5-l18" secondAttribute="trailing" id="aHy-ew-iMd"/>
                     <constraint firstItem="Ved-1A-3Tj" firstAttribute="top" secondItem="iz3-oe-xRY" secondAttribute="bottom" constant="16" id="fSf-50-Xng"/>
                     <constraint firstItem="iz3-oe-xRY" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="maQ-yr-zgd"/>
                     <constraint firstItem="g88-Q9-kGf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="nuj-EL-ex3"/>
