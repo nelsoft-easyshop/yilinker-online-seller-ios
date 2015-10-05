@@ -28,6 +28,8 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
 
     var tableData: [TransactionModel] = []
     var riderName: String = ""
+    var productName: String = ""
+    var transactionId: String = ""
     var isPageEnd: Bool = false
     var page: Int = 0
     var isSuccessful: Bool = false
@@ -92,7 +94,14 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
         */
         
         //self.title = "\(self.searchModel!.invoiceNumber.count) Results"
-        self.fireSearchRiderName(riderName)
+        if self.searchType == 1 {
+            self.fireSearchRiderName(transactionId)
+        } else if searchType == 2 {
+            self.fireSearchRiderName(productName)
+        } else {
+            self.fireSearchRiderName(riderName)
+        }
+        
         self.backButton()
     }
     
@@ -136,9 +145,20 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
         var h: CGFloat = size.height
         var reload_distance: CGFloat = 10
         var temp: CGFloat = h + reload_distance
-        if y > temp {
-            self.fireSearchRiderName(self.riderName)
+        if self.searchType == 1 {
+            if y > temp {
+                self.fireSearchRiderName(self.transactionId)
+            }
+        } else if self.searchType == 2 {
+            if y > temp {
+                self.fireSearchRiderName(self.productName)
+            }
+        } else {
+            if y > temp {
+                self.fireSearchRiderName(self.riderName)
+            }
         }
+        
     }
     
     // Mark: - UITableViewDataSource methods
@@ -213,7 +233,7 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
                 cell.statusImageView.image = UIImage(named: "cancelled2")
             }
             
-            cell.transactionIdLabel.text = self.tableData[indexPath.row].invoice_number
+            //cell.transactionIdLabel.text = self.tableData[indexPath.row].invoice_number
             cell.dateLabel.text = dateAdded
            
             if self.tableData[indexPath.row].product_count.toInt() < 2 {
@@ -225,18 +245,29 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
             }
             
             let underlineAttribute = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue]
-            if self.searchType == 3 {
+            if self.searchType == 1 {
+                let underlineAttributedString = NSAttributedString(string: self.tableData[indexPath.row].invoice_number, attributes: underlineAttribute)
+                cell.transactionIdLabel.textColor = Constants.Colors.appTheme
+                cell.productNameLabel.textColor = Constants.Colors.grayText
+                cell.riderNameLabel.textColor = Constants.Colors.grayText
+                cell.transactionIdLabel.attributedText = underlineAttributedString
+            } else if self.searchType == 2 {
+                let underlineAttributedString = NSAttributedString(string: self.tableData[indexPath.row].product_names, attributes: underlineAttribute)
+                cell.productNameLabel.textColor = Constants.Colors.appTheme
+                cell.riderNameLabel.textColor = Constants.Colors.grayText
+                cell.transactionIdLabel.textColor = UIColor.blackColor()
+                cell.productNameLabel.attributedText = underlineAttributedString
+            } else {
                 let underlineAttributedString = NSAttributedString(string: self.riderName, attributes: underlineAttribute)
                 cell.riderNameLabel.textColor = Constants.Colors.appTheme
                 cell.productNameLabel.textColor = Constants.Colors.grayText
+                cell.transactionIdLabel.textColor = UIColor.blackColor()
                 cell.riderNameLabel.attributedText = underlineAttributedString
-            } else {
-                
             }
             cell.sellerNameLabel.textColor = Constants.Colors.grayText
             cell.dateLabel.textColor = Constants.Colors.grayText
             cell.numberOfProductsLabel.textColor = Constants.Colors.grayText
-            cell.productNameLabel.text = self.tableData[indexPath.row].product_names
+            //cell.productNameLabel.text = self.tableData[indexPath.row].product_names
             //cell.sellerNameLabel.text = self.tableData[indexPath.row].
             cell.priceLabel.text = "P " + ((self.tableData[indexPath.row].total_price as NSString).floatValue).stringToFormat(2)
         }
@@ -279,8 +310,17 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
             page++
             self.showHUD()
             let manager = APIManager.sharedInstance
+            var params: String = ""
             
-            var url = APIAtlas.transactionLogs+"\(SessionManager.accessToken())&riderName=\(riderName)&perPage=15&page=\(page)" as NSString
+            if self.searchType == 1 {
+                params = "transactionId=\(riderName)"
+            } else if self.searchType == 2 {
+                params = "productName=\(riderName)"
+            } else {
+                params = "riderName=\(riderName)"
+            }
+            
+            var url = APIAtlas.transactionLogs+"\(SessionManager.accessToken())&\(params)&perPage=15&page=\(page)" as NSString
             let urlEncoded = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
             
             manager.GET(urlEncoded!, parameters: nil, success: {
