@@ -247,18 +247,24 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
             let underlineAttribute = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue]
             if self.searchType == 1 {
                 let underlineAttributedString = NSAttributedString(string: self.tableData[indexPath.row].invoice_number, attributes: underlineAttribute)
+                cell.riderNameLabel.text = "TID-Rider Name"
+                cell.productNameLabel.text = self.tableData[indexPath.row].product_names
                 cell.transactionIdLabel.textColor = Constants.Colors.appTheme
                 cell.productNameLabel.textColor = Constants.Colors.grayText
                 cell.riderNameLabel.textColor = Constants.Colors.grayText
                 cell.transactionIdLabel.attributedText = underlineAttributedString
             } else if self.searchType == 2 {
                 let underlineAttributedString = NSAttributedString(string: self.tableData[indexPath.row].product_names, attributes: underlineAttribute)
+                cell.riderNameLabel.text = "PN-Rider Name"
+                cell.transactionIdLabel.text = self.tableData[indexPath.row].invoice_number
                 cell.productNameLabel.textColor = Constants.Colors.appTheme
                 cell.riderNameLabel.textColor = Constants.Colors.grayText
                 cell.transactionIdLabel.textColor = UIColor.blackColor()
                 cell.productNameLabel.attributedText = underlineAttributedString
             } else {
                 let underlineAttributedString = NSAttributedString(string: self.riderName, attributes: underlineAttribute)
+                cell.transactionIdLabel.text = self.tableData[indexPath.row].invoice_number
+                cell.productNameLabel.text = self.tableData[indexPath.row].product_names
                 cell.riderNameLabel.textColor = Constants.Colors.appTheme
                 cell.productNameLabel.textColor = Constants.Colors.grayText
                 cell.transactionIdLabel.textColor = UIColor.blackColor()
@@ -281,7 +287,10 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         //self.showView()
-        
+        var transactionDetails = TransactionDetailsTableViewController(nibName: "TransactionDetailsTableViewController", bundle: nil)
+        transactionDetails.edgesForExtendedLayout = .None
+        transactionDetails.invoiceNumber = self.tableData[indexPath.row].invoice_number
+        self.navigationController?.pushViewController(transactionDetails, animated: true)
     }
     
     func collectionView(collectionView: UICollectionView,
