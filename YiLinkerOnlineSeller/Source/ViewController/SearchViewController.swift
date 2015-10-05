@@ -205,16 +205,19 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             println(filterBySelected)
         } else {
+            var filterRiderNameViewController = FilterResultsRiderNameViewController(nibName: "FilterResultsRiderNameViewController", bundle: nil)
+            filterRiderNameViewController.edgesForExtendedLayout = .None
             if self.filterBySelected == 2 {
-                
-            } else {
-              println("--\(self.riderNameArray[indexPath.row])")
-                var filterRiderNameViewController = FilterResultsRiderNameViewController(nibName: "FilterResultsRiderNameViewController", bundle: nil)
-                filterRiderNameViewController.edgesForExtendedLayout = .None
+                filterRiderNameViewController.productName = self.tableData[indexPath.row].name2
+                filterRiderNameViewController.searchType = 2
+            } else if self.filterBySelected == 3 {
                 filterRiderNameViewController.riderName = self.riderNameArray[indexPath.row]
                 filterRiderNameViewController.searchType = 3
-                self.navigationController?.pushViewController(filterRiderNameViewController, animated: true)
+            } else {
+                filterRiderNameViewController.transactionId = self.searchTextField.text
+                filterRiderNameViewController.searchType = 1
             }
+             self.navigationController?.pushViewController(filterRiderNameViewController, animated: true)
         }
     }
     
@@ -257,16 +260,25 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.showAlert(title: "Information", message: "Search by \(filterBy[filterBySelected]) is not yet available.")
         } else if filterBySelected == 2 {
             self.tableData.removeAll(keepCapacity: false)
+            self.riderNameArray.removeAll(keepCapacity: false)
             self.fireSearchProduct(2)
         } else if filterBySelected == 3 {
+             self.tableData.removeAll(keepCapacity: false)
             self.riderNameArray.removeAll(keepCapacity: false)
             self.fireSearchProduct(3)
         } else {
+            self.tableData.removeAll(keepCapacity: false)
+            self.riderNameArray.removeAll(keepCapacity: false)
             if count(textField.text) < 3 {
                 self.showAlert(title: "Error", message: "Minimum character is 3. Please enter another transaction id.")
                 textField.text = ""
             } else {
-                self.fireSearch()
+                //self.fireSearch()
+                var filterRiderNameViewController = FilterResultsRiderNameViewController(nibName: "FilterResultsRiderNameViewController", bundle: nil)
+                filterRiderNameViewController.edgesForExtendedLayout = .None
+                filterRiderNameViewController.transactionId = self.searchTextField.text
+                filterRiderNameViewController.searchType = 1
+                self.navigationController?.pushViewController(filterRiderNameViewController, animated: true)
             }
             
         }
@@ -284,19 +296,22 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
            
                 self.searchModel = SearchModel.parseDataFromDictionary(responseObject as! NSDictionary)
-                
+                println("--\(self.searchModel!.invoiceNumber)-- \(responseObject)")
                 if self.searchModel!.invoiceNumber.count == 0 {
                     self.noResultLabel.hidden = false
                 } else {
-                    for var i = 0; i < self.searchModel!.invoiceNumber.count; i++ {
-                        self.allObjectArray.addObject(i)
-                    }
-                    self.elements.addObjectsFromArray(self.allObjectArray.subarrayWithRange(NSMakeRange(0, 20)))
+                    //for var i = 0; i < self.searchModel!.invoiceNumber.count; i++ {
+                     //   self.allObjectArray.addObject(i)
+                    //}
+                    //self.elements.addObjectsFromArray(self.allObjectArray.subarrayWithRange(NSMakeRange(0, 20)))
                     
+                  
+                    /*
                     var storeInfoViewController = FilterResultsViewController(nibName: "FilterResultsViewController", bundle: nil)
                     storeInfoViewController.edgesForExtendedLayout = .None
                     storeInfoViewController.searchModel = self.searchModel
                     self.navigationController?.pushViewController(storeInfoViewController, animated: true)
+                    */
                     self.noResultLabel.hidden = true
                 }
 
@@ -338,7 +353,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 if searchProductNameModel.name.count == 0 {
                     self.noResultLabel.hidden = false
                 } else {
-                    self.noResultLabel.hidden = false
+                    self.noResultLabel.hidden = true
                 }
                 for var i = 0; i < searchProductNameModel.name.count; i++ {
                     self.tableData.append(SearchProductNameModel(name2: searchProductNameModel.name[i], productId2: searchProductNameModel.productId[i]))
@@ -349,7 +364,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 if rider.count == 0 {
                     self.noResultLabel.hidden = false
                 } else {
-                     self.noResultLabel.hidden = false
+                     self.noResultLabel.hidden = true
                 }
                 for var i: Int = 0; i < rider.count; i++ {
                     self.riderNameArray.append(rider[i] as! String)
