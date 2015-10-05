@@ -313,13 +313,23 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
     func cancelButtonOrderAction() {
         showDimView()
         
-        var cancelOrderController = TransactionCancelOrderViewController(nibName: "TransactionCancelOrderViewController", bundle: nil)
-        cancelOrderController.delegate = self
-        cancelOrderController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        cancelOrderController.providesPresentationContextTransitionStyle = true
-        cancelOrderController.definesPresentationContext = true
-        cancelOrderController.view.backgroundColor = UIColor.clearColor()
-        self.tabBarController?.presentViewController(cancelOrderController, animated: true, completion: nil)
+        var reasonController = TransactionCancelReasonOrderViewController(nibName: "TransactionCancelReasonOrderViewController", bundle: nil)
+        reasonController.delegate = self
+        reasonController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        reasonController.providesPresentationContextTransitionStyle = true
+        reasonController.definesPresentationContext = true
+        reasonController.view.backgroundColor = UIColor.clearColor()
+        reasonController.orderProductId = productModel.orderProductId
+        reasonController.invoiceNumber = invoiceNumber
+        self.tabBarController?.presentViewController(reasonController, animated: true, completion: nil)
+        
+//        var cancelOrderController = TransactionCancelOrderViewController(nibName: "TransactionCancelOrderViewController", bundle: nil)
+//        cancelOrderController.delegate = self
+//        cancelOrderController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+//        cancelOrderController.providesPresentationContextTransitionStyle = true
+//        cancelOrderController.definesPresentationContext = true
+//        cancelOrderController.view.backgroundColor = UIColor.clearColor()
+//        self.tabBarController?.presentViewController(cancelOrderController, animated: true, completion: nil)
     }
     
     // MARK : TransactionProductDescriptionTableViewCellDelegate
