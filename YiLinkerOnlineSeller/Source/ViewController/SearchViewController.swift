@@ -74,6 +74,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBAction func cancel(sender: AnyObject) {
         self.searchTextField.resignFirstResponder()
         self.cancelButton.hidden = true
+        self.searchTextField.text = ""
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
