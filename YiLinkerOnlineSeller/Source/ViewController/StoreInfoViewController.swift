@@ -80,7 +80,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         self.navigationController?.view.addSubview(dimView)
         dimView.hidden = true
         
-        self.hasQRCode = true
+        self.hasQRCode = false
         
         self.initializeViews()
         self.registerNibs()
