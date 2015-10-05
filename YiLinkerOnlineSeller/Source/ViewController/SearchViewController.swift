@@ -28,7 +28,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var filterBySelected: Int = 0
     var currentPage: Int = 0
     var nextpage: Int = 0
-    
+    var noResultToShow: Bool = false
     var allObjectArray: NSMutableArray = []
     var elements: NSMutableArray = []
     
@@ -142,13 +142,11 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 if !self.tableData.isEmpty {
                     return self.tableData.count
                 } else {
-                    self.noResultLabel.hidden = true
                     return 0
                 }
             } else if self.filterBySelected == 3 {
                 return self.riderNameArray.count
             } else {
-                self.noResultLabel.hidden = true
                 return 0
             }
         } else {
@@ -333,12 +331,22 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             if search == 2 {
                 let searchProductNameModel: SearchProductNameModel = SearchProductNameModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 println("\(searchProductNameModel.name.count)")
+                if searchProductNameModel.name.count == 0 {
+                    self.noResultLabel.hidden = false
+                } else {
+                    self.noResultLabel.hidden = false
+                }
                 for var i = 0; i < searchProductNameModel.name.count; i++ {
                     self.tableData.append(SearchProductNameModel(name2: searchProductNameModel.name[i], productId2: searchProductNameModel.productId[i]))
                 }
             } else {
                 var rider: NSArray = responseObject["data"] as! NSArray
                 println(responseObject["data"] as! NSArray)
+                if rider.count == 0 {
+                    self.noResultLabel.hidden = false
+                } else {
+                     self.noResultLabel.hidden = false
+                }
                 for var i: Int = 0; i < rider.count; i++ {
                     self.riderNameArray.append(rider[i] as! String)
                 }
