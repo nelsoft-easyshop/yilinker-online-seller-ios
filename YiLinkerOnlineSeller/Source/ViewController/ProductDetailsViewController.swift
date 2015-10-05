@@ -36,6 +36,8 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     var hud: MBProgressHUD?
     var emptyView: EmptyView?
     
+    var isEditable: Bool = false
+    
     var newFrame: CGRect!
     
     var productId: String = "1"
@@ -125,8 +127,9 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         navigationSpacer.width = -10
         
         self.navigationItem.leftBarButtonItems = [navigationSpacer, backButton]
-        self.navigationItem.rightBarButtonItem = editButton
-        
+        if isEditable {
+            self.navigationItem.rightBarButtonItem = editButton
+        }
     }
     
     func loadloadViewsWithDetails() {

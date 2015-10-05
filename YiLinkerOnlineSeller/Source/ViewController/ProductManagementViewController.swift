@@ -513,9 +513,12 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if Reachability.isConnectedToNetwork() {
-            if selectedIndex == 1 || selectedIndex == 2 || selectedIndex == 3 {
+            if selectedIndex != 4 {
                 let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
                 productDetails.productId = self.productModel.products[indexPath.row].id
+                if selectedIndex != 0 {
+                    productDetails.isEditable = true
+                }
                 self.navigationController?.pushViewController(productDetails, animated: true)
             }
         } else {
