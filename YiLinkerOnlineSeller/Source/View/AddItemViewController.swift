@@ -27,6 +27,7 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
     var selectedItemIDsIndex: [Int] = []
     
     var hud: MBProgressHUD?
+    var requestTask: NSURLSessionDataTask!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,36 +127,41 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: - Requests
     
     func requestGetProductList(key: String) {
-        self.showHUD()
-        
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-                                        "status": "2",
-                                        "keyword": key]
-        
-        manager.POST(APIAtlas.managementGetProductList, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-
-            self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
-            
-            if self.productModel.products.count != 0 {
-                self.tableView.reloadData()
-            } else {
-                self.emptyLabel.hidden = false
+        if Reachability.isConnectedToNetwork() {
+            if self.requestTask != nil {
+                self.requestTask.cancel()
+                self.requestTask = nil
             }
-            self.hud?.hide(true)
+            self.showHUD()
             
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+            let manager = APIManager.sharedInstance
+            let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
+                "status": "2",
+                "keyword": key]
+            
+            manager.POST(APIAtlas.managementGetProductList, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 
-                if task.statusCode == 401 {
-                    self.requestRefreshToken()
+                self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                
+                if self.productModel.products.count != 0 {
+                    self.tableView.reloadData()
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
-                    self.hud?.hide(true)
+                    self.emptyLabel.hidden = false
                 }
-        })
+                self.hud?.hide(true)
+                
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    
+                    if error.code != NSURLErrorCancelled {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+                        self.hud?.hide(true)
+                    }
+            })
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
+        }
     }
     
     func requestRefreshToken() {
