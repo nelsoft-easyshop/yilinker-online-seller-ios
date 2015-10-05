@@ -24,13 +24,14 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
     var selectedParentId: Int = 0
     
     var hud: MBProgressHUD?
+    var requestTask: NSURLSessionDataTask!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         if Reachability.isConnectedToNetwork() {
-            requestGetCustomizedCategories()
+            requestGetCustomizedCategories("")
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.failed)
         }
@@ -63,6 +64,7 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
         searchImage.contentMode = UIViewContentMode.Center
         searchBarTextField.leftView = searchImage
         searchBarTextField.leftViewMode = UITextFieldViewMode.Always
+        searchBarTextField.addTarget(self, action: "searchBarTextDidChanged:", forControlEvents: UIControlEvents.EditingChanged)
         
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         
@@ -84,34 +86,39 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
     
     // MARK: - Requests
     
-    func requestGetCustomizedCategories() {
-        self.showHUD()
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
-        
-        manager.POST(APIAtlas.getCustomizedCategories, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            self.customizedCategoriesModel = CustomizedCategoriesModel.parseDataWithDictionary(responseObject as! NSDictionary)
-            
-            if self.customizedCategoriesModel.customizedCategories.count != 0 {
-                self.tableView.reloadData()
-            } else {
-                self.emptyLabel.hidden = false
+    func requestGetCustomizedCategories(key: String) {
+        if Reachability.isConnectedToNetwork() {
+            if self.requestTask != nil {
+                self.requestTask.cancel()
+                self.requestTask = nil
             }
-            self.hud?.hide(true)
+            self.showHUD()
+            let manager = APIManager.sharedInstance
+            let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "queryString": key]
             
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+            self.requestTask = manager.POST(APIAtlas.getCustomizedCategories, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 
-                if task.statusCode == 401 {
-                    self.requestRefreshToken()
+                self.customizedCategoriesModel = CustomizedCategoriesModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                
+                if self.customizedCategoriesModel.customizedCategories.count != 0 {
+                    self.tableView.reloadData()
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
-                    self.hud?.hide(true)
+                    self.emptyLabel.hidden = false
                 }
-        })
+                self.hud?.hide(true)
+                
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    
+                    if error.code != NSURLErrorCancelled {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.wentWrong, title: AlertStrings.error)
+                        self.hud?.hide(true)
+                    }
+            })
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
+        }
     }
     
     func requestRefreshToken() {
@@ -127,7 +134,7 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
             
             self.hud?.hide(true)
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.requestGetCustomizedCategories()
+            self.requestGetCustomizedCategories(self.searchBarTextField.text)
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -191,6 +198,20 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
             self.selectedParentId = customizedCategoriesModel.customizedCategories[indexPath.row].categoryId
         }
         self.tableView.reloadData()
+    }
+    
+    // MARK: - Text Field Delegates
+    
+    func searchBarTextDidChanged(textField: UITextField) {
+        if count(self.searchBarTextField.text) > 2 || self.searchBarTextField.text == "" {
+            requestGetCustomizedCategories(self.searchBarTextField.text)
+        }
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.searchBarTextField.resignFirstResponder()
+        
+        return true
     }
     
 }
