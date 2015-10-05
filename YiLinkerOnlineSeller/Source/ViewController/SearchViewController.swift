@@ -48,6 +48,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var riderNameArray: [String] = []
     
+    @IBOutlet var cancelButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -61,11 +63,26 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.searchResultTableView.layoutMargins = UIEdgeInsetsZero
         //self.searchTextField.becomeFirstResponder()
         self.title = searchTitle
+        self.cancelButton.hidden = true
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func cancel(sender: AnyObject) {
+        self.searchTextField.resignFirstResponder()
+        self.cancelButton.hidden = true
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        self.cancelButton.hidden = false
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        self.searchTextField.resignFirstResponder()
+        self.cancelButton.hidden = true
     }
     
     func initializeViews() {

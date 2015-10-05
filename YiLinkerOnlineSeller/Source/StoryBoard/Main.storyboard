@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="PZ0-iH-fRI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="PZ0-iH-fRI">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -28,6 +28,7 @@
             <string>Panton-SemiBold</string>
         </mutableArray>
         <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
@@ -1570,12 +1571,28 @@
                                             <outlet property="delegate" destination="P4i-u7-5FG" id="IW4-BV-Khq"/>
                                         </connections>
                                     </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a0O-Jw-MfN">
+                                        <rect key="frame" x="303" y="2" width="48" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="G2K-ER-gyC"/>
+                                            <constraint firstAttribute="width" constant="48" id="K9d-7d-Nyu"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="cancel:" destination="aQm-jw-7MA" eventType="touchUpInside" id="1zq-Bb-CaW"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="aZB-TK-5J6" firstAttribute="top" secondItem="a0O-Jw-MfN" secondAttribute="bottom" constant="-32" id="9IG-g5-8TC"/>
                                     <constraint firstAttribute="bottom" secondItem="7dG-Ed-1dH" secondAttribute="bottom" id="DLi-85-ZMl"/>
                                     <constraint firstItem="bYM-ay-3oQ" firstAttribute="top" secondItem="P4i-u7-5FG" secondAttribute="top" id="FUM-d8-Y3N"/>
                                     <constraint firstItem="7dG-Ed-1dH" firstAttribute="leading" secondItem="xNt-4E-Mci" secondAttribute="trailing" constant="-1" id="LFU-pE-OEf"/>
+                                    <constraint firstItem="a0O-Jw-MfN" firstAttribute="leading" secondItem="aZB-TK-5J6" secondAttribute="trailing" constant="-56" id="P9p-lw-A90"/>
                                     <constraint firstAttribute="height" constant="34" id="PGY-Ph-spU"/>
                                     <constraint firstItem="bYM-ay-3oQ" firstAttribute="leading" secondItem="7dG-Ed-1dH" secondAttribute="trailing" constant="1" id="TGc-Wm-dxp"/>
                                     <constraint firstItem="bYM-ay-3oQ" firstAttribute="leading" secondItem="7dG-Ed-1dH" secondAttribute="trailing" constant="1" id="XA0-RU-XVI"/>
@@ -1584,8 +1601,8 @@
                                     <constraint firstItem="xNt-4E-Mci" firstAttribute="leading" secondItem="P4i-u7-5FG" secondAttribute="leading" id="mBS-an-Pc7"/>
                                     <constraint firstAttribute="bottom" secondItem="xNt-4E-Mci" secondAttribute="bottom" id="qXL-R7-xaK"/>
                                     <constraint firstItem="7dG-Ed-1dH" firstAttribute="top" secondItem="P4i-u7-5FG" secondAttribute="top" id="tH5-Mc-LGd"/>
+                                    <constraint firstAttribute="trailing" secondItem="aZB-TK-5J6" secondAttribute="trailing" id="tj6-j0-gJD"/>
                                     <constraint firstItem="xNt-4E-Mci" firstAttribute="top" secondItem="P4i-u7-5FG" secondAttribute="top" id="y8e-I0-fBZ"/>
-                                    <constraint firstAttribute="trailing" secondItem="aZB-TK-5J6" secondAttribute="trailing" id="z4f-oa-HaB"/>
                                     <constraint firstAttribute="bottom" secondItem="bYM-ay-3oQ" secondAttribute="bottom" id="zbS-NN-Ssw"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
@@ -1624,6 +1641,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="arrowView" destination="7dG-Ed-1dH" id="RJN-oP-VLa"/>
+                        <outlet property="cancelButton" destination="a0O-Jw-MfN" id="WBr-Ok-aoa"/>
                         <outlet property="dimView" destination="wyL-yh-FrS" id="ZeJ-bc-3wE"/>
                         <outlet property="filterByButton" destination="xNt-4E-Mci" id="Pav-Bg-hGo"/>
                         <outlet property="filterByTableView" destination="OEV-I3-Q9s" id="Sgm-yh-Mra"/>
@@ -1634,7 +1652,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Chg-4g-o66" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7176.5" y="2669.5"/>
+            <point key="canvasLocation" x="6450.5" y="2640.5"/>
         </scene>
         <!--Message-->
         <scene sceneID="TIG-sW-NPB">
