@@ -197,7 +197,7 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
     func collectionView(collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-            return CGSizeMake(collectionView.bounds.size.width, CGFloat(139.0))
+            return CGSizeMake(collectionView.bounds.size.width, CGFloat(46.0))
     }
     
     /*
