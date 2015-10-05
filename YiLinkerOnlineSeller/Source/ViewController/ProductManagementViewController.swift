@@ -485,16 +485,23 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
             cell.subTitleLabel.text = self.productModel.products[indexPath.row].category
 
-            if selectedIndex == 4 || selectedIndex == 5 {
+//            if selectedIndex == 4 || selectedIndex == 5 {
+//                cell.arrowImageView.hidden = true
+//                if selectedIndex == 4 {
+//                    cell.decreaseAlpha()
+//                } else {
+//                    cell.checkTapView.hidden = true
+//                }
+//            } else {
+//                cell.arrowImageView.hidden = false
+//                cell.checkTapView.hidden = false   
+//            }
+
+            if selectedIndex == 4 {
                 cell.arrowImageView.hidden = true
-                if selectedIndex == 4 {
-                    cell.decreaseAlpha()
-                } else {
-                    cell.checkTapView.hidden = true
-                }
+                cell.decreaseAlpha()
             } else {
                 cell.arrowImageView.hidden = false
-                cell.checkTapView.hidden = false   
             }
             
             return cell
@@ -516,7 +523,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             if selectedIndex != 4 {
                 let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
                 productDetails.productId = self.productModel.products[indexPath.row].id
-                if selectedIndex != 0 {
+                if selectedIndex == 1 || selectedIndex == 2 || selectedIndex == 3 {
                     productDetails.isEditable = true
                 }
                 self.navigationController?.pushViewController(productDetails, animated: true)
