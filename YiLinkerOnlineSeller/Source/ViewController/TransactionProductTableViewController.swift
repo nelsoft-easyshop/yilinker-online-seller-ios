@@ -74,15 +74,21 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
             tableHeaderView.images.append(productModel.productImage)
         }
         
-        if tableFooterView == nil {
-            tableFooterView = XibHelper.puffViewWithNibName("TransactionProductDetailsFooterView", index: 0) as! TransactionProductDetailsFooterView
-            tableFooterView.delegate = self
-            tableFooterView.frame.size.width = self.view.frame.size.width
-            tableFooterView.frame.size.height = 65
+        if productModel.isCancellable {
+            if tableFooterView == nil {
+                tableFooterView = XibHelper.puffViewWithNibName("TransactionProductDetailsFooterView", index: 0) as! TransactionProductDetailsFooterView
+                tableFooterView.delegate = self
+                tableFooterView.frame.size.width = self.view.frame.size.width
+                tableFooterView.frame.size.height = 65
+                
+                
+                self.tableView.tableFooterView = tableFooterView
+            }
+        } else {
+            self.tableView.tableFooterView = UIView(frame: CGRectZero)
         }
         
         self.tableView.tableHeaderView = tableHeaderView
-        self.tableView.tableFooterView = tableFooterView
     }
     
     func initializeAttributes() {
@@ -378,6 +384,8 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
     // MARK: - TransactionCancelOrderSuccessViewControllerDelegate
     func closeCancelOrderSuccessViewController() {
         hideDimView()
+        productModel.isCancellable = false
+        initializeTableView()
     }
     
     func returnToDashboardAction() {
