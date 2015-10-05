@@ -9,6 +9,19 @@
 import UIKit
 import AVFoundation
 
+
+struct MessageThreadStrings {
+    static let send = StringHelper.localizedStringWithKey("MESSAGING_SEND")
+    static let online = StringHelper.localizedStringWithKey("MESSAGING_ONLINE")
+    static let offline = StringHelper.localizedStringWithKey("MESSAGING_OFFLINE")
+    
+    static let errorMessage = StringHelper.localizedStringWithKey("MESSAGING_ERROR_MESSAGE")
+    static let errorTitle = StringHelper.localizedStringWithKey("MESSAGING_ERROR_TITLE")
+    static let connectionUnreachableTitle = StringHelper.localizedStringWithKey("CONNECTION_UNREACHABLE_LOCALIZE_KEY")
+    static let connectionUnreachableMessage = StringHelper.localizedStringWithKey("PLEASE_CHECK_INTERNET_LOCALIZE_KEY")
+    static let ok = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
+}
+
 class MessageThreadVC: UIViewController {
     
     let captureSession = AVCaptureSession()
@@ -24,6 +37,7 @@ class MessageThreadVC: UIViewController {
     @IBOutlet weak var composeViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var composeTextView: TextViewAutoHeight!
     @IBOutlet weak var composeTVConstraint: NSLayoutConstraint!
+    @IBOutlet weak var sendButton: UIButton!
     
     let composeViewHeight : CGFloat = 50.0
     
@@ -44,7 +58,6 @@ class MessageThreadVC: UIViewController {
     
     @IBOutlet weak var cameraButton: UIButton!
     
-    @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var bottomLayoutConstraint: NSLayoutConstraint!
     
     var imagePlaced : Bool = false
@@ -199,6 +212,7 @@ class MessageThreadVC: UIViewController {
         /* set message as read */
         var r_temp = recipient?.userId ?? ""
         self.setConversationAsReadFromEndpoint(r_temp)
+        self.sendButton.titleLabel?.text = LocalizedStrings.send
     }
     
     func tableTapped(tap : UITapGestureRecognizer){

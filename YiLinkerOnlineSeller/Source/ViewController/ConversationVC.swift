@@ -8,6 +8,28 @@
 
 import UIKit
 
+struct LocalizedStrings{
+    static let title = StringHelper.localizedStringWithKey("MESSAGING_TITLE")
+    static let errorMessage = StringHelper.localizedStringWithKey("MESSAGING_ERROR_MESSAGE")
+    static let errorTitle = StringHelper.localizedStringWithKey("MESSAGING_ERROR_TITLE")
+    static let titleNewMessage = StringHelper.localizedStringWithKey("MESSAGING_NEW")
+    static let online = StringHelper.localizedStringWithKey("MESSAGING_ONLINE")
+    static let offline = StringHelper.localizedStringWithKey("MESSAGING_OFFLINE")
+    
+    
+    static let send = StringHelper.localizedStringWithKey("MESSAGING_SEND")
+    static let camera = StringHelper.localizedStringWithKey("MESSAGING_CAMERA")
+    static let cameraRoll = StringHelper.localizedStringWithKey("MESSAGING_CAMERA_ROLL")
+    static let connectionUnreachableTitle = StringHelper.localizedStringWithKey("CONNECTION_UNREACHABLE_LOCALIZE_KEY")
+    static let connectionUnreachableMessage = StringHelper.localizedStringWithKey("PLEASE_CHECK_INTERNET_LOCALIZE_KEY")
+    static let pickImageFirst = StringHelper.localizedStringWithKey("MESSAGING_PICK_IMAGE_ERROR")
+    static let ok = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
+    static let saveFailed = StringHelper.localizedStringWithKey("MESSAGING_SAVE_FAILED")
+    static let saveFailedMessage = StringHelper.localizedStringWithKey("MESSAGING_SAVE_FAILED_MESSAGE")
+    
+    static let seen = StringHelper.localizedStringWithKey("MESSAGING_SEEN")
+}
+
 class ConversationVC: UIViewController, EmptyViewDelegate{
     
     @IBOutlet weak var conversationTableView: UITableView!
@@ -88,6 +110,8 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
         self.contentViewFrame = self.view.frame
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        self.navigationItem.title = ContactListStrings.title
         /*
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistration:",
         name: appDelegate.registrationKey, object: nil)
@@ -203,7 +227,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                         self.fireRefreshToken()
                     }
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ConversationStrings.errorMessage, title: ConversationStrings.errorTitle)
                 }
                 
                 //SVProgressHUD.dismiss()
@@ -238,7 +262,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                             self.fireRefreshToken()
                         }
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ConversationStrings.errorMessage, title: ConversationStrings.errorTitle)
                     }
                     
                     //SVProgressHUD.dismiss()
@@ -288,7 +312,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                                 self.fireRefreshToken()
                             }
                         } else {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ConversationStrings.errorMessage, title: ConversationStrings.errorTitle)
                         }
                         
                         self.conversations = Array<W_Conversation>()
@@ -318,7 +342,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ConversationStrings.errorMessage, title: ConversationStrings.errorTitle)
         })
         
     }

@@ -23,6 +23,7 @@ class MessageThreadImageTVC: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        seen_label.text = LocalizedStrings.seen
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -43,3 +44,4 @@ class MessageThreadImageTVC: UITableViewCell {
     }
 
 }
+
