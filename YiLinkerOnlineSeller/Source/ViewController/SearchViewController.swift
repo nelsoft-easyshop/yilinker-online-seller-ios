@@ -22,12 +22,13 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var filterByButton: DynamicRoundedButton!
     
+    @IBOutlet var noResultLabel: UILabel!
     @IBOutlet weak var arrowView: UIView!
     
     var filterBySelected: Int = 0
     var currentPage: Int = 0
     var nextpage: Int = 0
-    
+    var noResultToShow: Bool = false
     var allObjectArray: NSMutableArray = []
     var elements: NSMutableArray = []
     
@@ -36,7 +37,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     let transaction: String = StringHelper.localizedStringWithKey("SEARCH_TRANSACTION_LOCALIZE_KEY")
     let productName: String = StringHelper.localizedStringWithKey("SEARCH_PRODUCT_LOCALIZE_KEY")
     let rider: String = StringHelper.localizedStringWithKey("SEARCH_RIDER_LOCALIZE_KEY")
-    
+    let noResult: String = StringHelper.localizedStringWithKey("SEARCH_RIDER_LOCALIZE_KEY")
     var filterBy: [String] = []
     
     var hud: MBProgressHUD?
@@ -47,6 +48,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var transactionModel: TransactionModel?
     
     var riderNameArray: [String] = []
+    
+    @IBOutlet var cancelButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,11 +64,35 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.searchResultTableView.layoutMargins = UIEdgeInsetsZero
         //self.searchTextField.becomeFirstResponder()
         self.title = searchTitle
+        self.cancelButton.hidden = true
+        self.noResultLabel.hidden = true
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func cancel(sender: AnyObject) {
+        self.searchTextField.resignFirstResponder()
+        self.cancelButton.hidden = true
+        self.searchTextField.text = ""
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        self.searchTextField.addToolBarWithTargetSearch(self, done: "done")
+        self.cancelButton.hidden = false
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        self.searchTextField.resignFirstResponder()
+        self.cancelButton.hidden = true
+    }
+    
+    func done() {
+        self.searchTextField.resignFirstResponder()
+        self.cancelButton.hidden = true
+        self.textFieldShouldReturn(self.searchTextField!)
     }
     
     func initializeViews() {
@@ -142,6 +169,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             if self.filterBySelected == 2 {
                 if !self.tableData.isEmpty {
                     cell.invoiceNumberLabel.text = self.tableData[indexPath.row].name2
+                   
                 }
             } else {
                 if !self.riderNameArray.isEmpty {
@@ -303,12 +331,22 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             if search == 2 {
                 let searchProductNameModel: SearchProductNameModel = SearchProductNameModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 println("\(searchProductNameModel.name.count)")
+                if searchProductNameModel.name.count == 0 {
+                    self.noResultLabel.hidden = false
+                } else {
+                    self.noResultLabel.hidden = false
+                }
                 for var i = 0; i < searchProductNameModel.name.count; i++ {
                     self.tableData.append(SearchProductNameModel(name2: searchProductNameModel.name[i], productId2: searchProductNameModel.productId[i]))
                 }
             } else {
                 var rider: NSArray = responseObject["data"] as! NSArray
                 println(responseObject["data"] as! NSArray)
+                if rider.count == 0 {
+                    self.noResultLabel.hidden = false
+                } else {
+                     self.noResultLabel.hidden = false
+                }
                 for var i: Int = 0; i < rider.count; i++ {
                     self.riderNameArray.append(rider[i] as! String)
                 }
