@@ -64,9 +64,9 @@
                                         </state>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="facebook" translatesAutoresizingMaskIntoConstraints="NO" id="uAp-Dj-xqG">
-                                        <rect key="frame" x="110" y="0.0" width="38" height="36"/>
+                                        <rect key="frame" x="110" y="0.0" width="25" height="36"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="38" id="OaY-8z-8Z8"/>
+                                            <constraint firstAttribute="width" constant="25" id="OaY-8z-8Z8"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
@@ -94,9 +94,9 @@
                                 <rect key="frame" x="175" y="54" width="180" height="36"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="twitter" translatesAutoresizingMaskIntoConstraints="NO" id="DNM-zQ-UIY">
-                                        <rect key="frame" x="110" y="0.0" width="38" height="36"/>
+                                        <rect key="frame" x="110" y="0.0" width="25" height="36"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="38" id="ic1-Xt-uw7"/>
+                                            <constraint firstAttribute="width" constant="25" id="ic1-Xt-uw7"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SHARE WITH" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="230-YQ-UJ2">
@@ -140,9 +140,9 @@
                                 <rect key="frame" x="175" y="142" width="180" height="36"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mail" translatesAutoresizingMaskIntoConstraints="NO" id="W1c-7t-gP2">
-                                        <rect key="frame" x="110" y="0.0" width="38" height="36"/>
+                                        <rect key="frame" x="110" y="0.0" width="25" height="36"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="38" id="0HH-tW-Mk0"/>
+                                            <constraint firstAttribute="width" constant="25" id="0HH-tW-Mk0"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SHARE WITH" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e34-Z6-XMQ">
@@ -185,9 +185,9 @@
                                 <rect key="frame" x="175" y="98" width="180" height="36"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="google+" translatesAutoresizingMaskIntoConstraints="NO" id="Cmt-oa-cEd">
-                                        <rect key="frame" x="110" y="0.0" width="38" height="36"/>
+                                        <rect key="frame" x="110" y="0.0" width="25" height="36"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="38" id="wdd-I1-d3k"/>
+                                            <constraint firstAttribute="width" constant="25" id="wdd-I1-d3k"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SHARE WITH" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rRv-3c-SLW">
