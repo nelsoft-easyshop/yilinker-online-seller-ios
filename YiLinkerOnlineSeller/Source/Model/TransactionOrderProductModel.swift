@@ -35,9 +35,11 @@ class TransactionOrderProductModel: NSObject {
     var weight: String = ""
     var fullDescription: String = ""
     var shortDescription: String = ""
+    var isCancellable: Bool = false
+    var isShippable: Bool = false
     var transactionOrderItemStatus: TransactionOrderItemStatus = TransactionOrderItemStatus.UnSelected
     
-    init(orderProductId: String, productId: String, quantity: Int, unitPrice: String, totalPrice: String, productName: String, handlingFee: String, dateAdded: String, lastDateModified: String, orderProductStatusId: Int, orderProductStatusName: String, orderProductStatusDescription: String, productImage: String, sku: String, attributes: [Attribute], originalUnitPrice: String, discount: String, width: String, height: String, length: String, weight: String, fullDescription: String, shortDescription: String) {
+    init(orderProductId: String, productId: String, quantity: Int, unitPrice: String, totalPrice: String, productName: String, handlingFee: String, dateAdded: String, lastDateModified: String, orderProductStatusId: Int, orderProductStatusName: String, orderProductStatusDescription: String, productImage: String, sku: String, attributes: [Attribute], originalUnitPrice: String, discount: String, width: String, height: String, length: String, weight: String, fullDescription: String, shortDescription: String, isCancellable: Bool, isShippable: Bool) {
         
         self.orderProductId = orderProductId
         self.productId = productId
@@ -62,6 +64,8 @@ class TransactionOrderProductModel: NSObject {
         self.weight = weight
         self.fullDescription = fullDescription
         self.shortDescription = shortDescription
+        self.isCancellable = isCancellable
+        self.isShippable = isShippable
         
     }
     
@@ -90,6 +94,8 @@ class TransactionOrderProductModel: NSObject {
         var weight: String = ""
         var fullDescription: String = ""
         var shortDescription: String = ""
+        var isCancellable: Bool = false
+        var isShippable: Bool = false
         
         if dictionary.isKindOfClass(NSDictionary) {
             if dictionary["productId"] != nil {
@@ -243,9 +249,21 @@ class TransactionOrderProductModel: NSObject {
                     shortDescription = tempVar
                 }
             }
+            
+            if dictionary["isCancellable"] != nil {
+                if let tempVar = dictionary["isCancellable"] as? Bool {
+                    isCancellable = tempVar
+                }
+            }
+            
+            if dictionary["isShippable"] != nil {
+                if let tempVar = dictionary["isShippable"] as? Bool {
+                    isShippable = tempVar
+                }
+            }
         }
         
-        return TransactionOrderProductModel(orderProductId: orderProductId, productId: productId, quantity: quantity, unitPrice: unitPrice, totalPrice: totalPrice, productName: productName, handlingFee: handlingFee, dateAdded: dateAdded, lastDateModified: lastDateModified, orderProductStatusId: orderProductStatusId, orderProductStatusName: orderProductStatusName, orderProductStatusDescription: orderProductStatusDescription, productImage: productImage, sku: sku, attributes: attributes, originalUnitPrice: originalUnitPrice, discount: discount, width: width, height: height, length: length, weight: weight, fullDescription: fullDescription, shortDescription: shortDescription)
+        return TransactionOrderProductModel(orderProductId: orderProductId, productId: productId, quantity: quantity, unitPrice: unitPrice, totalPrice: totalPrice, productName: productName, handlingFee: handlingFee, dateAdded: dateAdded, lastDateModified: lastDateModified, orderProductStatusId: orderProductStatusId, orderProductStatusName: orderProductStatusName, orderProductStatusDescription: orderProductStatusDescription, productImage: productImage, sku: sku, attributes: attributes, originalUnitPrice: originalUnitPrice, discount: discount, width: width, height: height, length: length, weight: weight, fullDescription: fullDescription, shortDescription: shortDescription, isCancellable: isCancellable, isShippable: isShippable)
     }
 
     

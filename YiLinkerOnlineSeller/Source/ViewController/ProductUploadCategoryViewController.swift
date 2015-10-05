@@ -127,7 +127,27 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         //self.delegate!.productUploadCategoryViewController(didSelectCategory: self.titles[indexPath.row])
         
         var categoryModel: CategoryModel = self.categories[indexPath.row]
-        if categoryModel.hasChildren == "1" {
+        
+        if self.userType == UserType.Seller {
+            if categoryModel.hasChildren == "1" {
+                let productUploadCategoryViewController: ProductUploadCategoryViewController = ProductUploadCategoryViewController(nibName: "ProductUploadCategoryViewController", bundle: nil)
+                productUploadCategoryViewController.pageTitle = categoryModel.name
+                productUploadCategoryViewController.parentID = categoryModel.uid
+                productUploadCategoryViewController.userType = self.userType
+                self.navigationController!.pushViewController(productUploadCategoryViewController, animated: true)
+            } else {
+                let uploadViewController: ProductUploadTableViewController = self.navigationController!.viewControllers[0] as! ProductUploadTableViewController
+                uploadViewController.didSelecteCategory(categoryModel)
+                self.navigationController!.popToRootViewControllerAnimated(true)
+                
+            }
+        } else {
+            let resellerViewController: ResellerItemViewController = ResellerItemViewController(nibName: "ResellerItemViewController", bundle: nil)
+            resellerViewController.categoryModel = categoryModel
+            self.navigationController?.pushViewController(resellerViewController, animated: true)
+        }
+        
+        /*if categoryModel.hasChildren == "1" {
             let productUploadCategoryViewController: ProductUploadCategoryViewController = ProductUploadCategoryViewController(nibName: "ProductUploadCategoryViewController", bundle: nil)
             productUploadCategoryViewController.pageTitle = categoryModel.name
             productUploadCategoryViewController.parentID = categoryModel.uid
@@ -143,7 +163,12 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
                 resellerViewController.categoryModel = categoryModel
                 self.navigationController?.pushViewController(resellerViewController, animated: true)
             }
-        }
+            
+            let uploadViewController: ProductUploadTableViewController = self.navigationController!.viewControllers[0] as! ProductUploadTableViewController
+            uploadViewController.didSelecteCategory(categoryModel)
+            self.navigationController!.popToRootViewControllerAnimated(true)
+         
+        }*/
      
     }
     
