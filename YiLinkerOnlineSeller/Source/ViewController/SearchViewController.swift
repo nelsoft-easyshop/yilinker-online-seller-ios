@@ -22,6 +22,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var filterByButton: DynamicRoundedButton!
     
+    @IBOutlet var noResultLabel: UILabel!
     @IBOutlet weak var arrowView: UIView!
     
     var filterBySelected: Int = 0
@@ -36,7 +37,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     let transaction: String = StringHelper.localizedStringWithKey("SEARCH_TRANSACTION_LOCALIZE_KEY")
     let productName: String = StringHelper.localizedStringWithKey("SEARCH_PRODUCT_LOCALIZE_KEY")
     let rider: String = StringHelper.localizedStringWithKey("SEARCH_RIDER_LOCALIZE_KEY")
-    
+    let noResult: String = StringHelper.localizedStringWithKey("SEARCH_RIDER_LOCALIZE_KEY")
     var filterBy: [String] = []
     
     var hud: MBProgressHUD?
@@ -64,6 +65,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //self.searchTextField.becomeFirstResponder()
         self.title = searchTitle
         self.cancelButton.hidden = true
+        self.noResultLabel.hidden = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -78,12 +80,19 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
+        self.searchTextField.addToolBarWithTargetSearch(self, done: "done")
         self.cancelButton.hidden = false
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
         self.searchTextField.resignFirstResponder()
         self.cancelButton.hidden = true
+    }
+    
+    func done() {
+        self.searchTextField.resignFirstResponder()
+        self.cancelButton.hidden = true
+        self.textFieldShouldReturn(self.searchTextField!)
     }
     
     func initializeViews() {
@@ -133,11 +142,13 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 if !self.tableData.isEmpty {
                     return self.tableData.count
                 } else {
+                    self.noResultLabel.hidden = true
                     return 0
                 }
             } else if self.filterBySelected == 3 {
                 return self.riderNameArray.count
             } else {
+                self.noResultLabel.hidden = true
                 return 0
             }
         } else {
@@ -160,6 +171,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             if self.filterBySelected == 2 {
                 if !self.tableData.isEmpty {
                     cell.invoiceNumberLabel.text = self.tableData[indexPath.row].name2
+                   
                 }
             } else {
                 if !self.riderNameArray.isEmpty {

@@ -58,6 +58,7 @@
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -1492,6 +1493,11 @@
                                     <outlet property="delegate" destination="nOb-Vl-TXr" id="7Gh-fd-Ggt"/>
                                 </connections>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No result found." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAN-Ux-RhM">
+                                <rect key="frame" x="8" y="323" width="359" height="21"/>
+                                <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wyL-yh-FrS">
                                 <rect key="frame" x="0.0" y="114" width="375" height="520"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1620,21 +1626,25 @@
                             <constraint firstAttribute="trailing" secondItem="P4i-u7-5FG" secondAttribute="trailing" constant="8" id="6Zq-jX-agm"/>
                             <constraint firstAttribute="trailing" secondItem="3aD-Xm-eWu" secondAttribute="trailing" id="8vE-lw-2Kc"/>
                             <constraint firstItem="Kw1-t8-18t" firstAttribute="top" secondItem="P4i-u7-5FG" secondAttribute="bottom" constant="8" id="DpW-Ro-u4H"/>
+                            <constraint firstItem="dAN-Ux-RhM" firstAttribute="leading" secondItem="nOb-Vl-TXr" secondAttribute="leading" constant="8" id="GGC-CA-F9b"/>
                             <constraint firstItem="ytg-6M-24S" firstAttribute="leading" secondItem="nOb-Vl-TXr" secondAttribute="leading" id="HWb-o8-aab"/>
                             <constraint firstItem="P4i-u7-5FG" firstAttribute="top" secondItem="cKA-AC-DhN" secondAttribute="bottom" constant="8" id="IKj-iM-fgF"/>
                             <constraint firstItem="wyL-yh-FrS" firstAttribute="top" secondItem="nOb-Vl-TXr" secondAttribute="top" constant="114" id="IPq-7Z-swr"/>
                             <constraint firstItem="3aD-Xm-eWu" firstAttribute="leading" secondItem="nOb-Vl-TXr" secondAttribute="leading" id="Iu7-0h-nvG"/>
                             <constraint firstItem="wyL-yh-FrS" firstAttribute="leading" secondItem="nOb-Vl-TXr" secondAttribute="leading" id="KNN-ck-mXl"/>
                             <constraint firstAttribute="trailing" secondItem="ytg-6M-24S" secondAttribute="trailing" id="M4m-vV-YYs"/>
+                            <constraint firstAttribute="trailing" secondItem="dAN-Ux-RhM" secondAttribute="trailing" constant="8" id="RQK-gV-ZK9"/>
                             <constraint firstItem="ytg-6M-24S" firstAttribute="top" secondItem="P4i-u7-5FG" secondAttribute="bottom" constant="8" id="VTz-mW-Yb3"/>
                             <constraint firstItem="ytg-6M-24S" firstAttribute="top" secondItem="P4i-u7-5FG" secondAttribute="bottom" constant="8" id="Yh9-wk-FW4"/>
                             <constraint firstItem="Kw1-t8-18t" firstAttribute="leading" secondItem="nOb-Vl-TXr" secondAttribute="leading" id="b3l-sX-tdg"/>
                             <constraint firstItem="ytg-6M-24S" firstAttribute="leading" secondItem="nOb-Vl-TXr" secondAttribute="leading" id="gfg-zi-glw"/>
+                            <constraint firstItem="dAN-Ux-RhM" firstAttribute="top" secondItem="cKA-AC-DhN" secondAttribute="bottom" constant="259" id="jEV-vs-a9i"/>
                             <constraint firstItem="P4i-u7-5FG" firstAttribute="leading" secondItem="nOb-Vl-TXr" secondAttribute="leading" constant="8" id="kaf-bt-ize"/>
                             <constraint firstAttribute="trailing" secondItem="Kw1-t8-18t" secondAttribute="trailing" id="pLD-2X-85T"/>
                             <constraint firstAttribute="bottom" secondItem="ytg-6M-24S" secondAttribute="bottom" constant="72" id="t2R-Rc-V9K"/>
                             <constraint firstItem="VdL-4l-7VO" firstAttribute="top" secondItem="wyL-yh-FrS" secondAttribute="bottom" constant="-16" id="vj7-97-T1Q"/>
                             <constraint firstAttribute="trailing" secondItem="ytg-6M-24S" secondAttribute="trailing" id="vkR-fW-jgU"/>
+                            <constraint firstAttribute="centerX" secondItem="dAN-Ux-RhM" secondAttribute="centerX" id="ztg-7d-eBa"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Search" id="HeZ-OQ-l0k"/>
@@ -1645,6 +1655,7 @@
                         <outlet property="dimView" destination="wyL-yh-FrS" id="ZeJ-bc-3wE"/>
                         <outlet property="filterByButton" destination="xNt-4E-Mci" id="Pav-Bg-hGo"/>
                         <outlet property="filterByTableView" destination="OEV-I3-Q9s" id="Sgm-yh-Mra"/>
+                        <outlet property="noResultLabel" destination="dAN-Ux-RhM" id="pzN-uL-Dcs"/>
                         <outlet property="searchFilterByView" destination="Kw1-t8-18t" id="TCP-Yn-jXF"/>
                         <outlet property="searchResultTableView" destination="ytg-6M-24S" id="tbN-ge-jrj"/>
                         <outlet property="searchTextField" destination="aZB-TK-5J6" id="HQU-wa-ISw"/>
