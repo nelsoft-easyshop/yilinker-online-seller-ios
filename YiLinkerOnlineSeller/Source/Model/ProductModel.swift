@@ -134,21 +134,39 @@ class ProductModel {
                 }
                 
                 var combination = CombinationModel()
-                for subValue in value["productProperties"] as! NSArray {
-                    combination.combinationID = subValue["id"] as! String
-                    combination.attributes = subValue["attributes"] as! NSArray as! [NSMutableDictionary]
-                    combination.retailPrice = subValue["price"] as! String
-                    combination.discountedPrice = subValue["discountedPrice"] as! String
-                    combination.quantity = String(subValue["quantity"] as! Int)
-                    combination.sku = subValue["sku"] as! String
-                    combination.images = subValue["images"] as! NSArray as! [UIImage]
+                let properties: NSArray = value["productProperties"] as! NSArray
+                if properties.count == 0 {
+                    combination.combinationID = ""
+                    combination.attributes = []
+                    combination.retailPrice = "0.0"
+                    combination.discountedPrice = "0.0"
+                    combination.quantity = "0"
+                    combination.sku = ""
+                    combination.images = []
                     
-                    combination.weight = subValue["unitWeight"] as! String
-                    combination.height = subValue["unitHeight"] as! String
-                    combination.length = subValue["unitLength"] as! String
-                    combination.width = subValue["unitWidth"] as! String
+                    combination.weight = "0.0"
+                    combination.height = "0.0"
+                    combination.length = "0.0"
+                    combination.width = "0.0"
                     
                     validCombinations.append(combination)
+                } else {
+                    for subValue in value["productProperties"] as! NSArray {
+                        combination.combinationID = subValue["id"] as! String
+                        combination.attributes = subValue["attributes"] as! NSArray as! [NSMutableDictionary]
+                        combination.retailPrice = subValue["price"] as! String
+                        combination.discountedPrice = subValue["discountedPrice"] as! String
+                        combination.quantity = String(subValue["quantity"] as! Int)
+                        combination.sku = subValue["sku"] as! String
+                        combination.images = subValue["images"] as! NSArray as! [UIImage]
+                        
+                        combination.weight = subValue["unitWeight"] as! String
+                        combination.height = subValue["unitHeight"] as! String
+                        combination.length = subValue["unitLength"] as! String
+                        combination.width = subValue["unitWidth"] as! String
+                        
+                        validCombinations.append(combination)
+                    }
                 }
                 
             } // data
