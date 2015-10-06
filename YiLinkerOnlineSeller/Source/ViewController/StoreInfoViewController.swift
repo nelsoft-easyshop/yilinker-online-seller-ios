@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol StoreInfoViewControllerDelegate {
-    
-}
-
 class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate, CongratulationsViewControllerDelegate, UzysAssetsPickerControllerDelegate{
     
     var storeInfoModel: StoreInfoModel?
@@ -84,7 +80,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         self.initializeViews()
         self.registerNibs()
-        
+        self.fireStoreInfo()
         self.backButton()
         
         var tap = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
@@ -100,7 +96,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     }
     
     override func viewDidAppear(animated: Bool) {
-        self.fireStoreInfo()
+       
     }
     
     //MARK: Initialize views
@@ -553,14 +549,11 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         manager.POST(APIAtlas.sellerChangeMobileNumber, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             if responseObject["isSuccessful"] as! Bool {
-                self.storeInfoModel?.contact_number = newNumber
+                //self.storeInfoModel?.contact_number = newNumber
                 self.verifyOrChange = 1
-                self.storeInfoVerify()
                 println(self.verifyOrChange)
-                //self.mobileNumber = newNumber
-                println(self.mobileNumber)
-                println(responseObject.description)
-                self.tableView.reloadData()
+                self.mobileNumber = newNumber
+                self.storeInfoVerify()
                 self.hud?.hide(true)
             } else {
                 self.showAlert("Error", message: responseObject["message"] as! String)
@@ -632,6 +625,11 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 self.hud?.hide(true)
         })
         
+    }
+    
+    func getStoreInfo() {
+        self.fireStoreInfo()
+        self.tableView.reloadData()
     }
 
     //MARK: Show MBProgressHUD bar
