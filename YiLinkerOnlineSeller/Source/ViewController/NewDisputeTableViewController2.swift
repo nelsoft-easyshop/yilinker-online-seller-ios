@@ -26,6 +26,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     var transactionsModel: TransactionsModel = TransactionsModel()
     var transactionDefaultIndex: Int = 0
     var disputeTypeDefaultIndex: Int = 0
+    var reasonDefaultIndex: Int = 0
     
     var currentTextField: UITextField = UITextField()
     let disputeType: [String] = ["Refund", "Replacement"]
@@ -288,7 +289,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             } else if disputeRefreshType == DisputeRefreshType.AddCase{
                 self.fireAddCase(self.remarks)
             } else {
-                
+                self.fireGetReasons()
             }
 
             self.hud?.hide(true)
@@ -327,7 +328,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         } else if self.disputePickerType == DisputePickerType.DisputeType {
             pickerView.selectRow(self.disputeTypeDefaultIndex, inComponent: 0, animated: false)
         } else {
-            
+            pickerView.selectRow(self.reasonDefaultIndex, inComponent: 0, animated: false)
         }
         
         if self.disputePickerType == DisputePickerType.TransactionList {
@@ -336,7 +337,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         } else if self.disputePickerType == DisputePickerType.DisputeType {
             self.currentTextField.text = self.disputeType[self.disputeTypeDefaultIndex]
         } else {
-            
+            self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons[self.reasonDefaultIndex].reason
         }
         
         textField.inputView = pickerView
@@ -355,7 +356,8 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             self.disputeTypeDefaultIndex = row
             self.currentTextField.text = self.disputeType[row]
         } else {
-            
+            self.reasonDefaultIndex = row
+            self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons[row].reason
         }
     }
     
@@ -367,9 +369,9 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         if self.disputePickerType == DisputePickerType.TransactionList {
            return self.transactionsModel.transactions.count
         } else if self.disputePickerType == DisputePickerType.DisputeType {
-           return self.disputeType.count
+           return self.reasonTableData.count
         } else {
-            return self.disputeType.count
+            return self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons.count
         }
     }
     
@@ -379,7 +381,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         } else if self.disputePickerType == DisputePickerType.DisputeType{
             return self.disputeType[row]
         } else {
-            return self.disputeType[row]
+            return self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons[row].reason
         }
 
     }
