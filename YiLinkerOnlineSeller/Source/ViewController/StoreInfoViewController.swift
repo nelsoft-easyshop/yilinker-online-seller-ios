@@ -141,14 +141,13 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             println("store info \(responseObject)")
             if responseObject["isSuccessful"] as! Bool {
                 self.tableView.reloadData()
-                
             } else {
-                self.showAlert("Error", message: "Something went wrong.")
+                self.showAlert(Constants.Localized.error, message: responseObject["message"] as! String)
             }
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                self.showAlert("Error", message: "Something went wrong.")
+                self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
                 println(error)
             })
     }
@@ -178,8 +177,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         println("sections \(indexPath.section) row \(indexPath.row)")
         println("\(self.storeInfoModel?.store_address)")
-        
-        
+  
         if indexPath.section == 0 {
             
             let cell: StoreInfoTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoHeaderTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoTableViewCell
