@@ -34,8 +34,8 @@ class ResolutionCenterDisputeReasonModel: NSObject {
         
         if dictionary.isKindOfClass(NSDictionary) {
             if let value: AnyObject = dictionary["data"] {
-                let reasons: NSArray = value["data"] as! NSArray
-                for reasonDictionary in reasons as! [NSDictionary] {
+                //let reasons: NSArray = value["data"] as! NSArray
+                for reasonDictionary in value as! [NSDictionary] {
                     key = reasonDictionary["key"] as! String
                     println("key: \(key)")
                     let  reasons = ResolutionCenterDisputeReasonsModel.parseDataFromDictionary(reasonDictionary["reasons"] as! NSArray)
