@@ -75,6 +75,7 @@ enum ResellerItemStatus {
 enum DisputePickerType {
     case TransactionList
     case DisputeType
+    case ReasonType
 }
 
 enum TransactionOrderItemStatus {
@@ -86,6 +87,7 @@ enum DisputeRefreshType {
     case Transaction
     case AddCase
     case OrderType
+    case Reason
 }
 
 enum UploadType {
