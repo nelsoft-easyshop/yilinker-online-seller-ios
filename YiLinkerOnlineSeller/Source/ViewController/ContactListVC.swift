@@ -233,10 +233,10 @@ extension ContactListVC : UITableViewDataSource, UITableViewDelegate{
             cell.profile_image.layer.masksToBounds = true
             cell.user_name.text = filteredContacts[indexPath.row].fullName
             if (filteredContacts[indexPath.row].isOnline == "1"){
-                cell.online_text.text = "Online"
+                cell.online_text.text = LocalizedStrings.online
                 cell.online_view.backgroundColor = onlineColor
             } else {
-                cell.online_text.text = "Offline"
+                cell.online_text.text = LocalizedStrings.offline
                 cell.online_view.backgroundColor = offlineColor
             }
         } else {

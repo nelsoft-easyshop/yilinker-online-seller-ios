@@ -26,9 +26,10 @@ struct LocalizedStrings{
     static let ok = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
     static let saveFailed = StringHelper.localizedStringWithKey("MESSAGING_SAVE_FAILED")
     static let saveFailedMessage = StringHelper.localizedStringWithKey("MESSAGING_SAVE_FAILED_MESSAGE")
-    
+    static let typeYourMessage = StringHelper.localizedStringWithKey("MESSAGING_TYPE_YOUR_MESSAGE")
+
     static let seen = StringHelper.localizedStringWithKey("MESSAGING_SEEN")
-}
+    }
 
 class ConversationVC: UIViewController, EmptyViewDelegate{
     
@@ -111,7 +112,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
-        self.navigationItem.title = ContactListStrings.title
+        self.navigationItem.title = LocalizedStrings.title
         /*
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistration:",
         name: appDelegate.registrationKey, object: nil)
@@ -227,7 +228,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                         self.fireRefreshToken()
                     }
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ConversationStrings.errorMessage, title: ConversationStrings.errorTitle)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
                 }
                 
                 //SVProgressHUD.dismiss()
@@ -262,7 +263,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                             self.fireRefreshToken()
                         }
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ConversationStrings.errorMessage, title: ConversationStrings.errorTitle)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
                     }
                     
                     //SVProgressHUD.dismiss()
@@ -312,7 +313,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                                 self.fireRefreshToken()
                             }
                         } else {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ConversationStrings.errorMessage, title: ConversationStrings.errorTitle)
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
                         }
                         
                         self.conversations = Array<W_Conversation>()
@@ -342,7 +343,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ConversationStrings.errorMessage, title: ConversationStrings.errorTitle)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
         })
         
     }

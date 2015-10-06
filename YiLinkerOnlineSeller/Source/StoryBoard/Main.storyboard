@@ -2362,7 +2362,7 @@
                         <outlet property="composeView" destination="lcu-6X-Jzu" id="AZJ-g5-5Ws"/>
                         <outlet property="composeViewBottomLayout" destination="7H4-e1-J7Y" id="jAc-YA-GEZ"/>
                         <outlet property="composeViewHeightConstraint" destination="BGm-TI-S5t" id="tHL-cu-0Ux"/>
-                        <outlet property="sendButton" destination="T27-ey-FVA" id="abM-iA-Bc6"/>
+                        <outlet property="sendButton" destination="T27-ey-FVA" id="Ipj-Dn-8FG"/>
                         <outlet property="threadTableView" destination="Mbk-gf-Zx6" id="b1v-dw-Z4I"/>
                         <outlet property="threadTableViewConstraint" destination="GHB-z4-77h" id="2Ud-dZ-cUr"/>
                     </connections>
