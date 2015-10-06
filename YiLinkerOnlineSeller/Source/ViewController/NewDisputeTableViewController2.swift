@@ -33,6 +33,9 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     var disputePickerType: DisputePickerType = DisputePickerType.TransactionList
     
     var products: [TransactionOrderProductModel] = []
+    var reason: ResolutionCenterDisputeReasonModel?
+    var reasonTableData: [ResolutionCenterDisputeReasonModel] = []
+    var reasons: [ResolutionCenterDisputeReasonsModel] = []
     
     var resolutiontitle: String = ""
     var remarks: String = ""
@@ -43,13 +46,15 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     let disputeTitle: String = StringHelper.localizedStringWithKey("DISPUTE_TITLE_LOCALIZE_KEY")
     let transactionNoTitle: String = StringHelper.localizedStringWithKey("DISPUTE_TRANSACTION_NO_LOCALIZE_KEY")
     let disputeTypeTitle: String = StringHelper.localizedStringWithKey("DISPUTE_DISPUTE_TYPE_LOCALIZE_KEY")
+    let reasonTitle: String = StringHelper.localizedStringWithKey("DISPUTE_REASON_LOCALIZE_KEY")
+    let reasonPlaceholderTitle: String = StringHelper.localizedStringWithKey("DISPUTE_REASON_PLACEHOLDER_LOCALIZE_KEY")
     let productsTitle: String = StringHelper.localizedStringWithKey("DISPUTE_PRODUCTS_LOCALIZE_KEY")
     let addTitle: String = StringHelper.localizedStringWithKey("DISPUTE_ADD_LOCALIZE_KEY")
     let transactionTitle: String = StringHelper.localizedStringWithKey("DISPUTE_TRANSACTION_NUMBER_LOCALIZE_KEY")
     let enterTransactionTitle: String = StringHelper.localizedStringWithKey("DISPUTE_TRANSACTION_NUMBER_PLACEHOLDER_LOCALIZE_KEY")
     let remarksTitle: String = StringHelper.localizedStringWithKey("DISPUTE_REMARKS_LOCALIZE_KEY")
     let submitTitle: String = StringHelper.localizedStringWithKey("DISPUTE_SUBMIT_CASE_LOCALIZE_KEY")
-     let addCaseTitle: String = StringHelper.localizedStringWithKey("DISPUTE_ADD_CASE_LOCALIZE_KEY")
+    let addCaseTitle: String = StringHelper.localizedStringWithKey("DISPUTE_ADD_CASE_LOCALIZE_KEY")
     let addProductTitle: String = StringHelper.localizedStringWithKey("DISPUTE_ADD_LOCALIZE_KEY")
     
     override func viewDidLoad() {
@@ -58,7 +63,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         self.fireRegisterCell()
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         self.fireGetTransactions()
-        
+        self.fireGetReasons()
         self.title = addCaseTitle
         self.backButton()
     }
@@ -123,7 +128,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         if section == 0 {
-            return 3
+            return 4
         } else if section == 1 {
             return self.products.count
         } else {
@@ -147,6 +152,10 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             } else if indexPath.row == 2 {
                 cell.textField.text = self.disputeType[self.disputeTypeDefaultIndex]
                 cell.titleLabel.text = disputeTypeTitle
+                cell.titleLabel.required()
+            } else {
+                cell.textField.placeholder = reasonPlaceholderTitle
+                cell.titleLabel.text = reasonTitle
                 cell.titleLabel.required()
             }
             cell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -227,6 +236,39 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
 
     }
     
+    func fireGetReasons() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = [
+            "access_token": SessionManager.accessToken()]
+        
+        manager.GET(APIAtlas.resolutionCenterReasons+"\(SessionManager.accessToken())", parameters: nil, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.hud?.hide(true)
+            self.reason = ResolutionCenterDisputeReasonModel.parseDataFromDictionary(responseObject as! NSDictionary)
+            println("reason \(self.reason?.resolutionReasons.count)")
+            for var i: Int = 0; i < self.reason?.resolutionReasons.count; i++ {
+                self.reasonTableData.append(ResolutionCenterDisputeReasonModel(key: self.reason!.key, resolutionReasons: self.reason!.resolutionReasons))
+                println("reason table data \(self.reasonTableData.count)")
+                for var j: Int = 0; j < self.reasonTableData.count; j++ {
+                    self.reasons.append(ResolutionCenterDisputeReasonsModel(id: self.reasonTableData[i].resolutionReasons[j].id, reason: self.reasonTableData[i].resolutionReasons[j].reason))
+                }
+            }
+           
+            //self.tableView.reloadData()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 401 {
+                    self.fireRefreshToken(DisputeRefreshType.Reason)
+                }
+                
+                self.hud?.hide(true)
+        })
+        
+    }
+    
     func fireRefreshToken(disputeRefreshType: DisputeRefreshType) {
         self.showHUD()
         let manager = APIManager.sharedInstance
@@ -243,8 +285,10 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             
             if disputeRefreshType == DisputeRefreshType.Transaction {
                 self.fireGetTransactions()
-            } else {
+            } else if disputeRefreshType == DisputeRefreshType.AddCase{
                 self.fireAddCase(self.remarks)
+            } else {
+                
             }
 
             self.hud?.hide(true)
@@ -280,15 +324,19 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         
         if self.disputePickerType == DisputePickerType.TransactionList {
             pickerView.selectRow(self.transactionDefaultIndex, inComponent: 0, animated: false)
-        } else {
+        } else if self.disputePickerType == DisputePickerType.DisputeType {
             pickerView.selectRow(self.disputeTypeDefaultIndex, inComponent: 0, animated: false)
+        } else {
+            
         }
         
         if self.disputePickerType == DisputePickerType.TransactionList {
             self.isValid = true
             self.currentTextField.text = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
-        } else {
+        } else if self.disputePickerType == DisputePickerType.DisputeType {
             self.currentTextField.text = self.disputeType[self.disputeTypeDefaultIndex]
+        } else {
+            
         }
         
         textField.inputView = pickerView
@@ -303,9 +351,11 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         if self.disputePickerType == DisputePickerType.TransactionList {
             self.transactionDefaultIndex = row
             self.currentTextField.text = self.transactionsModel.transactions[row].invoice_number
-        } else {
+        } else if self.disputePickerType == DisputePickerType.DisputeType {
             self.disputeTypeDefaultIndex = row
             self.currentTextField.text = self.disputeType[row]
+        } else {
+            
         }
     }
     
@@ -316,14 +366,18 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if self.disputePickerType == DisputePickerType.TransactionList {
            return self.transactionsModel.transactions.count
-        } else {
+        } else if self.disputePickerType == DisputePickerType.DisputeType {
            return self.disputeType.count
+        } else {
+            return self.disputeType.count
         }
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
         if self.disputePickerType == DisputePickerType.TransactionList {
             return self.transactionsModel.transactions[row].invoice_number
+        } else if self.disputePickerType == DisputePickerType.DisputeType{
+            return self.disputeType[row]
         } else {
             return self.disputeType[row]
         }
@@ -346,7 +400,12 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             self.currentTextField = disputeTextFieldTableViewCell.textField
             self.disputePickerType = DisputePickerType.DisputeType
             self.addPicker(disputeTextFieldTableViewCell.textField)
+        }  else if indexPath.row == 3 && indexPath.section == 0 {
+            self.currentTextField = disputeTextFieldTableViewCell.textField
+            self.disputePickerType = DisputePickerType.ReasonType
+            self.addPicker(disputeTextFieldTableViewCell.textField)
         }
+
     }
     
     func addProductHeaderView(addProductHeaderView: AddProductHeaderView, didClickButtonAdd button: UIButton) {

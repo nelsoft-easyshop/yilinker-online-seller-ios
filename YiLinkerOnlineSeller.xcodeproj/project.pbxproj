@@ -553,6 +553,8 @@
 		F7C40FE11B9854B20091C16C /* SalesReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EFF7761B8D9274008A9E7D /* SalesReportViewController.swift */; };
 		F7C6A94D1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C6A94B1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.swift */; };
 		F7C6A94E1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C6A94C1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.xib */; };
+		F7C971D41BC3B83100F8A04F /* ResolutionCenterDisputeReasonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C971D21BC3B83100F8A04F /* ResolutionCenterDisputeReasonModel.swift */; };
+		F7C971D51BC3B83100F8A04F /* ResolutionCenterDisputeReasonsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C971D31BC3B83100F8A04F /* ResolutionCenterDisputeReasonsModel.swift */; };
 		F7CB78431B9D822C001AF766 /* FilterCalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CB78411B9D822C001AF766 /* FilterCalendarTableViewCell.swift */; };
 		F7CB78441B9D822C001AF766 /* FilterCalendarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CB78421B9D822C001AF766 /* FilterCalendarTableViewCell.xib */; };
 		F7CCEEF21BBE607100D876C2 /* FilterResultsCollectionViewCellV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCEEF01BBE607100D876C2 /* FilterResultsCollectionViewCellV2.swift */; };
@@ -1148,6 +1150,8 @@
 		F7C40FDE1B98443B0091C16C /* StoreInfoSectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoSectionTableViewCell.xib; sourceTree = "<group>"; };
 		F7C6A94B1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoQrCodeTableViewCell.swift; sourceTree = "<group>"; };
 		F7C6A94C1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoQrCodeTableViewCell.xib; sourceTree = "<group>"; };
+		F7C971D21BC3B83100F8A04F /* ResolutionCenterDisputeReasonModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionCenterDisputeReasonModel.swift; sourceTree = "<group>"; };
+		F7C971D31BC3B83100F8A04F /* ResolutionCenterDisputeReasonsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionCenterDisputeReasonsModel.swift; sourceTree = "<group>"; };
 		F7CB78411B9D822C001AF766 /* FilterCalendarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCalendarTableViewCell.swift; sourceTree = "<group>"; };
 		F7CB78421B9D822C001AF766 /* FilterCalendarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterCalendarTableViewCell.xib; sourceTree = "<group>"; };
 		F7CCEEF01BBE607100D876C2 /* FilterResultsCollectionViewCellV2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterResultsCollectionViewCellV2.swift; sourceTree = "<group>"; };
@@ -1253,6 +1257,8 @@
 		0CF28EC21B8C85E4005B2E54 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F7C971D21BC3B83100F8A04F /* ResolutionCenterDisputeReasonModel.swift */,
+				F7C971D31BC3B83100F8A04F /* ResolutionCenterDisputeReasonsModel.swift */,
 				B7BADADF1BA5626C005F59F9 /* Messaging */,
 				962653561BAA797800CAEA1C /* CaseDetailsModel.swift */,
 				795B0D251BA307CB00FC373C /* ActivityLogItemModel.swift */,
@@ -2458,6 +2464,7 @@
 				2690ED191B999354009343E0 /* ProductManagementProductModel.swift in Sources */,
 				7928762F1B8DF89F00762A39 /* ChartXAxisRenderer.swift in Sources */,
 				F7C282EF1B9AE97500864451 /* BankModel.swift in Sources */,
+				F7C971D51BC3B83100F8A04F /* ResolutionCenterDisputeReasonsModel.swift in Sources */,
 				F7AC5F7C1B9AA75300227D18 /* GetAddressesModel.swift in Sources */,
 				792876031B8DF89F00762A39 /* ChartLegend.swift in Sources */,
 				7928763E1B8DF89F00762A39 /* ChartFillFormatter.swift in Sources */,
@@ -2680,6 +2687,7 @@
 				79EF7AC21B99F0D30082CD35 /* TransactionDetailsTableViewCell.swift in Sources */,
 				79E6337E1B9AF4FD0062DB14 /* TransactionCancelOrderViewController.swift in Sources */,
 				7948807B1B94D9BD0090B259 /* FollowersViewController.swift in Sources */,
+				F7C971D41BC3B83100F8A04F /* ResolutionCenterDisputeReasonModel.swift in Sources */,
 				79EDA40A1B9204F20037558A /* PointsDetailsTableViewCell.swift in Sources */,
 				79EFF7701B8D6E35008A9E7D /* ActivityLogModel.swift in Sources */,
 				F7C40F811B983B6B0091C16C /* StoreInfoBankAccountTableViewCell.swift in Sources */,
