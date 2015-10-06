@@ -11,6 +11,7 @@ import UIKit
 protocol CongratulationsViewControllerDelegate {
     func dismissView()
     func verifyViewController()
+    func getStoreInfo()
 }
 
 class CongratulationsViewController: UIViewController {
@@ -66,11 +67,13 @@ class CongratulationsViewController: UIViewController {
     
     @IBAction func closeAction(sender: AnyObject){
         self.delegate?.dismissView()
+        self.delegate?.getStoreInfo()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func continueAction(sender: AnyObject){
         self.delegate?.dismissView()
+        self.delegate?.getStoreInfo()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
