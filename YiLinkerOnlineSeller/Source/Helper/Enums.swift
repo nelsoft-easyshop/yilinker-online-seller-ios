@@ -72,6 +72,13 @@ enum ResellerItemStatus {
     case Unselected
 }
 
+enum StoreInfoType {
+    case GetStroreInfo
+    case SaveStoreInfo
+    case SetMobile
+    case VerifyNumber
+}
+
 enum DisputePickerType {
     case TransactionList
     case DisputeType

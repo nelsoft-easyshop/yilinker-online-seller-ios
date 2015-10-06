@@ -497,7 +497,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
                 if task.statusCode == 401 {
                     self.fireRefreshToken(DisputeRefreshType.AddCase)
                 } else {
-                    self.navigationController?.view.makeToast("Something went wrong.")
+                    self.navigationController?.view.makeToast(Constants.Localized.someThingWentWrong)
                 }
                 
                 self.hud?.hide(true)
