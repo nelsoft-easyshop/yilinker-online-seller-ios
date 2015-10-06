@@ -99,7 +99,7 @@ struct APIAtlas {
     static let resolutionCenterProductListUrl = "auth/getTransactionList"
     static let resolutionCenterGetTransactionItems = "auth/getTransaction"
     static let resolutionCenterAddCaseUrl = "auth/dispute/add-case"
-
+    static let resolutionCenterReasons = "auth/dispute/get-seller-reasons?access_token="
     //Reseller
     static let resellerUrl = "auth/reseller/products"
     static let resellerUploadUrl = "auth/reseller/upload"

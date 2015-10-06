@@ -84,7 +84,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         self.initializeViews()
         self.registerNibs()
-        self.fireStoreInfo()
+        
         self.backButton()
         
         var tap = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
@@ -97,6 +97,10 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.fireStoreInfo()
     }
     
     //MARK: Initialize views
@@ -141,16 +145,24 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             println("store info \(responseObject)")
             if responseObject["isSuccessful"] as! Bool {
                 self.tableView.reloadData()
-                
             } else {
-                self.showAlert("Error", message: "Something went wrong.")
+                self.showAlert(Constants.Localized.error, message: responseObject["message"] as! String)
             }
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                self.showAlert("Error", message: "Something went wrong.")
-                println(error)
-            })
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    self.showAlert(self.error, message: errorModel.message)
+                    //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                } else if task.statusCode == 401 {
+                    self.fireRefreshToken(StoreInfoType.GetStroreInfo)
+                } else {
+                    self.showAlert(self.error, message: self.somethingWentWrong)
+                }
+        })
     }
     
     //MARK: Navigation bar
@@ -178,8 +190,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         println("sections \(indexPath.section) row \(indexPath.row)")
         println("\(self.storeInfoModel?.store_address)")
-        
-        
+  
         if indexPath.section == 0 {
             
             let cell: StoreInfoTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoHeaderTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoTableViewCell
@@ -410,7 +421,17 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                self.showAlert(self.error, message: self.somethingWentWrong)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    self.showAlert(self.error, message: errorModel.message)
+                    //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                } else if task.statusCode == 401 {
+                    self.fireRefreshToken(StoreInfoType.VerifyNumber)
+                } else {
+                    self.showAlert(self.error, message: self.somethingWentWrong)
+                }
                 self.dismissView()
         })
         self.showView()
@@ -483,7 +504,17 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     println(error.userInfo)
-                    self.showAlert(self.error, message: self.somethingWentWrong)
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        self.showAlert(self.error, message: errorModel.message)
+                        //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                    } else if task.statusCode == 401 {
+                        self.fireRefreshToken(StoreInfoType.SaveStoreInfo)
+                    } else {
+                        self.showAlert(self.error, message: self.somethingWentWrong)
+                    }
+   
                     self.hud?.hide(true)
             }
         } else {
@@ -517,6 +548,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldContactNumber" : oldNumber, "newContactNumber" : newNumber];
+        self.mobileNumber = oldNumber
+        self.newContactNumber = newNumber
         manager.POST(APIAtlas.sellerChangeMobileNumber, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             if responseObject["isSuccessful"] as! Bool {
@@ -524,7 +557,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 self.verifyOrChange = 1
                 self.storeInfoVerify()
                 println(self.verifyOrChange)
-                self.mobileNumber = newNumber
+                //self.mobileNumber = newNumber
                 println(self.mobileNumber)
                 println(responseObject.description)
                 self.tableView.reloadData()
@@ -537,25 +570,70 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                println(error.description)
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    self.showAlert(self.error, message: errorModel.message)
+                    //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                } else if task.statusCode == 401 {
+                     self.fireRefreshToken(StoreInfoType.SetMobile)
+                } else {
+                    self.showAlert(self.error, message: self.somethingWentWrong)
+                }
+                /*
                 if task.statusCode == 401{
-                    //resfresh token
+                   
                 } else if task.statusCode == 404 || task.statusCode == 400 {
                     let data = error.userInfo as! Dictionary<String, AnyObject>
-                    var message = data["data"] as! NSArray
-                    if message.count != 0 {
-                        self.showAlert("Error", message: message[0] as! String)
+                    var message = data["data"] as! Dictionary<String, AnyObject>
+                    if !message.isEmpty {
+                        var err = message["errors"] as! NSArray
+                        self.showAlert(Constants.Localized.error, message: err[0] as! String)
                     } else {
-                        self.showAlert("Error", message: data["message"] as! String)
+                        self.showAlert(Constants.Localized.error, message: data["message"] as! String)
                     }
                 } else {
-                    self.showAlert("Error", message: self.somethingWentWrong)
-                }
+                    self.showAlert(Constants.Localized.error, message: self.somethingWentWrong)
+                }*/
                 self.dismissView()
         })
     }
     
+    func fireRefreshToken(storeInfoType: StoreInfoType) {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            
+            if storeInfoType == StoreInfoType.GetStroreInfo {
+                self.fireStoreInfo()
+            } else if storeInfoType == StoreInfoType.SaveStoreInfo{
+                self.saveAccountInfo()
+            } else if storeInfoType == StoreInfoType.SetMobile{
+                self.setMobileNumber(self.newContactNumber, oldNumber: self.mobileNumber)
+            } else {
+                self.verifyViewController()
+            }
+            
+            self.hud?.hide(true)
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+        })
+        
+    }
+
     //MARK: Show MBProgressHUD bar
     func showHUD() {
         if self.hud != nil {
