@@ -76,7 +76,6 @@ class ChangeEmailViewController: UIViewController {
             println("Submit email")
         } else {
             println("Submit password")
-            self.showHUD()
             if oldEmailAddressTextField.text.isEmpty ||  newEmailAddressTextField.text.isEmpty || confirmEmailAddressTextField.text.isEmpty {
                 var completeLocalizeString = StringHelper.localizedStringWithKey("COMPLETEFIELDS_LOCALIZE_KEY")
                 showAlert(title: Constants.Localized.error, message: completeLocalizeString)
@@ -86,6 +85,7 @@ class ChangeEmailViewController: UIViewController {
             } else {
                 if confirmEmailAddressTextField.text.toInt() > 8 && newEmailAddressTextField.text.toInt() > 8 {
                     if confirmEmailAddressTextField.text.isAlphaNumeric() && newEmailAddressTextField.text.isAlphaNumeric() {
+                        self.showHUD()
                         self.fireChangePassword()
                     } else {
                         var passwordAlpha = StringHelper.localizedStringWithKey("PASSWORD_ALPHA_LOCALIZE_KEY")
