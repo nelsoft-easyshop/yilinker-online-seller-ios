@@ -22,6 +22,12 @@ class TransactionDetailsFooterView: UIView {
     @IBOutlet weak var shipItemLabel: UILabel!
     @IBOutlet weak var cancelOrderLabel: UILabel!
     
+    
+    @IBOutlet weak var shipItem2View: UIView!
+    @IBOutlet weak var shiptItem2Label: UILabel!
+    @IBOutlet weak var cancelOrder2View: UIView!
+    @IBOutlet weak var cancelOrder2Label: UILabel!
+    
     override func awakeFromNib() {
         initializesViews()
         intializeLocalizedStrings()
@@ -33,14 +39,18 @@ class TransactionDetailsFooterView: UIView {
         
         var shipItem = UITapGestureRecognizer(target:self, action:"shipItemAction")
         shipItemView.addGestureRecognizer(shipItem)
+        shipItem2View.addGestureRecognizer(shipItem)
         
         var cancelOrder = UITapGestureRecognizer(target:self, action:"cancelOrderAction")
         cancelOrderView.addGestureRecognizer(cancelOrder)
+        cancelOrder2View.addGestureRecognizer(cancelOrder)
     }
     
     func intializeLocalizedStrings() {
         shipItemLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_SHIP_ITEM_LOCALIZE_KEY")
+        shiptItem2Label.text = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_SHIP_ITEM_LOCALIZE_KEY")
         cancelOrderLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_CANCEL_ORDER_LOCALIZE_KEY")
+        cancelOrder2Label.text = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_CANCEL_ORDER_LOCALIZE_KEY")
     }
     
     func shipItemAction() {
@@ -49,5 +59,29 @@ class TransactionDetailsFooterView: UIView {
 
     func cancelOrderAction() {
         delegate?.cancelOrderAction()
+    }
+    
+    func setStatus(isShippable: Bool, isCancellable: Bool){
+        if isShippable && isCancellable {
+            shipItemView.hidden = false
+            cancelOrderView.hidden = false
+            shipItem2View.hidden = true
+            cancelOrder2View.hidden = true
+        } else if !isShippable && !isCancellable {
+            shipItemView.hidden = false
+            cancelOrderView.hidden = false
+            shipItem2View.hidden = false
+            cancelOrder2View.hidden = false
+        } else if !isShippable && isCancellable {
+            shipItemView.hidden = false
+            cancelOrderView.hidden = false
+            shipItem2View.hidden = false
+            cancelOrder2View.hidden = true
+        } else if isShippable && !isCancellable {
+            shipItemView.hidden = false
+            cancelOrderView.hidden = false
+            shipItem2View.hidden = true
+            cancelOrder2View.hidden = false
+        }
     }
 }
