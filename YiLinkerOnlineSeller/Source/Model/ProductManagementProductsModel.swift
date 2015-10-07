@@ -20,17 +20,16 @@ class ProductManagementProductsModel {
         
         var model = ProductManagementProductsModel()
         if products.isKindOfClass(NSDictionary) {
-            
+
             model.id = products["id"] as! String
             model.name = products["name"] as! String
-            if let tempVar = products["category"] as? String {
-                if tempVar != "" {
-                    model.category = products["category"] as! String
-                } else {
-                    model.category = "Not Available"
-                }
+
+            if !(products["category"] is NSNull) {
+                model.category = products["category"] as! String
+            } else {
+                model.category = "Not Categorized"
             }
-            
+
             model.image = products["image"] as! String
             model.status = products["status"] as! Int
             
