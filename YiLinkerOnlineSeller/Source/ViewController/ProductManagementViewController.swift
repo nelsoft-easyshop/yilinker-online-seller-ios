@@ -504,6 +504,12 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
                 cell.arrowImageView.hidden = false
             }
             
+            if selectedIndex == 5 {
+                cell.checkTapView.userInteractionEnabled = false
+            } else {
+                cell.checkTapView.userInteractionEnabled = true
+            }
+            
             return cell
         }
     }
