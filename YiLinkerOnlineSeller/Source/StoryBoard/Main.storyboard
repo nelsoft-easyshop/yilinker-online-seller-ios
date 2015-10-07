@@ -315,7 +315,6 @@
                                         <rect key="frame" x="39" y="8" width="29" height="31"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="31" id="U8e-Kv-4FS"/>
-                                            <constraint firstAttribute="width" constant="29" id="b8L-Ba-gQP"/>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MXL-hb-QoK">
@@ -360,7 +359,6 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="close4-a" translatesAutoresizingMaskIntoConstraints="NO" id="8yT-nV-UGx">
                                         <rect key="frame" x="39" y="8" width="29" height="31"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="29" id="Br2-Te-uq6"/>
                                             <constraint firstAttribute="height" constant="31" id="uEm-9R-pzi"/>
                                         </constraints>
                                     </imageView>
@@ -400,7 +398,6 @@
                                         <rect key="frame" x="39" y="8" width="29" height="31"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="31" id="5QR-0n-gcV"/>
-                                            <constraint firstAttribute="width" constant="29" id="yOs-OI-1uh"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OPEN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ahp-wz-ci3">
@@ -1030,7 +1027,6 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Other Party" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7F4-5X-06y">
                                                     <rect key="frame" x="15" y="11" width="88" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="XFp-bL-6xU"/>
                                                         <constraint firstAttribute="width" constant="88" id="ZGU-TA-0mw"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
@@ -1051,8 +1047,8 @@
                                             <constraints>
                                                 <constraint firstItem="7F4-5X-06y" firstAttribute="leading" secondItem="9YE-kp-9Vl" secondAttribute="leading" constant="15" id="OCw-jX-2nE"/>
                                                 <constraint firstAttribute="centerY" secondItem="80T-Ls-bpS" secondAttribute="centerY" id="otG-gB-Vmu"/>
+                                                <constraint firstItem="7F4-5X-06y" firstAttribute="top" secondItem="9YE-kp-9Vl" secondAttribute="topMargin" constant="3" id="ulG-Pf-R4m"/>
                                                 <constraint firstAttribute="trailing" secondItem="80T-Ls-bpS" secondAttribute="trailing" constant="15" id="yWZ-gL-nCq"/>
-                                                <constraint firstAttribute="centerY" secondItem="7F4-5X-06y" secondAttribute="centerY" id="z6l-R0-bWh"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1217,7 +1213,6 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PXk-CH-NGL">
                                             <rect key="frame" x="15" y="9" width="50" height="21"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="D5e-mN-VLl"/>
                                                 <constraint firstAttribute="width" constant="50" id="vc0-zq-Hig"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
@@ -1240,7 +1235,6 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date Open" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RCm-mM-v1l">
                                             <rect key="frame" x="15" y="9" width="83" height="21"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="DsS-Aw-2Eq"/>
                                                 <constraint firstAttribute="width" constant="83" id="xo6-36-s14"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
@@ -1285,7 +1279,6 @@
                                             <rect key="frame" x="15" y="9" width="88" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="88" id="0wN-Co-I32"/>
-                                                <constraint firstAttribute="height" constant="21" id="Ndq-PE-kEd"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1296,7 +1289,6 @@
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="LvG-Md-SHZ" secondAttribute="trailing" constant="15" id="33c-hn-OLY"/>
                                         <constraint firstAttribute="height" constant="40" id="Vc3-Hm-aNS"/>
-                                        <constraint firstAttribute="centerY" secondItem="3cJ-lL-AEd" secondAttribute="centerY" id="sAr-HI-5ci"/>
                                         <constraint firstAttribute="centerY" secondItem="LvG-Md-SHZ" secondAttribute="centerY" id="tg9-KU-89C"/>
                                         <constraint firstItem="3cJ-lL-AEd" firstAttribute="leading" secondItem="UVg-gU-5Ip" secondAttribute="leading" constant="15" id="uti-vf-xt6"/>
                                         <constraint firstItem="3cJ-lL-AEd" firstAttribute="top" secondItem="UVg-gU-5Ip" secondAttribute="top" constant="9" id="uvC-MT-DI0"/>
@@ -1493,7 +1485,7 @@
                                     <outlet property="delegate" destination="nOb-Vl-TXr" id="7Gh-fd-Ggt"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No result found." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAN-Ux-RhM">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No result found." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAN-Ux-RhM">
                                 <rect key="frame" x="8" y="323" width="359" height="21"/>
                                 <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
                                 <nil key="highlightedColor"/>

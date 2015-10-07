@@ -20,6 +20,10 @@ CANCEL_LOCALIZE_KEY = "CANCEL";
 DONE_LOCALIZE_KEY  = "DONE";
 INCOMPLETE_PRODUCT_DETAILS_LOCALIZE_KEY  = "Incomplete Product Details";
 SERVER_ERROR_LOCALIZE_KEY  = "Server Error";
+PASSWORDMISMATCH_LOCALIZE_KEY = "Password does not match!";
+COMPLETEFIELDS_LOCALIZE_KEY = "Complete necessary fields!";
+PASSWORD_ALPHA_LOCALIZE_KEY = "Password must be combination of letters and number.";
+PASSWORD_CHAR_LOCALIZE_KEY = "Password should be 8 characters long.";
 
 // MARK: - Dashboard
 TOTAL_SALES_LOCALIZE_KEY = "Gross Sales";

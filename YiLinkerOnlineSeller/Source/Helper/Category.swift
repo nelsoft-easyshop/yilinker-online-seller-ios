@@ -286,6 +286,15 @@ extension String {
         return emailTest.evaluateWithObject(self)
     }
     
+    //^(?:.*\d)(?:.*[a-z])(?:.*[A-Z])(?:.*[\W\_])[a-zA-Z0-9\W\_]{8,15}*$
+    
+    func isValidPassword() -> Bool {
+        let emailRegEx = "^(?=.*?[0-9])(?=.*?[a-z]).{8,}$"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluateWithObject(self) 
+    }
+    
     func isAlphaNumeric() -> Bool {
         let passwordRegEx = "[A-Za-z0-9_]*"
         let passwordTest = NSPredicate(format: "SELF MATCHES %@", passwordRegEx)

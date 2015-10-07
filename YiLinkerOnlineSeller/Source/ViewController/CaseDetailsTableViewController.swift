@@ -162,7 +162,7 @@ class CaseDetailsTableViewController: UITableViewController {
             self.hud?.hide(true)
             
             let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-            
+            println("error \(error)")
             if task.statusCode == 401 {
                 self.fireRefreshToken()
             } else {
