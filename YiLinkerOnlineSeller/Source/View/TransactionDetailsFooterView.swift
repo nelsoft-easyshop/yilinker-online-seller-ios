@@ -28,6 +28,8 @@ class TransactionDetailsFooterView: UIView {
     @IBOutlet weak var cancelOrder2View: UIView!
     @IBOutlet weak var cancelOrder2Label: UILabel!
     
+    var shipItem: UITapGestureRecognizer?
+    var cancelOrder: UITapGestureRecognizer?
     override func awakeFromNib() {
         initializesViews()
         intializeLocalizedStrings()
@@ -36,14 +38,16 @@ class TransactionDetailsFooterView: UIView {
     func initializesViews() {
         shipItemView.layer.cornerRadius = shipItemView.frame.height / 2
         cancelOrderView.layer.cornerRadius = cancelOrderView.frame.height / 2
+        shipItem2View.layer.cornerRadius = shipItemView.frame.height / 2
+        cancelOrder2View.layer.cornerRadius = cancelOrderView.frame.height / 2
         
-        var shipItem = UITapGestureRecognizer(target:self, action:"shipItemAction")
-        shipItemView.addGestureRecognizer(shipItem)
-        shipItem2View.addGestureRecognizer(shipItem)
+        shipItem = UITapGestureRecognizer(target:self, action:"shipItemAction")
+        shipItem2View.addGestureRecognizer(shipItem!)
+        shipItemView.addGestureRecognizer(shipItem!)
         
-        var cancelOrder = UITapGestureRecognizer(target:self, action:"cancelOrderAction")
-        cancelOrderView.addGestureRecognizer(cancelOrder)
-        cancelOrder2View.addGestureRecognizer(cancelOrder)
+        cancelOrder = UITapGestureRecognizer(target:self, action:"cancelOrderAction")
+        cancelOrder2View.addGestureRecognizer(cancelOrder!)
+        cancelOrderView.addGestureRecognizer(cancelOrder!)
     }
     
     func intializeLocalizedStrings() {
@@ -67,21 +71,32 @@ class TransactionDetailsFooterView: UIView {
             cancelOrderView.hidden = false
             shipItem2View.hidden = true
             cancelOrder2View.hidden = true
+            
+            self.bringSubviewToFront(shipItemView)
+            self.bringSubviewToFront(cancelOrderView)
+            shipItemView.addGestureRecognizer(shipItem!)
+            cancelOrderView.addGestureRecognizer(cancelOrder!)
         } else if !isShippable && !isCancellable {
-            shipItemView.hidden = false
-            cancelOrderView.hidden = false
-            shipItem2View.hidden = false
-            cancelOrder2View.hidden = false
-        } else if !isShippable && isCancellable {
-            shipItemView.hidden = false
-            cancelOrderView.hidden = false
-            shipItem2View.hidden = false
+            shipItemView.hidden = true
+            cancelOrderView.hidden = true
+            shipItem2View.hidden = true
             cancelOrder2View.hidden = true
-        } else if isShippable && !isCancellable {
-            shipItemView.hidden = false
-            cancelOrderView.hidden = false
+        } else if !isShippable && isCancellable {
+            shipItemView.hidden = true
+            cancelOrderView.hidden = true
             shipItem2View.hidden = true
             cancelOrder2View.hidden = false
+            
+            self.bringSubviewToFront(cancelOrder2View)
+            cancelOrder2View.addGestureRecognizer(cancelOrder!)
+        } else if isShippable && !isCancellable {
+            shipItemView.hidden = true
+            cancelOrderView.hidden = true
+            shipItem2View.hidden = false
+            cancelOrder2View.hidden = true
+            
+            self.bringSubviewToFront(shipItem2View)
+            shipItem2View.addGestureRecognizer(shipItem!)
         }
     }
 }
