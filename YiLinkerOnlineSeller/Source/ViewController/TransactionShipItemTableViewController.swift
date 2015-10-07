@@ -8,7 +8,14 @@
 
 import UIKit
 
+protocol TransactionShipItemTableViewControllerDelegate {
+    func cancelTransactionShipItem()
+    func readyForPickupItemTransaction()
+}
+
 class TransactionShipItemTableViewController: UITableViewController, TransactionShipItemTableViewCellDelegate {
+    
+    var delegate: TransactionShipItemTableViewControllerDelegate?
     
     var cellIdentifier: String = "TransactionShipItemTableViewCell"
     
@@ -74,6 +81,7 @@ class TransactionShipItemTableViewController: UITableViewController, Transaction
 
     // MARK: TransactionShipItemTableViewCellDelegate
     func cancelTransactionShipItem() {
+        delegate?.cancelTransactionShipItem()
         self.navigationController?.popViewControllerAnimated(true)
     }
     
@@ -97,8 +105,8 @@ class TransactionShipItemTableViewController: UITableViewController, Transaction
             println(responseObject)
             var response: NSDictionary = responseObject as! NSDictionary
             if response["isSuccessful"] as! Bool {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("TRANSACTION_SHIP_SUCCESS_LOCALIZE_KEY"), title: StringHelper.localizedStringWithKey("TRANSACTION_SHIP_ITEM_LOCALIZE_KEY"))
                 self.navigationController?.popViewControllerAnimated(true)
+                self.delegate?.readyForPickupItemTransaction()
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: response["message"] as! String, title: StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY"))
             }

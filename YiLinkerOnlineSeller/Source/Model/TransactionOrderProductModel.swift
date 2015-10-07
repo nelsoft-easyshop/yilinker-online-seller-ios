@@ -37,9 +37,10 @@ class TransactionOrderProductModel: NSObject {
     var shortDescription: String = ""
     var isCancellable: Bool = false
     var isShippable: Bool = false
+    var brand: String = ""
     var transactionOrderItemStatus: TransactionOrderItemStatus = TransactionOrderItemStatus.UnSelected
     
-    init(orderProductId: String, productId: String, quantity: Int, unitPrice: String, totalPrice: String, productName: String, handlingFee: String, dateAdded: String, lastDateModified: String, orderProductStatusId: Int, orderProductStatusName: String, orderProductStatusDescription: String, productImage: String, sku: String, attributes: [Attribute], originalUnitPrice: String, discount: String, width: String, height: String, length: String, weight: String, fullDescription: String, shortDescription: String, isCancellable: Bool, isShippable: Bool) {
+    init(orderProductId: String, productId: String, quantity: Int, unitPrice: String, totalPrice: String, productName: String, handlingFee: String, dateAdded: String, lastDateModified: String, orderProductStatusId: Int, orderProductStatusName: String, orderProductStatusDescription: String, productImage: String, sku: String, attributes: [Attribute], originalUnitPrice: String, discount: String, width: String, height: String, length: String, weight: String, fullDescription: String, shortDescription: String, isCancellable: Bool, isShippable: Bool, brand: String) {
         
         self.orderProductId = orderProductId
         self.productId = productId
@@ -66,7 +67,7 @@ class TransactionOrderProductModel: NSObject {
         self.shortDescription = shortDescription
         self.isCancellable = isCancellable
         self.isShippable = isShippable
-        
+        self.brand = brand
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> TransactionOrderProductModel {
@@ -96,6 +97,7 @@ class TransactionOrderProductModel: NSObject {
         var shortDescription: String = ""
         var isCancellable: Bool = false
         var isShippable: Bool = false
+        var brand: String = ""
         
         if dictionary.isKindOfClass(NSDictionary) {
             if dictionary["productId"] != nil {
@@ -261,9 +263,17 @@ class TransactionOrderProductModel: NSObject {
                     isShippable = tempVar
                 }
             }
+            
+            if dictionary["brand"] != nil {
+                if let tempDict = dictionary["brand"] as? NSDictionary {
+                    if let tempVar = tempDict["name"] as? String {
+                        brand = tempVar
+                    }
+                }
+            }
         }
         
-        return TransactionOrderProductModel(orderProductId: orderProductId, productId: productId, quantity: quantity, unitPrice: unitPrice, totalPrice: totalPrice, productName: productName, handlingFee: handlingFee, dateAdded: dateAdded, lastDateModified: lastDateModified, orderProductStatusId: orderProductStatusId, orderProductStatusName: orderProductStatusName, orderProductStatusDescription: orderProductStatusDescription, productImage: productImage, sku: sku, attributes: attributes, originalUnitPrice: originalUnitPrice, discount: discount, width: width, height: height, length: length, weight: weight, fullDescription: fullDescription, shortDescription: shortDescription, isCancellable: isCancellable, isShippable: isShippable)
+        return TransactionOrderProductModel(orderProductId: orderProductId, productId: productId, quantity: quantity, unitPrice: unitPrice, totalPrice: totalPrice, productName: productName, handlingFee: handlingFee, dateAdded: dateAdded, lastDateModified: lastDateModified, orderProductStatusId: orderProductStatusId, orderProductStatusName: orderProductStatusName, orderProductStatusDescription: orderProductStatusDescription, productImage: productImage, sku: sku, attributes: attributes, originalUnitPrice: originalUnitPrice, discount: discount, width: width, height: height, length: length, weight: weight, fullDescription: fullDescription, shortDescription: shortDescription, isCancellable: isCancellable, isShippable: isShippable, brand: brand)
     }
 
     

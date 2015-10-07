@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TransactionDetailsTableViewController: UITableViewController, TransactionDetailsFooterViewDelegate, TransactionConsigneeTableViewCellDelegate, TransactionCancelOrderViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate, TransactionCancelReasonOrderViewControllerDelegate {
+class TransactionDetailsTableViewController: UITableViewController, TransactionDetailsFooterViewDelegate, TransactionConsigneeTableViewCellDelegate, TransactionCancelOrderViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate, TransactionCancelReasonOrderViewControllerDelegate, TransactionShipItemTableViewControllerDelegate {
     
     var detailsCellIdentifier: String = "TransactionDetailsTableViewCell"
     var productsCellIdentifier: String = "TransactionProductTableViewCell"
@@ -38,9 +38,9 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        transactionDetailsModel = TransactionDetailsModel(isSuccessful: false, message: "", transactionInvoice: "", transactionShippingFee: "", transactionDate: "2000-01-01 00:00:00.000000", transactionPrice: "", transactionQuantity: 0, transactionUnitPrice: "",  transactionStatusId: 0, transactionStatusName: "", transactionPayment: "", transactionItems: [])
+        transactionDetailsModel = TransactionDetailsModel(isSuccessful: false, message: "", transactionInvoice: "", transactionShippingFee: "", transactionDate: "2000-01-01 00:00:00.000000", transactionPrice: "", transactionQuantity: 0, transactionUnitPrice: "",  transactionStatusId: 0, transactionStatusName: "", transactionPayment: "", transactionItems: [], isCancellable: false, isShippable: false)
         
-        transactionConsigneeModel = TransactionConsigneeModel(isSuccessful: false, message: "", deliveryAddress: "", consigneeName: "", consigneeContactNumber: "")
+        transactionConsigneeModel = TransactionConsigneeModel(isSuccessful: false, message: "", deliveryAddress: "", consigneeName: "", consigneeContactNumber: "", buyerId: 0)
         
         initializeNavigationBar()
         initializeViews()
@@ -83,12 +83,21 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         counterLabel.font = UIFont(name: "Panton-Regular", size: CGFloat(14))
         counterLabel.text = ""
         tableHeaderView.addSubview(counterLabel)
+        tableView.tableFooterView = UIView(frame: CGRectZero)
+        tableFooterView = nil
         
-        if tableFooterView == nil {
-            tableFooterView = XibHelper.puffViewWithNibName("TransactionDetailsFooterView", index: 0) as! TransactionDetailsFooterView
-            tableFooterView.delegate = self
-            tableFooterView.frame.size.width = self.view.frame.size.width
+        
+        if  transactionDetailsModel.isShippable || transactionDetailsModel.isCancellable {
+            if tableFooterView == nil {
+                tableFooterView = XibHelper.puffViewWithNibName("TransactionDetailsFooterView", index: 0) as! TransactionDetailsFooterView
+                tableFooterView.delegate = self
+                tableFooterView.setStatus(transactionDetailsModel.isShippable, isCancellable: transactionDetailsModel.isCancellable)
+                tableFooterView.frame.size.width = self.view.frame.size.width
+
+                self.tableView.tableFooterView = tableFooterView
+            }
         }
+        
         
         self.tidLabel.text = self.transactionDetailsModel.transactionInvoice
         if self.transactionDetailsModel.transactionQuantity > 1 {
@@ -101,7 +110,6 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         
         
         self.tableView.tableHeaderView = tableHeaderView
-        self.tableView.tableFooterView = tableFooterView
         
         self.tableView.reloadData()
     }
@@ -390,6 +398,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     func shipItemAction() {
         var shipItemController = TransactionShipItemTableViewController(nibName: "TransactionShipItemTableViewController", bundle: nil)
         shipItemController.invoiceNumber = invoiceNumber
+        shipItemController.delegate = self
         self.navigationController?.pushViewController(shipItemController, animated:true)
     }
     
@@ -438,6 +447,8 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     // MARK: - TransactionCancelOrderSuccessViewControllerDelegate
     func closeCancelOrderSuccessViewController() {
         hideDimView()
+        sectionHeader.removeAll(keepCapacity: false)
+        self.fireGetTransactionDetails()
     }
     
     func returnToDashboardAction() {
@@ -477,6 +488,19 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             UIApplication.sharedApplication().openURL(NSURL(string: "tel:\(transactionConsigneeModel.consigneeContactNumber)")!)
         }
     }
+    
+    // MARK: - TransactionShipItemTableViewControllerDelegate
+    func cancelTransactionShipItem() {
+        
+    }
+    
+    func readyForPickupItemTransaction() {
+        
+        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("TRANSACTION_SHIP_SUCCESS_LOCALIZE_KEY"), title: StringHelper.localizedStringWithKey("TRANSACTION_SHIP_ITEM_LOCALIZE_KEY"))
+        sectionHeader.removeAll(keepCapacity: false)
+        self.fireGetTransactionDetails()
+    }
+    
     
     
     func formatDateToString(date: NSDate) -> String {

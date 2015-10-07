@@ -93,8 +93,13 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
     
     func initializeAttributes() {
         for subValue in productModel.attributes {
-            productAttributeValueData.insert(subValue.attributeValue, atIndex: 0)
-            productAttributeData.insert(subValue.attributeName, atIndex: 0)
+            productAttributeValueData.insert(subValue.attributeValue, atIndex: 1)
+            productAttributeData.insert(subValue.attributeName, atIndex: 1)
+        }
+        
+        if productModel.brand.isNotEmpty() {
+            productAttributeValueData.insert(productModel.brand, atIndex: 1)
+            productAttributeData.insert(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_BRAND_LOCALIZE_KEY"), atIndex: 1)
         }
         
         self.tableView.reloadData()

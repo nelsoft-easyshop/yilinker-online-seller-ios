@@ -78,6 +78,18 @@ class TransactionCancelReasonOrderViewController: UIViewController, UITextViewDe
         
         topConstraint.constant = (screenHeight! / 2) - (mainView.frame.height / 2)
         
+        reasonTextField.addToolBarWithTarget(self, next: "next", previous: nil, done: "done")
+        remarksTextView.addToolBarWithDoneTarget(self, done: "done")
+        
+    }
+    
+    func done() {
+        tapMainAction()
+    }
+    
+    func next() {
+        remarksTextView.becomeFirstResponder()
+
     }
     
     func intializeLocalizeStrings() {
