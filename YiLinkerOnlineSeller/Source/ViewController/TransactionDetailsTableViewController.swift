@@ -38,7 +38,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        transactionDetailsModel = TransactionDetailsModel(isSuccessful: false, message: "", transactionInvoice: "", transactionShippingFee: "", transactionDate: "2000-01-01 00:00:00.000000", transactionPrice: "", transactionQuantity: 0, transactionUnitPrice: "",  transactionStatusId: 0, transactionStatusName: "", transactionPayment: "", transactionItems: [])
+        transactionDetailsModel = TransactionDetailsModel(isSuccessful: false, message: "", transactionInvoice: "", transactionShippingFee: "", transactionDate: "2000-01-01 00:00:00.000000", transactionPrice: "", transactionQuantity: 0, transactionUnitPrice: "",  transactionStatusId: 0, transactionStatusName: "", transactionPayment: "", transactionItems: [], isCancellable: false, isShippable: false)
         
         transactionConsigneeModel = TransactionConsigneeModel(isSuccessful: false, message: "", deliveryAddress: "", consigneeName: "", consigneeContactNumber: "")
         
@@ -84,11 +84,16 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         counterLabel.text = ""
         tableHeaderView.addSubview(counterLabel)
         
-        if tableFooterView == nil {
-            tableFooterView = XibHelper.puffViewWithNibName("TransactionDetailsFooterView", index: 0) as! TransactionDetailsFooterView
-            tableFooterView.delegate = self
-            tableFooterView.frame.size.width = self.view.frame.size.width
+        
+        if  transactionDetailsModel.isShippable || transactionDetailsModel.isCancellable {
+            if tableFooterView == nil {
+                tableFooterView = XibHelper.puffViewWithNibName("TransactionDetailsFooterView", index: 0) as! TransactionDetailsFooterView
+                tableFooterView.delegate = self
+                tableFooterView.setStatus(transactionDetailsModel.isShippable, isCancellable: transactionDetailsModel.isCancellable)
+                tableFooterView.frame.size.width = self.view.frame.size.width
+            }
         }
+        
         
         self.tidLabel.text = self.transactionDetailsModel.transactionInvoice
         if self.transactionDetailsModel.transactionQuantity > 1 {
