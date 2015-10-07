@@ -456,7 +456,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if selectedIndex == 0 {
+        if selectedIndex == 0 || selectedIndex == 5 {
             let cell: ProductManagementAllTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductManagementAllIdentifier") as! ProductManagementAllTableViewCell
             cell.selectionStyle = .None
             
@@ -464,6 +464,11 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
             cell.subTitleLabel.text = self.productModel.products[indexPath.row].category
             cell.setStatus(self.productModel.products[indexPath.row].status)
+            if selectedIndex == 5 {
+                cell.statusLabel.hidden = true
+            } else {
+                cell.statusLabel.hidden = false
+            }
             
             return cell
         } else {
@@ -485,18 +490,6 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
             cell.subTitleLabel.text = self.productModel.products[indexPath.row].category
 
-//            if selectedIndex == 4 || selectedIndex == 5 {
-//                cell.arrowImageView.hidden = true
-//                if selectedIndex == 4 {
-//                    cell.decreaseAlpha()
-//                } else {
-//                    cell.checkTapView.hidden = true
-//                }
-//            } else {
-//                cell.arrowImageView.hidden = false
-//                cell.checkTapView.hidden = false   
-//            }
-
             if selectedIndex == 4 {
                 cell.arrowImageView.hidden = true
                 cell.decreaseAlpha()
@@ -504,11 +497,11 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
                 cell.arrowImageView.hidden = false
             }
             
-            if selectedIndex == 5 {
-                cell.checkTapView.userInteractionEnabled = false
-            } else {
-                cell.checkTapView.userInteractionEnabled = true
-            }
+//            if selectedIndex == 5 {
+//                cell.checkTapView.hidden = true
+//            } else {
+//                cell.checkTapView.hidden = false
+//            }
             
             return cell
         }

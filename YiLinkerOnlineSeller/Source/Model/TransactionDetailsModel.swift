@@ -22,12 +22,14 @@ class TransactionDetailsModel: NSObject {
     var transactionStatusName: String = ""
     var transactionPayment: String = ""
     var transactionItems: [TransactionItemModel] = []
+    var isCancellable: Bool = false
+    var isShippable: Bool = false
     
     override init() {
         
     }
     
-    init(isSuccessful: Bool, message: String, transactionInvoice: String, transactionShippingFee: String, transactionDate: String, transactionPrice: String, transactionQuantity: Int, transactionUnitPrice: String, transactionStatusId: Int, transactionStatusName: String, transactionPayment: String, transactionItems: [TransactionItemModel]) {
+    init(isSuccessful: Bool, message: String, transactionInvoice: String, transactionShippingFee: String, transactionDate: String, transactionPrice: String, transactionQuantity: Int, transactionUnitPrice: String, transactionStatusId: Int, transactionStatusName: String, transactionPayment: String, transactionItems: [TransactionItemModel], isCancellable: Bool, isShippable: Bool) {
         self.isSuccessful = isSuccessful
         self.message = message
         self.transactionInvoice = transactionInvoice
@@ -40,6 +42,8 @@ class TransactionDetailsModel: NSObject {
         self.transactionStatusName = transactionStatusName
         self.transactionPayment = transactionPayment
         self.transactionItems = transactionItems
+        self.isCancellable = isCancellable
+        self.isShippable = isShippable
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> TransactionDetailsModel {
@@ -55,6 +59,8 @@ class TransactionDetailsModel: NSObject {
         var transactionStatusId: Int = 0
         var transactionStatusName: String = ""
         var transactionPayment: String = ""
+        var isCancellable: Bool = false
+        var isShippable: Bool = false
         
         var transactionItems: [TransactionItemModel] = []
         
@@ -141,11 +147,23 @@ class TransactionDetailsModel: NSObject {
                         }
                     }
                     
+                    if tempDict["isCancellable"] != nil {
+                        if let tempVar = tempDict["isCancellable"] as? Bool {
+                            isCancellable = tempVar
+                        }
+                    }
+                    
+                    if tempDict["isShippable"] != nil {
+                        if let tempVar = tempDict["isShippable"] as? Bool {
+                            isShippable = tempVar
+                        }
+                    }
+                    
                 }
             }
         }
         
-        return TransactionDetailsModel(isSuccessful: isSuccessful, message: message, transactionInvoice: transactionInvoice, transactionShippingFee: transactionShippingFee, transactionDate: transactionDate, transactionPrice: transactionPrice, transactionQuantity: transactionQuantity, transactionUnitPrice: transactionUnitPrice,  transactionStatusId: transactionStatusId, transactionStatusName: transactionStatusName, transactionPayment: transactionPayment, transactionItems: transactionItems)
+        return TransactionDetailsModel(isSuccessful: isSuccessful, message: message, transactionInvoice: transactionInvoice, transactionShippingFee: transactionShippingFee, transactionDate: transactionDate, transactionPrice: transactionPrice, transactionQuantity: transactionQuantity, transactionUnitPrice: transactionUnitPrice,  transactionStatusId: transactionStatusId, transactionStatusName: transactionStatusName, transactionPayment: transactionPayment, transactionItems: transactionItems, isCancellable: isCancellable, isShippable: isShippable)
     }
 
 }

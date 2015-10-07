@@ -281,8 +281,15 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
             self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                println(error)
                 self.hud?.hide(true)
+                println(error.userInfo)
+                let alert = UIAlertController(title: AlertStrings.wentWrong, message: "", preferredStyle: UIAlertControllerStyle.Alert)
+                let okButton = UIAlertAction(title: AlertStrings.ok, style: UIAlertActionStyle.Cancel) { (alert) -> Void in
+                        self.navigationController?.popViewControllerAnimated(true)
+                }
+                alert.addAction(okButton)
+                self.presentViewController(alert, animated: true, completion: nil)
+                
         })
     }
     
