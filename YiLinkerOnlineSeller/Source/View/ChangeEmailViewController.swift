@@ -77,7 +77,27 @@ class ChangeEmailViewController: UIViewController {
         } else {
             println("Submit password")
             self.showHUD()
-            self.fireChangePassword()
+            if oldEmailAddressTextField.text.isEmpty ||  newEmailAddressTextField.text.isEmpty || confirmEmailAddressTextField.text.isEmpty {
+                var completeLocalizeString = StringHelper.localizedStringWithKey("COMPLETEFIELDS_LOCALIZE_KEY")
+                showAlert(title: Constants.Localized.error, message: completeLocalizeString)
+            } else if newEmailAddressTextField.text != confirmEmailAddressTextField.text {
+                var passwordLocalizeString = StringHelper.localizedStringWithKey("PASSWORDMISMATCH_LOCALIZE_KEY")
+                showAlert(title: Constants.Localized.error, message: passwordLocalizeString)
+            } else {
+                if confirmEmailAddressTextField.text.toInt() > 8 && newEmailAddressTextField.text.toInt() > 8 {
+                    if confirmEmailAddressTextField.text.isAlphaNumeric() && newEmailAddressTextField.text.isAlphaNumeric() {
+                        self.fireChangePassword()
+                    } else {
+                        var passwordAlpha = StringHelper.localizedStringWithKey("PASSWORD_ALPHA_LOCALIZE_KEY")
+                        showAlert(title: Constants.Localized.error, message: passwordAlpha)
+                    }
+                } else {
+                    var passwordChar = StringHelper.localizedStringWithKey("PASSWORD_CHAR_LOCALIZE_KEY")
+                    showAlert(title: Constants.Localized.error, message: passwordChar)
+                }
+               
+            }
+            
         }
        
     }
