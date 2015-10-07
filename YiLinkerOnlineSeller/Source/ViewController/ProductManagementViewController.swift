@@ -523,9 +523,12 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             if selectedIndex != 4 {
                 let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
                 productDetails.productId = self.productModel.products[indexPath.row].id
-                if selectedIndex == 1 || selectedIndex == 2 || selectedIndex == 3 {
+                if selectedIndex != 5 {
                     productDetails.isEditable = true
                 }
+//                if selectedIndex == 0 || selectedIndex == 1 || selectedIndex == 2 || selectedIndex == 3 {
+//                    productDetails.isEditable = true
+//                }
                 self.navigationController?.pushViewController(productDetails, animated: true)
             }
         } else {
