@@ -23,10 +23,14 @@ class StoreInfoQrCodeTableViewCell: UITableViewCell {
     @IBOutlet var qrCodeImageView: UIImageView!
     @IBOutlet var qrCodeLabel: UILabel!
     @IBOutlet var qrCodeDescriptionLabel: UILabel!
-    
+    @IBOutlet var shareWithFbLabel: UILabel!
+    @IBOutlet var shareWithTwitterLabel: UILabel!
+    @IBOutlet var shareWithGoogleLabel: UILabel!
+    @IBOutlet var shareWithEmailLabel: UILabel!
     
     var qrCode: String = StringHelper.localizedStringWithKey("STORE_INFO_QR_LOCALIZE_KEY")
     var qrCodeDesc: String = StringHelper.localizedStringWithKey("STORE_INFO_SPREAD_LOCALIZE_KEY")
+    var shareWith: String = StringHelper.localizedStringWithKey("STORE_INFO_SHARE_WITH_LOCALIZE_KEY")
     
     var delegate: StoreInfoQrCodeTableViewCellDelegate?
     
@@ -34,6 +38,10 @@ class StoreInfoQrCodeTableViewCell: UITableViewCell {
         super.awakeFromNib()
         self.qrCodeLabel.text = qrCode
         self.qrCodeDescriptionLabel.text = qrCodeDesc
+        self.shareWithEmailLabel.text = shareWith
+        self.shareWithFbLabel.text = shareWith
+        self.shareWithGoogleLabel.text = shareWith
+        self.shareWithTwitterLabel.text = shareWith
         // Initialization code
     }
 
