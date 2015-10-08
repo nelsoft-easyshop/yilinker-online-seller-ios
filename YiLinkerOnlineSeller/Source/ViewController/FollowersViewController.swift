@@ -29,6 +29,8 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
     
     var searchTask: NSURLSessionDataTask?
     
+    var contacts = [W_Contact()]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -192,7 +194,10 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
     
     // MARK: - Cell message button action
     func messageButtonAction(sender: AnyObject) {
-        println("Message button clicked!")
+        var pathOfTheCell: NSIndexPath = tableView.indexPathForCell(sender as! UITableViewCell)!
+        var rowOfTheCell: Int = pathOfTheCell.row
+
+        getContactsFromEndpoint(followersModel.data[rowOfTheCell].email)
     }
     
     func showHUD() {
@@ -313,6 +318,88 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
         
     }
     
+    func getContactsFromEndpoint(keyword: String){
+        //SVProgressHUD.show()
+        if (Reachability.isConnectedToNetwork()) {
+            self.showHUD()
+            
+            let manager: APIManager = APIManager.sharedInstance
+            manager.requestSerializer = AFHTTPRequestSerializer()
+            
+            let parameters: NSDictionary = [
+                "page"          : "1",
+                "limit"         : "1",
+                "keyword"       : keyword,
+                "access_token"  : SessionManager.accessToken()
+                ]   as Dictionary<String, String>
+            
+            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
+            
+            manager.POST(url, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
+                self.goToMessaging()
+                //SVProgressHUD.dismiss()
+                self.hud?.hide(true)
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        if (SessionManager.isLoggedIn()){
+                            self.fireRefreshToken()
+                        }
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    }
+                    
+                    self.contacts = Array<W_Contact>()
+                    
+                    //SVProgressHUD.dismiss()
+                    self.hud?.hide(true)
+            })
+        }
+        
+    }
+    
+    func goToMessaging() {
+        var selectedContact : W_Contact?
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let messagingViewController: MessageThreadVC = (storyBoard.instantiateViewControllerWithIdentifier("MessageThreadVC") as? MessageThreadVC)!
+        
+        
+        if contacts.count != 0 {
+            selectedContact = contacts[0]
+        }
+        
+        var isOnline = "-1"
+        if (SessionManager.isLoggedIn()){
+            isOnline = "1"
+        } else {
+            isOnline = "0"
+        }
+        messagingViewController.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
+        messagingViewController.recipient = selectedContact
+        
+        self.navigationController?.pushViewController(messagingViewController, animated: true)
+    }
+    
+    func fireRefreshToken() {
+        let manager: APIManager = APIManager.sharedInstance
+        //seller@easyshop.ph
+        //password
+        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+        })
+        
+    }
 }
 
 
