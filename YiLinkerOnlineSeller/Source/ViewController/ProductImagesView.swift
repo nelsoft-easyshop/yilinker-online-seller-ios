@@ -29,7 +29,9 @@ class ProductImagesView: UIView, UICollectionViewDataSource {
         
         self.titleLabel.text = product.name
         self.subTitleLabel.text = product.shortDescription
-
+        
+//        self.collectionView.transform = CGAffineTransformMakeTranslation(0.0, 20.0)
+//        self.frame.size.height = self.frame.size.height + (self.subTitleLabel.frame.size.height - 38)
         self.imagesUrls = product.imageUrls
         self.collectionView.reloadData()
     }
