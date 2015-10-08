@@ -383,7 +383,9 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     func gotoDescriptionViewController(view: ProductDescriptionView) {
         let productDescription = ProductDescriptionViewController(nibName: "ProductDescriptionViewController", bundle: nil)
         productDescription.fullDescription = self.productModel.completeDescription
-        self.navigationController?.presentViewController(productDescription, animated: true, completion: nil)
+        productDescription.title = "Description"
+        let root = UINavigationController(rootViewController: productDescription)
+        self.navigationController?.presentViewController(root, animated: true, completion: nil)
     }
     
     // Dealloc
