@@ -10,6 +10,8 @@ import UIKit
 
 class FollowersViewController: UIViewController, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, FollowerTableViewCellDelegate {
     
+    let manager = APIManager.sharedInstance
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emptyLabel: UILabel!
@@ -21,6 +23,11 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
     var getCtr: Int = 0
     
     var errorLocalizeString: String  = ""
+    
+    var isPageEnd: Bool = false
+    var page: Int = 1
+    
+    var searchTask: NSURLSessionDataTask?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,9 +111,15 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        if count(searchText) > 1 {
+        if count(searchText) > 0 {
+            page = 1
+            followersModel.data.removeAll(keepCapacity: false)
+            isPageEnd = false
             fireGetFollower(searchText)
         } else {
+            page = 1
+            followersModel.data.removeAll(keepCapacity: false)
+            isPageEnd = false
             fireGetFollower("")
         }
     }
@@ -124,6 +137,10 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         self.searchBar.resignFirstResponder()
         self.searchBar.text = ""
+        page = 1
+        followersModel.data.removeAll(keepCapacity: false)
+        isPageEnd = false
+        fireGetFollower("")
     }
     
     // MARK: - Table view data source
@@ -158,6 +175,21 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
         searchBar.resignFirstResponder()
     }
     
+    func scrollViewDidEndDragging(aScrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        var offset: CGPoint = aScrollView.contentOffset
+        var bounds: CGRect = aScrollView.bounds
+        var size: CGSize = aScrollView.contentSize
+        var inset: UIEdgeInsets = aScrollView.contentInset
+        var y: CGFloat = offset.y + bounds.size.height - inset.bottom
+        var h: CGFloat = size.height
+        var reload_distance: CGFloat = 10
+        var temp: CGFloat = h + reload_distance
+        if y > temp {
+            showHUD()
+            fireGetFollower("")
+        }
+    }
+    
     // MARK: - Cell message button action
     func messageButtonAction(sender: AnyObject) {
         println("Message button clicked!")
@@ -177,59 +209,84 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
     }
     
     func fireGetFollower(searchKey: String) {
-        self.emptyLabel.hidden = true
-    
-        let manager = APIManager.sharedInstance
         
-        var params: Dictionary = ["access_token" : SessionManager.accessToken()]
-        if searchKey.isEmpty {
-            if getCtr == 0{
-                showHUD()
+        if !isPageEnd {
+            
+            if (self.searchTask != nil) {
+                searchTask?.cancel()
+                manager.operationQueue.cancelAllOperations()
+                searchTask = nil
             }
-        } else {
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-            params["searchKeyword"] = searchKey
-        }
-        
-        getCtr++
-        
-        manager.operationQueue.cancelAllOperations()
-        manager.GET(APIAtlas.getFollowers, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            self.followersModel = FollowersModel.parseDataWithDictionary(responseObject as! NSDictionary)
+            self.emptyLabel.hidden = true
             
-            if self.followersModel.isSuccessful {
-                if self.followersModel.data.count == 0 {
-                    self.emptyLabel.hidden = false
+            var params: Dictionary = ["access_token" : SessionManager.accessToken(), "page": "\(page)", "perPage": "15"]
+            if searchKey.isEmpty {
+                if getCtr == 0{
+                    showHUD()
                 }
-                self.tableView.reloadData()
-                
-                
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.followersModel.message, title: self.errorLocalizeString)
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+                params["searchKeyword"] = searchKey
             }
-            self.hud?.hide(true)
             
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                if Reachability.isConnectedToNetwork() {
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    if task.statusCode == 401 {
-                        self.fireRefreshToken(searchKey)
-                    } else {
+            getCtr++
+            searchTask = manager.GET(APIAtlas.getFollowers, parameters: params, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                
+                let followerModel: FollowersModel = FollowersModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                
+                if followerModel.isSuccessful {
+                    self.page++
+                    self.followersModel.data += followerModel.data
+                    if self.followersModel.data.count == 0 {
                         self.emptyLabel.hidden = false
-                        if Reachability.isConnectedToNetwork() {
+                    }
+                    
+                    if followerModel.data.count < 15 {
+                        self.isPageEnd = true
+                    }
+                    
+                    self.tableView.reloadData()
+                    
+                    
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.followersModel.message, title: self.errorLocalizeString)
+                }
+                self.hud?.hide(true)
+                
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                    self.hud?.hide(true)
+                    println(error)
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    if (task.response as? NSHTTPURLResponse != nil) {
+                        let response: NSHTTPURLResponse  = task.response as! NSHTTPURLResponse
+                        let statusCode: Int = response.statusCode
+                        println("STATUS CODE \(statusCode)")
+                        if statusCode == 401 {
+                            self.fireRefreshToken(searchKey)
+                        } else if statusCode == -1009 {
+                            if !Reachability.isConnectedToNetwork() {
+                                UIAlertController.displayNoInternetConnectionError(self)
+                            }
+                        } else if(statusCode != -999) {
                             UIAlertController.displaySomethingWentWrongError(self)
                         } else {
+                            self.fireGetFollower(searchKey)
+                        }
+                    } else {
+                        if !Reachability.isConnectedToNetwork() {
                             UIAlertController.displayNoInternetConnectionError(self)
                         }
-                        println(error)
                     }
-                }
-        })
+            })
+        } else {
+            self.hud?.hide(true)
+            let titleString = StringHelper.localizedStringWithKey("FOLLOWERS_TITLE_LOCALIZE_KEY")
+            let noMoreDataString = StringHelper.localizedStringWithKey("NO_MORE_DATA_LOCALIZE_KEY")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noMoreDataString, title: titleString)
+        }
     }
     
     func fireRefreshToken(searchKey: String) {

@@ -33,6 +33,7 @@ class ProductModel {
     var message: String = ""
     var isSuccessful: Bool = false
     var imageUrls: [String] = []
+    var imageIds: [String] = []
     
     var editedImage: [ServerUIImage] = []
     
@@ -41,13 +42,14 @@ class ProductModel {
         self.validCombinations = validCombinations
     }
     
-    init (isSuccessful: Bool, message: String, attributes: [AttributeModel], validCombinations: [CombinationModel], images: [String], category: CategoryModel, brand: BrandModel, condition: ConditionModel, name: String, shortDescription: String, completeDescription: String, productId: String) {
+    init (isSuccessful: Bool, message: String, attributes: [AttributeModel], validCombinations: [CombinationModel], images: [String], imageIds: [String], category: CategoryModel, brand: BrandModel, condition: ConditionModel, name: String, shortDescription: String, completeDescription: String, productId: String) {
     
         self.isSuccessful = isSuccessful
         self.message = message
         self.attributes = attributes
         self.validCombinations = validCombinations
         self.imageUrls = images
+        self.imageIds = imageIds
         self.category = category
         self.brand = brand
         self.condition = condition
@@ -74,6 +76,7 @@ class ProductModel {
         var attributes: [AttributeModel] = []
         var validCombinations: [CombinationModel] = []
         var images: [String] = []
+        var imageIds: [String] = []
         
         var category: CategoryModel = CategoryModel(uid: 0, name: "", hasChildren: "")
         var brand: BrandModel = BrandModel(name: "", brandId:1)
@@ -126,6 +129,7 @@ class ProductModel {
                 
                 for subValue in value["images"] as! NSArray {
                     images.append("http://online.api.easydeal.ph/assets/images/uploads/products/" + (subValue["image"] as! String))
+                    imageIds.append(subValue["id"] as! String)
                 }
                 
                 var attributeModel = AttributeModel()
@@ -174,7 +178,7 @@ class ProductModel {
             } // data
         } // dictionary
         
-        return ProductModel(isSuccessful: isSuccessful, message: message, attributes: attributes, validCombinations: validCombinations, images: images, category: category, brand: brand, condition: condition, name: name, shortDescription: shortDescription, completeDescription: completeDescription, productId: uid)
+        return ProductModel(isSuccessful: isSuccessful, message: message, attributes: attributes, validCombinations: validCombinations, images: images, imageIds: imageIds, category: category, brand: brand, condition: condition, name: name, shortDescription: shortDescription, completeDescription: completeDescription, productId: uid)
         
     } // parseDataWithDictionary
 }
