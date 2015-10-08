@@ -192,35 +192,30 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func populateDetails() {
-        
         self.productImagesView.setDetails(productModel)
         self.productDescriptionView.descriptionLabel.text = productModel.completeDescription
-        
-        let def: CombinationModel = productModel.validCombinations[0]
-        self.detailValues = [productModel.category.name, productModel.brand.name]
-//        self.detailValues.append(productModel.category.name)
-//        self.detailValues.append(productModel.brand.name)
-        
-        self.priceValues = [def.retailPrice, def.discountedPrice]
-//        self.priceValues.append(def.retailPrice)
-//        self.priceValues.append(def.discountedPrice)
-        
-        self.dimensionWeightValues = [def.length, def.width, def.weight, def.height]
-//        self.dimensionWeightValues.append(def.length)
-//        self.dimensionWeightValues.append(def.width)
-//        self.dimensionWeightValues.append(def.weight)
-//        self.dimensionWeightValues.append(def.height)
 
+        if productModel.validCombinations.count != 0 {
+            let def: CombinationModel = productModel.validCombinations[0]
+            self.detailValues = [productModel.category.name, productModel.brand.name]
+            self.priceValues = [def.retailPrice, def.discountedPrice]
+            self.dimensionWeightValues = [def.length, def.width, def.weight, def.height]
+//            self.listNames = ["Category", "Brand", "Retail Price", "Discounted Price", "Length (CM)", "Width (CM)", "Weight (KG)", "Height (CM)"]
+            self.listValues = [productModel.category.name, productModel.brand.name,
+                "₱" + def.retailPrice.floatValue.string(2), "₱" + def.discountedPrice.floatValue.string(2),
+                def.length + "cm", def.width + "cm", def.weight + "kg", def.height + "cm"]
+        } else {
+            self.detailValues = [productModel.category.name, productModel.brand.name]
+            self.priceValues = [productModel.retailPrice, productModel.discoutedPrice]
+            self.dimensionWeightValues = [productModel.length, productModel.width, productModel.weigth, productModel.height]
+//            self.listNames = ["Category", "Brand", "Retail Price", "Discounted Price", "Length (CM)", "Width (CM)", "Weight (KG)", "Height (CM)"]
+            self.listValues = [productModel.category.name, productModel.brand.name,
+                "₱" + productModel.retailPrice.floatValue.string(2), "₱" + productModel.discoutedPrice.floatValue.string(2),
+                productModel.length + "cm", productModel.width + "cm", productModel.weigth + "kg", productModel.height + "cm"]
+        }
+        
         self.listNames = ["Category", "Brand", "Retail Price", "Discounted Price", "Length (CM)", "Width (CM)", "Weight (KG)", "Height (CM)"]
-        self.listValues = [productModel.category.name, productModel.brand.name,
-            "₱" + def.retailPrice.floatValue.string(2), "₱" + def.discountedPrice.floatValue.string(2),
-            def.length + "cm", def.width + "cm", def.weight + "kg", def.height + "cm"]
-        
-//        self.listDetails = ["Category": productModel.category.name, "Brand": productModel.brand.name]
-//        self.listPrice = ["Retail Price": def.retailPrice, "Discounted Price": def.discountedPrice]
-//        self.listDimensionsWeight = ["Length (CM)": def.length, "Width (CM)": def.width, "Weight (KG)": def.weight, "Height (CM)": def.height]
         self.listSections = [detailValues, priceValues, dimensionWeightValues]
-        
         self.tableView.reloadData()
     }
     
