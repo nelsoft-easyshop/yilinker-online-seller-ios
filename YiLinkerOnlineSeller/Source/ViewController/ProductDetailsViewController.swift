@@ -210,9 +210,10 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
 //        self.dimensionWeightValues.append(def.width)
 //        self.dimensionWeightValues.append(def.weight)
 //        self.dimensionWeightValues.append(def.height)
-        
+
         self.listNames = ["Category", "Brand", "Retail Price", "Discounted Price", "Length (CM)", "Width (CM)", "Weight (KG)", "Height (CM)"]
-        self.listValues = [productModel.category.name, productModel.brand.name, "P " + def.retailPrice, "P " + def.discountedPrice,
+        self.listValues = [productModel.category.name, productModel.brand.name,
+            "₱" + def.retailPrice.floatValue.string(2), "₱" + def.discountedPrice.floatValue.string(2),
             def.length + "cm", def.width + "cm", def.weight + "kg", def.height + "cm"]
         
 //        self.listDetails = ["Category": productModel.category.name, "Brand": productModel.brand.name]
@@ -394,4 +395,20 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
 //        self.tableView.delegate = nil
 //        self.tableView.dataSource = nil
 //    }
+}
+
+extension String {
+    var floatValue: Float {
+        return (self as NSString).floatValue
+    }
+}
+
+extension Float {
+    func string(fractionDigits:Int) -> String {
+        let formatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = fractionDigits
+        formatter.maximumFractionDigits = fractionDigits
+        formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+        return formatter.stringFromNumber(self) ?? "\(self)"
+    }
 }
