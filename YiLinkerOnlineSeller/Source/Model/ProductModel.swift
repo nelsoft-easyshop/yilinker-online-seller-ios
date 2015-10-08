@@ -139,9 +139,9 @@ class ProductModel {
                     attributes.append(attributeModel)
                 }
                 
-                var combination = CombinationModel()
                 let properties: NSArray = value["productProperties"] as! NSArray
                 if properties.count == 0 {
+                    var combination = CombinationModel()
                     combination.combinationID = ""
                     combination.attributes = []
                     combination.retailPrice = "0.0"
@@ -154,10 +154,10 @@ class ProductModel {
                     combination.height = "0.0"
                     combination.length = "0.0"
                     combination.width = "0.0"
-                    
                     validCombinations.append(combination)
                 } else {
                     for subValue in value["productProperties"] as! NSArray {
+                        var combination = CombinationModel()
                         combination.combinationID = subValue["id"] as! String
                         combination.attributes = subValue["attributes"] as! NSArray as! [NSMutableDictionary]
                         combination.retailPrice = subValue["price"] as! String
@@ -170,7 +170,6 @@ class ProductModel {
                         combination.height = subValue["unitHeight"] as! String
                         combination.length = subValue["unitLength"] as! String
                         combination.width = subValue["unitWidth"] as! String
-                        
                         validCombinations.append(combination)
                     }
                 }
