@@ -525,6 +525,11 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
                 productDetails.productId = self.productModel.products[indexPath.row].id
                 if selectedIndex != 5 {
                     productDetails.isEditable = true
+                    if selectedIndex == 0 {
+                        if self.productModel.products[indexPath.row].status == 4 || self.productModel.products[indexPath.row].status == 1 {
+                            productDetails.isEditable = false
+                        }
+                    }
                 }
 //                if selectedIndex == 0 || selectedIndex == 1 || selectedIndex == 2 || selectedIndex == 3 {
 //                    productDetails.isEditable = true
