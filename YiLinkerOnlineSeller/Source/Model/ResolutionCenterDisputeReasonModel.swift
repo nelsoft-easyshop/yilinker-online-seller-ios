@@ -61,6 +61,10 @@ class ResolutionCenterDisputeReasonModel: NSObject {
                             resolutionReasons.append(ResolutionCenterDisputeReasonsModel(id: subValue["id"] as! Int, reason: subValue["reason"] as! String))
                         }
                     } else {
+                         allkey.append(reasonDictionary["key"] as! String)
+                         id.append(1001)
+                         reasons.append("No reason for this dispute")
+
                          resolutionReasons.append(ResolutionCenterDisputeReasonsModel(id: 10001, reason: "No reason"))
                     }
                     /*

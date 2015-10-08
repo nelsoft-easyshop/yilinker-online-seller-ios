@@ -252,16 +252,14 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             
             for var i: Int = 0; i < self.reason?.key.count; i++ {
                 var arr = [ResolutionCenterDisputeReasonsModel]()
-                println("reason \(self.reason!.key[i])")
                 for var j: Int = 0; j < self.reason?.reason.count; j++ {
-                    println("reason \(self.reason!.key[i]) \(self.reason?.allkey[j])")
-                    if self.reason?.key[i] == self.reason?.allkey[j] {
+                    if self.reason!.key[i] == self.reason!.allkey[j] {
+                        println("reason \(self.reason!.key[i]) \(self.reason!.allkey[j])")
                         self.reas = ResolutionCenterDisputeReasonsModel(id: self.reason!.id[j], reason: self.reason!.reason[j])
                         arr.append(self.reas)
                     }
                    self.reasonTableData.append(ResolutionCenterDisputeReasonModel(key2: self.reason!.key[i], resolutionReasons2: arr))
                 }
-                println(self.reasonTableData[i].reason.count)
             }
            
             //self.tableView.reloadData()
@@ -361,7 +359,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             self.currentTextField.text = self.transactionsModel.transactions[row].invoice_number
         } else if self.disputePickerType == DisputePickerType.DisputeType {
             self.disputeTypeDefaultIndex = row
-            self.currentTextField.text = self.disputeType[row]
+            self.currentTextField.text = self.reason!.key[row]
         } else {
             self.reasonDefaultIndex = row
             self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons[row].reason
@@ -376,7 +374,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         if self.disputePickerType == DisputePickerType.TransactionList {
            return self.transactionsModel.transactions.count
         } else if self.disputePickerType == DisputePickerType.DisputeType {
-           return self.reasonTableData.count
+           return self.reason!.key.count
         } else {
             return self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons.count
         }
@@ -386,7 +384,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         if self.disputePickerType == DisputePickerType.TransactionList {
             return self.transactionsModel.transactions[row].invoice_number
         } else if self.disputePickerType == DisputePickerType.DisputeType{
-            return self.disputeType[row]
+            return self.reason!.key[row]
         } else {
             return self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons[row].reason
         }
