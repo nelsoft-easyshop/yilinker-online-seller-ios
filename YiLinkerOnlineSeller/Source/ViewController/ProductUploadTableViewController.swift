@@ -129,7 +129,6 @@ struct ProductUploadTableViewControllerConstant {
     
     static let quantityHeight: CGFloat = 59
     
-    
     static let uploadImagesKey = "images[]"
     static let uploadConditionKey = "condition"
     static let uploadTitleKey = "title"
@@ -251,7 +250,14 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     func addAddPhoto() {
-        self.productModel.images.append(UIImage(named: "addPhoto")!)
+        if self.uploadType == UploadType.EditProduct {
+            let image: UIImage = UIImage(named: "addPhoto")!
+            let serverImage: ServerUIImage  = ServerUIImage(data: UIImagePNGRepresentation(image)!)!
+            self.productModel.editedImage.append(serverImage)
+        } else {
+            self.productModel.images.append(UIImage(named: "addPhoto")!)
+        }
+        
     }
     
     func register() {
@@ -681,26 +687,49 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     
     //Upload Cell Datasource
     func productUploadUploadImageTableViewCell(numberOfCollectionViewRows cell: ProductUploadUploadImageTableViewCell) -> Int {
-        return self.productModel.images.count
+        if self.uploadType == UploadType.EditProduct {
+            return self.productModel.editedImage.count
+        } else {
+            return self.productModel.images.count
+        }
     }
     
     //Upload Delegate
     func productUploadUploadImageTableViewCell(didSelecteRowAtIndexPath indexPath: NSIndexPath, cell: ProductUploadUploadImageTableViewCell) {
-        if indexPath.row == self.productModel.images.count - 1 && self.productModel.images.count <= 5 {
-            let picker: UzysAssetsPickerController = UzysAssetsPickerController()
-            let maxCount: Int = 6
-            
-            let imageLimit: Int = maxCount - self.productModel.images.count
-            picker.delegate = self
-            picker.maximumNumberOfSelectionVideo = 0
-            picker.maximumNumberOfSelectionPhoto = 100
-            UzysAssetsPickerController.setUpAppearanceConfig(self.uzyConfig())
-            self.presentViewController(picker, animated: true, completion: nil)
+        if self.uploadType == UploadType.EditProduct {
+            if indexPath.row == self.productModel.editedImage.count - 1 && self.productModel.editedImage.count <= 5 {
+                let picker: UzysAssetsPickerController = UzysAssetsPickerController()
+                let maxCount: Int = 6
+                
+                let imageLimit: Int = maxCount - self.productModel.images.count
+                picker.delegate = self
+                picker.maximumNumberOfSelectionVideo = 0
+                picker.maximumNumberOfSelectionPhoto = 100
+                UzysAssetsPickerController.setUpAppearanceConfig(self.uzyConfig())
+                self.presentViewController(picker, animated: true, completion: nil)
+            }
+
+        } else {
+            if indexPath.row == self.productModel.images.count - 1 && self.productModel.images.count <= 5 {
+                let picker: UzysAssetsPickerController = UzysAssetsPickerController()
+                let maxCount: Int = 6
+                
+                let imageLimit: Int = maxCount - self.productModel.images.count
+                picker.delegate = self
+                picker.maximumNumberOfSelectionVideo = 0
+                picker.maximumNumberOfSelectionPhoto = 100
+                UzysAssetsPickerController.setUpAppearanceConfig(self.uzyConfig())
+                self.presentViewController(picker, animated: true, completion: nil)
+            }
         }
     }
     
     func productUploadUploadImageTableViewCell(didDeleteAtRowIndexPath indexPath: NSIndexPath, collectionView: UICollectionView) {
-        self.productModel.images.removeAtIndex(indexPath.row)
+        if self.uploadType == UploadType.EditProduct {
+            self.productModel.editedImage.removeAtIndex(indexPath.row)
+        } else {
+            self.productModel.images.removeAtIndex(indexPath.row)
+        }
         collectionView.deleteItemsAtIndexPaths([indexPath])
     }
     
@@ -711,7 +740,11 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     func productUploadUploadImageTableViewCell(images cell: ProductUploadUploadImageTableViewCell) -> [UIImage] {
-        return self.productModel.images
+        if self.uploadType == UploadType.EditProduct {
+            return self.productModel.editedImage
+        } else {
+            return self.productModel.images
+        }
     }
     
     //UzzyPickerDelegate
@@ -721,8 +754,17 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         let alaSset: ALAsset = assets[0] as! ALAsset
 
         for allaSset in assets as! [ALAsset] {
-            let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!
-            self.productModel.images.insert(image, atIndex: self.productModel.images.count - 1)
+            
+            
+            if self.uploadType == UploadType.EditProduct {
+                let image: ServerUIImage = ServerUIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!
+                image.isNew = true
+                image.isRemoved = false
+                self.productModel.editedImage.insert(image, atIndex: self.productModel.editedImage.count - 1)
+            } else {
+               let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!
+               self.productModel.images.insert(image, atIndex: self.productModel.images.count - 1)
+            }
         }
         
         self.reloadUploadCellCollectionViewData()
@@ -751,7 +793,14 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
 //            cell.isImageIsFull = false
 //        }
 //        
-        let lastIndexPath: NSIndexPath = NSIndexPath(forItem: self.productModel.images.count - 1, inSection: 0)
+        var lastIndexPath: NSIndexPath = NSIndexPath()
+        
+        if self.uploadType == UploadType.EditProduct {
+            lastIndexPath = NSIndexPath(forItem: self.productModel.editedImage.count - 1, inSection: 0)
+        } else {
+            lastIndexPath = NSIndexPath(forItem: self.productModel.images.count - 1, inSection: 0)
+        }
+        
         cell.collectionView.scrollToItemAtIndexPath(lastIndexPath, atScrollPosition: UICollectionViewScrollPosition.Right, animated: true)
     }
     
@@ -787,7 +836,14 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     func productUploadFooterView(didClickUpload view: ProductUploadFooterView) {
-        if self.productModel.images.count == 1 {
+        var count: Int = 0
+        if self.uploadType == UploadType.EditProduct {
+            count = self.productModel.editedImage.count
+        } else {
+            count = self.productModel.images.count
+        }
+        
+        if count == 1 {
           UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.insertOneImage, title: ProductUploadStrings.incompleteProductDetails)
         } else if self.productModel.name == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.productNameRequired, title: ProductUploadStrings.incompleteProductDetails)
@@ -890,7 +946,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     func fireUploadWithUploadType(uploadType: UploadType) {
-        
         if uploadType == UploadType.EditProduct {
             for (index, oldImage) in enumerate(self.oldEditedImages) {
                 var isNew: Bool = false
@@ -905,10 +960,12 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 
                 if isDeleted == true {
                     oldImage.isRemoved = true
+                    oldImage.isNew = false
                     self.productModel.editedImage.append(oldImage)
                 }
             }
         }
+        
         
         var datas: [NSData] = []
         
@@ -936,9 +993,18 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             }
         }
         
-        for image in uploadedImages as [UIImage] {
-            let data: NSData = UIImageJPEGRepresentation(image, 1)
-            datas.append(data)
+        if self.uploadType == UploadType.EditProduct {
+            for image in self.productModel.editedImage as [ServerUIImage] {
+                if image.isNew {
+                    let data: NSData = UIImageJPEGRepresentation(image, 1)
+                    datas.append(data)
+                }
+            }
+        } else {
+            for image in uploadedImages as [UIImage] {
+                let data: NSData = UIImageJPEGRepresentation(image, 1)
+                datas.append(data)
+            }
         }
         
         var customBrand: String = ""
@@ -976,6 +1042,24 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         if categoryId == "0" {
             categoryId = ""
         }
+        
+        
+        if self.uploadType == UploadType.EditProduct {
+            imagesKey.removeAll(keepCapacity: true)
+            self.productModel.editedImage.removeLast()
+            for var x = 0; x < self.productModel.editedImage.count; x++ {
+                let image: ServerUIImage = self.productModel.editedImage[x]
+                var dictionary: NSMutableDictionary = NSMutableDictionary()
+                dictionary["id"] = x
+                dictionary["isNew"] = image.isNew
+                dictionary["isRemoved"] = image.isRemoved
+                dictionary["oldId"] = image.uid
+                let data = NSJSONSerialization.dataWithJSONObject(dictionary, options: nil, error: nil)
+                let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
+                imagesKey.append(string as! String)
+            }
+        }
+        println(imagesKey)
     
         let parameters: NSMutableDictionary = [ProductUploadTableViewControllerConstant.uploadPriceKey: self.productModel.retailPrice,
         ProductUploadTableViewControllerConstant.uploadShortDescriptionkey: self.productModel.shortDescription,
@@ -1019,7 +1103,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 println("index: \(index)")
                 formData.appendPartWithFileData(data, name: "images[]", fileName: "\(index)", mimeType: "image/jpeg")
             }
-            
             }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
                 self.hud?.hide(true)
                 let dictionary: NSDictionary = response as! NSDictionary
@@ -1045,6 +1128,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                self.fireRefreshToken2()
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                self.addAddPhoto()
+                self.tableView.reloadData()
             }
             self.hud?.hide(true)
         }
