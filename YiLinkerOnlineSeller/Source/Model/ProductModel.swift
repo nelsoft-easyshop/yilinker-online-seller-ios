@@ -42,7 +42,7 @@ class ProductModel {
         self.validCombinations = validCombinations
     }
     
-    init (isSuccessful: Bool, message: String, attributes: [AttributeModel], validCombinations: [CombinationModel], images: [String], imageIds: [String], category: CategoryModel, brand: BrandModel, condition: ConditionModel, name: String, shortDescription: String, completeDescription: String, productId: String) {
+    init (isSuccessful: Bool, message: String, attributes: [AttributeModel], validCombinations: [CombinationModel], images: [String], imageIds: [String], category: CategoryModel, brand: BrandModel, condition: ConditionModel, name: String, shortDescription: String, completeDescription: String, productId: String,  quantity: Int, retailPrice: String, discountedPrice: String, weight: String, height: String, length: String, width: String) {
     
         self.isSuccessful = isSuccessful
         self.message = message
@@ -57,7 +57,14 @@ class ProductModel {
         self.shortDescription = shortDescription
         self.completeDescription = completeDescription
         self.uid = productId
-        println(">> \(self.uid)")
+        self.quantity = quantity
+        self.attributes = attributes
+        self.retailPrice = retailPrice
+        self.discoutedPrice = discountedPrice
+        self.width = width
+        self.weigth = weight
+        self.length = length
+        self.height = height
     }
     
     init() {
@@ -86,6 +93,15 @@ class ProductModel {
         var shortDescription: String = ""
         var completeDescription: String = ""
         var uid: String = "0"
+        
+        var sku: String = ""
+        var retailPrice: String = "0"
+        var discoutedPrice: String = "0"
+        var width = ""
+        var height = ""
+        var length = ""
+        var weigth = ""
+        var quantity = 0
         
         if dictionary.isKindOfClass(NSDictionary) {
             
@@ -139,9 +155,9 @@ class ProductModel {
                     attributes.append(attributeModel)
                 }
                 
-                var combination = CombinationModel()
                 let properties: NSArray = value["productProperties"] as! NSArray
                 if properties.count == 0 {
+                    var combination = CombinationModel()
                     combination.combinationID = ""
                     combination.attributes = []
                     combination.retailPrice = "0.0"
@@ -154,10 +170,22 @@ class ProductModel {
                     combination.height = "0.0"
                     combination.length = "0.0"
                     combination.width = "0.0"
-                    
                     validCombinations.append(combination)
-                } else {
+                } else if properties.count == 1 {
                     for subValue in value["productProperties"] as! NSArray {
+                        attributes = subValue["attributes"] as! NSArray as! [AttributeModel]
+                        quantity = subValue["quantity"] as! Int
+                        retailPrice = subValue["price"] as! String
+                        discoutedPrice = subValue["discountedPrice"] as! String
+                        sku = subValue["sku"] as! String
+                        weigth = subValue["unitWeight"] as! String
+                        height = subValue["unitHeight"] as! String
+                        length = subValue["unitLength"] as! String
+                        width = subValue["unitWidth"] as! String
+                    }
+                } else if properties.count > 1 {
+                    for subValue in value["productProperties"] as! NSArray {
+                        var combination = CombinationModel()
                         combination.combinationID = subValue["id"] as! String
                         combination.attributes = subValue["attributes"] as! NSArray as! [NSMutableDictionary]
                         combination.retailPrice = subValue["price"] as! String
@@ -170,7 +198,6 @@ class ProductModel {
                         combination.height = subValue["unitHeight"] as! String
                         combination.length = subValue["unitLength"] as! String
                         combination.width = subValue["unitWidth"] as! String
-                        
                         validCombinations.append(combination)
                     }
                 }
@@ -178,7 +205,7 @@ class ProductModel {
             } // data
         } // dictionary
         
-        return ProductModel(isSuccessful: isSuccessful, message: message, attributes: attributes, validCombinations: validCombinations, images: images, imageIds: imageIds, category: category, brand: brand, condition: condition, name: name, shortDescription: shortDescription, completeDescription: completeDescription, productId: uid)
+        return ProductModel(isSuccessful: isSuccessful, message: message, attributes: attributes, validCombinations: validCombinations, images: images, imageIds: imageIds, category: category, brand: brand, condition: condition, name: name, shortDescription: shortDescription, completeDescription: completeDescription, productId: uid, quantity: quantity, retailPrice: retailPrice, discountedPrice: discoutedPrice, weight: weigth, height: height, length: length, width: width)
         
     } // parseDataWithDictionary
 }

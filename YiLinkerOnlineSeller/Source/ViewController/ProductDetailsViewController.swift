@@ -192,34 +192,30 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func populateDetails() {
-        
         self.productImagesView.setDetails(productModel)
         self.productDescriptionView.descriptionLabel.text = productModel.completeDescription
-        
-        let def: CombinationModel = productModel.validCombinations[0]
-        self.detailValues = [productModel.category.name, productModel.brand.name]
-//        self.detailValues.append(productModel.category.name)
-//        self.detailValues.append(productModel.brand.name)
-        
-        self.priceValues = [def.retailPrice, def.discountedPrice]
-//        self.priceValues.append(def.retailPrice)
-//        self.priceValues.append(def.discountedPrice)
-        
-        self.dimensionWeightValues = [def.length, def.width, def.weight, def.height]
-//        self.dimensionWeightValues.append(def.length)
-//        self.dimensionWeightValues.append(def.width)
-//        self.dimensionWeightValues.append(def.weight)
-//        self.dimensionWeightValues.append(def.height)
+
+        if productModel.validCombinations.count != 0 {
+            let def: CombinationModel = productModel.validCombinations[0]
+            self.detailValues = [productModel.category.name, productModel.brand.name]
+            self.priceValues = [def.retailPrice, def.discountedPrice]
+            self.dimensionWeightValues = [def.length, def.width, def.weight, def.height]
+//            self.listNames = ["Category", "Brand", "Retail Price", "Discounted Price", "Length (CM)", "Width (CM)", "Weight (KG)", "Height (CM)"]
+            self.listValues = [productModel.category.name, productModel.brand.name,
+                "₱" + def.retailPrice.floatValue.string(2), "₱" + def.discountedPrice.floatValue.string(2),
+                def.length + "cm", def.width + "cm", def.weight + "kg", def.height + "cm"]
+        } else {
+            self.detailValues = [productModel.category.name, productModel.brand.name]
+            self.priceValues = [productModel.retailPrice, productModel.discoutedPrice]
+            self.dimensionWeightValues = [productModel.length, productModel.width, productModel.weigth, productModel.height]
+//            self.listNames = ["Category", "Brand", "Retail Price", "Discounted Price", "Length (CM)", "Width (CM)", "Weight (KG)", "Height (CM)"]
+            self.listValues = [productModel.category.name, productModel.brand.name,
+                "₱" + productModel.retailPrice.floatValue.string(2), "₱" + productModel.discoutedPrice.floatValue.string(2),
+                productModel.length + "cm", productModel.width + "cm", productModel.weigth + "kg", productModel.height + "cm"]
+        }
         
         self.listNames = ["Category", "Brand", "Retail Price", "Discounted Price", "Length (CM)", "Width (CM)", "Weight (KG)", "Height (CM)"]
-        self.listValues = [productModel.category.name, productModel.brand.name, "P " + def.retailPrice, "P " + def.discountedPrice,
-            def.length + "cm", def.width + "cm", def.weight + "kg", def.height + "cm"]
-        
-//        self.listDetails = ["Category": productModel.category.name, "Brand": productModel.brand.name]
-//        self.listPrice = ["Retail Price": def.retailPrice, "Discounted Price": def.discountedPrice]
-//        self.listDimensionsWeight = ["Length (CM)": def.length, "Width (CM)": def.width, "Weight (KG)": def.weight, "Height (CM)": def.height]
         self.listSections = [detailValues, priceValues, dimensionWeightValues]
-        
         self.tableView.reloadData()
     }
     
@@ -300,38 +296,40 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func editAction() {
-        self.showHUD()
-        if self.productModel.imageUrls.count != self.productModel.images.count {
-            self.productModel.images = []
-            for i in 0..<self.productModel.imageUrls.count {
-                var imgURL: NSURL = NSURL(string: self.productModel.imageUrls[i])!
-                let request: NSURLRequest = NSURLRequest(URL: imgURL)
-                NSURLConnection.sendAsynchronousRequest(
-                    request, queue: NSOperationQueue.mainQueue(),
-                    completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
-                        if error == nil {
-                            var convertedImage: ServerUIImage = ServerUIImage(data: data)!
-                            convertedImage.uid = self.productModel.imageIds[i]
-                            self.productModel.images.append(convertedImage)
-                            if self.productModel.images.count == self.productModel.imageUrls.count {
-                                self.hud?.hide(true)
-                                let upload = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
-                                upload.uploadType = UploadType.EditProduct
-                                upload.productModel = self.productModel
-                                let navigationController: UINavigationController = UINavigationController(rootViewController: upload)
-                                navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-                                self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
+        if self.productModel != nil {
+            self.showHUD()
+            if self.productModel.imageUrls.count != self.productModel.images.count {
+                self.productModel.images = []
+                for i in 0..<self.productModel.imageUrls.count {
+                    var imgURL: NSURL = NSURL(string: self.productModel.imageUrls[i])!
+                    let request: NSURLRequest = NSURLRequest(URL: imgURL)
+                    NSURLConnection.sendAsynchronousRequest(
+                        request, queue: NSOperationQueue.mainQueue(),
+                        completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
+                            if error == nil {
+                                var convertedImage: ServerUIImage = ServerUIImage(data: data)!
+                                convertedImage.uid = self.productModel.imageIds[i]
+                                self.productModel.images.append(convertedImage)
+                                if self.productModel.images.count == self.productModel.imageUrls.count {
+                                    self.hud?.hide(true)
+                                    let upload = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
+                                    upload.uploadType = UploadType.EditProduct
+                                    upload.productModel = self.productModel
+                                    let navigationController: UINavigationController = UINavigationController(rootViewController: upload)
+                                    navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+                                    self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
+                                }
                             }
-                        }
-                })
+                    })
+                }
+            } else {
+                let upload = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
+                upload.uploadType = UploadType.EditProduct
+                upload.productModel = self.productModel
+                let navigationController: UINavigationController = UINavigationController(rootViewController: upload)
+                navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+                self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
             }
-        } else {
-            let upload = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
-            upload.uploadType = UploadType.EditProduct
-            upload.productModel = self.productModel
-            let navigationController: UINavigationController = UINavigationController(rootViewController: upload)
-            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-            self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
         }
     }
 
@@ -385,7 +383,9 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     func gotoDescriptionViewController(view: ProductDescriptionView) {
         let productDescription = ProductDescriptionViewController(nibName: "ProductDescriptionViewController", bundle: nil)
         productDescription.fullDescription = self.productModel.completeDescription
-        self.navigationController?.presentViewController(productDescription, animated: true, completion: nil)
+        productDescription.title = "Description"
+        let root = UINavigationController(rootViewController: productDescription)
+        self.navigationController?.presentViewController(root, animated: true, completion: nil)
     }
     
     // Dealloc
@@ -394,4 +394,20 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
 //        self.tableView.delegate = nil
 //        self.tableView.dataSource = nil
 //    }
+}
+
+extension String {
+    var floatValue: Float {
+        return (self as NSString).floatValue
+    }
+}
+
+extension Float {
+    func string(fractionDigits:Int) -> String {
+        let formatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = fractionDigits
+        formatter.maximumFractionDigits = fractionDigits
+        formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+        return formatter.stringFromNumber(self) ?? "\(self)"
+    }
 }
