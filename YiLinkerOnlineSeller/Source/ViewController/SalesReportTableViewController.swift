@@ -136,7 +136,7 @@ class SalesReportTableViewController: UITableViewController, SalesReportTableVie
                 }
                 
                 if tempEndDate.isLessThanDate(tempDateEnd) {
-                    tempEndDate = tempStartDate
+                    tempEndDate = tempDateEnd
                 }
             }
         }
