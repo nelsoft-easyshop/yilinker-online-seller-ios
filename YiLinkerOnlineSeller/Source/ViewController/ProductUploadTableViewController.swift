@@ -172,7 +172,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         self.footer()
         self.fireCondition()
         
-        if self.uploadType == UploadType.EditProduct {
+        if self.uploadType == UploadType.EditProduct && self.productModel.validCombinations.count != 0 {
             self.updateCombinationListRow()
         }
     }
@@ -971,7 +971,9 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         "height": height,
         "width": width,
         "weight": weight,
-        "length": length]
+        "length": length,
+        "sku": self.productModel.sku]
+
         
         if self.productModel.uid != "0" {
             parameters["productId"] = self.productModel.uid
