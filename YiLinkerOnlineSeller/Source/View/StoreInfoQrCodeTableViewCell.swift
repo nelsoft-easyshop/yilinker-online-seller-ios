@@ -8,12 +8,32 @@
 
 import UIKit
 
+protocol StoreInfoQrCodeTableViewCellDelegate {
+    func shareAction(postImage: UIImageView, title: String)
+}
+
+
 class StoreInfoQrCodeTableViewCell: UITableViewCell {
 
     
+    @IBOutlet var facebookButton: UIButton!
+    @IBOutlet var twitterButton: UIButton!
+    @IBOutlet var googlePlusButton: UIButton!
+    @IBOutlet var emailButton: UIButton!
+    @IBOutlet var qrCodeImageView: UIImageView!
+    @IBOutlet var qrCodeLabel: UILabel!
+    @IBOutlet var qrCodeDescriptionLabel: UILabel!
+    
+    
+    var qrCode: String = StringHelper.localizedStringWithKey("STORE_INFO_QR_LOCALIZE_KEY")
+    var qrCodeDesc: String = StringHelper.localizedStringWithKey("STORE_INFO_SPREAD_LOCALIZE_KEY")
+    
+    var delegate: StoreInfoQrCodeTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.qrCodeLabel.text = qrCode
+        self.qrCodeDescriptionLabel.text = qrCodeDesc
         // Initialization code
     }
 
@@ -21,6 +41,10 @@ class StoreInfoQrCodeTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    @IBAction func socialShare(sender: AnyObject){
+        self.delegate?.shareAction(self.qrCodeImageView, title: qrCode)
     }
     
 }
