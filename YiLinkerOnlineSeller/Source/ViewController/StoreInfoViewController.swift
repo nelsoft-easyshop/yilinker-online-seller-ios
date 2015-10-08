@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate, CongratulationsViewControllerDelegate, UzysAssetsPickerControllerDelegate{
+class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate, CongratulationsViewControllerDelegate, UzysAssetsPickerControllerDelegate, StoreInfoQrCodeTableViewCellDelegate{
     
     var storeInfoModel: StoreInfoModel?
     var storeAddressModel: StoreAddressModel?
@@ -76,7 +76,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         self.navigationController?.view.addSubview(dimView)
         dimView.hidden = true
         
-        self.hasQRCode = false
+        self.hasQRCode = true
         
         self.initializeViews()
         self.registerNibs()
@@ -240,6 +240,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         } else if indexPath.section == 1 {
             if self.hasQRCode {
                 let cell: StoreInfoQrCodeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoQRCodeTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoQrCodeTableViewCell
+                cell.delegate = self
                 return cell
             } else {
                 let cell: StoreInfoSectionTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoSectionTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoSectionTableViewCell
@@ -631,7 +632,27 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         self.fireStoreInfo()
         self.tableView.reloadData()
     }
-
+    
+    func shareAction(postImage: UIImageView, title: String) {
+        var sharingItems = [AnyObject]()
+        let image = postImage.image
+        
+        if (postImage.image != nil) {
+            sharingItems = [title, postImage.image!]
+        } else {
+            sharingItems = [title]
+        }
+        
+        let activityController = UIActivityViewController(activityItems:
+            sharingItems, applicationActivities: nil)
+        self.presentViewController(activityController, animated: true,
+            completion: nil)
+       // sharingItems.append(NSURL(string: "https://sociobiology.files.wordpress.com/2013/07/strassmann-queller-qr-code.jpg")!)
+        
+        //let shareViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
+        //self.presentViewController(shareViewController, animated: true, completion: nil)
+    }
+    
     //MARK: Show MBProgressHUD bar
     func showHUD() {
         if self.hud != nil {

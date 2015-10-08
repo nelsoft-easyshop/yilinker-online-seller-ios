@@ -62,6 +62,9 @@
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="socialShare:" destination="rvF-Za-fSu" eventType="touchUpInside" id="1rx-Tb-wjL"/>
+                                        </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="facebook" translatesAutoresizingMaskIntoConstraints="NO" id="uAp-Dj-xqG">
                                         <rect key="frame" x="110" y="0.0" width="25" height="36"/>
@@ -113,6 +116,9 @@
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="socialShare:" destination="rvF-Za-fSu" eventType="touchUpInside" id="tgh-5K-OEd"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.17647058823529413" green="0.66666666666666663" blue="0.88235294117647056" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -159,6 +165,9 @@
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="socialShare:" destination="rvF-Za-fSu" eventType="touchUpInside" id="5FM-YC-jfq"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -204,6 +213,9 @@
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="socialShare:" destination="rvF-Za-fSu" eventType="touchUpInside" id="Rgc-gt-tJz"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.23393739113210799" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -280,11 +292,20 @@
                     <constraint firstItem="NhT-EN-VS8" firstAttribute="top" secondItem="3xV-nq-Fx5" secondAttribute="topMargin" id="qKs-Xc-Uxi"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="emailButton" destination="PGK-l3-pgA" id="z1S-hg-SD6"/>
+                <outlet property="facebookButton" destination="o4g-oo-oQW" id="kOA-Nc-VLp"/>
+                <outlet property="googlePlusButton" destination="HPL-U0-nqH" id="JR1-4V-Mct"/>
+                <outlet property="qrCodeDescriptionLabel" destination="vVu-OL-goO" id="a2u-bd-H8t"/>
+                <outlet property="qrCodeImageView" destination="2d1-at-m0P" id="obF-ec-YTD"/>
+                <outlet property="qrCodeLabel" destination="NhT-EN-VS8" id="S3O-PE-YBp"/>
+                <outlet property="twitterButton" destination="hdC-El-89M" id="LYs-Du-Bih"/>
+            </connections>
             <point key="canvasLocation" x="278.5" y="257"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="facebook" width="200" height="194"/>
+        <image name="facebook" width="200" height="200"/>
         <image name="google+" width="200" height="200"/>
         <image name="mail" width="200" height="150"/>
         <image name="qr" width="225" height="225"/>
