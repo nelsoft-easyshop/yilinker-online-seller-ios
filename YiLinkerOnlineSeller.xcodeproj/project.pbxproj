@@ -17,6 +17,8 @@
 		0C51C2F61BB0138C00F4D2D6 /* RemarksTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C51C2F41BB0138C00F4D2D6 /* RemarksTableViewCell.xib */; };
 		0C51C2FD1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C51C2FB1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.swift */; };
 		0C51C2FE1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C51C2FC1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.xib */; };
+		0C574A301BC651B700913F29 /* EditImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C574A2F1BC651B700913F29 /* EditImageModel.swift */; };
+		0C574A321BC6531A00913F29 /* ServerUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C574A311BC6531A00913F29 /* ServerUIImage.swift */; };
 		0C5E9D8E1B91E2E200F32CFE /* ProductUploadFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5E9D8D1B91E2E200F32CFE /* ProductUploadFooterView.swift */; };
 		0C5E9D901B91E2F700F32CFE /* ProductUploadFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C5E9D8F1B91E2F700F32CFE /* ProductUploadFooterView.xib */; };
 		0C65F8A51B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C65F8A31B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.xib */; };
@@ -594,6 +596,8 @@
 		0C51C2F41BB0138C00F4D2D6 /* RemarksTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemarksTableViewCell.xib; sourceTree = "<group>"; };
 		0C51C2FB1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionCenterProductListViewController.swift; sourceTree = "<group>"; };
 		0C51C2FC1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResolutionCenterProductListViewController.xib; sourceTree = "<group>"; };
+		0C574A2F1BC651B700913F29 /* EditImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditImageModel.swift; sourceTree = "<group>"; };
+		0C574A311BC6531A00913F29 /* ServerUIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerUIImage.swift; sourceTree = "<group>"; };
 		0C5E9D8D1B91E2E200F32CFE /* ProductUploadFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadFooterView.swift; sourceTree = "<group>"; };
 		0C5E9D8F1B91E2F700F32CFE /* ProductUploadFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadFooterView.xib; path = ../View/ProductUploadFooterView.xib; sourceTree = "<group>"; };
 		0C65F8A21B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadTextFieldTableViewCell.swift; sourceTree = "<group>"; };
@@ -1325,6 +1329,7 @@
 				7985D36B1BB05C500060E5F5 /* DeliveryLogsModel.swift */,
 				7985D36D1BB071F60060E5F5 /* DeliveryLogsSectionModel.swift */,
 				F7CCEEF41BBE714A00D876C2 /* SearchRiderNameModel.swift */,
+				0C574A2F1BC651B700913F29 /* EditImageModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1448,6 +1453,7 @@
 				F7CCEEF11BBE607100D876C2 /* FilterResultsCollectionViewCellV2.xib */,
 				F7C6A94B1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.swift */,
 				F7C6A94C1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.xib */,
+				0C574A311BC6531A00913F29 /* ServerUIImage.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2617,6 +2623,7 @@
 				792876051B8DF89F00762A39 /* ChartMarker.swift in Sources */,
 				799892FD1B8CEBA500F4CFE2 /* SettingsHeaderTableViewCell.swift in Sources */,
 				0CF28ED91B8C85E5005B2E54 /* DashboardViewController.swift in Sources */,
+				0C574A321BC6531A00913F29 /* ServerUIImage.swift in Sources */,
 				79EF7AC61B99F8980082CD35 /* TransactionProductTableViewCell.swift in Sources */,
 				792876141B8DF89F00762A39 /* ChartDataEntry.swift in Sources */,
 				0CF28EDC1B8C85E5005B2E54 /* SettingsViewController.swift in Sources */,
@@ -2629,6 +2636,7 @@
 				26B5B24A1B94E37A00CBDDE5 /* CCSubCategoriesView.swift in Sources */,
 				7928760D1B8DF89F00762A39 /* BubbleChartData.swift in Sources */,
 				7928761C1B8DF89F00762A39 /* PieChartDataSet.swift in Sources */,
+				0C574A301BC651B700913F29 /* EditImageModel.swift in Sources */,
 				792875F31B8DF89F00762A39 /* ChartAnimationEasing.swift in Sources */,
 				799892FF1B8CEBC100F4CFE2 /* SettingsItemTableViewCell.swift in Sources */,
 				792876041B8DF89F00762A39 /* ChartLimitLine.swift in Sources */,

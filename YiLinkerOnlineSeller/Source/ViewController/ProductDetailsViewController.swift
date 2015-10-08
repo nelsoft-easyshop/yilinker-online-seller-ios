@@ -310,7 +310,9 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                     request, queue: NSOperationQueue.mainQueue(),
                     completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
                         if error == nil {
-                            self.productModel.images.append(UIImage(data: data)!)
+                            var convertedImage: ServerUIImage = ServerUIImage(data: data)!
+                            convertedImage.uid = self.productModel.imageIds[i]
+                            self.productModel.images.append(convertedImage)
                             if self.productModel.images.count == self.productModel.imageUrls.count {
                                 self.hud?.hide(true)
                                 let upload = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)

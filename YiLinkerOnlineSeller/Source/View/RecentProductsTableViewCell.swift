@@ -36,7 +36,7 @@ class RecentProductsTableViewCell: UITableViewCell {
     }
     
     func setPrice(text: String) {
-        priceLabel.text = text
+        priceLabel.text = text.formatToTwoDecimal()
     }
     
     func setStatus(text: String) {
