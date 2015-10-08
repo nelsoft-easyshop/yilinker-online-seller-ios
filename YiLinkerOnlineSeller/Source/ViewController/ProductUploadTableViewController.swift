@@ -155,6 +155,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     var dimensionsHeaderViewHeight: CGFloat = 41
     
     var uploadType: UploadType = UploadType.NewProduct
+    var oldEditedImages: [ServerUIImage] = []
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -174,6 +175,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         
         if self.uploadType == UploadType.EditProduct {
             self.updateCombinationListRow()
+            let oldImages: [ServerUIImage] = self.productModel.editedImage
+            self.oldEditedImages = oldImages
         }
     }
     
@@ -887,6 +890,26 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     func fireUploadWithUploadType(uploadType: UploadType) {
+        
+        if uploadType == UploadType.EditProduct {
+            for (index, oldImage) in enumerate(self.oldEditedImages) {
+                var isNew: Bool = false
+                var isDeleted: Bool = true
+                
+                for image in self.productModel.editedImage {
+                    if oldImage.uid == image.uid {
+                        isDeleted = false
+                        break
+                    }
+                }
+                
+                if isDeleted == true {
+                    oldImage.isRemoved = true
+                    self.productModel.editedImage.append(oldImage)
+                }
+            }
+        }
+        
         var datas: [NSData] = []
         
         var uploadedImages: [UIImage] = []
