@@ -37,6 +37,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     var reason: ResolutionCenterDisputeReasonModel?
     var reasonTableData: [ResolutionCenterDisputeReasonModel] = []
     var reasons: [ResolutionCenterDisputeReasonsModel] = []
+    var reas: ResolutionCenterDisputeReasonsModel!
     
     var resolutiontitle: String = ""
     var remarks: String = ""
@@ -248,13 +249,19 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)
             self.reason = ResolutionCenterDisputeReasonModel.parseDataFromDictionary(responseObject as! NSDictionary)
-            println("reason \(self.reason?.resolutionReasons.count)")
-            for var i: Int = 0; i < self.reason?.resolutionReasons.count; i++ {
-                self.reasonTableData.append(ResolutionCenterDisputeReasonModel(key: self.reason!.key, resolutionReasons: self.reason!.resolutionReasons))
-                println("reason table data \(self.reasonTableData.count)")
-                for var j: Int = 0; j < self.reasonTableData.count; j++ {
-                    self.reasons.append(ResolutionCenterDisputeReasonsModel(id: self.reasonTableData[i].resolutionReasons[j].id, reason: self.reasonTableData[i].resolutionReasons[j].reason))
+            
+            for var i: Int = 0; i < self.reason?.key.count; i++ {
+                var arr = [ResolutionCenterDisputeReasonsModel]()
+                println("reason \(self.reason!.key[i])")
+                for var j: Int = 0; j < self.reason?.reason.count; j++ {
+                    println("reason \(self.reason!.key[i]) \(self.reason?.allkey[j])")
+                    if self.reason?.key[i] == self.reason?.allkey[j] {
+                        self.reas = ResolutionCenterDisputeReasonsModel(id: self.reason!.id[j], reason: self.reason!.reason[j])
+                        arr.append(self.reas)
+                    }
+                   self.reasonTableData.append(ResolutionCenterDisputeReasonModel(key2: self.reason!.key[i], resolutionReasons2: arr))
                 }
+                println(self.reasonTableData[i].reason.count)
             }
            
             //self.tableView.reloadData()
