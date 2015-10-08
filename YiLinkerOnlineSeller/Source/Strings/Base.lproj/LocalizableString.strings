@@ -284,6 +284,7 @@ STORE_INFO_QR_LOCALIZE_KEY = "QR Code";
 STORE_INFO_GENERATE_LOCALIZE_KEY = "Generate your store QR code and spread the word about your store. Your QR code points to your store page can be scanned by most smartphones for easier process.";
 STORE_INFO_SPREAD_LOCALIZE_KEY = "Spread the word about your store. Your QR code points to your store page and can be scanned by most smarthphones for easier access.";
 STORE_INFO_GENERATE_QR_LOCALIZE_KEY = "GENERATE QR CODE";
+STORE_INFO_SHARE_WITH_LOCALIZE_KEY = "SHARE WITH";
 
 STORE_INFO_STORE_ADDRESS_LOCALIZE_KEY = "Store Address";
 STORE_INFO_NEW_ADDRESS_LOCALIZE_KEY = "New Address";
