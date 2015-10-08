@@ -34,6 +34,8 @@ class ProductModel {
     var isSuccessful: Bool = false
     var imageUrls: [String] = []
     
+    var editedImage: [ServerUIImage] = []
+    
     init (attributes: [AttributeModel], validCombinations: [CombinationModel]) {
         self.attributes = attributes
         self.validCombinations = validCombinations
