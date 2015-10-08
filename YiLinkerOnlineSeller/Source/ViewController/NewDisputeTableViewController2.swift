@@ -342,7 +342,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         } else if self.disputePickerType == DisputePickerType.DisputeType {
             self.currentTextField.text = self.disputeType[self.disputeTypeDefaultIndex]
         } else {
-            self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons[self.reasonDefaultIndex].reason
+            self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[self.reasonDefaultIndex].reason
         }
         
         textField.inputView = pickerView
@@ -362,7 +362,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             self.currentTextField.text = self.reason!.key[row]
         } else {
             self.reasonDefaultIndex = row
-            self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons[row].reason
+            self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[row].reason
         }
     }
     
@@ -376,7 +376,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         } else if self.disputePickerType == DisputePickerType.DisputeType {
            return self.reason!.key.count
         } else {
-            return self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons.count
+            return self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2.count
         }
     }
     
@@ -386,7 +386,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         } else if self.disputePickerType == DisputePickerType.DisputeType{
             return self.reason!.key[row]
         } else {
-            return self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons[row].reason
+            return self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[row].reason
         }
 
     }
