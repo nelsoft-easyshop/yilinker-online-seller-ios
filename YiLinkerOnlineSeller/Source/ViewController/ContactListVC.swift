@@ -30,7 +30,6 @@ class ContactListVC: UIViewController, EmptyViewDelegate{
     var contentViewFrame: CGRect?
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        println(segue.identifier)
         if (segue.identifier == messageThreadSegueIdentifier){
             var messageThreadVC = segue.destinationViewController as! MessageThreadVC
             
@@ -54,7 +53,6 @@ class ContactListVC: UIViewController, EmptyViewDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         var ref = W_Contact()
-        //contacts = ref.testData()
         self.contentViewFrame = self.view.frame
         
         self.getContactsFromEndpoint("1", limit: "30", keyword: "")
