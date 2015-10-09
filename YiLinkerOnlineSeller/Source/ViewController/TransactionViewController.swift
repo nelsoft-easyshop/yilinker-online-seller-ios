@@ -160,6 +160,11 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         paymentMethod.removeAll(keepCapacity: false)
         dateFrom = ""
         dateTo = ""
+        
+        if indexPath.row == 1 {
+            dateTo = formatDateToString(NSDate())
+            dateFrom = formatDateToString(NSDate().addDays(-3))
+        }
         fireGetTransaction()
     }
     
@@ -304,6 +309,8 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
                     
                     println(error)
             })
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("NO_MORE_DATA_LOCALIZE_KEY"), title: StringHelper.localizedStringWithKey("TRANSACTIONS_TITLE_LOCALIZE_KEY"))
         }
     }
     
