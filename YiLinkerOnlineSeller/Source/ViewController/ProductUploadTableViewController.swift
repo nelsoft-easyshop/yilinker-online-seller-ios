@@ -1030,6 +1030,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     func dismissControllerWithToastMessage(message: String) {
+        self.tableView.endEditing(true)
         self.navigationController?.view.makeToast(message)
         let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC)))
         
