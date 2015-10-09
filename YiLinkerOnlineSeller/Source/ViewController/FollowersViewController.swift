@@ -378,8 +378,8 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
         } else {
             isOnline = "0"
         }
-        messagingViewController.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
         messagingViewController.recipient = selectedContact
+        messagingViewController.sender = W_Contact(fullName: SessionManager.userFullName(), userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken() , profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
         
         self.navigationController?.pushViewController(messagingViewController, animated: true)
     }

@@ -16,14 +16,16 @@ class TransactionConsigneeModel: NSObject {
     var consigneeName: String = ""
     var consigneeContactNumber: String = ""
     var buyerId: Int = 0
+    var email: String = ""
     
-    init(isSuccessful: Bool, message: String, deliveryAddress: String, consigneeName: String, consigneeContactNumber: String, buyerId: Int) {
+    init(isSuccessful: Bool, message: String, deliveryAddress: String, consigneeName: String, consigneeContactNumber: String, buyerId: Int, email: String) {
         self.isSuccessful = isSuccessful
         self.message = message
         self.deliveryAddress = deliveryAddress
         self.consigneeName = consigneeName
         self.consigneeContactNumber = consigneeContactNumber
         self.buyerId = buyerId
+        self.email = email
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> TransactionConsigneeModel {
@@ -34,6 +36,7 @@ class TransactionConsigneeModel: NSObject {
         var consigneeName: String = ""
         var consigneeContactNumber: String = ""
         var buyerId: Int = 0
+        var email: String = ""
         
         if dictionary.isKindOfClass(NSDictionary) {
             if dictionary["message"] != nil {
@@ -64,9 +67,13 @@ class TransactionConsigneeModel: NSObject {
                 if let tempVar = tempDict["buyerId"] as? Int {
                     buyerId = tempVar
                 }
+                
+                if let tempVar = tempDict["email"] as? String {
+                    email = tempVar
+                }
             }
         }
         
-        return TransactionConsigneeModel(isSuccessful: isSuccessful, message: message, deliveryAddress: deliveryAddress, consigneeName: consigneeName, consigneeContactNumber: consigneeContactNumber, buyerId: buyerId)
+        return TransactionConsigneeModel(isSuccessful: isSuccessful, message: message, deliveryAddress: deliveryAddress, consigneeName: consigneeName, consigneeContactNumber: consigneeContactNumber, buyerId: buyerId, email: email)
     }
 }
