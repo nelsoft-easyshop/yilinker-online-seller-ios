@@ -8,6 +8,30 @@
 
 import UIKit
 
+struct LocalizedStrings{
+    static let title = StringHelper.localizedStringWithKey("MESSAGING_TITLE")
+    static let errorMessage = StringHelper.localizedStringWithKey("MESSAGING_ERROR_MESSAGE")
+    static let errorTitle = StringHelper.localizedStringWithKey("MESSAGING_ERROR_TITLE")
+    static let titleNewMessage = StringHelper.localizedStringWithKey("MESSAGING_NEW")
+    static let online = StringHelper.localizedStringWithKey("MESSAGING_ONLINE")
+    static let offline = StringHelper.localizedStringWithKey("MESSAGING_OFFLINE")
+    
+    
+    static let send = StringHelper.localizedStringWithKey("MESSAGING_SEND")
+    static let camera = StringHelper.localizedStringWithKey("MESSAGING_CAMERA")
+    static let cameraRoll = StringHelper.localizedStringWithKey("MESSAGING_CAMERA_ROLL")
+    static let connectionUnreachableTitle = StringHelper.localizedStringWithKey("CONNECTION_UNREACHABLE_LOCALIZE_KEY")
+    static let connectionUnreachableMessage = StringHelper.localizedStringWithKey("PLEASE_CHECK_INTERNET_LOCALIZE_KEY")
+    static let pickImageFirst = StringHelper.localizedStringWithKey("MESSAGING_PICK_IMAGE_ERROR")
+    static let ok = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
+    static let saveFailed = StringHelper.localizedStringWithKey("MESSAGING_SAVE_FAILED")
+    static let saveFailedMessage = StringHelper.localizedStringWithKey("MESSAGING_SAVE_FAILED_MESSAGE")
+    static let typeYourMessage = StringHelper.localizedStringWithKey("MESSAGING_TYPE_YOUR_MESSAGE")
+
+    static let seen = StringHelper.localizedStringWithKey("MESSAGING_SEEN")
+    static let photoMessage = StringHelper.localizedStringWithKey("MESSAGING_PHOTO_MESSAGE")
+}
+
 class ConversationVC: UIViewController, EmptyViewDelegate{
     
     @IBOutlet weak var conversationTableView: UITableView!
@@ -88,6 +112,8 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
         self.contentViewFrame = self.view.frame
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        self.navigationItem.title = LocalizedStrings.title
         /*
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistration:",
         name: appDelegate.registrationKey, object: nil)
@@ -203,7 +229,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                         self.fireRefreshToken()
                     }
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
                 }
                 
                 //SVProgressHUD.dismiss()
@@ -238,7 +264,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                             self.fireRefreshToken()
                         }
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
                     }
                     
                     //SVProgressHUD.dismiss()
@@ -288,7 +314,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                                 self.fireRefreshToken()
                             }
                         } else {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
                         }
                         
                         self.conversations = Array<W_Conversation>()
@@ -318,7 +344,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
         })
         
     }
@@ -345,7 +371,11 @@ extension ConversationVC : UITableViewDataSource{
             let convoCell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath : indexPath) as! ConversationTVC
             
             convoCell.user_name.text = filteredConversations[indexPath.row].contact.fullName as String
-            convoCell.user_message.text = filteredConversations[indexPath.row].lastMessage as String
+            if (filteredConversations[indexPath.row].isImage == "1"){
+                convoCell.user_message.text = LocalizedStrings.photoMessage
+            } else {
+                convoCell.user_message.text = filteredConversations[indexPath.row].lastMessage as String
+            }
             convoCell.user_dt.text = DateUtility.convertDateToString(filteredConversations[indexPath.row].lastMessageDt) as String
             //convoCell.user_thumbnail.image = filteredConversations[indexPath.row].contact.profileImageUrl
             convoCell.user_thumbnail.layer.cornerRadius = convoCell.user_thumbnail.frame.width/2
@@ -357,7 +387,11 @@ extension ConversationVC : UITableViewDataSource{
             let convoCell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath : indexPath) as! ConversationTVC
             
             convoCell.user_name.text = conversations[indexPath.row].contact.fullName as String
-            convoCell.user_message.text = conversations[indexPath.row].lastMessage as String
+            if (conversations[indexPath.row].isImage == "1"){
+                convoCell.user_message.text = LocalizedStrings.photoMessage
+            } else {
+                convoCell.user_message.text = conversations[indexPath.row].lastMessage as String
+            }
             convoCell.user_dt.text = DateUtility.convertDateToString(conversations[indexPath.row].lastMessageDt) as String
             //convoCell.user_thumbnail.image = conversations[indexPath.row].contact.profileImageUrl
             let url = NSURL(string: conversations[indexPath.row].contact.profileImageUrl)
