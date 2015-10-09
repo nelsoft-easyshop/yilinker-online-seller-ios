@@ -410,6 +410,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             cell.delegate = self
             cell.collectionView.reloadData()
             cell.selectionStyle = UITableViewCellSelectionStyle.None
+
             return cell
         } else if indexPath.section == 1 {
             if indexPath.row == 0 {
@@ -421,6 +422,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.cellTexField.placeholder = ProductUploadStrings.productName
                 cell.cellTexField.text = self.productModel.name
                 cell.textFieldType = ProductTextFieldType.ProductName
+                
+                if SessionManager.isSeller() {
+                    cell.userInteractionEnabled = true
+                } else {
+                    cell.userInteractionEnabled = true
+                }
+                
                 return cell
             } else if indexPath.row == 1 {
                 let cell: ProductUploadTextViewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextViewTableViewCellNibNameAndIdentifier) as! ProductUploadTextViewTableViewCell
@@ -430,6 +438,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.cellTitleLabel.text = ProductUploadStrings.shortDescription
                 cell.cellTitleLabel.required()
                 cell.productUploadTextView.text = self.productModel.shortDescription
+                
+                if SessionManager.isSeller() {
+                    cell.userInteractionEnabled = true
+                } else {
+                    cell.userInteractionEnabled = true
+                }
+                
                 return cell
             } else if indexPath.row == 2 {
                 let cell: ProductUploadTextViewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextViewTableViewCellNibNameAndIdentifier) as! ProductUploadTextViewTableViewCell
@@ -439,6 +454,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.cellTitleLabel.text = ProductUploadStrings.completeDescription
                 cell.cellTitleLabel.required()
                 cell.productUploadTextView.text = self.productModel.completeDescription
+                
+                if SessionManager.isSeller() {
+                    cell.userInteractionEnabled = true
+                } else {
+                    cell.userInteractionEnabled = true
+                }
+                
                 return cell
             } else {
                 let cell: ProductUploadTextViewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextViewTableViewCellNibNameAndIdentifier) as! ProductUploadTextViewTableViewCell
@@ -459,6 +481,12 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     cell.cellTexField.text = self.productModel.category.name
                 }
                 
+                if SessionManager.isSeller() {
+                    cell.userInteractionEnabled = true
+                } else {
+                    cell.userInteractionEnabled = false
+                }
+                
                 return cell
             } else if indexPath.row == 1 {
                 let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
@@ -473,6 +501,12 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 }
                 
                 cell.addTextFieldDelegate()
+                
+                if SessionManager.isSeller() {
+                    cell.userInteractionEnabled = true
+                } else {
+                    cell.userInteractionEnabled = false
+                }
                 
                 return cell
             } else {
@@ -495,6 +529,12 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     cell.addPicker()
                 }
                 
+                if SessionManager.isSeller() {
+                    cell.userInteractionEnabled = true
+                } else {
+                    cell.userInteractionEnabled = false
+                }
+                
                 return cell
             }
         } else if indexPath.section == 3 {
@@ -504,6 +544,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     cell.cellButton.setTitle(ProductUploadStrings.addMoreDtails, forState: UIControlState.Normal)
                     cell.selectionStyle = UITableViewCellSelectionStyle.None
                     cell.cellButton.addTarget(self, action: "addMoreDetails:", forControlEvents: UIControlEvents.TouchUpInside)
+                    
+                    if SessionManager.isSeller() {
+                        cell.userInteractionEnabled = true
+                    } else {
+                        cell.userInteractionEnabled = false
+                    }
+                    
                     return cell
                 } else if indexPath.row == 1 {
                     let cell: ProductUploadQuantityTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadQuantityTableViewCellNibNameAndIdentifier) as! ProductUploadQuantityTableViewCell
@@ -512,6 +559,12 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     
                     if self.productModel.quantity != 0 {
                        cell.cellTextField.text = "\(self.productModel.quantity)"
+                    }
+                    
+                    if SessionManager.isSeller() {
+                        cell.userInteractionEnabled = true
+                    } else {
+                        cell.userInteractionEnabled = false
                     }
                     
                     return cell
@@ -524,6 +577,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     cell.delegate = self
                     cell.textFieldType = ProductTextFieldType.ProductSKU
                     cell.cellTexField.text = self.productModel.sku
+                    
+                    if SessionManager.isSeller() {
+                        cell.userInteractionEnabled = true
+                    } else {
+                        cell.userInteractionEnabled = false
+                    }
+                    
                     return cell
                 }
             } else {
@@ -564,12 +624,25 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                         cell.cellTitleLabel.font = UIFont(name:"Panton-Bold", size: defaultFontSize)
                     }
                     
+                    if SessionManager.isSeller() {
+                        cell.userInteractionEnabled = true
+                    } else {
+                        cell.userInteractionEnabled = false
+                    }
+                    
                     return cell
                 } else {
                     let cell: ProductUploadButtonTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadButtonTableViewCellNibNameAndIdentifier) as! ProductUploadButtonTableViewCell
                     cell.cellButton.setTitle(ProductUploadStrings.addEdit, forState: UIControlState.Normal)
                     cell.selectionStyle = UITableViewCellSelectionStyle.None
                     cell.cellButton.addTarget(self, action: "addMoreDetails:", forControlEvents: UIControlEvents.TouchUpInside)
+                    
+                    if SessionManager.isSeller() {
+                        cell.userInteractionEnabled = true
+                    } else {
+                        cell.userInteractionEnabled = false
+                    }
+                    
                     return cell
                 }
             }
@@ -588,6 +661,12 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     cell.cellTextField.text = self.productModel.retailPrice
                 }
                 
+                if SessionManager.isSeller() {
+                    cell.userInteractionEnabled = true
+                } else {
+                    cell.userInteractionEnabled = false
+                }
+                
                 return cell
             } else {
                 let cell: ProductUploadPriceTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadPriceTableViewCellNibNameAndIdentifier) as! ProductUploadPriceTableViewCell
@@ -597,6 +676,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.cellTitleLabel.text = ProductUploadStrings.discountedPrice
                 cell.cellTextField.placeholder = "0.00"
                 cell.cellTextField.text = self.productModel.discoutedPrice
+                
+                if SessionManager.isSeller() {
+                    cell.userInteractionEnabled = true
+                } else {
+                    cell.userInteractionEnabled = false
+                }
+                
                 return cell
             }
         } else {
@@ -616,6 +702,12 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.hidden = true
             } else {
                 cell.hidden = false
+            }
+            
+            if SessionManager.isSeller() {
+                cell.userInteractionEnabled = true
+            } else {
+                cell.userInteractionEnabled = false
             }
             
             return cell

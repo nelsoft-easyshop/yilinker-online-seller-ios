@@ -68,6 +68,12 @@ class ProductUploadUploadImageTableViewCell: UITableViewCell, UICollectionViewDa
         
         cell.delegate = self
         
+        if SessionManager.isSeller() {
+            cell.userInteractionEnabled = true
+        } else {
+            cell.userInteractionEnabled = false
+        }
+        
         return cell
     }
     
