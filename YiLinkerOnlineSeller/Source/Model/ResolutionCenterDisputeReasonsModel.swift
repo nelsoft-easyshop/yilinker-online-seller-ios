@@ -19,21 +19,28 @@ class ResolutionCenterDisputeReasonsModel: NSObject {
     "reason": "I changed my mind. Im no longer interested in the product."
     },
     */
-    var id: String = ""
+    var id: Int = 0
     var reason: String = ""
     
-    init(id: String, reason: String) {
+    init(id: Int, reason: String) {
         self.id = id
         self.reason = reason
     }
     
     class func parseDataFromDictionary(dictionary: AnyObject) -> ResolutionCenterDisputeReasonsModel {
-        var id: String = ""
+        var id: Int = 0
         var reason: String = ""
         
         if dictionary.isKindOfClass(NSDictionary) {
-            
-            
+            if !(dictionary["reasons"] is NSNull) {
+                for subValue in dictionary["reasons"] as! NSArray {
+                    id = subValue["id"] as! Int
+                    reason = subValue["reason"] as! String
+                }
+            } else {
+                id = 0
+                reason = "No reason"
+            }
         }
         
         var reasons = ResolutionCenterDisputeReasonsModel(id: id, reason: reason)

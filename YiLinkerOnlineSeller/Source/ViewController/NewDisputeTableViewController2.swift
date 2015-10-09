@@ -37,7 +37,8 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     var reason: ResolutionCenterDisputeReasonModel?
     var reasonTableData: [ResolutionCenterDisputeReasonModel] = []
     var reasons: [ResolutionCenterDisputeReasonsModel] = []
-    
+    var reas: ResolutionCenterDisputeReasonsModel!
+    var transactionIds: [String] = []
     var resolutiontitle: String = ""
     var remarks: String = ""
     var isValid: Bool = false
@@ -224,6 +225,11 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)
             self.transactionsModel = TransactionsModel.parseDataWithDictionary(responseObject as! NSDictionary)
+            for i in 0..<self.transactionsModel.transactions.count {
+                if self.transactionsModel.transactions[i].order_status_id == "3" || self.transactionsModel.transactions[i].order_status_id == "6" {
+                    self.transactionIds.append(self.transactionsModel.transactions[i].invoice_number)
+                }
+            }
             self.tableView.reloadData()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -248,13 +254,17 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)
             self.reason = ResolutionCenterDisputeReasonModel.parseDataFromDictionary(responseObject as! NSDictionary)
-            println("reason \(self.reason?.resolutionReasons.count)")
-            for var i: Int = 0; i < self.reason?.resolutionReasons.count; i++ {
-                self.reasonTableData.append(ResolutionCenterDisputeReasonModel(key: self.reason!.key, resolutionReasons: self.reason!.resolutionReasons))
-                println("reason table data \(self.reasonTableData.count)")
-                for var j: Int = 0; j < self.reasonTableData.count; j++ {
-                    self.reasons.append(ResolutionCenterDisputeReasonsModel(id: self.reasonTableData[i].resolutionReasons[j].id, reason: self.reasonTableData[i].resolutionReasons[j].reason))
+            
+            for var i: Int = 0; i < self.reason?.key.count; i++ {
+                var arr = [ResolutionCenterDisputeReasonsModel]()
+                for var j: Int = 0; j < self.reason?.reason.count; j++ {
+                    if self.reason!.key[i] == self.reason!.allkey[j] {
+                        self.reas = ResolutionCenterDisputeReasonsModel(id: self.reason!.id[j], reason: self.reason!.reason[j])
+                        arr.append(self.reas)
+                        println("id \(self.reason!.id[j])")
+                    }
                 }
+                self.reasonTableData.append(ResolutionCenterDisputeReasonModel(key2: self.reason!.key[i], resolutionReasons2: arr))
             }
            
             //self.tableView.reloadData()
@@ -333,11 +343,11 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         
         if self.disputePickerType == DisputePickerType.TransactionList {
             self.isValid = true
-            self.currentTextField.text = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
+            self.currentTextField.text = self.transactionIds[self.transactionDefaultIndex]
         } else if self.disputePickerType == DisputePickerType.DisputeType {
-            self.currentTextField.text = self.disputeType[self.disputeTypeDefaultIndex]
+            self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].key2
         } else {
-            self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons[self.reasonDefaultIndex].reason
+            self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[self.reasonDefaultIndex].reason
         }
         
         textField.inputView = pickerView
@@ -351,13 +361,14 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if self.disputePickerType == DisputePickerType.TransactionList {
             self.transactionDefaultIndex = row
-            self.currentTextField.text = self.transactionsModel.transactions[row].invoice_number
+            self.currentTextField.text = self.transactionIds[self.transactionDefaultIndex]
         } else if self.disputePickerType == DisputePickerType.DisputeType {
             self.disputeTypeDefaultIndex = row
-            self.currentTextField.text = self.disputeType[row]
+            self.reasonDefaultIndex = 0
+            self.currentTextField.text = self.reason!.key[row]
         } else {
             self.reasonDefaultIndex = row
-            self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons[row].reason
+            self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[row].reason
         }
     }
     
@@ -367,21 +378,21 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if self.disputePickerType == DisputePickerType.TransactionList {
-           return self.transactionsModel.transactions.count
+           return self.transactionIds.count
         } else if self.disputePickerType == DisputePickerType.DisputeType {
-           return self.reasonTableData.count
+           return self.reason!.key.count
         } else {
-            return self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons.count
+            return self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2.count
         }
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
         if self.disputePickerType == DisputePickerType.TransactionList {
-            return self.transactionsModel.transactions[row].invoice_number
+            return self.transactionIds[self.transactionDefaultIndex]
         } else if self.disputePickerType == DisputePickerType.DisputeType{
-            return self.disputeType[row]
+            return self.reason!.key[row]
         } else {
-            return self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons[row].reason
+            return self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[row].reason
         }
 
     }
@@ -470,18 +481,19 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         
         var status: Int = 0
         
-        if self.disputeType[self.disputeTypeDefaultIndex] == "Refund" {
+        if self.reason?.key[self.disputeTypeDefaultIndex] == self.reasonTableData[self.disputeTypeDefaultIndex].key2 {
             status = 10
         } else {
             status = 16
         }
         
-        
+        println("\(self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[self.reasonDefaultIndex].id) \(self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[self.reasonDefaultIndex].reason)")
         let parameters: NSDictionary = [
             "access_token": SessionManager.accessToken(),
             "disputeTitle": self.resolutiontitle,
             "remarks": remarks,
             "orderProductStatus": "\(status)",
+            "reasonId": self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[self.reasonDefaultIndex].id,
             "orderProductIds": ids.description]
         //[153, 486]
         println(ids.description)
