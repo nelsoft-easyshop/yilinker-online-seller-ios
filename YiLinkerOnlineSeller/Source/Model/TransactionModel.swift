@@ -77,15 +77,7 @@ class TransactionModel: NSObject {
             
             if dictionary["date_added"] != nil {
                 if let tempVar = dictionary["date_added"] as? String {
-                    var dates = tempVar
-                    let dateFormatter = NSDateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                    let date: NSDate = dateFormatter.dateFromString(dates)!
-                    
-                    let dateFormatter1 = NSDateFormatter()
-                    dateFormatter1.dateFormat = "MMMM dd, yyyy"
-                    let dateAdded = dateFormatter1.stringFromDate(date)
-                    date_added = dateAddedd
+                    date_added = tempVar
                 }
             }
             
