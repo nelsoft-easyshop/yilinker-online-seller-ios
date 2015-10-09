@@ -129,7 +129,7 @@ struct ProductUploadTableViewControllerConstant {
     
     static let quantityHeight: CGFloat = 59
     
-    static let uploadImagesKey = "images[]"
+    static let uploadImagesKey = "imageDetail"
     static let uploadConditionKey = "condition"
     static let uploadTitleKey = "title"
     static let uploadBrandKey = "brand"
@@ -1079,6 +1079,12 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         "width": width,
         "weight": weight,
         "length": length]
+        
+       
+        
+        let data2 = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
+        let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
+        
         
         if self.productModel.uid != "0" {
             parameters["productId"] = self.productModel.uid
