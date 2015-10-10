@@ -53,7 +53,7 @@ class TransactionTableViewCell: UITableViewCell {
     }
     
     func setTID(text: String) {
-        self.tidLabel.text = text
+        self.tidLabel.text = "TID-\(text)"
     }
     
     func setProductDate(text: String) {

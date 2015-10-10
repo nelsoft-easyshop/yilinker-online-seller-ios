@@ -101,7 +101,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         }
         
         
-        self.tidLabel.text = self.transactionDetailsModel.transactionInvoice
+        self.tidLabel.text = "TID-\(self.transactionDetailsModel.transactionInvoice)"
         if self.transactionDetailsModel.transactionQuantity > 1 {
             let productString = StringHelper.localizedStringWithKey("TRANSACTIONS_DETAILS_PRODUCT_LOCALIZE_KEY")
             self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) \(productString)"
