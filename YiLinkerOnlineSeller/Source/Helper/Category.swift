@@ -277,6 +277,10 @@ extension NSDate {
 }
 
 extension String {
+   
+    var floatValue: Float {
+        return (self as NSString).floatValue
+    }
     
     func isValidEmail() -> Bool {
         // println("validate calendar: \(testStr)")
@@ -351,5 +355,16 @@ extension String {
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 2
         return "\(formatter.stringFromNumber((self as NSString).doubleValue)!)"
+    }
+}
+
+
+extension Float {
+    func string(fractionDigits:Int) -> String {
+        let formatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = fractionDigits
+        formatter.maximumFractionDigits = fractionDigits
+        formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+        return formatter.stringFromNumber(self) ?? "\(self)"
     }
 }

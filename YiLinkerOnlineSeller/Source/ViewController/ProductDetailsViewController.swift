@@ -390,24 +390,9 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     // Dealloc
     
-//    deinit {
-//        self.tableView.delegate = nil
-//        self.tableView.dataSource = nil
-//    }
-}
-
-extension String {
-    var floatValue: Float {
-        return (self as NSString).floatValue
+    deinit {
+        self.tableView.delegate = nil
+        self.tableView.dataSource = nil
     }
 }
 
-extension Float {
-    func string(fractionDigits:Int) -> String {
-        let formatter = NSNumberFormatter()
-        formatter.minimumFractionDigits = fractionDigits
-        formatter.maximumFractionDigits = fractionDigits
-        formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
-        return formatter.stringFromNumber(self) ?? "\(self)"
-    }
-}
