@@ -48,10 +48,10 @@
                     <rect key="frame" x="0.0" y="36" width="375" height="600"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QAT-6Y-ObB">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="58"/>
                             <subviews>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="25" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="A5r-2c-aHD">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="58"/>
                                     <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 </tableView>
                             </subviews>
@@ -61,7 +61,7 @@
                                 <constraint firstItem="A5r-2c-aHD" firstAttribute="leading" secondItem="QAT-6Y-ObB" secondAttribute="leading" id="N6m-Xe-glW"/>
                                 <constraint firstAttribute="bottom" secondItem="A5r-2c-aHD" secondAttribute="bottom" id="Shu-r3-7Ok"/>
                                 <constraint firstItem="A5r-2c-aHD" firstAttribute="top" secondItem="QAT-6Y-ObB" secondAttribute="top" id="uEM-q9-ON8"/>
-                                <constraint firstAttribute="height" constant="120" id="uT3-oh-Ylf"/>
+                                <constraint firstAttribute="height" constant="58" id="uT3-oh-Ylf"/>
                             </constraints>
                         </view>
                     </subviews>
