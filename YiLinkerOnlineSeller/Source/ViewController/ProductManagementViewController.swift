@@ -364,11 +364,17 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 self.requestTask = nil
             }
             
+            var sampleString: String = String(status)
+            
+            if status == 5 {
+                sampleString == "all"
+            }
+            
             self.showHUD()
             
             let manager = APIManager.sharedInstance
             let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-                "status": String(status),
+                "status": sampleString,
                 "keyword": key]
             
             self.requestTask = manager.POST(APIAtlas.managementGetProductList, parameters: parameters, success: {
