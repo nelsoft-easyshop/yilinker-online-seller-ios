@@ -36,6 +36,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     var errorLocalizedString = ""
     
     var contacts = [W_Contact()]
+    var orderProductIds: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,7 +102,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         }
         
         
-        self.tidLabel.text = self.transactionDetailsModel.transactionInvoice
+        self.tidLabel.text = "TID-\(self.transactionDetailsModel.transactionInvoice)"
         if self.transactionDetailsModel.transactionQuantity > 1 {
             let productString = StringHelper.localizedStringWithKey("TRANSACTIONS_DETAILS_PRODUCT_LOCALIZE_KEY")
             self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) \(productString)"
@@ -468,6 +469,13 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         var shipItemController = TransactionShipItemTableViewController(nibName: "TransactionShipItemTableViewController", bundle: nil)
         shipItemController.invoiceNumber = invoiceNumber
         shipItemController.delegate = self
+        
+        orderProductIds.removeAll(keepCapacity: false)
+        for subValue in transactionDetailsModel.transactionItems[0].products {
+            orderProductIds.append(subValue.orderProductId)
+        }
+        
+        shipItemController.orderProductIds = orderProductIds
         self.navigationController?.pushViewController(shipItemController, animated:true)
     }
     

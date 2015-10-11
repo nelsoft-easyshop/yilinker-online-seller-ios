@@ -23,6 +23,7 @@ class TransactionShipItemTableViewController: UITableViewController, Transaction
     var invoiceNumber: String = ""
     var selectedDate: String = ""
     var remarks: String = ""
+    var orderProductIds: [String] = []
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,10 +96,20 @@ class TransactionShipItemTableViewController: UITableViewController, Transaction
     func firePostCancellation(){
         self.showHUD()
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(),
-            "transactionId": invoiceNumber,
-            "pickupSchedule": selectedDate,
-            "pickupRemark": remarks];
+        var parameters = [String: String]()
+        parameters["access_token"] = SessionManager.accessToken()
+        parameters["transactionId"] = invoiceNumber
+        parameters["pickupSchedule"] = selectedDate
+        parameters["pickupRemark"] = remarks
+        
+//        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(),
+//            "transactionId": invoiceNumber,
+//            "pickupSchedule": selectedDate,
+//            "pickupRemark": remarks];
+        
+        for var i: Int = 0; i < orderProductIds.count; i++ {
+            parameters["orderProductIds[\(i)]"] = orderProductIds[i]
+        }
         
         manager.POST(APIAtlas.shipItem, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -165,7 +176,7 @@ class TransactionShipItemTableViewController: UITableViewController, Transaction
         self.hud = MBProgressHUD(view: self.view)
         self.hud?.removeFromSuperViewOnHide = true
         self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
+        self.navigationController?.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
 

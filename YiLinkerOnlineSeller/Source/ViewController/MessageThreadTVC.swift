@@ -27,6 +27,7 @@ class MessageThreadTVC: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        seen_label.text = LocalizedStrings.seen
         var maxCellWidth = UIScreen.mainScreen().bounds.size.width * 0.55
         
         message_label.preferredMaxLayoutWidth = maxCellWidth

@@ -71,8 +71,8 @@ class W_Contact: NSObject {
                         userIdleRegistrationIds = tempVar
                     }
                     
-                    if let tempVar = contact["userId"] as? String {
-                        userId = tempVar
+                    if let tempVar = contact["userId"] as? Int {
+                        userId = "\(tempVar)"
                     }
                     
                     if let tempVar = contact["profileImageUrl"] as? String {
