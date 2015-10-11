@@ -94,13 +94,9 @@ class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate 
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.row == 2 {
-            return 298
-        } else if indexPath.row == 0{
-            return 95
-        } else {
-            return 95
-        }
+
+        return 95
+       
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
