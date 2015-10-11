@@ -46,7 +46,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var searchProductNameModel: SearchProductNameModel?
     var tableData: [SearchProductNameModel] = []
     var transactionModel: TransactionModel?
-    
+    var tableDataTransaction: [SearchModel] = []
     var riderNameArray: [String] = []
     
     @IBOutlet var cancelButton: UIButton!
@@ -145,9 +145,17 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     return 0
                 }
             } else if self.filterBySelected == 3 {
-                return self.riderNameArray.count
+                if !self.riderNameArray.isEmpty {
+                    return self.riderNameArray.count
+                } else {
+                    return 0
+                }
             } else {
-                return 0
+                if !self.tableDataTransaction.isEmpty {
+                    return self.tableDataTransaction.count
+                } else {
+                    return 0
+                }
             }
         } else {
                return 4
@@ -171,9 +179,13 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     cell.invoiceNumberLabel.text = self.tableData[indexPath.row].name2
                    
                 }
-            } else {
+            } else if self.filterBySelected == 3{
                 if !self.riderNameArray.isEmpty {
                     cell.invoiceNumberLabel.text = self.riderNameArray[indexPath.row]
+                }
+            } else {
+                if !self.tableDataTransaction.isEmpty {
+                    cell.invoiceNumberLabel.text = self.tableDataTransaction[indexPath.row].invoiceNumber2
                 }
             }
             
@@ -205,19 +217,28 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             println(filterBySelected)
         } else {
-            var filterRiderNameViewController = FilterResultsRiderNameViewController(nibName: "FilterResultsRiderNameViewController", bundle: nil)
-            filterRiderNameViewController.edgesForExtendedLayout = .None
+            
             if self.filterBySelected == 2 {
+                var filterRiderNameViewController = FilterResultsRiderNameViewController(nibName: "FilterResultsRiderNameViewController", bundle: nil)
+                filterRiderNameViewController.edgesForExtendedLayout = .None
                 filterRiderNameViewController.productName = self.tableData[indexPath.row].name2
                 filterRiderNameViewController.searchType = 2
+                self.navigationController?.pushViewController(filterRiderNameViewController, animated: true)
             } else if self.filterBySelected == 3 {
+                var filterRiderNameViewController = FilterResultsRiderNameViewController(nibName: "FilterResultsRiderNameViewController", bundle: nil)
+                filterRiderNameViewController.edgesForExtendedLayout = .None
                 filterRiderNameViewController.riderName = self.riderNameArray[indexPath.row]
                 filterRiderNameViewController.searchType = 3
+                self.navigationController?.pushViewController(filterRiderNameViewController, animated: true)
             } else {
-                filterRiderNameViewController.transactionId = self.searchTextField.text
-                filterRiderNameViewController.searchType = 1
+                //filterRiderNameViewController.transactionId = self.searchTextField.text
+                //filterRiderNameViewController.searchType = 1
+                var transactionDetails = TransactionDetailsTableViewController(nibName: "TransactionDetailsTableViewController", bundle: nil)
+                transactionDetails.edgesForExtendedLayout = .None
+                transactionDetails.invoiceNumber = self.tableDataTransaction[indexPath.row].invoiceNumber2
+                self.navigationController?.pushViewController(transactionDetails, animated: true)
             }
-             self.navigationController?.pushViewController(filterRiderNameViewController, animated: true)
+            
         }
     }
     
@@ -261,24 +282,29 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         } else if filterBySelected == 2 {
             self.tableData.removeAll(keepCapacity: false)
             self.riderNameArray.removeAll(keepCapacity: false)
+            self.tableDataTransaction.removeAll(keepCapacity: false)
             self.fireSearchProduct(2)
         } else if filterBySelected == 3 {
-             self.tableData.removeAll(keepCapacity: false)
+            self.tableData.removeAll(keepCapacity: false)
             self.riderNameArray.removeAll(keepCapacity: false)
+            self.tableDataTransaction.removeAll(keepCapacity: false)
             self.fireSearchProduct(3)
         } else {
             self.tableData.removeAll(keepCapacity: false)
             self.riderNameArray.removeAll(keepCapacity: false)
+            self.tableDataTransaction.removeAll(keepCapacity: false)
             if count(textField.text) < 3 {
                 self.showAlert(title: "Error", message: "Minimum character is 3. Please enter another transaction id.")
                 textField.text = ""
             } else {
+                self.fireSearchProduct(1)
                 //self.fireSearch()
-                var filterRiderNameViewController = FilterResultsRiderNameViewController(nibName: "FilterResultsRiderNameViewController", bundle: nil)
+                /*var filterRiderNameViewController = FilterResultsRiderNameViewController(nibName: "FilterResultsRiderNameViewController", bundle: nil)
                 filterRiderNameViewController.edgesForExtendedLayout = .None
                 filterRiderNameViewController.transactionId = self.searchTextField.text
                 filterRiderNameViewController.searchType = 1
                 self.navigationController?.pushViewController(filterRiderNameViewController, animated: true)
+                */
             }
             
         }
@@ -339,12 +365,18 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.showHUD()
         let manager = APIManager.sharedInstance
         var url: String = ""
+        var query: String = ""
         if search == 2 {
             url = APIAtlas.searchNameSuggestion
-        } else {
+            query = "queryString=\(self.searchTextField.text)"
+        } else if search == 3{
             url = APIAtlas.searchRiderSuggestion
+            query = "queryString=\(self.searchTextField.text)"
+        } else {
+            url = APIAtlas.transaction
+            query = "query=\(self.searchTextField.text)"
         }
-        manager.GET(url+"\(SessionManager.accessToken())&queryString=\(self.searchTextField.text)", parameters: nil, success: { (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+        manager.GET(url+"\(SessionManager.accessToken())&\(query)", parameters: nil, success: { (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             println(">> \(responseObject)")
             
             if search == 2 {
@@ -358,7 +390,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 for var i = 0; i < searchProductNameModel.name.count; i++ {
                     self.tableData.append(SearchProductNameModel(name2: searchProductNameModel.name[i], productId2: searchProductNameModel.productId[i]))
                 }
-            } else {
+            } else if search == 3{
                 var rider: NSArray = responseObject["data"] as! NSArray
                 println(responseObject["data"] as! NSArray)
                 if rider.count == 0 {
@@ -368,6 +400,17 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 }
                 for var i: Int = 0; i < rider.count; i++ {
                     self.riderNameArray.append(rider[i] as! String)
+                }
+            } else {
+                let transaction: SearchModel = SearchModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                println("\(transaction.targetType.count)")
+                if transaction.targetType.count == 0 {
+                    self.noResultLabel.hidden = false
+                } else {
+                    self.noResultLabel.hidden = true
+                }
+                for var i = 0; i < transaction.targetType.count; i++ {
+                    self.tableDataTransaction.append(SearchModel(invoiceNumber2: transaction.invoiceNumber[i], targetType2: transaction.targetType[i]))
                 }
             }
             
@@ -406,7 +449,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             } else if type == SearchRefreshType.All {
                 
             } else if type == SearchRefreshType.TransactionId {
-                self.fireSearch()
+                //self.fireSearch()
+                self.fireSearchProduct(3)
             } else {
                 self.fireSearchProduct(3)
             }
