@@ -28,6 +28,8 @@ class ResellerItemViewController: UIViewController, UIScrollViewDelegate, UISear
     
     @IBOutlet weak var searchBar: UISearchBar!
     
+    var resellerViewController: ResellerViewController = ResellerViewController()
+    
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +37,7 @@ class ResellerItemViewController: UIViewController, UIScrollViewDelegate, UISear
         if self.respondsToSelector("edgesForExtendedLayout") {
             self.edgesForExtendedLayout = UIRectEdge.None
         }
-        
+        self.initParentViewController()
         self.registerCell()
         self.title = ResellerStrings.resellerAddItem
         self.backButton()
@@ -47,6 +49,12 @@ class ResellerItemViewController: UIViewController, UIScrollViewDelegate, UISear
     func footerView() {
         let footerView: UIView = UIView(frame: CGRectZero)
         self.tableView.tableFooterView = footerView
+    }
+    
+    // Init Parent View Controller
+    
+    func initParentViewController() {
+        self.resellerViewController = self.navigationController!.viewControllers[0] as! ResellerViewController
     }
     
     //Show HUD
@@ -99,33 +107,10 @@ class ResellerItemViewController: UIViewController, UIScrollViewDelegate, UISear
         self.navigationItem.rightBarButtonItems = [navigationSpacer, customCheckButton]
     }
     
+    //MARK: - Check
     func check() {
-        self.showHUD()
-        let manager = APIManager.sharedInstance
-        
-        var productIds: [Int] = []
-        
-        for item in self.resellerGetProductModel.resellerItems {
-            if item.status == ResellerItemStatus.Selected {
-                productIds.append(item.uid)
-            }
-        }
-        
-        let parameters: NSDictionary = [
-            "access_token": SessionManager.accessToken(),
-            "productIds[]": productIds]
-        
-        manager.POST(APIAtlas.resellerUploadUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                let message: String = responseObject["message"] as! String
-                self.navigationController?.view.makeToast(message)
-                self.hud?.hide(true)
-                self.navigationController?.popToRootViewControllerAnimated(true)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                self.hud?.hide(true)
-        })
+        self.resellerViewController.animateSelectedItems()
+        self.navigationController!.popToRootViewControllerAnimated(true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -151,8 +136,16 @@ class ResellerItemViewController: UIViewController, UIScrollViewDelegate, UISear
         cell.cellSellerLabel.text = resellerItemModel.manufacturer
         println(resellerItemModel.imageUrl)
         cell.cellImageView.sd_setImageWithURL(NSURL(string: resellerItemModel.imageUrl), placeholderImage: UIImage(named: "dummy-placeholder"))
+
+        var isSelected: Bool = false
         
-        if resellerItemModel.status == ResellerItemStatus.Selected {
+        for item in self.resellerViewController.resellerUploadedItemModels {
+            if item.uid == resellerItemModel.uid {
+                isSelected = true
+            }
+        }
+        
+        if isSelected {
             cell.checkImage()
         } else {
             cell.addImage()
@@ -165,14 +158,25 @@ class ResellerItemViewController: UIViewController, UIScrollViewDelegate, UISear
         return self.cellHeight
     }
     
+      //MARK: - TableView Delegate
      func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
         let resellerItemModel: ResellerItemModel = self.resellerGetProductModel.resellerItems[indexPath.row]
-        if resellerItemModel.status == ResellerItemStatus.Selected {
-            resellerItemModel.status = ResellerItemStatus.Unselected
-        } else {
-            resellerItemModel.status = ResellerItemStatus.Selected
+        
+        var isSelected: Bool = false
+        
+        for (index, item) in enumerate(self.resellerViewController.resellerUploadedItemModels) {
+            if item.uid == resellerItemModel.uid {
+                self.resellerViewController.resellerUploadedItemModels.removeAtIndex(index)
+                isSelected = true
+            }
         }
+        
+        if !isSelected {
+            self.resellerViewController.resellerUploadedItemModels.append(resellerItemModel)
+        }
+        
         self.tableView.reloadData()
     }
     
@@ -215,7 +219,7 @@ class ResellerItemViewController: UIViewController, UIScrollViewDelegate, UISear
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = [
             "access_token": SessionManager.accessToken(),
-            "categoryId": 1,
+            "categoryId": self.categoryModel.uid,
             "page": 1,
             "query": query]
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
