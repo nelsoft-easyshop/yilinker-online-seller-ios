@@ -332,7 +332,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     }
     
     func setSellerImage(imgURL: NSURL) {
-        
+
         let request: NSURLRequest = NSURLRequest(URL: imgURL)
         NSURLConnection.sendAsynchronousRequest(
             request, queue: NSOperationQueue.mainQueue(),
@@ -349,6 +349,8 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
                         self.dismissViewControllerAnimated(true, completion: nil)
                         
                     })
+                } else {
+                    self.dismissViewControllerAnimated(true, completion: nil)
                 }
         })
         

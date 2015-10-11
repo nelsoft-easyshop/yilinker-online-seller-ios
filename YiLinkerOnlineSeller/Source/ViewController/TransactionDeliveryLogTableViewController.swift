@@ -14,6 +14,7 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
     var signatureCellIdentifier: String = "TransactionDeliveryLogSignatureTableViewCell"
     
     var orderProductId: String = ""
+    var transactionId: String = ""
     
     var hud: MBProgressHUD?
     var tableHeaderView: UIView!
@@ -55,7 +56,7 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
         tidLabel = UILabel(frame: CGRectMake(16, 10, (self.view.bounds.width - 32), 20))
         tidLabel.textColor = Constants.Colors.grayText
         tidLabel.font = UIFont(name: "Panton-Bold", size: CGFloat(14))
-        tidLabel.text = orderProductId
+        tidLabel.text = "TID-\(transactionId)"
         tableHeaderView.addSubview(tidLabel)
         
         self.tableView.tableHeaderView = tableHeaderView

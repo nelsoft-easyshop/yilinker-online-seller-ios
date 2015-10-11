@@ -28,7 +28,15 @@ class ResolutionCenterModel {
     class func parseDictionaryString(dictionary: NSDictionary, key: String, defaultValue: String = "") -> String {
         if dictionary[key] != nil {
             if let parsedValue = dictionary[key] as? String {
-                return parsedValue
+                var dates = parsedValue
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                let date: NSDate = dateFormatter.dateFromString(dates)!
+                
+                let dateFormatter1 = NSDateFormatter()
+                dateFormatter1.dateFormat = "MMMM dd, yyyy"
+                let dateAdded = dateFormatter1.stringFromDate(date)
+                return dateAdded
             }
         }
         
@@ -70,6 +78,7 @@ class ResolutionCenterModel {
                         element.status = parseDictionaryString(currentElement, key:"disputeStatusType")
                         element.status = autocorrectStatus( element.status )
                         element.type = parseDictionaryString(currentElement, key:"orderProductStatus")
+                       
                         element.date = parseDictionaryString(currentElement, key:"dateAdded")
                         element.ticketId = parseDictionaryString(currentElement, key:"ticketId")
                         // unused: "disputeeFullName"

@@ -35,12 +35,15 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     var errorMessage: String = ""
     var errorLocalizedString = ""
     
+    var contacts = [W_Contact()]
+    var orderProductIds: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         transactionDetailsModel = TransactionDetailsModel(isSuccessful: false, message: "", transactionInvoice: "", transactionShippingFee: "", transactionDate: "2000-01-01 00:00:00.000000", transactionPrice: "", transactionQuantity: 0, transactionUnitPrice: "",  transactionStatusId: 0, transactionStatusName: "", transactionPayment: "", transactionItems: [], isCancellable: false, isShippable: false)
         
-        transactionConsigneeModel = TransactionConsigneeModel(isSuccessful: false, message: "", deliveryAddress: "", consigneeName: "", consigneeContactNumber: "", buyerId: 0)
+        transactionConsigneeModel = TransactionConsigneeModel(isSuccessful: false, message: "", deliveryAddress: "", consigneeName: "", consigneeContactNumber: "", buyerId: 0, email: "")
         
         initializeNavigationBar()
         initializeViews()
@@ -99,7 +102,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         }
         
         
-        self.tidLabel.text = self.transactionDetailsModel.transactionInvoice
+        self.tidLabel.text = "TID-\(self.transactionDetailsModel.transactionInvoice)"
         if self.transactionDetailsModel.transactionQuantity > 1 {
             let productString = StringHelper.localizedStringWithKey("TRANSACTIONS_DETAILS_PRODUCT_LOCALIZE_KEY")
             self.counterLabel.text = "\(self.transactionDetailsModel.transactionQuantity) \(productString)"
@@ -365,6 +368,73 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         
     }
     
+    func getContactsFromEndpoint(keyword: String){
+        //SVProgressHUD.show()
+        if (Reachability.isConnectedToNetwork()) {
+            self.showHUD()
+            
+            let manager: APIManager = APIManager.sharedInstance
+            manager.requestSerializer = AFHTTPRequestSerializer()
+            
+            let parameters: NSDictionary = [
+                "page"          : "1",
+                "limit"         : "1",
+                "keyword"       : keyword,
+                "access_token"  : SessionManager.accessToken()
+                ]   as Dictionary<String, String>
+            
+            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
+            
+            manager.POST(url, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
+                self.goToMessaging()
+                //SVProgressHUD.dismiss()
+                self.hud?.hide(true)
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        if (SessionManager.isLoggedIn()){
+                            self.fireRefreshToken()
+                        }
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    }
+                    
+                    self.contacts = Array<W_Contact>()
+                    
+                    //SVProgressHUD.dismiss()
+                    self.hud?.hide(true)
+            })
+        }
+        
+    }
+    
+    func goToMessaging() {
+        var selectedContact : W_Contact?
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let messagingViewController: MessageThreadVC = (storyBoard.instantiateViewControllerWithIdentifier("MessageThreadVC") as? MessageThreadVC)!
+        
+        if contacts.count != 0 {
+            selectedContact = contacts[0]
+        }
+        
+        println("SELECTED CONTACT \(contacts[0].userId)")
+        
+        var isOnline = "-1"
+        if (SessionManager.isLoggedIn()){
+            isOnline = "1"
+        } else {
+            isOnline = "0"
+        }
+        messagingViewController.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
+        messagingViewController.recipient = selectedContact!
+        
+        self.navigationController?.pushViewController(messagingViewController, animated: true)
+    }
+    
     func showHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
@@ -399,6 +469,13 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         var shipItemController = TransactionShipItemTableViewController(nibName: "TransactionShipItemTableViewController", bundle: nil)
         shipItemController.invoiceNumber = invoiceNumber
         shipItemController.delegate = self
+        
+        orderProductIds.removeAll(keepCapacity: false)
+        for subValue in transactionDetailsModel.transactionItems[0].products {
+            orderProductIds.append(subValue.orderProductId)
+        }
+        
+        shipItemController.orderProductIds = orderProductIds
         self.navigationController?.pushViewController(shipItemController, animated:true)
     }
     
@@ -474,7 +551,10 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     
     // MARK: - TransactionConsigneeTableViewCellDelegate
     func messageConsigneeAction() {
-       
+       println("Message")
+        if transactionConsigneeModel.email.isNotEmpty() {
+            self.getContactsFromEndpoint(transactionConsigneeModel.email)
+        }
     }
     
     func smsConsigneeAction() {

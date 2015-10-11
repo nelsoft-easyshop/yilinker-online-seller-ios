@@ -443,6 +443,7 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
     func lastCheckinAction() {
         var transactionDetailsController = TransactionDeliveryLogTableViewController(nibName: "TransactionDeliveryLogTableViewController", bundle: nil)
         transactionDetailsController.orderProductId = productModel.orderProductId
+        transactionDetailsController.transactionId = invoiceNumber
         self.navigationController?.pushViewController(transactionDetailsController, animated:true)
     }
     

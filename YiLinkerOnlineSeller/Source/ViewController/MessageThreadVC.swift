@@ -24,6 +24,7 @@ class MessageThreadVC: UIViewController {
     @IBOutlet weak var composeViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var composeTextView: TextViewAutoHeight!
     @IBOutlet weak var composeTVConstraint: NSLayoutConstraint!
+    @IBOutlet weak var sendButton: UIButton!
     
     let composeViewHeight : CGFloat = 50.0
     
@@ -44,7 +45,6 @@ class MessageThreadVC: UIViewController {
     
     @IBOutlet weak var cameraButton: UIButton!
     
-    @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var bottomLayoutConstraint: NSLayoutConstraint!
     
     var imagePlaced : Bool = false
@@ -199,6 +199,7 @@ class MessageThreadVC: UIViewController {
         /* set message as read */
         var r_temp = recipient?.userId ?? ""
         self.setConversationAsReadFromEndpoint(r_temp)
+        self.sendButton.titleLabel?.text = LocalizedStrings.send
     }
     
     func tableTapped(tap : UITapGestureRecognizer){
@@ -232,7 +233,11 @@ class MessageThreadVC: UIViewController {
         var rightPadding3 : CGFloat = 4.0
         
         onlineLabel = UILabel()
-        onlineLabel.text = "Online"
+        if (recipient?.isOnline == "1"){
+            onlineLabel.text = LocalizedStrings.online
+        } else {
+            onlineLabel.text = LocalizedStrings.offline
+        }
         onlineLabel.font = UIFont(name: onlineLabel.font.fontName, size: 11.0)
         onlineLabel.textColor = UIColor.whiteColor()
         onlineLabel.sizeToFit()
@@ -336,16 +341,11 @@ class MessageThreadVC: UIViewController {
             var newTableFrame : CGRect = self.threadTableView.frame
             
             UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                //self.threadTableView.setContentOffset(UIEdgeInsetsZero, animated: true)
                 self.threadTableView.contentInset = UIEdgeInsetsMake(60, 0, self.tabBarHeight, 0)
                 
                 self.composeView.frame = newFrame
                 self.composeViewBottomLayout.constant -= (keyFrame.size.height - self.tabBarHeight)
                 
-                /*
-                self.threadTableView.frame = CGRectMake(0, 0, newTableFrame.height + keyFrame.size.height, newTableFrame.width)
-                self.threadTableViewConstraint.constant = newTableFrame.height + keyFrame.size.height
-                */
                 self.goToBottomTableView()
                 }, completion: nil)
             
@@ -361,22 +361,6 @@ class MessageThreadVC: UIViewController {
             var updatedH = updatedFrame.height - oldFrame.height
             
             var newFrame : CGRect = self.composeView.frame
-            
-            println ( oldFrame )
-            println ( updatedFrame )
-            println (" HEIGHT: \(updatedH)")
-
-            /*
-            (0.0, 568.0, 320.0, 216.0)
-            (0.0, 352.0, 320.0, 216.0)
-            ORIGIN: -216.0
-            HEIGHT: 0.0
-            (0.0, 352.0, 320.0, 216.0)
-            (0.0, 315.0, 320.0, 253.0)
-            ORIGIN: -37.0
-            HEIGHT: 37.0
-            */
-
             
             UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 self.composeView.frame = CGRectMake(newFrame.origin.x, newFrame.origin.y - updatedH, newFrame.width, newFrame.height)
@@ -459,12 +443,12 @@ class MessageThreadVC: UIViewController {
                             self.fireRefreshToken()
                         }
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
                     }
                     
                     self.messages[self.messages.count-1].isSent = "0"
                 } else {
-                    self.showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+                    self.showAlert(LocalizedStrings.connectionUnreachableTitle, message: LocalizedStrings.connectionUnreachableMessage)
                 }
         })
         self.composeTextView.text = ""
@@ -508,10 +492,10 @@ class MessageThreadVC: UIViewController {
                                 self.fireRefreshToken()
                             }
                         } else {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
                         }
                     } else {
-                        self.showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+                        self.showAlert(LocalizedStrings.connectionUnreachableTitle, message: LocalizedStrings.connectionUnreachableMessage)
                     }
                     
                     self.messages = Array<W_Messages>()
@@ -564,7 +548,7 @@ class MessageThreadVC: UIViewController {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
         })
         
     }
@@ -604,7 +588,7 @@ extension MessageThreadVC : UITextViewDelegate{
         // and set the cursor to the beginning of the text view
         if updatedText.isEmpty {
             
-            textView.text = "Enter Your Message"
+            textView.text = LocalizedStrings.typeYourMessage
             textView.textColor = UIColor.lightGrayColor()
             
             textView.selectedTextRange = textView.textRangeFromPosition(textView.beginningOfDocument, toPosition: textView.beginningOfDocument)
@@ -684,8 +668,6 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
         }
         
         var index : Int = indexPath.row
-        println("RECIP \(recipient?.userId)")
-        println("SENDER ID\(messages[index].senderId)")
         if (messages[index].isImage == "1"){
             if (recipient?.userId != String(messages[index].senderId)){
                 let cell = tableView.dequeueReusableCellWithIdentifier(senderImageIndentifier) as! MessageThreadImageTVC

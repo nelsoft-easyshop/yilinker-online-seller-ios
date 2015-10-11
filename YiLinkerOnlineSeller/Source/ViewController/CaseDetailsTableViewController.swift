@@ -127,7 +127,7 @@ class CaseDetailsTableViewController: UITableViewController {
         var parameters: NSDictionary =
             ["access_token" : SessionManager.accessToken()
             ,"disputeId": self.disputeId];
-        
+
         manager.GET(APIAtlas.getResolutionCenterCaseDetails, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             let caseDetailsModel: CaseDetailsModel = CaseDetailsModel.parseDataWithDictionary(responseObject)
@@ -153,7 +153,7 @@ class CaseDetailsTableViewController: UITableViewController {
                 self.tableData = caseDetails.products
                 self.tableView.reloadData()
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error while reading Case Details", title: "Data Loading Error")
+               self.showAlert(title: Constants.Localized.error, message: responseObject["message"] as! String)
             }
             self.hud?.hide(true)
             
@@ -162,11 +162,11 @@ class CaseDetailsTableViewController: UITableViewController {
             self.hud?.hide(true)
             
             let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-            println("error \(error)")
+            println("error \(task.statusCode)")
             if task.statusCode == 401 {
                 self.fireRefreshToken()
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error Refreshing Token", title: "Refresh Token Error")
+              self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
             }
             
             println(error)
@@ -193,6 +193,13 @@ class CaseDetailsTableViewController: UITableViewController {
             self.hud?.hide(true)
         })
         
+    }
+    
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
     }
     
     // MARK: UITableViewController

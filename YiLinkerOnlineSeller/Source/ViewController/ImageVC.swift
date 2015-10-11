@@ -35,6 +35,8 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         */
         // Do any additional setup after loading the view.
         
+        cameraButton.titleLabel?.text = LocalizedStrings.camera
+        cameraRollButton.titleLabel?.text = LocalizedStrings.cameraRoll
         cameraRollButton.layer.cornerRadius = 5.0
         cameraButton.layer.cornerRadius = 5.0
         self.placeCustomBackImage()
@@ -47,7 +49,7 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     }
     
     func placeSendButton(){
-        var sendItem = UIBarButtonItem(title : "Send", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("sendImageByFile"))
+        var sendItem = UIBarButtonItem(title : LocalizedStrings.send, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("sendImageByFile"))
         
         sendItem.tintColor = UIColor.whiteColor()
         
@@ -111,7 +113,7 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
                             }
                         } else {
                             
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong. (\(error.description))", title: "Error")
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "\(LocalizedStrings.errorMessage) (\(error.description))", title: LocalizedStrings.errorTitle)
                         }
                         
                         println(error.description)
@@ -119,11 +121,11 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
                         //SVProgressHUD.dismiss()
                 }
             } else {
-                self.showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+                self.showAlert(LocalizedStrings.connectionUnreachableTitle, message: LocalizedStrings.connectionUnreachableMessage)
             }
             
         } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please pick or upload an image first.", title: "Error")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.pickImageFirst, title: LocalizedStrings.errorTitle)
         }
         
     }
@@ -142,7 +144,7 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
         })
         
     }
@@ -150,7 +152,7 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+        let OKAction = UIAlertAction(title: LocalizedStrings.ok, style: .Default) { (action) in
             alertController.dismissViewControllerAnimated(true, completion: nil)
         }
         
@@ -217,11 +219,11 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     func image(image: UIImage, didFinishSavingWithError error: NSErrorPointer, contextInfo:UnsafePointer<Void>) {
         
         if error != nil {
-            let alert = UIAlertController(title: "Save Failed",
-                message: "Failed to save image",
+            let alert = UIAlertController(title: LocalizedStrings.saveFailed,
+                message: LocalizedStrings.saveFailedMessage,
                 preferredStyle: UIAlertControllerStyle.Alert)
             
-            let cancelAction = UIAlertAction(title: "OK",
+            let cancelAction = UIAlertAction(title: LocalizedStrings.ok,
                 style: .Cancel, handler: nil)
             
             alert.addAction(cancelAction)
