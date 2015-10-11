@@ -127,13 +127,17 @@ class CaseDetailsTableViewController: UITableViewController {
         var parameters: NSDictionary =
             ["access_token" : SessionManager.accessToken()
             ,"disputeId": self.disputeId];
-
+        let data2 = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
+        let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
+        println(string2)
         manager.GET(APIAtlas.getResolutionCenterCaseDetails, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             let caseDetailsModel: CaseDetailsModel = CaseDetailsModel.parseDataWithDictionary(responseObject)
             
             println(responseObject)
-            
+            let data2 = NSJSONSerialization.dataWithJSONObject(responseObject, options: nil, error: nil)
+            let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
+            println(string2)
             if caseDetailsModel.isSuccessful {
                 let caseDetails = caseDetailsModel.caseData
                 
