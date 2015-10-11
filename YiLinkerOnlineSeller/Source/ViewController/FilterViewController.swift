@@ -90,17 +90,13 @@ class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 3
+        return 2
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.row == 2 {
-            return 298
-        } else if indexPath.row == 0{
-            return 95
-        } else {
-            return 95
-        }
+
+        return 95
+       
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -112,16 +108,13 @@ class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate 
             //}
             
             return cell
-        } else if indexPath.row == 1{
+        } else {
             let cell = tableView.dequeueReusableCellWithIdentifier("FilterTableViewCell", forIndexPath: indexPath) as! FilterTableViewCell
             println("\(tableData.count)")
             //if !tableData.isEmpty {
             cell.passModel(tableData[1])
             //}
             
-            return cell
-        }  else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("FilterCalendarTableViewCell", forIndexPath: indexPath) as! FilterCalendarTableViewCell
             return cell
         }
         

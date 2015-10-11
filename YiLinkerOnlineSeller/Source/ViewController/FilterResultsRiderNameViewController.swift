@@ -39,11 +39,11 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
     let newToOld: String = StringHelper.localizedStringWithKey("SEARCH_NEW_TO_OLD_LOCALIZE_KEY")
     let aWeekAgo: String = StringHelper.localizedStringWithKey("SEARCH_A_WEEK_LOCALIZE_KEY")
     let aMonth: String = StringHelper.localizedStringWithKey("SEARCH_A_MONTH_LOCALIZE_KEY")
-    
+    var sortDirection: String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.filterBy = [oldToNew, newToOld, aWeekAgo, aMonth]
+        self.filterBy = [oldToNew, newToOld]
         self.filterTableView.delegate = self
         self.filterTableView.dataSource = self
         self.filterTableView.separatorInset = UIEdgeInsetsZero
@@ -94,6 +94,7 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
         */
         
         //self.title = "\(self.searchModel!.invoiceNumber.count) Results"
+        self.sortDirection = "ASC"
         if self.searchType == 1 {
             self.fireSearchRiderName(transactionId)
         } else if searchType == 2 {
@@ -167,7 +168,7 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 2
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -189,6 +190,25 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
         self.dimView.hidden = true
         let indexPath = tableView.indexPathForSelectedRow();
         filterBySelected = filterBy[indexPath!.row]
+        if filterBySelected == "0" {
+            self.sortDirection = "DESC"
+        } else {
+            self.sortDirection = "ASC"
+        }
+        
+        self.tableData.removeAll(keepCapacity: false)
+        page = 0
+        isPageEnd = false
+        
+        if self.searchType == 1 {
+            self.fireSearchRiderName(transactionId)
+        } else if searchType == 2 {
+            self.fireSearchRiderName(productName)
+        } else {
+            self.fireSearchRiderName(riderName)
+        }
+
+        
         //Add filto call filter collection view and reload
         println(filterBySelected)
         
@@ -329,7 +349,7 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
                 params = "riderName=\(riderName)"
             }
             
-            var url = APIAtlas.transactionLogs+"\(SessionManager.accessToken())&\(params)&perPage=15&page=\(page)" as NSString
+            var url = APIAtlas.transactionLogs+"\(SessionManager.accessToken())&\(params)&sortDirection=\(self.sortDirection)&perPage=15&page=\(page)" as NSString
             let urlEncoded = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
             
             manager.GET(urlEncoded!, parameters: nil, success: {
