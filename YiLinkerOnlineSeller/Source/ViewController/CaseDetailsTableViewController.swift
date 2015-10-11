@@ -126,7 +126,7 @@ class CaseDetailsTableViewController: UITableViewController {
         let manager = APIManager.sharedInstance
         var parameters: NSDictionary =
             ["access_token" : SessionManager.accessToken()
-            ,"disputeId": self.disputeId];
+                ,"disputeId": self.disputeId];
         let data2 = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
         let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
         println(string2)

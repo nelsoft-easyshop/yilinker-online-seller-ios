@@ -39,6 +39,7 @@ class ChangeMobileNumberViewController: UIViewController {
     let sameNumber: String = StringHelper.localizedStringWithKey("CHANGE_MOBILE_SAME_NUMBER_LOCALIZE_KEY")
      let ok: String = StringHelper.localizedStringWithKey("CHANGE_MOBILE_OK_LOCALIZE_KEY")
     let somethingWentWrong: String = StringHelper.localizedStringWithKey("ERROR_SOMETHING_WENT_WRONG_LOCALIZE_KEY")
+    var mobile: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +47,9 @@ class ChangeMobileNumberViewController: UIViewController {
         self.oldNumberTitleLabel.text = oldNumber
         self.newNumberTitleLabel.text = newNumber
         self.submitButton.setTitle(submit, forState: UIControlState.Normal)
+        self.oldNumberTextField.text = self.mobile
         self.newNumberTextField.placeholder = enterNewNumber
+        self.oldNumberTextField.enabled = false
         // Do any additional setup after loading the view.
     }
 

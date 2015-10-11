@@ -9,7 +9,7 @@
 import UIKit
 
 protocol StoreInfoTableViewCellDelegate {
-    func storeInfoVerify()
+    func storeInfoVerify(mobile: String)
     func storeNameAndDescription(storeName: String, storeDescription: String)
     func callUzyPicker(imageType: String)
     func textViewNextResponder(textView: UITextView)
@@ -103,7 +103,7 @@ class StoreInfoTableViewCell: UITableViewCell, UITextFieldDelegate, UITextViewDe
     }
     
     @IBAction func callVerification(sender: AnyObject){
-        self.delegate?.storeInfoVerify()
+        self.delegate?.storeInfoVerify(self.mobilePhoneTextField.text)
     }
     
     func callUzyPicker(){

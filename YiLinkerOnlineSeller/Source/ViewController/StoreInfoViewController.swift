@@ -310,7 +310,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         self.storeInfoModel?.store_description = storeDescription
     }
     //MARK: Store Details Function
-    func storeInfoVerify() {
+    func storeInfoVerify(mobile: String) {
         println("verify " + "\(self.verifyOrChange)")
         self.showView()
         
@@ -332,6 +332,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             changeMobileNumber.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
             changeMobileNumber.providesPresentationContextTransitionStyle = true
             changeMobileNumber.definesPresentationContext = true
+            changeMobileNumber.mobile = mobile
             changeMobileNumber.view.frame.origin.y = changeMobileNumber.view.frame.size.height
             self.tabBarController?.presentViewController(changeMobileNumber, animated: true, completion:
                 nil)
@@ -554,7 +555,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 self.verifyOrChange = 1
                 println(self.verifyOrChange)
                 self.mobileNumber = newNumber
-                self.storeInfoVerify()
+                self.storeInfoVerify(oldNumber)
                 self.hud?.hide(true)
             } else {
                 self.showAlert("Error", message: responseObject["message"] as! String)
