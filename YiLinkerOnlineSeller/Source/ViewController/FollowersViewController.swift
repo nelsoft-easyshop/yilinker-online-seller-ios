@@ -39,12 +39,13 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
         titleView()
         backButton()
         registerNibs()
+        
+        fireGetFollower("")
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         getCtr = 0
-        fireGetFollower("")
     }
     
     override func didReceiveMemoryWarning() {
