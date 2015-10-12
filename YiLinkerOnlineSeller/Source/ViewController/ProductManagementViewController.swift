@@ -66,8 +66,8 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     var pageTitle: [String] = [ManagementStrings.all, ManagementStrings.active, ManagementStrings.inactive, ManagementStrings.drafts, ManagementStrings.deleted, ManagementStrings.underReview, ManagementStrings.rejected]
     var selectedImage: [String] = ["all2", "active2", "inactive2", "drafts2", "deleted2", "review2", "review2"]
     var deSelectedImage: [String] = ["all", "active", "inactive", "drafts", "deleted", "review", "review"]
-
-    var statusId: [Int] = [5, 2, 3, 0, 4, 1, 6]
+//status : Active = 2, Inactive = 3, Draft = 0, Deleted =4, For Review = 1, Rejected = 5, All = all
+    var statusId: [Int] = [6, 2, 3, 0, 4, 1, 5]
     
     var selectedIndex: Int = 0
     var tableViewSectionHeight: CGFloat = 0
@@ -86,7 +86,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        requestGetProductList(5, key: "")
+        requestGetProductList(6, key: "")
         customizeNavigationBar()
         customizeViews()
         registerNibs()
@@ -368,7 +368,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             self.showHUD()
             
             var parameters: NSDictionary = [:]
-            if status == 5 {
+            if status == 6 {
                 parameters = ["access_token": SessionManager.accessToken(),
                     "status": "all",
                     "keyword": key]
@@ -475,7 +475,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if selectedIndex == 0 || selectedIndex == 5 {
+        if selectedIndex == 0 || selectedIndex == 6 {
             let cell: ProductManagementAllTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductManagementAllIdentifier") as! ProductManagementAllTableViewCell
             cell.selectionStyle = .None
             
@@ -483,7 +483,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
             cell.subTitleLabel.text = self.productModel.products[indexPath.row].category
             cell.setStatus(self.productModel.products[indexPath.row].status)
-            if selectedIndex == 5 {
+            if selectedIndex == 6 {
                 cell.statusLabel.hidden = true
             } else {
                 cell.statusLabel.hidden = false
@@ -541,7 +541,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             if selectedIndex != 4 {
                 let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
                 productDetails.productId = self.productModel.products[indexPath.row].id
-                if selectedIndex != 5 {
+                if selectedIndex != 6 {
                     productDetails.isEditable = true
                     if selectedIndex == 0 {
                         if self.productModel.products[indexPath.row].status == 4 || self.productModel.products[indexPath.row].status == 1 {
@@ -646,7 +646,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             self.deleteView.hidden = true
             self.activeInactiveContainerView.hidden = true
             
-        } else if selectedIndex == 3 || selectedIndex == 5 {
+        } else if selectedIndex == 3 || selectedIndex == 6 {
             self.deleteView.hidden = false
             
             self.activeInactiveDeleteContainerView.hidden = true
