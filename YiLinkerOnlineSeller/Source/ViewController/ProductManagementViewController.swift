@@ -16,6 +16,7 @@ private struct ManagementStrings {
     static let drafts = StringHelper.localizedStringWithKey("MANAGEMENT_DRAFTS_LOCALIZE_KEY")
     static let deleted = StringHelper.localizedStringWithKey("MANAGEMENT_DELETED_LOCALIZE_KEY")
     static let underReview = StringHelper.localizedStringWithKey("MANAGEMENT_UNDER_REVIEW_LOCALIZE_KEY")
+    static let rejected = StringHelper.localizedStringWithKey("MANAGEMENT_REJECTED_LOCALIZE_KEY")
     
     static let disableAll = StringHelper.localizedStringWithKey("MANAGEMENT_DISABLE_ALL_LOCALIZE_KEY")
     static let restoreAll = StringHelper.localizedStringWithKey("MANAGEMENT_RESTORE_ALL_LOCALIZE_KEY")
@@ -33,10 +34,11 @@ private struct ManagementStrings {
 
 private struct Status {
     static let active = 2
-    static let inactive = 3
+    static let inactive = 6
     static let draft = 0
-    static let deleted = 4
+    static let deleted = 3
     static let review = 1
+    static let rejected = 5
 }
 
 class ProductManagementViewController: UIViewController, ProductManagementModelViewControllerDelegate, EmptyViewDelegate {
@@ -61,11 +63,12 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     @IBOutlet weak var emptyLabel: UILabel!
     @IBOutlet weak var dimView: UIView!
     
-    var pageTitle: [String] = [ManagementStrings.all, ManagementStrings.active, ManagementStrings.inactive, ManagementStrings.drafts, ManagementStrings.deleted, ManagementStrings.underReview]
-    var selectedImage: [String] = ["all2", "active2", "inactive2", "drafts2", "deleted2", "review2"]
-    var deSelectedImage: [String] = ["all", "active", "inactive", "drafts", "deleted", "review"]
-
-    var statusId: [Int] = [5, 2, 3, 0, 4, 1]
+    var pageTitle: [String] = [ManagementStrings.all, ManagementStrings.active, ManagementStrings.inactive, ManagementStrings.drafts, ManagementStrings.deleted, ManagementStrings.underReview, ManagementStrings.rejected]
+    var selectedImage: [String] = ["all2", "active2", "inactive2", "drafts2", "deleted2", "review2", "review2"]
+    var deSelectedImage: [String] = ["all", "active", "inactive", "drafts", "deleted", "review", "review"]
+//status : Active = 2, Inactive = 3, Draft = 0, Deleted =4, For Review = 1, Rejected = 5, All = all
+//    draft = 0, review = 1, active = 2, delete = 3, reject = 5, inactive = 6
+    var statusId: [Int] = [7, 2, 6, 0, 3, 1, 5]
     
     var selectedIndex: Int = 0
     var tableViewSectionHeight: CGFloat = 0
@@ -84,7 +87,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        requestGetProductList(5, key: "")
+        requestGetProductList(7, key: "")
         customizeNavigationBar()
         customizeViews()
         registerNibs()
@@ -187,7 +190,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         
         if selectedIndex == 1 {
             button1.setTitle(ManagementStrings.disableAll, forState: .Normal)
-        } else if selectedIndex == 2 || selectedIndex == 3 {
+        } else if selectedIndex == 2 || selectedIndex == 6 {
             button1.setTitle(ManagementStrings.deleteAll, forState: .Normal)
             
             if selectedIndex == 2 {
@@ -314,7 +317,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 } else if sender.titleLabel!!.text == ManagementStrings.restoreAll {
                     action = Status.active
                 }
-            } else if selectedIndex == 3 {
+            } else if selectedIndex == 6 {
                 action = Status.deleted
             }
             
@@ -366,7 +369,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             self.showHUD()
             
             var parameters: NSDictionary = [:]
-            if status == 5 {
+            if status == 7 {
                 parameters = ["access_token": SessionManager.accessToken(),
                     "status": "all",
                     "keyword": key]
@@ -473,7 +476,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if selectedIndex == 0 || selectedIndex == 5 {
+        if selectedIndex == 0 || selectedIndex == 7 {
             let cell: ProductManagementAllTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductManagementAllIdentifier") as! ProductManagementAllTableViewCell
             cell.selectionStyle = .None
             
@@ -481,7 +484,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
             cell.subTitleLabel.text = self.productModel.products[indexPath.row].category
             cell.setStatus(self.productModel.products[indexPath.row].status)
-            if selectedIndex == 5 {
+            if selectedIndex == 7 {
                 cell.statusLabel.hidden = true
             } else {
                 cell.statusLabel.hidden = false
@@ -507,7 +510,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
             cell.subTitleLabel.text = self.productModel.products[indexPath.row].category
 
-            if selectedIndex == 4 {
+            if selectedIndex == 3 {
                 cell.arrowImageView.hidden = true
                 cell.decreaseAlpha()
             } else {
@@ -536,13 +539,13 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if Reachability.isConnectedToNetwork() {
-            if selectedIndex != 4 {
+            if selectedIndex != 3 {
                 let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
                 productDetails.productId = self.productModel.products[indexPath.row].id
-                if selectedIndex != 5 {
+                if selectedIndex != 7 {
                     productDetails.isEditable = true
                     if selectedIndex == 0 {
-                        if self.productModel.products[indexPath.row].status == 4 || self.productModel.products[indexPath.row].status == 1 {
+                        if self.productModel.products[indexPath.row].status == 3 || self.productModel.products[indexPath.row].status == 1 {
                             productDetails.isEditable = false
                         }
                     }
@@ -564,7 +567,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     // MARK: - Collection View Data Source
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return 7
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -644,16 +647,18 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             self.deleteView.hidden = true
             self.activeInactiveContainerView.hidden = true
             
-        } else if selectedIndex == 3 || selectedIndex == 5 {
+        } else if selectedIndex == 6 || selectedIndex == 7 {
             self.deleteView.hidden = false
             
             self.activeInactiveDeleteContainerView.hidden = true
             self.activeInactiveContainerView.hidden = true
-        } else if selectedIndex == 4 {
+        } else if selectedIndex == 3 {
             self.activeInactiveContainerView.hidden = false
             
             self.deleteView.hidden = true
             self.activeInactiveDeleteContainerView.hidden = true
+        } else {
+            
         }
     }
     

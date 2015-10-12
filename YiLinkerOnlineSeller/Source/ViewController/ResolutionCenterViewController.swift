@@ -106,6 +106,10 @@ class ResolutionCenterViewController
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidAppear(animated: Bool) {
+        self.tableData.removeAll(keepCapacity: false)
+        self.fireGetCases()
+    }
     // MARK: initialization functions
     func setupNavigationBar() {
         // Title text in Navigation Bar will now turn WHITE

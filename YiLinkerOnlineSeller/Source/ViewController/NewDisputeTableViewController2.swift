@@ -152,7 +152,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
                 cell.titleLabel.text = transactionNoTitle
                 cell.titleLabel.required()
             } else if indexPath.row == 2 {
-                cell.textField.text = self.disputeType[self.disputeTypeDefaultIndex]
+                //cell.textField.text = self.disputeType[self.disputeTypeDefaultIndex]
                 cell.titleLabel.text = disputeTypeTitle
                 cell.titleLabel.required()
             } else {
@@ -343,7 +343,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         
         if self.disputePickerType == DisputePickerType.TransactionList {
             self.isValid = true
-            self.currentTextField.text = self.transactionIds[self.transactionDefaultIndex]
+            self.currentTextField.text = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number//self.transactionIds[self.transactionDefaultIndex]
         } else if self.disputePickerType == DisputePickerType.DisputeType {
             self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].key2
         } else {
@@ -361,7 +361,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if self.disputePickerType == DisputePickerType.TransactionList {
             self.transactionDefaultIndex = row
-            self.currentTextField.text = self.transactionIds[self.transactionDefaultIndex]
+            self.currentTextField.text = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
         } else if self.disputePickerType == DisputePickerType.DisputeType {
             self.disputeTypeDefaultIndex = row
             self.reasonDefaultIndex = 0
@@ -378,7 +378,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if self.disputePickerType == DisputePickerType.TransactionList {
-           return self.transactionIds.count
+           return self.transactionsModel.transactions.count
         } else if self.disputePickerType == DisputePickerType.DisputeType {
            return self.reason!.key.count
         } else {
@@ -388,7 +388,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
         if self.disputePickerType == DisputePickerType.TransactionList {
-            return self.transactionIds[self.transactionDefaultIndex]
+            return self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
         } else if self.disputePickerType == DisputePickerType.DisputeType{
             return self.reason!.key[row]
         } else {
@@ -500,6 +500,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         
         manager.POST(APIAtlas.resolutionCenterAddCaseUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            println(responseObject)
             self.hud?.hide(true)
             self.navigationController?.popViewControllerAnimated(true)
             }, failure: {
