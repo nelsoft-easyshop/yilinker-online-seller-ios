@@ -163,6 +163,9 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        println("quantity: \(self.productModel.quantity)")
+        
         self.backButton()
         self.title = Constants.ViewControllersTitleString.productUpload
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
@@ -572,9 +575,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     cell.selectionStyle = UITableViewCellSelectionStyle.None
                     cell.delegate = self
                     
-                    if self.productModel.quantity != 0 {
-                       cell.cellTextField.text = "\(self.productModel.quantity)"
-                    }
+                    cell.cellTextField.text = "\(self.productModel.quantity)"
                     
                     if SessionManager.isSeller() {
                         cell.userInteractionEnabled = true
