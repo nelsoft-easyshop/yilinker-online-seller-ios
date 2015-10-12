@@ -163,6 +163,9 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        println("quantity: \(self.productModel.quantity)")
+        
         self.backButton()
         self.title = Constants.ViewControllersTitleString.productUpload
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
@@ -176,6 +179,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             let oldImages: [ServerUIImage] = self.productModel.editedImage
             self.oldEditedImages = oldImages
         }
+        
+        println("product price: \(self.productModel.retailPrice)")
         
         if self.productModel.validCombinations.count != 0 {
            self.updateCombinationListRow()
@@ -570,9 +575,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     cell.selectionStyle = UITableViewCellSelectionStyle.None
                     cell.delegate = self
                     
-                    if self.productModel.quantity != 0 {
-                       cell.cellTextField.text = "\(self.productModel.quantity)"
-                    }
+                    cell.cellTextField.text = "\(self.productModel.quantity)"
                     
                     if SessionManager.isSeller() {
                         cell.userInteractionEnabled = true
@@ -670,8 +673,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.cellTitleLabel.required()
                 cell.cellTextField.placeholder = "0.00"
               
-                if self.productModel.retailPrice != "0" || self.productModel.retailPrice != "" {
+                if self.productModel.retailPrice == "0" || self.productModel.retailPrice == "" {
                     cell.cellTextField.text = ""
+                } else {
+                    cell.cellTextField.text = self.productModel.retailPrice
                 }
                 
                 if SessionManager.isSeller() {
@@ -1177,9 +1182,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         "weight": weight,
         "length": length,
         "sku": self.productModel.sku]
-
-        
-       
         
         let data2 = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
         let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
