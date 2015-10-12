@@ -21,4 +21,5 @@ class CombinationModel {
     var height: String = ""
     var length: String = ""
     var width: String = ""
+    var productUnitId: String = ""
 }
