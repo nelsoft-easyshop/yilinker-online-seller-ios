@@ -9,7 +9,7 @@
 import UIKit
 
 protocol TransactionTableViewControllerDelegate {
-    func doneWithFilter(dates: String, statuses: [String], paymentMethods: [String])
+    func doneWithFilter(dates: String, statuses: [String], paymentMethods: [String], selectedDate: Int, selectedStatus: Int, selectedPayment: Int)
 }
 
 class TransactionTableViewController: UITableViewController {
@@ -19,6 +19,10 @@ class TransactionTableViewController: UITableViewController {
     var filterTableViewCellIdentifier: String = "TransactionFilterTableViewCell"
     
     var tableData: [TransactionsFilterModel] = []
+    
+    var selectedDate: Int = 4
+    var selectedStatus: Int = 0
+    var selectedPayment: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,21 +54,21 @@ class TransactionTableViewController: UITableViewController {
         let totalString = StringHelper.localizedStringWithKey("TRANSACTIONS_TOTAL_LOCALIZE_KEY")
         
         tableData.append(TransactionsFilterModel(headerText: datesString, items:
-            [TransactionsFilterItemModel(title: todayString, isChecked: true),
+            [TransactionsFilterItemModel(title: todayString, isChecked: false),
             TransactionsFilterItemModel(title: thisWeekString, isChecked: false),
             TransactionsFilterItemModel(title: thisMonthString, isChecked: false),
             TransactionsFilterItemModel(title: totalString, isChecked: false)]))
         
         let statusString = StringHelper.localizedStringWithKey("TRANSACTIONS_STATUS_LOCALIZE_KEY")
-        let newUpdateString = StringHelper.localizedStringWithKey("TRANSACTIONS_NEW_UPDATE_LOCALIZE_KEY")
         let newOrderString = StringHelper.localizedStringWithKey("TRANSACTIONS_NEW_ORDER_LOCALIZE_KEY")
+        let newUpdateString = StringHelper.localizedStringWithKey("TRANSACTIONS_NEW_UPDATE_LOCALIZE_KEY")
         let ongoingString = StringHelper.localizedStringWithKey("TRANSACTIONS_ONGOING_LOCALIZE_KEY")
         let completedString = StringHelper.localizedStringWithKey("TRANSACTIONS_COMPLETED_LOCALIZE_KEY")
         let cancelledString = StringHelper.localizedStringWithKey("TRANSACTIONS_CANCELLED_LOCALIZE_KEY")
         
         tableData.append(TransactionsFilterModel(headerText: statusString, items:
-            [TransactionsFilterItemModel(title: newUpdateString, isChecked: false),
-                TransactionsFilterItemModel(title: newOrderString, isChecked: false),
+            [TransactionsFilterItemModel(title: newOrderString, isChecked: false),
+                TransactionsFilterItemModel(title: newUpdateString, isChecked: false),
                 TransactionsFilterItemModel(title: ongoingString, isChecked: false),
                 TransactionsFilterItemModel(title: completedString, isChecked: false),
                 TransactionsFilterItemModel(title: cancelledString, isChecked: false),]))
@@ -83,7 +87,30 @@ class TransactionTableViewController: UITableViewController {
                 TransactionsFilterItemModel(title: pesoPayString, isChecked: false),
                 TransactionsFilterItemModel(title: walletString, isChecked: false),]))
         
+        
+        if selectedDate != 0 {
+            tableData[0].items[selectedDate - 1].isChecked = true
+        }
+        
+        if selectedStatus != 0 {
+            if selectedStatus != 0 {
+                tableData[1].items[selectedStatus].isChecked = true
+            }
+        }
+        
+        if selectedPayment != 0 {
+            tableData[2].items[selectedPayment - 1].isChecked = true
+        }
+        
         self.tableView.reloadData()
+    }
+    
+    func clearFilter() {
+        selectedDate = 4
+        selectedStatus = 0
+        selectedPayment = 0
+        
+        populateData()
     }
     
     func initializesViews() {
@@ -101,7 +128,7 @@ class TransactionTableViewController: UITableViewController {
         clearFilterView.addSubview(clearTextLabel)
         footerView.addSubview(clearFilterView)
         
-        var tapGesture = UITapGestureRecognizer(target: self, action: "populateData")
+        var tapGesture = UITapGestureRecognizer(target: self, action: "clearFilter")
         footerView.addGestureRecognizer(tapGesture)
         
         tableView.tableFooterView = footerView
@@ -156,7 +183,7 @@ class TransactionTableViewController: UITableViewController {
             }
         }
         
-        delegate?.doneWithFilter(dates, statuses: statuses, paymentMethods: paymentMethods)
+        delegate?.doneWithFilter(dates, statuses: statuses, paymentMethods: paymentMethods, selectedDate: selectedDate, selectedStatus: selectedStatus, selectedPayment: selectedPayment)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
@@ -187,8 +214,6 @@ class TransactionTableViewController: UITableViewController {
         return headerView
     }
     
-    
-    
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
@@ -200,7 +225,7 @@ class TransactionTableViewController: UITableViewController {
         if indexPath.section == 0 {
             cell.setType(0)
         } else {
-            cell.setType(1)
+            cell.setType(0)
         }
         
         cell.setTitleLabelText(tempModel.items[indexPath.row].title)
@@ -212,16 +237,32 @@ class TransactionTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
+//        if indexPath.section == 0 {
+//            for var i: Int = 0; i < tableData[0].items.count; i++ {
+//                tableData[0].items[i].isChecked = false
+//                println(tableData[0].items[i].isChecked)
+//            }
+//            tableData[indexPath.section].items[indexPath.row].isChecked = true
+//            self.tableView.reloadData()
+//        } else {
+//            tableData[indexPath.section].items[indexPath.row].isChecked = !tableData[indexPath.section].items[indexPath.row].isChecked
+//        }
+        
         if indexPath.section == 0 {
-            for var i: Int = 0; i < tableData[0].items.count; i++ {
-                tableData[0].items[i].isChecked = false
-                println(tableData[0].items[i].isChecked)
-            }
-            tableData[indexPath.section].items[indexPath.row].isChecked = true
-            self.tableView.reloadData()
-        } else {
-            tableData[indexPath.section].items[indexPath.row].isChecked = !tableData[indexPath.section].items[indexPath.row].isChecked
+            selectedDate = indexPath.row + 1
+        } else if indexPath.section == 1 {
+            selectedStatus = indexPath.row
+        }  else if indexPath.section == 2 {
+            selectedPayment = indexPath.row + 1
         }
+        
+        for var i: Int = 0; i < tableData[indexPath.section].items.count; i++ {
+            tableData[indexPath.section].items[i].isChecked = false
+            println(tableData[indexPath.section].items[i].isChecked)
+        }
+        tableData[indexPath.section].items[indexPath.row].isChecked = true
+        self.tableView.reloadData()
+        
         self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
     }
     
