@@ -141,6 +141,7 @@ struct ProductUploadTableViewControllerConstant {
     static let uploadShortDescriptionkey = "shortDescription"
     static let uploadDescriptionKey = "description"
     static let uploadDiscountedPriceKey = "discountedPrice"
+    static let uploadProductUnitId = "productUnitId"
 }
 
 class ProductUploadTableViewController: UITableViewController, ProductUploadUploadImageTableViewCellDataSource, ProductUploadUploadImageTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadCategoryViewControllerDelegate, ProductUploadFooterViewDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadPriceTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadBrandViewControllerDelegate, ProductUploadQuantityTableViewCellDelegate, SuccessUploadViewControllerDelegate {
@@ -164,7 +165,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        println("quantity: \(self.productModel.quantity)")
+        println("product unit id: \(self.productModel.productUnitId)")
         
         self.backButton()
         self.title = Constants.ViewControllersTitleString.productUpload
@@ -1187,8 +1188,9 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
         println(string2)
         
-        if self.productModel.uid != "0" {
+        if self.uploadType == UploadType.EditProduct {
             parameters["productId"] = self.productModel.uid
+            parameters[ProductUploadTableViewControllerConstant.uploadProductUnitId] = self.productModel.productUnitId
         }
         
         let manager: APIManager = APIManager.sharedInstance

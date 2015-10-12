@@ -34,7 +34,7 @@ class ProductModel {
     var isSuccessful: Bool = false
     var imageUrls: [String] = []
     var imageIds: [String] = []
-    
+    var productUnitId: String = ""
     var editedImage: [ServerUIImage] = []
     
     init (attributes: [AttributeModel], validCombinations: [CombinationModel]) {
@@ -42,7 +42,7 @@ class ProductModel {
         self.validCombinations = validCombinations
     }
     
-    init (isSuccessful: Bool, message: String, attributes: [AttributeModel], validCombinations: [CombinationModel], images: [String], imageIds: [String], category: CategoryModel, brand: BrandModel, condition: ConditionModel, name: String, shortDescription: String, completeDescription: String, productId: String,  quantity: Int, retailPrice: String, discountedPrice: String, weight: String, height: String, length: String, width: String, sku: String) {
+    init (isSuccessful: Bool, message: String, attributes: [AttributeModel], validCombinations: [CombinationModel], images: [String], imageIds: [String], category: CategoryModel, brand: BrandModel, condition: ConditionModel, name: String, shortDescription: String, completeDescription: String, productId: String,  quantity: Int, retailPrice: String, discountedPrice: String, weight: String, height: String, length: String, width: String, sku: String, productUnitId: String) {
     
         self.isSuccessful = isSuccessful
         self.message = message
@@ -66,6 +66,7 @@ class ProductModel {
         self.length = length
         self.height = height
         self.sku = sku
+        self.productUnitId = productUnitId
     }
     
     init() {
@@ -94,7 +95,7 @@ class ProductModel {
         self.isSuccessful = false
         self.imageUrls = []
         self.imageIds = []
-        
+        self.productUnitId = ""
         self.editedImage = []
     }
     
@@ -128,6 +129,7 @@ class ProductModel {
         var height = ""
         var length = ""
         var weigth = ""
+        var productUnitId = ""
         var quantity = 0
         
         if dictionary.isKindOfClass(NSDictionary) {
@@ -144,6 +146,10 @@ class ProductModel {
 
                 if let name = value["brandName"] as? String {
                     brand = BrandModel(name: name, brandId: value["brandId"] as! Int)
+                }
+                
+                if let unitId = value["productUnitId"] as? String {
+                    productUnitId = unitId
                 }
                 
                 if let name = value["categoryName"] as? String {
@@ -211,6 +217,7 @@ class ProductModel {
                         height = subValue["unitHeight"] as! String
                         length = subValue["unitLength"] as! String
                         width = subValue["unitWidth"] as! String
+                        productUnitId = subValue["productUnitId"] as! String
                     }
                 } else if properties.count > 1 {
                     for subValue in value["productProperties"] as! NSArray {
@@ -235,7 +242,7 @@ class ProductModel {
             } // data
         } // dictionary
         
-        return ProductModel(isSuccessful: isSuccessful, message: message, attributes: attributes, validCombinations: validCombinations, images: images, imageIds: imageIds, category: category, brand: brand, condition: condition, name: name, shortDescription: shortDescription, completeDescription: completeDescription, productId: uid, quantity: quantity, retailPrice: retailPrice, discountedPrice: discoutedPrice, weight: weigth, height: height, length: length, width: width, sku: sku)
+        return ProductModel(isSuccessful: isSuccessful, message: message, attributes: attributes, validCombinations: validCombinations, images: images, imageIds: imageIds, category: category, brand: brand, condition: condition, name: name, shortDescription: shortDescription, completeDescription: completeDescription, productId: uid, quantity: quantity, retailPrice: retailPrice, discountedPrice: discoutedPrice, weight: weigth, height: height, length: length, width: width, sku: sku, productUnitId: productUnitId)
         
     } // parseDataWithDictionary
 }
