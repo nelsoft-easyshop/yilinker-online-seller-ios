@@ -16,6 +16,7 @@ private struct ManagementStrings {
     static let drafts = StringHelper.localizedStringWithKey("MANAGEMENT_DRAFTS_LOCALIZE_KEY")
     static let deleted = StringHelper.localizedStringWithKey("MANAGEMENT_DELETED_LOCALIZE_KEY")
     static let underReview = StringHelper.localizedStringWithKey("MANAGEMENT_UNDER_REVIEW_LOCALIZE_KEY")
+    static let rejected = StringHelper.localizedStringWithKey("MANAGEMENT_REJECTED_LOCALIZE_KEY")
     
     static let disableAll = StringHelper.localizedStringWithKey("MANAGEMENT_DISABLE_ALL_LOCALIZE_KEY")
     static let restoreAll = StringHelper.localizedStringWithKey("MANAGEMENT_RESTORE_ALL_LOCALIZE_KEY")
@@ -37,6 +38,7 @@ private struct Status {
     static let draft = 0
     static let deleted = 4
     static let review = 1
+    static let rejected = 5
 }
 
 class ProductManagementViewController: UIViewController, ProductManagementModelViewControllerDelegate, EmptyViewDelegate {
@@ -61,11 +63,11 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     @IBOutlet weak var emptyLabel: UILabel!
     @IBOutlet weak var dimView: UIView!
     
-    var pageTitle: [String] = [ManagementStrings.all, ManagementStrings.active, ManagementStrings.inactive, ManagementStrings.drafts, ManagementStrings.deleted, ManagementStrings.underReview]
-    var selectedImage: [String] = ["all2", "active2", "inactive2", "drafts2", "deleted2", "review2"]
-    var deSelectedImage: [String] = ["all", "active", "inactive", "drafts", "deleted", "review"]
+    var pageTitle: [String] = [ManagementStrings.all, ManagementStrings.active, ManagementStrings.inactive, ManagementStrings.drafts, ManagementStrings.deleted, ManagementStrings.underReview, ManagementStrings.rejected]
+    var selectedImage: [String] = ["all2", "active2", "inactive2", "drafts2", "deleted2", "review2", "review2"]
+    var deSelectedImage: [String] = ["all", "active", "inactive", "drafts", "deleted", "review", "review"]
 
-    var statusId: [Int] = [5, 2, 3, 0, 4, 1]
+    var statusId: [Int] = [5, 2, 3, 0, 4, 1, 6]
     
     var selectedIndex: Int = 0
     var tableViewSectionHeight: CGFloat = 0
@@ -564,7 +566,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     // MARK: - Collection View Data Source
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return 7
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -654,6 +656,8 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             
             self.deleteView.hidden = true
             self.activeInactiveDeleteContainerView.hidden = true
+        } else {
+            
         }
     }
     
