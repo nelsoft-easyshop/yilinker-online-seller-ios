@@ -307,7 +307,6 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                     NSURLConnection.sendAsynchronousRequest(
                         request, queue: NSOperationQueue.mainQueue(),
                         completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
-                            println(data)
                             if error == nil {
                                 var convertedImage: ServerUIImage = ServerUIImage(data: data)!
                                 convertedImage.uid = self.productModel.imageIds[i]
