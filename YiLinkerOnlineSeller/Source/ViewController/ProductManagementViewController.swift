@@ -381,12 +381,17 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             self.requestTask = manager.POST(APIAtlas.managementGetProductList, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 
-                self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
-                if self.productModel.products.count != 0 {
-                    self.tableView.reloadData()
+                if responseObject["isSuccessful"] as! Bool {
+                    self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                    if self.productModel.products.count != 0 {
+                        self.tableView.reloadData()
+                    } else {
+                        self.emptyLabel.hidden = false
+                    }
                 } else {
-                    self.emptyLabel.hidden = false
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.failed)
                 }
+                
                 self.loaderContainerView.hidden = true
                 self.searchBarTextField.userInteractionEnabled = true
                 self.hud?.hide(true)
@@ -397,10 +402,12 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                         self.hud?.hide(true)
                         self.loaderContainerView.hidden = true
                         self.searchBarTextField.userInteractionEnabled = true
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
                     }
                     
             })
-        } else {
+        } else { // Not connected
 //            addEmptyView()
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
         }
