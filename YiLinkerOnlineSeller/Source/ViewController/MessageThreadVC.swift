@@ -217,6 +217,8 @@ class MessageThreadVC: UIViewController {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: appDelegate.seenMessageKey, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: appDelegate.messageKey, object: nil)
         
+        self.clearProfileView()
+        
     }
     
     override func viewDidDisappear(animated: Bool) {

@@ -10,7 +10,7 @@ import UIKit
 
 struct LocalizedStrings{
     static let title = StringHelper.localizedStringWithKey("MESSAGING_TITLE")
-    static let errorMessage = StringHelper.localizedStringWithKey("MESSAGING_ERROR_MESSAGE")
+    static let errorMessage = StringHelper.localizedStringWithKey("MESSAGING_SOMETHING_WENT_WRONG")
     static let errorTitle = StringHelper.localizedStringWithKey("MESSAGING_ERROR_TITLE")
     static let titleNewMessage = StringHelper.localizedStringWithKey("MESSAGING_NEW")
     static let online = StringHelper.localizedStringWithKey("MESSAGING_ONLINE")
