@@ -402,6 +402,8 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                         self.hud?.hide(true)
                         self.loaderContainerView.hidden = true
                         self.searchBarTextField.userInteractionEnabled = true
+                    } else if error.code == NSURLErrorCancelled {
+                        println("request cancelled")
                     } else {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
                     }
