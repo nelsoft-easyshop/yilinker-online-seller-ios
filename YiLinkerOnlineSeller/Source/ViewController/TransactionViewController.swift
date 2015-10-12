@@ -39,6 +39,10 @@ class TransactionViewController: UIViewController {
     
     var errorLocalizedString = ""
     
+    var selectedDate: Int = 4
+    var selectedStatus: Int = 0
+    var selectedPayment: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -99,6 +103,9 @@ class TransactionViewController: UIViewController {
         navigation.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
         navigation.navigationBar.barTintColor = Constants.Colors.appTheme
         filterController.delegate = self
+        filterController.selectedDate = selectedDate
+        filterController.selectedPayment = selectedPayment
+        filterController.selectedStatus = selectedStatus
         self.navigationController?.presentViewController(navigation, animated: true, completion: nil)
     }
     
@@ -160,6 +167,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         paymentMethod.removeAll(keepCapacity: false)
         dateFrom = ""
         dateTo = ""
+        selectedStatus = indexPath.row
         fireGetTransaction()
     }
     
@@ -343,7 +351,10 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
     }
     
     // MARK : TransactionTableViewControllerDelegate
-    func doneWithFilter(dates: String, statuses: [String], paymentMethods: [String]) {
+    func doneWithFilter(dates: String, statuses: [String], paymentMethods: [String], selectedDate: Int, selectedStatus: Int, selectedPayment: Int) {
+        self.selectedDate = selectedDate
+        self.selectedStatus = selectedStatus
+        self.selectedPayment = selectedPayment
         if dates.isEmpty {
             dateFrom = ""
             dateTo = ""
@@ -404,6 +415,8 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         isRefreshable = true
         tableData.removeAll(keepCapacity: false)
         page = 1
+        
+        self.collectionView(collectionView, didSelectItemAtIndexPath: NSIndexPath(forRow: selectedStatus, inSection: 0))
         fireGetTransaction()
     }
     
