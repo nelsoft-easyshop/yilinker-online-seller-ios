@@ -172,10 +172,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         self.footer()
         self.fireCondition()
         
-        if self.uploadType == UploadType.EditProduct && self.productModel.validCombinations.count != 0 {
-            self.updateCombinationListRow()
+        if self.uploadType == UploadType.EditProduct {
             let oldImages: [ServerUIImage] = self.productModel.editedImage
             self.oldEditedImages = oldImages
+        }
+        
+        if self.productModel.validCombinations.count != 0 {
+           self.updateCombinationListRow()
         }
     }
     
@@ -193,6 +196,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     func fireCondition() {
+        self.conditions.removeAll(keepCapacity: true)
         self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
         //seller@easyshop.ph
@@ -666,8 +670,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.cellTitleLabel.required()
                 cell.cellTextField.placeholder = "0.00"
               
-                if self.productModel.retailPrice != "0" {
-                    cell.cellTextField.text = self.productModel.retailPrice
+                if self.productModel.retailPrice != "0" || self.productModel.retailPrice != "" {
+                    cell.cellTextField.text = ""
                 }
                 
                 if SessionManager.isSeller() {
@@ -1044,6 +1048,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 var isDeleted: Bool = true
                 
                 for image in self.productModel.editedImage {
+                    
                     if oldImage.uid == image.uid {
                         isDeleted = false
                         break
@@ -1138,7 +1143,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         
         if self.uploadType == UploadType.EditProduct {
             imagesKey.removeAll(keepCapacity: true)
-            self.productModel.editedImage.removeLast()
+            self.productModel.editedImage.removeAtIndex(0)
             for var x = 0; x < self.productModel.editedImage.count; x++ {
                 let image: ServerUIImage = self.productModel.editedImage[x]
                 var dictionary: NSMutableDictionary = NSMutableDictionary()
@@ -1151,7 +1156,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 imagesKey.append(string as! String)
             }
         }
-        println(imagesKey)
+        
     
         let parameters: NSMutableDictionary = [ProductUploadTableViewControllerConstant.uploadPriceKey: self.productModel.retailPrice,
         ProductUploadTableViewControllerConstant.uploadShortDescriptionkey: self.productModel.shortDescription,
@@ -1178,7 +1183,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         
         let data2 = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
         let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
-        
+        println(string2)
         
         if self.productModel.uid != "0" {
             parameters["productId"] = self.productModel.uid
@@ -1263,7 +1268,9 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         
         self.productModel = ProductModel()
         self.addAddPhoto()
+        self.fireCondition()
         self.tableView.reloadData()
+        self.updateCombinationListRow()
         self.tableView.setContentOffset(CGPointZero, animated: true)
     }
     

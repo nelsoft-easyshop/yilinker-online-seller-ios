@@ -68,7 +68,33 @@ class ProductModel {
     }
     
     init() {
+        self.attributes = []
+        self.validCombinations = []
+        self.images = []
         
+        self.category = CategoryModel(uid: 0, name: "", hasChildren: "")
+        self.brand = BrandModel(name: "", brandId:1)
+        self.condition = ConditionModel(uid: 0, name: "")
+        self.quantity = 1
+        self.uid = "0"
+        
+        self.name = ""
+        self.shortDescription = ""
+        self.completeDescription = ""
+        self.sku = ""
+        self.retailPrice = "0"
+        self.discoutedPrice = "0"
+        self.width = ""
+        self.height = ""
+        self.length = ""
+        self.weigth = ""
+        
+        self.message = ""
+        self.isSuccessful = false
+        self.imageUrls = []
+        self.imageIds = []
+        
+        self.editedImage = []
     }
     
     func copy() -> ProductModel {
