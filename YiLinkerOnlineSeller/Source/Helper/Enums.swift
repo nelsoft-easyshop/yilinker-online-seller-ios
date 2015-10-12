@@ -77,6 +77,7 @@ enum StoreInfoType {
     case SaveStoreInfo
     case SetMobile
     case VerifyNumber
+    case GenerateQR
 }
 
 enum DisputePickerType {

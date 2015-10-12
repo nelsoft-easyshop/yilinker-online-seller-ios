@@ -65,6 +65,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     let empty: String = StringHelper.localizedStringWithKey("STORE_INFO_EMPTY_LOCALIZE_KEY")
     let successTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TITLE_LOCALIZE_KEY")
     
+    var qrUrl: String = ""
+    var qr: String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -240,6 +242,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         } else if indexPath.section == 1 {
             if self.hasQRCode {
                 let cell: StoreInfoQrCodeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoQRCodeTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoQrCodeTableViewCell
+                cell.qrCodeImageView.sd_setImageWithURL(NSURL(fileURLWithPath: self.qrUrl), placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
                 cell.delegate = self
                 return cell
             } else {
@@ -525,6 +528,47 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     func generateQRCode() {
         println("QR Code")
+        self.showView()
+        self.generateQr()
+    }
+    
+    func generateQr(){
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        manager.POST(APIAtlas.sellerGenerateQrCode+"\(SessionManager.accessToken())", parameters: nil, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            println(responseObject)
+            if responseObject["isSuccessful"] as! Bool {
+                let value: AnyObject = responseObject["data"]!!
+                if let qrCode = value["qrcodeUrl"] as? String {
+                    self.qrUrl = qrCode
+                    self.hasQRCode = true
+                } else {
+                    self.qrUrl = ""
+                }
+            } else {
+                self.showAlert(self.error, message: self.invalid)
+            }
+            self.tableView.reloadData()
+            self.dismissView()
+            //self.setSelectedViewControllerWithIndex(0)
+            self.hud?.hide(true)
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    self.showAlert(self.error, message: errorModel.message)
+                    //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                } else if task.statusCode == 401 {
+                    self.fireRefreshToken(StoreInfoType.GenerateQR)
+                } else {
+                    self.showAlert(self.error, message: self.somethingWentWrong)
+                }
+                self.dismissView()
+        }) 
+
     }
     
     //MARK: ChangeBankAccountViewControllerDelegate protoco method
@@ -615,8 +659,10 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 self.saveAccountInfo()
             } else if storeInfoType == StoreInfoType.SetMobile{
                 self.setMobileNumber(self.newContactNumber, oldNumber: self.mobileNumber)
-            } else {
+            } else if storeInfoType == StoreInfoType.VerifyNumber {
                 self.verifyViewController()
+            } else {
+                self.generateQr()
             }
             
             self.hud?.hide(true)
