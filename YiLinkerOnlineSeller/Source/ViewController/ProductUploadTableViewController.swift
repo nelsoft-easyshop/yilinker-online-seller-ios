@@ -177,6 +177,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             self.oldEditedImages = oldImages
         }
         
+        println("product price: \(self.productModel.retailPrice)")
+        
         if self.productModel.validCombinations.count != 0 {
            self.updateCombinationListRow()
         }
@@ -670,8 +672,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 cell.cellTitleLabel.required()
                 cell.cellTextField.placeholder = "0.00"
               
-                if self.productModel.retailPrice != "0" || self.productModel.retailPrice != "" {
+                if self.productModel.retailPrice == "0" || self.productModel.retailPrice == "" {
                     cell.cellTextField.text = ""
+                } else {
+                    cell.cellTextField.text = self.productModel.retailPrice
                 }
                 
                 if SessionManager.isSeller() {
@@ -1177,9 +1181,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         "weight": weight,
         "length": length,
         "sku": self.productModel.sku]
-
-        
-       
         
         let data2 = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
         let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
