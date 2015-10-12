@@ -363,20 +363,21 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 self.requestTask.cancel()
                 self.requestTask = nil
             }
-            
-            var sampleString: String = String(status)
-            
-            if status == 5 {
-                sampleString == "all"
-            }
-            
             self.showHUD()
             
-            let manager = APIManager.sharedInstance
-            let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-                "status": sampleString,
-                "keyword": key]
+            var parameters: NSDictionary = [:]
+            if status == 5 {
+                parameters = ["access_token": SessionManager.accessToken(),
+                    "status": "all",
+                    "keyword": key]
+            } else {
+                parameters = ["access_token": SessionManager.accessToken(),
+                    "status": String(status),
+                    "keyword": key]
+            }
             
+            let manager = APIManager.sharedInstance
+            println(parameters)
             self.requestTask = manager.POST(APIAtlas.managementGetProductList, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 
@@ -391,7 +392,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 self.hud?.hide(true)
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
-                    
+                    println(error)
                     if error.code != NSURLErrorCancelled {
                         self.hud?.hide(true)
                         self.loaderContainerView.hidden = true
