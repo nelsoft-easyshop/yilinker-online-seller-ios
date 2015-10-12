@@ -363,43 +363,51 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 self.requestTask.cancel()
                 self.requestTask = nil
             }
-            
-            var sampleString: String = String(status)
-            
-            if status == 5 {
-                sampleString == "all"
-            }
-            
             self.showHUD()
             
-            let manager = APIManager.sharedInstance
-            let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-                "status": sampleString,
-                "keyword": key]
+            var parameters: NSDictionary = [:]
+            if status == 5 {
+                parameters = ["access_token": SessionManager.accessToken(),
+                    "status": "all",
+                    "keyword": key]
+            } else {
+                parameters = ["access_token": SessionManager.accessToken(),
+                    "status": String(status),
+                    "keyword": key]
+            }
             
+            let manager = APIManager.sharedInstance
+            println(parameters)
             self.requestTask = manager.POST(APIAtlas.managementGetProductList, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 
-                self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
-                if self.productModel.products.count != 0 {
-                    self.tableView.reloadData()
+                if responseObject["isSuccessful"] as! Bool {
+                    self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                    if self.productModel.products.count != 0 {
+                        self.tableView.reloadData()
+                    } else {
+                        self.emptyLabel.hidden = false
+                    }
                 } else {
-                    self.emptyLabel.hidden = false
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.failed)
                 }
+                
                 self.loaderContainerView.hidden = true
                 self.searchBarTextField.userInteractionEnabled = true
                 self.hud?.hide(true)
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
-                    
+                    println(error)
                     if error.code != NSURLErrorCancelled {
                         self.hud?.hide(true)
                         self.loaderContainerView.hidden = true
                         self.searchBarTextField.userInteractionEnabled = true
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
                     }
                     
             })
-        } else {
+        } else { // Not connected
 //            addEmptyView()
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
         }

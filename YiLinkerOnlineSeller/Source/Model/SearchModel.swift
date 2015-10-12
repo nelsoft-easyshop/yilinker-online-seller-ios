@@ -12,10 +12,17 @@ class SearchModel: NSObject {
    
     var invoiceNumber: [String] = []
     var targetType: [String] = []
+    var invoiceNumber2: String = ""
+    var targetType2: String = ""
     
     init(invoiceNumber: NSArray, targetType: NSArray) {
         self.invoiceNumber = invoiceNumber as! [String]
         self.targetType = targetType as! [String]
+    }
+    
+    init(invoiceNumber2: String, targetType2: String) {
+        self.invoiceNumber2 = invoiceNumber2 as String
+        self.targetType2 = targetType2 as String
     }
     
     class func parseDataFromDictionary(dictionary: AnyObject ) -> SearchModel {

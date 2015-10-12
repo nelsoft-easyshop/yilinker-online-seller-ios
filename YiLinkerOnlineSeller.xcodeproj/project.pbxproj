@@ -17,6 +17,8 @@
 		0C51C2F61BB0138C00F4D2D6 /* RemarksTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C51C2F41BB0138C00F4D2D6 /* RemarksTableViewCell.xib */; };
 		0C51C2FD1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C51C2FB1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.swift */; };
 		0C51C2FE1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C51C2FC1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.xib */; };
+		0C568A261BCABF1A00E35B12 /* ResellerItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C568A241BCABF1A00E35B12 /* ResellerItemCollectionViewCell.swift */; };
+		0C568A271BCABF1A00E35B12 /* ResellerItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C568A251BCABF1A00E35B12 /* ResellerItemCollectionViewCell.xib */; };
 		0C574A301BC651B700913F29 /* EditImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C574A2F1BC651B700913F29 /* EditImageModel.swift */; };
 		0C574A321BC6531A00913F29 /* ServerUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C574A311BC6531A00913F29 /* ServerUIImage.swift */; };
 		0C5E9D8E1B91E2E200F32CFE /* ProductUploadFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5E9D8D1B91E2E200F32CFE /* ProductUploadFooterView.swift */; };
@@ -596,6 +598,8 @@
 		0C51C2F41BB0138C00F4D2D6 /* RemarksTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemarksTableViewCell.xib; sourceTree = "<group>"; };
 		0C51C2FB1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionCenterProductListViewController.swift; sourceTree = "<group>"; };
 		0C51C2FC1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResolutionCenterProductListViewController.xib; sourceTree = "<group>"; };
+		0C568A241BCABF1A00E35B12 /* ResellerItemCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResellerItemCollectionViewCell.swift; sourceTree = "<group>"; };
+		0C568A251BCABF1A00E35B12 /* ResellerItemCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResellerItemCollectionViewCell.xib; sourceTree = "<group>"; };
 		0C574A2F1BC651B700913F29 /* EditImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditImageModel.swift; sourceTree = "<group>"; };
 		0C574A311BC6531A00913F29 /* ServerUIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerUIImage.swift; sourceTree = "<group>"; };
 		0C5E9D8D1B91E2E200F32CFE /* ProductUploadFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadFooterView.swift; sourceTree = "<group>"; };
@@ -1454,6 +1458,8 @@
 				F7C6A94B1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.swift */,
 				F7C6A94C1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.xib */,
 				0C574A311BC6531A00913F29 /* ServerUIImage.swift */,
+				0C568A241BCABF1A00E35B12 /* ResellerItemCollectionViewCell.swift */,
+				0C568A251BCABF1A00E35B12 /* ResellerItemCollectionViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2297,6 +2303,7 @@
 				0C65F8D91B8E0C4600504D86 /* ProductUploadDimensionsAndWeightTableViewCell.xib in Resources */,
 				F7C40FA11B983BE90091C16C /* FilterFooterTableViewCell.xib in Resources */,
 				0C8D7FB21B8FC1A400B3FA4E /* ProductUploadCombinationTableViewController.xib in Resources */,
+				0C568A271BCABF1A00E35B12 /* ResellerItemCollectionViewCell.xib in Resources */,
 				0C942BB81BAFF8700049A6B0 /* NewDisputeTableViewController2.xib in Resources */,
 				0CF28F021B8CA2E9005B2E54 /* Panton SemiBold.otf in Resources */,
 				F7C40FAB1B983C190091C16C /* CongratulationsViewController.xib in Resources */,
@@ -2438,6 +2445,7 @@
 				79EFF78A1B8DCFA2008A9E7D /* SalesReportTableViewController.swift in Sources */,
 				F7C40F5F1B983AC00091C16C /* ChangeAddressCollectionViewCell.swift in Sources */,
 				F7C40F891B983B860091C16C /* VerifyNumberViewController.swift in Sources */,
+				0C568A261BCABF1A00E35B12 /* ResellerItemCollectionViewCell.swift in Sources */,
 				7928763A1B8DF89F00762A39 /* PieChartRenderer.swift in Sources */,
 				79E633731B9ACAD20062DB14 /* TransactionProductDetailsTableViewCell.swift in Sources */,
 				792876411B8DF89F00762A39 /* ChartTransformerHorizontalBarChart.swift in Sources */,

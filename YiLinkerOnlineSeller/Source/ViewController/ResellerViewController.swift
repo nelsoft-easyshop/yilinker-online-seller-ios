@@ -13,17 +13,32 @@ class ResellerViewController: UIViewController, UICollectionViewDataSource, Rese
     let headerIdentifier: String = "ResellerCollectionReusableView"
     let headerNibName: String = "ResellerCollectionReusableView"
     
+    let cellNibNameAndIdentifier: String = "ResellerItemCollectionViewCell"
+    
     let headerHeight: CGFloat = 148
     var hud: MBProgressHUD?
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    var resellerUploadedItemModels: [ResellerItemModel] = []
+    var cellCounter: Int = 0
+    
+    //MARK: - View Did Appear
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        if self.resellerUploadedItemModels.count == 0 {
+            self.navigationItem.rightBarButtonItems = []
+        } else {
+            self.checkButton()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.registerCell()
         self.title = ResellerStrings.reseller
         self.backButton()
-        self.checkButton()
         self.layout()
     }
 
@@ -53,12 +68,13 @@ class ResellerViewController: UIViewController, UICollectionViewDataSource, Rese
         self.collectionView.collectionViewLayout = layout
     }
     
+    //MARK: Register Cells
     func registerCell() {
         let headerNib: UINib = UINib(nibName: self.headerNibName, bundle: nil)
         self.collectionView.registerNib(headerNib, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: self.headerIdentifier)
         
-        let cellNib: UINib = UINib(nibName: ProductUploadUploadImageTableViewCellConstant.productUploadImageCollectionViewCellNibNameAndIdentifier, bundle: nil)
-        self.collectionView.registerNib(cellNib, forCellWithReuseIdentifier: ProductUploadUploadImageTableViewCellConstant.productUploadImageCollectionViewCellNibNameAndIdentifier)
+        let cellNib: UINib = UINib(nibName: cellNibNameAndIdentifier, bundle: nil)
+        self.collectionView.registerNib(cellNib, forCellWithReuseIdentifier: cellNibNameAndIdentifier)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
@@ -66,10 +82,32 @@ class ResellerViewController: UIViewController, UICollectionViewDataSource, Rese
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell: ProductUploadImageCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(ProductUploadUploadImageTableViewCellConstant.productUploadImageCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ProductUploadImageCollectionViewCell
+        let cell: ResellerItemCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(cellNibNameAndIdentifier, forIndexPath: indexPath) as! ResellerItemCollectionViewCell
+        
+        cell.setCellWithResellerItemModel(self.resellerUploadedItemModels[indexPath.row])
         
         return cell
     }
+    
+    //MARK: - Cell Size
+    func collectionView(collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+
+            if IphoneType.isIphone6() {
+                return CGSizeMake(111, 150)
+            } else if IphoneType.isIphone4() {
+                return CGSizeMake(145, 150)
+            } else if IphoneType.isIphone5() {
+                return CGSizeMake(145, 150)
+            } else if IphoneType.isIphone6Plus() {
+                return CGSizeMake(124, 150)
+            } else {
+                return CGSizeMake(110, 150)
+            }
+
+    }
+    
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         let resellerView: ResellerCollectionReusableView = self.collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: self.headerIdentifier, forIndexPath: indexPath) as! ResellerCollectionReusableView
@@ -78,7 +116,7 @@ class ResellerViewController: UIViewController, UICollectionViewDataSource, Rese
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-       return 0
+       return self.resellerUploadedItemModels.count
     }
     
     func backButton() {
@@ -107,14 +145,63 @@ class ResellerViewController: UIViewController, UICollectionViewDataSource, Rese
     }
     
     func check() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
         
+        var productIds: [Int] = []
+        
+        for item in self.resellerUploadedItemModels {
+            productIds.append(item.uid)
+        }
+        
+        let parameters: NSDictionary = [
+            "access_token": SessionManager.accessToken(),
+            "productIds[]": productIds]
+        
+        manager.POST(APIAtlas.resellerUploadUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            let message: String = responseObject["message"] as! String
+            self.navigationController?.view.makeToast(message)
+            self.hud?.hide(true)
+            self.dismissViewControllerAnimated(true, completion: nil)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+        })
     }
     
-    //Header Delegate
+    //MARK: - Display Selected Item
+    func animateSelectedItems() {
+        /*let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+            if self.collectionView != nil && self.cellCounter != self.resellerUploadedItemModels.count {
+                var startOfIndexToAdd: Int = self.resellerUploadedItemModels.count - self.cellCounter
+                
+                startOfIndexToAdd = startOfIndexToAdd - 1
+                
+                var indexPaths: [NSIndexPath] = []
+                
+                for var x = startOfIndexToAdd; x < self.resellerUploadedItemModels.count; x++ {
+                    let indexPath: NSIndexPath = NSIndexPath(forItem: x, inSection: 0)!
+                    indexPaths.append(indexPath)
+                }
+                
+                self.collectionView.performBatchUpdates({ () -> Void in
+                    self.collectionView.insertItemsAtIndexPaths(indexPaths)
+                    }, completion: nil)
+            }
+        }*/
+        
+        self.collectionView.reloadData()
+    }
+    
+    //MARK: - Header Delegate
     func resellerCollectionReusableView(didClickAddItemButton resellerCollectionReusableView: ResellerCollectionReusableView) {
         let productUploadCategoryViewController: ProductUploadCategoryViewController = ProductUploadCategoryViewController(nibName: "ProductUploadCategoryViewController", bundle: nil)
         productUploadCategoryViewController.userType = UserType.Reseller
         productUploadCategoryViewController.pageTitle = "Select Category"
+        self.cellCounter = self.resellerUploadedItemModels.count - 1
         self.navigationController?.pushViewController(productUploadCategoryViewController, animated: true)
     }
 }
