@@ -42,7 +42,7 @@ class ProductModel {
         self.validCombinations = validCombinations
     }
     
-    init (isSuccessful: Bool, message: String, attributes: [AttributeModel], validCombinations: [CombinationModel], images: [String], imageIds: [String], category: CategoryModel, brand: BrandModel, condition: ConditionModel, name: String, shortDescription: String, completeDescription: String, productId: String,  quantity: Int, retailPrice: String, discountedPrice: String, weight: String, height: String, length: String, width: String) {
+    init (isSuccessful: Bool, message: String, attributes: [AttributeModel], validCombinations: [CombinationModel], images: [String], imageIds: [String], category: CategoryModel, brand: BrandModel, condition: ConditionModel, name: String, shortDescription: String, completeDescription: String, productId: String,  quantity: Int, retailPrice: String, discountedPrice: String, weight: String, height: String, length: String, width: String, sku: String) {
     
         self.isSuccessful = isSuccessful
         self.message = message
@@ -65,6 +65,7 @@ class ProductModel {
         self.weigth = weight
         self.length = length
         self.height = height
+        self.sku = sku
     }
     
     init() {
@@ -148,11 +149,13 @@ class ProductModel {
                     imageIds.append(subValue["id"] as! String)
                 }
                 
-                var attributeModel = AttributeModel()
-                for subValue in value["productVariants"] as! NSArray {
-                    attributeModel.definition = subValue["name"] as! String
-                    attributeModel.values = subValue["values"] as! [String]
-                    attributes.append(attributeModel)
+                if !(value["productVariants"] is NSNull) {
+                    var attributeModel = AttributeModel()
+                    for subValue in value["productVariants"] as! NSArray {
+                        attributeModel.definition = subValue["name"] as! String
+                        attributeModel.values = subValue["values"] as! [String]
+                        attributes.append(attributeModel)
+                    }
                 }
                 
                 let properties: NSArray = value["productProperties"] as! NSArray
@@ -200,12 +203,13 @@ class ProductModel {
                         combination.width = subValue["unitWidth"] as! String
                         validCombinations.append(combination)
                     }
+                    sku = validCombinations[0].sku
                 }
                 
             } // data
         } // dictionary
         
-        return ProductModel(isSuccessful: isSuccessful, message: message, attributes: attributes, validCombinations: validCombinations, images: images, imageIds: imageIds, category: category, brand: brand, condition: condition, name: name, shortDescription: shortDescription, completeDescription: completeDescription, productId: uid, quantity: quantity, retailPrice: retailPrice, discountedPrice: discoutedPrice, weight: weigth, height: height, length: length, width: width)
+        return ProductModel(isSuccessful: isSuccessful, message: message, attributes: attributes, validCombinations: validCombinations, images: images, imageIds: imageIds, category: category, brand: brand, condition: condition, name: name, shortDescription: shortDescription, completeDescription: completeDescription, productId: uid, quantity: quantity, retailPrice: retailPrice, discountedPrice: discoutedPrice, weight: weigth, height: height, length: length, width: width, sku: sku)
         
     } // parseDataWithDictionary
 }
