@@ -87,10 +87,14 @@ class MessageThreadVC: UIViewController {
         self.getMessagesFromEndpoint("1", limit: "30", userId: r_temp)
         self.configureTableView()
         
-        var imageStringRecipient = recipient!.profileImageUrl
-        var urlRecipient : NSURL = NSURL(string: imageStringRecipient)!
-        recipientImage = UIImageView()
-        recipientImage!.sd_setImageWithURL(urlRecipient, placeholderImage: UIImage(named: "Male-50.png"))
+        var imageStringRecipient = recipient?.profileImageUrl
+        if imageStringRecipient != nil {
+            var urlRecipient : NSURL = NSURL(string: imageStringRecipient!)!
+            recipientImage = UIImageView()
+            recipientImage!.sd_setImageWithURL(urlRecipient, placeholderImage: UIImage(named: "Male-50.png"))
+        } else {
+            recipientImage?.image = UIImage(named: "Male-50.png")
+        }
         
         senderImage = UIImageView()
         var imageStringSender = sender!.profileImageUrl
@@ -257,9 +261,16 @@ class MessageThreadVC: UIViewController {
         profileNameLabel.frame = profileNameFrame
         
         profileImageView = UIImageView(frame: CGRectMake(navBarWidth-profileImageDimension - rightPadding, 0,profileImageDimension, profileImageDimension))
-        var temp = recipient!.profileImageUrl ?? ""
-        let url = NSURL(string: temp)
-        profileImageView.sd_setImageWithURL(url, placeholderImage: UIImage(named: "Male-50.png"))
+        
+        var imageStringRecipient = recipient?.profileImageUrl
+        if imageStringRecipient != nil {
+            var urlRecipient : NSURL = NSURL(string: imageStringRecipient!)!
+            profileImageView!.sd_setImageWithURL(urlRecipient, placeholderImage: UIImage(named: "Male-50.png"))
+        } else {
+            profileImageView?.image = UIImage(named: "Male-50.png")
+        }
+
+        
         
         profileImageView.layer.cornerRadius = profileImageView.frame.width/2
         profileImageView.layer.masksToBounds = true
