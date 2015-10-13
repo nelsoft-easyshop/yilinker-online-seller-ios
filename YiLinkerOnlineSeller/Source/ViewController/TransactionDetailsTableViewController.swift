@@ -191,9 +191,9 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             cell.paymentTypeLabel.text = transactionDetailsModel.transactionPayment
             cell.dateCreatedLabel.text = formatDateToString(formatStringToDate(transactionDetailsModel.transactionDate))
             cell.totalQuantityLabel.text = "\(transactionDetailsModel.transactionQuantity)"
-            cell.totalUnitCostLabel.text = transactionDetailsModel.transactionUnitPrice.formatToTwoDecimal()
-            cell.shippingCostLabel.text = transactionDetailsModel.transactionShippingFee.formatToTwoDecimal()
-            cell.totalCostLabel.text = transactionDetailsModel.transactionPrice.formatToTwoDecimal()
+            cell.totalUnitCostLabel.text = transactionDetailsModel.transactionUnitPrice.formatToPeso()
+            cell.shippingCostLabel.text = transactionDetailsModel.transactionShippingFee.formatToPeso()
+            cell.totalCostLabel.text = transactionDetailsModel.transactionPrice.formatToPeso()
             return cell
         } else if indexPath.section == 1 {
             let cell: TransactionProductTableViewCell = tableView.dequeueReusableCellWithIdentifier(productsCellIdentifier, forIndexPath: indexPath) as! TransactionProductTableViewCell

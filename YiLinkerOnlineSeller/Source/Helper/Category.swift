@@ -356,6 +356,10 @@ extension String {
         formatter.maximumFractionDigits = 2
         return "\(formatter.stringFromNumber((self as NSString).doubleValue)!)"
     }
+    
+    func formatToPeso() -> String {
+        return "₱\(self)"
+    }
 }
 
 

@@ -40,25 +40,25 @@ class TransactionFilterTableViewCell: UITableViewCell {
     
     func setChecked(isChecked: Bool) {
         if isChecked {
-            if isDate {
+//            if isDate {
                 checkView.hidden = false
                 checkImageView.hidden = false
                 checkView.backgroundColor = UIColor.whiteColor()
                 checkImageView.image = UIImage(named: "checkDate")
-            } else {
-                checkView.hidden = false
-                checkImageView.hidden = false
-                checkView.backgroundColor = Constants.Colors.transactionGreen
-                checkImageView.image = UIImage(named: "checkDateWhite")
-            }
+//            } else {
+//                checkView.hidden = false
+//                checkImageView.hidden = false
+//                checkView.backgroundColor = Constants.Colors.transactionGreen
+//                checkImageView.image = UIImage(named: "checkDateWhite")
+//            }
         } else {
-            if isDate {
+//            if isDate {
                 checkView.hidden = true
-            } else {
-                checkView.hidden = false
-                checkImageView.hidden = true
-                checkView.backgroundColor = Constants.Colors.transactionGrey
-            }
+//            } else {
+//                checkView.hidden = false
+//                checkImageView.hidden = true
+//                checkView.backgroundColor = Constants.Colors.transactionGrey
+//            }
         }
     }
 }

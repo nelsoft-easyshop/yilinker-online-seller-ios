@@ -281,8 +281,8 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
         if indexPath.section == 0 {
             let cell: TransactionProductPurchaseTableViewCell = tableView.dequeueReusableCellWithIdentifier(purchaseCellIdentifier, forIndexPath: indexPath) as! TransactionProductPurchaseTableViewCell
             cell.quantityLabel.text = "\(productModel.quantity)x"
-            cell.priceLabel.text = productModel.unitPrice.formatToTwoDecimal()
-            cell.totalCostLabel.text = productModel.totalPrice.formatToTwoDecimal()
+            cell.priceLabel.text = productModel.unitPrice.formatToPeso()
+            cell.totalCostLabel.text = productModel.totalPrice.formatToPeso()
             return cell
         } else if indexPath.section == 1 {
             let cell: TransactionProductDetailsTableViewCell = tableView.dequeueReusableCellWithIdentifier(productCellIdentifier, forIndexPath: indexPath) as! TransactionProductDetailsTableViewCell

@@ -36,7 +36,7 @@ class RecentProductsTableViewCell: UITableViewCell {
     }
     
     func setPrice(text: String) {
-        priceLabel.text = text.formatToTwoDecimal()
+        priceLabel.text = text.formatToPeso()
     }
     
     func setStatus(text: String) {
