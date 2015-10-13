@@ -11,6 +11,7 @@
             <string>Panton-Bold</string>
             <string>Panton-Bold</string>
             <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
         </mutableArray>
         <mutableArray key="Panton Light.otf">
             <string>Panton-Light</string>
@@ -36,6 +37,8 @@
                 <outlet property="emptyLabel" destination="FUn-ar-xOV" id="tHx-TH-fYG"/>
                 <outlet property="inactiveView" destination="Nzf-ql-uSX" id="ss7-Xo-WfY"/>
                 <outlet property="loaderContainerView" destination="uuA-ht-XIf" id="Pr7-yd-csl"/>
+                <outlet property="restoreLabel" destination="rOk-P0-KqO" id="vyC-mZ-aqH"/>
+                <outlet property="restoreView" destination="8gV-eA-Elr" id="yxq-Vs-toy"/>
                 <outlet property="searchBarContainerView" destination="3F0-RF-3Em" id="wou-Sq-ffW"/>
                 <outlet property="searchBarTextField" destination="Pes-BY-ovq" id="TNU-A6-xq6"/>
                 <outlet property="tableView" destination="NPe-9O-VXY" id="3Cj-4s-dRs"/>
@@ -130,80 +133,7 @@
                                 <constraint firstAttribute="centerY" secondItem="oGC-VH-UxX" secondAttribute="centerY" id="wBf-gm-5vh"/>
                             </constraints>
                         </view>
-                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YSL-EU-QIf" userLabel="Active And Inactive Container">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
-                            <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cwv-eb-YNi" userLabel="Active Container">
-                                    <rect key="frame" x="0.0" y="0.0" width="188" height="50"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Bs-8E-slb" userLabel="Active Holder">
-                                            <rect key="frame" x="23" y="0.0" width="141" height="50"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="moveToInactive" translatesAutoresizingMaskIntoConstraints="NO" id="nFn-bY-duz">
-                                                    <rect key="frame" x="0.0" y="14" width="15" height="18"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MOVE TO INACTIVE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aca-Pl-63Q">
-                                                    <rect key="frame" x="25" y="14" width="116" height="21"/>
-                                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="141" id="SMJ-mj-0LD"/>
-                                                <constraint firstAttribute="height" constant="50" id="tLb-sp-Syp"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <color key="backgroundColor" red="0.50122048590000001" green="0.0" blue="0.7202493687" alpha="1" colorSpace="calibratedRGB"/>
-                                    <constraints>
-                                        <constraint firstAttribute="centerY" secondItem="4Bs-8E-slb" secondAttribute="centerY" id="VfJ-H4-dCj"/>
-                                        <constraint firstAttribute="centerX" secondItem="4Bs-8E-slb" secondAttribute="centerX" id="ush-Ga-MLA"/>
-                                    </constraints>
-                                </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nzf-ql-uSX" userLabel="Inactive">
-                                    <rect key="frame" x="188" y="0.0" width="187" height="50"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3fH-Si-rMy" userLabel="Inactive Holder">
-                                            <rect key="frame" x="27" y="0.0" width="133" height="50"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="moveToInactive" translatesAutoresizingMaskIntoConstraints="NO" id="aVu-BD-6vR">
-                                                    <rect key="frame" x="4" y="14" width="15" height="18"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MOVE TO ACTIVE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3LD-u1-oGz" userLabel="MOVE TO ACTIVE">
-                                                    <rect key="frame" x="29" y="14" width="104" height="21"/>
-                                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="50" id="O0U-pQ-kVS"/>
-                                                <constraint firstAttribute="width" constant="133" id="SIv-Fb-uxs"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <color key="backgroundColor" red="0.43529411759999997" green="0.20392156859999999" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
-                                    <constraints>
-                                        <constraint firstAttribute="centerX" secondItem="3fH-Si-rMy" secondAttribute="centerX" id="Qqo-iO-wkZ"/>
-                                        <constraint firstAttribute="centerY" secondItem="3fH-Si-rMy" secondAttribute="centerY" id="rsn-xF-97T"/>
-                                    </constraints>
-                                </view>
-                            </subviews>
-                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstItem="cwv-eb-YNi" firstAttribute="leading" secondItem="YSL-EU-QIf" secondAttribute="leading" id="DJ6-ja-5IH"/>
-                                <constraint firstItem="Nzf-ql-uSX" firstAttribute="height" secondItem="cwv-eb-YNi" secondAttribute="height" id="HML-mY-3Kc"/>
-                                <constraint firstAttribute="bottom" secondItem="Nzf-ql-uSX" secondAttribute="bottom" id="TJW-2l-bbD"/>
-                                <constraint firstItem="Nzf-ql-uSX" firstAttribute="leading" secondItem="cwv-eb-YNi" secondAttribute="trailing" id="gUA-rs-GGD"/>
-                                <constraint firstItem="cwv-eb-YNi" firstAttribute="top" secondItem="YSL-EU-QIf" secondAttribute="top" id="jZE-1m-ToO"/>
-                                <constraint firstAttribute="bottom" secondItem="cwv-eb-YNi" secondAttribute="bottom" id="lJK-mX-npP"/>
-                                <constraint firstItem="Nzf-ql-uSX" firstAttribute="top" secondItem="YSL-EU-QIf" secondAttribute="top" id="ncR-eX-xzX"/>
-                                <constraint firstAttribute="trailing" secondItem="Nzf-ql-uSX" secondAttribute="trailing" id="ti4-Oa-SwN"/>
-                                <constraint firstItem="Nzf-ql-uSX" firstAttribute="width" secondItem="cwv-eb-YNi" secondAttribute="width" id="zW9-DN-GqA"/>
-                            </constraints>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CIM-d9-GI2" userLabel="Active/Inactive and Delete Container">
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CIM-d9-GI2" userLabel="Active/Inactive and Delete Container">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                             <subviews>
                                 <view alpha="0.89999997615814209" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BuB-K0-wgf" userLabel="Active/Inactive Container">
@@ -274,6 +204,111 @@
                                 <constraint firstAttribute="bottom" secondItem="Y4h-6r-cj3" secondAttribute="bottom" id="kfr-YK-EPy"/>
                                 <constraint firstItem="BuB-K0-wgf" firstAttribute="top" secondItem="CIM-d9-GI2" secondAttribute="top" id="lLF-C1-eyB"/>
                                 <constraint firstItem="Y4h-6r-cj3" firstAttribute="top" secondItem="CIM-d9-GI2" secondAttribute="top" id="xrf-Nm-lDh"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YSL-EU-QIf" userLabel="Active And Inactive Container">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                            <subviews>
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cwv-eb-YNi" userLabel="Active Container">
+                                    <rect key="frame" x="0.0" y="0.0" width="188" height="50"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Bs-8E-slb" userLabel="Active Holder">
+                                            <rect key="frame" x="23" y="0.0" width="141" height="50"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="moveToInactive" translatesAutoresizingMaskIntoConstraints="NO" id="nFn-bY-duz">
+                                                    <rect key="frame" x="0.0" y="14" width="15" height="18"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MOVE TO INACTIVE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aca-Pl-63Q">
+                                                    <rect key="frame" x="25" y="14" width="116" height="21"/>
+                                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="141" id="SMJ-mj-0LD"/>
+                                                <constraint firstAttribute="height" constant="50" id="tLb-sp-Syp"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.50122048590000001" green="0.0" blue="0.7202493687" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="centerY" secondItem="4Bs-8E-slb" secondAttribute="centerY" id="VfJ-H4-dCj"/>
+                                        <constraint firstAttribute="centerX" secondItem="4Bs-8E-slb" secondAttribute="centerX" id="ush-Ga-MLA"/>
+                                    </constraints>
+                                </view>
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nzf-ql-uSX" userLabel="Inactive">
+                                    <rect key="frame" x="188" y="0.0" width="187" height="50"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3fH-Si-rMy" userLabel="Inactive Holder">
+                                            <rect key="frame" x="27" y="0.0" width="133" height="50"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="moveToInactive" translatesAutoresizingMaskIntoConstraints="NO" id="aVu-BD-6vR">
+                                                    <rect key="frame" x="4" y="14" width="15" height="18"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MOVE TO ACTIVE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3LD-u1-oGz" userLabel="MOVE TO ACTIVE">
+                                                    <rect key="frame" x="29" y="14" width="104" height="21"/>
+                                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="O0U-pQ-kVS"/>
+                                                <constraint firstAttribute="width" constant="133" id="SIv-Fb-uxs"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.43529411759999997" green="0.20392156859999999" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="centerX" secondItem="3fH-Si-rMy" secondAttribute="centerX" id="Qqo-iO-wkZ"/>
+                                        <constraint firstAttribute="centerY" secondItem="3fH-Si-rMy" secondAttribute="centerY" id="rsn-xF-97T"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8gV-eA-Elr" userLabel="Restore Container">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hI7-Yu-THW" userLabel="Restore Holder">
+                                            <rect key="frame" x="145" y="0.0" width="85" height="50"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="moveToInactive" translatesAutoresizingMaskIntoConstraints="NO" id="BZq-nS-awX">
+                                                    <rect key="frame" x="0.0" y="14" width="15" height="18"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="RESTORE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rOk-P0-KqO" userLabel="RESTORE">
+                                                    <rect key="frame" x="25" y="14" width="60" height="21"/>
+                                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="Dsd-6k-5xy"/>
+                                                <constraint firstAttribute="width" constant="85" id="rOo-5G-7mg"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.50122048590000001" green="0.0" blue="0.7202493687" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="centerX" secondItem="hI7-Yu-THW" secondAttribute="centerX" id="3Wo-Sv-loR"/>
+                                        <constraint firstAttribute="centerY" secondItem="hI7-Yu-THW" secondAttribute="centerY" id="lX1-WP-zwb"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="8gV-eA-Elr" firstAttribute="leading" secondItem="YSL-EU-QIf" secondAttribute="leading" id="A6j-03-nYj"/>
+                                <constraint firstItem="cwv-eb-YNi" firstAttribute="leading" secondItem="YSL-EU-QIf" secondAttribute="leading" id="DJ6-ja-5IH"/>
+                                <constraint firstItem="Nzf-ql-uSX" firstAttribute="height" secondItem="cwv-eb-YNi" secondAttribute="height" id="HML-mY-3Kc"/>
+                                <constraint firstAttribute="bottom" secondItem="Nzf-ql-uSX" secondAttribute="bottom" id="TJW-2l-bbD"/>
+                                <constraint firstAttribute="bottom" secondItem="8gV-eA-Elr" secondAttribute="bottom" id="U8U-B8-iWD"/>
+                                <constraint firstItem="8gV-eA-Elr" firstAttribute="top" secondItem="YSL-EU-QIf" secondAttribute="top" id="WAv-v2-7sg"/>
+                                <constraint firstItem="Nzf-ql-uSX" firstAttribute="leading" secondItem="cwv-eb-YNi" secondAttribute="trailing" id="gUA-rs-GGD"/>
+                                <constraint firstItem="cwv-eb-YNi" firstAttribute="top" secondItem="YSL-EU-QIf" secondAttribute="top" id="jZE-1m-ToO"/>
+                                <constraint firstAttribute="bottom" secondItem="cwv-eb-YNi" secondAttribute="bottom" id="lJK-mX-npP"/>
+                                <constraint firstItem="Nzf-ql-uSX" firstAttribute="top" secondItem="YSL-EU-QIf" secondAttribute="top" id="ncR-eX-xzX"/>
+                                <constraint firstAttribute="trailing" secondItem="8gV-eA-Elr" secondAttribute="trailing" id="sbL-ov-eD5"/>
+                                <constraint firstAttribute="trailing" secondItem="Nzf-ql-uSX" secondAttribute="trailing" id="ti4-Oa-SwN"/>
+                                <constraint firstItem="Nzf-ql-uSX" firstAttribute="width" secondItem="cwv-eb-YNi" secondAttribute="width" id="zW9-DN-GqA"/>
                             </constraints>
                         </view>
                     </subviews>

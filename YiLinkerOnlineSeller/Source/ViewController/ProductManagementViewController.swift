@@ -25,6 +25,7 @@ private struct ManagementStrings {
     static let moveActive = StringHelper.localizedStringWithKey("MANAGEMENT_MOVE_ACTIVE_LOCALIZE_KEY")
     static let moveInactive = StringHelper.localizedStringWithKey("MANAGEMENT_MOVE_INACTIVE_LOCALIZE_KEY")
     static let delete = StringHelper.localizedStringWithKey("MANAGEMENT_DELETE_LOCALIZE_KEY")
+    static let restore = StringHelper.localizedStringWithKey("MANAGEMENT_RESTORE_LOCALIZE_KEY")
     
     static let modalTitle = StringHelper.localizedStringWithKey("MANAGEMENT_MODAL_TITLE_LOCALIZE_KEY")
     static let modalTitle2 = StringHelper.localizedStringWithKey("MANAGEMENT_MODAL_TITLE2_LOCALIZE_KEY")
@@ -56,11 +57,13 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     @IBOutlet weak var activeInactiveContainerView: UIView!
     @IBOutlet weak var activeView: UIView!
     @IBOutlet weak var inactiveView: UIView!
+    @IBOutlet weak var restoreView: UIView!
     @IBOutlet weak var activeInactiveDeleteContainerView: UIView!
     @IBOutlet weak var activeInactiveView: UIView!
     @IBOutlet weak var delete2View: UIView!
     @IBOutlet weak var activeInactiveLabel: UILabel!
     @IBOutlet weak var deleteLabel: UILabel!
+    @IBOutlet weak var restoreLabel: UILabel!
     
     @IBOutlet weak var emptyLabel: UILabel!
     @IBOutlet weak var dimView: UIView!
@@ -128,10 +131,11 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         self.inactiveView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "inactiveAction:"))
         self.activeInactiveView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "activeInactiveAction:"))
         self.delete2View.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "delete2Action:"))
+        self.restoreView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "restoreAction:"))
         
         self.dimView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "dimAction"))
         self.deleteLabel.text = ManagementStrings.delete
-        
+        self.restoreLabel.text = ManagementStrings.restore
         self.emptyLabel.text = StringHelper.localizedStringWithKey("EMPTY_LABEL_NO_PRODUCTS_FOUND_LOCALIZE_KEY")
     }
     
@@ -192,7 +196,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         
         if selectedIndex == 1 {
             button1.setTitle(ManagementStrings.disableAll, forState: .Normal)
-        } else if selectedIndex == 2 || selectedIndex == 6 {
+        } else if selectedIndex == 2 || selectedIndex == 3 || selectedIndex == 6 {
             button1.setTitle(ManagementStrings.deleteAll, forState: .Normal)
             
             if selectedIndex == 2 {
@@ -208,6 +212,8 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 restoreAllButton.addTarget(self, action: "tabAction:", forControlEvents: .TouchUpInside)
                 sectionHeaderContainverView.addSubview(restoreAllButton)
             }
+        } else if selectedIndex == 4 {
+            button1.setTitle(ManagementStrings.restoreAll, forState: .Normal)
         }
         
         var underlineView = UIView(frame: CGRectMake(0, sectionHeaderContainverView.frame.size.height - lineThin, sectionHeaderContainverView.frame.size.width, lineThin))
@@ -319,8 +325,10 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 } else if sender.titleLabel!!.text == ManagementStrings.restoreAll {
                     action = Status.active
                 }
-            } else if selectedIndex == 6 {
+            } else if selectedIndex == 3 || selectedIndex == 6 {
                 action = Status.deleted
+            } else if selectedIndex == 4 {
+                action = Status.review
             }
             
             if sender.titleLabel!.text != nil {
@@ -333,7 +341,11 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     
     func deleteAction(gesture: UIGestureRecognizer) {
         self.searchBarTextField.userInteractionEnabled = false
-        requestUpdateProductStatus(Status.deleted)
+        if selectedIndex == 3 {
+            requestUpdateProductStatus(Status.fullyDeleted)
+        } else {
+            requestUpdateProductStatus(Status.deleted)
+        }
     }
     
     func activeAction(gesture: UIGestureRecognizer) {
@@ -358,6 +370,11 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     func delete2Action(gesture: UIGestureRecognizer) {
         self.searchBarTextField.userInteractionEnabled = false
         requestUpdateProductStatus(Status.deleted)
+    }
+    
+    func restoreAction(gesture: UIGestureRecognizer) {
+        self.searchBarTextField.userInteractionEnabled = false
+        requestUpdateProductStatus(Status.review)
     }
     
     // MARK: - Requests
@@ -460,14 +477,24 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    
                     if task.statusCode == 401 {
-                        self.requestRefreshToken("get", status: status)
-                    } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+                        self.requestRefreshToken("update", status: status)
+                    } else if error.userInfo != nil {
                         self.hud?.hide(true)
                         self.loaderContainerView.hidden = true
                         self.searchBarTextField.userInteractionEnabled = true
+                        if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                            if jsonResult["message"] != nil {
+                                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: jsonResult["message"] as! String, title: AlertStrings.failed)
+                            } else {
+                                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+                            }
+                        }
+                    } else {
+                        self.hud?.hide(true)
+                        self.loaderContainerView.hidden = true
+                        self.searchBarTextField.userInteractionEnabled = true
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
                     }
             })
         } else {
@@ -679,16 +706,6 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             self.selectedItems = self.selectedItems.filter({$0 != self.productModel.products[index].id})
         }
         
-        if self.selectedItems.count != 0 {
-            self.buttonsContainer.hidden = false
-            self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0)
-            self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 50, 0)
-        } else {
-            self.buttonsContainer.hidden = true
-            self.tableView.contentInset = UIEdgeInsetsZero
-            self.tableView.scrollIndicatorInsets = UIEdgeInsetsZero
-        }
-        
         if selectedIndex == 1 || selectedIndex == 2 {
             self.activeInactiveDeleteContainerView.hidden = false
             if selectedIndex == 1 {
@@ -717,6 +734,16 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             self.activeInactiveContainerView.hidden = true
         } else {
             
+        }
+        
+        if self.selectedItems.count != 0 {
+            self.buttonsContainer.hidden = false
+            self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0)
+            self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 50, 0)
+        } else {
+            self.buttonsContainer.hidden = true
+            self.tableView.contentInset = UIEdgeInsetsZero
+            self.tableView.scrollIndicatorInsets = UIEdgeInsetsZero
         }
     }
     
