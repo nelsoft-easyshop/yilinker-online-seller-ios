@@ -1083,11 +1083,11 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
 
         let mainImageCount: Int = uploadedImages.count
         
-        var imagesKey: [String] = []
+        var imagesKey: [NSDictionary] = []
         
-        for var x = 0; x < mainImageCount; x++ {
-            imagesKey.append("\(x)")
-        }
+//        for var x = 0; x < mainImageCount; x++ {
+//            imagesKey.append("\(x)")
+//        }
         
         for combination in self.productModel.validCombinations {
             for image in combination.images {
@@ -1097,7 +1097,9 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         
         if self.uploadType == UploadType.EditProduct {
             for image in self.productModel.editedImage as [ServerUIImage] {
-                if image.isNew {
+                if image.uid == "" && image.isRemoved == false && image.isNew == false {
+                 
+                } else {
                     let data: NSData = UIImageJPEGRepresentation(image, 1)
                     datas.append(data)
                 }
@@ -1164,12 +1166,17 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 dictionary["oldId"] = image.uid
                 let data = NSJSONSerialization.dataWithJSONObject(dictionary, options: nil, error: nil)
                 let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
-                imagesKey.append(string as! String)
-                println("edited image uid: \(image.uid): isNew: \(image.isNew): isDeleted:\(image.isRemoved)")
+                imagesKey.append(dictionary)
+                
+               
             }
         }
         
-    
+        
+        let dataString = NSJSONSerialization.dataWithJSONObject(imagesKey, options: nil, error: nil)
+        let jsonString: String = NSString(data: dataString!, encoding: NSUTF8StringEncoding)! as! String
+        let finalJsonString: String = jsonString.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        
         let parameters: NSMutableDictionary = [ProductUploadTableViewControllerConstant.uploadPriceKey: self.productModel.retailPrice,
         ProductUploadTableViewControllerConstant.uploadShortDescriptionkey: self.productModel.shortDescription,
         ProductUploadTableViewControllerConstant.uploadDescriptionKey: self.productModel.completeDescription,
@@ -1181,7 +1188,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         ProductUploadTableViewControllerConstant.uploadTitleKey: self.productModel.name,
         ProductUploadTableViewControllerConstant.uploadConditionKey: self.productModel.condition.uid,
         ProductUploadTableViewControllerConstant.uploadPropertyKey: self.property(mainImageCount),
-        ProductUploadTableViewControllerConstant.uploadImagesKey: imagesKey,
+        ProductUploadTableViewControllerConstant.uploadImagesKey: finalJsonString,
         "customBrand": customBrand,
         "isFreeShipping": false,
         "height": height,
@@ -1190,16 +1197,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         "length": length,
         "sku": self.productModel.sku]
         
-      
-        
         if self.productModel.uid != "" {
             parameters["productId"] = self.productModel.uid
             parameters[ProductUploadTableViewControllerConstant.uploadProductUnitId] = self.productModel.productUnitId
         }
-        let data2 = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
-        let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
-        println(string2)
-
         
         let manager: APIManager = APIManager.sharedInstance
         
@@ -1214,6 +1215,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         } else if uploadType == UploadType.EditProduct {
             url = "\(APIAtlas.uploadEditUrl)?access_token=\(SessionManager.accessToken())"
         }
+        
+        let data2 = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
+        let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
+        println("parameters: \(string2)")
         
         manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
             for (index, data) in enumerate(datas) {
@@ -1236,11 +1241,12 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: dictionary["message"] as! String, title: Constants.Localized.serverError)
                 }
                 
-                
                 println(response)
         }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
             let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-            println(error.userInfo)
+            let data = NSJSONSerialization.dataWithJSONObject(error.userInfo!, options: nil, error: nil)
+            let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            println("error response: \(string)")
             if task.statusCode == 401 {
                self.fireRefreshToken2()
             } else {
