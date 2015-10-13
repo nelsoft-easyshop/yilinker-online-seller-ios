@@ -248,21 +248,34 @@ class TransactionTableViewController: UITableViewController {
 //            tableData[indexPath.section].items[indexPath.row].isChecked = !tableData[indexPath.section].items[indexPath.row].isChecked
 //        }
         
+        let originalStatus: Bool = tableData[indexPath.section].items[indexPath.row].isChecked
+        
         if indexPath.section == 0 {
             selectedDate = indexPath.row + 1
         } else if indexPath.section == 1 {
-            selectedStatus = indexPath.row
+            if !originalStatus {
+                selectedStatus = indexPath.row
+            } else {
+                selectedStatus = 0
+            }
         }  else if indexPath.section == 2 {
-            selectedPayment = indexPath.row + 1
+            if !originalStatus {
+                selectedPayment = indexPath.row + 1
+            }  else {
+                selectedPayment = 0
+            }
         }
         
         for var i: Int = 0; i < tableData[indexPath.section].items.count; i++ {
             tableData[indexPath.section].items[i].isChecked = false
-            println(tableData[indexPath.section].items[i].isChecked)
         }
-        tableData[indexPath.section].items[indexPath.row].isChecked = true
+        if indexPath.section == 0 {
+            tableData[indexPath.section].items[indexPath.row].isChecked = true
+        } else {
+            tableData[indexPath.section].items[indexPath.row].isChecked = !originalStatus
+        }
         self.tableView.reloadData()
-        
+
         self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
     }
     
