@@ -129,7 +129,7 @@ struct ProductUploadTableViewControllerConstant {
     
     static let quantityHeight: CGFloat = 59
     
-    static let uploadImagesKey = "imageDetail"
+    static let uploadImagesKey = "imageDetails"
     static let uploadConditionKey = "condition"
     static let uploadTitleKey = "title"
     static let uploadBrandKey = "brand"
@@ -164,9 +164,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        println("product unit id: \(self.productModel.productUnitId)")
-        
+    
         self.backButton()
         self.title = Constants.ViewControllersTitleString.productUpload
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
@@ -1064,6 +1062,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 if isDeleted == true {
                     oldImage.isRemoved = true
                     oldImage.isNew = false
+                    println("old image uid: \(oldImage.uid)")
                     self.productModel.editedImage.append(oldImage)
                 }
             }
@@ -1149,7 +1148,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         
         if self.uploadType == UploadType.EditProduct {
             imagesKey.removeAll(keepCapacity: true)
-            self.productModel.editedImage.removeAtIndex(0)
+            
+            for (index, image) in enumerate(self.productModel.editedImage) {
+                if image.uid == "" && image.isRemoved == false && image.isNew == false {
+                    self.productModel.editedImage.removeAtIndex(index)
+                }
+            }
+            
             for var x = 0; x < self.productModel.editedImage.count; x++ {
                 let image: ServerUIImage = self.productModel.editedImage[x]
                 var dictionary: NSMutableDictionary = NSMutableDictionary()
@@ -1160,6 +1165,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 let data = NSJSONSerialization.dataWithJSONObject(dictionary, options: nil, error: nil)
                 let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
                 imagesKey.append(string as! String)
+                println("edited image uid: \(image.uid): isNew: \(image.isNew): isDeleted:\(image.isRemoved)")
             }
         }
         
@@ -1184,14 +1190,16 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         "length": length,
         "sku": self.productModel.sku]
         
-        let data2 = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
-        let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
-        println(string2)
+      
         
-        if self.uploadType == UploadType.EditProduct {
+        if self.productModel.uid != "" {
             parameters["productId"] = self.productModel.uid
             parameters[ProductUploadTableViewControllerConstant.uploadProductUnitId] = self.productModel.productUnitId
         }
+        let data2 = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
+        let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
+        println(string2)
+
         
         let manager: APIManager = APIManager.sharedInstance
         
