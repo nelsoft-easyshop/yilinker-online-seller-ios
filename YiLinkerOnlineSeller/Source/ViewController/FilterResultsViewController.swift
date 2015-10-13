@@ -132,6 +132,9 @@ class FilterResultsViewController: UIViewController, UITableViewDelegate, UITabl
         self.tabBarController?.presentViewController(filterViewController, animated: true, completion: nil)
     }
     
+    func filterAction(filter: String) {
+        
+    }
     // Mark: - UITableViewDataSource methods
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1

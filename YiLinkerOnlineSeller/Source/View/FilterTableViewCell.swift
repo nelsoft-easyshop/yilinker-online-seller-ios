@@ -8,12 +8,16 @@
 
 import UIKit
 
+protocol FilterTableViewCellDelegate {
+    func filterDateAction(filter: String)
+}
+
 class FilterTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
     
     var filter: FilterAttributeModel!
-    
+    var delegate: FilterTableViewCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -76,6 +80,7 @@ class FilterTableViewCell: UITableViewCell {
     }
     
     func SelectButton(button: UIButton) {
+        self.delegate?.filterDateAction(button.titleLabel!.text!)
         button.selected = true
         button.layer.borderColor = UIColor.purpleColor().CGColor
         button.backgroundColor = UIColor.purpleColor()

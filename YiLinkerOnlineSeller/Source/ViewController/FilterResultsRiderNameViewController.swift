@@ -40,6 +40,10 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
     let aWeekAgo: String = StringHelper.localizedStringWithKey("SEARCH_A_WEEK_LOCALIZE_KEY")
     let aMonth: String = StringHelper.localizedStringWithKey("SEARCH_A_MONTH_LOCALIZE_KEY")
     var sortDirection: String = ""
+    var dateFrom: String = ""
+    var dateTo: String = ""
+    var filterType: String = "All"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -104,6 +108,7 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
         }
         
         self.backButton()
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -191,9 +196,9 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
         let indexPath = tableView.indexPathForSelectedRow();
         filterBySelected = filterBy[indexPath!.row]
         if filterBySelected == "0" {
-            self.sortDirection = "DESC"
+            self.sortDirection = "desc"
         } else {
-            self.sortDirection = "ASC"
+            self.sortDirection = "asc"
         }
         
         self.tableData.removeAll(keepCapacity: false)
@@ -349,16 +354,50 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
                 params = "riderName=\(riderName)"
             }
             
-            var url = APIAtlas.transactionLogs+"\(SessionManager.accessToken())&\(params)&sortDirection=\(self.sortDirection)&perPage=15&page=\(page)" as NSString
-            let urlEncoded = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+            var currentDate: NSDate = NSDate()
+            if self.filterType == "Today" {
+                dateFrom = formatDateToString(NSDate())
+                dateTo = formatDateToString(NSDate())
+                println("Today \(dateFrom)  to \(dateTo)")
+            } else if self.filterType == "Day Ago" {
+               let dayAgo = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: -1, toDate: NSDate(), options: nil)
+                dateFrom = formatDateToString(dayAgo!)
+                dateTo = formatDateToString(dayAgo!)
+                 println("Day Ago \(dateFrom) to \(dateTo)")
+            } else if self.filterType == "Week" {
+                var beginningOfWeek: NSDate = firstDateOfWeekWithDate(currentDate)
+                
+                dateFrom = formatDateToString(beginningOfWeek)
+                dateTo = formatDateToString(beginningOfWeek.addDays(6))
+                println("Week \(dateFrom) to \(dateTo)")
+            } else if self.filterType == "New" {
+                
+            }
+            /*
+            var beginningOfMonth: NSDate = firstDateOfMonthWithDate(currentDate)
             
-            manager.GET(urlEncoded!, parameters: nil, success: {
+            dateFrom = formatDateToString(beginningOfMonth)
+            dateTo = formatDateToString(beginningOfMonth.addDays(30))
+            println("Month \(dateFrom)-\(dateTo)")
+            */
+            var url: String = ""
+            var urlEncoded: String = ""
+            
+            if self.filterType == "All" || self.filterType == "New" {
+                url = APIAtlas.transactionLogs+"\(SessionManager.accessToken())&\(params)&sortDirection=\(self.sortDirection)&perPage=15&page=\(page)" as NSString as String
+                urlEncoded = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+            } else {
+                url = APIAtlas.transactionLogs+"\(SessionManager.accessToken())&\(params)&sortDirection=\(self.sortDirection)&perPage=15&page=\(page)&dateFrom=\(dateFrom)&dateTo\(dateTo)" as NSString as String
+                urlEncoded = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+            }
+   
+            manager.GET(urlEncoded, parameters: nil, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 println(responseObject)
                 let trans: TransactionsModel = TransactionsModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 self.isSuccessful = trans.isSuccessful
                 
-                self.title = "\(trans.transactions.count) Results"
+               
                 if trans.transactions.count != 0 {
                     if trans.transactions.count < 15 {
                         self.isPageEnd = true
@@ -366,12 +405,14 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
                     }
                     if self.isSuccessful {
                         self.tableData += trans.transactions
+                         self.title = "\(self.tableData.count) Results"
                     } else {
                         self.isPageEnd = true
                     }
                 }
                 
                 self.searchFilterCollectionView.reloadData()
+                self.dismissView()
                 self.hud?.hide(true)
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                      self.hud?.hide(true)
@@ -404,6 +445,14 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
         })
     }
     
+    func filterAction(filter: String) {
+        self.filterType = filter
+        self.isPageEnd = false
+        self.page = 0
+        self.tableData.removeAll(keepCapacity: false)
+        self.fireSearchRiderName(self.riderName)
+    }
+    
     func showView(){
         dimView2.hidden = false
         UIView.animateWithDuration(0.25, animations: {
@@ -425,6 +474,36 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
         self.hud?.show(true)
     }
     
+    func formatStringToDate(date: String) -> NSDate {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        return dateFormatter.dateFromString(date)!
+    }
+    
+    func formatDateToString(date: NSDate) -> String {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.stringFromDate(date)
+    }
+    
+    func firstDateOfWeekWithDate(date: NSDate) -> NSDate {
+        
+        var beginningOfWeek: NSDate?
+        var calendar: NSCalendar = NSCalendar.currentCalendar()
+        calendar.rangeOfUnit(.CalendarUnitWeekOfYear, startDate: &beginningOfWeek, interval: nil, forDate: date)
+        
+        return beginningOfWeek!
+        
+    }
+    
+    func firstDateOfMonthWithDate(date: NSDate) -> NSDate {
+        var calendar: NSCalendar = NSCalendar.currentCalendar()
+        let components = NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth, fromDate: date)
+        components.day = 1
+        return calendar.dateFromComponents(components)!
+    }
+
     /*
     // MARK: - Navigation
     

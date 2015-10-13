@@ -10,9 +10,10 @@ import UIKit
 
 protocol FilterViewControllerDelegate {
     func dismissView()
+    func filterAction(filter: String)
 }
 
-class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate {
+class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate, FilterTableViewCellDelegate {
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var resetButton: UIButton!
     @IBOutlet weak var applyFilterButton: SemiRoundedButton!
@@ -35,11 +36,14 @@ class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate 
     var tableData: [FilterAttributeModel] = []
     
     var delegate: FilterViewControllerDelegate?
+    var search: String = ""
+    var dates: String = ""
+    var filter: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableData =  [FilterAttributeModel(title: self.searchBy, attributes: [self.productName, self.transaction, self.rider]),
+        self.tableData =  [
         FilterAttributeModel(title: self.date, attributes: [self.all, self.today, self.dayAgo, self.week, self.new])]
         
         self.applyFilterButton.setTitle(self.applyFilter, forState: UIControlState.Normal)
@@ -74,9 +78,14 @@ class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate 
     }
     
     @IBAction func resetAction(sender: AnyObject) {
+        self.filterTableView.reloadData()
     }
     
     @IBAction func applyFilterAction(sender: AnyObject) {
+        if self.filter != "" {
+            self.delegate?.filterAction(self.filter)
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
     // MARK: - Table view data source
@@ -90,34 +99,24 @@ class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 2
+        return 1
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 
-        return 95
+        return 110
        
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-         if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("FilterTableViewCell", forIndexPath: indexPath) as! FilterTableViewCell
-            println("\(tableData.count)")
-            //if !tableData.isEmpty {
-                cell.passModel(tableData[0])
-            //}
-            
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("FilterTableViewCell", forIndexPath: indexPath) as! FilterTableViewCell
-            println("\(tableData.count)")
-            //if !tableData.isEmpty {
-            cell.passModel(tableData[1])
-            //}
-            
-            return cell
-        }
+        let cell = tableView.dequeueReusableCellWithIdentifier("FilterTableViewCell", forIndexPath: indexPath) as! FilterTableViewCell
+        println("\(tableData.count)")
+        cell.delegate = self
+        //if !tableData.isEmpty {
+        cell.passModel(tableData[0])
+        //}
         
+        return cell
     }
     
     func tableFooterView() -> UIView {
@@ -126,6 +125,11 @@ class FilterViewController: UIViewController, FilterFooterTableViewCellDelegate 
         guestCheckoutTableViewCell.delegate = self
         
         return guestCheckoutTableViewCell
+    }
+    
+    func filterDateAction(filter: String) {
+        self.filter = filter
+        println("Date \(filter)")
     }
     
     /*
