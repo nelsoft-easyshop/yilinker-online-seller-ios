@@ -1158,7 +1158,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             for var x = 0; x < self.productModel.editedImage.count; x++ {
                 let image: ServerUIImage = self.productModel.editedImage[x]
                 var dictionary: NSMutableDictionary = NSMutableDictionary()
-                dictionary["id"] = x
+                dictionary["imageId"] = x
                 dictionary["isNew"] = image.isNew
                 dictionary["isRemoved"] = image.isRemoved
                 dictionary["oldId"] = image.uid
@@ -1310,6 +1310,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             dictionary["unitLength"] = (combination.length as NSString).doubleValue
             dictionary["unitWidth"] = (combination.width as NSString).doubleValue
             dictionary["unitHeight"] = (combination.height as NSString).doubleValue
+            
+            if self.uploadType == UploadType.EditProduct {
+                dictionary["productUnitId"] = combination.productUnitId
+            }
             
             array.append(dictionary)
         }
