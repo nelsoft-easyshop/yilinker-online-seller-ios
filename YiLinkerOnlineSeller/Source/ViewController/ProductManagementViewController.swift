@@ -33,12 +33,14 @@ private struct ManagementStrings {
 }
 
 private struct Status {
+    static let all = -1
     static let active = 2
     static let inactive = 6
     static let draft = 0
     static let deleted = 3
     static let review = 1
     static let rejected = 5
+    static let fullyDeleted = 4
 }
 
 class ProductManagementViewController: UIViewController, ProductManagementModelViewControllerDelegate, EmptyViewDelegate {
@@ -68,7 +70,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     var deSelectedImage: [String] = ["all", "active", "inactive", "drafts", "deleted", "review", "review"]
 //status : Active = 2, Inactive = 3, Draft = 0, Deleted =4, For Review = 1, Rejected = 5, All = all
 //    draft = 0, review = 1, active = 2, delete = 3, reject = 5, inactive = 6
-    var statusId: [Int] = [7, 2, 6, 0, 3, 1, 5]
+    var statusId: [Int] = [Status.all, Status.active, Status.inactive, Status.draft, Status.deleted, Status.review, Status.rejected]
     
     var selectedIndex: Int = 0
     var tableViewSectionHeight: CGFloat = 0
@@ -595,20 +597,17 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if Reachability.isConnectedToNetwork() {
-            if selectedIndex != 4 {
-                let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
-                productDetails.productId = self.productModel.products[indexPath.row].id
-//                if selectedIndex != 7 {
-                    productDetails.isEditable = true
-                    if selectedIndex == 0 && self.productModel.products[indexPath.row].status == Status.deleted {
-                        productDetails.isEditable = false
-                    }
-//                }
-//                if selectedIndex == 0 || selectedIndex == 1 || selectedIndex == 2 || selectedIndex == 3 {
-//                    productDetails.isEditable = true
-//                }
-                self.navigationController?.pushViewController(productDetails, animated: true)
+            let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
+            productDetails.productId = self.productModel.products[indexPath.row].id
+
+            productDetails.isEditable = true
+            if selectedIndex == 0 && self.productModel.products[indexPath.row].status == Status.deleted {
+                productDetails.isEditable = false
+            } else if selectedIndex == 4 {
+                productDetails.isEditable = false
             }
+            
+            self.navigationController?.pushViewController(productDetails, animated: true)
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
         }
@@ -701,16 +700,21 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             self.deleteView.hidden = true
             self.activeInactiveContainerView.hidden = true
             
-        } else if selectedIndex == 6 || selectedIndex == 7 {
+        } else if selectedIndex == 3 {
+            self.deleteView.hidden = false
+            
+            self.activeInactiveContainerView.hidden = true
+            self.activeInactiveDeleteContainerView.hidden = true
+        } else if selectedIndex == 4 {
+            self.activeInactiveContainerView.hidden = false
+
+            self.deleteView.hidden = true
+            self.activeInactiveDeleteContainerView.hidden = true
+        } else if selectedIndex == 6 {
             self.deleteView.hidden = false
             
             self.activeInactiveDeleteContainerView.hidden = true
             self.activeInactiveContainerView.hidden = true
-        } else if selectedIndex == 3 {
-            self.activeInactiveContainerView.hidden = false
-            
-            self.deleteView.hidden = true
-            self.activeInactiveDeleteContainerView.hidden = true
         } else {
             
         }
