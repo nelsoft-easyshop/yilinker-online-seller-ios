@@ -25,6 +25,7 @@ private struct ManagementStrings {
     static let moveActive = StringHelper.localizedStringWithKey("MANAGEMENT_MOVE_ACTIVE_LOCALIZE_KEY")
     static let moveInactive = StringHelper.localizedStringWithKey("MANAGEMENT_MOVE_INACTIVE_LOCALIZE_KEY")
     static let delete = StringHelper.localizedStringWithKey("MANAGEMENT_DELETE_LOCALIZE_KEY")
+    static let restore = StringHelper.localizedStringWithKey("MANAGEMENT_RESTORE_LOCALIZE_KEY")
     
     static let modalTitle = StringHelper.localizedStringWithKey("MANAGEMENT_MODAL_TITLE_LOCALIZE_KEY")
     static let modalTitle2 = StringHelper.localizedStringWithKey("MANAGEMENT_MODAL_TITLE2_LOCALIZE_KEY")
@@ -33,12 +34,14 @@ private struct ManagementStrings {
 }
 
 private struct Status {
+    static let all = -1
     static let active = 2
     static let inactive = 6
     static let draft = 0
     static let deleted = 3
     static let review = 1
     static let rejected = 5
+    static let fullyDeleted = 4
 }
 
 class ProductManagementViewController: UIViewController, ProductManagementModelViewControllerDelegate, EmptyViewDelegate {
@@ -54,11 +57,13 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     @IBOutlet weak var activeInactiveContainerView: UIView!
     @IBOutlet weak var activeView: UIView!
     @IBOutlet weak var inactiveView: UIView!
+    @IBOutlet weak var restoreView: UIView!
     @IBOutlet weak var activeInactiveDeleteContainerView: UIView!
     @IBOutlet weak var activeInactiveView: UIView!
     @IBOutlet weak var delete2View: UIView!
     @IBOutlet weak var activeInactiveLabel: UILabel!
     @IBOutlet weak var deleteLabel: UILabel!
+    @IBOutlet weak var restoreLabel: UILabel!
     
     @IBOutlet weak var emptyLabel: UILabel!
     @IBOutlet weak var dimView: UIView!
@@ -68,7 +73,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     var deSelectedImage: [String] = ["all", "active", "inactive", "drafts", "deleted", "review", "review"]
 //status : Active = 2, Inactive = 3, Draft = 0, Deleted =4, For Review = 1, Rejected = 5, All = all
 //    draft = 0, review = 1, active = 2, delete = 3, reject = 5, inactive = 6
-    var statusId: [Int] = [7, 2, 6, 0, 3, 1, 5]
+    var statusId: [Int] = [Status.all, Status.active, Status.inactive, Status.draft, Status.deleted, Status.review, Status.rejected]
     
     var selectedIndex: Int = 0
     var tableViewSectionHeight: CGFloat = 0
@@ -126,10 +131,11 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         self.inactiveView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "inactiveAction:"))
         self.activeInactiveView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "activeInactiveAction:"))
         self.delete2View.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "delete2Action:"))
+        self.restoreView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "restoreAction:"))
         
         self.dimView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "dimAction"))
         self.deleteLabel.text = ManagementStrings.delete
-        
+        self.restoreLabel.text = ManagementStrings.restore
         self.emptyLabel.text = StringHelper.localizedStringWithKey("EMPTY_LABEL_NO_PRODUCTS_FOUND_LOCALIZE_KEY")
     }
     
@@ -190,7 +196,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         
         if selectedIndex == 1 {
             button1.setTitle(ManagementStrings.disableAll, forState: .Normal)
-        } else if selectedIndex == 2 || selectedIndex == 6 {
+        } else if selectedIndex == 2 || selectedIndex == 3 || selectedIndex == 6 {
             button1.setTitle(ManagementStrings.deleteAll, forState: .Normal)
             
             if selectedIndex == 2 {
@@ -206,6 +212,8 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 restoreAllButton.addTarget(self, action: "tabAction:", forControlEvents: .TouchUpInside)
                 sectionHeaderContainverView.addSubview(restoreAllButton)
             }
+        } else if selectedIndex == 4 {
+            button1.setTitle(ManagementStrings.restoreAll, forState: .Normal)
         }
         
         var underlineView = UIView(frame: CGRectMake(0, sectionHeaderContainverView.frame.size.height - lineThin, sectionHeaderContainverView.frame.size.width, lineThin))
@@ -317,8 +325,10 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 } else if sender.titleLabel!!.text == ManagementStrings.restoreAll {
                     action = Status.active
                 }
-            } else if selectedIndex == 6 {
+            } else if selectedIndex == 3 || selectedIndex == 6 {
                 action = Status.deleted
+            } else if selectedIndex == 4 {
+                action = Status.review
             }
             
             if sender.titleLabel!.text != nil {
@@ -331,7 +341,11 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     
     func deleteAction(gesture: UIGestureRecognizer) {
         self.searchBarTextField.userInteractionEnabled = false
-        requestUpdateProductStatus(Status.deleted)
+        if selectedIndex == 3 {
+            requestUpdateProductStatus(Status.fullyDeleted)
+        } else {
+            requestUpdateProductStatus(Status.deleted)
+        }
     }
     
     func activeAction(gesture: UIGestureRecognizer) {
@@ -356,6 +370,11 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     func delete2Action(gesture: UIGestureRecognizer) {
         self.searchBarTextField.userInteractionEnabled = false
         requestUpdateProductStatus(Status.deleted)
+    }
+    
+    func restoreAction(gesture: UIGestureRecognizer) {
+        self.searchBarTextField.userInteractionEnabled = false
+        requestUpdateProductStatus(Status.review)
     }
     
     // MARK: - Requests
@@ -400,17 +419,38 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 self.hud?.hide(true)
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
-                    println(error)
+                    
                     if error.code != NSURLErrorCancelled {
-                        self.hud?.hide(true)
-                        self.loaderContainerView.hidden = true
-                        self.searchBarTextField.userInteractionEnabled = true
+                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                        if task.statusCode == 401 {
+                            self.requestRefreshToken("get", status: status)
+                        } else if error.userInfo != nil {
+                            self.hud?.hide(true)
+                            self.loaderContainerView.hidden = true
+                            self.searchBarTextField.userInteractionEnabled = true
+                            if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                                if jsonResult["message"] != nil {
+                                    if jsonResult["message"] as! String == "No products found" {
+                                        self.emptyLabel.hidden = false
+                                    }
+                                } else {
+                                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+                                }
+                            }
+                        } else {
+                            self.hud?.hide(true)
+                            self.loaderContainerView.hidden = true
+                            self.searchBarTextField.userInteractionEnabled = true
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+                        }
                     } else if error.code == NSURLErrorCancelled {
                         println("request cancelled")
                     } else {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+                        self.hud?.hide(true)
+                        self.loaderContainerView.hidden = true
+                        self.searchBarTextField.userInteractionEnabled = true
                     }
-                    
             })
         } else { // Not connected
 //            addEmptyView()
@@ -436,13 +476,58 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
-                    println(error)
-                    self.hud?.hide(true)
-                    self.loaderContainerView.hidden = true
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    if task.statusCode == 401 {
+                        self.requestRefreshToken("update", status: status)
+                    } else if error.userInfo != nil {
+                        self.hud?.hide(true)
+                        self.loaderContainerView.hidden = true
+                        self.searchBarTextField.userInteractionEnabled = true
+                        if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                            if jsonResult["message"] != nil {
+                                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: jsonResult["message"] as! String, title: AlertStrings.failed)
+                            } else {
+                                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+                            }
+                        }
+                    } else {
+                        self.hud?.hide(true)
+                        self.loaderContainerView.hidden = true
+                        self.searchBarTextField.userInteractionEnabled = true
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+                    }
             })
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
         }
+    }
+    
+    func requestRefreshToken(type: String, status: Int) {
+        
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        let manager = APIManager.sharedInstance
+        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.hud?.hide(true)
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            if type == "get" {
+                self.requestGetProductList(status, key: self.searchBarTextField.text)
+            } else if type == "update" {
+                self.requestUpdateProductStatus(status)
+            } else {
+                println("else in product view refresh token")
+            }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+        })
     }
     
 } // ProductManagementViewController
@@ -476,7 +561,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if selectedIndex == 0 || selectedIndex == 7 {
+        if selectedIndex == 0 || selectedIndex == 5 {
             let cell: ProductManagementAllTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductManagementAllIdentifier") as! ProductManagementAllTableViewCell
             cell.selectionStyle = .None
             
@@ -484,7 +569,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
             cell.subTitleLabel.text = self.productModel.products[indexPath.row].category
             cell.setStatus(self.productModel.products[indexPath.row].status)
-            if selectedIndex == 7 {
+            if selectedIndex == 5 {
                 cell.statusLabel.hidden = true
             } else {
                 cell.statusLabel.hidden = false
@@ -539,22 +624,17 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if Reachability.isConnectedToNetwork() {
-            if selectedIndex != 3 {
-                let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
-                productDetails.productId = self.productModel.products[indexPath.row].id
-                if selectedIndex != 7 {
-                    productDetails.isEditable = true
-                    if selectedIndex == 0 {
-                        if self.productModel.products[indexPath.row].status == Status.deleted {
-                            productDetails.isEditable = false
-                        }
-                    }
-                }
-//                if selectedIndex == 0 || selectedIndex == 1 || selectedIndex == 2 || selectedIndex == 3 {
-//                    productDetails.isEditable = true
-//                }
-                self.navigationController?.pushViewController(productDetails, animated: true)
+            let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
+            productDetails.productId = self.productModel.products[indexPath.row].id
+
+            productDetails.isEditable = true
+            if selectedIndex == 0 && self.productModel.products[indexPath.row].status == Status.deleted {
+                productDetails.isEditable = false
+            } else if selectedIndex == 4 {
+                productDetails.isEditable = false
             }
+            
+            self.navigationController?.pushViewController(productDetails, animated: true)
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
         }
@@ -626,16 +706,6 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             self.selectedItems = self.selectedItems.filter({$0 != self.productModel.products[index].id})
         }
         
-        if self.selectedItems.count != 0 {
-            self.buttonsContainer.hidden = false
-            self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0)
-            self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 50, 0)
-        } else {
-            self.buttonsContainer.hidden = true
-            self.tableView.contentInset = UIEdgeInsetsZero
-            self.tableView.scrollIndicatorInsets = UIEdgeInsetsZero
-        }
-        
         if selectedIndex == 1 || selectedIndex == 2 {
             self.activeInactiveDeleteContainerView.hidden = false
             if selectedIndex == 1 {
@@ -647,18 +717,33 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             self.deleteView.hidden = true
             self.activeInactiveContainerView.hidden = true
             
-        } else if selectedIndex == 6 || selectedIndex == 7 {
+        } else if selectedIndex == 3 {
+            self.deleteView.hidden = false
+            
+            self.activeInactiveContainerView.hidden = true
+            self.activeInactiveDeleteContainerView.hidden = true
+        } else if selectedIndex == 4 {
+            self.activeInactiveContainerView.hidden = false
+
+            self.deleteView.hidden = true
+            self.activeInactiveDeleteContainerView.hidden = true
+        } else if selectedIndex == 6 {
             self.deleteView.hidden = false
             
             self.activeInactiveDeleteContainerView.hidden = true
             self.activeInactiveContainerView.hidden = true
-        } else if selectedIndex == 3 {
-            self.activeInactiveContainerView.hidden = false
-            
-            self.deleteView.hidden = true
-            self.activeInactiveDeleteContainerView.hidden = true
         } else {
             
+        }
+        
+        if self.selectedItems.count != 0 {
+            self.buttonsContainer.hidden = false
+            self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0)
+            self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 50, 0)
+        } else {
+            self.buttonsContainer.hidden = true
+            self.tableView.contentInset = UIEdgeInsetsZero
+            self.tableView.scrollIndicatorInsets = UIEdgeInsetsZero
         }
     }
     
