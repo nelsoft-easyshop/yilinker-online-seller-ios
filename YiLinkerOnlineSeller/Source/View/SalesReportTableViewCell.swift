@@ -279,7 +279,7 @@ class SalesReportTableViewCell: UITableViewCell {
     func passModel(salesReportModel: SalesReportModel, startDate: NSDate, endDate: NSDate) {
         self.salesReportModel = salesReportModel
         
-        totalSalesLabel.text = salesReportModel.totalSales.formatToTwoDecimal()
+        totalSalesLabel.text = salesReportModel.totalSales.formatToPeso()
         totalProducts.text = "\(salesReportModel.productCount)"
         totalTransactionsLabel.text = "\(salesReportModel.totalTransactionCount)"
         
