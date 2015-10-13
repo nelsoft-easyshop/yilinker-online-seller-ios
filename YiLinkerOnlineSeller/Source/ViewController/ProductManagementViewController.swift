@@ -400,17 +400,38 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 self.hud?.hide(true)
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
-                    println(error)
+                    
                     if error.code != NSURLErrorCancelled {
-                        self.hud?.hide(true)
-                        self.loaderContainerView.hidden = true
-                        self.searchBarTextField.userInteractionEnabled = true
+                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                        if task.statusCode == 401 {
+                            self.requestRefreshToken("get", status: status)
+                        } else if error.userInfo != nil {
+                            self.hud?.hide(true)
+                            self.loaderContainerView.hidden = true
+                            self.searchBarTextField.userInteractionEnabled = true
+                            if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                                if jsonResult["message"] != nil {
+                                    if jsonResult["message"] as! String == "No products found" {
+                                        self.emptyLabel.hidden = false
+                                    }
+                                } else {
+                                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+                                }
+                            }
+                        } else {
+                            self.hud?.hide(true)
+                            self.loaderContainerView.hidden = true
+                            self.searchBarTextField.userInteractionEnabled = true
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+                        }
                     } else if error.code == NSURLErrorCancelled {
                         println("request cancelled")
                     } else {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+                        self.hud?.hide(true)
+                        self.loaderContainerView.hidden = true
+                        self.searchBarTextField.userInteractionEnabled = true
                     }
-                    
             })
         } else { // Not connected
 //            addEmptyView()
@@ -436,13 +457,48 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
-                    println(error)
-                    self.hud?.hide(true)
-                    self.loaderContainerView.hidden = true
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.requestRefreshToken("get", status: status)
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+                        self.hud?.hide(true)
+                        self.loaderContainerView.hidden = true
+                        self.searchBarTextField.userInteractionEnabled = true
+                    }
             })
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
         }
+    }
+    
+    func requestRefreshToken(type: String, status: Int) {
+        
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        let manager = APIManager.sharedInstance
+        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.hud?.hide(true)
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            if type == "get" {
+                self.requestGetProductList(status, key: self.searchBarTextField.text)
+            } else if type == "update" {
+                self.requestUpdateProductStatus(status)
+            } else {
+                println("else in product view refresh token")
+            }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+        })
     }
     
 } // ProductManagementViewController
@@ -476,7 +532,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if selectedIndex == 0 || selectedIndex == 7 {
+        if selectedIndex == 0 || selectedIndex == 5 {
             let cell: ProductManagementAllTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductManagementAllIdentifier") as! ProductManagementAllTableViewCell
             cell.selectionStyle = .None
             
@@ -484,7 +540,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
             cell.subTitleLabel.text = self.productModel.products[indexPath.row].category
             cell.setStatus(self.productModel.products[indexPath.row].status)
-            if selectedIndex == 7 {
+            if selectedIndex == 5 {
                 cell.statusLabel.hidden = true
             } else {
                 cell.statusLabel.hidden = false
@@ -539,17 +595,15 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if Reachability.isConnectedToNetwork() {
-            if selectedIndex != 3 {
+            if selectedIndex != 4 {
                 let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
                 productDetails.productId = self.productModel.products[indexPath.row].id
-                if selectedIndex != 7 {
+//                if selectedIndex != 7 {
                     productDetails.isEditable = true
-                    if selectedIndex == 0 {
-                        if self.productModel.products[indexPath.row].status == Status.deleted {
-                            productDetails.isEditable = false
-                        }
+                    if selectedIndex == 0 && self.productModel.products[indexPath.row].status == Status.deleted {
+                        productDetails.isEditable = false
                     }
-                }
+//                }
 //                if selectedIndex == 0 || selectedIndex == 1 || selectedIndex == 2 || selectedIndex == 3 {
 //                    productDetails.isEditable = true
 //                }
