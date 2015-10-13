@@ -182,6 +182,9 @@ class ResellerItemViewController: UIViewController, UIScrollViewDelegate, UISear
     
     func fireGetProductList() {
         self.showHUD()
+        if self.page == 1 {
+            self.resellerGetProductModel.resellerItems.removeAll(keepCapacity: true)
+        }
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = [
             "access_token": SessionManager.accessToken(),
