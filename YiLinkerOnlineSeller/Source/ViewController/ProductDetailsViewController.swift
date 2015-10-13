@@ -8,11 +8,26 @@
 
 import UIKit
 
-struct myConstant {
+private struct DetailsString {
     static let cellIdentifier = "ProductDetailsIdentifier"
     static let title = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_TITLE_LOCALIZE_KEY")
     static let description = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_DESCRIPTION_LOCALIZE_KEY")
     static let seeMore = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_SEEMORE_LOCALIZE_KEY")
+
+    static let titleDetails = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_TITLE_DETAILS_LOCALIZE_KEY")
+    static let titlePrice = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_TITLE_PRICE_LOCALIZE_KEY")
+    static let titleDimensionsWeight = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_TITLE_DIMENSIONSWEIGHT_LOCALIZE_KEY")
+    
+    static let category = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_CATEGORY_LOCALIZE_KEY")
+    static let brand = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_BRAND_LOCALIZE_KEY")
+    static let sku = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_SKU_LOCALIZE_KEY")
+    static let quantity = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_QUANTITY_LOCALIZE_KEY")
+    static let retail = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_RETAIL_LOCALIZE_KEY")
+    static let discounted = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_DISCOUNTED_LOCALIZE_KEY")
+    static let length = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_LENGTH_LOCALIZE_KEY")
+    static let width = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_WIDTH_LOCALIZE_KEY")
+    static let weight = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_WEIGHT_LOCALIZE_KEY")
+    static let height = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_HEIGHT_LOCALIZE_KEY")
 }
 
 class ProductDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProductDescriptionViewDelegate, EmptyViewDelegate {
@@ -41,10 +56,10 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     var newFrame: CGRect!
     
     var productId: String = "1"
-    
-    let detailNames = ["Category", "Brand"]
-    let priceNames = ["Retail Price", "Discounted Price"]
-    let dimensionWeightNames = ["Length (CM)", "Width (CM)", "Weight (KG)", "Height (CM)"]
+
+    let detailNames = [DetailsString.category, DetailsString.brand, DetailsString.sku, DetailsString.quantity]
+    let priceNames = [DetailsString.retail, DetailsString.discounted]
+    let dimensionWeightNames = [DetailsString.length, DetailsString.width, DetailsString.weight, DetailsString.height]
     
     var detailValues: [String] = []
     var priceValues: [String] = []
@@ -57,7 +72,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     var listPrice: NSDictionary = [:]
     var listDimensionsWeight: NSDictionary = [:]
     var listSections: [NSArray] = []
-    var listSectionTitle = ["Detail", "Price", "Dimensions & Weight"]
+    var listSectionTitle = [DetailsString.titleDetails, DetailsString.titlePrice, DetailsString.titleDimensionsWeight]
     var names: [String] = []
     var values: [String] = []
     
@@ -71,7 +86,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         customizeNavigationBar()
         
         let nib = UINib(nibName: "ProductDetailsTableViewCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: myConstant.cellIdentifier)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: DetailsString.cellIdentifier)
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -107,8 +122,8 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
             self.productDescriptionView = XibHelper.puffViewWithNibName("ProductDetailViews", index: 1) as! ProductDescriptionView
             self.productDescriptionView.frame.size.width = self.view.frame.size.width
             self.productDescriptionView.delegate = self
-            self.productDescriptionView.titleLabel.text = myConstant.title
-            self.productDescriptionView.seeMoreLabel.text = myConstant.seeMore
+            self.productDescriptionView.titleLabel.text = DetailsString.title
+            self.productDescriptionView.seeMoreLabel.text = DetailsString.seeMore
         }
         return self.productDescriptionView
     }
@@ -118,7 +133,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     func customizeNavigationBar() {
         
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.title = myConstant.title
+        self.title = DetailsString.title
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
         var backButton = UIBarButtonItem(image: UIImage(named: "back-white"), style: .Plain, target: self, action: "backAction")
@@ -197,24 +212,26 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
 
         if productModel.validCombinations.count != 0 {
             let def: CombinationModel = productModel.validCombinations[0]
-            self.detailValues = [productModel.category.name, productModel.brand.name]
-            self.priceValues = [def.retailPrice, def.discountedPrice]
-            self.dimensionWeightValues = [def.length, def.width, def.weight, def.height]
-//            self.listNames = ["Category", "Brand", "Retail Price", "Discounted Price", "Length (CM)", "Width (CM)", "Weight (KG)", "Height (CM)"]
-            self.listValues = [productModel.category.name, productModel.brand.name,
-                "₱" + def.retailPrice.floatValue.string(2), "₱" + def.discountedPrice.floatValue.string(2),
-                def.length + "cm", def.width + "cm", def.weight + "kg", def.height + "cm"]
+            self.detailValues = [productModel.category.name, productModel.brand.name, def.sku, def.quantity]
+            self.priceValues = ["₱ " + def.retailPrice, "₱ " + def.discountedPrice]
+            self.dimensionWeightValues = [def.length + "cm", def.width + "cm", def.weight + "kg", def.height + "cm"]
+
+//            self.listValues = [productModel.category.name, productModel.brand.name, def.sku, def.quantity,
+//                "₱" + def.retailPrice.floatValue.string(2), "₱" + def.discountedPrice.floatValue.string(2),
+//                def.length + "cm", def.width + "cm", def.weight + "kg", def.height + "cm"]
         } else {
-            self.detailValues = [productModel.category.name, productModel.brand.name]
-            self.priceValues = [productModel.retailPrice, productModel.discoutedPrice]
-            self.dimensionWeightValues = [productModel.length, productModel.width, productModel.weigth, productModel.height]
-//            self.listNames = ["Category", "Brand", "Retail Price", "Discounted Price", "Length (CM)", "Width (CM)", "Weight (KG)", "Height (CM)"]
-            self.listValues = [productModel.category.name, productModel.brand.name,
-                "₱" + productModel.retailPrice.floatValue.string(2), "₱" + productModel.discoutedPrice.floatValue.string(2),
-                productModel.length + "cm", productModel.width + "cm", productModel.weigth + "kg", productModel.height + "cm"]
+            self.detailValues = [productModel.category.name, productModel.brand.name, productModel.sku, String(productModel.quantity)]
+            self.priceValues = ["₱ " + productModel.retailPrice, "₱ " + productModel.discoutedPrice]
+            self.dimensionWeightValues = [productModel.length + "cm", productModel.width + "cm", productModel.weigth + "kg", productModel.height + "cm"]
+            
+//            self.listValues = [productModel.category.name, productModel.brand.name, productModel.sku, String(productModel.quantity),
+//                "₱" + productModel.retailPrice.floatValue.string(2), "₱" + productModel.discoutedPrice.floatValue.string(2),
+//                productModel.length + "cm", productModel.width + "cm", productModel.weigth + "kg", productModel.height + "cm"]
         }
         
-        self.listNames = ["Category", "Brand", "Retail Price", "Discounted Price", "Length (CM)", "Width (CM)", "Weight (KG)", "Height (CM)"]
+        self.listNames = [DetailsString.category, DetailsString.brand, DetailsString.sku, DetailsString.quantity,
+            DetailsString.retail, DetailsString.discounted,
+            DetailsString.length, DetailsString.width, DetailsString.weight, DetailsString.height]
         self.listSections = [detailValues, priceValues, dimensionWeightValues]
         self.tableView.reloadData()
     }
@@ -370,11 +387,23 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: ProductDetailsTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(myConstant.cellIdentifier) as! ProductDetailsTableViewCell
+        let cell: ProductDetailsTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(DetailsString.cellIdentifier) as! ProductDetailsTableViewCell
         cell.selectionStyle = .None
         
-        cell.itemNameLabel.text = self.listNames[indexPath.row + (indexPath.section * 2)]
-        cell.itemValueLabel.text = self.listValues[indexPath.row + (indexPath.section * 2)]
+        if indexPath.section == 0 {
+            println(self.detailNames[indexPath.row])
+            cell.itemNameLabel.text = self.detailNames[indexPath.row]
+            cell.itemValueLabel.text = self.detailValues[indexPath.row]
+        } else if indexPath.section == 1 {
+            cell.itemNameLabel.text = self.priceNames[indexPath.row]
+            cell.itemValueLabel.text = self.priceValues[indexPath.row]
+            if indexPath.row == 1 {
+                cell.itemValueLabel.textColor = Constants.Colors.productPrice
+            }
+        } else if indexPath.section == 2 {
+            cell.itemNameLabel.text = self.dimensionWeightNames[indexPath.row]
+            cell.itemValueLabel.text = self.dimensionWeightValues[indexPath.row]
+        }
         
         return cell
     }
