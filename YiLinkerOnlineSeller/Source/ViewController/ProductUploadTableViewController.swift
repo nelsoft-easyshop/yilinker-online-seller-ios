@@ -1197,7 +1197,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         "length": length,
         "sku": self.productModel.sku]
         
-        if self.productModel.uid != "" {
+        if self.uploadType == UploadType.EditProduct || self.uploadType == UploadType.Draft {
             parameters["productId"] = self.productModel.uid
             parameters[ProductUploadTableViewControllerConstant.uploadProductUnitId] = self.productModel.productUnitId
         }
@@ -1317,7 +1317,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             dictionary["unitWidth"] = (combination.width as NSString).doubleValue
             dictionary["unitHeight"] = (combination.height as NSString).doubleValue
             
-            if self.uploadType == UploadType.EditProduct {
+            if self.uploadType == UploadType.EditProduct || self.uploadType == UploadType.Draft {
                 dictionary["productUnitId"] = combination.productUnitId
             }
             
