@@ -199,6 +199,7 @@ class ProductModel {
                     combination.discountedPrice = "0.0"
                     combination.quantity = "0"
                     combination.sku = ""
+                    combination.productUnitId = ""
                     combination.images = []
                     
                     combination.weight = "0.0"
@@ -220,6 +221,19 @@ class ProductModel {
                             width = subValue["unitWidth"] as! String
                             productUnitId = subValue["productUnitId"] as! String
                         }
+                    } else if productAttributes.count == 1 {
+                        for subValue in value["productProperties"] as! NSArray {
+                            quantity = subValue["quantity"] as! Int
+                            retailPrice = subValue["price"] as! String
+                            discoutedPrice = subValue["discountedPrice"] as! String
+                            sku = subValue["sku"] as! String
+                            weigth = subValue["unitWeight"] as! String
+                            height = subValue["unitHeight"] as! String
+                            length = subValue["unitLength"] as! String
+                            width = subValue["unitWidth"] as! String
+                            productUnitId = subValue["productUnitId"] as! String
+                        }
+
                     } else {
                         for subValue in value["productProperties"] as! NSArray {
                             var combination = CombinationModel()
@@ -230,6 +244,7 @@ class ProductModel {
                             combination.quantity = String(subValue["quantity"] as! Int)
                             combination.sku = subValue["sku"] as! String
                             combination.images = subValue["images"] as! NSArray as! [UIImage]
+                            combination.productUnitId = subValue["productUnitId"] as! String
                             
                             combination.weight = subValue["unitWeight"] as! String
                             combination.height = subValue["unitHeight"] as! String
@@ -238,7 +253,7 @@ class ProductModel {
                             validCombinations.append(combination)
                         }
                         sku = validCombinations[0].sku
-
+                        productUnitId = validCombinations[0].productUnitId
                     }
                 }
                 
