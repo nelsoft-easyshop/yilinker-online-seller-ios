@@ -93,14 +93,12 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        if self.productModel == nil {
-            if Reachability.isConnectedToNetwork() {
-                requestProductDetails()
-            } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
-            }
-            loadloadViewsWithDetails()
+        if Reachability.isConnectedToNetwork() {
+            requestProductDetails()
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
         }
+        loadloadViewsWithDetails()
     }
     
     // MARK: - Init Views
@@ -343,8 +341,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                                     navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
                                     self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
                                 }
-                            }
-                            else {
+                            } else {
                                 var convertedImage = ServerUIImage()
                                 convertedImage.uid = self.productModel.imageIds[i]
                                 self.productModel.images.append(convertedImage)
@@ -408,7 +405,11 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         if indexPath.section == 0 {
             println(self.detailNames[indexPath.row])
             cell.itemNameLabel.text = self.detailNames[indexPath.row]
-            cell.itemValueLabel.text = self.detailValues[indexPath.row]
+            if self.detailValues[indexPath.row] == "" {
+                cell.itemValueLabel.text = "-"
+            } else {
+                cell.itemValueLabel.text = self.detailValues[indexPath.row]
+            }
         } else if indexPath.section == 1 {
             cell.itemNameLabel.text = self.priceNames[indexPath.row]
             cell.itemValueLabel.text = self.priceValues[indexPath.row]
@@ -417,7 +418,11 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
             }
         } else if indexPath.section == 2 {
             cell.itemNameLabel.text = self.dimensionWeightNames[indexPath.row]
-            cell.itemValueLabel.text = self.dimensionWeightValues[indexPath.row]
+            if count(self.dimensionWeightValues[indexPath.row]) == 2 {
+                cell.itemValueLabel.text = "-"
+            } else {
+                cell.itemValueLabel.text = self.dimensionWeightValues[indexPath.row]
+            }
         }
         
         return cell

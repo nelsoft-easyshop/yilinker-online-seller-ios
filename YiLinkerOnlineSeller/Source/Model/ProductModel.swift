@@ -143,7 +143,7 @@ class ProductModel {
             }
             
             if let value: AnyObject = dictionary["data"] {
-                println(value)
+
                 if let name = value["brandName"] as? String {
                     brand = BrandModel(name: name, brandId: value["brandId"] as! Int)
                 }
@@ -177,7 +177,7 @@ class ProductModel {
                 }
                 
                 for subValue in value["images"] as! NSArray {
-                    images.append("http://online.api.easydeal.ph/assets/images/uploads/products/" + (subValue["image"] as! String))
+                    images.append("http://online.api.easydeal.ph/assets/images/uploads/products/" + (subValue["path"] as! String))
                     imageIds.append(subValue["id"] as! String)
                 }
                 
@@ -206,10 +206,12 @@ class ProductModel {
                     combination.height = "0.0"
                     combination.length = "0.0"
                     combination.width = "0.0"
-                    validCombinations.append(combination)
+//                    validCombinations.append(combination)
+                    
+                    
                 } else {
                     var productAttributes: [NSDictionary] = value["productVariants"] as! [NSDictionary]
-                    if productAttributes.count == 0 {
+                    if productAttributes.count == 0 || productAttributes.count == 1 {
                         for subValue in value["productProperties"] as! NSArray {
                             quantity = subValue["quantity"] as! Int
                             retailPrice = subValue["price"] as! String
@@ -221,19 +223,6 @@ class ProductModel {
                             width = subValue["unitWidth"] as! String
                             productUnitId = subValue["productUnitId"] as! String
                         }
-                    } else if productAttributes.count == 1 {
-                        for subValue in value["productProperties"] as! NSArray {
-                            quantity = subValue["quantity"] as! Int
-                            retailPrice = subValue["price"] as! String
-                            discoutedPrice = subValue["discountedPrice"] as! String
-                            sku = subValue["sku"] as! String
-                            weigth = subValue["unitWeight"] as! String
-                            height = subValue["unitHeight"] as! String
-                            length = subValue["unitLength"] as! String
-                            width = subValue["unitWidth"] as! String
-                            productUnitId = subValue["productUnitId"] as! String
-                        }
-
                     } else {
                         for subValue in value["productProperties"] as! NSArray {
                             var combination = CombinationModel()
