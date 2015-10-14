@@ -28,6 +28,8 @@ class ResellerItemViewController: UIViewController, UIScrollViewDelegate, UISear
     
     @IBOutlet weak var searchBar: UISearchBar!
     
+    var didFireSearchClear: Bool = false
+    
     var resellerViewController: ResellerViewController = ResellerViewController()
     
     @IBOutlet weak var tableView: UITableView!
@@ -183,17 +185,17 @@ class ResellerItemViewController: UIViewController, UIScrollViewDelegate, UISear
     func fireGetProductList() {
         self.showHUD()
         if self.page == 1 {
-            self.resellerGetProductModel.resellerItems.removeAll(keepCapacity: true)
+            self.resellerGetProductModel.resellerItems.removeAll(keepCapacity: false)
         }
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = [
             "access_token": SessionManager.accessToken(),
             "categoryId": self.categoryModel.uid,
             "page": self.page]
-        
+        manager.operationQueue.cancelAllOperations()
         manager.GET(APIAtlas.resellerUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+            println(responseObject)
             if self.page == 1 {
                 self.resellerGetProductModel = ResellerGetProductModel.parseDataFromDictionary(responseObject as! NSDictionary)
             } else {
@@ -203,6 +205,7 @@ class ResellerItemViewController: UIViewController, UIScrollViewDelegate, UISear
                     self.resellerGetProductModel.resellerItems.append(item)
                 }
             }
+            self.didFireSearchClear = false
             self.page++
             self.tableView.reloadData()
             self.hud?.hide(true)
@@ -290,11 +293,17 @@ class ResellerItemViewController: UIViewController, UIScrollViewDelegate, UISear
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        self.fireGetProductListWithQuery(searchText)
-        
         if searchText == "" {
+            self.resellerGetProductModel.resellerItems.removeAll(keepCapacity: false)
             self.page = 1
-            self.fireGetProductList()
+            if self.didFireSearchClear == false {
+                self.fireGetProductList()
+                self.didFireSearchClear = true
+            }
+            
+        } else {
+            self.resellerGetProductModel.resellerItems.removeAll(keepCapacity: false)
+            self.fireGetProductListWithQuery(searchText)
         }
     }
 }
