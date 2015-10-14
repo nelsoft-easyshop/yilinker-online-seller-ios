@@ -235,7 +235,13 @@ class ProductModel {
                                 combination.discountedPrice = subValue["discountedPrice"] as! String
                                 combination.quantity = String(subValue["quantity"] as! Int)
                                 combination.sku = subValue["sku"] as! String
-                                combination.images = subValue["images"] as! NSArray as! [UIImage]
+                                
+                                for images in subValue["images"] as! NSArray {
+                                    println(images["id"])
+                                    println(images["name"])
+                                    println(images["isNew"])
+                                }
+//                                combination.images = subValue["images"] as! NSArray as! [UIImage]
                                 combination.productUnitId = subValue["productUnitId"] as! String
                                 
                                 combination.weight = subValue["unitWeight"] as! String
