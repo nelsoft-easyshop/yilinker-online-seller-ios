@@ -856,13 +856,14 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         for allaSset in assets as! [ALAsset] {
             
             if self.uploadType == UploadType.EditProduct {
-                let image: ServerUIImage = ServerUIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!
+                let image: ServerUIImage = ServerUIImage(CGImage: allaSset.defaultRepresentation().fullScreenImage().takeUnretainedValue())!
                 image.isNew = true
                 image.isRemoved = false
                 self.productModel.editedImage.insert(image, atIndex: self.productModel.editedImage.count - 1)
             } else {
-               let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!
-               self.productModel.images.insert(image, atIndex: self.productModel.images.count - 1)
+                let representation: ALAssetRepresentation = allaSset.defaultRepresentation()
+                let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullScreenImage().takeUnretainedValue(), scale: 1.0, orientation: UIImageOrientation.Up)!
+                self.productModel.images.insert(image, atIndex: self.productModel.images.count - 1)
             }
         }
         
