@@ -855,7 +855,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
 
         for allaSset in assets as! [ALAsset] {
             
-            
             if self.uploadType == UploadType.EditProduct {
                 let image: ServerUIImage = ServerUIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!
                 image.isNew = true
