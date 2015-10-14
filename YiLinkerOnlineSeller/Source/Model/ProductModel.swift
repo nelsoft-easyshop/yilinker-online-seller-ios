@@ -207,8 +207,40 @@ class ProductModel {
                     combination.width = "0.0"
                     validCombinations.append(combination)
                 } else {
-                    var productAttributes: [NSDictionary] = value["productVariants"] as! [NSDictionary]
-                    if productAttributes.count == 0 {
+                    if !(value["productVariants"] is NSNull) {
+                        var productAttributes: [NSDictionary] = value["productVariants"] as! [NSDictionary]
+                        if productAttributes.count == 0 {
+                            for subValue in value["productProperties"] as! NSArray {
+                                quantity = subValue["quantity"] as! Int
+                                retailPrice = subValue["price"] as! String
+                                discoutedPrice = subValue["discountedPrice"] as! String
+                                sku = subValue["sku"] as! String
+                                weigth = subValue["unitWeight"] as! String
+                                height = subValue["unitHeight"] as! String
+                                length = subValue["unitLength"] as! String
+                                width = subValue["unitWidth"] as! String
+                                productUnitId = subValue["productUnitId"] as! String
+                            }
+                        } else {
+                            for subValue in value["productProperties"] as! NSArray {
+                                var combination = CombinationModel()
+                                combination.combinationID = subValue["id"] as! String
+                                combination.attributes = subValue["attributes"] as! [NSMutableDictionary]
+                                combination.retailPrice = subValue["price"] as! String
+                                combination.discountedPrice = subValue["discountedPrice"] as! String
+                                combination.quantity = String(subValue["quantity"] as! Int)
+                                combination.sku = subValue["sku"] as! String
+                                combination.images = subValue["images"] as! NSArray as! [UIImage]
+                                
+                                combination.weight = subValue["unitWeight"] as! String
+                                combination.height = subValue["unitHeight"] as! String
+                                combination.length = subValue["unitLength"] as! String
+                                combination.width = subValue["unitWidth"] as! String
+                                validCombinations.append(combination)
+                            }
+                            sku = validCombinations[0].sku
+                        }
+                    } else {
                         for subValue in value["productProperties"] as! NSArray {
                             quantity = subValue["quantity"] as! Int
                             retailPrice = subValue["price"] as! String
@@ -220,25 +252,6 @@ class ProductModel {
                             width = subValue["unitWidth"] as! String
                             productUnitId = subValue["productUnitId"] as! String
                         }
-                    } else {
-                        for subValue in value["productProperties"] as! NSArray {
-                            var combination = CombinationModel()
-                            combination.combinationID = subValue["id"] as! String
-                            combination.attributes = subValue["attributes"] as! [NSMutableDictionary]
-                            combination.retailPrice = subValue["price"] as! String
-                            combination.discountedPrice = subValue["discountedPrice"] as! String
-                            combination.quantity = String(subValue["quantity"] as! Int)
-                            combination.sku = subValue["sku"] as! String
-                            combination.images = subValue["images"] as! NSArray as! [UIImage]
-                            
-                            combination.weight = subValue["unitWeight"] as! String
-                            combination.height = subValue["unitHeight"] as! String
-                            combination.length = subValue["unitLength"] as! String
-                            combination.width = subValue["unitWidth"] as! String
-                            validCombinations.append(combination)
-                        }
-                        sku = validCombinations[0].sku
-
                     }
                 }
                 
