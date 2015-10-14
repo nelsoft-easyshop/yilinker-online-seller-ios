@@ -301,7 +301,7 @@ class ProductModel {
 //                        combination.quantity = String(subValue["quantity"] as! Int)
 //                        combination.sku = subValue["sku"] as! String
 //                        combination.images = subValue["images"] as! NSArray as! [UIImage]
-//                        
+//
 //                        combination.weight = subValue["unitWeight"] as! String
 //                        combination.height = subValue["unitHeight"] as! String
 //                        combination.length = subValue["unitLength"] as! String

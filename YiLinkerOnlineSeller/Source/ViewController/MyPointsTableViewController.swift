@@ -21,6 +21,7 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
     
     var isMyPointsEnd: Bool = false
     var myPointsPage: Int = 1
+    var getCtr: Int = 0
     
     var errorLocalizeString: String  = ""
     var somethingWrongLocalizeString: String = ""
@@ -40,6 +41,7 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         myPointsPage = 0
+        getCtr = 0
         fireGetTotalPoints()
     }
     
@@ -110,23 +112,31 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        if getCtr == 0 {
+            return 0
+        } else {
+            return 1
+        }
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if myPointsHistory.data.count != 0 {
-            
+//        if myPointsHistory.data.count != 0 {
+        
             return myPointsHistory.data.count + 3
-        } else {
-            return 0
-        }
+//        } else {
+//            return 0
+//        }
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellPointsEarned, forIndexPath: indexPath) as! PointsEarnedTableViewCell
-            cell.pointsLabel.text = totalPointsModel.data.formatToTwoDecimalNoTrailling()
+            if totalPointsModel.data.formatToTwoDecimalNoTrailling() == ".00" {
+                cell.pointsLabel.text = "0\(totalPointsModel.data.formatToTwoDecimalNoTrailling())"
+            } else {
+                cell.pointsLabel.text = "\(totalPointsModel.data.formatToTwoDecimalNoTrailling())"
+            }
             return cell
         } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellPointsDetails, forIndexPath: indexPath) as! PointsDetailsTableViewCell
@@ -276,6 +286,7 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
             manager.GET(url, parameters: nil, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
     
+                self.getCtr++
                 //self.myPointsHistory = MyPointsHistoryModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 
                 let pointHistory: MyPointsHistoryModel = MyPointsHistoryModel.parseDataWithDictionary(responseObject as! NSDictionary)
@@ -290,6 +301,7 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
                     self.tableView.reloadData()
                 } else {
                     self.isMyPointsEnd = true
+                    self.tableView.reloadData()
                 }
                 self.hud?.hide(true)
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
@@ -309,9 +321,11 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
             })
         } else {
             self.hud?.hide(true)
-            let noMoreString = StringHelper.localizedStringWithKey("NO_MORE_DATA_LOCALIZE_KEY")
-            let myPointsString = StringHelper.localizedStringWithKey("MY_POINTS_TITLE_LOCALIZE_KEY")
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noMoreString, title: myPointsString)
+            if self.myPointsHistory.data.count != 0 {
+                let noMoreString = StringHelper.localizedStringWithKey("NO_MORE_DATA_LOCALIZE_KEY")
+                let myPointsString = StringHelper.localizedStringWithKey("MY_POINTS_TITLE_LOCALIZE_KEY")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noMoreString, title: myPointsString)
+            }
         }
 
     }
