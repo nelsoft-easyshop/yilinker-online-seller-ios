@@ -210,6 +210,7 @@ class ProductModel {
                     
                     
                 } else {
+                    if !(value["productVariants"] is NSNull) {
                     var productAttributes: [NSDictionary] = value["productVariants"] as! [NSDictionary]
                     if productAttributes.count == 0 || productAttributes.count == 1 {
                         for subValue in value["productProperties"] as! NSArray {
@@ -244,6 +245,9 @@ class ProductModel {
                         sku = validCombinations[0].sku
                         productUnitId = validCombinations[0].productUnitId
                     }
+} else {
+
+}
                 }
                 
 //                    for subValue in value["productProperties"] as! NSArray {

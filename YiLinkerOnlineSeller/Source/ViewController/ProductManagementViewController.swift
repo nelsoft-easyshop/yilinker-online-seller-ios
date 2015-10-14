@@ -101,6 +101,12 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
 //        }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        requestGetProductList(statusId[selectedIndex], key: self.searchBarTextField.text)
+    }
+    
     // MARK: - Methods
     
     func registerNibs() {
