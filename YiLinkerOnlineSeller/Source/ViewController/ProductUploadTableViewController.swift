@@ -855,7 +855,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
 
         for allaSset in assets as! [ALAsset] {
             
-            
             if self.uploadType == UploadType.EditProduct {
                 let image: ServerUIImage = ServerUIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!
                 image.isNew = true
@@ -1292,7 +1291,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         self.tableView.setContentOffset(CGPointZero, animated: true)
     }
     
-    func property(mainImageCount: Int) -> NSString {
+    func property(mainImageCount: Int) -> String {
         var array: [NSMutableDictionary] = []
         var counter: Int = mainImageCount
         for combination in self.productModel.validCombinations {
@@ -1325,9 +1324,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
        
         let data = NSJSONSerialization.dataWithJSONObject(array, options: nil, error: nil)
-        let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
-        println(string)
-        return string!
+        let string: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+        let finalJsonString: String = string.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        println(finalJsonString)
+        return finalJsonString
     }
     
     
