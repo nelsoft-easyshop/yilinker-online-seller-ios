@@ -118,7 +118,9 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     // MARK: Actions
     
     @IBAction func forgotPasswordAction(sender: AnyObject) {
-         UIApplication.sharedApplication().openURL(NSURL(string: "http://merchant.online.api.easydeal.ph/forgot-password-request")!)
+        var url: String = APIEnvironment.baseUrl() + "/forgot-password-request"
+        url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
+         UIApplication.sharedApplication().openURL(NSURL(string: url)!)
     }
     
     @IBAction func signInAction(sender: AnyObject) {
@@ -274,11 +276,13 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.signInButton.setTitle("SIGN IN", forState: .Normal)
-                
+
                 if error.userInfo != nil {
                     if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
                         let errorDescription: String = jsonResult["error_description"] as! String
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
+                    } else {
+                        
                     }
                 } else {
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
