@@ -1197,7 +1197,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         "length": length,
         "sku": self.productModel.sku]
         
-        if self.productModel.uid != "" {
+        if self.uploadType == UploadType.EditProduct {
             parameters["productId"] = self.productModel.uid
             parameters[ProductUploadTableViewControllerConstant.uploadProductUnitId] = self.productModel.productUnitId
         }
