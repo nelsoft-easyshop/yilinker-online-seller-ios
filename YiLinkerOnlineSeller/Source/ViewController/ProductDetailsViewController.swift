@@ -56,7 +56,9 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     var newFrame: CGRect!
     
     var productId: String = "1"
-
+    var isDraft: Bool = false
+    
+    
     let detailNames = [DetailsString.category, DetailsString.brand, DetailsString.sku, DetailsString.quantity]
     let priceNames = [DetailsString.retail, DetailsString.discounted]
     let dimensionWeightNames = [DetailsString.length, DetailsString.width, DetailsString.weight, DetailsString.height]
@@ -91,12 +93,14 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        if Reachability.isConnectedToNetwork() {
-            requestProductDetails()
-        } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
+        if self.productModel == nil {
+            if Reachability.isConnectedToNetwork() {
+                requestProductDetails()
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
+            }
+            loadloadViewsWithDetails()
         }
-        loadloadViewsWithDetails()
     }
     
     // MARK: - Init Views
@@ -280,7 +284,6 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
             println(responseObject)
             if responseObject["isSuccessful"] as! Bool {
                 self.productModel = ProductModel.parseDataWithDictionary(responseObject)
-                
 //                self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
 //                self.productAttributesModel = self.productDetailsModel.attributes
 //                self.productUnitsModel = self.productDetailsModel.productUnits
@@ -331,7 +334,11 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                                 if self.productModel.editedImage.count == self.productModel.imageUrls.count {
                                     self.hud?.hide(true)
                                     let upload = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
-                                    upload.uploadType = UploadType.EditProduct
+                                    if self.isDraft {
+                                        upload.uploadType = UploadType.NewProduct
+                                    } else {
+                                        upload.uploadType = UploadType.EditProduct
+                                    }
                                     upload.productModel = self.productModel
                                     let navigationController: UINavigationController = UINavigationController(rootViewController: upload)
                                     navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
@@ -344,7 +351,11 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                                 if self.productModel.images.count == self.productModel.imageUrls.count {
                                     self.hud?.hide(true)
                                     let upload = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
-                                    upload.uploadType = UploadType.EditProduct
+                                    if self.isDraft {
+                                        upload.uploadType = UploadType.NewProduct
+                                    } else {
+                                        upload.uploadType = UploadType.EditProduct
+                                    }
                                     upload.productModel = self.productModel
                                     let navigationController: UINavigationController = UINavigationController(rootViewController: upload)
                                     navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
@@ -355,7 +366,11 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                 }
             } else {
                 let upload = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
-                upload.uploadType = UploadType.EditProduct
+                if isDraft {
+                    upload.uploadType = UploadType.NewProduct
+                } else {
+                    upload.uploadType = UploadType.EditProduct
+                }
                 upload.productModel = self.productModel
                 let navigationController: UINavigationController = UINavigationController(rootViewController: upload)
                 navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
