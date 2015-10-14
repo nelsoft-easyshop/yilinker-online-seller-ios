@@ -92,7 +92,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        requestGetProductList(7, key: "")
+        requestGetProductList(Status.all, key: "")
         customizeNavigationBar()
         customizeViews()
         registerNibs()
@@ -388,7 +388,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             self.showHUD()
             
             var parameters: NSDictionary = [:]
-            if status == 7 {
+            if status == Status.all {
                 parameters = ["access_token": SessionManager.accessToken(),
                     "status": "all",
                     "keyword": key]
