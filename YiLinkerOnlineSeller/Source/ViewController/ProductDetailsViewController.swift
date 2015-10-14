@@ -210,8 +210,8 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     func populateDetails() {
         self.productImagesView.setDetails(productModel)
-        self.productDescriptionView.descriptionLabel.text = productModel.completeDescription
-
+//        self.productDescriptionView.descriptionLabel.text = productModel.shortDescription
+        self.productDescriptionView.setDescription(productModel.shortDescription)
         if productModel.validCombinations.count != 0 {
             let def: CombinationModel = productModel.validCombinations[0]
             self.detailValues = [productModel.category.name, productModel.brand.name, def.sku, def.quantity]
