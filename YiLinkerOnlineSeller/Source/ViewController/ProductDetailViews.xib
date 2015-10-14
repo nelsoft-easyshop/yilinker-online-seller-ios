@@ -74,11 +74,11 @@
             <point key="canvasLocation" x="837.5" y="331"/>
         </view>
         <view contentMode="scaleToFill" id="Z65-YD-xsx" customClass="ProductDescriptionView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="136"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="157"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kwn-db-AzY">
-                    <rect key="frame" x="83" y="93" width="209" height="35"/>
+                    <rect key="frame" x="83" y="114" width="209" height="35"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SEE MORE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spi-nn-9Z3">
                             <rect key="frame" x="55" y="0.0" width="90" height="35"/>
@@ -113,9 +113,9 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Description Text Here" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehP-lJ-I5r">
-                    <rect key="frame" x="10" y="57" width="357" height="33"/>
+                    <rect key="frame" x="10" y="57" width="357" height="16"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="33" id="1oM-o4-nPA"/>
+                        <constraint firstAttribute="height" priority="500" constant="33" id="1oM-o4-nPA"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="500" constant="16" id="ftV-J3-0ZA"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
@@ -149,7 +149,7 @@
                 <outlet property="seeMoreView" destination="kwn-db-AzY" id="uuM-kZ-boB"/>
                 <outlet property="titleLabel" destination="GnP-7v-HbZ" id="mQc-9R-Fim"/>
             </connections>
-            <point key="canvasLocation" x="837.5" y="646"/>
+            <point key="canvasLocation" x="837.5" y="656.5"/>
         </view>
     </objects>
     <resources>

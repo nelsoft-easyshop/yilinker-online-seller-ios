@@ -27,6 +27,10 @@ class ProductDescriptionView: UIView {
     
     // MARK: - Methods
     
+    func setDescription(desc: String) {
+        self.descriptionLabel.text = desc
+    }
+    
     // MARK: - Actions
     
     func seeMoreAction(gesture: UIGestureRecognizer) {
