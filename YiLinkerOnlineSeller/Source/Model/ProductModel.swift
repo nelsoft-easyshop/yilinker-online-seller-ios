@@ -177,7 +177,9 @@ class ProductModel {
                 }
                 
                 for subValue in value["images"] as! NSArray {
-                    images.append("http://online.api.easydeal.ph/assets/images/uploads/products/" + (subValue["path"] as! String))
+                    var url: String = APIEnvironment.baseUrl() + "/assets/images/uploads/products/" + (subValue["path"] as! String)
+                    url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
+                    images.append(url)
                     imageIds.append(subValue["id"] as! String)
                 }
                 

@@ -118,7 +118,9 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     // MARK: Actions
     
     @IBAction func forgotPasswordAction(sender: AnyObject) {
-         UIApplication.sharedApplication().openURL(NSURL(string: "http://merchant.online.api.easydeal.ph/forgot-password-request")!)
+        var url: String = APIEnvironment.baseUrl() + "/forgot-password-request"
+        url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
+         UIApplication.sharedApplication().openURL(NSURL(string: url)!)
     }
     
     @IBAction func signInAction(sender: AnyObject) {
