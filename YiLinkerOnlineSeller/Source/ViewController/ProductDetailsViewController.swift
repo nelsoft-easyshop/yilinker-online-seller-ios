@@ -318,10 +318,9 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     func editAction() {
         if self.productModel != nil {
             self.showHUD()
-            if self.productModel.imageUrls.count != self.productModel.images.count {
-                self.productModel.images = []
+            if self.productModel.imageUrls.count != self.productModel.editedImage.count {
+                self.productModel.editedImage = []
                 for i in 0..<self.productModel.imageUrls.count {
-                    println(self.productModel.imageUrls[i])
                     var imgURL: NSURL = NSURL(string: self.productModel.imageUrls[i])!
                     let request: NSURLRequest = NSURLRequest(URL: imgURL)
                     NSURLConnection.sendAsynchronousRequest(
@@ -344,7 +343,8 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                                     navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
                                     self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
                                 }
-                            } else {
+                            }
+                            else {
                                 var convertedImage = ServerUIImage()
                                 convertedImage.uid = self.productModel.imageIds[i]
                                 self.productModel.images.append(convertedImage)
