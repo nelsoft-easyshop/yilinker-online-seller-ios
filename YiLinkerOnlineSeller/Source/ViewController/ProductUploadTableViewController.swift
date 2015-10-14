@@ -1303,15 +1303,15 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             dictionary["quantity"] = combination.quantity.toInt()
             dictionary["sku"] = combination.sku
             
-            var arrayNumber: [String] = []
+            var arrayNumber: [Int] = []
             
             for (index, image) in enumerate(combination.images) {
                 var x: Int = counter
                 counter++
-                arrayNumber.append("\(x)")
+                arrayNumber.append(x)
             }
             //dictionary["images"] = arrayNumber
-            dictionary["images"] = "\(arrayNumber)"
+            dictionary["images"] = arrayNumber
             dictionary["unitWeight"] = (combination.weight as NSString).doubleValue
             dictionary["unitLength"] = (combination.length as NSString).doubleValue
             dictionary["unitWidth"] = (combination.width as NSString).doubleValue
