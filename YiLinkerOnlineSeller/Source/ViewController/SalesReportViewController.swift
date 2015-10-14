@@ -129,7 +129,7 @@ class SalesReportViewController: UIViewController, UISearchBarDelegate {
                 currentView = "salesReportsView"
             }
         } else {
-            searchButton.hidden = false
+            searchButton.hidden = true
             
             salesReportsView.backgroundColor = Constants.Colors.productPrice
             salesReportLabel.textColor = UIColor.whiteColor()
