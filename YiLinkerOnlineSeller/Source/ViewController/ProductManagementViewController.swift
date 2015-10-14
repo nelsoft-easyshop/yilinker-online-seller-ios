@@ -595,12 +595,12 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
             cell.subTitleLabel.text = self.productModel.products[indexPath.row].category
 
-            if selectedIndex == 3 {
-                cell.arrowImageView.hidden = true
-                cell.decreaseAlpha()
-            } else {
-                cell.arrowImageView.hidden = false
-            }
+//            if selectedIndex == 3 {
+//                cell.arrowImageView.hidden = true
+//                cell.decreaseAlpha()
+//            } else {
+//                cell.arrowImageView.hidden = false
+//            }
             
 //            if selectedIndex == 5 {
 //                cell.checkTapView.hidden = true
@@ -632,6 +632,10 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
                 productDetails.isEditable = false
             } else if selectedIndex == 4 {
                 productDetails.isEditable = false
+            }
+            
+            if self.productModel.products[indexPath.row].status == Status.draft {
+                productDetails.isDraft = true
             }
             
             self.navigationController?.pushViewController(productDetails, animated: true)
