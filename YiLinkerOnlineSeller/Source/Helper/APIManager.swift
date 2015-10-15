@@ -18,7 +18,7 @@ struct APIEnvironment {
         } else if staging {
             return ""
         } else  {
-            return "http://merchant.yilinker.com"
+            return "http://merchant.yilinker.com/api/v1"
         }
     }
 }
