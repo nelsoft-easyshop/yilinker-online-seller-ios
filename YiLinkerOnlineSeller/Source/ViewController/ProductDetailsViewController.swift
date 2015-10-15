@@ -144,8 +144,10 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         navigationSpacer.width = -10
         
         self.navigationItem.leftBarButtonItems = [navigationSpacer, backButton]
-        if isEditable {
-            self.navigationItem.rightBarButtonItem = editButton
+        if SessionManager.isSeller() {
+            if isEditable {
+                self.navigationItem.rightBarButtonItem = editButton
+            }
         }
     }
     
