@@ -138,6 +138,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         self.activeInactiveView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "activeInactiveAction:"))
         self.delete2View.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "delete2Action:"))
         self.restoreView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "restoreAction:"))
+        self.restoreView.backgroundColor = Constants.Colors.appTheme
         
         self.dimView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "dimAction"))
         self.deleteLabel.text = ManagementStrings.delete
@@ -369,7 +370,9 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         if selectedIndex == 1 {
             requestUpdateProductStatus(Status.inactive)
         } else if selectedIndex == 2 {
-            requestUpdateProductStatus(Status.active)
+            if SessionManager.isSeller() {
+                requestUpdateProductStatus(Status.active)
+            }
         }
     }
     
@@ -693,8 +696,8 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
                 self.tableViewSectionHeight = 0.0
             } else {
                 self.tableViewSectionHeight = 40.0
-                self.buttonsContainer.hidden = true
             }
+            self.buttonsContainer.hidden = true
             self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(self.tableViewSectionHeight, 0, 0, 0)
             self.collectionView.reloadData()
             self.tableView.reloadData()
@@ -717,11 +720,16 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
         }
         
         if selectedIndex == 1 || selectedIndex == 2 {
+            self.activeInactiveView.backgroundColor = Constants.Colors.appTheme
             self.activeInactiveDeleteContainerView.hidden = false
             if selectedIndex == 1 {
                 self.activeInactiveLabel.text = ManagementStrings.moveInactive
             } else {
-                self.activeInactiveLabel.text = ManagementStrings.moveActive
+                if SessionManager.isReseller() {
+                    self.activeInactiveView.backgroundColor = .grayColor()
+                } else {
+                    self.activeInactiveLabel.text = ManagementStrings.moveActive
+                }
             }
             
             self.deleteView.hidden = true
