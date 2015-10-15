@@ -408,6 +408,7 @@ class FilterResultsRiderNameViewController: UIViewController, UITableViewDelegat
                          self.title = "\(self.tableData.count) Results"
                     } else {
                         self.isPageEnd = true
+                        self.title = "0 Results"
                     }
                 }
                 
