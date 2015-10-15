@@ -36,11 +36,10 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
     var width: String = ""
     
     var combination: CombinationModel = CombinationModel()
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.backButton()
-        
         if self.productModel != nil {
             self.title = "Edit Combination"
             let combination: CombinationModel = self.productModel!.validCombinations[self.selectedIndexpath!.section]
@@ -53,16 +52,54 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         self.tableView.tableHeaderView = headerView
         headerView.combinationLabel.text = self.headerTitle
         
-        if self.productModel != nil {
-            self.images = self.productModel!.validCombinations[self.selectedIndexpath!.section].images
-            self.images.append(UIImage(named: "addPhoto")!)
+        
+        
+        /*if self.parentUploadViewController.uploadType == UploadType.NewProduct {
+            
         } else {
-            self.images.append(UIImage(named: "addPhoto")!)
+            if self.productModel != nil {
+                self.images = self.productModel!.validCombinations[self.selectedIndexpath!.section].editedImages
+                let image: UIImage = UIImage(named: "addPhoto")!
+                let serverImage: ServerUIImage  = ServerUIImage(data: UIImagePNGRepresentation(image)!)!
+                self.images.append(serverImage)
+            } else {
+                self.images.append(UIImage(named: "addPhoto")!)
+            }
+        }*/
+        
+        let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
+        
+        if viewController.uploadType == UploadType.NewProduct {
+            if self.productModel != nil {
+                self.images = self.productModel!.validCombinations[self.selectedIndexpath!.section].images
+                self.images.append(UIImage(named: "addPhoto")!)
+            } else {
+                self.images.append(UIImage(named: "addPhoto")!)
+            }
+        } else {
+            if self.productModel != nil {
+                self.images = self.productModel!.validCombinations[self.selectedIndexpath!.section].editedImages
+                let image: UIImage = UIImage(named: "addPhoto")!
+                let serverImage: ServerUIImage  = ServerUIImage(data: UIImagePNGRepresentation(image)!)!
+                self.images.append(serverImage)
+            } else {
+                let image: UIImage = UIImage(named: "addPhoto")!
+                let serverImage: ServerUIImage  = ServerUIImage(data: UIImagePNGRepresentation(image)!)!
+                self.images.append(serverImage)
+            }
+
+        }
+        
+        
+        for image in self.images {
+            let i: ServerUIImage = image as! ServerUIImage
+            println("uid: \(i.uid)")
         }
         
         self.tableView.tableFooterView = self.footerView()
         self.registerCell()
     }
+    
 
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
@@ -211,8 +248,26 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         let alaSset: ALAsset = assets[0] as! ALAsset
         
         for allaSset in assets as! [ALAsset] {
-            let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!
-            self.images.insert(image, atIndex: 0)
+           /* if self.parentUploadViewController.uploadType == UploadType.NewProduct {
+                let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!
+                self.images.insert(image, atIndex: 0)
+            } else {
+                let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!
+                self.images.insert(image, atIndex: 0)
+            }*/
+            
+            let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
+           
+            if viewController.uploadType == UploadType.NewProduct {
+                let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullScreenImage().takeUnretainedValue())!
+                self.images.insert(image, atIndex: 0)
+            } else {
+                let image: ServerUIImage = ServerUIImage(CGImage: allaSset.defaultRepresentation().fullScreenImage().takeUnretainedValue())!
+                image.isNew = true
+                image.isRemoved = false
+                self.images.insert(image, atIndex: 0)
+            }
+
         }
         
         let indexPath: NSIndexPath = NSIndexPath(forRow: 1, inSection: 0)
@@ -264,7 +319,15 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
     
     func productUploadCombinationFooterTableViewCell(didDeleteUploadImage cell: ProductUploadCombinationFooterTableViewCell, indexPath: NSIndexPath) {
         if self.productModel == nil {
-            self.images.removeAtIndex(indexPath.row)
+            
+            let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
+            
+            if viewController.uploadType == UploadType.NewProduct {
+               self.images.removeAtIndex(indexPath.row)
+            } else {
+               self.images.removeAtIndex(indexPath.row)
+            }
+            
         } else {
             if indexPath.row < self.productModel!.validCombinations[self.selectedIndexpath!.section].images.count {
                 self.productModel!.validCombinations[self.selectedIndexpath!.section].images.removeAtIndex(indexPath.row)

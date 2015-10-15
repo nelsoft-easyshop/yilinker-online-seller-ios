@@ -1090,7 +1090,11 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             uploadedImages.removeLast()
         }
 
-        let mainImageCount: Int = uploadedImages.count
+        var mainImageCount: Int = uploadedImages.count
+        
+        if self.uploadType == UploadType.EditProduct {
+            mainImageCount = self.productModel.editedImage.count
+        }
         
         var imagesKey: [NSDictionary] = []
         
@@ -1100,14 +1104,38 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         
         for combination in self.productModel.validCombinations {
             for image in combination.images {
-                uploadedImages.append(image)
+                if self.uploadType == UploadType.NewProduct {
+                    uploadedImages.append(image)
+                } else if self.uploadType == UploadType.EditProduct {
+                    editedImages.append(image as! ServerUIImage)
+                }
+                
+            }
+        }
+        
+        // This is for checking old images in combination that has been deleted.
+        if self.uploadType == UploadType.EditProduct {
+            for oldImage in self.productModel.oldEditedCombinationImages {
+                var isDeleted: Bool = true
+                for image in editedImages {
+                    if image.uid == oldImage.uid {
+                        isDeleted = false
+                        break
+                    }
+                }
+                
+                if isDeleted {
+                    oldImage.isNew = false
+                    oldImage.isRemoved = true
+                    editedImages.append(oldImage)
+                }
             }
         }
         
         if self.uploadType == UploadType.EditProduct {
-            for image in self.productModel.editedImage as [ServerUIImage] {
+            for image in editedImages as [ServerUIImage] {
                 if image.uid == "" && image.isRemoved == false && image.isNew == false {
-                 
+                    
                 } else {
                     let data: NSData = UIImageJPEGRepresentation(image, 1)
                     datas.append(data)
