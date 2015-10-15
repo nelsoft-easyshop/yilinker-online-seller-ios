@@ -36,6 +36,7 @@ class ProductModel {
     var imageIds: [String] = []
     var productUnitId: String = ""
     var editedImage: [ServerUIImage] = []
+    var oldEditedCombinationImages: [ServerUIImage] = []
     
     init (attributes: [AttributeModel], validCombinations: [CombinationModel]) {
         self.attributes = attributes
