@@ -77,6 +77,12 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
                 self.images.append(UIImage(named: "addPhoto")!)
             }
         } else {
+ 
+            for image in self.images {
+                let i: ServerUIImage = image as! ServerUIImage
+                println("uid: \(i.uid)")
+            }
+
             if self.productModel != nil {
                 self.images = self.productModel!.validCombinations[self.selectedIndexpath!.section].editedImages
                 let image: UIImage = UIImage(named: "addPhoto")!
@@ -90,11 +96,6 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
 
         }
         
-        
-        for image in self.images {
-            let i: ServerUIImage = image as! ServerUIImage
-            println("uid: \(i.uid)")
-        }
         
         self.tableView.tableFooterView = self.footerView()
         self.registerCell()
