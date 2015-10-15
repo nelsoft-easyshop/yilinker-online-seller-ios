@@ -177,11 +177,19 @@ class ProductModel {
                     completeDescription = tempVar
                 }
                 
-                for subValue in value["images"] as! NSArray {
-                    var url: String = APIEnvironment.baseUrl() + "/assets/images/uploads/products/" + (subValue["path"] as! String)
+                if let imagesValue = value["images"] as? NSArray {
+                    for subValue in value["images"] as! NSArray {
+                        var url: String = APIEnvironment.baseUrl() + "/assets/images/uploads/products/" + (subValue["path"] as! String)
+                        url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
+                        images.append(url)
+                        imageIds.append(subValue["id"] as! String)
+                    }
+                } else if let imagesValue: AnyObject = value["images"] {
+                    let image1: AnyObject = imagesValue["1"] as! NSDictionary
+                    var url: String = APIEnvironment.baseUrl() + "/assets/images/uploads/products/" + (image1["path"] as! String)
                     url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
                     images.append(url)
-                    imageIds.append(subValue["id"] as! String)
+                    imageIds.append(image1["id"] as! String)
                 }
                 
                 if !(value["productVariants"] is NSNull) {
