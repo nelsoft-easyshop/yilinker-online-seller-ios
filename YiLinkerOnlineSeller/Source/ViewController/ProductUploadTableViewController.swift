@@ -542,8 +542,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                         values.append(condition.name)
                     }
                     
-                    cell.values = values
-                    cell.addPicker()
+                    if indexPath.row == 2 {
+                        cell.values = values
+                        cell.addPicker()
+                    }
                 }
                 
                 if SessionManager.isSeller() {
