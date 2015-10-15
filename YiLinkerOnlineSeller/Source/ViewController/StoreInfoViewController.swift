@@ -242,7 +242,12 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         } else if indexPath.section == 1 {
             if self.hasQRCode {
                 let cell: StoreInfoQrCodeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoQRCodeTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoQrCodeTableViewCell
-                cell.qrCodeImageView.sd_setImageWithURL(NSURL(fileURLWithPath: self.qrUrl), placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                if let url = NSURL(string: "\(self.qrUrl)") {
+                    if let data = NSData(contentsOfURL: url){
+                        //imageURL.contentMode = UIViewContentMode.ScaleAspectFit
+                        cell.qrCodeImageView.image = UIImage(data: data)
+                    }
+                }
                 cell.delegate = self
                 return cell
             } else {
