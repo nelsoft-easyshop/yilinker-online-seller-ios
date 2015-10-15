@@ -320,6 +320,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                             if error == nil {
                                 var convertedImage: ServerUIImage = ServerUIImage(data: data)!
                                 convertedImage.uid = self.productModel.validCombinations[i].imagesId[j]
+                                self.productModel.oldEditedCombinationImages.append(convertedImage)
                                 self.productModel.validCombinations[i].editedImages.append(convertedImage)
                                 println("\(i) == \(self.productModel.validCombinations.count)")
                                 if self.productModel.validCombinations[i].imagesUrl.count == self.productModel.validCombinations[i].editedImages.count && (i + 1) == self.productModel.validCombinations.count {
@@ -329,7 +330,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                                 var convertedImage = ServerUIImage()
                                 convertedImage.uid = self.productModel.validCombinations[i].imagesId[j]
                                 self.productModel.validCombinations[i].editedImages.append(convertedImage)
-                                
+                                self.productModel.oldEditedCombinationImages.append(convertedImage)
                                 if self.productModel.validCombinations[i].imagesUrl.count == self.productModel.validCombinations[i].editedImages.count && (i + 1) == self.productModel.validCombinations.count {
                                     self.gotoEditProduct()
                                 }
