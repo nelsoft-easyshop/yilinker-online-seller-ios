@@ -237,11 +237,12 @@ class ProductModel {
                                 combination.sku = subValue["sku"] as! String
                                 
                                 for images in subValue["images"] as! NSArray {
-                                    println(images["id"])
-                                    println(images["name"])
-                                    println(images["isNew"])
+                                    var url: String = APIEnvironment.baseUrl() + "/assets/images/uploads/products/" + (images["path"] as! String)
+                                    url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
+                                    combination.imagesUrl.append(url)
+                                    combination.imagesId.append(images["id"] as! String)
                                 }
-//                                combination.images = subValue["images"] as! NSArray as! [UIImage]
+
                                 combination.productUnitId = subValue["productUnitId"] as! String
                                 
                                 combination.weight = subValue["unitWeight"] as! String
