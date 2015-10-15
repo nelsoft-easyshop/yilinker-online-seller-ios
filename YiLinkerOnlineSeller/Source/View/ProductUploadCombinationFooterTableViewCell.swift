@@ -17,7 +17,6 @@ protocol ProductUploadCombinationFooterTableViewCellDelegate {
 }
 
 class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, ProductUploadImageCollectionViewCellDelegate, UITextFieldDelegate {
-    
     @IBOutlet weak var collectionView: UICollectionView!
     var delegate: ProductUploadCombinationFooterTableViewCellDelegate?
     var images: [UIImage] = []
@@ -32,7 +31,6 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
     @IBOutlet weak var discountedPriceLabel: UILabel!
     @IBOutlet weak var quantityLabel: UILabel!
     @IBOutlet weak var skuLabel: UILabel!
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()

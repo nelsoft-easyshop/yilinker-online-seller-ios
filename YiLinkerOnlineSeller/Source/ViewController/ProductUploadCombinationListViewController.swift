@@ -27,8 +27,10 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         self.backButton()
         self.title = Constants.ViewControllersTitleString.attributeCombination
         self.registerCell()
+        
+        let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
     }
-
+    
     func registerCell() {
         let footerNib: UINib = UINib(nibName: PUCTVCConstant.productUploadCombinationFooterTableViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(footerNib, forCellReuseIdentifier: PUCTVCConstant.productUploadCombinationFooterTableViewCellNibNameAndIdentifier)
@@ -117,7 +119,15 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             
             let combination: CombinationModel = self.productModel!.validCombinations[indexPath.section]
             cell.collectionView.reloadData()
-            cell.images = combination.images
+            
+            let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
+            
+            if viewController.uploadType == UploadType.NewProduct {
+                cell.images = combination.images
+            } else {
+                cell.images = combination.editedImages
+            }
+            
             cell.skuTextField.text = combination.sku
             cell.quantityTextField.text = combination.quantity
             cell.retailPriceTextField.text = combination.retailPrice
@@ -231,11 +241,27 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         }
         
         if isValidCombination {
-            if !isEdit {
-                self.productModel!.validCombinations.append(combination)
+            
+            let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
+            
+            if viewController.uploadType == UploadType.NewProduct {
+                if !isEdit {
+                    self.productModel!.validCombinations.append(combination)
+                } else {
+                    self.productModel!.validCombinations[indexPath.section] = combination
+                }
             } else {
-                self.productModel!.validCombinations[indexPath.section] = combination
+                combination.editedImages.removeAll(keepCapacity: false)
+                for webImage in combination.images {
+                    combination.editedImages.append(webImage as! ServerUIImage)
+                }
+                if !isEdit {
+                    self.productModel!.validCombinations.append(combination)
+                } else {
+                    self.productModel!.validCombinations[indexPath.section] = combination
+                }
             }
+            
             
             self.tableView.reloadData()
         } else {
