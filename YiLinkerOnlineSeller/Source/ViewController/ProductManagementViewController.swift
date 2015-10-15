@@ -578,10 +578,17 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
             cell.subTitleLabel.text = self.productModel.products[indexPath.row].category
             cell.setStatus(self.productModel.products[indexPath.row].status)
+            
             if selectedIndex == 5 {
                 cell.statusLabel.hidden = true
             } else {
                 cell.statusLabel.hidden = false
+            }
+            
+            if SessionManager.isReseller() && self.productModel.products[indexPath.row].status == 0 {
+                cell.hidden = true
+            } else {
+                cell.hidden = false
             }
             
             return cell
@@ -619,6 +626,14 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             
             return cell
         }
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if SessionManager.isReseller() && self.productModel.products[indexPath.row].status == 0 {
+            return 0.0
+        }
+        
+        return 65.0
     }
     
     // MARK: - Table View Delegate
@@ -705,8 +720,10 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return
-            CGSize(width: self.view.frame.size.width / 6, height: 60)
+        if SessionManager.isReseller() && indexPath.row == 3 {
+            return CGSize(width: 0.0, height: 60.0)
+        }
+        return CGSize(width: self.view.frame.size.width / 6, height: 60)
     }
     
     // MARK: - Product Management Table View Cell Delegate
