@@ -16,6 +16,9 @@ class CombinationModel {
     var quantity: String = ""
     var sku: String = ""
     var images: [UIImage] = []
+    var editedImages: [ServerUIImage] = []
+    var imagesUrl: [String] = []
+    var imagesId: [String] = []
     
     var weight: String = ""
     var height: String = ""

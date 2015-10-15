@@ -270,6 +270,77 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         self.view.addSubview(self.emptyView!)
     }
     
+    func gotoEditProduct() {
+        self.hud?.hide(true)
+        let upload = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
+        upload.uploadType = UploadType.EditProduct
+        upload.productModel = self.productModel
+        let navigationController: UINavigationController = UINavigationController(rootViewController: upload)
+        navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+        self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
+    }
+    
+    func downloadImage(url: [String]) {
+        for i in 0..<url.count {
+            var imgURL: NSURL = NSURL(string: url[i])!
+            let request: NSURLRequest = NSURLRequest(URL: imgURL)
+            NSURLConnection.sendAsynchronousRequest(
+                request, queue: NSOperationQueue.mainQueue(),
+                completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
+                    if error == nil {
+                        var convertedImage: ServerUIImage = ServerUIImage(data: data)!
+                        convertedImage.uid = self.productModel.imageIds[i]
+                        self.productModel.editedImage.append(convertedImage)
+                        if self.productModel.editedImage.count == self.productModel.imageUrls.count {
+                            self.downloadCombinationsImages()
+                        }
+                    } else {
+                        var convertedImage = ServerUIImage()
+                        convertedImage.uid = self.productModel.imageIds[i]
+                        self.productModel.images.append(convertedImage)
+                        if self.productModel.images.count == self.productModel.imageUrls.count {
+                            self.downloadCombinationsImages()
+                        }
+                    }
+            })
+        }
+    }
+    
+    func downloadCombinationsImages() {
+        if self.productModel.validCombinations.count == 0 {
+            self.gotoEditProduct()
+        } else {
+            for i in 0..<self.productModel.validCombinations.count {
+                for j in 0..<self.productModel.validCombinations[i].imagesUrl.count {
+                    var imgURL: NSURL = NSURL(string: self.productModel.validCombinations[i].imagesUrl[j])!
+                    let request: NSURLRequest = NSURLRequest(URL: imgURL)
+                    NSURLConnection.sendAsynchronousRequest(
+                        request, queue: NSOperationQueue.mainQueue(),
+                        completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
+                            if error == nil {
+                                var convertedImage: ServerUIImage = ServerUIImage(data: data)!
+                                convertedImage.uid = self.productModel.validCombinations[i].imagesId[j]
+                                self.productModel.validCombinations[i].editedImages.append(convertedImage)
+                                println("\(i) == \(self.productModel.validCombinations.count)")
+                                if self.productModel.validCombinations[i].imagesUrl.count == self.productModel.validCombinations[i].editedImages.count && (i + 1) == self.productModel.validCombinations.count {
+                                    self.gotoEditProduct()
+                                }
+                            } else {
+                                var convertedImage = ServerUIImage()
+                                convertedImage.uid = self.productModel.validCombinations[i].imagesId[j]
+                                self.productModel.validCombinations[i].editedImages.append(convertedImage)
+                                
+                                if self.productModel.validCombinations[i].imagesUrl.count == self.productModel.validCombinations[i].editedImages.count && (i + 1) == self.productModel.validCombinations.count {
+                                    self.gotoEditProduct()
+                                }
+                            }
+                    })
+
+                }
+            }
+        }
+    }
+    
     // MARK: - Request
     
     func requestProductDetails() {
@@ -318,48 +389,9 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
             self.showHUD()
             if self.productModel.imageUrls.count != self.productModel.editedImage.count {
                 self.productModel.editedImage = []
-                for i in 0..<self.productModel.imageUrls.count {
-                    var imgURL: NSURL = NSURL(string: self.productModel.imageUrls[i])!
-                    let request: NSURLRequest = NSURLRequest(URL: imgURL)
-                    NSURLConnection.sendAsynchronousRequest(
-                        request, queue: NSOperationQueue.mainQueue(),
-                        completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
-                            if error == nil {
-                                var convertedImage: ServerUIImage = ServerUIImage(data: data)!
-                                convertedImage.uid = self.productModel.imageIds[i]
-                                self.productModel.editedImage.append(convertedImage)
-                                if self.productModel.editedImage.count == self.productModel.imageUrls.count {
-                                    self.hud?.hide(true)
-                                    let upload = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
-                                    upload.uploadType = UploadType.EditProduct
-                                    upload.productModel = self.productModel
-                                    let navigationController: UINavigationController = UINavigationController(rootViewController: upload)
-                                    navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-                                    self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
-                                }
-                            } else {
-                                var convertedImage = ServerUIImage()
-                                convertedImage.uid = self.productModel.imageIds[i]
-                                self.productModel.images.append(convertedImage)
-                                if self.productModel.images.count == self.productModel.imageUrls.count {
-                                    self.hud?.hide(true)
-                                    let upload = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
-                                    upload.uploadType = UploadType.EditProduct
-                                    upload.productModel = self.productModel
-                                    let navigationController: UINavigationController = UINavigationController(rootViewController: upload)
-                                    navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-                                    self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
-                                }
-                            }
-                    })
-                }
+                self.downloadImage(self.productModel.imageUrls)
             } else {
-                let upload = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
-                upload.uploadType = UploadType.EditProduct
-                upload.productModel = self.productModel
-                let navigationController: UINavigationController = UINavigationController(rootViewController: upload)
-                navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-                self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
+                self.gotoEditProduct()
             }
         }
     }
