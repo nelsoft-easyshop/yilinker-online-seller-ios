@@ -1046,12 +1046,18 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     func fireUploadWithUploadType(uploadType: UploadType) {
+        var editedImages: [ServerUIImage] = []
+        
+        for editedImage in  self.productModel.editedImage {
+            editedImages.append(editedImage)
+        }
+        
         if uploadType == UploadType.EditProduct {
             for (index, oldImage) in enumerate(self.oldEditedImages) {
                 var isNew: Bool = false
                 var isDeleted: Bool = true
                 
-                for image in self.productModel.editedImage {
+                for image in editedImages {
                     
                     if oldImage.uid == image.uid {
                         isDeleted = false
@@ -1063,7 +1069,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     oldImage.isRemoved = true
                     oldImage.isNew = false
                     println("old image uid: \(oldImage.uid)")
-                    self.productModel.editedImage.append(oldImage)
+                    editedImages.append(oldImage)
                 }
             }
         }
@@ -1073,7 +1079,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         
         var uploadedImages: [UIImage] = []
         
-        uploadedImages = self.productModel.images
+        
+        for images in self.productModel.images {
+            uploadedImages.append(images)
+        }
         
         var productUploadedImagesCount: Int = 0
 
@@ -1151,14 +1160,21 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         if self.uploadType == UploadType.EditProduct {
             imagesKey.removeAll(keepCapacity: true)
             
-            for (index, image) in enumerate(self.productModel.editedImage) {
+           /* for (index, image) in enumerate(self.productModel.editedImage) {
                 if image.uid == "" && image.isRemoved == false && image.isNew == false {
                     self.productModel.editedImage.removeAtIndex(index)
                 }
+            }*/
+            
+            for (index, image) in enumerate(editedImages) {
+                if image.uid == "" && image.isRemoved == false && image.isNew == false {
+                    editedImages.removeAtIndex(index)
+                }
             }
             
-            for var x = 0; x < self.productModel.editedImage.count; x++ {
-                let image: ServerUIImage = self.productModel.editedImage[x]
+            
+            for var x = 0; x < editedImages.count; x++ {
+                let image: ServerUIImage = editedImages[x]
                 var dictionary: NSMutableDictionary = NSMutableDictionary()
                 dictionary["imageId"] = x
                 dictionary["isNew"] = image.isNew
@@ -1251,7 +1267,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                self.fireRefreshToken2()
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
-                self.addAddPhoto()
                 self.tableView.reloadData()
             }
             self.hud?.hide(true)
