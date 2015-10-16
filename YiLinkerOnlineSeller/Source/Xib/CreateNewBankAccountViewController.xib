@@ -66,7 +66,7 @@
                                         <constraint firstAttribute="height" constant="30" id="Ww4-42-arI"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                    <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="next"/>
                                     <connections>
                                         <action selector="updateTopContraint:" destination="-1" eventType="editingDidBegin" id="RO9-5z-DRs"/>
                                     </connections>
@@ -142,7 +142,7 @@
                                         <constraint firstAttribute="height" constant="30" id="StI-2t-JSl"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                    <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
                                     <connections>
                                         <action selector="updateTopContraint:" destination="-1" eventType="editingDidBegin" id="vK3-yY-hoF"/>
                                     </connections>
@@ -153,7 +153,7 @@
                                         <constraint firstAttribute="height" constant="30" id="Qbv-Iu-Jru"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                    <textInputTraits key="textInputTraits" keyboardType="namePhonePad" returnKeyType="next"/>
                                     <connections>
                                         <action selector="updateTopContraint:" destination="-1" eventType="editingDidBegin" id="cUx-0F-jhh"/>
                                     </connections>
@@ -192,7 +192,7 @@
                                         <constraint firstAttribute="height" constant="30" id="sMG-Td-eHc"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                    <textInputTraits key="textInputTraits" keyboardType="namePhonePad" returnKeyType="next"/>
                                     <connections>
                                         <action selector="updateTopContraint:" destination="-1" eventType="editingDidBegin" id="zIA-W7-1w0"/>
                                     </connections>
