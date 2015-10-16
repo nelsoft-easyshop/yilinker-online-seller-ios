@@ -370,9 +370,9 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         if selectedIndex == 1 {
             requestUpdateProductStatus(Status.inactive)
         } else if selectedIndex == 2 {
-            if SessionManager.isSeller() {
-                requestUpdateProductStatus(Status.active)
-            }
+//            if SessionManager.isSeller() {
+//                requestUpdateProductStatus(Status.active)
+//            }
         }
     }
     
@@ -742,11 +742,12 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             if selectedIndex == 1 {
                 self.activeInactiveLabel.text = ManagementStrings.moveInactive
             } else {
-                if SessionManager.isReseller() {
-                    self.activeInactiveView.backgroundColor = .grayColor()
-                } else {
-                    self.activeInactiveLabel.text = ManagementStrings.moveActive
-                }
+//                if SessionManager.isReseller() {
+//                    self.activeInactiveView.backgroundColor = .grayColor()
+//                } else {
+//                    self.activeInactiveLabel.text = ManagementStrings.moveActive
+//                }
+                self.activeInactiveView.backgroundColor = .grayColor()
             }
             
             self.deleteView.hidden = true
