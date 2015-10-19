@@ -77,7 +77,7 @@ class TransactionShipItemTableViewController: UITableViewController, Transaction
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 621.0
+        return 245.0
     }
 
     // MARK: TransactionShipItemTableViewCellDelegate
@@ -89,17 +89,16 @@ class TransactionShipItemTableViewController: UITableViewController, Transaction
     func readyForPickupItem(date: String, remarks: String){
         selectedDate = date
         self.remarks = remarks
-        firePostCancellation()
+        firePostShipItem()
     }
     
-    
-    func firePostCancellation(){
+    func firePostShipItem(){
         self.showHUD()
         let manager = APIManager.sharedInstance
         var parameters = [String: String]()
         parameters["access_token"] = SessionManager.accessToken()
         parameters["transactionId"] = invoiceNumber
-        parameters["pickupSchedule"] = selectedDate
+        //parameters["pickupSchedule"] = selectedDate
         parameters["pickupRemark"] = remarks
         
 //        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(),
@@ -158,7 +157,7 @@ class TransactionShipItemTableViewController: UITableViewController, Transaction
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.firePostCancellation()
+            self.firePostShipItem()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
