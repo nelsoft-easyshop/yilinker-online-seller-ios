@@ -253,6 +253,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="calendarConstant" destination="V1T-Vo-PJS" id="0jI-pv-tbB"/>
                 <outlet property="calendarView" destination="WcH-r4-pl7" id="QEL-Ah-iEY"/>
                 <outlet property="cancelButton" destination="ZgR-uL-JFn" id="AHn-Jz-Yus"/>
                 <outlet property="dateLabel" destination="pkk-UP-ey4" id="wzm-c1-NPT"/>
@@ -261,8 +262,10 @@
                 <outlet property="pickupButton" destination="bBZ-8N-cOV" id="4yv-BW-Tsg"/>
                 <outlet property="pickupScheduleDescriptionLabel" destination="O9e-Ks-E7K" id="GDY-i7-aRg"/>
                 <outlet property="pickupScheduleLabel" destination="pqo-DC-hNj" id="kix-an-Lxb"/>
+                <outlet property="timeConstant" destination="Qpn-gI-qsE" id="1KN-R5-Pxo"/>
                 <outlet property="timeTextField" destination="Vv6-hI-LWG" id="MWQ-uv-RkM"/>
                 <outlet property="timeTitleLabel" destination="vxd-nq-2D0" id="nwC-zR-uDc"/>
+                <outlet property="timeView" destination="bnT-uc-IPo" id="aM9-be-4sx"/>
             </connections>
             <point key="canvasLocation" x="282.5" y="137.5"/>
         </tableViewCell>

@@ -34,6 +34,7 @@ class TransactionViewController: UIViewController {
     var type: String = ""
     var status: [String] = []
     var paymentMethod: [Int] = []
+    var tempPaymentMethod: [Int] = []
     var dateFrom: String = ""
     var dateTo: String = ""
     
@@ -168,6 +169,11 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         dateFrom = ""
         dateTo = ""
         selectedStatus = indexPath.row
+        
+        if tempPaymentMethod.count != 0 {
+            paymentMethod = tempPaymentMethod
+        }
+        
         fireGetTransaction()
     }
     
@@ -412,12 +418,12 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
                 paymentMethod.append(0)
             }
         }
+        tempPaymentMethod = paymentMethod
         isRefreshable = true
         tableData.removeAll(keepCapacity: false)
         page = 1
         
         self.collectionView(collectionView, didSelectItemAtIndexPath: NSIndexPath(forRow: selectedStatus, inSection: 0))
-        fireGetTransaction()
     }
     
     func formatStringToDate(date: String) -> NSDate {
