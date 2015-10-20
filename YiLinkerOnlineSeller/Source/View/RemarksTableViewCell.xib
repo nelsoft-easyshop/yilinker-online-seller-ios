@@ -7,6 +7,7 @@
     <customFonts key="customFonts">
         <mutableArray key="Panton SemiBold.otf">
             <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -20,9 +21,9 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remarks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zaK-Ti-Z1e">
-                        <rect key="frame" x="3" y="18" width="141" height="21"/>
+                        <rect key="frame" x="3" y="18" width="58" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="141" id="6Mf-GK-8oR"/>
+                            <constraint firstAttribute="width" constant="58" id="rp9-YV-dQd"/>
                             <constraint firstAttribute="height" constant="21" id="uuR-ib-Png"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
@@ -54,15 +55,27 @@
                             <action selector="submit:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wHb-9s-orB"/>
                         </connections>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f21-7J-OFK">
+                        <rect key="frame" x="57" y="18" width="12" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="12" id="v5A-3T-zbo"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                        <color key="textColor" red="1" green="0.2339373911" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstItem="zaK-Ti-Z1e" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="7DH-Bo-WY2"/>
                     <constraint firstItem="JhO-NG-FXP" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="7" id="Efa-ix-9VQ"/>
+                    <constraint firstItem="JhO-NG-FXP" firstAttribute="top" secondItem="f21-7J-OFK" secondAttribute="bottom" constant="3" id="Kl6-Xf-3yJ"/>
                     <constraint firstAttribute="bottomMargin" secondItem="naS-9W-5ZF" secondAttribute="bottom" constant="10" id="LZy-zC-Cgg"/>
                     <constraint firstItem="JhO-NG-FXP" firstAttribute="top" secondItem="zaK-Ti-Z1e" secondAttribute="bottom" constant="3" id="bTa-fD-NdZ"/>
+                    <constraint firstItem="f21-7J-OFK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="ctA-Sr-2pV"/>
                     <constraint firstAttribute="centerX" secondItem="naS-9W-5ZF" secondAttribute="centerX" id="eks-ee-ujP"/>
                     <constraint firstItem="JhO-NG-FXP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-6" id="gbH-C1-DHI"/>
+                    <constraint firstItem="f21-7J-OFK" firstAttribute="leading" secondItem="zaK-Ti-Z1e" secondAttribute="trailing" constant="-4" id="jOh-Ek-aJ8"/>
                     <constraint firstItem="zaK-Ti-Z1e" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-5" id="yeF-JA-Yq1"/>
                 </constraints>
             </tableViewCellContentView>
