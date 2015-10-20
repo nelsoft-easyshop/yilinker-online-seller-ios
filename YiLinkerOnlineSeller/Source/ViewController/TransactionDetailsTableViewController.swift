@@ -32,6 +32,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     var transactionDetailsModel: TransactionDetailsModel!
     var transactionConsigneeModel: TransactionConsigneeModel!
     
+    var date_modified: String = ""
     var errorMessage: String = ""
     var errorLocalizedString = ""
     
@@ -190,6 +191,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             cell.statusLabel.text = "   \(transactionDetailsModel.transactionStatusName)     "
             cell.paymentTypeLabel.text = transactionDetailsModel.transactionPayment
             cell.dateCreatedLabel.text = formatDateToString(formatStringToDate(transactionDetailsModel.transactionDate))
+            cell.dateModifiedLabel.text = formatDateToString(formatStringToDate(date_modified))
             cell.totalQuantityLabel.text = "\(transactionDetailsModel.transactionQuantity)"
             cell.totalUnitCostLabel.text = transactionDetailsModel.transactionUnitPrice.formatToPeso()
             cell.shippingCostLabel.text = transactionDetailsModel.transactionShippingFee.formatToPeso()
@@ -239,7 +241,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {           //Details
-            return 231
+            return 264
         } else if indexPath.section == 1 {    //Product Lis
             return 35
         } else if indexPath.section == 2 {    //Consignee

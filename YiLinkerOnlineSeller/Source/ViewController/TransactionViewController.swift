@@ -37,6 +37,8 @@ class TransactionViewController: UIViewController {
     var tempPaymentMethod: [Int] = []
     var dateFrom: String = ""
     var dateTo: String = ""
+    var tempDateFrom: String = ""
+    var tempDateTo: String = ""
     
     var errorLocalizedString = ""
     
@@ -174,6 +176,14 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
             paymentMethod = tempPaymentMethod
         }
         
+        if tempDateFrom.isNotEmpty(){
+            dateFrom = tempDateFrom
+        }
+        
+        if tempDateTo.isNotEmpty(){
+            dateTo = tempDateTo
+        }
+        
         fireGetTransaction()
     }
     
@@ -223,6 +233,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         if !tableData[indexPath.row].invoice_number.isEmpty {
             var transactionDetailsController = TransactionDetailsTableViewController(nibName: "TransactionDetailsTableViewController", bundle: nil)
             transactionDetailsController.invoiceNumber = tableData[indexPath.row].invoice_number
+            transactionDetailsController.date_modified = "\(tableData[indexPath.row].date_modified).000000"
             self.navigationController?.pushViewController(transactionDetailsController, animated:true)
         } else {
             let noInvoiceString = StringHelper.localizedStringWithKey("TRANSACTIONS_NO_INVOCE_LOCALIZE_KEY")
@@ -279,6 +290,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
             if !dateTo.isEmpty {
                 url = "\(url)&dateTo=\(dateTo)"
             }
+            
             
             manager.GET(url, parameters: nil, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -369,7 +381,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
             
             if dates == StringHelper.localizedStringWithKey("TRANSACTIONS_TODAY_LOCALIZE_KEY") {
                 dateFrom = formatDateToString(NSDate())
-                dateTo = formatDateToString(NSDate())
+                dateTo = formatDateToString(NSDate().addDays(1))
                 
             } else if dates == StringHelper.localizedStringWithKey("TRANSACTIONS_THIS_WEEK_LOCALIZE_KEY") {
                 var beginningOfWeek: NSDate = firstDateOfWeekWithDate(currentDate)
@@ -419,6 +431,8 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
             }
         }
         tempPaymentMethod = paymentMethod
+        tempDateFrom = dateFrom
+        tempDateTo = dateTo
         isRefreshable = true
         tableData.removeAll(keepCapacity: false)
         page = 1
