@@ -48,6 +48,9 @@ class TransactionViewController: UIViewController {
     var selectedStatus: Int = 0
     var selectedPayment: Int = 0
     
+    var isFromFilter: Bool = false
+    var isNewOrder: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -168,29 +171,15 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         type = types[indexPath.row]
         page = 1
         isRefreshable = true
-        status.removeAll(keepCapacity: false)
-        paymentMethod.removeAll(keepCapacity: false)
-        dateFrom = ""
-        dateTo = ""
-        sortBy = ""
+        if !isFromFilter {
+            status.removeAll(keepCapacity: false)
+            paymentMethod.removeAll(keepCapacity: false)
+            dateFrom = ""
+            dateTo = ""
+            sortBy = ""
+        }
         selectedStatus = indexPath.row
-        
-        if tempPaymentMethod.count != 0 {
-            paymentMethod = tempPaymentMethod
-        }
-        
-        if tempDateFrom.isNotEmpty(){
-            dateFrom = tempDateFrom
-        }
-        
-        if tempDateTo.isNotEmpty(){
-            dateTo = tempDateTo
-        }
-        
-        if tempSortBy.isNotEmpty(){
-            sortBy = tempSortBy
-        }
-        
+        isFromFilter = false
         fireGetTransaction()
     }
     
@@ -298,6 +287,10 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
                 url = "\(url)&dateTo=\(dateTo)"
             }
             
+            if isNewOrder {
+                url = "\(url)&sortBy=create&sortDirection=desc"
+                isNewOrder = false
+            }
             
             manager.GET(url, parameters: nil, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -410,16 +403,21 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         
         status.removeAll(keepCapacity: false)
         for subValue in statuses {
-            if subValue == StringHelper.localizedStringWithKey("TRANSACTIONS_NEW_UPDATE_LOCALIZE_KEY") {
+            if subValue == StringHelper.localizedStringWithKey("TRANSACTIONS_NEW_ORDER_LOCALIZE_KEY") {
                 status.append(types[1])
+                isNewOrder = true
             } else if subValue == StringHelper.localizedStringWithKey("TRANSACTIONS_NEW_UPDATE_LOCALIZE_KEY") {
                 status.append(types[1])
+                isNewOrder = false
             } else if subValue == StringHelper.localizedStringWithKey("TRANSACTIONS_ONGOING_LOCALIZE_KEY") {
                 status.append(types[2])
+                isNewOrder = false
             } else if subValue == StringHelper.localizedStringWithKey("TRANSACTIONS_COMPLETED_LOCALIZE_KEY") {
                 status.append(types[3])
+                isNewOrder = false
             }  else if subValue == StringHelper.localizedStringWithKey("TRANSACTIONS_CANCELLED_LOCALIZE_KEY") {
                 status.append(types[4])
+                isNewOrder = false
             }
         }
         
@@ -443,7 +441,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         isRefreshable = true
         tableData.removeAll(keepCapacity: false)
         page = 1
-        
+        isFromFilter = true
         self.collectionView(collectionView, didSelectItemAtIndexPath: NSIndexPath(forRow: selectedStatus, inSection: 0))
     }
     
