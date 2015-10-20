@@ -23,12 +23,15 @@ class TransactionShipItemTableViewCell: UITableViewCell, FSCalendarDelegate, FSC
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var pickupButton: UIButton!
     @IBOutlet weak var timeTextField: UITextField!
+    @IBOutlet weak var timeView: UIView!
     
     @IBOutlet weak var pickupScheduleLabel: UILabel!
     @IBOutlet weak var pickupScheduleDescriptionLabel: UILabel!
     @IBOutlet weak var timeTitleLabel: UILabel!
     @IBOutlet weak var notesTitleLabel: UILabel!
     
+    @IBOutlet weak var calendarConstant: NSLayoutConstraint!
+    @IBOutlet weak var timeConstant: NSLayoutConstraint!
     var pickerView: UIDatePicker!
     
     var selectedDate: NSDate = NSDate()
@@ -62,6 +65,10 @@ class TransactionShipItemTableViewCell: UITableViewCell, FSCalendarDelegate, FSC
         calendarView.appearance.headerMinimumDissolvedAlpha = 0.25
         
         timeTextField.text = formatTime(selectedTime)
+        
+        timeConstant.constant = 0
+        calendarConstant.constant = 0
+        timeView.hidden = true
     }
     
     func initializeLocalizedStrings() {

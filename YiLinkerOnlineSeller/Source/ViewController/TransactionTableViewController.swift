@@ -59,19 +59,19 @@ class TransactionTableViewController: UITableViewController {
             TransactionsFilterItemModel(title: thisMonthString, isChecked: false),
             TransactionsFilterItemModel(title: totalString, isChecked: false)]))
         
-        let statusString = StringHelper.localizedStringWithKey("TRANSACTIONS_STATUS_LOCALIZE_KEY")
-        let newOrderString = StringHelper.localizedStringWithKey("TRANSACTIONS_NEW_ORDER_LOCALIZE_KEY")
-        let newUpdateString = StringHelper.localizedStringWithKey("TRANSACTIONS_NEW_UPDATE_LOCALIZE_KEY")
-        let ongoingString = StringHelper.localizedStringWithKey("TRANSACTIONS_ONGOING_LOCALIZE_KEY")
-        let completedString = StringHelper.localizedStringWithKey("TRANSACTIONS_COMPLETED_LOCALIZE_KEY")
-        let cancelledString = StringHelper.localizedStringWithKey("TRANSACTIONS_CANCELLED_LOCALIZE_KEY")
-        
-        tableData.append(TransactionsFilterModel(headerText: statusString, items:
-            [TransactionsFilterItemModel(title: newOrderString, isChecked: false),
-                TransactionsFilterItemModel(title: newUpdateString, isChecked: false),
-                TransactionsFilterItemModel(title: ongoingString, isChecked: false),
-                TransactionsFilterItemModel(title: completedString, isChecked: false),
-                TransactionsFilterItemModel(title: cancelledString, isChecked: false),]))
+//        let statusString = StringHelper.localizedStringWithKey("TRANSACTIONS_STATUS_LOCALIZE_KEY")
+//        let newOrderString = StringHelper.localizedStringWithKey("TRANSACTIONS_NEW_ORDER_LOCALIZE_KEY")
+//        let newUpdateString = StringHelper.localizedStringWithKey("TRANSACTIONS_NEW_UPDATE_LOCALIZE_KEY")
+//        let ongoingString = StringHelper.localizedStringWithKey("TRANSACTIONS_ONGOING_LOCALIZE_KEY")
+//        let completedString = StringHelper.localizedStringWithKey("TRANSACTIONS_COMPLETED_LOCALIZE_KEY")
+//        let cancelledString = StringHelper.localizedStringWithKey("TRANSACTIONS_CANCELLED_LOCALIZE_KEY")
+//        
+//        tableData.append(TransactionsFilterModel(headerText: statusString, items:
+//            [TransactionsFilterItemModel(title: newOrderString, isChecked: false),
+//                TransactionsFilterItemModel(title: newUpdateString, isChecked: false),
+//                TransactionsFilterItemModel(title: ongoingString, isChecked: false),
+//                TransactionsFilterItemModel(title: completedString, isChecked: false),
+//                TransactionsFilterItemModel(title: cancelledString, isChecked: false),]))
         
         let paymentMethodString = StringHelper.localizedStringWithKey("TRANSACTIONS_PAYMENT_METHOD_LOCALIZE_KEY")
         let codString = StringHelper.localizedStringWithKey("TRANSACTIONS_COD_LOCALIZE_KEY")
@@ -80,26 +80,32 @@ class TransactionTableViewController: UITableViewController {
         let pesoPayString = StringHelper.localizedStringWithKey("TRANSACTIONS_PESOPAY_LOCALIZE_KEY")
         let walletString = StringHelper.localizedStringWithKey("TRANSACTIONS_WALLET_LOCALIZE_KEY")
         
+//        tableData.append(TransactionsFilterModel(headerText: paymentMethodString, items:
+//            [TransactionsFilterItemModel(title: codString, isChecked: false),
+//                TransactionsFilterItemModel(title: creditDebitString, isChecked: false),
+//                TransactionsFilterItemModel(title: dragonPayString, isChecked: false),
+//                TransactionsFilterItemModel(title: pesoPayString, isChecked: false),
+//                TransactionsFilterItemModel(title: walletString, isChecked: false),]))
+        
         tableData.append(TransactionsFilterModel(headerText: paymentMethodString, items:
             [TransactionsFilterItemModel(title: codString, isChecked: false),
-                TransactionsFilterItemModel(title: creditDebitString, isChecked: false),
                 TransactionsFilterItemModel(title: dragonPayString, isChecked: false),
-                TransactionsFilterItemModel(title: pesoPayString, isChecked: false),
-                TransactionsFilterItemModel(title: walletString, isChecked: false),]))
+                TransactionsFilterItemModel(title: pesoPayString, isChecked: false)]))
+
         
         
         if selectedDate != 0 {
             tableData[0].items[selectedDate - 1].isChecked = true
         }
         
-        if selectedStatus != 0 {
-            if selectedStatus != 0 {
-                tableData[1].items[selectedStatus].isChecked = true
-            }
-        }
+//        if selectedStatus != 0 {
+//            if selectedStatus != 0 {
+//                tableData[1].items[selectedStatus].isChecked = true
+//            }
+//        }
         
         if selectedPayment != 0 {
-            tableData[2].items[selectedPayment - 1].isChecked = true
+            tableData[1].items[selectedPayment - 1].isChecked = true
         }
         
         self.tableView.reloadData()
@@ -170,14 +176,14 @@ class TransactionTableViewController: UITableViewController {
         }
         
         var statuses: [String] = []
-        for subValue in tableData[1].items {
-            if subValue.isChecked {
-                statuses.append(subValue.title)
-            }
-        }
+//        for subValue in tableData[1].items {
+//            if subValue.isChecked {
+//                statuses.append(subValue.title)
+//            }
+//        }
         
         var paymentMethods: [String] = []
-        for subValue in tableData[2].items {
+        for subValue in tableData[1].items {
             if subValue.isChecked {
                 paymentMethods.append(subValue.title)
             }
@@ -252,13 +258,13 @@ class TransactionTableViewController: UITableViewController {
         
         if indexPath.section == 0 {
             selectedDate = indexPath.row + 1
-        } else if indexPath.section == 1 {
-            if !originalStatus {
-                selectedStatus = indexPath.row
-            } else {
-                selectedStatus = 0
-            }
-        }  else if indexPath.section == 2 {
+//        } else if indexPath.section == 1 {
+//            if !originalStatus {
+//                selectedStatus = indexPath.row
+//            } else {
+//                selectedStatus = 0
+//            }
+        }  else if indexPath.section == 1 {
             if !originalStatus {
                 selectedPayment = indexPath.row + 1
             }  else {

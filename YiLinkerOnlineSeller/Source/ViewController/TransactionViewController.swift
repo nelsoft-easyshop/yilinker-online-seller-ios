@@ -34,14 +34,22 @@ class TransactionViewController: UIViewController {
     var type: String = ""
     var status: [String] = []
     var paymentMethod: [Int] = []
+    var tempPaymentMethod: [Int] = []
     var dateFrom: String = ""
     var dateTo: String = ""
+    var tempDateFrom: String = ""
+    var tempDateTo: String = ""
+    var sortBy: String = ""
+    var tempSortBy: String = ""
     
     var errorLocalizedString = ""
     
     var selectedDate: Int = 4
     var selectedStatus: Int = 0
     var selectedPayment: Int = 0
+    
+    var isFromFilter: Bool = false
+    var isNewOrder: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -163,11 +171,15 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         type = types[indexPath.row]
         page = 1
         isRefreshable = true
-        status.removeAll(keepCapacity: false)
-        paymentMethod.removeAll(keepCapacity: false)
-        dateFrom = ""
-        dateTo = ""
+        if !isFromFilter {
+            status.removeAll(keepCapacity: false)
+            paymentMethod.removeAll(keepCapacity: false)
+            dateFrom = ""
+            dateTo = ""
+            sortBy = ""
+        }
         selectedStatus = indexPath.row
+        isFromFilter = false
         fireGetTransaction()
     }
     
@@ -190,7 +202,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let date: NSDate = dateFormatter.dateFromString(tempModel.date_added)!
+        let date: NSDate = dateFormatter.dateFromString(tempModel.date_modified)!
         
         let dateFormatter1 = NSDateFormatter()
         dateFormatter1.dateFormat = "MMMM dd, yyyy"
@@ -217,6 +229,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         if !tableData[indexPath.row].invoice_number.isEmpty {
             var transactionDetailsController = TransactionDetailsTableViewController(nibName: "TransactionDetailsTableViewController", bundle: nil)
             transactionDetailsController.invoiceNumber = tableData[indexPath.row].invoice_number
+            transactionDetailsController.date_modified = "\(tableData[indexPath.row].date_modified).000000"
             self.navigationController?.pushViewController(transactionDetailsController, animated:true)
         } else {
             let noInvoiceString = StringHelper.localizedStringWithKey("TRANSACTIONS_NO_INVOCE_LOCALIZE_KEY")
@@ -272,6 +285,11 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
             
             if !dateTo.isEmpty {
                 url = "\(url)&dateTo=\(dateTo)"
+            }
+            
+            if isNewOrder {
+                url = "\(url)&sortBy=create&sortDirection=desc"
+                isNewOrder = false
             }
             
             manager.GET(url, parameters: nil, success: {
@@ -363,7 +381,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
             
             if dates == StringHelper.localizedStringWithKey("TRANSACTIONS_TODAY_LOCALIZE_KEY") {
                 dateFrom = formatDateToString(NSDate())
-                dateTo = formatDateToString(NSDate())
+                dateTo = formatDateToString(NSDate().addDays(1))
                 
             } else if dates == StringHelper.localizedStringWithKey("TRANSACTIONS_THIS_WEEK_LOCALIZE_KEY") {
                 var beginningOfWeek: NSDate = firstDateOfWeekWithDate(currentDate)
@@ -385,16 +403,21 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         
         status.removeAll(keepCapacity: false)
         for subValue in statuses {
-            if subValue == StringHelper.localizedStringWithKey("TRANSACTIONS_NEW_UPDATE_LOCALIZE_KEY") {
+            if subValue == StringHelper.localizedStringWithKey("TRANSACTIONS_NEW_ORDER_LOCALIZE_KEY") {
                 status.append(types[1])
+                isNewOrder = true
             } else if subValue == StringHelper.localizedStringWithKey("TRANSACTIONS_NEW_UPDATE_LOCALIZE_KEY") {
                 status.append(types[1])
+                isNewOrder = false
             } else if subValue == StringHelper.localizedStringWithKey("TRANSACTIONS_ONGOING_LOCALIZE_KEY") {
                 status.append(types[2])
+                isNewOrder = false
             } else if subValue == StringHelper.localizedStringWithKey("TRANSACTIONS_COMPLETED_LOCALIZE_KEY") {
                 status.append(types[3])
+                isNewOrder = false
             }  else if subValue == StringHelper.localizedStringWithKey("TRANSACTIONS_CANCELLED_LOCALIZE_KEY") {
                 status.append(types[4])
+                isNewOrder = false
             }
         }
         
@@ -412,12 +435,14 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
                 paymentMethod.append(0)
             }
         }
+        tempPaymentMethod = paymentMethod
+        tempDateFrom = dateFrom
+        tempDateTo = dateTo
         isRefreshable = true
         tableData.removeAll(keepCapacity: false)
         page = 1
-        
+        isFromFilter = true
         self.collectionView(collectionView, didSelectItemAtIndexPath: NSIndexPath(forRow: selectedStatus, inSection: 0))
-        fireGetTransaction()
     }
     
     func formatStringToDate(date: String) -> NSDate {
