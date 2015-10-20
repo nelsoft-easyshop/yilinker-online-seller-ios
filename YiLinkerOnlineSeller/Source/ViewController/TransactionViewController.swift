@@ -39,6 +39,8 @@ class TransactionViewController: UIViewController {
     var dateTo: String = ""
     var tempDateFrom: String = ""
     var tempDateTo: String = ""
+    var sortBy: String = ""
+    var tempSortBy: String = ""
     
     var errorLocalizedString = ""
     
@@ -170,6 +172,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         paymentMethod.removeAll(keepCapacity: false)
         dateFrom = ""
         dateTo = ""
+        sortBy = ""
         selectedStatus = indexPath.row
         
         if tempPaymentMethod.count != 0 {
@@ -182,6 +185,10 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         
         if tempDateTo.isNotEmpty(){
             dateTo = tempDateTo
+        }
+        
+        if tempSortBy.isNotEmpty(){
+            sortBy = tempSortBy
         }
         
         fireGetTransaction()
@@ -206,7 +213,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let date: NSDate = dateFormatter.dateFromString(tempModel.date_added)!
+        let date: NSDate = dateFormatter.dateFromString(tempModel.date_modified)!
         
         let dateFormatter1 = NSDateFormatter()
         dateFormatter1.dateFormat = "MMMM dd, yyyy"
