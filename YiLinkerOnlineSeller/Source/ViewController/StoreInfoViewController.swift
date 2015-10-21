@@ -300,7 +300,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 502
+            return 556
         } else if indexPath.section == 1 {
             if self.hasQRCode {
                 return 322
