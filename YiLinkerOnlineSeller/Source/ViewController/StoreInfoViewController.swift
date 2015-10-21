@@ -64,6 +64,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     let success: String = StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_LOCALIZE_KEY")
     let empty: String = StringHelper.localizedStringWithKey("STORE_INFO_EMPTY_LOCALIZE_KEY")
     let successTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TITLE_LOCALIZE_KEY")
+    let tinTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_TIN_LOCALIZE_KEY")
     
     var qrUrl: String = ""
     var qr: String = ""
@@ -229,6 +230,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 //    cell.verifyButton.setTitle("Verify", forState: UIControlState.Normal)
                 //} else {
                 cell.verifyButton.setTitle(self.changeTitle, forState: UIControlState.Normal)
+                cell.tinLabel.text = self.tinTitle
+                cell.tinTextField.placeholder = self.tinTitle
                 //}
                 cell.verifyButton.tag = 2
             } else {
@@ -297,7 +300,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 502
+            return 556
         } else if indexPath.section == 1 {
             if self.hasQRCode {
                 return 322

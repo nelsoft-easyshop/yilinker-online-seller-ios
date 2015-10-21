@@ -23,6 +23,7 @@ class StoreInfoTableViewCell: UITableViewCell, UITextFieldDelegate, UITextViewDe
     @IBOutlet weak var coverPhotoImageView: UIImageView!
     @IBOutlet weak var mobilePhoneTextField: UITextField!
     @IBOutlet weak var storeNameTextField: UITextField!
+    @IBOutlet var tinTextField: UITextField!
     
     @IBOutlet weak var storeDescriptionTextView: UITextView!
     
@@ -36,6 +37,7 @@ class StoreInfoTableViewCell: UITableViewCell, UITextFieldDelegate, UITextViewDe
     @IBOutlet weak var profileEditImageView: UIImageView!
     @IBOutlet weak var coverEditImageView: UIImageView!
     @IBOutlet weak var profileEditLabel: UILabel!
+    @IBOutlet var tinLabel: UILabel!
     @IBOutlet weak var coverEditLabel: UILabel!
     @IBOutlet weak var storeInfoLabel: UILabel!
     @IBOutlet weak var storeNameLabel: UILabel!
