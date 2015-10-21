@@ -146,7 +146,10 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     func initializeLocalizedStrings() {
         sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_DETAILS_LOCALIZE_KEY"))
         sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_PRODUCT_LIST_LOCALIZE_KEY"))
-        sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_CONSIGNEE_LOCALIZE_KEY"))
+        
+        if !SessionManager.isReseller(){
+            sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_CONSIGNEE_LOCALIZE_KEY"))
+        }
         errorLocalizedString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
         
         initializeTableView()
@@ -277,7 +280,12 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             println(responseObject)
             
             if self.transactionDetailsModel.isSuccessful {
-                self.fireGetConsigneeDetails()
+                if SessionManager.isReseller(){
+                    self.hud?.hide(true)
+                    self.initializeLocalizedStrings()
+                } else {
+                    self.fireGetConsigneeDetails()
+                }
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.transactionDetailsModel.message, title: self.errorLocalizedString)
                 self.navigationController!.popViewControllerAnimated(true)

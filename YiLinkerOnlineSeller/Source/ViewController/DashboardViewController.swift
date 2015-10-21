@@ -90,6 +90,11 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         self.navigationController?.navigationBarHidden = true
         
         self.tabBarController?.tabBar.hidden = false
+        
+        //Remove messaging item
+        if SessionManager.isReseller() {
+            self.removeMessagingInTabBar()
+        }
     }
     
     func initializeLocalizedString() {
@@ -127,9 +132,19 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         tableData.append(followersString)
         tableData.append(activityLogsString)
         tableData.append(myPointsString)
-        tableData.append(resolutionCenterString)
+        if !SessionManager.isReseller(){
+            tableData.append(resolutionCenterString)
+        }
         tableData.append(helpString)
         tableData.append(logoutString)
+    }
+    
+    func removeMessagingInTabBar() {
+        var viewControllers: [UIViewController] =  self.tabBarController!.viewControllers as! [UIViewController]
+        if viewControllers.count == 4 {
+            viewControllers.removeAtIndex(2)
+            self.tabBarController?.setViewControllers(viewControllers, animated: true)
+        }
     }
     
     func setupGCM(){
@@ -349,6 +364,14 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        var temp: Int = 0
+        if SessionManager.isReseller() {
+            temp = 1
+        } else {
+            temp = 0
+        }
+        
         if indexPath.row == 0 {
             var storeInfoViewController = StoreInfoViewController(nibName: "StoreInfoViewController", bundle: nil)
             self.navigationController?.pushViewController(storeInfoViewController, animated:true)
@@ -390,14 +413,14 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             var myPointsViewController = MyPointsTableViewController(nibName: "MyPointsTableViewController", bundle: nil)
             self.navigationController?.pushViewController(myPointsViewController, animated:true)
             
+        } else if indexPath.row == (10 - temp) {
+            
         } else if indexPath.row == 9 {
             let resolutionCenter = self.storyboard?.instantiateViewControllerWithIdentifier("ResolutionCenterViewController")
                 as! ResolutionCenterViewController
             resolutionCenter.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(resolutionCenter, animated:true)
-        } else if indexPath.row == 10 {
-            
-        } else if indexPath.row == 11 {
+        } else if indexPath.row == (11 - temp) {
             let areYouSUreString = StringHelper.localizedStringWithKey("ARE_YOU_SURE_LOGOUT_LOCALIZE_KEY")
             let logoutString = StringHelper.localizedStringWithKey("LOGOUT_LOCALIZE_KEY")
             let cancelString = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")

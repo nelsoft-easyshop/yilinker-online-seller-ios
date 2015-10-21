@@ -33,6 +33,11 @@ class FollowerTableViewCell: UITableViewCell {
     
     func initializeViews() {
         followerImageView.layer.cornerRadius = followerImageView.frame.height / 2
+        
+        if SessionManager.isReseller(){
+            messageButton.hidden = true
+            messageButton.userInteractionEnabled = false
+        }
     }
     
     func setFollowerImage(url: NSURL) {

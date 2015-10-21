@@ -7,6 +7,7 @@
         <mutableArray key="Panton SemiBold.otf">
             <string>Panton-SemiBold</string>
             <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
         </mutableArray>
         <mutableArray key="Panton.otf">
             <string>Panton-Regular</string>
@@ -23,9 +24,9 @@
                     <rect key="frame" x="0.0" y="25" width="317" height="41"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Products" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aQt-lg-tbS">
-                            <rect key="frame" x="8" y="11" width="61" height="21"/>
+                            <rect key="frame" x="8" y="11" width="53" height="21"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="61" id="LPq-Hp-4yb"/>
+                                <constraint firstAttribute="width" constant="53" id="LPq-Hp-4yb"/>
                                 <constraint firstAttribute="height" constant="21" id="QXc-Xm-5DC"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
@@ -61,13 +62,25 @@
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Suc-x5-iOq">
+                            <rect key="frame" x="62" y="11" width="12" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="12" id="ClS-IR-Yoc"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                            <color key="textColor" red="1" green="0.2339373911" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="41" id="87Y-8p-C4u"/>
+                        <constraint firstItem="Suc-x5-iOq" firstAttribute="top" secondItem="qAf-gV-JiU" secondAttribute="top" constant="11" id="PLK-ly-DtQ"/>
                         <constraint firstItem="cit-ay-iVI" firstAttribute="top" secondItem="qAf-gV-JiU" secondAttribute="top" constant="16" id="Vve-cC-Rds"/>
                         <constraint firstItem="aQt-lg-tbS" firstAttribute="top" secondItem="qAf-gV-JiU" secondAttribute="top" constant="11" id="bxV-LG-cyA"/>
                         <constraint firstItem="aQt-lg-tbS" firstAttribute="leading" secondItem="qAf-gV-JiU" secondAttribute="leading" constant="8" id="gQf-mc-P7x"/>
+                        <constraint firstAttribute="bottom" secondItem="Suc-x5-iOq" secondAttribute="bottom" constant="9" id="j4d-3K-vYb"/>
+                        <constraint firstItem="Suc-x5-iOq" firstAttribute="leading" secondItem="aQt-lg-tbS" secondAttribute="trailing" constant="1" id="kJl-Vg-UIf"/>
                         <constraint firstItem="i1F-L7-sNz" firstAttribute="top" secondItem="qAf-gV-JiU" secondAttribute="top" constant="7" id="l2x-o3-CmE"/>
                         <constraint firstAttribute="trailing" secondItem="i1F-L7-sNz" secondAttribute="trailing" constant="8" id="nbG-U9-ykU"/>
                         <constraint firstAttribute="trailing" secondItem="cit-ay-iVI" secondAttribute="trailing" constant="58" id="qsj-R8-7nH"/>
