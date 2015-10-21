@@ -132,7 +132,10 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
         sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_PURCHASE_LOCALIZE_KEY"))
         sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_LOCALIZE_KEY"))
         sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DESCRIPTION_LOCALIZE_KEY"))
-        sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DELIVERY_LOCALIZE_KEY"))
+        
+        if !SessionManager.isReseller() {
+            sectionHeader.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DELIVERY_LOCALIZE_KEY"))
+        }
         
         productAttributeData.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_SKU_LOCALIZE_KEY"))
         productAttributeData.append(StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_WIDTH_LOCALIZE_KEY"))
