@@ -28,7 +28,7 @@ class MessageThreadVC: UIViewController {
     
     let composeViewHeight : CGFloat = 50.0
     
-    //var tabBarHidden : Bool = false
+    var tabBarHidden : Bool = false
     
     var sender : W_Contact?
     var recipient : W_Contact?
@@ -208,9 +208,9 @@ class MessageThreadVC: UIViewController {
         self.sendButton.titleLabel?.text = LocalizedStrings.send
         
         if((self.tabBarController?.tabBar.hidden) != nil){
-            tabBarHidden = true
+            self.tabBarHidden = true
         } else {
-            tabBarHidden = false
+            self.tabBarHidden = false
         }
     }
     
