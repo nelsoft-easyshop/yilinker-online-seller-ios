@@ -90,6 +90,11 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         self.navigationController?.navigationBarHidden = true
         
         self.tabBarController?.tabBar.hidden = false
+        
+        //Remove messaging item
+        if SessionManager.isReseller() {
+            self.removeMessagingInTabBar()
+        }
     }
     
     func initializeLocalizedString() {
@@ -130,6 +135,14 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         tableData.append(resolutionCenterString)
         tableData.append(helpString)
         tableData.append(logoutString)
+    }
+    
+    func removeMessagingInTabBar() {
+        var viewControllers: [UIViewController] =  self.tabBarController!.viewControllers as! [UIViewController]
+        if viewControllers.count == 4 {
+            viewControllers.removeAtIndex(2)
+            self.tabBarController?.setViewControllers(viewControllers, animated: true)
+        }
     }
     
     func setupGCM(){
