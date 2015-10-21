@@ -64,6 +64,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     let success: String = StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_LOCALIZE_KEY")
     let empty: String = StringHelper.localizedStringWithKey("STORE_INFO_EMPTY_LOCALIZE_KEY")
     let successTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TITLE_LOCALIZE_KEY")
+    let tinTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_TIN_LOCALIZE_KEY")
     
     var qrUrl: String = ""
     var qr: String = ""
@@ -229,6 +230,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 //    cell.verifyButton.setTitle("Verify", forState: UIControlState.Normal)
                 //} else {
                 cell.verifyButton.setTitle(self.changeTitle, forState: UIControlState.Normal)
+                cell.tinLabel.text = self.tinTitle
+                cell.tinTextField.placeholder = self.tinTitle
                 //}
                 cell.verifyButton.tag = 2
             } else {
