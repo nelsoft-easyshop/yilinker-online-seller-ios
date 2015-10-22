@@ -11,9 +11,10 @@ import UIKit
 class StoreInfoPreferredCategoriesModel: NSObject {
     var title: String = ""
     var isChecked: Bool = false
-    
-    init(title: String, isChecked: Bool) {
+    var productId: String = ""
+    init(title: String, isChecked: Bool, productId: String) {
         self.title = title
         self.isChecked = isChecked
+        self.productId = productId
     }
 }
