@@ -345,9 +345,9 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             }
         } else if indexPath.section == 2 {
             if self.hasQRCode {
-                return 322
+                return 341
             } else {
-                return 198
+                return 208
             }            
         } else if indexPath.section == 3 {
             return 163
