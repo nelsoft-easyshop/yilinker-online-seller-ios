@@ -320,8 +320,12 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 1 {
-            if self.storeInfoModel != nil {
-                return self.storeInfoModel!.productCategoryName.count
+            if SessionManager.isReseller() {
+                if self.storeInfoModel != nil {
+                    return self.storeInfoModel!.productCategoryName.count
+                } else {
+                    return 0
+                }
             } else {
                 return 0
             }
@@ -337,7 +341,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             if SessionManager.isReseller() {
                 return 44
             } else {
-                return 44
+                return 0
             }
         } else if indexPath.section == 2 {
             if self.hasQRCode {
@@ -356,8 +360,12 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 1 {
-            let headerView: StoreInfoPreferredCategoriesSectionView = XibHelper.puffViewWithNibName("AddProductHeaderView", index: 2) as! StoreInfoPreferredCategoriesSectionView
-            return headerView
+            if SessionManager.isReseller() {
+                let headerView: StoreInfoPreferredCategoriesSectionView = XibHelper.puffViewWithNibName("AddProductHeaderView", index: 2) as! StoreInfoPreferredCategoriesSectionView
+                return headerView
+            } else {
+                return nil
+            }
         } else {
             return nil
         }
@@ -365,7 +373,11 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 1 {
-            return 50
+            if SessionManager.isReseller() {
+                return 50
+            } else {
+                return 0
+            }
         } else {
             return 0
         }
