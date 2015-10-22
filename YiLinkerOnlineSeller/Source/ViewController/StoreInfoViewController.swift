@@ -90,12 +90,14 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         self.fireStoreInfo()
         self.backButton()
         
+        /*
         self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Clothing", isChecked: false))
         self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Gadgets", isChecked: false))
         self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Shoes", isChecked: false))
         self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Home Improvements", isChecked: false))
         self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Toys, Kids and Babies", isChecked: false))
         self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Health and Beauty", isChecked: false))
+        */
         
         var tap = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         tap.cancelsTouchesInView = false
@@ -157,6 +159,9 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             
             println("store info \(responseObject)")
             if responseObject["isSuccessful"] as! Bool {
+                for var i: Int = 0; i < self.storeInfoModel?.productCategoryName.count; i++ {
+                    self.tableData.append(StoreInfoPreferredCategoriesModel(title: self.storeInfoModel!.productCategoryName[i], isChecked: false, productId: self.storeInfoModel!.productId[i]))
+                }
                 self.tableView.reloadData()
             } else {
                 self.showAlert(Constants.Localized.error, message: responseObject["message"] as! String)
@@ -256,8 +261,12 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             return cell
         } else if indexPath.section == 1 {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoPreferredCategoriesTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoPreferredCategoriesTableViewCell
-            cell.titleLabel.text = self.tableData[indexPath.row].title
-            cell.setChecked(self.tableData[indexPath.row].isChecked)
+            
+            if self.storeInfoModel != nil {
+                cell.titleLabel.text = self.tableData[indexPath.row].title
+                cell.setChecked(self.tableData[indexPath.row].isChecked)
+            }
+            
             return cell
         } else if indexPath.section == 2 {
             if self.hasQRCode {
@@ -311,7 +320,11 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 1 {
-            return 6
+            if self.storeInfoModel != nil {
+                return self.storeInfoModel!.productCategoryName.count
+            } else {
+                return 0
+            }
         } else {
             return 1
         }
@@ -321,7 +334,11 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         if indexPath.section == 0 {
             return 556
         } else if indexPath.section == 1 {
-            return 44
+            if SessionManager.isReseller() {
+                return 44
+            } else {
+                return 44
+            }
         } else if indexPath.section == 2 {
             if self.hasQRCode {
                 return 322
@@ -356,16 +373,16 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 1 {
-            if contains(self.selectedCategories, "\(indexPath.row)") {
+            if contains(self.selectedCategories, self.storeInfoModel!.productId[indexPath.row]) {
                 println("yes")
                 self.tableData[indexPath.row].isChecked = false
-                if let index = find(self.selectedCategories, "\(indexPath.row)") {
+                if let index = find(self.selectedCategories, self.storeInfoModel!.productId[indexPath.row]) {
                     self.selectedCategories.removeAtIndex(index)
                 }
                 println(self.selectedCategories)
             } else {
                 self.tableData[indexPath.row].isChecked = true
-                self.selectedCategories.insert("\(indexPath.row)", atIndex: self.selectedCategories.count)
+                self.selectedCategories.insert(self.storeInfoModel!.productId[indexPath.row], atIndex: self.selectedCategories.count)
                 println(self.selectedCategories)
             }
         }
