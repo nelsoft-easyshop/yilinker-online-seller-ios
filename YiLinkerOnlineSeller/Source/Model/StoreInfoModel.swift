@@ -50,8 +50,20 @@ class StoreInfoModel: NSObject {
     var isReseller: Bool = false
     var isEmailSubscribed: Bool = false
     var isSmsSubscribed: Bool = false
+    /*
+    "storeCategory": {
+    "categories": [
+    {
+    "productCategoryId": 2,
+    "name": "Clothing  & Accessories",
+    "isSelected": false
+    },
+    */
+    var productId: [String] = []
+    var productCategoryName: [String] = []
+    var isSelected: [Bool] = []
     
-    init(name : String, email : String, gender : String, nickname : String, contact_number : String, specialty : String, birthdate : String, store_name : String, store_description : String, avatar : NSURL, cover_photo : NSURL, is_allowed : Bool, title: String, unit_number: String, bldg_name: String, street_number: String, street_name: String, subdivision: String, zip_code: String, full_address: String, account_title: String, account_number: String, bank_account: String, bank_id: Int, productCount: Int, transactionCount: Int, totalSales: String, isReseller: Bool, isEmailSubscribed: Bool, isSmsSubscribed: Bool) {
+    init(name : String, email : String, gender : String, nickname : String, contact_number : String, specialty : String, birthdate : String, store_name : String, store_description : String, avatar : NSURL, cover_photo : NSURL, is_allowed : Bool, title: String, unit_number: String, bldg_name: String, street_number: String, street_name: String, subdivision: String, zip_code: String, full_address: String, account_title: String, account_number: String, bank_account: String, bank_id: Int, productCount: Int, transactionCount: Int, totalSales: String, isReseller: Bool, isEmailSubscribed: Bool, isSmsSubscribed: Bool, productId: NSArray, productCategoryName: NSArray, isSelected: NSArray) {
         self.name = name
         self.email = email
         self.gender = gender
@@ -81,6 +93,9 @@ class StoreInfoModel: NSObject {
         self.isReseller = isReseller
         self.isEmailSubscribed = isEmailSubscribed
         self.isSmsSubscribed = isSmsSubscribed
+        self.productId = productId as! [String]
+        self.productCategoryName = productCategoryName as! [String]
+        self.isSelected = isSelected as! [Bool]
     }
 
     class func parseSellerDataFromDictionary(dictionary: NSDictionary) -> StoreInfoModel {
@@ -117,6 +132,10 @@ class StoreInfoModel: NSObject {
         var isReseller: Bool = false
         var isEmailSubscribed: Bool = false
         var isSmsSubscribed: Bool = false
+        
+        var productId: [String] = []
+        var productCategoryName: [String] = []
+        var isSelected: [Bool] = []
         
         println(dictionary["data"])
         if let value: AnyObject = dictionary["data"] {
@@ -261,6 +280,34 @@ class StoreInfoModel: NSObject {
                 
             }
             
+            /*
+            "storeCategory": {
+            "categories": [
+            {
+            "productCategoryId": 2,
+            "name": "Clothing  & Accessories",
+            "isSelected": false
+            },
+            */
+            
+            if let val: AnyObject = value["storeCategory"] {
+                if let categories: AnyObject = val["categories"] {
+                    for category in categories as! NSArray {
+                        if let tempVal = category["productCategoryId"] as? Int {
+                            productId.append("\(tempVal)")
+                        }
+                        
+                        if let tempVal = category["name"] as? String {
+                            productCategoryName.append(tempVal)
+                        }
+                        
+                        if let tempVal = category["isSelected"] as? Bool {
+                            isSelected.append(tempVal)
+                        }
+                    }
+                }
+            }
+            
             if let val: AnyObject = value["userAddress"] {
                 
                 if let temTitle = val["title"] as? String {
@@ -299,7 +346,7 @@ class StoreInfoModel: NSObject {
             
         }
         
-        let storeInfo: StoreInfoModel = StoreInfoModel(name: name, email: email, gender: gender, nickname: nickname, contact_number: contact_number, specialty: contact_number, birthdate: birthdate, store_name: store_name, store_description: store_description, avatar: avatar, cover_photo: cover_photo, is_allowed: is_followed, title: title, unit_number: unit_number, bldg_name: bldg_name, street_number: street_number, street_name: street_name, subdivision: subdivision, zip_code: zip_code, full_address: store_address, account_title: account_title, account_number: account_number,bank_account: bank_account, bank_id: bank_id, productCount: productCount, transactionCount: transactionCount, totalSales: totalSales, isReseller: isReseller, isEmailSubscribed: isEmailSubscribed, isSmsSubscribed: isSmsSubscribed)
+        let storeInfo: StoreInfoModel = StoreInfoModel(name: name, email: email, gender: gender, nickname: nickname, contact_number: contact_number, specialty: contact_number, birthdate: birthdate, store_name: store_name, store_description: store_description, avatar: avatar, cover_photo: cover_photo, is_allowed: is_followed, title: title, unit_number: unit_number, bldg_name: bldg_name, street_number: street_number, street_name: street_name, subdivision: subdivision, zip_code: zip_code, full_address: store_address, account_title: account_title, account_number: account_number,bank_account: bank_account, bank_id: bank_id, productCount: productCount, transactionCount: transactionCount, totalSales: totalSales, isReseller: isReseller, isEmailSubscribed: isEmailSubscribed, isSmsSubscribed: isSmsSubscribed, productId: productId, productCategoryName: productCategoryName, isSelected: isSelected)
         println("\(store_address)")
         return storeInfo
     }
