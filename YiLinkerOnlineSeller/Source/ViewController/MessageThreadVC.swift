@@ -145,6 +145,15 @@ class MessageThreadVC: UIViewController {
             name: appDelegate.seenMessageKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onReceiveNewMessage:",
             name: appDelegate.messageKey, object: nil)
+        
+        if let var tabBarTemp = self.tabBarController?.tabBar{
+            if (tabBarTemp.hidden){
+                self.tabBarHidden = true
+            } else {
+                self.tabBarHidden = false
+            }
+        }
+        println("HIDDEN? \(self.tabBarHidden)")
     }
     
     func onSeenMessage(notification : NSNotification){
@@ -207,11 +216,6 @@ class MessageThreadVC: UIViewController {
         self.setConversationAsReadFromEndpoint(r_temp)
         self.sendButton.titleLabel?.text = LocalizedStrings.send
         
-        if((self.tabBarController?.tabBar.hidden) != nil){
-            self.tabBarHidden = true
-        } else {
-            self.tabBarHidden = false
-        }
     }
     
     func tableTapped(tap : UITapGestureRecognizer){
@@ -220,6 +224,7 @@ class MessageThreadVC: UIViewController {
     }
     
     override func viewWillDisappear(animated: Bool) {
+        self.clearProfileView()
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardDidChangeFrameNotification, object: nil)
@@ -365,6 +370,7 @@ class MessageThreadVC: UIViewController {
                 if (!self.tabBarHidden){
                     tabBarH = self.tabBarHeight
                 }
+                println("tabBarH Hidden \(tabBarH)")
                 
                 self.threadTableView.contentInset = UIEdgeInsetsMake(60, 0, tabBarH, 0)
                 
@@ -416,6 +422,8 @@ class MessageThreadVC: UIViewController {
                 if (!self.tabBarHidden){
                     tabBarH = self.tabBarHeight
                 }
+                
+                println("tabBarH shown \(tabBarH)")
                 
                 self.composeViewBottomLayout.constant += (keyFrame.size.height - tabBarH)
                 

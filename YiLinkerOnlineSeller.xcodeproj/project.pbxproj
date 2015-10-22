@@ -448,6 +448,7 @@
 		96FBF6811BA06C94009DDD29 /* ResolutionCenterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FBF6801BA06C94009DDD29 /* ResolutionCenterModel.swift */; };
 		B70DD90F1BA727F400EC3A18 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B70DD90E1BA727F300EC3A18 /* GoogleService-Info.plist */; };
 		B70DD9121BA72B9800EC3A18 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70DD9111BA72B9800EC3A18 /* EmptyView.swift */; };
+		B78B18B41BD886B600F0EC43 /* MessageThreadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BADAF41BA563FF005F59F9 /* MessageThreadVC.swift */; };
 		B7BADAE31BA56381005F59F9 /* DateUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BADAE21BA56381005F59F9 /* DateUtility.swift */; };
 		B7BADAE71BA563A5005F59F9 /* W_Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BADAE41BA563A5005F59F9 /* W_Contact.swift */; };
 		B7BADAE81BA563A5005F59F9 /* W_Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BADAE51BA563A5005F59F9 /* W_Conversation.swift */; };
@@ -2378,6 +2379,7 @@
 				0CEB3AC71BB092B600139AFE /* ProductManagementViewController.swift in Sources */,
 				0CEB3AC61BB08CA700139AFE /* TransactionShipItemTableViewController.swift in Sources */,
 				0CEB3AC41BB0895F00139AFE /* ProductImagesView.swift in Sources */,
+				B78B18B41BD886B600F0EC43 /* MessageThreadVC.swift in Sources */,
 				F7E175761BA3F32C00A3820B /* ProductUploadTextFieldTableViewCell.swift in Sources */,
 				961F70361B983E50007D0EA5 /* ResolutionFilterViewController.swift in Sources */,
 				0CEB3AC11BB052BE00139AFE /* SelectedProductTableViewCell.swift in Sources */,
