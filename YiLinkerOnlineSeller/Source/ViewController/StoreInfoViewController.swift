@@ -19,7 +19,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     let storeInfoAddressTableViewCellIdentifier: String = "StoreInfoAddressTableViewCell"
     let storeInfoBankAccountTableViewCellIdentifier: String = "StoreInfoBankAccountTableViewCell"
     let storeInfoAccountInformationTableViewCellIdentifier: String = "StoreInfoAccountInformationTableViewCell"
-
+    let storeInfoPreferredCategoriesTableViewCellIdentifier: String = "StoreInfoPreferredCategoriesTableViewCell"
     var hud: MBProgressHUD?
     
     var dimView: UIView = UIView()
@@ -68,6 +68,10 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     var qrUrl: String = ""
     var qr: String = ""
+    
+    var tableData: [StoreInfoPreferredCategoriesModel] = []
+    var selectedCategories: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -85,6 +89,13 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         self.registerNibs()
         self.fireStoreInfo()
         self.backButton()
+        
+        self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Clothing", isChecked: false))
+        self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Gadgets", isChecked: false))
+        self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Shoes", isChecked: false))
+        self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Home Improvements", isChecked: false))
+        self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Toys, Kids and Babies", isChecked: false))
+        self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Health and Beauty", isChecked: false))
         
         var tap = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         tap.cancelsTouchesInView = false
@@ -129,6 +140,9 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         var storeInfoAccountInformation = UINib(nibName: storeInfoAccountInformationTableViewCellIdentifier, bundle: nil)
         self.tableView.registerNib(storeInfoAccountInformation, forCellReuseIdentifier: storeInfoAccountInformationTableViewCellIdentifier)
+        
+        var storeInfoPreferredCategories = UINib(nibName: storeInfoPreferredCategoriesTableViewCellIdentifier, bundle: nil)
+        self.tableView.registerNib(storeInfoPreferredCategories, forCellReuseIdentifier: storeInfoPreferredCategoriesTableViewCellIdentifier)
     }
     
     //MARK: Get store info
@@ -183,12 +197,10 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     //MARK: Tableview delegate methods
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-       return 5
+       return 6
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        println("sections \(indexPath.section) row \(indexPath.row)")
-        println("\(self.storeInfoModel?.store_address)")
   
         if indexPath.section == 0 {
             
@@ -243,6 +255,11 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
            
             return cell
         } else if indexPath.section == 1 {
+            let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoPreferredCategoriesTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoPreferredCategoriesTableViewCell
+            cell.titleLabel.text = self.tableData[indexPath.row].title
+            cell.setChecked(self.tableData[indexPath.row].isChecked)
+            return cell
+        } else if indexPath.section == 2 {
             if self.hasQRCode {
                 let cell: StoreInfoQrCodeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoQRCodeTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoQrCodeTableViewCell
                 if let url = NSURL(string: "\(self.qrUrl)") {
@@ -261,7 +278,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 cell.delegate = self
                 return cell
             }
-       } else if indexPath.section == 2 {
+       } else if indexPath.section == 3 {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoAddressTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAddressTableViewCell
             cell.delegate = self
             //Display current bank account
@@ -270,7 +287,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             cell.storeAddressTitleLabel.text = self.storeAddressTitle
             cell.newAddressLabel.text = self.newAddress
             return cell
-        } else if indexPath.section == 3 {
+        } else if indexPath.section == 4 {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoBankAccountTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoBankAccountTableViewCell
             cell.delegate = self
             //Display current bank account
@@ -293,27 +310,78 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return 1
-        
+        if section == 1 {
+            return 6
+        } else {
+            return 1
+        }
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
             return 556
         } else if indexPath.section == 1 {
+            return 44
+        } else if indexPath.section == 2 {
             if self.hasQRCode {
                 return 322
             } else {
                 return 198
             }            
-        } else if indexPath.section == 2 {
+        } else if indexPath.section == 3 {
             return 163
-        } else  if indexPath.section == 3 {
+        } else if indexPath.section == 4 {
             return 163
         } else {
             return 221
         }
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 1 {
+            let headerView: StoreInfoPreferredCategoriesSectionView = XibHelper.puffViewWithNibName("AddProductHeaderView", index: 2) as! StoreInfoPreferredCategoriesSectionView
+            return headerView
+        } else {
+            return nil
+        }
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 1 {
+            return 50
+        } else {
+            return 0
+        }
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 1 {
+            if contains(self.selectedCategories, "\(indexPath.row)") {
+                println("yes")
+                self.tableData[indexPath.row].isChecked = false
+                if let index = find(self.selectedCategories, "\(indexPath.row)") {
+                    self.selectedCategories.removeAtIndex(index)
+                }
+                println(self.selectedCategories)
+            } else {
+                self.tableData[indexPath.row].isChecked = true
+                self.selectedCategories.insert("\(indexPath.row)", atIndex: self.selectedCategories.count)
+                println(self.selectedCategories)
+            }
+        }
+        
+        self.tableView.reloadData()
+        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+    }
+    
+    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 1 {
+            let originalStatus: Bool = self.tableData[indexPath.row].isChecked
+            self.tableData[indexPath.row].isChecked = false
+        }
+        
+        self.tableView.reloadData()
+        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
     }
     
     func storeNameAndDescription(storeName: String, storeDescription: String) {
