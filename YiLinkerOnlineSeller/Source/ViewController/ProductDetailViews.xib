@@ -74,20 +74,20 @@
             <point key="canvasLocation" x="837.5" y="331"/>
         </view>
         <view contentMode="scaleToFill" id="Z65-YD-xsx" customClass="ProductDescriptionView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="157"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="93"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kwn-db-AzY">
-                    <rect key="frame" x="83" y="114" width="209" height="35"/>
+                    <rect key="frame" x="83" y="50" width="209" height="35"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SEE MORE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spi-nn-9Z3">
-                            <rect key="frame" x="55" y="0.0" width="90" height="35"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SEE MORE DETAILS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spi-nn-9Z3">
+                            <rect key="frame" x="30" y="0.0" width="130" height="35"/>
                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <color key="textColor" red="0.50122048590000001" green="0.0" blue="0.7202493687" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="seeMore" translatesAutoresizingMaskIntoConstraints="NO" id="Wdj-VO-zkp">
-                            <rect key="frame" x="144" y="10" width="10" height="15"/>
+                            <rect key="frame" x="168" y="10" width="10" height="15"/>
                         </imageView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -112,7 +112,7 @@
                         <constraint firstAttribute="height" constant="1" id="RWE-sF-sBJ"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Description Text Here" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehP-lJ-I5r">
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Description Text Here" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehP-lJ-I5r">
                     <rect key="frame" x="10" y="57" width="357" height="16"/>
                     <constraints>
                         <constraint firstAttribute="height" priority="500" constant="33" id="1oM-o4-nPA"/>
@@ -149,7 +149,7 @@
                 <outlet property="seeMoreView" destination="kwn-db-AzY" id="uuM-kZ-boB"/>
                 <outlet property="titleLabel" destination="GnP-7v-HbZ" id="mQc-9R-Fim"/>
             </connections>
-            <point key="canvasLocation" x="837.5" y="656.5"/>
+            <point key="canvasLocation" x="837.5" y="624.5"/>
         </view>
     </objects>
     <resources>
