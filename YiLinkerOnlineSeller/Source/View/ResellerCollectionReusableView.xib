@@ -15,22 +15,21 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ResellerCollectionReusableView" id="U6b-Vx-4bR" customClass="ResellerCollectionReusableView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="415" height="148"/>
+            <rect key="frame" x="0.0" y="0.0" width="415" height="116"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cKl-9e-3wn">
-                    <rect key="frame" x="22" y="8" width="374" height="65"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select the products that you would like to sell. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cKl-9e-3wn">
+                    <rect key="frame" x="22" y="8" width="374" height="43"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="374" id="A5p-63-m4V"/>
-                        <constraint firstAttribute="height" constant="65" id="Mic-31-Ai3"/>
+                        <constraint firstAttribute="height" constant="43" id="Mic-31-Ai3"/>
                     </constraints>
-                    <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</string>
                     <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fUq-4c-oGR" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
-                    <rect key="frame" x="95" y="98" width="229" height="37"/>
+                    <rect key="frame" x="93" y="59" width="229" height="37"/>
                     <color key="backgroundColor" red="0.27450980390000002" green="0.66274509800000003" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="37" id="7yW-H2-RLb"/>
@@ -57,12 +56,15 @@
             <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="cKl-9e-3wn" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="8" id="7JQ-ns-yUJ"/>
-                <constraint firstItem="fUq-4c-oGR" firstAttribute="top" secondItem="cKl-9e-3wn" secondAttribute="bottom" constant="25" id="Le0-Eu-Nj3"/>
+                <constraint firstItem="fUq-4c-oGR" firstAttribute="top" secondItem="cKl-9e-3wn" secondAttribute="bottom" constant="8" id="Le0-Eu-Nj3"/>
                 <constraint firstItem="cKl-9e-3wn" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="22" id="cBT-hh-Isn"/>
-                <constraint firstAttribute="centerX" secondItem="fUq-4c-oGR" secondAttribute="centerX" constant="-2" id="d3C-V6-aSN"/>
+                <constraint firstAttribute="centerX" secondItem="fUq-4c-oGR" secondAttribute="centerX" id="d3C-V6-aSN"/>
                 <constraint firstAttribute="trailing" secondItem="cKl-9e-3wn" secondAttribute="trailing" constant="19" id="zQc-2y-tnS"/>
             </constraints>
-            <point key="canvasLocation" x="308.5" y="321"/>
+            <connections>
+                <outlet property="headerLabel" destination="cKl-9e-3wn" id="UNJ-Pn-X6I"/>
+            </connections>
+            <point key="canvasLocation" x="308.5" y="305"/>
         </collectionReusableView>
     </objects>
 </document>

@@ -11,6 +11,7 @@ import UIKit
 struct ResellerStrings {
     static let reseller: String = StringHelper.localizedStringWithKey("RESELLER_LOCALIZE_KEY")
     static let resellerAddItem: String = StringHelper.localizedStringWithKey("RESELLER_ADDITEMS_LOCALIZE_KEY")
+    static let resellerHeader: String = StringHelper.localizedStringWithKey("RESELLER_HEADER_LOCALIZE_KEY")
 }
 
 class ResellerItemViewController: UIViewController, UIScrollViewDelegate, UISearchBarDelegate {
