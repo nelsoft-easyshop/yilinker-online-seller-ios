@@ -91,7 +91,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         tableFooterView = nil
         
         
-        if  transactionDetailsModel.isShippable || transactionDetailsModel.isCancellable {
+        if  (transactionDetailsModel.isShippable || transactionDetailsModel.isCancellable) && !SessionManager.isReseller(){
             if tableFooterView == nil {
                 tableFooterView = XibHelper.puffViewWithNibName("TransactionDetailsFooterView", index: 0) as! TransactionDetailsFooterView
                 tableFooterView.delegate = self

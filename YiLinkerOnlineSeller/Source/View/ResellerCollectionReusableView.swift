@@ -16,9 +16,11 @@ class ResellerCollectionReusableView: UICollectionReusableView {
 
     var delegate: ResellerCollectionReusableViewDelegate?
     
+    @IBOutlet weak var headerLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.headerLabel.text = ResellerStrings.resellerHeader
     }
     
     @IBAction func addItems(sender: AnyObject) {

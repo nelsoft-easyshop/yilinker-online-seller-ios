@@ -18,7 +18,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     
     var tableData: [String] = []
     
-    var tableImages: [String] = ["mystore", "report", "transaction", "product", "category", "uploadItem", "followers", "activityLog", "points", "resolution", "help", "logout"]
+    var tableImages: [String] = []
     
     var storeInfo: StoreInfoModel!
     
@@ -137,6 +137,28 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         }
         tableData.append(helpString)
         tableData.append(logoutString)
+        
+        tableImages.removeAll(keepCapacity: false)
+        tableImages.append("mystore")
+        tableImages.append("report")
+        tableImages.append("transaction")
+        tableImages.append("product")
+        tableImages.append("category")
+        tableImages.append("uploadItem")
+        tableImages.append("followers")
+        tableImages.append("activityLog")
+        tableImages.append("points")
+        if !SessionManager.isReseller(){
+            tableImages.append("resolution")
+        } else {
+            for var i = 0; i < tableImages.count; i++ {
+                if tableImages[i] == "resolution" {
+                    tableImages.removeAtIndex(i)
+                }
+            }
+        }
+        tableImages.append("help")
+        tableImages.append("logout")
     }
     
     func removeMessagingInTabBar() {
