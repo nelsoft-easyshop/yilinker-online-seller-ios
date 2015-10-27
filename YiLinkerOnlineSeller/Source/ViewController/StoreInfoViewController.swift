@@ -70,7 +70,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     var qr: String = ""
     
     var tableData: [StoreInfoPreferredCategoriesModel] = []
-    var selectedCategories: [String] = []
+    var selectedCategories: [Int] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -160,7 +160,11 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             println("store info \(responseObject)")
             if responseObject["isSuccessful"] as! Bool {
                 for var i: Int = 0; i < self.storeInfoModel?.productCategoryName.count; i++ {
-                    self.tableData.append(StoreInfoPreferredCategoriesModel(title: self.storeInfoModel!.productCategoryName[i], isChecked: false, productId: self.storeInfoModel!.productId[i]))
+                    self.tableData.append(StoreInfoPreferredCategoriesModel(title: self.storeInfoModel!.productCategoryName[i], isChecked: self.storeInfoModel!.isSelected[i], productId: self.storeInfoModel!.productId[i]))
+                    if self.storeInfoModel!.isSelected[i] {
+                        self.selectedCategories.insert(self.storeInfoModel!.productId[i].toInt()!, atIndex: self.selectedCategories.count)
+                    }
+                    println(self.selectedCategories)
                 }
                 self.tableView.reloadData()
             } else {
@@ -385,16 +389,16 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 1 {
-            if contains(self.selectedCategories, self.storeInfoModel!.productId[indexPath.row]) {
+            if contains(self.selectedCategories, self.storeInfoModel!.productId[indexPath.row].toInt()!) {
                 println("yes")
                 self.tableData[indexPath.row].isChecked = false
-                if let index = find(self.selectedCategories, self.storeInfoModel!.productId[indexPath.row]) {
+                if let index = find(self.selectedCategories, self.storeInfoModel!.productId[indexPath.row].toInt()!) {
                     self.selectedCategories.removeAtIndex(index)
                 }
                 println(self.selectedCategories)
             } else {
                 self.tableData[indexPath.row].isChecked = true
-                self.selectedCategories.insert(self.storeInfoModel!.productId[indexPath.row], atIndex: self.selectedCategories.count)
+                self.selectedCategories.insert(self.storeInfoModel!.productId[indexPath.row].toInt()!, atIndex: self.selectedCategories.count)
                 println(self.selectedCategories)
             }
         }
@@ -578,10 +582,19 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             datas.append(dataCoverPhoto)
         }
        
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "storeName" : cell.storeNameTextField.text, "storeDescription" : cell.storeDescriptionTextView.text, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
+        let data = NSJSONSerialization.dataWithJSONObject(self.selectedCategories, options: nil, error: nil)
+        var formattedCategories: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+        let parameters: NSDictionary?
+        
+        if self.storeInfoModel!.isReseller {
+             parameters = ["access_token" : SessionManager.accessToken(), "storeName" : cell.storeNameTextField.text, "storeDescription" : cell.storeDescriptionTextView.text, "categoryIds" : formattedCategories, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
+        } else {
+            parameters = ["access_token" : SessionManager.accessToken(), "storeName" : cell.storeNameTextField.text, "storeDescription" : cell.storeDescriptionTextView.text, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
+        }
 
         let url: String = "\(APIAtlas.sellerUpdateSellerInfo)?access_token=\(SessionManager.accessToken())"
         
+        println("params \(parameters)")
         if !cell.storeNameTextField.text.isEmpty && !cell.storeNameTextField.text.isEmpty {
             manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
                 for (index, data) in enumerate(datas) {
