@@ -299,11 +299,11 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             //Display current bank account
             cell.storeAddressTitleLabel.text = self.storeAddressTitle
             if self.storeInfoModel?.store_address != "" || self.storeInfoModel?.title != "" {
-                cell.addressLabel.text = self.addressNotSet
-                cell.addressTitle.text = ""
-            } else {
                 cell.addressTitle.text = self.storeInfoModel?.title
                 cell.addressLabel.text = self.storeInfoModel?.store_address
+            } else {
+                cell.addressLabel.text = self.addressNotSet
+                cell.addressTitle.text = ""
             }
             
             cell.newAddressLabel.text = self.newAddress
@@ -314,16 +314,16 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             //Display current bank account
             cell.bankAccountTitleLabel.text = self.bankAccountTitle
             cell.newAccountLabel.text = self.newAccount
+            cell.newAccountLabel.hidden = true
+            cell.arrowButton.hidden = true
             if self.storeInfoModel?.accountTitle != "" || self.storeInfoModel?.bankAccount != "" {
-                cell.newAccountLabel.hidden = true
-                cell.arrowButton.hidden = true
-                cell.bankAccountDetailLabel.text = self.bankNotSet
-                cell.bankAccountInfoLabel.text = ""
-            } else {
-                cell.newAccountLabel.hidden = false
-                cell.arrowButton.hidden = false
                 cell.bankAccountDetailLabel.text = self.storeInfoModel?.bankAccount
                 cell.bankAccountInfoLabel.text = self.storeInfoModel?.accountTitle
+            } else {
+                //cell.newAccountLabel.hidden = false
+                //cell.arrowButton.hidden = false
+                cell.bankAccountDetailLabel.text = self.bankNotSet
+                cell.bankAccountInfoLabel.text = ""
             }
             cell.accountTitle = self.storeInfoModel!.accountTitle
             println("account title \(cell.accountTitle)")
