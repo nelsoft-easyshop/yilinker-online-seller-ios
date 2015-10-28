@@ -65,6 +65,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     let empty: String = StringHelper.localizedStringWithKey("STORE_INFO_EMPTY_LOCALIZE_KEY")
     let successTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TITLE_LOCALIZE_KEY")
     let tinTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_TIN_LOCALIZE_KEY")
+    let bankNotSet: String = StringHelper.localizedStringWithKey("STORE_INFO_NO_BANK_LOCALIZE_KEY")
+    let addressNotSet: String = StringHelper.localizedStringWithKey("STORE_INFO_NO_ADDRESS_LOCALIZE_KEY")
     
     var qrUrl: String = ""
     var qr: String = ""
@@ -295,9 +297,15 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoAddressTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAddressTableViewCell
             cell.delegate = self
             //Display current bank account
-            cell.addressLabel.text = self.storeInfoModel?.store_address
-            cell.addressTitle.text = self.storeInfoModel?.title
             cell.storeAddressTitleLabel.text = self.storeAddressTitle
+            if self.storeInfoModel?.store_address != "" || self.storeInfoModel?.title != "" {
+                cell.addressLabel.text = self.addressNotSet
+                cell.addressTitle.text = ""
+            } else {
+                cell.addressTitle.text = self.storeInfoModel?.title
+                cell.addressLabel.text = self.storeInfoModel?.store_address
+            }
+            
             cell.newAddressLabel.text = self.newAddress
             return cell
         } else if indexPath.section == 4 {
@@ -305,10 +313,20 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             cell.delegate = self
             //Display current bank account
             cell.bankAccountTitleLabel.text = self.bankAccountTitle
-            cell.bankAccountDetailLabel.text = self.storeInfoModel?.bankAccount
-            cell.bankAccountInfoLabel.text = self.storeInfoModel?.accountTitle
             cell.newAccountLabel.text = self.newAccount
-            println(cell)
+            if self.storeInfoModel?.accountTitle != "" || self.storeInfoModel?.bankAccount != "" {
+                cell.newAccountLabel.hidden = true
+                cell.arrowButton.hidden = true
+                cell.bankAccountDetailLabel.text = self.bankNotSet
+                cell.bankAccountInfoLabel.text = ""
+            } else {
+                cell.newAccountLabel.hidden = false
+                cell.arrowButton.hidden = false
+                cell.bankAccountDetailLabel.text = self.storeInfoModel?.bankAccount
+                cell.bankAccountInfoLabel.text = self.storeInfoModel?.accountTitle
+            }
+            cell.accountTitle = self.storeInfoModel!.accountTitle
+            println("account title \(cell.accountTitle)")
             return cell
         } else {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoAccountInformationTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAccountInformationTableViewCell
