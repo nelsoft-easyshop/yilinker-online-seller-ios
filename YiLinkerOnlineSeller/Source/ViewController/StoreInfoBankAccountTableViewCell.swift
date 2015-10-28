@@ -23,12 +23,17 @@ class StoreInfoBankAccountTableViewCell: UITableViewCell {
     @IBOutlet weak var bankAccountInfoLabel: UILabel!
     @IBOutlet weak var newAccountLabel: UILabel!
     @IBOutlet weak var bankAccountView: UIView!
+    @IBOutlet weak var arrowButton: UIButton!
+
+    var accountTitle: String = ""
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         var tapBankView = UITapGestureRecognizer(target: self, action: "tapBankAccount")
-        bankAccountView.addGestureRecognizer(tapBankView)
+        arrowButton.addGestureRecognizer(tapBankView)
+        
+        newAccountLabel.addGestureRecognizer(tapBankView)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
