@@ -240,6 +240,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 cell.storeDescriptionTextView.text = self.storeInfoModel?.store_description
                 cell.profileEditImageView.image = UIImage(named: "edit.png")
                 cell.coverEditImageView.image = UIImage(named: "edit.png")
+                cell.tinTextField.text = self.self.storeInfoModel?.tin
                 let url: NSString = NSString(string: (self.storeInfoModel?.avatar)!.absoluteString!)
                 if (!url.isEqual("")) {
                     cell.profileEditLabel.text = editPhoto
