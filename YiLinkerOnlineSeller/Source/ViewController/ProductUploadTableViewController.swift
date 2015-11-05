@@ -733,6 +733,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
     }
     
+    //MARK: - Category
     func category() {
         let productUploadCategoryViewController: ProductUploadCategoryViewController = ProductUploadCategoryViewController(nibName: "ProductUploadCategoryViewController", bundle: nil)
         productUploadCategoryViewController.delegate = self
@@ -741,12 +742,14 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         self.navigationController!.pushViewController(productUploadCategoryViewController, animated: true)
     }
     
+    //MARK: - Brand
     func brand() {
         let brandViewController: ProductUploadBrandViewController = ProductUploadBrandViewController(nibName: "ProductUploadBrandViewController", bundle: nil)
         brandViewController.delegate = self
         self.navigationController!.pushViewController(brandViewController, animated: true)
     }
     
+    //MARK: - Product Uplaod Brand View Controller
     func productUploadBrandViewController(didSelectBrand brand: String, brandModel: BrandModel) {
         if brandModel.name != brand {
             self.productModel.brand = BrandModel(name: brand, brandId: 1)
@@ -758,6 +761,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
     }
     
+    //MARK: - Add More Details
     func addMoreDetails(sender: UIButton) {
         /*let productUploadDetailViewController: ProductUploadDetailTableViewController = ProductUploadDetailTableViewController(nibName: "ProductUploadDetailTableViewController", bundle: nil)
         self.navigationController!.pushViewController(productUploadDetailViewController, animated: true)*/
@@ -766,10 +770,12 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         self.navigationController!.pushViewController(productUploadAttributeListTableViewController, animated: true)
     }
     
+    //MARK: - Product Upload Category View Controller
     func productUploadCategoryViewController(didSelectCategory category: String) {
         println(category)
     }
     
+    //MARK: - Back Button
     func backButton() {
         var customBackButton:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "back")
         customBackButton.tintColor = UIColor.whiteColor()
@@ -778,6 +784,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
+    //MARK: - Back
     func back() {
         if self.productModel.name != "" {
             self.draft()
@@ -787,7 +794,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
 
     }
     
-    //Upload Cell Datasource
+    //MARK: - Product Upload Upload Image Table View Cell
     func productUploadUploadImageTableViewCell(numberOfCollectionViewRows cell: ProductUploadUploadImageTableViewCell) -> Int {
         if self.uploadType == UploadType.EditProduct {
             return self.productModel.editedImage.count
@@ -796,7 +803,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
     }
     
-    //Upload Delegate
+    //MARK: - Upload Delegate
     func productUploadUploadImageTableViewCell(didSelecteRowAtIndexPath indexPath: NSIndexPath, cell: ProductUploadUploadImageTableViewCell) {
         if self.uploadType == UploadType.EditProduct {
             if indexPath.row == self.productModel.editedImage.count - 1 && self.productModel.editedImage.count <= 5 {
@@ -826,6 +833,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
     }
     
+    //MARK: - Product Upload Upload Image Table View Cell
     func productUploadUploadImageTableViewCell(didDeleteAtRowIndexPath indexPath: NSIndexPath, collectionView: UICollectionView) {
         if self.uploadType == UploadType.EditProduct {
             self.productModel.editedImage.removeAtIndex(indexPath.row)
@@ -835,12 +843,14 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         collectionView.deleteItemsAtIndexPaths([indexPath])
     }
     
+    //MARK: - Uzy Config
     func uzyConfig() -> UzysAppearanceConfig {
         let config: UzysAppearanceConfig = UzysAppearanceConfig()
         config.finishSelectionButtonColor = Constants.Colors.appTheme
         return config
     }
     
+    //MARK: - Product Upload Upload Image Table View Cell
     func productUploadUploadImageTableViewCell(images cell: ProductUploadUploadImageTableViewCell) -> [UIImage] {
         if self.uploadType == UploadType.EditProduct {
             return self.productModel.editedImage
@@ -849,8 +859,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
     }
     
-    //UzzyPickerDelegate
-    
+    //MARK: - Uzzy Picker Delegate
     func uzysAssetsPickerController(picker: UzysAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) {
         let assetsLibrary = ALAssetsLibrary()
         let alaSset: ALAsset = assets[0] as! ALAsset
@@ -873,6 +882,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         self.tableView.reloadData()
     }
     
+    //MARK: - Reupload Cell Collection View Data
     func reloadUploadCellCollectionViewData() {
         let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
         let cell: ProductUploadUploadImageTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! ProductUploadUploadImageTableViewCell
@@ -906,6 +916,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         cell.collectionView.scrollToItemAtIndexPath(lastIndexPath, atScrollPosition: UICollectionViewScrollPosition.Right, animated: true)
     }
     
+    
+    //MARK: - Uzy Delegate
     func uzysAssetsPickerControllerDidCancel(picker: UzysAssetsPickerController!) {
         
     }
@@ -937,6 +949,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         self.tableView.reloadData()
     }
     
+    //MARK: - Product Upload Footer View
     func productUploadFooterView(didClickUpload view: ProductUploadFooterView) {
         var count: Int = 0
         if self.uploadType == UploadType.EditProduct {
@@ -978,6 +991,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
     }
     
+    //MARK: - Product Upload Text Field Table View Cell
     func productUploadTextFieldTableViewCell(textFieldDidChange text: String, cell: ProductUploadTextFieldTableViewCell, textFieldType: ProductTextFieldType) {
         if textFieldType == ProductTextFieldType.ProductName {
             self.productModel.name = text
@@ -999,6 +1013,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
     }
     
+    //MARK: - Product Upload Text View Table View Cell Delegate
     func productUploadTextViewTableViewCell(textFieldDidChange text: String, cell: ProductUploadTextViewTableViewCell, textFieldType: ProductTextFieldType) {
         if textFieldType == ProductTextFieldType.ProductShortDescription {
             self.productModel.shortDescription = text
@@ -1007,6 +1022,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
     }
     
+    //MARK: - Price Table View Cell Delegate
     func productUploadPriceTableViewCell(textFieldDidChange text: String, cell: ProductUploadPriceTableViewCell, textFieldType: ProductTextFieldType) {
         if textFieldType == ProductTextFieldType.ProductRetailPrice {
             self.productModel.retailPrice = text
@@ -1022,6 +1038,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
     }
     
+    //MARK: - Dimensions And Weight Table View Cell Delegate
     func productUploadDimensionsAndWeightTableViewCell(textFieldDidChange textField: UITextField, text: String, cell: ProductUploadDimensionsAndWeightTableViewCell) {
         if textField.isEqual(cell.weightTextField) {
             self.productModel.weigth = text
@@ -1034,6 +1051,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
     }
     
+    //MARK: - Quantity Table View Cell Delegate
     func productUploadQuantityTableViewCell(textFieldDidChange text: String, cell: ProductUploadQuantityTableViewCell) {
         if let val = text.toInt() {
            self.productModel.quantity = text.toInt()!
@@ -1041,12 +1059,14 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
     }
     
-     func didSelecteCategory(categoryModel: CategoryModel) {
+    //MARK: - Select Category
+    func didSelecteCategory(categoryModel: CategoryModel) {
         self.productModel.category = categoryModel
         let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 2)
         self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
     }
     
+    //MARK: - Fire Upload With Upload Type
     func fireUploadWithUploadType(uploadType: UploadType) {
         var editedImages: [ServerUIImage] = []
         
@@ -1262,6 +1282,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             url = "\(APIAtlas.uploadEditUrl)?access_token=\(SessionManager.accessToken())"
         }
         
+        println("parameters: \(url)")
+        
         let data2 = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
         let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
         println("parameters: \(string2)")
@@ -1303,6 +1325,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
     }
     
+    //MARK: - Dismiss Controller Toast Message
     func dismissControllerWithToastMessage(message: String) {
         self.tableView.endEditing(true)
         self.navigationController?.view.makeToast(message)
@@ -1313,17 +1336,20 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
     }
     
+    //MARK: - Success
     func success() {
         let successViewController: SuccessUploadViewController = SuccessUploadViewController(nibName: "SuccessUploadViewController", bundle: nil)
         successViewController.delegate = self
         self.presentViewController(successViewController, animated: true, completion: nil)
     }
     
+    //MARK: - Success Upload View Controller
     func successUploadViewController(didTapDashBoard viewController: SuccessUploadViewController) {
         self.tableView.hidden = true
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    //MARK: - Success Upload View Controller
     func successUploadViewController(didTapUploadAgain viewController: SuccessUploadViewController) {
         for (index, images) in enumerate(self.productModel.images) {
             self.productModel.images.removeLast()
@@ -1337,6 +1363,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         self.tableView.setContentOffset(CGPointZero, animated: true)
     }
     
+    //MARK: - Property
     func property(mainImageCount: Int) -> String {
         var array: [NSMutableDictionary] = []
         var counter: Int = mainImageCount
@@ -1376,7 +1403,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         return finalJsonString
     }
     
-    
+    //MARK: - Fire Refresh Token
     func fireRefreshToken() {
         self.showHUD()
         let manager = APIManager.sharedInstance
@@ -1399,6 +1426,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
 
     }
     
+    //MARK: - Fire Refresh Token 2
     func fireRefreshToken2() {
         self.showHUD()
         let manager = APIManager.sharedInstance
@@ -1427,7 +1455,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     }
     
     // Mark: - Draft Alert 
-    
     func draft() {
         let alertController = UIAlertController(title: ProductUploadStrings.uploadItem, message: ProductUploadStrings.saveAsDraft, preferredStyle: .Alert)
         let cancelAction = UIAlertAction(title: Constants.Localized.no, style: .Cancel) { (action) in
