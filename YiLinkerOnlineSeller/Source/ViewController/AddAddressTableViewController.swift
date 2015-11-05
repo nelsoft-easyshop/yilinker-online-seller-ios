@@ -134,6 +134,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 cell.rowTextField.text = self.addressModel.barangay
             } else {
                 cell.rowTextField.text = self.addressModel.zipCode
+                cell.rowTextField.keyboardType = UIKeyboardType.NumberPad
                 cell.rowTitleLabel.required()
             }
         }
@@ -150,6 +151,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             cell.rowTitleLabel.required()
         } else if indexPath.row == 9 {
             cell.rowTitleLabel.required()
+            cell.rowTextField.keyboardType = UIKeyboardType.NumberPad
         }
         
         if indexPath.row == 6 || indexPath.row == 7 || indexPath.row == 8 {
@@ -340,6 +342,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     }
     
     func done() {
+        self.tableView.reloadData()
         let row = NSIndexPath(forItem: activeTextField, inSection: 0)
         let cell: NewAddressTableViewCell = tableView.cellForRowAtIndexPath(row) as! NewAddressTableViewCell
         cell.rowTextField.endEditing(true)
@@ -541,7 +544,6 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 self.addressModel.barangay = self.barangayModel.location[0]
             }
             
-            self.tableView.reloadData()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
