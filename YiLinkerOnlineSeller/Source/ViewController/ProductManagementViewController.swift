@@ -720,8 +720,12 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        if SessionManager.isReseller() && indexPath.row == 3 {
-            return CGSize(width: 0.0, height: 60.0)
+        if SessionManager.isReseller() {
+            if indexPath.row <= 2 {
+                return CGSize(width: self.view.frame.size.width / 3, height: 60)
+            } else {
+                return CGSize(width: 0.0, height: 60.0)
+            }
         }
         return CGSize(width: self.view.frame.size.width / 6, height: 60)
     }
