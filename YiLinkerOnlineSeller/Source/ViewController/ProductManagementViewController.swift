@@ -585,10 +585,12 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
                 cell.statusLabel.hidden = false
             }
             
-            if SessionManager.isReseller() && self.productModel.products[indexPath.row].status == 0 {
-                cell.hidden = true
-            } else {
-                cell.hidden = false
+            if SessionManager.isReseller() {
+                if self.productModel.products[indexPath.row].status == Status.active || self.productModel.products[indexPath.row].status == Status.inactive {
+                    cell.hidden = false
+                } else {
+                    cell.hidden = true
+                }
             }
             
             return cell
