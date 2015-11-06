@@ -209,7 +209,8 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
         //password
         let parameters: NSDictionary = [
             "registrationId": "\(registrationID)",
-            "access_token"  : SessionManager.accessToken()
+            "access_token"  : SessionManager.accessToken(),
+            "deviceType"    : "1"
             ]   as Dictionary<String, String>
         
         let url = APIAtlas.baseUrl + APIAtlas.ACTION_GCM_CREATE
