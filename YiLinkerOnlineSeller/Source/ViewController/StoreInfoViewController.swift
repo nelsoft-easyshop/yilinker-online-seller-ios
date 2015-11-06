@@ -218,7 +218,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             let cell: StoreInfoTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoHeaderTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoTableViewCell
             index = indexPath
             cell.delegate = self
-            
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.storeInfoLabel.text = self.storeInfo
             cell.storeNameLabel.text = self.storeName
             cell.storeDescriptionLabel.text = self.storeDesc
@@ -268,7 +268,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             return cell
         } else if indexPath.section == 1 {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoPreferredCategoriesTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoPreferredCategoriesTableViewCell
-            
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             if self.storeInfoModel != nil {
                 cell.titleLabel.text = self.tableData[indexPath.row].title
                 cell.setChecked(self.tableData[indexPath.row].isChecked)
@@ -278,6 +278,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         } else if indexPath.section == 2 {
             if self.hasQRCode {
                 let cell: StoreInfoQrCodeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoQRCodeTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoQrCodeTableViewCell
+                cell.selectionStyle = UITableViewCellSelectionStyle.None
                 if let url = NSURL(string: "\(self.qrUrl)") {
                     if let data = NSData(contentsOfURL: url){
                         //imageURL.contentMode = UIViewContentMode.ScaleAspectFit
@@ -288,6 +289,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 return cell
             } else {
                 let cell: StoreInfoSectionTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoSectionTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoSectionTableViewCell
+                cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.qrCodeLabel.text = self.qrCode
                 cell.generateLabel.text = self.generate
                 cell.generateQRCodeButton.setTitle(self.generateQRCodeTitle, forState: UIControlState.Normal)
@@ -296,6 +298,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             }
        } else if indexPath.section == 3 {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoAddressTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAddressTableViewCell
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.delegate = self
             //Display current bank account
             cell.storeAddressTitleLabel.text = self.storeAddressTitle
@@ -311,6 +314,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             return cell
         } else if indexPath.section == 4 {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoBankAccountTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoBankAccountTableViewCell
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.delegate = self
             //Display current bank account
             cell.bankAccountTitleLabel.text = self.bankAccountTitle
@@ -331,6 +335,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             return cell
         } else {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoAccountInformationTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAccountInformationTableViewCell
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.delegate = self
             cell.accountInfoLabel.text = self.accountInfo
             cell.passwordLabel.text = self.password
@@ -407,6 +412,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
         if indexPath.section == 1 {
             if contains(self.selectedCategories, self.storeInfoModel!.productId[indexPath.row].toInt()!) {
                 println("yes")
@@ -423,17 +429,19 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         }
         
         self.tableView.reloadData()
-        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
     }
     
     override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        var selectedCell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
+        selectedCell.contentView.backgroundColor = UIColor.whiteColor()
         if indexPath.section == 1 {
             let originalStatus: Bool = self.tableData[indexPath.row].isChecked
             self.tableData[indexPath.row].isChecked = false
         }
         
         self.tableView.reloadData()
-        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
     }
     
     func storeNameAndDescription(storeName: String, storeDescription: String) {
@@ -612,8 +620,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         }
 
         let url: String = "\(APIAtlas.sellerUpdateSellerInfo)?access_token=\(SessionManager.accessToken())"
-        
-        println("params \(parameters)")
+
         if !cell.storeNameTextField.text.isEmpty && !cell.storeNameTextField.text.isEmpty {
             manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
                 for (index, data) in enumerate(datas) {
