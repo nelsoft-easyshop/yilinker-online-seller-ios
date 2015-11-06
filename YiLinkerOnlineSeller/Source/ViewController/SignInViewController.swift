@@ -395,7 +395,16 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                println(error)
+                self.signInButton.setTitle("SIGN IN", forState: .Normal)
+                
+                if error.userInfo != nil {
+                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                        let errorDescription: String = jsonResult["error_description"] as! String
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
+                    } else {
+                        
+                    }
+                }
         })
     }
     

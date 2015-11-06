@@ -585,10 +585,12 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
                 cell.statusLabel.hidden = false
             }
             
-            if SessionManager.isReseller() && self.productModel.products[indexPath.row].status == 0 {
-                cell.hidden = true
-            } else {
-                cell.hidden = false
+            if SessionManager.isReseller() {
+                if self.productModel.products[indexPath.row].status == Status.active || self.productModel.products[indexPath.row].status == Status.inactive {
+                    cell.hidden = false
+                } else {
+                    cell.hidden = true
+                }
             }
             
             return cell
@@ -720,8 +722,12 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        if SessionManager.isReseller() && indexPath.row == 3 {
-            return CGSize(width: 0.0, height: 60.0)
+        if SessionManager.isReseller() {
+            if indexPath.row <= 2 {
+                return CGSize(width: self.view.frame.size.width / 3, height: 60)
+            } else {
+                return CGSize(width: 0.0, height: 60.0)
+            }
         }
         return CGSize(width: self.view.frame.size.width / 6, height: 60)
     }
