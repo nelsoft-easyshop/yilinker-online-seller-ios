@@ -371,28 +371,23 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     }
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        switch kind {
-        case UICollectionElementKindSectionHeader:
-            let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: dashBoardHeaderIdentifier, forIndexPath: indexPath) as! DashBoardHeaderCollectionViewCell
+        let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: dashBoardHeaderIdentifier, forIndexPath: indexPath) as! DashBoardHeaderCollectionViewCell
+        
+        if storeInfo != nil{
+            let totalSales: String = "\(storeInfo.totalSales)"
+            let totalProducts: String = "\(storeInfo.productCount)"
+            let totalTransactions: String = "\(storeInfo.transactionCount)"
             
-            if storeInfo != nil{
-                let totalSales: String = "\(storeInfo.totalSales)"
-                let totalProducts: String = "\(storeInfo.productCount)"
-                let totalTransactions: String = "\(storeInfo.transactionCount)"
-                
-                headerView.setStoreName(storeInfo.store_name)
-                headerView.setAddress(storeInfo.store_address)
-                headerView.setCoverPhotoUrl(storeInfo.coverPhoto)
-                headerView.setProfilePhotoUrl(storeInfo.avatar)
-                headerView.setTotalProducts(totalProducts)
-                headerView.setTotalSales(totalSales.formatToTwoDecimal())
-                headerView.setTotalTransactions(totalTransactions)
-            }
-            
-            return headerView
-        default:
-            assert(false, "Unexpected element kind")
+            headerView.setStoreName(storeInfo.store_name)
+            headerView.setAddress(storeInfo.store_address)
+            headerView.setCoverPhotoUrl(storeInfo.coverPhoto)
+            headerView.setProfilePhotoUrl(storeInfo.avatar)
+            headerView.setTotalProducts(totalProducts)
+            headerView.setTotalSales(totalSales.formatToTwoDecimal())
+            headerView.setTotalTransactions(totalTransactions)
         }
+        
+        return headerView
     }
     
     // MARK: UICollectionViewDelegate
