@@ -371,8 +371,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     }
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        switch kind {
-        case UICollectionElementKindSectionHeader:
+//        switch kind {
+//        case UICollectionElementKindSectionHeader:
             let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: dashBoardHeaderIdentifier, forIndexPath: indexPath) as! DashBoardHeaderCollectionViewCell
             
             if storeInfo != nil{
@@ -390,9 +390,9 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             }
             
             return headerView
-        default:
-            assert(false, "Unexpected element kind")
-        }
+//        default:
+//            assert(false, "Unexpected element kind")
+//        }
     }
     
     // MARK: UICollectionViewDelegate
