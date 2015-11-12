@@ -194,8 +194,16 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
 
     
     func onNewMessage(notification : NSNotification){
-        var newCount = SessionManager.getUnReadMessagesCount() + 1
-        SessionManager.setUnReadMessagesCount(newCount)
+        if let info = notification.userInfo as? Dictionary<String, AnyObject> {
+            if let data = info["data"] as? String{
+                if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
+                    if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
+                        var count = SessionManager.getUnReadMessagesCount() + 1
+                        SessionManager.setUnReadMessagesCount(count)
+                    }
+                }
+            }
+        }
     }
     
     func fireCreateRegistration(registrationID : String) {
