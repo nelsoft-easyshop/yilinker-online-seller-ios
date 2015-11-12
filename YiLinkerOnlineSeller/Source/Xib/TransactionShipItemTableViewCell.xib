@@ -37,15 +37,6 @@
                         <color key="textColor" red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consectetur adiscing elit, sed" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O9e-Ks-E7K">
-                        <rect key="frame" x="16" y="37" width="343" height="28"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="28" id="kZb-ev-vs2"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
-                        <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JOv-zQ-xgg">
                         <rect key="frame" x="0.0" y="451" width="375" height="106"/>
                         <subviews>
@@ -229,13 +220,22 @@
                             <outlet property="delegate" destination="-1" id="F74-cZ-1qy"/>
                         </connections>
                     </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consectetur adiscing elit, sed" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="O9e-Ks-E7K">
+                        <rect key="frame" x="16" y="30" width="343" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="kZb-ev-vs2"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                        <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstItem="O9e-Ks-E7K" firstAttribute="leading" secondItem="hIr-fn-AfD" secondAttribute="leading" constant="16" id="3y6-GV-QFH"/>
                     <constraint firstItem="bnT-uc-IPo" firstAttribute="top" secondItem="WcH-r4-pl7" secondAttribute="bottom" constant="8" id="5lE-1Q-BbI"/>
                     <constraint firstItem="JOv-zQ-xgg" firstAttribute="top" secondItem="bnT-uc-IPo" secondAttribute="bottom" constant="2" id="7ET-bc-iBk"/>
-                    <constraint firstItem="O9e-Ks-E7K" firstAttribute="top" secondItem="pqo-DC-hNj" secondAttribute="bottom" constant="4" id="B1t-tb-tEZ"/>
+                    <constraint firstItem="O9e-Ks-E7K" firstAttribute="top" secondItem="pqo-DC-hNj" secondAttribute="bottom" constant="-3" id="B1t-tb-tEZ"/>
                     <constraint firstItem="WcH-r4-pl7" firstAttribute="leading" secondItem="hIr-fn-AfD" secondAttribute="leading" id="OHd-7G-AQX"/>
                     <constraint firstAttribute="trailing" secondItem="WcH-r4-pl7" secondAttribute="trailing" id="RGs-ba-PIX"/>
                     <constraint firstAttribute="trailing" secondItem="bnT-uc-IPo" secondAttribute="trailing" constant="1" id="U9c-xT-XiN"/>

@@ -31,6 +31,9 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     var connectionLocalizeString: String = ""
     var connectionMessageLocalizeString: String = ""
     
+    // Variable for storing messaging controller if user logged in as affiliate
+    var messagingController: UIViewController = UIViewController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController!.tabBar.tintColor = Constants.Colors.appTheme
@@ -94,6 +97,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         //Remove messaging item
         if SessionManager.isReseller() {
             self.removeMessagingInTabBar()
+        } else {
+            self.addMessagingController(self.messagingController)
         }
     }
     
@@ -164,7 +169,17 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     func removeMessagingInTabBar() {
         var viewControllers: [UIViewController] =  self.tabBarController!.viewControllers as! [UIViewController]
         if viewControllers.count == 4 {
+            self.messagingController = viewControllers[2]
             viewControllers.removeAtIndex(2)
+            self.tabBarController?.setViewControllers(viewControllers, animated: true)
+        }
+    }
+    
+    //MARK: - Add Messaging Controller
+    func addMessagingController(viewController: UIViewController) {
+        var viewControllers: [UIViewController] =  self.tabBarController!.viewControllers as! [UIViewController]
+        if viewControllers.count == 3 {
+            viewControllers.insert(viewController, atIndex: 2)
             self.tabBarController?.setViewControllers(viewControllers, animated: true)
         }
     }
@@ -365,8 +380,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     }
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        switch kind {
-        case UICollectionElementKindSectionHeader:
+//        switch kind {
+//        case UICollectionElementKindSectionHeader:
             let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: dashBoardHeaderIdentifier, forIndexPath: indexPath) as! DashBoardHeaderCollectionViewCell
             
             if storeInfo != nil{
@@ -384,9 +399,9 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             }
             
             return headerView
-        default:
-            assert(false, "Unexpected element kind")
-        }
+//        default:
+//            assert(false, "Unexpected element kind")
+//        }
     }
     
     // MARK: UICollectionViewDelegate

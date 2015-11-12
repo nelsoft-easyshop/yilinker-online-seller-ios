@@ -178,6 +178,15 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
             dateTo = ""
             sortBy = ""
         }
+        
+        if indexPath.row == 1 {
+            dateFrom = formatDateToString(NSDate())
+            dateTo = formatDateToString(NSDate().addDays(1))
+        } else {
+            dateFrom = ""
+            dateTo = ""
+        }
+
         selectedStatus = indexPath.row
         isFromFilter = false
         fireGetTransaction()

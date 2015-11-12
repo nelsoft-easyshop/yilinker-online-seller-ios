@@ -370,6 +370,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         if selectedIndex == 1 {
             requestUpdateProductStatus(Status.inactive)
         } else if selectedIndex == 2 {
+            requestUpdateProductStatus(Status.review)
 //            if SessionManager.isSeller() {
 //                requestUpdateProductStatus(Status.active)
 //            }
@@ -411,11 +412,23 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             println(parameters)
             self.requestTask = manager.POST(APIAtlas.managementGetProductList, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                
+                println(responseObject)
                 if responseObject["isSuccessful"] as! Bool {
                     self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
                     if self.productModel.products.count != 0 {
                         self.tableView.reloadData()
+                        
+                        if SessionManager.isReseller() {
+                            var productStatuses: [Int] = []
+                            for i in 0..<self.productModel.products.count {
+                                productStatuses.append(self.productModel.products[i].status)
+                            }
+                            
+                            if !(contains(productStatuses, Status.active) || contains(productStatuses, Status.inactive)) {
+                                self.emptyLabel.hidden = false
+                            }
+                        }
+                        
                     } else {
                         self.emptyLabel.hidden = false
                     }
@@ -585,10 +598,12 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
                 cell.statusLabel.hidden = false
             }
             
-            if SessionManager.isReseller() && self.productModel.products[indexPath.row].status == 0 {
-                cell.hidden = true
-            } else {
-                cell.hidden = false
+            if SessionManager.isReseller() {
+                if self.productModel.products[indexPath.row].status == Status.active || self.productModel.products[indexPath.row].status == Status.inactive {
+                    cell.hidden = false
+                } else {
+                    cell.hidden = true
+                }
             }
             
             return cell
@@ -720,8 +735,12 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        if SessionManager.isReseller() && indexPath.row == 3 {
-            return CGSize(width: 0.0, height: 60.0)
+        if SessionManager.isReseller() {
+            if indexPath.row <= 2 {
+                return CGSize(width: self.view.frame.size.width / 3, height: 60)
+            } else {
+                return CGSize(width: 0.0, height: 60.0)
+            }
         }
         return CGSize(width: self.view.frame.size.width / 6, height: 60)
     }
@@ -745,9 +764,9 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
 //                if SessionManager.isReseller() {
 //                    self.activeInactiveView.backgroundColor = .grayColor()
 //                } else {
-//                    self.activeInactiveLabel.text = ManagementStrings.moveActive
+                    self.activeInactiveLabel.text = ManagementStrings.moveActive
 //                }
-                self.activeInactiveView.backgroundColor = .grayColor()
+//                self.activeInactiveView.backgroundColor = .grayColor()
             }
             
             self.deleteView.hidden = true
