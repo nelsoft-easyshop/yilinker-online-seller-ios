@@ -460,7 +460,16 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             self.navigationController?.pushViewController(myPointsViewController, animated:true)
             
         } else if indexPath.row == (10 - temp) {
+            let alertController = UIAlertController(title: StringHelper.localizedStringWithKey("HELP_ALERT_TITLE_LOCALIZE_KEY"), message: StringHelper.localizedStringWithKey("HELP_ALERT_MESSAGE_LOCALIZE_KEY"), preferredStyle: .Alert)
             
+            let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            }
+            
+            alertController.addAction(OKAction)
+            self.presentViewController(alertController, animated: true) {
+                // ...
+            }
+
         } else if indexPath.row == 9 {
             let resolutionCenter = self.storyboard?.instantiateViewControllerWithIdentifier("ResolutionCenterViewController")
                 as! ResolutionCenterViewController
