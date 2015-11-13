@@ -41,6 +41,8 @@ RESOLUTION_CENTER_LOCALIZE_KEY = "方案解决中心";
 HELP_LOCALIZE_KEY = "帮助";
 LOGOUT_LOCALIZE_KEY = "退出";
 ARE_YOU_SURE_LOGOUT_LOCALIZE_KEY = "您确定要退出？";//No Chinese String
+HELP_ALERT_TITLE_LOCALIZE_KEY = "功能不可用";//No Chinese String
+HELP_ALERT_MESSAGE_LOCALIZE_KEY = "将在下一个版本上提供帮助。";//No Chinese String
 
 // MARK: - Sales Report
 REPORT_TITLE_LOCALIZE_KEY = "报告";
