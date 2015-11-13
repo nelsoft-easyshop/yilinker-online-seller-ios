@@ -43,6 +43,8 @@ RESOLUTION_CENTER_LOCALIZE_KEY = "Resolution\nCenter";
 HELP_LOCALIZE_KEY = "Help";
 LOGOUT_LOCALIZE_KEY = "Logout";
 ARE_YOU_SURE_LOGOUT_LOCALIZE_KEY = "Are you sure you want to logout?";
+HELP_ALERT_TITLE_LOCALIZE_KEY = "Feature Not Available";
+HELP_ALERT_MESSAGE_LOCALIZE_KEY = "Help will be available on the next release.";
 
 // MARK: - Sales Report
 REPORT_TITLE_LOCALIZE_KEY = "Report";
