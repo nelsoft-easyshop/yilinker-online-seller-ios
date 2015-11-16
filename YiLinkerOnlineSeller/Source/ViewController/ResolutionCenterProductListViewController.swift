@@ -15,7 +15,6 @@ protocol ResolutionCenterProductListViewControllereDelegate {
 class ResolutionCenterProductListViewController: UIViewController {
     
     var delegate: ResolutionCenterProductListViewControllereDelegate?
-    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
     var transactionDetails: TransactionDetailsModel = TransactionDetailsModel()

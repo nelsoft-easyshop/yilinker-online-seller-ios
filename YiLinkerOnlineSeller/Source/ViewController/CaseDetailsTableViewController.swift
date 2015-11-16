@@ -37,7 +37,7 @@ class CaseDetailsTableViewController: UITableViewController {
     let caseIdTitle: String = StringHelper.localizedStringWithKey("CASE_ID_LOCALIZE_KEY")
     let detailsTitle: String = StringHelper.localizedStringWithKey("CASE_DETAILS_LOCALIZE_KEY")
     let statusTitle: String = StringHelper.localizedStringWithKey("CASE_STATUS_LOCALIZE_KEY")
-    let dateTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_CLOSED_LOCALIZE_KEY")
+    let dateTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_DATE_OPENED_LOCALIZE_KEY")
     let otherPartyTitle: String = StringHelper.localizedStringWithKey("CASE_OTHER_PARTY_LOCALIZE_KEY")
     let complaintTitle: String = StringHelper.localizedStringWithKey("CASE_COMPLAINT_LOCALIZE_KEY")
     let csrTitle: String = StringHelper.localizedStringWithKey("CASE_CSR_LOCALIZE_KEY")
@@ -143,7 +143,14 @@ class CaseDetailsTableViewController: UITableViewController {
                 
                 self.caseID.text = caseDetails.ticket
                 self.statusCase.text = caseDetails.statusType
-                self.dateOpen.text = caseDetails.dateAdded
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                let date: NSDate = dateFormatter.dateFromString(caseDetails.dateAdded)!
+                
+                let dateFormatter1 = NSDateFormatter()
+                dateFormatter1.dateFormat = "MMMM dd, yyyy"
+                let dateAdded = dateFormatter1.stringFromDate(date)
+                self.dateOpen.text = dateAdded
                 // In Seller other is Disputer, In Buyer other is Disputee
                 self.otherParty.text = caseDetails.disputerName
                 for remarkElement in caseDetails.remarks {

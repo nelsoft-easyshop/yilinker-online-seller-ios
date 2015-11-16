@@ -244,6 +244,7 @@ class ResolutionFilterViewController: UITableViewController {
     
     // MARK: - Status Filter Checkbox Selection
     private func selectStatusFilter(filterSelection: ResolutionStatusFilter) {
+        println("status \(self.statusFilter)")
         if self.statusFilter == .Both {
             if filterSelection == .Open {
                 self.statusFilter = .Closed
