@@ -31,8 +31,9 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     var connectionLocalizeString: String = ""
     var connectionMessageLocalizeString: String = ""
     
-    // Variable for storing messaging controller if user logged in as affiliate
+    // Variable for storing messaging and search controller if user logged in as affiliate
     var messagingController: UIViewController = UIViewController()
+    var searchViewController: UIViewController = UIViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,11 +95,20 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         
         self.tabBarController?.tabBar.hidden = false
         
+        
+        var viewControllers: [UIViewController] =  self.tabBarController!.viewControllers as! [UIViewController]
+        if viewControllers.count == 4 {
+            //remove search tab index
+            viewControllers.removeAtIndex(1)
+            self.tabBarController?.setViewControllers(viewControllers, animated: true)
+        }
+        
         //Remove messaging item
         if SessionManager.isReseller() {
-            self.removeMessagingInTabBar()
+            self.removeMessagingAndSearchInTabBar()
         } else {
             self.addMessagingController(self.messagingController)
+            //self.addMessagingController(self.searchViewController)
         }
     }
     
@@ -166,11 +176,15 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         tableImages.append("logout")
     }
     
-    func removeMessagingInTabBar() {
+    func removeMessagingAndSearchInTabBar() {
         var viewControllers: [UIViewController] =  self.tabBarController!.viewControllers as! [UIViewController]
-        if viewControllers.count == 4 {
-            self.messagingController = viewControllers[2]
-            viewControllers.removeAtIndex(2)
+        if viewControllers.count == 3 {
+            //self.searchViewController = viewControllers[1]
+            self.messagingController = viewControllers[1]
+            
+            viewControllers.removeAtIndex(1)
+            //viewControllers.removeAtIndex(1)
+            
             self.tabBarController?.setViewControllers(viewControllers, animated: true)
         }
     }
@@ -178,8 +192,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     //MARK: - Add Messaging Controller
     func addMessagingController(viewController: UIViewController) {
         var viewControllers: [UIViewController] =  self.tabBarController!.viewControllers as! [UIViewController]
-        if viewControllers.count == 3 {
-            viewControllers.insert(viewController, atIndex: 2)
+        if viewControllers.count == 2 {
+            viewControllers.insert(viewController, atIndex: 1)
             self.tabBarController?.setViewControllers(viewControllers, animated: true)
         }
     }
