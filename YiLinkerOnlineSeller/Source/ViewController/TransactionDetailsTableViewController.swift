@@ -32,7 +32,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     var transactionDetailsModel: TransactionDetailsModel!
     var transactionConsigneeModel: TransactionConsigneeModel!
     
-    var date_modified: String = "2000-01-01 00:00:00.000000"
+    var date_modified: String = ""
     var errorMessage: String = ""
     var errorLocalizedString = ""
     
@@ -276,7 +276,6 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         manager.GET(APIAtlas.transactionDetails, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.transactionDetailsModel = TransactionDetailsModel.parseDataWithDictionary(responseObject)
-            self.date_modified = self.transactionDetailsModel.transactionDate
             
             println(responseObject)
             
