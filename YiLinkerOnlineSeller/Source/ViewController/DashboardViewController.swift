@@ -95,12 +95,20 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         
         self.tabBarController?.tabBar.hidden = false
         
+        
+        var viewControllers: [UIViewController] =  self.tabBarController!.viewControllers as! [UIViewController]
+        if viewControllers.count == 4 {
+            //remove search tab index
+            viewControllers.removeAtIndex(1)
+            self.tabBarController?.setViewControllers(viewControllers, animated: true)
+        }
+        
         //Remove messaging item
         if SessionManager.isReseller() {
             self.removeMessagingAndSearchInTabBar()
         } else {
             self.addMessagingController(self.messagingController)
-            self.addMessagingController(self.searchViewController)
+            //self.addMessagingController(self.searchViewController)
         }
     }
     
@@ -170,12 +178,12 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     
     func removeMessagingAndSearchInTabBar() {
         var viewControllers: [UIViewController] =  self.tabBarController!.viewControllers as! [UIViewController]
-        if viewControllers.count == 4 {
-            self.searchViewController = viewControllers[1]
-            self.messagingController = viewControllers[2]
+        if viewControllers.count == 3 {
+            //self.searchViewController = viewControllers[1]
+            self.messagingController = viewControllers[1]
             
             viewControllers.removeAtIndex(1)
-            viewControllers.removeAtIndex(1)
+            //viewControllers.removeAtIndex(1)
             
             self.tabBarController?.setViewControllers(viewControllers, animated: true)
         }
@@ -184,7 +192,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     //MARK: - Add Messaging Controller
     func addMessagingController(viewController: UIViewController) {
         var viewControllers: [UIViewController] =  self.tabBarController!.viewControllers as! [UIViewController]
-        if viewControllers.count == 2 || viewControllers.count == 3 {
+        if viewControllers.count == 2 {
             viewControllers.insert(viewController, atIndex: 1)
             self.tabBarController?.setViewControllers(viewControllers, animated: true)
         }
