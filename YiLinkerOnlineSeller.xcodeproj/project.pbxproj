@@ -446,6 +446,7 @@
 		967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 967EE1C01B8AEA25000591AC /* Images.xcassets */; };
 		967EE1D01B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */; };
 		96FBF6811BA06C94009DDD29 /* ResolutionCenterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FBF6801BA06C94009DDD29 /* ResolutionCenterModel.swift */; };
+		9F02F9361BF0BAEC00F44E2F /* yilinker_pinned_certificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 9F02F9351BF0BAEC00F44E2F /* yilinker_pinned_certificate.cer */; };
 		B70DD90F1BA727F400EC3A18 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B70DD90E1BA727F300EC3A18 /* GoogleService-Info.plist */; };
 		B70DD9121BA72B9800EC3A18 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70DD9111BA72B9800EC3A18 /* EmptyView.swift */; };
 		B78B18B41BD886B600F0EC43 /* MessageThreadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BADAF41BA563FF005F59F9 /* MessageThreadVC.swift */; };
@@ -566,6 +567,10 @@
 		F7CCEEF51BBE714A00D876C2 /* SearchRiderNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCEEF41BBE714A00D876C2 /* SearchRiderNameModel.swift */; };
 		F7CCEEFA1BBEC41D00D876C2 /* FilterResultsRiderNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCEEF81BBEC41D00D876C2 /* FilterResultsRiderNameViewController.swift */; };
 		F7CCEEFB1BBEC41D00D876C2 /* FilterResultsRiderNameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCEEF91BBEC41D00D876C2 /* FilterResultsRiderNameViewController.xib */; };
+		F7CF662A1BD8F0E7008B8226 /* StoreInfoPreferredCategoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CF66281BD8F0E6008B8226 /* StoreInfoPreferredCategoriesTableViewCell.swift */; };
+		F7CF662B1BD8F0E7008B8226 /* StoreInfoPreferredCategoriesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF66291BD8F0E7008B8226 /* StoreInfoPreferredCategoriesTableViewCell.xib */; };
+		F7CF662D1BD8FE2E008B8226 /* StoreInfoPreferredCategoriesSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CF662C1BD8FE2E008B8226 /* StoreInfoPreferredCategoriesSectionView.swift */; };
+		F7CF662F1BD9102F008B8226 /* StoreInfoPreferredCategoriesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CF662E1BD9102F008B8226 /* StoreInfoPreferredCategoriesModel.swift */; };
 		F7D8C9011BBBC0AB00305EF2 /* SearchProductNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D8C9001BBBC0AB00305EF2 /* SearchProductNameModel.swift */; };
 		F7E175761BA3F32C00A3820B /* ProductUploadTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8A21B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.swift */; };
 		F7E465841B9F2D7B00FAB97D /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E465821B9F2D7B00FAB97D /* SearchTableViewCell.swift */; };
@@ -1049,6 +1054,7 @@
 		967EE1CE1B8AEA25000591AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YiLinkerOnlineSellerTests.swift; sourceTree = "<group>"; };
 		96FBF6801BA06C94009DDD29 /* ResolutionCenterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionCenterModel.swift; sourceTree = "<group>"; };
+		9F02F9351BF0BAEC00F44E2F /* yilinker_pinned_certificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = yilinker_pinned_certificate.cer; sourceTree = "<group>"; };
 		B70DD90E1BA727F300EC3A18 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B70DD9111BA72B9800EC3A18 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		B7BADAE21BA56381005F59F9 /* DateUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtility.swift; sourceTree = "<group>"; };
@@ -1167,6 +1173,10 @@
 		F7CCEEF41BBE714A00D876C2 /* SearchRiderNameModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchRiderNameModel.swift; sourceTree = "<group>"; };
 		F7CCEEF81BBEC41D00D876C2 /* FilterResultsRiderNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterResultsRiderNameViewController.swift; sourceTree = "<group>"; };
 		F7CCEEF91BBEC41D00D876C2 /* FilterResultsRiderNameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterResultsRiderNameViewController.xib; sourceTree = "<group>"; };
+		F7CF66281BD8F0E6008B8226 /* StoreInfoPreferredCategoriesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoPreferredCategoriesTableViewCell.swift; sourceTree = "<group>"; };
+		F7CF66291BD8F0E7008B8226 /* StoreInfoPreferredCategoriesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoPreferredCategoriesTableViewCell.xib; sourceTree = "<group>"; };
+		F7CF662C1BD8FE2E008B8226 /* StoreInfoPreferredCategoriesSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoPreferredCategoriesSectionView.swift; sourceTree = "<group>"; };
+		F7CF662E1BD9102F008B8226 /* StoreInfoPreferredCategoriesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoPreferredCategoriesModel.swift; sourceTree = "<group>"; };
 		F7D8C9001BBBC0AB00305EF2 /* SearchProductNameModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchProductNameModel.swift; sourceTree = "<group>"; };
 		F7E465821B9F2D7B00FAB97D /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		F7E465831B9F2D7B00FAB97D /* SearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
@@ -1334,6 +1344,7 @@
 				7985D36D1BB071F60060E5F5 /* DeliveryLogsSectionModel.swift */,
 				F7CCEEF41BBE714A00D876C2 /* SearchRiderNameModel.swift */,
 				0C574A2F1BC651B700913F29 /* EditImageModel.swift */,
+				F7CF662E1BD9102F008B8226 /* StoreInfoPreferredCategoriesModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1457,9 +1468,12 @@
 				F7CCEEF11BBE607100D876C2 /* FilterResultsCollectionViewCellV2.xib */,
 				F7C6A94B1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.swift */,
 				F7C6A94C1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.xib */,
+				F7CF66281BD8F0E6008B8226 /* StoreInfoPreferredCategoriesTableViewCell.swift */,
+				F7CF66291BD8F0E7008B8226 /* StoreInfoPreferredCategoriesTableViewCell.xib */,
 				0C574A311BC6531A00913F29 /* ServerUIImage.swift */,
 				0C568A241BCABF1A00E35B12 /* ResellerItemCollectionViewCell.swift */,
 				0C568A251BCABF1A00E35B12 /* ResellerItemCollectionViewCell.xib */,
+				F7CF662C1BD8FE2E008B8226 /* StoreInfoPreferredCategoriesSectionView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1957,6 +1971,7 @@
 		967EE1B71B8AEA25000591AC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9F02F9351BF0BAEC00F44E2F /* yilinker_pinned_certificate.cer */,
 				F727FF581B99C94700872E11 /* edit.png */,
 				F7C40FBA1B983CD90091C16C /* address.png */,
 				F7C40FBB1B983CD90091C16C /* addressRight.png */,
@@ -2053,6 +2068,7 @@
 				967EE1B11B8AEA25000591AC /* Frameworks */,
 				967EE1B21B8AEA25000591AC /* Resources */,
 				E9EA2D2D652BCE072148B1D3 /* Copy Pods Resources */,
+				A4260CC6356B7F9480095367 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2224,12 +2240,14 @@
 				F7C6A94E1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.xib in Resources */,
 				79E633B11B9B3C330062DB14 /* TransactionDeliveryLogTableViewController.xib in Resources */,
 				79E633651B9AB1E60062DB14 /* TransactionImageCollectionViewCell.xib in Resources */,
+				9F02F9361BF0BAEC00F44E2F /* yilinker_pinned_certificate.cer in Resources */,
 				0CF28F1B1B8CD079005B2E54 /* ProductUploadImageCollectionViewCell.xib in Resources */,
 				79E633711B9AC96D0062DB14 /* TransactionProductDetailsTableViewCell.xib in Resources */,
 				F7C40FD91B983CD90091C16C /* photo.png in Resources */,
 				0C8D7FBE1B8FCC5800B3FA4E /* ProductUploadCombinationHeaderTableViewCell.xib in Resources */,
 				F7C40FCF1B983CD90091C16C /* bankAccount.png in Resources */,
 				26BD5E5C1B8DCF9B00739488 /* ProductImagesCollectionViewCell.xib in Resources */,
+				F7CF662B1BD8F0E7008B8226 /* StoreInfoPreferredCategoriesTableViewCell.xib in Resources */,
 				799892F31B8CB21600F4CFE2 /* DashBoardHeaderCollectionViewCell.xib in Resources */,
 				26B5B2561B94F3AC00CBDDE5 /* CustomizedCategoryViewsViewController.xib in Resources */,
 				0C1179541BA9A58F00AA1554 /* LocalizableString.strings in Resources */,
@@ -2352,6 +2370,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A4260CC6356B7F9480095367 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E9EA2D2D652BCE072148B1D3 /* Copy Pods Resources */ = {
@@ -2478,6 +2511,7 @@
 				7928764E1B8E1FD800762A39 /* DatePickerViewController.swift in Sources */,
 				2690ED191B999354009343E0 /* ProductManagementProductModel.swift in Sources */,
 				7928762F1B8DF89F00762A39 /* ChartXAxisRenderer.swift in Sources */,
+				F7CF662F1BD9102F008B8226 /* StoreInfoPreferredCategoriesModel.swift in Sources */,
 				F7C282EF1B9AE97500864451 /* BankModel.swift in Sources */,
 				F7C971D51BC3B83100F8A04F /* ResolutionCenterDisputeReasonsModel.swift in Sources */,
 				F7AC5F7C1B9AA75300227D18 /* GetAddressesModel.swift in Sources */,
@@ -2591,6 +2625,7 @@
 				794880821B94EB530090B259 /* FollowerModel.swift in Sources */,
 				0CF28F1D1B8CD21B005B2E54 /* DynamicRoundedButton.swift in Sources */,
 				794A96571B9E8870002F32A0 /* OrderModel.swift in Sources */,
+				F7CF662A1BD8F0E7008B8226 /* StoreInfoPreferredCategoriesTableViewCell.swift in Sources */,
 				0C8D7F8D1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.swift in Sources */,
 				79E633A51B9B27E70062DB14 /* FSCalendarHeaderTouchDeliver.m in Sources */,
 				0C8D7FB11B8FC1A400B3FA4E /* ProductUploadCombinationTableViewController.swift in Sources */,
@@ -2742,6 +2777,7 @@
 				7928762A1B8DF89F00762A39 /* CandleStickChartRenderer.swift in Sources */,
 				F7C40F7B1B983B570091C16C /* FilterViewController.swift in Sources */,
 				79EF7ABA1B99950E0082CD35 /* TransactionsFilterModel.swift in Sources */,
+				F7CF662D1BD8FE2E008B8226 /* StoreInfoPreferredCategoriesSectionView.swift in Sources */,
 				F7C40F8B1B983B8D0091C16C /* VerifyViewController.swift in Sources */,
 				792876371B8DF89F00762A39 /* HorizontalBarChartRenderer.swift in Sources */,
 				792876341B8DF89F00762A39 /* ChartYAxisRendererHorizontalBarChart.swift in Sources */,
@@ -2876,9 +2912,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
 				INFOPLIST_FILE = YiLinkerOnlineSeller/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "88d7ee4c-2b22-4511-b253-c76902544be2";
 				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineSeller/Source/YiLinkerOnlineSeller-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -2891,9 +2929,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
 				INFOPLIST_FILE = YiLinkerOnlineSeller/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "88d7ee4c-2b22-4511-b253-c76902544be2";
 				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineSeller/Source/YiLinkerOnlineSeller-Bridging-Header.h";
 			};
 			name = Release;

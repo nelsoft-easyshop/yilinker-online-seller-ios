@@ -3,7 +3,7 @@
 //
 
 #import <AFNetworking/AFNetworking.h>
-#import <SDWebImage/UIImageView+WebCache.h>
+#import <UIImageView+WebCache.h>
 #import "UzysAssetsPickerController.h"
 #import <MBProgressHUD.h>
 #import "UIImageView+WebCache.h"

@@ -122,16 +122,16 @@ class ChangeEmailViewController: UIViewController {
                     self.requestRefreshToken()
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error Refreshing Token", title: "Refresh Token Error")
                     self.hud?.hide(true)
-                     self.dismissViewControllerAnimated(true, completion: nil)
+                    //self.dismissViewControllerAnimated(true, completion: nil)
                 } else if task.statusCode == 404 || task.statusCode == 400 {
                     let data = error.userInfo as! Dictionary<String, AnyObject>
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: data["message"] as! String, title: "Error")
-                     self.hud?.hide(true)
-                     self.dismissViewControllerAnimated(true, completion: nil)
+                    self.hud?.hide(true)
+                    //self.dismissViewControllerAnimated(true, completion: nil)
                 }else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error", title: Constants.Localized.someThingWentWrong )
-                     self.hud?.hide(true)
-                     self.dismissViewControllerAnimated(true, completion: nil)
+                    self.hud?.hide(true)
+                    //self.dismissViewControllerAnimated(true, completion: nil)
                 }
                self.delegate?.dismissView()
         })

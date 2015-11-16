@@ -15,7 +15,7 @@ class ResellerViewController: UIViewController, UICollectionViewDataSource, Rese
     
     let cellNibNameAndIdentifier: String = "ResellerItemCollectionViewCell"
     
-    let headerHeight: CGFloat = 148
+    let headerHeight: CGFloat = 116
     var hud: MBProgressHUD?
     
     @IBOutlet weak var tableView: UITableView!

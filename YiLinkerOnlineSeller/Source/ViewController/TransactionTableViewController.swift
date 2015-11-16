@@ -76,7 +76,7 @@ class TransactionTableViewController: UITableViewController {
         let paymentMethodString = StringHelper.localizedStringWithKey("TRANSACTIONS_PAYMENT_METHOD_LOCALIZE_KEY")
         let codString = StringHelper.localizedStringWithKey("TRANSACTIONS_COD_LOCALIZE_KEY")
         let creditDebitString = StringHelper.localizedStringWithKey("TRANSACTIONS_CREDIT_DEBIT_CARD_LOCALIZE_KEY")
-        let dragonPayString = StringHelper.localizedStringWithKey("TRANSACTIONS_DRAGONPAY_LOCALIZE_KEY")
+        //let dragonPayString = StringHelper.localizedStringWithKey("TRANSACTIONS_DRAGONPAY_LOCALIZE_KEY")
         let pesoPayString = StringHelper.localizedStringWithKey("TRANSACTIONS_PESOPAY_LOCALIZE_KEY")
         let walletString = StringHelper.localizedStringWithKey("TRANSACTIONS_WALLET_LOCALIZE_KEY")
         
@@ -89,7 +89,6 @@ class TransactionTableViewController: UITableViewController {
         
         tableData.append(TransactionsFilterModel(headerText: paymentMethodString, items:
             [TransactionsFilterItemModel(title: codString, isChecked: false),
-                TransactionsFilterItemModel(title: dragonPayString, isChecked: false),
                 TransactionsFilterItemModel(title: pesoPayString, isChecked: false)]))
 
         

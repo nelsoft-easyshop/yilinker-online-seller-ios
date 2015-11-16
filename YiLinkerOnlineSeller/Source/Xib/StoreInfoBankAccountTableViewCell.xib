@@ -117,6 +117,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="arrowButton" destination="JBC-8U-Zrf" id="jAT-wS-y8j"/>
                 <outlet property="bankAccountDetailLabel" destination="bxj-bM-2ur" id="zfx-x0-zTb"/>
                 <outlet property="bankAccountInfoLabel" destination="uBs-1U-8tg" id="mnz-4s-KFK"/>
                 <outlet property="bankAccountTitleLabel" destination="5Ys-Dp-kcC" id="Bdd-1C-es8"/>

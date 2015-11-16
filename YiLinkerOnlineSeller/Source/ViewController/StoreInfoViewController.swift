@@ -19,7 +19,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     let storeInfoAddressTableViewCellIdentifier: String = "StoreInfoAddressTableViewCell"
     let storeInfoBankAccountTableViewCellIdentifier: String = "StoreInfoBankAccountTableViewCell"
     let storeInfoAccountInformationTableViewCellIdentifier: String = "StoreInfoAccountInformationTableViewCell"
-
+    let storeInfoPreferredCategoriesTableViewCellIdentifier: String = "StoreInfoPreferredCategoriesTableViewCell"
     var hud: MBProgressHUD?
     
     var dimView: UIView = UIView()
@@ -64,9 +64,16 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     let success: String = StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_LOCALIZE_KEY")
     let empty: String = StringHelper.localizedStringWithKey("STORE_INFO_EMPTY_LOCALIZE_KEY")
     let successTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TITLE_LOCALIZE_KEY")
+    let tinTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_TIN_LOCALIZE_KEY")
+    let bankNotSet: String = StringHelper.localizedStringWithKey("STORE_INFO_NO_BANK_LOCALIZE_KEY")
+    let addressNotSet: String = StringHelper.localizedStringWithKey("STORE_INFO_NO_ADDRESS_LOCALIZE_KEY")
     
     var qrUrl: String = ""
     var qr: String = ""
+    
+    var tableData: [StoreInfoPreferredCategoriesModel] = []
+    var selectedCategories: [Int] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -84,6 +91,15 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         self.registerNibs()
         self.fireStoreInfo()
         self.backButton()
+        
+        /*
+        self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Clothing", isChecked: false))
+        self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Gadgets", isChecked: false))
+        self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Shoes", isChecked: false))
+        self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Home Improvements", isChecked: false))
+        self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Toys, Kids and Babies", isChecked: false))
+        self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Health and Beauty", isChecked: false))
+        */
         
         var tap = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         tap.cancelsTouchesInView = false
@@ -128,6 +144,9 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         var storeInfoAccountInformation = UINib(nibName: storeInfoAccountInformationTableViewCellIdentifier, bundle: nil)
         self.tableView.registerNib(storeInfoAccountInformation, forCellReuseIdentifier: storeInfoAccountInformationTableViewCellIdentifier)
+        
+        var storeInfoPreferredCategories = UINib(nibName: storeInfoPreferredCategoriesTableViewCellIdentifier, bundle: nil)
+        self.tableView.registerNib(storeInfoPreferredCategories, forCellReuseIdentifier: storeInfoPreferredCategoriesTableViewCellIdentifier)
     }
     
     //MARK: Get store info
@@ -142,6 +161,13 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             
             println("store info \(responseObject)")
             if responseObject["isSuccessful"] as! Bool {
+                for var i: Int = 0; i < self.storeInfoModel?.productCategoryName.count; i++ {
+                    self.tableData.append(StoreInfoPreferredCategoriesModel(title: self.storeInfoModel!.productCategoryName[i], isChecked: self.storeInfoModel!.isSelected[i], productId: self.storeInfoModel!.productId[i]))
+                    if self.storeInfoModel!.isSelected[i] {
+                        self.selectedCategories.insert(self.storeInfoModel!.productId[i].toInt()!, atIndex: self.selectedCategories.count)
+                    }
+                    println(self.selectedCategories)
+                }
                 self.tableView.reloadData()
             } else {
                 self.showAlert(Constants.Localized.error, message: responseObject["message"] as! String)
@@ -182,19 +208,17 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     //MARK: Tableview delegate methods
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-       return 5
+       return 6
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        println("sections \(indexPath.section) row \(indexPath.row)")
-        println("\(self.storeInfoModel?.store_address)")
   
         if indexPath.section == 0 {
             
             let cell: StoreInfoTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoHeaderTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoTableViewCell
             index = indexPath
             cell.delegate = self
-            
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.storeInfoLabel.text = self.storeInfo
             cell.storeNameLabel.text = self.storeName
             cell.storeDescriptionLabel.text = self.storeDesc
@@ -216,6 +240,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 cell.storeDescriptionTextView.text = self.storeInfoModel?.store_description
                 cell.profileEditImageView.image = UIImage(named: "edit.png")
                 cell.coverEditImageView.image = UIImage(named: "edit.png")
+                cell.tinTextField.text = self.self.storeInfoModel?.tin
                 let url: NSString = NSString(string: (self.storeInfoModel?.avatar)!.absoluteString!)
                 if (!url.isEqual("")) {
                     cell.profileEditLabel.text = editPhoto
@@ -229,6 +254,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 //    cell.verifyButton.setTitle("Verify", forState: UIControlState.Normal)
                 //} else {
                 cell.verifyButton.setTitle(self.changeTitle, forState: UIControlState.Normal)
+                cell.tinLabel.text = self.tinTitle
+                cell.tinTextField.placeholder = self.tinTitle
                 //}
                 cell.verifyButton.tag = 2
             } else {
@@ -240,8 +267,18 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
            
             return cell
         } else if indexPath.section == 1 {
+            let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoPreferredCategoriesTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoPreferredCategoriesTableViewCell
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            if self.storeInfoModel != nil {
+                cell.titleLabel.text = self.tableData[indexPath.row].title
+                cell.setChecked(self.tableData[indexPath.row].isChecked)
+            }
+            
+            return cell
+        } else if indexPath.section == 2 {
             if self.hasQRCode {
                 let cell: StoreInfoQrCodeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoQRCodeTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoQrCodeTableViewCell
+                cell.selectionStyle = UITableViewCellSelectionStyle.None
                 if let url = NSURL(string: "\(self.qrUrl)") {
                     if let data = NSData(contentsOfURL: url){
                         //imageURL.contentMode = UIViewContentMode.ScaleAspectFit
@@ -252,33 +289,53 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 return cell
             } else {
                 let cell: StoreInfoSectionTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoSectionTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoSectionTableViewCell
+                cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.qrCodeLabel.text = self.qrCode
                 cell.generateLabel.text = self.generate
                 cell.generateQRCodeButton.setTitle(self.generateQRCodeTitle, forState: UIControlState.Normal)
                 cell.delegate = self
                 return cell
             }
-       } else if indexPath.section == 2 {
+       } else if indexPath.section == 3 {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoAddressTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAddressTableViewCell
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.delegate = self
             //Display current bank account
-            cell.addressLabel.text = self.storeInfoModel?.store_address
-            cell.addressTitle.text = self.storeInfoModel?.title
             cell.storeAddressTitleLabel.text = self.storeAddressTitle
+            if self.storeInfoModel?.store_address != "" || self.storeInfoModel?.title != "" {
+                cell.addressTitle.text = self.storeInfoModel?.title
+                cell.addressLabel.text = self.storeInfoModel?.store_address
+            } else {
+                cell.addressLabel.text = self.addressNotSet
+                cell.addressTitle.text = ""
+            }
+            
             cell.newAddressLabel.text = self.newAddress
             return cell
-        } else if indexPath.section == 3 {
+        } else if indexPath.section == 4 {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoBankAccountTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoBankAccountTableViewCell
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.delegate = self
             //Display current bank account
             cell.bankAccountTitleLabel.text = self.bankAccountTitle
-            cell.bankAccountDetailLabel.text = self.storeInfoModel?.bankAccount
-            cell.bankAccountInfoLabel.text = self.storeInfoModel?.accountTitle
             cell.newAccountLabel.text = self.newAccount
-            println(cell)
+            cell.newAccountLabel.hidden = true
+            cell.arrowButton.hidden = true
+            if self.storeInfoModel?.accountTitle != "" || self.storeInfoModel?.bankAccount != "" {
+                cell.bankAccountDetailLabel.text = self.storeInfoModel?.bankAccount
+                cell.bankAccountInfoLabel.text = self.storeInfoModel?.accountTitle
+            } else {
+                //cell.newAccountLabel.hidden = false
+                //cell.arrowButton.hidden = false
+                cell.bankAccountDetailLabel.text = self.bankNotSet
+                cell.bankAccountInfoLabel.text = ""
+            }
+            cell.accountTitle = self.storeInfoModel!.accountTitle
+            println("account title \(cell.accountTitle)")
             return cell
         } else {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoAccountInformationTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAccountInformationTableViewCell
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.delegate = self
             cell.accountInfoLabel.text = self.accountInfo
             cell.passwordLabel.text = self.password
@@ -290,27 +347,101 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return 1
-        
+        if section == 1 {
+            if SessionManager.isReseller() {
+                if self.storeInfoModel != nil {
+                    return self.storeInfoModel!.productCategoryName.count
+                } else {
+                    return 0
+                }
+            } else {
+                return 0
+            }
+        } else {
+            return 1
+        }
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 502
+            return 556
         } else if indexPath.section == 1 {
-            if self.hasQRCode {
-                return 322
+            if SessionManager.isReseller() {
+                return 44
             } else {
-                return 198
-            }            
+                return 0
+            }
         } else if indexPath.section == 2 {
+            if self.hasQRCode {
+                return 341
+            } else {
+                return 208
+            }            
+        } else if indexPath.section == 3 {
             return 163
-        } else  if indexPath.section == 3 {
+        } else if indexPath.section == 4 {
             return 163
         } else {
             return 221
         }
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 1 {
+            if SessionManager.isReseller() {
+                let headerView: StoreInfoPreferredCategoriesSectionView = XibHelper.puffViewWithNibName("AddProductHeaderView", index: 2) as! StoreInfoPreferredCategoriesSectionView
+                return headerView
+            } else {
+                return nil
+            }
+        } else {
+            return nil
+        }
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 1 {
+            if SessionManager.isReseller() {
+                return 50
+            } else {
+                return 0
+            }
+        } else {
+            return 0
+        }
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if indexPath.section == 1 {
+            if contains(self.selectedCategories, self.storeInfoModel!.productId[indexPath.row].toInt()!) {
+                println("yes")
+                self.tableData[indexPath.row].isChecked = false
+                if let index = find(self.selectedCategories, self.storeInfoModel!.productId[indexPath.row].toInt()!) {
+                    self.selectedCategories.removeAtIndex(index)
+                }
+                println(self.selectedCategories)
+            } else {
+                self.tableData[indexPath.row].isChecked = true
+                self.selectedCategories.insert(self.storeInfoModel!.productId[indexPath.row].toInt()!, atIndex: self.selectedCategories.count)
+                println(self.selectedCategories)
+            }
+        }
+        
+        self.tableView.reloadData()
+        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
+    }
+    
+    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        var selectedCell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
+        selectedCell.contentView.backgroundColor = UIColor.whiteColor()
+        if indexPath.section == 1 {
+            let originalStatus: Bool = self.tableData[indexPath.row].isChecked
+            self.tableData[indexPath.row].isChecked = false
+        }
+        
+        self.tableView.reloadData()
+        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
     }
     
     func storeNameAndDescription(storeName: String, storeDescription: String) {
@@ -478,10 +609,18 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             datas.append(dataCoverPhoto)
         }
        
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "storeName" : cell.storeNameTextField.text, "storeDescription" : cell.storeDescriptionTextView.text, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
+        let data = NSJSONSerialization.dataWithJSONObject(self.selectedCategories, options: nil, error: nil)
+        var formattedCategories: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+        let parameters: NSDictionary?
+        
+        if self.storeInfoModel!.isReseller {
+             parameters = ["access_token" : SessionManager.accessToken(), "storeName" : cell.storeNameTextField.text, "storeDescription" : cell.storeDescriptionTextView.text, "categoryIds" : formattedCategories, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
+        } else {
+            parameters = ["access_token" : SessionManager.accessToken(), "storeName" : cell.storeNameTextField.text, "storeDescription" : cell.storeDescriptionTextView.text, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
+        }
 
         let url: String = "\(APIAtlas.sellerUpdateSellerInfo)?access_token=\(SessionManager.accessToken())"
-        
+
         if !cell.storeNameTextField.text.isEmpty && !cell.storeNameTextField.text.isEmpty {
             manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
                 for (index, data) in enumerate(datas) {

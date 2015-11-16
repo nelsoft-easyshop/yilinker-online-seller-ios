@@ -18,7 +18,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     
     var tableData: [String] = []
     
-    var tableImages: [String] = ["mystore", "report", "transaction", "product", "category", "uploadItem", "followers", "activityLog", "points", "resolution", "help", "logout"]
+    var tableImages: [String] = []
     
     var storeInfo: StoreInfoModel!
     
@@ -30,6 +30,9 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     var somethingWrongLocalizeString: String = ""
     var connectionLocalizeString: String = ""
     var connectionMessageLocalizeString: String = ""
+    
+    // Variable for storing messaging controller if user logged in as affiliate
+    var messagingController: UIViewController = UIViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,6 +93,13 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         self.navigationController?.navigationBarHidden = true
         
         self.tabBarController?.tabBar.hidden = false
+        
+        //Remove messaging item
+        if SessionManager.isReseller() {
+            self.removeMessagingInTabBar()
+        } else {
+            self.addMessagingController(self.messagingController)
+        }
     }
     
     func initializeLocalizedString() {
@@ -127,9 +137,51 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         tableData.append(followersString)
         tableData.append(activityLogsString)
         tableData.append(myPointsString)
-        tableData.append(resolutionCenterString)
+        if !SessionManager.isReseller(){
+            tableData.append(resolutionCenterString)
+        }
         tableData.append(helpString)
         tableData.append(logoutString)
+        
+        tableImages.removeAll(keepCapacity: false)
+        tableImages.append("mystore")
+        tableImages.append("report")
+        tableImages.append("transaction")
+        tableImages.append("product")
+        tableImages.append("category")
+        tableImages.append("uploadItem")
+        tableImages.append("followers")
+        tableImages.append("activityLog")
+        tableImages.append("points")
+        if !SessionManager.isReseller(){
+            tableImages.append("resolution")
+        } else {
+            for var i = 0; i < tableImages.count; i++ {
+                if tableImages[i] == "resolution" {
+                    tableImages.removeAtIndex(i)
+                }
+            }
+        }
+        tableImages.append("help")
+        tableImages.append("logout")
+    }
+    
+    func removeMessagingInTabBar() {
+        var viewControllers: [UIViewController] =  self.tabBarController!.viewControllers as! [UIViewController]
+        if viewControllers.count == 4 {
+            self.messagingController = viewControllers[2]
+            viewControllers.removeAtIndex(2)
+            self.tabBarController?.setViewControllers(viewControllers, animated: true)
+        }
+    }
+    
+    //MARK: - Add Messaging Controller
+    func addMessagingController(viewController: UIViewController) {
+        var viewControllers: [UIViewController] =  self.tabBarController!.viewControllers as! [UIViewController]
+        if viewControllers.count == 3 {
+            viewControllers.insert(viewController, atIndex: 2)
+            self.tabBarController?.setViewControllers(viewControllers, animated: true)
+        }
     }
     
     func setupGCM(){
@@ -319,8 +371,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     }
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        switch kind {
-        case UICollectionElementKindSectionHeader:
+//        switch kind {
+//        case UICollectionElementKindSectionHeader:
             let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: dashBoardHeaderIdentifier, forIndexPath: indexPath) as! DashBoardHeaderCollectionViewCell
             
             if storeInfo != nil{
@@ -338,9 +390,9 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             }
             
             return headerView
-        default:
-            assert(false, "Unexpected element kind")
-        }
+//        default:
+//            assert(false, "Unexpected element kind")
+//        }
     }
     
     // MARK: UICollectionViewDelegate
@@ -349,6 +401,14 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        var temp: Int = 0
+        if SessionManager.isReseller() {
+            temp = 1
+        } else {
+            temp = 0
+        }
+        
         if indexPath.row == 0 {
             var storeInfoViewController = StoreInfoViewController(nibName: "StoreInfoViewController", bundle: nil)
             self.navigationController?.pushViewController(storeInfoViewController, animated:true)
@@ -390,14 +450,14 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             var myPointsViewController = MyPointsTableViewController(nibName: "MyPointsTableViewController", bundle: nil)
             self.navigationController?.pushViewController(myPointsViewController, animated:true)
             
+        } else if indexPath.row == (10 - temp) {
+            
         } else if indexPath.row == 9 {
             let resolutionCenter = self.storyboard?.instantiateViewControllerWithIdentifier("ResolutionCenterViewController")
                 as! ResolutionCenterViewController
             resolutionCenter.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(resolutionCenter, animated:true)
-        } else if indexPath.row == 10 {
-            
-        } else if indexPath.row == 11 {
+        } else if indexPath.row == (11 - temp) {
             let areYouSUreString = StringHelper.localizedStringWithKey("ARE_YOU_SURE_LOGOUT_LOCALIZE_KEY")
             let logoutString = StringHelper.localizedStringWithKey("LOGOUT_LOCALIZE_KEY")
             let cancelString = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
@@ -460,7 +520,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                         self.fireRefreshToken(showHUD)
                     } else {
                         UIAlertController.displaySomethingWentWrongError(self)
-                        self.storeInfo = StoreInfoModel(name: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", account_number: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "", isReseller: false, isEmailSubscribed: false, isSmsSubscribed: false)
+                        self.storeInfo = StoreInfoModel(name: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", account_number: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "", isReseller: false, isEmailSubscribed: false, isSmsSubscribed: false, productId: [""], productCategoryName: [""], isSelected: [false], tin: "")
                         
                         
                         var store_name1 = NSUserDefaults.standardUserDefaults().stringForKey("storeName")

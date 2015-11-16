@@ -67,7 +67,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.titles = [self.addressTitle, self.unitNo, self.bldgName, self.streetNo, self.streetName, self.subdivision, self.province, self.city, self.barangay, self.zipCode, self.additionalInfo]
+        self.titles = [self.addressTitle, self.unitNo, self.bldgName, self.streetNo, self.streetName, self.subdivision, self.province, self.city, self.barangay, self.zipCode]
         self.registerNib()
         self.backButton()
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
@@ -132,12 +132,10 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 cell.rowTitleLabel.required()
             } else if indexPath.row == 8 {
                 cell.rowTextField.text = self.addressModel.barangay
-            } else if indexPath.row == 9 {
-                cell.rowTextField.text = self.addressModel.zipCode
-                cell.rowTitleLabel.required()
             } else {
-                cell.rowTextField.text = self.addressModel.additionalInfo
-                isEdit = false
+                cell.rowTextField.text = self.addressModel.zipCode
+                cell.rowTextField.keyboardType = UIKeyboardType.NumberPad
+                cell.rowTitleLabel.required()
             }
         }
         
@@ -153,6 +151,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             cell.rowTitleLabel.required()
         } else if indexPath.row == 9 {
             cell.rowTitleLabel.required()
+            cell.rowTextField.keyboardType = UIKeyboardType.NumberPad
         }
         
         if indexPath.row == 6 || indexPath.row == 7 || indexPath.row == 8 {
@@ -282,7 +281,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         var index: Int = -1
         var index2: Int = 1001
         for i in 0..<10 {
-            if getTextAtIndex(i) == "" && i != 1 && i != 2 && i != 3 && i != 10 && i != 5 {
+            if getTextAtIndex(i) == "" && i != 1 && i != 2 && i != 3 && i != 5 {
                 index = i
                 break
             }
@@ -343,6 +342,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     }
     
     func done() {
+        self.tableView.reloadData()
         let row = NSIndexPath(forItem: activeTextField, inSection: 0)
         let cell: NewAddressTableViewCell = tableView.cellForRowAtIndexPath(row) as! NewAddressTableViewCell
         cell.rowTextField.endEditing(true)
@@ -385,7 +385,6 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             "city": getTextAtIndex(7),
             "barangay": getTextAtIndex(8),
             "zipCode": getTextAtIndex(9),
-            "addtionalInfo": getTextAtIndex(10),
             "locationId": self.addressModel.barangayId
         ]
         
@@ -420,7 +419,6 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             "city": getTextAtIndex(7),
             "barangay": getTextAtIndex(8),
             "zipCode": getTextAtIndex(9),
-            "addtionalInfo": getTextAtIndex(10),
             "locationId": self.addressModel.barangayId,
             "userAddressId": self.addressModel.userAddressId
         ]
@@ -546,7 +544,6 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 self.addressModel.barangay = self.barangayModel.location[0]
             }
             
-            self.tableView.reloadData()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
