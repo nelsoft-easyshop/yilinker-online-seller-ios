@@ -89,6 +89,14 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.cancelButton.hidden = true
     }
     
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        let newLength = count(textField.text.utf16) + count(string.utf16) - range.length
+        if newLength > 3 {
+            self.fireAutoSearch(textField)
+        }
+        return true
+    }
+    
     func done() {
         self.searchTextField.resignFirstResponder()
         self.cancelButton.hidden = true
@@ -202,7 +210,13 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // Mark: - UITableViewDelegate methods
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
         if (tableView.isEqual(self.filterByTableView)){
+            self.tableData.removeAll(keepCapacity: false)
+            self.riderNameArray.removeAll(keepCapacity: false)
+            self.tableDataTransaction.removeAll(keepCapacity: false)
+            self.searchTextField.text = ""
+            self.searchResultTableView.reloadData()
             self.filterByButton.tag = 1
             self.dimView.hidden = true
             self.searchFilterByView.hidden = true
@@ -275,9 +289,17 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         //self.searchTextField.resignFirstResponder()
+        self.fireAutoSearch(textField)
+        return true
+    }
+    
+    func fireAutoSearch(textField: UITextField){
         self.searchTextField.endEditing(true)
         
         if filterBySelected == 0 {
+            self.tableData.removeAll(keepCapacity: false)
+            self.riderNameArray.removeAll(keepCapacity: false)
+            self.tableDataTransaction.removeAll(keepCapacity: false)
             self.showAlert(title: "Information", message: "Search by \(filterBy[filterBySelected]) is not yet available.")
         } else if filterBySelected == 2 {
             self.tableData.removeAll(keepCapacity: false)
@@ -308,8 +330,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
             
         }
-        
-        return true
     }
     
     func fireSearch(){
