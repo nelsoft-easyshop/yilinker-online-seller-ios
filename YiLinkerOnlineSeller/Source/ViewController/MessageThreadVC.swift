@@ -28,6 +28,8 @@ class MessageThreadVC: UIViewController {
     
     let composeViewHeight : CGFloat = 50.0
     
+    var tabBarHidden : Bool = false
+    
     var sender : W_Contact?
     var recipient : W_Contact?
     
@@ -136,6 +138,26 @@ class MessageThreadVC: UIViewController {
         var tap = UITapGestureRecognizer (target: self, action: Selector("tableTapped:"))
         self.threadTableView.addGestureRecognizer(tap)
         
+<<<<<<< HEAD
+=======
+        
+        /* GCM */
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "onSeenMessage:",
+            name: appDelegate.seenMessageKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "onReceiveNewMessage:",
+            name: appDelegate.messageKey, object: nil)
+        
+        if let var tabBarTemp = self.tabBarController?.tabBar{
+            if (tabBarTemp.hidden){
+                self.tabBarHidden = true
+            } else {
+                self.tabBarHidden = false
+            }
+        }
+        println("HIDDEN? \(self.tabBarHidden)")
+>>>>>>> resolve/Message-textfield-and-Send-button-are-behind-the-in-app-keyboard-#525
     }
     
     func onStatusUpdate(notification: NSNotification){
@@ -216,6 +238,7 @@ class MessageThreadVC: UIViewController {
         self.setConversationAsReadFromEndpoint(r_temp)
         self.sendButton.titleLabel?.text = LocalizedStrings.send
         
+<<<<<<< HEAD
         /* GCM */
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
@@ -225,6 +248,8 @@ class MessageThreadVC: UIViewController {
             name: appDelegate.seenMessageKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onReceiveNewMessage:",
             name: appDelegate.messageKey, object: nil)
+=======
+>>>>>>> resolve/Message-textfield-and-Send-button-are-behind-the-in-app-keyboard-#525
     }
     
     func tableTapped(tap : UITapGestureRecognizer){
@@ -233,6 +258,7 @@ class MessageThreadVC: UIViewController {
     }
     
     override func viewWillDisappear(animated: Bool) {
+        self.clearProfileView()
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardDidChangeFrameNotification, object: nil)
@@ -379,10 +405,17 @@ class MessageThreadVC: UIViewController {
             var newTableFrame : CGRect = self.threadTableView.frame
             
             UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                self.threadTableView.contentInset = UIEdgeInsetsMake(60, 0, self.tabBarHeight, 0)
+                
+                var tabBarH : CGFloat = 0.0
+                if (!self.tabBarHidden){
+                    tabBarH = self.tabBarHeight
+                }
+                println("tabBarH Hidden \(tabBarH)")
+                
+                self.threadTableView.contentInset = UIEdgeInsetsMake(60, 0, tabBarH, 0)
                 
                 self.composeView.frame = newFrame
-                self.composeViewBottomLayout.constant -= (keyFrame.size.height - self.tabBarHeight)
+                self.composeViewBottomLayout.constant -= (keyFrame.size.height - tabBarH)
                 
                 self.goToBottomTableView()
                 }, completion: nil)
@@ -424,7 +457,16 @@ class MessageThreadVC: UIViewController {
             
             UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 self.composeView.frame = CGRectMake(newFrame.origin.x, newFrame.origin.y - keyFrame.size.height, newFrame.width, newFrame.height)
-                self.composeViewBottomLayout.constant += (keyFrame.size.height - self.tabBarHeight)
+                
+                var tabBarH : CGFloat = 0.0
+                if (!self.tabBarHidden){
+                    tabBarH = self.tabBarHeight
+                }
+                
+                println("tabBarH shown \(tabBarH)")
+                
+                self.composeViewBottomLayout.constant += (keyFrame.size.height - tabBarH)
+                
                 self.threadTableView.contentInset = UIEdgeInsetsMake(60, 0, keyFrame.size.height, 0)
                 self.goToBottomTableView()
                 

@@ -449,7 +449,11 @@
 		9F02F9361BF0BAEC00F44E2F /* yilinker_pinned_certificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 9F02F9351BF0BAEC00F44E2F /* yilinker_pinned_certificate.cer */; };
 		B70DD90F1BA727F400EC3A18 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B70DD90E1BA727F300EC3A18 /* GoogleService-Info.plist */; };
 		B70DD9121BA72B9800EC3A18 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70DD9111BA72B9800EC3A18 /* EmptyView.swift */; };
+<<<<<<< HEAD
 		B76DE7511BF1BA2F006D9974 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B76DE7501BF1BA2D006D9974 /* GoogleService-Info.plist */; };
+=======
+		B78B18B41BD886B600F0EC43 /* MessageThreadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BADAF41BA563FF005F59F9 /* MessageThreadVC.swift */; };
+>>>>>>> resolve/Message-textfield-and-Send-button-are-behind-the-in-app-keyboard-#525
 		B7BADAE31BA56381005F59F9 /* DateUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BADAE21BA56381005F59F9 /* DateUtility.swift */; };
 		B7BADAE71BA563A5005F59F9 /* W_Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BADAE41BA563A5005F59F9 /* W_Contact.swift */; };
 		B7BADAE81BA563A5005F59F9 /* W_Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BADAE51BA563A5005F59F9 /* W_Conversation.swift */; };
@@ -463,7 +467,6 @@
 		B7BADAFB1BA563FF005F59F9 /* ImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BADAF11BA563FF005F59F9 /* ImageVC.swift */; };
 		B7BADAFC1BA563FF005F59F9 /* MessageThreadImageTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BADAF21BA563FF005F59F9 /* MessageThreadImageTVC.swift */; };
 		B7BADAFD1BA563FF005F59F9 /* MessageThreadTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BADAF31BA563FF005F59F9 /* MessageThreadTVC.swift */; };
-		B7BADAFE1BA563FF005F59F9 /* MessageThreadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BADAF41BA563FF005F59F9 /* MessageThreadVC.swift */; };
 		B7BADAFF1BA563FF005F59F9 /* TextViewAutoHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BADAF51BA563FF005F59F9 /* TextViewAutoHeight.swift */; };
 		E72BD5070233EC6FF42DDA3A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B825E81D3B27E563C7C3C53 /* libPods.a */; };
 		F727FF591B99C94700872E11 /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = F727FF581B99C94700872E11 /* edit.png */; };
@@ -2416,6 +2419,7 @@
 				0CEB3AC71BB092B600139AFE /* ProductManagementViewController.swift in Sources */,
 				0CEB3AC61BB08CA700139AFE /* TransactionShipItemTableViewController.swift in Sources */,
 				0CEB3AC41BB0895F00139AFE /* ProductImagesView.swift in Sources */,
+				B78B18B41BD886B600F0EC43 /* MessageThreadVC.swift in Sources */,
 				F7E175761BA3F32C00A3820B /* ProductUploadTextFieldTableViewCell.swift in Sources */,
 				961F70361B983E50007D0EA5 /* ResolutionFilterViewController.swift in Sources */,
 				0CEB3AC11BB052BE00139AFE /* SelectedProductTableViewCell.swift in Sources */,
@@ -2562,7 +2566,6 @@
 				F7CB78431B9D822C001AF766 /* FilterCalendarTableViewCell.swift in Sources */,
 				F7C40F791B983B510091C16C /* FilterTableViewCell.swift in Sources */,
 				0C65F8B81B8DCD8B00504D86 /* ProductUploadCategoryTableViewCell.swift in Sources */,
-				B7BADAFE1BA563FF005F59F9 /* MessageThreadVC.swift in Sources */,
 				0C8D7FC11B8FE50900B3FA4E /* ProductUploadAttributeValuesCollectionViewCell.swift in Sources */,
 				0C65F8C81B8DEE6400504D86 /* ProductUploadPriceTableViewCell.swift in Sources */,
 				0CAB52A71B920A5800EA441A /* BrandModel.swift in Sources */,
