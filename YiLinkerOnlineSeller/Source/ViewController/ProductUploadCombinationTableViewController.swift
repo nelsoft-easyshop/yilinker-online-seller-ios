@@ -344,7 +344,6 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
     }
     
     // MARK: - Dimension's Delegate
-    
     func productUploadDimensionsAndWeightTableViewCell(textFieldDidChange textField: UITextField, text: String, cell: ProductUploadDimensionsAndWeightTableViewCell) {
         if textField.isEqual(cell.weightTextField) {
             self.combination.weight = text
@@ -369,7 +368,11 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         
         let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
         dispatch_after(delayTime, dispatch_get_main_queue()) {
-            if self.combination.sku == "" {
+            if self.combination.retailPrice == "" {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.retailPriceRequired, title: ProductUploadStrings.incompleteProductDetails)
+            } else if self.combination.quantity == "" {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.quantityRequired, title: ProductUploadStrings.incompleteProductDetails)
+            } else if self.combination.sku == "" {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.skuRequried, title: ProductUploadStrings.incompleteProductDetails)
             } else if self.combination.length == "" {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.lengthRequried, title: ProductUploadStrings.incompleteProductDetails)
