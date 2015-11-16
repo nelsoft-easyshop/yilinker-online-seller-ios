@@ -92,8 +92,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        requestGetProductList(Status.all, key: "")
-
+        self.showHUD()
         customizeNavigationBar()
         customizeViews()
         registerNibs()
@@ -102,9 +101,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        if self.requestTask != nil {
-            requestGetProductList(statusId[selectedIndex], key: self.searchBarTextField.text)
-        }
+        requestGetProductList(statusId[selectedIndex], key: self.searchBarTextField.text)
     }
     
     // MARK: - Methods
