@@ -4,7 +4,7 @@ Test Accounts, Staging.
 
 Buyer:
 mobile.yilinker+buyer1@gmail.com
-password1
+password123
 
 Physical Store Owner (Merchant):
 mobile.yilinker+merchant1@gmail.com
