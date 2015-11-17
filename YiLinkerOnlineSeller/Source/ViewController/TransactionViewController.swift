@@ -174,18 +174,14 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         if !isFromFilter {
             status.removeAll(keepCapacity: false)
             paymentMethod.removeAll(keepCapacity: false)
-            dateFrom = ""
-            dateTo = ""
             sortBy = ""
         }
         
         if indexPath.row == 1 {
             dateFrom = formatDateToString(NSDate())
             dateTo = formatDateToString(NSDate().addDays(1))
-        } else {
-            dateFrom = ""
-            dateTo = ""
         }
+        
 
         selectedStatus = indexPath.row
         isFromFilter = false
@@ -382,6 +378,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         self.selectedDate = selectedDate
         self.selectedStatus = selectedStatus
         self.selectedPayment = selectedPayment
+        
         if dates.isEmpty {
             dateFrom = ""
             dateTo = ""

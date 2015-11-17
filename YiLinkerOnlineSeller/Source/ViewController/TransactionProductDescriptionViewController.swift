@@ -15,7 +15,7 @@ class TransactionProductDescriptionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        webView.loadHTMLString(fullDescription, baseURL: nil)
+        webView.loadHTMLString("<font face='Panton-Light'>\(fullDescription)", baseURL: nil)
         initializeNavigationBar()
     }
 
