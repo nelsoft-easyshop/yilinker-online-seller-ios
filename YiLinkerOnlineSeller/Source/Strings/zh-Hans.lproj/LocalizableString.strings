@@ -186,6 +186,7 @@ ERROR_LOCALIZE_KEY = "登录";
 FAILED_LOCALIZE_KEY = "登录";
 TOOLBAR_DONE_LOCALIZE_KEY = "登录";
 PLEASE_CHECK_INTERNET_LOCALIZE_KEY = "登录 登录 登录 登录 登录.";
+NO_CONTACT_NUMBER = "没有联系人的号码!";//No Chinese String
 
 // MARK: - Modules by Rj
 

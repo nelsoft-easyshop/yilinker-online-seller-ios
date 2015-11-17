@@ -187,6 +187,8 @@ FAILED_LOCALIZE_KEY = "Failed";
 TOOLBAR_DONE_LOCALIZE_KEY = "Done";
 PLEASE_CHECK_INTERNET_LOCALIZE_KEY = "Please check your internet connection.";
 
+NO_CONTACT_NUMBER = "No contact number!";
+
 // MARK: - Modules by Rj
 
 // MARK: - SIGN IN
