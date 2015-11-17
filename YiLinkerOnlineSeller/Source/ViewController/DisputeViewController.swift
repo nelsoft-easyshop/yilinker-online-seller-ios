@@ -15,7 +15,7 @@ class DisputeViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var modalView: UIView!
     @IBOutlet weak var titleView: UIView!
-    weak var delegate: ResolutionCenterViewController?
+    weak var delegate: ResolutionCenterViewControllerV2?
     @IBOutlet weak var caseId: UILabel!
     @IBOutlet weak var verticalSpaceInset: NSLayoutConstraint!
 
