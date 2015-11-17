@@ -307,6 +307,9 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
             let cell: TransactionDeliveryTableViewCell = tableView.dequeueReusableCellWithIdentifier(deliveryCellIdentifier, forIndexPath: indexPath) as! TransactionDeliveryTableViewCell
             cell.selectionStyle = .None;
             cell.delegate = self
+            cell.lastCheckinLabel.text = productModel.lastCheckedinLocation
+            cell.pickupRiderLabel.text = productModel.pickupRider
+            cell.deliveryRiderLabel.text = productModel.deliveryRider
             return cell
         } else {
             let cell: TransactionDeliveryTableViewCell = tableView.dequeueReusableCellWithIdentifier(deliveryCellIdentifier, forIndexPath: indexPath) as! TransactionDeliveryTableViewCell
@@ -428,19 +431,35 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
 
     // MARK: - TransactionDeliveryTableViewCellDelegate {
     func smsPickupRiderAction() {
-        
+        if !productModel.pickupRiderContactNumber.isEmpty {
+            UIApplication.sharedApplication().openURL(NSURL(string: "sms:\(productModel.pickupRiderContactNumber)")!)
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("NO_CONTACT_NUMBER"))
+        }
     }
     
     func callPickupRiderAction() {
-        
+        if !productModel.pickupRiderContactNumber.isEmpty {
+            UIApplication.sharedApplication().openURL(NSURL(string: "tel:\(productModel.pickupRiderContactNumber)")!)
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("NO_CONTACT_NUMBER"))
+        }
     }
     
     func smsDeliveryRiderAction() {
-        
+        if !productModel.deliveryRiderContactNumber.isEmpty {
+            UIApplication.sharedApplication().openURL(NSURL(string: "sms:\(productModel.deliveryRiderContactNumber)")!)
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("NO_CONTACT_NUMBER"))
+        }
     }
     
     func callDeliveryRiderAction() {
-        
+        if !productModel.deliveryRiderContactNumber.isEmpty {
+            UIApplication.sharedApplication().openURL(NSURL(string: "tel:\(productModel.deliveryRiderContactNumber)")!)
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("NO_CONTACT_NUMBER"))
+        }
     }
     
     func lastCheckinAction() {
