@@ -217,7 +217,7 @@ class ResolutionCenterViewController
     // Mark: - OLD VERSION FOR MODAL File a Dispute
     private func disputeOldPressed() {
         var attributeModal = DisputeViewController(nibName: "DisputeViewController", bundle: nil)
-        attributeModal.delegate = self
+        //attributeModal.delegate = self
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         attributeModal.providesPresentationContextTransitionStyle = true
         attributeModal.definesPresentationContext = true
@@ -267,7 +267,7 @@ class ResolutionCenterViewController
             self.storyboard?.instantiateViewControllerWithIdentifier("FilterNavigationController")
                 as! UINavigationController
         let filtrationView = filtrationNav.viewControllers[0] as! ResolutionFilterViewController
-        filtrationView.delegate = self
+        //filtrationView.delegate = self
 
         self.navigationController?.presentViewController(filtrationNav, animated: true, completion: nil)
     }
