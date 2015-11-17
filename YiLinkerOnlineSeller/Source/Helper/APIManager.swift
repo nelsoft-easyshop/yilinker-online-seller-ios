@@ -16,7 +16,7 @@ struct APIEnvironment {
         if development {
             return "http://merchant.online.api.easydeal.ph/api/v1"
         } else if staging {
-            return ""
+            return "http://merchant.online.api.easydeal.ph/api/v1"
         } else  {
             return "https://merchant.yilinker.com/api/v1"
         }

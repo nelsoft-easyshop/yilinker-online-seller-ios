@@ -466,6 +466,7 @@
 		B7BADAFE1BA563FF005F59F9 /* MessageThreadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BADAF41BA563FF005F59F9 /* MessageThreadVC.swift */; };
 		B7BADAFF1BA563FF005F59F9 /* TextViewAutoHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BADAF51BA563FF005F59F9 /* TextViewAutoHeight.swift */; };
 		E72BD5070233EC6FF42DDA3A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B825E81D3B27E563C7C3C53 /* libPods.a */; };
+		F721FCB31BFB08850009E645 /* ResolutionCenterViewControllerV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F721FCB21BFB08850009E645 /* ResolutionCenterViewControllerV2.swift */; };
 		F727FF591B99C94700872E11 /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = F727FF581B99C94700872E11 /* edit.png */; };
 		F79403001BC00D6E00CD21DD /* FilterHeaderSectiionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79402FE1BC00D6E00CD21DD /* FilterHeaderSectiionViewController.swift */; };
 		F79403011BC00D6E00CD21DD /* FilterHeaderSectiionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F79402FF1BC00D6E00CD21DD /* FilterHeaderSectiionViewController.xib */; };
@@ -1075,6 +1076,7 @@
 		B7BADAF41BA563FF005F59F9 /* MessageThreadVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadVC.swift; sourceTree = "<group>"; };
 		B7BADAF51BA563FF005F59F9 /* TextViewAutoHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewAutoHeight.swift; sourceTree = "<group>"; };
 		D4D17EE114265F93B1630151 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		F721FCB21BFB08850009E645 /* ResolutionCenterViewControllerV2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionCenterViewControllerV2.swift; sourceTree = "<group>"; };
 		F727FF581B99C94700872E11 /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
 		F79402FE1BC00D6E00CD21DD /* FilterHeaderSectiionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterHeaderSectiionViewController.swift; sourceTree = "<group>"; };
 		F79402FF1BC00D6E00CD21DD /* FilterHeaderSectiionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterHeaderSectiionViewController.xib; sourceTree = "<group>"; };
@@ -1576,6 +1578,7 @@
 				F79402FF1BC00D6E00CD21DD /* FilterHeaderSectiionViewController.xib */,
 				F7CCEEF81BBEC41D00D876C2 /* FilterResultsRiderNameViewController.swift */,
 				F7CCEEF91BBEC41D00D876C2 /* FilterResultsRiderNameViewController.xib */,
+				F721FCB21BFB08850009E645 /* ResolutionCenterViewControllerV2.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2678,6 +2681,7 @@
 				792876091B8DF89F00762A39 /* BarChartDataEntry.swift in Sources */,
 				792876181B8DF89F00762A39 /* LineChartDataSet.swift in Sources */,
 				F7C40FDD1B9840490091C16C /* FilterAttributeModel.swift in Sources */,
+				F721FCB31BFB08850009E645 /* ResolutionCenterViewControllerV2.swift in Sources */,
 				792876221B8DF89F00762A39 /* ChartDataBaseFilter.swift in Sources */,
 				79ED2F641B9BF2CA00C5BC0A /* TransactionsModel.swift in Sources */,
 				F7AC5F711B9AA2DC00227D18 /* CityModel.swift in Sources */,

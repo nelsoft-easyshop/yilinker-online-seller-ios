@@ -485,8 +485,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             }
 
         } else if indexPath.row == 9 {
-            let resolutionCenter = self.storyboard?.instantiateViewControllerWithIdentifier("ResolutionCenterViewController")
-                as! ResolutionCenterViewController
+            let resolutionCenter = self.storyboard?.instantiateViewControllerWithIdentifier("ResolutionCenterViewControllerV2")
+                as! ResolutionCenterViewControllerV2
             resolutionCenter.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(resolutionCenter, animated:true)
         } else if indexPath.row == (11 - temp) {

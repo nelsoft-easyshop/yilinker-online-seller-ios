@@ -1,77 +1,68 @@
 //
-//  ResolutionCenterViewController.swift
-//  Bar Button Item
+//  ResolutionCenterViewControllerV2.swift
+//  YiLinkerOnlineSeller
 //
-//  Created by @EasyShop.ph on 8/29/15.
+//  Created by Joriel Oller Fronda on 11/17/15.
 //  Copyright (c) 2015 YiLinker. All rights reserved.
 //
 
 import UIKit
 
-class ResolutionCenterViewController
-: UIViewController, UITableViewDataSource, UITableViewDelegate {
+struct ResolutionStrings {
+    static let title = StringHelper.localizedStringWithKey("RESOLUTION_TITLE_LOCALIZE_KEY")
+    static let cases = StringHelper.localizedStringWithKey("RESOLUTION_CASES_LOCALIZE_KEY")
+    static let open = StringHelper.localizedStringWithKey("RESOLUTION_OPEN_LOCALIZE_KEY")
+    static let closed = StringHelper.localizedStringWithKey("RESOLUTION_CLOSED_LOCALIZE_KEY")
+    static let file = StringHelper.localizedStringWithKey("RESOLUTION_FILE_LOCALIZE_KEY")
+    static let emptyText = StringHelper.localizedStringWithKey("RESOLUTION_EMPTY_LOCALIZE_KEY")
+}
+
+class ResolutionCenterViewControllerV2: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var casesTab: UIButton!
     @IBOutlet weak var openTab: UIButton!
     @IBOutlet weak var closedTab: UIButton!
-    @IBOutlet weak var casesLabel: UILabel!
-    @IBOutlet weak var openLabel: UILabel!
-    @IBOutlet weak var closedLabel: UILabel!
-    @IBOutlet weak var caseImageView: UIImageView!
-    @IBOutlet weak var openImageView: UIImageView!
-    @IBOutlet weak var closedImageView: UIImageView!
-    
-    @IBOutlet weak var closedView: UIView!
-    @IBOutlet weak var openVIew: UIView!
-    @IBOutlet weak var casesView: UIView!
     var tabSelector = ButtonToTabBehaviorizer()
     @IBOutlet weak var disputeButton: UIButton!
     var dimView: UIView? = nil
     
     @IBOutlet weak var resolutionTableView: UITableView!
     var tableData = [ResolutionCenterElement]()
-    var resolutionCenterModel: ResolutionCenterModel = ResolutionCenterModel()
     /*: [(ResolutionCenterElement)] =
     [ ("7889360001", "Open"  , "December 12, 2015", "Seller", "Not Happy", "It's okay")
-     ,("7889360002", "Closed", "January 2, 2016"  , "Buyer" , "Yo wassup", "Go voltron!")
-     ,("7889360003", "Open"  , "February 4, 2016" , "Seller", "hmm...", "hack'd'planet")
-     ,("2345647856", "Open"  , "January 21, 2016" , "Seller", "Numbers game", "13")
-     ,("2345647856", "Closed", "January 21, 2016" , "Buyer" , "On-start", "What's goin on")]
+    ,("7889360002", "Closed", "January 2, 2016"  , "Buyer" , "Yo wassup", "Go voltron!")
+    ,("7889360003", "Open"  , "February 4, 2016" , "Seller", "hmm...", "hack'd'planet")
+    ,("2345647856", "Open"  , "January 21, 2016" , "Seller", "Numbers game", "13")
+    ,("2345647856", "Closed", "January 21, 2016" , "Buyer" , "On-start", "What's goin on")]
     **/
-
-    var currentSelectedFilter = SelectedFilters(time:.Total, status:.Both)
+    
+    @IBOutlet weak var casesContainerView: UIView!
+    @IBOutlet weak var casesImageView: UIImageView!
+    @IBOutlet weak var casesLabel: UILabel!
+    @IBOutlet weak var openContainerView: UIView!
+    @IBOutlet weak var openImageView: UIImageView!
+    @IBOutlet weak var openLabel: UILabel!
+    @IBOutlet weak var closedContainerView: UIView!
+    @IBOutlet weak var closedImageView: UIImageView!
+    @IBOutlet weak var closedLabel: UILabel!
+    @IBOutlet weak var emptyLabel: UILabel!
+    
+    var currentSelectedFilter = SelectedFilters(time:.Total,status:.Both)
     
     var hud: MBProgressHUD?
-
+    
     /// Don't Call fireGetCases() everytime this screen is shown
-    /// Call it intentionally from inside the completion: from screens
+    /// Call it intentionally whenever a screen completes
     //override func viewDidAppear(animated: Bool) {
     //    super.viewDidAppear(animated)
     //    fireGetCases()
     //}
-
-    //Localize strings
-    let caseTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_CASES_LOCALIZE_KEY")
-    let openTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_OPEN_LOCALIZE_KEY")
-    let closedTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_CLOSED_LOCALIZE_KEY")
-    let resolutionTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_TITLE_LOCALIZE_KEY")
-    let fileDisputeTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_FILE_LOCALIZE_KEY")
-    let resTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_TITLE_LOCALIZE_KEY")
+    
+    var resolutionCenterModel: ResolutionCenterModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //Set localized string to buttons
-        //casesTab.setTitle(caseTitle, forState: UIControlState.Normal)
-        casesLabel.text = caseTitle
-        openLabel.text = openTitle
-        closedLabel.text = closedTitle
-        
-        //openTab.setTitle(openTitle, forState: UIControlState.Normal)
-        //closedTab.setTitle(closedTitle, forState: UIControlState.Normal)
-        disputeButton.setTitle(fileDisputeTitle, forState: UIControlState.Normal)
-        
         // Initialize tab-behavior for buttons
-        //tabSelector.viewDidLoadInitialize(casesTab, second: openTab, third: closedTab)
-        self.title = resTitle
+        tabSelector.viewDidLoadInitialize(casesTab, second: openTab, third: closedTab)
         
         // UITableViewDataSource initialization
         resolutionTableView.dataSource = self
@@ -87,32 +78,34 @@ class ResolutionCenterViewController
         // Dispute button
         disputeButton.addTarget(self, action:"disputePressed", forControlEvents:.TouchUpInside)
         
-        caseImageView.image = UIImage(named: "cases2-b")
-        closedImageView.image = UIImage(named: "close4-a")
-        openImageView.image = UIImage(named: "open2-a")
-        casesView.backgroundColor = UIColor.whiteColor()
-        closedView.backgroundColor = Constants.Colors.appTheme
-        openVIew.backgroundColor = Constants.Colors.appTheme
-        casesLabel.textColor = Constants.Colors.appTheme
-        closedLabel.textColor = UIColor.whiteColor()
-        openLabel.textColor = UIColor.whiteColor()
+        self.casesLabel.text = ResolutionStrings.cases
+        self.openLabel.text = ResolutionStrings.open
+        self.closedLabel.text = ResolutionStrings.closed
+        self.disputeButton.setTitle(ResolutionStrings.file, forState: .Normal)
+        self.emptyLabel.text = ResolutionStrings.emptyText
         
-        // Initial data load
+        self.casesContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "casesAction:"))
+        self.openContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "openAction:"))
+        self.closedContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "closedAction:"))
+        
+        setSelectedTab(0)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.emptyLabel.hidden = true
         fireGetCases()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidAppear(animated: Bool) {
-        self.tableData.removeAll(keepCapacity: false)
-        self.fireGetCases()
-    }
     // MARK: initialization functions
     func setupNavigationBar() {
         // Title text in Navigation Bar will now turn WHITE
+        self.title = ResolutionStrings.title
         self.navigationController!.navigationBar.barStyle = UIBarStyle.Black
         
         // Back button
@@ -136,7 +129,6 @@ class ResolutionCenterViewController
         
         self.navigationController?.pushViewController(caseDetails, animated:true);
     }
-
     
     // MARK: UITableViewDataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -154,58 +146,81 @@ class ResolutionCenterViewController
     
     // MARK: Tab Selection Logic
     @IBAction func casesPressed(sender: AnyObject) {
-        //if self.tabSelector.didSelectTheSameTab(sender) {
-        //    return
-       // }
-        //self.tabSelector.setSelection(.TabOne)
-        caseImageView.image = UIImage(named: "cases2-b")
-        closedImageView.image = UIImage(named: "close4-a")
-        openImageView.image = UIImage(named: "open2-a")
-        casesView.backgroundColor = UIColor.whiteColor()
-        closedView.backgroundColor = Constants.Colors.appTheme
-        openVIew.backgroundColor = Constants.Colors.appTheme
-        casesLabel.textColor = Constants.Colors.appTheme
-        closedLabel.textColor = UIColor.whiteColor()
-        openLabel.textColor = UIColor.whiteColor()
-        
+        if self.tabSelector.didSelectTheSameTab(sender) {
+            return
+        }
+        self.tabSelector.setSelection(.TabOne)
         self.currentSelectedFilter.status = .Both
         fireGetCases()
     }
-
+    
     @IBAction func openPressed(sender: AnyObject) {
-       // if self.tabSelector.didSelectTheSameTab(sender) {
-        //    return
-        //}
-        //self.tabSelector.setSelection(.TabTwo)
-        caseImageView.image = UIImage(named: "cases2-a")
-        closedImageView.image = UIImage(named: "close4-a")
-        openImageView.image = UIImage(named: "open2-b")
-        casesView.backgroundColor = Constants.Colors.appTheme
-        closedView.backgroundColor = Constants.Colors.appTheme
-        openVIew.backgroundColor = UIColor.whiteColor()
-        casesLabel.textColor = UIColor.whiteColor()
-        closedLabel.textColor = UIColor.whiteColor()
-        openLabel.textColor = Constants.Colors.appTheme
+        if self.tabSelector.didSelectTheSameTab(sender) {
+            return
+        }
+        self.tabSelector.setSelection(.TabTwo)
         self.currentSelectedFilter.status = .Open
         fireGetCases()
     }
     
     @IBAction func closedPressed(sender: AnyObject) {
-        //if self.tabSelector.didSelectTheSameTab(sender) {
-        //    return
-        //}
-        //self.tabSelector.setSelection(.TabThree)
-        caseImageView.image = UIImage(named: "cases2-a")
-        closedImageView.image = UIImage(named: "close4-b")
-        openImageView.image = UIImage(named: "open2-a")
-        casesView.backgroundColor = Constants.Colors.appTheme
-        closedView.backgroundColor = UIColor.whiteColor()
-        openVIew.backgroundColor = Constants.Colors.appTheme
-        casesLabel.textColor = UIColor.whiteColor()
-        closedLabel.textColor = Constants.Colors.appTheme
-        openLabel.textColor = UIColor.whiteColor()
+        if self.tabSelector.didSelectTheSameTab(sender) {
+            return
+        }
+        self.tabSelector.setSelection(.TabThree)
         self.currentSelectedFilter.status = .Closed
         fireGetCases()
+    }
+    
+    // MARK: - Tabs Actions
+    
+    func casesAction(gesture: UIGestureRecognizer) {
+        setSelectedTab(0)
+        self.currentSelectedFilter.status = .Both
+        fireGetCases()
+        self.emptyLabel.hidden = true
+    }
+    
+    func openAction(gesture: UIGestureRecognizer) {
+        setSelectedTab(1)
+        self.currentSelectedFilter.status = .Open
+        fireGetCases()
+        self.emptyLabel.hidden = true
+    }
+    
+    func closedAction(gesture: UIGestureRecognizer) {
+        setSelectedTab(2)
+        self.currentSelectedFilter.status = .Closed
+        fireGetCases()
+        self.emptyLabel.hidden = true
+    }
+    
+    func setSelectedTab(index: Int) {
+        self.casesContainerView.backgroundColor = Constants.Colors.appTheme
+        self.casesImageView.image = UIImage(named: "cases2-a")
+        self.casesLabel.textColor = UIColor.whiteColor()
+        
+        self.openContainerView.backgroundColor = Constants.Colors.appTheme
+        self.openImageView.image = UIImage(named: "open2-a")
+        self.openLabel.textColor = UIColor.whiteColor()
+        
+        self.closedContainerView.backgroundColor = Constants.Colors.appTheme
+        self.closedImageView.image = UIImage(named: "close4-a")
+        self.closedLabel.textColor = UIColor.whiteColor()
+        
+        if index == 0 {
+            self.casesContainerView.backgroundColor = UIColor.whiteColor()
+            self.casesImageView.image = UIImage(named: "cases2-b")
+            self.casesLabel.textColor = Constants.Colors.appTheme
+        } else if index == 1 {
+            self.openContainerView.backgroundColor = UIColor.whiteColor()
+            self.openImageView.image = UIImage(named: "open2-b")
+            self.openLabel.textColor = Constants.Colors.appTheme
+        } else if index == 2 {
+            self.closedContainerView.backgroundColor = UIColor.whiteColor()
+            self.closedImageView.image = UIImage(named: "close4-b")
+            self.closedLabel.textColor = Constants.Colors.appTheme
+        }
     }
     
     // Mark: - New Dispute View Controller
@@ -217,16 +232,16 @@ class ResolutionCenterViewController
     // Mark: - OLD VERSION FOR MODAL File a Dispute
     private func disputeOldPressed() {
         var attributeModal = DisputeViewController(nibName: "DisputeViewController", bundle: nil)
-        //attributeModal.delegate = self
+        attributeModal.delegate = self
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         attributeModal.providesPresentationContextTransitionStyle = true
         attributeModal.definesPresentationContext = true
         attributeModal.view.backgroundColor = UIColor.clearColor()
         attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
-      
+        
         //UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(attributeModal, animated: true, completion: nil)
         self.navigationController?.presentViewController(attributeModal, animated: true, completion: nil)
-
+        
         if self.dimView == nil {
             let dimView = UIView(frame: self.view.frame)
             dimView.tag = 1337;
@@ -254,8 +269,6 @@ class ResolutionCenterViewController
             //self.navigationController?.navigationBar.alpha = CGFl oat(self.visibility)
         })
     }
-
-    
     
     // MARK: - Navigation Bar Buttons
     func goBackButton() {
@@ -264,11 +277,11 @@ class ResolutionCenterViewController
     
     func goFilterButton() {
         let filtrationNav =
-            self.storyboard?.instantiateViewControllerWithIdentifier("FilterNavigationController")
-                as! UINavigationController
+        self.storyboard?.instantiateViewControllerWithIdentifier("FilterNavigationController")
+            as! UINavigationController
         let filtrationView = filtrationNav.viewControllers[0] as! ResolutionFilterViewController
-        //filtrationView.delegate = self
-
+        filtrationView.delegate = self
+        
         self.navigationController?.presentViewController(filtrationNav, animated: true, completion: nil)
     }
     
@@ -283,9 +296,9 @@ class ResolutionCenterViewController
         default:
             tabSelector.setSelection(.TabOne)
         }
-        fireGetCases()
+        //        fireGetCases()
     }
-
+    
     func showHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
@@ -320,7 +333,7 @@ class ResolutionCenterViewController
             } else if statusFilter == "0" {
                 if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisMonth {
                     parameters = [ "access_token" : SessionManager.accessToken()
-                        , "dateFrom" : "\(fullDate[0])-1-\(fullDate[2])",
+                        , "dateFrom" : "\(fullDate[0])-\(fullDate[1])-1",
                         "dateTo": timeFilter]
                     
                 } else if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisWeek {
@@ -334,7 +347,7 @@ class ResolutionCenterViewController
             } else {
                 if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisMonth {
                     parameters = [ "access_token" : SessionManager.accessToken()
-                        , "dateFrom" : "\(fullDate[0])-1-\(fullDate[2])",
+                        , "dateFrom" : "\(fullDate[0])-\(fullDate[1])-1",
                         "dateTo": timeFilter,
                         "disputeStatusType" : statusFilter]
                     
@@ -354,26 +367,19 @@ class ResolutionCenterViewController
         
         manager.GET(urlString, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.resolutionCenterModel = ResolutionCenterModel.parseDataWithDictionary(responseObject as! NSDictionary)
-            
-            //            var fullDate = self.resolutionCenterModel.resolutionArray[0].date.componentsSeparatedByString(" ")
-            //            println(fullDate[0])
-            //
-            //            let dateFormatter = NSDateFormatter()
-            //            dateFormatter.dateFormat = "MM/dd/yyyy"
-            //            let date = dateFormatter.dateFromString(fullDate[0])
-            //            println(date)
+            self.resolutionCenterModel = ResolutionCenterModel.parseDataWithDictionary(responseObject)
             
             if self.resolutionCenterModel.isSuccessful {
-                self.tableData.removeAll(keepCapacity: false)
-                self.tableData = self.resolutionCenterModel.resolutionArray
-                self.resolutionTableView.reloadData()
+                if self.resolutionCenterModel.resolutionArray.count == 0 {
+                    self.emptyLabel.hidden = false
+                } else {
+                    self.tableData.removeAll(keepCapacity: false)
+                    self.tableData = self.resolutionCenterModel.resolutionArray
+                    self.resolutionTableView.reloadData()
+                }
             } else {
                 println(responseObject["message"])
-                //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error while reading Resolution Center table", title: "Data Loading Error")
-                self.tableData.removeAll(keepCapacity: false)
-                self.tableData = self.resolutionCenterModel.resolutionArray
-                self.resolutionTableView.reloadData()
+                self.emptyLabel.hidden = false
             }
             
             self.hud?.hide(true)
@@ -386,13 +392,12 @@ class ResolutionCenterViewController
                 if task.statusCode == 401 {
                     self.fireRefreshToken()
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error Refreshing Token", title: "Refresh Token Error")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY"), title: StringHelper.localizedStringWithKey("SOMETHING_WENT_WRONG_LOCALIZE_KEY"))
                 }
                 
                 println(error)
         })
     }
-
     
     func fireRefreshToken() {
         self.showHUD()
