@@ -38,9 +38,14 @@ class TransactionOrderProductModel: NSObject {
     var isCancellable: Bool = false
     var isShippable: Bool = false
     var brand: String = ""
+    var lastCheckedinLocation: String = ""
+    var pickupRider: String = ""
+    var pickupRiderContactNumber: String = ""
+    var deliveryRider: String = ""
+    var deliveryRiderContactNumber: String = ""
     var transactionOrderItemStatus: TransactionOrderItemStatus = TransactionOrderItemStatus.UnSelected
     
-    init(orderProductId: String, productId: String, quantity: Int, unitPrice: String, totalPrice: String, productName: String, handlingFee: String, dateAdded: String, lastDateModified: String, orderProductStatusId: Int, orderProductStatusName: String, orderProductStatusDescription: String, productImage: String, sku: String, attributes: [Attribute], originalUnitPrice: String, discount: String, width: String, height: String, length: String, weight: String, fullDescription: String, shortDescription: String, isCancellable: Bool, isShippable: Bool, brand: String) {
+    init(orderProductId: String, productId: String, quantity: Int, unitPrice: String, totalPrice: String, productName: String, handlingFee: String, dateAdded: String, lastDateModified: String, orderProductStatusId: Int, orderProductStatusName: String, orderProductStatusDescription: String, productImage: String, sku: String, attributes: [Attribute], originalUnitPrice: String, discount: String, width: String, height: String, length: String, weight: String, fullDescription: String, shortDescription: String, isCancellable: Bool, isShippable: Bool, brand: String, lastCheckedinLocation: String, pickupRider: String, pickupRiderContactNumber: String, deliveryRider: String, deliveryRiderContactNumber: String) {
         
         self.orderProductId = orderProductId
         self.productId = productId
@@ -68,6 +73,11 @@ class TransactionOrderProductModel: NSObject {
         self.isCancellable = isCancellable
         self.isShippable = isShippable
         self.brand = brand
+        self.lastCheckedinLocation = lastCheckedinLocation
+        self.pickupRider = pickupRider
+        self.pickupRiderContactNumber = pickupRiderContactNumber
+        self.deliveryRider = deliveryRider
+        self.deliveryRiderContactNumber = deliveryRiderContactNumber
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> TransactionOrderProductModel {
@@ -98,6 +108,11 @@ class TransactionOrderProductModel: NSObject {
         var isCancellable: Bool = false
         var isShippable: Bool = false
         var brand: String = ""
+        var lastCheckedinLocation: String = ""
+        var pickupRider: String = ""
+        var pickupRiderContactNumber: String = ""
+        var deliveryRider: String = ""
+        var deliveryRiderContactNumber: String = ""
         
         if dictionary.isKindOfClass(NSDictionary) {
             if dictionary["productId"] != nil {
@@ -271,9 +286,42 @@ class TransactionOrderProductModel: NSObject {
                     }
                 }
             }
+            
+            if dictionary["deliveryLogs"] != nil {
+                if let tempDict = dictionary["deliveryLogs"] as? NSDictionary {
+                    if let tempVar = tempDict["lastCheckedinLocation"] as? String {
+                        lastCheckedinLocation = tempVar
+                    }
+                    
+                    if tempDict["pickupRider"] != nil {
+                        if let tempInnerDict = tempDict["pickupRider"] as? NSDictionary {
+                            if let tempVar = tempInnerDict["pickupRider"] as? String {
+                                pickupRider = tempVar
+                            }
+                            
+                            if let tempVar = tempInnerDict["contactNumber"] as? String {
+                                pickupRiderContactNumber = tempVar
+                            }
+                        }
+                    }
+                    
+                    if tempDict["deliveryRider"] != nil {
+                        if let tempInnerDict = tempDict["deliveryRider"] as? NSDictionary {
+                            if let tempVar = tempInnerDict["deliveryRider"] as? String {
+                                deliveryRider = tempVar
+                            }
+                            
+                            if let tempVar = tempInnerDict["contactNumber"] as? String {
+                                deliveryRiderContactNumber = tempVar
+                            }
+                        }
+                    }
+                    
+                }
+            }
         }
         
-        return TransactionOrderProductModel(orderProductId: orderProductId, productId: productId, quantity: quantity, unitPrice: unitPrice, totalPrice: totalPrice, productName: productName, handlingFee: handlingFee, dateAdded: dateAdded, lastDateModified: lastDateModified, orderProductStatusId: orderProductStatusId, orderProductStatusName: orderProductStatusName, orderProductStatusDescription: orderProductStatusDescription, productImage: productImage, sku: sku, attributes: attributes, originalUnitPrice: originalUnitPrice, discount: discount, width: width, height: height, length: length, weight: weight, fullDescription: fullDescription, shortDescription: shortDescription, isCancellable: isCancellable, isShippable: isShippable, brand: brand)
+        return TransactionOrderProductModel(orderProductId: orderProductId, productId: productId, quantity: quantity, unitPrice: unitPrice, totalPrice: totalPrice, productName: productName, handlingFee: handlingFee, dateAdded: dateAdded, lastDateModified: lastDateModified, orderProductStatusId: orderProductStatusId, orderProductStatusName: orderProductStatusName, orderProductStatusDescription: orderProductStatusDescription, productImage: productImage, sku: sku, attributes: attributes, originalUnitPrice: originalUnitPrice, discount: discount, width: width, height: height, length: length, weight: weight, fullDescription: fullDescription, shortDescription: shortDescription, isCancellable: isCancellable, isShippable: isShippable, brand: brand, lastCheckedinLocation: lastCheckedinLocation, pickupRider: pickupRider, pickupRiderContactNumber: pickupRiderContactNumber, deliveryRider: deliveryRider, deliveryRiderContactNumber: deliveryRiderContactNumber)
     }
 
     
