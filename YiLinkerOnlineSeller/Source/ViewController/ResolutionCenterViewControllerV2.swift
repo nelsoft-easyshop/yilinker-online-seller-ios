@@ -225,10 +225,8 @@ class ResolutionCenterViewControllerV2: UIViewController, UITableViewDataSource,
     
     // Mark: - New Dispute View Controller
     func disputePressed() {
-        let newDispute = self.storyboard?.instantiateViewControllerWithIdentifier("NewDisputeTableViewController2")
-            as! NewDisputeTableViewController2
-        
-        self.navigationController?.pushViewController(newDispute, animated:true);
+        let newDisputeTableviewController: NewDisputeTableViewController2 = NewDisputeTableViewController2(nibName: "NewDisputeTableViewController2", bundle: nil)
+        self.navigationController?.pushViewController(newDisputeTableviewController, animated:true)
     }
     
     // Mark: - OLD VERSION FOR MODAL File a Dispute
