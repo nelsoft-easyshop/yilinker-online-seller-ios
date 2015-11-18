@@ -30,6 +30,7 @@ struct LocalizedStrings{
 
     static let seen = StringHelper.localizedStringWithKey("MESSAGING_SEEN")
     static let photoMessage = StringHelper.localizedStringWithKey("MESSAGING_PHOTO_MESSAGE")
+    static let newMessage = StringHelper.localizedStringWithKey("MESSAGING_NEW_MESSAGE")
 }
 
 class ConversationVC: UIViewController, EmptyViewDelegate{
@@ -122,8 +123,8 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                     if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {                        if let userId = json["userId"] as? Int{
                             for convo in conversations{
                                 if (convo.contact.userId == String(userId)) {
-                                    if let status = json["isOnline"] as? String{
-                                        if (status == "false"){
+                                    if let status = json["isOnline"] as? Bool{
+                                        if (!status){
                                             convo.contact.isOnline = "0"
                                         } else {
                                             convo.contact.isOnline = "1"
@@ -148,14 +149,29 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                         if let userId = json["senderUid"] as? Int{
                             for (index,convo) in enumerate(conversations){
                                 if (convo.contact.userId == String(userId)) {
-                                    if let newMessage = info["message"] as? String {
+                                    if let newMessage = json["message"] as? String {
                                         convo.lastMessage = newMessage
+                                        convo.hasUnreadMessage = "1"
                                     }
                                     self.conversationTableView.reloadData()
                                     break
                                 }
                             }
                         }
+                        
+                        if let receipientId = json["recipientUid"] as? Int{
+                            for (index,convo) in enumerate(conversations){
+                                if (convo.contact.userId == String(receipientId)) {
+                                    if let newMessage = json["message"] as? String {
+                                        convo.lastMessage = newMessage
+                                        convo.hasUnreadMessage = "1"
+                                    }
+                                    self.conversationTableView.reloadData()
+                                    break
+                                }
+                            }
+                        }
+
                     }
                 }
             }
@@ -421,6 +437,13 @@ extension ConversationVC : UITableViewDataSource{
             } else {
                 convoCell.user_message.text = conversations[indexPath.row].lastMessage as String
             }
+            
+            if (conversations[indexPath.row].hasUnreadMessage == "0"){
+                convoCell.user_message.font = UIFont.systemFontOfSize(13.0)
+            } else {
+                convoCell.user_message.font = UIFont.boldSystemFontOfSize(13.0)
+            }
+            
             convoCell.user_dt.text = DateUtility.convertDateToString(conversations[indexPath.row].lastMessageDt) as String
             //convoCell.user_thumbnail.image = conversations[indexPath.row].contact.profileImageUrl
             let url = NSURL(string: conversations[indexPath.row].contact.profileImageUrl)
