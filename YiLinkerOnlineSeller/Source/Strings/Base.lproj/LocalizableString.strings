@@ -349,6 +349,10 @@ STORE_INFO_SUCCESS_TITLE_LOCALIZE_KEY = "Success!";
 STORE_INFO_EMPTY_LOCALIZE_KEY = "Either your store name or store description is empty.";
 STORE_INFO_SUCCESS_LOCALIZE_KEY = "You have successfully updated you store information.";
 STORE_INFO_INFORMATION_TITLE_LOCALIZE_KEY = "Information";
+STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY = "You have successfully shared your qr code on email.";
+STORE_INFO_SUCCESS_FB_LOCALIZE_KEY = "You have successfully shared your qr code on Facebook.";
+STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY = "You have successfully shared your qr code on Twitter.";
+STORE_INFO_SUCCESS_GPLUS_LOCALIZE_KEY = "You have successfully shared your qr code on Google Plus.";
 
 //CHANGE MOBILE NUMBER
 CHANGE_MOBILE_TITLE_LOCALIZE_KEY = "Change Mobile Number";
