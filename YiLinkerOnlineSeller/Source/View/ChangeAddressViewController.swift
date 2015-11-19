@@ -192,7 +192,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     }
     
     func done() {
-        fireSetDefaultStoreAddress()
+       self.navigationController!.popViewControllerAnimated(true)
     }
     
     func fireSetDefaultStoreAddress(){
@@ -206,7 +206,6 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 self.showAlert(title: self.information, message: responseObject["message"] as! String)
                 self.delegate?.updateStoreAddressDetail(self.getAddressModel.listOfAddress[self.defaultAddress].title, storeAddress:self.getAddressModel.listOfAddress[self.defaultAddress].fullLocation)
                 //self.changeBankAccountCollectionView.reloadData()
-                self.navigationController!.popViewControllerAnimated(true)
             } else {
                 self.showAlert(title: self.error, message: self.somethingWentWrong)
             }
@@ -316,7 +315,12 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         let indexPath: NSIndexPath = self.changeAddressCollectionView.indexPathForCell(cell)!
         self.userId = cell.titleLabel.tag
         self.index = indexPath
-        fireDeleteStoreAddress(cell.titleLabel.tag, indexPath: indexPath)
+        if self.getAddressModel.listOfAddress[self.defaultAddress].isDefault {
+            self.showAlert(title: StringHelper.localizedStringWithKey("STORE_INFO_DELETE_LOCALIZE_KEY"), message: nil)
+        } else {
+            fireDeleteStoreAddress(cell.titleLabel.tag, indexPath: indexPath)
+        }
+        
     }
 
     func checkAddressCollectionViewCell(checkAdressWithCell cell: ChangeAddressCollectionViewCell){
@@ -334,6 +338,8 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         cell.delegate = self
         self.changeAddressCollectionView.reloadData()
         self.selectedIndex = indexPath.row
+        
+         fireSetDefaultStoreAddress()
     }
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
@@ -363,6 +369,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                println(error)
                 if task.statusCode == 401 {
                     self.requestRefreshToken(AddressRefreshType.Delete)
                 } else {

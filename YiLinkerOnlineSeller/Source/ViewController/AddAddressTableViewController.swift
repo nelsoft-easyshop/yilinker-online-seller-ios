@@ -111,7 +111,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         if self.isEdit {
             if indexPath.row == 0 {
                 cell.rowTextField.text = self.addressModel.title
-                cell.rowTitleLabel.required()
+                //cell.rowTitleLabel.required()
             } else if indexPath.row == 1 {
                 cell.rowTextField.text = self.addressModel.unitNumber
             } else if indexPath.row == 2 {
@@ -121,21 +121,21 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 //cell.rowTitleLabel.required()
             } else if indexPath.row == 4 {
                 cell.rowTextField.text = self.addressModel.streetName
-                cell.rowTitleLabel.required()
+                //cell.rowTitleLabel.required()
             } else if indexPath.row == 5 {
                 cell.rowTextField.text = self.addressModel.subdivision
             } else if indexPath.row == 6 {
                 cell.rowTextField.text = self.addressModel.province
-                cell.rowTitleLabel.required()
+                //cell.rowTitleLabel.required()
             } else if indexPath.row == 7 {
                 cell.rowTextField.text = self.addressModel.city
-                cell.rowTitleLabel.required()
+                //cell.rowTitleLabel.required()
             } else if indexPath.row == 8 {
                 cell.rowTextField.text = self.addressModel.barangay
             } else {
                 cell.rowTextField.text = self.addressModel.zipCode
                 cell.rowTextField.keyboardType = UIKeyboardType.NumberPad
-                cell.rowTitleLabel.required()
+                //cell.rowTitleLabel.required()
             }
         }
         
@@ -475,6 +475,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)
             self.provinceModel = ProvinceModel.parseDataWithDictionary(responseObject)
+            println(responseObject)
             if self.provinceModel.location.count != 0 && self.addressModel.title == "" {
                 self.addressModel.province = self.provinceModel.location[0]
                 self.addressModel.provinceId = self.provinceModel.provinceId[0]
@@ -543,7 +544,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 self.addressModel.barangayId = self.barangayModel.barangayId[0]
                 self.addressModel.barangay = self.barangayModel.location[0]
             }
-            
+            self.tableView.reloadData()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)

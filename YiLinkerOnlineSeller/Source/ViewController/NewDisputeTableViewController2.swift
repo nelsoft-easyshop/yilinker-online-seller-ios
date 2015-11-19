@@ -225,6 +225,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)
             self.transactionsModel = TransactionsModel.parseDataWithDictionary(responseObject as! NSDictionary)
+            print(responseObject)
             for i in 0..<self.transactionsModel.transactions.count {
                // if self.transactionsModel.transactions[i].order_status_id == "3" || self.transactionsModel.transactions[i].order_status_id == "6" {
                     self.transactionIds.append(self.transactionsModel.transactions[i].invoice_number)
@@ -341,16 +342,24 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             pickerView.selectRow(self.reasonDefaultIndex, inComponent: 0, animated: false)
         }
         
+        print(self.transactionsModel.transactions.count)
         if self.disputePickerType == DisputePickerType.TransactionList {
             self.isValid = true
-            self.currentTextField.text = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number//self.transactionIds[self.transactionDefaultIndex]
+            if self.transactionsModel.transactions.count != 0 {
+                self.currentTextField.text = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number//self.transactionIds[self.transactionDefaultIndex]
+            } else {
+                self.showAlert(title: Constants.Localized.no, message: StringHelper.localizedStringWithKey("TRANSACTIONS_NO_TRANSACTIONS_AVAIL_LOCALIZE_KEY"))
+            }
         } else if self.disputePickerType == DisputePickerType.DisputeType {
             self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].key2
         } else {
             self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[self.reasonDefaultIndex].reason
         }
         
+       
         textField.inputView = pickerView
+        
+        
         textField.addToolBarWithDoneTarget(self, done: "done")
     }
     
@@ -516,5 +525,12 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
                 self.hud?.hide(true)
         })
         
+    }
+    
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
     }
 }

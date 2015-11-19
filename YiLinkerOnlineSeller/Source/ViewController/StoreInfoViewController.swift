@@ -836,8 +836,40 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         let activityController = UIActivityViewController(activityItems:
             sharingItems, applicationActivities: nil)
+        
+        activityController.excludedActivityTypes =  [
+            UIActivityTypePostToWeibo,
+            UIActivityTypePrint,
+            UIActivityTypeCopyToPasteboard,
+            UIActivityTypeAssignToContact,
+            UIActivityTypeSaveToCameraRoll,
+            UIActivityTypeAddToReadingList,
+            UIActivityTypePostToFlickr,
+            UIActivityTypePostToVimeo,
+            UIActivityTypePostToTencentWeibo
+        ]
+        
+        activityController.completionWithItemsHandler = { (s: String?, ok: Bool, items: [AnyObject]?, err:NSError?) -> Void in
+            print("completed \(s) \(ok) \(items) \(err)")
+            if s != nil {
+                if s == "com.apple.UIKit.activity.Mail" {
+                    self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY"))
+                } else if s == "com.apple.UIKit.activity.PostToFacebook" {
+                    self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_FB_LOCALIZE_KEY"))
+                } else if s == "com.apple.UIKit.activity.PostToTwitter" {
+                    self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"))
+                } else {
+                    self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_GPLUS_LOCALIZE_KEY"))
+                }
+            } else {
+                
+            }
+        }
+        
         self.presentViewController(activityController, animated: true,
             completion: nil)
+
+        
        // sharingItems.append(NSURL(string: "https://sociobiology.files.wordpress.com/2013/07/strassmann-queller-qr-code.jpg")!)
         
         //let shareViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
