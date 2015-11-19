@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -29,9 +29,9 @@
                                 <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Default Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qvf-Dc-JZh">
-                                <rect key="frame" x="17" y="47" width="123" height="21"/>
+                                <rect key="frame" x="17" y="47" width="324" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="123" id="LUT-FN-Vyy"/>
+                                    <constraint firstAttribute="width" constant="324" id="LUT-FN-Vyy"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -88,6 +88,7 @@
                             <constraint firstItem="Qvf-Dc-JZh" firstAttribute="leading" secondItem="srs-wV-U41" secondAttribute="leading" constant="17" id="U64-rE-ifu"/>
                             <constraint firstItem="vsD-dO-TO3" firstAttribute="bottom" secondItem="WN0-8l-9FO" secondAttribute="bottom" id="Yfp-ED-J4g"/>
                             <constraint firstAttribute="bottom" secondItem="d8T-T9-3Hb" secondAttribute="bottom" constant="32" id="Yku-DN-YDX"/>
+                            <constraint firstAttribute="trailing" secondItem="Qvf-Dc-JZh" secondAttribute="trailing" constant="34" id="ZIg-Fl-fDO"/>
                             <constraint firstItem="AU4-WQ-Gmt" firstAttribute="top" secondItem="bJJ-C5-EXD" secondAttribute="top" id="gb4-hH-3SC"/>
                             <constraint firstAttribute="trailing" secondItem="AU4-WQ-Gmt" secondAttribute="trailing" constant="13" id="o5C-DR-sai"/>
                             <constraint firstItem="Qvf-Dc-JZh" firstAttribute="top" secondItem="srs-wV-U41" secondAttribute="top" constant="47" id="ueT-kz-gLH"/>
