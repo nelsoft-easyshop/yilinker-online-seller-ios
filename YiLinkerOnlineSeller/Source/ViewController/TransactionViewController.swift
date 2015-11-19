@@ -180,6 +180,29 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         if indexPath.row == 1 {
             dateFrom = formatDateToString(NSDate())
             dateTo = formatDateToString(NSDate().addDays(1))
+        } else {
+            var currentDate: NSDate = NSDate()
+            if selectedDate == 1 {
+                dateFrom = formatDateToString(NSDate())
+                dateTo = formatDateToString(NSDate().addDays(1))
+                
+            } else if selectedDate == 2 {
+                var beginningOfWeek: NSDate = firstDateOfWeekWithDate(currentDate)
+                
+                dateFrom = formatDateToString(beginningOfWeek)
+                dateTo = formatDateToString(beginningOfWeek.addDays(6))
+                
+            }  else if selectedDate == 3 {
+                var beginningOfMonth: NSDate = firstDateOfMonthWithDate(currentDate)
+                
+                dateFrom = formatDateToString(beginningOfMonth)
+                dateTo = formatDateToString(beginningOfMonth.addDays(30))
+                
+            } else {
+                dateFrom = ""
+                dateTo = ""
+            }
+
         }
         
 
