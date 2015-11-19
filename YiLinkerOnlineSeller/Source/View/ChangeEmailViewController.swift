@@ -114,7 +114,7 @@ class ChangeEmailViewController: UIViewController {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             println("SUCCESS!")
             var success = StringHelper.localizedStringWithKey("PASSWORD_SUCCESS_CHANGE_LOCALIZE_KEY")
-            showAlert(title: Constants.Localized.success, message: success)
+            self.showAlert(title: Constants.Localized.success, message: success)
             self.hud?.hide(true)
             self.dismissViewControllerAnimated(true, completion: nil)
             self.delegate?.dismissView()
