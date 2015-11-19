@@ -353,6 +353,7 @@ STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY = "You have successfully shared your qr co
 STORE_INFO_SUCCESS_FB_LOCALIZE_KEY = "You have successfully shared your qr code on Facebook.";
 STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY = "You have successfully shared your qr code on Twitter.";
 STORE_INFO_SUCCESS_GPLUS_LOCALIZE_KEY = "You have successfully shared your qr code on Google Plus.";
+STORE_INFO_DELETE_LOCALIZE_KEY = "You can not delete your default address.";
 
 //CHANGE MOBILE NUMBER
 CHANGE_MOBILE_TITLE_LOCALIZE_KEY = "Change Mobile Number";
