@@ -54,7 +54,7 @@ class MessageThreadVC: UIViewController {
     var keyboardIsShown : Bool = false
     var minimumYComposeView : CGFloat = 0.0
     var maximumXComposeTextView : CGFloat = 0.0
-    var messages = [W_Messages()]
+    var messages = [W_Messages]()
     
     var offlineColor = UIColor(red: 218/255, green: 32/255, blue: 43/255, alpha: 1.0)
     var onlineColor = UIColor(red: 84/255, green: 182/255, blue: 167/255, alpha: 1.0)
@@ -87,6 +87,7 @@ class MessageThreadVC: UIViewController {
         var r_temp = recipient?.userId ?? ""
         println(recipient)
         println("recipient id \(r_temp)")
+        self.messages.removeAll(keepCapacity: false)
         self.getMessagesFromEndpoint("1", limit: "30", userId: r_temp)
         self.configureTableView()
         

@@ -60,6 +60,7 @@ class W_Messages: NSObject {
         self.isSent = isSent
     }
     
+    
     override init()
     {
         self.message_id = 0
@@ -72,7 +73,7 @@ class W_Messages: NSObject {
         self.timeSeen = NSDate(dateString: "2015-07-24 07:17:00")
         self.isSent = "0"
     }
-    
+
     class func parseUploadImageResponse(dictionary : AnyObject) -> String {
         
         var url : String = ""
