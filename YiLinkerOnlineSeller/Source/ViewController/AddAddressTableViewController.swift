@@ -111,7 +111,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         if self.isEdit {
             if indexPath.row == 0 {
                 cell.rowTextField.text = self.addressModel.title
-                cell.rowTitleLabel.required()
+                //cell.rowTitleLabel.required()
             } else if indexPath.row == 1 {
                 cell.rowTextField.text = self.addressModel.unitNumber
             } else if indexPath.row == 2 {
@@ -121,21 +121,21 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 //cell.rowTitleLabel.required()
             } else if indexPath.row == 4 {
                 cell.rowTextField.text = self.addressModel.streetName
-                cell.rowTitleLabel.required()
+                //cell.rowTitleLabel.required()
             } else if indexPath.row == 5 {
                 cell.rowTextField.text = self.addressModel.subdivision
             } else if indexPath.row == 6 {
                 cell.rowTextField.text = self.addressModel.province
-                cell.rowTitleLabel.required()
+                //cell.rowTitleLabel.required()
             } else if indexPath.row == 7 {
                 cell.rowTextField.text = self.addressModel.city
-                cell.rowTitleLabel.required()
+                //cell.rowTitleLabel.required()
             } else if indexPath.row == 8 {
                 cell.rowTextField.text = self.addressModel.barangay
             } else {
                 cell.rowTextField.text = self.addressModel.zipCode
                 cell.rowTextField.keyboardType = UIKeyboardType.NumberPad
-                cell.rowTitleLabel.required()
+                //cell.rowTitleLabel.required()
             }
         }
         
