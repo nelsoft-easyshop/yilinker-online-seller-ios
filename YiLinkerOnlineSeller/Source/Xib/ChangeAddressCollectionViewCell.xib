@@ -46,7 +46,6 @@
                         <rect key="frame" x="45" y="13" width="312" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="Q8w-cV-fVi"/>
-                            <constraint firstAttribute="width" constant="312" id="aeh-hV-o7N"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="12"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
