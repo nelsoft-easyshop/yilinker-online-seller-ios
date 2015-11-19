@@ -139,6 +139,14 @@ class MessageThreadVC: UIViewController {
         var tap = UITapGestureRecognizer (target: self, action: Selector("tableTapped:"))
         self.threadTableView.addGestureRecognizer(tap)
         
+        if let var tabBarTemp = self.tabBarController?.tabBar{
+            if (tabBarTemp.hidden){
+                self.tabBarHidden = true
+            } else {
+                self.tabBarHidden = false
+            }
+        }
+        
     }
     
     func onStatusUpdate(notification: NSNotification){
@@ -230,13 +238,6 @@ class MessageThreadVC: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onReceiveNewMessage:",
             name: appDelegate.messageKey, object: nil)
         
-        if let var tabBarTemp = self.tabBarController?.tabBar{
-            if (tabBarTemp.hidden){
-                self.tabBarHidden = true
-            } else {
-                self.tabBarHidden = false
-            }
-        }
     }
     
     func tableTapped(tap : UITapGestureRecognizer){
