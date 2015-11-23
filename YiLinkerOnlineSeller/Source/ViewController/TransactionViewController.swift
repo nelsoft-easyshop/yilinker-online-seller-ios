@@ -258,6 +258,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
             var transactionDetailsController = TransactionDetailsTableViewController(nibName: "TransactionDetailsTableViewController", bundle: nil)
             transactionDetailsController.invoiceNumber = tableData[indexPath.row].invoice_number
             transactionDetailsController.date_modified = "\(tableData[indexPath.row].date_modified).000000"
+            transactionDetailsController.transactioStatus = pageTitle[selectedIndex]
             self.navigationController?.pushViewController(transactionDetailsController, animated:true)
         } else {
             let noInvoiceString = StringHelper.localizedStringWithKey("TRANSACTIONS_NO_INVOCE_LOCALIZE_KEY")
