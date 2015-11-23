@@ -28,6 +28,8 @@ class MessageThreadVC: UIViewController {
     
     let composeViewHeight : CGFloat = 50.0
     
+    var tabBarHidden : Bool = false
+    
     var sender : W_Contact?
     var recipient : W_Contact?
     
@@ -52,7 +54,7 @@ class MessageThreadVC: UIViewController {
     var keyboardIsShown : Bool = false
     var minimumYComposeView : CGFloat = 0.0
     var maximumXComposeTextView : CGFloat = 0.0
-    var messages = [W_Messages()]
+    var messages = [W_Messages]()
     
     var offlineColor = UIColor(red: 218/255, green: 32/255, blue: 43/255, alpha: 1.0)
     var onlineColor = UIColor(red: 84/255, green: 182/255, blue: 167/255, alpha: 1.0)
@@ -85,6 +87,7 @@ class MessageThreadVC: UIViewController {
         var r_temp = recipient?.userId ?? ""
         println(recipient)
         println("recipient id \(r_temp)")
+        self.messages.removeAll(keepCapacity: false)
         self.getMessagesFromEndpoint("1", limit: "30", userId: r_temp)
         self.configureTableView()
         
@@ -136,6 +139,14 @@ class MessageThreadVC: UIViewController {
         var tap = UITapGestureRecognizer (target: self, action: Selector("tableTapped:"))
         self.threadTableView.addGestureRecognizer(tap)
         
+        if let var tabBarTemp = self.tabBarController?.tabBar{
+            if (tabBarTemp.hidden){
+                self.tabBarHidden = true
+            } else {
+                self.tabBarHidden = false
+            }
+        }
+        
     }
     
     func onStatusUpdate(notification: NSNotification){
@@ -146,12 +157,13 @@ class MessageThreadVC: UIViewController {
                         println("json \(json)")
                         if let userId = json["userId"] as? Int{
                             if (String(userId) == recipient?.userId){
-                                if let status = json["isOnline"] as? String{
-                                    recipient?.isOnline = status
-                                    if (status == "false"){
+                                if let status = json["isOnline"] as? Bool{
+                                    if (!status){
+                                        recipient?.isOnline = "false"
                                         onlineView.backgroundColor = offlineColor
                                         onlineLabel.text = LocalizedStrings.offline
                                     } else {
+                                        recipient?.isOnline = "true"
                                         onlineView.backgroundColor = onlineColor
                                         onlineLabel.text = LocalizedStrings.online
                                     }
@@ -225,6 +237,7 @@ class MessageThreadVC: UIViewController {
             name: appDelegate.seenMessageKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onReceiveNewMessage:",
             name: appDelegate.messageKey, object: nil)
+        
     }
     
     func tableTapped(tap : UITapGestureRecognizer){
@@ -379,10 +392,18 @@ class MessageThreadVC: UIViewController {
             var newTableFrame : CGRect = self.threadTableView.frame
             
             UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                self.threadTableView.contentInset = UIEdgeInsetsMake(60, 0, self.tabBarHeight, 0)
+                //self.threadTableView.contentInset = UIEdgeInsetsMake(60, 0, self.tabBarHeight, 0)
+                
+                var tabBarH : CGFloat = 0.0
+                if (!self.tabBarHidden){
+                    tabBarH = self.tabBarHeight
+                }
+                
+                self.threadTableView.contentInset = UIEdgeInsetsMake(60, 0, tabBarH, 0)
                 
                 self.composeView.frame = newFrame
-                self.composeViewBottomLayout.constant -= (keyFrame.size.height - self.tabBarHeight)
+                //self.composeViewBottomLayout.constant -= (keyFrame.size.height - self.tabBarHeight)
+                self.composeViewBottomLayout.constant -= (keyFrame.size.height - tabBarH)
                 
                 self.goToBottomTableView()
                 }, completion: nil)
@@ -424,7 +445,15 @@ class MessageThreadVC: UIViewController {
             
             UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 self.composeView.frame = CGRectMake(newFrame.origin.x, newFrame.origin.y - keyFrame.size.height, newFrame.width, newFrame.height)
-                self.composeViewBottomLayout.constant += (keyFrame.size.height - self.tabBarHeight)
+                //self.composeViewBottomLayout.constant += (keyFrame.size.height - self.tabBarHeight)
+                
+                var tabBarH : CGFloat = 0.0
+                if (!self.tabBarHidden){
+                    tabBarH = self.tabBarHeight
+                }
+                
+                self.composeViewBottomLayout.constant += (keyFrame.size.height - tabBarH)
+                
                 self.threadTableView.contentInset = UIEdgeInsetsMake(60, 0, keyFrame.size.height, 0)
                 self.goToBottomTableView()
                 
