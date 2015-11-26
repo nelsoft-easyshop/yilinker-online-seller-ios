@@ -227,13 +227,16 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             
             if(self.storeInfoModel?.store_name != nil){
                
-                if self.image != nil || self.imageCover != nil {
+               /* if self.image != nil || self.imageCover != nil {
                     cell.coverEditImageView.image = self.imageCover
                     cell.profilePictureImageView.image = self.image
                 } else {
-                    cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
-                    cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
-                }
+                */
+                cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+            
+                cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                
+               // }
                 
                 cell.storeNameTextField.text = self.storeInfoModel?.store_name
                 cell.mobilePhoneTextField.text = self.storeInfoModel?.contact_number
@@ -598,14 +601,14 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
         if self.image != nil && self.imageCover != nil {
             let data: NSData = UIImageJPEGRepresentation(self.image, 0)
-            let dataCoverPhoto: NSData = UIImageJPEGRepresentation(self.imageCover, 1)
+            let dataCoverPhoto: NSData = UIImagePNGRepresentation(self.image) //UIImageJPEGRepresentation(self.imageCover, 1)
             datas.append(data)
             datas.append(dataCoverPhoto)
         } else if self.image != nil && self.imageCover == nil{
             let data: NSData = UIImageJPEGRepresentation(self.image, 0)
             datas.append(data)
         } else if self.image == nil && self.imageCover != nil {
-            let dataCoverPhoto: NSData = UIImageJPEGRepresentation(self.imageCover, 0)
+            let dataCoverPhoto: NSData = UIImagePNGRepresentation(self.imageCover) //UIImageJPEGRepresentation(self.imageCover, 0)
             datas.append(dataCoverPhoto)
         }
        
@@ -933,8 +936,9 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     func uzysAssetsPickerController(picker: UzysAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) {
         let assetsLibrary = ALAssetsLibrary()
         let alaSset: ALAsset = assets[0] as! ALAsset
-        
+    
         for allaSset in assets as! [ALAsset] {
+            //let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage(), scale: allaSset.defaultRepresentation().scale(), orientation: allaSset.defaultRepresentation().orientation())!
             let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!
             self.uploadImages.insert(image, atIndex: 0)
 
