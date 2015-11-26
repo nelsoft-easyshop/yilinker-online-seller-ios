@@ -9,7 +9,10 @@
 import UIKit
 
 protocol StoreInfoQrCodeTableViewCellDelegate {
-    func shareAction(postImage: UIImageView, title: String)
+    func shareFBAction(postImage: UIImageView, title: String)
+    func shareTWAction(postImage: UIImageView, title: String)
+    func shareEMAction(postImage: UIImageView, title: String)
+    func shareGPAction(postImage: UIImageView, title: String)
 }
 
 
@@ -51,8 +54,20 @@ class StoreInfoQrCodeTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    @IBAction func socialShare(sender: AnyObject){
-        self.delegate?.shareAction(self.qrCodeImageView, title: qrCode)
+    @IBAction func socialFBShare(sender: AnyObject){
+        self.delegate?.shareFBAction(self.qrCodeImageView, title: qrCode)
+    }
+    
+    @IBAction func socialTWShare(sender: AnyObject){
+        self.delegate?.shareTWAction(self.qrCodeImageView, title: qrCode)
+    }
+    
+    @IBAction func socialEMShare(sender: AnyObject){
+        self.delegate?.shareEMAction(self.qrCodeImageView, title: qrCode)
+    }
+    
+    @IBAction func socialGPShare(sender: AnyObject){
+        self.delegate?.shareGPAction(self.qrCodeImageView, title: qrCode)
     }
     
 }

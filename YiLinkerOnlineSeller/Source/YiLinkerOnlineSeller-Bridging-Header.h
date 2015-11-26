@@ -10,4 +10,6 @@
 #import "FSCalendar.h"
 #import <Google/CloudMessaging.h>
 #import "UIView+Toast.h"
-
+#import <Social/Social.h>
+#import <GooglePlus/GooglePlus.h>
+#import <GoogleOpenSource/GoogleOpenSource.h>

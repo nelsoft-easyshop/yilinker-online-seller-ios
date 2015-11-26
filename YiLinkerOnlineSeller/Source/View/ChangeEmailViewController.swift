@@ -14,6 +14,7 @@ protocol ChangeEmailViewControllerDelegate {
 
 class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
     
+    @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var submitEmailAddressButton: DynamicRoundedButton!
     @IBOutlet weak var closeButton: UIButton!
@@ -59,12 +60,21 @@ class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
         self.oldEmailAddressTextField.delegate = self
         self.newEmailAddressTextField.delegate = self
         self.confirmEmailAddressTextField.delegate = self
+        let tap = UITapGestureRecognizer()
+        tap.addTarget(self, action: "mainViewTapped")
+        self.view.addGestureRecognizer(tap)
         // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func mainViewTapped() {
+        self.oldEmailAddressTextField.resignFirstResponder()
+        self.newEmailAddressTextField.resignFirstResponder()
+        self.confirmEmailAddressTextField.resignFirstResponder()
     }
     
     @IBAction func closeAction(sender: AnyObject){

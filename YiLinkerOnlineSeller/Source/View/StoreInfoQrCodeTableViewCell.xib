@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -82,7 +82,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="socialShare:" destination="rvF-Za-fSu" eventType="touchUpInside" id="1rx-Tb-wjL"/>
+                                            <action selector="socialFBShare:" destination="rvF-Za-fSu" eventType="touchUpInside" id="yOK-Hg-5KU"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -141,7 +141,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="socialShare:" destination="rvF-Za-fSu" eventType="touchUpInside" id="tgh-5K-OEd"/>
+                                            <action selector="socialTWShare:" destination="rvF-Za-fSu" eventType="touchUpInside" id="Z9J-kV-A2k"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -198,7 +198,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="socialShare:" destination="rvF-Za-fSu" eventType="touchUpInside" id="Rgc-gt-tJz"/>
+                                            <action selector="socialGPShare:" destination="rvF-Za-fSu" eventType="touchUpInside" id="rg2-Mr-DVj"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -262,7 +262,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="socialShare:" destination="rvF-Za-fSu" eventType="touchUpInside" id="5FM-YC-jfq"/>
+                                            <action selector="socialEMShare:" destination="rvF-Za-fSu" eventType="touchUpInside" id="HX1-Cc-cgt"/>
                                         </connections>
                                     </button>
                                 </subviews>

@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MessageUI
 
-class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate, CongratulationsViewControllerDelegate, UzysAssetsPickerControllerDelegate, StoreInfoQrCodeTableViewCellDelegate{
+class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate, CongratulationsViewControllerDelegate, UzysAssetsPickerControllerDelegate, StoreInfoQrCodeTableViewCellDelegate, MFMailComposeViewControllerDelegate {
     
     var storeInfoModel: StoreInfoModel?
     var storeAddressModel: StoreAddressModel?
@@ -450,8 +451,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     }
     
     func storeNameAndDescription(storeName: String, storeDescription: String) {
-        self.storeInfoModel?.store_name = storeName
-        self.storeInfoModel?.store_description = storeDescription
+        self.storeInfoModel!.store_name = storeName
+        self.storeInfoModel!.store_description = storeDescription
     }
     //MARK: Store Details Function
     func storeInfoVerify(mobile: String) {
@@ -619,9 +620,10 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         let parameters: NSDictionary?
         
         if self.storeInfoModel!.isReseller {
-             parameters = ["access_token" : SessionManager.accessToken(), "storeName" : cell.storeNameTextField.text, "storeDescription" : cell.storeDescriptionTextView.text, "categoryIds" : formattedCategories, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
+             parameters = ["storeName" : cell.storeNameTextField.text, "storeDescription" : cell.storeDescriptionTextView.text, "categoryIds" : formattedCategories, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
         } else {
-            parameters = ["access_token" : SessionManager.accessToken(), "storeName" : cell.storeNameTextField.text, "storeDescription" : cell.storeDescriptionTextView.text, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
+            print(cell.storeNameTextField.text)
+            parameters = ["storeName" : cell.storeNameTextField.text, "storeDescription" : cell.storeDescriptionTextView.text, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
         }
 
         let url: String = "\(APIAtlas.sellerUpdateSellerInfo)?access_token=\(SessionManager.accessToken())"
@@ -645,10 +647,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 
                 }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
                     self.hud?.hide(true)
-                    
-                    println(response)
                     self.fireStoreInfo()
-                    self.tableView.reloadData()
                     //cell.coverPhotoImageView.image = self.image
                     self.showAlert(self.successTitle, message: self.success)
                 }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
@@ -829,7 +828,15 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         self.tableView.reloadData()
     }
     
-    func shareAction(postImage: UIImageView, title: String) {
+    func shareFBAction(postImage: UIImageView, title: String) {
+    
+        let vc = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+        vc.setInitialText("")
+        let image = postImage.image
+        vc.addImage(image)
+        presentViewController(vc, animated: true, completion: nil)
+        
+        /*
         var sharingItems = [AnyObject]()
         let image = postImage.image
         
@@ -873,7 +880,9 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         self.presentViewController(activityController, animated: true,
             completion: nil)
-
+        */
+        
+        
         
        // sharingItems.append(NSURL(string: "https://sociobiology.files.wordpress.com/2013/07/strassmann-queller-qr-code.jpg")!)
         
@@ -881,6 +890,62 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         //self.presentViewController(shareViewController, animated: true, completion: nil)
     }
     
+    func shareTWAction(postImage: UIImageView, title: String) {
+        
+        let vc = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+        vc.setInitialText("")
+        let image = postImage.image
+        vc.addImage(image)
+        presentViewController(vc, animated: true, completion: nil)
+        
+    }
+    
+    func shareEMAction(postImage: UIImageView, title: String) {
+        
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients(["paul@hackingwithswift.com"])
+            mail.setMessageBody(title, isHTML: true)
+            let data: NSData = UIImageJPEGRepresentation(postImage.image, 1.0)
+            var qr = "qr_code"
+            qr = qr.stringByAppendingString("jpeg")
+            mail.addAttachmentData(data, mimeType: "image/jpeg", fileName: qr)
+            presentViewController(mail, animated: true, completion: nil)
+        } else {
+            // show failure alert
+        }
+    }
+    
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        
+        switch result.value {
+        case MFMailComposeResultCancelled.value:
+            NSLog("Mail cancelled")
+        case MFMailComposeResultSaved.value:
+            NSLog("Mail saved")
+        case MFMailComposeResultSent.value:
+            NSLog("Mail sent")
+        case MFMailComposeResultFailed.value:
+            NSLog("Mail sent failure: %@", [error!.localizedDescription])
+        default:
+            break
+        }
+        controller.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func shareGPAction(postImage: UIImageView, title: String) {
+    
+        var shareDialog = GPPShare.sharedInstance().nativeShareDialog();
+        
+        // This line will fill out the title, description, and thumbnail from
+        // the URL that you are sharing and includes a link to that URL.
+        //shareDialog.setURLToShare(NSURL(fileURLWithPath: kShareURL));
+        shareDialog.attachImage(postImage.image)
+        shareDialog.setTitle(title, description: "Sharing your store qr code on Google Plus", thumbnailURL: nil)
+        shareDialog.open();
+        
+    }
     //MARK: Show MBProgressHUD bar
     func showHUD() {
         if self.hud != nil {

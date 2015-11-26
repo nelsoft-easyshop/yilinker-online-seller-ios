@@ -468,6 +468,21 @@
 		E72BD5070233EC6FF42DDA3A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B825E81D3B27E563C7C3C53 /* libPods.a */; };
 		F721FCB31BFB08850009E645 /* ResolutionCenterViewControllerV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F721FCB21BFB08850009E645 /* ResolutionCenterViewControllerV2.swift */; };
 		F727FF591B99C94700872E11 /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = F727FF581B99C94700872E11 /* edit.png */; };
+		F73D398F1C06E0F500673A1A /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D398E1C06E0F500673A1A /* Social.framework */; };
+		F73D39911C06E84200673A1A /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D39901C06E84200673A1A /* MessageUI.framework */; };
+		F73D39931C06EC7100673A1A /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D39921C06EC7100673A1A /* GooglePlus.framework */; };
+		F73D39951C06EE2600673A1A /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D39941C06EE2600673A1A /* AddressBook.framework */; };
+		F73D39971C06EE3100673A1A /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D39961C06EE3100673A1A /* AssetsLibrary.framework */; };
+		F73D39991C06EE3800673A1A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D39981C06EE3800673A1A /* Foundation.framework */; };
+		F73D399B1C06EE4300673A1A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D399A1C06EE4300673A1A /* CoreLocation.framework */; };
+		F73D399D1C06EE4F00673A1A /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D399C1C06EE4F00673A1A /* CoreMotion.framework */; };
+		F73D399F1C06EE5800673A1A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D399E1C06EE5800673A1A /* CoreGraphics.framework */; };
+		F73D39A11C06EE5F00673A1A /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D39A01C06EE5F00673A1A /* CoreText.framework */; };
+		F73D39A31C06EE6C00673A1A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D39A21C06EE6C00673A1A /* MediaPlayer.framework */; };
+		F73D39A51C06EE7700673A1A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D39A41C06EE7700673A1A /* Security.framework */; };
+		F73D39A71C06EE8A00673A1A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D39A61C06EE8A00673A1A /* SystemConfiguration.framework */; };
+		F73D39A91C06EE9100673A1A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D39A81C06EE9100673A1A /* UIKit.framework */; };
+		F73D39AB1C06EEA300673A1A /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D39AA1C06EEA300673A1A /* GoogleOpenSource.framework */; };
 		F79403001BC00D6E00CD21DD /* FilterHeaderSectiionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79402FE1BC00D6E00CD21DD /* FilterHeaderSectiionViewController.swift */; };
 		F79403011BC00D6E00CD21DD /* FilterHeaderSectiionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F79402FF1BC00D6E00CD21DD /* FilterHeaderSectiionViewController.xib */; };
 		F79403031BC00E8D00CD21DD /* FilterSeactionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79403021BC00E8D00CD21DD /* FilterSeactionHeaderView.swift */; };
@@ -1078,6 +1093,21 @@
 		D4D17EE114265F93B1630151 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F721FCB21BFB08850009E645 /* ResolutionCenterViewControllerV2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionCenterViewControllerV2.swift; sourceTree = "<group>"; };
 		F727FF581B99C94700872E11 /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
+		F73D398E1C06E0F500673A1A /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		F73D39901C06E84200673A1A /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		F73D39921C06EC7100673A1A /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlus.framework; path = "../../../Downloads/google-plus-ios-sdk-1.7.1/GooglePlus.framework"; sourceTree = "<group>"; };
+		F73D39941C06EE2600673A1A /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		F73D39961C06EE3100673A1A /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		F73D39981C06EE3800673A1A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		F73D399A1C06EE4300673A1A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		F73D399C1C06EE4F00673A1A /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		F73D399E1C06EE5800673A1A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		F73D39A01C06EE5F00673A1A /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		F73D39A21C06EE6C00673A1A /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		F73D39A41C06EE7700673A1A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		F73D39A61C06EE8A00673A1A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		F73D39A81C06EE9100673A1A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		F73D39AA1C06EEA300673A1A /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleOpenSource.framework; path = "../../../Downloads/google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework"; sourceTree = "<group>"; };
 		F79402FE1BC00D6E00CD21DD /* FilterHeaderSectiionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterHeaderSectiionViewController.swift; sourceTree = "<group>"; };
 		F79402FF1BC00D6E00CD21DD /* FilterHeaderSectiionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterHeaderSectiionViewController.xib; sourceTree = "<group>"; };
 		F79403021BC00E8D00CD21DD /* FilterSeactionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterSeactionHeaderView.swift; sourceTree = "<group>"; };
@@ -1194,6 +1224,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F73D39AB1C06EEA300673A1A /* GoogleOpenSource.framework in Frameworks */,
+				F73D39A91C06EE9100673A1A /* UIKit.framework in Frameworks */,
+				F73D39A71C06EE8A00673A1A /* SystemConfiguration.framework in Frameworks */,
+				F73D39A51C06EE7700673A1A /* Security.framework in Frameworks */,
+				F73D39A31C06EE6C00673A1A /* MediaPlayer.framework in Frameworks */,
+				F73D39A11C06EE5F00673A1A /* CoreText.framework in Frameworks */,
+				F73D399F1C06EE5800673A1A /* CoreGraphics.framework in Frameworks */,
+				F73D399D1C06EE4F00673A1A /* CoreMotion.framework in Frameworks */,
+				F73D399B1C06EE4300673A1A /* CoreLocation.framework in Frameworks */,
+				F73D39991C06EE3800673A1A /* Foundation.framework in Frameworks */,
+				F73D39971C06EE3100673A1A /* AssetsLibrary.framework in Frameworks */,
+				F73D39951C06EE2600673A1A /* AddressBook.framework in Frameworks */,
+				F73D39931C06EC7100673A1A /* GooglePlus.framework in Frameworks */,
+				F73D39911C06E84200673A1A /* MessageUI.framework in Frameworks */,
+				F73D398F1C06E0F500673A1A /* Social.framework in Frameworks */,
 				E72BD5070233EC6FF42DDA3A /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2057,6 +2102,21 @@
 		D957134FEAF8E3FA392A4C1E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F73D39AA1C06EEA300673A1A /* GoogleOpenSource.framework */,
+				F73D39A81C06EE9100673A1A /* UIKit.framework */,
+				F73D39A61C06EE8A00673A1A /* SystemConfiguration.framework */,
+				F73D39A41C06EE7700673A1A /* Security.framework */,
+				F73D39A21C06EE6C00673A1A /* MediaPlayer.framework */,
+				F73D39A01C06EE5F00673A1A /* CoreText.framework */,
+				F73D399E1C06EE5800673A1A /* CoreGraphics.framework */,
+				F73D399C1C06EE4F00673A1A /* CoreMotion.framework */,
+				F73D399A1C06EE4300673A1A /* CoreLocation.framework */,
+				F73D39981C06EE3800673A1A /* Foundation.framework */,
+				F73D39961C06EE3100673A1A /* AssetsLibrary.framework */,
+				F73D39941C06EE2600673A1A /* AddressBook.framework */,
+				F73D39921C06EC7100673A1A /* GooglePlus.framework */,
+				F73D39901C06E84200673A1A /* MessageUI.framework */,
+				F73D398E1C06E0F500673A1A /* Social.framework */,
 				5B825E81D3B27E563C7C3C53 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -2905,6 +2965,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/yhelfronda/Downloads/google-plus-ios-sdk-1.7.1",
+				);
 				INFOPLIST_FILE = YiLinkerOnlineSeller/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2922,6 +2986,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/yhelfronda/Downloads/google-plus-ios-sdk-1.7.1",
+				);
 				INFOPLIST_FILE = YiLinkerOnlineSeller/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
