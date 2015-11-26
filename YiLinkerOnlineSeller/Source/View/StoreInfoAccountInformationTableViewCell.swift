@@ -23,17 +23,20 @@ class StoreInfoAccountInformationTableViewCell: UITableViewCell{
     @IBOutlet weak var accountInfoLabel: UILabel!
     @IBOutlet weak var passwordLabel: UILabel!
     
+    @IBOutlet weak var saveLabel: UILabel!
+    @IBOutlet weak var saveView: DynamicRoundedView!
     var delegate: StoreInfoAccountInformationTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-            self.saveButton.layer.cornerRadius = 5.0
-            self.saveButton.clipsToBounds = true
+            //self.saveButton.layer.cornerRadius = 5.0
+            //self.saveButton.clipsToBounds = true
         
-            self.changePasswordButton.layer.cornerRadius = 5.0
-            self.changePasswordButton.clipsToBounds = true
-        
+        self.changePasswordButton.layer.cornerRadius = 5.0
+        self.changePasswordButton.clipsToBounds = true
+        var tap = UITapGestureRecognizer(target: self, action: "save")
+        saveView.addGestureRecognizer(tap)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -53,9 +56,14 @@ class StoreInfoAccountInformationTableViewCell: UITableViewCell{
         println("Save Account Info")
         self.delegate?.saveAccountInfo()
     }
+    
     @IBAction func dismissKeyboard(sender: AnyObject) {
         
         self.passwordTextField.resignFirstResponder()
+    }
+    
+    func save(){
+        self.delegate?.saveAccountInfo()
     }
     
 }

@@ -94,7 +94,6 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         self.hasQRCode = false
         
-        self.googlePlusSignIn()
         self.initializeViews()
         self.registerNibs()
         self.fireStoreInfo()
@@ -387,13 +386,15 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             println("account title \(cell.accountTitle)")
             return cell
         } else {
+            
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoAccountInformationTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAccountInformationTableViewCell
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.delegate = self
             cell.accountInfoLabel.text = self.accountInfo
             cell.passwordLabel.text = self.password
             cell.changePasswordButton.setTitle(changeTitle, forState: UIControlState.Normal)
-            cell.saveButton.setTitle(save, forState: UIControlState.Normal)
+            cell.saveLabel.text = save
+            //cell.saveButton.setTitle(save, forState: UIControlState.Normal)
             //cell.emailAddressTextField.text = self.storeInfoModel?.email
             return cell
         }
@@ -1031,6 +1032,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     func shareGPAction(postImage: UIImageView, title: String) {
         self.imageToPost = postImage.image
+        self.googlePlusSignIn()
         self.updateUI()
     }
     

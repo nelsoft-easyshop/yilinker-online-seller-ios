@@ -129,10 +129,19 @@ class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
         manager.POST(APIAtlas.sellerChangePassword, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             println("SUCCESS!")
-            self.dismissViewControllerAnimated(true, completion: nil)
+           
             var success = StringHelper.localizedStringWithKey("PASSWORD_SUCCESS_CHANGE_LOCALIZE_KEY")
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: success, title: Constants.Localized.success)
-            //self.showAlert(Constants.Localized.success, message: success)
+            //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: success, title: Constants.Localized.success)
+            self.showAlert(Constants.Localized.success, message: success)
+            let seconds = 1.0
+            let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+            let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+            
+            dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+                self.dismissViewControllerAnimated(true, completion: nil)
+                // here code perfomed with delay
+            })
+            
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -163,13 +172,11 @@ class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
         let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
             alertController.dismissViewControllerAnimated(true, completion: nil)
             self.delegate?.dismissView()
-            self.dismissViewControllerAnimated(true, completion: nil)
         }
         
         alertController.addAction(OKAction)
         
         self.presentViewController(alertController, animated: true) {
-        
         }
     }
     

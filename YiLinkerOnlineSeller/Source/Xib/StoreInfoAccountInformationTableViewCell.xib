@@ -5,8 +5,8 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="Panton ExtraBold.otf">
-            <string>Panton-ExtraBold</string>
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
         </mutableArray>
         <mutableArray key="Panton SemiBold.otf">
             <string>Panton-SemiBold</string>
@@ -83,21 +83,6 @@
                             <action selector="changePassword:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="z5m-kp-0lv"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tjg-OX-UXr">
-                        <rect key="frame" x="7" y="154" width="345" height="58"/>
-                        <color key="backgroundColor" red="0.20000000000000001" green="0.65098039220000004" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="58" id="xxE-Xb-6sh"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Panton-ExtraBold" family="Panton" pointSize="14"/>
-                        <state key="normal" title="SAVE">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="saveAccountInfo:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="JwW-mb-3vh"/>
-                        </connections>
-                    </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PSA-q5-LA3">
                         <rect key="frame" x="8" y="80" width="62" height="21"/>
                         <constraints>
@@ -108,24 +93,51 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SoT-oa-oT6" customClass="DynamicRoundedView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+                        <rect key="frame" x="8" y="150" width="344" height="62"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SAVE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wEc-6r-sB0">
+                                <rect key="frame" x="114" y="20" width="117" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="117" id="GkR-Nd-hm7"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.17254901959999999" green="0.59607843140000005" blue="0.48627450979999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="wEc-6r-sB0" secondAttribute="bottom" constant="21" id="1SR-6s-mlz"/>
+                            <constraint firstAttribute="centerX" secondItem="wEc-6r-sB0" secondAttribute="centerX" id="BSX-iI-1rR"/>
+                            <constraint firstAttribute="height" constant="62" id="btH-Yr-ZVx"/>
+                            <constraint firstItem="wEc-6r-sB0" firstAttribute="top" secondItem="SoT-oa-oT6" secondAttribute="top" constant="20" id="uxw-Z5-nBP"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstItem="Wht-2l-Tg0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="11" id="2uG-CR-Sxw"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="tjg-OX-UXr" secondAttribute="bottom" id="9rM-x0-d6j"/>
                     <constraint firstItem="7Jr-B8-Mxd" firstAttribute="top" secondItem="NxH-dT-DmS" secondAttribute="bottom" id="EKi-0N-ohb"/>
                     <constraint firstItem="7Jr-B8-Mxd" firstAttribute="leading" secondItem="PSA-q5-LA3" secondAttribute="leading" id="FCt-vO-yAD"/>
                     <constraint firstItem="7Jr-B8-Mxd" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="3" id="M6N-8q-6eg"/>
                     <constraint firstItem="NxH-dT-DmS" firstAttribute="leading" secondItem="PSA-q5-LA3" secondAttribute="trailing" constant="-5" id="QWy-aG-xLK"/>
                     <constraint firstItem="7Jr-B8-Mxd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="RtC-EZ-rJc"/>
                     <constraint firstAttribute="trailingMargin" secondItem="JK2-YS-HgT" secondAttribute="trailing" id="SXX-WA-fQ4"/>
+                    <constraint firstAttribute="bottom" secondItem="SoT-oa-oT6" secondAttribute="bottom" constant="8" id="XFw-Xv-EEt"/>
                     <constraint firstItem="JK2-YS-HgT" firstAttribute="baseline" secondItem="7Jr-B8-Mxd" secondAttribute="baseline" id="ZYn-hE-sz1"/>
                     <constraint firstItem="PSA-q5-LA3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Zcj-pY-69F"/>
                     <constraint firstItem="Wht-2l-Tg0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="c0h-qw-ggV"/>
                     <constraint firstItem="NxH-dT-DmS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="72" id="fjC-jf-n7O"/>
-                    <constraint firstItem="tjg-OX-UXr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-1" id="sku-UH-IyB"/>
-                    <constraint firstItem="tjg-OX-UXr" firstAttribute="top" secondItem="7Jr-B8-Mxd" secondAttribute="bottom" constant="23" id="wCz-r0-qMz"/>
-                    <constraint firstAttribute="centerX" secondItem="tjg-OX-UXr" secondAttribute="centerX" id="x7a-SJ-LCe"/>
+                    <constraint firstItem="SoT-oa-oT6" firstAttribute="top" secondItem="7Jr-B8-Mxd" secondAttribute="bottom" constant="19" id="gO4-Qc-hdG"/>
+                    <constraint firstAttribute="trailing" secondItem="SoT-oa-oT6" secondAttribute="trailing" constant="8" id="mCV-Co-aZX"/>
+                    <constraint firstItem="SoT-oa-oT6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="q0B-hK-RSL"/>
+                    <constraint firstAttribute="centerX" secondItem="SoT-oa-oT6" secondAttribute="centerX" id="w3Q-Kt-QPh"/>
                     <constraint firstItem="7Jr-B8-Mxd" firstAttribute="top" secondItem="PSA-q5-LA3" secondAttribute="bottom" id="yOt-a4-tcO"/>
                 </constraints>
             </tableViewCellContentView>
@@ -134,7 +146,8 @@
                 <outlet property="changePasswordButton" destination="JK2-YS-HgT" id="Hwf-3H-jwP"/>
                 <outlet property="passwordLabel" destination="PSA-q5-LA3" id="Zqi-zq-U8g"/>
                 <outlet property="passwordTextField" destination="7Jr-B8-Mxd" id="FIw-87-nZy"/>
-                <outlet property="saveButton" destination="tjg-OX-UXr" id="0wQ-ax-wsu"/>
+                <outlet property="saveLabel" destination="wEc-6r-sB0" id="YDz-hW-Fpq"/>
+                <outlet property="saveView" destination="SoT-oa-oT6" id="7s4-sH-6Gk"/>
             </connections>
             <point key="canvasLocation" x="231" y="297.5"/>
         </tableViewCell>
