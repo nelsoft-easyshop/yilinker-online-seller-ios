@@ -52,6 +52,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     let generateQRCodeTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_GENERATE_QR_LOCALIZE_KEY")
     let storeAddressTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_STORE_ADDRESS_LOCALIZE_KEY")
     let newAddress: String = StringHelper.localizedStringWithKey("STORE_INFO_NEW_ADDRESS_LOCALIZE_KEY")
+    let changeAddress: String = StringHelper.localizedStringWithKey("STORE_INFO_CHANGE_ADDRESS_LOCALIZE_KEY")
     let bankAccountTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_BANK_ACCOUNT_LOCALIZE_KEY")
     let newAccount: String = StringHelper.localizedStringWithKey("STORE_INFO_NEW_ACCOUNT_LOCALIZE_KEY")
     let accountInfo: String = StringHelper.localizedStringWithKey("STORE_INFO_ACCOUNT_INFO_LOCALIZE_KEY")
@@ -308,12 +309,13 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             if self.storeInfoModel?.store_address != "" || self.storeInfoModel?.title != "" {
                 cell.addressTitle.text = self.storeInfoModel?.title
                 cell.addressLabel.text = self.storeInfoModel?.store_address
+                cell.newAddressLabel.text = self.changeAddress
             } else {
                 cell.addressLabel.text = self.addressNotSet
                 cell.addressTitle.text = ""
+                cell.newAddressLabel.text = self.newAddress
             }
-            
-            cell.newAddressLabel.text = self.newAddress
+        
             return cell
         } else if indexPath.section == 4 {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoBankAccountTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoBankAccountTableViewCell

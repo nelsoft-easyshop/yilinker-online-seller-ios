@@ -12,7 +12,7 @@ protocol ChangeEmailViewControllerDelegate {
     func dismissView()
 }
 
-class ChangeEmailViewController: UIViewController {
+class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var submitEmailAddressButton: DynamicRoundedButton!
@@ -56,7 +56,9 @@ class ChangeEmailViewController: UIViewController {
         self.newEmailAddressTextField.secureTextEntry = true
         self.confirmEmailAddressTextField.secureTextEntry = true
         self.submitEmailAddressButton.setTitle(self.submit, forState: UIControlState.Normal)
-        
+        self.oldEmailAddressTextField.delegate = self
+        self.newEmailAddressTextField.delegate = self
+        self.confirmEmailAddressTextField.delegate = self
         // Do any additional setup after loading the view.
     }
 
@@ -198,7 +200,7 @@ class ChangeEmailViewController: UIViewController {
         self.hud?.show(true)
     }
     
-    @IBAction func textFieldDidBeginEditing(sender: AnyObject) {
+    @IBAction func textFieldDidBegin(sender: AnyObject) {
         if IphoneType.isIphone4() {
             topConstraint.constant = 40
         } else if IphoneType.isIphone5() {
@@ -207,6 +209,15 @@ class ChangeEmailViewController: UIViewController {
             topConstraint.constant = 100
         }
         
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField == self.oldEmailAddressTextField {
+            self.newEmailAddressTextField.becomeFirstResponder()
+        } else {
+            self.confirmEmailAddressTextField.becomeFirstResponder()
+        }
+        return true
     }
 
     /*
