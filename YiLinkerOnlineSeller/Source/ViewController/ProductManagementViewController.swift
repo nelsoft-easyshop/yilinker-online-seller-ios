@@ -367,7 +367,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         if selectedIndex == 1 {
             requestUpdateProductStatus(Status.inactive)
         } else if selectedIndex == 2 {
-            requestUpdateProductStatus(Status.review)
+            requestUpdateProductStatus(Status.active)
 //            if SessionManager.isSeller() {
 //                requestUpdateProductStatus(Status.active)
 //            }

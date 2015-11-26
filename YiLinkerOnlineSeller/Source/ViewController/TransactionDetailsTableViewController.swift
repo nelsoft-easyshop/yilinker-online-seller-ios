@@ -36,6 +36,8 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
     var errorMessage: String = ""
     var errorLocalizedString = ""
     
+    var transactioStatus: String = ""
+    
     var contacts = [W_Contact()]
     var orderProductIds: [String] = []
     
@@ -191,7 +193,12 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         if indexPath.section == 0 {
             let cell: TransactionDetailsTableViewCell = tableView.dequeueReusableCellWithIdentifier(detailsCellIdentifier, forIndexPath: indexPath) as! TransactionDetailsTableViewCell
             cell.selectionStyle = .None;
-            cell.statusLabel.text = "   \(transactionDetailsModel.transactionStatusName)     "
+            if transactioStatus == StringHelper.localizedStringWithKey("TRANSACTIONS_TRANSACTIONS_LOCALIZE_KEY") {
+                cell.statusLabel.text = "   \(transactionDetailsModel.transactionStatusName)     "
+            } else {
+                cell.statusLabel.text = "   \(transactioStatus)     "
+            }
+            
             cell.paymentTypeLabel.text = transactionDetailsModel.transactionPayment
             cell.dateCreatedLabel.text = formatDateToString(formatStringToDate(transactionDetailsModel.transactionDate))
             cell.dateModifiedLabel.text = formatDateToString(formatStringToDate(date_modified))
@@ -204,6 +211,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             let cell: TransactionProductTableViewCell = tableView.dequeueReusableCellWithIdentifier(productsCellIdentifier, forIndexPath: indexPath) as! TransactionProductTableViewCell
             if transactionDetailsModel.transactionItems.count != 0 {
                 cell.productNameLabel.text = transactionDetailsModel.transactionItems[0].products[indexPath.row].productName
+                cell.statusLabel.text = "   \(transactionDetailsModel.transactionItems[0].products[indexPath.row].orderProductStatusName)   "
             }
             return cell
         }  else if indexPath.section == 2 {
@@ -246,7 +254,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         if indexPath.section == 0 {           //Details
             return 264
         } else if indexPath.section == 1 {    //Product Lis
-            return 35
+            return 55
         } else if indexPath.section == 2 {    //Consignee
             return 190
         }else {

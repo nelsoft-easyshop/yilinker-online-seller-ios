@@ -11,10 +11,13 @@ import UIKit
 class TransactionProductTableViewCell: UITableViewCell {
 
     @IBOutlet weak var productNameLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        statusLabel.layer.masksToBounds = true
+        statusLabel.layer.cornerRadius = statusLabel.frame.height / 2
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
