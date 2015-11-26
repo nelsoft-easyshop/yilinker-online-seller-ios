@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate, CongratulationsViewControllerDelegate, UzysAssetsPickerControllerDelegate, StoreInfoQrCodeTableViewCellDelegate, MFMailComposeViewControllerDelegate {
+class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate, CongratulationsViewControllerDelegate, UzysAssetsPickerControllerDelegate, StoreInfoQrCodeTableViewCellDelegate, MFMailComposeViewControllerDelegate, GPPSignInDelegate {
     
     var storeInfoModel: StoreInfoModel?
     var storeAddressModel: StoreAddressModel?
@@ -76,6 +76,10 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     var tableData: [StoreInfoPreferredCategoriesModel] = []
     var selectedCategories: [Int] = []
     
+    //Google Plus Sign In
+    var kClientId = "120452328739-36rpdqne3pvgj21p7ptru7daqp0tgiik.apps.googleusercontent.com"; // Get this from https://console.developers.google.com
+    var kShareURL = "https://yilinker.com/";
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -89,6 +93,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         self.hasQRCode = false
         
+        self.googlePlusSignIn()
+        self.updateUI()
         self.initializeViews()
         self.registerNibs()
         self.fireStoreInfo()
@@ -117,6 +123,38 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     override func viewDidAppear(animated: Bool) {
        
+    }
+    
+    //MARK: Google Plus Sign In
+    func googlePlusSignIn(){
+        var signIn = GPPSignIn.sharedInstance();
+        signIn.shouldFetchGooglePlusUser = true;
+        signIn.clientID = kClientId;
+        signIn.scopes = [kGTLAuthScopePlusLogin];
+        signIn.trySilentAuthentication();
+        signIn.delegate = self;
+        signIn.authenticate();
+    }
+    
+    func finishedWithAuth(auth: GTMOAuth2Authentication!, error: NSError!) {
+        updateUI();
+    }
+    
+    
+    func updateUI() {
+        // TODO: Toggle buttons here.
+        if (GPPSignIn.sharedInstance().userID != nil){
+            // Signed in?
+            var user = GPPSignIn.sharedInstance().googlePlusUser
+            println(user.name.JSONString())
+            if (user.emails != nil){
+                println(user.emails.first?.JSONString() ?? "no email")
+            } else {
+                println("no email")
+            }
+        } else {
+            
+        }
     }
     
     //MARK: Initialize views
@@ -621,55 +659,103 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         if self.storeInfoModel!.isReseller {
              parameters = ["storeName" : cell.storeNameTextField.text, "storeDescription" : cell.storeDescriptionTextView.text, "categoryIds" : formattedCategories, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
+            if self.selectedCategories.count != 0 {
+                let url: String = "\(APIAtlas.sellerUpdateSellerInfo)?access_token=\(SessionManager.accessToken())"
+                self.storeNameAndDescription(cell.storeNameTextField.text, storeDescription: cell.storeDescriptionTextView.text)
+                if !cell.storeNameTextField.text.isEmpty && !cell.storeNameTextField.text.isEmpty {
+                    manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
+                        for (index, data) in enumerate(datas) {
+                            println("index: \(index)")
+                            if self.image != nil && self.imageCover != nil {
+                                if(index == 0){
+                                    formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(0)", mimeType: "image/jpeg")
+                                } else {
+                                    formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(1)", mimeType: "image/jpeg")
+                                }
+                            } else if self.image != nil && self.imageCover == nil{
+                                formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(index)", mimeType: "image/jpeg")
+                            } else if self.image == nil && self.imageCover != nil {
+                                formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(index)", mimeType: "image/jpeg")
+                            }
+                        }
+                        
+                        }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
+                            self.hud?.hide(true)
+                            self.fireStoreInfo()
+                            //cell.coverPhotoImageView.image = self.image
+                            self.showAlert(self.successTitle, message: self.success)
+                        }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
+                            let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                            println(error.userInfo)
+                            if error.userInfo != nil {
+                                let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                                let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                                self.showAlert(self.error, message: errorModel.message)
+                                //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                            } else if task.statusCode == 401 {
+                                self.fireRefreshToken(StoreInfoType.SaveStoreInfo)
+                            } else {
+                                self.showAlert(self.error, message: self.somethingWentWrong)
+                            }
+                            
+                            self.hud?.hide(true)
+                    }
+                } else {
+                    self.showAlert(self.error, message: self.empty)
+                    self.hud?.hide(true)
+                    self.dismissView()
+                }
+            } else {
+                self.showAlert("Ooops!!", message: "Please select category.")
+            }
         } else {
             print(cell.storeNameTextField.text)
             parameters = ["storeName" : cell.storeNameTextField.text, "storeDescription" : cell.storeDescriptionTextView.text, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
-        }
-
-        let url: String = "\(APIAtlas.sellerUpdateSellerInfo)?access_token=\(SessionManager.accessToken())"
-        self.storeNameAndDescription(cell.storeNameTextField.text, storeDescription: cell.storeDescriptionTextView.text)
-        if !cell.storeNameTextField.text.isEmpty && !cell.storeNameTextField.text.isEmpty {
-            manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
-                for (index, data) in enumerate(datas) {
-                    println("index: \(index)")
-                    if self.image != nil && self.imageCover != nil {
-                        if(index == 0){
-                            formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(0)", mimeType: "image/jpeg")
-                        } else {
-                            formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(1)", mimeType: "image/jpeg")
+            let url: String = "\(APIAtlas.sellerUpdateSellerInfo)?access_token=\(SessionManager.accessToken())"
+            self.storeNameAndDescription(cell.storeNameTextField.text, storeDescription: cell.storeDescriptionTextView.text)
+            if !cell.storeNameTextField.text.isEmpty && !cell.storeNameTextField.text.isEmpty {
+                manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
+                    for (index, data) in enumerate(datas) {
+                        println("index: \(index)")
+                        if self.image != nil && self.imageCover != nil {
+                            if(index == 0){
+                                formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(0)", mimeType: "image/jpeg")
+                            } else {
+                                formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(1)", mimeType: "image/jpeg")
+                            }
+                        } else if self.image != nil && self.imageCover == nil{
+                            formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(index)", mimeType: "image/jpeg")
+                        } else if self.image == nil && self.imageCover != nil {
+                            formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(index)", mimeType: "image/jpeg")
                         }
-                    } else if self.image != nil && self.imageCover == nil{
-                        formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(index)", mimeType: "image/jpeg")
-                    } else if self.image == nil && self.imageCover != nil {
-                        formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(index)", mimeType: "image/jpeg")
                     }
+                    
+                    }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
+                        self.hud?.hide(true)
+                        self.fireStoreInfo()
+                        //cell.coverPhotoImageView.image = self.image
+                        self.showAlert(self.successTitle, message: self.success)
+                    }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
+                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                        println(error.userInfo)
+                        if error.userInfo != nil {
+                            let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                            let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                            self.showAlert(self.error, message: errorModel.message)
+                            //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                        } else if task.statusCode == 401 {
+                            self.fireRefreshToken(StoreInfoType.SaveStoreInfo)
+                        } else {
+                            self.showAlert(self.error, message: self.somethingWentWrong)
+                        }
+                        
+                        self.hud?.hide(true)
                 }
-                
-                }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
-                    self.hud?.hide(true)
-                    self.fireStoreInfo()
-                    //cell.coverPhotoImageView.image = self.image
-                    self.showAlert(self.successTitle, message: self.success)
-                }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    println(error.userInfo)
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(self.error, message: errorModel.message)
-                        //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                    } else if task.statusCode == 401 {
-                        self.fireRefreshToken(StoreInfoType.SaveStoreInfo)
-                    } else {
-                        self.showAlert(self.error, message: self.somethingWentWrong)
-                    }
-   
-                    self.hud?.hide(true)
+            } else {
+                self.showAlert(self.error, message: self.empty)
+                self.hud?.hide(true)
+                self.dismissView()
             }
-        } else {
-            self.showAlert(self.error, message: self.empty)
-            self.hud?.hide(true)
-            self.dismissView()
         }
         
     }
@@ -903,15 +989,15 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     func shareEMAction(postImage: UIImageView, title: String) {
         
         if MFMailComposeViewController.canSendMail() {
-            let mail = MFMailComposeViewController()
-            mail.mailComposeDelegate = self
-            mail.setToRecipients(["paul@hackingwithswift.com"])
-            mail.setMessageBody(title, isHTML: true)
-            let data: NSData = UIImageJPEGRepresentation(postImage.image, 1.0)
-            var qr = "qr_code"
-            qr = qr.stringByAppendingString("jpeg")
-            mail.addAttachmentData(data, mimeType: "image/jpeg", fileName: qr)
-            presentViewController(mail, animated: true, completion: nil)
+            let mailComposeVC = MFMailComposeViewController()
+            mailComposeVC.mailComposeDelegate = self
+            mailComposeVC.addAttachmentData(UIImageJPEGRepresentation(postImage.image, CGFloat(1.0))!, mimeType: "image/jpeg", fileName:  "qrcode.jpeg")
+            
+            mailComposeVC.setSubject(title)
+            
+            mailComposeVC.setMessageBody(title, isHTML: true)
+            
+            self.presentViewController(mailComposeVC, animated: true, completion: nil)
         } else {
             // show failure alert
         }
@@ -935,7 +1021,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     }
     
     func shareGPAction(postImage: UIImageView, title: String) {
-    
+        
         var shareDialog = GPPShare.sharedInstance().nativeShareDialog();
         
         // This line will fill out the title, description, and thumbnail from
@@ -946,6 +1032,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         shareDialog.open();
         
     }
+    
     //MARK: Show MBProgressHUD bar
     func showHUD() {
         if self.hud != nil {

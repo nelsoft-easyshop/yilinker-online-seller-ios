@@ -37,6 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        } else {
 //            self.changeRootToDashboard()
 //        }
+        self.initializeGooglePlusSignIn()
         
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         self.window?.makeKeyAndVisible()
@@ -184,6 +185,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func onTokenRefresh(){
         // for messaging
         GGLInstanceID.sharedInstance().tokenWithAuthorizedEntity(gcmSenderID, scope: kGGLInstanceIDScopeGCM, options: registrationOptions, handler: registrationHandler)
+    }
+    
+    func initializeGooglePlusSignIn()
+    {
+        GPPSignIn.sharedInstance().clientID = "120452328739-36rpdqne3pvgj21p7ptru7daqp0tgiik.apps.googleusercontent.com"
+    }
+    
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool
+    {
+        // handle Google+ Sign In callback URL
+        return GPPSignIn.sharedInstance().handleURL(url, sourceApplication: sourceApplication, annotation: annotation)
     }
 
     func applicationWillResignActive(application: UIApplication) {
