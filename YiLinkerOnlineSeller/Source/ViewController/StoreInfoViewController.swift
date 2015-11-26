@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MessageUI
 
-class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate, CongratulationsViewControllerDelegate, UzysAssetsPickerControllerDelegate, StoreInfoQrCodeTableViewCellDelegate{
+class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate, CongratulationsViewControllerDelegate, UzysAssetsPickerControllerDelegate, StoreInfoQrCodeTableViewCellDelegate, MFMailComposeViewControllerDelegate, GPPSignInDelegate {
     
     var storeInfoModel: StoreInfoModel?
     var storeAddressModel: StoreAddressModel?
@@ -52,6 +53,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     let generateQRCodeTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_GENERATE_QR_LOCALIZE_KEY")
     let storeAddressTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_STORE_ADDRESS_LOCALIZE_KEY")
     let newAddress: String = StringHelper.localizedStringWithKey("STORE_INFO_NEW_ADDRESS_LOCALIZE_KEY")
+    let changeAddress: String = StringHelper.localizedStringWithKey("STORE_INFO_CHANGE_ADDRESS_LOCALIZE_KEY")
     let bankAccountTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_BANK_ACCOUNT_LOCALIZE_KEY")
     let newAccount: String = StringHelper.localizedStringWithKey("STORE_INFO_NEW_ACCOUNT_LOCALIZE_KEY")
     let accountInfo: String = StringHelper.localizedStringWithKey("STORE_INFO_ACCOUNT_INFO_LOCALIZE_KEY")
@@ -74,6 +76,10 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     var tableData: [StoreInfoPreferredCategoriesModel] = []
     var selectedCategories: [Int] = []
     
+    //Google Plus Sign In
+    var kClientId = "120452328739-36rpdqne3pvgj21p7ptru7daqp0tgiik.apps.googleusercontent.com"; // Get this from https://console.developers.google.com
+    var kShareURL = "https://yilinker.com/";
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -87,6 +93,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         self.hasQRCode = false
         
+        self.googlePlusSignIn()
+        self.updateUI()
         self.initializeViews()
         self.registerNibs()
         self.fireStoreInfo()
@@ -115,6 +123,38 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     override func viewDidAppear(animated: Bool) {
        
+    }
+    
+    //MARK: Google Plus Sign In
+    func googlePlusSignIn(){
+        var signIn = GPPSignIn.sharedInstance();
+        signIn.shouldFetchGooglePlusUser = true;
+        signIn.clientID = kClientId;
+        signIn.scopes = [kGTLAuthScopePlusLogin];
+        signIn.trySilentAuthentication();
+        signIn.delegate = self;
+        signIn.authenticate();
+    }
+    
+    func finishedWithAuth(auth: GTMOAuth2Authentication!, error: NSError!) {
+        updateUI();
+    }
+    
+    
+    func updateUI() {
+        // TODO: Toggle buttons here.
+        if (GPPSignIn.sharedInstance().userID != nil){
+            // Signed in?
+            var user = GPPSignIn.sharedInstance().googlePlusUser
+            println(user.name.JSONString())
+            if (user.emails != nil){
+                println(user.emails.first?.JSONString() ?? "no email")
+            } else {
+                println("no email")
+            }
+        } else {
+            
+        }
     }
     
     //MARK: Initialize views
@@ -227,13 +267,16 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             
             if(self.storeInfoModel?.store_name != nil){
                
-                if self.image != nil || self.imageCover != nil {
+               /* if self.image != nil || self.imageCover != nil {
                     cell.coverEditImageView.image = self.imageCover
                     cell.profilePictureImageView.image = self.image
                 } else {
-                    cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
-                    cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
-                }
+                */
+                cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+            
+                cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                
+               // }
                 
                 cell.storeNameTextField.text = self.storeInfoModel?.store_name
                 cell.mobilePhoneTextField.text = self.storeInfoModel?.contact_number
@@ -305,12 +348,13 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             if self.storeInfoModel?.store_address != "" || self.storeInfoModel?.title != "" {
                 cell.addressTitle.text = self.storeInfoModel?.title
                 cell.addressLabel.text = self.storeInfoModel?.store_address
+                cell.newAddressLabel.text = self.changeAddress
             } else {
                 cell.addressLabel.text = self.addressNotSet
                 cell.addressTitle.text = ""
+                cell.newAddressLabel.text = self.newAddress
             }
-            
-            cell.newAddressLabel.text = self.newAddress
+        
             return cell
         } else if indexPath.section == 4 {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoBankAccountTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoBankAccountTableViewCell
@@ -445,8 +489,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     }
     
     func storeNameAndDescription(storeName: String, storeDescription: String) {
-        self.storeInfoModel?.store_name = storeName
-        self.storeInfoModel?.store_description = storeDescription
+        self.storeInfoModel!.store_name = storeName
+        self.storeInfoModel!.store_description = storeDescription
     }
     //MARK: Store Details Function
     func storeInfoVerify(mobile: String) {
@@ -598,14 +642,14 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
         if self.image != nil && self.imageCover != nil {
             let data: NSData = UIImageJPEGRepresentation(self.image, 0)
-            let dataCoverPhoto: NSData = UIImageJPEGRepresentation(self.imageCover, 1)
+            let dataCoverPhoto: NSData = UIImagePNGRepresentation(self.image) //UIImageJPEGRepresentation(self.imageCover, 1)
             datas.append(data)
             datas.append(dataCoverPhoto)
         } else if self.image != nil && self.imageCover == nil{
             let data: NSData = UIImageJPEGRepresentation(self.image, 0)
             datas.append(data)
         } else if self.image == nil && self.imageCover != nil {
-            let dataCoverPhoto: NSData = UIImageJPEGRepresentation(self.imageCover, 0)
+            let dataCoverPhoto: NSData = UIImagePNGRepresentation(self.imageCover) //UIImageJPEGRepresentation(self.imageCover, 0)
             datas.append(dataCoverPhoto)
         }
        
@@ -614,58 +658,104 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         let parameters: NSDictionary?
         
         if self.storeInfoModel!.isReseller {
-             parameters = ["access_token" : SessionManager.accessToken(), "storeName" : cell.storeNameTextField.text, "storeDescription" : cell.storeDescriptionTextView.text, "categoryIds" : formattedCategories, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
-        } else {
-            parameters = ["access_token" : SessionManager.accessToken(), "storeName" : cell.storeNameTextField.text, "storeDescription" : cell.storeDescriptionTextView.text, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
-        }
-
-        let url: String = "\(APIAtlas.sellerUpdateSellerInfo)?access_token=\(SessionManager.accessToken())"
-
-        if !cell.storeNameTextField.text.isEmpty && !cell.storeNameTextField.text.isEmpty {
-            manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
-                for (index, data) in enumerate(datas) {
-                    println("index: \(index)")
-                    if self.image != nil && self.imageCover != nil {
-                        if(index == 0){
-                            formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(0)", mimeType: "image/jpeg")
-                        } else {
-                            formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(1)", mimeType: "image/jpeg")
+             parameters = ["storeName" : cell.storeNameTextField.text, "storeDescription" : cell.storeDescriptionTextView.text, "categoryIds" : formattedCategories, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
+            if self.selectedCategories.count != 0 {
+                let url: String = "\(APIAtlas.sellerUpdateSellerInfo)?access_token=\(SessionManager.accessToken())"
+                self.storeNameAndDescription(cell.storeNameTextField.text, storeDescription: cell.storeDescriptionTextView.text)
+                if !cell.storeNameTextField.text.isEmpty && !cell.storeNameTextField.text.isEmpty {
+                    manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
+                        for (index, data) in enumerate(datas) {
+                            println("index: \(index)")
+                            if self.image != nil && self.imageCover != nil {
+                                if(index == 0){
+                                    formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(0)", mimeType: "image/jpeg")
+                                } else {
+                                    formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(1)", mimeType: "image/jpeg")
+                                }
+                            } else if self.image != nil && self.imageCover == nil{
+                                formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(index)", mimeType: "image/jpeg")
+                            } else if self.image == nil && self.imageCover != nil {
+                                formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(index)", mimeType: "image/jpeg")
+                            }
                         }
-                    } else if self.image != nil && self.imageCover == nil{
-                        formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(index)", mimeType: "image/jpeg")
-                    } else if self.image == nil && self.imageCover != nil {
-                        formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(index)", mimeType: "image/jpeg")
+                        
+                        }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
+                            self.hud?.hide(true)
+                            self.fireStoreInfo()
+                            //cell.coverPhotoImageView.image = self.image
+                            self.showAlert(self.successTitle, message: self.success)
+                        }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
+                            let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                            println(error.userInfo)
+                            if error.userInfo != nil {
+                                let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                                let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                                self.showAlert(self.error, message: errorModel.message)
+                                //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                            } else if task.statusCode == 401 {
+                                self.fireRefreshToken(StoreInfoType.SaveStoreInfo)
+                            } else {
+                                self.showAlert(self.error, message: self.somethingWentWrong)
+                            }
+                            
+                            self.hud?.hide(true)
                     }
+                } else {
+                    self.showAlert(self.error, message: self.empty)
+                    self.hud?.hide(true)
+                    self.dismissView()
                 }
-                
-                }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
-                    self.hud?.hide(true)
-                    
-                    println(response)
-                    self.fireStoreInfo()
-                    self.tableView.reloadData()
-                    //cell.coverPhotoImageView.image = self.image
-                    self.showAlert(self.successTitle, message: self.success)
-                }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    println(error.userInfo)
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(self.error, message: errorModel.message)
-                        //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                    } else if task.statusCode == 401 {
-                        self.fireRefreshToken(StoreInfoType.SaveStoreInfo)
-                    } else {
-                        self.showAlert(self.error, message: self.somethingWentWrong)
-                    }
-   
-                    self.hud?.hide(true)
+            } else {
+                self.showAlert("Ooops!!", message: "Please select category.")
             }
         } else {
-            self.showAlert(self.error, message: self.empty)
-            self.hud?.hide(true)
-            self.dismissView()
+            print(cell.storeNameTextField.text)
+            parameters = ["storeName" : cell.storeNameTextField.text, "storeDescription" : cell.storeDescriptionTextView.text, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
+            let url: String = "\(APIAtlas.sellerUpdateSellerInfo)?access_token=\(SessionManager.accessToken())"
+            self.storeNameAndDescription(cell.storeNameTextField.text, storeDescription: cell.storeDescriptionTextView.text)
+            if !cell.storeNameTextField.text.isEmpty && !cell.storeNameTextField.text.isEmpty {
+                manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
+                    for (index, data) in enumerate(datas) {
+                        println("index: \(index)")
+                        if self.image != nil && self.imageCover != nil {
+                            if(index == 0){
+                                formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(0)", mimeType: "image/jpeg")
+                            } else {
+                                formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(1)", mimeType: "image/jpeg")
+                            }
+                        } else if self.image != nil && self.imageCover == nil{
+                            formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(index)", mimeType: "image/jpeg")
+                        } else if self.image == nil && self.imageCover != nil {
+                            formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(index)", mimeType: "image/jpeg")
+                        }
+                    }
+                    
+                    }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
+                        self.hud?.hide(true)
+                        self.fireStoreInfo()
+                        //cell.coverPhotoImageView.image = self.image
+                        self.showAlert(self.successTitle, message: self.success)
+                    }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
+                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                        println(error.userInfo)
+                        if error.userInfo != nil {
+                            let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                            let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                            self.showAlert(self.error, message: errorModel.message)
+                            //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                        } else if task.statusCode == 401 {
+                            self.fireRefreshToken(StoreInfoType.SaveStoreInfo)
+                        } else {
+                            self.showAlert(self.error, message: self.somethingWentWrong)
+                        }
+                        
+                        self.hud?.hide(true)
+                }
+            } else {
+                self.showAlert(self.error, message: self.empty)
+                self.hud?.hide(true)
+                self.dismissView()
+            }
         }
         
     }
@@ -824,7 +914,15 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         self.tableView.reloadData()
     }
     
-    func shareAction(postImage: UIImageView, title: String) {
+    func shareFBAction(postImage: UIImageView, title: String) {
+    
+        let vc = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+        vc.setInitialText("")
+        let image = postImage.image
+        vc.addImage(image)
+        presentViewController(vc, animated: true, completion: nil)
+        
+        /*
         var sharingItems = [AnyObject]()
         let image = postImage.image
         
@@ -868,12 +966,71 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         self.presentViewController(activityController, animated: true,
             completion: nil)
-
+        */
+        
+        
         
        // sharingItems.append(NSURL(string: "https://sociobiology.files.wordpress.com/2013/07/strassmann-queller-qr-code.jpg")!)
         
         //let shareViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
         //self.presentViewController(shareViewController, animated: true, completion: nil)
+    }
+    
+    func shareTWAction(postImage: UIImageView, title: String) {
+        
+        let vc = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+        vc.setInitialText("")
+        let image = postImage.image
+        vc.addImage(image)
+        presentViewController(vc, animated: true, completion: nil)
+        
+    }
+    
+    func shareEMAction(postImage: UIImageView, title: String) {
+        
+        if MFMailComposeViewController.canSendMail() {
+            let mailComposeVC = MFMailComposeViewController()
+            mailComposeVC.mailComposeDelegate = self
+            mailComposeVC.addAttachmentData(UIImageJPEGRepresentation(postImage.image, CGFloat(1.0))!, mimeType: "image/jpeg", fileName:  "qrcode.jpeg")
+            
+            mailComposeVC.setSubject(title)
+            
+            mailComposeVC.setMessageBody(title, isHTML: true)
+            
+            self.presentViewController(mailComposeVC, animated: true, completion: nil)
+        } else {
+            // show failure alert
+        }
+    }
+    
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        
+        switch result.value {
+        case MFMailComposeResultCancelled.value:
+            NSLog("Mail cancelled")
+        case MFMailComposeResultSaved.value:
+            NSLog("Mail saved")
+        case MFMailComposeResultSent.value:
+            NSLog("Mail sent")
+        case MFMailComposeResultFailed.value:
+            NSLog("Mail sent failure: %@", [error!.localizedDescription])
+        default:
+            break
+        }
+        controller.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func shareGPAction(postImage: UIImageView, title: String) {
+        
+        var shareDialog = GPPShare.sharedInstance().nativeShareDialog();
+        
+        // This line will fill out the title, description, and thumbnail from
+        // the URL that you are sharing and includes a link to that URL.
+        //shareDialog.setURLToShare(NSURL(fileURLWithPath: kShareURL));
+        shareDialog.attachImage(postImage.image)
+        shareDialog.setTitle(title, description: "Sharing your store qr code on Google Plus", thumbnailURL: nil)
+        shareDialog.open();
+        
     }
     
     //MARK: Show MBProgressHUD bar
@@ -933,8 +1090,9 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     func uzysAssetsPickerController(picker: UzysAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) {
         let assetsLibrary = ALAssetsLibrary()
         let alaSset: ALAsset = assets[0] as! ALAsset
-        
+    
         for allaSset in assets as! [ALAsset] {
+            //let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage(), scale: allaSset.defaultRepresentation().scale(), orientation: allaSset.defaultRepresentation().orientation())!
             let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!
             self.uploadImages.insert(image, atIndex: 0)
 

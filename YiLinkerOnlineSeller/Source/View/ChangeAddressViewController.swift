@@ -192,7 +192,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     }
     
     func done() {
-       self.navigationController!.popViewControllerAnimated(true)
+       fireSetDefaultStoreAddress()
     }
     
     func fireSetDefaultStoreAddress(){
@@ -206,6 +206,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 self.showAlert(title: self.information, message: responseObject["message"] as! String)
                 self.delegate?.updateStoreAddressDetail(self.getAddressModel.listOfAddress[self.defaultAddress].title, storeAddress:self.getAddressModel.listOfAddress[self.defaultAddress].fullLocation)
                 //self.changeBankAccountCollectionView.reloadData()
+                self.navigationController!.popViewControllerAnimated(true)
             } else {
                 self.showAlert(title: self.error, message: self.somethingWentWrong)
             }
@@ -315,11 +316,11 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         let indexPath: NSIndexPath = self.changeAddressCollectionView.indexPathForCell(cell)!
         self.userId = cell.titleLabel.tag
         self.index = indexPath
-        if self.getAddressModel.listOfAddress[self.defaultAddress].isDefault {
-            self.showAlert(title: StringHelper.localizedStringWithKey("STORE_INFO_DELETE_LOCALIZE_KEY"), message: nil)
-        } else {
+        //if self.getAddressModel.listOfAddress[self.defaultAddress].isDefault {
+        //    self.showAlert(title: StringHelper.localizedStringWithKey("STORE_INFO_DELETE_LOCALIZE_KEY"), message: nil)
+        //} else {
             fireDeleteStoreAddress(cell.titleLabel.tag, indexPath: indexPath)
-        }
+        //}
         
     }
 
@@ -339,7 +340,6 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         self.changeAddressCollectionView.reloadData()
         self.selectedIndex = indexPath.row
         
-         fireSetDefaultStoreAddress()
     }
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
@@ -369,14 +369,15 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                println(error)
+                println(task.statusCode)
                 if task.statusCode == 401 {
                     self.requestRefreshToken(AddressRefreshType.Delete)
+                } else if task.statusCode == 400 {
+                     self.showAlert(title: StringHelper.localizedStringWithKey("STORE_INFO_DELETE_LOCALIZE_KEY"), message: nil)
                 } else {
                     self.showAlert(title: self.somethingWentWrong, message: nil)
-                    self.hud?.hide(true)
                 }
-
+                self.hud?.hide(true)
         })
     }
     

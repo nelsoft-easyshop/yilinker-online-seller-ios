@@ -342,7 +342,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     }
     
     func done() {
-        self.tableView.reloadData()
+        //self.tableView.reloadData()
         let row = NSIndexPath(forItem: activeTextField, inSection: 0)
         let cell: NewAddressTableViewCell = tableView.cellForRowAtIndexPath(row) as! NewAddressTableViewCell
         cell.rowTextField.endEditing(true)

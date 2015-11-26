@@ -41,7 +41,7 @@ class CategoryDetailModel: NSObject {
             }
             
             if dictionary["sortOrder"] != nil {
-                if let tempVar = dictionary[sortOrder] as? Int {
+                if let tempVar = dictionary[sortOrder as NSCopying] as? Int {
                     sortOrder = tempVar
                 }
             }
