@@ -620,7 +620,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         }
 
         let url: String = "\(APIAtlas.sellerUpdateSellerInfo)?access_token=\(SessionManager.accessToken())"
-
+        self.storeNameAndDescription(cell.storeNameTextField.text, storeDescription: cell.storeDescriptionTextView.text)
         if !cell.storeNameTextField.text.isEmpty && !cell.storeNameTextField.text.isEmpty {
             manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
                 for (index, data) in enumerate(datas) {

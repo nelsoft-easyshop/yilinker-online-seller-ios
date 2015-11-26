@@ -348,7 +348,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             if self.transactionsModel.transactions.count != 0 {
                 self.currentTextField.text = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number//self.transactionIds[self.transactionDefaultIndex]
             } else {
-                self.showAlert(title: Constants.Localized.no, message: StringHelper.localizedStringWithKey("TRANSACTIONS_NO_TRANSACTIONS_AVAIL_LOCALIZE_KEY"))
+                //self.showAlert(title: Constants.Localized.no, message: StringHelper.localizedStringWithKey("TRANSACTIONS_NO_TRANSACTIONS_AVAIL_LOCALIZE_KEY"))
             }
         } else if self.disputePickerType == DisputePickerType.DisputeType {
             self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].key2
@@ -369,8 +369,10 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if self.disputePickerType == DisputePickerType.TransactionList {
-            self.transactionDefaultIndex = row
-            self.currentTextField.text = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
+            if self.transactionsModel.transactions.count != 0 {
+                self.transactionDefaultIndex = row
+                self.currentTextField.text = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
+            }
         } else if self.disputePickerType == DisputePickerType.DisputeType {
             self.disputeTypeDefaultIndex = row
             self.reasonDefaultIndex = 0
@@ -433,9 +435,11 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     func addProductHeaderView(addProductHeaderView: AddProductHeaderView, didClickButtonAdd button: UIButton) {
         if self.isValid {
             let resolutionCenterProductListViewController: ResolutionCenterProductListViewController = ResolutionCenterProductListViewController(nibName: "ResolutionCenterProductListViewController", bundle: nil)
-            resolutionCenterProductListViewController.transactionId = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
-            resolutionCenterProductListViewController.delegate = self
-            self.navigationController?.pushViewController(resolutionCenterProductListViewController, animated: true)
+            if self.transactionsModel.transactions.count != 0 {
+                resolutionCenterProductListViewController.transactionId = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
+                resolutionCenterProductListViewController.delegate = self
+                self.navigationController?.pushViewController(resolutionCenterProductListViewController, animated: true)
+            }
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please select transaction number.", title: "Incomplete product details")
         }

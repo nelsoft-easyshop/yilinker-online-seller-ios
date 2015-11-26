@@ -13,7 +13,7 @@ protocol ChangeMobileNumberViewControllerDelegate {
     func dismissView()
 }
 
-class ChangeMobileNumberViewController: UIViewController {
+class ChangeMobileNumberViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
 
    
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
@@ -50,6 +50,7 @@ class ChangeMobileNumberViewController: UIViewController {
         self.oldNumberTextField.text = self.mobile
         self.newNumberTextField.placeholder = enterNewNumber
         self.oldNumberTextField.enabled = false
+        self.newNumberTextField.delegate = self
         // Do any additional setup after loading the view.
     }
 
@@ -81,7 +82,7 @@ class ChangeMobileNumberViewController: UIViewController {
         
     }
     
-    @IBAction func textFieldDidBeginEditing(sender: AnyObject) {
+    @IBAction func textFieldDidBegin(sender: AnyObject) {
         if IphoneType.isIphone4() {
             topConstraint.constant = 40
         } else if IphoneType.isIphone5() {
@@ -97,6 +98,12 @@ class ChangeMobileNumberViewController: UIViewController {
         let defaultAction = UIAlertAction(title: self.ok, style: .Default, handler: nil)
         alertController.addAction(defaultAction)
         presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        let prospectiveText = (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
+        return count(prospectiveText) <= 11
+        //return true;
     }
     
     /*

@@ -23,9 +23,10 @@ class CaseDetailsTableViewController: UITableViewController {
     @IBOutlet weak var dateOpen: UILabel!
     @IBOutlet weak var otherParty: UILabel!
     @IBOutlet weak var complainantRemarks: UILabel!
+    @IBOutlet weak var itemLabel: UILabel!
     //@IBOutlet weak var complainRemarksView: UIView!
     //@IBOutlet weak var complainRemarksCell: UITableViewCell!
-    @IBOutlet weak var csrRemarks: UILabel!
+    //@IBOutlet weak var csrRemarks: UILabel!
     
     var tableData = [String]()
     
@@ -42,7 +43,8 @@ class CaseDetailsTableViewController: UITableViewController {
     let complaintTitle: String = StringHelper.localizedStringWithKey("CASE_COMPLAINT_LOCALIZE_KEY")
     let csrTitle: String = StringHelper.localizedStringWithKey("CASE_CSR_LOCALIZE_KEY")
     let caseTitle: String = StringHelper.localizedStringWithKey("CASE_TITLE_LOCALIZE_KEY")
-
+    let items: String = StringHelper.localizedStringWithKey("CASE_ITEMS_LOCALIZE_KEY")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //Localized strings 
@@ -52,7 +54,8 @@ class CaseDetailsTableViewController: UITableViewController {
         dateTitleLabel.text = dateTitle
         otherPartyLabel.text = otherPartyTitle
         complaintLabel.text = complaintTitle
-        csrRemarks.text = csrTitle
+        //csrRemarks.text = csrTitle
+        itemLabel.text = items
         
         setupNavigationBar()
         setupClearFields()
@@ -77,7 +80,7 @@ class CaseDetailsTableViewController: UITableViewController {
         dateOpen.text = ""
         otherParty.text = ""
         complainantRemarks.text = ""
-        csrRemarks.text = ""
+        //csrRemarks.text = ""
     }
     
     private func setupNavigationBar() {
@@ -155,7 +158,7 @@ class CaseDetailsTableViewController: UITableViewController {
                 self.otherParty.text = caseDetails.disputerName
                 for remarkElement in caseDetails.remarks {
                     if( remarkElement.isAdmin ) {
-                        self.csrRemarks.text = remarkElement.message
+                        //self.csrRemarks.text = remarkElement.message
                     }
                     else {
                         self.complainantRemarks.text = remarkElement.message

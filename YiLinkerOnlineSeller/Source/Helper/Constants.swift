@@ -14,7 +14,7 @@ struct Constants {
         static let error: String = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
         static let failed: String = StringHelper.localizedStringWithKey("FAILED_LOCALIZE_KEY")
         static let done: String = StringHelper.localizedStringWithKey("TOOLBAR_DONE_LOCALIZE_KEY")
-        static let success: String = StringHelper.localizedStringWithKey("SUCCESS_LOGIN_LOCALIZE_KEY")
+        static let success: String = StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TITLE_LOCALIZE_KEY")
         static let serverError: String = StringHelper.localizedStringWithKey("SERVER_ERROR_LOCALIZE_KEY")
         static let next: String = StringHelper.localizedStringWithKey("NEXT_LOCALIZE_KEY")
         static let previous: String = StringHelper.localizedStringWithKey("PREVIOUS_LOCALIZE_KEY")
