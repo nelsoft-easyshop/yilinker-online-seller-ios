@@ -105,6 +105,8 @@ struct ProductUploadStrings {
     
     static let uploadAgain: String = StringHelper.localizedStringWithKey("UPLOAD_AGAIN_LOCALIZE_KEY")
     static let backToDashboard: String = StringHelper.localizedStringWithKey("BACK_TO_DASHBOARD_LOCALIZE_KEY")
+    
+    static var cropped: [UIImage] = []
 }
 
 struct ProductUploadTableViewControllerConstant {
@@ -156,7 +158,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     
     var uploadType: UploadType = UploadType.NewProduct
     var oldEditedImages: [ServerUIImage] = []
-    
+    var croppedImages: [UIImage] = []
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
@@ -164,7 +166,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        ProductUploadStrings.cropped.removeAll(keepCapacity: true)
         self.backButton()
         self.title = Constants.ViewControllersTitleString.productUpload
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
@@ -264,6 +266,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             self.productModel.editedImage.append(serverImage)
         } else {
             self.productModel.images.append(UIImage(named: "addPhoto")!)
+            ProductUploadStrings.cropped.append(UIImage(named: "addPhoto")!)
         }
         
     }
@@ -839,8 +842,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             self.productModel.editedImage.removeAtIndex(indexPath.row)
         } else {
             self.productModel.images.removeAtIndex(indexPath.row)
+            ProductUploadStrings.cropped.removeAtIndex(indexPath.row)
         }
         collectionView.deleteItemsAtIndexPaths([indexPath])
+        println("Afted deletion count \(ProductUploadStrings.cropped.count)")
     }
     
     //MARK: - Uzy Config
@@ -874,10 +879,28 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             } else {
                 let representation: ALAssetRepresentation = allaSset.defaultRepresentation()
                 let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullScreenImage().takeUnretainedValue(), scale: 1.0, orientation: UIImageOrientation.Up)!
+                
                 self.productModel.images.insert(image, atIndex: self.productModel.images.count - 1)
+                
+                let storyboard = UIStoryboard(name: "FaImagePicker", bundle: nil)
+                
+                let faImagePicker = storyboard.instantiateViewControllerWithIdentifier("FaCropper") as! CropAssetViewController!
+                
+                faImagePicker.image = image
+                faImagePicker.imageCount = ProductUploadStrings.cropped.count - 1
+                //faImagePicker.imagePickerDelegate = self
+                faImagePicker.edgesForExtendedLayout = .None
+                self.navigationController!.pushViewController(faImagePicker, animated: true)
+                println("crop images count \(faImagePicker.croppedImages.count) full images count \(self.productModel.images.count)")
             }
         }
-        
+        println("crop images count \(ProductUploadStrings.cropped.count)")
+        self.reloadUploadCellCollectionViewData()
+        self.tableView.reloadData()
+        //self.reloadTable()
+    }
+    
+    func reloadTable(){
         self.reloadUploadCellCollectionViewData()
         self.tableView.reloadData()
     }

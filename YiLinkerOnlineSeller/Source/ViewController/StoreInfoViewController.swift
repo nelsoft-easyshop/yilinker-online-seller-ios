@@ -31,6 +31,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     var image: UIImage?
     var imageCover: UIImage?
+    var imageToPost: UIImage?
     
     var verifyOrChange: Int = 0
     var imageType: String = ""
@@ -93,8 +94,6 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         self.hasQRCode = false
         
-        self.googlePlusSignIn()
-        self.updateUI()
         self.initializeViews()
         self.registerNibs()
         self.fireStoreInfo()
@@ -148,6 +147,14 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             var user = GPPSignIn.sharedInstance().googlePlusUser
             println(user.name.JSONString())
             if (user.emails != nil){
+                var shareDialog = GPPShare.sharedInstance().nativeShareDialog();
+                
+                // This line will fill out the title, description, and thumbnail from
+                // the URL that you are sharing and includes a link to that URL.
+                //shareDialog.setURLToShare(NSURL(fileURLWithPath: kShareURL));
+                shareDialog.attachImage(self.imageToPost)
+                shareDialog.setTitle(title, description: "Sharing your store qr code on Google Plus", thumbnailURL: nil)
+                shareDialog.open();
                 println(user.emails.first?.JSONString() ?? "no email")
             } else {
                 println("no email")
@@ -279,6 +286,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                // }
                 
                 cell.storeNameTextField.text = self.storeInfoModel?.store_name
+                cell.storeNameTextField.enabled = false
                 cell.mobilePhoneTextField.text = self.storeInfoModel?.contact_number
                 cell.storeDescriptionTextView.text = self.storeInfoModel?.store_description
                 cell.profileEditImageView.image = UIImage(named: "edit.png")
@@ -378,13 +386,15 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             println("account title \(cell.accountTitle)")
             return cell
         } else {
+            
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoAccountInformationTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAccountInformationTableViewCell
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.delegate = self
             cell.accountInfoLabel.text = self.accountInfo
             cell.passwordLabel.text = self.password
             cell.changePasswordButton.setTitle(changeTitle, forState: UIControlState.Normal)
-            cell.saveButton.setTitle(save, forState: UIControlState.Normal)
+            cell.saveLabel.text = save
+            //cell.saveButton.setTitle(save, forState: UIControlState.Normal)
             //cell.emailAddressTextField.text = self.storeInfoModel?.email
             return cell
         }
@@ -1021,16 +1031,9 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     }
     
     func shareGPAction(postImage: UIImageView, title: String) {
-        
-        var shareDialog = GPPShare.sharedInstance().nativeShareDialog();
-        
-        // This line will fill out the title, description, and thumbnail from
-        // the URL that you are sharing and includes a link to that URL.
-        //shareDialog.setURLToShare(NSURL(fileURLWithPath: kShareURL));
-        shareDialog.attachImage(postImage.image)
-        shareDialog.setTitle(title, description: "Sharing your store qr code on Google Plus", thumbnailURL: nil)
-        shareDialog.open();
-        
+        self.imageToPost = postImage.image
+        self.googlePlusSignIn()
+        self.updateUI()
     }
     
     //MARK: Show MBProgressHUD bar
