@@ -173,7 +173,7 @@ extension TransactionViewController: UICollectionViewDataSource, UICollectionVie
         isRefreshable = true
         if !isFromFilter {
             status.removeAll(keepCapacity: false)
-            paymentMethod.removeAll(keepCapacity: false)
+            //paymentMethod.removeAll(keepCapacity: false)
             sortBy = ""
         }
         
