@@ -8,6 +8,9 @@
 
 import UIKit
 
+struct IMAGETYPE {
+    static var imageType: String = ""
+}
 protocol StoreInfoTableViewCellDelegate {
     func storeInfoVerify(mobile: String)
     func storeNameAndDescription(storeName: String, storeDescription: String)
@@ -110,10 +113,12 @@ class StoreInfoTableViewCell: UITableViewCell, UITextFieldDelegate, UITextViewDe
     
     func callUzyPicker(){
         self.delegate?.callUzyPicker("profile")
+        IMAGETYPE.imageType = "profile"
     }
     
     func callUzyPickerCover(){
         self.delegate?.callUzyPicker("cover")
+        IMAGETYPE.imageType = "cover"
     }
    
 }

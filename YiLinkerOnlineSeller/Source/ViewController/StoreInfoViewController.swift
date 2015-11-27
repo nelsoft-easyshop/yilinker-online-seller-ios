@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate, CongratulationsViewControllerDelegate, UzysAssetsPickerControllerDelegate, StoreInfoQrCodeTableViewCellDelegate, MFMailComposeViewControllerDelegate, GPPSignInDelegate, ImageCropperViewControllerDelegate {
+class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate, CongratulationsViewControllerDelegate, UzysAssetsPickerControllerDelegate, StoreInfoQrCodeTableViewCellDelegate, MFMailComposeViewControllerDelegate, GPPSignInDelegate {
     
     var storeInfoModel: StoreInfoModel?
     var storeAddressModel: StoreAddressModel?
@@ -273,17 +273,31 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             cell.verifyButton.setTitle(self.changeTitle, forState: UIControlState.Normal)
             
             if(self.storeInfoModel?.store_name != nil){
-               
-               /* if self.image != nil || self.imageCover != nil {
+                
+                if self.image != nil && self.imageCover != nil {
                     cell.coverEditImageView.image = self.imageCover
                     cell.profilePictureImageView.image = self.image
+                } else if self.image != nil && self.imageCover == nil {
+                    cell.profilePictureImageView.image = self.image
+                    cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                } else if self.image == nil && self.imageCover != nil {
+                    cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                    cell.coverEditImageView.image = self.imageCover
                 } else {
-                */
-                cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
-            
-                cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
-                
-               // }
+                    let url: NSString = NSString(string: (self.storeInfoModel?.avatar)!.absoluteString!)
+                    let url2: NSString = NSString(string: (self.storeInfoModel?.coverPhoto)!.absoluteString!)
+                    if url != "" && url2 != "" {
+                        cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                        cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                    } else if url == "" && url2 != "" {
+                        cell.profilePictureImageView.image = UIImage(named: "dummy-placeholder.jpg")
+                        cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                    } else {
+                        cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                        cell.coverPhotoImageView.image = UIImage(named: "dummy-placeholder.jpg")
+                    }
+                    
+                }
                 
                 cell.storeNameTextField.text = self.storeInfoModel?.store_name
                 cell.storeNameTextField.enabled = false
@@ -296,11 +310,14 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 if (!url.isEqual("")) {
                     cell.profileEditLabel.text = editPhoto
                     cell.coverEditLabel.text = editCover
+                    
                 } else {
                     cell.profileEditLabel.text = addPhoto
                     cell.coverEditLabel.text = addCover
                 }
                 
+                //self.image = cell.profilePictureImageView.image
+                //self.imageCover = cell.coverPhotoImageView.image
                 //if(self.verifyOrChange == 1) {
                 //    cell.verifyButton.setTitle("Verify", forState: UIControlState.Normal)
                 //} else {
@@ -652,14 +669,14 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
         if self.image != nil && self.imageCover != nil {
             let data: NSData = UIImageJPEGRepresentation(self.image, 0)
-            let dataCoverPhoto: NSData = UIImagePNGRepresentation(self.image) //UIImageJPEGRepresentation(self.imageCover, 1)
+            let dataCoverPhoto: NSData = UIImageJPEGRepresentation(self.imageCover, 1)
             datas.append(data)
             datas.append(dataCoverPhoto)
         } else if self.image != nil && self.imageCover == nil{
             let data: NSData = UIImageJPEGRepresentation(self.image, 0)
             datas.append(data)
         } else if self.image == nil && self.imageCover != nil {
-            let dataCoverPhoto: NSData = UIImagePNGRepresentation(self.imageCover) //UIImageJPEGRepresentation(self.imageCover, 0)
+            let dataCoverPhoto: NSData = UIImageJPEGRepresentation(self.imageCover, 1)
             datas.append(dataCoverPhoto)
         }
        
@@ -998,7 +1015,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     func shareEMAction(postImage: UIImageView, title: String) {
         
-        let mailComposeViewController = configuredMailComposeViewController(postImage)
+        let mailComposeViewController = configuredMailComposeViewController()
         if MFMailComposeViewController.canSendMail() {
             self.presentViewController(mailComposeViewController, animated: true, completion: nil)
         } else {
@@ -1020,17 +1037,13 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         }*/
     }
     
-    func configuredMailComposeViewController(postImage: UIImageView) -> MFMailComposeViewController {
+    func configuredMailComposeViewController() -> MFMailComposeViewController {
         let mailComposerVC = MFMailComposeViewController()
         mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
         
-        mailComposerVC.addAttachmentData(UIImageJPEGRepresentation(postImage.image, CGFloat(1.0))!, mimeType: "image/jpeg", fileName:  "qrcode.jpeg")
-        
-        mailComposerVC.setSubject(title)
-        
-        mailComposerVC.setMessageBody(title, isHTML: true)
         mailComposerVC.setToRecipients(["someone@somewhere.com"])
         mailComposerVC.setSubject("Sending you an in-app e-mail...")
+        mailComposerVC.setMessageBody("Sending e-mail in-app is not so bad!", isHTML: false)
         
         return mailComposerVC
     }
@@ -1124,24 +1137,12 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         for allaSset in assets as! [ALAsset] {
             //let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage(), scale: allaSset.defaultRepresentation().scale(), orientation: allaSset.defaultRepresentation().orientation())!
             let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullScreenImage().takeUnretainedValue(), scale: 1.0, orientation: UIImageOrientation.Up)!
-            self.uploadImages.insert(image, atIndex: 0)
             
-            let storyboard = UIStoryboard(name: "FaImagePicker", bundle: nil)
-            
-            let faImagePicker = storyboard.instantiateViewControllerWithIdentifier("FaImageCropper") as! ImageCropperViewController!
-            faImagePicker.image = image
-            faImagePicker.delegate = self
-            self.navigationController!.pushViewController(faImagePicker, animated: true)
-            
-            //self.setImageProfileCoverPhoto(image)
+            self.setImageProfileCoverPhoto(image)
         }
         
         //self.reloadUploadCellCollectionViewData()
         //self.storeInfoTableView.reloadData()
-    }
-    
-    func setCroppedImage(image: UIImage) {
-        self.setImageProfileCoverPhoto(image)
     }
     
     func uzysAssetsPickerControllerDidCancel(picker: UzysAssetsPickerController!) {
@@ -1161,38 +1162,10 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
         let cell: StoreInfoTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! StoreInfoTableViewCell
         //cell.collectionView.reloadData()
-        if self.imageType == "profile" {
+        if IMAGETYPE.imageType == "profile" {
             cell.profilePictureImageView.image = nil
-            
-            let resultImageSize = CGSizeMake(500.0, 500.0)
-            
-            let resultImageOrigin = CGPointMake(cell.profilePictureImageView.bounds.origin.x, cell.profilePictureImageView.bounds.origin.y)
-            
-            let rect = CGRect(origin: resultImageOrigin, size: resultImageSize)
-            
-            var rectTransform:CGAffineTransform!
-            
-            switch (image.imageOrientation)  {
-            case UIImageOrientation.Left:
-                rectTransform = CGAffineTransformTranslate(CGAffineTransformMakeRotation(CGFloat(M_PI_2)), 0, -image.size.height)
-                break;
-            case UIImageOrientation.Right:
-                rectTransform = CGAffineTransformTranslate(CGAffineTransformMakeRotation(CGFloat(-M_PI_2)), -image.size.width, 0)
-                break;
-            case UIImageOrientation.Down:
-                rectTransform = CGAffineTransformTranslate(CGAffineTransformMakeRotation(CGFloat(-M_PI)), -image.size.width, -image.size.height)
-                break;
-            default:
-                rectTransform = CGAffineTransformIdentity;
-            };
-            rectTransform = CGAffineTransformScale(rectTransform, image.scale, image.scale)
-            println("\(rectTransform) \(image.scale) \(rect)" )
-            let imageRef:CGImageRef = CGImageCreateWithImageInRect(image.CGImage, CGRectApplyAffineTransform(rect, rectTransform))
-            
-            let cropImage = UIImage(CGImage: imageRef, scale: image.scale, orientation: image.imageOrientation)!
-            
-            self.image = cropImage
-            cell.profilePictureImageView.image = cropImage
+            cell.profilePictureImageView.image = image
+            self.image = image
         } else {
             //Cover photo
             cell.coverPhotoImageView.image = nil
