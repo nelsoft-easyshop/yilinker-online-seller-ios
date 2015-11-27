@@ -8,6 +8,10 @@
 
 import UIKit
 
+struct ProductCroppedImages {
+    static var imagesCropped: [UIImage] = []
+}
+
 class ProductModel {
     var attributes: [AttributeModel] = []
     var validCombinations: [CombinationModel] = []

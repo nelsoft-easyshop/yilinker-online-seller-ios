@@ -1,27 +1,24 @@
 //
-//  CropAssetViewController.swift
-//  FaImagePicker
+//  ImageCropperViewController.swift
+//  YiLinkerOnlineSeller
 //
-//  Created by juniac on 07/16/2015.
-//  Copyright (c) 2015 maneuling. All rights reserved.
+//  Created by Joriel Oller Fronda on 11/27/15.
+//  Copyright (c) 2015 YiLinker. All rights reserved.
 //
 
 import UIKit
 
-struct ASSET_ASPECT {
-    static let RATIO_ORIGINAL = 0
-    static let RATIO_1x1 = 1
-    static let RATIO_4x3 = 2
-    static let RATIO_3x4 = 3
-    
+protocol ImageCropperViewControllerDelegate {
+    func setCroppedImage(image: UIImage)
 }
-class CropAssetViewController: UIViewController, UIScrollViewDelegate {
 
+class ImageCropperViewController: UIViewController, UIScrollViewDelegate {
+    
     var image:UIImage!
     var imageView = UIImageView()
     var croppedImages: [UIImage] = []
     var scrollView: UIScrollView! = UIScrollView()
-
+    
     @IBOutlet weak var menuView: UIView!
     
     @IBOutlet weak var ratio1x1Button: UIButton!
@@ -32,6 +29,7 @@ class CropAssetViewController: UIViewController, UIScrollViewDelegate {
     var topDimmedView: UIView = UIView()
     var bottomDimmedView: UIView = UIView()
     var imageCount: Int = 0
+    var delegate: ImageCropperViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,21 +85,18 @@ class CropAssetViewController: UIViewController, UIScrollViewDelegate {
         
         self.navigationItem.rightBarButtonItems = [navigationSpacer2, customCheckButton]
     }
-
+    
     func check(){
         let cropImage = self.cropImage()
+        self.delegate?.setCroppedImage(cropImage)
+        //let storeInfo: StoreInfoViewController = StoreInfoViewController(nibName: "StoreInfoViewController", bundle: nil)
+        //storeInfo.setImageProfileCoverPhoto(cropImage)
+        self.navigationController?.popViewControllerAnimated(true)
         
-        let productUploadTableViewController: ProductUploadTableViewController = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
-        println(ProductUploadStrings.cropped)
-        ProductCroppedImages.imagesCropped.insert(cropImage, atIndex: ProductCroppedImages.imagesCropped.count)
-        //productUploadTableViewController.productModel.imagesCropped.append(cropImage)
-        self.navigationController!.popViewControllerAnimated(true)
-        productUploadTableViewController.reloadTable()
-
     }
     
     override func viewWillAppear(animated: Bool) {
-     
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -115,14 +110,14 @@ class CropAssetViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidAppear(animated: Bool) {
         
     }
-
-
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
         return imageView
     }
@@ -130,9 +125,9 @@ class CropAssetViewController: UIViewController, UIScrollViewDelegate {
     func frameSizeWithAspectRatio(ratio:Int) -> CGSize {
         let availableSize = CGSizeMake(self.view.bounds.width, self.view.bounds.height - self.topLayoutGuide.length)
         var frameSize:CGSize = availableSize
-//        println(availableSize)
+        //        println(availableSize)
         let frameRatio = availableSize.width / availableSize.height
-    
+        
         switch ratio {
         case ASSET_ASPECT.RATIO_1x1:
             if frameRatio > 1 {
@@ -168,9 +163,9 @@ class CropAssetViewController: UIViewController, UIScrollViewDelegate {
                 frameSize = CGSizeMake(availableSize.width, availableSize.width / imageRatio)
             }
             /*if frameRatio > 1 {
-                frameSize = CGSizeMake(availableSize.height, availableSize.height)
+            frameSize = CGSizeMake(availableSize.height, availableSize.height)
             } else {
-                frameSize = CGSizeMake(availableSize.width, availableSize.width)
+            frameSize = CGSizeMake(availableSize.width, availableSize.width)
             }*/
             break
         default:
@@ -182,7 +177,7 @@ class CropAssetViewController: UIViewController, UIScrollViewDelegate {
     
     func imageViewSizeWithFrame(size:CGSize) -> CGSize {
         let imageRatio = self.image.size.width / self.image.size.height
-
+        
         let frameRatio = size.width / size.height
         var imageFrameSize:CGSize = CGSizeZero
         
@@ -195,7 +190,7 @@ class CropAssetViewController: UIViewController, UIScrollViewDelegate {
         }
         return imageFrameSize
     }
-
+    
     func changeCroppingAreaWithAnimation(animation:Bool, frame:CGSize, imageFrameSize:CGSize) {
         
         let availableSize = CGSizeMake(self.view.bounds.width, self.view.bounds.height - self.topLayoutGuide.length)
@@ -215,16 +210,16 @@ class CropAssetViewController: UIViewController, UIScrollViewDelegate {
                 self.topDimmedView.frame = topDimmedViewFrame
                 self.bottomDimmedView.frame = bottomDimmedViewFrame
                 }, completion: { finished in
-
+                    
             })
         } else {
-
-                self.scrollView.frame = scrollViewFrame
-                self.imageView.frame = imageViewFrame
-                self.topDimmedView.frame = topDimmedViewFrame
-                self.bottomDimmedView.frame = bottomDimmedViewFrame
+            
+            self.scrollView.frame = scrollViewFrame
+            self.imageView.frame = imageViewFrame
+            self.topDimmedView.frame = topDimmedViewFrame
+            self.bottomDimmedView.frame = bottomDimmedViewFrame
         }
-
+        
     }
     
     func cropImage() -> UIImage {
@@ -238,7 +233,7 @@ class CropAssetViewController: UIViewController, UIScrollViewDelegate {
         
         let resultImageOrigin = CGPointMake(self.scrollView.contentOffset.x * scale, self.scrollView.contentOffset.y * scale)
         let rect = CGRect(origin: resultImageOrigin, size: resultImageSize)
-
+        
         
         var rectTransform:CGAffineTransform!
         switch (self.image.imageOrientation)  {
@@ -261,7 +256,7 @@ class CropAssetViewController: UIViewController, UIScrollViewDelegate {
         let cropImage = UIImage(CGImage: imageRef, scale: self.image.scale, orientation: self.image.imageOrientation)!
         println("cropImageSize:\(cropImage)")
         return cropImage
-
+        
     }
     
     @IBAction func ratioButtonAction(sender: UIButton) {
@@ -277,19 +272,16 @@ class CropAssetViewController: UIViewController, UIScrollViewDelegate {
             frameSize = self.frameSizeWithAspectRatio(ASSET_ASPECT.RATIO_ORIGINAL)
         }
         imageFrameSize = self.imageViewSizeWithFrame(frameSize)
-
+        
         
         self.changeCroppingAreaWithAnimation(true, frame: frameSize, imageFrameSize: imageFrameSize)
-//        println("frameSize:\(frameSize)")
-//        println("imageFrameSize:\(imageFrameSize)")
+        //        println("frameSize:\(frameSize)")
+        //        println("imageFrameSize:\(imageFrameSize)")
     }
     @IBAction func doneButtonAction(sender: UIBarButtonItem) {
         let cropImage = self.cropImage()
-        
-        let productUploadTableViewController: ProductUploadTableViewController = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
-        ProductCroppedImages.imagesCropped.insert(cropImage, atIndex: ProductCroppedImages.imagesCropped.count)
-        self.navigationController!.popViewControllerAnimated(true)
-        productUploadTableViewController.reloadTable()
-    }
 
+    }
+    
 }
+

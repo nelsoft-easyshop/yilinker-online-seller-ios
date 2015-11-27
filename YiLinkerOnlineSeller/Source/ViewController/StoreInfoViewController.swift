@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate, CongratulationsViewControllerDelegate, UzysAssetsPickerControllerDelegate, StoreInfoQrCodeTableViewCellDelegate, MFMailComposeViewControllerDelegate, GPPSignInDelegate {
+class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate, CongratulationsViewControllerDelegate, UzysAssetsPickerControllerDelegate, StoreInfoQrCodeTableViewCellDelegate, MFMailComposeViewControllerDelegate, GPPSignInDelegate, ImageCropperViewControllerDelegate {
     
     var storeInfoModel: StoreInfoModel?
     var storeAddressModel: StoreAddressModel?
@@ -998,6 +998,13 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     func shareEMAction(postImage: UIImageView, title: String) {
         
+        let mailComposeViewController = configuredMailComposeViewController(postImage)
+        if MFMailComposeViewController.canSendMail() {
+            self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+        } else {
+            self.showSendMailErrorAlert()
+        }
+        /*
         if MFMailComposeViewController.canSendMail() {
             let mailComposeVC = MFMailComposeViewController()
             mailComposeVC.mailComposeDelegate = self
@@ -1010,7 +1017,27 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             self.presentViewController(mailComposeVC, animated: true, completion: nil)
         } else {
             // show failure alert
-        }
+        }*/
+    }
+    
+    func configuredMailComposeViewController(postImage: UIImageView) -> MFMailComposeViewController {
+        let mailComposerVC = MFMailComposeViewController()
+        mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
+        
+        mailComposerVC.addAttachmentData(UIImageJPEGRepresentation(postImage.image, CGFloat(1.0))!, mimeType: "image/jpeg", fileName:  "qrcode.jpeg")
+        
+        mailComposerVC.setSubject(title)
+        
+        mailComposerVC.setMessageBody(title, isHTML: true)
+        mailComposerVC.setToRecipients(["someone@somewhere.com"])
+        mailComposerVC.setSubject("Sending you an in-app e-mail...")
+        
+        return mailComposerVC
+    }
+    
+    func showSendMailErrorAlert() {
+        let sendMailErrorAlert = UIAlertView(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", delegate: self, cancelButtonTitle: "OK")
+        sendMailErrorAlert.show()
     }
     
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
@@ -1096,14 +1123,25 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
         for allaSset in assets as! [ALAsset] {
             //let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage(), scale: allaSset.defaultRepresentation().scale(), orientation: allaSset.defaultRepresentation().orientation())!
-            let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!
+            let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullScreenImage().takeUnretainedValue(), scale: 1.0, orientation: UIImageOrientation.Up)!
             self.uploadImages.insert(image, atIndex: 0)
-
-            self.setImageProfileCoverPhoto(image)
+            
+            let storyboard = UIStoryboard(name: "FaImagePicker", bundle: nil)
+            
+            let faImagePicker = storyboard.instantiateViewControllerWithIdentifier("FaImageCropper") as! ImageCropperViewController!
+            faImagePicker.image = image
+            faImagePicker.delegate = self
+            self.navigationController!.pushViewController(faImagePicker, animated: true)
+            
+            //self.setImageProfileCoverPhoto(image)
         }
         
         //self.reloadUploadCellCollectionViewData()
         //self.storeInfoTableView.reloadData()
+    }
+    
+    func setCroppedImage(image: UIImage) {
+        self.setImageProfileCoverPhoto(image)
     }
     
     func uzysAssetsPickerControllerDidCancel(picker: UzysAssetsPickerController!) {
@@ -1125,8 +1163,36 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         //cell.collectionView.reloadData()
         if self.imageType == "profile" {
             cell.profilePictureImageView.image = nil
-            cell.profilePictureImageView.image = image
-            self.image = image
+            
+            let resultImageSize = CGSizeMake(500.0, 500.0)
+            
+            let resultImageOrigin = CGPointMake(cell.profilePictureImageView.bounds.origin.x, cell.profilePictureImageView.bounds.origin.y)
+            
+            let rect = CGRect(origin: resultImageOrigin, size: resultImageSize)
+            
+            var rectTransform:CGAffineTransform!
+            
+            switch (image.imageOrientation)  {
+            case UIImageOrientation.Left:
+                rectTransform = CGAffineTransformTranslate(CGAffineTransformMakeRotation(CGFloat(M_PI_2)), 0, -image.size.height)
+                break;
+            case UIImageOrientation.Right:
+                rectTransform = CGAffineTransformTranslate(CGAffineTransformMakeRotation(CGFloat(-M_PI_2)), -image.size.width, 0)
+                break;
+            case UIImageOrientation.Down:
+                rectTransform = CGAffineTransformTranslate(CGAffineTransformMakeRotation(CGFloat(-M_PI)), -image.size.width, -image.size.height)
+                break;
+            default:
+                rectTransform = CGAffineTransformIdentity;
+            };
+            rectTransform = CGAffineTransformScale(rectTransform, image.scale, image.scale)
+            println("\(rectTransform) \(image.scale) \(rect)" )
+            let imageRef:CGImageRef = CGImageCreateWithImageInRect(image.CGImage, CGRectApplyAffineTransform(rect, rectTransform))
+            
+            let cropImage = UIImage(CGImage: imageRef, scale: image.scale, orientation: image.imageOrientation)!
+            
+            self.image = cropImage
+            cell.profilePictureImageView.image = cropImage
         } else {
             //Cover photo
             cell.coverPhotoImageView.image = nil

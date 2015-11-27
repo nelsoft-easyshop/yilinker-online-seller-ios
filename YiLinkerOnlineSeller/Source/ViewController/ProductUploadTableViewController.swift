@@ -166,7 +166,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        ProductUploadStrings.cropped.removeAll(keepCapacity: true)
         self.backButton()
         self.title = Constants.ViewControllersTitleString.productUpload
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
@@ -266,7 +265,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             self.productModel.editedImage.append(serverImage)
         } else {
             self.productModel.images.append(UIImage(named: "addPhoto")!)
-            ProductUploadStrings.cropped.append(UIImage(named: "addPhoto")!)
+            //ProductCroppedImages.imagesCropped.append(UIImage(named: "addPhoto")!)
         }
         
     }
@@ -780,6 +779,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     
     //MARK: - Back Button
     func backButton() {
+        ProductCroppedImages.imagesCropped.removeAll(keepCapacity: false)
         var customBackButton:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "back")
         customBackButton.tintColor = UIColor.whiteColor()
         
@@ -842,10 +842,9 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             self.productModel.editedImage.removeAtIndex(indexPath.row)
         } else {
             self.productModel.images.removeAtIndex(indexPath.row)
-            ProductUploadStrings.cropped.removeAtIndex(indexPath.row)
+            ProductCroppedImages.imagesCropped.removeAtIndex(indexPath.row)
         }
         collectionView.deleteItemsAtIndexPaths([indexPath])
-        println("Afted deletion count \(ProductUploadStrings.cropped.count)")
     }
     
     //MARK: - Uzy Config
@@ -885,23 +884,22 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 let storyboard = UIStoryboard(name: "FaImagePicker", bundle: nil)
                 
                 let faImagePicker = storyboard.instantiateViewControllerWithIdentifier("FaCropper") as! CropAssetViewController!
-                
                 faImagePicker.image = image
-                faImagePicker.imageCount = ProductUploadStrings.cropped.count - 1
+                faImagePicker.imageCount = ProductCroppedImages.imagesCropped.count - 1
                 //faImagePicker.imagePickerDelegate = self
                 faImagePicker.edgesForExtendedLayout = .None
                 self.navigationController!.pushViewController(faImagePicker, animated: true)
-                println("crop images count \(faImagePicker.croppedImages.count) full images count \(self.productModel.images.count)")
             }
         }
-        println("crop images count \(ProductUploadStrings.cropped.count)")
+    
         self.reloadUploadCellCollectionViewData()
-        self.tableView.reloadData()
+        //self.tableView.reloadData()
         //self.reloadTable()
     }
     
     func reloadTable(){
-        self.reloadUploadCellCollectionViewData()
+        println("crop images count \(ProductCroppedImages.imagesCropped)")
+        //self.reloadUploadCellCollectionViewData()
         self.tableView.reloadData()
     }
     
@@ -1376,6 +1374,11 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     func successUploadViewController(didTapUploadAgain viewController: SuccessUploadViewController) {
         for (index, images) in enumerate(self.productModel.images) {
             self.productModel.images.removeLast()
+            
+        }
+        
+        for (index, images) in enumerate(ProductCroppedImages.imagesCropped) {
+            ProductCroppedImages.imagesCropped.removeLast()
         }
         
         self.productModel = ProductModel()
