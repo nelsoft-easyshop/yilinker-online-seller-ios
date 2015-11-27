@@ -1041,9 +1041,13 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         let mailComposerVC = MFMailComposeViewController()
         mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
         
-        mailComposerVC.setToRecipients(["someone@somewhere.com"])
-        mailComposerVC.setSubject("Sending you an in-app e-mail...")
-        mailComposerVC.setMessageBody("Sending e-mail in-app is not so bad!", isHTML: false)
+        mailComposerVC.addAttachmentData(UIImageJPEGRepresentation(postImage.image, CGFloat(1.0))!, mimeType: "image/jpeg", fileName:  "qrcode.jpeg")
+        
+        mailComposerVC.setSubject(title)
+        
+        mailComposerVC.setMessageBody(title, isHTML: true)
+        mailComposerVC.setSubject(title)
+        mailComposerVC.setMessageBody(title, isHTML: false)
         
         return mailComposerVC
     }
