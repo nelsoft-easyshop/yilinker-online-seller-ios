@@ -470,7 +470,6 @@
 		F727FF591B99C94700872E11 /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = F727FF581B99C94700872E11 /* edit.png */; };
 		F73D398F1C06E0F500673A1A /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D398E1C06E0F500673A1A /* Social.framework */; };
 		F73D39911C06E84200673A1A /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D39901C06E84200673A1A /* MessageUI.framework */; };
-		F73D39931C06EC7100673A1A /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D39921C06EC7100673A1A /* GooglePlus.framework */; };
 		F73D39951C06EE2600673A1A /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D39941C06EE2600673A1A /* AddressBook.framework */; };
 		F73D39971C06EE3100673A1A /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D39961C06EE3100673A1A /* AssetsLibrary.framework */; };
 		F73D39991C06EE3800673A1A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D39981C06EE3800673A1A /* Foundation.framework */; };
@@ -482,7 +481,6 @@
 		F73D39A51C06EE7700673A1A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D39A41C06EE7700673A1A /* Security.framework */; };
 		F73D39A71C06EE8A00673A1A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D39A61C06EE8A00673A1A /* SystemConfiguration.framework */; };
 		F73D39A91C06EE9100673A1A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D39A81C06EE9100673A1A /* UIKit.framework */; };
-		F73D39AB1C06EEA300673A1A /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D39AA1C06EEA300673A1A /* GoogleOpenSource.framework */; };
 		F79403001BC00D6E00CD21DD /* FilterHeaderSectiionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79402FE1BC00D6E00CD21DD /* FilterHeaderSectiionViewController.swift */; };
 		F79403011BC00D6E00CD21DD /* FilterHeaderSectiionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F79402FF1BC00D6E00CD21DD /* FilterHeaderSectiionViewController.xib */; };
 		F79403031BC00E8D00CD21DD /* FilterSeactionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79403021BC00E8D00CD21DD /* FilterSeactionHeaderView.swift */; };
@@ -498,6 +496,15 @@
 		F7AC5F7C1B9AA75300227D18 /* GetAddressesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AC5F7B1B9AA75300227D18 /* GetAddressesModel.swift */; };
 		F7AC5F831B9ACB6500227D18 /* NewAddressHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AC5F811B9ACB6500227D18 /* NewAddressHeaderTableViewCell.swift */; };
 		F7AC5F841B9ACB6500227D18 /* NewAddressHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7AC5F821B9ACB6500227D18 /* NewAddressHeaderTableViewCell.xib */; };
+		F7AE35F91C08054B00A1C9CE /* FaImagePicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7AE35F21C08054B00A1C9CE /* FaImagePicker.storyboard */; };
+		F7AE35FA1C08054B00A1C9CE /* AlbumTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AE35F31C08054B00A1C9CE /* AlbumTableViewCell.swift */; };
+		F7AE35FB1C08054B00A1C9CE /* AlbumTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AE35F41C08054B00A1C9CE /* AlbumTableViewController.swift */; };
+		F7AE35FD1C08054B00A1C9CE /* AssetCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AE35F61C08054B00A1C9CE /* AssetCollectionViewCell.swift */; };
+		F7AE35FE1C08054B00A1C9CE /* AssetCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AE35F71C08054B00A1C9CE /* AssetCollectionViewController.swift */; };
+		F7AE35FF1C08054B00A1C9CE /* FaImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AE35F81C08054B00A1C9CE /* FaImagePickerController.swift */; };
+		F7AE36011C08056700A1C9CE /* CropAssetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AE36001C08056700A1C9CE /* CropAssetViewController.swift */; };
+		F7AE36041C08279200A1C9CE /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7AE36021C08279200A1C9CE /* GoogleOpenSource.framework */; };
+		F7AE36051C08279200A1C9CE /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7AE36031C08279200A1C9CE /* GooglePlus.framework */; };
 		F7C282EF1B9AE97500864451 /* BankModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C282EE1B9AE97500864451 /* BankModel.swift */; };
 		F7C40F511B983A590091C16C /* BankAccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C40F4E1B983A590091C16C /* BankAccountModel.swift */; };
 		F7C40F521B983A590091C16C /* StoreAddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C40F4F1B983A590091C16C /* StoreAddressModel.swift */; };
@@ -1095,7 +1102,6 @@
 		F727FF581B99C94700872E11 /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
 		F73D398E1C06E0F500673A1A /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		F73D39901C06E84200673A1A /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		F73D39921C06EC7100673A1A /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlus.framework; path = "../../../Downloads/google-plus-ios-sdk-1.7.1/GooglePlus.framework"; sourceTree = "<group>"; };
 		F73D39941C06EE2600673A1A /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		F73D39961C06EE3100673A1A /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		F73D39981C06EE3800673A1A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1107,7 +1113,6 @@
 		F73D39A41C06EE7700673A1A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		F73D39A61C06EE8A00673A1A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		F73D39A81C06EE9100673A1A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		F73D39AA1C06EEA300673A1A /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleOpenSource.framework; path = "../../../Downloads/google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework"; sourceTree = "<group>"; };
 		F79402FE1BC00D6E00CD21DD /* FilterHeaderSectiionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterHeaderSectiionViewController.swift; sourceTree = "<group>"; };
 		F79402FF1BC00D6E00CD21DD /* FilterHeaderSectiionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterHeaderSectiionViewController.xib; sourceTree = "<group>"; };
 		F79403021BC00E8D00CD21DD /* FilterSeactionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterSeactionHeaderView.swift; sourceTree = "<group>"; };
@@ -1123,6 +1128,15 @@
 		F7AC5F7B1B9AA75300227D18 /* GetAddressesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAddressesModel.swift; sourceTree = "<group>"; };
 		F7AC5F811B9ACB6500227D18 /* NewAddressHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAddressHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		F7AC5F821B9ACB6500227D18 /* NewAddressHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewAddressHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		F7AE35F21C08054B00A1C9CE /* FaImagePicker.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FaImagePicker.storyboard; sourceTree = "<group>"; };
+		F7AE35F31C08054B00A1C9CE /* AlbumTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumTableViewCell.swift; sourceTree = "<group>"; };
+		F7AE35F41C08054B00A1C9CE /* AlbumTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumTableViewController.swift; sourceTree = "<group>"; };
+		F7AE35F61C08054B00A1C9CE /* AssetCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetCollectionViewCell.swift; sourceTree = "<group>"; };
+		F7AE35F71C08054B00A1C9CE /* AssetCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetCollectionViewController.swift; sourceTree = "<group>"; };
+		F7AE35F81C08054B00A1C9CE /* FaImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaImagePickerController.swift; sourceTree = "<group>"; };
+		F7AE36001C08056700A1C9CE /* CropAssetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropAssetViewController.swift; sourceTree = "<group>"; };
+		F7AE36021C08279200A1C9CE /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleOpenSource.framework; sourceTree = "<group>"; };
+		F7AE36031C08279200A1C9CE /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GooglePlus.framework; sourceTree = "<group>"; };
 		F7C282EE1B9AE97500864451 /* BankModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankModel.swift; sourceTree = "<group>"; };
 		F7C40F4E1B983A590091C16C /* BankAccountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankAccountModel.swift; sourceTree = "<group>"; };
 		F7C40F4F1B983A590091C16C /* StoreAddressModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreAddressModel.swift; sourceTree = "<group>"; };
@@ -1224,8 +1238,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F73D39AB1C06EEA300673A1A /* GoogleOpenSource.framework in Frameworks */,
 				F73D39A91C06EE9100673A1A /* UIKit.framework in Frameworks */,
+				F7AE36051C08279200A1C9CE /* GooglePlus.framework in Frameworks */,
 				F73D39A71C06EE8A00673A1A /* SystemConfiguration.framework in Frameworks */,
 				F73D39A51C06EE7700673A1A /* Security.framework in Frameworks */,
 				F73D39A31C06EE6C00673A1A /* MediaPlayer.framework in Frameworks */,
@@ -1235,8 +1249,8 @@
 				F73D399B1C06EE4300673A1A /* CoreLocation.framework in Frameworks */,
 				F73D39991C06EE3800673A1A /* Foundation.framework in Frameworks */,
 				F73D39971C06EE3100673A1A /* AssetsLibrary.framework in Frameworks */,
+				F7AE36041C08279200A1C9CE /* GoogleOpenSource.framework in Frameworks */,
 				F73D39951C06EE2600673A1A /* AddressBook.framework in Frameworks */,
-				F73D39931C06EC7100673A1A /* GooglePlus.framework in Frameworks */,
 				F73D39911C06E84200673A1A /* MessageUI.framework in Frameworks */,
 				F73D398F1C06E0F500673A1A /* Social.framework in Frameworks */,
 				E72BD5070233EC6FF42DDA3A /* libPods.a in Frameworks */,
@@ -1264,6 +1278,7 @@
 		0CF28EB51B8C85E4005B2E54 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				F7AE35F11C08050F00A1C9CE /* ImageCropper */,
 				0C1179511BA9A56200AA1554 /* Strings */,
 				0CF28EDD1B8C8614005B2E54 /* YiLinkerOnlineSeller-Bridging-Header.h */,
 				0CF28EB61B8C85E4005B2E54 /* AppDelegate */,
@@ -2102,7 +2117,8 @@
 		D957134FEAF8E3FA392A4C1E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F73D39AA1C06EEA300673A1A /* GoogleOpenSource.framework */,
+				F7AE36021C08279200A1C9CE /* GoogleOpenSource.framework */,
+				F7AE36031C08279200A1C9CE /* GooglePlus.framework */,
 				F73D39A81C06EE9100673A1A /* UIKit.framework */,
 				F73D39A61C06EE8A00673A1A /* SystemConfiguration.framework */,
 				F73D39A41C06EE7700673A1A /* Security.framework */,
@@ -2114,12 +2130,25 @@
 				F73D39981C06EE3800673A1A /* Foundation.framework */,
 				F73D39961C06EE3100673A1A /* AssetsLibrary.framework */,
 				F73D39941C06EE2600673A1A /* AddressBook.framework */,
-				F73D39921C06EC7100673A1A /* GooglePlus.framework */,
 				F73D39901C06E84200673A1A /* MessageUI.framework */,
 				F73D398E1C06E0F500673A1A /* Social.framework */,
 				5B825E81D3B27E563C7C3C53 /* libPods.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F7AE35F11C08050F00A1C9CE /* ImageCropper */ = {
+			isa = PBXGroup;
+			children = (
+				F7AE36001C08056700A1C9CE /* CropAssetViewController.swift */,
+				F7AE35F21C08054B00A1C9CE /* FaImagePicker.storyboard */,
+				F7AE35F31C08054B00A1C9CE /* AlbumTableViewCell.swift */,
+				F7AE35F41C08054B00A1C9CE /* AlbumTableViewController.swift */,
+				F7AE35F61C08054B00A1C9CE /* AssetCollectionViewCell.swift */,
+				F7AE35F71C08054B00A1C9CE /* AssetCollectionViewController.swift */,
+				F7AE35F81C08054B00A1C9CE /* FaImagePickerController.swift */,
+			);
+			name = ImageCropper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2332,6 +2361,7 @@
 				F7C40FB31B983C310091C16C /* ChangeAddressViewController.xib in Resources */,
 				26378F521B8CEE82008533B6 /* ProductManagementTableViewCell.xib in Resources */,
 				79E633871B9B15FD0062DB14 /* TransactionShipItemTableViewController.xib in Resources */,
+				F7AE35F91C08054B00A1C9CE /* FaImagePicker.storyboard in Resources */,
 				0CE2244E1BBAF8AE00853AC9 /* SaveButtonView.xib in Resources */,
 				0C51C2F21BB00A7900F4D2D6 /* AddProductHeaderView.xib in Resources */,
 				0CF28EFE1B8CA2E9005B2E54 /* Panton Light Italic.otf in Resources */,
@@ -2486,6 +2516,7 @@
 				0C6E7D391BAD67420079EF78 /* ResellerGetProductModel.swift in Sources */,
 				79E633771B9AD2570062DB14 /* TransactionProductDescriptionTableViewCell.swift in Sources */,
 				26B282FC1B929BE300A7C2B1 /* APIManager.swift in Sources */,
+				F7AE35FF1C08054B00A1C9CE /* FaImagePickerController.swift in Sources */,
 				26378F511B8CEE82008533B6 /* ProductManagementTableViewCell.swift in Sources */,
 				2625FEA51B96A92500DD24AF /* EditSubCategoriesViewController.swift in Sources */,
 				26BD5E5B1B8DCF9B00739488 /* ProductImagesCollectionViewCell.swift in Sources */,
@@ -2617,6 +2648,7 @@
 				0C6661A51B906FBF005ADFDD /* JSONResponseSerializer.swift in Sources */,
 				0C65F8EC1B8E377500504D86 /* ProductUploadAttributeCollectionViewCell.swift in Sources */,
 				F7C40F591B983A7B0091C16C /* DynamicRoundedTextField.swift in Sources */,
+				F7AE35FA1C08054B00A1C9CE /* AlbumTableViewCell.swift in Sources */,
 				F7C40F731B983B390091C16C /* FilterCollectionViewCell.swift in Sources */,
 				7928764B1B8E049400762A39 /* SalesReportTableViewCell.swift in Sources */,
 				2690ED1A1B999354009343E0 /* ProductManagementProductsModel.swift in Sources */,
@@ -2661,6 +2693,7 @@
 				793C41E11B98237F009CE671 /* CategoryProductModel.swift in Sources */,
 				0C8D7FB51B8FC4AC00B3FA4E /* ProductUploadCombinationTableViewCell.swift in Sources */,
 				0C8739DA1B96E172005D2EF8 /* SuccessUploadViewController.swift in Sources */,
+				F7AE35FE1C08054B00A1C9CE /* AssetCollectionViewController.swift in Sources */,
 				0C6661AC1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.swift in Sources */,
 				0C8739D71B96CFA5005D2EF8 /* CommonHelper.swift in Sources */,
 				F7C40F511B983A590091C16C /* BankAccountModel.swift in Sources */,
@@ -2732,6 +2765,7 @@
 				7928761C1B8DF89F00762A39 /* PieChartDataSet.swift in Sources */,
 				0C574A301BC651B700913F29 /* EditImageModel.swift in Sources */,
 				792875F31B8DF89F00762A39 /* ChartAnimationEasing.swift in Sources */,
+				F7AE35FD1C08054B00A1C9CE /* AssetCollectionViewCell.swift in Sources */,
 				799892FF1B8CEBC100F4CFE2 /* SettingsItemTableViewCell.swift in Sources */,
 				792876041B8DF89F00762A39 /* ChartLimitLine.swift in Sources */,
 				792875F41B8DF89F00762A39 /* ChartAnimator.swift in Sources */,
@@ -2766,6 +2800,7 @@
 				7928761E1B8DF89F00762A39 /* RadarChartDataSet.swift in Sources */,
 				79E6337B1B9AEDA50062DB14 /* TransactionDetailsFooterView.swift in Sources */,
 				F7C40F531B983A590091C16C /* StoreInfoModel.swift in Sources */,
+				F7AE35FB1C08054B00A1C9CE /* AlbumTableViewController.swift in Sources */,
 				7985D36E1BB071F60060E5F5 /* DeliveryLogsSectionModel.swift in Sources */,
 				792875FE1B8DF89F00762A39 /* PieRadarChartViewBase.swift in Sources */,
 				0CAACCC41B9D8EA500BE5EF3 /* ResellerItemViewController.swift in Sources */,
@@ -2785,6 +2820,7 @@
 				7928760F1B8DF89F00762A39 /* BubbleChartDataSet.swift in Sources */,
 				79C071171B9F2CCF0032B7A5 /* TransactionDetailsModel.swift in Sources */,
 				7928761D1B8DF89F00762A39 /* RadarChartData.swift in Sources */,
+				F7AE36011C08056700A1C9CE /* CropAssetViewController.swift in Sources */,
 				26374DA01B8F50A4006C639B /* SignInViewController.swift in Sources */,
 				2686E37E1B95D44D00E8FA80 /* AddItemViewController.swift in Sources */,
 				79EF7AC21B99F0D30082CD35 /* TransactionDetailsTableViewCell.swift in Sources */,
@@ -2968,6 +3004,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/yhelfronda/Downloads/google-plus-ios-sdk-1.7.1",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = YiLinkerOnlineSeller/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2989,6 +3026,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/yhelfronda/Downloads/google-plus-ios-sdk-1.7.1",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = YiLinkerOnlineSeller/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -12,6 +12,7 @@ class ProductModel {
     var attributes: [AttributeModel] = []
     var validCombinations: [CombinationModel] = []
     var images: [UIImage] = []
+    var imagesCropped: [UIImage] = []
     
     var category: CategoryModel = CategoryModel(uid: 0, name: "", hasChildren: "")
     var brand: BrandModel = BrandModel(name: "", brandId:1)
