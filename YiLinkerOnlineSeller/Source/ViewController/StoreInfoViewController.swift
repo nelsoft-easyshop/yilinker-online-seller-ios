@@ -947,6 +947,14 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         vc.setInitialText("")
         let image = postImage.image
         vc.addImage(image)
+        
+        var socialVC :SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+        
+        socialVC.completionHandler = {
+            (result:SLComposeViewControllerResult) in
+            self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_FB_LOCALIZE_KEY"))
+        }
+
         presentViewController(vc, animated: true, completion: nil)
         
         /*
@@ -1009,12 +1017,21 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         vc.setInitialText("")
         let image = postImage.image
         vc.addImage(image)
+        
+        var socialVC :SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+        
+        socialVC.completionHandler = {
+            (result:SLComposeViewControllerResult) in
+            // Your code
+            self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"))
+        }
         presentViewController(vc, animated: true, completion: nil)
+       
         
     }
     
     func shareEMAction(postImage: UIImageView, title: String) {
-        
+        imageToPost = postImage.image
         let mailComposeViewController = configuredMailComposeViewController()
         if MFMailComposeViewController.canSendMail() {
             self.presentViewController(mailComposeViewController, animated: true, completion: nil)
@@ -1041,7 +1058,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         let mailComposerVC = MFMailComposeViewController()
         mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
         
-        mailComposerVC.addAttachmentData(UIImageJPEGRepresentation(postImage.image, CGFloat(1.0))!, mimeType: "image/jpeg", fileName:  "qrcode.jpeg")
+        mailComposerVC.addAttachmentData(UIImageJPEGRepresentation(imageToPost, CGFloat(1.0))!, mimeType: "image/jpeg", fileName:  "qrcode.jpeg")
         
         mailComposerVC.setSubject(title)
         
@@ -1061,12 +1078,16 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         switch result.value {
         case MFMailComposeResultCancelled.value:
+            self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_CANCEL_EMAIL_LOCALIZE_KEY"))
             NSLog("Mail cancelled")
         case MFMailComposeResultSaved.value:
+            self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SAVE_EMAIL_LOCALIZE_KEY"))
             NSLog("Mail saved")
         case MFMailComposeResultSent.value:
+            self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY"))
             NSLog("Mail sent")
         case MFMailComposeResultFailed.value:
+            self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_FAIL_EMAIL_LOCALIZE_KEY"))
             NSLog("Mail sent failure: %@", [error!.localizedDescription])
         default:
             break
