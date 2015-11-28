@@ -219,9 +219,9 @@ class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func textFieldDidBegin(sender: AnyObject) {
         if IphoneType.isIphone4() {
-            topConstraint.constant = 40
+            topConstraint.constant = 20
         } else if IphoneType.isIphone5() {
-            topConstraint.constant = 60
+            topConstraint.constant = 40
         } else {
             topConstraint.constant = 100
         }
