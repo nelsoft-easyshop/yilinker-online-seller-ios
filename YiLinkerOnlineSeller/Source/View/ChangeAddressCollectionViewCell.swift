@@ -19,7 +19,9 @@ class ChangeAddressCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subTitleLabel: UILabel!
+    @IBOutlet weak var deleteBigButton: UIButton!
    
+    @IBOutlet weak var checkBoxBigButton: UIButton!
     var delegate: ChangeAddressCollectionViewCellDelegate?
 
     override func awakeFromNib() {

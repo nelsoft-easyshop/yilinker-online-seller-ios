@@ -343,9 +343,15 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     
     func done() {
         //self.tableView.reloadData()
-        let row = NSIndexPath(forItem: activeTextField, inSection: 0)
-        let cell: NewAddressTableViewCell = tableView.cellForRowAtIndexPath(row) as! NewAddressTableViewCell
-        cell.rowTextField.endEditing(true)
+        if activeTextField == 6 {
+            self.requestGetCities(self.addressModel.provinceId)
+        } else if activeTextField == 7 {
+            self.requestGetBarangay(self.addressModel.cityId)
+        } else {
+            let row = NSIndexPath(forItem: activeTextField, inSection: 0)
+            let cell: NewAddressTableViewCell = tableView.cellForRowAtIndexPath(row) as! NewAddressTableViewCell
+            cell.rowTextField.endEditing(true)
+        }
     }
     
     func getTextAtIndex(index: Int) -> String {
@@ -559,15 +565,12 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             self.addressModel.province = self.provinceModel.location[row]
             self.addressModel.city = ""
             //request for new city data model and reload tableview
-            self.requestGetCities(self.addressModel.provinceId)
-            
             //save current row and reset dependent values
             self.provinceRow = row
             self.cityRow = 0
             self.barangayRow = 0
         } else if activeTextField == 7 {
             self.addressModel.cityId = self.cityModel.cityId[row]
-            self.requestGetBarangay(self.addressModel.cityId)
             self.addressModel.city = self.cityModel.location[row]
             //save current row and reset dependent values
             self.cityRow = row
