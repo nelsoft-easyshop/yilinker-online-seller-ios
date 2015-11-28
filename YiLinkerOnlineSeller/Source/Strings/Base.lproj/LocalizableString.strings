@@ -352,6 +352,10 @@ STORE_INFO_EMPTY_LOCALIZE_KEY = "Either your store name or store description is 
 STORE_INFO_SUCCESS_LOCALIZE_KEY = "You have successfully updated your store information.";
 STORE_INFO_INFORMATION_TITLE_LOCALIZE_KEY = "Information";
 STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY = "You have successfully shared your qr code on email.";
+STORE_INFO_CANCEL_EMAIL_LOCALIZE_KEY = "Email cancelled.";
+STORE_INFO_SAVE_EMAIL_LOCALIZE_KEY = "Your email has been saved to draft.";
+STORE_INFO_FAIL_EMAIL_LOCALIZE_KEY = "Failed to send your email.";
+
 STORE_INFO_SUCCESS_FB_LOCALIZE_KEY = "You have successfully shared your qr code on Facebook.";
 STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY = "You have successfully shared your qr code on Twitter.";
 STORE_INFO_SUCCESS_GPLUS_LOCALIZE_KEY = "You have successfully shared your qr code on Google Plus.";

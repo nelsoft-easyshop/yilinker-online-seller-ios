@@ -7,13 +7,13 @@
         <!--Album-->
         <scene sceneID="eRm-bC-QrX">
             <objects>
-                <tableViewController storyboardIdentifier="AlbumTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7Qt-A6-dzf" customClass="AlbumTableViewController" customModule="SampleImageCropping" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AlbumTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7Qt-A6-dzf" customClass="AlbumTableViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" id="Zjs-pl-5Mr">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="AlbumIdentifier" rowHeight="70" id="dOM-vM-15q" customClass="AlbumTableViewCell" customModule="SampleImageCropping" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="AlbumIdentifier" rowHeight="70" id="dOM-vM-15q" customClass="AlbumTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dOM-vM-15q" id="w0W-VK-Hnm">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -63,7 +63,7 @@
         <!--Asset Collection View Controller-->
         <scene sceneID="W0M-Pt-Q3A">
             <objects>
-                <collectionViewController storyboardIdentifier="AssetCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1W3-0C-eHu" customClass="AssetCollectionViewController" customModule="SampleImageCropping" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="AssetCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1W3-0C-eHu" customClass="AssetCollectionViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="lpD-XF-KLd">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -75,7 +75,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AssetCell" id="Fps-kb-HgD" customClass="AssetCollectionViewCell" customModule="SampleImageCropping" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AssetCell" id="Fps-kb-HgD" customClass="AssetCollectionViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="231" height="209"/>
@@ -113,7 +113,7 @@
         <!--Crop-->
         <scene sceneID="MuU-et-iC1">
             <objects>
-                <viewController storyboardIdentifier="FaCropper" id="z2e-K9-czs" customClass="CropAssetViewController" customModule="SampleImageCropping" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FaCropper" id="z2e-K9-czs" customClass="CropAssetViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JD3-SI-QNg"/>
                         <viewControllerLayoutGuide type="bottom" id="peW-Kh-KEj"/>
@@ -206,7 +206,7 @@
         <!--Fa Image Picker Controller-->
         <scene sceneID="ooC-6R-dHF">
             <objects>
-                <navigationController storyboardIdentifier="FaImagePicker" id="meX-ZJ-9Rr" customClass="FaImagePickerController" customModule="SampleImageCropping" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="FaImagePicker" id="meX-ZJ-9Rr" customClass="FaImagePickerController" customModule="YiLinkerOnlineSeller" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bWz-k1-Uak">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -218,6 +218,117 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ddf-Mu-ncC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="24" y="432"/>
+        </scene>
+        <!--Crop-->
+        <scene sceneID="Gx2-Kd-1Ya">
+            <objects>
+                <viewController storyboardIdentifier="FaImageCropper" id="oAo-Go-er9" customClass="ImageCropperViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="v27-bs-8my"/>
+                        <viewControllerLayoutGuide type="bottom" id="X4M-Ev-VFd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ruf-rV-L4x">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pS6-Cm-iEE" userLabel="Menu">
+                                <rect key="frame" x="0.0" y="530" width="600" height="70"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VFJ-cL-tNv">
+                                        <rect key="frame" x="18" y="15" width="46" height="40"/>
+                                        <color key="backgroundColor" red="0.26274509800000001" green="0.70196078429999997" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="1 : 1">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="ratioButtonAction:" destination="oAo-Go-er9" eventType="touchUpInside" id="aT3-DV-dfS"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1iA-f6-q4z">
+                                        <rect key="frame" x="84" y="15" width="46" height="40"/>
+                                        <color key="backgroundColor" red="0.26274509800000001" green="0.70196078429999997" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="4 : 3">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="ratioButtonAction:" destination="oAo-Go-er9" eventType="touchUpInside" id="eqs-bQ-Iwh"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yZ2-8i-7Lb">
+                                        <rect key="frame" x="146" y="15" width="46" height="40"/>
+                                        <color key="backgroundColor" red="0.26274509800000001" green="0.70196078429999997" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="3 : 4">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="ratioButtonAction:" destination="oAo-Go-er9" eventType="touchUpInside" id="6Cd-ls-p65"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tm0-rC-boE">
+                                        <rect key="frame" x="212" y="15" width="58" height="40"/>
+                                        <color key="backgroundColor" red="0.26274509800000001" green="0.70196078429999997" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <state key="normal" title="original">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="ratioButtonAction:" destination="oAo-Go-er9" eventType="touchUpInside" id="qor-iM-Ckl"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="nLf-8I-ZoG"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="X4M-Ev-VFd" firstAttribute="top" secondItem="pS6-Cm-iEE" secondAttribute="bottom" id="9uu-WL-W4T"/>
+                            <constraint firstAttribute="trailing" secondItem="pS6-Cm-iEE" secondAttribute="trailing" id="OdO-HC-hFf"/>
+                            <constraint firstItem="pS6-Cm-iEE" firstAttribute="leading" secondItem="Ruf-rV-L4x" secondAttribute="leading" id="r9W-Ja-K7L"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Crop" id="8z9-Bs-dyO">
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="IWN-0i-y5Z">
+                            <connections>
+                                <action selector="doneButtonAction:" destination="oAo-Go-er9" id="kns-mw-1ul"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="menuView" destination="pS6-Cm-iEE" id="aKr-lN-q9L"/>
+                        <outlet property="ratio1x1Button" destination="VFJ-cL-tNv" id="wM7-iD-mR2"/>
+                        <outlet property="ratio3x4Button" destination="yZ2-8i-7Lb" id="pWf-sm-9Zf"/>
+                        <outlet property="ratio4x3Button" destination="1iA-f6-q4z" id="gMi-bz-r19"/>
+                        <outlet property="ratioOriginalButton" destination="Tm0-rC-boE" id="dkR-aN-jvk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Oqn-ou-hOU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3493" y="536"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="WVP-Gx-kBh">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YSM-0C-xPu" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="K0g-M4-NLm">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="oAo-Go-er9" kind="relationship" relationship="rootViewController" id="yTB-iU-slb"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PhL-s5-Wno" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2681" y="536"/>
         </scene>
     </scenes>
 </document>

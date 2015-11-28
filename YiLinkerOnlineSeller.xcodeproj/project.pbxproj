@@ -505,6 +505,7 @@
 		F7AE36011C08056700A1C9CE /* CropAssetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AE36001C08056700A1C9CE /* CropAssetViewController.swift */; };
 		F7AE36041C08279200A1C9CE /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7AE36021C08279200A1C9CE /* GoogleOpenSource.framework */; };
 		F7AE36051C08279200A1C9CE /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7AE36031C08279200A1C9CE /* GooglePlus.framework */; };
+		F7AE36071C08730600A1C9CE /* ImageCropperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AE36061C08730600A1C9CE /* ImageCropperViewController.swift */; };
 		F7C282EF1B9AE97500864451 /* BankModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C282EE1B9AE97500864451 /* BankModel.swift */; };
 		F7C40F511B983A590091C16C /* BankAccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C40F4E1B983A590091C16C /* BankAccountModel.swift */; };
 		F7C40F521B983A590091C16C /* StoreAddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C40F4F1B983A590091C16C /* StoreAddressModel.swift */; };
@@ -1137,6 +1138,7 @@
 		F7AE36001C08056700A1C9CE /* CropAssetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropAssetViewController.swift; sourceTree = "<group>"; };
 		F7AE36021C08279200A1C9CE /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleOpenSource.framework; sourceTree = "<group>"; };
 		F7AE36031C08279200A1C9CE /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GooglePlus.framework; sourceTree = "<group>"; };
+		F7AE36061C08730600A1C9CE /* ImageCropperViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCropperViewController.swift; sourceTree = "<group>"; };
 		F7C282EE1B9AE97500864451 /* BankModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankModel.swift; sourceTree = "<group>"; };
 		F7C40F4E1B983A590091C16C /* BankAccountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankAccountModel.swift; sourceTree = "<group>"; };
 		F7C40F4F1B983A590091C16C /* StoreAddressModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreAddressModel.swift; sourceTree = "<group>"; };
@@ -2141,6 +2143,7 @@
 			isa = PBXGroup;
 			children = (
 				F7AE36001C08056700A1C9CE /* CropAssetViewController.swift */,
+				F7AE36061C08730600A1C9CE /* ImageCropperViewController.swift */,
 				F7AE35F21C08054B00A1C9CE /* FaImagePicker.storyboard */,
 				F7AE35F31C08054B00A1C9CE /* AlbumTableViewCell.swift */,
 				F7AE35F41C08054B00A1C9CE /* AlbumTableViewController.swift */,
@@ -2806,6 +2809,7 @@
 				0CAACCC41B9D8EA500BE5EF3 /* ResellerItemViewController.swift in Sources */,
 				26DB062B1B97F9EB00D38EA8 /* RemovedItemTableViewCell.swift in Sources */,
 				F7C40F871B983B810091C16C /* StoreInfoViewController.swift in Sources */,
+				F7AE36071C08730600A1C9CE /* ImageCropperViewController.swift in Sources */,
 				79EFF7711B8D6E35008A9E7D /* ActivityModel.swift in Sources */,
 				79E633AD1B9B328E0062DB14 /* TransactionShipItemTableViewCell.swift in Sources */,
 				F79403001BC00D6E00CD21DD /* FilterHeaderSectiionViewController.swift in Sources */,
@@ -2999,8 +3003,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/yhelfronda/Downloads/google-plus-ios-sdk-1.7.1",
@@ -3021,8 +3025,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/yhelfronda/Downloads/google-plus-ios-sdk-1.7.1",

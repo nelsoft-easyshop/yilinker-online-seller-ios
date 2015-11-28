@@ -273,17 +273,31 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             cell.verifyButton.setTitle(self.changeTitle, forState: UIControlState.Normal)
             
             if(self.storeInfoModel?.store_name != nil){
-               
-               /* if self.image != nil || self.imageCover != nil {
+                
+                if self.image != nil && self.imageCover != nil {
                     cell.coverEditImageView.image = self.imageCover
                     cell.profilePictureImageView.image = self.image
+                } else if self.image != nil && self.imageCover == nil {
+                    cell.profilePictureImageView.image = self.image
+                    cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                } else if self.image == nil && self.imageCover != nil {
+                    cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                    cell.coverEditImageView.image = self.imageCover
                 } else {
-                */
-                cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
-            
-                cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
-                
-               // }
+                    let url: NSString = NSString(string: (self.storeInfoModel?.avatar)!.absoluteString!)
+                    let url2: NSString = NSString(string: (self.storeInfoModel?.coverPhoto)!.absoluteString!)
+                    if url != "" && url2 != "" {
+                        cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                        cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                    } else if url == "" && url2 != "" {
+                        cell.profilePictureImageView.image = UIImage(named: "dummy-placeholder.jpg")
+                        cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                    } else {
+                        cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                        cell.coverPhotoImageView.image = UIImage(named: "dummy-placeholder.jpg")
+                    }
+                    
+                }
                 
                 cell.storeNameTextField.text = self.storeInfoModel?.store_name
                 cell.storeNameTextField.enabled = false
@@ -292,15 +306,19 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 cell.profileEditImageView.image = UIImage(named: "edit.png")
                 cell.coverEditImageView.image = UIImage(named: "edit.png")
                 cell.tinTextField.text = self.self.storeInfoModel?.tin
+
                 let url: NSString = NSString(string: (self.storeInfoModel?.avatar)!.absoluteString!)
                 if (!url.isEqual("")) {
                     cell.profileEditLabel.text = editPhoto
                     cell.coverEditLabel.text = editCover
+                    
                 } else {
                     cell.profileEditLabel.text = addPhoto
                     cell.coverEditLabel.text = addCover
                 }
                 
+                //self.image = cell.profilePictureImageView.image
+                //self.imageCover = cell.coverPhotoImageView.image
                 //if(self.verifyOrChange == 1) {
                 //    cell.verifyButton.setTitle("Verify", forState: UIControlState.Normal)
                 //} else {
@@ -502,6 +520,12 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         self.storeInfoModel!.store_name = storeName
         self.storeInfoModel!.store_description = storeDescription
     }
+    
+    func textViewScrollUp(textView: UITextView) {
+        var scrollPt:CGPoint = CGPointMake(textView.bounds.origin.x, textView.bounds.origin.y)
+        self.tableView.setContentOffset(scrollPt, animated: true)
+    }
+    
     //MARK: Store Details Function
     func storeInfoVerify(mobile: String) {
         println("verify " + "\(self.verifyOrChange)")
@@ -652,14 +676,14 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
         if self.image != nil && self.imageCover != nil {
             let data: NSData = UIImageJPEGRepresentation(self.image, 0)
-            let dataCoverPhoto: NSData = UIImagePNGRepresentation(self.image) //UIImageJPEGRepresentation(self.imageCover, 1)
+            let dataCoverPhoto: NSData = UIImageJPEGRepresentation(self.imageCover, 1)
             datas.append(data)
             datas.append(dataCoverPhoto)
         } else if self.image != nil && self.imageCover == nil{
             let data: NSData = UIImageJPEGRepresentation(self.image, 0)
             datas.append(data)
         } else if self.image == nil && self.imageCover != nil {
-            let dataCoverPhoto: NSData = UIImagePNGRepresentation(self.imageCover) //UIImageJPEGRepresentation(self.imageCover, 0)
+            let dataCoverPhoto: NSData = UIImageJPEGRepresentation(self.imageCover, 1)
             datas.append(dataCoverPhoto)
         }
        
@@ -717,6 +741,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 }
             } else {
                 self.showAlert("Ooops!!", message: "Please select category.")
+                self.hud?.hide(true)
             }
         } else {
             print(cell.storeNameTextField.text)
@@ -930,6 +955,14 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         vc.setInitialText("")
         let image = postImage.image
         vc.addImage(image)
+        
+        var socialVC :SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+        
+        socialVC.completionHandler = {
+            (result:SLComposeViewControllerResult) in
+            self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_FB_LOCALIZE_KEY"))
+        }
+
         presentViewController(vc, animated: true, completion: nil)
         
         /*
@@ -992,12 +1025,28 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         vc.setInitialText("")
         let image = postImage.image
         vc.addImage(image)
+        
+        var socialVC :SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+        
+        socialVC.completionHandler = {
+            (result:SLComposeViewControllerResult) in
+            // Your code
+            self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"))
+        }
         presentViewController(vc, animated: true, completion: nil)
+       
         
     }
     
     func shareEMAction(postImage: UIImageView, title: String) {
-        
+        imageToPost = postImage.image
+        let mailComposeViewController = configuredMailComposeViewController()
+        if MFMailComposeViewController.canSendMail() {
+            self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+        } else {
+            self.showSendMailErrorAlert()
+        }
+        /*
         if MFMailComposeViewController.canSendMail() {
             let mailComposeVC = MFMailComposeViewController()
             mailComposeVC.mailComposeDelegate = self
@@ -1010,19 +1059,43 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             self.presentViewController(mailComposeVC, animated: true, completion: nil)
         } else {
             // show failure alert
-        }
+        }*/
+    }
+    
+    func configuredMailComposeViewController() -> MFMailComposeViewController {
+        let mailComposerVC = MFMailComposeViewController()
+        mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
+        
+        mailComposerVC.addAttachmentData(UIImageJPEGRepresentation(imageToPost, CGFloat(1.0))!, mimeType: "image/jpeg", fileName:  "qrcode.jpeg")
+        
+        mailComposerVC.setSubject(title)
+        
+        mailComposerVC.setMessageBody(title, isHTML: true)
+        mailComposerVC.setSubject(title)
+        mailComposerVC.setMessageBody(title, isHTML: false)
+        
+        return mailComposerVC
+    }
+    
+    func showSendMailErrorAlert() {
+        let sendMailErrorAlert = UIAlertView(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", delegate: self, cancelButtonTitle: "OK")
+        sendMailErrorAlert.show()
     }
     
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         
         switch result.value {
         case MFMailComposeResultCancelled.value:
+            self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_CANCEL_EMAIL_LOCALIZE_KEY"))
             NSLog("Mail cancelled")
         case MFMailComposeResultSaved.value:
+            self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SAVE_EMAIL_LOCALIZE_KEY"))
             NSLog("Mail saved")
         case MFMailComposeResultSent.value:
+            self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY"))
             NSLog("Mail sent")
         case MFMailComposeResultFailed.value:
+            self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_FAIL_EMAIL_LOCALIZE_KEY"))
             NSLog("Mail sent failure: %@", [error!.localizedDescription])
         default:
             break
@@ -1096,9 +1169,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
         for allaSset in assets as! [ALAsset] {
             //let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage(), scale: allaSset.defaultRepresentation().scale(), orientation: allaSset.defaultRepresentation().orientation())!
-            let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!
-            self.uploadImages.insert(image, atIndex: 0)
-
+            let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullScreenImage().takeUnretainedValue(), scale: 1.0, orientation: UIImageOrientation.Up)!
+            
             self.setImageProfileCoverPhoto(image)
         }
         
@@ -1123,7 +1195,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
         let cell: StoreInfoTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! StoreInfoTableViewCell
         //cell.collectionView.reloadData()
-        if self.imageType == "profile" {
+        if IMAGETYPE.imageType == "profile" {
             cell.profilePictureImageView.image = nil
             cell.profilePictureImageView.image = image
             self.image = image

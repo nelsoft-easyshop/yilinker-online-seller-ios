@@ -64,6 +64,24 @@
                             <action selector="deleteIndexPath:" destination="gTV-IL-0wX" eventType="touchUpInside" id="V8r-aF-bDJ"/>
                         </connections>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RzB-Xg-cbW">
+                        <rect key="frame" x="8" y="6" width="30" height="68"/>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="selectAddress:" destination="gTV-IL-0wX" eventType="touchUpInside" id="9MB-Uc-NKq"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zwb-L4-Ql5">
+                        <rect key="frame" x="332" y="8" width="35" height="66"/>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="deleteIndexPath:" destination="gTV-IL-0wX" eventType="touchUpInside" id="KKr-NQ-Pwi"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -75,15 +93,25 @@
                 <constraint firstAttribute="centerY" secondItem="q7d-g0-zfw" secondAttribute="centerY" constant="-0.5" id="CPe-fz-8Lz"/>
                 <constraint firstAttribute="trailing" secondItem="q7d-g0-zfw" secondAttribute="trailing" constant="18" id="Cr1-4q-2lD"/>
                 <constraint firstItem="q7d-g0-zfw" firstAttribute="leading" secondItem="Sx5-GY-uj9" secondAttribute="trailing" constant="23" id="Dft-Dr-QJ7"/>
+                <constraint firstItem="zwb-L4-Ql5" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="GTN-jX-2DP"/>
                 <constraint firstItem="Sx5-GY-uj9" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="46" id="GeN-kN-vSn"/>
+                <constraint firstAttribute="bottom" secondItem="RzB-Xg-cbW" secondAttribute="bottom" constant="5" id="N8N-Hx-ZfR"/>
                 <constraint firstItem="Sx5-GY-uj9" firstAttribute="top" secondItem="BKG-VE-yR0" secondAttribute="bottom" id="cB6-QR-Mt6"/>
+                <constraint firstAttribute="bottom" secondItem="zwb-L4-Ql5" secondAttribute="bottom" constant="5" id="hbq-1d-y3L"/>
                 <constraint firstAttribute="bottom" secondItem="Sx5-GY-uj9" secondAttribute="bottom" constant="5" id="iMx-if-242"/>
+                <constraint firstAttribute="trailing" secondItem="zwb-L4-Ql5" secondAttribute="trailing" constant="8" id="kdt-ci-zjM"/>
                 <constraint firstItem="BKG-VE-yR0" firstAttribute="leading" secondItem="q5N-SS-ZY2" secondAttribute="trailing" constant="7" id="lX7-5E-IbL"/>
+                <constraint firstItem="RzB-Xg-cbW" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="6" id="rcV-dl-MAA"/>
                 <constraint firstItem="q5N-SS-ZY2" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="15" id="rdT-33-3oE"/>
+                <constraint firstItem="BKG-VE-yR0" firstAttribute="leading" secondItem="RzB-Xg-cbW" secondAttribute="trailing" constant="7" id="xgA-zF-Mnn"/>
+                <constraint firstItem="RzB-Xg-cbW" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="y6H-v3-HQc"/>
+                <constraint firstItem="zwb-L4-Ql5" firstAttribute="leading" secondItem="Sx5-GY-uj9" secondAttribute="trailing" constant="16" id="yhJ-no-nZq"/>
             </constraints>
             <size key="customSize" width="381" height="79"/>
             <connections>
+                <outlet property="checkBoxBigButton" destination="RzB-Xg-cbW" id="Jva-bY-nd7"/>
                 <outlet property="checkBoxButton" destination="q5N-SS-ZY2" id="yaM-Vz-NDo"/>
+                <outlet property="deleteBigButton" destination="zwb-L4-Ql5" id="ySZ-ew-0ze"/>
                 <outlet property="deleteButton" destination="q7d-g0-zfw" id="GAb-UF-GPw"/>
                 <outlet property="subTitleLabel" destination="Sx5-GY-uj9" id="kpc-FG-kcS"/>
                 <outlet property="titleLabel" destination="BKG-VE-yR0" id="PHA-0b-mSD"/>

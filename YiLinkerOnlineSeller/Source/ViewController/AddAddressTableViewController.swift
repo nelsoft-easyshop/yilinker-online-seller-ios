@@ -343,9 +343,15 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     
     func done() {
         //self.tableView.reloadData()
-        let row = NSIndexPath(forItem: activeTextField, inSection: 0)
-        let cell: NewAddressTableViewCell = tableView.cellForRowAtIndexPath(row) as! NewAddressTableViewCell
-        cell.rowTextField.endEditing(true)
+        if activeTextField == 6 {
+            self.requestGetCities(self.addressModel.provinceId)
+        } else if activeTextField == 7 {
+            self.requestGetBarangay(self.addressModel.cityId)
+        } else {
+            let row = NSIndexPath(forItem: activeTextField, inSection: 0)
+            let cell: NewAddressTableViewCell = tableView.cellForRowAtIndexPath(row) as! NewAddressTableViewCell
+            cell.rowTextField.endEditing(true)
+        }
     }
     
     func getTextAtIndex(index: Int) -> String {
@@ -396,7 +402,12 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 401 {
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: self.somethingWentWrong)
+                    self.hud?.hide(true)
+                } else if task.statusCode == 401 {
                     self.requestRefreshToken(AddressRefreshType.Create)
                 } else {
                     self.showAlert(title: self.somethingWentWrong, message: nil)
@@ -435,6 +446,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: self.somethingWentWrong)
+                    self.hud?.hide(true)
                 } else if task.statusCode == 401 {
                     self.requestRefreshToken(AddressRefreshType.Edit)
                 } else {
@@ -557,18 +569,17 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             //get province title and id
             self.addressModel.provinceId = self.provinceModel.provinceId[row]
             self.addressModel.province = self.provinceModel.location[row]
-            self.addressModel.city = ""
+            self.setTextAtIndex(activeTextField, text: self.provinceModel.location[row])
+            //self.addressModel.city = ""
             //request for new city data model and reload tableview
-            self.requestGetCities(self.addressModel.provinceId)
-            
             //save current row and reset dependent values
             self.provinceRow = row
             self.cityRow = 0
             self.barangayRow = 0
         } else if activeTextField == 7 {
             self.addressModel.cityId = self.cityModel.cityId[row]
-            self.requestGetBarangay(self.addressModel.cityId)
             self.addressModel.city = self.cityModel.location[row]
+            self.setTextAtIndex(activeTextField, text: self.cityModel.location[row])
             //save current row and reset dependent values
             self.cityRow = row
             self.barangayRow = 0

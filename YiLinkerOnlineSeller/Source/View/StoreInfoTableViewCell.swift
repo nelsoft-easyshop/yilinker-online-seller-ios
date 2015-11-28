@@ -8,11 +8,15 @@
 
 import UIKit
 
+struct IMAGETYPE {
+    static var imageType: String = ""
+}
 protocol StoreInfoTableViewCellDelegate {
     func storeInfoVerify(mobile: String)
     func storeNameAndDescription(storeName: String, storeDescription: String)
     func callUzyPicker(imageType: String)
     func textViewNextResponder(textView: UITextView)
+    func textViewScrollUp(textView: UITextView)
 }
 
 class StoreInfoTableViewCell: UITableViewCell, UITextFieldDelegate, UITextViewDelegate {
@@ -92,6 +96,7 @@ class StoreInfoTableViewCell: UITableViewCell, UITextFieldDelegate, UITextViewDe
     // UITextField Delegates
     func textViewDidBeginEditing(textField: UITextView) {
         println("TextField did begin editing method called")
+        self.delegate?.textViewScrollUp(textField)
     }
     
     func textViewDidEndEditing(textField: UITextView) {
@@ -110,10 +115,12 @@ class StoreInfoTableViewCell: UITableViewCell, UITextFieldDelegate, UITextViewDe
     
     func callUzyPicker(){
         self.delegate?.callUzyPicker("profile")
+        IMAGETYPE.imageType = "profile"
     }
     
     func callUzyPickerCover(){
         self.delegate?.callUzyPicker("cover")
+        IMAGETYPE.imageType = "cover"
     }
    
 }
