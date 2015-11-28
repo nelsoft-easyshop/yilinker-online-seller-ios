@@ -95,7 +95,7 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
             self.showHUD()
             let manager = APIManager.sharedInstance
             let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "queryString": key]
-            
+
             self.requestTask = manager.POST(APIAtlas.getCustomizedCategories, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 
@@ -103,8 +103,11 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
                 
                 if self.customizedCategoriesModel.customizedCategories.count != 0 {
                     self.tableView.reloadData()
+                    self.tableView.hidden = false
+                    self.emptyLabel.hidden = true
                 } else {
                     self.emptyLabel.hidden = false
+                    self.tableView.hidden = true
                 }
                 self.hud?.hide(true)
                 
