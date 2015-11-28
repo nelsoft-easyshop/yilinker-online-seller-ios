@@ -16,6 +16,7 @@ protocol StoreInfoTableViewCellDelegate {
     func storeNameAndDescription(storeName: String, storeDescription: String)
     func callUzyPicker(imageType: String)
     func textViewNextResponder(textView: UITextView)
+    func textViewScrollUp(textView: UITextView)
 }
 
 class StoreInfoTableViewCell: UITableViewCell, UITextFieldDelegate, UITextViewDelegate {
@@ -95,6 +96,7 @@ class StoreInfoTableViewCell: UITableViewCell, UITextFieldDelegate, UITextViewDe
     // UITextField Delegates
     func textViewDidBeginEditing(textField: UITextView) {
         println("TextField did begin editing method called")
+        self.delegate?.textViewScrollUp(textField)
     }
     
     func textViewDidEndEditing(textField: UITextView) {

@@ -306,6 +306,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 cell.profileEditImageView.image = UIImage(named: "edit.png")
                 cell.coverEditImageView.image = UIImage(named: "edit.png")
                 cell.tinTextField.text = self.self.storeInfoModel?.tin
+
                 let url: NSString = NSString(string: (self.storeInfoModel?.avatar)!.absoluteString!)
                 if (!url.isEqual("")) {
                     cell.profileEditLabel.text = editPhoto
@@ -519,6 +520,12 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         self.storeInfoModel!.store_name = storeName
         self.storeInfoModel!.store_description = storeDescription
     }
+    
+    func textViewScrollUp(textView: UITextView) {
+        var scrollPt:CGPoint = CGPointMake(textView.bounds.origin.x, textView.bounds.origin.y)
+        self.tableView.setContentOffset(scrollPt, animated: true)
+    }
+    
     //MARK: Store Details Function
     func storeInfoVerify(mobile: String) {
         println("verify " + "\(self.verifyOrChange)")
@@ -734,6 +741,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 }
             } else {
                 self.showAlert("Ooops!!", message: "Please select category.")
+                self.hud?.hide(true)
             }
         } else {
             print(cell.storeNameTextField.text)
