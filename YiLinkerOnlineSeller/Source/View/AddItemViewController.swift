@@ -153,10 +153,14 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
                 
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
+                    self.hud?.hide(true)
                     
-                    if error.code != NSURLErrorCancelled {
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: AlertStrings.error)
+                    } else if error.code != NSURLErrorCancelled {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
-                        self.hud?.hide(true)
                     }
             })
         } else {

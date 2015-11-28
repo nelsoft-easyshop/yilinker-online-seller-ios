@@ -433,8 +433,10 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                     }
                 }
                 
+            } else { //Category name
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: CategoryStrings.categoryNameEmpty, title: AlertStrings.failed)
             }
-        } else {
+        } else { //Internet connection
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.failed)
         }
     }
