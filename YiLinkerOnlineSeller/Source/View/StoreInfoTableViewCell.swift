@@ -99,6 +99,11 @@ class StoreInfoTableViewCell: UITableViewCell, UITextFieldDelegate, UITextViewDe
         self.delegate?.textViewScrollUp(textField)
     }
     
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        let prospectiveText = (textView.text! as NSString).stringByReplacingCharactersInRange(range, withString: text)
+        return textView.textInputMode != nil //&& prospectiveText.containsOnlyCharactersIn("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .'-&:!/")
+    }
+    
     func textViewDidEndEditing(textField: UITextView) {
         self.delegate?.storeNameAndDescription(self.storeNameTextField.text, storeDescription: self.storeDescriptionTextView.text)
        

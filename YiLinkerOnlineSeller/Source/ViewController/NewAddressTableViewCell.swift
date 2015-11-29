@@ -45,7 +45,7 @@ class NewAddressTableViewCell: UITableViewCell, UITextFieldDelegate, UIPickerVie
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         let prospectiveText = (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
-        return textField.textInputMode != nil
+        return textField.textInputMode != nil && prospectiveText.containsOnlyCharactersIn("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .'-&")
     }
     
     func addPicker(selectedIndex: Int) {
