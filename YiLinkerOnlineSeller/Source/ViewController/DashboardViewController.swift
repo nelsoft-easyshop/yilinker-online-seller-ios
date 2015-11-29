@@ -506,9 +506,10 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                 case .Destructive:
 //                    NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
                     self.ctr = 0
+                    NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
                     SessionManager.setAccessToken("")
-                    let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
-                    self.presentViewController(signInViewController, animated: true, completion: nil)
+                    let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                    appDelegate.changeRootToDashboard()
                 }
             }))
             alert.addAction(UIAlertAction(title: cancelString, style: .Cancel, handler: nil))
