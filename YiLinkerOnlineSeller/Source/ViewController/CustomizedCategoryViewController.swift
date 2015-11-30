@@ -116,6 +116,7 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
     func addCategoryAction() {
         let addCustomizedCategory = AddCustomizedCategoryViewController(nibName: "AddCustomizedCategoryViewController", bundle: nil)
         addCustomizedCategory.title = CategoryStrings.titleAddCustomized
+        addCustomizedCategory.isNew = true
         addCustomizedCategory.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(addCustomizedCategory, animated: true)
     }
