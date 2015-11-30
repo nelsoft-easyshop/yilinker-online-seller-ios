@@ -971,18 +971,21 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     func shareFBAction(postImage: UIImageView, title: String) {
     
         let vc = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
-        vc.setInitialText("")
-        let image = postImage.image
-        vc.addImage(image)
-        
+
         var socialVC :SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
-        
+        socialVC.setInitialText("")
+        let image = postImage.image
+        socialVC.addImage(image)
         socialVC.completionHandler = {
             (result:SLComposeViewControllerResult) in
-            self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_FB_LOCALIZE_KEY"))
+            if result == SLComposeViewControllerResult.Done {
+                self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_FB_LOCALIZE_KEY"))
+            } else {
+                
+            }
         }
-
-        presentViewController(vc, animated: true, completion: nil)
+        
+        presentViewController(socialVC, animated: true, completion: nil)
         
         /*
         var sharingItems = [AnyObject]()
@@ -1041,19 +1044,22 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     func shareTWAction(postImage: UIImageView, title: String) {
         
         let vc = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
-        vc.setInitialText("")
-        let image = postImage.image
-        vc.addImage(image)
+       
         
         var socialVC :SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
-        
+        socialVC.setInitialText("")
+        let image = postImage.image
+        socialVC.addImage(image)
         socialVC.completionHandler = {
             (result:SLComposeViewControllerResult) in
-            // Your code
-            self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"))
+            if result == SLComposeViewControllerResult.Done{
+                //self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"))
+                self.view.makeToast(StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"), duration: 3.0, position: CSToastPositionCenter)
+            } else {
+                 self.view.makeToast("Cancelled", duration: 3.0, position: CSToastPositionBottom)
+            }
         }
-        presentViewController(vc, animated: true, completion: nil)
-       
+        presentViewController(socialVC, animated: true, completion: nil)
         
     }
     
