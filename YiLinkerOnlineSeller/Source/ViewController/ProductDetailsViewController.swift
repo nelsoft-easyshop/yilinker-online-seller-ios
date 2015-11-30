@@ -283,6 +283,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func downloadImage(url: [String]) {
+        println("DOWNLOADING MAIN IMAGES = \(url.count)")
         for i in 0..<url.count {
             var imgURL: NSURL = NSURL(string: url[i])!
             let request: NSURLRequest = NSURLRequest(URL: imgURL)
@@ -290,6 +291,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                 request, queue: NSOperationQueue.mainQueue(),
                 completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
                     if error == nil {
+                        println("success downloading main image - \(i + 1)")
                         var convertedImage: ServerUIImage = ServerUIImage(data: data)!
                         convertedImage.uid = self.productModel.imageIds[i]
                         self.productModel.editedImage.append(convertedImage)
@@ -297,6 +299,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                             self.downloadCombinationsImages()
                         }
                     } else {
+                        println("failed downloading main image - \(i + 1)")
                         var convertedImage = ServerUIImage()
                         convertedImage.uid = self.productModel.imageIds[i]
                         self.productModel.images.append(convertedImage)
@@ -309,34 +312,40 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func downloadCombinationsImages() {
+        println("DOWNLOADING COMBINATION IMAGES")
         if self.productModel.validCombinations.count == 0 {
             self.gotoEditProduct()
         } else {
             for i in 0..<self.productModel.validCombinations.count {
+                println("downloading images of combination -  \(i + 1)")
                 for j in 0..<self.productModel.validCombinations[i].imagesUrl.count {
+                    print("downloading images -  \(j + 1) >> ")
                     var imgURL: NSURL = NSURL(string: self.productModel.validCombinations[i].imagesUrl[j])!
+                    println("image url == \(imgURL)")
                     let request: NSURLRequest = NSURLRequest(URL: imgURL)
                     NSURLConnection.sendAsynchronousRequest(
                         request, queue: NSOperationQueue.mainQueue(),
                         completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
                             if error == nil {
+                                println("success downloading combination image - \(i + 1) of \(j + 1)")
                                 var convertedImage: ServerUIImage = ServerUIImage(data: data)!
                                 convertedImage.uid = self.productModel.validCombinations[i].imagesId[j]
                                 self.productModel.oldEditedCombinationImages.append(convertedImage)
                                 self.productModel.validCombinations[i].editedImages.append(convertedImage)
-                                println("\(i) == \(self.productModel.validCombinations.count)")
                                 if self.productModel.validCombinations[i].imagesUrl.count == self.productModel.validCombinations[i].editedImages.count && (i + 1) == self.productModel.validCombinations.count {
                                     self.gotoEditProduct()
                                 }
                             } else {
+                                println("failed downloading combination image - \(i + 1) of \(j + 1)")
                                 var convertedImage = ServerUIImage()
                                 convertedImage.uid = self.productModel.validCombinations[i].imagesId[j]
                                 self.productModel.validCombinations[i].editedImages.append(convertedImage)
                                 self.productModel.oldEditedCombinationImages.append(convertedImage)
-                                if self.productModel.validCombinations[i].imagesUrl.count == self.productModel.validCombinations[i].editedImages.count && (i + 1) == self.productModel.validCombinations.count {
+                                if self.productModel.validCombinations[i].imagesUrl.count == self.productModel.validCombinations[i].editedImages.count /*&& (i + 1) == self.productModel.validCombinations.count */{
                                     self.gotoEditProduct()
                                 }
                             }
+                            println("\(self.productModel.validCombinations[i].imagesUrl.count) == \(self.productModel.validCombinations[i].editedImages.count) && \((i + 1)) == \(self.productModel.validCombinations.count)")
                     })
 
                 }

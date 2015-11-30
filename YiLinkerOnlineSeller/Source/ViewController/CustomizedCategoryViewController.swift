@@ -21,7 +21,7 @@ struct CategoryStrings {
     static let categoryEdit = StringHelper.localizedStringWithKey("CATEGORY_EDIT_LOCALIZE_KEY")
     static let categorySeeAll = StringHelper.localizedStringWithKey("CATEGORY_SEE_ALL_LOCALIZE_KEY")
     static let categoryItems2 = StringHelper.localizedStringWithKey("CATEGORY_ITEMS_LOCALIZE_KEY")
-    
+    static let categoryNameEmpty = StringHelper.localizedStringWithKey("CATEGORY_NAME_EMPTY_LOCALIZE_KEY")
     
     static let titleAddCustomized = StringHelper.localizedStringWithKey("CATEGORY_ADD_CUSTOMIZED_LOCALIZE_KEY")
     static let search = StringHelper.localizedStringWithKey("CATEGORY_SEARCH_LOCALIZE_KEY")
@@ -116,6 +116,7 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
     func addCategoryAction() {
         let addCustomizedCategory = AddCustomizedCategoryViewController(nibName: "AddCustomizedCategoryViewController", bundle: nil)
         addCustomizedCategory.title = CategoryStrings.titleAddCustomized
+        addCustomizedCategory.isNew = true
         addCustomizedCategory.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(addCustomizedCategory, animated: true)
     }

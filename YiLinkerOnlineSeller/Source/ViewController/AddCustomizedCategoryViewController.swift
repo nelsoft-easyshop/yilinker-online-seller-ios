@@ -48,6 +48,7 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     
     var categoryId: Int = 0
     var refreshParameter: NSDictionary!
+    var isNew: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -174,7 +175,9 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     func getCategoryDetailsView() -> CCCategoryDetailsView {
         if self.categoryDetailsView == nil {
             self.categoryDetailsView = XibHelper.puffViewWithNibName("CustomizedCategoryViewsViewController", index: 0) as! CCCategoryDetailsView
-            self.categoryDetailsView.categoryNameTextField.becomeFirstResponder()
+            if isNew {
+                self.categoryDetailsView.categoryNameTextField.becomeFirstResponder()
+            }
             self.categoryDetailsView.categoryNameTextField.delegate = self
             self.categoryDetailsView.delegate = self
             self.categoryDetailsView.frame.size.width = self.view.frame.size.width
@@ -433,8 +436,10 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
                     }
                 }
                 
+            } else { //Category name
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: CategoryStrings.categoryNameEmpty, title: AlertStrings.failed)
             }
-        } else {
+        } else { //Internet connection
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.failed)
         }
     }
