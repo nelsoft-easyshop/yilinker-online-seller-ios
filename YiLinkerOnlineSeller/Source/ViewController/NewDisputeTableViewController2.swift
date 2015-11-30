@@ -399,7 +399,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
         if self.disputePickerType == DisputePickerType.TransactionList {
-            return self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
+            return self.transactionsModel.transactions[row].invoice_number
         } else if self.disputePickerType == DisputePickerType.DisputeType{
             return self.reason!.key[row]
         } else {
