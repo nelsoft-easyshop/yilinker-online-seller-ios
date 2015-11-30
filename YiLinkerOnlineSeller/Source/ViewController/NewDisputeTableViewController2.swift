@@ -40,9 +40,12 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     var reas: ResolutionCenterDisputeReasonsModel!
     var transactionIds: [String] = []
     var resolutiontitle: String = ""
+    var resolutionTransactionId: String = ""
+    var resolutionDisputeType: String = ""
+    var resolutionReason: String = ""
     var remarks: String = ""
     var isValid: Bool = false
-
+    
     //Localize strings
     let newDispute: String = StringHelper.localizedStringWithKey("RESOLUTION_CASES_LOCALIZE_KEY")
     let disputeTitle: String = StringHelper.localizedStringWithKey("DISPUTE_TITLE_LOCALIZE_KEY")
@@ -151,14 +154,17 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             } else if indexPath.row == 1 {
                 cell.titleLabel.text = transactionNoTitle
                 cell.titleLabel.required()
+                cell.addTracker()
             } else if indexPath.row == 2 {
                 //cell.textField.text = self.disputeType[self.disputeTypeDefaultIndex]
                 cell.titleLabel.text = disputeTypeTitle
                 cell.titleLabel.required()
+                cell.addTracker()
             } else {
                 cell.textField.placeholder = reasonPlaceholderTitle
                 cell.titleLabel.text = reasonTitle
                 cell.titleLabel.required()
+                cell.addTracker()
             }
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.delegate = self
@@ -342,18 +348,20 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             pickerView.selectRow(self.reasonDefaultIndex, inComponent: 0, animated: false)
         }
         
-        print(self.transactionsModel.transactions.count)
         if self.disputePickerType == DisputePickerType.TransactionList {
             self.isValid = true
             if self.transactionsModel.transactions.count != 0 {
                 self.currentTextField.text = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number//self.transactionIds[self.transactionDefaultIndex]
+                self.resolutionTransactionId = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
             } else {
                 //self.showAlert(title: Constants.Localized.no, message: StringHelper.localizedStringWithKey("TRANSACTIONS_NO_TRANSACTIONS_AVAIL_LOCALIZE_KEY"))
             }
         } else if self.disputePickerType == DisputePickerType.DisputeType {
             self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].key2
+            self.resolutionDisputeType = self.reasonTableData[self.disputeTypeDefaultIndex].key2
         } else {
             self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[self.reasonDefaultIndex].reason
+            self.resolutionReason = self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[self.reasonDefaultIndex].reason
         }
         
        
@@ -409,14 +417,14 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     }
 
     func disputeTextFieldTableViewCell(disputeTextFieldTableViewCell: DisputeTextFieldTableViewCell, editingAtTextField textField: UITextField) {
-        let indexPath: NSIndexPath = self.tableView.indexPathForCell(disputeTextFieldTableViewCell)!
         self.resolutiontitle = textField.text
     }
     
     func disputeTextFieldTableViewCell(disputeTextFieldTableViewCell: DisputeTextFieldTableViewCell, didStartEditingAtTextField textField: UITextField) {
         let indexPath: NSIndexPath = self.tableView.indexPathForCell(disputeTextFieldTableViewCell)!
-        
-        if indexPath.row == 1 && indexPath.section == 0 {
+        if indexPath.row == 0 && indexPath.section == 0 {
+            
+        } else if indexPath.row == 1 && indexPath.section == 0 {
             self.currentTextField = disputeTextFieldTableViewCell.textField
             self.disputePickerType = DisputePickerType.TransactionList
             self.addPicker(disputeTextFieldTableViewCell.textField)
@@ -470,15 +478,23 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     }
     
     func remarksTableViewCellDelegate(remarksTableViewCell: RemarksTableViewCell, didTapSubmit button: UIButton) {
+        
         if self.resolutiontitle == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Title is required.")
         } else if self.products.count == 0 {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Selecting a product is required.")
         } else if remarksTableViewCell.textView.text == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Remarks is required.")
+        } else if self.resolutionTransactionId == "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Transaction id is required.")
+        } else if self.resolutionDisputeType == "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Dispute type is required.")
+        } else if self.resolutionReason == "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Reason is required.")
         } else {
-            self.fireAddCase(remarksTableViewCell.textView.text)
+            //self.fireAddCase(remarksTableViewCell.textView.text)
         }
+        println("\(self.resolutionTransactionId) \(self.resolutionDisputeType) \(self.resolutionReason)")
     }
     
     func fireAddCase(remarks: String) {
@@ -494,7 +510,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         
         var status: Int = 0
         
-        if self.reason?.key[self.disputeTypeDefaultIndex] == self.reasonTableData[self.disputeTypeDefaultIndex].key2 {
+        if self.reasonTableData[self.disputeTypeDefaultIndex].key2 == "Refund"{
             status = 10
         } else {
             status = 16
@@ -528,7 +544,6 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
                 
                 self.hud?.hide(true)
         })
-        
     }
     
     func showAlert(#title: String!, message: String!) {

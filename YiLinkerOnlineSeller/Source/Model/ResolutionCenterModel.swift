@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias ResolutionCenterElement = (resolutionId: String, status: String, date: String, type: String, complainantRemarks: String, csrRemarks: String, ticketId: String)
+typealias ResolutionCenterElement = (resolutionId: String, status: String, date: String, type: String, complainantRemarks: String, csrRemarks: String, ticketId: String, disputeeName: String)
 
 class ResolutionCenterModel {
     var message: String = ""
@@ -70,7 +70,8 @@ class ResolutionCenterModel {
                         element.status = parseDictionaryString(currentElement, key:"disputeStatusType")
                         element.status = autocorrectStatus( element.status )
                         element.type = parseDictionaryString(currentElement, key:"orderProductStatus")
-                       
+                        element.disputeeName = parseDictionaryString(currentElement, key:"disputeeFullName")
+                        
                         var dates = currentElement["dateAdded"] as! String
                         let dateFormatter = NSDateFormatter()
                         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"

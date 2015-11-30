@@ -274,6 +274,38 @@ extension NSDate {
         var dateWithHoursAdded : NSDate = self.dateByAddingTimeInterval(secondsInHours)
         return dateWithHoursAdded
     }
+    
+    func startOfMonth() -> NSDate? {
+        
+        let calendar = NSCalendar.currentCalendar()
+        let currentDateComponents = calendar.components(.CalendarUnitYear | .CalendarUnitMonth, fromDate: self)
+        let startOfMonth = calendar.dateFromComponents(currentDateComponents)
+        
+        return startOfMonth
+    }
+    
+    func dateByAddingMonths(monthsToAdd: Int) -> NSDate? {
+        
+        let calendar = NSCalendar.currentCalendar()
+        let months = NSDateComponents()
+        months.month = monthsToAdd
+        
+        return calendar.dateByAddingComponents(months, toDate: self, options: nil)
+    }
+    
+    func endOfMonth() -> NSDate? {
+        
+        let calendar = NSCalendar.currentCalendar()
+        if let plusOneMonthDate = dateByAddingMonths(1) {
+            let plusOneMonthDateComponents = calendar.components(.CalendarUnitYear | .CalendarUnitMonth, fromDate: plusOneMonthDate)
+            
+            let endOfMonth = calendar.dateFromComponents(plusOneMonthDateComponents)?.dateByAddingTimeInterval(-1)
+            
+            return endOfMonth
+        }
+        
+        return nil
+    }
 }
 
 extension String {

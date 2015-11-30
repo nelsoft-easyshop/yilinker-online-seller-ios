@@ -332,9 +332,10 @@ class ResolutionCenterViewControllerV2: UIViewController, UITableViewDataSource,
                 parameters = [ "access_token" : SessionManager.accessToken(), "disputeStatusType" : statusFilter]
             } else if statusFilter == "0" {
                 if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisMonth {
+                    let date = NSDate()
                     parameters = [ "access_token" : SessionManager.accessToken()
-                        , "dateFrom" : "\(fullDate[0])-\(fullDate[1])-1",
-                        "dateTo": timeFilter]
+                        , "dateFrom" : self.formatDateToCompleteString(date.startOfMonth()!),
+                        "dateTo": self.formatDateToCompleteString(date.endOfMonth()!)]
                     
                 } else if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisWeek {
                     parameters = [ "access_token" : SessionManager.accessToken()
@@ -346,9 +347,10 @@ class ResolutionCenterViewControllerV2: UIViewController, UITableViewDataSource,
                 }
             } else {
                 if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisMonth {
+                    let date = NSDate()
                     parameters = [ "access_token" : SessionManager.accessToken()
-                        , "dateFrom" : "\(fullDate[0])-\(fullDate[1])-1",
-                        "dateTo": timeFilter,
+                        , "dateFrom" : self.formatDateToCompleteString(date.startOfMonth()!),
+                        "dateTo": self.formatDateToCompleteString(date.endOfMonth()!),
                         "disputeStatusType" : statusFilter]
                     
                 } else if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisWeek {
@@ -420,4 +422,11 @@ class ResolutionCenterViewControllerV2: UIViewController, UITableViewDataSource,
         })
         
     }
+    
+    func formatDateToCompleteString(date: NSDate) -> String {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.stringFromDate(date)
+    }
+
 }
