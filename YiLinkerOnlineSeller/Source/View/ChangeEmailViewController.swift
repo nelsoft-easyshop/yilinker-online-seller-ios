@@ -99,6 +99,9 @@ class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
             } else {
                 //self.showHUD()
                 //self.fireChangePassword()
+                self.newEmailAddressTextField.resignFirstResponder()
+                self.oldEmailAddressTextField.resignFirstResponder()
+                self.confirmEmailAddressTextField.resignFirstResponder()
                 println(confirmEmailAddressTextField.text.isValidPassword())
                 if count(confirmEmailAddressTextField.text) >= 8 && count(newEmailAddressTextField.text) >= 8 {
                     if confirmEmailAddressTextField.text.isValidPassword() && newEmailAddressTextField.text.isValidPassword(){
@@ -133,15 +136,18 @@ class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
             var success = StringHelper.localizedStringWithKey("PASSWORD_SUCCESS_CHANGE_LOCALIZE_KEY")
             //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: success, title: Constants.Localized.success)
             self.showAlert(Constants.Localized.success, message: success)
-            let seconds = 1.0
+            //self.view.makeToast(success, duration: 3.0, position: CSToastPositionBottom)
+            /*
+            let seconds = 2.0
             let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
             let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
             
             dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-                self.dismissViewControllerAnimated(true, completion: nil)
+                //self.dismissViewControllerAnimated(true, completion: nil)
+                //self.delegate?.dismissView()
                 // here code perfomed with delay
             })
-            
+            */
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -170,8 +176,9 @@ class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         
         let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
-            alertController.dismissViewControllerAnimated(true, completion: nil)
+            self.dismissViewControllerAnimated(true, completion: nil)
             self.delegate?.dismissView()
+            //alertController.dismissViewControllerAnimated(true, completion: nil)
         }
         
         alertController.addAction(OKAction)
@@ -219,9 +226,9 @@ class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func textFieldDidBegin(sender: AnyObject) {
         if IphoneType.isIphone4() {
-            topConstraint.constant = 40
+            topConstraint.constant = 20
         } else if IphoneType.isIphone5() {
-            topConstraint.constant = 60
+            topConstraint.constant = 40
         } else {
             topConstraint.constant = 100
         }

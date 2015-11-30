@@ -360,6 +360,12 @@ extension String {
     func formatToPeso() -> String {
         return "₱\(self)"
     }
+    
+    // Returns true if the string contains only characters found in matchCharacters.
+    func containsOnlyCharactersIn(matchCharacters: String) -> Bool {
+        let disallowedCharacterSet = NSCharacterSet(charactersInString: matchCharacters).invertedSet
+        return self.rangeOfCharacterFromSet(disallowedCharacterSet) == nil
+    }
 }
 
 

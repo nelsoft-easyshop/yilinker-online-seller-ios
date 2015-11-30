@@ -328,8 +328,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         hideDimView()
         NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
         SessionManager.setAccessToken("")
-        let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
-        self.presentViewController(signInViewController, animated: true, completion: nil)
+        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.changeRootToDashboard()
+
     }
     
 }

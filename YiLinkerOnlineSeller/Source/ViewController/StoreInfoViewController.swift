@@ -73,7 +73,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     var qrUrl: String = ""
     var qr: String = ""
-    
+    var refresh: Bool = false
     var tableData: [StoreInfoPreferredCategoriesModel] = []
     var selectedCategories: [Int] = []
     
@@ -96,9 +96,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         self.initializeViews()
         self.registerNibs()
-        self.fireStoreInfo()
         self.backButton()
-        
+        self.fireStoreInfo()
         /*
         self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Clothing", isChecked: false))
         self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Gadgets", isChecked: false))
@@ -121,7 +120,9 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     }
     
     override func viewDidAppear(animated: Bool) {
-       
+        if refresh {
+           self.fireStoreInfo()
+        }
     }
     
     //MARK: Google Plus Sign In
@@ -198,14 +199,19 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     //MARK: Get store info
     func fireStoreInfo(){
-        self.showHUD()
+        
+        if !refresh {
+            self.showHUD()
+        } else {
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        }
+        
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
         
         manager.POST(APIAtlas.sellerStoreInfo, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.storeInfoModel = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
-            
             println("store info \(responseObject)")
             if responseObject["isSuccessful"] as! Bool {
                 for var i: Int = 0; i < self.storeInfoModel?.productCategoryName.count; i++ {
@@ -219,9 +225,22 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             } else {
                 self.showAlert(Constants.Localized.error, message: responseObject["message"] as! String)
             }
-            self.hud?.hide(true)
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+            
+            if !self.refresh {
                 self.hud?.hide(true)
+            } else {
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            }
+            
+            self.refresh = true
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                
+                if !self.refresh {
+                    self.hud?.hide(true)
+                } else {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                }
+                
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 if error.userInfo != nil {
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
@@ -952,18 +971,21 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     func shareFBAction(postImage: UIImageView, title: String) {
     
         let vc = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
-        vc.setInitialText("")
-        let image = postImage.image
-        vc.addImage(image)
-        
+
         var socialVC :SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
-        
+        socialVC.setInitialText("")
+        let image = postImage.image
+        socialVC.addImage(image)
         socialVC.completionHandler = {
             (result:SLComposeViewControllerResult) in
-            self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_FB_LOCALIZE_KEY"))
+            if result == SLComposeViewControllerResult.Done {
+                self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_FB_LOCALIZE_KEY"))
+            } else {
+                
+            }
         }
-
-        presentViewController(vc, animated: true, completion: nil)
+        
+        presentViewController(socialVC, animated: true, completion: nil)
         
         /*
         var sharingItems = [AnyObject]()
@@ -1022,19 +1044,22 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     func shareTWAction(postImage: UIImageView, title: String) {
         
         let vc = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
-        vc.setInitialText("")
-        let image = postImage.image
-        vc.addImage(image)
+       
         
         var socialVC :SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
-        
+        socialVC.setInitialText("")
+        let image = postImage.image
+        socialVC.addImage(image)
         socialVC.completionHandler = {
             (result:SLComposeViewControllerResult) in
-            // Your code
-            self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"))
+            if result == SLComposeViewControllerResult.Done{
+                //self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"))
+                self.view.makeToast(StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"), duration: 3.0, position: CSToastPositionCenter)
+            } else {
+                 self.view.makeToast("Cancelled", duration: 3.0, position: CSToastPositionBottom)
+            }
         }
-        presentViewController(vc, animated: true, completion: nil)
-       
+        presentViewController(socialVC, animated: true, completion: nil)
         
     }
     

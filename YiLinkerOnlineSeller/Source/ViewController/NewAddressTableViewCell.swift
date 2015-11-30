@@ -43,6 +43,11 @@ class NewAddressTableViewCell: UITableViewCell, UITextFieldDelegate, UIPickerVie
         delegate?.newAddressTableViewCell(didBeginEditing: self, index: self.tag)
     }
     
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        let prospectiveText = (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
+        return textField.textInputMode != nil && prospectiveText.containsOnlyCharactersIn("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .'-&")
+    }
+    
     func addPicker(selectedIndex: Int) {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let pickerView: UIPickerView = UIPickerView(frame:CGRectMake(0, 0, screenSize.width, 225))
