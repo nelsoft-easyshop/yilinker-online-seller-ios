@@ -511,7 +511,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         
         var status: Int = 0
         
-        if self.reasonTableData[self.disputeTypeDefaultIndex].key2 == "Refund"{
+        if self.reason!.key[self.disputeTypeDefaultIndex] == "Refund"{
             status = 10
         } else {
             status = 16
@@ -526,7 +526,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             "reasonId": self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[self.reasonDefaultIndex].id,
             "orderProductIds": ids.description]
         //[153, 486]
-        println(ids.description)
+        println(parameters)
         
         manager.POST(APIAtlas.resolutionCenterAddCaseUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
