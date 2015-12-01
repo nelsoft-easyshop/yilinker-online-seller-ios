@@ -233,9 +233,9 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             self.transactionsModel = TransactionsModel.parseDataWithDictionary(responseObject as! NSDictionary)
             print(responseObject)
             for i in 0..<self.transactionsModel.transactions.count {
-               // if self.transactionsModel.transactions[i].order_status_id == "3" || self.transactionsModel.transactions[i].order_status_id == "6" {
+                if self.transactionsModel.transactions[i].order_status_id == "3" || self.transactionsModel.transactions[i].order_status_id == "6" {
                     self.transactionIds.append(self.transactionsModel.transactions[i].invoice_number)
-               // }
+                }
             }
             self.tableView.reloadData()
             }, failure: {
@@ -492,9 +492,8 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         } else if self.resolutionReason == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Reason is required.")
         } else {
-            //self.fireAddCase(remarksTableViewCell.textView.text)
+            self.fireAddCase(remarksTableViewCell.textView.text)
         }
-        println("\(self.resolutionTransactionId) \(self.resolutionDisputeType) \(self.resolutionReason)")
     }
     
     func fireAddCase(remarks: String) {
