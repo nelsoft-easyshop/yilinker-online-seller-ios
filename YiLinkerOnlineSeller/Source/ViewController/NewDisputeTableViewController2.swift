@@ -446,6 +446,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             if self.transactionsModel.transactions.count != 0 {
                 resolutionCenterProductListViewController.transactionId = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
                 resolutionCenterProductListViewController.delegate = self
+                self.products.removeAll(keepCapacity: false)
                 self.navigationController?.pushViewController(resolutionCenterProductListViewController, animated: true)
             }
         } else {
@@ -456,13 +457,14 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     func resolutionCenterProductListViewController(resolutionCenterProductListViewController: ResolutionCenterProductListViewController, didSelecteProducts products: [TransactionOrderProductModel]) {
         for (index, product) in enumerate(products) {
             for p in self.products {
-                if p.productId == product.productId {
+                /*if p.productId == product.productId {
                     self.navigationController?.view.makeToast("Some Item/s has been selected twice.")
                 } else {
                     self.products.append(product)
-                }
+                }*/
+                //self.products.append(product)
             }
-            
+            self.products.append(product)
             if self.products.count == 0 {
                 self.products.append(product)
             }
