@@ -233,9 +233,9 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             self.transactionsModel = TransactionsModel.parseDataWithDictionary(responseObject as! NSDictionary)
             print(responseObject)
             for i in 0..<self.transactionsModel.transactions.count {
-               // if self.transactionsModel.transactions[i].order_status_id == "3" || self.transactionsModel.transactions[i].order_status_id == "6" {
+                //if self.transactionsModel.transactions[i].order_status_id == "3" || self.transactionsModel.transactions[i].order_status_id == "6" {
                     self.transactionIds.append(self.transactionsModel.transactions[i].invoice_number)
-               // }
+                //}
             }
             self.tableView.reloadData()
             }, failure: {
@@ -446,6 +446,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             if self.transactionsModel.transactions.count != 0 {
                 resolutionCenterProductListViewController.transactionId = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
                 resolutionCenterProductListViewController.delegate = self
+                self.products.removeAll(keepCapacity: false)
                 self.navigationController?.pushViewController(resolutionCenterProductListViewController, animated: true)
             }
         } else {
@@ -456,13 +457,14 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     func resolutionCenterProductListViewController(resolutionCenterProductListViewController: ResolutionCenterProductListViewController, didSelecteProducts products: [TransactionOrderProductModel]) {
         for (index, product) in enumerate(products) {
             for p in self.products {
-                if p.productId == product.productId {
+                /*if p.productId == product.productId {
                     self.navigationController?.view.makeToast("Some Item/s has been selected twice.")
                 } else {
                     self.products.append(product)
-                }
+                }*/
+                //self.products.append(product)
             }
-            
+            self.products.append(product)
             if self.products.count == 0 {
                 self.products.append(product)
             }
@@ -492,9 +494,8 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         } else if self.resolutionReason == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Reason is required.")
         } else {
-            //self.fireAddCase(remarksTableViewCell.textView.text)
+            self.fireAddCase(remarksTableViewCell.textView.text)
         }
-        println("\(self.resolutionTransactionId) \(self.resolutionDisputeType) \(self.resolutionReason)")
     }
     
     func fireAddCase(remarks: String) {

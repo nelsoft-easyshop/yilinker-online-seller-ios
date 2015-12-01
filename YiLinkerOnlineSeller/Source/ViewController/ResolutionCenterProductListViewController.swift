@@ -160,16 +160,20 @@ class ResolutionCenterProductListViewController: UIViewController {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let transactionProductModel: TransactionOrderProductModel =  self.transactionDetails.transactionItems[0].products[indexPath.row]
         let cell: ResellerItemTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.cellIdentifier) as! ResellerItemTableViewCell
-        cell.cellTitleLabel.text = transactionProductModel.productName
-        cell.cellSellerLabel.text = self.transactionDetails.transactionItems[0].sellerStore
-        cell.selectionStyle = UITableViewCellSelectionStyle.None
         
-        cell.cellImageView.sd_setImageWithURL(NSURL(string: transactionProductModel.productImage), placeholderImage: UIImage(named: "dummy-placeholder"))
-        
-        if transactionProductModel.transactionOrderItemStatus == TransactionOrderItemStatus.Selected {
-            cell.checkImage()
-        } else {
-            cell.addImage()
+        if self.transactionDetails.transactionItems[0].products[indexPath.row].orderProductStatusId == 4 {
+            cell.cellTitleLabel.text = transactionProductModel.productName
+            cell.cellSellerLabel.text = self.transactionDetails.transactionItems[0].sellerStore
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            
+            cell.cellImageView.sd_setImageWithURL(NSURL(string: transactionProductModel.productImage), placeholderImage: UIImage(named: "dummy-placeholder"))
+            
+            if transactionProductModel.transactionOrderItemStatus == TransactionOrderItemStatus.Selected {
+                cell.checkImage()
+            } else {
+                cell.addImage()
+            }
+
         }
         return cell
     }

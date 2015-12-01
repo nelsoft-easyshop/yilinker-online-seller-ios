@@ -23,7 +23,7 @@ class ResolutionCenterCell: UITableViewCell {
     func setData(data: ResolutionCenterElement) {
         self.idLabel.text = data.ticketId
         self.dateLabel.text = data.date
-        self.userTypeLabel.text = data.type
+        self.userTypeLabel.text = data.disputeeName
         self.viewStatus.layer.cornerRadius = self.viewStatus.bounds.size.width / 2
 
         if( data.status == "Open" ) {
