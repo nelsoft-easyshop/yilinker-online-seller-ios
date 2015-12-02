@@ -346,6 +346,7 @@ STORE_INFO_PASSWORD_LOCALIZE_KEY = "Password";
 STORE_INFO_SAVE_LOCALIZE_KEY = "SAVE";
 STORE_INFO_NO_BANK_LOCALIZE_KEY = "Bank account not yet set by user";
 STORE_INFO_NO_ADDRESS_LOCALIZE_KEY = "Location not yet set by user";
+STORE_INFO_SET_DEFAULT_ADDRESS_LOCALIZE_KEY = "Already set as your default address.";
 
 //Error messages
 STORE_INFO_SUCCESS_TITLE_LOCALIZE_KEY = "Success!";
