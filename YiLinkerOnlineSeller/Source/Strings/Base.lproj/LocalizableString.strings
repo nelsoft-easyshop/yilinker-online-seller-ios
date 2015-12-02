@@ -47,6 +47,11 @@ ARE_YOU_SURE_LOGOUT_LOCALIZE_KEY = "Are you sure you want to logout?";
 HELP_ALERT_TITLE_LOCALIZE_KEY = "Feature Not Available";
 HELP_ALERT_MESSAGE_LOCALIZE_KEY = "Help will be available on the next release.";
 
+// MARK: - HELP
+HELP_FOR_CUSTOMER_SERVICE= "For Customer Service Assistance";
+HELP_EMAIL = "Email  :";
+HELP_CALL = "Call     :";
+
 // MARK: - Sales Report
 REPORT_TITLE_LOCALIZE_KEY = "Report";
 SALES_REPORT_BUTTON_LOCALIZE_KEY = "SALES REPORT";

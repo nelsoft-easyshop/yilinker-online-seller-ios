@@ -46,6 +46,11 @@ ARE_YOU_SURE_LOGOUT_LOCALIZE_KEY = "您确定要退出？";//No Chinese String
 HELP_ALERT_TITLE_LOCALIZE_KEY = "功能不可用";//No Chinese String
 HELP_ALERT_MESSAGE_LOCALIZE_KEY = "将在下一个版本上提供帮助。";//No Chinese String
 
+// MARK: - HELP
+HELP_FOR_CUSTOMER_SERVICE= "为客户服务援助";
+HELP_EMAIL = "电子邮件：";
+HELP_CALL = "电话:";
+
 // MARK: - Sales Report
 REPORT_TITLE_LOCALIZE_KEY = "报告";
 SALES_REPORT_BUTTON_LOCALIZE_KEY = "销售报告";
