@@ -18,6 +18,8 @@ class ResolutionCenterProductListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var transactionDetails: TransactionDetailsModel = TransactionDetailsModel()
+    var transactionDetailsFiltered: [TransactionOrderProductModel] = []
+    var transactionItemModel: [TransactionItemModel] = []
     
     let cellIdentifier: String = "ResellerItemTableViewCell"
     let cellNibName: String = "ResellerItemTableViewCell"
@@ -106,11 +108,21 @@ class ResolutionCenterProductListViewController: UIViewController {
     func check() {
         var products: [TransactionOrderProductModel] = []
         
+        for i in 0..<self.transactionDetails.transactionItems[0].products.count {
+            if self.transactionDetails.transactionItems[0].products[i].transactionOrderItemStatus == TransactionOrderItemStatus.Selected {
+                //self.transactionDetailsFiltered.append(self.transactionDetails.transactionItems[0].products[i])
+                //self.transactionItemModel.append(self.transactionDetails.transactionItems[0])
+                products.append(self.transactionDetails.transactionItems[0].products[i])
+            }
+            
+        }
+        
+        /*
         for product in self.transactionDetails.transactionItems[0].products {
             if product.transactionOrderItemStatus == TransactionOrderItemStatus.Selected {
                 products.append(product)
             }
-        }
+        }*/
         
         self.delegate!.resolutionCenterProductListViewController(self, didSelecteProducts: products)
         self.navigationController?.popViewControllerAnimated(true)
@@ -132,6 +144,13 @@ class ResolutionCenterProductListViewController: UIViewController {
             self.hud?.hide(true)
             println(responseObject)
             self.transactionDetails = TransactionDetailsModel.parseDataWithDictionary(responseObject as! NSDictionary)
+            for i in 0..<self.transactionDetails.transactionItems[0].products.count {
+                if self.transactionDetails.transactionItems[0].products[i].orderProductStatusId == 4 {
+                    self.transactionDetailsFiltered.append(self.transactionDetails.transactionItems[0].products[i])
+                    self.transactionItemModel.append(self.transactionDetails.transactionItems[0])
+                }
+
+            }
             self.tableView.reloadData()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -146,8 +165,11 @@ class ResolutionCenterProductListViewController: UIViewController {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.transactionDetails.transactionItems.count != 0 {
-            return self.transactionDetails.transactionItems[0].products.count
+//        if self.transactionDetails.transactionItems.count != 0 {
+//            return self.transactionDetails.transactionItems[0].products.count
+//        } 
+        if self.transactionDetailsFiltered.count != 0 {
+            return self.transactionDetailsFiltered.count
         } else {
             return 0
         }
@@ -161,30 +183,36 @@ class ResolutionCenterProductListViewController: UIViewController {
         let transactionProductModel: TransactionOrderProductModel =  self.transactionDetails.transactionItems[0].products[indexPath.row]
         let cell: ResellerItemTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.cellIdentifier) as! ResellerItemTableViewCell
         
-        if self.transactionDetails.transactionItems[0].products[indexPath.row].orderProductStatusId == 4 {
-            cell.cellTitleLabel.text = transactionProductModel.productName
-            cell.cellSellerLabel.text = self.transactionDetails.transactionItems[0].sellerStore
+        //if self.transactionDetails.transactionItems[0].products[indexPath.row].orderProductStatusId == 4 {
+            cell.cellTitleLabel.text = self.transactionDetailsFiltered[indexPath.row].productName
+            cell.cellSellerLabel.text = self.transactionItemModel[indexPath.row].sellerStore
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             
-            cell.cellImageView.sd_setImageWithURL(NSURL(string: transactionProductModel.productImage), placeholderImage: UIImage(named: "dummy-placeholder"))
+            cell.cellImageView.sd_setImageWithURL(NSURL(string: self.transactionDetailsFiltered[indexPath.row].productImage), placeholderImage: UIImage(named: "dummy-placeholder"))
             
-            if transactionProductModel.transactionOrderItemStatus == TransactionOrderItemStatus.Selected {
+            if self.transactionDetailsFiltered[indexPath.row].transactionOrderItemStatus == TransactionOrderItemStatus.Selected {
                 cell.checkImage()
             } else {
                 cell.addImage()
             }
 
-        }
+        //}
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.tableView.deselectRowAtIndexPath(indexPath, animated: false)
-        let transactionProductModel: TransactionOrderProductModel =  self.transactionDetails.transactionItems[0].products[indexPath.row]
+        
+        /*let transactionProductModel: TransactionOrderProductModel =  self.transactionDetails.transactionItems[0].products[indexPath.row]
         if transactionProductModel.transactionOrderItemStatus == TransactionOrderItemStatus.Selected {
             transactionProductModel.transactionOrderItemStatus = TransactionOrderItemStatus.UnSelected
         } else {
             transactionProductModel.transactionOrderItemStatus = TransactionOrderItemStatus.Selected
+        }*/
+        if self.transactionDetailsFiltered[indexPath.row].transactionOrderItemStatus == TransactionOrderItemStatus.Selected {
+            self.transactionDetailsFiltered[indexPath.row].transactionOrderItemStatus = TransactionOrderItemStatus.UnSelected
+        } else {
+            self.transactionDetailsFiltered[indexPath.row].transactionOrderItemStatus = TransactionOrderItemStatus.Selected
         }
         self.tableView.reloadData()
     }

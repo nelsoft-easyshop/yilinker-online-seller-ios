@@ -221,6 +221,8 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 if task.statusCode == 401 {
                     self.requestRefreshToken(AddressRefreshType.Create)
+                } else if task.statusCode == 402 {
+                    self.showAlert(title: self.information, message: StringHelper.localizedStringWithKey("STORE_INFO_SET_DEFAULT_ADDRESS_LOCALIZE_KEY"))
                 } else {
                     self.showAlert(title: self.somethingWentWrong, message: nil)
                 }
