@@ -447,7 +447,6 @@
 		967EE1D01B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */; };
 		96FBF6811BA06C94009DDD29 /* ResolutionCenterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FBF6801BA06C94009DDD29 /* ResolutionCenterModel.swift */; };
 		9F02F9361BF0BAEC00F44E2F /* yilinker_pinned_certificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 9F02F9351BF0BAEC00F44E2F /* yilinker_pinned_certificate.cer */; };
-		B70DD90F1BA727F400EC3A18 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B70DD90E1BA727F300EC3A18 /* GoogleService-Info.plist */; };
 		B70DD9121BA72B9800EC3A18 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70DD9111BA72B9800EC3A18 /* EmptyView.swift */; };
 		B76DE7511BF1BA2F006D9974 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B76DE7501BF1BA2D006D9974 /* GoogleService-Info.plist */; };
 		B7BADAE31BA56381005F59F9 /* DateUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BADAE21BA56381005F59F9 /* DateUtility.swift */; };
@@ -1080,7 +1079,6 @@
 		967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YiLinkerOnlineSellerTests.swift; sourceTree = "<group>"; };
 		96FBF6801BA06C94009DDD29 /* ResolutionCenterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionCenterModel.swift; sourceTree = "<group>"; };
 		9F02F9351BF0BAEC00F44E2F /* yilinker_pinned_certificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = yilinker_pinned_certificate.cer; sourceTree = "<group>"; };
-		B70DD90E1BA727F300EC3A18 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B70DD9111BA72B9800EC3A18 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		B76DE7501BF1BA2D006D9974 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B7BADAE21BA56381005F59F9 /* DateUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtility.swift; sourceTree = "<group>"; };
@@ -1308,7 +1306,6 @@
 			children = (
 				B76DE7501BF1BA2D006D9974 /* GoogleService-Info.plist */,
 				79E633881B9B27E70062DB14 /* FSCalendar */,
-				B70DD90E1BA727F300EC3A18 /* GoogleService-Info.plist */,
 				792875991B8DF89F00762A39 /* Classes */,
 				0CF28EE01B8CA2E9005B2E54 /* Font */,
 			);
@@ -2257,7 +2254,6 @@
 				F7CCEEF31BBE607100D876C2 /* FilterResultsCollectionViewCellV2.xib in Resources */,
 				F7C40FA91B983C0D0091C16C /* CreateNewAddressViewController.xib in Resources */,
 				0C65F8ED1B8E377500504D86 /* ProductUploadAttributeCollectionViewCell.xib in Resources */,
-				B70DD90F1BA727F400EC3A18 /* GoogleService-Info.plist in Resources */,
 				9628AC961B9848E700734551 /* DisputeViewController.xib in Resources */,
 				0C8739DB1B96E172005D2EF8 /* SuccessUploadViewController.xib in Resources */,
 				F7C40FDF1B98443B0091C16C /* StoreInfoSectionTableViewCell.xib in Resources */,
