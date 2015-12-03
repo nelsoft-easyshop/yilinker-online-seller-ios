@@ -24,9 +24,9 @@ typealias CaseDetailsData =
     , disputeeName: String
     , description: String
     , remarks: [RemarkElement]
-    , products: [String] )
+    , products: [String], transactionId: String )
 
-let blankCaseDetails = CaseDetailsData("","","","","","","","",[RemarkElement](),[String]())
+let blankCaseDetails = CaseDetailsData("","","","","","","","",[RemarkElement](),[String](), "")
 
 class CaseDetailsModel {
     let message: String
@@ -75,6 +75,7 @@ class CaseDetailsModel {
             
             if let dictionaryData = dictionary["data"] as? NSDictionary {
                 thisCase.ticket = parseDictionaryString(dictionaryData, key:"ticket")
+                thisCase.transactionId = parseDictionaryString(dictionaryData, key:"invoiceNumber")
                 thisCase.statusType = parseDictionaryString(dictionaryData, key:"disputeStatusType")
                 thisCase.orderStatus = parseDictionaryString(dictionaryData, key:"orderProductStatus")
                 thisCase.dateAdded = parseDictionaryString(dictionaryData, key:"dateAdded")
