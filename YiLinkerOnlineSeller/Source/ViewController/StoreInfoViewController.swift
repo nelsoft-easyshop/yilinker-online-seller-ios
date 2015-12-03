@@ -635,6 +635,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     func verifyViewController() {
         self.showHUD()
         let manager = APIManager.sharedInstance
+        println(self.mobileNumber)
         manager.POST(APIAtlas.sellerResendVerification+"\(SessionManager.accessToken())&mobileNumber=\(self.mobileNumber)", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 println(responseObject.description)
@@ -647,10 +648,11 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                     verifyNumberViewController.view.frame.origin.y = verifyNumberViewController.view.frame.size.height
                     self.navigationController?.presentViewController(verifyNumberViewController, animated: true, completion:
                     nil)
-                //self.dismissView()
                 } else {
-                    self.showAlert(self.error, message: self.invalid)
+                    self.showAlert(self.error, message: responseObject["message"] as! String)
+                    self.dismissView()
                 }
+                //self.dismissView()
                 //self.setSelectedViewControllerWithIndex(0)
                 self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
@@ -886,7 +888,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 //self.storeInfoModel?.contact_number = newNumber
                 self.verifyOrChange = 1
                 println(self.verifyOrChange)
-                self.mobileNumber = newNumber
+                //self.mobileNumber = newNumber
                 self.storeInfoVerify(oldNumber)
                 self.hud?.hide(true)
             } else {

@@ -18,6 +18,8 @@ class CaseDetailsTableViewController: UITableViewController {
     @IBOutlet weak var complaintLabel: UILabel!
     @IBOutlet weak var csrLabel: UIView!
     
+    @IBOutlet weak var transactionIdTitleLabel: UILabel!
+    @IBOutlet weak var transactionIdLabel: UILabel!
     @IBOutlet weak var caseID: UILabel!
     @IBOutlet weak var statusCase: UILabel!
     @IBOutlet weak var dateOpen: UILabel!
@@ -44,7 +46,7 @@ class CaseDetailsTableViewController: UITableViewController {
     let csrTitle: String = StringHelper.localizedStringWithKey("CASE_CSR_LOCALIZE_KEY")
     let caseTitle: String = StringHelper.localizedStringWithKey("CASE_TITLE_LOCALIZE_KEY")
     let items: String = StringHelper.localizedStringWithKey("CASE_ITEMS_LOCALIZE_KEY")
-    
+    let transaction: String = StringHelper.localizedStringWithKey("DISPUTE_TRANSACTION_NO_LOCALIZE_KEY")
     override func viewDidLoad() {
         super.viewDidLoad()
         //Localized strings 
@@ -54,8 +56,12 @@ class CaseDetailsTableViewController: UITableViewController {
         dateTitleLabel.text = dateTitle
         otherPartyLabel.text = otherPartyTitle
         complaintLabel.text = complaintTitle
+        transactionIdTitleLabel.text = transaction
         //csrRemarks.text = csrTitle
         itemLabel.text = items
+        
+        self.tableView.separatorInset = UIEdgeInsetsZero
+        self.tableView.layoutMargins = UIEdgeInsetsZero
         
         setupNavigationBar()
         setupClearFields()
@@ -80,6 +86,7 @@ class CaseDetailsTableViewController: UITableViewController {
         dateOpen.text = ""
         otherParty.text = ""
         complainantRemarks.text = ""
+        transactionIdLabel.text = ""
         //csrRemarks.text = ""
     }
     
@@ -154,6 +161,7 @@ class CaseDetailsTableViewController: UITableViewController {
                 dateFormatter1.dateFormat = "MMMM dd, yyyy"
                 let dateAdded = dateFormatter1.stringFromDate(date)
                 self.dateOpen.text = dateAdded
+                self.transactionIdLabel.text = caseDetails.transactionId
                 // In Seller other is Disputer, In Buyer other is Disputee
                 self.otherParty.text = caseDetails.disputerName
                 for remarkElement in caseDetails.remarks {
@@ -223,6 +231,9 @@ class CaseDetailsTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("ProductCell") as! UITableViewCell
+        cell.textLabel!.font = UIFont(name: "Panton-Regular", size: 15.0)
+        cell.separatorInset = UIEdgeInsetsZero
+        cell.layoutMargins = UIEdgeInsetsZero
         cell.textLabel!.text = self.tableData[indexPath.row]
         return cell
     }
