@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="PZ0-iH-fRI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="PZ0-iH-fRI">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -32,6 +32,8 @@
             <string>Panton-SemiBold</string>
         </mutableArray>
         <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
@@ -1158,12 +1160,12 @@
         <scene sceneID="AyV-kp-Yk8">
             <objects>
                 <tableViewController storyboardIdentifier="CaseDetailsTableViewController" title="Case Details" id="47S-iP-Xdk" customClass="CaseDetailsTableViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="z7Q-y6-ncC">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="101" sectionHeaderHeight="22" sectionFooterHeight="22" id="z7Q-y6-ncC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="4Wi-ed-3nt">
-                            <rect key="frame" x="0.0" y="64" width="320" height="297"/>
+                            <rect key="frame" x="0.0" y="64" width="320" height="338"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yVY-zZ-jI4">
@@ -1233,7 +1235,7 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x1b-gG-oRY">
-                                    <rect key="frame" x="0.0" y="176" width="320" height="40"/>
+                                    <rect key="frame" x="0.0" y="217" width="320" height="40"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date Open" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RCm-mM-v1l">
                                             <rect key="frame" x="15" y="9" width="123" height="21"/>
@@ -1263,19 +1265,19 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UVg-gU-5Ip">
-                                    <rect key="frame" x="0.0" y="217" width="320" height="40"/>
+                                    <rect key="frame" x="0.0" y="258" width="320" height="40"/>
                                     <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seller" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="LvG-Md-SHZ" userLabel="otherParty">
+                                            <rect key="frame" x="141" y="9" width="164" height="21"/>
+                                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Other Party" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3cJ-lL-AEd">
                                             <rect key="frame" x="15" y="9" width="107" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="107" id="0wN-Co-I32"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seller" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="LvG-Md-SHZ" userLabel="otherParty">
-                                            <rect key="frame" x="141" y="9" width="164" height="21"/>
                                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -1301,7 +1303,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zPt-nh-Agr">
-                                    <rect key="frame" x="0.0" y="265" width="320" height="32"/>
+                                    <rect key="frame" x="0.0" y="306" width="320" height="32"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ITEMS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WuR-B9-mUj">
                                             <rect key="frame" x="15" y="5" width="107" height="21"/>
@@ -1321,6 +1323,36 @@
                                         <constraint firstItem="WuR-B9-mUj" firstAttribute="top" secondItem="zPt-nh-Agr" secondAttribute="top" constant="5" id="wcy-Pc-zmi"/>
                                     </constraints>
                                 </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aDl-Q6-m0I">
+                                    <rect key="frame" x="0.0" y="176" width="320" height="40"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transaction Id" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJ4-m9-FvQ">
+                                            <rect key="frame" x="15" y="9" width="123" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="123" id="wUk-rX-4Ud"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12589289845226558" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="RTK-HB-yT0" userLabel="dateOpen">
+                                            <rect key="frame" x="140" y="9" width="166" height="21"/>
+                                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="RTK-HB-yT0" secondAttribute="bottom" constant="10" id="4xc-3o-feN"/>
+                                        <constraint firstItem="RTK-HB-yT0" firstAttribute="leading" secondItem="lJ4-m9-FvQ" secondAttribute="trailing" constant="2" id="BD9-3C-zkT"/>
+                                        <constraint firstAttribute="trailing" secondItem="RTK-HB-yT0" secondAttribute="trailing" constant="14" id="R3A-79-ffJ"/>
+                                        <constraint firstAttribute="bottom" secondItem="lJ4-m9-FvQ" secondAttribute="bottom" constant="10" id="Rb8-av-BYm"/>
+                                        <constraint firstItem="lJ4-m9-FvQ" firstAttribute="top" secondItem="aDl-Q6-m0I" secondAttribute="top" constant="9" id="Riw-5Q-ueb"/>
+                                        <constraint firstItem="lJ4-m9-FvQ" firstAttribute="leading" secondItem="aDl-Q6-m0I" secondAttribute="leading" constant="15" id="YBe-ke-job"/>
+                                        <constraint firstItem="RTK-HB-yT0" firstAttribute="top" secondItem="aDl-Q6-m0I" secondAttribute="top" constant="9" id="lGB-Pb-Fgn"/>
+                                    </constraints>
+                                </view>
                             </subviews>
                             <color key="backgroundColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
@@ -1329,9 +1361,9 @@
                                 <constraint firstItem="UVg-gU-5Ip" firstAttribute="top" secondItem="x1b-gG-oRY" secondAttribute="bottom" constant="1" id="6WT-Ii-Co4"/>
                                 <constraint firstItem="rSp-UQ-ZPS" firstAttribute="leading" secondItem="4Wi-ed-3nt" secondAttribute="leading" constant="15" id="8Wv-p0-Xhq"/>
                                 <constraint firstAttribute="trailing" secondItem="yVY-zZ-jI4" secondAttribute="trailing" id="9dA-EW-4hE"/>
+                                <constraint firstItem="x1b-gG-oRY" firstAttribute="top" secondItem="aDl-Q6-m0I" secondAttribute="bottom" constant="1" id="AeJ-xZ-dSJ"/>
                                 <constraint firstItem="x1b-gG-oRY" firstAttribute="leading" secondItem="4Wi-ed-3nt" secondAttribute="leading" id="Aw9-Sr-fBa"/>
                                 <constraint firstItem="yVY-zZ-jI4" firstAttribute="leading" secondItem="4Wi-ed-3nt" secondAttribute="leading" id="JK5-RV-QRH"/>
-                                <constraint firstItem="x1b-gG-oRY" firstAttribute="top" secondItem="8kk-ws-cmW" secondAttribute="bottom" constant="1" id="JWV-eb-jGM"/>
                                 <constraint firstAttribute="trailing" secondItem="UVg-gU-5Ip" secondAttribute="trailing" id="Q9z-Os-x2n"/>
                                 <constraint firstItem="zPt-nh-Agr" firstAttribute="leading" secondItem="4Wi-ed-3nt" secondAttribute="leading" id="RC6-LR-wwV"/>
                                 <constraint firstItem="rSp-UQ-ZPS" firstAttribute="top" secondItem="yVY-zZ-jI4" secondAttribute="bottom" constant="21" id="SRM-di-pgn"/>
@@ -1339,10 +1371,12 @@
                                 <constraint firstAttribute="trailing" secondItem="zPt-nh-Agr" secondAttribute="trailing" id="Xvs-9d-Qgq"/>
                                 <constraint firstItem="UVg-gU-5Ip" firstAttribute="leading" secondItem="4Wi-ed-3nt" secondAttribute="leading" id="b86-G9-5qn"/>
                                 <constraint firstItem="8kk-ws-cmW" firstAttribute="top" secondItem="rSp-UQ-ZPS" secondAttribute="bottom" constant="8" id="cgn-hQ-jse"/>
-                                <constraint firstItem="x1b-gG-oRY" firstAttribute="top" secondItem="8kk-ws-cmW" secondAttribute="bottom" constant="1" id="mIs-Vr-N02"/>
+                                <constraint firstItem="aDl-Q6-m0I" firstAttribute="leading" secondItem="4Wi-ed-3nt" secondAttribute="leading" id="dZq-24-Lnk"/>
                                 <constraint firstItem="8kk-ws-cmW" firstAttribute="leading" secondItem="4Wi-ed-3nt" secondAttribute="leading" id="uD0-JE-bgA"/>
                                 <constraint firstAttribute="bottom" secondItem="zPt-nh-Agr" secondAttribute="bottom" id="wQ3-pV-lTH"/>
                                 <constraint firstAttribute="trailing" secondItem="x1b-gG-oRY" secondAttribute="trailing" id="xHF-qG-t1h"/>
+                                <constraint firstAttribute="trailing" secondItem="aDl-Q6-m0I" secondAttribute="trailing" id="z1c-HC-pUV"/>
+                                <constraint firstItem="aDl-Q6-m0I" firstAttribute="top" secondItem="8kk-ws-cmW" secondAttribute="bottom" constant="1" id="z59-Jp-Zvi"/>
                             </constraints>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="ZzI-hq-IBl">
@@ -1402,7 +1436,7 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="ProductCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProductCell" id="6zD-C5-UlH">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="ProductCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProductCell" rowHeight="101" id="6zD-C5-UlH">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6zD-C5-UlH" id="6EW-mp-rEe">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -1428,6 +1462,8 @@
                         <outlet property="otherPartyLabel" destination="3cJ-lL-AEd" id="yUM-8a-m0l"/>
                         <outlet property="statusCase" destination="XLa-oV-kjd" id="Dgf-io-fOs"/>
                         <outlet property="statusTitleLabel" destination="PXk-CH-NGL" id="N5k-4s-CHM"/>
+                        <outlet property="transactionIdLabel" destination="RTK-HB-yT0" id="9ts-WI-gOM"/>
+                        <outlet property="transactionIdTitleLabel" destination="lJ4-m9-FvQ" id="XfH-Ur-pe0"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bjk-Oh-yGL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1457,7 +1493,7 @@
                                     <outlet property="delegate" destination="nOb-Vl-TXr" id="7Gh-fd-Ggt"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No result found." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAN-Ux-RhM">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No result found." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAN-Ux-RhM">
                                 <rect key="frame" x="8" y="323" width="359" height="21"/>
                                 <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
                                 <nil key="highlightedColor"/>
