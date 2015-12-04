@@ -118,9 +118,23 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     // MARK: Actions
     
     @IBAction func forgotPasswordAction(sender: AnyObject) {
-        var url: String = APIEnvironment.baseUrl() + "/forgot-password-request"
-        url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
-         UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+        var alert = UIAlertController(title: "Please choose your type.", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+        
+        alert.addAction(UIAlertAction(title: "Merchant", style: UIAlertActionStyle.Default) { UIAlertAction in
+            var url: String = APIEnvironment.baseUrl() + "/forgot-password-request"
+            url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
+            UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+        })
+        
+        alert.addAction(UIAlertAction(title: "Reseller", style: UIAlertActionStyle.Default) { UIAlertAction in
+            var url: String = APIEnvironment.baseUrl() + "/affiliate-program/forgot-password-request"
+            url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
+            UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+        })
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
     }
     
     @IBAction func signInAction(sender: AnyObject) {
