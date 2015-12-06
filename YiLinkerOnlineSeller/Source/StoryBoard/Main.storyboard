@@ -1493,7 +1493,7 @@
                                     <outlet property="delegate" destination="nOb-Vl-TXr" id="7Gh-fd-Ggt"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No result found." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAN-Ux-RhM">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No result found." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAN-Ux-RhM">
                                 <rect key="frame" x="8" y="323" width="359" height="21"/>
                                 <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
                                 <nil key="highlightedColor"/>
@@ -1851,16 +1851,16 @@
                                                     </constraints>
                                                 </view>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="time" translatesAutoresizingMaskIntoConstraints="NO" id="Mna-vD-VLY">
-                                                    <rect key="frame" x="159" y="72" width="10" height="10"/>
+                                                    <rect key="frame" x="64" y="72" width="10" height="10"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="10" id="BBG-JV-3uE"/>
                                                         <constraint firstAttribute="height" constant="10" id="xOs-Ko-WA3"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VWU-2M-rzs">
-                                                    <rect key="frame" x="172" y="67" width="30" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MM/DD/YYYY 00:00 ZZ" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VWU-2M-rzs">
+                                                    <rect key="frame" x="77" y="67" width="125" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="30" id="IBd-WV-A7P"/>
+                                                        <constraint firstAttribute="width" constant="125" id="IBd-WV-A7P"/>
                                                         <constraint firstAttribute="height" constant="21" id="Who-As-sW4"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
@@ -1966,10 +1966,10 @@
                                                         <constraint firstItem="Lp2-hD-qof" firstAttribute="top" secondItem="yVl-O0-d6h" secondAttribute="top" constant="12" id="axX-1v-Qcg"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1I6-Lq-NQu">
-                                                    <rect key="frame" x="83" y="65" width="30" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MM/DD/YYYY 00:00 ZZ" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1I6-Lq-NQu">
+                                                    <rect key="frame" x="83" y="65" width="125" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="30" id="9Ed-zy-E0t"/>
+                                                        <constraint firstAttribute="width" constant="125" id="9Ed-zy-E0t"/>
                                                         <constraint firstAttribute="height" constant="21" id="gKQ-Gx-Ld6"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
@@ -1984,14 +1984,14 @@
                                                     </constraints>
                                                 </imageView>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="seen" translatesAutoresizingMaskIntoConstraints="NO" id="fuM-IL-5VZ">
-                                                    <rect key="frame" x="118" y="70" width="10" height="10"/>
+                                                    <rect key="frame" x="213" y="70" width="10" height="10"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="10" id="UVM-nL-5nv"/>
                                                         <constraint firstAttribute="height" constant="10" id="imm-ML-Gle"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seen" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9VG-QB-sFA">
-                                                    <rect key="frame" x="131" y="65" width="30" height="21"/>
+                                                    <rect key="frame" x="226" y="65" width="30" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="M77-WZ-WJn"/>
                                                         <constraint firstAttribute="height" constant="21" id="gOe-5D-MDv"/>
@@ -2053,10 +2053,10 @@
                                                         <constraint firstAttribute="height" constant="40" id="uTB-RD-idt"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="heL-BX-m4l">
-                                                    <rect key="frame" x="107" y="196" width="30" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MM/DD/YYYY 00:00 ZZ" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="heL-BX-m4l">
+                                                    <rect key="frame" x="107" y="196" width="125" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="30" id="VmA-JO-lIa"/>
+                                                        <constraint firstAttribute="width" constant="125" id="VmA-JO-lIa"/>
                                                         <constraint firstAttribute="height" constant="21" id="zfn-p3-pmO"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
@@ -2088,14 +2088,14 @@
                                                     </constraints>
                                                 </imageView>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="seen" translatesAutoresizingMaskIntoConstraints="NO" id="68v-pi-YZJ">
-                                                    <rect key="frame" x="142" y="201" width="10" height="10"/>
+                                                    <rect key="frame" x="237" y="201" width="10" height="10"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="10" id="Cmd-p6-Ecp"/>
                                                         <constraint firstAttribute="width" constant="10" id="JIH-pB-y4W"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seen" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5g6-Ms-UnY">
-                                                    <rect key="frame" x="155" y="196" width="30" height="21"/>
+                                                    <rect key="frame" x="250" y="196" width="30" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="eDX-uq-n8f"/>
                                                         <constraint firstAttribute="width" constant="30" id="eqn-ls-JvQ"/>
@@ -2201,10 +2201,10 @@
                                                         <constraint firstAttribute="height" constant="10" id="dbw-rQ-ZhC"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="56R-Ug-rKQ">
-                                                    <rect key="frame" x="83" y="196" width="30" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MM/DD/YYYY 00:00 ZZ" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="56R-Ug-rKQ">
+                                                    <rect key="frame" x="83" y="196" width="125" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="30" id="1l0-rY-IrZ"/>
+                                                        <constraint firstAttribute="width" constant="125" id="1l0-rY-IrZ"/>
                                                         <constraint firstAttribute="height" constant="21" id="wE8-6n-6zZ"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
@@ -2212,14 +2212,14 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="seen" translatesAutoresizingMaskIntoConstraints="NO" id="1DS-WW-brh">
-                                                    <rect key="frame" x="118" y="201" width="10" height="10"/>
+                                                    <rect key="frame" x="213" y="201" width="10" height="10"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="10" id="vlC-0W-v4G"/>
                                                         <constraint firstAttribute="width" constant="10" id="x2d-Oz-x38"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seen" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X17-1A-E2c">
-                                                    <rect key="frame" x="131" y="196" width="30" height="21"/>
+                                                    <rect key="frame" x="226" y="196" width="30" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="FdB-Rq-Ehv"/>
                                                         <constraint firstAttribute="height" constant="21" id="UZF-ji-Tda"/>
