@@ -209,6 +209,9 @@ SIGNING_IN_LOCALIZE_KEY = "SIGNING IN ....";
 WELCOME_LOCALIZE_KEY = "Welcome to YiLinker!";
 PLEASE_INPUT_LOCALIZE_KEY = "Please input valid email and password.";
 NOT_MATCH_LOCALIZE_KEY = "Email and Password did not match.";
+ACCOUNT_TYPE_LOCALIZE_KEY = "What is your account type?";
+MERCHANT_LOCALIZE_KEY = "Merchant";
+AFFILIATE_LOCALIZE_KEY = "Affiliate";
 
 // LOG OUT
 LOGOUT_LOCALIZE_KEY = "Logout";

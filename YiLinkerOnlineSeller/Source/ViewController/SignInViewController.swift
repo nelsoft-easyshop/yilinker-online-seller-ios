@@ -21,6 +21,10 @@ struct SignInStrings {
     static let notMatch = StringHelper.localizedStringWithKey("NOT_MATCH_LOCALIZE_KEY")
     static let alertLogout = StringHelper.localizedStringWithKey("LOGOUT_LOCALIZE_KEY")
     static let alertLogoutMessage = StringHelper.localizedStringWithKey("LOGOUT_MESSAGE_LOCALIZE_KEY")
+    static let sheetAccountType = StringHelper.localizedStringWithKey("ACCOUNT_TYPE_LOCALIZE_KEY")
+    static let sheetMerchant = StringHelper.localizedStringWithKey("MERCHANT_LOCALIZE_KEY")
+    static let sheetAffiliate = StringHelper.localizedStringWithKey("AFFILIATE_LOCALIZE_KEY")
+    
 }
 
 protocol SignInViewControllerDelegate{
@@ -118,9 +122,23 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     // MARK: Actions
     
     @IBAction func forgotPasswordAction(sender: AnyObject) {
-        var url: String = APIEnvironment.baseUrl() + "/forgot-password-request"
-        url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
-         UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+        var alert = UIAlertController(title: SignInStrings.sheetAccountType, message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        alert.addAction(UIAlertAction(title: AlertStrings.cancel, style: UIAlertActionStyle.Cancel, handler: nil))
+        
+        alert.addAction(UIAlertAction(title: SignInStrings.sheetMerchant, style: UIAlertActionStyle.Default) { UIAlertAction in
+            var url: String = APIEnvironment.baseUrl() + "/forgot-password-request"
+            url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
+            UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+        })
+        
+        alert.addAction(UIAlertAction(title: SignInStrings.sheetAffiliate, style: UIAlertActionStyle.Default) { UIAlertAction in
+            var url: String = APIEnvironment.baseUrl() + "/affiliate-program/forgot-password-request"
+            url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
+            UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+        })
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
     }
     
     @IBAction func signInAction(sender: AnyObject) {
