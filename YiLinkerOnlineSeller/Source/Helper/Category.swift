@@ -378,7 +378,7 @@ extension String {
         let formatter = NSNumberFormatter()
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 2
-        formatter.numberStyle = .CurrencyStyle
+        formatter.numberStyle = .DecimalStyle
         return "\(formatter.stringFromNumber((self as NSString).doubleValue)!)"
     }
     
