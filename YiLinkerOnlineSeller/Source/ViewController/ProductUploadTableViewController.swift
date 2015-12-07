@@ -1327,7 +1327,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                         self.success()
                     }
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: dictionary["message"] as! String, title: Constants.Localized.serverError)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: dictionary["message"] as! String, title: Constants.Localized.invalid)
                 }
                 
                 println(response)
