@@ -149,10 +149,10 @@
                             <constraint firstAttribute="height" constant="1" id="0sm-gh-kiA"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Unit Cost" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rd4-I0-Mdj">
-                        <rect key="frame" x="16" y="169" width="95" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Product Cost" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rd4-I0-Mdj">
+                        <rect key="frame" x="16" y="169" width="115" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="95" id="Uov-Lj-Ghe"/>
+                            <constraint firstAttribute="width" constant="115" id="Uov-Lj-Ghe"/>
                             <constraint firstAttribute="height" constant="21" id="pkU-iF-DQ8"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
@@ -160,7 +160,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="35,999" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mSU-gM-R0X" userLabel="Total unit Cost Value">
-                        <rect key="frame" x="119" y="169" width="240" height="21"/>
+                        <rect key="frame" x="139" y="169" width="220" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="d9P-1A-fbT"/>
                         </constraints>
@@ -332,7 +332,7 @@
                 <outlet property="totalUnitCostLabel" destination="mSU-gM-R0X" id="MQg-PF-1RY"/>
                 <outlet property="totalUnitCostTitleLabel" destination="Rd4-I0-Mdj" id="JqI-cS-Hpj"/>
             </connections>
-            <point key="canvasLocation" x="290.5" y="206.5"/>
+            <point key="canvasLocation" x="290.5" y="206"/>
         </tableViewCell>
     </objects>
 </document>
