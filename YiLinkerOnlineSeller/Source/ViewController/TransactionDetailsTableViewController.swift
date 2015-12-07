@@ -280,7 +280,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         var tempUnitCost: Double = 0
         
         for unitCost in transactionDetailsModel.transactionItems[0].products {
-            tempUnitCost += (unitCost.unitPrice.stringByReplacingOccurrencesOfString(",", withString: "") as NSString).doubleValue
+            tempUnitCost += (unitCost.totalPrice.stringByReplacingOccurrencesOfString(",", withString: "") as NSString).doubleValue
         }
         
         return "\(tempUnitCost)"
