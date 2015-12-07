@@ -570,7 +570,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             self.addressModel.provinceId = self.provinceModel.provinceId[row]
             self.addressModel.province = self.provinceModel.location[row]
             self.setTextAtIndex(activeTextField, text: self.provinceModel.location[row])
-            //self.addressModel.city = ""
+            self.addressModel.city = ""
             //request for new city data model and reload tableview
             //save current row and reset dependent values
             self.provinceRow = row
@@ -580,6 +580,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             self.addressModel.cityId = self.cityModel.cityId[row]
             self.addressModel.city = self.cityModel.location[row]
             self.setTextAtIndex(activeTextField, text: self.cityModel.location[row])
+            self.addressModel.barangay = ""
             //save current row and reset dependent values
             self.cityRow = row
             self.barangayRow = 0
