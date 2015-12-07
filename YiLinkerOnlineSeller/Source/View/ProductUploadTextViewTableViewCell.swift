@@ -39,4 +39,9 @@ class ProductUploadTextViewTableViewCell: UITableViewCell, UITextViewDelegate {
     func textViewDidChange(textView: UITextView) {
         self.delegate!.productUploadTextViewTableViewCell(textFieldDidChange: textView.text, cell: self, textFieldType: self.textFieldType!)
     }
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        let prospectiveText = (textView.text! as NSString).stringByReplacingCharactersInRange(range, withString: text)
+        return count(prospectiveText) <= 160 && prospectiveText.containsOnlyCharactersIn("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .'-&:!/?()@%*_{}[],")
+    }
 }
