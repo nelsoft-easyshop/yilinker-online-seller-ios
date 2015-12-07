@@ -203,7 +203,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             cell.dateCreatedLabel.text = formatDateToString(formatStringToDate(transactionDetailsModel.transactionDate))
             cell.dateModifiedLabel.text = formatDateToString(formatStringToDate(date_modified))
             cell.totalQuantityLabel.text = "\(transactionDetailsModel.transactionQuantity)"
-            cell.totalUnitCostLabel.text = transactionDetailsModel.transactionUnitPrice.formatToPeso()
+            cell.totalUnitCostLabel.text = calculateTotalUnitCost().formatToTwoDecimal().formatToPeso()
             cell.shippingCostLabel.text = transactionDetailsModel.transactionShippingFee.formatToPeso()
             cell.totalCostLabel.text = transactionDetailsModel.transactionPrice.formatToPeso()
             return cell
@@ -274,6 +274,16 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
             productDetailsController.invoiceNumber = invoiceNumber
             self.navigationController?.pushViewController(productDetailsController, animated:true)
         }
+    }
+    
+    func calculateTotalUnitCost() -> String {
+        var tempUnitCost: Double = 0
+        
+        for unitCost in transactionDetailsModel.transactionItems[0].products {
+            tempUnitCost += (unitCost.unitPrice.stringByReplacingOccurrencesOfString(",", withString: "") as NSString).doubleValue
+        }
+        
+        return "\(tempUnitCost)"
     }
     
     func fireGetTransactionDetails(){
