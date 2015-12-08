@@ -193,7 +193,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         if indexPath.section == 0 {
             let cell: TransactionDetailsTableViewCell = tableView.dequeueReusableCellWithIdentifier(detailsCellIdentifier, forIndexPath: indexPath) as! TransactionDetailsTableViewCell
             cell.selectionStyle = .None;
-            if transactioStatus == StringHelper.localizedStringWithKey("TRANSACTIONS_TRANSACTIONS_LOCALIZE_KEY") {
+            if transactioStatus == StringHelper.localizedStringWithKey("TRANSACTIONS_ALL_LOCALIZE_KEY") {
                 cell.statusLabel.text = "   \(transactionDetailsModel.transactionStatusName)     "
             } else {
                 cell.statusLabel.text = "   \(transactioStatus)     "

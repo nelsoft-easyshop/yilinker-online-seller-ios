@@ -119,7 +119,7 @@ class TransactionViewController: UIViewController {
     
     func initializeLocalizedStrings() {
         noTransactionLabel.text = StringHelper.localizedStringWithKey("TRANSACTIONS_NO_TRANSACTIONS_LOCALIZE_KEY")
-        pageTitle.append(StringHelper.localizedStringWithKey("TRANSACTIONS_TRANSACTIONS_LOCALIZE_KEY"))
+        pageTitle.append(StringHelper.localizedStringWithKey("TRANSACTIONS_ALL_LOCALIZE_KEY"))
         pageTitle.append(StringHelper.localizedStringWithKey("TRANSACTIONS_NEW_UPDATE_LOCALIZE_KEY"))
         pageTitle.append(StringHelper.localizedStringWithKey("TRANSACTIONS_ONGOING_LOCALIZE_KEY"))
         pageTitle.append(StringHelper.localizedStringWithKey("TRANSACTIONS_COMPLETED_LOCALIZE_KEY"))
