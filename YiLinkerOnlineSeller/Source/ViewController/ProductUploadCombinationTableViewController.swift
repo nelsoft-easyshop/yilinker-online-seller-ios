@@ -385,9 +385,8 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
             } else if self.combination.height == "" {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.heightRequried, title: ProductUploadStrings.incompleteProductDetails)
             } else {
-                
                 if self.combination.discountedPrice.toInt() > self.combination.retailPrice.toInt() {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Discounted price must be less than or equal to the retail price.", title: "Invalid")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRICE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
                     self.combination.discountedPrice = self.combination.retailPrice
                 } else {
                     let cell: ProductUploadCombinationFooterTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as! ProductUploadCombinationFooterTableViewCell
@@ -401,7 +400,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
                     
                     if self.productModel == nil {
                         if find(ProductSku.SKUS, self.combination.sku) != nil {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "SKU is already taken.", title: "Invalid")
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_AVAILABLE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
                         } else {
                             self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: false, indexPath: NSIndexPath())
                             ProductSku.SKUS.append(self.combination.sku)
@@ -410,14 +409,13 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
                     } else {
                         ProductSku.SKUS[self.selectedIndexpath!.section] = ""
                         if find(ProductSku.SKUS, self.combination.sku) != nil {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "SKU is already taken.", title: "Invalid")
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_AVAILABLE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
                         } else {
                             self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: true, indexPath: self.selectedIndexpath!)
                             ProductSku.SKUS[self.selectedIndexpath!.section] = self.combination.sku
                             self.navigationController?.popViewControllerAnimated(true)
                         }
                     }
-                    
                 }
             }
         }
