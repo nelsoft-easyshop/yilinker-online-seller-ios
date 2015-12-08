@@ -630,6 +630,9 @@ ATTRIBUTE_LIST_LOCALIZE_KEY = "Attribute List";
 ADD_COMBINATION_LOCALIZE_KEY = "Add Combination";
 PRODUCT_UPLOAD_LOCALIZE_KEY = "Product Upload";
 ATTRIBUTE_COMBINATION_LOCALIZE_KEY = "Attribute Combination";
+PRODUCT_UPLOAD_INVALID_LOCALIZE_KEY = "Invalid ";
+PRODUCT_UPLOAD_PRICE_LOCALIZE_KEY = "Discounted/final price must be less than or equal to the retail price.";
+PRODUCT_UPLOAD_SKU_AVAILABLE_LOCALIZE_KEY = "SKU is already taken.";
 
 // MARK: - Reseller
 RESELLER_LOCALIZE_KEY = "Reseller";

@@ -16,10 +16,15 @@ struct PUCLVCConstant {
     static let productUploadPlainCombinationTableViewCellNibNameAndIdentifier = "ProductUploadPlainDetailCombinationTableViewCell"
 }
 
+struct ProductSku {
+    static var SKUS: [String] = []
+}
+
 class ProductUploadCombinationListViewController: UIViewController, ProductUploadAddFooterViewDelegate, ProductUploadCombinationTableViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, PUAttributeSetHeaderTableViewCellDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     var productModel: ProductModel?
+    var isValidSku: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -262,10 +267,13 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
                 }
             }
             
-            
             self.tableView.reloadData()
         } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.combinationAlreadyExist, title: Constants.Localized.error)
+            if isValidSku {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.invalid, title: "SKU must be unique for each combination.")
+            } else {
+                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.combinationAlreadyExist, title: Constants.Localized.error)
+            }
         }
     }
     @IBAction func saveDetails(sender: AnyObject) {

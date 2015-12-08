@@ -15,6 +15,7 @@ struct PUCTVCConstant {
     static let productUploadAttributeValluesCollectionViewCellNibNameAndIdentifier = "ProductUploadAttributeValuesCollectionViewCell"
    
     static let footerHeight: CGFloat = 261
+    
 }
 
 protocol ProductUploadCombinationTableViewControllerDelegate {
@@ -221,7 +222,8 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
             self.delegate!.productUploadCombinationTableViewController(appendCombination: combination, isEdit: true, indexPath: self.selectedIndexpath!)
         }
         
-        self.navigationController?.popViewControllerAnimated(true)
+         self.navigationController?.popViewControllerAnimated(true)
+        
     }
     
     func productUploadCombinationFooterTableViewCell(didClickUploadImage cell: ProductUploadCombinationFooterTableViewCell) {
@@ -383,24 +385,39 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
             } else if self.combination.height == "" {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.heightRequried, title: ProductUploadStrings.incompleteProductDetails)
             } else {
-                
-                let cell: ProductUploadCombinationFooterTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as! ProductUploadCombinationFooterTableViewCell
-                
-                self.combination.images = cell.uploadedImages()
-                
-                let cell2: ProductUploadCombinationTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! ProductUploadCombinationTableViewCell
-                
-                let combination2: CombinationModel = cell2.data()
-                self.combination.attributes = combination2.attributes
-                
-                if self.productModel == nil {
-                    self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: false, indexPath: NSIndexPath())
+                if self.combination.discountedPrice.toInt() > self.combination.retailPrice.toInt() {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRICE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
+                    self.combination.discountedPrice = self.combination.retailPrice
                 } else {
-                    self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: true, indexPath: self.selectedIndexpath!)
+                    let cell: ProductUploadCombinationFooterTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as! ProductUploadCombinationFooterTableViewCell
+                    
+                    self.combination.images = cell.uploadedImages()
+                    
+                    let cell2: ProductUploadCombinationTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! ProductUploadCombinationTableViewCell
+                    
+                    let combination2: CombinationModel = cell2.data()
+                    self.combination.attributes = combination2.attributes
+                    
+                    if self.productModel == nil {
+                        if find(ProductSku.SKUS, self.combination.sku) != nil {
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_AVAILABLE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
+                        } else {
+                            self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: false, indexPath: NSIndexPath())
+                            ProductSku.SKUS.append(self.combination.sku)
+                            self.navigationController?.popViewControllerAnimated(true)
+                        }
+                    } else {
+                        ProductSku.SKUS[self.selectedIndexpath!.section] = ""
+                        if find(ProductSku.SKUS, self.combination.sku) != nil {
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_AVAILABLE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
+                        } else {
+                            self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: true, indexPath: self.selectedIndexpath!)
+                            ProductSku.SKUS[self.selectedIndexpath!.section] = self.combination.sku
+                            self.navigationController?.popViewControllerAnimated(true)
+                        }
+                    }
                 }
             }
-            
-            self.navigationController?.popViewControllerAnimated(true)
         }
     }
     
