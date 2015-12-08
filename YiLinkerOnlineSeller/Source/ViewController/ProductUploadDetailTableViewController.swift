@@ -229,7 +229,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
             //self.tableView.reloadRowsAtIndexPaths([collectionViewIndexPath], withRowAnimation: UITableViewRowAnimation.None)
             self.tableView.endUpdates()
         } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.error, title: ProductUploadStrings.attributeAlreadyExist)
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.attributeAlreadyExist, title: Constants.Localized.error)
         }
     }
     
