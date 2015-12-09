@@ -408,7 +408,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                 headerView.setCoverPhotoUrl(storeInfo.coverPhoto)
                 headerView.setProfilePhotoUrl(storeInfo.avatar)
                 headerView.setTotalProducts(totalProducts)
-                headerView.setTotalSales(totalSales.formatToTwoDecimal())
+                headerView.setTotalSales(totalSales.formatToTwoDecimal().formatToPeso())
                 headerView.setTotalTransactions(totalTransactions)
             }
             
