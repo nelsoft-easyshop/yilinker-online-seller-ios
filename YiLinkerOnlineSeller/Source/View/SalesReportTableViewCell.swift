@@ -178,7 +178,9 @@ class SalesReportTableViewCell: UITableViewCell {
                 let tempNumber = salesReportModel.confirmedTransactionPerDay[soldItemIndex].numberOfOrders as NSString
                 println("tempNumber\(i) \(tempNumber)")
                 soldItemEntries.append(ChartDataEntry(value: tempNumber.doubleValue, xIndex: i))
-                soldItemIndex++
+                if soldItemIndex != salesReportModel.confirmedTransactionPerDay.count - 1 {
+                    soldItemIndex++
+                }
                 
                 if tempNumber.integerValue > maximumYVals {
                     maximumYVals = tempNumber.integerValue
@@ -192,7 +194,9 @@ class SalesReportTableViewCell: UITableViewCell {
                 let tempNumber = salesReportModel.cancelledTransactionPerDay[cancelledItemIndex].numberOfOrders as NSString
                 println("tempNumber\(i) \(tempNumber)")
                 cancelledItemEntries.append(ChartDataEntry(value: tempNumber.doubleValue, xIndex: i))
-                cancelledItemIndex++
+                if cancelledItemIndex != salesReportModel.cancelledTransactionPerDay.count - 1 {
+                    cancelledItemIndex++
+                }
                 
                 if tempNumber.integerValue > maximumYVals {
                     maximumYVals = tempNumber.integerValue
@@ -200,6 +204,7 @@ class SalesReportTableViewCell: UITableViewCell {
             } else {
                 cancelledItemEntries.append(ChartDataEntry(value: 0, xIndex: i))
             }
+        
         }
         
         var soldItemDataSet: LineChartDataSet = LineChartDataSet(yVals: soldItemEntries, label: soldLocalizeString)
