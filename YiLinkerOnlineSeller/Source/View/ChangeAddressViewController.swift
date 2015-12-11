@@ -135,7 +135,6 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             self.cellCount = self.getAddressModel.listOfAddress.count
             for var num  = 0; num < self.getAddressModel.listOfAddress.count; num++ {
                 if self.getAddressModel.listOfAddress[num].isDefault {
-                    //self.selectedIndex = num
                     self.defaultAddress = num
                 }
             }
@@ -147,19 +146,14 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 if task.statusCode == 401 {
                     self.requestRefreshToken(AddressRefreshType.Get)
                 } else {
-                    self.showAlert(title: self.somethingWentWrong, message: nil)
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        self.showAlert(title: self.error, message: errorModel.message)
+                    } else {
+                        self.showAlert(title: self.somethingWentWrong, message: nil)
+                    }
                 }
-
-                /* if task.statusCode == 401 {
-                    self.requestRefreshToken(AddressRefreshType.Get, uid: 0, indexPath: nil)
-                }  else if error.userInfo != nil {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: errorModel.title)
-                } else {
-                    self.addEmptyView()
-                }
-                */
                 self.hud?.hide(true)
         })
     }
@@ -205,29 +199,25 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             if responseObject["isSuccessful"] as! Bool {
                 self.showAlert(title: self.information, message: responseObject["message"] as! String)
                 self.delegate?.updateStoreAddressDetail(self.getAddressModel.listOfAddress[self.defaultAddress].title, storeAddress:self.getAddressModel.listOfAddress[self.defaultAddress].fullLocation)
-                //self.changeBankAccountCollectionView.reloadData()
                 self.navigationController!.popViewControllerAnimated(true)
             } else {
                 self.showAlert(title: self.error, message: self.somethingWentWrong)
             }
-            //self.delegate?.updateStoreAddressDetail(self.storeAddressModel.user_address_id[self.selectedIndex], location_id: self.storeAddressModel.location_id[self.selectedIndex], title: self.storeAddressModel.title[self.selectedIndex], unit_number: self.storeAddressModel.unit_number[self.selectedIndex], building_name: self.storeAddressModel.building_name[self.selectedIndex], street_number: self.storeAddressModel.street_number[self.selectedIndex], street_name: self.storeAddressModel.street_name[self.selectedIndex], subdivision: self.storeAddressModel.subdivision[self.selectedIndex], zip_code: self.storeAddressModel.zip_code[self.selectedIndex], street_address: self.storeAddressModel.street_address[self.selectedIndex], country: self.storeAddressModel.country[self.selectedIndex], island: self.storeAddressModel.island[self.selectedIndex], region: self.storeAddressModel.region[self.selectedIndex], province: self.storeAddressModel.province[self.selectedIndex], city: self.storeAddressModel.city[self.selectedIndex], municipality: self.storeAddressModel.municipality[self.selectedIndex], barangay: self.storeAddressModel.barangay[self.selectedIndex], longitude: self.storeAddressModel.longitude[self.selectedIndex], latitude: self.storeAddressModel.latitude[self.selectedIndex], landline: self.storeAddressModel.landline[self.selectedIndex], is_default: self.storeAddressModel.is_default[self.selectedIndex])
-       
-            //Old
-            //self.delegate?.updateStoreAddressDetail(self.storeAddressModel.title[self.defaultAddress], storeAddress: self.storeAddressModel.store_address[self.defaultAddress])
-            //New
-            
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 if task.statusCode == 401 {
                     self.requestRefreshToken(AddressRefreshType.Create)
-                } else if task.statusCode == 402 {
-                    self.showAlert(title: self.information, message: StringHelper.localizedStringWithKey("STORE_INFO_SET_DEFAULT_ADDRESS_LOCALIZE_KEY"))
                 } else {
-                    self.showAlert(title: self.somethingWentWrong, message: nil)
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        self.showAlert(title: self.error, message: errorModel.message)
+                    } else {
+                        self.showAlert(title: self.somethingWentWrong, message: nil)
+                    }
                 }
                 self.hud?.hide(true)
-                println(error)
         })
     }
 
@@ -374,10 +364,14 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 println(task.statusCode)
                 if task.statusCode == 401 {
                     self.requestRefreshToken(AddressRefreshType.Delete)
-                } else if task.statusCode == 400 {
-                     self.showAlert(title: StringHelper.localizedStringWithKey("STORE_INFO_DELETE_LOCALIZE_KEY"), message: nil)
                 } else {
-                    self.showAlert(title: self.somethingWentWrong, message: nil)
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        self.showAlert(title: self.error, message: errorModel.message)
+                    } else {
+                        self.showAlert(title: self.somethingWentWrong, message: nil)
+                    }
                 }
                 self.hud?.hide(true)
         })
@@ -393,6 +387,8 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         manager.POST(APIAtlas.loginUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            
             if type == AddressRefreshType.Get {
                 self.requestGetAddressess()
             } else if type == AddressRefreshType.Create {
@@ -403,8 +399,14 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    self.showAlert(title: self.error, message: errorModel.message)
+                } else {
+                    self.showAlert(title: self.somethingWentWrong, message: nil)
+                }
                 self.hud?.hide(true)
-                self.showAlert(title: self.error, message: self.somethingWentWrong)
         })
     }
     

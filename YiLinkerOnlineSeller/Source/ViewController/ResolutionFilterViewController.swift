@@ -67,8 +67,6 @@ class SelectedFilters {
         }
     }
     
-    
-    
     func getFilterType() -> ResolutionTimeFilter {
         return self.time
     }

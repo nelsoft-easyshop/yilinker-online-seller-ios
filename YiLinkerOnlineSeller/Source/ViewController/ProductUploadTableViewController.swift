@@ -235,7 +235,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 if task.statusCode == 401 {
                     self.fireRefreshToken()
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        self.showAlert(Constants.Localized.error, message: errorModel.message)
+                    } else {
+                        self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                    }
                 }
                 
                 self.hud?.hide(true)
@@ -1327,7 +1333,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                         self.success()
                     }
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: dictionary["message"] as! String, title: Constants.Localized.invalid)
+                    self.showAlert(Constants.Localized.invalid, message: dictionary["message"] as! String)
                 }
                 
                 println(response)
@@ -1339,7 +1345,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             if task.statusCode == 401 {
                self.fireRefreshToken2()
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else {
+                    self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                }
                 self.tableView.reloadData()
             }
             self.hud?.hide(true)
@@ -1447,6 +1459,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else {
+                    self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                }
                 self.hud?.hide(true)
         })
 
@@ -1470,6 +1489,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else {
+                    self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                }
                 self.hud?.hide(true)
         })
     }
@@ -1490,6 +1516,20 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         
         let OKAction = UIAlertAction(title: Constants.Localized.yes, style: .Default) { (action) in
             self.fireUploadWithUploadType(UploadType.Draft)
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+        }
+    }
+    
+    //MARK: Alert view
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
+            self.dismissViewControllerAnimated(true, completion: nil)
         }
         
         alertController.addAction(OKAction)

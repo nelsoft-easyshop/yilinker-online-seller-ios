@@ -387,17 +387,20 @@ class ResolutionCenterViewControllerV2: UIViewController, UITableViewDataSource,
             self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
-                
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
                 if task.statusCode == 401 {
                     self.fireRefreshToken()
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY"), title: StringHelper.localizedStringWithKey("SOMETHING_WENT_WRONG_LOCALIZE_KEY"))
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        self.showAlert(Constants.Localized.error, message: errorModel.message)
+                    } else {
+                        self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                    }
                 }
-                
-                println(error)
+                self.hud?.hide(true)
         })
     }
     
@@ -414,13 +417,36 @@ class ResolutionCenterViewControllerV2: UIViewController, UITableViewDataSource,
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            
             self.fireGetCases()
+            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else {
+                    self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                }
                 self.hud?.hide(true)
         })
         
+    }
+    
+    //MARK: Alert view
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+        }
     }
     
     func formatDateToCompleteString(date: NSDate) -> String {

@@ -144,10 +144,9 @@ class CaseDetailsTableViewController: UITableViewController {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             let caseDetailsModel: CaseDetailsModel = CaseDetailsModel.parseDataWithDictionary(responseObject)
             
-            println(responseObject)
             let data2 = NSJSONSerialization.dataWithJSONObject(responseObject, options: nil, error: nil)
             let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
-            println(string2)
+            
             if caseDetailsModel.isSuccessful {
                 let caseDetails = caseDetailsModel.caseData
                 
@@ -175,23 +174,26 @@ class CaseDetailsTableViewController: UITableViewController {
                 self.tableData = caseDetails.products
                 self.tableView.reloadData()
             } else {
-               self.showAlert(title: Constants.Localized.error, message: responseObject["message"] as! String)
+               self.showAlert(Constants.Localized.error, message: responseObject["message"] as! String)
             }
             self.hud?.hide(true)
             
         }, failure: {
             (task: NSURLSessionDataTask!, error: NSError!) in
-            self.hud?.hide(true)
-            
             let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-            println("error \(task.statusCode)")
             if task.statusCode == 401 {
                 self.fireRefreshToken()
             } else {
-              self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else {
+                    self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                }
             }
             
-            println(error)
+            self.hud?.hide(true)
         })
     }
     
@@ -208,16 +210,29 @@ class CaseDetailsTableViewController: UITableViewController {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            
             self.fireGetCases()
         }, failure: {
             (task: NSURLSessionDataTask!, error: NSError!) in
             let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+            
+            if task.statusCode == 401 {
+                self.fireRefreshToken()
+            } else {
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else {
+                    self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                }
+            }
             self.hud?.hide(true)
         })
         
     }
     
-    func showAlert(#title: String!, message: String!) {
+    func showAlert(title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
         alertController.addAction(defaultAction)

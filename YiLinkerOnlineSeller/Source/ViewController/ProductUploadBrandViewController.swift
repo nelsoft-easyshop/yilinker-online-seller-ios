@@ -23,7 +23,6 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
     var searchTask: NSURLSessionDataTask?
     var hud: MBProgressHUD?
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,7 +55,6 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
-    
     func checkButton() {
         var checkButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         checkButton.frame = CGRectMake(0, 0, 40, 40)
@@ -69,7 +67,6 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
         
         self.navigationItem.rightBarButtonItems = [navigationSpacer, customCheckButton]
     }
-    
     
     func fireBrandWithKeyWord(keyWord: String) {
         let manager: APIManager = APIManager.sharedInstance
@@ -104,7 +101,13 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
                     if task.statusCode == 401 {
                         self.fireRefreshTokenWithKeyWord(keyWord)
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        if error.userInfo != nil {
+                            let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                            let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                            self.showAlert(Constants.Localized.error, message: errorModel.message)
+                        } else {
+                            self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                        }
                     }
                 }
             })
@@ -128,6 +131,13 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else {
+                    self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                }
                 self.hud?.hide(true)
         })
         
@@ -188,6 +198,20 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: Alert view
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+        }
+    }
+
     // Dealloc
     deinit {
         self.tableView.delegate = nil

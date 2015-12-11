@@ -95,7 +95,6 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         self.hud?.show(true)
     }
     
-    
     func registerNib() {
         let nib: UINib = UINib(nibName: Constants.Checkout.newAddressTableViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: Constants.Checkout.newAddressTableViewCellNibNameAndIdentifier)
@@ -407,17 +406,18 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if error.userInfo != nil {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: self.somethingWentWrong)
-                    self.hud?.hide(true)
-                } else if task.statusCode == 401 {
+                if task.statusCode == 401 {
                     self.requestRefreshToken(AddressRefreshType.Create)
                 } else {
-                    self.showAlert(title: self.somethingWentWrong, message: nil)
-                    self.hud?.hide(true)
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        self.showAlert(title: self.error, message: errorModel.message)
+                    } else {
+                        self.showAlert(title: self.somethingWentWrong, message: nil)
+                    }
                 }
+                self.hud?.hide(true)
         })
     }
     
@@ -447,17 +447,18 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if error.userInfo != nil {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: self.somethingWentWrong)
-                    self.hud?.hide(true)
-                } else if task.statusCode == 401 {
+                if task.statusCode == 401 {
                     self.requestRefreshToken(AddressRefreshType.Edit)
                 } else {
-                    self.showAlert(title: self.somethingWentWrong, message: nil)
-                    self.hud?.hide(true)
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        self.showAlert(title: self.error, message: errorModel.message)
+                    } else {
+                        self.showAlert(title: self.somethingWentWrong, message: nil)
+                    }
                 }
+                self.hud?.hide(true)
         })
     }
     
@@ -471,16 +472,42 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         manager.POST(APIAtlas.loginUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            
             if type == AddressRefreshType.Create {
                 self.requestAddAddress()
             } else if type == AddressRefreshType.Edit {
                 self.fireEditAddress()
+            } else if type == AddressRefreshType.Province {
+                self.requestGetProvince()
+            } else if type == AddressRefreshType.City {
+                self.requestGetCities(self.addressModel.provinceId)
+                self.isEdit3 = false
+                self.setTextAtIndex(7, text: "")
+                self.setTextAtIndex(8, text: "")
+            } else {
+                if !self.isEdit3 {
+                    self.addressModel.barangay = ""
+                    self.addressModel.barangayId = 0
+                } else if self.addressModel.barangayId == 0 && self.addressModel.title == "" {
+                    self.addressModel.barangayId = self.barangayModel.barangayId[0]
+                    self.addressModel.barangay = self.barangayModel.location[0]
+                }else {
+                    self.addressModel.barangayId = self.addressModel.barangayId
+                    self.addressModel.barangay = self.barangayModel.location[0]
+                }
             }
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    self.showAlert(title: self.error, message: errorModel.message)
+                } else {
+                    self.showAlert(title: self.somethingWentWrong, message: nil)
+                }
                 self.hud?.hide(true)
-                self.showAlert(title: self.somethingWentWrong, message: nil)
         })
     }
     
@@ -492,7 +519,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)
             self.provinceModel = ProvinceModel.parseDataWithDictionary(responseObject)
-            println(responseObject)
+            
             if self.provinceModel.location.count != 0 && self.addressModel.title == "" {
                 self.addressModel.province = self.provinceModel.location[0]
                 self.addressModel.provinceId = self.provinceModel.provinceId[0]
@@ -504,13 +531,23 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 } else {
                     self.requestGetCities(self.provinceModel.provinceId[0])
                 }
-                
             }
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 401 {
+                    self.requestRefreshToken(AddressRefreshType.Province)
+                } else {
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        self.showAlert(title: self.error, message: errorModel.message)
+                    } else {
+                        self.showAlert(title: self.somethingWentWrong, message: nil)
+                    }
+                }
                 self.hud?.hide(true)
-                self.showAlert(title: self.somethingWentWrong, message: nil)
         })
     }
     
@@ -543,8 +580,20 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 401 {
+                    self.requestRefreshToken(AddressRefreshType.City)
+                } else {
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        self.showAlert(title: self.error, message: errorModel.message)
+                    } else {
+                        self.showAlert(title: self.somethingWentWrong, message: nil)
+                    }
+                }
                 self.hud?.hide(true)
-                self.showAlert(title: self.somethingWentWrong, message: nil)
+
         })
     }
     
@@ -556,7 +605,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)
             self.barangayModel = BarangayModel.parseDataWithDictionary(responseObject)
-            println(self.addressModel.barangayId)
+            
             if self.addressModel.barangayId == 0 && self.addressModel.title != "" {
                 self.addressModel.barangay = ""
                 self.addressModel.barangayId = 0
@@ -576,8 +625,19 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             self.tableView.reloadData()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 401 {
+                    self.requestRefreshToken(AddressRefreshType.Barangay)
+                } else {
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        self.showAlert(title: self.error, message: errorModel.message)
+                    } else {
+                        self.showAlert(title: self.somethingWentWrong, message: nil)
+                    }
+                }
                 self.hud?.hide(true)
-                self.showAlert(title: self.somethingWentWrong, message: nil)
         })
     }
     
