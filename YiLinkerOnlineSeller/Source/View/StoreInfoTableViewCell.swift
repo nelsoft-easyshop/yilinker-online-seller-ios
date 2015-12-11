@@ -90,7 +90,7 @@ class StoreInfoTableViewCell: UITableViewCell, UITextFieldDelegate, UITextViewDe
     
     func textFieldDidEndEditing(textField: UITextField) {
         self.delegate?.storeNameAndDescription(self.storeNameTextField.text, storeDescription: self.storeDescriptionTextView.text)
-        println("TextField did end editing method called \(self.storeNameTextField.text)")
+        println("TextField did end editing method called \(self.storeNameTextField.text) \(self.storeDescriptionTextView.text)")
     }
     
     // UITextField Delegates

@@ -230,21 +230,31 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         manager.GET(APIAtlas.transactionList, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)
-            self.transactionsModel = TransactionsModel.parseDataWithDictionary(responseObject as! NSDictionary)
-            print(responseObject)
-            for i in 0..<self.transactionsModel.transactions.count {
-                //if self.transactionsModel.transactions[i].order_status_id == "3" || self.transactionsModel.transactions[i].order_status_id == "6" {
+            
+            if responseObject["isSuccessful"] as! Bool {
+                self.transactionsModel = TransactionsModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                for i in 0..<self.transactionsModel.transactions.count {
                     self.transactionIds.append(self.transactionsModel.transactions[i].invoice_number)
-                //}
+                }
+            } else {
+                self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
             }
+            
             self.tableView.reloadData()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 if task.statusCode == 401 {
                     self.fireRefreshToken(DisputeRefreshType.Transaction)
+                } else {
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        self.showAlert(Constants.Localized.error, message: errorModel.message)
+                    } else {
+                        self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                    }
                 }
-                
                 self.hud?.hide(true)
         })
 
@@ -260,28 +270,39 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         manager.GET(APIAtlas.resolutionCenterReasons+"\(SessionManager.accessToken())", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)
-            self.reason = ResolutionCenterDisputeReasonModel.parseDataFromDictionary(responseObject as! NSDictionary)
             
-            for var i: Int = 0; i < self.reason?.key.count; i++ {
-                var arr = [ResolutionCenterDisputeReasonsModel]()
-                for var j: Int = 0; j < self.reason?.reason.count; j++ {
-                    if self.reason!.key[i] == self.reason!.allkey[j] {
-                        self.reas = ResolutionCenterDisputeReasonsModel(id: self.reason!.id[j], reason: self.reason!.reason[j])
-                        arr.append(self.reas)
-                        println("id \(self.reason!.id[j])")
+            if responseObject["isSuccessful"] as! Bool {
+                self.reason = ResolutionCenterDisputeReasonModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                
+                for var i: Int = 0; i < self.reason?.key.count; i++ {
+                    var arr = [ResolutionCenterDisputeReasonsModel]()
+                    for var j: Int = 0; j < self.reason?.reason.count; j++ {
+                        if self.reason!.key[i] == self.reason!.allkey[j] {
+                            self.reas = ResolutionCenterDisputeReasonsModel(id: self.reason!.id[j], reason: self.reason!.reason[j])
+                            arr.append(self.reas)
+                            println("id \(self.reason!.id[j])")
+                        }
                     }
+                    self.reasonTableData.append(ResolutionCenterDisputeReasonModel(key2: self.reason!.key[i], resolutionReasons2: arr))
                 }
-                self.reasonTableData.append(ResolutionCenterDisputeReasonModel(key2: self.reason!.key[i], resolutionReasons2: arr))
+            } else {
+                self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
             }
-           
-            //self.tableView.reloadData()
+            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 if task.statusCode == 401 {
                     self.fireRefreshToken(DisputeRefreshType.Reason)
+                } else {
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        self.showAlert(Constants.Localized.error, message: errorModel.message)
+                    } else {
+                        self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                    }
                 }
-                
                 self.hud?.hide(true)
         })
         
@@ -314,6 +335,13 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else {
+                    self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                }
                 self.hud?.hide(true)
         })
         
@@ -331,7 +359,6 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         self.navigationController?.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
-    
     
     func addPicker(textField: UITextField) {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -366,7 +393,6 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         
        
         textField.inputView = pickerView
-        
         
         textField.addToolBarWithDoneTarget(self, done: "done")
     }
@@ -517,7 +543,6 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             status = 16
         }
         
-        println("\(self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[self.reasonDefaultIndex].id) \(self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[self.reasonDefaultIndex].reason)")
         let parameters: NSDictionary = [
             "access_token": SessionManager.accessToken(),
             "disputeTitle": self.resolutiontitle,
@@ -525,14 +550,17 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             "orderProductStatus": "\(status)",
             "reasonId": self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[self.reasonDefaultIndex].id,
             "orderProductIds": ids.description]
-        //[153, 486]
-        println(parameters)
         
         manager.POST(APIAtlas.resolutionCenterAddCaseUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
+            
+            if responseObject["isSuccessful"] as! Bool {
+                self.navigationController?.popViewControllerAnimated(true)
+            } else {
+                self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+            }
             self.hud?.hide(true)
-            self.navigationController?.popViewControllerAnimated(true)
+            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -540,14 +568,20 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
                 if task.statusCode == 401 {
                     self.fireRefreshToken(DisputeRefreshType.AddCase)
                 } else {
-                    self.navigationController?.view.makeToast(Constants.Localized.someThingWentWrong)
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        self.showAlert(Constants.Localized.error, message: errorModel.message)
+                    } else {
+                        self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                    }
+                    //self.navigationController?.view.makeToast(Constants.Localized.someThingWentWrong)
                 }
-                
                 self.hud?.hide(true)
         })
     }
     
-    func showAlert(#title: String!, message: String!) {
+    func showAlert(title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
         alertController.addAction(defaultAction)

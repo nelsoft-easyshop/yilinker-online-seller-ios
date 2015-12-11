@@ -131,42 +131,25 @@ class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
         self.showHUD()
         manager.POST(APIAtlas.sellerChangePassword, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println("SUCCESS!")
            
             var success = StringHelper.localizedStringWithKey("PASSWORD_SUCCESS_CHANGE_LOCALIZE_KEY")
-            //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: success, title: Constants.Localized.success)
             self.showAlert(Constants.Localized.success, message: success)
-            //self.view.makeToast(success, duration: 3.0, position: CSToastPositionBottom)
-            /*
-            let seconds = 2.0
-            let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
-            let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
             
-            dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-                //self.dismissViewControllerAnimated(true, completion: nil)
-                //self.delegate?.dismissView()
-                // here code perfomed with delay
-            })
-            */
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 401{
+                if task.statusCode == 401 {
                     self.requestRefreshToken()
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error Refreshing Token", title: "Refresh Token Error")
-                    self.hud?.hide(true)
-                    //self.dismissViewControllerAnimated(true, completion: nil)
-                } else if task.statusCode == 404 || task.statusCode == 400 {
-                    let data = error.userInfo as! Dictionary<String, AnyObject>
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: data["message"] as! String, title: "Error")
-                    self.hud?.hide(true)
-                    //self.dismissViewControllerAnimated(true, completion: nil)
-                }else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error", title: Constants.Localized.someThingWentWrong )
-                    self.hud?.hide(true)
-                    //self.dismissViewControllerAnimated(true, completion: nil)
+                } else {
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.error)
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error )
+                    }
                 }
-               //self.delegate?.dismissView()
+                self.hud?.hide(true)
         })
         
     }
@@ -205,7 +188,13 @@ class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                self.showAlert(Constants.Localized.someThingWentWrong, message: "")
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.error)
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error )
+                }
                 self.hud?.hide(true)
         })
         

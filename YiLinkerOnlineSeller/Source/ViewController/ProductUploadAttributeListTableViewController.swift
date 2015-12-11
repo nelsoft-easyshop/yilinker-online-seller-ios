@@ -62,7 +62,6 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
         let nib: UINib = UINib(nibName: PUALTVConstant.pUAttributeSetHeaderTableViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: PUALTVConstant.pUAttributeSetHeaderTableViewCellNibNameAndIdentifier)
     }
-
     
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
@@ -99,7 +98,6 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
         // Return the number of rows in the section.
         return 2
     }
-
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
@@ -196,7 +194,6 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
             self.productModel.attributes.append(attribute)
         }
 
-        
         self.tableView.reloadData()
         self.changeButtonName()
     }
@@ -212,7 +209,6 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
             productUploadTableViewController.replaceProductAttributeWithAttribute(self.productModel.attributes, combinations: self.productModel.validCombinations)
             self.navigationController?.popToRootViewControllerAnimated(true)
         }
-       
     }
     
     func pUAttributeSetHeaderTableViewCell(didClickDelete cell: PUAttributeSetHeaderTableViewCell) {

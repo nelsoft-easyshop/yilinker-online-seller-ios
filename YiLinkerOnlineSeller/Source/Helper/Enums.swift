@@ -48,6 +48,9 @@ enum AddressRefreshType {
     case Create
     case SetDefault
     case Get
+    case Province
+    case City
+    case Barangay
 }
 
 enum VerifyType {

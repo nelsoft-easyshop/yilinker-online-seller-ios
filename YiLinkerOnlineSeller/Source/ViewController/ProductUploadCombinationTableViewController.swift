@@ -53,8 +53,6 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         self.tableView.tableHeaderView = headerView
         headerView.combinationLabel.text = self.headerTitle
         
-        
-        
         /*if self.parentUploadViewController.uploadType == UploadType.NewProduct {
             
         } else {
@@ -96,7 +94,6 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
             }
 
         }
-        
         
         self.tableView.tableFooterView = self.footerView()
         self.registerCell()
@@ -155,7 +152,6 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         // Return the number of rows in the section.
         return 3
     }
-
    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
