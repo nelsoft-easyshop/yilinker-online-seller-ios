@@ -51,6 +51,8 @@ class ChangeMobileNumberViewController: UIViewController, UITextFieldDelegate, U
         self.newNumberTextField.placeholder = enterNewNumber
         self.oldNumberTextField.enabled = false
         self.newNumberTextField.delegate = self
+        var tap = UITapGestureRecognizer(target: self, action: "dissmissKeyboard")
+        self.view.addGestureRecognizer(tap)
         // Do any additional setup after loading the view.
     }
 
@@ -104,6 +106,10 @@ class ChangeMobileNumberViewController: UIViewController, UITextFieldDelegate, U
         let prospectiveText = (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
         return count(prospectiveText) <= 11
         //return true;
+    }
+    
+    func dissmissKeyboard() {
+        self.newNumberTextField.resignFirstResponder()
     }
     
     /*
