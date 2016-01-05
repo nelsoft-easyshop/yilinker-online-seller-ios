@@ -796,7 +796,11 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     //MARK: - Back
     func back() {
         if self.productModel.name != "" {
-            self.draft()
+            if Draft.draft == 3 {
+                 self.dismissViewControllerAnimated(true, completion: nil)
+            } else {
+                self.draft()
+            }
         } else {
             self.dismissViewControllerAnimated(true, completion: nil)
         }
