@@ -365,6 +365,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
             println(responseObject)
             if responseObject["isSuccessful"] as! Bool {
                 self.productModel = ProductModel.parseDataWithDictionary(responseObject)
+                println(responseObject)
 //                self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
 //                self.productAttributesModel = self.productDetailsModel.attributes
 //                self.productUnitsModel = self.productDetailsModel.productUnits
