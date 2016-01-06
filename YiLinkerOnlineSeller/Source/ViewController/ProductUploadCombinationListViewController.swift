@@ -32,13 +32,11 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         self.backButton()
         self.title = Constants.ViewControllersTitleString.attributeCombination
         self.registerCell()
-        
         let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        println(self.productModel!.validCombinations.count)
     }
     
     func registerCell() {
@@ -137,14 +135,6 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             } else {
                 cell.images = combination.editedImages
             }
-        
-            if ProductSku.SKUS.count != 0 {
-                if contains(ProductSku.SKUS, combination.sku) {
-                    ProductSku.SKUS.append(combination.sku)
-                }
-            } else {
-                ProductSku.SKUS.append(combination.sku)
-            }
             
             cell.skuTextField.text = combination.sku
             cell.quantityTextField.text = combination.quantity
@@ -201,15 +191,22 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
     
     func back() {
         self.navigationController?.popViewControllerAnimated(true)
+        ProductSku.SKUS.removeAll(keepCapacity: false)
     }
     
     func productUploadAddFooterView(didSelectAddMore view: UIView) {
         let productUploadCombinationTableViewController: ProductUploadCombinationTableViewController = ProductUploadCombinationTableViewController(nibName: "ProductUploadCombinationTableViewController", bundle: nil)
         productUploadCombinationTableViewController.attributes = self.productModel!.attributes
         productUploadCombinationTableViewController.delegate = self
+       
         var counter: Int = 0
         if self.productModel != nil {
            counter = self.productModel!.validCombinations.count
+        }
+        
+        ProductSku.SKUS.removeAll(keepCapacity: false)
+        for i in 0..<self.productModel!.validCombinations.count {
+            ProductSku.SKUS.append(self.productModel!.validCombinations[i].sku)
         }
         
         productUploadCombinationTableViewController.headerTitle = "\(ProductUploadStrings.combination) \(counter + 1)"
@@ -297,6 +294,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
             productUploadTableViewController.replaceProductAttributeWithAttribute(self.productModel!.attributes, combinations: self.productModel!.validCombinations)
             self.navigationController?.popToRootViewControllerAnimated(true)
+            ProductSku.SKUS.removeAll(keepCapacity: false)
         }
     }
     
@@ -320,6 +318,11 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         productUploadCombinationTableViewController.productModel = self.productModel!.copy()
         productUploadCombinationTableViewController.selectedIndexpath = indexPath
         productUploadCombinationTableViewController.delegate = self
+    
+        ProductSku.SKUS.removeAll(keepCapacity: false)
+        for i in 0..<self.productModel!.validCombinations.count {
+            ProductSku.SKUS.append(self.productModel!.validCombinations[i].sku)
+        }
     
         var counter: Int = 0
         if self.productModel != nil {
