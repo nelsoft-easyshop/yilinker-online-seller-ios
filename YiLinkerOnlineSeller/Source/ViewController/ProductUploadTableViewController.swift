@@ -1186,7 +1186,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 if image.uid == "" && image.isRemoved == false && image.isNew == false {
                     
                 } else {
-                    println(image)
                     let data: NSData = UIImageJPEGRepresentation(image, 1)
                     datas.append(data)
                 }
