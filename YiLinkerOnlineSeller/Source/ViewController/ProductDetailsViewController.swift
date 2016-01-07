@@ -362,14 +362,8 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         let manager = APIManager.sharedInstance
         manager.GET(APIAtlas.getProductDetails + id, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
             if responseObject["isSuccessful"] as! Bool {
                 self.productModel = ProductModel.parseDataWithDictionary(responseObject)
-//                self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
-//                self.productAttributesModel = self.productDetailsModel.attributes
-//                self.productUnitsModel = self.productDetailsModel.productUnits
-//                self.productImagesModel = self.productDetailsModel.images
-//                
                 self.populateDetails()
             } else {
                 self.showAlert(title: "Error", message: responseObject["message"] as! String)

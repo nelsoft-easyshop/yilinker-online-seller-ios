@@ -198,8 +198,8 @@ class ProductModel {
                 }
                 
                 if !(value["productVariants"] is NSNull) {
-                    var attributeModel = AttributeModel()
                     for subValue in value["productVariants"] as! NSArray {
+                        var attributeModel = AttributeModel()
                         attributeModel.definition = subValue["name"] as! String
                         attributeModel.values = subValue["values"] as! [String]
                         attributes.append(attributeModel)
