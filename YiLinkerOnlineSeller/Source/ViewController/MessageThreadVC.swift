@@ -70,6 +70,8 @@ class MessageThreadVC: UIViewController {
     
     var hud: MBProgressHUD?
     
+    var hasUnreadMessage : String = ""
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == uploadImageSegueIdentifier){
             var imageVC = segue.destinationViewController as! ImageVC
@@ -182,10 +184,11 @@ class MessageThreadVC: UIViewController {
             if let data = info["data"] as? String{
                 if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
                     if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
-                        if let userId = json["userId"] as? Int{
-                            if (String(userId) == recipient?.userId){
+                        if let userId = json["recipientName"] as? String{
+                            if (String(userId) == recipient?.fullName){
                                 var r_temp = recipient?.userId ?? ""
-                                self.getMessagesFromEndpoint("1", limit: "30", userId: r_temp)
+                                self.messages[messages.count - 1].isSeen = "1"
+                                self.threadTableView.reloadData()
                             }
                         }
                     }
@@ -222,6 +225,10 @@ class MessageThreadVC: UIViewController {
         self.placeCustomBackImage()
         self.placeRightNavigationControllerDetails()
         
+//        SessionManager.setUnReadMessagesCount(SessionManager.getUnReadMessagesCount() - hasUnreadMessage.toInt()!)
+        SessionManager.setUnReadMessagesCount(0)
+        setMessageBadgeCount()
+        
         self.composeTextView.becomeFirstResponder()
         
         /* set message as read */
@@ -239,6 +246,18 @@ class MessageThreadVC: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onReceiveNewMessage:",
             name: appDelegate.messageKey, object: nil)
         
+    }
+    
+    
+    
+    func setMessageBadgeCount() {
+        if self.tabBarController!.tabBar.items?.count == 3 && SessionManager.isSeller() {
+            if SessionManager.getUnReadMessagesCount() != 0 {
+                (self.tabBarController!.tabBar.items![1] as! UITabBarItem).badgeValue = String(SessionManager.getUnReadMessagesCount())
+            } else {
+                (self.tabBarController!.tabBar.items![1] as! UITabBarItem).badgeValue = nil
+            }
+        }
     }
     
     func tableTapped(tap : UITapGestureRecognizer){
@@ -278,8 +297,9 @@ class MessageThreadVC: UIViewController {
         onlineLabel.font = UIFont(name: onlineLabel.font.fontName, size: 11.0)
         onlineLabel.textColor = UIColor.whiteColor()
         onlineLabel.sizeToFit()
+        onlineLabel.text = LocalizedStrings.online
         
-        var onlineLabelFrame = CGRectMake(navBarWidth-profileImageDimension - rightPadding - onlineLabel.frame.width - rightPadding2, 6, onlineLabel.frame.width, onlineLabel.frame.height)
+        var onlineLabelFrame = CGRectMake(navBarWidth-profileImageDimension - rightPadding - 35 - rightPadding2, 6, 35, 15)
         
         onlineLabel.frame = onlineLabelFrame
         
@@ -842,6 +862,8 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 
                 if (messages[index].isSeen == "0") {
                     cell.setSeenOff()
+                } else {
+                    cell.setSeenOn()
                 }
                 return cell
             } else {

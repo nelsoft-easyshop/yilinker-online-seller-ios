@@ -72,6 +72,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
             //messageThreadVC.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
             messageThreadVC.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
             messageThreadVC.recipient = selectedContact
+            messageThreadVC.hasUnreadMessage = conversations[indexPath!.row].hasUnreadMessage
         }
     }
     
@@ -180,8 +181,6 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
     override func viewWillAppear(animated: Bool) {
         //self.fireLogin()
         self.getConversationsFromEndpoint("1", limit: "10")
-        SessionManager.setUnReadMessagesCount(0)
-        
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistration:",
