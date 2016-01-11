@@ -30,6 +30,10 @@ private struct DetailsString {
     static let height = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_HEIGHT_LOCALIZE_KEY")
 }
 
+struct ProductUploadEdit {
+    static var edit: Bool = false
+}
+
 class ProductDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProductDescriptionViewDelegate, EmptyViewDelegate {
 
     // MARK: - Models
@@ -84,15 +88,13 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        customizeNavigationBar()
-        
         let nib = UINib(nibName: "ProductDetailsTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: DetailsString.cellIdentifier)
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        customizeNavigationBar()
         if Reachability.isConnectedToNetwork() {
             requestProductDetails()
         } else {
@@ -146,7 +148,11 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         self.navigationItem.leftBarButtonItems = [navigationSpacer, backButton]
         if SessionManager.isSeller() {
             if isEditable {
-                self.navigationItem.rightBarButtonItem = editButton
+                if ProductUploadEdit.edit {
+                    
+                } else {
+                    self.navigationItem.rightBarButtonItem = editButton
+                }
             }
         }
     }
@@ -362,6 +368,9 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         let manager = APIManager.sharedInstance
         manager.GET(APIAtlas.getProductDetails + id, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            let data = NSJSONSerialization.dataWithJSONObject(responseObject, options: nil, error: nil)
+            let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            println("product details -- \(responseObject)")
             if responseObject["isSuccessful"] as! Bool {
                 self.productModel = ProductModel.parseDataWithDictionary(responseObject)
                 self.populateDetails()

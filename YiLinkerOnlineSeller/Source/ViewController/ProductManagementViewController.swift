@@ -44,6 +44,10 @@ private struct Status {
     static let fullyDeleted = 4
 }
 
+struct Draft {
+    static var draft: Int = 0
+}
+
 class ProductManagementViewController: UIViewController, ProductManagementModelViewControllerDelegate, EmptyViewDelegate {
     
     @IBOutlet weak var searchBarContainerView: UIView!
@@ -718,7 +722,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             self.productModel = nil
             requestGetProductList(statusId[indexPath.row], key: searchBarTextField.text)
             selectedIndex = indexPath.row
-            
+            Draft.draft = indexPath.row
             if selectedIndex == 0 {
                 self.tableViewSectionHeight = 0.0
             } else {
