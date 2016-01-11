@@ -13,7 +13,8 @@ class ProductImagesView: UIView, UICollectionViewDataSource {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subTitleLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
-   
+    var productModel: ProductModel?
+
     var imagesUrls: [String] = []
     
     override func awakeFromNib() {
@@ -26,7 +27,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource {
     // MARK: - Methods
     
     func setDetails(product: ProductModel) {
-        
+        self.productModel = product
         self.titleLabel.text = product.name
         self.subTitleLabel.text = product.shortDescription
         
