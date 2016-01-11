@@ -188,6 +188,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
     
     func back() {
         self.navigationController?.popViewControllerAnimated(true)
+        ProductSku.SKUS.removeAll(keepCapacity: false)
     }
     
     func productUploadAddFooterView(didSelectAddMore view: UIView) {
@@ -197,6 +198,11 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         var counter: Int = 0
         if self.productModel != nil {
            counter = self.productModel!.validCombinations.count
+        }
+        
+        ProductSku.SKUS.removeAll(keepCapacity: false)
+        for i in 0..<self.productModel!.validCombinations.count {
+            ProductSku.SKUS.append(self.productModel!.validCombinations[i].sku)
         }
         
         productUploadCombinationTableViewController.headerTitle = "\(ProductUploadStrings.combination) \(counter + 1)"
@@ -284,6 +290,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
             productUploadTableViewController.replaceProductAttributeWithAttribute(self.productModel!.attributes, combinations: self.productModel!.validCombinations)
             self.navigationController?.popToRootViewControllerAnimated(true)
+            ProductSku.SKUS.removeAll(keepCapacity: false)
         }
     }
     
@@ -292,6 +299,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         let range: NSRange = NSMakeRange(indexPath.section, 1)
         let section: NSIndexSet = NSIndexSet(indexesInRange: range)
         
+        ProductSku.SKUS.removeAtIndex(indexPath.section)
         self.productModel!.validCombinations.removeAtIndex(indexPath.section)
         self.tableView.beginUpdates()
         self.tableView.deleteSections(section, withRowAnimation: UITableViewRowAnimation.Fade)
@@ -308,12 +316,17 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         productUploadCombinationTableViewController.selectedIndexpath = indexPath
         productUploadCombinationTableViewController.delegate = self
     
+        ProductSku.SKUS.removeAll(keepCapacity: false)
+        for i in 0..<self.productModel!.validCombinations.count {
+            ProductSku.SKUS.append(self.productModel!.validCombinations[i].sku)
+        }
+    
         var counter: Int = 0
         if self.productModel != nil {
             counter = self.productModel!.validCombinations.count
         }
-
-        productUploadCombinationTableViewController.headerTitle = "\(ProductUploadStrings.combination) \(counter)"
+    
+        productUploadCombinationTableViewController.headerTitle = "\(ProductUploadStrings.combination) \(indexPath.section+1)"
     
         self.navigationController?.pushViewController(productUploadCombinationTableViewController, animated: true)
     }
