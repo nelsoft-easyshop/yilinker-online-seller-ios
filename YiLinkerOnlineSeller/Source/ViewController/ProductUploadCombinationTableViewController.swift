@@ -403,12 +403,12 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
                             self.navigationController?.popViewControllerAnimated(true)
                         }
                     } else {
-                        ProductSku.SKUS[self.selectedIndexpath!.section] = ""
+                        //ProductSku.SKUS[self.selectedIndexpath!.section] = ""
                         if find(ProductSku.SKUS, self.combination.sku) != nil {
                             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_AVAILABLE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
                         } else {
                             self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: true, indexPath: self.selectedIndexpath!)
-                            ProductSku.SKUS[self.selectedIndexpath!.section] = self.combination.sku
+                            //ProductSku.SKUS[self.selectedIndexpath!.section] = self.combination.sku
                             self.navigationController?.popViewControllerAnimated(true)
                         }
                     }

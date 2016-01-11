@@ -1142,7 +1142,14 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         var mainImageCount: Int = uploadedImages.count
         
         if self.uploadType == UploadType.EditProduct {
-            mainImageCount = self.productModel.editedImage.count
+            //mainImageCount = self.productModel.editedImage.count
+            mainImageCount = 0
+            
+            for image in self.productModel.editedImage {
+                if image.isNew {
+                    mainImageCount++
+                }
+            }
         }
         
         var imagesKey: [NSDictionary] = []
@@ -1249,22 +1256,45 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 }
             }
             
+            var newImageCounter: Int = 0
+            for var x = 0; x < editedImages.count; x++ {
+                let image: ServerUIImage = editedImages[x]
+                var dictionary: NSMutableDictionary = NSMutableDictionary()
+                dictionary["imageId"] = newImageCounter
+                dictionary["isNew"] = image.isNew
+                dictionary["isRemoved"] = image.isRemoved
+                dictionary["oldId"] = image.uid
+                if image.isNew {
+                    let data = NSJSONSerialization.dataWithJSONObject(dictionary, options: nil, error: nil)
+                    let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
+                    imagesKey.append(dictionary)
+                    editedImages.removeAtIndex(x)
+                    newImageCounter++
+                }
+            }
             
             for var x = 0; x < editedImages.count; x++ {
                 let image: ServerUIImage = editedImages[x]
                 var dictionary: NSMutableDictionary = NSMutableDictionary()
-                dictionary["imageId"] = x
+                dictionary["imageId"] = newImageCounter
                 dictionary["isNew"] = image.isNew
                 dictionary["isRemoved"] = image.isRemoved
                 dictionary["oldId"] = image.uid
+                newImageCounter++
                 let data = NSJSONSerialization.dataWithJSONObject(dictionary, options: nil, error: nil)
                 let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
                 imagesKey.append(dictionary)
-                
-               
             }
         }
         
+        let tempImage: UIImage = UIImage(named: "back-white")!
+        
+        for (index, dictionary) in enumerate(imagesKey) {
+            if datas.count <= index {
+                let data: NSData = UIImageJPEGRepresentation(tempImage, 1)
+                datas.append(data)
+            }
+        }
         
         let dataString = NSJSONSerialization.dataWithJSONObject(imagesKey, options: nil, error: nil)
         let jsonString: String = NSString(data: dataString!, encoding: NSUTF8StringEncoding)! as! String
@@ -1320,6 +1350,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 println("index: \(index)")
                 formData.appendPartWithFileData(data, name: "images[]", fileName: "\(index)", mimeType: "image/jpeg")
             }
+            
             }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
                 self.hud?.hide(true)
                 let dictionary: NSDictionary = response as! NSDictionary
@@ -1415,11 +1446,26 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             
             var arrayNumber: [Int] = []
             
-            for (index, image) in enumerate(combination.images) {
-                var x: Int = counter
-                counter++
-                arrayNumber.append(x)
-            }
+            
+                if self.uploadType == UploadType.EditProduct {
+                    for (index, image) in enumerate(combination.editedImages) {
+                        if image.isNew {
+                            var x: Int = counter
+                            counter++
+                            arrayNumber.append(x)
+                        } else {
+                            arrayNumber.append(image.uid.toInt()!)
+                        }
+                       
+                    }
+                } else {
+                    for (index, image) in enumerate(combination.images) {
+                        var x: Int = counter
+                        counter++
+                        arrayNumber.append(x)
+                    }
+                }
+           
             //dictionary["images"] = arrayNumber
             dictionary["images"] = arrayNumber
             dictionary["unitWeight"] = (combination.weight as NSString).doubleValue
