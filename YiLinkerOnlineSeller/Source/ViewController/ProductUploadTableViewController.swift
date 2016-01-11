@@ -146,6 +146,12 @@ struct ProductUploadTableViewControllerConstant {
     static let uploadProductUnitId = "productUnitId"
 }
 
+struct ProductUploadCombination {
+    static var parameters: NSMutableDictionary?
+    static var url: String = ""
+    static var datas: [NSData] = []
+}
+
 class ProductUploadTableViewController: UITableViewController, ProductUploadUploadImageTableViewCellDataSource, ProductUploadUploadImageTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadCategoryViewControllerDelegate, ProductUploadFooterViewDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadPriceTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadBrandViewControllerDelegate, ProductUploadQuantityTableViewCellDelegate, SuccessUploadViewControllerDelegate {
     
     var productModel: ProductModel = ProductModel()
@@ -159,6 +165,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     var uploadType: UploadType = UploadType.NewProduct
     var oldEditedImages: [ServerUIImage] = []
     var croppedImages: [UIImage] = []
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
@@ -1340,8 +1347,27 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
         println("parameters: \(string2)")
         
-        manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
-            for (index, data) in enumerate(datas) {
+        let productDetailsViewController: ProductDetailsViewController = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
+        
+        for i in 0..<editedImages.count {
+            productDetailsViewController.imagesToEdit.append(editedImages[i])
+            println(editedImages[i].size)
+        }
+        productDetailsViewController.productModel = self.productModel
+        productDetailsViewController.uploadType = uploadType
+        ProductUploadCombination.parameters = parameters
+        ProductUploadCombination.url = url
+        ProductUploadCombination.datas = datas
+        ProductUploadEdit.isPreview = true
+        self.dismissViewControllerAnimated(true, completion: nil)
+        
+    }
+    
+    func upload(uploadType: UploadType) -> Bool {
+        let manager: APIManager = APIManager.sharedInstance
+        var uploaded: Bool = false
+        manager.POST(ProductUploadCombination.url, parameters: ProductUploadCombination.parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
+            for (index, data) in enumerate(ProductUploadCombination.datas) {
                 println("multipart index: \(index)")
                 formData.appendPartWithFileData(data, name: "images[]", fileName: "\(index)", mimeType: "image/jpeg")
             }
@@ -1354,6 +1380,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     if uploadType == UploadType.Draft {
                         self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyDraft)
                     } else if uploadType == UploadType.EditProduct {
+                        ProductUploadEdit.edit = true
                         self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyEdited)
                     } else {
                         self.success()
@@ -1363,25 +1390,26 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 }
                 
                 println(response)
-        }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
-            let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-            let data = NSJSONSerialization.dataWithJSONObject(error.userInfo!, options: nil, error: nil)
-            let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
-            println("error response: \(string)")
-            if task.statusCode == 401 {
-               self.fireRefreshToken2()
-            } else {
-                if error.userInfo != nil {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+            }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                let data = NSJSONSerialization.dataWithJSONObject(error.userInfo!, options: nil, error: nil)
+                let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
+                println("error response: \(string)")
+                if task.statusCode == 401 {
+                    self.fireRefreshToken2()
                 } else {
-                    self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        self.showAlert(Constants.Localized.error, message: errorModel.message)
+                    } else {
+                        self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                    }
+                    self.tableView.reloadData()
                 }
-                self.tableView.reloadData()
-            }
-            self.hud?.hide(true)
+                self.hud?.hide(true)
         }
+        return uploaded
     }
     
     //MARK: - Dismiss Controller Toast Message
