@@ -181,7 +181,7 @@ class ProductModel {
                 if let tempVar = value["description"] as? String {
                     completeDescription = tempVar
                 }
-                
+                /*
                 if let imagesValue = value["images"] as? NSArray {
                     for subValue in value["images"] as! NSArray {
                         var url: String = APIEnvironment.baseUrl() + "/assets/images/uploads/products/" + (subValue["path"] as! String)
@@ -195,7 +195,7 @@ class ProductModel {
                     url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
                     images.append(url)
                     imageIds.append(image1["id"] as! String)
-                }
+                }*/
                 
                 if !(value["productVariants"] is NSNull) {
                     for subValue in value["productVariants"] as! NSArray {
@@ -255,12 +255,14 @@ class ProductModel {
                                     combination.imagesUrl.append("")
                                     combination.imagesId.append("0")
                                 } else {
-                                    for images in subValue["images"] as! NSArray {
-                                        var url: String = APIEnvironment.baseUrl() + "/assets/images/uploads/products/" + (images["path"] as! String)
+                                    for subimages in subValue["images"] as! NSArray {
+                                        var url: String = APIEnvironment.baseUrl() + "/assets/images/uploads/products/" + (subimages["path"] as! String)
                                         println(">> \(url)")
                                         url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
                                         combination.imagesUrl.append(url)
-                                        combination.imagesId.append(images["id"] as! String)
+                                        combination.imagesId.append(subimages["id"] as! String)
+                                        //images.append(url)
+                                        //imageIds.append(subimages["id"] as! String)
                                     }
                                 }
 
@@ -279,6 +281,23 @@ class ProductModel {
                         
                     }
                 }
+                
+                if let imagesValue = value["images"] as? NSArray {
+                    for subValue in value["images"] as! NSArray {
+                        var url: String = APIEnvironment.baseUrl() + "/assets/images/uploads/products/" + (subValue["path"] as! String)
+                        url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
+                        images.append(url)
+                        imageIds.append(subValue["id"] as! String)
+                    }
+                } else if let imagesValue: AnyObject = value["images"] {
+                    //let image1: AnyObject = imagesValue["1"] as! NSDictionary
+                    var url: String = APIEnvironment.baseUrl() + "/assets/images/uploads/products/" + (imagesValue["path"] as! String)
+                    url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
+                    images.append(url)
+                    imageIds.append(imagesValue["id"] as! String)
+                }
+                
+                
                 
 //                    for subValue in value["productProperties"] as! NSArray {
 //                        var attributeModel = AttributeModel()
