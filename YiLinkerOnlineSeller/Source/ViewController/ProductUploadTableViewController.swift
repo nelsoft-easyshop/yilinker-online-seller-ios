@@ -1189,10 +1189,11 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
         
         if self.uploadType == UploadType.EditProduct {
+            var counter: Int = 0
             for image in editedImages as [ServerUIImage] {
                 if image.uid == "" && image.isRemoved == false && image.isNew == false {
                     
-                } else {
+                } else if image.isNew == true {
                     let data: NSData = UIImageJPEGRepresentation(image, 1)
                     datas.append(data)
                 }
@@ -1243,13 +1244,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         
         if self.uploadType == UploadType.EditProduct {
             imagesKey.removeAll(keepCapacity: true)
-            
-           /* for (index, image) in enumerate(self.productModel.editedImage) {
-                if image.uid == "" && image.isRemoved == false && image.isNew == false {
-                    self.productModel.editedImage.removeAtIndex(index)
-                }
-            }*/
-            
+
             for (index, image) in enumerate(editedImages) {
                 if image.uid == "" && image.isRemoved == false && image.isNew == false {
                     editedImages.removeAtIndex(index)
@@ -1347,7 +1342,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         
         manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
             for (index, data) in enumerate(datas) {
-                println("index: \(index)")
+                println("multipart index: \(index)")
                 formData.appendPartWithFileData(data, name: "images[]", fileName: "\(index)", mimeType: "image/jpeg")
             }
             
@@ -1449,13 +1444,17 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             
                 if self.uploadType == UploadType.EditProduct {
                     for (index, image) in enumerate(combination.editedImages) {
-                        if image.isNew {
+                       /* if image.isNew {
                             var x: Int = counter
                             counter++
                             arrayNumber.append(x)
                         } else {
                             arrayNumber.append(image.uid.toInt()!)
-                        }
+                        }*/
+                        
+                        var x: Int = counter
+                        counter++
+                        arrayNumber.append(x)
                        
                     }
                 } else {
