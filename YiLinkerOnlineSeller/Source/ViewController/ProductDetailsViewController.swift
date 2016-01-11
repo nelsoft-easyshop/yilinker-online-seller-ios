@@ -30,6 +30,11 @@ private struct DetailsString {
     static let height = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_HEIGHT_LOCALIZE_KEY")
 }
 
+struct ProductUploadEdit {
+    static var edit: Bool = false
+    static var isPreview: Bool = false
+}
+
 class ProductDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProductDescriptionViewDelegate, EmptyViewDelegate {
 
     // MARK: - Models
@@ -77,6 +82,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     var listSectionTitle = [DetailsString.titleDetails, DetailsString.titlePrice, DetailsString.titleDimensionsWeight]
     var names: [String] = []
     var values: [String] = []
+    var uploadType: UploadType = UploadType.NewProduct
     
     // MARK: - View Life Cycle
     
@@ -94,7 +100,11 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         if Reachability.isConnectedToNetwork() {
-            requestProductDetails()
+            if ProductUploadEdit.isPreview {
+                populateDetails()
+            } else {
+                requestProductDetails()
+            }
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
         }
@@ -139,14 +149,26 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
         var backButton = UIBarButtonItem(image: UIImage(named: "back-white"), style: .Plain, target: self, action: "backAction")
-        var editButton = UIBarButtonItem(image: UIImage(named: "edit"), style: .Plain, target: self, action: "editAction")
+        var editButton: UIBarButtonItem?
+        
+        if ProductUploadEdit.isPreview {
+            //editButton = UIBarButtonItem(image: UIImage(named: "check"), style: .Plain, target: self, action: "editAction")
+            editButton = UIBarButtonItem(title: "Upload", style: .Plain, target: self, action: "editAction")
+        } else {
+            editButton = UIBarButtonItem(image: UIImage(named: "edit"), style: .Plain, target: self, action: "editAction")
+        }
+
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -10
         
         self.navigationItem.leftBarButtonItems = [navigationSpacer, backButton]
         if SessionManager.isSeller() {
             if isEditable {
-                self.navigationItem.rightBarButtonItem = editButton
+                if ProductUploadEdit.edit {
+                    
+                } else {
+                    self.navigationItem.rightBarButtonItem = editButton
+                }
             }
         }
     }
@@ -391,13 +413,25 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func editAction() {
-        if self.productModel != nil {
+        if ProductUploadEdit.isPreview {
             self.showHUD()
-            if self.productModel.imageUrls.count != self.productModel.editedImage.count {
-                self.productModel.editedImage = []
-                self.downloadImage(self.productModel.imageUrls)
+            let productDetailsViewController: ProductUploadTableViewController = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
+            var successUploading: Bool = productDetailsViewController.upload(self.uploadType)
+            if  successUploading == true {
+                self.hud?.hide(true)
             } else {
-                self.gotoEditProduct()
+               self.hud?.hide(true)
+            }
+            
+        } else {
+            if self.productModel != nil {
+                self.showHUD()
+                if self.productModel.imageUrls.count != self.productModel.editedImage.count {
+                    self.productModel.editedImage = []
+                    self.downloadImage(self.productModel.imageUrls)
+                } else {
+                    self.gotoEditProduct()
+                }
             }
         }
     }
@@ -478,10 +512,10 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     // Dealloc
-    
+    /*
     deinit {
         self.tableView.delegate = nil
         self.tableView.dataSource = nil
-    }
+    }*/
 }
 

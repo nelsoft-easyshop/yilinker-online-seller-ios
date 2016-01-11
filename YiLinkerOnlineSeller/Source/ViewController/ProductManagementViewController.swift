@@ -44,6 +44,10 @@ private struct Status {
     static let fullyDeleted = 4
 }
 
+struct Draft {
+    static var draft: Int = 0
+}
+
 class ProductManagementViewController: UIViewController, ProductManagementModelViewControllerDelegate, EmptyViewDelegate {
     
     @IBOutlet weak var searchBarContainerView: UIView!

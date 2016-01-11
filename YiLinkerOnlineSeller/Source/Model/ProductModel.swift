@@ -190,11 +190,11 @@ class ProductModel {
                         imageIds.append(subValue["id"] as! String)
                     }
                 } else if let imagesValue: AnyObject = value["images"] {
-                    let image1: AnyObject = imagesValue["1"] as! NSDictionary
-                    var url: String = APIEnvironment.baseUrl() + "/assets/images/uploads/products/" + (image1["path"] as! String)
+                    //let image1: AnyObject = imagesValue["1"] as! NSDictionary
+                    var url: String = APIEnvironment.baseUrl() + "/assets/images/uploads/products/" + (imagesValue["path"] as! String)
                     url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
                     images.append(url)
-                    imageIds.append(image1["id"] as! String)
+                    imageIds.append(imagesValue["id"] as! String)
                 }
                 
                 if !(value["productVariants"] is NSNull) {
