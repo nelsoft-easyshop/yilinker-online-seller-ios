@@ -32,24 +32,41 @@ class ProductImagesView: UIView, UICollectionViewDataSource {
         
 //        self.collectionView.transform = CGAffineTransformMakeTranslation(0.0, 20.0)
 //        self.frame.size.height = self.frame.size.height + (self.subTitleLabel.frame.size.height - 38)
-        self.imagesUrls = product.imageUrls
+        if !ProductUploadEdit.isPreview {
+            self.imagesUrls = product.imageUrls
+        }
+
         self.collectionView.reloadData()
     }
     
     // MARK: - Collection View Data Source
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if imagesUrls.count == 0 {
-            return 5
+        if  ProductUploadEdit.isPreview {
+            if self.productModel!.editedImage.count == 0 {
+                return 5
+            }
+            return self.productModel!.editedImage.count - 1
+        } else {
+            if imagesUrls.count == 0 {
+                return 5
+            }
+            return imagesUrls.count
         }
-        return imagesUrls.count
+
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: ProductImagesCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("ProductImagesIdentifier", forIndexPath: indexPath) as! ProductImagesCollectionViewCell
         
-        if imagesUrls.count != 0 {
-            cell.setItemImage(imagesUrls[indexPath.row])
+        if ProductUploadEdit.isPreview {
+            if self.productModel!.editedImage.count != 0 {
+                cell.setLocalImage(self.productModel!.editedImage[indexPath.row])
+            }
+        } else {
+            if imagesUrls.count != 0 {
+                cell.setItemImage(imagesUrls[indexPath.row])
+            }
         }
         
         return cell
