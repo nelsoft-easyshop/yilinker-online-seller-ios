@@ -74,6 +74,8 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
             tableHeaderView.images.append(productModel.productImage)
         }
         
+        self.productModel.isCancellable = false
+        
         if productModel.isCancellable && !SessionManager.isReseller(){
             if tableFooterView == nil {
                 tableFooterView = XibHelper.puffViewWithNibName("TransactionProductDetailsFooterView", index: 0) as! TransactionProductDetailsFooterView
