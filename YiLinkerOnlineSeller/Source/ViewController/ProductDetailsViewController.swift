@@ -90,15 +90,13 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        customizeNavigationBar()
-        
         let nib = UINib(nibName: "ProductDetailsTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: DetailsString.cellIdentifier)
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        customizeNavigationBar()
         if Reachability.isConnectedToNetwork() {
             if ProductUploadEdit.isPreview {
                 populateDetails()
@@ -384,6 +382,9 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         let manager = APIManager.sharedInstance
         manager.GET(APIAtlas.getProductDetails + id, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            let data = NSJSONSerialization.dataWithJSONObject(responseObject, options: nil, error: nil)
+            let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            println("product details -- \(responseObject)")
             if responseObject["isSuccessful"] as! Bool {
                 self.productModel = ProductModel.parseDataWithDictionary(responseObject)
                 self.populateDetails()

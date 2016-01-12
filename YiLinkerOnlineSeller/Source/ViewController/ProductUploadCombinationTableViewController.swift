@@ -83,10 +83,19 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
             }
 
             if self.productModel != nil {
-                self.images = self.productModel!.validCombinations[self.selectedIndexpath!.section].editedImages
-                let image: UIImage = UIImage(named: "addPhoto")!
-                let serverImage: ServerUIImage  = ServerUIImage(data: UIImagePNGRepresentation(image)!)!
-                self.images.append(serverImage)
+                if self.productModel!.validCombinations[self.selectedIndexpath!.section].editedImages.count != 0 || self.productModel!.validCombinations[self.selectedIndexpath!.section].images.count != 0 {
+                    self.images = self.productModel!.validCombinations[self.selectedIndexpath!.section].editedImages
+                    println(self.productModel!.validCombinations[self.selectedIndexpath!.section].editedImages)
+                    let image: UIImage = UIImage(named: "addPhoto")!
+                    let serverImage: ServerUIImage  = ServerUIImage(data: UIImagePNGRepresentation(image)!)!
+                    println(serverImage)
+                    self.images.append(serverImage)
+                } else {
+                    let image: UIImage = UIImage(named: "addPhoto")!
+                    let serverImage: ServerUIImage  = ServerUIImage(data: UIImagePNGRepresentation(image)!)!
+                    println(serverImage)
+                    self.images.append(serverImage)
+                }
             } else {
                 let image: UIImage = UIImage(named: "addPhoto")!
                 let serverImage: ServerUIImage  = ServerUIImage(data: UIImagePNGRepresentation(image)!)!
@@ -264,7 +273,10 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
                 let image: ServerUIImage = ServerUIImage(CGImage: allaSset.defaultRepresentation().fullScreenImage().takeUnretainedValue())!
                 image.isNew = true
                 image.isRemoved = false
+                image.isCombination = true
                 self.images.insert(image, atIndex: 0)
+                //ProductUploadCombination.combinationArray.append("\(self.productModel!.validCombinations[self.selectedIndexpath!.section].editedImages.count-1)")
+                //println("\(self.productModel!.validCombinations[self.selectedIndexpath!.section].editedImages.count-1)")
             }
 
         }

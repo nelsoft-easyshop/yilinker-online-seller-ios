@@ -32,8 +32,11 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         self.backButton()
         self.title = Constants.ViewControllersTitleString.attributeCombination
         self.registerCell()
-        
         let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     func registerCell() {
@@ -195,6 +198,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         let productUploadCombinationTableViewController: ProductUploadCombinationTableViewController = ProductUploadCombinationTableViewController(nibName: "ProductUploadCombinationTableViewController", bundle: nil)
         productUploadCombinationTableViewController.attributes = self.productModel!.attributes
         productUploadCombinationTableViewController.delegate = self
+       
         var counter: Int = 0
         if self.productModel != nil {
            counter = self.productModel!.validCombinations.count
@@ -298,7 +302,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         let indexPath: NSIndexPath = self.tableView.indexPathForCell(cell)!
         let range: NSRange = NSMakeRange(indexPath.section, 1)
         let section: NSIndexSet = NSIndexSet(indexesInRange: range)
-        
+
         ProductSku.SKUS.removeAtIndex(indexPath.section)
         self.productModel!.validCombinations.removeAtIndex(indexPath.section)
         self.tableView.beginUpdates()

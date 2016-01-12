@@ -722,7 +722,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             self.productModel = nil
             requestGetProductList(statusId[indexPath.row], key: searchBarTextField.text)
             selectedIndex = indexPath.row
-            
+            Draft.draft = indexPath.row
             if selectedIndex == 0 {
                 self.tableViewSectionHeight = 0.0
             } else {

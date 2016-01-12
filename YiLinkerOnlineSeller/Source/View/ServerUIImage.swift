@@ -12,4 +12,5 @@ class ServerUIImage: UIImage {
     var uid: String = ""
     var isNew: Bool = false
     var isRemoved: Bool = false
+    var isCombination: Bool = false
 }

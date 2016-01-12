@@ -923,9 +923,9 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         cell.collectionView.reloadData()
         
 //        var row: Int = 0
-//        
+//
 //        let maxCount: Int = 4
-//        
+//
 //        if self.uploadImages.count <= 5 {
 //            row = self.uploadImages.count - 1
 //        } else {
@@ -938,7 +938,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
 //        } else {
 //            cell.isImageIsFull = false
 //        }
-//        
+//
         var lastIndexPath: NSIndexPath = NSIndexPath()
         
         if self.uploadType == UploadType.EditProduct {
@@ -1579,7 +1579,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         self.tableView.dataSource = nil
     }
     
-    // Mark: - Draft Alert 
+    // Mark: - Draft Alert
     func draft() {
         let alertController = UIAlertController(title: ProductUploadStrings.uploadItem, message: ProductUploadStrings.saveAsDraft, preferredStyle: .Alert)
         let cancelAction = UIAlertAction(title: Constants.Localized.no, style: .Cancel) { (action) in
