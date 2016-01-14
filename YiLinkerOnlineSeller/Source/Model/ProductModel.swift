@@ -238,7 +238,7 @@ class ProductModel {
                                 let imagesCount: NSArray = subValue["images"] as! NSArray
                                 if imagesCount.count == 0 {
                                     combination.imagesUrl.append("")
-                                    combination.imagesId.append("0")
+                                    combination.imagesId.append("")
                                 } else {
                                     for subimages in subValue["images"] as! NSArray {
                                         var url: String = APIEnvironment.baseUrl() + "/assets/images/uploads/products/" + (subimages["path"] as! String)
