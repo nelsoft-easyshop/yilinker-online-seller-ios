@@ -106,3 +106,13 @@ enum UploadType {
     case Draft
     case EditProduct
 }
+
+enum RequestErrorType {
+    case NoInternetConnection
+    case RequestTimeOut
+    case PageNotFound
+    case AccessTokenExpired
+    case ResponseError
+    case UnRecognizeError
+    case NoError
+}
