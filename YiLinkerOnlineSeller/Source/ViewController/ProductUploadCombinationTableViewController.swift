@@ -274,7 +274,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
                 image.isNew = true
                 image.isRemoved = false
                 image.isCombination = true
-                self.images.insert(image, atIndex: 0)
+                self.images.insert(image, atIndex: self.images.count - 1)
                 //ProductUploadCombination.combinationArray.append("\(self.productModel!.validCombinations[self.selectedIndexpath!.section].editedImages.count-1)")
                 //println("\(self.productModel!.validCombinations[self.selectedIndexpath!.section].editedImages.count-1)")
             }
@@ -340,6 +340,13 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
             }
             
         } else {
+            self.images.removeAtIndex(indexPath.row)
+            if indexPath.row < self.productModel!.validCombinations[self.selectedIndexpath!.section].imagesId.count {
+                if !contains(ProductUploadCombination.deleted, self.productModel!.validCombinations[self.selectedIndexpath!.section].imagesId[indexPath.row]) {
+                    ProductUploadCombination.deleted.append(self.productModel!.validCombinations[self.selectedIndexpath!.section].imagesId[indexPath.row])
+                }
+            }
+    
             if indexPath.row < self.productModel!.validCombinations[self.selectedIndexpath!.section].images.count {
                 self.productModel!.validCombinations[self.selectedIndexpath!.section].images.removeAtIndex(indexPath.row)
             }
@@ -415,12 +422,12 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
                             self.navigationController?.popViewControllerAnimated(true)
                         }
                     } else {
-                        //ProductSku.SKUS[self.selectedIndexpath!.section] = ""
+                        ProductSku.SKUS[self.selectedIndexpath!.section] = ""
                         if find(ProductSku.SKUS, self.combination.sku) != nil {
                             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_AVAILABLE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
                         } else {
                             self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: true, indexPath: self.selectedIndexpath!)
-                            //ProductSku.SKUS[self.selectedIndexpath!.section] = self.combination.sku
+                            ProductSku.SKUS[self.selectedIndexpath!.section] = self.combination.sku
                             self.navigationController?.popViewControllerAnimated(true)
                         }
                     }
