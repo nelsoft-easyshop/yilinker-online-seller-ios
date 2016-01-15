@@ -413,7 +413,6 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             println(parameters)
             self.requestTask = manager.POST(APIAtlas.managementGetProductList, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                println(responseObject)
                 if responseObject["isSuccessful"] as! Bool {
                     self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
                     if self.productModel.products.count != 0 {

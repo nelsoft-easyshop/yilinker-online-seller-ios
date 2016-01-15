@@ -156,6 +156,7 @@
 		260725F81BA0A40200C24DDB /* ProductImagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260725F71BA0A40200C24DDB /* ProductImagesModel.swift */; };
 		260725FA1BA0A41000C24DDB /* ProductUnitsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260725F91BA0A41000C24DDB /* ProductUnitsModel.swift */; };
 		260EBB411C48CD1A006D83D6 /* WebServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260EBB401C48CD1A006D83D6 /* WebServiceManager.swift */; };
+		260EBB431C48D2AE006D83D6 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260EBB421C48D2AE006D83D6 /* Toast.swift */; };
 		2618DD711B970E210030C6D2 /* AddSubCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2618DD6F1B970E210030C6D2 /* AddSubCategoriesViewController.swift */; };
 		2618DD721B970E210030C6D2 /* AddSubCategoriesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2618DD701B970E210030C6D2 /* AddSubCategoriesViewController.xib */; };
 		2618DD751B975E910030C6D2 /* EditSubCategoriesRemovedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2618DD731B975E910030C6D2 /* EditSubCategoriesRemovedTableViewCell.swift */; };
@@ -770,6 +771,7 @@
 		260725F71BA0A40200C24DDB /* ProductImagesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductImagesModel.swift; sourceTree = "<group>"; };
 		260725F91BA0A41000C24DDB /* ProductUnitsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUnitsModel.swift; sourceTree = "<group>"; };
 		260EBB401C48CD1A006D83D6 /* WebServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebServiceManager.swift; path = ../../../WebServiceManager.swift; sourceTree = "<group>"; };
+		260EBB421C48D2AE006D83D6 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Toast.swift; path = ../../../Toast.swift; sourceTree = "<group>"; };
 		2618DD6F1B970E210030C6D2 /* AddSubCategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSubCategoriesViewController.swift; sourceTree = "<group>"; };
 		2618DD701B970E210030C6D2 /* AddSubCategoriesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddSubCategoriesViewController.xib; path = ../ViewController/AddSubCategoriesViewController.xib; sourceTree = "<group>"; };
 		2618DD731B975E910030C6D2 /* EditSubCategoriesRemovedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditSubCategoriesRemovedTableViewCell.swift; sourceTree = "<group>"; };
@@ -1321,6 +1323,7 @@
 		0CF28EB91B8C85E4005B2E54 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				260EBB421C48D2AE006D83D6 /* Toast.swift */,
 				260EBB401C48CD1A006D83D6 /* WebServiceManager.swift */,
 				0C11795B1BA9A5C900AA1554 /* StringHelper.swift */,
 				961F70371B983ECF007D0EA5 /* CheckBox.swift */,
@@ -2818,6 +2821,7 @@
 				B7BADAFA1BA563FF005F59F9 /* DummyNavigationController.swift in Sources */,
 				F7C40F581B983A7B0091C16C /* DynamicRoundedLabel.swift in Sources */,
 				792F6E541B9D484000F0CB03 /* MyPointsHistoryModel.swift in Sources */,
+				260EBB431C48D2AE006D83D6 /* Toast.swift in Sources */,
 				7928762C1B8DF89F00762A39 /* ChartDataRendererBase.swift in Sources */,
 				792876151B8DF89F00762A39 /* ChartDataSet.swift in Sources */,
 				792875F71B8DF89F00762A39 /* BubbleChartView.swift in Sources */,
