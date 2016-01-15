@@ -677,7 +677,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             if self.productModel.products[indexPath.row].status == Status.draft {
                 productDetails.isDraft = true
             }
-            
+            ProductUploadEdit.isPreview = false
             self.navigationController?.pushViewController(productDetails, animated: true)
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
