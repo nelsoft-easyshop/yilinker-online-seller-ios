@@ -1116,13 +1116,14 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         //added 
         var combinationCounter: Int = 0
         for editedImage in  self.productModel.editedImage {
-            editedImages.append(editedImage)
+            //editedImages.append(editedImage)
+            editedImages.insert(editedImage, atIndex: combinationCounter)
             combinationCounter++
         }
         
         if uploadType == UploadType.EditProduct {
             editedImages.removeLast()
-            combinationCounter++
+            combinationCounter--
         }
         
         //Comparing of oldEditedImages and editedImages
@@ -1145,7 +1146,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     oldImage.isRemoved = true
                     oldImage.isNew = false
                     println("old image uid: \(oldImage.uid)")
-                    editedImages.append(oldImage)
+                    //editedImages.append(oldImage)
+                    editedImages.insert(oldImage, atIndex: combinationCounter)
                     combinationCounter++
                 }
                 //}
