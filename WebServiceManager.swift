@@ -21,8 +21,12 @@ class WebServiceManager: NSObject {
     static let accessTokenKey = "access_token"
     static let tokenKey = "token"
     
-    //Refresh Token
+    // Refresh Token
     static let refreshTokenKey = "refresh_token"
+    
+    // Product Management
+    static let statusKey = "status"
+    static let keywordKey = "keyword"
     
     // MARK: - CALLS
     // MARK: - Post Request With Url
@@ -99,11 +103,23 @@ class WebServiceManager: NSObject {
         }
     }
     
-    //MARK: - Fire Login Request With URL
+    // MARK: - Fire Login Request With URL
     class func fireLoginRequestWithUrl(url: String, emailAddress: String, password: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager: APIManager = APIManager.sharedInstance
         
         let parameters: NSDictionary = [self.emailKey: emailAddress, self.passwordKey: password, self.clientIdKey: Constants.Credentials.clientID, self.clientSecretKey: Constants.Credentials.clientSecret, self.grantTypeKey: Constants.Credentials.grantSeller]
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: - Product Management Calls
+    // MARK: - Fire Product List Request With URL
+    class func fireProductListRequestWithUrl(url: String, status: String, keyword: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = [self.statusKey: status, self.keywordKey: keyword, self.accessTokenKey: SessionManager.accessToken()]
         
         self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
