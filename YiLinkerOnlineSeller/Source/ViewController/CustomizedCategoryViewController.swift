@@ -141,6 +141,7 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
                     }
                     self.hud?.hide(true)
                 } else {
+                    self.hud?.hide(true)
                     if requestErrorType == .ResponseError {
                         //Error in api requirements
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -162,33 +163,6 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
                     }
                 }
             })
-            
-//            let manager = APIManager.sharedInstance
-//            let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
-//            
-//            manager.POST(APIAtlas.getCustomizedCategories, parameters: parameters, success: {
-//                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-//                
-//                self.customizedCategoriesModel = CustomizedCategoriesModel.parseDataWithDictionary(responseObject as! NSDictionary)
-//                
-//                if self.customizedCategoriesModel.customizedCategories.count != 0 {
-//                    self.tableView.reloadData()
-//                } else {
-//                    self.emptyLabel.hidden = false
-//                }   
-//                self.hud?.hide(true)
-//                
-//                }, failure: {
-//                    (task: NSURLSessionDataTask!, error: NSError!) in
-//                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-//                    
-//                    if task.statusCode == 401 {
-//                        self.requestRefreshToken()
-//                    } else {
-//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
-//                        self.hud?.hide(true)
-//                    }
-//            })
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.failed)
         }
@@ -204,6 +178,7 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
                 self.hud?.hide(true)
                 self.tableView.reloadData()
             } else {
+                self.hud?.hide(true)
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -225,27 +200,9 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
                 }
             }
         })
-        
-//        let manager = APIManager.sharedInstance
-//        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "categoryId": categoryId]
-
-//        manager.POST(APIAtlas.deleteCustomizedCategory, parameters: parameters, success: {
-//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-//            self.hud?.hide(true)
-//            self.tableView.reloadData()
-//            }, failure: {
-//                (task: NSURLSessionDataTask!, error: NSError!) in
-//                println(error)
-//                self.hud?.hide(true)
-//        })
     }
     
     func requestRefreshToken() {
-        
-//        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
-//            "client_secret": Constants.Credentials.clientSecret,
-//            "grant_type": Constants.Credentials.grantRefreshToken,
-//            "refresh_token": SessionManager.refreshToken()]
         
         WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.loginUrl, actionHandler: { (successful, responseObject, RequestErrorType) -> Void in
             if successful {
@@ -262,21 +219,6 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
                 })
             }
         })
-        
-//        let manager = APIManager.sharedInstance
-//        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
-//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-//            
-//            self.hud?.hide(true)
-//            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-//            self.requestGetCustomizedCategories()
-//            
-//            }, failure: {
-//                (task: NSURLSessionDataTask!, error: NSError!) in
-//                self.hud?.hide(true)
-//                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-//                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
-//        })
     }
     
     // MARK: - Table View Data Source

@@ -88,13 +88,7 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
     
     func requestGetCustomizedCategories(key: String) {
         if Reachability.isConnectedToNetwork() {
-//            if self.requestTask != nil {
-//                self.requestTask.cancel()
-//                self.requestTask = nil
-//            }
             self.showHUD()
-//            let manager = APIManager.sharedInstance
-//            let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "queryString": key]
             
             WebServiceManager.fireGetParentCategoryRequestWithUrl(APIAtlas.getCustomizedCategories, key: key, actionHandler: {
                 (successful, responseObject, requestErrorType) -> Void in
@@ -111,6 +105,7 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
                     }
                     self.hud?.hide(true)
                 } else {
+                    self.hud?.hide(true)
                     if requestErrorType == .ResponseError {
                         //Error in api requirements
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -132,30 +127,6 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
                     }
                 }
             })
-            
-//            self.requestTask = manager.POST(APIAtlas.getCustomizedCategories, parameters: parameters, success: {
-//                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-//                
-//                self.customizedCategoriesModel = CustomizedCategoriesModel.parseDataWithDictionary(responseObject as! NSDictionary)
-//                
-//                if self.customizedCategoriesModel.customizedCategories.count != 0 {
-//                    self.tableView.reloadData()
-//                    self.tableView.hidden = false
-//                    self.emptyLabel.hidden = true
-//                } else {
-//                    self.emptyLabel.hidden = false
-//                    self.tableView.hidden = true
-//                }
-//                self.hud?.hide(true)
-//                
-//                }, failure: {
-//                    (task: NSURLSessionDataTask!, error: NSError!) in
-//                    
-//                    if error.code != NSURLErrorCancelled {
-//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.wentWrong, title: AlertStrings.error)
-//                        self.hud?.hide(true)
-//                    }
-//            })
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
         }
@@ -178,26 +149,6 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
                 })
             }
         })
-        
-//        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
-//            "client_secret": Constants.Credentials.clientSecret,
-//            "grant_type": Constants.Credentials.grantRefreshToken,
-//            "refresh_token": SessionManager.refreshToken()]
-//        
-//        let manager = APIManager.sharedInstance
-//        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
-//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-//            
-//            self.hud?.hide(true)
-//            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-//            self.requestGetCustomizedCategories(self.searchBarTextField.text)
-//            
-//            }, failure: {
-//                (task: NSURLSessionDataTask!, error: NSError!) in
-//                self.hud?.hide(true)
-//                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-//                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
-//        })
     }
     
     // MARK: - Actions

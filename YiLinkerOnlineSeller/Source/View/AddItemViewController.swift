@@ -151,6 +151,7 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
                     }
                     self.hud?.hide(true)
                 } else {
+                    self.hud?.hide(true)
                     if requestErrorType == .ResponseError {
                         //Error in api requirements
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -172,31 +173,6 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
                     }
                 }
             })
-            
-//            manager.POST(APIAtlas.managementGetProductList, parameters: parameters, success: {
-//                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-//                
-//                self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
-//                
-//                if self.productModel.products.count != 0 {
-//                    self.tableView.reloadData()
-//                } else {
-//                    self.emptyLabel.hidden = false
-//                }
-//                self.hud?.hide(true)
-//                
-//                }, failure: {
-//                    (task: NSURLSessionDataTask!, error: NSError!) in
-//                    self.hud?.hide(true)
-//                    
-//                    if error.userInfo != nil {
-//                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-//                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: AlertStrings.error)
-//                    } else if error.code != NSURLErrorCancelled {
-//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
-//                    }
-//            })
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
         }
