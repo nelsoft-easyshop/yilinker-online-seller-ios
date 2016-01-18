@@ -440,6 +440,8 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 self.hud?.hide(true)
             } else {
                 self.hud?.hide(true)
+                self.loaderContainerView.hidden = true
+                self.searchBarTextField.userInteractionEnabled = true
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -449,9 +451,6 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                     } else {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: AlertStrings.failed)
                     }
-                    self.hud?.hide(true)
-                    self.loaderContainerView.hidden = true
-                    self.searchBarTextField.userInteractionEnabled = true
                 } else if requestErrorType == .AccessTokenExpired {
                     self.requestRefreshToken("get", status: status.toInt()!)
                 } else if requestErrorType == .PageNotFound {
