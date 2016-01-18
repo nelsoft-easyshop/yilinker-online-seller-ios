@@ -374,8 +374,12 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    let data: NSArray = responseObject["data"] as! NSArray
-                    self.showAlert(title: AlertStrings.failed, message: errorModel.message)
+                    let alert = UIAlertController(title: AlertStrings.failed, message: errorModel.message, preferredStyle: UIAlertControllerStyle.Alert)
+                    let okButton = UIAlertAction(title: AlertStrings.ok, style: UIAlertActionStyle.Cancel) { (alert) -> Void in
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }
+                    alert.addAction(okButton)
+                    self.presentViewController(alert, animated: true, completion: nil)
                 } else if requestErrorType == .AccessTokenExpired {
                     self.requestRefreshToken()
                 } else if requestErrorType == .PageNotFound {
@@ -393,33 +397,6 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                 }
             }
         })
-        
-//        let manager = APIManager.sharedInstance
-//        manager.GET(APIAtlas.getProductDetails + id, parameters: nil, success: {
-//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-//            let data = NSJSONSerialization.dataWithJSONObject(responseObject, options: nil, error: nil)
-//            let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
-//            println("product details -- \(responseObject)")
-//            if responseObject["isSuccessful"] as! Bool {
-//                self.productModel = ProductModel.parseDataWithDictionary(responseObject)
-//                self.populateDetails()
-//            } else {
-//                self.showAlert(title: "Error", message: responseObject["message"] as! String)
-//                
-//            }
-//            self.hud?.hide(true)
-//            }, failure: {
-//                (task: NSURLSessionDataTask!, error: NSError!) in
-//                self.hud?.hide(true)
-//                println(error.userInfo)
-//                let alert = UIAlertController(title: AlertStrings.wentWrong, message: "", preferredStyle: UIAlertControllerStyle.Alert)
-//                let okButton = UIAlertAction(title: AlertStrings.ok, style: UIAlertActionStyle.Cancel) { (alert) -> Void in
-//                        self.navigationController?.popViewControllerAnimated(true)
-//                }
-//                alert.addAction(okButton)
-//                self.presentViewController(alert, animated: true, completion: nil)
-//                
-//        })
     }
     
     func requestRefreshToken() {

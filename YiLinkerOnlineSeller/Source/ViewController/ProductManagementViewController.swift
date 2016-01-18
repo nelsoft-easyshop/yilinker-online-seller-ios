@@ -469,72 +469,6 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             }
             
         })
-        
-        //            let manager = APIManager.sharedInstance
-        //            println(parameters)
-        //            self.requestTask = manager.POST(APIAtlas.managementGetProductList, parameters: parameters, success: {
-        //                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-        //                if responseObject["isSuccessful"] as! Bool {
-        //                    self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
-        //                    if self.productModel.products.count != 0 {
-        //                        self.tableView.reloadData()
-        //
-        //                        if SessionManager.isReseller() {
-        //                            var productStatuses: [Int] = []
-        //                            for i in 0..<self.productModel.products.count {
-        //                                productStatuses.append(self.productModel.products[i].status)
-        //                            }
-        //
-        //                            if !(contains(productStatuses, Status.active) || contains(productStatuses, Status.inactive)) {
-        //                                self.emptyLabel.hidden = false
-        //                            }
-        //                        }
-        //
-        //                    } else {
-        //                        self.emptyLabel.hidden = false
-        //                    }
-        //                } else {
-        //                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.failed)
-        //                }
-        //
-        //                self.loaderContainerView.hidden = true
-        //                self.searchBarTextField.userInteractionEnabled = true
-        //                self.hud?.hide(true)
-        //                }, failure: {
-        //                    (task: NSURLSessionDataTask!, error: NSError!) in
-        //
-        //                    if error.code != NSURLErrorCancelled {
-        //                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-        //                        if task.statusCode == 401 {
-        //                            self.requestRefreshToken("get", status: status)
-        //                        } else if error.userInfo != nil {
-        //                            self.hud?.hide(true)
-        //                            self.loaderContainerView.hidden = true
-        //                            self.searchBarTextField.userInteractionEnabled = true
-        //                            if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-        //                                if jsonResult["message"] != nil {
-        //                                    if jsonResult["message"] as! String == "No products found" {
-        //                                        self.emptyLabel.hidden = false
-        //                                    }
-        //                                } else {
-        //                                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
-        //                                }
-        //                            }
-        //                        } else {
-        //                            self.hud?.hide(true)
-        //                            self.loaderContainerView.hidden = true
-        //                            self.searchBarTextField.userInteractionEnabled = true
-        //                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
-        //                        }
-        //                    } else if error.code == NSURLErrorCancelled {
-        //                        println("request cancelled")
-        //                    } else {
-        //                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
-        //                        self.hud?.hide(true)
-        //                        self.loaderContainerView.hidden = true
-        //                        self.searchBarTextField.userInteractionEnabled = true
-        //                    }
-        //            })
     }
     
     func requestUpdateProductStatus(status: Int) {
@@ -577,43 +511,6 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 }
                 
             })
-        
-//            let manager = APIManager.sharedInstance
-//            let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-//                "productId": selectedItems.description,
-//                "status": status]
-//            
-//            manager.POST(APIAtlas.managementUpdateProductStatus, parameters: parameters, success: {
-//                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-//                
-//                self.selectedItems = []
-//                self.updateSelectedItems(0, selected: false)
-//                
-//                self.getProductList(self.statusId[self.selectedIndex], key: self.searchBarTextField.text)
-//
-//                }, failure: {
-//                    (task: NSURLSessionDataTask!, error: NSError!) in
-//                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-//                    if task.statusCode == 401 {
-//                        self.requestRefreshToken("update", status: status)
-//                    } else if error.userInfo != nil {
-//                        self.hud?.hide(true)
-//                        self.loaderContainerView.hidden = true
-//                        self.searchBarTextField.userInteractionEnabled = true
-//                        if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-//                            if jsonResult["message"] != nil {
-//                                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: jsonResult["message"] as! String, title: AlertStrings.failed)
-//                            } else {
-//                                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
-//                            }
-//                        }
-//                    } else {
-//                        self.hud?.hide(true)
-//                        self.loaderContainerView.hidden = true
-//                        self.searchBarTextField.userInteractionEnabled = true
-//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
-//                    }
-//            })
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
         }
