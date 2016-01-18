@@ -27,6 +27,8 @@ class WebServiceManager: NSObject {
     // Product Management
     static let statusKey = "status"
     static let keywordKey = "keyword"
+    static let productIdKey = "productId"
+    
     
     // MARK: - CALLS
     // MARK: - Post Request With Url
@@ -103,6 +105,16 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: -
+    //MARK: - Fire RefreshTokenWithUrl
+    class func fireRefreshTokenWithUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.clientIdKey: Constants.Credentials.clientID, self.clientSecretKey: Constants.Credentials.clientSecret, self.grantTypeKey: Constants.Credentials.grantRefreshToken, self.refreshTokenKey: SessionManager.refreshToken()]
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
     // MARK: - Fire Login Request With URL
     class func fireLoginRequestWithUrl(url: String, emailAddress: String, password: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager: APIManager = APIManager.sharedInstance
@@ -120,6 +132,17 @@ class WebServiceManager: NSObject {
         let manager: APIManager = APIManager.sharedInstance
         
         let parameters: NSDictionary = [self.statusKey: status, self.keywordKey: keyword, self.accessTokenKey: SessionManager.accessToken()]
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: - Fire Update Product Status Request With URL
+    class func fireUpdateProductStatusRequestWithUrl(url: String, productId: String, status: Int, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = [self.productIdKey: productId, self.statusKey: status, self.accessTokenKey: SessionManager.accessToken()]
         
         self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
