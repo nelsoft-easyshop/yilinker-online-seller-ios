@@ -448,12 +448,6 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                     } else {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: AlertStrings.failed)
                     }
-//                    if errorModel.message == "No products found" {
-//                        self.emptyLabel.hidden = false
-//                    } else {
-//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: AlertStrings.failed)
-//                    }
-                    
                     self.hud?.hide(true)
                     self.loaderContainerView.hidden = true
                     self.searchBarTextField.userInteractionEnabled = true
