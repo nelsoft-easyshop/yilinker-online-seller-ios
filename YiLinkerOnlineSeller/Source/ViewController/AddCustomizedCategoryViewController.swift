@@ -502,102 +502,200 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
     func requestGetCategoryDetails(categoryId: Int) {
         self.showHUD()
         self.categoryId = categoryId
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-            "categoryId": String(categoryId)]
-
-        manager.POST(APIAtlas.getCategoryDetails, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            self.categoryDetailsModel = CategoryDetailsModel.parseDataWithDictionary(responseObject as! NSDictionary)
-            self.customizedCategoryProducts = self.categoryDetailsModel.products
-//            self.subCategories2 = self.categoryDetailsModel.subcategories
-
-            for i in 0..<self.categoryDetailsModel.subcategories.count {
-
-                var subProducts: [CategoryProductModel] = []
-                for j in 0..<self.categoryDetailsModel.subcategories[i].products.count {
-                    let products = CategoryProductModel()
-                    products.productId = self.categoryDetailsModel.subcategories[i].products[j].productId
-                    products.productName = self.categoryDetailsModel.subcategories[i].products[j].productName
-                    products.image = self.categoryDetailsModel.subcategories[i].products[j].image
-                    subProducts.append(products)
+        
+        WebServiceManager.fireGetCategoryDetailsRequestWithUrl(APIAtlas.getCategoryDetails, categoryId: categoryId, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.categoryDetailsModel = CategoryDetailsModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                self.customizedCategoryProducts = self.categoryDetailsModel.products
+                
+                for i in 0..<self.categoryDetailsModel.subcategories.count {
+                    
+                    var subProducts: [CategoryProductModel] = []
+                    for j in 0..<self.categoryDetailsModel.subcategories[i].products.count {
+                        let products = CategoryProductModel()
+                        products.productId = self.categoryDetailsModel.subcategories[i].products[j].productId
+                        products.productName = self.categoryDetailsModel.subcategories[i].products[j].productName
+                        products.image = self.categoryDetailsModel.subcategories[i].products[j].image
+                        subProducts.append(products)
+                    }
+                    
+                    self.subCategories2.append(SubCategoryModel(message: "",
+                        isSuccessful: true,
+                        categoryId: self.categoryDetailsModel.subcategories[i].categoryId,
+                        categoryName: self.categoryDetailsModel.subcategories[i].categoryName,
+                        parentName: self.categoryDetailsModel.categoryName,
+                        parentId: self.categoryDetailsModel.categoryId,
+                        sortOrder: self.categoryDetailsModel.subcategories[i].sortOrder,
+                        products: subProducts,
+                        local: false))
                 }
                 
-                self.subCategories2.append(SubCategoryModel(message: "",
-                    isSuccessful: true,
-                    categoryId: self.categoryDetailsModel.subcategories[i].categoryId,
-                    categoryName: self.categoryDetailsModel.subcategories[i].categoryName,
-                    parentName: self.categoryDetailsModel.categoryName,
-                    parentId: self.categoryDetailsModel.categoryId,
-                    sortOrder: self.categoryDetailsModel.subcategories[i].sortOrder,
-                    products: subProducts,
-                    local: false))
-            }
-            
-            for i in 0..<self.customizedCategoryProducts.count {
-                let categoryProducts = ProductManagementProductsModel()
-                categoryProducts.id = self.customizedCategoryProducts[i].productId
-                categoryProducts.name = self.customizedCategoryProducts[i].productName
-                categoryProducts.image = self.customizedCategoryProducts[i].image
-                self.selectedProductsModel.append(categoryProducts)
-            }
-            
-            self.initializeViews()
-            self.applyDetails()
-
-            self.hud?.hide(true)
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                for i in 0..<self.customizedCategoryProducts.count {
+                    let categoryProducts = ProductManagementProductsModel()
+                    categoryProducts.id = self.customizedCategoryProducts[i].productId
+                    categoryProducts.name = self.customizedCategoryProducts[i].productName
+                    categoryProducts.image = self.customizedCategoryProducts[i].image
+                    self.selectedProductsModel.append(categoryProducts)
+                }
                 
-                if task.statusCode == 401 {
+                self.initializeViews()
+                self.applyDetails()
+                
+                self.hud?.hide(true)
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
                     self.requestRefreshToken("details")
-                } else {
-                    println(error)
-                    self.hud?.hide(true)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                 }
-        })
             }
+        })
+        
+//        let manager = APIManager.sharedInstance
+//        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
+//            "categoryId": String(categoryId)]
+//
+//        manager.POST(APIAtlas.getCategoryDetails, parameters: parameters, success: {
+//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+//            
+//            self.categoryDetailsModel = CategoryDetailsModel.parseDataWithDictionary(responseObject as! NSDictionary)
+//            self.customizedCategoryProducts = self.categoryDetailsModel.products
+//
+//            for i in 0..<self.categoryDetailsModel.subcategories.count {
+//
+//                var subProducts: [CategoryProductModel] = []
+//                for j in 0..<self.categoryDetailsModel.subcategories[i].products.count {
+//                    let products = CategoryProductModel()
+//                    products.productId = self.categoryDetailsModel.subcategories[i].products[j].productId
+//                    products.productName = self.categoryDetailsModel.subcategories[i].products[j].productName
+//                    products.image = self.categoryDetailsModel.subcategories[i].products[j].image
+//                    subProducts.append(products)
+//                }
+//                
+//                self.subCategories2.append(SubCategoryModel(message: "",
+//                    isSuccessful: true,
+//                    categoryId: self.categoryDetailsModel.subcategories[i].categoryId,
+//                    categoryName: self.categoryDetailsModel.subcategories[i].categoryName,
+//                    parentName: self.categoryDetailsModel.categoryName,
+//                    parentId: self.categoryDetailsModel.categoryId,
+//                    sortOrder: self.categoryDetailsModel.subcategories[i].sortOrder,
+//                    products: subProducts,
+//                    local: false))
+//            }
+//            
+//            for i in 0..<self.customizedCategoryProducts.count {
+//                let categoryProducts = ProductManagementProductsModel()
+//                categoryProducts.id = self.customizedCategoryProducts[i].productId
+//                categoryProducts.name = self.customizedCategoryProducts[i].productName
+//                categoryProducts.image = self.customizedCategoryProducts[i].image
+//                self.selectedProductsModel.append(categoryProducts)
+//            }
+//            
+//            self.initializeViews()
+//            self.applyDetails()
+//
+//            self.hud?.hide(true)
+//            
+//            }, failure: {
+//                (task: NSURLSessionDataTask!, error: NSError!) in
+//                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+//                
+//                if task.statusCode == 401 {
+//                    self.requestRefreshToken("details")
+//                } else {
+//                    println(error)
+//                    self.hud?.hide(true)
+//                }
+//        })
+    }
     
     func requestAddCustomizedCategory(parameter: NSDictionary) {
         self.refreshParameter = parameter
         self.showHUD()
         var manager = APIManager.sharedInstance
-            
-        manager.POST(APIAtlas.addCustomizedCategory, parameters: parameter, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            self.hud?.hide(true)
-            
-            if responseObject["isSuccessful"] as! Bool {
-                self.closeAction()
-            } else {
-                self.showAlert(title: "Error", message: responseObject["message"] as! String)
-            }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+        
+        
+        
+        WebServiceManager.fireAddCustomizedCategoryRequestWithUrl(APIAtlas.addCustomizedCategory, parameter: parameter, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.hud?.hide(true)
                 
-                if task.statusCode == 401 {
-                    self.requestRefreshToken("details")
-                } else if error.userInfo != nil {
-                    self.hud?.hide(true)
-                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                        if jsonResult["message"] != nil {
-                            self.showAlert(title: jsonResult["message"] as! String, message: nil)
-                        } else {
-                            self.showAlert(title: AlertStrings.wentWrong, message: nil)
-                        }
-                    }
+                if responseObject["isSuccessful"] as! Bool {
+                    self.closeAction()
                 } else {
-                    self.showAlert(title: AlertStrings.wentWrong, message: nil)
-                    self.hud?.hide(true)
+                    self.showAlert(title: "Error", message: responseObject["message"] as! String)
                 }
-                
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.requestRefreshToken("add")
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
         })
+        
+//        manager.POST(APIAtlas.addCustomizedCategory, parameters: parameter, success: {
+//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+//            
+//            self.hud?.hide(true)
+//            
+//            if responseObject["isSuccessful"] as! Bool {
+//                self.closeAction()
+//            } else {
+//                self.showAlert(title: "Error", message: responseObject["message"] as! String)
+//            }
+//            
+//            }, failure: {
+//                (task: NSURLSessionDataTask!, error: NSError!) in
+//                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+//                
+//                if task.statusCode == 401 {
+//                    self.requestRefreshToken("details")
+//                } else if error.userInfo != nil {
+//                    self.hud?.hide(true)
+//                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+//                        if jsonResult["message"] != nil {
+//                            self.showAlert(title: jsonResult["message"] as! String, message: nil)
+//                        } else {
+//                            self.showAlert(title: AlertStrings.wentWrong, message: nil)
+//                        }
+//                    }
+//                } else {
+//                    self.showAlert(title: AlertStrings.wentWrong, message: nil)
+//                    self.hud?.hide(true)
+//                }
+//                
+//        })
     }
     
     func requestEditCustomizedCategory(parameter: NSDictionary) {
@@ -605,69 +703,124 @@ class AddCustomizedCategoryViewController: UIViewController, UITableViewDataSour
         self.showHUD()
         let manager = APIManager.sharedInstance
         
-        manager.POST(APIAtlas.editCustomizedCategory, parameters: parameter, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            self.hud?.hide(true)
-            
-            if responseObject["isSuccessful"] as! Bool {
-                self.closeAction()
-            } else {
-                self.showAlert(title: "Error", message: responseObject["message"] as! String)
-            }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+        WebServiceManager.fireEditCustomizedCategoryRequestWithUrl(APIAtlas.editCustomizedCategory, parameter: parameter, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.hud?.hide(true)
                 
-                if task.statusCode == 401 {
-                    self.requestRefreshToken("details")
-                } else if error.userInfo != nil {
-                    self.hud?.hide(true)
-                    println(error.userInfo)
-                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                        if jsonResult["message"] != nil {
-                            self.showAlert(title: jsonResult["message"] as! String, message: nil)
-                        } else {
-                            self.showAlert(title: AlertStrings.wentWrong, message: nil)
-                        }
-                    }
+                if responseObject["isSuccessful"] as! Bool {
+                    self.closeAction()
                 } else {
-                    self.showAlert(title: AlertStrings.wentWrong, message: nil)
-                    self.hud?.hide(true)
+                    self.showAlert(title: "Error", message: responseObject["message"] as! String)
                 }
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.requestRefreshToken("edit")
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
         })
+        
+//        manager.POST(APIAtlas.editCustomizedCategory, parameters: parameter, success: {
+//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+//            
+//            self.hud?.hide(true)
+//            
+//            if responseObject["isSuccessful"] as! Bool {
+//                self.closeAction()
+//            } else {
+//                self.showAlert(title: "Error", message: responseObject["message"] as! String)
+//            }
+//            
+//            }, failure: {
+//                (task: NSURLSessionDataTask!, error: NSError!) in
+//                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+//                
+//                if task.statusCode == 401 {
+//                    self.requestRefreshToken("details")
+//                } else if error.userInfo != nil {
+//                    self.hud?.hide(true)
+//                    println(error.userInfo)
+//                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+//                        if jsonResult["message"] != nil {
+//                            self.showAlert(title: jsonResult["message"] as! String, message: nil)
+//                        } else {
+//                            self.showAlert(title: AlertStrings.wentWrong, message: nil)
+//                        }
+//                    }
+//                } else {
+//                    self.showAlert(title: AlertStrings.wentWrong, message: nil)
+//                    self.hud?.hide(true)
+//                }
+//        })
     }
     
     func requestRefreshToken(type: String) {
         
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        let manager = APIManager.sharedInstance
-        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            self.hud?.hide(true)
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            if type == "details" {
-                self.requestGetCategoryDetails(self.categoryId)
-            } else if type == "add" {
-                self.requestAddCustomizedCategory(self.refreshParameter)
-            } else if type == "edit" {
-                self.requestEditCustomizedCategory(self.refreshParameter)
-            }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.loginUrl, actionHandler: { (successful, responseObject, RequestErrorType) -> Void in
+            if successful {
                 self.hud?.hide(true)
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                self.showAlert(title: AlertStrings.wentWrong, message: nil)
-                
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                if type == "details" {
+                    self.requestGetCategoryDetails(self.categoryId)
+                } else if type == "add" {
+                    self.requestAddCustomizedCategory(self.refreshParameter)
+                } else if type == "edit" {
+                    self.requestEditCustomizedCategory(self.refreshParameter)
+                }
+            } else {
+                //Forcing user to logout.
+                self.hud?.hide(true)
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    SessionManager.logout()
+                    GPPSignIn.sharedInstance().signOut()
+                    self.navigationController?.popToRootViewControllerAnimated(false)
+                })
+            }
         })
+        
+//        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+//            "client_secret": Constants.Credentials.clientSecret,
+//            "grant_type": Constants.Credentials.grantRefreshToken,
+//            "refresh_token": SessionManager.refreshToken()]
+//        
+//        let manager = APIManager.sharedInstance
+//        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
+//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+//            
+//            self.hud?.hide(true)
+//            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+//            if type == "details" {
+//                self.requestGetCategoryDetails(self.categoryId)
+//            } else if type == "add" {
+//                self.requestAddCustomizedCategory(self.refreshParameter)
+//            } else if type == "edit" {
+//                self.requestEditCustomizedCategory(self.refreshParameter)
+//            }
+//            
+//            }, failure: {
+//                (task: NSURLSessionDataTask!, error: NSError!) in
+//                self.hud?.hide(true)
+//                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+//                
+//                self.showAlert(title: AlertStrings.wentWrong, message: nil)
+//                
+//        })
     }
     
     // MARK: - Text Field Delegate

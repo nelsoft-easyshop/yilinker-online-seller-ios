@@ -11,7 +11,7 @@ import UIKit
 class WebServiceManager: NSObject {
     
     // MARK: - KEYS
-    // MARK: - Login dictionary keys
+    // MARK: Login Dictionary Keys
     static let emailKey = "email"
     static let passwordKey = "password"
     static let clientIdKey = "client_id"
@@ -21,14 +21,17 @@ class WebServiceManager: NSObject {
     static let accessTokenKey = "access_token"
     static let tokenKey = "token"
     
-    // Refresh Token
+    // MARK: Refresh Token
     static let refreshTokenKey = "refresh_token"
     
-    // Product Management
+    // MARK: Product Management Keys
     static let statusKey = "status"
     static let keywordKey = "keyword"
     static let productIdKey = "productId"
     
+    // MARK: Customized Category Keys
+    static let categoryIdKey = "categoryId"
+    static let queryStringKey = "queryString"
     
     // MARK: - CALLS
     // MARK: - Post Request With Url
@@ -133,7 +136,7 @@ class WebServiceManager: NSObject {
         }
     }
     
-    // MARK: - Fire Update Product Status Request With URL
+    // MARK: Fire Update Product Status Request With URL
     class func fireUpdateProductStatusRequestWithUrl(url: String, productId: String, status: Int, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let parameters: NSDictionary = [self.productIdKey: productId, self.statusKey: status, self.accessTokenKey: SessionManager.accessToken()]
         self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
@@ -141,10 +144,68 @@ class WebServiceManager: NSObject {
         }
     }
     
-    // MARK: - Fire Get Product Details Request With URL
+    // MARK: Fire Get Product Details Request With URL
     class func fireGetProductDetailsRequestWithUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         self.fireGetRequestWithUrl(url, parameters: []) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
+    
+    // MARK: - Customized Category Calls
+    // MARK: - Fire Get Customized Categories Request With URL
+    class func fireGetCustomizedCategoriesRequestWithUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.accessTokenKey: SessionManager.accessToken(), self.accessTokenKey: SessionManager.accessToken()]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: Fire Delete Customized Categories Request With URL
+    class func fireDeleteCustomizedCategoryRequestWithUrl(url: String, categoryId: Int, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.categoryIdKey: categoryId, self.accessTokenKey: SessionManager.accessToken()]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: Fire Delete Customized Categories Request With URL
+    class func fireGetCategoryDetailsRequestWithUrl(url: String, categoryId: Int, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.categoryIdKey: categoryId, self.accessTokenKey: SessionManager.accessToken()]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: Fire Delete Customized Categories Request With URL
+    class func fireAddCustomizedCategoryRequestWithUrl(url: String, parameter: NSDictionary, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+//        let parameters: NSDictionary = [self.categoryIdKey: categoryId, self.accessTokenKey: SessionManager.accessToken()]
+        self.firePostRequestWithUrl(url, parameters: parameter) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: Fire Delete Customized Categories Request With URL
+    class func fireEditCustomizedCategoryRequestWithUrl(url: String, parameter: NSDictionary, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+//        let parameters: NSDictionary = [self.categoryIdKey: categoryId, self.accessTokenKey: SessionManager.accessToken()]
+        self.firePostRequestWithUrl(url, parameters: parameter) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: Fire Get Parent Categories Request With URL
+    class func fireGetParentCategoryRequestWithUrl(url: String, key: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.queryStringKey: key, self.accessTokenKey: SessionManager.accessToken()]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: Fire Add New Item Request With URL
+    class func fireAddNewItemRequestWithUrl(url: String, key: String, status: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.statusKey: status, self.keywordKey: key, self.accessTokenKey: SessionManager.accessToken()]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
 }

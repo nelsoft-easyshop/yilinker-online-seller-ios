@@ -106,7 +106,6 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         super.viewDidAppear(animated)
         
         getProductList(statusId[selectedIndex], key: self.searchBarTextField.text)
-//        requestRefreshToken("", status: 0)
     }
     
     // MARK: - Methods
@@ -518,7 +517,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     
     func requestRefreshToken(type: String, status: Int) {
         
-        WebServiceManager.fireRefreshTokenWithUrl(/*APIAtlas.loginUrl*/"asd", actionHandler: { (successful, responseObject, RequestErrorType) -> Void in
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.loginUrl, actionHandler: { (successful, responseObject, RequestErrorType) -> Void in
             self.hud?.hide(true)
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
@@ -534,8 +533,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
                     SessionManager.logout()
                     GPPSignIn.sharedInstance().signOut()
-                    let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                    appDelegate.startPage()
+                    self.navigationController?.popToRootViewControllerAnimated(false)
                 })
             }
         })

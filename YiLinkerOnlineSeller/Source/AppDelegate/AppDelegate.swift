@@ -200,9 +200,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let dashboard: DashboardViewController = storyBoard.instantiateViewControllerWithIdentifier("DashboardViewController") as! DashboardViewController
 //        self.window?.rootViewController = dashboard
         
-        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = mainStoryboard.instantiateViewControllerWithIdentifier("DashboardViewController") as! DashboardViewController
-        UIApplication.sharedApplication().keyWindow?.rootViewController = viewController
+//        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//        
+//        let dashboard: DashboardViewController = mainStoryboard.instantiateViewControllerWithIdentifier("DashboardViewController") as! DashboardViewController
+//        
+//        UIApplication.sharedApplication().keyWindow?.rootViewController = dashboard
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool

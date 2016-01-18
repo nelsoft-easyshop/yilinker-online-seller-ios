@@ -411,8 +411,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                 UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
                     SessionManager.logout()
                     GPPSignIn.sharedInstance().signOut()
-                    let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                    appDelegate.startPage()
+                    self.navigationController?.popToRootViewControllerAnimated(false)
                 })
             }
         })

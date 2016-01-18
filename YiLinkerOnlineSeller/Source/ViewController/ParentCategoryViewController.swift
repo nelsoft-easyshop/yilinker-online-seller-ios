@@ -88,37 +88,74 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
     
     func requestGetCustomizedCategories(key: String) {
         if Reachability.isConnectedToNetwork() {
-            if self.requestTask != nil {
-                self.requestTask.cancel()
-                self.requestTask = nil
-            }
+//            if self.requestTask != nil {
+//                self.requestTask.cancel()
+//                self.requestTask = nil
+//            }
             self.showHUD()
-            let manager = APIManager.sharedInstance
-            let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "queryString": key]
-
-            self.requestTask = manager.POST(APIAtlas.getCustomizedCategories, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                
-                self.customizedCategoriesModel = CustomizedCategoriesModel.parseDataWithDictionary(responseObject as! NSDictionary)
-                
-                if self.customizedCategoriesModel.customizedCategories.count != 0 {
-                    self.tableView.reloadData()
-                    self.tableView.hidden = false
-                    self.emptyLabel.hidden = true
-                } else {
-                    self.emptyLabel.hidden = false
-                    self.tableView.hidden = true
-                }
-                self.hud?.hide(true)
-                
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
+//            let manager = APIManager.sharedInstance
+//            let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "queryString": key]
+            
+            WebServiceManager.fireGetParentCategoryRequestWithUrl(APIAtlas.getCustomizedCategories, key: key, actionHandler: {
+                (successful, responseObject, requestErrorType) -> Void in
+                if successful {
+                    self.customizedCategoriesModel = CustomizedCategoriesModel.parseDataWithDictionary(responseObject as! NSDictionary)
                     
-                    if error.code != NSURLErrorCancelled {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.wentWrong, title: AlertStrings.error)
-                        self.hud?.hide(true)
+                    if self.customizedCategoriesModel.customizedCategories.count != 0 {
+                        self.tableView.reloadData()
+                        self.tableView.hidden = false
+                        self.emptyLabel.hidden = true
+                    } else {
+                        self.emptyLabel.hidden = false
+                        self.tableView.hidden = true
                     }
+                    self.hud?.hide(true)
+                } else {
+                    if requestErrorType == .ResponseError {
+                        //Error in api requirements
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .AccessTokenExpired {
+                        self.requestRefreshToken()
+                    } else if requestErrorType == .PageNotFound {
+                        //Page not found
+                        Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .NoInternetConnection {
+                        //No internet connection
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .RequestTimeOut {
+                        //Request timeout
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .UnRecognizeError {
+                        //Unhandled error
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                    }
+                }
             })
+            
+//            self.requestTask = manager.POST(APIAtlas.getCustomizedCategories, parameters: parameters, success: {
+//                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+//                
+//                self.customizedCategoriesModel = CustomizedCategoriesModel.parseDataWithDictionary(responseObject as! NSDictionary)
+//                
+//                if self.customizedCategoriesModel.customizedCategories.count != 0 {
+//                    self.tableView.reloadData()
+//                    self.tableView.hidden = false
+//                    self.emptyLabel.hidden = true
+//                } else {
+//                    self.emptyLabel.hidden = false
+//                    self.tableView.hidden = true
+//                }
+//                self.hud?.hide(true)
+//                
+//                }, failure: {
+//                    (task: NSURLSessionDataTask!, error: NSError!) in
+//                    
+//                    if error.code != NSURLErrorCancelled {
+//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.wentWrong, title: AlertStrings.error)
+//                        self.hud?.hide(true)
+//                    }
+//            })
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
         }
@@ -126,25 +163,41 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
     
     func requestRefreshToken() {
         
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        let manager = APIManager.sharedInstance
-        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            self.hud?.hide(true)
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.requestGetCustomizedCategories(self.searchBarTextField.text)
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.loginUrl, actionHandler: { (successful, responseObject, RequestErrorType) -> Void in
+            if successful {
                 self.hud?.hide(true)
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.requestGetCustomizedCategories(self.searchBarTextField.text)
+            } else {
+                //Forcing user to logout.
+                self.hud?.hide(true)
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    SessionManager.logout()
+                    GPPSignIn.sharedInstance().signOut()
+                    self.navigationController?.popToRootViewControllerAnimated(false)
+                })
+            }
         })
+        
+//        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+//            "client_secret": Constants.Credentials.clientSecret,
+//            "grant_type": Constants.Credentials.grantRefreshToken,
+//            "refresh_token": SessionManager.refreshToken()]
+//        
+//        let manager = APIManager.sharedInstance
+//        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
+//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+//            
+//            self.hud?.hide(true)
+//            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+//            self.requestGetCustomizedCategories(self.searchBarTextField.text)
+//            
+//            }, failure: {
+//                (task: NSURLSessionDataTask!, error: NSError!) in
+//                self.hud?.hide(true)
+//                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+//                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+//        })
     }
     
     // MARK: - Actions
