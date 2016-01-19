@@ -197,7 +197,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         self.fireCondition()
         
         if self.uploadType == UploadType.EditProduct {
-            self.title = "Edit Product"
+            self.title = Constants.ViewControllersTitleString.productEdit
             let oldImages: [ServerUIImage] = self.productModel.editedImage
             self.oldEditedImages = oldImages
             let combiOldImages: [ServerUIImage] = self.productModel.oldEditedCombinationImages
