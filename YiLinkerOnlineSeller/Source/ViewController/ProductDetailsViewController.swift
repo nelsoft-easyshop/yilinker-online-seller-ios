@@ -34,6 +34,7 @@ struct ProductUploadEdit {
     static var edit: Bool = false
     static var isPreview: Bool = false
     static var combinedImagesDictionary: [NSMutableDictionary] = []
+    static var uploadType: UploadType = UploadType.NewProduct
 }
 
 class ProductDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProductDescriptionViewDelegate, EmptyViewDelegate, SuccessUploadViewControllerDelegate {
@@ -100,6 +101,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         loadloadViewsWithDetails()
         if Reachability.isConnectedToNetwork() {
             if ProductUploadEdit.isPreview {
+                isEditable = true
                 populateDetails()
             } else {
                 ProductUploadEdit.combinedImagesDictionary.removeAll(keepCapacity: false)
@@ -445,7 +447,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     func editAction() {
         if ProductUploadEdit.isPreview {
             self.showHUD()
-            self.upload(self.uploadType)
+            self.upload(ProductUploadEdit.uploadType)
         } else {
             if self.productModel != nil {
                 self.showHUD()
@@ -553,6 +555,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                         self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyDraft)
                     } else if uploadType == UploadType.EditProduct {
                         ProductUploadEdit.edit = true
+                        self.dismissViewControllerAnimated(true, completion: nil)
                         self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyEdited)
                     } else {
                         self.success()
@@ -596,7 +599,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.upload(self.uploadType)
+            self.upload(ProductUploadEdit.uploadType)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -637,10 +640,12 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     //MARK: - Success Upload View Controller
     func successUploadViewController(didTapUploadAgain viewController: SuccessUploadViewController) {
-        let productUploadTableViewController: ProductUploadTableViewController = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
-        let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadTableViewController)
-        navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-        self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
+        //let productUploadTableViewController: ProductUploadTableViewController = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
+        //let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadTableViewController)
+        //navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+        self.dismissViewControllerAnimated(true, completion: nil)
+        //self.presentViewController(productUploadTableViewController, animated: true, completion: nil)
+        //self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
     }
     
     //MARK: Alert view
