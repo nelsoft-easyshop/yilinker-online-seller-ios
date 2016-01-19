@@ -555,7 +555,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                         self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyDraft)
                     } else if uploadType == UploadType.EditProduct {
                         ProductUploadEdit.edit = true
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                        //self.dismissViewControllerAnimated(true, completion: nil)
                         self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyEdited)
                     } else {
                         self.success()
@@ -622,6 +622,10 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         
         dispatch_after(delayTime, dispatch_get_main_queue()) {
             self.dismissViewControllerAnimated(true, completion: nil)
+            let productManagement: ProductManagementViewController = ProductManagementViewController(nibName: "ProductManagementViewController", bundle: nil)
+            let navigationController: UINavigationController = UINavigationController(rootViewController: productManagement)
+            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+            self.navigationController?.pushViewController(productManagement, animated: true)
         }
     }
     
@@ -640,10 +644,11 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     //MARK: - Success Upload View Controller
     func successUploadViewController(didTapUploadAgain viewController: SuccessUploadViewController) {
-        //let productUploadTableViewController: ProductUploadTableViewController = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
-        //let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadTableViewController)
-        //navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-        self.dismissViewControllerAnimated(true, completion: nil)
+        let productUploadTableViewController: ProductUploadTableViewController = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
+        let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadTableViewController)
+        navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+        self.navigationController?.pushViewController(productUploadTableViewController, animated: true)
+        //self.dismissViewControllerAnimated(true, completion: nil)
         //self.presentViewController(productUploadTableViewController, animated: true, completion: nil)
         //self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
     }
