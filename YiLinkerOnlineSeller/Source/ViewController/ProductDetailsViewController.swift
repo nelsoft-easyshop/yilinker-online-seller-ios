@@ -538,6 +538,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     
     func upload(uploadType: UploadType) {
+        self.showHUD()
         self.uploadType = uploadType
         let manager: APIManager = APIManager.sharedInstance
         manager.POST(ProductUploadCombination.url, parameters: ProductUploadCombination.parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
@@ -555,8 +556,8 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                         self.dismissViewControllerAnimated(true, completion: nil)
                         self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyDraft)
                     } else if uploadType == UploadType.EditProduct {
+                        ProductUploadEdit.edit = false
                         self.dismissViewControllerAnimated(true, completion: nil)
-                        ProductUploadEdit.edit = true
                         //self.dismissViewControllerAnimated(true, completion: nil)
                         self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyEdited)
                     } else {
@@ -623,10 +624,12 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC)))
         
         dispatch_after(delayTime, dispatch_get_main_queue()) {
-            let productManagement: ProductManagementViewController = ProductManagementViewController(nibName: "ProductManagementViewController", bundle: nil)
+            let productManagement: ProductDetailsViewController = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
             let navigationController: UINavigationController = UINavigationController(rootViewController: productManagement)
             navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-            self.navigationController?.pushViewController(productManagement, animated: true)
+            //self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+            self.navigationController?.popViewControllerAnimated(true)
+            //self.navigationController?.popToRootViewControllerAnimated(true)//(productManagement, animated: true)
         }
     }
     
