@@ -1557,7 +1557,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             self.presentViewController(alertController, animated: true) {
             }
         } else {
-            self.upload(UploadType.Draft)
+            self.upload(self.uploadType)
         }
     }
     
