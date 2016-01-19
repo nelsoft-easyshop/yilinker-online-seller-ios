@@ -192,6 +192,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GPPSignIn.sharedInstance().clientID = "120452328739-36rpdqne3pvgj21p7ptru7daqp0tgiik.apps.googleusercontent.com"
     }
     
+    func startPage() {
+//        for view in self.window!.subviews {
+//            view.removeFromSuperview()
+//        }
+//        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//        let dashboard: DashboardViewController = storyBoard.instantiateViewControllerWithIdentifier("DashboardViewController") as! DashboardViewController
+//        self.window?.rootViewController = dashboard
+        
+//        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//        
+//        let dashboard: DashboardViewController = mainStoryboard.instantiateViewControllerWithIdentifier("DashboardViewController") as! DashboardViewController
+//        
+//        UIApplication.sharedApplication().keyWindow?.rootViewController = dashboard
+    }
+    
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool
     {
         // handle Google+ Sign In callback URL
