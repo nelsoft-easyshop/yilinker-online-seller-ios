@@ -20,5 +20,9 @@ class ProductImagesCollectionViewCell: UICollectionViewCell {
     func setItemImage(image: String) {
         self.itemImageView.sd_setImageWithURL(NSURL(string: image), placeholderImage: UIImage(named: "dummy-placeholder"))
     }
+    
+    func setLocalImage(image: UIImage) {
+        self.itemImageView.image = image
+    }
 
 }

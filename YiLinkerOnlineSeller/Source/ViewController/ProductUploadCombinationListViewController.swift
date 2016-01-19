@@ -302,6 +302,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         let indexPath: NSIndexPath = self.tableView.indexPathForCell(cell)!
         let range: NSRange = NSMakeRange(indexPath.section, 1)
         let section: NSIndexSet = NSIndexSet(indexesInRange: range)
+
         ProductSku.SKUS.removeAtIndex(indexPath.section)
         self.productModel!.validCombinations.removeAtIndex(indexPath.section)
         self.tableView.beginUpdates()
@@ -328,7 +329,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         if self.productModel != nil {
             counter = self.productModel!.validCombinations.count
         }
-
+    
         productUploadCombinationTableViewController.headerTitle = "\(ProductUploadStrings.combination) \(indexPath.section+1)"
     
         self.navigationController?.pushViewController(productUploadCombinationTableViewController, animated: true)
