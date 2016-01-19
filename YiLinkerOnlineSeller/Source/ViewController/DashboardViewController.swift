@@ -471,6 +471,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             if SessionManager.isSeller() {
                 let productUploadTableViewController: ProductUploadTableViewController = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
                 let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadTableViewController)
+                ProductUploadCombination.draft = true
                 navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
                 self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
             } else {
