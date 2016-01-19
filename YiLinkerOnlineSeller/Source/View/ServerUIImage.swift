@@ -13,4 +13,5 @@ class ServerUIImage: UIImage {
     var isNew: Bool = false
     var isRemoved: Bool = false
     var isCombination: Bool = false
+    var index: Int = 0
 }

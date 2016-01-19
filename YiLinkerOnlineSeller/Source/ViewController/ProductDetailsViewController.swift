@@ -322,22 +322,44 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         if self.productModel.validCombinations.count == 0 {
             self.gotoEditProduct()
         } else {
+            var imageIndex: Int = 0
             for i in 0..<self.productModel.validCombinations.count {
                 println("downloading images of combination -  \(i + 1)")
                 for j in 0..<self.productModel.validCombinations[i].imagesUrl.count {
-                    print("downloading images -  \(j + 1) >> ")
                     var imgURL: NSURL = NSURL(string: self.productModel.validCombinations[i].imagesUrl[j])!
-                    println("image url == \(imgURL)")
+                    println("downloading images -  \(j + 1) >> image url == \(imgURL)")
+                    self.productModel.oldEditedCombinationImages.append(ServerUIImage())
+                    self.productModel.oldEditedCombinationImages.append(ServerUIImage())
+                    self.productModel.validCombinations[i].editedImages.append(ServerUIImage())
+                    self.productModel.validCombinations[i].editedImages.append(ServerUIImage())
+                    
                     let request: NSURLRequest = NSURLRequest(URL: imgURL)
                     NSURLConnection.sendAsynchronousRequest(
                         request, queue: NSOperationQueue.mainQueue(),
                         completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
+                            var combinationImagesToDownload: Int = 0
+                            
+                            if i == 0 {
+                                imageIndex = j
+                            } else {
+                                imageIndex = self.productModel.validCombinations[i - 1].imagesUrl.count + j
+                            }
                             if error == nil {
-                                println("success downloading combination image - \(i + 1) of \(j + 1)")
+                                println("downloaded combination image - \(i + 1) of \(j + 1) - index >> \(imageIndex)")
                                 var convertedImage: ServerUIImage = ServerUIImage(data: data)!
                                 convertedImage.uid = self.productModel.validCombinations[i].imagesId[j]
-                                self.productModel.oldEditedCombinationImages.append(convertedImage)
-                                self.productModel.validCombinations[i].editedImages.append(convertedImage)
+                                convertedImage.index = i + j
+//                                println(convertedImage.index)
+//                                self.productModel.oldEditedCombinationImages.append(convertedImage)
+                                self.productModel.oldEditedCombinationImages[imageIndex] = convertedImage
+                                self.productModel.validCombinations[i].editedImages[j] = convertedImage
+//                                self.productModel.validCombinations[i].editedImages.append(convertedImage)
+//                                println("index before")
+//                                for images in self.productModel.oldEditedCombinationImages {
+//                                    println(images.index)
+//                                }
+                                self.productModel.oldEditedCombinationImages.removeLast()
+                                self.productModel.validCombinations[i].editedImages.removeLast()
                                 if self.productModel.validCombinations[i].imagesUrl.count == self.productModel.validCombinations[i].editedImages.count && (i + 1) == self.productModel.validCombinations.count {
                                     self.gotoEditProduct()
                                 }
@@ -347,11 +369,11 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                                 convertedImage.uid = self.productModel.validCombinations[i].imagesId[j]
                                 self.productModel.validCombinations[i].editedImages.append(convertedImage)
                                 self.productModel.oldEditedCombinationImages.append(convertedImage)
-                                if self.productModel.validCombinations[i].imagesUrl.count == self.productModel.validCombinations[i].editedImages.count /*&& (i + 1) == self.productModel.validCombinations.count */{
+                                if self.productModel.validCombinations[i].imagesUrl.count == self.productModel.validCombinations[i].editedImages.count && (i + 1) == self.productModel.validCombinations.count {
                                     self.gotoEditProduct()
                                 }
                             }
-                            println("\(self.productModel.validCombinations[i].imagesUrl.count) == \(self.productModel.validCombinations[i].editedImages.count) && \((i + 1)) == \(self.productModel.validCombinations.count)")
+//                            println("\(self.productModel.validCombinations[i].imagesUrl.count) == \(self.productModel.validCombinations[i].editedImages.count) && \((i + 1)) == \(self.productModel.validCombinations.count)")
                     })
 
                 }
