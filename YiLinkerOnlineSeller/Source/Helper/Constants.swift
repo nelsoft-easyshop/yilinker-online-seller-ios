@@ -8,6 +8,12 @@
 
 struct Constants {
     
+    struct WebServiceStatusCode {
+        static let pageNotFound: Int = 404
+        static let expiredAccessToken: Int = 401
+        static let requestTimeOut: Int = 408
+    }
+    
     struct Localized {
         static let ok: String = StringHelper.localizedStringWithKey("OK_BUTTON_LOCALIZE_KEY")
         static let someThingWentWrong: String = StringHelper.localizedStringWithKey("SOMETHING_WENT_WRONG_LOCALIZE_KEY")
@@ -23,6 +29,8 @@ struct Constants {
         static let invalid: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_INVALID_LOCALIZE_KEY")
         static let noInternet: String = StringHelper.localizedStringWithKey("NO_INTERNET_LOCALIZE_KEY")
         static let noInternetErrorMessage: String = StringHelper.localizedStringWithKey("NO_INTERNET_ERROR_MESSAGE_LOCALIZE_KEY")
+        static let targetNotAvailable: String = StringHelper.localizedStringWithKey("TARGET_NOT_AVAILABLE")
+        static let pageNotFound: String = StringHelper.localizedStringWithKey("PAGE_NOT_FOUND_LOCALIZE_KEY")
     }
 
     struct Colors {
