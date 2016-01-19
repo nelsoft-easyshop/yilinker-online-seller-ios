@@ -348,7 +348,6 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                                 println("downloaded combination image - \(i + 1) of \(j + 1) - index >> \(imageIndex)")
                                 var convertedImage: ServerUIImage = ServerUIImage(data: data)!
                                 convertedImage.uid = self.productModel.validCombinations[i].imagesId[j]
-                                convertedImage.index = i + j
 //                                println(convertedImage.index)
 //                                self.productModel.oldEditedCombinationImages.append(convertedImage)
                                 self.productModel.oldEditedCombinationImages[imageIndex] = convertedImage
