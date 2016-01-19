@@ -552,8 +552,10 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                 
                 if dictionary["isSuccessful"] as! Bool == true {
                     if uploadType == UploadType.Draft {
+                        self.dismissViewControllerAnimated(true, completion: nil)
                         self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyDraft)
                     } else if uploadType == UploadType.EditProduct {
+                        self.dismissViewControllerAnimated(true, completion: nil)
                         ProductUploadEdit.edit = true
                         //self.dismissViewControllerAnimated(true, completion: nil)
                         self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyEdited)
@@ -621,7 +623,6 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC)))
         
         dispatch_after(delayTime, dispatch_get_main_queue()) {
-            self.dismissViewControllerAnimated(true, completion: nil)
             let productManagement: ProductManagementViewController = ProductManagementViewController(nibName: "ProductManagementViewController", bundle: nil)
             let navigationController: UINavigationController = UINavigationController(rootViewController: productManagement)
             navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
