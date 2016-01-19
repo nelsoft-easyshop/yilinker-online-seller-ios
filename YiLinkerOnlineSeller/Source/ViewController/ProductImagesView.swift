@@ -13,7 +13,9 @@ class ProductImagesView: UIView, UICollectionViewDataSource {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subTitleLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
-   
+    var productModel: ProductModel?
+    var uploadType: UploadType?
+    var images: [UIImage] = []
     var imagesUrls: [String] = []
     
     override func awakeFromNib() {
@@ -25,31 +27,61 @@ class ProductImagesView: UIView, UICollectionViewDataSource {
     
     // MARK: - Methods
     
-    func setDetails(product: ProductModel) {
-        
+    func setDetails(product: ProductModel, uploadType: UploadType, images: [UIImage]) {
+        self.uploadType = uploadType
+        self.images = images
+        self.productModel = product
         self.titleLabel.text = product.name
         self.subTitleLabel.text = product.shortDescription
         
-//        self.collectionView.transform = CGAffineTransformMakeTranslation(0.0, 20.0)
-//        self.frame.size.height = self.frame.size.height + (self.subTitleLabel.frame.size.height - 38)
-        self.imagesUrls = product.imageUrls
+        if !ProductUploadEdit.isPreview {
+            self.imagesUrls = product.imageUrls
+        }
+
         self.collectionView.reloadData()
     }
     
     // MARK: - Collection View Data Source
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if imagesUrls.count == 0 {
-            return 5
+        if  ProductUploadEdit.isPreview {
+            if self.uploadType == UploadType.EditProduct {
+                if self.productModel!.editedImage.count == 0 {
+                    return 5
+                }
+                return self.productModel!.editedImage.count - 1
+            } else {
+                if self.images.count == 0 {
+                    return 5
+                }
+                return self.images.count
+            }
+        } else {
+            if imagesUrls.count == 0 {
+                return 5
+            }
+            return imagesUrls.count
         }
-        return imagesUrls.count
+
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: ProductImagesCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("ProductImagesIdentifier", forIndexPath: indexPath) as! ProductImagesCollectionViewCell
         
-        if imagesUrls.count != 0 {
-            cell.setItemImage(imagesUrls[indexPath.row])
+        if ProductUploadEdit.isPreview {
+            if self.uploadType == UploadType.EditProduct {
+                if self.productModel!.editedImage.count != 0 {
+                    cell.setLocalImage(self.productModel!.editedImage[indexPath.row])
+                }
+            } else {
+                if self.images.count != 0 {
+                    cell.setLocalImage(self.images[indexPath.row])
+                }
+            }
+        } else {
+            if imagesUrls.count != 0 {
+                cell.setItemImage(imagesUrls[indexPath.row])
+            }
         }
         
         return cell

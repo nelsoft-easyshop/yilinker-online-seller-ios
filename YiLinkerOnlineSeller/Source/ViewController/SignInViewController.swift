@@ -276,42 +276,30 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     func requestSignin() {
         NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isSeller")
         self.showHUD()
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["email": self.emailAddressTextField.text,
-            "password": self.passwordTextField.text,
-            "client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantSeller]
-        
-        manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            
-            self.hideKeyboard(UIGestureRecognizer())
-            self.signInButton.setTitle(SignInStrings.welcome, forState: .Normal)
-            self.signinSuccessful()
-            self.fireCreateRegistration(SessionManager.gcmToken())
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                self.signInButton.setTitle("SIGN IN", forState: .Normal)
-
-                if error.userInfo != nil {
-                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                        let errorDescription: String = jsonResult["error_description"] as! String
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
-                    } else {
-                        
-                    }
-                } else {
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    if task.statusCode == 1011 {
-                        self.showAlert(title: AlertStrings.error, message: SignInStrings.notMatch)
-                    } else {
-                        self.showAlert(title: AlertStrings.error, message: AlertStrings.wentWrong)
-                    }
-                }
-                
+        WebServiceManager.fireLoginRequestWithUrl(APIAtlas.loginUrl, emailAddress: self.emailAddressTextField.text!, password: self.passwordTextField.text!, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.hideKeyboard(UIGestureRecognizer())
+                self.signInButton.setTitle(SignInStrings.welcome, forState: .Normal)
+                self.signinSuccessful()
+                self.fireCreateRegistration(SessionManager.gcmToken())
+            } else {
                 self.hud?.hide(true)
+                self.signInButton.setTitle(SignInStrings.signin, forState: .Normal)
+                if requestErrorType == .ResponseError {
+//                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+//                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    self.showAlert(title: AlertStrings.error, message: responseObject["error_description"] as! String)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
         })
     }
     

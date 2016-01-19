@@ -16,6 +16,8 @@ FAILED_LOCALIZE_KEY = "Failed";
 CONNECTION_UNREACHABLE_LOCALIZE_KEY = "Connection Unreachable";
 CONNECTION_ERROR_MESSAGE_LOCALIZE_KEY = "Cannot retrieve data. Please check your internet connection.";
 CANCEL_LOCALIZE_KEY = "CANCEL";
+TARGET_NOT_AVAILABLE = "No items to load.";
+PAGE_NOT_FOUND_LOCALIZE_KEY = "Page not found.";
 
 DONE_LOCALIZE_KEY  = "DONE";
 INCOMPLETE_PRODUCT_DETAILS_LOCALIZE_KEY  = "Incomplete Product Details";
@@ -523,7 +525,8 @@ DISPUTE_SUBMIT_CASE_LOCALIZE_KEY = "SUBMIT CASE";
 DISPUTE_ADD_CASE_LOCALIZE_KEY = "Add Case";
 
 // MARK: - Product Upload
-UPLOAD_ITEM_LOCALIZE_KEY = "Upload Item";
+UPLOAD_ITEM_LOCALIZE_KEY = "Proceed";
+UPLOAD_ITEMS_LOCALIZE_KEY = "Upload Item";
 PRODUCT_PHOTOS_LOCALIZE_KEY = "PRODUCT PHOTOS";
 ADD_PHOTO_LOCALIZE_KEY = "ADD PHOTO";
 
@@ -629,9 +632,10 @@ SUCCESSFULLY_UPLOADED_LOCALIZE_KEY = "Your product has been successfuly uploaded
 ATTRIBUTE_LIST_LOCALIZE_KEY = "Attribute List";
 ADD_COMBINATION_LOCALIZE_KEY = "Add Combination";
 PRODUCT_UPLOAD_LOCALIZE_KEY = "Product Upload";
+PRODUCT_EDIT_LOCALIZE_KEY = "Edit Product";
 ATTRIBUTE_COMBINATION_LOCALIZE_KEY = "Attribute Combination";
 PRODUCT_UPLOAD_INVALID_LOCALIZE_KEY = "Invalid ";
-PRODUCT_UPLOAD_PRICE_LOCALIZE_KEY = "Discounted/final price must be less than or equal to the retail price.";
+PRODUCT_UPLOAD_PRICE_LOCALIZE_KEY = "Final price must be less than or equal to the retail price.";
 PRODUCT_UPLOAD_SKU_AVAILABLE_LOCALIZE_KEY = "SKU is already taken.";
 
 // MARK: - Reseller
