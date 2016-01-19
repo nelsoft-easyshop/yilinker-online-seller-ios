@@ -1121,21 +1121,39 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         switch result.value {
         case MFMailComposeResultCancelled.value:
-            self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_CANCEL_EMAIL_LOCALIZE_KEY"))
+            let sendMailErrorAlert = UIAlertView(title: self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_CANCEL_EMAIL_LOCALIZE_KEY"), delegate: self, cancelButtonTitle: "OK")
+            sendMailErrorAlert.show()
+            //self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_CANCEL_EMAIL_LOCALIZE_KEY"))
             NSLog("Mail cancelled")
         case MFMailComposeResultSaved.value:
-            self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SAVE_EMAIL_LOCALIZE_KEY"))
+            let sendMailErrorAlert = UIAlertView(title: self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SAVE_EMAIL_LOCALIZE_KEY"), delegate: self, cancelButtonTitle: "OK")
+            sendMailErrorAlert.show()
+            //self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SAVE_EMAIL_LOCALIZE_KEY"))
             NSLog("Mail saved")
         case MFMailComposeResultSent.value:
-            self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY"))
+            /*let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(3 * Double(NSEC_PER_SEC)))
+            dispatch_after(delayTime, dispatch_get_main_queue()) {
+                self.navigationController?.view.makeToast(StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY"), duration: 3.0, position: CSToastPositionBottom)
+            }*/
+            let sendMailErrorAlert = UIAlertView(title: self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY"), delegate: self, cancelButtonTitle: "OK")
+            sendMailErrorAlert.show()
+            //self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY"))
             NSLog("Mail sent")
         case MFMailComposeResultFailed.value:
-            self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_FAIL_EMAIL_LOCALIZE_KEY"))
+            let sendMailErrorAlert = UIAlertView(title: self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_FAIL_EMAIL_LOCALIZE_KEY"), delegate: self, cancelButtonTitle: "OK")
+            sendMailErrorAlert.show()
+            //self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_FAIL_EMAIL_LOCALIZE_KEY"))
             NSLog("Mail sent failure: %@", [error!.localizedDescription])
         default:
             break
         }
-        controller.dismissViewControllerAnimated(true, completion: nil)
+        
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(4 * Double(NSEC_PER_SEC)))
+        
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+            controller.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
     }
     
     func shareGPAction(postImage: UIImageView, title: String) {
@@ -1261,9 +1279,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         alertController.addAction(OKAction)
         
-        self.presentViewController(alertController, animated: true) {
-            
-        }
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     /*
