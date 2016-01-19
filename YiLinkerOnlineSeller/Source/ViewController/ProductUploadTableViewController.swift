@@ -1141,13 +1141,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             combinationCounter++
         }
         
-        if uploadType == UploadType.EditProduct ||  uploadType == UploadType.Draft {
+        if uploadType == UploadType.EditProduct {
             editedImages.removeLast()
             combinationCounter--
         }
         
         //Comparing of oldEditedImages and editedImages
-        if uploadType == UploadType.EditProduct ||  uploadType == UploadType.Draft {
+        if uploadType == UploadType.EditProduct {
             for (index, oldImage) in enumerate(self.oldEditedImages) {
                 var isNew: Bool = false
                 var isDeleted: Bool = true
@@ -1186,7 +1186,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             uploadedImages.removeLast()
         }
         
-        if self.uploadType == UploadType.EditProduct ||  uploadType == UploadType.Draft {
+        if self.uploadType == UploadType.EditProduct {
             self.imagesToUpload = editedImages.count
         } else {
             self.imagesToUpload = uploadedImages.count
@@ -1371,7 +1371,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
         
         
-        if self.uploadType == UploadType.EditProduct ||  uploadType == UploadType.Draft {
+        if self.uploadType == UploadType.EditProduct {
             imagesKey.removeAll(keepCapacity: true)
 
             for (index, image) in enumerate(editedImages) {
@@ -1509,6 +1509,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         
         if self.uploadType == UploadType.EditProduct {
             productDetailsViewController.uploadType = UploadType.EditProduct
+        } else if self.uploadType == UploadType.Draft {
+            
         } else {
             productDetailsViewController.uploadType = UploadType.NewProduct
         }
