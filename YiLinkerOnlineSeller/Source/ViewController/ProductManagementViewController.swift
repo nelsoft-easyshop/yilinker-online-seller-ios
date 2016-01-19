@@ -676,6 +676,8 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             
             if self.productModel.products[indexPath.row].status == Status.draft {
                 productDetails.isDraft = true
+                ProductUploadCombination.draft = true
+            } else {
                 ProductUploadCombination.draft = false
             }
             ProductUploadEdit.isPreview = false
