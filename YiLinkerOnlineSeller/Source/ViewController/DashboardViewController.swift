@@ -524,17 +524,68 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                     println("cancel")
                     
                 case .Destructive:
-//                    NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
-                    self.ctr = 0
-                    NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
-                    SessionManager.setAccessToken("")
-                    let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                    appDelegate.changeRootToDashboard()
+                    self.fireDeleteRegistration(SessionManager.gcmToken())
+                    
                 }
             }))
             alert.addAction(UIAlertAction(title: cancelString, style: .Cancel, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
         }
+    }
+    
+    func fireDeleteRegistration(registrationID : String) {
+        if Reachability.isConnectedToNetwork() {
+            if(SessionManager.isLoggedIn()){
+                let manager: APIManager = APIManager.sharedInstance
+                let parameters: NSDictionary = [
+                    
+                    "registrationId": "\(registrationID)",
+                    "deviceType"    : "1"
+                    ]   as Dictionary<String, String>
+                
+                let url = "\(APIAtlas.ACTION_GCM_DELETE)?access_token=\(SessionManager.accessToken())"
+                self.showHUD()
+                manager.POST(url, parameters: parameters, success: {
+                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                    println(responseObject)
+                    println("Registration successful!")
+                    self.logoutUser()
+                    self.hud?.hide(true)
+                    }, failure: {
+                        (task: NSURLSessionDataTask!, error: NSError!) in
+                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                        println("Registration unsuccessful!")
+                        self.hud?.hide(true)
+                        if task.statusCode == 401 {
+                        } else {
+                            if Reachability.isConnectedToNetwork() {
+                                var info = error.userInfo!
+                                
+                                if info["data"] != nil {
+                                    self.logoutUser()
+                                } else {
+                                    UIAlertController.displaySomethingWentWrongError(self)
+                                }
+                                
+                            } else {
+                                UIAlertController.displayNoInternetConnectionError(self)
+                            }
+                        }
+                        
+                })
+            }
+        } else {
+            UIAlertController.displayNoInternetConnectionError(self)
+        }
+        
+    }
+    
+    func logoutUser() {
+        self.ctr = 0
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
+        SessionManager.setAccessToken("")
+        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.changeRootToDashboard()
     }
     
     func fireStoreInfo(showHUD: Bool){
