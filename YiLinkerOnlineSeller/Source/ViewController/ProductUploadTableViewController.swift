@@ -152,6 +152,7 @@ struct ProductUploadCombination {
     static var datas: [NSData] = []
     static var indexes: [Int] = []
     static var deleted: [String] = []
+    static var draft: Bool = false
 }
 
 class ProductUploadTableViewController: UITableViewController, ProductUploadUploadImageTableViewCellDataSource, ProductUploadUploadImageTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadCategoryViewControllerDelegate, ProductUploadFooterViewDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadPriceTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadBrandViewControllerDelegate, ProductUploadQuantityTableViewCellDelegate, SuccessUploadViewControllerDelegate {
@@ -188,7 +189,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     override func viewDidLoad() {
         super.viewDidLoad()
         self.backButton()
-        self.title = Constants.ViewControllersTitleString.productUpload
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         
         self.register()
@@ -197,10 +197,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         self.fireCondition()
         
         if self.uploadType == UploadType.EditProduct {
+            self.title = "Edit Product"
             let oldImages: [ServerUIImage] = self.productModel.editedImage
             self.oldEditedImages = oldImages
             let combiOldImages: [ServerUIImage] = self.productModel.oldEditedCombinationImages
             self.combinationOldEditedImages = combiOldImages
+        } else {
+            self.title = Constants.ViewControllersTitleString.productUpload
         }
         
         
@@ -820,7 +823,11 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     //MARK: - Back
     func back() {
         if self.productModel.name != "" {
-            self.draft()
+            if ProductUploadCombination.draft {
+              self.draft()
+            } else {
+               self.dismissViewControllerAnimated(true, completion: nil) 
+            }
         } else {
             self.dismissViewControllerAnimated(true, completion: nil)
         }
@@ -1134,13 +1141,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             combinationCounter++
         }
         
-        if uploadType == UploadType.EditProduct {
+        if uploadType == UploadType.EditProduct ||  uploadType == UploadType.Draft {
             editedImages.removeLast()
             combinationCounter--
         }
         
         //Comparing of oldEditedImages and editedImages
-        if uploadType == UploadType.EditProduct {
+        if uploadType == UploadType.EditProduct ||  uploadType == UploadType.Draft {
             for (index, oldImage) in enumerate(self.oldEditedImages) {
                 var isNew: Bool = false
                 var isDeleted: Bool = true
@@ -1179,7 +1186,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             uploadedImages.removeLast()
         }
         
-        if self.uploadType == UploadType.EditProduct {
+        if self.uploadType == UploadType.EditProduct ||  uploadType == UploadType.Draft {
             self.imagesToUpload = editedImages.count
         } else {
             self.imagesToUpload = uploadedImages.count
@@ -1231,7 +1238,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         println("main images + combi images \(editedImages)")
         println("main images + combi images count \(editedImages.count)")
         // This is for checking old images in combination that has been deleted.
-        if self.uploadType == UploadType.EditProduct {
+        if self.uploadType == UploadType.EditProduct ||  uploadType == UploadType.Draft {
             //for oldImage in self.productModel.oldEditedCombinationImages {
                 
                 /*println("old image uid: \(oldImage.uid)")
@@ -1364,7 +1371,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
         
         
-        if self.uploadType == UploadType.EditProduct {
+        if self.uploadType == UploadType.EditProduct ||  uploadType == UploadType.Draft {
             imagesKey.removeAll(keepCapacity: true)
 
             for (index, image) in enumerate(editedImages) {
@@ -1490,13 +1497,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         
         if uploadType == UploadType.EditProduct {
             for i in 0..<editedImages.count {
-                productDetailsViewController.imagesToEdit.append(editedImages[i])
-                println(editedImages[i].size)
+                if !editedImages[i].isRemoved {
+                    productDetailsViewController.imagesToEdit.append(editedImages[i])
+                }
             }
         } else {
             for i in 0..<uploadedImages.count {
                 productDetailsViewController.imagesToEdit.append(uploadedImages[i])
-                println(uploadedImages[i].size)
             }
         }
         
@@ -1520,17 +1527,17 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             alertController.addAction(cancelAction)
             
             let OKAction = UIAlertAction(title: Constants.Localized.yes, style: .Default) { (action) in
+                self.dismissViewControllerAnimated(true, completion: nil)
                 productDetailsViewController.productModel = self.productModel
                 ProductUploadEdit.uploadType = UploadType.EditProduct
                 ProductUploadEdit.isPreview = true
-                self.dismissViewControllerAnimated(true, completion: nil)
             }
             
             alertController.addAction(OKAction)
             
             self.presentViewController(alertController, animated: true) {
             }
-        } else {
+        } else if uploadType == UploadType.EditProduct {
             let cancelAction = UIAlertAction(title: Constants.Localized.no, style: .Cancel) { (action) in
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
@@ -1547,10 +1554,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             
             self.presentViewController(alertController, animated: true) {
             }
+        } else {
+            self.upload(UploadType.Draft)
         }
     }
     
     func upload(uploadType: UploadType) -> Bool {
+        self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
         var uploaded: Bool = false
         manager.POST(ProductUploadCombination.url, parameters: ProductUploadCombination.parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
@@ -1565,9 +1575,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 
                 if dictionary["isSuccessful"] as! Bool == true {
                     if uploadType == UploadType.Draft {
+                        ProductUploadEdit.edit = false
                         self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyDraft)
                     } else if uploadType == UploadType.EditProduct {
-                        ProductUploadEdit.edit = true
+                        ProductUploadEdit.edit = false
                         self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyEdited)
                     } else {
                         self.success()
@@ -1607,6 +1618,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC)))
         
         dispatch_after(delayTime, dispatch_get_main_queue()) {
+            //self.navigationController?.popViewControllerAnimated(true)
+            ProductUploadEdit.isPreview = false
             self.dismissViewControllerAnimated(true, completion: nil)
         }
     }
