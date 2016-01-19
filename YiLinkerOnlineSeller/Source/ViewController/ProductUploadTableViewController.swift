@@ -166,6 +166,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     
     var uploadType: UploadType = UploadType.NewProduct
     var oldEditedImages: [ServerUIImage] = []
+    var combinationOldEditedImages: [ServerUIImage] = []
     var croppedImages: [UIImage] = []
     var combinationImagesArray: [Int] = []
     var imagesToUpload: Int = 0
@@ -176,6 +177,14 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if self.uploadType == UploadType.EditProduct || self.uploadType == UploadType.Draft{
+            
+        } else if self.uploadType == UploadType.NewProduct {
+            
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.backButton()
@@ -190,7 +199,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         if self.uploadType == UploadType.EditProduct {
             let oldImages: [ServerUIImage] = self.productModel.editedImage
             self.oldEditedImages = oldImages
+            let combiOldImages: [ServerUIImage] = self.productModel.oldEditedCombinationImages
+            self.combinationOldEditedImages = combiOldImages
         }
+        
         
         println("product price: \(self.productModel.retailPrice)")
         
@@ -1113,8 +1125,9 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     //MARK: - Fire Upload With Upload Type
     func fireUploadWithUploadType(uploadType: UploadType) {
         var editedImages: [ServerUIImage] = []
-        //added 
+       
         var combinationCounter: Int = 0
+        
         for editedImage in  self.productModel.editedImage {
             //editedImages.append(editedImage)
             editedImages.insert(editedImage, atIndex: combinationCounter)
@@ -1140,8 +1153,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                         break
                     }
                 }
-                //If isDeleted is true set isRemove to true
-                //if isDeleted == true {
+                
                 if contains(self.deletedImagesId, oldImage.uid) {
                     oldImage.isRemoved = true
                     oldImage.isNew = false
@@ -1150,7 +1162,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     editedImages.insert(oldImage, atIndex: combinationCounter)
                     combinationCounter++
                 }
-                //}
             }
         }
         
@@ -1175,29 +1186,15 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
         
         var imagesKey: [NSDictionary] = []
-        
-//        for var x = 0; x < mainImageCount; x++ {
-//            imagesKey.append("\(x)")
-//        }
-        
-        /*for combination in self.productModel.validCombinations {
-            for image in combination.images {
-                if self.uploadType == UploadType.NewProduct {
-                    uploadedImages.append(image)
-                } else if self.uploadType == UploadType.EditProduct {
-                    editedImages.append(image as! ServerUIImage)
-                    self.combinationImagesArray.append(editedImages.count - 1)
-                }
-            }
-        }*/
+
         var combinationImagesId: [String] = []
         for combination in self.productModel.validCombinations {
             if combination.images.count == 0 {
-                for image in self.productModel.oldEditedCombinationImages {
+                for image in self.combinationOldEditedImages {
                     if self.uploadType == UploadType.NewProduct {
                         uploadedImages.append(image)
                     } else if self.uploadType == UploadType.EditProduct {
-                        println("id: \(image.uid) - removed: \(image.isRemoved) - new: \(image.isNew)")
+                        println("\(combination.images.count) id: \(image.uid) - removed: \(image.isRemoved) - new: \(image.isNew)")
                         if (!contains(combinationImagesId, image.uid) && !contains(ProductUploadCombination.deleted, image.uid)) || image.isNew == true {
                             //Working
                             //editedImages.append(image)
@@ -1205,7 +1202,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                             combinationImagesId.append(image.uid)
                             combinationCounter++
                         }
-                        //editedImages.append(image)
                     }
                 }
             } else {
@@ -1214,16 +1210,19 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                         uploadedImages.append(image)
                     } else if self.uploadType == UploadType.EditProduct {
                         var serverImages: ServerUIImage = image as! ServerUIImage
-                        println("id: \(serverImages.uid) - removed: \(serverImages.isRemoved) - new: \(serverImages.isNew)")
+                        println("\(combination.images.count) --- id: \(serverImages.uid) - removed: \(serverImages.isRemoved) - new: \(serverImages.isNew)")
                         
-                        if !contains(ProductUploadCombination.deleted, serverImages.uid) && !contains(ProductUploadCombination.deleted, serverImages.uid) {
+                        if !contains(ProductUploadCombination.deleted, serverImages.uid) && !contains(combinationImagesId, serverImages.uid) || serverImages.isNew == true{
                             //Working
                             //editedImages.append(serverImages)
                             editedImages.insert(serverImages, atIndex: combinationCounter)
                             combinationImagesId.append(serverImages.uid)
                             combinationCounter++
+                        } else if !contains(combinationImagesId, serverImages.uid) {
+                            editedImages.insert(serverImages, atIndex: combinationCounter)
+                            combinationImagesId.append(serverImages.uid)
+                            combinationCounter++
                         }
-                        //editedImages.append(serverImages)
                     }
                 }
             }
@@ -1251,7 +1250,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     editedImages.append(oldImage)
                 }*/
                 
-                for (index, oldImage) in enumerate(self.productModel.oldEditedCombinationImages) {
+                for (index, oldImage) in enumerate(self.combinationOldEditedImages) {
                     var isNew: Bool = false
                     var isDeleted: Bool = true
                     var imageId: String = ""
@@ -1272,13 +1271,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                             break
                         }
                     }
-                    //If isDeleted is true set isRemove to true
-                    /*if isDeleted == true {
-                        oldImage.isNew = false
-                        oldImage.isRemoved = true
-                        println("old image uid: \(oldImage.uid)")
-                        editedImages.append(oldImage)
-                    }*/
+                    
                     /* working
                     if contains(ProductUploadCombination.deleted, oldImage.uid) {
                         oldImage.isRemoved = true
@@ -1286,6 +1279,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                         println("old image uid: \(oldImage.uid)")
                         editedImages.append(oldImage)
                     }*/
+                    
                     if contains(ProductUploadCombination.deleted, oldImage.uid)  {
                         oldImage.isRemoved = true
                         oldImage.isNew = false
@@ -1296,7 +1290,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                         combinationCounter++
                     }
                 }
-            //}
         }
         
         var mainImageCount: Int = uploadedImages.count
@@ -1311,7 +1304,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 }
             }
         }
-        /*
+        
+        /* Removed - from Alvin's changes
         if self.uploadType == UploadType.EditProduct {
             var counter: Int = 0
             for image in editedImages as [ServerUIImage] {
@@ -1390,9 +1384,11 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 }
             }
             */
+            var imagesAdded: [String] = []
             for var x = 0; x < editedImages.count; x++ {
                 //if !contains(deletedIndexes, x) {
                     let image: ServerUIImage = editedImages[x]
+                //if !contains(imagesAdded, image.uid) || image.isNew == true {
                     var dictionary: NSMutableDictionary = NSMutableDictionary()
                     dictionary["imageId"] = newImageCounter
                     dictionary["isNew"] = image.isNew
@@ -1404,12 +1400,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     let data = NSJSONSerialization.dataWithJSONObject(dictionary, options: nil, error: nil)
                     let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
                     imagesKey.append(dictionary)
-                    let data2: NSData = UIImageJPEGRepresentation(image, 1)
+                    let data2: NSData = UIImageJPEGRepresentation(image, 0.7)
                     //datas.insert(data2, atIndex: x)
                     datas.append(data2)
-                //}
-                //let data2: NSData = UIImageJPEGRepresentation(image, 1)
-                //datas.append(data2)
+                    imagesAdded.append(image.uid)
             }
         
             //WORKING - commented due to error in deleting combi images
@@ -1506,14 +1500,20 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             }
         }
         
-        productDetailsViewController.uploadType = uploadType
+        if self.uploadType == UploadType.EditProduct {
+            productDetailsViewController.uploadType = UploadType.EditProduct
+        } else {
+            productDetailsViewController.uploadType = UploadType.NewProduct
+        }
+        
         ProductUploadCombination.parameters = parameters
         ProductUploadCombination.url = url
         ProductUploadCombination.datas = datas
         
+        let alertController = UIAlertController(title: ProductUploadStrings.uploadItem, message: "Do you want to proceed?", preferredStyle: .Alert)
+        
         if uploadType == UploadType.EditProduct {
             
-            let alertController = UIAlertController(title: ProductUploadStrings.uploadItem, message: "Do you want to proceed?", preferredStyle: .Alert)
             let cancelAction = UIAlertAction(title: Constants.Localized.no, style: .Cancel) { (action) in
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
@@ -1521,7 +1521,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             
             let OKAction = UIAlertAction(title: Constants.Localized.yes, style: .Default) { (action) in
                 productDetailsViewController.productModel = self.productModel
-                productDetailsViewController.uploadType = UploadType.EditProduct
+                ProductUploadEdit.uploadType = UploadType.EditProduct
                 ProductUploadEdit.isPreview = true
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
@@ -1531,15 +1531,22 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             self.presentViewController(alertController, animated: true) {
             }
         } else {
-            productDetailsViewController.productModel = self.productModel
-            ProductUploadEdit.isPreview = true
-            productDetailsViewController.uploadType = UploadType.NewProduct
+            let cancelAction = UIAlertAction(title: Constants.Localized.no, style: .Cancel) { (action) in
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+            alertController.addAction(cancelAction)
             
-            let navController = UINavigationController(rootViewController: productDetailsViewController) // Creating a navigation controller with resultController at the root of the navigation stack.
-            self.navigationController?.pushViewController(productDetailsViewController, animated: true)
-            //self.navigationController?.presentViewController(navController, animated: true, completion: nil)
-            //self.navigationController?.popToViewController(productDetailsViewController, animated: true)
-            //self.presentViewController(productDetailsViewController, animated: true, completion: nil)
+            let OKAction = UIAlertAction(title: Constants.Localized.yes, style: .Default) { (action) in
+                productDetailsViewController.productModel = self.productModel
+                ProductUploadEdit.isPreview = true
+                ProductUploadEdit.uploadType = UploadType.NewProduct
+                self.navigationController?.pushViewController(productDetailsViewController, animated: true)
+            }
+            
+            alertController.addAction(OKAction)
+            
+            self.presentViewController(alertController, animated: true) {
+            }
         }
     }
     
