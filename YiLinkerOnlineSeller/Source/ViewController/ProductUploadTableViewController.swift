@@ -1480,10 +1480,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         var url: String = ""
         
         if uploadType == UploadType.Draft {
+            self.uploadType = UploadType.Draft
             url = "\(APIAtlas.uploadDraftUrl)?access_token=\(SessionManager.accessToken())"
         } else if uploadType == UploadType.NewProduct {
+            self.uploadType = UploadType.NewProduct
             url = "\(APIAtlas.uploadUrl)?access_token=\(SessionManager.accessToken())"
         } else if uploadType == UploadType.EditProduct {
+            self.uploadType = UploadType.EditProduct
             url = "\(APIAtlas.uploadEditUrl)?access_token=\(SessionManager.accessToken())"
         }
         
@@ -1531,7 +1534,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             let OKAction = UIAlertAction(title: Constants.Localized.yes, style: .Default) { (action) in
                 self.dismissViewControllerAnimated(true, completion: nil)
                 productDetailsViewController.productModel = self.productModel
-                ProductUploadEdit.uploadType = UploadType.EditProduct
+                ProductUploadEdit.uploadType = self.uploadType
                 ProductUploadEdit.isPreview = true
             }
             
@@ -1548,7 +1551,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             let OKAction = UIAlertAction(title: Constants.Localized.yes, style: .Default) { (action) in
                 productDetailsViewController.productModel = self.productModel
                 ProductUploadEdit.isPreview = true
-                ProductUploadEdit.uploadType = UploadType.NewProduct
+                ProductUploadEdit.uploadType = self.uploadType
                 self.navigationController?.pushViewController(productDetailsViewController, animated: true)
             }
             
