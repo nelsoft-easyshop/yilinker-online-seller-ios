@@ -203,7 +203,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         let attributeCell: ProductUploadAttributeTableViewCell = self.tableView.cellForRowAtIndexPath(collectionViewIndexPath) as! ProductUploadAttributeTableViewCell
         var isValid: Bool = true
         for attribute in attributeCell.attributes {
-            if attribute == cell.cellTextField.text {
+            if (attribute as NSString).lowercaseString == (cell.cellTextField.text).lowercaseString {
                 isValid = false
                 break
             }
