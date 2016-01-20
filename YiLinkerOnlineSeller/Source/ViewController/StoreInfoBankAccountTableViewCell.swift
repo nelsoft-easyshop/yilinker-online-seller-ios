@@ -8,6 +8,8 @@
 
 import UIKit
 
+//MARK- Delegate
+//StoreInfoBankAccountTableViewCell Delegate method
 protocol StoreInfoBankAccountTableViewCellDelegate{
     func newBankAccount()
 }
