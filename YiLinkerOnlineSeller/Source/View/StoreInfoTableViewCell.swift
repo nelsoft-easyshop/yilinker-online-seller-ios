@@ -90,23 +90,21 @@ class StoreInfoTableViewCell: UITableViewCell, UITextFieldDelegate, UITextViewDe
     
     func textFieldDidEndEditing(textField: UITextField) {
         self.delegate?.storeNameAndDescription(self.storeNameTextField.text, storeDescription: self.storeDescriptionTextView.text)
-        println("TextField did end editing method called \(self.storeNameTextField.text) \(self.storeDescriptionTextView.text)")
     }
     
     // UITextField Delegates
     func textViewDidBeginEditing(textField: UITextView) {
-        println("TextField did begin editing method called")
         self.delegate?.textViewScrollUp(textField)
     }
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         let prospectiveText = (textView.text! as NSString).stringByReplacingCharactersInRange(range, withString: text)
+        self.delegate?.storeNameAndDescription(self.storeNameTextField.text, storeDescription: prospectiveText)
         return textView.textInputMode != nil //&& prospectiveText.containsOnlyCharactersIn("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .'-&:!/")
     }
     
     func textViewDidEndEditing(textField: UITextView) {
         self.delegate?.storeNameAndDescription(self.storeNameTextField.text, storeDescription: self.storeDescriptionTextView.text)
-       
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
