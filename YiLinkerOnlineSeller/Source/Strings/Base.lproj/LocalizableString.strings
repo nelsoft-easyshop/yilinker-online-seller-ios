@@ -361,6 +361,7 @@ STORE_INFO_SET_DEFAULT_ADDRESS_LOCALIZE_KEY = "Already set as your default addre
 
 //Error messages
 STORE_INFO_SUCCESS_TITLE_LOCALIZE_KEY = "Success!";
+STORE_INFO_INFORMATION_LOCALIZE_KEY = "Information";
 STORE_INFO_EMPTY_LOCALIZE_KEY = "Either your store name or store description is empty.";
 STORE_INFO_SUCCESS_LOCALIZE_KEY = "You have successfully updated your store information.";
 STORE_INFO_INFORMATION_TITLE_LOCALIZE_KEY = "Information";

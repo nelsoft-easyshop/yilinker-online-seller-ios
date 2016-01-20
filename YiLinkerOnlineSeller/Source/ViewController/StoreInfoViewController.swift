@@ -65,6 +65,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     let somethingWentWrong: String = StringHelper.localizedStringWithKey("ERROR_SOMETHING_WENT_WRONG_LOCALIZE_KEY")
     let invalid: String = StringHelper.localizedStringWithKey("VERIFY_NUMBER_INVALID_LOCALIZE_KEY")
     let success: String = StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_LOCALIZE_KEY")
+    let info: String = StringHelper.localizedStringWithKey("STORE_INFO_INFORMATION_LOCALIZE_KEY")
     let empty: String = StringHelper.localizedStringWithKey("STORE_INFO_EMPTY_LOCALIZE_KEY")
     let successTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TITLE_LOCALIZE_KEY")
     let tinTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_TIN_LOCALIZE_KEY")
@@ -80,6 +81,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     //Google Plus Sign In
     var kClientId = "120452328739-36rpdqne3pvgj21p7ptru7daqp0tgiik.apps.googleusercontent.com"; // Get this from https://console.developers.google.com
     var kShareURL = "https://yilinker.com/";
+    var timer: NSTimer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -679,10 +681,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     func saveAccountInfo() {
         
         self.showHUD()
-
-        let cell: StoreInfoTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoHeaderTableViewCellIndentifier, forIndexPath: index!) as! StoreInfoTableViewCell
-        cell.delegate = self
-
+      
         let manager = APIManager.sharedInstance
         
         var datas: [NSData] = []
@@ -716,11 +715,10 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         let parameters: NSDictionary?
         
         if self.storeInfoModel!.isReseller {
-             parameters = ["storeName" : cell.storeNameTextField.text, "storeDescription" : cell.storeDescriptionTextView.text, "categoryIds" : formattedCategories, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
+             parameters = ["storeName" : self.storeInfoModel!.store_name, "storeDescription" : self.storeInfoModel!.store_description, "categoryIds" : formattedCategories, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
             if self.selectedCategories.count != 0 {
                 let url: String = "\(APIAtlas.sellerUpdateSellerInfo)?access_token=\(SessionManager.accessToken())"
-                self.storeNameAndDescription(cell.storeNameTextField.text, storeDescription: cell.storeDescriptionTextView.text)
-                if !cell.storeNameTextField.text.isEmpty && !cell.storeNameTextField.text.isEmpty {
+                if !self.storeInfoModel!.store_name.isEmpty && !self.storeInfoModel!.store_description.isEmpty {
                     manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
                         for (index, data) in enumerate(datas) {
                             println("index: \(index)")
@@ -767,10 +765,9 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 self.hud?.hide(true)
             }
         } else {
-            println("store name \(cell.storeNameTextField.text) store desc \(cell.storeDescriptionTextView.text)")
-            parameters = ["storeName" : cell.storeNameTextField.text, "storeDescription" : cell.storeDescriptionTextView.text, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
+            parameters = ["storeName" : self.storeInfoModel!.store_name, "storeDescription" : self.storeInfoModel!.store_description, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
             let url: String = "\(APIAtlas.sellerUpdateSellerInfo)?access_token=\(SessionManager.accessToken())"
-            if !cell.storeNameTextField.text.isEmpty && !cell.storeNameTextField.text.isEmpty {
+            if !self.storeInfoModel!.store_name.isEmpty && !self.storeInfoModel!.store_description.isEmpty {
                 manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
                     for (index, data) in enumerate(datas) {
                         println("index: \(index)")
@@ -994,61 +991,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 
             }
         }
-        
         presentViewController(socialVC, animated: true, completion: nil)
-        
-        /*
-        var sharingItems = [AnyObject]()
-        let image = postImage.image
-        
-        if (postImage.image != nil) {
-            sharingItems = [title, postImage.image!]
-        } else {
-            sharingItems = [title]
-        }
-        
-        let activityController = UIActivityViewController(activityItems:
-            sharingItems, applicationActivities: nil)
-        
-        activityController.excludedActivityTypes =  [
-            UIActivityTypePostToWeibo,
-            UIActivityTypePrint,
-            UIActivityTypeCopyToPasteboard,
-            UIActivityTypeAssignToContact,
-            UIActivityTypeSaveToCameraRoll,
-            UIActivityTypeAddToReadingList,
-            UIActivityTypePostToFlickr,
-            UIActivityTypePostToVimeo,
-            UIActivityTypePostToTencentWeibo
-        ]
-        
-        activityController.completionWithItemsHandler = { (s: String?, ok: Bool, items: [AnyObject]?, err:NSError?) -> Void in
-            print("completed \(s) \(ok) \(items) \(err)")
-            if s != nil {
-                if s == "com.apple.UIKit.activity.Mail" {
-                    self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY"))
-                } else if s == "com.apple.UIKit.activity.PostToFacebook" {
-                    self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_FB_LOCALIZE_KEY"))
-                } else if s == "com.apple.UIKit.activity.PostToTwitter" {
-                    self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"))
-                } else {
-                    self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_GPLUS_LOCALIZE_KEY"))
-                }
-            } else {
-                
-            }
-        }
-        
-        self.presentViewController(activityController, animated: true,
-            completion: nil)
-        */
-        
-        
-        
-       // sharingItems.append(NSURL(string: "https://sociobiology.files.wordpress.com/2013/07/strassmann-queller-qr-code.jpg")!)
-        
-        //let shareViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
-        //self.presentViewController(shareViewController, animated: true, completion: nil)
     }
     
     func shareTWAction(postImage: UIImageView, title: String) {
@@ -1120,40 +1063,40 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         
         switch result.value {
-        case MFMailComposeResultCancelled.value:
-            let sendMailErrorAlert = UIAlertView(title: self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_CANCEL_EMAIL_LOCALIZE_KEY"), delegate: self, cancelButtonTitle: "OK")
-            sendMailErrorAlert.show()
-            //self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_CANCEL_EMAIL_LOCALIZE_KEY"))
-            NSLog("Mail cancelled")
-        case MFMailComposeResultSaved.value:
-            let sendMailErrorAlert = UIAlertView(title: self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SAVE_EMAIL_LOCALIZE_KEY"), delegate: self, cancelButtonTitle: "OK")
-            sendMailErrorAlert.show()
-            //self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SAVE_EMAIL_LOCALIZE_KEY"))
-            NSLog("Mail saved")
-        case MFMailComposeResultSent.value:
-            /*let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(3 * Double(NSEC_PER_SEC)))
-            dispatch_after(delayTime, dispatch_get_main_queue()) {
-                self.navigationController?.view.makeToast(StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY"), duration: 3.0, position: CSToastPositionBottom)
-            }*/
-            let sendMailErrorAlert = UIAlertView(title: self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY"), delegate: self, cancelButtonTitle: "OK")
-            sendMailErrorAlert.show()
-            //self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY"))
-            NSLog("Mail sent")
-        case MFMailComposeResultFailed.value:
-            let sendMailErrorAlert = UIAlertView(title: self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_FAIL_EMAIL_LOCALIZE_KEY"), delegate: self, cancelButtonTitle: "OK")
-            sendMailErrorAlert.show()
-            //self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_FAIL_EMAIL_LOCALIZE_KEY"))
-            NSLog("Mail sent failure: %@", [error!.localizedDescription])
-        default:
-            break
+            case MFMailComposeResultCancelled.value:
+            
+                var array = [self.info, StringHelper.localizedStringWithKey("STORE_INFO_CANCEL_EMAIL_LOCALIZE_KEY")]
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
+            
+            case MFMailComposeResultSaved.value:
+            
+                var array = [self.info, StringHelper.localizedStringWithKey("STORE_INFO_SAVE_EMAIL_LOCALIZE_KEY")]
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
+            
+            case MFMailComposeResultSent.value:
+           
+                var array = [self.successTitle, StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY")]
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
+           
+            case MFMailComposeResultFailed.value:
+            
+                var array = [self.info, StringHelper.localizedStringWithKey("STORE_INFO_FAIL_EMAIL_LOCALIZE_KEY")]
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
+           
+            default:
+                break
         }
         
-        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(4 * Double(NSEC_PER_SEC)))
+        controller.dismissViewControllerAnimated(true, completion: nil)
         
-        dispatch_after(delayTime, dispatch_get_main_queue()) {
-            controller.dismissViewControllerAnimated(true, completion: nil)
-        }
-        
+    }
+    
+    //Success modal
+    func successSharingDialogBox(timer: NSTimer) {
+        var array: NSArray = timer.userInfo as! NSArray
+        let sendMailErrorAlert = UIAlertView(title: array[0] as? String, message: array[1] as? String, delegate: self, cancelButtonTitle: StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY"))
+        sendMailErrorAlert.show()
+        self.timer?.invalidate()
     }
     
     func shareGPAction(postImage: UIImageView, title: String) {
