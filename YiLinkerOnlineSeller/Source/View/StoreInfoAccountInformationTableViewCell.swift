@@ -17,7 +17,7 @@ protocol StoreInfoAccountInformationTableViewCellDelegate {
 
 class StoreInfoAccountInformationTableViewCell: UITableViewCell{
     
-    //Views
+    //Custom Views
     @IBOutlet weak var saveView: DynamicRoundedView!
     
     //Buttons
