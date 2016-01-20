@@ -32,9 +32,12 @@ private struct DetailsString {
 
 struct ProductUploadEdit {
     static var edit: Bool = false
+    static var isPreview: Bool = false
+    static var combinedImagesDictionary: [NSMutableDictionary] = []
+    static var uploadType: UploadType = UploadType.NewProduct
 }
 
-class ProductDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProductDescriptionViewDelegate, EmptyViewDelegate {
+class ProductDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProductDescriptionViewDelegate, EmptyViewDelegate, SuccessUploadViewControllerDelegate {
 
     // MARK: - Models
     var productDetailsModel: ProductDetailsModel!
@@ -81,12 +84,12 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     var listSectionTitle = [DetailsString.titleDetails, DetailsString.titlePrice, DetailsString.titleDimensionsWeight]
     var names: [String] = []
     var values: [String] = []
+    var uploadType: UploadType = UploadType.NewProduct
     
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
         let nib = UINib(nibName: "ProductDetailsTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: DetailsString.cellIdentifier)
@@ -95,12 +98,18 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         customizeNavigationBar()
+        loadloadViewsWithDetails()
         if Reachability.isConnectedToNetwork() {
-            requestProductDetails()
+            if ProductUploadEdit.isPreview {
+                isEditable = true
+                populateDetails()
+            } else {
+                ProductUploadEdit.combinedImagesDictionary.removeAll(keepCapacity: false)
+                requestProductDetails()
+            }
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
         }
-        loadloadViewsWithDetails()
     }
     
     // MARK: - Init Views
@@ -141,7 +150,15 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
         var backButton = UIBarButtonItem(image: UIImage(named: "back-white"), style: .Plain, target: self, action: "backAction")
-        var editButton = UIBarButtonItem(image: UIImage(named: "edit"), style: .Plain, target: self, action: "editAction")
+        var editButton: UIBarButtonItem?
+        
+        if ProductUploadEdit.isPreview {
+            //editButton = UIBarButtonItem(image: UIImage(named: "check"), style: .Plain, target: self, action: "editAction")
+            editButton = UIBarButtonItem(title: "Upload", style: .Plain, target: self, action: "editAction")
+        } else {
+            editButton = UIBarButtonItem(image: UIImage(named: "edit"), style: .Plain, target: self, action: "editAction")
+        }
+
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -10
         
@@ -153,6 +170,8 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                 } else {
                     self.navigationItem.rightBarButtonItem = editButton
                 }
+            } else if !isEditable && self.uploadType == UploadType.NewProduct && ProductUploadEdit.isPreview {
+                self.navigationItem.rightBarButtonItem = editButton
             }
         }
     }
@@ -217,7 +236,11 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func populateDetails() {
-        self.productImagesView.setDetails(productModel)
+        if self.uploadType == UploadType.NewProduct {
+            self.productImagesView.setDetails(productModel!, uploadType: self.uploadType, images: self.imagesToEdit)
+        } else {
+            self.productImagesView.setDetails(productModel, uploadType: self.uploadType, images: [])
+        }
 //        self.productDescriptionView.descriptionLabel.text = productModel.shortDescription
         self.productDescriptionView.setDescription(productModel.shortDescription)
         if productModel.validCombinations.count != 0 {
@@ -305,11 +328,17 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
             NSURLConnection.sendAsynchronousRequest(
                 request, queue: NSOperationQueue.mainQueue(),
                 completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
+                    let dictionary: NSMutableDictionary = NSMutableDictionary()
                     if error == nil {
-                        println("success downloading main image - \(i + 1)")
+                        println("success downloading main image - \(i + 1) \(imgURL)")
                         var convertedImage: ServerUIImage = ServerUIImage(data: data)!
                         convertedImage.uid = self.productModel.imageIds[i]
                         self.productModel.editedImage.append(convertedImage)
+                        
+                        dictionary["imageId"] = self.productModel.imageIds[i]
+                        dictionary["path"] = self.productModel.imageUrls[i]
+                        ProductUploadEdit.combinedImagesDictionary.append(dictionary)
+                        
                         if self.productModel.editedImage.count == self.productModel.imageUrls.count {
                             self.downloadCombinationsImages()
                         }
@@ -443,13 +472,18 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func editAction() {
-        if self.productModel != nil {
+        if ProductUploadEdit.isPreview {
             self.showHUD()
-            if self.productModel.imageUrls.count != self.productModel.editedImage.count {
-                self.productModel.editedImage = []
-                self.downloadImage(self.productModel.imageUrls)
-            } else {
-                self.gotoEditProduct()
+            self.upload(ProductUploadEdit.uploadType)
+        } else {
+            if self.productModel != nil {
+                self.showHUD()
+                if self.productModel.imageUrls.count != self.productModel.editedImage.count {
+                    self.productModel.editedImage = []
+                    self.downloadImage(self.productModel.imageUrls)
+                } else {
+                    self.gotoEditProduct()
+                }
             }
         }
     }
@@ -529,11 +563,146 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         self.navigationController?.presentViewController(root, animated: true, completion: nil)
     }
     
-    // Dealloc
     
+    func upload(uploadType: UploadType) {
+        self.showHUD()
+        self.uploadType = uploadType
+        let manager: APIManager = APIManager.sharedInstance
+        manager.POST(ProductUploadCombination.url, parameters: ProductUploadCombination.parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
+            for (index, data) in enumerate(ProductUploadCombination.datas) {
+                println("multipart index: \(index)")
+                formData.appendPartWithFileData(data, name: "images[]", fileName: "\(index)", mimeType: "image/jpeg")
+            }
+            
+            }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
+                self.hud?.hide(true)
+                let dictionary: NSDictionary = response as! NSDictionary
+                
+                if dictionary["isSuccessful"] as! Bool == true {
+                    if uploadType == UploadType.Draft {
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                        self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyDraft)
+                    } else if uploadType == UploadType.EditProduct {
+                        ProductUploadEdit.edit = false
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                        //self.dismissViewControllerAnimated(true, completion: nil)
+                        self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyEdited)
+                    } else {
+                        self.success()
+                    }
+                } else {
+                    self.showAlert(Constants.Localized.invalid, message: dictionary["message"] as! String)
+                }
+                println(response)
+            }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                let data = NSJSONSerialization.dataWithJSONObject(error.userInfo!, options: nil, error: nil)
+                let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
+                println("error response: \(string)")
+                if task.statusCode == 401 {
+                    self.fireRefreshToken2()
+                } else {
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        self.showAlert(Constants.Localized.error, message: errorModel.message)
+                    } else {
+                        self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                    }
+                    self.tableView.reloadData()
+                }
+                self.hud?.hide(true)
+        }
+    }
+    
+    //MARK: - Fire Refresh Token 2
+    func fireRefreshToken2() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.upload(ProductUploadEdit.uploadType)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else {
+                    self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                }
+                self.hud?.hide(true)
+        })
+    }
+    
+    //MARK: - Dismiss Controller Toast Message
+    func dismissControllerWithToastMessage(message: String) {
+        self.tableView.endEditing(true)
+        self.navigationController?.view.makeToast(message)
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC)))
+        
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+            let productManagement: ProductDetailsViewController = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
+            let navigationController: UINavigationController = UINavigationController(rootViewController: productManagement)
+            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+            //self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+            self.navigationController?.popViewControllerAnimated(true)
+            //self.navigationController?.popToRootViewControllerAnimated(true)//(productManagement, animated: true)
+        }
+    }
+    
+    //MARK: - Success
+    func success() {
+        let successViewController: SuccessUploadViewController = SuccessUploadViewController(nibName: "SuccessUploadViewController", bundle: nil)
+        successViewController.delegate = self
+        self.presentViewController(successViewController, animated: true, completion: nil)
+    }
+    
+    //MARK: - Success Upload View Controller
+    func successUploadViewController(didTapDashBoard viewController: SuccessUploadViewController) {
+        self.tableView.hidden = true
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    //MARK: - Success Upload View Controller
+    func successUploadViewController(didTapUploadAgain viewController: SuccessUploadViewController) {
+        let productUploadTableViewController: ProductUploadTableViewController = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
+        let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadTableViewController)
+        navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+        self.navigationController?.pushViewController(productUploadTableViewController, animated: true)
+        //self.dismissViewControllerAnimated(true, completion: nil)
+        //self.presentViewController(productUploadTableViewController, animated: true, completion: nil)
+        //self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
+    }
+    
+    //MARK: Alert view
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+        }
+    }
+    
+    // Dealloc
+    /*
     deinit {
         self.tableView.delegate = nil
         self.tableView.dataSource = nil
-    }
+    }*/
 }
 

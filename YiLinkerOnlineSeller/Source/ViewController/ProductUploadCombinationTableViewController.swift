@@ -274,7 +274,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
                 image.isNew = true
                 image.isRemoved = false
                 image.isCombination = true
-                self.images.insert(image, atIndex: 0)
+                self.images.insert(image, atIndex: self.images.count - 1)
                 //ProductUploadCombination.combinationArray.append("\(self.productModel!.validCombinations[self.selectedIndexpath!.section].editedImages.count-1)")
                 //println("\(self.productModel!.validCombinations[self.selectedIndexpath!.section].editedImages.count-1)")
             }
@@ -340,6 +340,13 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
             }
             
         } else {
+            self.images.removeAtIndex(indexPath.row)
+            if indexPath.row < self.productModel!.validCombinations[self.selectedIndexpath!.section].imagesId.count {
+                if !contains(ProductUploadCombination.deleted, self.productModel!.validCombinations[self.selectedIndexpath!.section].imagesId[indexPath.row]) {
+                    ProductUploadCombination.deleted.append(self.productModel!.validCombinations[self.selectedIndexpath!.section].imagesId[indexPath.row])
+                }
+            }
+    
             if indexPath.row < self.productModel!.validCombinations[self.selectedIndexpath!.section].images.count {
                 self.productModel!.validCombinations[self.selectedIndexpath!.section].images.removeAtIndex(indexPath.row)
             }

@@ -129,7 +129,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         if SessionManager.isReseller() {
             uploadItemString = StringHelper.localizedStringWithKey("SELECT_PRODUCT_LOCALIZE_KEY")
         } else {
-            uploadItemString = StringHelper.localizedStringWithKey("UPLOAD_ITEM_LOCALIZE_KEY")
+            uploadItemString = StringHelper.localizedStringWithKey("UPLOAD_ITEMS_LOCALIZE_KEY")
         }
         let followersString = StringHelper.localizedStringWithKey("FOLLOWERS_LOCALIZE_KEY")
         let activityLogsString = StringHelper.localizedStringWithKey("ACTIVITY_LOGS_LOCALIZE_KEY")
@@ -471,6 +471,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             if SessionManager.isSeller() {
                 let productUploadTableViewController: ProductUploadTableViewController = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
                 let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadTableViewController)
+                ProductUploadCombination.draft = true
                 navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
                 self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
             } else {

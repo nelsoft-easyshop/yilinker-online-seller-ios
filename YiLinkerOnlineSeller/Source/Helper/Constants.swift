@@ -101,6 +101,7 @@ struct Constants {
         static let atttributeList: String = StringHelper.localizedStringWithKey("ATTRIBUTE_LIST_LOCALIZE_KEY")
         static let addCombination: String = StringHelper.localizedStringWithKey("ADD_COMBINATION_LOCALIZE_KEY")
         static let productUpload: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_LOCALIZE_KEY")
+        static let productEdit: String = StringHelper.localizedStringWithKey("PRODUCT_EDIT_LOCALIZE_KEY")
         static let addBrand: String = StringHelper.localizedStringWithKey("ADD_BRAND_DETAILS_LOCALIZE_KEY")
         static let attributeCombination = StringHelper.localizedStringWithKey("ATTRIBUTE_COMBINATION_LOCALIZE_KEY")
     }
