@@ -1141,13 +1141,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             combinationCounter++
         }
         
-        if uploadType == UploadType.EditProduct ||  uploadType == UploadType.Draft {
+        if uploadType == UploadType.EditProduct {
             editedImages.removeLast()
             combinationCounter--
         }
         
         //Comparing of oldEditedImages and editedImages
-        if uploadType == UploadType.EditProduct ||  uploadType == UploadType.Draft {
+        if uploadType == UploadType.EditProduct {
             for (index, oldImage) in enumerate(self.oldEditedImages) {
                 var isNew: Bool = false
                 var isDeleted: Bool = true
@@ -1186,7 +1186,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             uploadedImages.removeLast()
         }
         
-        if self.uploadType == UploadType.EditProduct ||  uploadType == UploadType.Draft {
+        if self.uploadType == UploadType.EditProduct {
             self.imagesToUpload = editedImages.count
         } else {
             self.imagesToUpload = uploadedImages.count
@@ -1371,7 +1371,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         }
         
         
-        if self.uploadType == UploadType.EditProduct ||  uploadType == UploadType.Draft {
+        if self.uploadType == UploadType.EditProduct {
             imagesKey.removeAll(keepCapacity: true)
 
             for (index, image) in enumerate(editedImages) {
@@ -1480,10 +1480,13 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         var url: String = ""
         
         if uploadType == UploadType.Draft {
+            self.uploadType = UploadType.Draft
             url = "\(APIAtlas.uploadDraftUrl)?access_token=\(SessionManager.accessToken())"
         } else if uploadType == UploadType.NewProduct {
+            self.uploadType = UploadType.NewProduct
             url = "\(APIAtlas.uploadUrl)?access_token=\(SessionManager.accessToken())"
         } else if uploadType == UploadType.EditProduct {
+            self.uploadType = UploadType.EditProduct
             url = "\(APIAtlas.uploadEditUrl)?access_token=\(SessionManager.accessToken())"
         }
         
@@ -1509,6 +1512,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         
         if self.uploadType == UploadType.EditProduct {
             productDetailsViewController.uploadType = UploadType.EditProduct
+        } else if self.uploadType == UploadType.Draft {
+            
         } else {
             productDetailsViewController.uploadType = UploadType.NewProduct
         }
@@ -1529,7 +1534,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             let OKAction = UIAlertAction(title: Constants.Localized.yes, style: .Default) { (action) in
                 self.dismissViewControllerAnimated(true, completion: nil)
                 productDetailsViewController.productModel = self.productModel
-                ProductUploadEdit.uploadType = UploadType.EditProduct
+                ProductUploadEdit.uploadType = self.uploadType
                 ProductUploadEdit.isPreview = true
             }
             
@@ -1546,7 +1551,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             let OKAction = UIAlertAction(title: Constants.Localized.yes, style: .Default) { (action) in
                 productDetailsViewController.productModel = self.productModel
                 ProductUploadEdit.isPreview = true
-                ProductUploadEdit.uploadType = UploadType.NewProduct
+                ProductUploadEdit.uploadType = self.uploadType
                 self.navigationController?.pushViewController(productDetailsViewController, animated: true)
             }
             
@@ -1555,7 +1560,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             self.presentViewController(alertController, animated: true) {
             }
         } else {
-            self.upload(UploadType.Draft)
+            self.upload(self.uploadType)
         }
     }
     

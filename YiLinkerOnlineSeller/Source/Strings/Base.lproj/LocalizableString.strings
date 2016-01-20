@@ -614,7 +614,7 @@ CATEGORY_REQUIRED_LOCALIZE_KEY = "Please select category.";
 CONDITION_REQUIRED_LOCALIZE_KEY = "Please select condition.";
 QUANTITY_REQUIRED_LOCALIZE_KEY = "Please insert quantity.";
 RETAIL_PRICE_REQUIRED_LOCALIZE_KEY = "Please insert Retail Price.";
-RETAIL_MUST_BE_LARGER_LOCALIZE_KEY = "Retail price must be larger than discount price.";
+RETAIL_MUST_BE_LARGER_LOCALIZE_KEY = "Retail price must be larger than final price.";
 SKU_REQUIRED_LOCALIZE_KEY = "Please insert sku.";
 
 LENGTH_REQUIRED_LOCALIZE_KEY = "Please insert length.";
