@@ -172,7 +172,7 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
     func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath) {
         var attributeIsAvailable: Bool = false
         for productAttribute in self.productModel.attributes as [AttributeModel] {
-            if productAttribute.definition == attribute.definition {
+            if (productAttribute.definition).lowercaseString == attribute.definition.lowercaseString {
                 attributeIsAvailable = true
             }
         }
@@ -181,7 +181,7 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
             if self.productModel.attributes.count > indexPath.section {
                self.productModel.attributes[indexPath.section] = attribute
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.error, title: "\(ProductUploadStrings.attributeDef) \(attribute.definition) \(ProductUploadStrings.alreadyExist)")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "\(ProductUploadStrings.attributeDef) \(attribute.definition) \(ProductUploadStrings.alreadyExist)", title: Constants.Localized.error)
             }
             
         } else {
