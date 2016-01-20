@@ -139,29 +139,39 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
                 "status": "2",
                 "keyword": key]
             
-            manager.POST(APIAtlas.managementGetProductList, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                
-                self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
-                
-                if self.productModel.products.count != 0 {
-                    self.tableView.reloadData()
-                } else {
-                    self.emptyLabel.hidden = false
-                }
-                self.hud?.hide(true)
-                
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    self.hud?.hide(true)
+            WebServiceManager.fireAddNewItemRequestWithUrl(APIAtlas.managementGetProductList, key: key, status: "2", actionHandler: {
+                (successful, responseObject, requestErrorType) -> Void in
+                if successful {
+                    self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
                     
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: AlertStrings.error)
-                    } else if error.code != NSURLErrorCancelled {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+                    if self.productModel.products.count != 0 {
+                        self.tableView.reloadData()
+                    } else {
+                        self.emptyLabel.hidden = false
                     }
+                    self.hud?.hide(true)
+                } else {
+                    self.hud?.hide(true)
+                    if requestErrorType == .ResponseError {
+                        //Error in api requirements
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .AccessTokenExpired {
+                        self.requestRefreshToken()
+                    } else if requestErrorType == .PageNotFound {
+                        //Page not found
+                        Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .NoInternetConnection {
+                        //No internet connection
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .RequestTimeOut {
+                        //Request timeout
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .UnRecognizeError {
+                        //Unhandled error
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                    }
+                }
             })
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
@@ -170,25 +180,41 @@ class AddItemViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func requestRefreshToken() {
         
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        let manager = APIManager.sharedInstance
-        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            self.hud?.hide(true)
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.requestGetProductList(self.searchBarTextField.text)
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.loginUrl, actionHandler: { (successful, responseObject, RequestErrorType) -> Void in
+            if successful {
                 self.hud?.hide(true)
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.requestGetProductList(self.searchBarTextField.text)
+            } else {
+                //Forcing user to logout.
+                self.hud?.hide(true)
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    SessionManager.logout()
+                    GPPSignIn.sharedInstance().signOut()
+                    self.navigationController?.popToRootViewControllerAnimated(false)
+                })
+            }
         })
+        
+//        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+//            "client_secret": Constants.Credentials.clientSecret,
+//            "grant_type": Constants.Credentials.grantRefreshToken,
+//            "refresh_token": SessionManager.refreshToken()]
+//        
+//        let manager = APIManager.sharedInstance
+//        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
+//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+//            
+//            self.hud?.hide(true)
+//            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+//            self.requestGetProductList(self.searchBarTextField.text)
+//            
+//            }, failure: {
+//                (task: NSURLSessionDataTask!, error: NSError!) in
+//                self.hud?.hide(true)
+//                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+//                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+//        })
     }
     
     // MARK: - Table View Data Source

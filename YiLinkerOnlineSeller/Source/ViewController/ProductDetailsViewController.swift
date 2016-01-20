@@ -403,7 +403,6 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                                     convertedImage.uid = self.productModel.validCombinations[i].imagesId[j]
                                     self.productModel.oldEditedCombinationImages.append(convertedImage)
                                     self.productModel.validCombinations[i].editedImages[j] = convertedImage
-                                    
                                     // Added by Joriel
                                     let dictionary: NSMutableDictionary = NSMutableDictionary()
                                     dictionary["imageId"] = self.productModel.imageIds[i]
@@ -433,32 +432,56 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     func requestProductDetails() {
         self.showHUD()
         let id: String = "?access_token=" + SessionManager.accessToken() + "&productId=" + productId
-        
-        let manager = APIManager.sharedInstance
-        manager.GET(APIAtlas.getProductDetails + id, parameters: nil, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            let data = NSJSONSerialization.dataWithJSONObject(responseObject, options: nil, error: nil)
-            let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
-            println("product details -- \(responseObject)")
-            if responseObject["isSuccessful"] as! Bool {
+        WebServiceManager.fireGetProductDetailsRequestWithUrl(APIAtlas.getProductDetails + id, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
                 self.productModel = ProductModel.parseDataWithDictionary(responseObject)
                 self.populateDetails()
-            } else {
-                self.showAlert(title: "Error", message: responseObject["message"] as! String)
-                
-            }
-            self.hud?.hide(true)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                println(error.userInfo)
-                let alert = UIAlertController(title: AlertStrings.wentWrong, message: "", preferredStyle: UIAlertControllerStyle.Alert)
-                let okButton = UIAlertAction(title: AlertStrings.ok, style: UIAlertActionStyle.Cancel) { (alert) -> Void in
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    let alert = UIAlertController(title: AlertStrings.failed, message: errorModel.message, preferredStyle: UIAlertControllerStyle.Alert)
+                    let okButton = UIAlertAction(title: AlertStrings.ok, style: UIAlertActionStyle.Cancel) { (alert) -> Void in
                         self.navigationController?.popViewControllerAnimated(true)
+                    }
+                    alert.addAction(okButton)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.requestRefreshToken()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                 }
-                alert.addAction(okButton)
-                self.presentViewController(alert, animated: true, completion: nil)
-                
+            }
+        })
+    }
+    
+    func requestRefreshToken() {
+        
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.loginUrl, actionHandler: { (successful, responseObject, RequestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.requestProductDetails()
+            } else {
+                //Forcing user to logout.
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    SessionManager.logout()
+                    GPPSignIn.sharedInstance().signOut()
+                    self.navigationController?.popToRootViewControllerAnimated(false)
+                })
+            }
         })
     }
     
