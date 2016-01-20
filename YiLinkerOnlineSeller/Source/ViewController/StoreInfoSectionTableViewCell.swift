@@ -8,17 +8,24 @@
 
 import UIKit
 
+//MARK: Delegate
+//StoreInfoSectionTableViewCell Delegate method
 protocol StoreInfoSectionTableViewCellDelegate {
     func generateQRCode()
 }
 
 class StoreInfoSectionTableViewCell: UITableViewCell {
-
+    
+    //Buttons
+    @IBOutlet weak var generateQRCodeButton: UIButton!
+    
+    //Labels
+    @IBOutlet weak var generateLabel: UILabel!
+    @IBOutlet weak var qrCodeLabel: UILabel!
+    
+    //Initialized StoreInfoSectionTableViewCellDelegate
     var delegate: StoreInfoSectionTableViewCellDelegate?
     
-    @IBOutlet weak var qrCodeLabel: UILabel!
-    @IBOutlet weak var generateLabel: UILabel!
-    @IBOutlet weak var generateQRCodeButton: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -30,6 +37,8 @@ class StoreInfoSectionTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    //MARK: Action methods of buttons
+    //Method to generate qr code
     @IBAction func generateQRCode(){
         self.delegate?.generateQRCode()
     }

@@ -8,6 +8,8 @@
 
 import UIKit
 
+//MARK: Delegate
+//Delegate methods of StoreInfoQrCodeTableViewCell
 protocol StoreInfoQrCodeTableViewCellDelegate {
     func shareFBAction(postImage: UIImageView, title: String)
     func shareTWAction(postImage: UIImageView, title: String)
@@ -15,37 +17,44 @@ protocol StoreInfoQrCodeTableViewCellDelegate {
     func shareGPAction(postImage: UIImageView, title: String)
 }
 
-
 class StoreInfoQrCodeTableViewCell: UITableViewCell {
 
-    
-    @IBOutlet var facebookButton: UIButton!
-    @IBOutlet var twitterButton: UIButton!
-    @IBOutlet var googlePlusButton: UIButton!
+    //Buttons
     @IBOutlet var emailButton: UIButton!
-    @IBOutlet var qrCodeImageView: UIImageView!
-    @IBOutlet var qrCodeLabel: UILabel!
-    @IBOutlet var qrCodeDescriptionLabel: UILabel!
-    @IBOutlet var shareWithFbLabel: UILabel!
-    @IBOutlet var shareWithTwitterLabel: UILabel!
-    @IBOutlet var shareWithGoogleLabel: UILabel!
-    @IBOutlet var shareWithEmailLabel: UILabel!
+    @IBOutlet var facebookButton: UIButton!
+    @IBOutlet var googlePlusButton: UIButton!
+    @IBOutlet var twitterButton: UIButton!
     
-    var qrCode: String = StringHelper.localizedStringWithKey("STORE_INFO_QR_LOCALIZE_KEY")
+    //Imageviews
+    @IBOutlet var qrCodeImageView: UIImageView!
+    
+    //Labels
+    @IBOutlet var qrCodeDescriptionLabel: UILabel!
+    @IBOutlet var qrCodeLabel: UILabel!
+    @IBOutlet var shareWithEmailLabel: UILabel!
+    @IBOutlet var shareWithFbLabel: UILabel!
+    @IBOutlet var shareWithGoogleLabel: UILabel!
+    @IBOutlet var shareWithTwitterLabel: UILabel!
+    
+    //Global variables declarations
+    //Variables that can only be accessed withis the class
     var qrCodeDesc: String = StringHelper.localizedStringWithKey("STORE_INFO_SPREAD_LOCALIZE_KEY")
+    var qrCode: String = StringHelper.localizedStringWithKey("STORE_INFO_QR_LOCALIZE_KEY")
     var shareWith: String = StringHelper.localizedStringWithKey("STORE_INFO_SHARE_WITH_LOCALIZE_KEY")
     
+    //Initialized StoreInfoQrCodeTableViewCellDelegate
     var delegate: StoreInfoQrCodeTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        //Set text in labels
         self.qrCodeLabel.text = qrCode
         self.qrCodeDescriptionLabel.text = qrCodeDesc
         self.shareWithEmailLabel.text = shareWith
         self.shareWithFbLabel.text = shareWith
         self.shareWithGoogleLabel.text = shareWith
         self.shareWithTwitterLabel.text = shareWith
-        // Initialization code
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -54,20 +63,21 @@ class StoreInfoQrCodeTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    @IBAction func socialFBShare(sender: AnyObject){
-        self.delegate?.shareFBAction(self.qrCodeImageView, title: qrCode)
-    }
-    
-    @IBAction func socialTWShare(sender: AnyObject){
-        self.delegate?.shareTWAction(self.qrCodeImageView, title: qrCode)
-    }
-    
+    //MARK: Action methods for buttons
     @IBAction func socialEMShare(sender: AnyObject){
         self.delegate?.shareEMAction(self.qrCodeImageView, title: qrCode)
     }
     
+    @IBAction func socialFBShare(sender: AnyObject){
+        self.delegate?.shareFBAction(self.qrCodeImageView, title: qrCode)
+    }
+    
     @IBAction func socialGPShare(sender: AnyObject){
         self.delegate?.shareGPAction(self.qrCodeImageView, title: qrCode)
+    }
+    
+    @IBAction func socialTWShare(sender: AnyObject){
+        self.delegate?.shareTWAction(self.qrCodeImageView, title: qrCode)
     }
     
 }

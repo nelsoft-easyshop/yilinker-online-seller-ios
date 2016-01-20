@@ -10,9 +10,14 @@ import UIKit
 
 class StoreInfoPreferredCategoriesTableViewCell: UITableViewCell {
 
-    @IBOutlet var titleLabel: UILabel!
+    //Custom Views
     @IBOutlet var checkView: DynamicRoundedView!
+    
+    //Imageviews
     @IBOutlet var checkImageView: UIImageView!
+    
+    //Labels
+    @IBOutlet var titleLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,34 +30,23 @@ class StoreInfoPreferredCategoriesTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    //MARK: Private method
     func setChecked(isChecked: Bool) {
         if isChecked {
-            //            if isDate {
             checkView.hidden = false
             checkImageView.hidden = false
             checkView.backgroundColor = UIColorFromRGB(0x44A491)
             checkView.borderWidth = 0
             checkImageView.image = UIImage(named: "checkBox.png")
-            //            } else {
-            //                checkView.hidden = false
-            //                checkImageView.hidden = false
-            //                checkView.backgroundColor = Constants.Colors.transactionGreen
-            //                checkImageView.image = UIImage(named: "checkDateWhite")
-            //            }
         } else {
-            //            if isDate {
             checkView.hidden = false
             checkView.borderWidth = 1
             checkView.backgroundColor = UIColor.whiteColor()
             checkImageView.hidden = true
-            //            } else {
-            //                checkView.hidden = false
-            //                checkImageView.hidden = true
-            //                checkView.backgroundColor = Constants.Colors.transactionGrey
-            //            }
         }
     }
     
+    //Method to change view's background color if checked
     func UIColorFromRGB(rgbValue: UInt) -> UIColor {
         return UIColor(
             red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,

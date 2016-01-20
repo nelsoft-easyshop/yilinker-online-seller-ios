@@ -10,7 +10,7 @@ import UIKit
 
 //MARK: Delegate
 //StoreInfoAddressTableViewCell Delegate method
-protocol StoreInfoAddressTableViewCellDelagate{
+protocol StoreInfoAddressTableViewCellDelagate {
     func changeToNewAddress()
 }
 
