@@ -51,6 +51,7 @@ enum AddressRefreshType {
     case Province
     case City
     case Barangay
+    case SellerAddress
 }
 
 enum VerifyType {
