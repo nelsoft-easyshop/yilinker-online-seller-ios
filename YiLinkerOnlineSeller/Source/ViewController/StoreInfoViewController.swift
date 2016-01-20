@@ -1122,39 +1122,28 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         
         switch result.value {
-        case MFMailComposeResultCancelled.value:
-            var array = [self.info, StringHelper.localizedStringWithKey("STORE_INFO_CANCEL_EMAIL_LOCALIZE_KEY")]
-            self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
-            //let sendMailErrorAlert = UIAlertView(title: self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_CANCEL_EMAIL_LOCALIZE_KEY"), delegate: self, cancelButtonTitle: "OK")
-            //sendMailErrorAlert.show()
-            //self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_CANCEL_EMAIL_LOCALIZE_KEY"))
-            NSLog("Mail cancelled")
-        case MFMailComposeResultSaved.value:
-            var array = [self.info, StringHelper.localizedStringWithKey("STORE_INFO_SAVE_EMAIL_LOCALIZE_KEY")]
-            self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
-            //let sendMailErrorAlert = UIAlertView(title: self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SAVE_EMAIL_LOCALIZE_KEY"), delegate: self, cancelButtonTitle: "OK")
-            //sendMailErrorAlert.show()
-            //self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SAVE_EMAIL_LOCALIZE_KEY"))
-            NSLog("Mail saved")
-        case MFMailComposeResultSent.value:
-            /*let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(3 * Double(NSEC_PER_SEC)))
-            dispatch_after(delayTime, dispatch_get_main_queue()) {
-                self.navigationController?.view.makeToast(StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY"), duration: 3.0, position: CSToastPositionBottom)
-            }*/
-            var array = [self.successTitle, StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY")]
-            self.timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
+            case MFMailComposeResultCancelled.value:
             
-            //self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY"))
-            NSLog("Mail sent")
-        case MFMailComposeResultFailed.value:
-            var array = [self.info, StringHelper.localizedStringWithKey("STORE_INFO_FAIL_EMAIL_LOCALIZE_KEY")]
-            self.timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
-            //let sendMailErrorAlert = UIAlertView(title: self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_FAIL_EMAIL_LOCALIZE_KEY"), delegate: self, cancelButtonTitle: "OK")
-            //sendMailErrorAlert.show()
-            //self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_FAIL_EMAIL_LOCALIZE_KEY"))
-            NSLog("Mail sent failure: %@", [error!.localizedDescription])
-        default:
-            break
+                var array = [self.info, StringHelper.localizedStringWithKey("STORE_INFO_CANCEL_EMAIL_LOCALIZE_KEY")]
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
+            
+            case MFMailComposeResultSaved.value:
+            
+                var array = [self.info, StringHelper.localizedStringWithKey("STORE_INFO_SAVE_EMAIL_LOCALIZE_KEY")]
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
+            
+            case MFMailComposeResultSent.value:
+           
+                var array = [self.successTitle, StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY")]
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
+           
+            case MFMailComposeResultFailed.value:
+            
+                var array = [self.info, StringHelper.localizedStringWithKey("STORE_INFO_FAIL_EMAIL_LOCALIZE_KEY")]
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
+           
+            default:
+                break
         }
         
         controller.dismissViewControllerAnimated(true, completion: nil)
@@ -1164,7 +1153,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     //Success modal
     func successSharingDialogBox(timer: NSTimer) {
         var array: NSArray = timer.userInfo as! NSArray
-        let sendMailErrorAlert = UIAlertView(title: array[0] as? String, message: array[1] as? String, delegate: self, cancelButtonTitle: "OK")
+        let sendMailErrorAlert = UIAlertView(title: array[0] as? String, message: array[1] as? String, delegate: self, cancelButtonTitle: StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY"))
         sendMailErrorAlert.show()
         self.timer?.invalidate()
     }
