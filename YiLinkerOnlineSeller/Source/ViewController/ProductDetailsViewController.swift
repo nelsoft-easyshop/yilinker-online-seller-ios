@@ -28,6 +28,9 @@ private struct DetailsString {
     static let width = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_WIDTH_LOCALIZE_KEY")
     static let weight = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_WEIGHT_LOCALIZE_KEY")
     static let height = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_HEIGHT_LOCALIZE_KEY")
+    
+    static let downloadFailed = StringHelper.localizedStringWithKey("PRODUCT_DOWNLOAD_FAILED_LOCALIZE_KEY")
+    static let tryAgain = StringHelper.localizedStringWithKey("PRODUCT_TRY_AGAIN_LOCALIZE_KEY")
 }
 
 struct ProductUploadEdit {
@@ -311,41 +314,50 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
     }
     
+    func showAlertDownloadFail() {
+        let alert = UIAlertController(title: AlertStrings.failed, message: DetailsString.downloadFailed, preferredStyle: UIAlertControllerStyle.Alert)
+        let okButton = UIAlertAction(title: AlertStrings.ok, style: UIAlertActionStyle.Cancel) { (alert) -> Void in
+            self.navigationController?.popViewControllerAnimated(true)
+        }
+        alert.addAction(okButton)
+//        let tryAgainButton = UIAlertAction(title: DetailsString.downloadFailed, style: UIAlertActionStyle.Default) { (alert) -> Void in
+//            self.navigationController?.popViewControllerAnimated(true)
+//        }
+//        alert.addAction(tryAgainButton)
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
     func downloadImage(url: [String]) {
         println("DOWNLOADING MAIN IMAGES = \(url.count)")
+        var downloadedImage: Int = 0
+        
         for i in 0..<url.count {
+            self.productModel.editedImage.append(ServerUIImage())
+            
             var imgURL: NSURL = NSURL(string: url[i])!
             let request: NSURLRequest = NSURLRequest(URL: imgURL)
             NSURLConnection.sendAsynchronousRequest(
                 request, queue: NSOperationQueue.mainQueue(),
                 completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
-                    let dictionary: NSMutableDictionary = NSMutableDictionary()
                     if error == nil {
-                        println("success downloading main image - \(i + 1) \(imgURL)")
+                        downloadedImage++
+                        println("success downloading main image - \(i + 1)")
                         var convertedImage: ServerUIImage = ServerUIImage(data: data)!
                         convertedImage.uid = self.productModel.imageIds[i]
-                        self.productModel.editedImage.append(convertedImage)
+//                        self.productModel.editedImage.append(convertedImage)
+                        self.productModel.editedImage[i] = convertedImage
                         
+                        // Added by Joriel
+                        let dictionary: NSMutableDictionary = NSMutableDictionary()
                         dictionary["imageId"] = self.productModel.imageIds[i]
                         dictionary["path"] = self.productModel.imageUrls[i]
                         ProductUploadEdit.combinedImagesDictionary.append(dictionary)
                         
-                        if self.productModel.editedImage.count == self.productModel.imageUrls.count {
+                        if downloadedImage == self.productModel.imageUrls.count {
                             self.downloadCombinationsImages()
                         }
                     } else {
-                        println("failed downloading main image - \(i + 1)")
-                        var convertedImage = ServerUIImage()
-                        convertedImage.uid = self.productModel.imageIds[i]
-                        self.productModel.images.append(convertedImage)
-                        
-                        dictionary["imageId"] = self.productModel.imageIds[i]
-                        dictionary["path"] = self.productModel.imageUrls[i]
-                        ProductUploadEdit.combinedImagesDictionary.append(dictionary)
-                        
-                        if self.productModel.images.count == self.productModel.imageUrls.count {
-                            self.downloadCombinationsImages()
-                        }
+                        self.showAlertDownloadFail()
                     }
             })
         }
@@ -356,49 +368,61 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         if self.productModel.validCombinations.count == 0 {
             self.gotoEditProduct()
         } else {
+            var imageIndex: Int = 0
+            var totalCombinationImages: Int = 0
+            var downloadedImages: Int = 0
+            
             for i in 0..<self.productModel.validCombinations.count {
                 println("downloading images of combination -  \(i + 1)")
-                for j in 0..<self.productModel.validCombinations[i].imagesUrl.count {
-                    var dictionary: NSMutableDictionary = NSMutableDictionary()
-                    print("downloading images -  \(j + 1) >> ")
-                    var imgURL: NSURL = NSURL(string: self.productModel.validCombinations[i].imagesUrl[j])!
-                    println("image url == \(imgURL)")
-                    let request: NSURLRequest = NSURLRequest(URL: imgURL)
-                    NSURLConnection.sendAsynchronousRequest(
-                        request, queue: NSOperationQueue.mainQueue(),
-                        completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
-                            if error == nil {
-                                println("success downloading combination image - \(i + 1) of \(j + 1)")
-                                var convertedImage: ServerUIImage = ServerUIImage(data: data)!
-                                convertedImage.uid = self.productModel.validCombinations[i].imagesId[j]
-                                self.productModel.oldEditedCombinationImages.append(convertedImage)
-                                self.productModel.validCombinations[i].editedImages.append(convertedImage)
+                if self.productModel.validCombinations[i].imagesUrl.count != 0 && self.productModel.validCombinations[i].imagesUrl[0] != "" {
+                    for j in 0..<self.productModel.validCombinations[i].imagesUrl.count {
+                        totalCombinationImages++
+                        var imgURL: NSURL = NSURL(string: self.productModel.validCombinations[i].imagesUrl[j])!
+                        println("downloading images -  \(j + 1) >> image url == \(imgURL)")
+                        // Adding dummy images to keys to be replaced by inserting using index
+                        self.productModel.oldEditedCombinationImages.append(ServerUIImage())
+                        self.productModel.oldEditedCombinationImages.append(ServerUIImage())
+                        self.productModel.validCombinations[i].editedImages.append(ServerUIImage())
+                        self.productModel.validCombinations[i].editedImages.append(ServerUIImage())
+                        
+                        let request: NSURLRequest = NSURLRequest(URL: imgURL)
+                        NSURLConnection.sendAsynchronousRequest(
+                            request, queue: NSOperationQueue.mainQueue(),
+                            completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
+                                downloadedImages++
                                 
-                                dictionary["imageId"] = self.productModel.validCombinations[i].imagesId[j]
-                                dictionary["path"] = self.productModel.validCombinations[i].imagesUrl[j]
-                                ProductUploadEdit.combinedImagesDictionary.append(dictionary)
-                                
-                                if self.productModel.validCombinations[i].imagesUrl.count == self.productModel.validCombinations[i].editedImages.count && (i + 1) == self.productModel.validCombinations.count {
-                                    self.gotoEditProduct()
+                                if i == 0 {
+                                    imageIndex = j
+                                } else {
+                                    imageIndex = self.productModel.validCombinations[i - 1].imagesUrl.count + j
                                 }
-                            } else {
-                                println("failed downloading combination image - \(i + 1) of \(j + 1)")
-                                var convertedImage = ServerUIImage()
-                                convertedImage.uid = self.productModel.validCombinations[i].imagesId[j]
-                                self.productModel.validCombinations[i].editedImages.append(convertedImage)
-                                self.productModel.oldEditedCombinationImages.append(convertedImage)
                                 
-                                dictionary["imageId"] = self.productModel.validCombinations[i].imagesId[j]
-                                dictionary["path"] = self.productModel.validCombinations[i].imagesUrl[j]
-                                ProductUploadEdit.combinedImagesDictionary.append(dictionary)
-                                
-                                if self.productModel.validCombinations[i].imagesUrl.count == self.productModel.validCombinations[i].editedImages.count /*&& (i + 1) == self.productModel.validCombinations.count */{
-                                    self.gotoEditProduct()
+                                if error == nil {
+                                    println("downloaded combination image - \(i + 1) of \(j + 1) - index >> \(imageIndex)")
+                                    var convertedImage: ServerUIImage = ServerUIImage(data: data)!
+                                    convertedImage.uid = self.productModel.validCombinations[i].imagesId[j]
+                                    self.productModel.oldEditedCombinationImages.append(convertedImage)
+                                    self.productModel.validCombinations[i].editedImages[j] = convertedImage
+                                    
+                                    // Added by Joriel
+                                    let dictionary: NSMutableDictionary = NSMutableDictionary()
+                                    dictionary["imageId"] = self.productModel.imageIds[i]
+                                    dictionary["path"] = self.productModel.imageUrls[i]
+                                    ProductUploadEdit.combinedImagesDictionary.append(dictionary)
+                                    
+                                    if totalCombinationImages == downloadedImages {
+                                        self.gotoEditProduct()
+                                    }
+                                } else {
+                                    println("failed downloading combination image - \(i + 1) of \(j + 1)")
+                                    self.showAlertDownloadFail()
                                 }
-                            }
-                            println("\(self.productModel.validCombinations[i].imagesUrl.count) == \(self.productModel.validCombinations[i].editedImages.count) && \((i + 1)) == \(self.productModel.validCombinations.count)")
-                    })
-
+                        })
+                        
+                    }
+                } else {
+                    self.gotoEditProduct()
+                    break
                 }
             }
         }
