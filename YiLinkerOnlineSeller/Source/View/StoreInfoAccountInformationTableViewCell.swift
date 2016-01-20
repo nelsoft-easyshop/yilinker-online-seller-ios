@@ -42,7 +42,7 @@ class StoreInfoAccountInformationTableViewCell: UITableViewCell{
         self.changePasswordButton.layer.cornerRadius = 5.0
         self.changePasswordButton.clipsToBounds = true
         
-        //Add tap gesture recognizer of saveView
+        //Add tap gesture recognizer in saveView
         var tap = UITapGestureRecognizer(target: self, action: "save")
         saveView.addGestureRecognizer(tap)
     }
