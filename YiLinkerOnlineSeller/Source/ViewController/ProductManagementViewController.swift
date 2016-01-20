@@ -270,6 +270,31 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         self.hud?.show(true)
     }
     
+    func getProductList(status: Int, key: String) {
+        if Reachability.isConnectedToNetwork() {
+            if self.requestTask != nil {
+                self.requestTask.cancel()
+                self.requestTask = nil
+            }
+            self.showHUD()
+            
+            var parameters: NSDictionary = [:]
+            if status == Status.all {
+                //                parameters = ["access_token": SessionManager.accessToken(),
+                //                    "status": "all",
+                //                    "keyword": key]
+                self.requestGetProductList("all", key: key)
+            } else {
+                //                parameters = ["access_token": SessionManager.accessToken(),
+                //                    "status": String(status),
+                //                    "keyword": key]
+                self.requestGetProductList(String(status), key: key)
+            }
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
+        }
+    }
+    
     // MARK: - Empty View
     
     func addEmptyView() {
@@ -390,31 +415,6 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     
     // MARK: - Requests
     
-    func getProductList(status: Int, key: String) {
-        if Reachability.isConnectedToNetwork() {
-            if self.requestTask != nil {
-                self.requestTask.cancel()
-                self.requestTask = nil
-            }
-            self.showHUD()
-            
-            var parameters: NSDictionary = [:]
-            if status == Status.all {
-//                parameters = ["access_token": SessionManager.accessToken(),
-//                    "status": "all",
-//                    "keyword": key]
-                self.requestGetProductList("all", key: key)
-            } else {
-//                parameters = ["access_token": SessionManager.accessToken(),
-//                    "status": String(status),
-//                    "keyword": key]
-                self.requestGetProductList(String(status), key: key)
-            }
-        } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
-        }
-    }
-    
     func requestGetProductList(status: String, key: String) {
         WebServiceManager.fireProductListRequestWithUrl(APIAtlas.managementGetProductList, status: String(status), keyword: key, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
@@ -439,6 +439,8 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 self.hud?.hide(true)
             } else {
                 self.hud?.hide(true)
+                self.loaderContainerView.hidden = true
+                self.searchBarTextField.userInteractionEnabled = true
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -448,15 +450,6 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                     } else {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: AlertStrings.failed)
                     }
-//                    if errorModel.message == "No products found" {
-//                        self.emptyLabel.hidden = false
-//                    } else {
-//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: AlertStrings.failed)
-//                    }
-                    
-                    self.hud?.hide(true)
-                    self.loaderContainerView.hidden = true
-                    self.searchBarTextField.userInteractionEnabled = true
                 } else if requestErrorType == .AccessTokenExpired {
                     self.requestRefreshToken("get", status: status.toInt()!)
                 } else if requestErrorType == .PageNotFound {
@@ -475,112 +468,47 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             }
             
         })
-        
-        //            let manager = APIManager.sharedInstance
-        //            println(parameters)
-        //            self.requestTask = manager.POST(APIAtlas.managementGetProductList, parameters: parameters, success: {
-        //                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-        //                if responseObject["isSuccessful"] as! Bool {
-        //                    self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
-        //                    if self.productModel.products.count != 0 {
-        //                        self.tableView.reloadData()
-        //
-        //                        if SessionManager.isReseller() {
-        //                            var productStatuses: [Int] = []
-        //                            for i in 0..<self.productModel.products.count {
-        //                                productStatuses.append(self.productModel.products[i].status)
-        //                            }
-        //
-        //                            if !(contains(productStatuses, Status.active) || contains(productStatuses, Status.inactive)) {
-        //                                self.emptyLabel.hidden = false
-        //                            }
-        //                        }
-        //
-        //                    } else {
-        //                        self.emptyLabel.hidden = false
-        //                    }
-        //                } else {
-        //                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.failed)
-        //                }
-        //
-        //                self.loaderContainerView.hidden = true
-        //                self.searchBarTextField.userInteractionEnabled = true
-        //                self.hud?.hide(true)
-        //                }, failure: {
-        //                    (task: NSURLSessionDataTask!, error: NSError!) in
-        //
-        //                    if error.code != NSURLErrorCancelled {
-        //                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-        //                        if task.statusCode == 401 {
-        //                            self.requestRefreshToken("get", status: status)
-        //                        } else if error.userInfo != nil {
-        //                            self.hud?.hide(true)
-        //                            self.loaderContainerView.hidden = true
-        //                            self.searchBarTextField.userInteractionEnabled = true
-        //                            if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-        //                                if jsonResult["message"] != nil {
-        //                                    if jsonResult["message"] as! String == "No products found" {
-        //                                        self.emptyLabel.hidden = false
-        //                                    }
-        //                                } else {
-        //                                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
-        //                                }
-        //                            }
-        //                        } else {
-        //                            self.hud?.hide(true)
-        //                            self.loaderContainerView.hidden = true
-        //                            self.searchBarTextField.userInteractionEnabled = true
-        //                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
-        //                        }
-        //                    } else if error.code == NSURLErrorCancelled {
-        //                        println("request cancelled")
-        //                    } else {
-        //                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
-        //                        self.hud?.hide(true)
-        //                        self.loaderContainerView.hidden = true
-        //                        self.searchBarTextField.userInteractionEnabled = true
-        //                    }
-        //            })
     }
     
     func requestUpdateProductStatus(status: Int) {
         if Reachability.isConnectedToNetwork() {
             self.showHUD()
-            let manager = APIManager.sharedInstance
-            let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-                "productId": selectedItems.description,
-                "status": status]
             
-            manager.POST(APIAtlas.managementUpdateProductStatus, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                
-                self.selectedItems = []
-                self.updateSelectedItems(0, selected: false)
-                
-                self.getProductList(self.statusId[self.selectedIndex], key: self.searchBarTextField.text)
-                
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    if task.statusCode == 401 {
-                        self.requestRefreshToken("update", status: status)
-                    } else if error.userInfo != nil {
-                        self.hud?.hide(true)
-                        self.loaderContainerView.hidden = true
-                        self.searchBarTextField.userInteractionEnabled = true
-                        if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                            if jsonResult["message"] != nil {
-                                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: jsonResult["message"] as! String, title: AlertStrings.failed)
-                            } else {
-                                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
-                            }
+            WebServiceManager.fireUpdateProductStatusRequestWithUrl(APIAtlas.managementUpdateProductStatus, productId: selectedItems.description, status: status, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+                if successful {
+                    self.selectedItems = []
+                    self.updateSelectedItems(0, selected: false)
+                    self.getProductList(self.statusId[self.selectedIndex], key: self.searchBarTextField.text)
+                } else {
+                    self.hud?.hide(true)
+                    self.loaderContainerView.hidden = true
+                    self.searchBarTextField.userInteractionEnabled = true
+                    if requestErrorType == .ResponseError {
+                        //Error in api requirements
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        let data: NSArray = responseObject["data"] as! NSArray
+                        if data == NSArray() {
+                            self.emptyLabel.hidden = false
+                        } else {
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: AlertStrings.failed)
                         }
-                    } else {
-                        self.hud?.hide(true)
-                        self.loaderContainerView.hidden = true
-                        self.searchBarTextField.userInteractionEnabled = true
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+                    } else if requestErrorType == .AccessTokenExpired {
+                        self.requestRefreshToken("update", status: status)
+                    } else if requestErrorType == .PageNotFound {
+                        //Page not found
+                        Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .NoInternetConnection {
+                        //No internet connection
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .RequestTimeOut {
+                        //Request timeout
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .UnRecognizeError {
+                        //Unhandled error
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                     }
+                }
+                
             })
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
@@ -589,30 +517,51 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     
     func requestRefreshToken(type: String, status: Int) {
         
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        let manager = APIManager.sharedInstance
-        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.loginUrl, actionHandler: { (successful, responseObject, RequestErrorType) -> Void in
             self.hud?.hide(true)
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            if type == "get" {
-                self.getProductList(status, key: self.searchBarTextField.text)
-            } else if type == "update" {
-                self.requestUpdateProductStatus(status)
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                if type == "get" {
+                    self.getProductList(status, key: self.searchBarTextField.text)
+                } else if type == "update" {
+                    self.requestUpdateProductStatus(status)
+                } else {
+                    println("else in product view refresh token")
+                }
             } else {
-                println("else in product view refresh token")
+                //Forcing user to logout.
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    SessionManager.logout()
+                    GPPSignIn.sharedInstance().signOut()
+                    self.navigationController?.popToRootViewControllerAnimated(false)
+                })
             }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
         })
+        
+//        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+//            "client_secret": Constants.Credentials.clientSecret,
+//            "grant_type": Constants.Credentials.grantRefreshToken,
+//            "refresh_token": SessionManager.refreshToken()]
+//        
+//        let manager = APIManager.sharedInstance
+//        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
+//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+//            
+//            self.hud?.hide(true)
+//            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+//            if type == "get" {
+//                self.getProductList(status, key: self.searchBarTextField.text)
+//            } else if type == "update" {
+//                self.requestUpdateProductStatus(status)
+//            } else {
+//                println("else in product view refresh token")
+//            }
+//            
+//            }, failure: {
+//                (task: NSURLSessionDataTask!, error: NSError!) in
+//                self.hud?.hide(true)
+//                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: AlertStrings.wentWrong)
+//        })
     }
     
 } // ProductManagementViewController
