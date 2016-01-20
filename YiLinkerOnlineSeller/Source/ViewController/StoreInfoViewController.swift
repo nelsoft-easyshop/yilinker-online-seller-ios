@@ -681,10 +681,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     func saveAccountInfo() {
         
         self.showHUD()
-
-        let cell: StoreInfoTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoHeaderTableViewCellIndentifier, forIndexPath: index!) as! StoreInfoTableViewCell
-        cell.delegate = self
-
+      
         let manager = APIManager.sharedInstance
         
         var datas: [NSData] = []
@@ -718,11 +715,10 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         let parameters: NSDictionary?
         
         if self.storeInfoModel!.isReseller {
-             parameters = ["storeName" : cell.storeNameTextField.text, "storeDescription" : cell.storeDescriptionTextView.text, "categoryIds" : formattedCategories, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
+             parameters = ["storeName" : self.storeInfoModel!.store_name, "storeDescription" : self.storeInfoModel!.store_description, "categoryIds" : formattedCategories, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
             if self.selectedCategories.count != 0 {
                 let url: String = "\(APIAtlas.sellerUpdateSellerInfo)?access_token=\(SessionManager.accessToken())"
-                self.storeNameAndDescription(cell.storeNameTextField.text, storeDescription: cell.storeDescriptionTextView.text)
-                if !cell.storeNameTextField.text.isEmpty && !cell.storeNameTextField.text.isEmpty {
+                if !self.storeInfoModel!.store_name.isEmpty && !self.storeInfoModel!.store_description.isEmpty {
                     manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
                         for (index, data) in enumerate(datas) {
                             println("index: \(index)")
@@ -769,10 +765,9 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 self.hud?.hide(true)
             }
         } else {
-            println("store name \(cell.storeNameTextField.text) store desc \(cell.storeDescriptionTextView.text)")
-            parameters = ["storeName" : cell.storeNameTextField.text, "storeDescription" : cell.storeDescriptionTextView.text, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
+            parameters = ["storeName" : self.storeInfoModel!.store_name, "storeDescription" : self.storeInfoModel!.store_description, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
             let url: String = "\(APIAtlas.sellerUpdateSellerInfo)?access_token=\(SessionManager.accessToken())"
-            if !cell.storeNameTextField.text.isEmpty && !cell.storeNameTextField.text.isEmpty {
+            if !self.storeInfoModel!.store_name.isEmpty && !self.storeInfoModel!.store_description.isEmpty {
                 manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
                     for (index, data) in enumerate(datas) {
                         println("index: \(index)")
@@ -996,61 +991,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 
             }
         }
-        
         presentViewController(socialVC, animated: true, completion: nil)
-        
-        /*
-        var sharingItems = [AnyObject]()
-        let image = postImage.image
-        
-        if (postImage.image != nil) {
-            sharingItems = [title, postImage.image!]
-        } else {
-            sharingItems = [title]
-        }
-        
-        let activityController = UIActivityViewController(activityItems:
-            sharingItems, applicationActivities: nil)
-        
-        activityController.excludedActivityTypes =  [
-            UIActivityTypePostToWeibo,
-            UIActivityTypePrint,
-            UIActivityTypeCopyToPasteboard,
-            UIActivityTypeAssignToContact,
-            UIActivityTypeSaveToCameraRoll,
-            UIActivityTypeAddToReadingList,
-            UIActivityTypePostToFlickr,
-            UIActivityTypePostToVimeo,
-            UIActivityTypePostToTencentWeibo
-        ]
-        
-        activityController.completionWithItemsHandler = { (s: String?, ok: Bool, items: [AnyObject]?, err:NSError?) -> Void in
-            print("completed \(s) \(ok) \(items) \(err)")
-            if s != nil {
-                if s == "com.apple.UIKit.activity.Mail" {
-                    self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY"))
-                } else if s == "com.apple.UIKit.activity.PostToFacebook" {
-                    self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_FB_LOCALIZE_KEY"))
-                } else if s == "com.apple.UIKit.activity.PostToTwitter" {
-                    self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"))
-                } else {
-                    self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_GPLUS_LOCALIZE_KEY"))
-                }
-            } else {
-                
-            }
-        }
-        
-        self.presentViewController(activityController, animated: true,
-            completion: nil)
-        */
-        
-        
-        
-       // sharingItems.append(NSURL(string: "https://sociobiology.files.wordpress.com/2013/07/strassmann-queller-qr-code.jpg")!)
-        
-        //let shareViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
-        //self.presentViewController(shareViewController, animated: true, completion: nil)
     }
     
     func shareTWAction(postImage: UIImageView, title: String) {
