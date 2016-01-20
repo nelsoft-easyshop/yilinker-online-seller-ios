@@ -8,6 +8,8 @@
 
 import UIKit
 
+//MARK: Delegate
+//VerifyNumberViewController Delegate Methods
 protocol VerifyViewControllerDelegate {
     func congratulationsViewController(isSuccessful: Bool)
     func dismissView()
@@ -15,38 +17,28 @@ protocol VerifyViewControllerDelegate {
 
 class VerifyNumberViewController: UIViewController {
 
+    //Contraints
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
-    @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var verifyButton: UIButton!
-    @IBOutlet weak var requestNewVerificationButton: UIButton!
-    @IBOutlet weak var viewContainer: UIView!
-    @IBOutlet weak var successFailView: UIView!
-    @IBOutlet weak var timerLabel: UILabel!
-    @IBOutlet weak var verificationCodeTextField: UITextField!
     
-    @IBOutlet weak var verifyTitleLabel: UILabel!
+    //Buttons
+    @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var requestNewVerificationButton: UIButton!
+    @IBOutlet weak var verifyButton: UIButton!
+    
+    //Labels
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var timeLeftLabel: UILabel!
+    @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var verifyTitleLabel: UILabel!
     
-    var viewControllers = [UIViewController]()
-    var congratulationsViewController: CongratulationsViewController?
-    var verifyViewController: VerifyViewController?
-    var selectedChildViewController: UIViewController?
+    //Textfields
+    @IBOutlet weak var verificationCodeTextField: UITextField!
     
-    var contentViewFrame: CGRect?
-    var selectedIndex: Int = 0
+    //Views
+    @IBOutlet weak var successFailView: UIView!
+    @IBOutlet weak var viewContainer: UIView!
 
-    var delegate: VerifyViewControllerDelegate?
-    
-    var hud: MBProgressHUD?
-    
-    var isSuccessful = false
-    
-    var mobileNumber: String = ""
-    
-    var seconds: Int = 300
-    var timer = NSTimer()
-    
+    //Strings
     let verifyTitle: String = StringHelper.localizedStringWithKey("VERIFY_NUMBER_TITLE_LOCALIZE_KEY")
     let message: String = StringHelper.localizedStringWithKey("VERIFY_NUMBER_MESSAGE_LOCALIZE_KEY")
     let timeLeft: String = StringHelper.localizedStringWithKey("VERIFY_NUMBER_TIME_LOCALIZE_KEY")
@@ -59,6 +51,27 @@ class VerifyNumberViewController: UIViewController {
     let somethingWentWrong: String = StringHelper.localizedStringWithKey("ERROR_SOMETHING_WENT_WRONG_LOCALIZE_KEY")
     let expired: String = StringHelper.localizedStringWithKey("VERIFY_NUMBER_EXPIRED_LOCALIZE_KEY")
     let information: String = StringHelper.localizedStringWithKey("STORE_INFO_INFORMATION_TITLE_LOCALIZE_KEY")
+    
+    var hud: MBProgressHUD?
+    
+    //View controllers initialization
+    var viewControllers = [UIViewController]()
+    var selectedChildViewController: UIViewController?
+    var congratulationsViewController: CongratulationsViewController?
+    var verifyViewController: VerifyViewController?
+    
+    //Global variables declaration
+    var isSuccessful: Bool = false
+    var seconds: Int = 300
+    var selectedIndex: Int = 0
+    var mobileNumber: String = ""
+    
+    var contentViewFrame: CGRect?
+    var timer: NSTimer = NSTimer()
+    
+    //Initialized VerifyViewControllerDelegate
+    var delegate: VerifyViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -76,7 +89,6 @@ class VerifyNumberViewController: UIViewController {
         self.requestNewVerificationButton.setTitle(self.requestNew, forState: UIControlState.Normal)
         
         timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("subtractTime"), userInfo: nil, repeats: true)
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -84,7 +96,7 @@ class VerifyNumberViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    //MARK: Button functions
+    //MARK: Action method of buttons
     @IBAction func cancelAction(sender: AnyObject!) {
         self.dismissViewControllerAnimated(true, completion: nil)
         self.delegate?.dismissView()
@@ -93,13 +105,10 @@ class VerifyNumberViewController: UIViewController {
     @IBAction func requestNewVerificationCode(sender: AnyObject){
         //Set action to send new verification code
         self.fireResendVerificationCode()
-        println("Resending verification code")
     }
     
     @IBAction func verifyContinueRequest(sender: AnyObject){
-        println("fire verify")
         if !self.verificationCodeTextField.text.isEmpty {
-            println(self.verificationCodeTextField.text.toInt())
             if count(self.verificationCodeTextField.text) < 6 || count(self.verificationCodeTextField.text) > 6 {
                 self.showAlert(self.error, message: self.invalid)
             } else {
@@ -109,109 +118,31 @@ class VerifyNumberViewController: UIViewController {
             self.showAlert(self.error, message: self.empty)
         }
     }
-    
-    //MARK: Resend verification code
-    func fireResendVerificationCode() {
-        self.showHUD()
-        let manager = APIManager.sharedInstance
-        manager.POST(APIAtlas.sellerResendVerification+"\(SessionManager.accessToken())&mobileNumber=\(self.mobileNumber)", parameters: nil, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                if responseObject["isSuccessful"] as! Bool {
-                    self.showAlert(self.information, message: responseObject["message"] as! String )
-                    self.seconds = 300
-                    self.invalidateTimer()
-                } else {
-                    self.showAlert(self.error, message: responseObject["message"] as! String)
-                }
-                println(responseObject.description)
-                //self.setSelectedViewControllerWithIndex(0)
-                self.hud?.hide(true)
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if error.userInfo != nil {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    self.showAlert(self.error, message: errorModel.message)
-                    self.delegate?.congratulationsViewController(false)
-                } else if task.statusCode == 401 {
-                    self.requestRefreshToken(VerifyType.Resend)
-                } else {
-                    self.delegate?.congratulationsViewController(false)
-                    self.showAlert(self.error, message: self.somethingWentWrong)
-                }
-                //self.showAlert(self.error, message: self.somethingWentWrong)
-        })
+
+    //MARK: Private Methods
+    //MARK: Invalidate timer - sets to 05:00
+    func invalidateTimer() {
+        timer.invalidate()
+        seconds = 300
+        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("subtractTime"), userInfo: nil, repeats: true)
+        verificationCodeTextField.text = ""
     }
-    
-    //MARK: Send verification code
-    func fireVerify(verificationCode: String){
-        if self.verifyViewController?.timerLabel.text != "00:00" {
-            self.showHUD()
-            let manager = APIManager.sharedInstance
-            let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "code" : NSNumber(integer: verificationCode.toInt()!)];
-            
-            manager.POST(APIAtlas.sellerMobileNumberVerification, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                self.hud?.hide(true)
-                if responseObject["isSuccessful"] as! Bool {
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                    //self.delegate?.dismissView()
-                    self.delegate?.congratulationsViewController(true)
-                } else {
-                    println("\(responseObject)")
-                    self.showAlert(self.error, message: responseObject["message"] as! String)
-                }
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.dismissViewControllerAnimated(true, completion: nil)
-                self.hud?.hide(true)
-                //self.delegate?.dismissView()
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if error.userInfo != nil {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    self.showAlert(self.error, message: errorModel.message)
-                    self.delegate?.congratulationsViewController(false)
-                } else if task.statusCode == 401 {
-                    self.requestRefreshToken(VerifyType.Verify)
-                } else {
-                    self.delegate?.congratulationsViewController(false)
-                    self.showAlert(self.error, message: self.somethingWentWrong)
-                }
-                //println(error.userInfo)
-                //self.delegate?.congratulationsViewController(false)
-                //self.showAlert(self.error, message: self.somethingWentWrong)
-                //println(error)
-            })
-        } else {
-             self.showAlert(self.error, message: self.expired)
+  
+    //MARK: Show alert view
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: self.ok, style: .Default) { (action) in
+            alertController.dismissViewControllerAnimated(true, completion: nil)
         }
-       
-    }
-    
-    func requestRefreshToken(type: VerifyType) {
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        self.showHUD()
-        let manager = APIManager.sharedInstance
-        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
             
-            if type == VerifyType.Verify {
-                self.fireVerify(self.verificationCodeTextField.text)
-            } else if type == VerifyType.Resend {
-                self.fireResendVerificationCode()
-            }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
-                 self.showAlert(self.error, message: self.somethingWentWrong)
-        })
+        }
     }
-    
+ 
     //MARK: Show MBProgressHUD bar
     func showHUD() {
         if self.hud != nil {
@@ -244,30 +175,7 @@ class VerifyNumberViewController: UIViewController {
         }
     }
     
-    //MARK: Invalidate timer - sets to 05:00
-    func invalidateTimer() {
-        timer.invalidate()
-        seconds = 300
-        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("subtractTime"), userInfo: nil, repeats: true)
-        verificationCodeTextField.text = ""
-    }
-    
-    //MARK: Show alert view
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        
-        let OKAction = UIAlertAction(title: self.ok, style: .Default) { (action) in
-            alertController.dismissViewControllerAnimated(true, completion: nil)
-        }
-        
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            
-        }
-    }
-    
-    //MARK: Textfield
+    //MARK: Textfield delegate method
     @IBAction func textFieldDidBeginEditing(sender: AnyObject) {
         if IphoneType.isIphone4() {
             topConstraint.constant = 40
@@ -278,6 +186,148 @@ class VerifyNumberViewController: UIViewController {
         }
         
     }
+    
+    //MARK -
+    //MARK - Rest API Request
+    /*MARK: POST METHOD - Resend verification code
+    *
+    * (Parameters) - mobileNumber
+    *
+    * Function to resend verification number
+    *
+    */
+    func fireResendVerificationCode() {
+        
+        self.showHUD()
+        
+        let manager = APIManager.sharedInstance
+        
+        manager.POST(APIAtlas.sellerResendVerification+"\(SessionManager.accessToken())&mobileNumber=\(self.mobileNumber)", parameters: nil, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            if responseObject["isSuccessful"] as! Bool {
+                //If isSuccessful is true, show alert view, set seconds tp 300 and invalidate time
+                self.showAlert(self.information, message: responseObject["message"] as! String )
+                self.seconds = 300
+                self.invalidateTimer()
+            } else {
+                self.showAlert(self.error, message: responseObject["message"] as! String)
+            }
+            
+            self.hud?.hide(true)
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                self.hud?.hide(true)
+                
+                //Catch unsuccessful return from API
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    //Parsed error messages from the API return
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    self.showAlert(self.error, message: errorModel.message)
+                    self.delegate?.congratulationsViewController(false)
+                } else if task.statusCode == 401 {
+                    //Call 'requestRefreshToken' if access token is expired
+                    self.requestRefreshToken(VerifyType.Resend)
+                } else {
+                    self.delegate?.congratulationsViewController(false)
+                    self.showAlert(self.error, message: self.somethingWentWrong)
+                }
+        })
+    }
+    
+    /*MARK: POST METHOD - Verify code sent from mobile
+    *
+    * (Parameters) - access_token, code
+    *
+    * Function to verify 6-digit code
+    *
+    */
+    func fireVerify(verificationCode: String){
+        
+        if self.verifyViewController?.timerLabel.text != "00:00" {
+            
+            self.showHUD()
+            
+            let manager = APIManager.sharedInstance
+            
+            let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "code" : NSNumber(integer: verificationCode.toInt()!)];
+            
+            manager.POST(APIAtlas.sellerMobileNumberVerification, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                
+                self.hud?.hide(true)
+                
+                if responseObject["isSuccessful"] as! Bool {
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.delegate?.congratulationsViewController(true)
+                } else {
+                    self.showAlert(self.error, message: responseObject["message"] as! String)
+                }
+                
+                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    
+                    //Catch unsuccessful return from API
+                    self.hud?.hide(true)
+                    
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        //Parsed error messages from API return
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        self.showAlert(self.error, message: errorModel.message)
+                        self.delegate?.congratulationsViewController(false)
+                    } else if task.statusCode == 401 {
+                        //Call 'requestRefreshToken' if access token is expired
+                        self.requestRefreshToken(VerifyType.Verify)
+                    } else {
+                        self.delegate?.congratulationsViewController(false)
+                        self.showAlert(self.error, message: self.somethingWentWrong)
+                    }
+            })
+        } else {
+            self.showAlert(self.error, message: self.expired)
+        }
+    }
+    
+    /*MARK: POST METHOD - Refresh token
+    *
+    * (Parameters) - client_id, client_secret, grant_type, refresh_token
+    *
+    * Function to resend verification number
+    *
+    */
+    func requestRefreshToken(type: VerifyType) {
+        
+        self.showHUD()
+        
+        let manager = APIManager.sharedInstance
+        
+        //Set parameter of POST Method
+        let parameter: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.loginUrl, parameters: parameter, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            if type == VerifyType.Verify {
+                self.fireVerify(self.verificationCodeTextField.text)
+            } else if type == VerifyType.Resend {
+                self.fireResendVerificationCode()
+            }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                //Catch unsuccessfulreturn from the API
+                self.hud?.hide(true)
+                self.showAlert(self.error, message: self.somethingWentWrong)
+        })
+    }
+
     /*
     // MARK: - Navigation
 
