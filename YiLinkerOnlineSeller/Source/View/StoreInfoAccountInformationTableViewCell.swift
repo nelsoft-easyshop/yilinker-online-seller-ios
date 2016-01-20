@@ -69,6 +69,7 @@ class StoreInfoAccountInformationTableViewCell: UITableViewCell{
     }
     
     //MARK: Private method
+    //Action method for saveView when tapped
     //Method for saving changes in account info
     func save(){
         self.delegate?.saveAccountInfo()
