@@ -215,7 +215,8 @@ class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    self.showAlert(Constants.Localized.error, message: responseObject["message"] as! String)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String, title: Constants.Localized.error)
+                    //self.showAlert(Constants.Localized.error, message: responseObject["message"] as! String)
                 } else if requestErrorType == .AccessTokenExpired {
                     //Call method 'requestRefreshToken' if the token is expired
                     self.requestRefreshToken()
@@ -235,42 +236,6 @@ class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
                 }
             }
         })
-        
-        /*
-        let manager = APIManager.sharedInstance
-        
-        manager.POST(APIAtlas.sellerChangePassword, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-           
-            var success = StringHelper.localizedStringWithKey("PASSWORD_SUCCESS_CHANGE_LOCALIZE_KEY")
-            
-            if responseObject["isSuccessful"] as! Bool {
-                self.showAlert(Constants.Localized.success, message: success)
-            } else {
-                self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-            }
-            
-            self.hud?.hide(true)
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-    
-                //Catch unsuccessful return from the API
-                if task.statusCode == 401 {
-                    //Call method 'requestRefreshToken' if the token is expired
-                    self.requestRefreshToken()
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        //Parsed error message return from the API
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.error)
-                    } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error )
-                    }
-                }
-                
-                self.hud?.hide(true)
-        })*/
     }
     
     //MARK: POST METHOD - Refresh token
