@@ -347,12 +347,6 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
 //                        self.productModel.editedImage.append(convertedImage)
                         self.productModel.editedImage[i] = convertedImage
                         
-                        // Added by Joriel
-                        let dictionary: NSMutableDictionary = NSMutableDictionary()
-                        dictionary["imageId"] = self.productModel.imageIds[i]
-                        dictionary["path"] = self.productModel.imageUrls[i]
-                        ProductUploadEdit.combinedImagesDictionary.append(dictionary)
-                        
                         if downloadedImage == self.productModel.imageUrls.count {
                             self.downloadCombinationsImages()
                         }
@@ -403,11 +397,6 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                                     convertedImage.uid = self.productModel.validCombinations[i].imagesId[j]
                                     self.productModel.oldEditedCombinationImages.append(convertedImage)
                                     self.productModel.validCombinations[i].editedImages[j] = convertedImage
-                                    // Added by Joriel
-                                    let dictionary: NSMutableDictionary = NSMutableDictionary()
-                                    dictionary["imageId"] = self.productModel.imageIds[i]
-                                    dictionary["path"] = self.productModel.imageUrls[i]
-                                    ProductUploadEdit.combinedImagesDictionary.append(dictionary)
                                     
                                     if totalCombinationImages == downloadedImages {
                                         self.gotoEditProduct()
