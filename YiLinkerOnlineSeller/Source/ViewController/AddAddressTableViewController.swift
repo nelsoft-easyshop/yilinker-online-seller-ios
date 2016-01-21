@@ -440,9 +440,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         
         self.showHUD()
         
-        let manager = APIManager.sharedInstance
-        
-        let parameter = ["access_token": SessionManager.accessToken(),
+        let parameters = ["access_token": SessionManager.accessToken(),
             "title": getTextAtIndex(0),
             "unitNumber": getTextAtIndex(1),
             "buildingName": getTextAtIndex(2),
@@ -457,6 +455,39 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             "userAddressId": self.addressModel.userAddressId
         ]
         
+        WebServiceManager.fireStoreInfoRequestWithUrl(APIAtlas.editAddress, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                //If isSuccessful is true, call the delegate method to add new address in collection view
+                self.delegate!.addAddressTableViewController(didAddAddressSucceed: self)
+                
+                self.navigationController!.popViewControllerAnimated(true)
+                self.hud?.hide(true)
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(title: self.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.requestRefreshToken(AddressRefreshType.Edit)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        })
+
+        /*
+        let manager = APIManager.sharedInstance
         manager.POST(APIAtlas.editAddress, parameters: parameter, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
@@ -488,7 +519,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 }
                 
                 self.hud?.hide(true)
-        })
+        })*/
     }
     
     //MARK: POST METHOD - Add address
@@ -504,10 +535,8 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         
         self.showHUD()
         
-        let manager = APIManager.sharedInstance
-        
         //Set parameters of POST method
-        let parameter = ["access_token": SessionManager.accessToken(),
+        let parameters = ["access_token": SessionManager.accessToken(),
             "title": getTextAtIndex(0),
             "unitNumber": getTextAtIndex(1),
             "buildingName": getTextAtIndex(2),
@@ -521,7 +550,40 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             "locationId": self.addressModel.barangayId
         ]
         
-        manager.POST(APIAtlas.addAddressUrl, parameters: parameter, success: {
+        WebServiceManager.fireStoreInfoRequestWithUrl(APIAtlas.addAddressUrl, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                //If isSuccessful is true, call the delegate method to add new address in collection view
+                self.delegate!.addAddressTableViewController(didAddAddressSucceed: self)
+                
+                self.navigationController!.popViewControllerAnimated(true)
+                self.hud?.hide(true)
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(title: self.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.requestRefreshToken(AddressRefreshType.Create)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        })
+        
+        /*
+        let manager = APIManager.sharedInstance
+        manager.POST(APIAtlas.addAddressUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             if responseObject["isSuccessful"] as! Bool {
@@ -553,7 +615,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 }
                 
                 self.hud?.hide(true)
-        })
+        })*/
     }
     
     //MARK: POST METHOD - Get all barangay
@@ -568,12 +630,59 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         
         self.showHUD()
         
-        let manager = APIManager.sharedInstance
-        
         //Set parameters of POST method
-        let params = ["access_token": SessionManager.accessToken(), "cityId": String(id)]
+        let parameters = ["access_token": SessionManager.accessToken(), "cityId": String(id)]
         
-        manager.POST(APIAtlas.barangay, parameters: params, success: {
+        WebServiceManager.fireStoreInfoRequestWithUrl(APIAtlas.barangay, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                //Parse responseObject
+                self.barangayModel = BarangayModel.parseDataWithDictionary(responseObject)
+                
+                if self.addressModel.barangayId == 0 && self.addressModel.title != "" {
+                    self.addressModel.barangay = ""
+                    self.addressModel.barangayId = 0
+                } else {
+                    if !self.isEdit3 {
+                        self.addressModel.barangay = ""
+                        self.addressModel.barangayId = 0
+                    } else if self.addressModel.barangayId == 0 && self.addressModel.title == "" {
+                        self.addressModel.barangayId = self.barangayModel.barangayId[0]
+                        self.addressModel.barangay = self.barangayModel.location[0]
+                    }else {
+                        self.addressModel.barangayId = self.addressModel.barangayId
+                        self.addressModel.barangay = self.barangayModel.location[0]
+                    }
+                }
+                
+                self.tableView.reloadData()
+                self.hud?.hide(true)
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(title: self.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.requestRefreshToken(AddressRefreshType.Barangay)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        })
+        
+        /*
+        let manager = APIManager.sharedInstance
+        manager.POST(APIAtlas.barangay, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             //Parse responseObject
@@ -621,7 +730,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 }
                 
                 self.hud?.hide(true)
-        })
+        })*/
     }
     
     //MARK: POST METHOD - Get Cities
@@ -635,12 +744,60 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     func requestGetCities(id: Int) {
         self.showHUD()
         
+        //Add parameter of POST method
+        let parameters = ["access_token": SessionManager.accessToken(), "provinceId": String(id)]
+        
+        WebServiceManager.fireStoreInfoRequestWithUrl(APIAtlas.citiesUrl, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                //Parse responseObject
+                self.cityModel = CityModel.parseDataWithDictionary(responseObject)
+                
+                if self.cityModel.cityId.count != 0 && self.addressModel.title == "" {
+                    self.addressModel.city = self.cityModel.location[0]
+                    self.addressModel.cityId = self.cityModel.cityId[0]
+                    self.requestGetBarangay(self.addressModel.cityId)
+                    self.addressModel.barangay = ""
+                    self.cityRow = 0
+                    self.barangayRow = 0
+                } else {
+                    if self.addressModel.cityId != 0 {
+                        self.requestGetBarangay(self.addressModel.cityId)
+                    } else {
+                        self.addressModel.city = self.cityModel.location[0]
+                        self.addressModel.cityId = self.cityModel.cityId[0]
+                        self.requestGetBarangay(self.cityModel.cityId[0])
+                    }
+                }
+                
+                self.hud?.hide(true)
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(title: self.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.requestRefreshToken(AddressRefreshType.City)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        })
+        
+        /*
         let manager = APIManager.sharedInstance
         
-        //Add parameter of POST method
-        let parameter = ["access_token": SessionManager.accessToken(), "provinceId": String(id)]
-        
-        manager.POST(APIAtlas.citiesUrl, parameters: parameter, success: {
+        manager.POST(APIAtlas.citiesUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             //Parse responseObject
@@ -689,7 +846,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 }
                 
                 self.hud?.hide(true)
-        })
+        })*/
     }
     
     //MARK: POST METHOD - Get Provinces
@@ -704,12 +861,56 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         
         self.showHUD()
         
+        //Add parameter of POST method
+        let parameters = ["access_token": SessionManager.accessToken()]
+        
+        WebServiceManager.fireStoreInfoRequestWithUrl(APIAtlas.provinceUrl, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                //Parse responseObject
+                self.provinceModel = ProvinceModel.parseDataWithDictionary(responseObject)
+                
+                if self.provinceModel.location.count != 0 && self.addressModel.title == "" {
+                    self.addressModel.province = self.provinceModel.location[0]
+                    self.addressModel.provinceId = self.provinceModel.provinceId[0]
+                    self.requestGetCities(self.provinceModel.provinceId[0])
+                    self.provinceRow = 0
+                } else {
+                    if self.addressModel.provinceId != 0 {
+                        self.requestGetCities(self.addressModel.provinceId)
+                    } else {
+                        self.requestGetCities(self.provinceModel.provinceId[0])
+                    }
+                }
+                
+                self.hud?.hide(true)
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(title: self.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.requestRefreshToken(AddressRefreshType.Province)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        })
+        
+        /*
         let manager = APIManager.sharedInstance
         
-        //Add parameter of POST method
-        let parameter = ["access_token": SessionManager.accessToken()]
-        
-        manager.POST(APIAtlas.provinceUrl, parameters: parameter, success: {
+        manager.POST(APIAtlas.provinceUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             //Parse responseObject
@@ -752,7 +953,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 }
                 
                 self.hud?.hide(true)
-        })
+        })*/
     }
     
     //MARK: POST METHOD - Refresh token
