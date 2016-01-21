@@ -301,10 +301,42 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         
         self.showHUD()
         
-        let manager = APIManager.sharedInstance
-        
         //Set parameter of POST Method
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "userAddressId" : NSNumber(integer: userAddressId)];
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "userAddressId" : NSNumber(integer: userAddressId)]
+        
+        WebServiceManager.fireStoreInfoRequestWithUrl(APIAtlas.sellerDeleteStoreAddress, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.showAlert(title: self.information, message: responseObject["message"] as! String)
+                self.deleteCellInIndexPath(indexPath)
+                self.changeAddressCollectionView.reloadData()
+                
+                self.hud?.hide(true)
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(title: self.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.requestRefreshToken(AddressRefreshType.Delete)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        })
+        
+        /*
+        let manager = APIManager.sharedInstance
         
         manager.POST(APIAtlas.sellerDeleteStoreAddress, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -336,7 +368,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 }
                 
                 self.hud?.hide(true)
-        })
+        })*/
     }
 
     //MARK: POST METHOD - Set default address of seller
@@ -350,10 +382,42 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         
         self.showHUD()
         
-        let manager = APIManager.sharedInstance
-        
         //Set parameter of POST Method
         let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "userAddressId" : self.selectedAddressId];
+        
+        WebServiceManager.fireStoreInfoRequestWithUrl(APIAtlas.sellerSetDefaultStoreAddress, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.showAlert(title: self.information, message: responseObject["message"] as! String)
+                self.delegate?.updateStoreAddressDetail(self.getAddressModel.listOfAddress[self.defaultAddress].title, storeAddress:self.getAddressModel.listOfAddress[self.defaultAddress].fullLocation)
+                self.navigationController!.popViewControllerAnimated(true)
+                
+                self.hud?.hide(true)
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(title: self.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.requestRefreshToken(AddressRefreshType.Create)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        })
+        
+        /*
+        let manager = APIManager.sharedInstance
         
         manager.POST(APIAtlas.sellerSetDefaultStoreAddress, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -385,7 +449,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 }
                 
                 self.hud?.hide(true)
-        })
+        })*/
     }
 
     //MARK: POST METHOD - Fire Seller Address
@@ -399,10 +463,49 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         
         self.showHUD()
         
-        let manager = APIManager.sharedInstance
-        
         //Set parameter of POST Method
         let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
+        
+        WebServiceManager.fireStoreInfoRequestWithUrl(APIAtlas.sellerStoreAddresses, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.storeAddressModel = StoreAddressModel.parseStoreAddressDataFromDictionary(responseObject as! NSDictionary)
+                
+                self.cellCount = self.storeAddressModel!.title.count
+                
+                for i in 0..<self.storeAddressModel!.title.count {
+                    if self.storeAddressModel.is_default[i]{
+                        self.defaultAddress = i
+                    }
+                }
+                
+                self.hud?.hide(true)
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(title: self.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                    //Call method 'fireRefreshToken' if the token is expired
+                    self.requestRefreshToken(AddressRefreshType.SellerAddress)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        })
+        
+        /*
+        let manager = APIManager.sharedInstance
         
         manager.POST(APIAtlas.sellerStoreAddresses, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -441,7 +544,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                         self.showAlert(title: self.error, message: self.somethingWentWrong)
                     }
                 }
-        })
+        })*/
     }
     
     //MARK: POST METHOD - Request get address
@@ -456,11 +559,51 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         self.showHUD()
         
         //Set parameter of POST Method
-        let parameter = ["access_token": SessionManager.accessToken()]
+        let parameters = ["access_token": SessionManager.accessToken()]
         
+        WebServiceManager.fireStoreInfoRequestWithUrl(APIAtlas.sellerStoreAddresses, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.getAddressModel = GetAddressesModel.parseDataWithDictionary(responseObject)
+                
+                self.cellCount = self.getAddressModel.listOfAddress.count
+                
+                for i in 0..<self.getAddressModel.listOfAddress.count {
+                    if self.getAddressModel.listOfAddress[i].isDefault {
+                        self.defaultAddress = i
+                    }
+                }
+                
+                self.changeAddressCollectionView.reloadData()
+                self.hud?.hide(true)
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(title: self.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                    //Call method 'fireRefreshToken' if the token is expired
+                    self.requestRefreshToken(AddressRefreshType.Get)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        })
+        
+        /*
         var manager = APIManager.sharedInstance
         
-        manager.POST(APIAtlas.sellerStoreAddresses, parameters: parameter, success: {
+        manager.POST(APIAtlas.sellerStoreAddresses, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             //Parse responseObject
@@ -499,7 +642,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 }
                 
                 self.hud?.hide(true)
-        })
+        })*/
     }
 
     //MARK: POST METHOD - Refresh token
