@@ -959,7 +959,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             if responseObject["isSuccessful"] as! Bool {
                 
                 //if response is successful generate for-loop in storeInfoModel and append each category in tableData
-                for var i: Int = 0; i < self.storeInfoModel?.productCategoryName.count; i++ {
+                for i in 0..<self.storeInfoModel!.productCategoryName.count {
                     self.tableData.append(StoreInfoPreferredCategoriesModel(title: self.storeInfoModel!.productCategoryName[i], isChecked: self.storeInfoModel!.isSelected[i], productId: self.storeInfoModel!.productId[i]))
                     
                     //if self.storeInfoModel!.isSelected[i] is true, then inser productId in selectedCategories array
@@ -981,6 +981,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
                 //Catch unsuccessful return from the API
                 if task.statusCode == 401 {
                     //Call method 'fireRefreshToken' if the token is expired
