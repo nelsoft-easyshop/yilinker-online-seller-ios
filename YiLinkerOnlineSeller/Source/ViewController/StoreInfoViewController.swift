@@ -227,6 +227,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         if self.verifyOrChange == 1 {
             var verifyNumberViewController = VerifyNumberViewController(nibName: "VerifyNumberViewController", bundle: nil)
             verifyNumberViewController.delegate = self
+            verifyNumberViewController.mobileNumber = mobile
             verifyNumberViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
             verifyNumberViewController.providesPresentationContextTransitionStyle = true
             verifyNumberViewController.definesPresentationContext = true
@@ -234,7 +235,6 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             self.tabBarController?.presentViewController(verifyNumberViewController, animated: true, completion:
                 nil)
             self.verifyOrChange = 2
-            verifyNumberViewController.mobileNumber = self.mobileNumber
         } else {
             var changeMobileNumber = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
             changeMobileNumber.delegate = self
@@ -1168,7 +1168,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 //If isSuccessful is true, call 'storeInfoVerify' method to call VerifyNumberViewController
                 //Set verifyOrChange to 1
                 self.verifyOrChange = 1
-                self.storeInfoVerify(oldNumber)
+                self.storeInfoVerify(newNumber)
                 self.hud?.hide(true)
             } else {
                 self.hud?.hide(true)
@@ -1215,6 +1215,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 //If 'isSuccessful' is true, call VerifyNumberViewController
                 var verifyNumberViewController = VerifyNumberViewController(nibName: "VerifyNumberViewController", bundle: nil)
                 verifyNumberViewController.delegate = self
+                verifyNumberViewController.mobileNumber = self.newContactNumber
                 verifyNumberViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
                 verifyNumberViewController.providesPresentationContextTransitionStyle = true
                 verifyNumberViewController.definesPresentationContext = true
