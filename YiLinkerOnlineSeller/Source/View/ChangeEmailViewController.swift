@@ -207,7 +207,7 @@ class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
             if successful {
                 var success = StringHelper.localizedStringWithKey("PASSWORD_SUCCESS_CHANGE_LOCALIZE_KEY")
                 
-                self.showAlert(Constants.Localized.error, message: success)
+                self.showAlert(Constants.Localized.success, message: success)
                 
                 self.hud?.hide(true)
             } else {
@@ -215,7 +215,7 @@ class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                    self.showAlert(Constants.Localized.error, message: responseObject["message"] as! String)
                 } else if requestErrorType == .AccessTokenExpired {
                     //Call method 'requestRefreshToken' if the token is expired
                     self.requestRefreshToken()
@@ -230,7 +230,7 @@ class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
                     Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
                 } else if requestErrorType == .UnRecognizeError {
                     //Unhandled error
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                    //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                     self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
                 }
             }
