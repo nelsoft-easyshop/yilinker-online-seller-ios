@@ -239,6 +239,59 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: - Post Request With Image
+    //This function is for removing repeated codes in handler
+    private static func firePostRequestStoreInfoImages(url: String, parameters: AnyObject, datas: [NSData], imageProfile: UIImage?, imageCover: UIImage?, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let manager = APIManager.sharedInstance
+        if Reachability.isConnectedToNetwork() {
+            
+            self.postTask = manager.POST(url, parameters: parameters,
+                constructingBodyWithBlock: { (formData: AFMultipartFormData!) -> Void in
+                    //Append images converted into data to multipart
+                    for (index, data) in enumerate(datas) {
+                        if imageProfile != nil && imageCover != nil {
+                            if(index == 0){
+                                formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(0)", mimeType: "image/jpeg")
+                            } else {
+                                formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(1)", mimeType: "image/jpeg")
+                            }
+                        } else if imageProfile != nil && imageCover == nil{
+                            formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(index)", mimeType: "image/jpeg")
+                        } else if imageProfile == nil && imageCover != nil {
+                            formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(index)", mimeType: "image/jpeg")
+                        }
+                    }
+                }, success: { (task, responseObject) -> Void in
+                    actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
+                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
+                    if let task = task.response as? NSHTTPURLResponse {
+                        if error.userInfo != nil {
+                            //Request is successful but encounter error in server
+                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
+                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
+                            //Page not found
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
+                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
+                            //Request Timeout
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
+                        } else if task.statusCode == Constants.WebServiceStatusCode.expiredAccessToken {
+                            //The accessToken is already expired
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .AccessTokenExpired)
+                        } else {
+                            //Unrecognized error, this is a rare case.
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
+                        }
+                    } else {
+                        //No internet connection
+                        actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+                    }
+            })
+            
+        } else {
+            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        }
+    }
+    
     //MARK: -
     //MARK: - Fire RefreshTokenWithUrl
     class func fireRefreshTokenWithUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
@@ -339,4 +392,21 @@ class WebServiceManager: NSObject {
         }
     }
     
+    // MARK: -
+    // MARK: - Store Info
+    // MARK: Fire Store Info Request With URL
+    // MARK: Get Store Info, Generate QR Code, Set Mobile Number, Resend Verification Code
+    class func fireStoreInfoRequestWithUrl(url: String, parameters: NSDictionary, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: Fire Save Store Info Request With URL
+    class func fireSaveStoreInfoRequestWithUrl(url: String, parameters: NSDictionary, datas: [NSData], imageProfile: UIImage?, imageCover: UIImage?, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        self.firePostRequestStoreInfoImages(url, parameters: parameters, datas: datas, imageProfile: imageProfile, imageCover: imageCover)  { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType) 
+        }
+    }
+
 }
