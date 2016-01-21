@@ -485,41 +485,6 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 }
             }
         })
-
-        /*
-        let manager = APIManager.sharedInstance
-        manager.POST(APIAtlas.editAddress, parameters: parameter, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            if responseObject["isSuccessful"] as! Bool {
-                //If isSuccessful is true, call the delegate method to add new address in collection view
-                self.delegate!.addAddressTableViewController(didAddAddressSucceed: self)
-            } else {
-                self.showAlert(title: self.somethingWentWrong, message: nil)
-            }
-            
-            self.hud?.hide(true)
-            self.navigationController!.popViewControllerAnimated(true)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                //Catch unsuccessful return from the API
-                if task.statusCode == 401 {
-                    self.requestRefreshToken(AddressRefreshType.Edit)
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        //Parse error messages from API rerurn
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(title: self.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(title: self.somethingWentWrong, message: nil)
-                    }
-                }
-                
-                self.hud?.hide(true)
-        })*/
     }
     
     //MARK: POST METHOD - Add address
@@ -580,42 +545,6 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 }
             }
         })
-        
-        /*
-        let manager = APIManager.sharedInstance
-        manager.POST(APIAtlas.addAddressUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            if responseObject["isSuccessful"] as! Bool {
-                //If isSuccessful is true, call the delegate method to add new address in collection view
-                self.delegate!.addAddressTableViewController(didAddAddressSucceed: self)
-            } else {
-                self.showAlert(title: self.somethingWentWrong, message: nil)
-            }
-            
-            self.hud?.hide(true)
-            self.navigationController!.popViewControllerAnimated(true)
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                //Catch unsuccessful return from the API
-                if task.statusCode == 401 {
-                    self.requestRefreshToken(AddressRefreshType.Create)
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        //Parse error messages from API rerurn
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(title: self.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(title: self.somethingWentWrong, message: nil)
-                    }
-                }
-                
-                self.hud?.hide(true)
-        })*/
     }
     
     //MARK: POST METHOD - Get all barangay
@@ -679,58 +608,6 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 }
             }
         })
-        
-        /*
-        let manager = APIManager.sharedInstance
-        manager.POST(APIAtlas.barangay, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            //Parse responseObject
-            self.barangayModel = BarangayModel.parseDataWithDictionary(responseObject)
-            
-            if responseObject["isSuccessful"] as! Bool {
-                if self.addressModel.barangayId == 0 && self.addressModel.title != "" {
-                    self.addressModel.barangay = ""
-                    self.addressModel.barangayId = 0
-                } else {
-                    if !self.isEdit3 {
-                        self.addressModel.barangay = ""
-                        self.addressModel.barangayId = 0
-                    } else if self.addressModel.barangayId == 0 && self.addressModel.title == "" {
-                        self.addressModel.barangayId = self.barangayModel.barangayId[0]
-                        self.addressModel.barangay = self.barangayModel.location[0]
-                    }else {
-                        self.addressModel.barangayId = self.addressModel.barangayId
-                        self.addressModel.barangay = self.barangayModel.location[0]
-                    }
-                }
-            } else {
-                self.showAlert(title: self.somethingWentWrong, message: nil)
-            }
-            
-            self.tableView.reloadData()
-            self.hud?.hide(true)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                //Catch unsuccessful return fro API
-                if task.statusCode == 401 {
-                    //Call 'requestRefreshToken' if access token is expired
-                    self.requestRefreshToken(AddressRefreshType.Barangay)
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        //Parse error messages from API return
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(title: self.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(title: self.somethingWentWrong, message: nil)
-                    }
-                }
-                
-                self.hud?.hide(true)
-        })*/
     }
     
     //MARK: POST METHOD - Get Cities
@@ -793,60 +670,6 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 }
             }
         })
-        
-        /*
-        let manager = APIManager.sharedInstance
-        
-        manager.POST(APIAtlas.citiesUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            //Parse responseObject
-            self.cityModel = CityModel.parseDataWithDictionary(responseObject)
-            
-            if responseObject["isSuccessful"] as! Bool {
-                //get all cities and assign get the id and title of the first city
-                if self.cityModel.cityId.count != 0 && self.addressModel.title == "" {
-                    self.addressModel.city = self.cityModel.location[0]
-                    self.addressModel.cityId = self.cityModel.cityId[0]
-                    self.requestGetBarangay(self.addressModel.cityId)
-                    self.addressModel.barangay = ""
-                    self.cityRow = 0
-                    self.barangayRow = 0
-                } else {
-                    if self.addressModel.cityId != 0 {
-                        self.requestGetBarangay(self.addressModel.cityId)
-                    } else {
-                        self.addressModel.city = self.cityModel.location[0]
-                        self.addressModel.cityId = self.cityModel.cityId[0]
-                        self.requestGetBarangay(self.cityModel.cityId[0])
-                    }
-                }
-            } else {
-                self.showAlert(title: self.somethingWentWrong, message: nil)
-            }
-            
-            self.hud?.hide(true)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                //Catch unsucccessful return from API
-                if task.statusCode == 401 {
-                    //Call 'requestRefreshToken' if access token is expired
-                    self.requestRefreshToken(AddressRefreshType.City)
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        //Parse error messages from API return
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(title: self.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(title: self.somethingWentWrong, message: nil)
-                    }
-                }
-                
-                self.hud?.hide(true)
-        })*/
     }
     
     //MARK: POST METHOD - Get Provinces
@@ -906,54 +729,6 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 }
             }
         })
-        
-        /*
-        let manager = APIManager.sharedInstance
-        
-        manager.POST(APIAtlas.provinceUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            //Parse responseObject
-            self.provinceModel = ProvinceModel.parseDataWithDictionary(responseObject)
-            
-            if responseObject["isSuccessful"] as! Bool {
-                if self.provinceModel.location.count != 0 && self.addressModel.title == "" {
-                    self.addressModel.province = self.provinceModel.location[0]
-                    self.addressModel.provinceId = self.provinceModel.provinceId[0]
-                    self.requestGetCities(self.provinceModel.provinceId[0])
-                    self.provinceRow = 0
-                } else {
-                    if self.addressModel.provinceId != 0 {
-                        self.requestGetCities(self.addressModel.provinceId)
-                    } else {
-                        self.requestGetCities(self.provinceModel.provinceId[0])
-                    }
-                }
-            } else {
-                self.showAlert(title: self.somethingWentWrong, message: nil)
-            }
-            
-            self.hud?.hide(true)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    //Call 'requestRefreshToken' if access token is expired
-                    self.requestRefreshToken(AddressRefreshType.Province)
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        //Parse error messages from API return
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(title: self.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(title: self.somethingWentWrong, message: nil)
-                    }
-                }
-                
-                self.hud?.hide(true)
-        })*/
     }
     
     //MARK: POST METHOD - Refresh token
