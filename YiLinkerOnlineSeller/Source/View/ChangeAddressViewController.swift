@@ -334,41 +334,6 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 }
             }
         })
-        
-        /*
-        let manager = APIManager.sharedInstance
-        
-        manager.POST(APIAtlas.sellerDeleteStoreAddress, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            if responseObject["isSuccessful"] as! Bool {
-                self.showAlert(title: self.information, message: responseObject["message"] as! String)
-                self.deleteCellInIndexPath(indexPath)
-                self.changeAddressCollectionView.reloadData()
-            } else {
-                self.showAlert(title: self.information, message: responseObject["message"] as! String)
-            }
-            
-            self.hud?.hide(true)
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                //Catch unsuccessful return from API
-                if task.statusCode == 401 {
-                    self.requestRefreshToken(AddressRefreshType.Delete)
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        //Parse error messages from API return
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(title: self.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(title: self.somethingWentWrong, message: nil)
-                    }
-                }
-                
-                self.hud?.hide(true)
-        })*/
     }
 
     //MARK: POST METHOD - Set default address of seller
@@ -415,41 +380,6 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 }
             }
         })
-        
-        /*
-        let manager = APIManager.sharedInstance
-        
-        manager.POST(APIAtlas.sellerSetDefaultStoreAddress, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            if responseObject["isSuccessful"] as! Bool {
-                self.showAlert(title: self.information, message: responseObject["message"] as! String)
-                self.delegate?.updateStoreAddressDetail(self.getAddressModel.listOfAddress[self.defaultAddress].title, storeAddress:self.getAddressModel.listOfAddress[self.defaultAddress].fullLocation)
-                self.navigationController!.popViewControllerAnimated(true)
-            } else {
-                self.showAlert(title: self.error, message: self.somethingWentWrong)
-            }
-            
-            self.hud?.hide(true)
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                //Catch unssuccessful return from API
-                if task.statusCode == 401 {
-                    self.requestRefreshToken(AddressRefreshType.Create)
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        //Parse error messages from API return
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(title: self.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(title: self.somethingWentWrong, message: nil)
-                    }
-                }
-                
-                self.hud?.hide(true)
-        })*/
     }
 
     //MARK: POST METHOD - Fire Seller Address
@@ -503,48 +433,6 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 }
             }
         })
-        
-        /*
-        let manager = APIManager.sharedInstance
-        
-        manager.POST(APIAtlas.sellerStoreAddresses, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            //Parse responseObject
-            if responseObject["isSuccessful"] as! Bool {
-                self.storeAddressModel = StoreAddressModel.parseStoreAddressDataFromDictionary(responseObject as! NSDictionary)
-                
-                self.cellCount = self.storeAddressModel!.title.count
-                
-                for var num  = 0; num < self.storeAddressModel?.title.count; num++ {
-                    if self.storeAddressModel.is_default[num]{
-                        self.defaultAddress = num
-                    }
-                }
-            } else {
-                self.showAlert(title: self.error, message: self.somethingWentWrong)
-            }
-            
-            self.changeAddressCollectionView.reloadData()
-            self.hud?.hide(true)
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                //Catch unsuccessful return from the API
-                if task.statusCode == 401 {
-                    //Call method 'fireRefreshToken' if the token is expired
-                    self.requestRefreshToken(AddressRefreshType.SellerAddress)
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        //Parsed error message return from the API
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(title: self.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(title: self.error, message: self.somethingWentWrong)
-                    }
-                }
-        })*/
     }
     
     //MARK: POST METHOD - Request get address
@@ -599,50 +487,6 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 }
             }
         })
-        
-        /*
-        var manager = APIManager.sharedInstance
-        
-        manager.POST(APIAtlas.sellerStoreAddresses, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            //Parse responseObject
-            if responseObject["isSuccessful"] as! Bool {
-                self.getAddressModel = GetAddressesModel.parseDataWithDictionary(responseObject)
-                
-                self.cellCount = self.getAddressModel.listOfAddress.count
-                
-                for var num  = 0; num < self.getAddressModel.listOfAddress.count; num++ {
-                    if self.getAddressModel.listOfAddress[num].isDefault {
-                        self.defaultAddress = num
-                    }
-                }
-            } else {
-                self.showAlert(title: self.somethingWentWrong, message: nil)
-            }
-            
-            self.changeAddressCollectionView.reloadData()
-            self.hud?.hide(true)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                //Catch unsuccessful API return
-                if task.statusCode == 401 {
-                    self.requestRefreshToken(AddressRefreshType.Get)
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        //Parse error messages from API return
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(title: self.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(title: self.somethingWentWrong, message: nil)
-                    }
-                }
-                
-                self.hud?.hide(true)
-        })*/
     }
 
     //MARK: POST METHOD - Refresh token
