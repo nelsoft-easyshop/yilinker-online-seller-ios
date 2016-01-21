@@ -125,11 +125,41 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         }
     }
     
+    //MARK: Private Method
+    func changeMobileNumber(){
+        var changeMobileNumberViewController = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
+        changeMobileNumberViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        changeMobileNumberViewController.providesPresentationContextTransitionStyle = true
+        changeMobileNumberViewController.definesPresentationContext = true
+        let black = UIColor.blackColor()
+        let transparent = black.colorWithAlphaComponent(0.5)
+        changeMobileNumberViewController.view.backgroundColor = transparent
+        changeMobileNumberViewController.view.frame.origin.y = changeMobileNumberViewController.view.frame.size.height
+        self.tabBarController?.presentViewController(changeMobileNumberViewController, animated: true, completion:
+            nil)
+    }
+    
+    func finishedWithAuth(auth: GTMOAuth2Authentication!, error: NSError!) {
+        shareToGooglePlus()
+    }
+    
     //MARK: Initialize views
     func initializeViews() {
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         self.tableView.delegate = self
         self.tableView.dataSource = self
+    }
+    
+    func generateQRCode() {
+        //Show dim background
+        self.showView()
+        self.generateQr()
+    }
+    
+    //MARK: CongratulationsViewController Delegate method
+    func getStoreInfo() {
+        self.fireStoreInfo()
+        self.tableView.reloadData()
     }
     
     //MARK: Register nib file
@@ -155,12 +185,6 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         var storeInfoPreferredCategories = UINib(nibName: storeInfoPreferredCategoriesTableViewCellIdentifier, bundle: nil)
         self.tableView.registerNib(storeInfoPreferredCategories, forCellReuseIdentifier: storeInfoPreferredCategoriesTableViewCellIdentifier)
-    }
-    
-    //MARK: CongratulationsViewController Delegate method
-    func getStoreInfo() {
-        self.fireStoreInfo()
-        self.tableView.reloadData()
     }
 
     //MARK: Navigation bar
@@ -361,30 +385,6 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         }
         presentViewController(socialVC, animated: true, completion: nil)
         
-    }
-    
-    //MARK: Private Method
-    func changeMobileNumber(){
-        var changeMobileNumberViewController = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
-        changeMobileNumberViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        changeMobileNumberViewController.providesPresentationContextTransitionStyle = true
-        changeMobileNumberViewController.definesPresentationContext = true
-        let black = UIColor.blackColor()
-        let transparent = black.colorWithAlphaComponent(0.5)
-        changeMobileNumberViewController.view.backgroundColor = transparent
-        changeMobileNumberViewController.view.frame.origin.y = changeMobileNumberViewController.view.frame.size.height
-        self.tabBarController?.presentViewController(changeMobileNumberViewController, animated: true, completion:
-            nil)
-    }
-    
-    func finishedWithAuth(auth: GTMOAuth2Authentication!, error: NSError!) {
-        shareToGooglePlus()
-    }
-    
-    func generateQRCode() {
-        //Show dim background
-        self.showView()
-        self.generateQr()
     }
     
     //MARK: Google Plus Sign In
@@ -930,7 +930,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
     }
     
-    //MARK: - Fire Store Info
+    //MARK: - POST METHOD - Fire Store Info
     /* Function to request store info.
     *
     * (Parameter) - access_token
