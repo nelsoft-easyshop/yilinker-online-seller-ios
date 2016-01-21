@@ -84,6 +84,12 @@ enum StoreInfoType {
     case GenerateQR
 }
 
+enum ChangeBankAccountType {
+    case GetBankAccount
+    case SetBankAccount
+    case DeleteBankAccount
+}
+
 enum DisputePickerType {
     case TransactionList
     case DisputeType
