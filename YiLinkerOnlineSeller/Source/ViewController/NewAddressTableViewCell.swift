@@ -8,29 +8,33 @@
 
 import UIKit
 
+//MARK: Delegate
+//NewAddressTableViewCell Delegate Methods
 protocol NewAddressTableViewCellDelegate {
     func newAddressTableViewCell(didClickNext newAddressTableViewCell: NewAddressTableViewCell)
     func newAddressTableViewCell(didClickPrevious newAddressTableViewCell: NewAddressTableViewCell)
     func newAddressTableViewCell(didBeginEditing newAddressTableViewCell: NewAddressTableViewCell, index: Int)
-    
     func newAddressTableViewCell(didSelectRow row: Int, cell: NewAddressTableViewCell)
 }
 
 class NewAddressTableViewCell: UITableViewCell, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
+    //Labels
     @IBOutlet weak var rowTitleLabel: UILabel!
+    
+    //Textfields
     @IBOutlet weak var rowTextField: UITextField!
     
+    //Global variable declarations
     var titles: [String] = []
     
+    //Initialized NewAddressTableViewCellDelegate
     var delegate: NewAddressTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        
         self.rowTextField.delegate = self
-        //      self.rowTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
@@ -39,15 +43,7 @@ class NewAddressTableViewCell: UITableViewCell, UITextFieldDelegate, UIPickerVie
         // Configure the view for the selected state
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        delegate?.newAddressTableViewCell(didBeginEditing: self, index: self.tag)
-    }
-    
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        let prospectiveText = (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
-        return textField.textInputMode != nil && prospectiveText.containsOnlyCharactersIn("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .'-&")
-    }
-    
+    //MARK: Private Methods
     func addPicker(selectedIndex: Int) {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let pickerView: UIPickerView = UIPickerView(frame:CGRectMake(0, 0, screenSize.width, 225))
@@ -57,26 +53,35 @@ class NewAddressTableViewCell: UITableViewCell, UITextFieldDelegate, UIPickerVie
         self.rowTextField.inputView = pickerView
     }
     
+    //MARK: Textfield delegate methods
+    func textFieldDidBeginEditing(textField: UITextField) {
+        delegate?.newAddressTableViewCell(didBeginEditing: self, index: self.tag)
+    }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        let prospectiveText = (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
+        return textField.textInputMode != nil && prospectiveText.containsOnlyCharactersIn("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .'-&")
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.delegate?.newAddressTableViewCell(didClickNext: self)
+        return true
+    }
+
+    //MARK: Pickerview delegate methods
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        
         return titles.count
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
-        
         return self.titles[row]
-    }
-    
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        return 1
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.delegate?.newAddressTableViewCell(didSelectRow: row, cell: self)
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        self.delegate?.newAddressTableViewCell(didClickNext: self)
-        return true
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
     }
 }
