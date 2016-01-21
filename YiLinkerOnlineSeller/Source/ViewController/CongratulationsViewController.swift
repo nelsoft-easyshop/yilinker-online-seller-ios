@@ -8,6 +8,8 @@
 
 import UIKit
 
+//MARK: Delegate
+//CongratulationsViewController Delegate Methods
 protocol CongratulationsViewControllerDelegate {
     func dismissView()
     func verifyViewController()
@@ -16,23 +18,31 @@ protocol CongratulationsViewControllerDelegate {
 
 class CongratulationsViewController: UIViewController {
     
-    @IBOutlet weak var iconImageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subTitleLabel: UILabel!
-    @IBOutlet weak var successFailView: DynamicRoundedView!
-    @IBOutlet weak var requestNewButton: DynamicRoundedButton!
+    //Custom Views/Buttons
     @IBOutlet weak var continueButton: DynamicRoundedButton!
+    @IBOutlet weak var requestNewButton: DynamicRoundedButton!
+    @IBOutlet weak var successFailView: DynamicRoundedView!
     
-    var delegate: CongratulationsViewControllerDelegate?
+    //Imageviews
+    @IBOutlet weak var iconImageView: UIImageView!
     
-    var isSuccessful: Bool = false
+    //Labels
+    @IBOutlet weak var subTitleLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
     
+    //Strings
     let congratulations: String = StringHelper.localizedStringWithKey("CONGRATULATIONS_MESSAGE_SUCCESS_TITLE_LOCALIZE_KEY")
     let message: String = StringHelper.localizedStringWithKey("CONGRATULATIONS_MESSAGE_SUCCESS_LOCALIZE_KEY")
     let continueTitle: String = StringHelper.localizedStringWithKey("CONGRATULATIONS_MESSAGE_SUCCESS_CONTINUE_LOCALIZE_KEY")
     let requestNewTitle: String = StringHelper.localizedStringWithKey("CONGRATULATIONS_MESSAGE_FAIL_REQUEST_LOCALIZE_KEY")
     let ooops: String = StringHelper.localizedStringWithKey("CONGRATULATIONS_MESSAGE_FAIL_TITLE_LOCALIZE_KEY")
     let incorrect: String = StringHelper.localizedStringWithKey("CONGRATULATIONS_MESSAGE_FAIL_LOCALIZE_KEY")
+    
+    //Global variables declarations
+    var isSuccessful: Bool = false
+    
+    //Initialized CongratulationsViewControllerDelegate
+    var delegate: CongratulationsViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,7 +74,7 @@ class CongratulationsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
+    //MARK: Action method of buttons
     @IBAction func closeAction(sender: AnyObject){
         self.delegate?.dismissView()
         self.delegate?.getStoreInfo()
