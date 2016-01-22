@@ -691,6 +691,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             } else {
                 ProductUploadCombination.draft = true
             }
+            ProductUploadEdit.uploadType = UploadType.EditProduct
             ProductUploadEdit.isPreview = false
             self.navigationController?.pushViewController(productDetails, animated: true)
         } else {
