@@ -8,7 +8,9 @@
 
 import UIKit
 
-protocol StoreInfoAddressTableViewCellDelagate{
+//MARK: Delegate
+//StoreInfoAddressTableViewCell Delegate method
+protocol StoreInfoAddressTableViewCellDelagate {
     func changeToNewAddress()
 }
 
@@ -16,32 +18,33 @@ class StoreInfoAddressTableViewCell: UITableViewCell {
 
     var delegate: StoreInfoAddressTableViewCellDelagate?
     
-    @IBOutlet weak var addressTitle: UILabel!
+    //Labels
     @IBOutlet weak var addressLabel: UILabel!
-    @IBOutlet weak var addressView: UIView!
-    
-    @IBOutlet weak var storeAddressTitleLabel: UILabel!
+    @IBOutlet weak var addressTitle: UILabel!
     @IBOutlet weak var newAddressLabel: UILabel!
+    @IBOutlet weak var storeAddressTitleLabel: UILabel!
+    
+    //Views
+    @IBOutlet weak var addressView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        //var tapAddressView = UITapGestureRecognizer(target: self, action: "changeMobileAddress")
-        //self.addressView.addGestureRecognizer(<#gestureRecognizer: UIGestureRecognizer#>)(tapAddressView)
+        
+        //Add tap gesture recoginizer in addressView
         var tapAddressView = UITapGestureRecognizer(target: self, action: "changeMobileAddress")
         addressView.addGestureRecognizer(tapAddressView)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
     
+    //MARK: Provate method
+    //Action method for addressView when tapped
+    //Method to call ChangeAddressViewController
     func changeMobileAddress(){
-        println("tap")
         self.delegate?.changeToNewAddress()
     }
-    
-    
 }

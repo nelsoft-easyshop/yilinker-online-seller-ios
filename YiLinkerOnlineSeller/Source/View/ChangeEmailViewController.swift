@@ -8,32 +8,38 @@
 
 import UIKit
 
+//MARK: Delegate
+//ChangeEmailViewController Delegate Method
 protocol ChangeEmailViewControllerDelegate {
     func dismissView()
 }
 
 class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
     
-    @IBOutlet weak var mainView: UIView!
+    //Constraints
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
+    
+    //Custom Buttond
     @IBOutlet weak var submitEmailAddressButton: DynamicRoundedButton!
+    
+    //Buttons
     @IBOutlet weak var closeButton: UIButton!
     
-    @IBOutlet weak var oldEmailAddressTextField: UITextField!
-    @IBOutlet weak var newEmailAddressTextField: UITextField!
-    @IBOutlet weak var confirmEmailAddressTextField: UITextField!
-    
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var oldEmailLabel: UILabel!
-    @IBOutlet weak var newEmailLabel: UILabel!
+    //Labels
     @IBOutlet weak var confirmEmailLabel: UILabel!
+    @IBOutlet weak var newEmailLabel: UILabel!
+    @IBOutlet weak var oldEmailLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
     
-    var type: String = ""
+    //Textfields
+    @IBOutlet weak var confirmEmailAddressTextField: UITextField!
+    @IBOutlet weak var newEmailAddressTextField: UITextField!
+    @IBOutlet weak var oldEmailAddressTextField: UITextField!
     
-    var hud : MBProgressHUD?
+    //Views
+    @IBOutlet weak var mainView: UIView!
     
-    var delegate: ChangeEmailViewControllerDelegate?
-    
+    //Strings
     let passwordTitle: String = StringHelper.localizedStringWithKey("CHANGE_PASSWORD_TITLE_LOCALIZE_KEY")
     let oldPassword: String = StringHelper.localizedStringWithKey("CHANGE_PASSWORD_OLD_PASSWORD_LOCALIZE_KEY")
     let enterOldPassword: String = StringHelper.localizedStringWithKey("CHANGE_PASSWORD_ENTER_OLD_LOCALIZE_KEY")
@@ -43,23 +49,38 @@ class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
     let confirmNewPassword: String = StringHelper.localizedStringWithKey("CHANGE_PASSWORD_CONFIRM_NEW_LOCALIZE_KEY")
     let submit: String = StringHelper.localizedStringWithKey("CHANGE_PASSWORD_SUBMIT_LOCALIZE_KEY")
     
+    //Global variables declarations
+    var type: String = ""
+    var hud : MBProgressHUD?
+    
+    //Initialized ChangeEmailViewControllerDelegate
+    var delegate: ChangeEmailViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Set labels and button text
         self.titleLabel.text = self.passwordTitle
         self.oldEmailLabel.text = self.oldPassword
         self.newEmailLabel.text = self.newPassword
         self.confirmEmailLabel.text = self.confirmPassword
+        self.submitEmailAddressButton.setTitle(self.submit, forState: UIControlState.Normal)
+        
+        //Set textfields placeholder
         self.oldEmailAddressTextField.placeholder = self.enterOldPassword
         self.newEmailAddressTextField.placeholder = self.enterNewPassword
         self.confirmEmailAddressTextField.placeholder = self.confirmNewPassword
+        
+        //Set security type of textfield - make entered text bulleted eg. password to ********
         self.oldEmailAddressTextField.secureTextEntry = true
         self.newEmailAddressTextField.secureTextEntry = true
         self.confirmEmailAddressTextField.secureTextEntry = true
-        self.submitEmailAddressButton.setTitle(self.submit, forState: UIControlState.Normal)
+        
         self.oldEmailAddressTextField.delegate = self
         self.newEmailAddressTextField.delegate = self
         self.confirmEmailAddressTextField.delegate = self
+        
+        //Add tap gesture recognizer to self
         let tap = UITapGestureRecognizer()
         tap.addTarget(self, action: "mainViewTapped")
         self.view.addGestureRecognizer(tap)
@@ -71,87 +92,60 @@ class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func mainViewTapped() {
-        self.oldEmailAddressTextField.resignFirstResponder()
-        self.newEmailAddressTextField.resignFirstResponder()
-        self.confirmEmailAddressTextField.resignFirstResponder()
-    }
-    
+    //MARK: Button methods
     @IBAction func closeAction(sender: AnyObject){
         self.delegate?.dismissView()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func sumbitAction(sender: AnyObject) {
-        
+
         if type == "email" {
-            println("Submit email")
+            
         } else {
-            println("Submit password")
+            //Password validation
             if oldEmailAddressTextField.text.isEmpty ||  newEmailAddressTextField.text.isEmpty || confirmEmailAddressTextField.text.isEmpty {
                 var completeLocalizeString = StringHelper.localizedStringWithKey("COMPLETEFIELDS_LOCALIZE_KEY")
-                //showAlert(Constants.Localized.error, message: completeLocalizeString)
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: completeLocalizeString, title: Constants.Localized.error)
             } else if newEmailAddressTextField.text != confirmEmailAddressTextField.text {
                 var passwordLocalizeString = StringHelper.localizedStringWithKey("PASSWORDMISMATCH_LOCALIZE_KEY")
-                //showAlert(Constants.Localized.error, message: passwordLocalizeString)
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: passwordLocalizeString, title: Constants.Localized.error)
             } else {
-                //self.showHUD()
-                //self.fireChangePassword()
-                self.newEmailAddressTextField.resignFirstResponder()
-                self.oldEmailAddressTextField.resignFirstResponder()
-                self.confirmEmailAddressTextField.resignFirstResponder()
-                println(confirmEmailAddressTextField.text.isValidPassword())
+                
+                self.mainViewTapped()
+                
                 if count(confirmEmailAddressTextField.text) >= 8 && count(newEmailAddressTextField.text) >= 8 {
                     if confirmEmailAddressTextField.text.isValidPassword() && newEmailAddressTextField.text.isValidPassword(){
                         self.showHUD()
                         self.fireChangePassword()
                     } else {
                         var passwordAlpha = StringHelper.localizedStringWithKey("PASSWORD_ALPHA_LOCALIZE_KEY")
-                        //showAlert(Constants.Localized.error, message: passwordAlpha)
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: passwordAlpha, title: Constants.Localized.error)
                     }
                 } else {
                     var passwordChar = StringHelper.localizedStringWithKey("PASSWORD_CHAR_LOCALIZE_KEY")
-                    //showAlert(Constants.Localized.error, message: passwordChar)
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: passwordChar, title: Constants.Localized.error)
                 }
-
-               
             }
-            
         }
-       
     }
     
-    func fireChangePassword(){
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldPassword" : self.oldEmailAddressTextField.text, "newPassword" : self.newEmailAddressTextField.text, "newPasswordConfirm" : self.confirmEmailAddressTextField.text];
-        self.showHUD()
-        manager.POST(APIAtlas.sellerChangePassword, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-           
-            var success = StringHelper.localizedStringWithKey("PASSWORD_SUCCESS_CHANGE_LOCALIZE_KEY")
-            self.showAlert(Constants.Localized.success, message: success)
-            
-            self.hud?.hide(true)
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 401 {
-                    self.requestRefreshToken()
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.error)
-                    } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error )
-                    }
-                }
-                self.hud?.hide(true)
-        })
-        
+    //MARK: Textfiel methods
+    @IBAction func textFieldDidBegin(sender: AnyObject) {
+        if IphoneType.isIphone4() {
+            topConstraint.constant = 20
+        } else if IphoneType.isIphone5() {
+            topConstraint.constant = 40
+        } else {
+            topConstraint.constant = 100
+        }
+    }
+    
+    //MARK: Private Methods
+    func mainViewTapped() {
+        self.oldEmailAddressTextField.resignFirstResponder()
+        self.newEmailAddressTextField.resignFirstResponder()
+        self.confirmEmailAddressTextField.resignFirstResponder()
     }
     
     //MARK: Alert view
@@ -161,7 +155,6 @@ class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
         let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
             self.dismissViewControllerAnimated(true, completion: nil)
             self.delegate?.dismissView()
-            //alertController.dismissViewControllerAnimated(true, completion: nil)
         }
         
         alertController.addAction(OKAction)
@@ -170,9 +163,98 @@ class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func requestRefreshToken() {
+    //Show loader
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    //MARK: Textfield delegate method
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField == self.oldEmailAddressTextField {
+            self.newEmailAddressTextField.becomeFirstResponder()
+        } else {
+            self.confirmEmailAddressTextField.becomeFirstResponder()
+        }
+        return true
+    }
+
+    //MARK: -
+    //MARK: - REST API request
+    //MARK: POST METHOD - Change Password
+    /*
+    *
+    * (Parameters) - access_token, oldPassword, newPassword, newPasswordConfirm
+    *
+    * Function to change the password
+    *
+    */
+    func fireChangePassword(){
+        
         self.showHUD()
+        
         let manager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldPassword" : self.oldEmailAddressTextField.text, "newPassword" : self.newEmailAddressTextField.text, "newPasswordConfirm" : self.confirmEmailAddressTextField.text];
+        
+        manager.POST(APIAtlas.sellerChangePassword, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+           
+            var success = StringHelper.localizedStringWithKey("PASSWORD_SUCCESS_CHANGE_LOCALIZE_KEY")
+            
+            if responseObject["isSuccessful"] as! Bool {
+                self.showAlert(Constants.Localized.success, message: success)
+            } else {
+                self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+            }
+            
+            self.hud?.hide(true)
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+    
+                //Catch unsuccessful return from the API
+                if task.statusCode == 401 {
+                    //Call method 'requestRefreshToken' if the token is expired
+                    self.requestRefreshToken()
+                } else {
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        //Parsed error message return from the API
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.error)
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error )
+                    }
+                }
+                
+                self.hud?.hide(true)
+        })
+        
+    }
+    
+    //MARK: POST METHOD - Refresh token
+    /*
+    *
+    * (Parameters) - client_id, client_secret, grant_type, refresh_token
+    *
+    *Function to refresh token to get another access token
+    *
+    */
+    func requestRefreshToken() {
+        
+        self.showHUD()
+        
+        let manager = APIManager.sharedInstance
+        
+        //Set parameters of POST Method
         let parameters: NSDictionary = [
             "client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
@@ -182,9 +264,14 @@ class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            self.fireChangePassword()
+            if responseObject["isSuccessful"] as! Bool {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                
+                self.fireChangePassword()
+            } else {
+                self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+            }
             
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -199,40 +286,7 @@ class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
         })
         
     }
-
-    func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
-    }
     
-    @IBAction func textFieldDidBegin(sender: AnyObject) {
-        if IphoneType.isIphone4() {
-            topConstraint.constant = 20
-        } else if IphoneType.isIphone5() {
-            topConstraint.constant = 40
-        } else {
-            topConstraint.constant = 100
-        }
-        
-    }
-    
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        if textField == self.oldEmailAddressTextField {
-            self.newEmailAddressTextField.becomeFirstResponder()
-        } else {
-            self.confirmEmailAddressTextField.becomeFirstResponder()
-        }
-        return true
-    }
-
     /*
     // MARK: - Navigation
 

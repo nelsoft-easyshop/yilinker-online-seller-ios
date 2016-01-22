@@ -7,36 +7,54 @@
 //
 
 import UIKit
+
+//MARK: Delegate
+//CreateNewBankAccountViewController Delegate methods
 protocol CreateNewBankAccountViewControllerDelegate{
     func updateCollectionView()
     func dismissDimView()
 }
+
 class CreateNewBankAccountViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FilterByTableViewCellDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
+    //Constraints
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     
+    //Buttons
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var createButton: UIButton!
     
-    @IBOutlet weak var accountTitleTextField: UITextField!
-    @IBOutlet weak var accountNameTextField: UITextField!
-    @IBOutlet weak var accountNumberTextField: UITextField!
-    @IBOutlet weak var bankNameTextField: UITextField!
-    
-    @IBOutlet weak var bankTableView: UITableView!
-    
-    @IBOutlet weak var bankAccountTitleLabel: UILabel!
-    @IBOutlet weak var bankAccountDetailLabel: UILabel!
-    @IBOutlet weak var accountTitleLabel: UILabel!
+    //Labels
     @IBOutlet weak var accountNameLabel: UILabel!
     @IBOutlet weak var accountNumberLabel: UILabel!
+    @IBOutlet weak var accountTitleLabel: UILabel!
+    @IBOutlet weak var bankAccountDetailLabel: UILabel!
+    @IBOutlet weak var bankAccountTitleLabel: UILabel!
     @IBOutlet weak var bankNameLabel: UILabel!
     
+    //Tableview
+    @IBOutlet weak var bankTableView: UITableView!
+    
+    //Texfields
+    @IBOutlet weak var accountNameTextField: UITextField!
+    @IBOutlet weak var accountNumberTextField: UITextField!
+    @IBOutlet weak var accountTitleTextField: UITextField!
+    @IBOutlet weak var bankNameTextField: UITextField!
+    
+    //Strings
+    let editBankTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_EDIT_LOCALIZE_KEY")
+    let addBankTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_ADD_LOCALIZE_KEY")
+    let account: String = StringHelper.localizedStringWithKey("CHANGE_BANK_ACCOUNT_TITLE_LOCALIZE_KEY")
+    let accountNameTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_ACCOUNT_NAME_LOCALIZE_KEY")
+    let accountNumberTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_ACCOUNT_NUMBER_LOCALIZE_KEY")
+    let bankNameTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_BANK_NAME_LOCALIZE_KEY")
+    let submitTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_SUBMIT_LOCALIZE_KEY")
+    
+    //Models
     var storeInfoModel: StoreInfoModel!
     var bankModel: BankModel!
     
-    var delegate: CreateNewBankAccountViewControllerDelegate?
-    
+    //Global variable declarations
     var hud: MBProgressHUD?
     
     var autoCompleteArray: NSMutableArray?
@@ -52,18 +70,14 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
     var accountNumber: String = ""
     var bankName: String = ""
     
-    let editBankTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_EDIT_LOCALIZE_KEY")
-    let addBankTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_ADD_LOCALIZE_KEY")
-    let account: String = StringHelper.localizedStringWithKey("CHANGE_BANK_ACCOUNT_TITLE_LOCALIZE_KEY")
-    let accountNameTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_ACCOUNT_NAME_LOCALIZE_KEY")
-    let accountNumberTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_ACCOUNT_NUMBER_LOCALIZE_KEY")
-    let bankNameTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_BANK_NAME_LOCALIZE_KEY")
-    let submitTitle: String = StringHelper.localizedStringWithKey("CHANGE_BANK_SUBMIT_LOCALIZE_KEY")
+    //Initialized CreateNewBankAccountViewControllerDelegate
+    var delegate: CreateNewBankAccountViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Initialized tableview
         self.bankTableView.hidden = true
-        self.bankNameTextField.delegate = self
         self.bankTableView.tableFooterView = UIView.new()
         self.bankTableView.layer.masksToBounds = false
         self.bankTableView.layer.shadowColor = UIColor.blackColor().CGColor
@@ -73,21 +87,23 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         self.bankTableView.dataSource = self
         self.bankTableView.separatorInset = UIEdgeInsetsZero
         self.bankTableView.layoutMargins = UIEdgeInsetsZero
+        
+        //Set Textfield delegate
         self.accountTitleTextField.delegate = self
         self.accountNumberTextField.delegate = self
         self.accountNameTextField.delegate = self
         self.bankNameTextField.delegate = self
+        
+        //Set labels and button text
         self.accountTitleLabel.text = self.account
         self.accountNameLabel.text = self.accountNameTitle
         self.accountNumberLabel.text = self.accountNumberTitle
         self.bankNameLabel.text = self.bankNameTitle
-        
         self.createButton.setTitle(self.submitTitle, forState: UIControlState.Normal)
        
-        var storeInfo = UINib(nibName: "FilterByTableViewCell", bundle: nil)
-        self.bankTableView.registerNib(storeInfo, forCellReuseIdentifier: "FilterByTableViewCell")
+        self.registerNibs()
     
-        addPicker()
+        self.addPicker()
         
         self.fireEnabledBanks()
         
@@ -106,6 +122,48 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: Private Methods
+    //Add picker view in bankNameTextField
+    func addPicker() {
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        let pickerView: UIPickerView = UIPickerView(frame:CGRectMake(0, 0, screenSize.width, 225))
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        self.bankNameTextField.inputView = pickerView
+    }
+    
+    //Fill bank details
+    func fillBankDetails(accountTitle: String, accountName: String,  accountNumber: String, bankName: String, bankAccountId: Int){
+        if(!accountTitle.isEmpty) {
+            self.accountTitleTextField.text = accountTitle
+            self.accountNameTextField.text = accountName
+            self.accountNumberTextField.text = accountNumber
+            self.bankNameTextField.text = "\(bankName)"
+        }
+        
+    }
+    
+    //Register nib files
+    func registerNibs() {
+        var storeInfo = UINib(nibName: "FilterByTableViewCell", bundle: nil)
+        self.bankTableView.registerNib(storeInfo, forCellReuseIdentifier: "FilterByTableViewCell")
+    }
+    
+    //Show loader
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    //MARK: Button actions
     @IBAction func closeAction(sender: AnyObject) {
         self.delegate?.dismissDimView()
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -117,7 +175,7 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         var url: String = ""
         var accountNumber: String = self.accountNumberTextField.text
         
-        if edit {
+        if self.edit {
             if !self.bankNameTextField.text.isEmpty && !self.accountNameTextField.text.isEmpty && !self.accountTitleTextField.text.isEmpty && !self.accountNumberTextField.text.isEmpty{
                 self.showHUD()
                 bankId2 = self.bankDictionary[self.bankNameTextField.text]!
@@ -169,26 +227,23 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
    
     }
     
-    func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
+    @IBAction func updateTopContraint(sender: AnyObject) {
+        if IphoneType.isIphone4() {
+            self.topConstraint.constant = -150
+        } else if IphoneType.isIphone5() {
+            topConstraint.constant = -60
+        } else {
+            topConstraint.constant = 60
         }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
     }
     
+    //Tableview delegate methods
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if autoCompleteFilterArray != nil {
         return autoCompleteFilterArray!.count
         } else {
             return 1
         }
-        
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -196,17 +251,13 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        //UITableViewCell *ell = [tableView dequeueReusableHeaderFooterViewWithIdentifier:nil];
+        
         let cell: FilterByTableViewCell = self.bankTableView.dequeueReusableCellWithIdentifier("FilterByTableViewCell") as! FilterByTableViewCell
         cell.delegate = self
-        println(self.bankModel)
+        
         if(self.bankModel != nil){
-            //autoCompleteArray?.addObject(self.bankModel.bankName[indexPath.row])
-            //autoCompleteArray = NSMutableArray(array: self.bankModel.bankName as NSArray)
             if(autoCompleteFilterArray != nil){
                 cell.filterByLabel?.text = autoCompleteFilterArray!.objectAtIndex(indexPath.row) as? String
-                
-                println("complete array 1 \(autoCompleteArray)")
             }
         }
        
@@ -223,85 +274,12 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         self.bankTableView.hidden = true
     }
     
-    @IBAction func updateTopContraint(sender: AnyObject) {
-        if IphoneType.isIphone4() {
-            self.topConstraint.constant = -150
-        } else if IphoneType.isIphone5() {
-            topConstraint.constant = -60
-        } else {
-            topConstraint.constant = 60
-        }
-    }
-
-    func fireEnabledBanks (){
-        self.showHUD()
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()]
-        
-        manager.POST(APIAtlas.sellerBank, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-           
-            self.bankModel = BankModel.parseEnablebankData(responseObject as! NSDictionary)
-            //self.dismissViewControllerAnimated(true, completion: nil)
-            self.autoCompleteArray = NSMutableArray(array: self.bankModel.bankName as NSArray)
-            self.autoCompleteFilterArray = NSArray(array: self.bankModel.bankName) as NSArray
-            self.autoCompleteFilterArrayId = NSArray(array: self.bankModel.bankId) as NSArray
-            for var num = 0 ; num < self.bankModel.bankName.count; num++ {
-                self.bankDictionary[self.bankModel.bankName[num]] = self.bankModel.bankId[num]
-            }
-            println("autocompletearray \(self.autoCompleteArray)")
-            self.hud?.hide(true)
-            self.bankTableView.reloadData()
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
-                println(error)
-        })
-    }
-    /*
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        var passcode = (self.bankNameTextField.text as NSString).stringByReplacingCharactersInRange(range, withString: string)
-
-        var predicate = NSPredicate(format: "SELF CONTAINS %@", passcode.uppercaseString)
-        println(passcode)
-        
-        autoCompleteFilterArray = (autoCompleteArray!).filteredArrayUsingPredicate(predicate)
-        if autoCompleteFilterArray?.count != 0 {
-            self.bankTableView.hidden = false
-        } else {
-            self.bankTableView.hidden = true
-        }
-        
-        self.bankTableView.reloadData()
-        return true
-    }
-    
-    @IBAction func textFieldDidEndEditing(textField: UITextField) {
-        self.bankTableView.hidden = true
-        if IphoneType.isIphone4() {
-            self.topConstraint.constant = -150
-        } else if IphoneType.isIphone5() {
-            topConstraint.constant = -60
-        } else {
-            topConstraint.constant = 60
-        }
-    }
-    */
-    // MARK : UIPickerViewDelegate
-    func addPicker() {
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
-        let pickerView: UIPickerView = UIPickerView(frame:CGRectMake(0, 0, screenSize.width, 225))
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        self.bankNameTextField.inputView = pickerView
-    }
-    
+    //MARK : UIPickerViewDelegate
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        
         return self.bankModel.bankName.count
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
-        
         return self.bankModel.bankName[row]
     }
     
@@ -314,8 +292,7 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         bankId = self.bankModel.bankId[row]
     }
     
-    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView!) -> UIView
-    {
+    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView!) -> UIView {
         var pickerLabel = UILabel()
         pickerLabel.textColor = UIColor.blackColor()
         pickerLabel.text = self.bankModel.bankName[row]
@@ -325,18 +302,49 @@ class CreateNewBankAccountViewController: UIViewController, UITableViewDataSourc
         return pickerLabel
     }
     
+    //MARK: Textfield Delegate methods
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         return true
     }
     
-    func fillBankDetails(accountTitle: String, accountName: String,  accountNumber: String, bankName: String, bankAccountId: Int){
-        if(!accountTitle.isEmpty) {
-            self.accountTitleTextField.text = accountTitle
-            self.accountNameTextField.text = accountName
-            self.accountNumberTextField.text = accountNumber
-            self.bankNameTextField.text = "\(bankName)"
-        }
-      
+    //MARK: -
+    //MARK: - REST API request
+    //MARK: POST METHOD - Get all available banks
+    /*
+    *
+    * (Parameters) - access_token
+    *
+    * Function to get all available bank
+    *
+    */
+    func fireEnabledBanks (){
+        
+        self.showHUD()
+        
+        let manager = APIManager.sharedInstance
+        
+        //Add parameter of POST method
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()]
+        
+        manager.POST(APIAtlas.sellerBank, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.bankModel = BankModel.parseEnablebankData(responseObject as! NSDictionary)
+            
+            if responseObject["isSuccessful"] as! Bool {
+                self.autoCompleteArray = NSMutableArray(array: self.bankModel.bankName as NSArray)
+                self.autoCompleteFilterArray = NSArray(array: self.bankModel.bankName) as NSArray
+                self.autoCompleteFilterArrayId = NSArray(array: self.bankModel.bankId) as NSArray
+                for i in 0..<self.bankModel.bankName.count {
+                    self.bankDictionary[self.bankModel.bankName[i]] = self.bankModel.bankId[i]
+                }
+            }
+            
+            self.bankTableView.reloadData()
+            self.hud?.hide(true)
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+        })
     }
     
     /*

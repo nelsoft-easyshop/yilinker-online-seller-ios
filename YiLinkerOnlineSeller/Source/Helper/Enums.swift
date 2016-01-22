@@ -51,6 +51,7 @@ enum AddressRefreshType {
     case Province
     case City
     case Barangay
+    case SellerAddress
 }
 
 enum VerifyType {
@@ -81,6 +82,12 @@ enum StoreInfoType {
     case SetMobile
     case VerifyNumber
     case GenerateQR
+}
+
+enum ChangeBankAccountType {
+    case GetBankAccount
+    case SetBankAccount
+    case DeleteBankAccount
 }
 
 enum DisputePickerType {

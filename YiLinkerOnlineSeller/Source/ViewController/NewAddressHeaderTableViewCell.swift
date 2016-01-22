@@ -10,8 +10,10 @@ import UIKit
 
 class NewAddressHeaderTableViewCell: UITableViewCell {
 
+    //Labels
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var addressDetailLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

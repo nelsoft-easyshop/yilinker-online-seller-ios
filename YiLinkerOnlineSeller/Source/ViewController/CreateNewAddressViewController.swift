@@ -8,6 +8,8 @@
 
 import UIKit
 
+//MARK: Delegate
+//CreateNewAddressViewController Delegate Methods
 protocol CreateNewAddressViewControllerDelegate {
     func updateCollectionView()
     func dismissDimView()
@@ -15,20 +17,20 @@ protocol CreateNewAddressViewControllerDelegate {
 
 class CreateNewAddressViewController: UIViewController {
 
+    //Buttons
     @IBOutlet weak var closeButton: UIButton!
-    
     @IBOutlet weak var createButton: UIButton!
     
+    //Textfields
+    @IBOutlet weak var addressInfoTextField: UITextField!
+    @IBOutlet weak var addressLine1TextField: UITextField!
+    @IBOutlet weak var addressLine2TextField: UITextField!
     @IBOutlet weak var addressTitleTextField: UITextField!
     
-    @IBOutlet weak var addressLine1TextField: UITextField!
-    
-    @IBOutlet weak var addressLine2TextField: UITextField!
-    
-    @IBOutlet weak var addressInfoTextField: UITextField!
-    
+    //Global variable declarations
     var hud: MBProgressHUD?
     
+    //Initialized CreateNewAddressViewControllerDelegate
     var delegate: CreateNewAddressViewControllerDelegate?
     
     override func viewDidLoad() {
@@ -42,6 +44,7 @@ class CreateNewAddressViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: Button actions
     @IBAction func closeAction(sender: AnyObject){
         self.delegate?.dismissDimView()
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -49,30 +52,12 @@ class CreateNewAddressViewController: UIViewController {
     
     @IBAction func createAddress(sender: AnyObject){
         
-        self.showHUD()
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()]
-        
-        self.delegate?.dismissDimView()
-        
-        manager.POST(APIAtlas.sellerAddBankAccount, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println("\(parameters)")
-            //self.dismissViewControllerAnimated(true, completion: nil)
-            self.hud?.hide(true)
-            self.delegate?.updateCollectionView()
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
-                println(error)
-        })
-
-        
-        self.delegate?.dismissDimView()
-        self.delegate?.updateCollectionView()
+        self.createNewAddress()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-    // Show hud
     
+    //MARK: Private Methods
+    // Show hud
     func showHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
@@ -86,6 +71,37 @@ class CreateNewAddressViewController: UIViewController {
         self.hud?.show(true)
     }
     
+    //MARK: -
+    //MARK: - REST API request
+    //MARK: POST METHOD - Create new address
+    /*
+    *
+    * (Parameters) - access_token
+    *
+    * Function to create new address
+    *
+    */
+    func createNewAddress() {
+        
+        self.showHUD()
+        
+        let manager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()]
+        
+        self.delegate?.dismissDimView()
+        
+        manager.POST(APIAtlas.sellerAddBankAccount, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.hud?.hide(true)
+            self.delegate?.updateCollectionView()
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+        })
+        
+        self.delegate?.dismissDimView()
+        self.delegate?.updateCollectionView()
+    }
     
     /*
     // MARK: - Navigation

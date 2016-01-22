@@ -8,13 +8,18 @@
 
 import UIKit
 
+//MARK: Delegate
+//ChangeAddressFooterCollectionViewCell Delegate Method
 protocol ChangeAddressFooterCollectionViewCellDelegate {
     func changeAddressFooterCollectionViewCell(didSelecteAddAddress cell: ChangeAddressFooterCollectionViewCell)
 }
 
 class ChangeAddressFooterCollectionViewCell: UICollectionViewCell {
 
+    //Custom Button
     @IBOutlet weak var newAddressButton: DynamicRoundedButton!
+    
+    //Initialized ChangeAddressFooterCollectionViewCellDelegate
     var delegate: ChangeAddressFooterCollectionViewCellDelegate?
     
     override func awakeFromNib() {
@@ -22,6 +27,7 @@ class ChangeAddressFooterCollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
     
+    //MARK: Action method of button
     @IBAction func newAddress(sender: AnyObject) {
         self.delegate?.changeAddressFooterCollectionViewCell(didSelecteAddAddress: self)
     }

@@ -11,9 +11,8 @@ import MessageUI
 
 class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate, CongratulationsViewControllerDelegate, UzysAssetsPickerControllerDelegate, StoreInfoQrCodeTableViewCellDelegate, MFMailComposeViewControllerDelegate, GPPSignInDelegate {
     
-    var storeInfoModel: StoreInfoModel?
-    var storeAddressModel: StoreAddressModel?
-    
+    //Global variables declarations
+    //Variables that can be accessed inside the class
     let storeInfoHeaderTableViewCellIndentifier: String = "StoreInfoTableViewCell"
     let storeInfoSectionTableViewCellIndentifier: String = "StoreInfoSectionTableViewCell"
     let storeInfoQRCodeTableViewCellIndentifier: String = "StoreInfoQrCodeTableViewCell"
@@ -21,23 +20,6 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     let storeInfoBankAccountTableViewCellIdentifier: String = "StoreInfoBankAccountTableViewCell"
     let storeInfoAccountInformationTableViewCellIdentifier: String = "StoreInfoAccountInformationTableViewCell"
     let storeInfoPreferredCategoriesTableViewCellIdentifier: String = "StoreInfoPreferredCategoriesTableViewCell"
-    var hud: MBProgressHUD?
-    
-    var dimView: UIView = UIView()
-    
-    var index: NSIndexPath?
-    
-    var uploadImages: [UIImage] = []
-    
-    var image: UIImage?
-    var imageCover: UIImage?
-    var imageToPost: UIImage?
-    
-    var verifyOrChange: Int = 0
-    var imageType: String = ""
-    var mobileNumber: String = ""
-    var newContactNumber: String = ""
-    var hasQRCode: Bool = false
     
     let storeInfoTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_TITLE_LOCALIZE_KEY")
     let addPhoto: String = StringHelper.localizedStringWithKey("STORE_INFO_ADD_PHOTO_LOCALIZE_KEY")
@@ -72,22 +54,52 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     let bankNotSet: String = StringHelper.localizedStringWithKey("STORE_INFO_NO_BANK_LOCALIZE_KEY")
     let addressNotSet: String = StringHelper.localizedStringWithKey("STORE_INFO_NO_ADDRESS_LOCALIZE_KEY")
     
-    var qrUrl: String = ""
-    var qr: String = ""
+    var hasQRCode: Bool = false
     var refresh: Bool = false
-    var tableData: [StoreInfoPreferredCategoriesModel] = []
+    var verifyOrChange: Int = 0
+    var imageType: String = ""
+    var mobileNumber: String = ""
+    var newContactNumber: String = ""
+    var qr: String = ""
+    var qrUrl: String = ""
+    
+    //Array variables
     var selectedCategories: [Int] = []
+    var uploadImages: [UIImage] = []
+    var tableData: [StoreInfoPreferredCategoriesModel] = []
     
     //Google Plus Sign In
-    var kClientId = "120452328739-36rpdqne3pvgj21p7ptru7daqp0tgiik.apps.googleusercontent.com"; // Get this from https://console.developers.google.com
-    var kShareURL = "https://yilinker.com/";
+    //Get this from https://console.developers.google.com
+    var kClientId = "120452328739-36rpdqne3pvgj21p7ptru7daqp0tgiik.apps.googleusercontent.com"
+    var kShareURL = "https://yilinker.com/"
+    
+    var hud: MBProgressHUD?
+    
+    var index: NSIndexPath?
     var timer: NSTimer?
+    
+    var image: UIImage?
+    var imageCover: UIImage?
+    var imageToPost: UIImage?
+    
+    var dimView: UIView = UIView()
+    
+    var storeInfoModel: StoreInfoModel?
+    var storeAddressModel: StoreAddressModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
+        //Set navigation bar title
         self.title = storeInfoTitle
         self.edgesForExtendedLayout = .None
+        
+        self.initializeViews()
+        self.registerNibs()
+        self.backButton()
+        self.fireStoreInfo()
+        
+        //Initialized dimView
         dimView = UIView(frame: UIScreen.mainScreen().bounds)
         dimView.backgroundColor=UIColor.blackColor()
         dimView.alpha = 0.5
@@ -96,24 +108,10 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         self.hasQRCode = false
         
-        self.initializeViews()
-        self.registerNibs()
-        self.backButton()
-        self.fireStoreInfo()
-        /*
-        self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Clothing", isChecked: false))
-        self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Gadgets", isChecked: false))
-        self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Shoes", isChecked: false))
-        self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Home Improvements", isChecked: false))
-        self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Toys, Kids and Babies", isChecked: false))
-        self.tableData.append(StoreInfoPreferredCategoriesModel(title: "Health and Beauty", isChecked: false))
-        */
-        
+        //Added tap gesture recognizer in tableView
         var tap = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         tap.cancelsTouchesInView = false
         self.tableView.addGestureRecognizer(tap)
-        
-        // Do any additional setup after loading the view.
     }
     
     override func didReceiveMemoryWarning() {
@@ -127,44 +125,22 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         }
     }
     
-    //MARK: Google Plus Sign In
-    func googlePlusSignIn(){
-        var signIn = GPPSignIn.sharedInstance();
-        signIn.shouldFetchGooglePlusUser = true;
-        signIn.clientID = kClientId;
-        signIn.scopes = [kGTLAuthScopePlusLogin];
-        signIn.trySilentAuthentication();
-        signIn.delegate = self;
-        signIn.authenticate();
+    //MARK: Private Method
+    func changeMobileNumber(){
+        var changeMobileNumberViewController = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
+        changeMobileNumberViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        changeMobileNumberViewController.providesPresentationContextTransitionStyle = true
+        changeMobileNumberViewController.definesPresentationContext = true
+        let black = UIColor.blackColor()
+        let transparent = black.colorWithAlphaComponent(0.5)
+        changeMobileNumberViewController.view.backgroundColor = transparent
+        changeMobileNumberViewController.view.frame.origin.y = changeMobileNumberViewController.view.frame.size.height
+        self.tabBarController?.presentViewController(changeMobileNumberViewController, animated: true, completion:
+            nil)
     }
     
     func finishedWithAuth(auth: GTMOAuth2Authentication!, error: NSError!) {
-        updateUI();
-    }
-    
-    
-    func updateUI() {
-        // TODO: Toggle buttons here.
-        if (GPPSignIn.sharedInstance().userID != nil){
-            // Signed in?
-            var user = GPPSignIn.sharedInstance().googlePlusUser
-            println(user.name.JSONString())
-            if (user.emails != nil){
-                var shareDialog = GPPShare.sharedInstance().nativeShareDialog();
-                
-                // This line will fill out the title, description, and thumbnail from
-                // the URL that you are sharing and includes a link to that URL.
-                //shareDialog.setURLToShare(NSURL(fileURLWithPath: kShareURL));
-                shareDialog.attachImage(self.imageToPost)
-                shareDialog.setTitle(title, description: "Sharing your store qr code on Google Plus", thumbnailURL: nil)
-                shareDialog.open();
-                println(user.emails.first?.JSONString() ?? "no email")
-            } else {
-                println("no email")
-            }
-        } else {
-            
-        }
+        shareToGooglePlus()
     }
     
     //MARK: Initialize views
@@ -172,6 +148,18 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         self.tableView.delegate = self
         self.tableView.dataSource = self
+    }
+    
+    func generateQRCode() {
+        //Show dim background
+        self.showView()
+        self.generateQr()
+    }
+    
+    //MARK: CongratulationsViewController Delegate method
+    func getStoreInfo() {
+        self.fireStoreInfo()
+        self.tableView.reloadData()
     }
     
     //MARK: Register nib file
@@ -198,66 +186,9 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         var storeInfoPreferredCategories = UINib(nibName: storeInfoPreferredCategoriesTableViewCellIdentifier, bundle: nil)
         self.tableView.registerNib(storeInfoPreferredCategories, forCellReuseIdentifier: storeInfoPreferredCategoriesTableViewCellIdentifier)
     }
-    
-    //MARK: Get store info
-    func fireStoreInfo(){
-        
-        if !refresh {
-            self.showHUD()
-        } else {
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        }
-        
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
-        
-        manager.POST(APIAtlas.sellerStoreInfo, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.storeInfoModel = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
-            println("store info \(responseObject)")
-            if responseObject["isSuccessful"] as! Bool {
-                for var i: Int = 0; i < self.storeInfoModel?.productCategoryName.count; i++ {
-                    self.tableData.append(StoreInfoPreferredCategoriesModel(title: self.storeInfoModel!.productCategoryName[i], isChecked: self.storeInfoModel!.isSelected[i], productId: self.storeInfoModel!.productId[i]))
-                    if self.storeInfoModel!.isSelected[i] {
-                        self.selectedCategories.insert(self.storeInfoModel!.productId[i].toInt()!, atIndex: self.selectedCategories.count)
-                    }
-                    println(self.selectedCategories)
-                }
-                self.tableView.reloadData()
-            } else {
-                self.showAlert(Constants.Localized.error, message: responseObject["message"] as! String)
-            }
-            
-            if !self.refresh {
-                self.hud?.hide(true)
-            } else {
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            }
-            
-            self.refresh = true
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 401 {
-                    self.fireRefreshToken(StoreInfoType.GetStroreInfo)
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(self.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(self.error, message: self.somethingWentWrong)
-                    }
-                }
-                
-                if !self.refresh {
-                    self.hud?.hide(true)
-                } else {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                }
-        })
-    }
-    
+
     //MARK: Navigation bar
+    //Add back button in navigation bar
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -270,31 +201,424 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
+    //Navigation bar back button method
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
     
+    //MARK: StoreInfoTableViewCell Delegate Method
+    func callUzyPicker(imageType: String) {
+        self.imageType = imageType
+        let picker: UzysAssetsPickerController = UzysAssetsPickerController()
+        let maxCount: Int = 6
+        
+        let imageLimit: Int = 1
+        picker.delegate = self
+        picker.maximumNumberOfSelectionVideo = 0
+        picker.maximumNumberOfSelectionPhoto = 1
+        UzysAssetsPickerController.setUpAppearanceConfig(self.uzyConfig())
+        self.presentViewController(picker, animated: true, completion: nil)
+    }
+    
+    func storeInfoVerify(mobile: String) {
+        
+        self.showView()
+        
+        if self.verifyOrChange == 1 {
+            var verifyNumberViewController = VerifyNumberViewController(nibName: "VerifyNumberViewController", bundle: nil)
+            verifyNumberViewController.delegate = self
+            verifyNumberViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+            verifyNumberViewController.providesPresentationContextTransitionStyle = true
+            verifyNumberViewController.definesPresentationContext = true
+            verifyNumberViewController.view.frame.origin.y = verifyNumberViewController.view.frame.size.height
+            self.tabBarController?.presentViewController(verifyNumberViewController, animated: true, completion:
+                nil)
+            self.verifyOrChange = 2
+            verifyNumberViewController.mobileNumber = self.mobileNumber
+        } else {
+            var changeMobileNumber = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
+            changeMobileNumber.delegate = self
+            changeMobileNumber.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+            changeMobileNumber.providesPresentationContextTransitionStyle = true
+            changeMobileNumber.definesPresentationContext = true
+            changeMobileNumber.mobile = mobile
+            changeMobileNumber.view.frame.origin.y = changeMobileNumber.view.frame.size.height
+            self.tabBarController?.presentViewController(changeMobileNumber, animated: true, completion:
+                nil)
+            self.verifyOrChange = 2
+        }
+    }
+    
+    func storeNameAndDescription(storeName: String, storeDescription: String) {
+        self.storeInfoModel!.store_name = storeName
+        self.storeInfoModel!.store_description = storeDescription
+    }
+    
+    func textViewScrollUp(textView: UITextView) {
+        var scrollPt:CGPoint = CGPointMake(textView.bounds.origin.x, textView.bounds.origin.y)
+        self.tableView.setContentOffset(scrollPt, animated: true)
+    }
+    
+    //MARK: StoreInfoBankAccountTableViewCell Delegate Method
+    func newBankAccount() {
+        var changeBankAccountViewController = ChangeBankAccountViewController(nibName: "ChangeBankAccountViewController", bundle: nil)
+        changeBankAccountViewController.delegate = self
+        self.navigationController?.pushViewController(changeBankAccountViewController, animated:true)
+    }
+    
+    //MARK: StoreInfoAddressTableViewCell Delegate Method
+    func changeToNewAddress() {
+        var changeAddressViewController = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
+        changeAddressViewController.delegate = self
+        self.navigationController?.pushViewController(changeAddressViewController, animated:true)
+    }
+
+    //MARK: StoreInfoAccountInformationTableViewCell Delegate Method
+    func changePassword() {
+        var changeEmailViewController = ChangeEmailViewController(nibName: "ChangeEmailViewController", bundle: nil)
+        changeEmailViewController.delegate = self
+        changeEmailViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        changeEmailViewController.providesPresentationContextTransitionStyle = true
+        changeEmailViewController.definesPresentationContext = true
+        changeEmailViewController.view.frame.origin.y = changeEmailViewController.view.frame.size.height
+       
+        changeEmailViewController.type = "password"
+        self.tabBarController?.presentViewController(changeEmailViewController, animated:true, completion: nil)
+        self.showView()
+    }
+    
+    func saveAccountInfo() {
+        
+        if self.storeInfoModel!.isReseller {
+            if self.selectedCategories.count != 0 {
+                self.saveStoreInfo()
+            } else {
+                self.showAlert("Ooops!!", message: "Please select category.")
+                self.hud?.hide(true)
+            }
+        } else {
+            self.saveStoreInfo()
+        }
+    }
+    
+    //MARK: VerifyViewController Delegate method
+    func congratulationsViewController(isSuccessful: Bool) {
+        var congratulations = CongratulationsViewController(nibName: "CongratulationsViewController", bundle: nil)
+        congratulations.delegate = self
+        congratulations.isSuccessful = isSuccessful
+        congratulations.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        congratulations.providesPresentationContextTransitionStyle = true
+        congratulations.definesPresentationContext = true
+        congratulations.view.frame.origin.y = congratulations.view.frame.size.height
+        self.tabBarController?.presentViewController(congratulations, animated: true, completion:
+            nil)
+        self.showView()
+    }
+    
+    //MARK: ChangeBankAccountViewController Delegate method
+    func updateBankDetail(accountTitle: String, accountName: String, accountNumber: String, bankName: String) {
+        self.storeInfoModel?.accountTitle = accountTitle
+        self.storeInfoModel?.bankAccount = accountName + "\n" + accountNumber + "\n" + bankName
+        self.tableView.reloadData()
+    }
+    
+    //MARK: ChangeStoreAddressViewController Delegate method
+    func updateStoreAddressDetail(title: String, storeAddress: String) {
+        self.storeInfoModel?.title = title
+        self.storeInfoModel?.store_address = storeAddress
+        self.tableView.reloadData()
+    }
+    
+    //MARK: StoreInfoQRCodeTableViewCell Delegate Method
+    func shareEMAction(postImage: UIImageView, title: String) {
+        imageToPost = postImage.image
+        let mailComposeViewController = configuredMailComposeViewController()
+        if MFMailComposeViewController.canSendMail() {
+            self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+        } else {
+            self.showSendMailErrorAlert()
+        }
+    }
+    
+    func shareGPAction(postImage: UIImageView, title: String) {
+        self.imageToPost = postImage.image
+        self.googlePlusSignIn()
+        self.shareToGooglePlus()
+    }
+    
+    func shareFBAction(postImage: UIImageView, title: String) {
+        
+        let vc = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+        
+        var socialVC :SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+        socialVC.setInitialText("")
+        let image = postImage.image
+        socialVC.addImage(image)
+        socialVC.completionHandler = {
+            (result:SLComposeViewControllerResult) in
+            if result == SLComposeViewControllerResult.Done {
+                self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_FB_LOCALIZE_KEY"))
+            } else {
+                self.showAlert(self.error, message: "Failed to share qr codel.")
+            }
+        }
+        presentViewController(socialVC, animated: true, completion: nil)
+    }
+    
+    func shareTWAction(postImage: UIImageView, title: String) {
+        
+        let vc = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+        
+        
+        var socialVC :SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+        socialVC.setInitialText("")
+        let image = postImage.image
+        socialVC.addImage(image)
+        socialVC.completionHandler = {
+            (result:SLComposeViewControllerResult) in
+            if result == SLComposeViewControllerResult.Done{
+                //self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"))
+                self.view.makeToast(StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"), duration: 3.0, position: CSToastPositionCenter)
+            } else {
+                self.view.makeToast("Cancelled", duration: 3.0, position: CSToastPositionBottom)
+            }
+        }
+        presentViewController(socialVC, animated: true, completion: nil)
+        
+    }
+    
+    //MARK: Google Plus Sign In
+    func googlePlusSignIn(){
+        var signIn = GPPSignIn.sharedInstance();
+        signIn.shouldFetchGooglePlusUser = true;
+        signIn.clientID = kClientId;
+        signIn.scopes = [kGTLAuthScopePlusLogin];
+        signIn.trySilentAuthentication();
+        signIn.delegate = self;
+        signIn.authenticate();
+    }
+    
+    //MARK: Loader methods
+    func hideLoader() {
+        if !self.refresh {
+            self.hud?.hide(true)
+        } else {
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        }
+    }
+    
+    func showLoader() {
+        if !refresh {
+            self.showHUD()
+        } else {
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        }
+    }
+
+    //MARK: Dismiss keyboard
+    func dismissKeyboard(){
+        self.view.endEditing(true)
+    }
+    
+    //MARK: Dismiss dim view
+    func dismissView() {
+        UIView.animateWithDuration(0.25, animations: {
+            self.dimView.alpha = 0
+            }, completion: { finished in
+                self.dimView.hidden = true
+        })
+    }
+    
+    //MARK: Set image/s for StoreInfoTableViewCell imageviews
+    func setImageProfileCoverPhoto(image: UIImage){
+        let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
+        let cell: StoreInfoTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! StoreInfoTableViewCell
+        if IMAGETYPE.imageType == "profile" {
+            cell.profilePictureImageView.image = nil
+            cell.profilePictureImageView.image = image
+            self.image = image
+        } else {
+            cell.coverPhotoImageView.image = nil
+            cell.coverPhotoImageView.image = image
+            self.imageCover = image
+        }
+    }
+    
+    //MARK: Alert view
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: self.ok, style: .Default) { (action) in
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func showSendMailErrorAlert() {
+        let sendMailErrorAlert = UIAlertView(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", delegate: self, cancelButtonTitle: "OK")
+        sendMailErrorAlert.show()
+    }
+    
+    //Show success/failed/deleted/cancelled dialog box
+    func successSharingDialogBox(timer: NSTimer) {
+        var array: NSArray = timer.userInfo as! NSArray
+        let sendMailErrorAlert = UIAlertView(title: array[0] as? String, message: array[1] as? String, delegate: self, cancelButtonTitle: StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY"))
+        sendMailErrorAlert.show()
+        self.timer?.invalidate()
+    }
+    
+    //MARK: Show MBProgressHUD bar
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    //MARK: Show dim view
+    func showView(){
+        dimView.hidden = false
+        UIView.animateWithDuration(0.25, animations: {
+            self.dimView.alpha = 0.5
+            }, completion: { finished in
+        })
+    }
+
+    func shareToGooglePlus() {
+        // TODO: Toggle buttons here.
+        if (GPPSignIn.sharedInstance().userID != nil){
+            // Signed in?
+            var user = GPPSignIn.sharedInstance().googlePlusUser
+            println(user.name.JSONString())
+            if (user.emails != nil){
+                var shareDialog = GPPShare.sharedInstance().nativeShareDialog();
+                
+                // This line will fill out the title, description, and thumbnail from
+                // the URL that you are sharing and includes a link to that URL.
+                //shareDialog.setURLToShare(NSURL(fileURLWithPath: kShareURL));
+                shareDialog.attachImage(self.imageToPost)
+                shareDialog.setTitle(title, description: "Sharing your store qr code on Google Plus", thumbnailURL: nil)
+                shareDialog.open();
+                println(user.emails.first?.JSONString() ?? "no email")
+            } else {
+                println("no email")
+            }
+        } else {
+            
+        }
+    }
+    
+    //MARK: MFMailComposeViewController Delegate methods
+    func configuredMailComposeViewController() -> MFMailComposeViewController {
+        let mailComposerVC = MFMailComposeViewController()
+        mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
+        
+        mailComposerVC.addAttachmentData(UIImageJPEGRepresentation(imageToPost, CGFloat(1.0))!, mimeType: "image/jpeg", fileName:  "qrcode.jpeg")
+        
+        mailComposerVC.setSubject(title)
+        
+        mailComposerVC.setMessageBody(title, isHTML: true)
+        mailComposerVC.setSubject(title)
+        mailComposerVC.setMessageBody(title, isHTML: false)
+        
+        return mailComposerVC
+    }
+    
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        
+        switch result.value {
+            case MFMailComposeResultCancelled.value:
+            
+                var array = [self.info, StringHelper.localizedStringWithKey("STORE_INFO_CANCEL_EMAIL_LOCALIZE_KEY")]
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
+            
+            case MFMailComposeResultSaved.value:
+            
+                var array = [self.info, StringHelper.localizedStringWithKey("STORE_INFO_SAVE_EMAIL_LOCALIZE_KEY")]
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
+            
+            case MFMailComposeResultSent.value:
+           
+                var array = [self.successTitle, StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY")]
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
+           
+            case MFMailComposeResultFailed.value:
+            
+                var array = [self.info, StringHelper.localizedStringWithKey("STORE_INFO_FAIL_EMAIL_LOCALIZE_KEY")]
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
+           
+            default:
+                break
+        }
+        
+        controller.dismissViewControllerAnimated(true, completion: nil)
+        
+    }
+    
+    //MARK: Textview delegate method
+    func textViewNextResponder(textView: UITextView) {
+        textView.becomeFirstResponder()
+    }
+    
+    //MARK: UzyPicker Delegate Mehtods
+    //MARK: Configure UzyPicker appearance
+    func uzyConfig() -> UzysAppearanceConfig {
+        let config: UzysAppearanceConfig = UzysAppearanceConfig()
+        config.finishSelectionButtonColor = Constants.Colors.appTheme
+        return config
+    }
+    
+    //MARK: UzzyPickerDelegate
+    func uzysAssetsPickerController(picker: UzysAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) {
+        let assetsLibrary = ALAssetsLibrary()
+        let alaSset: ALAsset = assets[0] as! ALAsset
+        
+        for allaSset in assets as! [ALAsset] {
+            let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullScreenImage().takeUnretainedValue(), scale: 1.0, orientation: UIImageOrientation.Up)!
+            
+            self.setImageProfileCoverPhoto(image)
+        }
+    }
+    
+    func uzysAssetsPickerControllerDidCancel(picker: UzysAssetsPickerController!) {
+        
+    }
+    
+    func uzysAssetsPickerControllerDidExceedMaximumNumberOfSelection(picker: UzysAssetsPickerController!) {
+        
+    }
+    
     //MARK: Tableview delegate methods
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-       return 6
+        return 6
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-  
+        
         if indexPath.section == 0 {
-            
             let cell: StoreInfoTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoHeaderTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoTableViewCell
             index = indexPath
             cell.delegate = self
             cell.selectionStyle = UITableViewCellSelectionStyle.None
+            
+            cell.mobilePhoneLabel.text = self.mobilePhone
+            cell.storeDescriptionLabel.text = self.storeDesc
             cell.storeInfoLabel.text = self.storeInfo
             cell.storeNameLabel.text = self.storeName
-            cell.storeDescriptionLabel.text = self.storeDesc
-            cell.mobilePhoneLabel.text = self.mobilePhone
             cell.verifyButton.setTitle(self.changeTitle, forState: UIControlState.Normal)
             
-            if(self.storeInfoModel?.store_name != nil){
-                
+            let url: NSString = NSString(string: (self.storeInfoModel?.avatar)!.absoluteString!)
+            
+            if(self.storeInfoModel?.store_name != nil) {
                 if self.image != nil && self.imageCover != nil {
                     cell.coverEditImageView.image = self.imageCover
                     cell.profilePictureImageView.image = self.image
@@ -308,45 +632,44 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                     let url: NSString = NSString(string: (self.storeInfoModel?.avatar)!.absoluteString!)
                     let url2: NSString = NSString(string: (self.storeInfoModel?.coverPhoto)!.absoluteString!)
                     if url != "" && url2 != "" {
+                        //Download the image from url if 'url' and 'url2' is not empty
                         cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
                         cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
                     } else if url == "" && url2 != "" {
+                        //Download the image from url if 'url2' is not empty and set profilePictureImageView with default placeholder if 'url' is empty
                         cell.profilePictureImageView.image = UIImage(named: "dummy-placeholder.jpg")
                         cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
-                    } else {
+                    } else if url != "" && url2 == "" {
+                        //Download the image from url if 'url' is not empty and set coverPhotoImageView with default placeholder if 'url2' is empty
                         cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
                         cell.coverPhotoImageView.image = UIImage(named: "dummy-placeholder.jpg")
+                    } else {
+                        //Set profilePictureImageView and coverPhotoImageView with default placeholder if 'url' and 'url2' is empty
+                        cell.profilePictureImageView.image = UIImage(named: "dummy-placeholder.jpg")
+                        cell.coverPhotoImageView.image = UIImage(named: "dummy-placeholder.jpg")
                     }
-                    
                 }
                 
-                cell.storeNameTextField.text = self.storeInfoModel?.store_name
                 cell.storeNameTextField.enabled = false
                 cell.mobilePhoneTextField.text = self.storeInfoModel?.contact_number
                 cell.storeDescriptionTextView.text = self.storeInfoModel?.store_description
+                cell.storeNameTextField.text = self.storeInfoModel?.store_name
+                cell.tinTextField.text = self.storeInfoModel?.tin
+                
                 cell.profileEditImageView.image = UIImage(named: "edit.png")
                 cell.coverEditImageView.image = UIImage(named: "edit.png")
-                cell.tinTextField.text = self.self.storeInfoModel?.tin
-
-                let url: NSString = NSString(string: (self.storeInfoModel?.avatar)!.absoluteString!)
+                
                 if (!url.isEqual("")) {
                     cell.profileEditLabel.text = editPhoto
                     cell.coverEditLabel.text = editCover
-                    
                 } else {
                     cell.profileEditLabel.text = addPhoto
                     cell.coverEditLabel.text = addCover
                 }
                 
-                //self.image = cell.profilePictureImageView.image
-                //self.imageCover = cell.coverPhotoImageView.image
-                //if(self.verifyOrChange == 1) {
-                //    cell.verifyButton.setTitle("Verify", forState: UIControlState.Normal)
-                //} else {
                 cell.verifyButton.setTitle(self.changeTitle, forState: UIControlState.Normal)
                 cell.tinLabel.text = self.tinTitle
                 cell.tinTextField.placeholder = self.tinTitle
-                //}
                 cell.verifyButton.tag = 2
             } else {
                 cell.profileEditImageView.image = UIImage(named: "dummy-placeholder.jpg")
@@ -354,11 +677,12 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 cell.profileEditLabel.text = addPhoto
                 cell.coverEditLabel.text = addCover
             }
-           
+            
             return cell
         } else if indexPath.section == 1 {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoPreferredCategoriesTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoPreferredCategoriesTableViewCell
             cell.selectionStyle = UITableViewCellSelectionStyle.None
+            
             if self.storeInfoModel != nil {
                 cell.titleLabel.text = self.tableData[indexPath.row].title
                 cell.setChecked(self.tableData[indexPath.row].isChecked)
@@ -369,13 +693,15 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             if self.hasQRCode {
                 let cell: StoreInfoQrCodeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoQRCodeTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoQrCodeTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
+                
                 if let url = NSURL(string: "\(self.qrUrl)") {
                     if let data = NSData(contentsOfURL: url){
-                        //imageURL.contentMode = UIViewContentMode.ScaleAspectFit
                         cell.qrCodeImageView.image = UIImage(data: data)
                     }
                 }
+                
                 cell.delegate = self
+                
                 return cell
             } else {
                 let cell: StoreInfoSectionTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoSectionTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoSectionTableViewCell
@@ -384,14 +710,17 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 cell.generateLabel.text = self.generate
                 cell.generateQRCodeButton.setTitle(self.generateQRCodeTitle, forState: UIControlState.Normal)
                 cell.delegate = self
+                
                 return cell
             }
-       } else if indexPath.section == 3 {
+        } else if indexPath.section == 3 {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoAddressTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAddressTableViewCell
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.delegate = self
-            //Display current bank account
+            
+            //Display current address
             cell.storeAddressTitleLabel.text = self.storeAddressTitle
+            
             if self.storeInfoModel?.store_address != "" || self.storeInfoModel?.title != "" {
                 cell.addressTitle.text = self.storeInfoModel?.title
                 cell.addressLabel.text = self.storeInfoModel?.store_address
@@ -401,46 +730,50 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 cell.addressTitle.text = ""
                 cell.newAddressLabel.text = self.newAddress
             }
-        
+            
             return cell
         } else if indexPath.section == 4 {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoBankAccountTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoBankAccountTableViewCell
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.delegate = self
+            
             //Display current bank account
             cell.bankAccountTitleLabel.text = self.bankAccountTitle
             cell.newAccountLabel.text = self.newAccount
             cell.newAccountLabel.hidden = true
             cell.arrowButton.hidden = true
+            
             if self.storeInfoModel?.accountTitle != "" || self.storeInfoModel?.bankAccount != "" {
                 cell.bankAccountDetailLabel.text = self.storeInfoModel?.bankAccount
                 cell.bankAccountInfoLabel.text = self.storeInfoModel?.accountTitle
             } else {
-                //cell.newAccountLabel.hidden = false
-                //cell.arrowButton.hidden = false
                 cell.bankAccountDetailLabel.text = self.bankNotSet
                 cell.bankAccountInfoLabel.text = ""
             }
+            
             cell.accountTitle = self.storeInfoModel!.accountTitle
-            println("account title \(cell.accountTitle)")
+            
             return cell
         } else {
             
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoAccountInformationTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAccountInformationTableViewCell
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.delegate = self
+            
             cell.accountInfoLabel.text = self.accountInfo
             cell.passwordLabel.text = self.password
             cell.changePasswordButton.setTitle(changeTitle, forState: UIControlState.Normal)
             cell.saveLabel.text = save
-            //cell.saveButton.setTitle(save, forState: UIControlState.Normal)
-            //cell.emailAddressTextField.text = self.storeInfoModel?.email
+            
             return cell
         }
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 1 {
+            //NOTE: Product category is only visible if the user is an affiliate
+            //Check if isReseller is true, return self.storeInfoModel!.productCategoryName.count
+            //Else, return 0
             if SessionManager.isReseller() {
                 if self.storeInfoModel != nil {
                     return self.storeInfoModel!.productCategoryName.count
@@ -469,7 +802,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 return 341
             } else {
                 return 208
-            }            
+            }
         } else if indexPath.section == 3 {
             return 163
         } else if indexPath.section == 4 {
@@ -508,16 +841,13 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         if indexPath.section == 1 {
             if contains(self.selectedCategories, self.storeInfoModel!.productId[indexPath.row].toInt()!) {
-                println("yes")
                 self.tableData[indexPath.row].isChecked = false
                 if let index = find(self.selectedCategories, self.storeInfoModel!.productId[indexPath.row].toInt()!) {
                     self.selectedCategories.removeAtIndex(index)
                 }
-                println(self.selectedCategories)
             } else {
                 self.tableData[indexPath.row].isChecked = true
                 self.selectedCategories.insert(self.storeInfoModel!.productId[indexPath.row].toInt()!, atIndex: self.selectedCategories.count)
-                println(self.selectedCategories)
             }
         }
         
@@ -528,6 +858,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         var selectedCell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         selectedCell.contentView.backgroundColor = UIColor.whiteColor()
+        
         if indexPath.section == 1 {
             let originalStatus: Bool = self.tableData[indexPath.row].isChecked
             self.tableData[indexPath.row].isChecked = false
@@ -536,394 +867,24 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         self.tableView.reloadData()
         self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
     }
-    
-    func storeNameAndDescription(storeName: String, storeDescription: String) {
-        self.storeInfoModel!.store_name = storeName
-        self.storeInfoModel!.store_description = storeDescription
-        println(storeName + " " + storeDescription)
-    }
-    
-    func textViewScrollUp(textView: UITextView) {
-        var scrollPt:CGPoint = CGPointMake(textView.bounds.origin.x, textView.bounds.origin.y)
-        self.tableView.setContentOffset(scrollPt, animated: true)
-    }
-    
-    //MARK: Store Details Function
-    func storeInfoVerify(mobile: String) {
-        println("verify " + "\(self.verifyOrChange)")
-        self.showView()
-        
-        if self.verifyOrChange == 1 {
-            var verifyNumberViewController = VerifyNumberViewController(nibName: "VerifyNumberViewController", bundle: nil)
-            verifyNumberViewController.delegate = self
-            verifyNumberViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-            verifyNumberViewController.providesPresentationContextTransitionStyle = true
-            verifyNumberViewController.definesPresentationContext = true
-            verifyNumberViewController.view.frame.origin.y = verifyNumberViewController.view.frame.size.height
-            self.tabBarController?.presentViewController(verifyNumberViewController, animated: true, completion:
-                nil)
-            self.verifyOrChange = 2
-            verifyNumberViewController.mobileNumber = self.mobileNumber
-            println(verifyNumberViewController.mobileNumber)
-        } else {
-            var changeMobileNumber = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
-            changeMobileNumber.delegate = self
-            changeMobileNumber.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-            changeMobileNumber.providesPresentationContextTransitionStyle = true
-            changeMobileNumber.definesPresentationContext = true
-            changeMobileNumber.mobile = mobile
-            changeMobileNumber.view.frame.origin.y = changeMobileNumber.view.frame.size.height
-            self.tabBarController?.presentViewController(changeMobileNumber, animated: true, completion:
-                nil)
-            self.verifyOrChange = 2
-        }
 
-    }
-
-    func newBankAccount() {
-        var changeBankAccountViewController = ChangeBankAccountViewController(nibName: "ChangeBankAccountViewController", bundle: nil)
-        changeBankAccountViewController.delegate = self
-        self.navigationController?.pushViewController(changeBankAccountViewController, animated:true)
-        
-    }
-    
-    func changeToNewAddress() {
-        var changeAddressViewController = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
-        changeAddressViewController.delegate = self
-        self.navigationController?.pushViewController(changeAddressViewController, animated:true)
-    }
-
-    func changePassword() {
-        println("Email Password")
-        var changeEmailViewController = ChangeEmailViewController(nibName: "ChangeEmailViewController", bundle: nil)
-        changeEmailViewController.delegate = self
-        changeEmailViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        changeEmailViewController.providesPresentationContextTransitionStyle = true
-        changeEmailViewController.definesPresentationContext = true
-        changeEmailViewController.view.frame.origin.y = changeEmailViewController.view.frame.size.height
-       
-        changeEmailViewController.type = "password"
-        self.tabBarController?.presentViewController(changeEmailViewController, animated:true, completion: nil)
-        self.showView()
-    }
-    
-    func changeMobileNumber(){
-        var changeMobileNumberViewController = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
-        changeMobileNumberViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        changeMobileNumberViewController.providesPresentationContextTransitionStyle = true
-        changeMobileNumberViewController.definesPresentationContext = true
-        let black = UIColor.blackColor()
-        let transparent = black.colorWithAlphaComponent(0.5)
-        changeMobileNumberViewController.view.backgroundColor = transparent
-        changeMobileNumberViewController.view.frame.origin.y = changeMobileNumberViewController.view.frame.size.height
-        self.tabBarController?.presentViewController(changeMobileNumberViewController, animated: true, completion:
-            nil)
-    }
-    
-    //MARK: CongratulationsViewController protocol method
-    func congratulationsViewController(isSuccessful: Bool) {
-        var congratulations = CongratulationsViewController(nibName: "CongratulationsViewController", bundle: nil)
-        congratulations.delegate = self
-        congratulations.isSuccessful = isSuccessful
-        congratulations.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        congratulations.providesPresentationContextTransitionStyle = true
-        congratulations.definesPresentationContext = true
-        congratulations.view.frame.origin.y = congratulations.view.frame.size.height
-        self.tabBarController?.presentViewController(congratulations, animated: true, completion:
-            nil)
-        self.showView()
-    }
-    
-    //MARK: VerifyViewController protocol method
-    func verifyViewController() {
-        
-        self.showHUD()
-        let manager = APIManager.sharedInstance
-        
-        manager.POST(APIAtlas.sellerResendVerification+"\(SessionManager.accessToken())&mobileNumber=\(self.mobileNumber)", parameters: nil, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                println(responseObject.description)
-                if responseObject["isSuccessful"] as! Bool {
-                    var verifyNumberViewController = VerifyNumberViewController(nibName: "VerifyNumberViewController", bundle: nil)
-                    verifyNumberViewController.delegate = self
-                    verifyNumberViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-                    verifyNumberViewController.providesPresentationContextTransitionStyle = true
-                    verifyNumberViewController.definesPresentationContext = true
-                    verifyNumberViewController.view.frame.origin.y = verifyNumberViewController.view.frame.size.height
-                    self.navigationController?.presentViewController(verifyNumberViewController, animated: true, completion:
-                    nil)
-                } else {
-                    self.showAlert(self.error, message: responseObject["message"] as! String)
-                    self.dismissView()
-                }
-                self.hud?.hide(true)
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-               
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-               
-                if task.statusCode == 401 {
-                    self.fireRefreshToken(StoreInfoType.VerifyNumber)
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(self.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(self.error, message: self.somethingWentWrong)
-                    }
-                }
-                self.hud?.hide(true)
-                self.dismissView()
-        })
-        self.showView()
-    }
-    
-    func saveAccountInfo() {
-        
-        self.showHUD()
-      
-        let manager = APIManager.sharedInstance
-        
-        var datas: [NSData] = []
-        
-        var imagesKeyProfile: [String] = []
-        var imagesKeyCover: [String] = []
-
-        for var x = 0; x < 1; x++ {
-            imagesKeyProfile.append("\(x)")
-        }
-        
-        for var x = 0; x < 1; x++ {
-            imagesKeyCover.append("\(x)")
-        }
-    
-        if self.image != nil && self.imageCover != nil {
-            let data: NSData = UIImageJPEGRepresentation(self.image, 0)
-            let dataCoverPhoto: NSData = UIImageJPEGRepresentation(self.imageCover, 1)
-            datas.append(data)
-            datas.append(dataCoverPhoto)
-        } else if self.image != nil && self.imageCover == nil{
-            let data: NSData = UIImageJPEGRepresentation(self.image, 0)
-            datas.append(data)
-        } else if self.image == nil && self.imageCover != nil {
-            let dataCoverPhoto: NSData = UIImageJPEGRepresentation(self.imageCover, 1)
-            datas.append(dataCoverPhoto)
-        }
-       
-        let data = NSJSONSerialization.dataWithJSONObject(self.selectedCategories, options: nil, error: nil)
-        var formattedCategories: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
-        let parameters: NSDictionary?
-        
-        if self.storeInfoModel!.isReseller {
-             parameters = ["storeName" : self.storeInfoModel!.store_name, "storeDescription" : self.storeInfoModel!.store_description, "categoryIds" : formattedCategories, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
-            if self.selectedCategories.count != 0 {
-                let url: String = "\(APIAtlas.sellerUpdateSellerInfo)?access_token=\(SessionManager.accessToken())"
-                if !self.storeInfoModel!.store_name.isEmpty && !self.storeInfoModel!.store_description.isEmpty {
-                    manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
-                        for (index, data) in enumerate(datas) {
-                            println("index: \(index)")
-                            if self.image != nil && self.imageCover != nil {
-                                if(index == 0){
-                                    formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(0)", mimeType: "image/jpeg")
-                                } else {
-                                    formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(1)", mimeType: "image/jpeg")
-                                }
-                            } else if self.image != nil && self.imageCover == nil{
-                                formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(index)", mimeType: "image/jpeg")
-                            } else if self.image == nil && self.imageCover != nil {
-                                formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(index)", mimeType: "image/jpeg")
-                            }
-                        }
-                        
-                        }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
-                            self.hud?.hide(true)
-                            self.fireStoreInfo()
-                            self.showAlert(self.successTitle, message: self.success)
-                        }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
-                            let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                            
-                            if task.statusCode == 401 {
-                                self.fireRefreshToken(StoreInfoType.SaveStoreInfo)
-                            } else {
-                                if error.userInfo != nil {
-                                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                                    self.showAlert(self.error, message: errorModel.message)
-                                } else {
-                                   self.showAlert(self.error, message: self.somethingWentWrong)
-                                }
-                            }
-                            self.hud?.hide(true)
-                    }
-                } else {
-                    self.showAlert(self.error, message: self.empty)
-                    self.hud?.hide(true)
-                    self.dismissView()
-                }
-            } else {
-                self.showAlert("Ooops!!", message: "Please select category.")
-                self.hud?.hide(true)
-            }
-        } else {
-            parameters = ["storeName" : self.storeInfoModel!.store_name, "storeDescription" : self.storeInfoModel!.store_description, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
-            let url: String = "\(APIAtlas.sellerUpdateSellerInfo)?access_token=\(SessionManager.accessToken())"
-            if !self.storeInfoModel!.store_name.isEmpty && !self.storeInfoModel!.store_description.isEmpty {
-                manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
-                    for (index, data) in enumerate(datas) {
-                        println("index: \(index)")
-                        if self.image != nil && self.imageCover != nil {
-                            if(index == 0){
-                                formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(0)", mimeType: "image/jpeg")
-                            } else {
-                                formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(1)", mimeType: "image/jpeg")
-                            }
-                        } else if self.image != nil && self.imageCover == nil{
-                            formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(index)", mimeType: "image/jpeg")
-                        } else if self.image == nil && self.imageCover != nil {
-                            formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(index)", mimeType: "image/jpeg")
-                        }
-                    }
-                    
-                    }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
-                        self.hud?.hide(true)
-                        self.fireStoreInfo()
-                        self.showAlert(self.successTitle, message: self.success)
-                    }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
-                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                        
-                        if task.statusCode == 401 {
-                            self.fireRefreshToken(StoreInfoType.SaveStoreInfo)
-                        } else {
-                            if error.userInfo != nil {
-                                let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                                let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                                self.showAlert(self.error, message: errorModel.message)
-                            } else {
-                                self.showAlert(self.error, message: self.somethingWentWrong)
-                            }
-                        }
-                        self.hud?.hide(true)
-                }
-            } else {
-                self.showAlert(self.error, message: self.empty)
-                self.hud?.hide(true)
-                self.dismissView()
-            }
-        }
-        
-    }
-    
-    func generateQRCode() {
-        println("QR Code")
-        self.showView()
-        self.generateQr()
-    }
-    
-    func generateQr(){
-        self.showHUD()
-        
-        let manager = APIManager.sharedInstance
-        
-        manager.POST(APIAtlas.sellerGenerateQrCode+"\(SessionManager.accessToken())", parameters: nil, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            if responseObject["isSuccessful"] as! Bool {
-                let value: AnyObject = responseObject["data"]!!
-                if let qrCode = value["qrcodeUrl"] as? String {
-                    self.qrUrl = qrCode
-                    self.hasQRCode = true
-                } else {
-                    self.qrUrl = ""
-                }
-            } else {
-                self.showAlert(self.error, message: self.invalid)
-            }
-            
-            self.tableView.reloadData()
-            self.dismissView()
-            
-            self.hud?.hide(true)
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 401 {
-                    self.fireRefreshToken(StoreInfoType.GenerateQR)
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(self.error, message: errorModel.message)
-                    } else {
-                       self.showAlert(self.error, message: self.somethingWentWrong)
-                    }
-                }
-                self.hud?.hide(true)
-                self.dismissView()
-        }) 
-
-    }
-    
-    //MARK: ChangeBankAccountViewControllerDelegate protoco method
-    func updateBankDetail(accountTitle: String, accountName: String, accountNumber: String, bankName: String) {
-        self.storeInfoModel?.accountTitle = accountTitle
-        self.storeInfoModel?.bankAccount = accountName + "\n"+accountNumber+"\n" + bankName
-        self.tableView.reloadData()
-    }
-    
-    //MARK: ChangeStoreAddressViewControllerDelegate protoco method
-    func updateStoreAddressDetail(title: String, storeAddress: String) {
-        self.storeInfoModel?.title = title
-        self.storeInfoModel?.store_address = storeAddress
-        self.tableView.reloadData()
-    }
-    
-    //MARK: ChangeMobileNumberViewControllerDelegate protocol method
-    func setMobileNumber(newNumber: String, oldNumber: String) {
-        self.showHUD()
-        
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldContactNumber" : oldNumber, "newContactNumber" : newNumber];
-        
-        self.mobileNumber = oldNumber
-        self.newContactNumber = newNumber
-        
-        manager.POST(APIAtlas.sellerChangeMobileNumber, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            if responseObject["isSuccessful"] as! Bool {
-                self.verifyOrChange = 1
-                //self.mobileNumber = newNumber
-                self.storeInfoVerify(oldNumber)
-            } else {
-                self.showAlert("Error", message: responseObject["message"] as! String)
-                self.dismissView()
-            }
-            self.hud?.hide(true)
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 401 {
-                     self.fireRefreshToken(StoreInfoType.SetMobile)
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(self.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(self.error, message: self.somethingWentWrong)
-                    }
-                }
-                self.hud?.hide(true)
-                self.dismissView()
-        })
-    }
-    
+    //MARK: -
+    //MARK: - REST API request
+    //MARK: POST METHOD - Refresh token
+    /*
+    *
+    * (Parameters) - client_id, client_secret, grant_type, refresh_token
+    *
+    *Function to refresh token to get another access token
+    *
+    */
     func fireRefreshToken(storeInfoType: StoreInfoType) {
         
-        if !self.refresh {
-            self.showHUD()
-        } else {
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        }
+        self.showLoader()
         
         let manager = APIManager.sharedInstance
+        
+        //Set parameter of POST method
         let parameters: NSDictionary = [
             "client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
@@ -933,6 +894,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
+            //Parsed 'responseObject' json object
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             
             if storeInfoType == StoreInfoType.GetStroreInfo {
@@ -947,284 +909,372 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 self.generateQr()
             }
             
-            if !self.refresh {
-               self.hud?.hide(true)
-            } else {
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            }
+            self.hideLoader()
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
+                //Catch unsuccessful return from the API
                 if error.userInfo != nil {
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    //Parsed error message from API return
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
                     self.showAlert(self.error, message: errorModel.message)
                 } else {
                     self.showAlert(Constants.Localized.error, message: self.somethingWentWrong)
                 }
                 
-                self.hud?.hide(true)
+                self.hideLoader()
         })
         
     }
     
-    func getStoreInfo() {
-        self.fireStoreInfo()
-        self.tableView.reloadData()
-    }
-    
-    func shareFBAction(postImage: UIImageView, title: String) {
-    
-        let vc = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
-
-        var socialVC :SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
-        socialVC.setInitialText("")
-        let image = postImage.image
-        socialVC.addImage(image)
-        socialVC.completionHandler = {
-            (result:SLComposeViewControllerResult) in
-            if result == SLComposeViewControllerResult.Done {
-                self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_FB_LOCALIZE_KEY"))
-            } else {
+    //MARK: - POST METHOD - Fire Store Info
+    /* Function to request store info.
+    *
+    * (Parameter) - access_token
+    *
+    *
+    * If the API request is successful, it will parse the 'responseObject', storing it on storeInfoModel
+    *
+    * If the API request is unsuccessful, it will add empty view, update the counter and call
+    * 'showAlert' function (funcion for handling of error based on the error type)
+    */
+    func fireStoreInfo(){
+        
+        self.showLoader()
+        
+        let manager = APIManager.sharedInstance
+        
+        //Set parameter
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
+        
+        manager.POST(APIAtlas.sellerStoreInfo, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            //Parsed returned response from the API
+            self.storeInfoModel = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
+            
+            if responseObject["isSuccessful"] as! Bool {
                 
-            }
-        }
-        presentViewController(socialVC, animated: true, completion: nil)
-    }
-    
-    func shareTWAction(postImage: UIImageView, title: String) {
-        
-        let vc = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
-       
-        
-        var socialVC :SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
-        socialVC.setInitialText("")
-        let image = postImage.image
-        socialVC.addImage(image)
-        socialVC.completionHandler = {
-            (result:SLComposeViewControllerResult) in
-            if result == SLComposeViewControllerResult.Done{
-                //self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"))
-                self.view.makeToast(StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"), duration: 3.0, position: CSToastPositionCenter)
+                //if response is successful generate for-loop in storeInfoModel and append each category in tableData
+                for i in 0..<self.storeInfoModel!.productCategoryName.count {
+                    self.tableData.append(StoreInfoPreferredCategoriesModel(title: self.storeInfoModel!.productCategoryName[i], isChecked: self.storeInfoModel!.isSelected[i], productId: self.storeInfoModel!.productId[i]))
+                    
+                    //if self.storeInfoModel!.isSelected[i] is true, then inser productId in selectedCategories array
+                    if self.storeInfoModel!.isSelected[i] {
+                        self.selectedCategories.insert(self.storeInfoModel!.productId[i].toInt()!, atIndex: self.selectedCategories.count)
+                    }
+                }
+                
+                //Reloading the tableview
+                self.tableView.reloadData()
             } else {
-                 self.view.makeToast("Cancelled", duration: 3.0, position: CSToastPositionBottom)
+                //Show alert if the response is unsuccessful
+                self.showAlert(Constants.Localized.error, message: responseObject["message"] as! String)
             }
-        }
-        presentViewController(socialVC, animated: true, completion: nil)
-        
-    }
-    
-    func shareEMAction(postImage: UIImageView, title: String) {
-        imageToPost = postImage.image
-        let mailComposeViewController = configuredMailComposeViewController()
-        if MFMailComposeViewController.canSendMail() {
-            self.presentViewController(mailComposeViewController, animated: true, completion: nil)
-        } else {
-            self.showSendMailErrorAlert()
-        }
-        /*
-        if MFMailComposeViewController.canSendMail() {
-            let mailComposeVC = MFMailComposeViewController()
-            mailComposeVC.mailComposeDelegate = self
-            mailComposeVC.addAttachmentData(UIImageJPEGRepresentation(postImage.image, CGFloat(1.0))!, mimeType: "image/jpeg", fileName:  "qrcode.jpeg")
             
-            mailComposeVC.setSubject(title)
+            self.hideLoader()
             
-            mailComposeVC.setMessageBody(title, isHTML: true)
+            self.refresh = true
             
-            self.presentViewController(mailComposeVC, animated: true, completion: nil)
-        } else {
-            // show failure alert
-        }*/
-    }
-    
-    func configuredMailComposeViewController() -> MFMailComposeViewController {
-        let mailComposerVC = MFMailComposeViewController()
-        mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
-        
-        mailComposerVC.addAttachmentData(UIImageJPEGRepresentation(imageToPost, CGFloat(1.0))!, mimeType: "image/jpeg", fileName:  "qrcode.jpeg")
-        
-        mailComposerVC.setSubject(title)
-        
-        mailComposerVC.setMessageBody(title, isHTML: true)
-        mailComposerVC.setSubject(title)
-        mailComposerVC.setMessageBody(title, isHTML: false)
-        
-        return mailComposerVC
-    }
-    
-    func showSendMailErrorAlert() {
-        let sendMailErrorAlert = UIAlertView(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", delegate: self, cancelButtonTitle: "OK")
-        sendMailErrorAlert.show()
-    }
-    
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        
-        switch result.value {
-            case MFMailComposeResultCancelled.value:
-            
-                var array = [self.info, StringHelper.localizedStringWithKey("STORE_INFO_CANCEL_EMAIL_LOCALIZE_KEY")]
-                self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
-            
-            case MFMailComposeResultSaved.value:
-            
-                var array = [self.info, StringHelper.localizedStringWithKey("STORE_INFO_SAVE_EMAIL_LOCALIZE_KEY")]
-                self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
-            
-            case MFMailComposeResultSent.value:
-           
-                var array = [self.successTitle, StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY")]
-                self.timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
-           
-            case MFMailComposeResultFailed.value:
-            
-                var array = [self.info, StringHelper.localizedStringWithKey("STORE_INFO_FAIL_EMAIL_LOCALIZE_KEY")]
-                self.timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
-           
-            default:
-                break
-        }
-        
-        controller.dismissViewControllerAnimated(true, completion: nil)
-        
-    }
-    
-    //Success modal
-    func successSharingDialogBox(timer: NSTimer) {
-        var array: NSArray = timer.userInfo as! NSArray
-        let sendMailErrorAlert = UIAlertView(title: array[0] as? String, message: array[1] as? String, delegate: self, cancelButtonTitle: StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY"))
-        sendMailErrorAlert.show()
-        self.timer?.invalidate()
-    }
-    
-    func shareGPAction(postImage: UIImageView, title: String) {
-        self.imageToPost = postImage.image
-        self.googlePlusSignIn()
-        self.updateUI()
-    }
-    
-    //MARK: Show MBProgressHUD bar
-    func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.navigationController?.view.addSubview(self.hud!)
-        self.hud?.show(true)
-    }
-
-    //MARK: Dismiss dim view
-    func dismissView() {
-        UIView.animateWithDuration(0.25, animations: {
-            self.dimView.alpha = 0
-            }, completion: { finished in
-                self.dimView.hidden = true
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                //Catch unsuccessful return from the API
+                if task.statusCode == 401 {
+                    //Call method 'fireRefreshToken' if the token is expired
+                    self.fireRefreshToken(StoreInfoType.GetStroreInfo)
+                } else {
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        //Parsed error message return from the API
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        self.showAlert(self.error, message: errorModel.message)
+                    } else {
+                        self.showAlert(self.error, message: self.somethingWentWrong)
+                    }
+                }
+                
+                self.hideLoader()
         })
     }
     
-    //MARK: Show dim view
-    func showView(){
-        dimView.hidden = false
-        UIView.animateWithDuration(0.25, animations: {
-            self.dimView.alpha = 0.5
-            }, completion: { finished in
+    //MARK: POST METHOD - Generate QR code
+    /*
+    *
+    *
+    *Function to generate QR code
+    *
+    */
+    func generateQr() {
+        self.showHUD()
+        
+        let manager = APIManager.sharedInstance
+        
+        manager.POST(APIAtlas.sellerGenerateQrCode+"\(SessionManager.accessToken())", parameters: nil, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            if responseObject["isSuccessful"] as! Bool {
+                //If isSuccessful is true, get data from 'data'
+                //Check if value if 'qrcodeUrl' inside the 'data' object has content
+                //Else, set qrUrl to empty
+                let value: AnyObject = responseObject["data"]!!
+                if let qrCode = value["qrcodeUrl"] as? String {
+                    self.qrUrl = qrCode
+                    self.hasQRCode = true
+                } else {
+                    self.qrUrl = ""
+                }
+            } else {
+                self.showAlert(self.error, message: self.somethingWentWrong)
+            }
+            
+            self.tableView.reloadData()
+            self.dismissView()
+            
+            self.hud?.hide(true)
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                //Catch unsuccessful return from API
+                if task.statusCode == 401 {
+                    self.fireRefreshToken(StoreInfoType.GenerateQR)
+                } else {
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        //Parsed error message from API return
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        self.showAlert(self.error, message: errorModel.message)
+                    } else {
+                        self.showAlert(self.error, message: self.somethingWentWrong)
+                    }
+                }
+                
+                self.hud?.hide(true)
+                self.dismissView()
         })
     }
-
-    //MARK: Open UzyPicker
-    func callUzyPicker(imageType: String) {
-        self.imageType = imageType
-        let picker: UzysAssetsPickerController = UzysAssetsPickerController()
-        let maxCount: Int = 6
+    
+    //MARK: POST METHOD - Update changes in store info
+    /*
+    *
+    * (Parameters) - if affiliate
+    *                   - storeName, storeDescription, categoryIds, profilePhoto, coverPhoto
+    *                else
+    *                   - storeName, storeDescription, profilePhoto, coverPhoto
+    *
+    *Function to update changes made in store info
+    *
+    */
+    func saveStoreInfo() {
         
-        let imageLimit: Int = 1
-        picker.delegate = self
-        picker.maximumNumberOfSelectionVideo = 0
-        picker.maximumNumberOfSelectionPhoto = 1
-        UzysAssetsPickerController.setUpAppearanceConfig(self.uzyConfig())
-        self.presentViewController(picker, animated: true, completion: nil)
-    }
-    
-    //MARK: Configure UzyPicker appearance
-    func uzyConfig() -> UzysAppearanceConfig {
-        let config: UzysAppearanceConfig = UzysAppearanceConfig()
-        config.finishSelectionButtonColor = Constants.Colors.appTheme
-        return config
-    }
-    
-    //MARK: UzzyPickerDelegate
-    func uzysAssetsPickerController(picker: UzysAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) {
-        let assetsLibrary = ALAssetsLibrary()
-        let alaSset: ALAsset = assets[0] as! ALAsset
-    
-        for allaSset in assets as! [ALAsset] {
-            //let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage(), scale: allaSset.defaultRepresentation().scale(), orientation: allaSset.defaultRepresentation().orientation())!
-            let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullScreenImage().takeUnretainedValue(), scale: 1.0, orientation: UIImageOrientation.Up)!
-            
-            self.setImageProfileCoverPhoto(image)
+        self.showHUD()
+        
+        let manager = APIManager.sharedInstance
+        
+        var datas: [NSData] = []
+        var imagesKeyProfile: [String] = []
+        var imagesKeyCover: [String] = []
+        
+        let url: String = "\(APIAtlas.sellerUpdateSellerInfo)?access_token=\(SessionManager.accessToken())"
+        let parameters: NSDictionary?
+        
+        imagesKeyProfile.append("0")
+        imagesKeyCover.append("0")
+        
+        if self.image != nil && self.imageCover != nil {
+            let data: NSData = UIImageJPEGRepresentation(self.image, 0)
+            let dataCoverPhoto: NSData = UIImageJPEGRepresentation(self.imageCover, 1)
+            datas.append(data)
+            datas.append(dataCoverPhoto)
+        } else if self.image != nil && self.imageCover == nil{
+            let data: NSData = UIImageJPEGRepresentation(self.image, 0)
+            datas.append(data)
+        } else if self.image == nil && self.imageCover != nil {
+            let dataCoverPhoto: NSData = UIImageJPEGRepresentation(self.imageCover, 1)
+            datas.append(dataCoverPhoto)
         }
         
-        //self.reloadUploadCellCollectionViewData()
-        //self.storeInfoTableView.reloadData()
-    }
-    
-    func uzysAssetsPickerControllerDidCancel(picker: UzysAssetsPickerController!) {
+        let data = NSJSONSerialization.dataWithJSONObject(self.selectedCategories, options: nil, error: nil)
+        var formattedCategories: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
         
-    }
-    
-    func uzysAssetsPickerControllerDidExceedMaximumNumberOfSelection(picker: UzysAssetsPickerController!) {
-        
-    }
-    
-    func textViewNextResponder(textView: UITextView) {
-        textView.becomeFirstResponder()
-    }
-    
-    //MARK: Set image/s for StoreInfoTableViewCell imageviews
-    func setImageProfileCoverPhoto(image: UIImage){
-        let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
-        let cell: StoreInfoTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! StoreInfoTableViewCell
-        //cell.collectionView.reloadData()
-        if IMAGETYPE.imageType == "profile" {
-            cell.profilePictureImageView.image = nil
-            cell.profilePictureImageView.image = image
-            self.image = image
+        //Set the parameter of the POST method
+        if self.storeInfoModel!.isReseller {
+            parameters = ["storeName" : self.storeInfoModel!.store_name, "storeDescription" : self.storeInfoModel!.store_description, "categoryIds" : formattedCategories, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
         } else {
-            //Cover photo
-            cell.coverPhotoImageView.image = nil
-            cell.coverPhotoImageView.image = image
-            self.imageCover = image
+            parameters = ["storeName" : self.storeInfoModel!.store_name, "storeDescription" : self.storeInfoModel!.store_description, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
+        }
+        
+        if !self.storeInfoModel!.store_name.isEmpty && !self.storeInfoModel!.store_description.isEmpty {
+            manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
+                
+                //Append images converted into data to multipart
+                for (index, data) in enumerate(datas) {
+                    if self.image != nil && self.imageCover != nil {
+                        if(index == 0){
+                            formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(0)", mimeType: "image/jpeg")
+                        } else {
+                            formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(1)", mimeType: "image/jpeg")
+                        }
+                    } else if self.image != nil && self.imageCover == nil{
+                        formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(index)", mimeType: "image/jpeg")
+                    } else if self.image == nil && self.imageCover != nil {
+                        formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(index)", mimeType: "image/jpeg")
+                    }
+                }
+                
+                }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
+                    self.hud?.hide(true)
+                    
+                    if response["isSuccessful"] as! Bool {
+                        //If isSuccessful is true, call method 'fireStoreInfo' to get store details
+                        self.fireStoreInfo()
+                        self.showAlert(self.successTitle, message: self.success)
+                    } else {
+                        self.showAlert(self.error, message: self.somethingWentWrong)
+                    }
+                    
+                }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    //Catch unsuccessful return from API
+                    if task.statusCode == 401 {
+                        self.fireRefreshToken(StoreInfoType.SaveStoreInfo)
+                    } else {
+                        if error.userInfo != nil {
+                            let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                            //Parsed error messages from API
+                            let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                            self.showAlert(self.error, message: errorModel.message)
+                        } else {
+                            self.showAlert(self.error, message: self.somethingWentWrong)
+                        }
+                    }
+                    self.hud?.hide(true)
+            }
+        } else {
+            self.showAlert(self.error, message: self.empty)
+            self.hud?.hide(true)
+            self.dismissView()
         }
     }
     
-    func reloadUploadCellCollectionViewData() {
-     
+    //MARK: ChangeMobileNumberViewControllerDelegate protocol method
+    //MARK: POST METHOD - Update Mobile Number
+    /*
+    *
+    * (Parameters) - access_token, oldContactNumber, newContactNumber
+    *
+    *Function to mobile number
+    *
+    */
+    func setMobileNumber(newNumber: String, oldNumber: String) {
+        
+        self.showHUD()
+        
+        let manager = APIManager.sharedInstance
+        
+        //Set parameter of the POST method
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldContactNumber" : oldNumber, "newContactNumber" : newNumber];
+        
+        self.mobileNumber = oldNumber
+        self.newContactNumber = newNumber
+        
+        manager.POST(APIAtlas.sellerChangeMobileNumber, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            if responseObject["isSuccessful"] as! Bool {
+                //If isSuccessful is true, call 'storeInfoVerify' method to call VerifyNumberViewController
+                //Set verifyOrChange to 1
+                self.verifyOrChange = 1
+                self.storeInfoVerify(oldNumber)
+            } else {
+                self.showAlert("Error", message: responseObject["message"] as! String)
+                self.dismissView()
+            }
+            
+            self.hud?.hide(true)
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                //Catch unsuccessful return from the API
+                if task.statusCode == 401 {
+                    //Call 'fireRefreshToken' if access token is expired
+                    self.fireRefreshToken(StoreInfoType.SetMobile)
+                } else {
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        //Parsed error messages from API return
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        self.showAlert(self.error, message: errorModel.message)
+                    } else {
+                        self.showAlert(self.error, message: self.somethingWentWrong)
+                    }
+                }
+                
+                self.hud?.hide(true)
+                self.dismissView()
+        })
+    }
+    
+    //MARK: - Resend verification code
+    /*
+    *
+    *Function to resend verification code
+    *
+    */
+    func verifyViewController() {
+        
+        self.showHUD()
+        
+        let manager = APIManager.sharedInstance
+        
+        manager.POST(APIAtlas.sellerResendVerification+"\(SessionManager.accessToken())&mobileNumber=\(self.mobileNumber)", parameters: nil, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            if responseObject["isSuccessful"] as! Bool {
+                //If 'isSuccessful' is true, call VerifyNumberViewController
+                var verifyNumberViewController = VerifyNumberViewController(nibName: "VerifyNumberViewController", bundle: nil)
+                verifyNumberViewController.delegate = self
+                verifyNumberViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+                verifyNumberViewController.providesPresentationContextTransitionStyle = true
+                verifyNumberViewController.definesPresentationContext = true
+                verifyNumberViewController.view.frame.origin.y = verifyNumberViewController.view.frame.size.height
+                self.navigationController?.presentViewController(verifyNumberViewController, animated: true, completion:
+                    nil)
+            } else {
+                //Show alert if isSuuccessful is false
+                self.showAlert(self.error, message: responseObject["message"] as! String)
+                self.dismissView()
+            }
+            
+            self.hud?.hide(true)
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                
+                //Catch unsuccessful return from the API
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    //Call 'fireRefreshToken' if the token is expired
+                    self.fireRefreshToken(StoreInfoType.VerifyNumber)
+                } else {
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        //Parsed error messages from the API return
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        self.showAlert(self.error, message: errorModel.message)
+                    } else {
+                        self.showAlert(self.error, message: self.somethingWentWrong)
+                    }
+                }
+                
+                self.hud?.hide(true)
+                self.dismissView()
+        })
+        self.showView()
     }
 
-    //MARK: Dismiss keyboard
-    func dismissKeyboard(){
-        self.view.endEditing(true)
-    }
-    
-    //MARK: Alert view
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        
-        let OKAction = UIAlertAction(title: self.ok, style: .Default) { (action) in
-            alertController.dismissViewControllerAnimated(true, completion: nil)
-        }
-        
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true, completion: nil)
-    }
-    
     /*
     // MARK: - Navigation
 
