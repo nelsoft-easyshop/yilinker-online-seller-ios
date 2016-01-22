@@ -59,7 +59,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
 
         // Do any additional setup after loading the view.
         costumizeViews()
-        
+        self.view.userInteractionEnabled = true
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "hideKeyboard:"))
         //self.profileContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "instantSignin:"))
         self.rememberMeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "rememberMeAction:"))
@@ -328,7 +328,6 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             })
         }
     }
-
     
     func signinSuccessful() {
         
@@ -376,9 +375,12 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             self.storeInfoModel = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
             //self.populateData()
             
-//            self.profileImageView.sd_setImageWithURL(self.storeInfoModel?.avatar, placeholderImage: UIImage(named: "dummy-placeholder"))
-            self.setSellerImage(self.storeInfoModel!.avatar)
+            self.profileImageView.sd_setImageWithURL(self.storeInfoModel?.avatar, placeholderImage: UIImage(named: "dummy-placeholder"))
+            self.profileImageView.frame = self.profileContainerView.bounds
+            self.profileImageView.contentMode = .ScaleAspectFill
+//            self.setSellerImage(self.storeInfoModel!.avatar)
             
+            self.view.userInteractionEnabled = false
             self.hud?.hide(true)
             
             NSUserDefaults.standardUserDefaults().setObject(self.storeInfoModel?.store_name, forKey: "storeName")
@@ -390,13 +392,11 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             
             NSUserDefaults.standardUserDefaults().synchronize()
             
-//            let delay = 1.0 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
-//            var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-//            dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-//                
-//                self.dismissViewControllerAnimated(true, completion: nil)
-//                
-//            })
+            let delay = 3.0 * Double(NSEC_PER_SEC)
+            var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+            dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
             
             self.delegate?.passStoreInfoModel(self.storeInfoModel!)
             
