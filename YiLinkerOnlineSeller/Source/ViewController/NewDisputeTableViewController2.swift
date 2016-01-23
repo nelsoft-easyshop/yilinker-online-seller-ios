@@ -10,43 +10,17 @@ import UIKit
 
 class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, DisputeTextFieldTableViewCellDelegate, AddProductHeaderViewDelegate, ResolutionCenterProductListViewControllereDelegate, SelectedProductTableViewCellDelegate, RemarksTableViewCellDelegate {
     
+    // Constant variable declarations
+    let textFieldRowHeight: CGFloat = 72
+    let remarksHeight: CGFloat = 194
     let cellTextFieldIdentifier: String = "DisputeTextFieldTableViewCell"
     let cellTextFieldNibName: String = "DisputeTextFieldTableViewCell"
-    
     let productCellIdentifier: String = "SelectedProductTableViewCell"
     let productCellNibName: String = "SelectedProductTableViewCell"
-    
     let remarksCellNibName: String = "RemarksTableViewCell"
     let remarksIdentifier: String = "RemarksTableViewCell"
     
-    let textFieldRowHeight: CGFloat = 72
-    let remarksHeight: CGFloat = 194
-    
-    var hud: MBProgressHUD?
-    var transactionsModel: TransactionsModel = TransactionsModel()
-    var transactionDefaultIndex: Int = 0
-    var disputeTypeDefaultIndex: Int = 0
-    var reasonDefaultIndex: Int = 0
-    
-    var currentTextField: UITextField = UITextField()
-    let disputeType: [String] = ["Refund", "Replacement"]
-    
-    var disputePickerType: DisputePickerType = DisputePickerType.TransactionList
-    
-    var products: [TransactionOrderProductModel] = []
-    var reason: ResolutionCenterDisputeReasonModel?
-    var reasonTableData: [ResolutionCenterDisputeReasonModel] = []
-    var reasons: [ResolutionCenterDisputeReasonsModel] = []
-    var reas: ResolutionCenterDisputeReasonsModel!
-    var transactionIds: [String] = []
-    var resolutiontitle: String = ""
-    var resolutionTransactionId: String = ""
-    var resolutionDisputeType: String = ""
-    var resolutionReason: String = ""
-    var remarks: String = ""
-    var isValid: Bool = false
-    
-    //Localize strings
+    // Localize strings
     let newDispute: String = StringHelper.localizedStringWithKey("RESOLUTION_CASES_LOCALIZE_KEY")
     let disputeTitle: String = StringHelper.localizedStringWithKey("DISPUTE_TITLE_LOCALIZE_KEY")
     let transactionNoTitle: String = StringHelper.localizedStringWithKey("DISPUTE_TRANSACTION_NO_LOCALIZE_KEY")
@@ -62,18 +36,51 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     let addCaseTitle: String = StringHelper.localizedStringWithKey("DISPUTE_ADD_CASE_LOCALIZE_KEY")
     let addProductTitle: String = StringHelper.localizedStringWithKey("DISPUTE_ADD_LOCALIZE_KEY")
     
+    // Models
+    var products: [TransactionOrderProductModel] = []
+    var reason: ResolutionCenterDisputeReasonModel?
+    var reasonTableData: [ResolutionCenterDisputeReasonModel] = []
+    var reasons: [ResolutionCenterDisputeReasonsModel] = []
+    var reas: ResolutionCenterDisputeReasonsModel!
+    var transactionsModel: TransactionsModel = TransactionsModel()
+    
+    // Global variables declaration
+    var disputePickerType: DisputePickerType = DisputePickerType.TransactionList
+    var hud: MBProgressHUD?
+    
+    var currentTextField: UITextField = UITextField()
+    
+    let disputeType: [String] = ["Refund", "Replacement"]
+    var transactionIds: [String] = []
+    
+    var isValid: Bool = false
+    var transactionDefaultIndex: Int = 0
+    var disputeTypeDefaultIndex: Int = 0
+    var reasonDefaultIndex: Int = 0
+    var resolutiontitle: String = ""
+    var resolutionTransactionId: String = ""
+    var resolutionDisputeType: String = ""
+    var resolutionReason: String = ""
+    var remarks: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.fireRegisterCell()
+        self.title = addCaseTitle
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        
+        self.fireRegisterCell()
         self.fireGetTransactions()
         self.fireGetReasons()
-        self.title = addCaseTitle
         self.backButton()
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
     
+    // MARK: - Navigation bar
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -87,10 +94,10 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
+    // MARK: - Back button actions
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
-    
     
     func checkButton() {
         var checkButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
@@ -104,7 +111,14 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         
         self.navigationItem.rightBarButtonItems = [navigationSpacer, customCheckButton]
     }
+
+    // MARK: - Private Methods
+    // MARK: Keyboard done action
+    func done() {
+        self.tableView.endEditing(true)
+    }
     
+    // MARK: - Register nib files
     func fireRegisterCell() {
         let textFieldCellNib: UINib = UINib(nibName: self.cellTextFieldNibName, bundle: nil)
         self.tableView.registerNib(textFieldCellNib, forCellReuseIdentifier: self.cellTextFieldIdentifier)
@@ -116,13 +130,191 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         self.tableView.registerNib(remarksCellNib, forCellReuseIdentifier: self.remarksIdentifier)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    // MARK: - Show alert view
+    func showAlert(title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
     }
-
-    // MARK: - Table view data source
-
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    // MARK: - Add picker view to textfield
+    func addPicker(textField: UITextField) {
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        
+        let pickerView: UIPickerView = UIPickerView(frame:CGRectMake(0, 0, screenSize.width, 225))
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        
+        if self.disputePickerType == DisputePickerType.TransactionList {
+            pickerView.selectRow(self.transactionDefaultIndex, inComponent: 0, animated: false)
+        } else if self.disputePickerType == DisputePickerType.DisputeType {
+            pickerView.selectRow(self.disputeTypeDefaultIndex, inComponent: 0, animated: false)
+        } else {
+            pickerView.selectRow(self.reasonDefaultIndex, inComponent: 0, animated: false)
+        }
+        
+        if self.disputePickerType == DisputePickerType.TransactionList {
+            self.isValid = true
+            if self.transactionsModel.transactions.count != 0 {
+                self.currentTextField.text = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
+                self.resolutionTransactionId = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
+            }
+        } else if self.disputePickerType == DisputePickerType.DisputeType {
+            self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].key2
+            self.resolutionDisputeType = self.reasonTableData[self.disputeTypeDefaultIndex].key2
+        } else {
+            self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[self.reasonDefaultIndex].reason
+            self.resolutionReason = self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[self.reasonDefaultIndex].reason
+        }
+        
+        textField.inputView = pickerView
+        
+        textField.addToolBarWithDoneTarget(self, done: "done")
+    }
+    
+    // MARK: - Picker view delegate methods
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if self.disputePickerType == DisputePickerType.TransactionList {
+            if self.transactionsModel.transactions.count != 0 {
+                self.transactionDefaultIndex = row
+                self.currentTextField.text = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
+            }
+        } else if self.disputePickerType == DisputePickerType.DisputeType {
+            self.disputeTypeDefaultIndex = row
+            self.reasonDefaultIndex = 0
+            self.currentTextField.text = self.reason!.key[row]
+        } else {
+            self.reasonDefaultIndex = row
+            self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[row].reason
+        }
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if self.disputePickerType == DisputePickerType.TransactionList {
+            return self.transactionsModel.transactions.count
+        } else if self.disputePickerType == DisputePickerType.DisputeType {
+            return self.reason!.key.count
+        } else {
+            return self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2.count
+        }
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+        if self.disputePickerType == DisputePickerType.TransactionList {
+            return self.transactionsModel.transactions[row].invoice_number
+        } else if self.disputePickerType == DisputePickerType.DisputeType{
+            return self.reason!.key[row]
+        } else {
+            return self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[row].reason
+        }
+        
+    }
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    // MARK: - DisputeTextFieldTableViewCell delegate methods
+    func disputeTextFieldTableViewCell(disputeTextFieldTableViewCell: DisputeTextFieldTableViewCell, editingAtTextField textField: UITextField) {
+        self.resolutiontitle = textField.text
+    }
+    
+    func disputeTextFieldTableViewCell(disputeTextFieldTableViewCell: DisputeTextFieldTableViewCell, didStartEditingAtTextField textField: UITextField) {
+        let indexPath: NSIndexPath = self.tableView.indexPathForCell(disputeTextFieldTableViewCell)!
+        if indexPath.row == 0 && indexPath.section == 0 {
+            
+        } else if indexPath.row == 1 && indexPath.section == 0 {
+            self.currentTextField = disputeTextFieldTableViewCell.textField
+            self.disputePickerType = DisputePickerType.TransactionList
+            self.addPicker(disputeTextFieldTableViewCell.textField)
+        } else if indexPath.row == 2 && indexPath.section == 0 {
+            self.currentTextField = disputeTextFieldTableViewCell.textField
+            self.disputePickerType = DisputePickerType.DisputeType
+            self.addPicker(disputeTextFieldTableViewCell.textField)
+        }  else if indexPath.row == 3 && indexPath.section == 0 {
+            self.currentTextField = disputeTextFieldTableViewCell.textField
+            self.disputePickerType = DisputePickerType.ReasonType
+            self.addPicker(disputeTextFieldTableViewCell.textField)
+        }
+        
+    }
+    
+    // MARK: - AddProductHeaderView delegate method
+    func addProductHeaderView(addProductHeaderView: AddProductHeaderView, didClickButtonAdd button: UIButton) {
+        if self.isValid {
+            let resolutionCenterProductListViewController: ResolutionCenterProductListViewController = ResolutionCenterProductListViewController(nibName: "ResolutionCenterProductListViewController", bundle: nil)
+            if self.transactionsModel.transactions.count != 0 {
+                resolutionCenterProductListViewController.transactionId = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
+                resolutionCenterProductListViewController.delegate = self
+                self.products.removeAll(keepCapacity: false)
+                self.navigationController?.pushViewController(resolutionCenterProductListViewController, animated: true)
+            }
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please select transaction number.", title: "Incomplete product details")
+        }
+    }
+    
+    // MARK: - ResolutionCenterProductListViewControllere Delegate methods
+    func resolutionCenterProductListViewController(resolutionCenterProductListViewController: ResolutionCenterProductListViewController, didSelecteProducts products: [TransactionOrderProductModel]) {
+        for (index, product) in enumerate(products) {
+            for p in self.products {
+                /*if p.productId == product.productId {
+                self.navigationController?.view.makeToast("Some Item/s has been selected twice.")
+                } else {
+                self.products.append(product)
+                }*/
+                //self.products.append(product)
+            }
+            self.products.append(product)
+            if self.products.count == 0 {
+                self.products.append(product)
+            }
+        }
+        
+        self.tableView.reloadData()
+    }
+    
+    // MARK: - SelectedProductTableViewCell delegate methods
+    func selectedProductTableViewCell(selectedProductTableViewCell: SelectedProductTableViewCell, didTapDeleteButton button: UIButton) {
+        let indexPath: NSIndexPath = self.tableView.indexPathForCell(selectedProductTableViewCell)!
+        self.products.removeAtIndex(indexPath.row)
+        self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: indexPath.row, inSection: 1)], withRowAnimation: UITableViewRowAnimation.Left)
+    }
+    
+    // MARK: - RemarksTableViewCell delegate methods
+    func remarksTableViewCellDelegate(remarksTableViewCell: RemarksTableViewCell, didTapSubmit button: UIButton) {
+        if self.resolutiontitle == "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Title is required.")
+        } else if self.products.count == 0 {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Selecting a product is required.")
+        } else if remarksTableViewCell.textView.text == "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Remarks is required.")
+        } else if self.resolutionTransactionId == "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Transaction id is required.")
+        } else if self.resolutionDisputeType == "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Dispute type is required.")
+        } else if self.resolutionReason == "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Reason is required.")
+        } else {
+            self.fireAddCase(remarksTableViewCell.textView.text)
+        }
+    }
+    
+    // MARK: - Tableview  delegate and data source methods
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
@@ -141,8 +333,8 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         }
     }
 
-    //10: refund
-    //16: replacement
+    // 10: refund
+    // 16: replacement
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell: DisputeTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.cellTextFieldIdentifier) as! DisputeTextFieldTableViewCell
@@ -220,6 +412,16 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         }
     }
     
+    // MARK: -
+    // MARK: - REST API request
+    // MARK: POST METHOD - Get transaction list
+    /*
+    *
+    * (Parameters) - access_token, type
+    *
+    * Function to get transaction list
+    *
+    */
     func fireGetTransactions() {
         self.showHUD()
         let manager = APIManager.sharedInstance
@@ -260,6 +462,14 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
 
     }
     
+    // MARK: POST METHOD - Get dispute reasons
+    /*
+    *
+    * (Parameters) - access_token
+    *
+    * Function to get dispute reasons depending on the selected type of dispute (Replacement/Refund)
+    *
+    */
     func fireGetReasons() {
         self.showHUD()
         let manager = APIManager.sharedInstance
@@ -308,6 +518,14 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         
     }
     
+    // MARK: POST METHOD - Refresh token
+    /*
+    *
+    * (Parameters) - client_id, client_secret, grant_type, refresh_token
+    *
+    * Function to refresh token to get another access token
+    *
+    */
     func fireRefreshToken(disputeRefreshType: DisputeRefreshType) {
         self.showHUD()
         let manager = APIManager.sharedInstance
@@ -347,183 +565,14 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
         
     }
     
-    func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.navigationController?.view.addSubview(self.hud!)
-        self.hud?.show(true)
-    }
-    
-    func addPicker(textField: UITextField) {
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
-
-        let pickerView: UIPickerView = UIPickerView(frame:CGRectMake(0, 0, screenSize.width, 225))
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        
-        if self.disputePickerType == DisputePickerType.TransactionList {
-            pickerView.selectRow(self.transactionDefaultIndex, inComponent: 0, animated: false)
-        } else if self.disputePickerType == DisputePickerType.DisputeType {
-            pickerView.selectRow(self.disputeTypeDefaultIndex, inComponent: 0, animated: false)
-        } else {
-            pickerView.selectRow(self.reasonDefaultIndex, inComponent: 0, animated: false)
-        }
-        
-        if self.disputePickerType == DisputePickerType.TransactionList {
-            self.isValid = true
-            if self.transactionsModel.transactions.count != 0 {
-                self.currentTextField.text = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number//self.transactionIds[self.transactionDefaultIndex]
-                self.resolutionTransactionId = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
-            } else {
-                //self.showAlert(title: Constants.Localized.no, message: StringHelper.localizedStringWithKey("TRANSACTIONS_NO_TRANSACTIONS_AVAIL_LOCALIZE_KEY"))
-            }
-        } else if self.disputePickerType == DisputePickerType.DisputeType {
-            self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].key2
-            self.resolutionDisputeType = self.reasonTableData[self.disputeTypeDefaultIndex].key2
-        } else {
-            self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[self.reasonDefaultIndex].reason
-            self.resolutionReason = self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[self.reasonDefaultIndex].reason
-        }
-        
-       
-        textField.inputView = pickerView
-        
-        textField.addToolBarWithDoneTarget(self, done: "done")
-    }
-    
-    func done() {
-        self.tableView.endEditing(true)
-    }
-    
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if self.disputePickerType == DisputePickerType.TransactionList {
-            if self.transactionsModel.transactions.count != 0 {
-                self.transactionDefaultIndex = row
-                self.currentTextField.text = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
-            }
-        } else if self.disputePickerType == DisputePickerType.DisputeType {
-            self.disputeTypeDefaultIndex = row
-            self.reasonDefaultIndex = 0
-            self.currentTextField.text = self.reason!.key[row]
-        } else {
-            self.reasonDefaultIndex = row
-            self.currentTextField.text = self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[row].reason
-        }
-    }
-    
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if self.disputePickerType == DisputePickerType.TransactionList {
-           return self.transactionsModel.transactions.count
-        } else if self.disputePickerType == DisputePickerType.DisputeType {
-           return self.reason!.key.count
-        } else {
-            return self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2.count
-        }
-    }
-    
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
-        if self.disputePickerType == DisputePickerType.TransactionList {
-            return self.transactionsModel.transactions[row].invoice_number
-        } else if self.disputePickerType == DisputePickerType.DisputeType{
-            return self.reason!.key[row]
-        } else {
-            return self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[row].reason
-        }
-
-    }
-
-    func disputeTextFieldTableViewCell(disputeTextFieldTableViewCell: DisputeTextFieldTableViewCell, editingAtTextField textField: UITextField) {
-        self.resolutiontitle = textField.text
-    }
-    
-    func disputeTextFieldTableViewCell(disputeTextFieldTableViewCell: DisputeTextFieldTableViewCell, didStartEditingAtTextField textField: UITextField) {
-        let indexPath: NSIndexPath = self.tableView.indexPathForCell(disputeTextFieldTableViewCell)!
-        if indexPath.row == 0 && indexPath.section == 0 {
-            
-        } else if indexPath.row == 1 && indexPath.section == 0 {
-            self.currentTextField = disputeTextFieldTableViewCell.textField
-            self.disputePickerType = DisputePickerType.TransactionList
-            self.addPicker(disputeTextFieldTableViewCell.textField)
-        } else if indexPath.row == 2 && indexPath.section == 0 {
-            self.currentTextField = disputeTextFieldTableViewCell.textField
-            self.disputePickerType = DisputePickerType.DisputeType
-            self.addPicker(disputeTextFieldTableViewCell.textField)
-        }  else if indexPath.row == 3 && indexPath.section == 0 {
-            self.currentTextField = disputeTextFieldTableViewCell.textField
-            self.disputePickerType = DisputePickerType.ReasonType
-            self.addPicker(disputeTextFieldTableViewCell.textField)
-        }
-
-    }
-    
-    func addProductHeaderView(addProductHeaderView: AddProductHeaderView, didClickButtonAdd button: UIButton) {
-        if self.isValid {
-            let resolutionCenterProductListViewController: ResolutionCenterProductListViewController = ResolutionCenterProductListViewController(nibName: "ResolutionCenterProductListViewController", bundle: nil)
-            if self.transactionsModel.transactions.count != 0 {
-                resolutionCenterProductListViewController.transactionId = self.transactionsModel.transactions[self.transactionDefaultIndex].invoice_number
-                resolutionCenterProductListViewController.delegate = self
-                self.products.removeAll(keepCapacity: false)
-                self.navigationController?.pushViewController(resolutionCenterProductListViewController, animated: true)
-            }
-        } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please select transaction number.", title: "Incomplete product details")
-        }
-    }
-    
-    func resolutionCenterProductListViewController(resolutionCenterProductListViewController: ResolutionCenterProductListViewController, didSelecteProducts products: [TransactionOrderProductModel]) {
-        for (index, product) in enumerate(products) {
-            for p in self.products {
-                /*if p.productId == product.productId {
-                    self.navigationController?.view.makeToast("Some Item/s has been selected twice.")
-                } else {
-                    self.products.append(product)
-                }*/
-                //self.products.append(product)
-            }
-            self.products.append(product)
-            if self.products.count == 0 {
-                self.products.append(product)
-            }
-        }
-        
-        self.tableView.reloadData()
-    }
-    
-    func selectedProductTableViewCell(selectedProductTableViewCell: SelectedProductTableViewCell, didTapDeleteButton button: UIButton) {
-        let indexPath: NSIndexPath = self.tableView.indexPathForCell(selectedProductTableViewCell)!
-        self.products.removeAtIndex(indexPath.row)
-        self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: indexPath.row, inSection: 1)], withRowAnimation: UITableViewRowAnimation.Left)
-    }
-    
-    func remarksTableViewCellDelegate(remarksTableViewCell: RemarksTableViewCell, didTapSubmit button: UIButton) {
-        
-        if self.resolutiontitle == "" {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Title is required.")
-        } else if self.products.count == 0 {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Selecting a product is required.")
-        } else if remarksTableViewCell.textView.text == "" {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Remarks is required.")
-        } else if self.resolutionTransactionId == "" {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Transaction id is required.")
-        } else if self.resolutionDisputeType == "" {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Dispute type is required.")
-        } else if self.resolutionReason == "" {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Reason is required.")
-        } else {
-            self.fireAddCase(remarksTableViewCell.textView.text)
-        }
-    }
-    
+    // MARK: POST METHOD - Add new dispute case
+    /*
+    *
+    * (Parameters) - access_token, disputeTitle, remarks, orderProductStatus, reasonId, orderProductIds
+    *
+    * Function to file new dispute
+    *
+    */
     func fireAddCase(remarks: String) {
         self.showHUD()
         self.remarks = remarks
@@ -543,6 +592,7 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             status = 16
         }
         
+        // Add parameter to POST method
         let parameters: NSDictionary = [
             "access_token": SessionManager.accessToken(),
             "disputeTitle": self.resolutiontitle,
@@ -575,16 +625,8 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
                     } else {
                         self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
                     }
-                    //self.navigationController?.view.makeToast(Constants.Localized.someThingWentWrong)
                 }
                 self.hud?.hide(true)
         })
-    }
-    
-    func showAlert(title: String!, message: String!) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
-        alertController.addAction(defaultAction)
-        presentViewController(alertController, animated: true, completion: nil)
     }
 }
