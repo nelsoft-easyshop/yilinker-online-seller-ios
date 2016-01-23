@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Strings
 struct ResolutionStrings {
     static let title = StringHelper.localizedStringWithKey("RESOLUTION_TITLE_LOCALIZE_KEY")
     static let cases = StringHelper.localizedStringWithKey("RESOLUTION_CASES_LOCALIZE_KEY")
@@ -18,49 +19,46 @@ struct ResolutionStrings {
 }
 
 class ResolutionCenterViewControllerV2: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    // Buttons
     @IBOutlet weak var casesTab: UIButton!
-    @IBOutlet weak var openTab: UIButton!
     @IBOutlet weak var closedTab: UIButton!
-    var tabSelector = ButtonToTabBehaviorizer()
     @IBOutlet weak var disputeButton: UIButton!
-    var dimView: UIView? = nil
+    @IBOutlet weak var openTab: UIButton!
     
-    @IBOutlet weak var resolutionTableView: UITableView!
-    var tableData = [ResolutionCenterElement]()
-    /*: [(ResolutionCenterElement)] =
-    [ ("7889360001", "Open"  , "December 12, 2015", "Seller", "Not Happy", "It's okay")
-    ,("7889360002", "Closed", "January 2, 2016"  , "Buyer" , "Yo wassup", "Go voltron!")
-    ,("7889360003", "Open"  , "February 4, 2016" , "Seller", "hmm...", "hack'd'planet")
-    ,("2345647856", "Open"  , "January 21, 2016" , "Seller", "Numbers game", "13")
-    ,("2345647856", "Closed", "January 21, 2016" , "Buyer" , "On-start", "What's goin on")]
-    **/
-    
-    @IBOutlet weak var casesContainerView: UIView!
+    // Imageviews
     @IBOutlet weak var casesImageView: UIImageView!
-    @IBOutlet weak var casesLabel: UILabel!
-    @IBOutlet weak var openContainerView: UIView!
-    @IBOutlet weak var openImageView: UIImageView!
-    @IBOutlet weak var openLabel: UILabel!
-    @IBOutlet weak var closedContainerView: UIView!
     @IBOutlet weak var closedImageView: UIImageView!
+    @IBOutlet weak var openImageView: UIImageView!
+    
+    // Labels
+    @IBOutlet weak var casesLabel: UILabel!
     @IBOutlet weak var closedLabel: UILabel!
     @IBOutlet weak var emptyLabel: UILabel!
+    @IBOutlet weak var openLabel: UILabel!
+    
+    // Tableview
+    @IBOutlet weak var resolutionTableView: UITableView!
+    
+    // Views
+    @IBOutlet weak var casesContainerView: UIView!
+    @IBOutlet weak var closedContainerView: UIView!
+    @IBOutlet weak var openContainerView: UIView!
+    
+    // Model
+    var resolutionCenterModel: ResolutionCenterModel!
     
     var currentSelectedFilter = SelectedFilters(time:.Total,status:.Both)
+    var tableData = [ResolutionCenterElement]()
+    var tabSelector = ButtonToTabBehaviorizer()
     
+    // Global Variables
     var hud: MBProgressHUD?
-    
-    /// Don't Call fireGetCases() everytime this screen is shown
-    /// Call it intentionally whenever a screen completes
-    //override func viewDidAppear(animated: Bool) {
-    //    super.viewDidAppear(animated)
-    //    fireGetCases()
-    //}
-    
-    var resolutionCenterModel: ResolutionCenterModel!
+    var dimView: UIView? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Initialize tab-behavior for buttons
         tabSelector.viewDidLoadInitialize(casesTab, second: openTab, third: closedTab)
         
@@ -68,27 +66,25 @@ class ResolutionCenterViewControllerV2: UIViewController, UITableViewDataSource,
         resolutionTableView.dataSource = self
         resolutionTableView.delegate = self
         
-        // Load custom cell
-        let nib = UINib(nibName:"ResolutionCenterCell", bundle:nil)
-        resolutionTableView.registerNib(nib, forCellReuseIdentifier: "RcCell")
-        resolutionTableView.rowHeight = 108
-        
-        setupNavigationBar()
-        
         // Dispute button
         disputeButton.addTarget(self, action:"disputePressed", forControlEvents:.TouchUpInside)
         
+        //Set text to labels
         self.casesLabel.text = ResolutionStrings.cases
         self.openLabel.text = ResolutionStrings.open
         self.closedLabel.text = ResolutionStrings.closed
         self.disputeButton.setTitle(ResolutionStrings.file, forState: .Normal)
         self.emptyLabel.text = ResolutionStrings.emptyText
         
+        //Added tap gesture recognizer to views
         self.casesContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "casesAction:"))
         self.openContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "openAction:"))
         self.closedContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "closedAction:"))
         
-        setSelectedTab(0)
+        self.setSelectedTab(0)
+        
+        self.registerNib()
+        self.setupNavigationBar()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -100,25 +96,6 @@ class ResolutionCenterViewControllerV2: UIViewController, UITableViewDataSource,
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    // MARK: initialization functions
-    func setupNavigationBar() {
-        // Title text in Navigation Bar will now turn WHITE
-        self.title = ResolutionStrings.title
-        self.navigationController!.navigationBar.barStyle = UIBarStyle.Black
-        
-        // Back button
-        let backButton = UIBarButtonItem(title:" ", style:.Plain, target: self, action:"goBackButton")
-        backButton.image = UIImage(named: "back-white")
-        backButton.tintColor = UIColor.whiteColor()
-        self.navigationItem.leftBarButtonItem = backButton
-        
-        // Filter button
-        let filterButton = UIBarButtonItem(title:" ", style:.Plain, target: self, action:"goFilterButton")
-        filterButton.image = UIImage(named: "filter-resolution")
-        filterButton.tintColor = UIColor.whiteColor()
-        self.navigationItem.rightBarButtonItem = filterButton
     }
     
     // MARK: UITableViewDelegate
@@ -144,6 +121,7 @@ class ResolutionCenterViewControllerV2: UIViewController, UITableViewDataSource,
         return cell
     }
     
+    // MARK: Buttons actions
     // MARK: Tab Selection Logic
     @IBAction func casesPressed(sender: AnyObject) {
         if self.tabSelector.didSelectTheSameTab(sender) {
@@ -172,8 +150,69 @@ class ResolutionCenterViewControllerV2: UIViewController, UITableViewDataSource,
         fireGetCases()
     }
     
-    // MARK: - Tabs Actions
+    // MARK: Navigation bar
+    // Add navigation bar buttons
+    func setupNavigationBar() {
+        // Title text in Navigation Bar will now turn WHITE
+        self.title = ResolutionStrings.title
+        self.navigationController!.navigationBar.barStyle = UIBarStyle.Black
+        
+        // Back button
+        let backButton = UIBarButtonItem(title:" ", style:.Plain, target: self, action:"goBackButton")
+        backButton.image = UIImage(named: "back-white")
+        backButton.tintColor = UIColor.whiteColor()
+        self.navigationItem.leftBarButtonItem = backButton
+        
+        // Filter button
+        let filterButton = UIBarButtonItem(title:" ", style:.Plain, target: self, action:"goFilterButton")
+        filterButton.image = UIImage(named: "filter-resolution")
+        filterButton.tintColor = UIColor.whiteColor()
+        self.navigationItem.rightBarButtonItem = filterButton
+    }
     
+    // Show loader
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    // MARK: - Navigation Bar Buttons actions
+    func goBackButton() {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func goFilterButton() {
+        let filtrationNav =
+        self.storyboard?.instantiateViewControllerWithIdentifier("FilterNavigationController")
+            as! UINavigationController
+        let filtrationView = filtrationNav.viewControllers[0] as! ResolutionFilterViewController
+        filtrationView.delegate = self
+        
+        self.navigationController?.presentViewController(filtrationNav, animated: true, completion: nil)
+    }
+    
+    func applyFilter() {
+        switch self.currentSelectedFilter.status {
+        case .Both:
+            tabSelector.setSelection(.TabOne)
+        case .Open:
+            tabSelector.setSelection(.TabTwo)
+        case .Closed:
+            tabSelector.setSelection(.TabThree)
+        default:
+            tabSelector.setSelection(.TabOne)
+        }
+    }
+    
+    // MARK: - Tabs Actions
     func casesAction(gesture: UIGestureRecognizer) {
         setSelectedTab(0)
         self.currentSelectedFilter.status = .Both
@@ -195,6 +234,29 @@ class ResolutionCenterViewControllerV2: UIViewController, UITableViewDataSource,
         self.emptyLabel.hidden = true
     }
     
+    // MARK: Private methods
+    // MARK: - New Dispute View Controller
+    func disputePressed() {
+        let newDisputeTableviewController: NewDisputeTableViewController2 = NewDisputeTableViewController2(nibName: "NewDisputeTableViewController2", bundle: nil)
+        self.navigationController?.pushViewController(newDisputeTableviewController, animated:true)
+    }
+    
+    // MARK: Use to format date in 'yyyy-MM-dd' format eg. 2016-01-23
+    func formatDateToCompleteString(date: NSDate) -> String {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.stringFromDate(date)
+    }
+    
+    // Register nib files
+    func registerNib() {
+        // Load custom cell
+        let nib = UINib(nibName:"ResolutionCenterCell", bundle:nil)
+        resolutionTableView.registerNib(nib, forCellReuseIdentifier: "RcCell")
+        resolutionTableView.rowHeight = 108
+    }
+    
+    //MARK: Set selected tab
     func setSelectedTab(index: Int) {
         self.casesContainerView.backgroundColor = Constants.Colors.appTheme
         self.casesImageView.image = UIImage(named: "cases2-a")
@@ -223,100 +285,44 @@ class ResolutionCenterViewControllerV2: UIViewController, UITableViewDataSource,
         }
     }
     
-    // Mark: - New Dispute View Controller
-    func disputePressed() {
-        let newDisputeTableviewController: NewDisputeTableViewController2 = NewDisputeTableViewController2(nibName: "NewDisputeTableViewController2", bundle: nil)
-        self.navigationController?.pushViewController(newDisputeTableviewController, animated:true)
-    }
-    
-    // Mark: - OLD VERSION FOR MODAL File a Dispute
-    private func disputeOldPressed() {
-        var attributeModal = DisputeViewController(nibName: "DisputeViewController", bundle: nil)
-        attributeModal.delegate = self
-        attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        attributeModal.providesPresentationContextTransitionStyle = true
-        attributeModal.definesPresentationContext = true
-        attributeModal.view.backgroundColor = UIColor.clearColor()
-        attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
+    // MARK: Alert view
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         
-        //UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(attributeModal, animated: true, completion: nil)
-        self.navigationController?.presentViewController(attributeModal, animated: true, completion: nil)
-        
-        if self.dimView == nil {
-            let dimView = UIView(frame: self.view.frame)
-            dimView.tag = 1337;
-            dimView.backgroundColor = UIColor.blackColor();
-            dimView.alpha = 0.7;
-            self.dimView = dimView
+        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
+            self.dismissViewControllerAnimated(true, completion: nil)
         }
-        self.view.addSubview(self.dimView!);
         
+        alertController.addAction(OKAction)
         
-        UIView.animateWithDuration(0.3, animations: {
-            self.dimView?.alpha = 0.5
-            self.dimView?.layer.zPosition = 2
-            //self.view.transform = CGAffineTransformMakeScale(0.92, 0.95)
-            //self.navigationController?.navigationBar.alpha = 0.0
-        })
+        self.presentViewController(alertController, animated: true) {
+        }
     }
     
+    // MARK: - Delegate methods
     func dissmissDisputeViewController(controller: DisputeViewController, type: String) {
         
         UIView.animateWithDuration(0.3, animations: {
             self.dimView?.alpha = 0
             self.dimView?.layer.zPosition = -1
-            //self.view.transform = CGAffineTransformMakeTranslation(1, 1)
-            //self.navigationController?.navigationBar.alpha = CGFl oat(self.visibility)
         })
     }
     
-    // MARK: - Navigation Bar Buttons
-    func goBackButton() {
-        self.navigationController?.popViewControllerAnimated(true)
-    }
-    
-    func goFilterButton() {
-        let filtrationNav =
-        self.storyboard?.instantiateViewControllerWithIdentifier("FilterNavigationController")
-            as! UINavigationController
-        let filtrationView = filtrationNav.viewControllers[0] as! ResolutionFilterViewController
-        filtrationView.delegate = self
-        
-        self.navigationController?.presentViewController(filtrationNav, animated: true, completion: nil)
-    }
-    
-    func applyFilter() {
-        switch self.currentSelectedFilter.status {
-        case .Both:
-            tabSelector.setSelection(.TabOne)
-        case .Open:
-            tabSelector.setSelection(.TabTwo)
-        case .Closed:
-            tabSelector.setSelection(.TabThree)
-        default:
-            tabSelector.setSelection(.TabOne)
-        }
-        //        fireGetCases()
-    }
-    
-    func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
-    }
-    
+    // MARK: -
+    // MARK: - REST API request
+    // MARK: POST METHOD - Get cases
+    /*
+    *
+    * (Parameters) - access_token, disputeStatusType, dateFrom, dateTo
+    *
+    * Function to get all the field cases of seller
+    *
+    */
     func fireGetCases() {
         self.showHUD()
         
         let manager = APIManager.sharedInstance
-        var parameters: NSDictionary = NSDictionary();
+        var parameters: NSDictionary = NSDictionary()
         var urlString: String = APIAtlas.getResolutionCenterCases
         
         // add filters to parameter
@@ -365,7 +371,6 @@ class ResolutionCenterViewControllerV2: UIViewController, UITableViewDataSource,
                 }
             }
         }
-        println(parameters)
         
         manager.GET(urlString, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -380,7 +385,6 @@ class ResolutionCenterViewControllerV2: UIViewController, UITableViewDataSource,
                     self.resolutionTableView.reloadData()
                 }
             } else {
-                println(responseObject["message"])
                 self.emptyLabel.hidden = false
             }
             
@@ -404,6 +408,14 @@ class ResolutionCenterViewControllerV2: UIViewController, UITableViewDataSource,
         })
     }
     
+    // MARK: POST METHOD - Refresh token
+    /*
+    *
+    * (Parameters) - client_id, client_secret, grant_type, refresh_token
+    *
+    * Function to refresh token to get another access token
+    *
+    */
     func fireRefreshToken() {
         self.showHUD()
         let manager = APIManager.sharedInstance
@@ -434,25 +446,4 @@ class ResolutionCenterViewControllerV2: UIViewController, UITableViewDataSource,
         })
         
     }
-    
-    //MARK: Alert view
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        
-        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
-        
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-        }
-    }
-    
-    func formatDateToCompleteString(date: NSDate) -> String {
-        var dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter.stringFromDate(date)
-    }
-
 }

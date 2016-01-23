@@ -10,45 +10,31 @@ import UIKit
 
 class ResolutionCenterViewController
 : UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    //Buttons
     @IBOutlet weak var casesTab: UIButton!
-    @IBOutlet weak var openTab: UIButton!
     @IBOutlet weak var closedTab: UIButton!
-    @IBOutlet weak var casesLabel: UILabel!
-    @IBOutlet weak var openLabel: UILabel!
-    @IBOutlet weak var closedLabel: UILabel!
-    @IBOutlet weak var caseImageView: UIImageView!
-    @IBOutlet weak var openImageView: UIImageView!
-    @IBOutlet weak var closedImageView: UIImageView!
-    
-    @IBOutlet weak var closedView: UIView!
-    @IBOutlet weak var openVIew: UIView!
-    @IBOutlet weak var casesView: UIView!
-    var tabSelector = ButtonToTabBehaviorizer()
     @IBOutlet weak var disputeButton: UIButton!
-    var dimView: UIView? = nil
+    @IBOutlet weak var openTab: UIButton!
     
+    //Labels
+    @IBOutlet weak var casesLabel: UILabel!
+    @IBOutlet weak var closedLabel: UILabel!
+    @IBOutlet weak var openLabel: UILabel!
+    
+    //Imageviews
+    @IBOutlet weak var caseImageView: UIImageView!
+    @IBOutlet weak var closedImageView: UIImageView!
+    @IBOutlet weak var openImageView: UIImageView!
+    
+    //Tabkeview
     @IBOutlet weak var resolutionTableView: UITableView!
-    var tableData = [ResolutionCenterElement]()
-    var resolutionCenterModel: ResolutionCenterModel = ResolutionCenterModel()
-    /*: [(ResolutionCenterElement)] =
-    [ ("7889360001", "Open"  , "December 12, 2015", "Seller", "Not Happy", "It's okay")
-     ,("7889360002", "Closed", "January 2, 2016"  , "Buyer" , "Yo wassup", "Go voltron!")
-     ,("7889360003", "Open"  , "February 4, 2016" , "Seller", "hmm...", "hack'd'planet")
-     ,("2345647856", "Open"  , "January 21, 2016" , "Seller", "Numbers game", "13")
-     ,("2345647856", "Closed", "January 21, 2016" , "Buyer" , "On-start", "What's goin on")]
-    **/
-
-    var currentSelectedFilter = SelectedFilters(time:.Total, status:.Both)
     
-    var hud: MBProgressHUD?
-
-    /// Don't Call fireGetCases() everytime this screen is shown
-    /// Call it intentionally from inside the completion: from screens
-    //override func viewDidAppear(animated: Bool) {
-    //    super.viewDidAppear(animated)
-    //    fireGetCases()
-    //}
-
+    //Views
+    @IBOutlet weak var closedView: UIView!
+    @IBOutlet weak var casesView: UIView!
+    @IBOutlet weak var openVIew: UIView!
+    
     //Localize strings
     let caseTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_CASES_LOCALIZE_KEY")
     let openTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_OPEN_LOCALIZE_KEY")
@@ -56,6 +42,24 @@ class ResolutionCenterViewController
     let resolutionTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_TITLE_LOCALIZE_KEY")
     let fileDisputeTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_FILE_LOCALIZE_KEY")
     let resTitle: String = StringHelper.localizedStringWithKey("RESOLUTION_TITLE_LOCALIZE_KEY")
+    
+    //Models
+    var resolutionCenterModel: ResolutionCenterModel = ResolutionCenterModel()
+    
+    var currentSelectedFilter = SelectedFilters(time:.Total, status:.Both)
+    var tableData = [ResolutionCenterElement]()
+    var tabSelector = ButtonToTabBehaviorizer()
+    
+    //Global variables declaration
+    var dimView: UIView? = nil
+    var hud: MBProgressHUD?
+    
+    /// Don't Call fireGetCases() everytime this screen is shown
+    /// Call it intentionally from inside the completion: from screens
+    //override func viewDidAppear(animated: Bool) {
+    //    super.viewDidAppear(animated)
+    //    fireGetCases()
+    //}
     
     override func viewDidLoad() {
         super.viewDidLoad()
