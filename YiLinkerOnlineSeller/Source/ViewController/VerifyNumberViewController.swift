@@ -76,12 +76,15 @@ class VerifyNumberViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        //Set rounded edges of view
         self.viewContainer.layer.cornerRadius = 5.0
         self.viewContainer.clipsToBounds = true
 
+        //Set rounded edged of button
         self.verifyButton.layer.cornerRadius = 4.0
         self.verifyButton.clipsToBounds = true
         
+        //Set label's text
         self.verifyTitleLabel.text = self.verifyTitle
         self.messageLabel.text = self.message
         self.timeLeftLabel.text = self.timeLeft
@@ -200,6 +203,47 @@ class VerifyNumberViewController: UIViewController {
         
         self.showHUD()
         
+        //Set parameter of the POST method
+        let parameters: NSDictionary = [:]
+        println(APIAtlas.sellerResendVerification+"\(SessionManager.accessToken())&mobileNumber=\(self.mobileNumber)")
+        WebServiceManager.fireStoreInfoRequestWithUrl(APIAtlas.sellerResendVerification+"\(SessionManager.accessToken())&mobileNumber=\(self.mobileNumber)", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                //If isSuccessful is true, show alert view, set seconds tp 300 and invalidate time
+                self.showAlert(self.information, message: responseObject["message"] as! String )
+                self.seconds = 300
+                self.invalidateTimer()
+                self.hud?.hide(true)
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(self.error, message: errorModel.message)
+                    self.delegate?.congratulationsViewController(false)
+                } else if requestErrorType == .AccessTokenExpired {
+                    //Call 'requestRefreshToken' if access token is expired
+                    self.requestRefreshToken(VerifyType.Resend)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                    self.delegate?.congratulationsViewController(false)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    self.delegate?.congratulationsViewController(false)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    self.delegate?.congratulationsViewController(false)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                    self.delegate?.congratulationsViewController(false)
+                }
+            }
+        })
+        
+        /*
         let manager = APIManager.sharedInstance
         
         manager.POST(APIAtlas.sellerResendVerification+"\(SessionManager.accessToken())&mobileNumber=\(self.mobileNumber)", parameters: nil, success: {
@@ -235,6 +279,7 @@ class VerifyNumberViewController: UIViewController {
                     self.showAlert(self.error, message: self.somethingWentWrong)
                 }
         })
+        */
     }
     
     /*MARK: POST METHOD - Verify code sent from mobile
@@ -254,6 +299,38 @@ class VerifyNumberViewController: UIViewController {
             
             let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "code" : NSNumber(integer: verificationCode.toInt()!)];
             
+            WebServiceManager.fireStoreInfoRequestWithUrl(APIAtlas.sellerMobileNumberVerification, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+                if successful {
+                    //If isSuccessful is true, show alert view, set seconds tp 300 and invalidate time
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.delegate?.congratulationsViewController(true)
+                    self.hud?.hide(true)
+                } else {
+                    self.hud?.hide(true)
+                    if requestErrorType == .ResponseError {
+                        //Error in api requirements
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        self.showAlert(self.error, message: errorModel.message)
+                    } else if requestErrorType == .AccessTokenExpired {
+                        //Call 'requestRefreshToken' if access token is expired
+                        self.requestRefreshToken(VerifyType.Verify)
+                    } else if requestErrorType == .PageNotFound {
+                        //Page not found
+                        Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .NoInternetConnection {
+                        //No internet connection
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .RequestTimeOut {
+                        //Request timeout
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .UnRecognizeError {
+                        //Unhandled error
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                    }
+                }
+            })
+            
+            /*
             manager.POST(APIAtlas.sellerMobileNumberVerification, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 
@@ -286,7 +363,7 @@ class VerifyNumberViewController: UIViewController {
                         self.delegate?.congratulationsViewController(false)
                         self.showAlert(self.error, message: self.somethingWentWrong)
                     }
-            })
+            }) */
         } else {
             self.showAlert(self.error, message: self.expired)
         }
