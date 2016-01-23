@@ -194,8 +194,8 @@ class ResolutionCenterProductListViewController: UIViewController {
     *
     */
     func fireGetTransactionItems() {
+        
         self.showHUD()
-        let manager = APIManager.sharedInstance
         
         var productIds: [Int] = []
         
@@ -203,38 +203,42 @@ class ResolutionCenterProductListViewController: UIViewController {
             "access_token": SessionManager.accessToken(),
             "transactionId": self.transactionId]
         
-        manager.GET(APIAtlas.resolutionCenterGetTransactionItems, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.hud?.hide(true)
-            
-            self.transactionDetails = TransactionDetailsModel.parseDataWithDictionary(responseObject as! NSDictionary)
-            
-            for i in 0..<self.transactionDetails.transactionItems[0].products.count {
-                if self.transactionDetails.transactionItems[0].products[i].orderProductStatusId == 4 {
-                    self.transactionDetailsFiltered.append(self.transactionDetails.transactionItems[0].products[i])
-                    self.transactionItemModel.append(self.transactionDetails.transactionItems[0])
-                }
+        WebServiceManager.fireGetResolutionCenterRequestWithUrl(APIAtlas.resolutionCenterGetTransactionItems, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.transactionDetails = TransactionDetailsModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 
-            }
-            
-            self.tableView.reloadData()
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    self.fireRefreshToken()
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(Constants.Localized.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                for i in 0..<self.transactionDetails.transactionItems[0].products.count {
+                    if self.transactionDetails.transactionItems[0].products[i].orderProductStatusId == 4 {
+                        self.transactionDetailsFiltered.append(self.transactionDetails.transactionItems[0].products[i])
+                        self.transactionItemModel.append(self.transactionDetails.transactionItems[0])
                     }
+                    
                 }
                 
+                self.tableView.reloadData()
                 self.hud?.hide(true)
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+                self.hud?.hide(true)
+            }
         })
     }
     
