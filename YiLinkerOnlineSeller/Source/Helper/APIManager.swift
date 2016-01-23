@@ -53,7 +53,7 @@ struct APIAtlas {
     static let sellerMobileNumberVerification = "auth/sms/verify"
     static let sellerChangePassword = "auth/user/changePassword"
     static let sellerUpdateSellerInfo = "auth/merchant/updateUserInfo"
-    static let sellerGenerateQrCode = "auth/merchant/getQrCode?access_token="
+    static let sellerGenerateQrCode = "auth/merchant/getQrCode"
     static let getCustomizedCategories   = "category/getCustomCategories"           // Applied
     static let getCategoryDetails        = "category/getCategoryDetails"            // Applied
     static let editCustomizedCategory    = "auth/category/updateCustomCategory"

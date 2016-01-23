@@ -227,6 +227,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         if self.verifyOrChange == 1 {
             var verifyNumberViewController = VerifyNumberViewController(nibName: "VerifyNumberViewController", bundle: nil)
             verifyNumberViewController.delegate = self
+            verifyNumberViewController.mobileNumber = mobile
             verifyNumberViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
             verifyNumberViewController.providesPresentationContextTransitionStyle = true
             verifyNumberViewController.definesPresentationContext = true
@@ -234,7 +235,6 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             self.tabBarController?.presentViewController(verifyNumberViewController, animated: true, completion:
                 nil)
             self.verifyOrChange = 2
-            verifyNumberViewController.mobileNumber = self.mobileNumber
         } else {
             var changeMobileNumber = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
             changeMobileNumber.delegate = self
@@ -357,9 +357,11 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         socialVC.completionHandler = {
             (result:SLComposeViewControllerResult) in
             if result == SLComposeViewControllerResult.Done {
-                self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_FB_LOCALIZE_KEY"))
+                Toast.displayToastBottomWithMessage(StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_FB_LOCALIZE_KEY"), duration: 1.5, view: self.tabBarController!.view)
+                //self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_FB_LOCALIZE_KEY"))
             } else {
-                self.showAlert(self.error, message: "Failed to share qr codel.")
+                Toast.displayToastBottomWithMessage("Failed to share qr code.", duration: 1.5, view: self.tabBarController!.view)
+                //self.showAlert(self.error, message: "Failed to share qr code.")
             }
         }
         presentViewController(socialVC, animated: true, completion: nil)
@@ -378,9 +380,11 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             (result:SLComposeViewControllerResult) in
             if result == SLComposeViewControllerResult.Done{
                 //self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"))
-                self.view.makeToast(StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"), duration: 3.0, position: CSToastPositionCenter)
+                //self.view.makeToast(StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"), duration: 3.0, position: CSToastPositionCenter)
+                Toast.displayToastBottomWithMessage(StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"), duration: 1.5, view: self.tabBarController!.view)
             } else {
-                self.view.makeToast("Cancelled", duration: 3.0, position: CSToastPositionBottom)
+                Toast.displayToastBottomWithMessage("Cancelled", duration: 1.5, view: self.tabBarController!.view)
+                //self.view.makeToast("Cancelled", duration: 3.0, position: CSToastPositionBottom)
             }
         }
         presentViewController(socialVC, animated: true, completion: nil)
@@ -537,24 +541,24 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         switch result.value {
             case MFMailComposeResultCancelled.value:
-            
-                var array = [self.info, StringHelper.localizedStringWithKey("STORE_INFO_CANCEL_EMAIL_LOCALIZE_KEY")]
-                self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
+                Toast.displayToastBottomWithMessage(StringHelper.localizedStringWithKey("STORE_INFO_CANCEL_EMAIL_LOCALIZE_KEY"), duration: 1.5, view: self.tabBarController!.view)
+                //var array = [self.info, StringHelper.localizedStringWithKey("STORE_INFO_CANCEL_EMAIL_LOCALIZE_KEY")]
+                //self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
             
             case MFMailComposeResultSaved.value:
-            
-                var array = [self.info, StringHelper.localizedStringWithKey("STORE_INFO_SAVE_EMAIL_LOCALIZE_KEY")]
-                self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
+                Toast.displayToastBottomWithMessage(StringHelper.localizedStringWithKey("STORE_INFO_SAVE_EMAIL_LOCALIZE_KEY"), duration: 1.5, view: self.tabBarController!.view)
+                //var array = [self.info, StringHelper.localizedStringWithKey("STORE_INFO_SAVE_EMAIL_LOCALIZE_KEY")]
+                //self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
             
             case MFMailComposeResultSent.value:
-           
-                var array = [self.successTitle, StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY")]
-                self.timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
+                 Toast.displayToastBottomWithMessage(StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY"), duration: 1.5, view: self.tabBarController!.view)
+                //var array = [self.successTitle, StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY")]
+                //self.timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
            
             case MFMailComposeResultFailed.value:
-            
-                var array = [self.info, StringHelper.localizedStringWithKey("STORE_INFO_FAIL_EMAIL_LOCALIZE_KEY")]
-                self.timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
+                Toast.displayToastBottomWithMessage(StringHelper.localizedStringWithKey("STORE_INFO_FAIL_EMAIL_LOCALIZE_KEY"), duration: 1.5, view: self.tabBarController!.view)
+                //var array = [self.info, StringHelper.localizedStringWithKey("STORE_INFO_FAIL_EMAIL_LOCALIZE_KEY")]
+                //self.timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "successSharingDialogBox:", userInfo: array, repeats: false)
            
             default:
                 break
@@ -616,66 +620,68 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             cell.storeNameLabel.text = self.storeName
             cell.verifyButton.setTitle(self.changeTitle, forState: UIControlState.Normal)
             
-            let url: NSString = NSString(string: (self.storeInfoModel?.avatar)!.absoluteString!)
-            
-            if(self.storeInfoModel?.store_name != nil) {
-                if self.image != nil && self.imageCover != nil {
-                    cell.coverEditImageView.image = self.imageCover
-                    cell.profilePictureImageView.image = self.image
-                } else if self.image != nil && self.imageCover == nil {
-                    cell.profilePictureImageView.image = self.image
-                    cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
-                } else if self.image == nil && self.imageCover != nil {
-                    cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
-                    cell.coverEditImageView.image = self.imageCover
-                } else {
-                    let url: NSString = NSString(string: (self.storeInfoModel?.avatar)!.absoluteString!)
-                    let url2: NSString = NSString(string: (self.storeInfoModel?.coverPhoto)!.absoluteString!)
-                    if url != "" && url2 != "" {
-                        //Download the image from url if 'url' and 'url2' is not empty
-                        cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+            if self.storeInfoModel != nil {
+                let url: NSString = NSString(string: (self.storeInfoModel?.avatar)!.absoluteString!)
+                
+                if(self.storeInfoModel?.store_name != nil) {
+                    if self.image != nil && self.imageCover != nil {
+                        cell.coverEditImageView.image = self.imageCover
+                        cell.profilePictureImageView.image = self.image
+                    } else if self.image != nil && self.imageCover == nil {
+                        cell.profilePictureImageView.image = self.image
                         cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
-                    } else if url == "" && url2 != "" {
-                        //Download the image from url if 'url2' is not empty and set profilePictureImageView with default placeholder if 'url' is empty
-                        cell.profilePictureImageView.image = UIImage(named: "dummy-placeholder.jpg")
-                        cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
-                    } else if url != "" && url2 == "" {
-                        //Download the image from url if 'url' is not empty and set coverPhotoImageView with default placeholder if 'url2' is empty
+                    } else if self.image == nil && self.imageCover != nil {
                         cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
-                        cell.coverPhotoImageView.image = UIImage(named: "dummy-placeholder.jpg")
+                        cell.coverEditImageView.image = self.imageCover
                     } else {
-                        //Set profilePictureImageView and coverPhotoImageView with default placeholder if 'url' and 'url2' is empty
-                        cell.profilePictureImageView.image = UIImage(named: "dummy-placeholder.jpg")
-                        cell.coverPhotoImageView.image = UIImage(named: "dummy-placeholder.jpg")
+                        let url: NSString = NSString(string: (self.storeInfoModel?.avatar)!.absoluteString!)
+                        let url2: NSString = NSString(string: (self.storeInfoModel?.coverPhoto)!.absoluteString!)
+                        if url != "" && url2 != "" {
+                            //Download the image from url if 'url' and 'url2' is not empty
+                            cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                            cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                        } else if url == "" && url2 != "" {
+                            //Download the image from url if 'url2' is not empty and set profilePictureImageView with default placeholder if 'url' is empty
+                            cell.profilePictureImageView.image = UIImage(named: "dummy-placeholder.jpg")
+                            cell.coverPhotoImageView.sd_setImageWithURL(self.storeInfoModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                        } else if url != "" && url2 == "" {
+                            //Download the image from url if 'url' is not empty and set coverPhotoImageView with default placeholder if 'url2' is empty
+                            cell.profilePictureImageView.sd_setImageWithURL(self.storeInfoModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder.jpg"))
+                            cell.coverPhotoImageView.image = UIImage(named: "dummy-placeholder.jpg")
+                        } else {
+                            //Set profilePictureImageView and coverPhotoImageView with default placeholder if 'url' and 'url2' is empty
+                            cell.profilePictureImageView.image = UIImage(named: "dummy-placeholder.jpg")
+                            cell.coverPhotoImageView.image = UIImage(named: "dummy-placeholder.jpg")
+                        }
                     }
-                }
-                
-                cell.storeNameTextField.enabled = false
-                cell.mobilePhoneTextField.text = self.storeInfoModel?.contact_number
-                cell.storeDescriptionTextView.text = self.storeInfoModel?.store_description
-                cell.storeNameTextField.text = self.storeInfoModel?.store_name
-                cell.tinTextField.text = self.storeInfoModel?.tin
-                
-                cell.profileEditImageView.image = UIImage(named: "edit.png")
-                cell.coverEditImageView.image = UIImage(named: "edit.png")
-                
-                if (!url.isEqual("")) {
-                    cell.profileEditLabel.text = editPhoto
-                    cell.coverEditLabel.text = editCover
+                    
+                    cell.storeNameTextField.enabled = false
+                    cell.mobilePhoneTextField.text = self.storeInfoModel?.contact_number
+                    cell.storeDescriptionTextView.text = self.storeInfoModel?.store_description
+                    cell.storeNameTextField.text = self.storeInfoModel?.store_name
+                    cell.tinTextField.text = self.storeInfoModel?.tin
+                    
+                    cell.profileEditImageView.image = UIImage(named: "edit.png")
+                    cell.coverEditImageView.image = UIImage(named: "edit.png")
+                    
+                    if (!url.isEqual("")) {
+                        cell.profileEditLabel.text = editPhoto
+                        cell.coverEditLabel.text = editCover
+                    } else {
+                        cell.profileEditLabel.text = addPhoto
+                        cell.coverEditLabel.text = addCover
+                    }
+                    
+                    cell.verifyButton.setTitle(self.changeTitle, forState: UIControlState.Normal)
+                    cell.tinLabel.text = self.tinTitle
+                    cell.tinTextField.placeholder = self.tinTitle
+                    cell.verifyButton.tag = 2
                 } else {
+                    cell.profileEditImageView.image = UIImage(named: "dummy-placeholder.jpg")
+                    cell.coverEditImageView.image = UIImage(named: "dummy-placeholder.jpg")
                     cell.profileEditLabel.text = addPhoto
                     cell.coverEditLabel.text = addCover
                 }
-                
-                cell.verifyButton.setTitle(self.changeTitle, forState: UIControlState.Normal)
-                cell.tinLabel.text = self.tinTitle
-                cell.tinTextField.placeholder = self.tinTitle
-                cell.verifyButton.tag = 2
-            } else {
-                cell.profileEditImageView.image = UIImage(named: "dummy-placeholder.jpg")
-                cell.coverEditImageView.image = UIImage(named: "dummy-placeholder.jpg")
-                cell.profileEditLabel.text = addPhoto
-                cell.coverEditLabel.text = addCover
             }
             
             return cell
@@ -945,18 +951,12 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         self.showLoader()
         
-        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()]
         
-        //Set parameter
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
-        
-        manager.POST(APIAtlas.sellerStoreInfo, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            //Parsed returned response from the API
-            self.storeInfoModel = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
-            
-            if responseObject["isSuccessful"] as! Bool {
+        WebServiceManager.fireStoreInfoRequestWithUrl(APIAtlas.sellerStoreInfo, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                //Parsed returned response from the API
+                self.storeInfoModel = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
                 
                 //if response is successful generate for-loop in storeInfoModel and append each category in tableData
                 for i in 0..<self.storeInfoModel!.productCategoryName.count {
@@ -970,35 +970,32 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 
                 //Reloading the tableview
                 self.tableView.reloadData()
-            } else {
-                //Show alert if the response is unsuccessful
-                self.showAlert(Constants.Localized.error, message: responseObject["message"] as! String)
-            }
-            
-            self.hideLoader()
-            
-            self.refresh = true
-            
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                //Catch unsuccessful return from the API
-                if task.statusCode == 401 {
-                    //Call method 'fireRefreshToken' if the token is expired
-                    self.fireRefreshToken(StoreInfoType.GetStroreInfo)
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        //Parsed error message return from the API
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(self.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(self.error, message: self.somethingWentWrong)
-                    }
-                }
-                
                 self.hideLoader()
-        })
+                
+                self.refresh = true
+            } else {
+                self.hideLoader()
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(self.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                     self.fireRefreshToken(StoreInfoType.GetStroreInfo)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+         })
     }
     
     //MARK: POST METHOD - Generate QR code
@@ -1009,14 +1006,13 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     *
     */
     func generateQr() {
+        
         self.showHUD()
         
-        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()]
         
-        manager.POST(APIAtlas.sellerGenerateQrCode+"\(SessionManager.accessToken())", parameters: nil, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            if responseObject["isSuccessful"] as! Bool {
+        WebServiceManager.fireStoreInfoRequestWithUrl(APIAtlas.sellerGenerateQrCode, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
                 //If isSuccessful is true, get data from 'data'
                 //Check if value if 'qrcodeUrl' inside the 'data' object has content
                 //Else, set qrUrl to empty
@@ -1027,33 +1023,33 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 } else {
                     self.qrUrl = ""
                 }
-            } else {
-                self.showAlert(self.error, message: self.somethingWentWrong)
-            }
-            
-            self.tableView.reloadData()
-            self.dismissView()
-            
-            self.hud?.hide(true)
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                //Catch unsuccessful return from API
-                if task.statusCode == 401 {
-                    self.fireRefreshToken(StoreInfoType.GenerateQR)
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        //Parsed error message from API return
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(self.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(self.error, message: self.somethingWentWrong)
-                    }
-                }
+                self.tableView.reloadData()
+                self.dismissView()
                 
                 self.hud?.hide(true)
+            } else {
+                self.hud?.hide(true)
                 self.dismissView()
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(self.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken(StoreInfoType.GenerateQR)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
         })
     }
     
@@ -1069,16 +1065,14 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     *
     */
     func saveStoreInfo() {
-        
+    
         self.showHUD()
-        
-        let manager = APIManager.sharedInstance
         
         var datas: [NSData] = []
         var imagesKeyProfile: [String] = []
         var imagesKeyCover: [String] = []
         
-        let url: String = "\(APIAtlas.sellerUpdateSellerInfo)?access_token=\(SessionManager.accessToken())"
+        //let url: String = "\(APIAtlas.sellerUpdateSellerInfo)?access_token=\(SessionManager.accessToken())"
         let parameters: NSDictionary?
         
         imagesKeyProfile.append("0")
@@ -1108,51 +1102,36 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         }
         
         if !self.storeInfoModel!.store_name.isEmpty && !self.storeInfoModel!.store_description.isEmpty {
-            manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
-                
-                //Append images converted into data to multipart
-                for (index, data) in enumerate(datas) {
-                    if self.image != nil && self.imageCover != nil {
-                        if(index == 0){
-                            formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(0)", mimeType: "image/jpeg")
-                        } else {
-                            formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(1)", mimeType: "image/jpeg")
-                        }
-                    } else if self.image != nil && self.imageCover == nil{
-                        formData.appendPartWithFileData(data, name: "profilePhoto", fileName: "\(index)", mimeType: "image/jpeg")
-                    } else if self.image == nil && self.imageCover != nil {
-                        formData.appendPartWithFileData(data, name: "coverPhoto", fileName: "\(index)", mimeType: "image/jpeg")
+            WebServiceManager.fireSaveStoreInfoRequestWithUrl(APIAtlas.sellerUpdateSellerInfo+"?access_token=\(SessionManager.accessToken())", parameters: parameters!, datas: datas, imageProfile: self.image, imageCover: self.imageCover, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+                if successful {
+                    //If isSuccessful is true, call method 'fireStoreInfo' to get store details
+                    self.fireStoreInfo()
+                    self.showAlert(self.successTitle, message: self.success)
+                    
+                    self.hud?.hide(true)
+                } else {
+                    self.hud?.hide(true)
+                    if requestErrorType == .ResponseError {
+                        //Error in api requirements
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        self.showAlert(self.error, message: errorModel.message)
+                    } else if requestErrorType == .AccessTokenExpired {
+                        self.fireRefreshToken(StoreInfoType.SaveStoreInfo)
+                    } else if requestErrorType == .PageNotFound {
+                        //Page not found
+                        Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .NoInternetConnection {
+                        //No internet connection
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .RequestTimeOut {
+                        //Request timeout
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .UnRecognizeError {
+                        //Unhandled error
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                     }
                 }
-                
-                }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
-                    self.hud?.hide(true)
-                    
-                    if response["isSuccessful"] as! Bool {
-                        //If isSuccessful is true, call method 'fireStoreInfo' to get store details
-                        self.fireStoreInfo()
-                        self.showAlert(self.successTitle, message: self.success)
-                    } else {
-                        self.showAlert(self.error, message: self.somethingWentWrong)
-                    }
-                    
-                }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    //Catch unsuccessful return from API
-                    if task.statusCode == 401 {
-                        self.fireRefreshToken(StoreInfoType.SaveStoreInfo)
-                    } else {
-                        if error.userInfo != nil {
-                            let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                            //Parsed error messages from API
-                            let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                            self.showAlert(self.error, message: errorModel.message)
-                        } else {
-                            self.showAlert(self.error, message: self.somethingWentWrong)
-                        }
-                    }
-                    self.hud?.hide(true)
-            }
+            })
         } else {
             self.showAlert(self.error, message: self.empty)
             self.hud?.hide(true)
@@ -1176,45 +1155,44 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         let manager = APIManager.sharedInstance
         
         //Set parameter of the POST method
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldContactNumber" : oldNumber, "newContactNumber" : newNumber];
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldContactNumber" : oldNumber, "newContactNumber" : newNumber]
         
         self.mobileNumber = oldNumber
         self.newContactNumber = newNumber
         
-        manager.POST(APIAtlas.sellerChangeMobileNumber, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            if responseObject["isSuccessful"] as! Bool {
+        WebServiceManager.fireStoreInfoRequestWithUrl(APIAtlas.sellerChangeMobileNumber, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                //If isSuccessful is true, get data from 'data'
+                //Check if value if 'qrcodeUrl' inside the 'data' object has content
+                //Else, set qrUrl to empty
                 //If isSuccessful is true, call 'storeInfoVerify' method to call VerifyNumberViewController
                 //Set verifyOrChange to 1
                 self.verifyOrChange = 1
-                self.storeInfoVerify(oldNumber)
+                self.storeInfoVerify(newNumber)
+                self.hud?.hide(true)
             } else {
-                self.showAlert("Error", message: responseObject["message"] as! String)
-                self.dismissView()
-            }
-            
-            self.hud?.hide(true)
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                //Catch unsuccessful return from the API
-                if task.statusCode == 401 {
-                    //Call 'fireRefreshToken' if access token is expired
-                    self.fireRefreshToken(StoreInfoType.SetMobile)
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        //Parsed error messages from API return
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(self.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(self.error, message: self.somethingWentWrong)
-                    }
-                }
-                
                 self.hud?.hide(true)
                 self.dismissView()
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(self.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken(StoreInfoType.SetMobile)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
         })
     }
     
@@ -1228,51 +1206,47 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         self.showHUD()
         
-        let manager = APIManager.sharedInstance
+        self.showView()
+        //Set parameter of the POST method
+        let parameters: NSDictionary = [:]
         
-        manager.POST(APIAtlas.sellerResendVerification+"\(SessionManager.accessToken())&mobileNumber=\(self.mobileNumber)", parameters: nil, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            if responseObject["isSuccessful"] as! Bool {
+        WebServiceManager.fireStoreInfoRequestWithUrl(APIAtlas.sellerResendVerification+"\(SessionManager.accessToken())&mobileNumber=\(self.mobileNumber)", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
                 //If 'isSuccessful' is true, call VerifyNumberViewController
                 var verifyNumberViewController = VerifyNumberViewController(nibName: "VerifyNumberViewController", bundle: nil)
                 verifyNumberViewController.delegate = self
+                verifyNumberViewController.mobileNumber = self.newContactNumber
                 verifyNumberViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
                 verifyNumberViewController.providesPresentationContextTransitionStyle = true
                 verifyNumberViewController.definesPresentationContext = true
                 verifyNumberViewController.view.frame.origin.y = verifyNumberViewController.view.frame.size.height
                 self.navigationController?.presentViewController(verifyNumberViewController, animated: true, completion:
                     nil)
+                self.hud?.hide(true)
             } else {
-                //Show alert if isSuuccessful is false
-                self.showAlert(self.error, message: responseObject["message"] as! String)
-                self.dismissView()
-            }
-            
-            self.hud?.hide(true)
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                
-                //Catch unsuccessful return from the API
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    //Call 'fireRefreshToken' if the token is expired
-                    self.fireRefreshToken(StoreInfoType.VerifyNumber)
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        //Parsed error messages from the API return
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(self.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(self.error, message: self.somethingWentWrong)
-                    }
-                }
-                
                 self.hud?.hide(true)
                 self.dismissView()
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(self.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken(StoreInfoType.VerifyNumber)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
         })
-        self.showView()
     }
 
     /*

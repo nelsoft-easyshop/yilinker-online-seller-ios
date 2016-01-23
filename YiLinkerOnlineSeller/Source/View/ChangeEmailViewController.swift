@@ -201,43 +201,41 @@ class ChangeEmailViewController: UIViewController, UITextFieldDelegate {
         
         self.showHUD()
         
-        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldPassword" : self.oldEmailAddressTextField.text, "newPassword" : self.newEmailAddressTextField.text, "newPasswordConfirm" : self.confirmEmailAddressTextField.text]
         
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "oldPassword" : self.oldEmailAddressTextField.text, "newPassword" : self.newEmailAddressTextField.text, "newPasswordConfirm" : self.confirmEmailAddressTextField.text];
-        
-        manager.POST(APIAtlas.sellerChangePassword, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-           
-            var success = StringHelper.localizedStringWithKey("PASSWORD_SUCCESS_CHANGE_LOCALIZE_KEY")
-            
-            if responseObject["isSuccessful"] as! Bool {
+        WebServiceManager.fireStoreInfoRequestWithUrl(APIAtlas.sellerChangePassword, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                var success = StringHelper.localizedStringWithKey("PASSWORD_SUCCESS_CHANGE_LOCALIZE_KEY")
+                
                 self.showAlert(Constants.Localized.success, message: success)
-            } else {
-                self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-            }
-            
-            self.hud?.hide(true)
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-    
-                //Catch unsuccessful return from the API
-                if task.statusCode == 401 {
-                    //Call method 'requestRefreshToken' if the token is expired
-                    self.requestRefreshToken()
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        //Parsed error message return from the API
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.error)
-                    } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error )
-                    }
-                }
                 
                 self.hud?.hide(true)
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String, title: Constants.Localized.error)
+                    //self.showAlert(Constants.Localized.error, message: responseObject["message"] as! String)
+                } else if requestErrorType == .AccessTokenExpired {
+                    //Call method 'requestRefreshToken' if the token is expired
+                    self.requestRefreshToken()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                    self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                }
+            }
         })
-        
     }
     
     //MARK: POST METHOD - Refresh token
