@@ -9,11 +9,17 @@
 import UIKit
 
 class ResolutionCenterCell: UITableViewCell {
+    
+    //Imageviews
     @IBOutlet private weak var imageStatus: UIImageView!
-    @IBOutlet private weak var viewStatus: UIView!
-    @IBOutlet private weak var idLabel: UILabel!
+    
+    //Labels
     @IBOutlet private weak var dateLabel: UILabel!
+    @IBOutlet private weak var idLabel: UILabel!
     @IBOutlet private weak var userTypeLabel: UILabel!
+    
+    //Labels
+    @IBOutlet private weak var viewStatus: UIView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
