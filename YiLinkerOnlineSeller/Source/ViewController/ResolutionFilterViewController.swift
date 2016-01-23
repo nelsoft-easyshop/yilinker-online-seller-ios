@@ -8,20 +8,9 @@
 
 import UIKit
 
-enum ResolutionTimeFilter {
-    case Today
-    case ThisWeek
-    case ThisMonth
-    case Total
-}
-
-enum ResolutionStatusFilter {
-    case Open
-    case Closed
-    case Both
-}
-
+// MARK: - Private class
 class SelectedFilters {
+    
     var time: ResolutionTimeFilter
     var status: ResolutionStatusFilter
     
@@ -105,6 +94,7 @@ class SelectedFilters {
     }
 }
 
+//Strings
 struct FilterStrings {
     static let title = StringHelper.localizedStringWithKey("FILTER_TITLE_LOCALIZE_KEY")
     static let dates = StringHelper.localizedStringWithKey("FILTER_DATES_LOCALIZE_KEY")
@@ -118,8 +108,12 @@ struct FilterStrings {
 }
 
 class ResolutionFilterViewController: UITableViewController {
+   
+    // Bar buttons
     @IBOutlet weak var cancel: UIBarButtonItem!
     @IBOutlet weak var save: UIBarButtonItem!
+    
+    // Checkboxes
     @IBOutlet weak var buttonToday: CheckBox!
     @IBOutlet weak var buttonThisWeek: CheckBox!
     @IBOutlet weak var buttonThisMonth: CheckBox!
@@ -127,40 +121,29 @@ class ResolutionFilterViewController: UITableViewController {
     @IBOutlet weak var buttonOpen: CheckBox!
     @IBOutlet weak var buttonClosed: CheckBox!
     
-    //    @IBOutlet weak var dateSection: UITableViewSection!
+    // Labels
     @IBOutlet weak var todayLabel: UILabel!
     @IBOutlet weak var weekLabel: UILabel!
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var totalLabel: UILabel!
-    //    @IBOutlet weak var statusSection: UITableViewSection!
     @IBOutlet weak var openLabel: UILabel!
     @IBOutlet weak var closedLabel: UILabel!
     
-    
     private var timeFilter: ResolutionTimeFilter = .Total
     private var statusFilter: ResolutionStatusFilter = .Both
-    //weak var currentFilter: SelectedFilters?
+    
+    // Initialized ResolutionCenterViewControllerV2
     var delegate: ResolutionCenterViewControllerV2?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // White title text
-        self.navigationController!.navigationBar.barStyle = UIBarStyle.Black
-        
-        cancel.tintColor = UIColor.whiteColor()
-        cancel.target = self
-        cancel.action = "cancelPressed"
-        
-        save.tintColor = UIColor.whiteColor()
-        save.target = self
-        save.action = "savePressed"
-        
         self.timeFilter = self.delegate!.currentSelectedFilter.time
-        selectTimeFilter(self.timeFilter)
+        self.selectTimeFilter(self.timeFilter)
         self.statusFilter = self.delegate!.currentSelectedFilter.status
-        selectStatusFilter(self.statusFilter)
+        self.selectStatusFilter(self.statusFilter)
         
+        // Add tap gesture recognizer to buttons
         self.buttonToday.addTarget(self, action: "todayPressed"
             , forControlEvents:.TouchUpInside)
         self.buttonThisWeek.addTarget(self, action: "thisWeekPressed"
@@ -174,9 +157,17 @@ class ResolutionFilterViewController: UITableViewController {
         self.buttonClosed.addTarget(self, action: "closedPressed"
             , forControlEvents:.TouchUpInside)
         
-        setStrings()
+        self.setUpNavigationBar()
+        self.setStrings()
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: - Private methods
+    // MARK: - Set text to labels
     func setStrings() {
         self.title = FilterStrings.title
         
@@ -189,9 +180,77 @@ class ResolutionFilterViewController: UITableViewController {
         closedLabel.text = FilterStrings.closed
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    // MARK: - Set up navigation bar
+    // Add save and cancel bar buton items
+    func setUpNavigationBar() {
+        // White title text
+        self.navigationController!.navigationBar.barStyle = UIBarStyle.Black
+        
+        cancel.tintColor = UIColor.whiteColor()
+        cancel.target = self
+        cancel.action = "cancelPressed"
+        
+        save.tintColor = UIColor.whiteColor()
+        save.target = self
+        save.action = "savePressed"
+    }
+    
+    // MARK: - Navigation bar actions
+    // MARK: - Cancel & Save
+    func cancelPressed() {
+        //self.navigationController?.popViewControllerAnimated(true)
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func savePressed() {
+        self.delegate!.currentSelectedFilter.time = self.timeFilter
+        self.delegate!.currentSelectedFilter.status = self.statusFilter
+        self.dismissViewControllerAnimated(true, completion: nil)
+        //        self.delegate!.applyFilter()
+        
+        switch self.statusFilter {
+        case .Both:
+            self.delegate!.setSelectedTab(0)
+        case .Open:
+            self.delegate!.setSelectedTab(1)
+        case .Closed:
+            self.delegate!.setSelectedTab(2)
+        default:
+            self.delegate!.setSelectedTab(0)
+        }
+    }
+    
+    // MARK: - Button actions
+    func todayPressed() {
+        selectTimeFilter(.Today)
+    }
+    
+    func thisWeekPressed() {
+        selectTimeFilter(.ThisWeek)
+    }
+    
+    func thisMonthPressed() {
+        selectTimeFilter(.ThisMonth)
+    }
+    
+    func totalPressed() {
+        selectTimeFilter(.Total)
+    }
+    
+    func openPressed() {
+        selectStatusFilter(.Open)
+    }
+    
+    func closedPressed() {
+        selectStatusFilter(.Closed)
+    }
+    
+    // MARK: - Delects all checkboxes
+    private func deselectAllTimeCheckBox() {
+        self.buttonToday.setUnchecked()
+        self.buttonThisWeek.setUnchecked()
+        self.buttonThisMonth.setUnchecked()
+        self.buttonTotal.setUnchecked()
     }
     
     // MARK: - Time Filter Checkbox Selection
@@ -200,12 +259,8 @@ class ResolutionFilterViewController: UITableViewController {
         self.deselectAllTimeCheckBox()
         self.setSelectedTimeCheckBox()
     }
-    private func deselectAllTimeCheckBox() {
-        self.buttonToday.setUnchecked()
-        self.buttonThisWeek.setUnchecked()
-        self.buttonThisMonth.setUnchecked()
-        self.buttonTotal.setUnchecked()
-    }
+    
+    // MARK: - Check checkboxes
     private func setSelectedTimeCheckBox() {
         switch(self.timeFilter) {
         case .Today:
@@ -219,18 +274,6 @@ class ResolutionFilterViewController: UITableViewController {
         default:
             ()
         }
-    }
-    func todayPressed() {
-        selectTimeFilter(.Today)
-    }
-    func thisWeekPressed() {
-        selectTimeFilter(.ThisWeek)
-    }
-    func thisMonthPressed() {
-        selectTimeFilter(.ThisMonth)
-    }
-    func totalPressed() {
-        selectTimeFilter(.Total)
     }
     
     // MARK: - Status Filter Checkbox Selection
@@ -268,35 +311,4 @@ class ResolutionFilterViewController: UITableViewController {
             self.buttonClosed.setChecked()
         }
     }
-    func openPressed() {
-        selectStatusFilter(.Open)
-    }
-    func closedPressed() {
-        selectStatusFilter(.Closed)
-    }
-    
-    // MARK - Cancel & Save
-    func cancelPressed() {
-        //self.navigationController?.popViewControllerAnimated(true)
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func savePressed() {
-        self.delegate!.currentSelectedFilter.time = self.timeFilter
-        self.delegate!.currentSelectedFilter.status = self.statusFilter
-        self.dismissViewControllerAnimated(true, completion: nil)
-        //        self.delegate!.applyFilter()
-        
-        switch self.statusFilter {
-        case .Both:
-            self.delegate!.setSelectedTab(0)
-        case .Open:
-            self.delegate!.setSelectedTab(1)
-        case .Closed:
-            self.delegate!.setSelectedTab(2)
-        default:
-            self.delegate!.setSelectedTab(0)
-        }
-    }
-    
 }
