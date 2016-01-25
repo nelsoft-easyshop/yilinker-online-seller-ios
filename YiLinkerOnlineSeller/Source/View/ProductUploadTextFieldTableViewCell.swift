@@ -8,18 +8,26 @@
 
 import UIKit
 
+// MARK: Delegate
+// ProductUploadTextFieldTableViewCell Delegate method
 protocol ProductUploadTextFieldTableViewCellDelegate {
     func productUploadTextFieldTableViewCell(textFieldDidChange text: String, cell: ProductUploadTextFieldTableViewCell, textFieldType: ProductTextFieldType)
 }
 
 class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
+    // Labels
     @IBOutlet weak var cellTitleLabel: UILabel!
+    
+    // Textfields
     @IBOutlet weak var cellTexField: UITextField!
     
-    var delegate: ProductUploadTextFieldTableViewCellDelegate?
+    // Global variables
     var textFieldType: ProductTextFieldType?
     var values: [String] = []
+    
+    // Initialize ProductUploadTextFieldTableViewCellDelegate
+    var delegate: ProductUploadTextFieldTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -33,6 +41,8 @@ class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate,
         self.cellTexField.delegate = self
     }
     
+    // MARK: Private methods
+    // Add textfield action
     func addTextFieldDelegate() {
         self.cellTexField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
     }
@@ -42,20 +52,8 @@ class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate,
         self.cellTexField.rightViewMode = UITextFieldViewMode.Always
     }
     
-    
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-        if self.textFieldType == ProductTextFieldType.Brand || self.textFieldType == ProductTextFieldType.Category {
-            self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: "", cell: self, textFieldType: self.textFieldType!)
-            return false
-        } else {
-            return true
-        }
-    }
-    
-    func textFieldDidChange(sender: UITextField) {
-        self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: sender.text, cell: self, textFieldType: self.textFieldType!)
-    }
-    
+    // MARK: Add Picker view
+    // Show picker view when textfield is on focus
     func addPicker() {
         if self.textFieldType == ProductTextFieldType.Condition {
             let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -70,17 +68,34 @@ class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate,
         }
     }
     
+    // Textfield's action methods
     func done() {
         self.cellTexField.endEditing(true)
         self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: self.cellTexField.text, cell: self, textFieldType: self.textFieldType!)
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.cellTexField.text = self.values[row]
+    func textFieldDidChange(sender: UITextField) {
+        self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: sender.text, cell: self, textFieldType: self.textFieldType!)
     }
     
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        return 1
+    // MARK: Textfield delegate methods
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        if self.textFieldType == ProductTextFieldType.Brand || self.textFieldType == ProductTextFieldType.Category {
+            self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: "", cell: self, textFieldType: self.textFieldType!)
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.cellTexField.endEditing(true)
+        return true
+    }
+    
+    // MARK: Picker view delegate methods
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.cellTexField.text = self.values[row]
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -91,8 +106,7 @@ class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate,
         return self.values[row]
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        self.cellTexField.endEditing(true)
-        return true
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
     }
 }
