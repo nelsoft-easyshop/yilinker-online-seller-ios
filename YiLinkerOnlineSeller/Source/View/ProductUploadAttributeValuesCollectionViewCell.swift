@@ -10,15 +10,20 @@ import UIKit
 
 class ProductUploadAttributeValuesCollectionViewCell: UICollectionViewCell, UIPickerViewDataSource, UIPickerViewDelegate {
 
-    @IBOutlet weak var attributeTextField: UITextField!
+    // Labels
     @IBOutlet weak var attributeDefinitionLabel: UILabel!
     
+    // Textfields
+    @IBOutlet weak var attributeTextField: UITextField!
+    
+    // GLobal variables
     var values: [String] = []
     
     override func awakeFromNib() {
         super.awakeFromNib()
     }
     
+    // MARK: Private Methods
     func addPicker() {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         
@@ -36,19 +41,20 @@ class ProductUploadAttributeValuesCollectionViewCell: UICollectionViewCell, UIPi
         self.attributeTextField.endEditing(true)
     }
     
+    // MARK: Pickerview data source methods
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.attributeTextField.text = self.values[row]
     }
-    
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
+
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return values.count
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
         return self.values[row]
+    }
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
     }
 }
