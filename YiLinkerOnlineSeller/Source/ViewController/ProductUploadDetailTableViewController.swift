@@ -8,6 +8,7 @@
 
 import UIKit
 
+// MARK: Constant variables declarations
 struct PUDTConstant {
     static let productUploadDetailHeaderViewCollectionViewCellNibNameAndIdentifier = "ProductUploadDetailHeaderViewCollectionViewCell"
     static let productUploadAttributeCollectionViewCellNibNameAndIdentifier = "ProductUploadAttributeCollectionViewCell"
@@ -16,6 +17,8 @@ struct PUDTConstant {
     static let productUploadAttributeTableViewCellNibNameAndIdentifier = "ProductUploadAttributeTableViewCell"
 }
 
+// MARK: Delegate
+// ProductUploadDetailTableViewController Delegate method
 protocol ProductUploadDetailTableViewControllerDelegate {
     func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath, productModel: ProductModel)
     func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath)
@@ -23,25 +26,40 @@ protocol ProductUploadDetailTableViewControllerDelegate {
 
 class ProductUploadDetailTableViewController: UITableViewController, ProductUploadDetailFooterTableViewCellDelegate, ProductUploadDetailHeaderViewCollectionViewCellDelegate, ProductUploadAttributeTableViewCellDelegate, ProductUploadDetailHeaderViewTableViewCellDelegate {
     
-    var tempDetailName: String = ""
-    var dynamicRowHeight: CGFloat = 0
-    var delegate: ProductUploadDetailTableViewControllerDelegate?
+    // Models
     var productModel: ProductModel?
+    
+    // Global variables
+    var dynamicRowHeight: CGFloat = 0
+    var tempDetailName: String = ""
+    
     var deletedCells: [NSIndexPath] = []
     var selectedIndexPath: NSIndexPath = NSIndexPath.new()
     
+    // Initialize ProductUploadDetailTableViewControllerDelegate
+    var delegate: ProductUploadDetailTableViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.registerCell()
         
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         
+        // Add tap gesture recognizer to tableview to dismiss keyboard when tap outside the view
         let tapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "endEditing")
         self.tableView.userInteractionEnabled = true
         self.tableView.addGestureRecognizer(tapRecognizer)
+        
         self.backButton()
+        self.registerCell()
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
+    }
+
+    // MARK: Navigation bar
+    // Add back button in navigation bar
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -55,6 +73,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
+    // MARK: Navigation bar button action
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
@@ -62,26 +81,8 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
     func endEditing() {
         self.tableView.endEditing(true)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        
-    }
-
-    // MARK: - Table view data source
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
-        return 1
-    }
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        return 3
-    }
     
+    // MARK: Register table view cells
     func registerCell() {
         let nib: UINib = UINib(nibName: ProductUploadCategoryViewControllerConstant.productUploadCategoryTableViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: ProductUploadCategoryViewControllerConstant.productUploadCategoryTableViewCellNibNameAndIdentifier)
@@ -96,6 +97,19 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         self.tableView.registerNib(nib4, forCellReuseIdentifier: PUDTConstant.productUploadAttributeTableViewCellNibNameAndIdentifier)
     }
 
+    // MARK: - Table view data source
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        // #warning Potentially incomplete method implementation.
+        // Return the number of sections.
+        return 1
+    }
+
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete method implementation.
+        // Return the number of rows in the section.
+        return 3
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell: ProductUploadDetailHeaderViewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(PUDTConstant.productUploadDetailHeaderViewTableViewCellNibNameAndIdentifier) as! ProductUploadDetailHeaderViewTableViewCell
@@ -157,10 +171,13 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         }
     }
     
+    // MARK: ProductUploadDetailHeaderViewCollectionViewCell Delegate method
     func productUploadDetailHeaderViewCollectionViewCell(editingCellTextFieldWithText text: String) {
         self.tempDetailName = text
     }
     
+    // MARK: ProductUploadDetailFooterTableViewCell Delegate method
+    // Save the changes made in product details
     func productUploadDetailFooterTableViewCell(didPressSaveButton cell: ProductUploadDetailFooterTableViewCell) {
         if self.productModel != nil {
             for (index, path) in enumerate(self.deletedCells) {
@@ -169,7 +186,6 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
                 }
             }
         }
-        
         
         let indexPath: NSIndexPath = NSIndexPath(forRow: 0, inSection: 0)
         let cell: ProductUploadDetailHeaderViewTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! ProductUploadDetailHeaderViewTableViewCell
@@ -191,10 +207,9 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.attributeValuesRequired)
         }
-        
-        
     }
     
+    // MARK: ProductUploadDetailFooterTableViewCell Delegate method
     func productUploadDetailFooterTableViewCell(didPressDoneButton cell: ProductUploadDetailFooterTableViewCell) {
         let cellPadding: CGFloat = 18
         let indexPath: NSIndexPath = self.tableView.indexPathForCell(cell)!
@@ -202,6 +217,8 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         let collectionViewIndexPath: NSIndexPath = NSIndexPath(forItem: 1, inSection: indexPath.section)
         let attributeCell: ProductUploadAttributeTableViewCell = self.tableView.cellForRowAtIndexPath(collectionViewIndexPath) as! ProductUploadAttributeTableViewCell
         var isValid: Bool = true
+        
+        // Iterate in product attributes to check if the newly added attribute is already added
         for attribute in attributeCell.attributes {
             if (attribute as NSString).lowercaseString == (cell.cellTextField.text).lowercaseString {
                 isValid = false
@@ -209,11 +226,14 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
             }
         }
         
+        // Check if 'isValid' is false, add the attribute in the product model
+        // Else, show alert view that the attribute is already taken
         if isValid {
             let value: String = CommonHelper.firstCharacterUppercaseString(cell.cellTextField.text)
             attributeCell.attributes.append(value)
             
             if self.productModel != nil {
+                // Capitalize the first letter of the string
                 let value: String = CommonHelper.firstCharacterUppercaseString(cell.cellTextField.text)
                 self.productModel!.attributes[self.selectedIndexPath.section].values.append(value)
             }
@@ -226,24 +246,25 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
             self.dynamicRowHeight = attributeCell.collectionViewContentSize().height + cellPadding
             
             self.tableView.beginUpdates()
-            //self.tableView.reloadRowsAtIndexPaths([collectionViewIndexPath], withRowAnimation: UITableViewRowAnimation.None)
             self.tableView.endUpdates()
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.attributeAlreadyExist, title: Constants.Localized.error)
         }
     }
     
+    // MARK: ProductUploadDetailFooterTableViewCell Delegate method
     func productUploadDetailFooterTableViewCell(cell: ProductUploadDetailFooterTableViewCell, didSelectButton button: UIButton) {
         self.tableView.reloadData()
     }
     
+    // MARK: ProductUploadAttributeTableViewCell Delegate method
+    // Store all the indexpath of the deleted attribute
     func productUploadAttributeTableViewCell(didTapCell cell: ProductUploadAttributeTableViewCell, indexPath: NSIndexPath) {
         self.deletedCells.append(indexPath)
-        //
     }
     
+    // MARK: ProductUploadDetailHeaderViewTableViewCell Delegate method
     func productUploadDetailHeaderViewTableViewCell(didEndEditing productUploadDetailHeaderViewTableViewCell: ProductUploadDetailHeaderViewTableViewCell, text: String) {
-        
     }
     
     // Dealloc
