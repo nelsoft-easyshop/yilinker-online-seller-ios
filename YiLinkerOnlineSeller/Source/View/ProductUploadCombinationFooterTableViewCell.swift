@@ -8,66 +8,72 @@
 
 import UIKit
 
+// MARK: Delegate
+// ProductUploadCombinationFooterTableViewCell Delegate methods
 protocol ProductUploadCombinationFooterTableViewCellDelegate {
     func productUploadCombinationFooterTableViewCell(didClickDoneButton cell: ProductUploadCombinationFooterTableViewCell, sku: String, quantity: String, discountedPrice: String, retailPrice: String, uploadImages: [UIImage])
     func productUploadCombinationFooterTableViewCell(didClickUploadImage cell: ProductUploadCombinationFooterTableViewCell)
     func productUploadCombinationFooterTableViewCell(didDeleteUploadImage cell: ProductUploadCombinationFooterTableViewCell, indexPath: NSIndexPath)
-    
     func productUploadCombinationFooterTableViewCell(textFieldDidChange textField: UITextField, text: String, cell: ProductUploadCombinationFooterTableViewCell)
 }
 
 class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, ProductUploadImageCollectionViewCellDelegate, UITextFieldDelegate {
+    
+    // Collection view
     @IBOutlet weak var collectionView: UICollectionView!
-    var delegate: ProductUploadCombinationFooterTableViewCellDelegate?
-    var images: [UIImage] = []
-    var viewController: UIViewController?
 
-    @IBOutlet weak var retailPriceTextField: UITextField!
-    @IBOutlet weak var discountedPriceTextField: UITextField!
-    @IBOutlet weak var quantityTextField: UITextField!
-    @IBOutlet weak var skuTextField: UITextField!
-
+    // Labels
     @IBOutlet weak var retailPriceLabel: UILabel!
     @IBOutlet weak var discountedPriceLabel: UILabel!
     @IBOutlet weak var quantityLabel: UILabel!
     @IBOutlet weak var skuLabel: UILabel!
     
+    // Textfields
+    @IBOutlet weak var retailPriceTextField: UITextField!
+    @IBOutlet weak var discountedPriceTextField: UITextField!
+    @IBOutlet weak var quantityTextField: UITextField!
+    @IBOutlet weak var skuTextField: UITextField!
+
+    // View Controller
+    var viewController: UIViewController?
+    
+    // Global variables
+    var images: [UIImage] = []
+    
+    // Initialized ProductUploadCombinationFooterTableViewCellDelegate
+    var delegate: ProductUploadCombinationFooterTableViewCellDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.registerCell()
         
-        self.retailPriceTextField.delegate = self
-        self.retailPriceTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        // Set Textfields delegates
         self.discountedPriceTextField.delegate = self
-        self.discountedPriceTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         self.quantityTextField.delegate = self
-        self.quantityTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        self.retailPriceTextField.delegate = self
         self.skuTextField.delegate = self
+        
+        // Set Textfields targets
+        self.retailPriceTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        self.discountedPriceTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        self.quantityTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         self.skuTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         
+        // Set text in labels
         self.retailPriceLabel.text = ProductUploadStrings.retailPrice
         self.discountedPriceLabel.text = ProductUploadStrings.discountedPrice
         self.quantityLabel.text = ProductUploadStrings.quantity
         self.skuLabel.text = ProductUploadStrings.sku
         
+        // Append asterisk (*) in label's text
         self.skuLabel.required()
         self.retailPriceLabel.required()
         self.quantityLabel.required()
     }
     
-    func textFieldDidChange(sender: UITextField) {
-        self.delegate!.productUploadCombinationFooterTableViewCell(textFieldDidChange: sender, text: sender.text, cell: self)
-    }
-    
-    // MARK: - Images
-    func uploadedImages() -> [UIImage] {
-        self.images.removeLast()
-        return self.images
-    }
-    
     @IBAction func save(sender: AnyObject) {
         //if self.images.last == UIImage(named: "addPhoto") {
-            self.images.removeLast()
+        self.images.removeLast()
         //}
         
         if self.retailPriceTextField.text == "" {
@@ -92,12 +98,37 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
         }
     }
     
+    // MARK: Private Methods
     func registerCell() {
         let nib: UINib = UINib(nibName: ProductUploadUploadImageTableViewCellConstant.productUploadImageCollectionViewCellNibNameAndIdentifier, bundle: nil)
         self.collectionView.registerNib(nib, forCellWithReuseIdentifier: ProductUploadUploadImageTableViewCellConstant.productUploadImageCollectionViewCellNibNameAndIdentifier)
     }
     
+    // MARK: - Images
+    func uploadedImages() -> [UIImage] {
+        self.images.removeLast()
+        return self.images
+    }
     
+    // MARK: ProductUploadImageCollectionViewCell Delegate method
+    func productUploadImageCollectionViewCell(didTapDeleteButtonAtCell cell: ProductUploadImageCollectionViewCell) {
+        let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
+        self.images.removeAtIndex(indexPath.item)
+        self.collectionView.deleteItemsAtIndexPaths([indexPath])
+        self.delegate!.productUploadCombinationFooterTableViewCell(didDeleteUploadImage: self, indexPath: indexPath)
+    }
+    
+    // MARK: Textfield delegate methods
+    func textFieldDidChange(sender: UITextField) {
+        self.delegate!.productUploadCombinationFooterTableViewCell(textFieldDidChange: sender, text: sender.text, cell: self)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.endEditing(true)
+        return true
+    }
+    
+    // MARK: Collection view delegate and data source methods
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.images.count
     }
@@ -122,19 +153,6 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
         if indexPath.row == self.images.count - 1 {
             self.delegate?.productUploadCombinationFooterTableViewCell(didClickUploadImage: self)
         }
-    }
-    
-    func productUploadImageCollectionViewCell(didTapDeleteButtonAtCell cell: ProductUploadImageCollectionViewCell) {
-        let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
-        self.images.removeAtIndex(indexPath.item)
-        self.collectionView.deleteItemsAtIndexPaths([indexPath])
-        self.delegate!.productUploadCombinationFooterTableViewCell(didDeleteUploadImage: self, indexPath: indexPath)
-        //self.delegate!.productUploadUploadImageTableViewCell(didDeleteAtRowIndexPath: indexPath, collectionView: self.collectionView)
-    }
-    
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        self.endEditing(true)
-        return true
     }
     
     // Dealloc
