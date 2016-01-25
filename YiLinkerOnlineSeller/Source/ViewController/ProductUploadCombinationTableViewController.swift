@@ -8,39 +8,45 @@
 
 import UIKit
 
+// MARK: Constant variable declarations
 struct PUCTVCConstant {
     static let productUploadCombinationHeaderTableViewCellNibNameAndIdentifier = "ProductUploadCombinationHeaderTableViewCell"
     static let productUploadCombinationTableViewCellNibNameAndIdentifier = "ProductUploadCombinationTableViewCell"
     static let productUploadCombinationFooterTableViewCellNibNameAndIdentifier = "ProductUploadCombinationFooterTableViewCell"
     static let productUploadAttributeValluesCollectionViewCellNibNameAndIdentifier = "ProductUploadAttributeValuesCollectionViewCell"
-   
     static let footerHeight: CGFloat = 261
-    
 }
 
+// MARK: Delegate
+// ProductUploadCombinationTableViewController delegate methods
 protocol ProductUploadCombinationTableViewControllerDelegate {
     func productUploadCombinationTableViewController(appendCombination combination: CombinationModel, isEdit: Bool, indexPath: NSIndexPath)
 }
 
 class ProductUploadCombinationTableViewController: UITableViewController, ProductUploadCombinationFooterTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, SaveButtonViewDelegate {
     
+    // Models
     var attributes: [AttributeModel]?
-    var delegate: ProductUploadCombinationTableViewControllerDelegate?
+    var combination: CombinationModel = CombinationModel()
+    var productModel: ProductModel?
+    
+    // Global variables
     var images: [UIImage] = []
     var selectedIndexpath: NSIndexPath?
-    var productModel: ProductModel?
-    var headerTitle: String = ""
     
+    var headerTitle: String = ""
     var weight: String = ""
     var height: String = ""
     var length: String = ""
     var width: String = ""
-    
-    var combination: CombinationModel = CombinationModel()
+
+    // Initialize ProductUploadCombinationTableViewControllerDelegate
+    var delegate: ProductUploadCombinationTableViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.backButton()
+        
+        // Set navigatrion bar title
         if self.productModel != nil {
             self.title = "Edit Combination"
             let combination: CombinationModel = self.productModel!.validCombinations[self.selectedIndexpath!.section]
@@ -48,67 +54,22 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         } else {
             self.title = "Add Combination"
         }
-    
-        let headerView: ProductUploadCombinationHeaderTableViewCell = XibHelper.puffViewWithNibName("ProductUploadCombinationHeaderTableViewCell", index: 0) as! ProductUploadCombinationHeaderTableViewCell
-        self.tableView.tableHeaderView = headerView
-        headerView.combinationLabel.text = self.headerTitle
-        
-        /*if self.parentUploadViewController.uploadType == UploadType.NewProduct {
-            
-        } else {
-            if self.productModel != nil {
-                self.images = self.productModel!.validCombinations[self.selectedIndexpath!.section].editedImages
-                let image: UIImage = UIImage(named: "addPhoto")!
-                let serverImage: ServerUIImage  = ServerUIImage(data: UIImagePNGRepresentation(image)!)!
-                self.images.append(serverImage)
-            } else {
-                self.images.append(UIImage(named: "addPhoto")!)
-            }
-        }*/
-        
-        let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
-        
-        if viewController.uploadType == UploadType.NewProduct {
-            if self.productModel != nil {
-                self.images = self.productModel!.validCombinations[self.selectedIndexpath!.section].images
-                self.images.append(UIImage(named: "addPhoto")!)
-            } else {
-                self.images.append(UIImage(named: "addPhoto")!)
-            }
-        } else {
- 
-            for image in self.images {
-                let i: ServerUIImage = image as! ServerUIImage
-                println("uid: \(i.uid)")
-            }
 
-            if self.productModel != nil {
-                if self.productModel!.validCombinations[self.selectedIndexpath!.section].editedImages.count != 0 || self.productModel!.validCombinations[self.selectedIndexpath!.section].images.count != 0 {
-                    self.images = self.productModel!.validCombinations[self.selectedIndexpath!.section].editedImages
-                    println(self.productModel!.validCombinations[self.selectedIndexpath!.section].editedImages)
-                    let image: UIImage = UIImage(named: "addPhoto")!
-                    let serverImage: ServerUIImage  = ServerUIImage(data: UIImagePNGRepresentation(image)!)!
-                    println(serverImage)
-                    self.images.append(serverImage)
-                } else {
-                    let image: UIImage = UIImage(named: "addPhoto")!
-                    let serverImage: ServerUIImage  = ServerUIImage(data: UIImagePNGRepresentation(image)!)!
-                    println(serverImage)
-                    self.images.append(serverImage)
-                }
-            } else {
-                let image: UIImage = UIImage(named: "addPhoto")!
-                let serverImage: ServerUIImage  = ServerUIImage(data: UIImagePNGRepresentation(image)!)!
-                self.images.append(serverImage)
-            }
-
-        }
-        
         self.tableView.tableFooterView = self.footerView()
+        
+        self.addDummyPhoto()
+        self.backButton()
+        self.headerView()
         self.registerCell()
     }
     
-
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: Navigation bar
+    // Add back button in navigation bar
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -122,6 +83,58 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
+    // Navigation bar back button action
+    func back() {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    // MARK: Private methods
+    // Add dummy photo in self.image array
+    func addDummyPhoto() {
+        let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
+        
+        if viewController.uploadType == UploadType.NewProduct {
+            if self.productModel != nil {
+                self.images = self.productModel!.validCombinations[self.selectedIndexpath!.section].images
+                self.images.append(UIImage(named: "addPhoto")!)
+            } else {
+                self.images.append(UIImage(named: "addPhoto")!)
+            }
+        } else {
+            
+            for image in self.images {
+                let i: ServerUIImage = image as! ServerUIImage
+            }
+            
+            if self.productModel != nil {
+                self.images = self.productModel!.validCombinations[self.selectedIndexpath!.section].editedImages
+                let image: UIImage = UIImage(named: "addPhoto")!
+                let serverImage: ServerUIImage  = ServerUIImage(data: UIImagePNGRepresentation(image)!)!
+                self.images.append(serverImage)
+            } else {
+                let image: UIImage = UIImage(named: "addPhoto")!
+                let serverImage: ServerUIImage  = ServerUIImage(data: UIImagePNGRepresentation(image)!)!
+                self.images.append(serverImage)
+            }
+        }
+    }
+    
+    // MARK: - Footer View
+    func footerView() -> SaveButtonView {
+        let saveButtonView: SaveButtonView = XibHelper.puffViewWithNibName("SaveButtonView", index: 0) as! SaveButtonView
+        saveButtonView.delegate = self
+        return saveButtonView
+    }
+    
+    // MARK: Header view
+    // Add table view header
+    func headerView() {
+        let headerView: ProductUploadCombinationHeaderTableViewCell = XibHelper.puffViewWithNibName("ProductUploadCombinationHeaderTableViewCell", index: 0) as! ProductUploadCombinationHeaderTableViewCell
+        self.tableView.tableHeaderView = headerView
+        headerView.combinationLabel.text = self.headerTitle
+    }
+    
+    // MARK: Register table view cells
     func registerCell() {
         let footerNib: UINib = UINib(nibName: PUCTVCConstant.productUploadCombinationFooterTableViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(footerNib, forCellReuseIdentifier: PUCTVCConstant.productUploadCombinationFooterTableViewCellNibNameAndIdentifier)
@@ -135,21 +148,8 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         let weightAndHeightNib: UINib = UINib(nibName: ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(weightAndHeightNib, forCellReuseIdentifier: ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier)
     }
-    
-    func back() {
-        self.navigationController?.popViewControllerAnimated(true)
-//        if self.productModel != nil {
-//                self.productModel?.images.removeLast()
-//        }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
     // MARK: - Table view data source
-
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
@@ -171,6 +171,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
                 cell.productModel = self.productModel!.copy()
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
             }
+            
             return cell
         } else if indexPath.row == 1 {
             let cell: ProductUploadCombinationFooterTableViewCell = tableView.dequeueReusableCellWithIdentifier(PUCTVCConstant.productUploadCombinationFooterTableViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ProductUploadCombinationFooterTableViewCell
@@ -189,6 +190,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
             }
             cell.viewController = self
             cell.selectionStyle = UITableViewCellSelectionStyle.None
+            
             return cell
         } else {
             let cell: ProductUploadDimensionsAndWeightTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier) as! ProductUploadDimensionsAndWeightTableViewCell
@@ -203,10 +205,12 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
             }
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.delegate = self
+            
             return cell
         }
     }
     
+    // MARK: ProductUploadCombinationFooterTableViewCell Delegate methods
     func productUploadCombinationFooterTableViewCell(didClickDoneButton cell: ProductUploadCombinationFooterTableViewCell, sku: String, quantity: String, discountedPrice: String, retailPrice: String, uploadImages: [UIImage]) {
         self.tableView.endEditing(true)
         self.tableView.reloadData()
@@ -228,7 +232,6 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         }
         
          self.navigationController?.popViewControllerAnimated(true)
-        
     }
     
     func productUploadCombinationFooterTableViewCell(didClickUploadImage cell: ProductUploadCombinationFooterTableViewCell) {
@@ -243,46 +246,38 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         self.presentViewController(picker, animated: true, completion: nil)
     }
     
+    // MARK: UzysAssetsPickerController data source and delegate methods
     func uzyConfig() -> UzysAppearanceConfig {
         let config: UzysAppearanceConfig = UzysAppearanceConfig()
         config.finishSelectionButtonColor = Constants.Colors.appTheme
         return config
     }
     
-    //UzzyPickerDelegate
-    
     func uzysAssetsPickerController(picker: UzysAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) {
         let assetsLibrary = ALAssetsLibrary()
         let alaSset: ALAsset = assets[0] as! ALAsset
         
         for allaSset in assets as! [ALAsset] {
-           /* if self.parentUploadViewController.uploadType == UploadType.NewProduct {
-                let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!
-                self.images.insert(image, atIndex: 0)
-            } else {
-                let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!
-                self.images.insert(image, atIndex: 0)
-            }*/
-            
             let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
            
             if viewController.uploadType == UploadType.NewProduct {
+                // Insert selected images on the first index of self.images array
                 let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullScreenImage().takeUnretainedValue())!
                 self.images.insert(image, atIndex: 0)
             } else {
+                // Insert selected images in the last index of self.images array
+                // Set ServerUIImage 'isNew' to 'true' for all newly added images
                 let image: ServerUIImage = ServerUIImage(CGImage: allaSset.defaultRepresentation().fullScreenImage().takeUnretainedValue())!
                 image.isNew = true
                 image.isRemoved = false
                 image.isCombination = true
                 self.images.insert(image, atIndex: self.images.count - 1)
-                //ProductUploadCombination.combinationArray.append("\(self.productModel!.validCombinations[self.selectedIndexpath!.section].editedImages.count-1)")
-                //println("\(self.productModel!.validCombinations[self.selectedIndexpath!.section].editedImages.count-1)")
             }
-
         }
         
         let indexPath: NSIndexPath = NSIndexPath(forRow: 1, inSection: 0)
         
+        // Pass 'self.images' to ProductUploadCombinationFooterTableViewCell 'images'
         let cell: ProductUploadCombinationFooterTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! ProductUploadCombinationFooterTableViewCell
         cell.images = self.images
         
@@ -299,6 +294,122 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         
     }
     
+    // MARK: ProductUploadCombinationFooterTableViewCell Delegate Method
+    func productUploadCombinationFooterTableViewCell(didDeleteUploadImage cell: ProductUploadCombinationFooterTableViewCell, indexPath: NSIndexPath) {
+        if self.productModel == nil {
+            
+            let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
+            
+            if viewController.uploadType == UploadType.NewProduct {
+               self.images.removeAtIndex(indexPath.row)
+            } else {
+               self.images.removeAtIndex(indexPath.row)
+            }
+            
+        } else {
+            self.images.removeAtIndex(indexPath.row)
+            if indexPath.row < self.productModel!.validCombinations[self.selectedIndexpath!.section].imagesId.count {
+                if !contains(ProductUploadCombination.deleted, self.productModel!.validCombinations[self.selectedIndexpath!.section].imagesId[indexPath.row]) {
+                    ProductUploadCombination.deleted.append(self.productModel!.validCombinations[self.selectedIndexpath!.section].imagesId[indexPath.row])
+                }
+            }
+    
+            if indexPath.row < self.productModel!.validCombinations[self.selectedIndexpath!.section].images.count {
+                self.productModel!.validCombinations[self.selectedIndexpath!.section].images.removeAtIndex(indexPath.row)
+            }
+            
+        }
+    }
+    
+    // MARK: ProductUploadDimensionsAndWeightTableViewCell Delegate Method
+    func productUploadDimensionsAndWeightTableViewCell(textFieldDidChange textField: UITextField, text: String, cell: ProductUploadDimensionsAndWeightTableViewCell) {
+        if textField.isEqual(cell.weightTextField) {
+            self.combination.weight = text
+        } else if textField.isEqual(cell.heightTextField) {
+            self.combination.height = text
+        } else if textField.isEqual(cell.lengthTextField) {
+            self.combination.length = text
+        } else if textField.isEqual(cell.widthTextField) {
+            self.combination.width = text
+        }
+    }
+    
+    // MARK: SaveButtonView Delegate method
+    func saveButtonView(didClickButtonWithView view: SaveButtonView) {
+        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+        
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+            // Error valiadtion if any of the required fields is empty
+            if self.combination.retailPrice == "" {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.retailPriceRequired, title: ProductUploadStrings.incompleteProductDetails)
+            } else if self.combination.quantity == "" {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.quantityRequired, title: ProductUploadStrings.incompleteProductDetails)
+            } else if self.combination.sku == "" {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.skuRequried, title: ProductUploadStrings.incompleteProductDetails)
+            } else if self.combination.length == "" {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.lengthRequried, title: ProductUploadStrings.incompleteProductDetails)
+            } else if self.combination.weight == "" {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.weightRequried, title: ProductUploadStrings.incompleteProductDetails)
+            } else if self.combination.width == "" {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.widthRequried, title: ProductUploadStrings.incompleteProductDetails)
+            } else if self.combination.height == "" {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.heightRequried, title: ProductUploadStrings.incompleteProductDetails)
+            } else {
+                if self.combination.discountedPrice.toInt() > self.combination.retailPrice.toInt() {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRICE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
+                    self.combination.discountedPrice = self.combination.retailPrice
+                } else {
+                    let cell: ProductUploadCombinationFooterTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as! ProductUploadCombinationFooterTableViewCell
+                    
+                    self.combination.images = cell.uploadedImages()
+                    
+                    let cell2: ProductUploadCombinationTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! ProductUploadCombinationTableViewCell
+                    
+                    let combination2: CombinationModel = cell2.data()
+                    self.combination.attributes = combination2.attributes
+                    
+                    // Check if SKU is already used
+                    // SKU's must be unique
+                    if self.productModel == nil {
+                        if find(ProductSku.SKUS, self.combination.sku) != nil {
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_AVAILABLE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
+                        } else {
+                            self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: false, indexPath: NSIndexPath())
+                            ProductSku.SKUS.append(self.combination.sku)
+                            self.navigationController?.popViewControllerAnimated(true)
+                        }
+                    } else {
+                        ProductSku.SKUS[self.selectedIndexpath!.section] = ""
+                        if find(ProductSku.SKUS, self.combination.sku) != nil {
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_AVAILABLE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
+                        } else {
+                            self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: true, indexPath: self.selectedIndexpath!)
+                            ProductSku.SKUS[self.selectedIndexpath!.section] = self.combination.sku
+                            self.navigationController?.popViewControllerAnimated(true)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    // MARK: - Product Upload Combination Footer Delegate method
+    func productUploadCombinationFooterTableViewCell(textFieldDidChange textField: UITextField, text: String, cell: ProductUploadCombinationFooterTableViewCell) {
+        if textField.isEqual(cell.skuTextField) {
+            self.combination.sku = text
+        } else if textField.isEqual(cell.discountedPriceTextField) {
+            self.combination.discountedPrice = text
+        } else if textField.isEqual(cell.quantityTextField) {
+            self.combination.quantity = text
+        } else if textField.isEqual(cell.retailPriceTextField) {
+            self.combination.retailPrice = text
+            self.combination.discountedPrice = text
+            cell.discountedPriceTextField.text = text
+        }
+    }
+    
+    // MARK: Table view data source method
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let rowInitialHeight: CGFloat = 14
         if indexPath.row == 0 {
@@ -328,126 +439,9 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         }
     }
     
-    func productUploadCombinationFooterTableViewCell(didDeleteUploadImage cell: ProductUploadCombinationFooterTableViewCell, indexPath: NSIndexPath) {
-        if self.productModel == nil {
-            
-            let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
-            
-            if viewController.uploadType == UploadType.NewProduct {
-               self.images.removeAtIndex(indexPath.row)
-            } else {
-               self.images.removeAtIndex(indexPath.row)
-            }
-            
-        } else {
-            self.images.removeAtIndex(indexPath.row)
-            if indexPath.row < self.productModel!.validCombinations[self.selectedIndexpath!.section].imagesId.count {
-                if !contains(ProductUploadCombination.deleted, self.productModel!.validCombinations[self.selectedIndexpath!.section].imagesId[indexPath.row]) {
-                    ProductUploadCombination.deleted.append(self.productModel!.validCombinations[self.selectedIndexpath!.section].imagesId[indexPath.row])
-                }
-            }
-    
-            if indexPath.row < self.productModel!.validCombinations[self.selectedIndexpath!.section].images.count {
-                self.productModel!.validCombinations[self.selectedIndexpath!.section].images.removeAtIndex(indexPath.row)
-            }
-            
-        }
-    }
-    
     // Dealloc
     deinit {
         self.tableView.delegate = nil
         self.tableView.dataSource = nil
-    }
-    
-    // MARK: - Dimension's Delegate
-    func productUploadDimensionsAndWeightTableViewCell(textFieldDidChange textField: UITextField, text: String, cell: ProductUploadDimensionsAndWeightTableViewCell) {
-        if textField.isEqual(cell.weightTextField) {
-            self.combination.weight = text
-        } else if textField.isEqual(cell.heightTextField) {
-            self.combination.height = text
-        } else if textField.isEqual(cell.lengthTextField) {
-            self.combination.length = text
-        } else if textField.isEqual(cell.widthTextField) {
-            self.combination.width = text
-        }
-    }
-    
-    // MARK: - Footer View
-    func footerView() -> SaveButtonView {
-        let saveButtonView: SaveButtonView = XibHelper.puffViewWithNibName("SaveButtonView", index: 0) as! SaveButtonView
-        saveButtonView.delegate = self
-        return saveButtonView
-    }
-    
-    func saveButtonView(didClickButtonWithView view: SaveButtonView) {
-        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
-        
-        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
-        dispatch_after(delayTime, dispatch_get_main_queue()) {
-            if self.combination.retailPrice == "" {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.retailPriceRequired, title: ProductUploadStrings.incompleteProductDetails)
-            } else if self.combination.quantity == "" {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.quantityRequired, title: ProductUploadStrings.incompleteProductDetails)
-            } else if self.combination.sku == "" {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.skuRequried, title: ProductUploadStrings.incompleteProductDetails)
-            } else if self.combination.length == "" {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.lengthRequried, title: ProductUploadStrings.incompleteProductDetails)
-            } else if self.combination.weight == "" {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.weightRequried, title: ProductUploadStrings.incompleteProductDetails)
-            } else if self.combination.width == "" {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.widthRequried, title: ProductUploadStrings.incompleteProductDetails)
-            } else if self.combination.height == "" {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.heightRequried, title: ProductUploadStrings.incompleteProductDetails)
-            } else {
-                if self.combination.discountedPrice.toInt() > self.combination.retailPrice.toInt() {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRICE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
-                    self.combination.discountedPrice = self.combination.retailPrice
-                } else {
-                    let cell: ProductUploadCombinationFooterTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as! ProductUploadCombinationFooterTableViewCell
-                    
-                    self.combination.images = cell.uploadedImages()
-                    
-                    let cell2: ProductUploadCombinationTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! ProductUploadCombinationTableViewCell
-                    
-                    let combination2: CombinationModel = cell2.data()
-                    self.combination.attributes = combination2.attributes
-                    
-                    if self.productModel == nil {
-                        if find(ProductSku.SKUS, self.combination.sku) != nil {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_AVAILABLE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
-                        } else {
-                            self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: false, indexPath: NSIndexPath())
-                            ProductSku.SKUS.append(self.combination.sku)
-                            self.navigationController?.popViewControllerAnimated(true)
-                        }
-                    } else {
-                        ProductSku.SKUS[self.selectedIndexpath!.section] = ""
-                        if find(ProductSku.SKUS, self.combination.sku) != nil {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_AVAILABLE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
-                        } else {
-                            self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: true, indexPath: self.selectedIndexpath!)
-                            ProductSku.SKUS[self.selectedIndexpath!.section] = self.combination.sku
-                            self.navigationController?.popViewControllerAnimated(true)
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    // MARK: - Product Upload Combination Footer
-    func productUploadCombinationFooterTableViewCell(textFieldDidChange textField: UITextField, text: String, cell: ProductUploadCombinationFooterTableViewCell) {
-        if textField.isEqual(cell.skuTextField) {
-            self.combination.sku = text
-        } else if textField.isEqual(cell.discountedPriceTextField) {
-            self.combination.discountedPrice = text
-        } else if textField.isEqual(cell.quantityTextField) {
-            self.combination.quantity = text
-        } else if textField.isEqual(cell.retailPriceTextField) {
-            self.combination.retailPrice = text
-            self.combination.discountedPrice = text
-            cell.discountedPriceTextField.text = text
-        }
     }
 }
