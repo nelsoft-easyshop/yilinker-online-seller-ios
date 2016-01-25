@@ -10,6 +10,7 @@ import UIKit
 
 class ProductUploadButtonTableViewCell: UITableViewCell {
 
+    // Custom Buttons
     @IBOutlet weak var cellButton: DynamicRoundedButton!
     
     override func awakeFromNib() {
