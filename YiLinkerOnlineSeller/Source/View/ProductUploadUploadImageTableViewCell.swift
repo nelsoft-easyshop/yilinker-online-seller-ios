@@ -8,15 +8,20 @@
 
 import UIKit
 
+// MARK: Constant variable declarations
 struct ProductUploadUploadImageTableViewCellConstant {
     static let productUploadImageCollectionViewCellNibNameAndIdentifier = "ProductUploadImageCollectionViewCell"
 }
 
+// MARK: Data source
+// ProductUploadUploadImageTableViewCell Data source methods
 protocol ProductUploadUploadImageTableViewCellDataSource {
     func productUploadUploadImageTableViewCell(numberOfCollectionViewRows cell: ProductUploadUploadImageTableViewCell) -> Int
     func productUploadUploadImageTableViewCell(images cell: ProductUploadUploadImageTableViewCell) -> [UIImage]
 }
 
+// MARK: Delegate
+// ProductUploadUploadImageTableViewCell delegate methods
 protocol ProductUploadUploadImageTableViewCellDelegate {
     func productUploadUploadImageTableViewCell(didSelecteRowAtIndexPath indexPath: NSIndexPath, cell: ProductUploadUploadImageTableViewCell)
     func productUploadUploadImageTableViewCell(didDeleteAtRowIndexPath indexPath: NSIndexPath, collectionView: UICollectionView)
@@ -24,9 +29,13 @@ protocol ProductUploadUploadImageTableViewCellDelegate {
 
 class ProductUploadUploadImageTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, ProductUploadImageCollectionViewCellDelegate {
 
+    // Collection view
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    // Labels
     @IBOutlet weak var productPhotosLabel: UILabel!
     
+    // Initialiaze ProductUploadUploadImageTableViewCellDataSource and ProductUploadUploadImageTableViewCellDelegate
     var dataSource: ProductUploadUploadImageTableViewCellDataSource?
     var delegate: ProductUploadUploadImageTableViewCellDelegate?
     
@@ -38,17 +47,26 @@ class ProductUploadUploadImageTableViewCell: UITableViewCell, UICollectionViewDa
         self.productPhotosLabel.required()
     }
 
+    override func setSelected(selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        
+        // Configure the view for the selected state
+    }
+    
+    // MARK: Private methods
+    // Register collection view cell
     func registerCell() {
         let nib: UINib = UINib(nibName: ProductUploadUploadImageTableViewCellConstant.productUploadImageCollectionViewCellNibNameAndIdentifier, bundle: nil)
         self.collectionView.registerNib(nib, forCellWithReuseIdentifier: ProductUploadUploadImageTableViewCellConstant.productUploadImageCollectionViewCellNibNameAndIdentifier)
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    // MARK: ProductUploadImageCollectionViewCell delegate method
+    func productUploadImageCollectionViewCell(didTapDeleteButtonAtCell cell: ProductUploadImageCollectionViewCell) {
+        let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
+        self.delegate!.productUploadUploadImageTableViewCell(didDeleteAtRowIndexPath: indexPath, collectionView: self.collectionView)
     }
     
+    // MARK: Collection view delegate methods
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.dataSource!.productUploadUploadImageTableViewCell(numberOfCollectionViewRows: self)
     }
@@ -79,11 +97,6 @@ class ProductUploadUploadImageTableViewCell: UITableViewCell, UICollectionViewDa
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         self.delegate!.productUploadUploadImageTableViewCell(didSelecteRowAtIndexPath: indexPath, cell: self)
-    }
-    
-    func productUploadImageCollectionViewCell(didTapDeleteButtonAtCell cell: ProductUploadImageCollectionViewCell) {
-        let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
-        self.delegate!.productUploadUploadImageTableViewCell(didDeleteAtRowIndexPath: indexPath, collectionView: self.collectionView)
     }
 
     // Dealloc
