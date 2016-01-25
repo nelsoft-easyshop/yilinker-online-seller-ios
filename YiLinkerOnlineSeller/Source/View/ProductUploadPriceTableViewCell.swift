@@ -8,17 +8,23 @@
 
 import UIKit
 
+// MARK: Delegate
+// ProductUploadPriceTableViewCell Delegate methods
 protocol ProductUploadPriceTableViewCellDelegate {
     func productUploadPriceTableViewCell(textFieldDidChange text: String, cell: ProductUploadPriceTableViewCell, textFieldType: ProductTextFieldType)
 }
 
 class ProductUploadPriceTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var cellTextField: UITextField!
+    // Labels 
     @IBOutlet weak var cellTitleLabel: UILabel!
     
-    var delegate: ProductUploadPriceTableViewCellDelegate?
+    // Textfields
+    @IBOutlet weak var cellTextField: UITextField!
+    
     var textFieldType: ProductTextFieldType?
+    
+    var delegate: ProductUploadPriceTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,10 +37,13 @@ class ProductUploadPriceTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    // MARK: Private methods
+    // Add textfield action
     func addTextFieldDelegate() {
         self.cellTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
     }
     
+    // MARK: Textfield delegate method
     func textFieldDidChange(sender: UITextField) {
         self.delegate!.productUploadPriceTableViewCell(textFieldDidChange: sender.text, cell: self, textFieldType: self.textFieldType!)
     }
