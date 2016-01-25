@@ -10,6 +10,7 @@ import UIKit
 
 class ProductUploadCombinationHeaderTableViewCell: UITableViewCell {
 
+    // Labels
     @IBOutlet weak var combinationLabel: UILabel!
     
     override func awakeFromNib() {
