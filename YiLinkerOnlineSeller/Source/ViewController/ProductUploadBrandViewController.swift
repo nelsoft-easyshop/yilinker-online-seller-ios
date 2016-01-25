@@ -8,23 +8,36 @@
 
 import UIKit
 
+// MARK: Delegate
+// ProductUploadBrandViewController Delegate method
 protocol ProductUploadBrandViewControllerDelegate {
     func productUploadBrandViewController(didSelectBrand brand: String, brandModel: BrandModel)
 }
 
 class ProductUploadBrandViewController: UIViewController, UITabBarControllerDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var brandTextField: UITextField!    
+    // Tableview
     @IBOutlet weak var tableView: UITableView!
     
-    var delegate: ProductUploadBrandViewControllerDelegate?
-    var brands: NSMutableArray = NSMutableArray()
-    var selectedBrandModel: BrandModel = BrandModel(name: "", brandId: 0)
-    var searchTask: NSURLSessionDataTask?
-    var hud: MBProgressHUD?
+    // Textfield
+    @IBOutlet weak var brandTextField: UITextField!
     
+    // Models
+    var selectedBrandModel: BrandModel = BrandModel(name: "", brandId: 0)
+    
+    // Global variables
+    var brands: NSMutableArray = NSMutableArray()
+    var hud: MBProgressHUD?
+    var searchTask: NSURLSessionDataTask?
+    
+    // Initialize ProductUploadBrandViewControllerDelegate
+    var delegate: ProductUploadBrandViewControllerDelegate?
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Set navigation bar title
+        self.title = Constants.ViewControllersTitleString.addBrand
         
         if self.respondsToSelector("edgesForExtendedLayout") {
             self.edgesForExtendedLayout = UIRectEdge.None
@@ -32,16 +45,23 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
         
         self.backButton()
         self.checkButton()
-        self.title = Constants.ViewControllersTitleString.addBrand
-        
         self.registerCell()
         
+        // Add texfield action
         self.brandTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         
+        // Remove tableview footer
         let footerView: UIView = UIView(frame: CGRectZero)
         self.tableView.tableFooterView = footerView
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: Navigation Bar
+    // Add back button in navigation bar
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -55,6 +75,7 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
+    // Add check button in navigation bar
     func checkButton() {
         var checkButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         checkButton.frame = CGRectMake(0, 0, 40, 40)
@@ -68,10 +89,85 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
         self.navigationItem.rightBarButtonItems = [navigationSpacer, customCheckButton]
     }
     
+    // Navigation bar button actions
+    func back() {
+        self.navigationController!.popViewControllerAnimated(true)
+    }
+    
+    func check() {
+        self.delegate!.productUploadBrandViewController(didSelectBrand: self.brandTextField.text, brandModel: self.selectedBrandModel)
+        self.back()
+    }
+    
+    // MARK: Private Methods
+    func registerCell() {
+        let nib: UINib = UINib(nibName: ProductUploadCategoryViewControllerConstant.productUploadCategoryTableViewCellNibNameAndIdentifier, bundle: nil)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: ProductUploadCategoryViewControllerConstant.productUploadCategoryTableViewCellNibNameAndIdentifier)
+    }
+    
+    // MARK: Alert view
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+        }
+    }
+    
+    // MARK: - Show HUD
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    func textFieldDidChange(sender: UITextField) {
+        self.fireBrandWithKeyWord(sender.text)
+    }
+    
+    // MARK: Table view data source methods
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.brands.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let brandModel: BrandModel = self.brands.objectAtIndex(indexPath.row) as! BrandModel
+        let cell: ProductUploadCategoryTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadCategoryViewControllerConstant.productUploadCategoryTableViewCellNibNameAndIdentifier) as! ProductUploadCategoryTableViewCell
+        cell.categoryTitleLabel.text = brandModel.name
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let brandModel: BrandModel = self.brands.objectAtIndex(indexPath.row) as! BrandModel
+        self.selectedBrandModel = brandModel
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        self.brandTextField.text = brandModel.name
+    }
+
+    // MARK: -
+    // MARK: - REST API request
+    // MARK: GET METHOD - Fire Brand
+    /*
+    *
+    * (Parameters) - access_token, brandKeyword
+    *
+    * Function to get brand list
+    *
+    */
     func fireBrandWithKeyWord(keyWord: String) {
         let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "brandKeyword": keyWord]
         
         if self.searchTask != nil {
@@ -113,8 +209,14 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
             })
     }
     
-    // MARK: - Fire Refresh Token
-    
+    // MARK: POST METHOD - Refresh token
+    /*
+    *
+    * (Parameters) - client_id, client_secret, grant_type, refresh_token
+    *
+    * Function to refresh token to get another access token
+    *
+    */
     func fireRefreshTokenWithKeyWord(keyWord: String) {
         self.showHUD()
         let manager = APIManager.sharedInstance
@@ -141,75 +243,6 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
                 self.hud?.hide(true)
         })
         
-    }
-    
-    func textFieldDidChange(sender: UITextField) {
-        self.fireBrandWithKeyWord(sender.text)
-    }
-    
-    func registerCell() {
-        let nib: UINib = UINib(nibName: ProductUploadCategoryViewControllerConstant.productUploadCategoryTableViewCellNibNameAndIdentifier, bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: ProductUploadCategoryViewControllerConstant.productUploadCategoryTableViewCellNibNameAndIdentifier)
-    }
-    
-    func back() {
-        self.navigationController!.popViewControllerAnimated(true)
-    }
-    
-    func check() {
-        self.delegate!.productUploadBrandViewController(didSelectBrand: self.brandTextField.text, brandModel: self.selectedBrandModel)
-        self.back()
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       return self.brands.count
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let brandModel: BrandModel = self.brands.objectAtIndex(indexPath.row) as! BrandModel
-        let cell: ProductUploadCategoryTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadCategoryViewControllerConstant.productUploadCategoryTableViewCellNibNameAndIdentifier) as! ProductUploadCategoryTableViewCell
-        cell.categoryTitleLabel.text = brandModel.name
-        return cell
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let brandModel: BrandModel = self.brands.objectAtIndex(indexPath.row) as! BrandModel
-        self.selectedBrandModel = brandModel
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        self.brandTextField.text = brandModel.name
-    }
-    
-    // MARK: - Show HUD
-    func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.navigationController?.view.addSubview(self.hud!)
-        self.hud?.show(true)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    //MARK: Alert view
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        
-        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
-        
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-        }
     }
 
     // Dealloc
