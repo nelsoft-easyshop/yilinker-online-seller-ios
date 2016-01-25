@@ -8,15 +8,21 @@
 
 import UIKit
 
+// MARK: Delegate
+// ProductUploadImageCollectionViewCell delegate methods
 protocol ProductUploadImageCollectionViewCellDelegate {
     func productUploadImageCollectionViewCell(didTapDeleteButtonAtCell cell: ProductUploadImageCollectionViewCell)
 }
 
 class ProductUploadImageCollectionViewCell: UICollectionViewCell {
-
-    @IBOutlet weak var imageView: UIImageView!
+    
+    // Custom buttons
     @IBOutlet weak var closeButton: DynamicRoundedButton!
     
+    // Imageviews
+    @IBOutlet weak var imageView: UIImageView!
+    
+    // Initialize ProductUploadImageCollectionViewCellDelegate
     var delegate: ProductUploadImageCollectionViewCellDelegate?
     
     override func awakeFromNib() {
@@ -25,6 +31,7 @@ class ProductUploadImageCollectionViewCell: UICollectionViewCell {
         self.imageView.clipsToBounds = true
     }
     
+    // MARK: Button actions
     @IBAction func close(sender: AnyObject) {
         self.delegate!.productUploadImageCollectionViewCell(didTapDeleteButtonAtCell: self)
     }
