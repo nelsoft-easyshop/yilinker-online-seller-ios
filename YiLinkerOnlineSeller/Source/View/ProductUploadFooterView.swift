@@ -8,19 +8,25 @@
 
 import UIKit
 
+// MARK: Delegate
+// ProductUploadFooterView Delegate methods
 protocol ProductUploadFooterViewDelegate {
     func productUploadFooterView(didClickUpload view: ProductUploadFooterView)
 }
 
 class ProductUploadFooterView: UIView {
-    var delegate: ProductUploadFooterViewDelegate?
     
+    // Custom buttons
     @IBOutlet weak var uploadProductButton: DynamicRoundedButton!
+    
+    // Initialize ProductUploadFooterViewDelegate
+    var delegate: ProductUploadFooterViewDelegate?
     
     override func awakeFromNib() {
         self.uploadProductButton.setTitle(ProductUploadStrings.uploadItem, forState: UIControlState.Normal)
     }
     
+    // MARK: Button actions
     @IBAction func productUpload(sender: AnyObject) {
         self.delegate!.productUploadFooterView(didClickUpload: self)
     }
