@@ -108,6 +108,19 @@ enum DisputeRefreshType {
     case Reason
 }
 
+enum ResolutionTimeFilter {
+    case Today
+    case ThisWeek
+    case ThisMonth
+    case Total
+}
+
+enum ResolutionStatusFilter {
+    case Open
+    case Closed
+    case Both
+}
+
 enum UploadType {
     case NewProduct
     case Draft
