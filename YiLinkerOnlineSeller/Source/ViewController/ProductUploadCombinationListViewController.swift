@@ -8,6 +8,7 @@
 
 import UIKit
 
+// MARK: Constant variable declarations
 struct PUCLVCConstant {
     static let productUploadCombinationHeaderTableViewCellNibNameAndIdentifier = "ProductUploadCombinationHeaderTableViewCell"
     static let productUploadCombinationTableViewCellNibNameAndIdentifier = "ProductUploadCombinationTableViewCell"
@@ -22,16 +23,24 @@ struct ProductSku {
 
 class ProductUploadCombinationListViewController: UIViewController, ProductUploadAddFooterViewDelegate, ProductUploadCombinationTableViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, PUAttributeSetHeaderTableViewCellDelegate {
 
+    // Tableview
     @IBOutlet weak var tableView: UITableView!
+    
+    // Models
     var productModel: ProductModel?
+    
+    //  Global variable
     var isValidSku: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Set navigation bar title
+        self.title = Constants.ViewControllersTitleString.attributeCombination
         self.footerView()
         self.backButton()
-        self.title = Constants.ViewControllersTitleString.attributeCombination
         self.registerCell()
+        
         let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
     }
     
@@ -39,6 +48,53 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         super.viewWillAppear(animated)
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: Button action
+    @IBAction func saveDetails(sender: AnyObject) {
+        if self.productModel!.validCombinations.count == 0 {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.combinationRequired, title: ProductUploadStrings.incompleteProductDetails)
+        } else {
+            let productUploadTableViewController: ProductUploadTableViewController
+            = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
+            productUploadTableViewController.replaceProductAttributeWithAttribute(self.productModel!.attributes, combinations: self.productModel!.validCombinations)
+            self.navigationController?.popToRootViewControllerAnimated(true)
+            ProductSku.SKUS.removeAll(keepCapacity: false)
+        }
+    }
+    
+    // MARK: Navigation bar
+    // Add back button in navigation bar
+    func backButton() {
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButton.frame = CGRectMake(0, 0, 40, 40)
+        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    // Navigation bar back button action
+    func back() {
+        self.navigationController?.popViewControllerAnimated(true)
+        ProductSku.SKUS.removeAll(keepCapacity: false)
+    }
+    
+    // MARK: Private methods// Add footer in tableview
+    func footerView() {
+        let addMoreTableViewFooter: ProductUploadAddFooterView = XibHelper.puffViewWithNibName("ProductUploadAddFooterView", index: 0) as! ProductUploadAddFooterView
+        addMoreTableViewFooter.delegate = self
+        self.tableView.tableFooterView = addMoreTableViewFooter
+    }
+    
+    // Register table view cells
     func registerCell() {
         let footerNib: UINib = UINib(nibName: PUCTVCConstant.productUploadCombinationFooterTableViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(footerNib, forCellReuseIdentifier: PUCTVCConstant.productUploadCombinationFooterTableViewCellNibNameAndIdentifier)
@@ -59,6 +115,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         self.tableView.registerNib(weightAndHeightNib, forCellReuseIdentifier: ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier)
     }
     
+    // MARK: Table view data source methods
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 4
     }
@@ -165,35 +222,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    func footerView() {
-        let addMoreTableViewFooter: ProductUploadAddFooterView = XibHelper.puffViewWithNibName("ProductUploadAddFooterView", index: 0) as! ProductUploadAddFooterView
-        addMoreTableViewFooter.delegate = self
-        self.tableView.tableFooterView = addMoreTableViewFooter
-    }
-    
-    func backButton() {
-        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
-        backButton.frame = CGRectMake(0, 0, 40, 40)
-        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
-        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
-        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
-        
-        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
-        navigationSpacer.width = -20
-        
-        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
-    }
-    
-    func back() {
-        self.navigationController?.popViewControllerAnimated(true)
-        ProductSku.SKUS.removeAll(keepCapacity: false)
-    }
-    
+    // MARK: ProductUploadAddFooterView Delegate Method
     func productUploadAddFooterView(didSelectAddMore view: UIView) {
         let productUploadCombinationTableViewController: ProductUploadCombinationTableViewController = ProductUploadCombinationTableViewController(nibName: "ProductUploadCombinationTableViewController", bundle: nil)
         productUploadCombinationTableViewController.attributes = self.productModel!.attributes
@@ -213,36 +242,8 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         self.navigationController?.pushViewController(productUploadCombinationTableViewController, animated: true)
     }
     
+    // MARK: ProductUploadCombinationTableViewController Delegate method
     func productUploadCombinationTableViewController(appendCombination combination: CombinationModel, isEdit: Bool, indexPath: NSIndexPath) {
-        
-      /*  var combinationIsAvailable: Bool = true
-
-        var values: [String] = []
-        var selectedValues: [String] = []
-        var index: Int = 0
-        
-        for var x = 0; x < combination.attributes.count; x++ {
-            var dictionary: NSMutableDictionary = combination.attributes[x]
-            selectedValues.append(dictionary["value"] as! String)
-        }
-        
-        for attributeCombination in self.productModel!.validCombinations as [CombinationModel] {
-            values = []
-            for var x = 0; x < attributeCombination.attributes.count; x++ {
-                var dictionary: NSMutableDictionary = attributeCombination.attributes[x]
-                values.append(dictionary["value"] as! String)
-            }
-            
-            let set1: NSSet = NSSet(array: selectedValues)
-            let set2: NSSet = NSSet(array: values)
-            
-            if set1.isEqualToSet(set2 as Set<NSObject>) {
-                combinationIsAvailable = false
-                break
-            } else {
-                index++
-            }
-        }*/
         
         var isValidCombination: Bool = true
         
@@ -279,31 +280,22 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             
             self.tableView.reloadData()
         } else {
-            if isValidSku {
+            if self.isValidSku {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.invalid, title: "SKU must be unique for each combination.")
             } else {
                  UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.combinationAlreadyExist, title: Constants.Localized.error)
             }
         }
     }
-    @IBAction func saveDetails(sender: AnyObject) {
-        if self.productModel!.validCombinations.count == 0 {
-             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.combinationRequired, title: ProductUploadStrings.incompleteProductDetails)
-        } else {
-            let productUploadTableViewController: ProductUploadTableViewController
-            = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
-            productUploadTableViewController.replaceProductAttributeWithAttribute(self.productModel!.attributes, combinations: self.productModel!.validCombinations)
-            self.navigationController?.popToRootViewControllerAnimated(true)
-            ProductSku.SKUS.removeAll(keepCapacity: false)
-        }
-    }
     
+    // MARK: ProductUploadAttributeSetHeaderTableViewCell delegate methods
     func pUAttributeSetHeaderTableViewCell(didClickDelete cell: PUAttributeSetHeaderTableViewCell) {
         let indexPath: NSIndexPath = self.tableView.indexPathForCell(cell)!
         let range: NSRange = NSMakeRange(indexPath.section, 1)
         let section: NSIndexSet = NSIndexSet(indexesInRange: range)
 
         ProductSku.SKUS.removeAtIndex(indexPath.section)
+        
         self.productModel!.validCombinations.removeAtIndex(indexPath.section)
         self.tableView.beginUpdates()
         self.tableView.deleteSections(section, withRowAnimation: UITableViewRowAnimation.Fade)
