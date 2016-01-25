@@ -49,7 +49,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource {
                 if self.productModel!.editedImage.count == 0 {
                     return 5
                 }
-                return self.productModel!.editedImage.count - 1
+                return self.productModel!.editedImage.count
             } else {
                 if self.images.count == 0 {
                     return 5

@@ -472,6 +472,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                 let productUploadTableViewController: ProductUploadTableViewController = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
                 let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadTableViewController)
                 ProductUploadCombination.draft = true
+                ProductUploadEdit.uploadType = UploadType.NewProduct
                 navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
                 self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
             } else {

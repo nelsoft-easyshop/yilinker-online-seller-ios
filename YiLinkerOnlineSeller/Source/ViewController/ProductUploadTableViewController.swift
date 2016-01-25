@@ -172,7 +172,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     var combinationImagesArray: [Int] = []
     var imagesToUpload: Int = 0
     var deletedImagesId: [String] = []
-    
+    var removedImages: Int = 0
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
@@ -1132,7 +1132,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     //MARK: - Fire Upload With Upload Type
     func fireUploadWithUploadType(uploadType: UploadType) {
         var editedImages: [ServerUIImage] = []
-       
+        var mainImages: [ServerUIImage] = []
         var combinationCounter: Int = 0
         
         for editedImage in  self.productModel.editedImage {
@@ -1146,6 +1146,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             combinationCounter--
         }
         
+        mainImages = editedImages
         //Comparing of oldEditedImages and editedImages
         if uploadType == UploadType.EditProduct {
             for (index, oldImage) in enumerate(self.oldEditedImages) {
@@ -1197,11 +1198,11 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         var combinationImagesId: [String] = []
         for combination in self.productModel.validCombinations {
             if combination.images.count == 0 {
-                for image in self.combinationOldEditedImages {
+                for image in  self.productModel.oldEditedCombinationImages {
                     if self.uploadType == UploadType.NewProduct {
                         uploadedImages.append(image)
                     } else if self.uploadType == UploadType.EditProduct {
-                        println("\(combination.images.count) id: \(image.uid) - removed: \(image.isRemoved) - new: \(image.isNew)")
+                        println("\(combination.images.count) id: \(image.uid) - removed: \(image.isRemoved) - new: \(image.isNew) - size: \(image.size.height)")
                         if (!contains(combinationImagesId, image.uid) && !contains(ProductUploadCombination.deleted, image.uid)) || image.isNew == true {
                             //Working
                             //editedImages.append(image)
@@ -1238,7 +1239,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         println("main images + combi images \(editedImages)")
         println("main images + combi images count \(editedImages.count)")
         // This is for checking old images in combination that has been deleted.
-        if self.uploadType == UploadType.EditProduct ||  uploadType == UploadType.Draft {
+        if self.uploadType == UploadType.EditProduct {
             //for oldImage in self.productModel.oldEditedCombinationImages {
                 
                 /*println("old image uid: \(oldImage.uid)")
@@ -1257,7 +1258,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     editedImages.append(oldImage)
                 }*/
                 
-                for (index, oldImage) in enumerate(self.combinationOldEditedImages) {
+                for (index, oldImage) in enumerate(self.productModel.oldEditedCombinationImages) {
                     var isNew: Bool = false
                     var isDeleted: Bool = true
                     var imageId: String = ""
@@ -1401,6 +1402,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     dictionary["isNew"] = image.isNew
                     dictionary["isRemoved"] = image.isRemoved
                     dictionary["oldId"] = image.uid
+                    self.removedImages++
                     newImageCounter++
                     println("\(image.uid) \(image.isRemoved) \(image.isNew)")
                     deletedIndexes.append(x)
@@ -1499,9 +1501,11 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         let productDetailsViewController: ProductDetailsViewController = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
         
         if uploadType == UploadType.EditProduct {
-            for i in 0..<editedImages.count {
-                if !editedImages[i].isRemoved {
-                    productDetailsViewController.imagesToEdit.append(editedImages[i])
+            self.productModel.editedImage.removeAll(keepCapacity: false)
+            for i in 0..<mainImages.count {
+                if !mainImages[i].isRemoved {
+                    self.productModel.editedImage.append(mainImages[i])
+                    productDetailsViewController.imagesToEdit.append(mainImages[i])
                 }
             }
         } else {
@@ -1513,7 +1517,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         if self.uploadType == UploadType.EditProduct {
             productDetailsViewController.uploadType = UploadType.EditProduct
         } else if self.uploadType == UploadType.Draft {
-            
+            productDetailsViewController.uploadType = UploadType.Draft
         } else {
             productDetailsViewController.uploadType = UploadType.NewProduct
         }
@@ -1527,13 +1531,14 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         if uploadType == UploadType.EditProduct {
             
             let cancelAction = UIAlertAction(title: Constants.Localized.no, style: .Cancel) { (action) in
-                self.dismissViewControllerAnimated(true, completion: nil)
+                //self.dismissViewControllerAnimated(true, completion: nil)
             }
             alertController.addAction(cancelAction)
             
             let OKAction = UIAlertAction(title: Constants.Localized.yes, style: .Default) { (action) in
                 self.dismissViewControllerAnimated(true, completion: nil)
                 productDetailsViewController.productModel = self.productModel
+                productDetailsViewController.uploadType = UploadType.EditProduct
                 ProductUploadEdit.uploadType = self.uploadType
                 ProductUploadEdit.isPreview = true
             }
@@ -1542,7 +1547,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             
             self.presentViewController(alertController, animated: true) {
             }
-        } else if uploadType == UploadType.EditProduct {
+        } else if uploadType == UploadType.NewProduct {
             let cancelAction = UIAlertAction(title: Constants.Localized.no, style: .Cancel) { (action) in
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
@@ -1552,6 +1557,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 productDetailsViewController.productModel = self.productModel
                 ProductUploadEdit.isPreview = true
                 ProductUploadEdit.uploadType = self.uploadType
+                productDetailsViewController.uploadType = UploadType.NewProduct
                 self.navigationController?.pushViewController(productDetailsViewController, animated: true)
             }
             
@@ -1676,7 +1682,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             
             var arrayNumber: [Int] = []
             if self.uploadType == UploadType.EditProduct {
-                
                 for (index, image) in enumerate(combination.editedImages) {
                     if image.isNew {
                         var x: Int = counter
@@ -1686,7 +1691,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                         arrayNumber.append(counter)
                         counter++
                     }
-                    
                 }
             } else {
                 for (index, image) in enumerate(combination.images) {

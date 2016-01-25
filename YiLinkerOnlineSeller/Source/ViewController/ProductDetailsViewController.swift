@@ -239,7 +239,8 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func populateDetails() {
-        if self.uploadType == UploadType.NewProduct {
+        self.uploadType = ProductUploadEdit.uploadType
+        if ProductUploadEdit.uploadType == UploadType.NewProduct {
             self.productImagesView.setDetails(productModel!, uploadType: self.uploadType, images: self.imagesToEdit)
         } else {
             self.productImagesView.setDetails(productModel, uploadType: self.uploadType, images: [])
@@ -367,13 +368,14 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
             var downloadedImages: Int = 0
             
             for i in 0..<self.productModel.validCombinations.count {
-                println("downloading images of combination -  \(i + 1)")
+                
                 if self.productModel.validCombinations[i].imagesUrl.count != 0 && self.productModel.validCombinations[i].imagesUrl[0] != "" {
+                    println("downloading images of combination -  \(i + 1)")
                     for j in 0..<self.productModel.validCombinations[i].imagesUrl.count {
                         totalCombinationImages++
                         var imgURL: NSURL = NSURL(string: self.productModel.validCombinations[i].imagesUrl[j])!
                         println("downloading images -  \(j + 1) >> image url == \(imgURL)")
-                        // Adding dummy images to keys to be replaced by inserting using index
+                        // Adding dummy images to be replaced by inserting using index
                         self.productModel.oldEditedCombinationImages.append(ServerUIImage())
                         self.productModel.oldEditedCombinationImages.append(ServerUIImage())
                         self.productModel.validCombinations[i].editedImages.append(ServerUIImage())
@@ -395,8 +397,11 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                                     println("downloaded combination image - \(i + 1) of \(j + 1) - index >> \(imageIndex)")
                                     var convertedImage: ServerUIImage = ServerUIImage(data: data)!
                                     convertedImage.uid = self.productModel.validCombinations[i].imagesId[j]
-                                    self.productModel.oldEditedCombinationImages.append(convertedImage)
+                                    self.productModel.oldEditedCombinationImages[imageIndex] = convertedImage
                                     self.productModel.validCombinations[i].editedImages[j] = convertedImage
+                                    
+                                    self.productModel.oldEditedCombinationImages.removeLast()
+                                    self.productModel.validCombinations[i].editedImages.removeLast()
                                     
                                     if totalCombinationImages == downloadedImages {
                                         self.gotoEditProduct()
