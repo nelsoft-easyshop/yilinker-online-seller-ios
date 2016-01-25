@@ -8,6 +8,8 @@
 
 import UIKit
 
+// MARK: Delegate
+// ProductUploadDetailFooterTableViewCell Delegate methods
 protocol ProductUploadDetailFooterTableViewCellDelegate {
     func productUploadDetailFooterTableViewCell(cell: ProductUploadDetailFooterTableViewCell, didSelectButton button: UIButton)
     func productUploadDetailFooterTableViewCell(didPressDoneButton cell: ProductUploadDetailFooterTableViewCell)
@@ -16,11 +18,18 @@ protocol ProductUploadDetailFooterTableViewCellDelegate {
 
 class ProductUploadDetailFooterTableViewCell: UITableViewCell, UITextFieldDelegate {
     
-    @IBOutlet weak var saveButton: DynamicRoundedButton!
-    @IBOutlet weak var valuesLabel: UILabel!
-    @IBOutlet weak var cellTextField: UITextField!
-    var delegate: ProductUploadDetailFooterTableViewCellDelegate?
+    // Custom buttons
     @IBOutlet weak var cellButton: DynamicRoundedButton!
+    @IBOutlet weak var saveButton: DynamicRoundedButton!
+    
+    // Labels
+    @IBOutlet weak var valuesLabel: UILabel!
+    
+    // Textfields
+    @IBOutlet weak var cellTextField: UITextField!
+    
+    // Initialize ProductUploadDetailFooterTableViewCellDelegate
+    var delegate: ProductUploadDetailFooterTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -35,10 +44,12 @@ class ProductUploadDetailFooterTableViewCell: UITableViewCell, UITextFieldDelega
         super.setSelected(selected, animated: animated)
     }
     
+    // MARK: Button actions
     @IBAction func save(sender: UIButton) {
           self.delegate!.productUploadDetailFooterTableViewCell(didPressSaveButton: self)
     }
     
+    // MARK: Textfield data source method
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         if self.cellTextField.isNotEmpty() {
             self.delegate?.productUploadDetailFooterTableViewCell(didPressDoneButton: self)
