@@ -8,14 +8,18 @@
 
 import UIKit
 
+// MARK: Delegate
 protocol ProductUploadDetailHeaderViewCollectionViewCellDelegate {
     func productUploadDetailHeaderViewCollectionViewCell(editingCellTextFieldWithText text: String)
 }
 
 class ProductUploadDetailHeaderViewCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
 
-    @IBOutlet weak var cellTextField: UITextField!
+    // Labels
     @IBOutlet weak var detailNameLabel: UILabel!
+    
+    // Textfields
+    @IBOutlet weak var cellTextField: UITextField!
     
     var delegate: ProductUploadDetailHeaderViewCollectionViewCellDelegate?
     
@@ -26,10 +30,12 @@ class ProductUploadDetailHeaderViewCollectionViewCell: UICollectionViewCell, UIT
         self.detailNameLabel.text = ProductUploadStrings.detailName
     }
     
+    // MARK: Private methods
     func trackEditingText() {
         self.cellTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
     }
     
+    // MARK: Textfield data source methods
     func textFieldDidChange(sender: UITextField) {
         self.delegate!.productUploadDetailHeaderViewCollectionViewCell(editingCellTextFieldWithText: sender.text)
     }

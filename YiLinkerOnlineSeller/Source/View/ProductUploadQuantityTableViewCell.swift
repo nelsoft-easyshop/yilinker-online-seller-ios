@@ -8,23 +8,30 @@
 
 import UIKit
 
+// MARK: Delegate
+// ProductUploadQuantityTableViewCell Delegate methods
 protocol ProductUploadQuantityTableViewCellDelegate {
     func productUploadQuantityTableViewCell(textFieldDidChange text: String, cell: ProductUploadQuantityTableViewCell)
 }
 
 class ProductUploadQuantityTableViewCell: UITableViewCell, UITextFieldDelegate {
 
+    // Textfields
     @IBOutlet weak var cellTextField: UITextField!
     @IBOutlet weak var cellLabel: UILabel!
     
+    // Initialize ProductUploadQuantityTableViewCellDelegate
     var delegate: ProductUploadQuantityTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        // Initialize cell's textfield
         self.cellTextField.delegate = self
         self.cellTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         self.cellLabel.text = ProductUploadStrings.quantity
         
+        // Append asterisk (*) in label's text
         self.cellLabel.required()
     }
 
@@ -34,6 +41,7 @@ class ProductUploadQuantityTableViewCell: UITableViewCell, UITextFieldDelegate {
         // Configure the view for the selected state
     }
     
+    // MARK: Textfield delegate methods
     func textFieldDidChange(sender: UITextField) {
         self.delegate!.productUploadQuantityTableViewCell(textFieldDidChange: sender.text, cell: self)
     }

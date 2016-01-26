@@ -10,6 +10,7 @@ import UIKit
 
 class ProductUploadAttributeCollectionViewCell: UICollectionViewCell {
 
+    // Buttons
     @IBOutlet weak var attributeLabel: UILabel!
     
     override func awakeFromNib() {

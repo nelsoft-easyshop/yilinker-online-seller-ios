@@ -8,17 +8,25 @@
 
 import UIKit
 
+// MARK: Delegate
+// ProductUploadDetailHeaderViewTableViewCell Delegate method
 protocol ProductUploadDetailHeaderViewTableViewCellDelegate {
     func productUploadDetailHeaderViewTableViewCell(didEndEditing productUploadDetailHeaderViewTableViewCell: ProductUploadDetailHeaderViewTableViewCell, text: String)
 }
 
 class ProductUploadDetailHeaderViewTableViewCell: UITableViewCell, UITextFieldDelegate {
+    
+    // Labels
+    @IBOutlet weak var detailNameLabel: UILabel!
 
+    // Textfields
     @IBOutlet weak var cellTextField: UITextField!
     
-    @IBOutlet weak var detailNameLabel: UILabel!
-    var delegate: ProductUploadDetailHeaderViewTableViewCellDelegate?
+    // Global variable
     var edited: Bool = true
+    
+    // Initialize ProductUploadDetailHeaderViewTableViewCellDelegate
+    var delegate: ProductUploadDetailHeaderViewTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,6 +42,7 @@ class ProductUploadDetailHeaderViewTableViewCell: UITableViewCell, UITextFieldDe
         // Configure the view for the selected state
     }
     
+    // MARK: Textfield delegate methods
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.endEditing(true)
         return true

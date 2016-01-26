@@ -8,22 +8,33 @@
 
 import UIKit
 
+// MARK: Delegate
+// ProductUploadAttributeTableViewCell Delegate method
 protocol ProductUploadAttributeTableViewCellDelegate {
     func productUploadAttributeTableViewCell(didTapCell cell: ProductUploadAttributeTableViewCell, indexPath: NSIndexPath)
 }
 
+// MARK: Constant variable
 struct PUAConstant {
     static let productUploadAttributeCollectionViewCellNibNameAndIdentier = "ProductUploadAttributeCollectionViewCell"
 }
 
 class ProductUploadAttributeTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate {
 
+    // Collection view
     @IBOutlet weak var collectionView: UICollectionView!
-    var attributes: [String] = []
+    
+    // Constraints
     @IBOutlet weak var colectionViewHeightConstraint: NSLayoutConstraint!
     
-    var delegate: ProductUploadAttributeTableViewCellDelegate?
+    // View Controller initialization
     var parentViewController: ProductUploadDetailTableViewController?
+    
+    // Global variable
+    var attributes: [String] = []
+    
+    // Initialized ProductUploadAttributeTableViewCellDelegate
+    var delegate: ProductUploadAttributeTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -46,11 +57,13 @@ class ProductUploadAttributeTableViewCell: UITableViewCell, UICollectionViewData
         // Configure the view for the selected state
     }
     
+    // MARK: Private Methods
     func registerCell() {
         let nib: UINib = UINib(nibName: PUAConstant.productUploadAttributeCollectionViewCellNibNameAndIdentier, bundle: nil)
         self.collectionView.registerNib(nib, forCellWithReuseIdentifier: PUAConstant.productUploadAttributeCollectionViewCellNibNameAndIdentier)
     }
     
+    // MARK: Collecton view delegate methods
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.attributes.count
     }
@@ -61,10 +74,6 @@ class ProductUploadAttributeTableViewCell: UITableViewCell, UICollectionViewData
         cell.attributeLabel.text = self.attributes[indexPath.row]
         cell.layer.cornerRadius = 5
         
-       /* let imageView: UIImageView = UIImageView(frame: CGRectMake(cell.frame.size.width - 20, (cell.frame.size.height / 2) - 7.5 , 15, 15))
-        imageView.image = UIImage(named: "close")
-        cell.addSubview(imageView)*/
-        
         let gestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapRecognizer:")
         cell.userInteractionEnabled = true
         cell.addGestureRecognizer(gestureRecognizer)
@@ -72,6 +81,11 @@ class ProductUploadAttributeTableViewCell: UITableViewCell, UICollectionViewData
         return cell
     }
     
+    func collectionViewContentSize() -> CGSize {
+        return self.collectionView.collectionViewLayout.collectionViewContentSize()
+    }
+    
+    // MARK: Cell action
     func tapRecognizer(sender: UITapGestureRecognizer) {
         let cell: ProductUploadAttributeCollectionViewCell = sender.view as! ProductUploadAttributeCollectionViewCell
         
@@ -124,12 +138,6 @@ class ProductUploadAttributeTableViewCell: UITableViewCell, UICollectionViewData
                 
             }
         }
-        
-        
-    }
-    
-    func collectionViewContentSize() -> CGSize {
-        return self.collectionView.collectionViewLayout.collectionViewContentSize()
     }
     
     // Dealloc

@@ -10,6 +10,7 @@ import UIKit
 
 class ProductUploadCategoryTableViewCell: UITableViewCell {
  
+    // Labels
     @IBOutlet weak var categoryTitleLabel: UILabel!
     
     override func awakeFromNib() {

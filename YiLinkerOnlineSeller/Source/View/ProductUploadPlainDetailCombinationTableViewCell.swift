@@ -10,40 +10,57 @@ import UIKit
 
 class ProductUploadPlainDetailCombinationTableViewCell: UITableViewCell, UITextFieldDelegate {
 
+    // Collection view
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var skuTextField: UITextField!
-    @IBOutlet weak var retailPriceTextField: UITextField!
-    @IBOutlet weak var discountedPriceTextField: UITextField!
-    @IBOutlet weak var quantityTextField: UITextField!
     
-    var images: [UIImage] = []
-    
-    @IBOutlet weak var retailPriceLabel: UILabel!
+    // Labels
     @IBOutlet weak var discountLabel: UILabel!
     @IBOutlet weak var quantityLabel: UILabel!
+    @IBOutlet weak var retailPriceLabel: UILabel!
     @IBOutlet weak var skuLabel: UILabel!
+    
+    // Textfields
+    @IBOutlet weak var discountedPriceTextField: UITextField!
+    @IBOutlet weak var quantityTextField: UITextField!
+    @IBOutlet weak var retailPriceTextField: UITextField!
+    @IBOutlet weak var skuTextField: UITextField!
+    
+    // Global variables
+    var images: [UIImage] = []
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        // Set textfields delegates
         self.skuTextField.delegate = self
         self.retailPriceTextField.delegate = self
         self.discountedPriceTextField.delegate = self
         self.quantityTextField.delegate = self
-        self.registerCell()
         
+        // Set labels texts
         self.retailPriceLabel.text = ProductUploadStrings.retailPrice
         self.discountLabel.text = ProductUploadStrings.discountedPrice
         self.quantityLabel.text = ProductUploadStrings.quantity
         self.skuLabel.text = ProductUploadStrings.sku
         self.skuTextField.placeholder = ProductUploadStrings.sku
+        
+        self.registerCell()
     }
     
+    override func setSelected(selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        
+        // Configure the view for the selected state
+    }
+
+    // MARK: Private methods
+    // Register collection view cells
     func registerCell() {
         let nib: UINib = UINib(nibName: ProductUploadUploadImageTableViewCellConstant.productUploadImageCollectionViewCellNibNameAndIdentifier, bundle: nil)
         self.collectionView.registerNib(nib, forCellWithReuseIdentifier: ProductUploadUploadImageTableViewCellConstant.productUploadImageCollectionViewCellNibNameAndIdentifier)
     }
     
-    
+    // MARK: Collection view data source methods
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.images.count
     }
@@ -58,13 +75,7 @@ class ProductUploadPlainDetailCombinationTableViewCell: UITableViewCell, UITextF
         return cell
     }
 
-    
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
+    // MARK: Textfield delegate method
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.endEditing(true)
         return true

@@ -10,6 +10,7 @@ import UIKit
 
 class ProductUploadAttributeSummaryTableViewCell: UITableViewCell {
 
+    // Labels
     @IBOutlet weak var cellQuantityLabel: UILabel!
     @IBOutlet weak var cellTitleLabel: UILabel!
     

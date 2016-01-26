@@ -10,6 +10,7 @@ import UIKit
 
 class ProductUploadTableHeaderView: UIView {
 
+    // Labels
     @IBOutlet weak var headerTitleLabel: UILabel!
 
     override func awakeFromNib() {
