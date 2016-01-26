@@ -1837,12 +1837,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         return uploaded
     }
     
-    // Dealloc
-    deinit {
-        self.tableView.delegate = nil
-        self.tableView.dataSource = nil
-    }
-    
     // MARK: -
     // MARK: - REST API request
     // MARK: GET METHOD - Fire Conditions
@@ -1941,5 +1935,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 self.hud?.hide(true)
         })*/
     }
-
+    
+    // Dealloc
+    deinit {
+        self.tableView.delegate = nil
+        self.tableView.dataSource = nil
+    }
 }
