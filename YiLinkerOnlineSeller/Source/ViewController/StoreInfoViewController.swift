@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate, CongratulationsViewControllerDelegate, UzysAssetsPickerControllerDelegate, StoreInfoQrCodeTableViewCellDelegate, MFMailComposeViewControllerDelegate, GPPSignInDelegate {
+class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate, CongratulationsViewControllerDelegate, UzysAssetsPickerControllerDelegate, StoreInfoQrCodeTableViewCellDelegate, MFMailComposeViewControllerDelegate, GPPSignInDelegate, StoreInfoReferralCodeTableViewCellDelegate {
     
     //Global variables declarations
     //Variables that can be accessed inside the class
@@ -20,6 +20,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     let storeInfoBankAccountTableViewCellIdentifier: String = "StoreInfoBankAccountTableViewCell"
     let storeInfoAccountInformationTableViewCellIdentifier: String = "StoreInfoAccountInformationTableViewCell"
     let storeInfoPreferredCategoriesTableViewCellIdentifier: String = "StoreInfoPreferredCategoriesTableViewCell"
+    let storeInfoReferralCodeTableViewCellIdentifier: String = "StoreInfoReferralCodeTableViewCell"
     
     let storeInfoTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_TITLE_LOCALIZE_KEY")
     let addPhoto: String = StringHelper.localizedStringWithKey("STORE_INFO_ADD_PHOTO_LOCALIZE_KEY")
@@ -185,6 +186,10 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         var storeInfoPreferredCategories = UINib(nibName: storeInfoPreferredCategoriesTableViewCellIdentifier, bundle: nil)
         self.tableView.registerNib(storeInfoPreferredCategories, forCellReuseIdentifier: storeInfoPreferredCategoriesTableViewCellIdentifier)
+        
+        var storeInfoReferralCode = UINib(nibName: storeInfoReferralCodeTableViewCellIdentifier, bundle: nil)
+        self.tableView.registerNib(storeInfoReferralCode, forCellReuseIdentifier: storeInfoReferralCodeTableViewCellIdentifier)
+        
     }
 
     //MARK: Navigation bar
@@ -389,6 +394,15 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         }
         presentViewController(socialVC, animated: true, completion: nil)
         
+    }
+    
+    //MARK: StoreInfoReferralCodeTableViewCell Delegate methods 
+    func copyReferralCode(code: String) {
+        UIPasteboard.generalPasteboard().string = code
+    }
+    
+    func saveReferralPerson(referralName: String) {
+        self.storeInfoModel?.referralPerson = referralName
     }
     
     //MARK: Google Plus Sign In
@@ -603,7 +617,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     //MARK: Tableview delegate methods
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 6
+        return 7
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -720,6 +734,17 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 return cell
             }
         } else if indexPath.section == 3 {
+            let cell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoReferralCodeTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoReferralCodeTableViewCell
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell.delegate = self
+            // TODO: Add delegate methods
+            if self.storeInfoModel != nil {
+                cell.referralCodeTextField.text = self.storeInfoModel?.referralCode
+                cell.referralPersonNameTextField.text = self.storeInfoModel?.referralPerson
+            }
+            
+            return cell
+        } else if indexPath.section == 4 {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoAddressTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAddressTableViewCell
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.delegate = self
@@ -738,7 +763,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             }
             
             return cell
-        } else if indexPath.section == 4 {
+        } else if indexPath.section == 5 {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoBankAccountTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoBankAccountTableViewCell
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.delegate = self
@@ -810,8 +835,10 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 return 208
             }
         } else if indexPath.section == 3 {
-            return 163
+            return 347
         } else if indexPath.section == 4 {
+            return 163
+        } else if indexPath.section == 5 {
             return 163
         } else {
             return 221
