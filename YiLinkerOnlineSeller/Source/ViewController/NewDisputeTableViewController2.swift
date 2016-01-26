@@ -423,46 +423,47 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     *
     */
     func fireGetTransactions() {
+       
         self.showHUD()
-        let manager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = [
-            "access_token": SessionManager.accessToken(), "type" : "for-resolution"]
+        // Add parameters to POST Method
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "type" : "for-resolution"]
         
-        manager.GET(APIAtlas.transactionList, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.hud?.hide(true)
-            
-            if responseObject["isSuccessful"] as! Bool {
+        WebServiceManager.fireGetResolutionCenterRequestWithUrl(APIAtlas.transactionList, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                //Parsed returned response from the API
                 self.transactionsModel = TransactionsModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 for i in 0..<self.transactionsModel.transactions.count {
                     self.transactionIds.append(self.transactionsModel.transactions[i].invoice_number)
                 }
+                self.tableView.reloadData()
+                self.hud?.hide(true)
             } else {
-                self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-            }
-            
-            self.tableView.reloadData()
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 401 {
-                    self.fireRefreshToken(DisputeRefreshType.Transaction)
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(Constants.Localized.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-                    }
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                     self.fireRefreshToken(DisputeRefreshType.Transaction)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                 }
                 self.hud?.hide(true)
+            }
         })
-
     }
     
-    // MARK: POST METHOD - Get dispute reasons
+    // MARK: GET METHOD - Get dispute reasons
     /*
     *
     * (Parameters) - access_token
@@ -471,54 +472,53 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     *
     */
     func fireGetReasons() {
+        
         self.showHUD()
-        let manager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = [
-            "access_token": SessionManager.accessToken()]
+        let parameters: NSDictionary = [:]
         
-        manager.GET(APIAtlas.resolutionCenterReasons+"\(SessionManager.accessToken())", parameters: nil, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.hud?.hide(true)
-            
-            if responseObject["isSuccessful"] as! Bool {
+        WebServiceManager.fireGetResolutionCenterRequestWithUrl(APIAtlas.resolutionCenterReasons+"\(SessionManager.accessToken())", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                //Parsed returned response from the API
                 self.reason = ResolutionCenterDisputeReasonModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 
-                for var i: Int = 0; i < self.reason?.key.count; i++ {
+                for i in 0..<self.reason!.key.count {
                     var arr = [ResolutionCenterDisputeReasonsModel]()
-                    for var j: Int = 0; j < self.reason?.reason.count; j++ {
+                    for j in 0..<self.reason!.reason.count {
                         if self.reason!.key[i] == self.reason!.allkey[j] {
                             self.reas = ResolutionCenterDisputeReasonsModel(id: self.reason!.id[j], reason: self.reason!.reason[j])
                             arr.append(self.reas)
-                            println("id \(self.reason!.id[j])")
                         }
                     }
                     self.reasonTableData.append(ResolutionCenterDisputeReasonModel(key2: self.reason!.key[i], resolutionReasons2: arr))
                 }
+                self.hud?.hide(true)
             } else {
-                self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-            }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 401 {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
                     self.fireRefreshToken(DisputeRefreshType.Reason)
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(Constants.Localized.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-                    }
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                 }
                 self.hud?.hide(true)
+            }
         })
-        
     }
     
-    // MARK: POST METHOD - Refresh token
+    // MARK: GET METHOD - Refresh token
     /*
     *
     * (Parameters) - client_id, client_secret, grant_type, refresh_token
@@ -574,9 +574,9 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
     *
     */
     func fireAddCase(remarks: String) {
+        
         self.showHUD()
         self.remarks = remarks
-        let manager = APIManager.sharedInstance
         
         var ids: [String] = []
         
@@ -601,32 +601,32 @@ class NewDisputeTableViewController2: UITableViewController, UIPickerViewDataSou
             "reasonId": self.reasonTableData[self.disputeTypeDefaultIndex].resolutionReasons2[self.reasonDefaultIndex].id,
             "orderProductIds": ids.description]
         
-        manager.POST(APIAtlas.resolutionCenterAddCaseUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            if responseObject["isSuccessful"] as! Bool {
+        WebServiceManager.fireResolutionCenterRequestWithUrl(APIAtlas.resolutionCenterAddCaseUrl, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
                 self.navigationController?.popViewControllerAnimated(true)
+                self.hud?.hide(true)
             } else {
-                self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-            }
-            self.hud?.hide(true)
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
                     self.fireRefreshToken(DisputeRefreshType.AddCase)
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(Constants.Localized.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-                    }
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                 }
                 self.hud?.hide(true)
+            }
         })
     }
 }
