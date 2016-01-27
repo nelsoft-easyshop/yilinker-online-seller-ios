@@ -118,7 +118,18 @@ extension UITextField {
         return true
     }
 
+    // Added by Rj
+    func isValidEmail() -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluateWithObject(self.text)
+    }
     
+    func isAlphaNumeric() -> Bool {
+        let passwordRegEx = "[A-Za-z0-9_]*"
+        let passwordTest = NSPredicate(format: "SELF MATCHES %@", passwordRegEx)
+        return passwordTest.evaluateWithObject(self.text)
+    }
     
 }
 
@@ -222,6 +233,14 @@ extension UIAlertController {
         
         alertController.addAction(login)
         target.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    // Added by Rj
+    class func showAlert(target: AnyObject, title: String!, message: String!) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let OKAction = UIAlertAction(title: StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY"), style: .Default) { (action) in }
+        alert.addAction(OKAction)
+        target.presentViewController(alert, animated: true, completion: nil)
     }
     
 }

@@ -12,7 +12,6 @@ struct SignInStrings {
     static let motto = StringHelper.localizedStringWithKey("MOTTO_LOCALIZE_KEY")
     static let emailPlaceholder = StringHelper.localizedStringWithKey("EMAIL_PLACEHOLDER_LOCALIZE_KEY")
     static let passwordPlaceholder = StringHelper.localizedStringWithKey("PASSWORD_PLACEHOLDER_LOCALIZE_KEY")
-    static let rememberMe = StringHelper.localizedStringWithKey("REMEMBER_ME_LOCALIZE_KEY")
     static let forgot = StringHelper.localizedStringWithKey("FORGOT_LOCALIZE_KEY")
     static let signin = StringHelper.localizedStringWithKey("SIGN_IN_LOCALIZE_KEY")
     static let signingin = StringHelper.localizedStringWithKey("SIGNING_IN_LOCALIZE_KEY")
@@ -36,14 +35,10 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     var delegate: SignInViewControllerDelegate?
     
     @IBOutlet weak var mottoLabel: UILabel!
-    @IBOutlet weak var rememberMeLabel: UILabel!
     @IBOutlet weak var profileContainerView: UIView!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var emailAddressTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var rememberMeView: UIView!
-    @IBOutlet weak var rememberMeImageContainerView: UIView!
-    @IBOutlet weak var rememberMeImageView: UIImageView!
    
     @IBOutlet weak var forgotPasswordButton: UIButton!
     @IBOutlet weak var signInButton: UIButton!
@@ -58,12 +53,9 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        costumizeViews()
+        setupViews()
         self.view.userInteractionEnabled = true
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "hideKeyboard:"))
-        //self.profileContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "instantSignin:"))
-        self.rememberMeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "rememberMeAction:"))
-        
         self.emailAddressTextField.addTarget(self, action: "emailDidTextChanged", forControlEvents: UIControlEvents.EditingChanged)
         self.passwordTextField.addTarget(self, action: "passwordDidTextChanged", forControlEvents: UIControlEvents.EditingChanged)
         self.addCheckInTextField(emailAddressTextField)
@@ -71,7 +63,6 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     }
     
     // Show hud
-    
     func showHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
@@ -87,18 +78,14 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     
     // MARK: - Methods
     
-    func costumizeViews() {
+    func setupViews() {
         self.profileContainerView.layer.cornerRadius = self.profileContainerView.frame.size.height / 2
-        
-        self.rememberMeImageContainerView.layer.cornerRadius = 3.0
-        self.rememberMeImageContainerView.layer.borderWidth = 0.5
         
         self.signInButton.layer.cornerRadius = 2.0
         
         self.mottoLabel.text = SignInStrings.motto
         self.emailAddressTextField.placeholder = SignInStrings.emailPlaceholder
         self.passwordTextField.placeholder = SignInStrings.passwordPlaceholder
-        self.rememberMeLabel.text = SignInStrings.rememberMe
         self.forgotPasswordButton.setTitle(SignInStrings.forgot, forState: .Normal)
         self.signInButton.setTitle(SignInStrings.signin, forState: .Normal)
     }
@@ -112,11 +99,68 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         field.rightView?.hidden = true
     }
     
-    func showAlert(#title: String!, message: String!) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-        alertController.addAction(defaultAction)
-        presentViewController(alertController, animated: true, completion: nil)
+//    func showAlert(#title: String!, message: String!) {
+//        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+//        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+//        alertController.addAction(defaultAction)
+//        presentViewController(alertController, animated: true, completion: nil)
+//    }
+    
+    func signinSuccessful() {
+        self.view.userInteractionEnabled = false
+        self.hideKeyboard(UIGestureRecognizer())
+        self.signInButton.setTitle(SignInStrings.welcome, forState: .Normal)
+        fireStoreInfo()
+        self.fireCreateRegistration(SessionManager.gcmToken())
+    }
+    
+    func loadUserImage() {
+        self.profileImageView.sd_setImageWithURL(self.storeInfoModel?.avatar, placeholderImage: UIImage(named: "dummy-placeholder"))
+        self.profileImageView.frame = self.profileContainerView.bounds
+        self.profileImageView.contentMode = .ScaleAspectFill
+    }
+    
+    func fireStoreInfo() {
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
+        
+        manager.POST(APIAtlas.sellerStoreInfo, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.storeInfoModel = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
+            
+            // loads user image
+            self.loadUserImage()
+            
+            NSUserDefaults.standardUserDefaults().setObject(self.storeInfoModel?.store_name, forKey: "storeName")
+            NSUserDefaults.standardUserDefaults().setObject(self.storeInfoModel?.store_address, forKey: "storeAddress")
+            NSUserDefaults.standardUserDefaults().setObject(self.storeInfoModel?.totalSales, forKey: "totalSales")
+            NSUserDefaults.standardUserDefaults().setObject(self.storeInfoModel?.productCount, forKey: "productCount")
+            NSUserDefaults.standardUserDefaults().setObject(self.storeInfoModel?.transactionCount, forKey: "transactionCount")
+            NSUserDefaults.standardUserDefaults().synchronize()
+            
+            // wait 3 seconds before going to dashboard
+            let delay = 3.0 * Double(NSEC_PER_SEC)
+            var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+            dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
+            
+            self.delegate?.passStoreInfoModel(self.storeInfoModel!)
+            self.hud?.hide(true)
+            
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                self.signInButton.setTitle(SignInStrings.signin, forState: .Normal)
+                
+                if error.userInfo != nil {
+                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                        let errorDescription: String = jsonResult["error_description"] as! String
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
+                    } else {
+                        
+                    }
+                }
+        })
     }
     
     // MARK: Actions
@@ -138,72 +182,21 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         })
         
         self.presentViewController(alert, animated: true, completion: nil)
-        
     }
     
     @IBAction func signInAction(sender: AnyObject) {
         if self.emailAddressTextField.rightView?.hidden == false && self.passwordTextField.rightView?.hidden == false {
             if Reachability.isConnectedToNetwork() {
                 self.signInButton.setTitle(SignInStrings.signingin, forState: .Normal)
-                self.requestSignin()
+                self.fireSignin()
             } else {
-                showAlert(title: AlertStrings.failed, message: AlertStrings.checkInternet)
+                UIAlertController.showAlert(self, title: AlertStrings.failed, message: AlertStrings.checkInternet)
+//                showAlert(title: AlertStrings.failed, message: AlertStrings.checkInternet)
             }
         } else {
-            showAlert(title: AlertStrings.error, message: SignInStrings.please)
+            UIAlertController.showAlert(self, title: AlertStrings.error, message: SignInStrings.please)
+//            showAlert(title: AlertStrings.error, message: SignInStrings.please)
         }
-    }
-    
-    func rememberMeAction(gesture: UIGestureRecognizer) {
-        if self.rememberMeImageView.image != nil {
-            self.rememberMeImageView.image = nil
-            self.rememberMeImageContainerView.backgroundColor = UIColor.clearColor()
-        } else {
-            self.rememberMeImageView.image = UIImage(named: "check")
-            self.rememberMeImageContainerView.backgroundColor = HexaColor.colorWithHexa(0x54b6a7)
-        }
-    }
-    
-    func instantSignin(gesture: UIGestureRecognizer) {
-        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isSeller")
-        self.showHUD()
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["email": "reseller@easyshop.ph",
-            "password": "password",
-            "client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantSeller]
-        
-        manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.signinSuccessful()
-            self.dismissViewControllerAnimated(true, completion: nil)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                self.signInButton.setTitle(SignInStrings.signin, forState: .Normal)
-                
-                if error.userInfo != nil {
-                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                        if jsonResult["error_description"] != nil {
-                            let errorDescription: String = jsonResult["error_description"] as! String
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
-                        } else {
-                            self.showAlert(title: AlertStrings.error, message: AlertStrings.wentWrong)
-                        }
-                    }
-                } else {
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    if task.statusCode == 1011 {
-                        self.showAlert(title: AlertStrings.error, message: SignInStrings.notMatch)
-                    } else {
-                        self.showAlert(title: AlertStrings.error, message: AlertStrings.wentWrong)
-                    }
-                }
-                
-                self.hud?.hide(true)
-        })
     }
     
     func hideKeyboard(gesture: UIGestureRecognizer) {
@@ -218,6 +211,8 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     
     // MARK: - Text Field Delegate
     
+    // checks if what textfield is currently editing
+    // increase border of the current textfield
     func textFieldDidBeginEditing(textField: UITextField) {
         if self.view.frame.height <= 568 {
             self.viewsContainer.transform = CGAffineTransformMakeTranslation(0, -135)
@@ -233,14 +228,12 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         }
     }
     
+    // deacrese border
     func textFieldDidEndEditing(textField: UITextField) {
-        if textField == self.emailAddressTextField {
-            textField.layer.borderWidth = 0.0
-        } else if textField == self.passwordTextField {
-            textField.layer.borderWidth = 0.0
-        }
+        textField.layer.borderWidth = 0.0
     }
     
+    // change return key's action
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         if textField.returnKeyType == UIReturnKeyType.Next {
             self.passwordTextField.becomeFirstResponder()
@@ -255,6 +248,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         return true
     }
     
+    // checks if email is valid while typing
     func emailDidTextChanged() {
         if self.emailAddressTextField.isValidEmail() {
             self.emailAddressTextField.rightView?.hidden = false
@@ -262,7 +256,8 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
             self.emailAddressTextField.rightView?.hidden = true
         }
     }
-    
+
+    // checks if password is valid while typing
     func passwordDidTextChanged() {
         if self.passwordTextField.isAlphaNumeric() && count(self.passwordTextField.text) > 5 {
             self.passwordTextField.rightView?.hidden = false
@@ -273,23 +268,19 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     
     // MARK: - Requests
     
-    func requestSignin() {
+    func fireSignin() {
         NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isSeller")
         self.showHUD()
         WebServiceManager.fireLoginRequestWithUrl(APIAtlas.loginUrl, emailAddress: self.emailAddressTextField.text!, password: self.passwordTextField.text!, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                self.hideKeyboard(UIGestureRecognizer())
-                self.signInButton.setTitle(SignInStrings.welcome, forState: .Normal)
                 self.signinSuccessful()
-                self.fireCreateRegistration(SessionManager.gcmToken())
             } else {
                 self.hud?.hide(true)
                 self.signInButton.setTitle(SignInStrings.signin, forState: .Normal)
                 if requestErrorType == .ResponseError {
-//                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-//                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
-                    self.showAlert(title: AlertStrings.error, message: responseObject["error_description"] as! String)
+//                    self.showAlert(title: AlertStrings.error, message: responseObject["error_description"] as! String)
+                    UIAlertController.showAlert(self, title: AlertStrings.error, message: responseObject["error_description"] as! String)
                 } else if requestErrorType == .PageNotFound {
                     Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
                 } else if requestErrorType == .NoInternetConnection {
@@ -329,105 +320,4 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         }
     }
     
-    func signinSuccessful() {
-        
-//        if self.rememberMeImageView.image != nil {
-//            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "rememberMe")
-//        } else {
-//            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
-//        }
-//        NSUserDefaults.standardUserDefaults().synchronize()
-        
-        fireStoreInfo()
-    }
-    
-    func setSellerImage(imgURL: NSURL) {
-
-        let request: NSURLRequest = NSURLRequest(URL: imgURL)
-        NSURLConnection.sendAsynchronousRequest(
-            request, queue: NSOperationQueue.mainQueue(),
-            completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
-                if error == nil {
-                    self.profileImageView.image = UIImage(data: data)
-                    self.profileImageView.frame = self.profileContainerView.bounds
-                    self.profileImageView.contentMode = .ScaleAspectFill
-
-                    let delay = 1.0 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
-                    var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-                    dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-                        
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                        
-                    })
-                } else {
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                }
-        })
-        
-    }
-    
-    func fireStoreInfo() {
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
-        
-        manager.POST(APIAtlas.sellerStoreInfo, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.storeInfoModel = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
-            //self.populateData()
-            
-            self.profileImageView.sd_setImageWithURL(self.storeInfoModel?.avatar, placeholderImage: UIImage(named: "dummy-placeholder"))
-            self.profileImageView.frame = self.profileContainerView.bounds
-            self.profileImageView.contentMode = .ScaleAspectFill
-//            self.setSellerImage(self.storeInfoModel!.avatar)
-            
-            self.view.userInteractionEnabled = false
-            self.hud?.hide(true)
-            
-            NSUserDefaults.standardUserDefaults().setObject(self.storeInfoModel?.store_name, forKey: "storeName")
-            NSUserDefaults.standardUserDefaults().setObject(self.storeInfoModel?.store_address, forKey: "storeAddress")
-            NSUserDefaults.standardUserDefaults().setObject(self.storeInfoModel?.totalSales, forKey: "totalSales")
-            NSUserDefaults.standardUserDefaults().setObject(self.storeInfoModel?.productCount, forKey: "productCount")
-            NSUserDefaults.standardUserDefaults().setObject(self.storeInfoModel?.transactionCount, forKey: "transactionCount")
-            
-            
-            NSUserDefaults.standardUserDefaults().synchronize()
-            
-            let delay = 3.0 * Double(NSEC_PER_SEC)
-            var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-            dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-                self.dismissViewControllerAnimated(true, completion: nil)
-            })
-            
-            self.delegate?.passStoreInfoModel(self.storeInfoModel!)
-            
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
-                self.signInButton.setTitle("SIGN IN", forState: .Normal)
-                
-                if error.userInfo != nil {
-                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                        let errorDescription: String = jsonResult["error_description"] as! String
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
-                    } else {
-                        
-                    }
-                }
-        })
-    }
-    
-}
-
-extension UITextField {
-    
-    func isValidEmail() -> Bool {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
-        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluateWithObject(self.text)
-    }
-    
-    func isAlphaNumeric() -> Bool {
-        let passwordRegEx = "[A-Za-z0-9_]*"
-        let passwordTest = NSPredicate(format: "SELF MATCHES %@", passwordRegEx)
-        return passwordTest.evaluateWithObject(self.text)
-    }
 }
