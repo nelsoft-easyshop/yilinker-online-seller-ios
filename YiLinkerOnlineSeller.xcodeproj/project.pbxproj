@@ -157,6 +157,7 @@
 		260725FA1BA0A41000C24DDB /* ProductUnitsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260725F91BA0A41000C24DDB /* ProductUnitsModel.swift */; };
 		260EBB411C48CD1A006D83D6 /* WebServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260EBB401C48CD1A006D83D6 /* WebServiceManager.swift */; };
 		260EBB431C48D2AE006D83D6 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260EBB421C48D2AE006D83D6 /* Toast.swift */; };
+		261286521C58708600345350 /* ParseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261286511C58708600345350 /* ParseHelper.swift */; };
 		2618DD711B970E210030C6D2 /* AddSubCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2618DD6F1B970E210030C6D2 /* AddSubCategoriesViewController.swift */; };
 		2618DD721B970E210030C6D2 /* AddSubCategoriesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2618DD701B970E210030C6D2 /* AddSubCategoriesViewController.xib */; };
 		2618DD751B975E910030C6D2 /* EditSubCategoriesRemovedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2618DD731B975E910030C6D2 /* EditSubCategoriesRemovedTableViewCell.swift */; };
@@ -772,6 +773,7 @@
 		260725F91BA0A41000C24DDB /* ProductUnitsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUnitsModel.swift; sourceTree = "<group>"; };
 		260EBB401C48CD1A006D83D6 /* WebServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebServiceManager.swift; path = ../../../WebServiceManager.swift; sourceTree = "<group>"; };
 		260EBB421C48D2AE006D83D6 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Toast.swift; path = ../../../Toast.swift; sourceTree = "<group>"; };
+		261286511C58708600345350 /* ParseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseHelper.swift; sourceTree = "<group>"; };
 		2618DD6F1B970E210030C6D2 /* AddSubCategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSubCategoriesViewController.swift; sourceTree = "<group>"; };
 		2618DD701B970E210030C6D2 /* AddSubCategoriesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddSubCategoriesViewController.xib; path = ../ViewController/AddSubCategoriesViewController.xib; sourceTree = "<group>"; };
 		2618DD731B975E910030C6D2 /* EditSubCategoriesRemovedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditSubCategoriesRemovedTableViewCell.swift; sourceTree = "<group>"; };
@@ -1342,6 +1344,7 @@
 				0CF28EC11B8C85E4005B2E54 /* XibHelper.swift */,
 				0C6661A41B906FBF005ADFDD /* JSONResponseSerializer.swift */,
 				0C8739D61B96CFA5005D2EF8 /* CommonHelper.swift */,
+				261286511C58708600345350 /* ParseHelper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -2589,6 +2592,7 @@
 				F7C40F5F1B983AC00091C16C /* ChangeAddressCollectionViewCell.swift in Sources */,
 				F7C40F891B983B860091C16C /* VerifyNumberViewController.swift in Sources */,
 				0C568A261BCABF1A00E35B12 /* ResellerItemCollectionViewCell.swift in Sources */,
+				261286521C58708600345350 /* ParseHelper.swift in Sources */,
 				7928763A1B8DF89F00762A39 /* PieChartRenderer.swift in Sources */,
 				79E633731B9ACAD20062DB14 /* TransactionProductDetailsTableViewCell.swift in Sources */,
 				792876411B8DF89F00762A39 /* ChartTransformerHorizontalBarChart.swift in Sources */,
