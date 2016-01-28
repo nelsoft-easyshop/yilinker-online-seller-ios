@@ -36,6 +36,11 @@ class WebServiceManager: NSObject {
     static let categoryIdKey = "categoryId"
     static let queryStringKey = "queryString"
     
+    
+    // MARK: Activity Logs Keys
+    static let pageKey = "page"
+    static let perPageKey = "perPage"
+    
     // MARK: - CALLS
     // MARK: - Post Request With Url
     // This function is for removing repeated codes in handler
@@ -420,6 +425,16 @@ class WebServiceManager: NSObject {
     
     class func fireGetResolutionCenterRequestWithUrl(url: String, parameters: NSDictionary, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         self.fireGetRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: -
+    // MARK: - Activity Logs
+    // MARK: Get Activity Logs Request With URL
+    class func fireGetActivityLogsRequestWithUrl(url: String, access_token: String, page: String, perPage: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let tempURL = "\(url)?access_token=\(SessionManager.accessToken())&perPage=\(perPage)&page=\(page)"
+        self.fireGetRequestWithUrl(tempURL, parameters:[]) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
