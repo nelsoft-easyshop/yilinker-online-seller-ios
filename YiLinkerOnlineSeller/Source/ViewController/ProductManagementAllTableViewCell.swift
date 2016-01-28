@@ -33,35 +33,36 @@ class ProductManagementAllTableViewCell: UITableViewCell {
     
     func setStatus(status: Int) {
         
-        if status == 0 {
+        if status == Status.draft {
             statusLabel.text = "Draft"
             statusLabel.textColor = UIColor.darkGrayColor()
             increaseAlpha()
-        } else if status == 1 {
+        } else if status == Status.review {
             statusLabel.text = "Under Review"
             statusLabel.textColor = UIColor.darkGrayColor()
             increaseAlpha()
-        } else if status == 2 {
+        } else if status == Status.active {
             statusLabel.text = "Active"
             statusLabel.textColor = Constants.Colors.pmCheckGreenColor
             increaseAlpha()
-        } else if status == 3 {
+        } else if status == Status.deleted {
             statusLabel.text = "Deleted"
             statusLabel.textColor = UIColor.darkGrayColor()
             setDeleted()
-        } else if status == 4 {
+        } else if status == Status.fullyDeleted {
             statusLabel.text = "Fully Deleted"
             statusLabel.textColor = UIColor.darkGrayColor()
             increaseAlpha()
-        } else if status == 5 {
+        } else if status == Status.rejected {
             statusLabel.text = "Rejected"
             statusLabel.textColor = UIColor.redColor()
             increaseAlpha()
-        } else if status == 6 {
+        } else if status == Status.inactive {
             statusLabel.text = "Inactive"
             statusLabel.textColor = UIColor.redColor()
             increaseAlpha()
         }
+
     }
     
     func setDeleted() {

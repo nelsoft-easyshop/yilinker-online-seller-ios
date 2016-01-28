@@ -100,15 +100,15 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        customizeNavigationBar()
-        loadloadViewsWithDetails()
+        setupNavigationBar()
+        loadViewsWithDetails()
         if Reachability.isConnectedToNetwork() {
             if ProductUploadEdit.isPreview {
                 isEditable = true
                 populateDetails()
             } else {
                 ProductUploadEdit.combinedImagesDictionary.removeAll(keepCapacity: false)
-                requestProductDetails()
+                fireProductDetails()
             }
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
@@ -146,7 +146,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     // MARK: - Methods
     
-    func customizeNavigationBar() {
+    func setupNavigationBar() {
         
         self.edgesForExtendedLayout = UIRectEdge.None
         self.title = DetailsString.title
@@ -179,7 +179,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
-    func loadloadViewsWithDetails() {
+    func loadViewsWithDetails() {
         // Adding views
         self.getHeaderView().addSubview(self.getProductImagesView())
         self.getHeaderView().addSubview(self.getProductDescriptionView())
@@ -213,7 +213,6 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         
         var underlineView = UIView(frame: CGRectMake(0, sectionView.frame.size.height - 1, self.view.frame.size.width, 1))
         underlineView.backgroundColor = Constants.Colors.backgroundGray
-//        sectionView.addSubview(underlineView)
         
         return sectionView
     }
@@ -233,7 +232,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     func showAlert(#title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let defaultAction = UIAlertAction(title: AlertStrings.ok, style: .Default, handler: nil)
         alertController.addAction(defaultAction)
         presentViewController(alertController, animated: true, completion: nil)
     }
@@ -271,31 +270,6 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
             DetailsString.length, DetailsString.width, DetailsString.weight, DetailsString.height]
         self.listSections = [detailValues, priceValues, dimensionWeightValues]
         self.tableView.reloadData()
-    }
-    
-    func localJson() {
-        if let path = NSBundle.mainBundle().pathForResource("productDetailsItemsJson", ofType: "json") {
-            if let jsonData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil) {
-                if let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers, error: nil) as? NSDictionary {
-                    if let data : NSDictionary = jsonResult["data"] as? NSDictionary {
-                        if let items : NSArray = data["items"] as? NSArray {
-                            for item in items as NSArray {
-                                if let tempVar = item["items"] as? NSDictionary {
-                                    println(tempVar)
-//                                    for tempVar2 in tempVar as NSArray {
-//                                        
-//                                    }
-                                }
-//
-//                                if let tempVar = category["fullName"] as? String {
-//                                    fullName.append(tempVar)
-//                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
     
     func addEmptyView() {
@@ -423,9 +397,10 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     // MARK: - Request
     
-    func requestProductDetails() {
+    func fireProductDetails() {
         self.showHUD()
         let id: String = "?access_token=" + SessionManager.accessToken() + "&productId=" + productId
+        println(id)
         WebServiceManager.fireGetProductDetailsRequestWithUrl(APIAtlas.getProductDetails + id, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 self.productModel = ProductModel.parseDataWithDictionary(responseObject)
@@ -443,7 +418,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                     alert.addAction(okButton)
                     self.presentViewController(alert, animated: true, completion: nil)
                 } else if requestErrorType == .AccessTokenExpired {
-                    self.requestRefreshToken()
+                    self.fireRefreshToken()
                 } else if requestErrorType == .PageNotFound {
                     //Page not found
                     Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
@@ -461,13 +436,13 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         })
     }
     
-    func requestRefreshToken() {
+    func fireRefreshToken() {
         
         WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.loginUrl, actionHandler: { (successful, responseObject, RequestErrorType) -> Void in
             self.hud?.hide(true)
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                self.requestProductDetails()
+                self.fireProductDetails()
             } else {
                 //Forcing user to logout.
                 UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
@@ -504,7 +479,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
 
     func didTapReload() {
         if Reachability.isConnectedToNetwork() {
-            requestProductDetails()
+            fireProductDetails()
         } else {
             addEmptyView()
         }
@@ -572,11 +547,10 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     func gotoDescriptionViewController(view: ProductDescriptionView) {
         let productDescription = ProductDescriptionViewController(nibName: "ProductDescriptionViewController", bundle: nil)
         productDescription.fullDescription = self.productModel.completeDescription
-        productDescription.title = "Description"
+        productDescription.title = DetailsString.description
         let root = UINavigationController(rootViewController: productDescription)
         self.navigationController?.presentViewController(root, animated: true, completion: nil)
     }
-    
     
     func upload(uploadType: UploadType) {
         self.showHUD()
@@ -628,6 +602,9 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                 self.hud?.hide(true)
         }
     }
+    
+    
+    // Joriel's codes here
     
     //MARK: - Fire Refresh Token 2
     func fireRefreshToken2() {

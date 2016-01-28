@@ -31,7 +31,7 @@ class ProductManagementTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        costumizeVies()
+        setupViews()
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -47,7 +47,7 @@ class ProductManagementTableViewCell: UITableViewCell {
         productImageView.sd_setImageWithURL(NSURL(string: image), placeholderImage: UIImage(named: "dummy-placeholder"))
     }
     
-    func costumizeVies() {
+    func setupViews() {
         checkContainerView.layer.cornerRadius = 4.0
         checkTapView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "checkAction:"))
     }

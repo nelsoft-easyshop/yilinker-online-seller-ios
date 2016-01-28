@@ -33,12 +33,12 @@ class ProductManagementModelViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        customizeViews()
+        setupViews()
     }
 
     // MARK: - Methods
     
-    func customizeViews() {
+    func setupViews() {
         modalView.layer.cornerRadius = 5
         yesButton.layer.cornerRadius = 3
         noButton.layer.cornerRadius = 3
@@ -56,10 +56,6 @@ class ProductManagementModelViewController: UIViewController {
     
     // MARK: - Actions
     
-    func selfAction(gesture: UIGestureRecognizer) {
-
-    }
-    
     @IBAction func closeAction(sender: AnyObject) {
         closeView()
     }
@@ -72,8 +68,5 @@ class ProductManagementModelViewController: UIViewController {
     @IBAction func noAction(sender: AnyObject) {
         closeView()
     }
-    
-    
-    
-    
+
 }
