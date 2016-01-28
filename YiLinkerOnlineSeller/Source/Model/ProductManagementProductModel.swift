@@ -27,17 +27,9 @@ class ProductManagementProductModel {
         var products: [ProductManagementProductsModel] = []
         
         if dictionary.isKindOfClass(NSDictionary) {
-            if dictionary["message"] != nil {
-                if let tempVar = dictionary["message"] as? String {
-                    message = tempVar
-                }
-            }
             
-            if dictionary["isSuccessful"] != nil {
-                if let tempVar = dictionary["isSuccessful"] as? Bool {
-                    isSuccessful = tempVar
-                }
-            }
+            message = ParseHelper.string(dictionary, key: "message", defaultValue: "")
+            isSuccessful = ParseHelper.bool(dictionary, key: "isSuccessful", defaultValue: false)
             
             if let value: AnyObject = dictionary["data"] {
                 for subValue in value["products"] as! NSArray {

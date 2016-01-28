@@ -24,9 +24,7 @@ class ProductDetailsModel {
     
     var attributes: [ProductAttributeModel] = [] //done
     var productUnits: [ProductUnitsModel] = []
-    
-    //DETAILS ???
-    //BADGES  ???
+
     
     init(message: String, isSuccessful: Bool, id: String, title: String, slug: String, image: String, images: NSArray, shortDescription: String, fullDescription: String, sellerId: Int, attributes: NSArray, productUnits: NSArray) {
         
@@ -63,10 +61,6 @@ class ProductDetailsModel {
         var attributes: [ProductAttributeModel] = [] //done
         var productUnits: [ProductUnitsModel] = []
         
-        //DETAILS ???
-        //BADGES  ???
-        
-        // ----
         var combinations: [ProductAvailableAttributeCombinationModel] = []
         
         if dictionary.isKindOfClass(NSDictionary) {
