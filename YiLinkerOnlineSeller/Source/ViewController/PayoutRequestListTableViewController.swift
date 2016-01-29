@@ -15,6 +15,11 @@ class PayoutRequestListTableViewController: UITableViewController {
     let cellIdentifier: String = "PayoutRequestListTableViewCell"
     let cellNibName: String = "PayoutRequestListTableViewCell"
     
+    // Models
+    var requestListModel: PayoutRequestListModel?
+    
+    // Global Variables
+    var hud: MBProgressHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +27,7 @@ class PayoutRequestListTableViewController: UITableViewController {
         self.backButton()
         self.footerView()
         self.registerCell()
+        self.fireRequestList()
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,6 +67,34 @@ class PayoutRequestListTableViewController: UITableViewController {
         self.tableView.registerNib(nib, forCellReuseIdentifier: self.cellIdentifier)
     }
     
+    // MARK: Alert view
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+        }
+    }
+    
+    // Show loader
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -72,16 +106,102 @@ class PayoutRequestListTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 5
+        if self.requestListModel != nil {
+            return self.requestListModel!.date.count
+        } else {
+            return 0
+        }
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier(self.cellIdentifier, forIndexPath: indexPath) as! PayoutRequestListTableViewCell
         
+        if self.requestListModel != nil {
+            cell.dateLabel.text = self.requestListModel!.date[indexPath.row]
+            if self.requestListModel!.withdrawalMethod[indexPath.row] == "bank" {
+                cell.requestDetailLabel.text =   "Bank Deposit | \(self.requestListModel!.totalAmount[indexPath.row])"
+            } else {
+                 cell.requestDetailLabel.text =   "Bank Cheque | \(self.requestListModel!.totalAmount[indexPath.row])"
+            }
+            
+            cell.bankChargeLabel.text = "Bank Charge: \(self.requestListModel!.charge[indexPath.row])"
+            cell.statusLabel.text = (self.requestListModel!.status[indexPath.row]).uppercaseString
+        }
+        
         return cell
     }
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 99
+        return 76
     }
     
+    func fireRequestList() {
+        self.showHUD()
+        var parameters: NSDictionary = [:]
+        WebServiceManager.fireGetResolutionCenterRequestWithUrl(APIAtlas.payoutRequestList+"\(SessionManager.accessToken())", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.requestListModel = PayoutRequestListModel.parseDataWithDictionary(responseObject)
+                self.tableView.reloadData()
+                self.hud?.hide(true)
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.tabBarController!.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.tabBarController!.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.tabBarController!.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+                self.hud?.hide(true)
+            }
+        })
+    }
+    // MARK: POST METHOD - Refresh token
+    /*
+    *
+    * (Parameters) - client_id, client_secret, grant_type, refresh_token
+    *
+    * Function to refresh token to get another access token
+    *
+    */
+    func fireRefreshToken() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            
+            self.fireRequestList()
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else {
+                    self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                }
+                self.hud?.hide(true)
+        })
+        
+    }
 }
