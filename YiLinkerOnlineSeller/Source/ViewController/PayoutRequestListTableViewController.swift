@@ -119,13 +119,13 @@ class PayoutRequestListTableViewController: UITableViewController {
         if self.requestListModel != nil {
             cell.dateLabel.text = self.requestListModel!.date[indexPath.row]
             if self.requestListModel!.withdrawalMethod[indexPath.row] == "bank" {
-                cell.requestDetailLabel.text =   "Bank Deposit | \(self.requestListModel!.totalAmount[indexPath.row].formatToPeso())"
+                cell.requestDetailLabel.text =   "Bank Deposit | \(self.requestListModel!.totalAmount[indexPath.row].formatToTwoDecimal().formatToPeso())"
             } else {
-                 cell.requestDetailLabel.text =   "Bank Cheque | \(self.requestListModel!.totalAmount[indexPath.row].formatToPeso())"
+                 cell.requestDetailLabel.text =   "Bank Cheque | \(self.requestListModel!.totalAmount[indexPath.row].formatToTwoDecimal().formatToPeso())"
             }
             
             if self.requestListModel!.charge[indexPath.row] != "0.0000" {
-                cell.bankChargeLabel.text = "Bank Charge: \(self.requestListModel!.charge[indexPath.row])"
+                cell.bankChargeLabel.text = "Bank Charge: \(self.requestListModel!.charge[indexPath.row].formatToTwoDecimal().formatToPeso())"
             } else {
                 cell.bankChargeLabel.hidden = true
             }
