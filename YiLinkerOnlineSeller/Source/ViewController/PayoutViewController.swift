@@ -38,7 +38,7 @@ class PayoutViewController: UIViewController {
     
     //MARK: - Navigation bar back button action
     func back() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController!.popViewControllerAnimated(true)
     }
 
     /*
