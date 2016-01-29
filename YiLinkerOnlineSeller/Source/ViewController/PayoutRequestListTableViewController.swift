@@ -18,7 +18,7 @@ class PayoutRequestListTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.title = "Withdrawal Request List"
         self.backButton()
         self.footerView()
         self.registerCell()
