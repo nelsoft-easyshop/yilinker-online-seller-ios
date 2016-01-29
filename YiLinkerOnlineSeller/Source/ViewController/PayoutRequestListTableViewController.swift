@@ -131,7 +131,7 @@ class PayoutRequestListTableViewController: UITableViewController {
         return cell
     }
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 56
+        return 65
     }
     
     func fireRequestList() {
