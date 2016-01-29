@@ -70,7 +70,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.06830092234736844" green="0.86248458056578936" blue="0.87575282985000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.29803921568627451" green="0.70196078431372544" blue="0.63529411764705879" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="Q3W-hp-Elt" secondAttribute="bottom" constant="4" id="T2i-7M-Sqg"/>
                                     <constraint firstItem="Q3W-hp-Elt" firstAttribute="leading" secondItem="a2S-7r-B0R" secondAttribute="leading" constant="8" id="hlY-MY-wsv"/>
@@ -79,7 +79,7 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="8"/>
+                                        <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
