@@ -488,9 +488,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             }
         } else if indexPath.row == 6 {
             let payoutViewController: PayoutViewController = PayoutViewController(nibName: "PayoutViewController", bundle: nil)
-            let navigationController: UINavigationController = UINavigationController(rootViewController: payoutViewController)
-            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-            self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
+            self.navigationController?.pushViewController(payoutViewController, animated:true)
         } else if indexPath.row == 7 {
             var followerController = FollowersViewController(nibName: "FollowersViewController", bundle: nil)
             self.navigationController?.pushViewController(followerController, animated:true)
