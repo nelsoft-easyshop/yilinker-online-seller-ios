@@ -117,14 +117,26 @@ class PayoutRequestListTableViewController: UITableViewController {
         let cell = self.tableView.dequeueReusableCellWithIdentifier(self.cellIdentifier, forIndexPath: indexPath) as! PayoutRequestListTableViewCell
         
         if self.requestListModel != nil {
-            cell.dateLabel.text = self.requestListModel!.date[indexPath.row]
+            
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "MM/dd/yyyy"
+            
+            let date: NSDate = dateFormatter.dateFromString(self.requestListModel!.date[indexPath.row])!
+            let dateAdded = dateFormatter.stringFromDate(date)
+            cell.dateLabel.text = dateAdded
+            
             if self.requestListModel!.withdrawalMethod[indexPath.row] == "bank" {
-                cell.requestDetailLabel.text =   "Bank Deposit | \(self.requestListModel!.totalAmount[indexPath.row])"
+                cell.requestDetailLabel.text =   "Bank Deposit | \(self.requestListModel!.totalAmount[indexPath.row].formatToPeso())"
             } else {
-                 cell.requestDetailLabel.text =   "Bank Cheque | \(self.requestListModel!.totalAmount[indexPath.row])"
+                 cell.requestDetailLabel.text =   "Bank Cheque | \(self.requestListModel!.totalAmount[indexPath.row].formatToPeso())"
             }
             
-            cell.bankChargeLabel.text = "Bank Charge: \(self.requestListModel!.charge[indexPath.row])"
+            if self.requestListModel!.charge[indexPath.row] != "0.0000" {
+                cell.bankChargeLabel.text = "Bank Charge: \(self.requestListModel!.charge[indexPath.row])"
+            } else {
+                cell.bankChargeLabel.hidden = true
+            }
+            
             cell.statusLabel.text = (self.requestListModel!.status[indexPath.row]).uppercaseString
         }
         
