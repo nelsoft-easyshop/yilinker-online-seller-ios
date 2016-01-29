@@ -61,10 +61,10 @@
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a2S-7r-B0R" customClass="DynamicRoundedView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="14" width="89" height="29"/>
+                                <rect key="frame" x="0.0" y="18" width="89" height="21"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="COMPLETED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="Q3W-hp-Elt">
-                                        <rect key="frame" x="8" y="4" width="73" height="21"/>
+                                        <rect key="frame" x="8" y="0.0" width="73" height="21"/>
                                         <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -72,10 +72,10 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.29803921568627451" green="0.70196078431372544" blue="0.63529411764705879" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="Q3W-hp-Elt" secondAttribute="bottom" constant="4" id="T2i-7M-Sqg"/>
+                                    <constraint firstAttribute="bottom" secondItem="Q3W-hp-Elt" secondAttribute="bottom" id="T2i-7M-Sqg"/>
                                     <constraint firstItem="Q3W-hp-Elt" firstAttribute="leading" secondItem="a2S-7r-B0R" secondAttribute="leading" constant="8" id="hlY-MY-wsv"/>
                                     <constraint firstAttribute="trailing" secondItem="Q3W-hp-Elt" secondAttribute="trailing" constant="8" id="uO3-Eg-VhI"/>
-                                    <constraint firstItem="Q3W-hp-Elt" firstAttribute="top" secondItem="a2S-7r-B0R" secondAttribute="top" constant="4" id="v4b-53-szK"/>
+                                    <constraint firstItem="Q3W-hp-Elt" firstAttribute="top" secondItem="a2S-7r-B0R" secondAttribute="top" id="v4b-53-szK"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -91,8 +91,8 @@
                             <constraint firstAttribute="bottom" secondItem="Emb-BH-u7d" secondAttribute="bottom" constant="18" id="VdO-ka-RnP"/>
                             <constraint firstItem="Emb-BH-u7d" firstAttribute="leading" secondItem="a2S-7r-B0R" secondAttribute="trailing" constant="11" id="YpS-Sm-NGt"/>
                             <constraint firstAttribute="trailing" secondItem="Emb-BH-u7d" secondAttribute="trailing" constant="5" id="aOy-2O-5sX"/>
-                            <constraint firstAttribute="bottom" secondItem="a2S-7r-B0R" secondAttribute="bottom" constant="14" id="b8i-97-OtK"/>
-                            <constraint firstItem="a2S-7r-B0R" firstAttribute="top" secondItem="DfC-Ci-whd" secondAttribute="top" constant="14" id="wBE-V4-OW3"/>
+                            <constraint firstAttribute="bottom" secondItem="a2S-7r-B0R" secondAttribute="bottom" constant="18" id="b8i-97-OtK"/>
+                            <constraint firstItem="a2S-7r-B0R" firstAttribute="top" secondItem="DfC-Ci-whd" secondAttribute="top" constant="18" id="wBE-V4-OW3"/>
                             <constraint firstAttribute="width" constant="114" id="xHp-Rw-SRK"/>
                         </constraints>
                     </view>
