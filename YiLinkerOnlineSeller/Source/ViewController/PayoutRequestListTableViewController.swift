@@ -117,14 +117,7 @@ class PayoutRequestListTableViewController: UITableViewController {
         let cell = self.tableView.dequeueReusableCellWithIdentifier(self.cellIdentifier, forIndexPath: indexPath) as! PayoutRequestListTableViewCell
         
         if self.requestListModel != nil {
-            
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "MM/dd/yyyy"
-            
-            let date: NSDate = dateFormatter.dateFromString(self.requestListModel!.date[indexPath.row])!
-            let dateAdded = dateFormatter.stringFromDate(date)
-            cell.dateLabel.text = dateAdded
-            
+            cell.dateLabel.text = self.requestListModel!.date[indexPath.row]
             if self.requestListModel!.withdrawalMethod[indexPath.row] == "bank" {
                 cell.requestDetailLabel.text =   "Bank Deposit | \(self.requestListModel!.totalAmount[indexPath.row].formatToPeso())"
             } else {
