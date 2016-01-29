@@ -74,7 +74,7 @@ class TransactionProductTableViewController: UITableViewController, TransactionP
             tableHeaderView.images.append(productModel.productImage)
         }
         
-        self.productModel.isCancellable = false
+        self.productModel.isCancellable = false     //Remove cancel Button
         
         if productModel.isCancellable && !SessionManager.isReseller(){
             if tableFooterView == nil {
