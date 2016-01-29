@@ -488,6 +488,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             }
         } else if indexPath.row == 6 {
             let payoutViewController: PayoutViewController = PayoutViewController(nibName: "PayoutViewController", bundle: nil)
+            payoutViewController.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(payoutViewController, animated:true)
         } else if indexPath.row == 7 {
             var followerController = FollowersViewController(nibName: "FollowersViewController", bundle: nil)
