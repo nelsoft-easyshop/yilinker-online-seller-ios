@@ -1742,8 +1742,53 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     
     func upload(uploadType: UploadType) -> Bool {
         self.showHUD()
-        let manager: APIManager = APIManager.sharedInstance
+        
         var uploaded: Bool = false
+        
+        WebServiceManager.fireProductUploadImageRequestWithUrl(ProductUploadCombination.url, parameters: ProductUploadCombination.parameters!, data: ProductUploadCombination.datas, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                if uploadType == UploadType.Draft {
+                    ProductUploadEdit.edit = false
+                    self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyDraft)
+                } else if uploadType == UploadType.EditProduct {
+                    ProductUploadEdit.edit = false
+                    self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyEdited)
+                } else {
+                    self.success()
+                }
+                uploaded = true
+                self.hud?.hide(true)
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                    uploaded = false
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken2()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                    uploaded = false
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    uploaded = false
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    uploaded = false
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                    uploaded = false
+                }
+            }
+        })
+        
+        /*
+        let manager: APIManager = APIManager.sharedInstance
         manager.POST(ProductUploadCombination.url, parameters: ProductUploadCombination.parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
             for (index, data) in enumerate(ProductUploadCombination.datas) {
                 println("multipart index: \(index)")
@@ -1788,14 +1833,8 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                     uploaded = false
                 }
                 self.hud?.hide(true)
-        }
+        }*/
         return uploaded
-    }
-    
-    // Dealloc
-    deinit {
-        self.tableView.delegate = nil
-        self.tableView.dataSource = nil
     }
     
     // MARK: -
@@ -1811,10 +1850,52 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     func fireCondition() {
         self.conditions.removeAll(keepCapacity: true)
         self.showHUD()
-        let manager: APIManager = APIManager.sharedInstance
         
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
         
+        WebServiceManager.fireGetProductUploadRequestWithUrl(APIAtlas.conditionUrl, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                let conditionParseModel: ConditionParserModel = ConditionParserModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                
+                let uidKey = "productConditionId"
+                let nameKey = "name"
+                
+                for dictionary in conditionParseModel.data as [NSDictionary] {
+                    let condition: ConditionModel = ConditionModel(uid: dictionary[uidKey] as! Int, name: dictionary[nameKey] as! String)
+                    self.conditions.append(condition)
+                }
+                
+                let indexPath: NSIndexPath = NSIndexPath(forItem: 2, inSection: 2)
+                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
+                self.productModel.condition = self.conditions[0]
+                
+                self.hud?.hide(true)
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        })
+        
+        /*
+        let manager: APIManager = APIManager.sharedInstance
         manager.GET(APIAtlas.conditionUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             let conditionParseModel: ConditionParserModel = ConditionParserModel.parseDataFromDictionary(responseObject as! NSDictionary)
@@ -1852,7 +1933,12 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 }
                 
                 self.hud?.hide(true)
-        })
+        })*/
     }
-
+    
+    // Dealloc
+    deinit {
+        self.tableView.delegate = nil
+        self.tableView.dataSource = nil
+    }
 }
