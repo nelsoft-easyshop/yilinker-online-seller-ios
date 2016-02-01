@@ -1,5 +1,5 @@
 //
-//  PayoutEarningsTypeTableViewCell.swift
+//  PayoutEarningsTransactionTypeTableViewCell.swift
 //  YiLinkerOnlineSeller
 //
 //  Created by Joriel Oller Fronda on 2/1/16.
@@ -8,15 +8,17 @@
 
 import UIKit
 
-class PayoutEarningsTypeTableViewCell: UITableViewCell {
+class PayoutEarningsTransactionTypeTableViewCell: UITableViewCell {
 
     // Labels
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var itemLabel: UILabel!
+    @IBOutlet weak var transactionNoLabel: UILabel!
+    @IBOutlet weak var productNameLabel: UILabel!
+    @IBOutlet weak var boughtByLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
     
-    //Views
+    // Views
     @IBOutlet weak var statusView: DynamicRoundedView!
     
     

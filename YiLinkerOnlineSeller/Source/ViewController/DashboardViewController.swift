@@ -490,9 +490,10 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             /*let payoutViewController: PayoutRequestListViewController = PayoutRequestListViewController(nibName: "PayoutRequestListViewController", bundle: nil)
             payoutViewController.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(payoutViewController, animated:true)*/
-            var payoutRequestListDetailViewController = PayoutRequestListDetailViewController(nibName: "PayoutRequestListDetailViewController", bundle: nil)
-            self.navigationController?.presentViewController(payoutRequestListDetailViewController, animated: true, completion: nil)
-            //self.navigationController?.pushViewController(payoutRequestListDetailViewController, animated:true)
+            var payoutRequestListDetailViewController = PayoutEarningsViewController(nibName: "PayoutEarningsViewController", bundle: nil)
+            //self.navigationController?.presentViewController(payoutRequestListDetailViewController, animated: true, completion: nil)
+            payoutRequestListDetailViewController.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(payoutRequestListDetailViewController, animated:true)
         } else if indexPath.row == 7 {
             var followerController = FollowersViewController(nibName: "FollowersViewController", bundle: nil)
             self.navigationController?.pushViewController(followerController, animated:true)
