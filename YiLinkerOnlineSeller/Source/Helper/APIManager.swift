@@ -121,6 +121,11 @@ struct APIAtlas {
     static let ACTION_GCM_DELETE            = "/auth/device/deleteRegistrationId"
     static let ACTION_GCM_UPDATE            = "/device/auth/updateRegistrationId"
     static let uploadFileType = "jpeg"
+    
+    // Sprint1
+    static let getBalanceRecordDetails = "auth/bank/balanceRecordDetails"
+    
+
 }
 
 class APIManager: AFHTTPSessionManager {

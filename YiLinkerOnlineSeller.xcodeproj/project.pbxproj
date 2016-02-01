@@ -196,6 +196,7 @@
 		267C52751C5F1F1700739850 /* WithdrawTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267C52731C5F1F1700739850 /* WithdrawTableViewController.xib */; };
 		267C52781C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C52761C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.swift */; };
 		267C52791C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267C52771C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.xib */; };
+		267C527B1C5F520600739850 /* BalanceRecordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C527A1C5F520600739850 /* BalanceRecordModel.swift */; };
 		2686E3731B956B7400E8FA80 /* CCCItemImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2686E3721B956B7400E8FA80 /* CCCItemImagesView.swift */; };
 		2686E3761B956C4A00E8FA80 /* ItemImagesHorizontalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2686E3741B956C4A00E8FA80 /* ItemImagesHorizontalCollectionViewCell.swift */; };
 		2686E3771B956C4A00E8FA80 /* ItemImagesHorizontalCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2686E3751B956C4A00E8FA80 /* ItemImagesHorizontalCollectionViewCell.xib */; };
@@ -835,6 +836,7 @@
 		267C52731C5F1F1700739850 /* WithdrawTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WithdrawTableViewController.xib; sourceTree = "<group>"; };
 		267C52761C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceWithdrawalViewsViewController.swift; sourceTree = "<group>"; };
 		267C52771C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BalanceWithdrawalViewsViewController.xib; sourceTree = "<group>"; };
+		267C527A1C5F520600739850 /* BalanceRecordModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceRecordModel.swift; sourceTree = "<group>"; };
 		2686E3721B956B7400E8FA80 /* CCCItemImagesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CCCItemImagesView.swift; sourceTree = "<group>"; };
 		2686E3741B956C4A00E8FA80 /* ItemImagesHorizontalCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemImagesHorizontalCollectionViewCell.swift; sourceTree = "<group>"; };
 		2686E3751B956C4A00E8FA80 /* ItemImagesHorizontalCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ItemImagesHorizontalCollectionViewCell.xib; path = ../View/ItemImagesHorizontalCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -1718,6 +1720,7 @@
 				267C52731C5F1F1700739850 /* WithdrawTableViewController.xib */,
 				267C52761C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.swift */,
 				267C52771C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.xib */,
+				267C527A1C5F520600739850 /* BalanceRecordModel.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2829,6 +2832,7 @@
 				267C526F1C5F19D800739850 /* WithdrawConfirmationCodeView.swift in Sources */,
 				0C8D7F8D1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.swift in Sources */,
 				79E633A51B9B27E70062DB14 /* FSCalendarHeaderTouchDeliver.m in Sources */,
+				267C527B1C5F520600739850 /* BalanceRecordModel.swift in Sources */,
 				0C8D7FB11B8FC1A400B3FA4E /* ProductUploadCombinationTableViewController.swift in Sources */,
 				0CF28F1A1B8CD079005B2E54 /* ProductUploadImageCollectionViewCell.swift in Sources */,
 				0C65F8B21B8DC9AC00504D86 /* ProductUploadCategoryViewController.swift in Sources */,

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WithdrawTableViewController: UITableViewController {
+class WithdrawTableViewController: UITableViewController, AvailableBalanceDelegate {
     
     var headerView: UIView!
     var availableBalanceView: WithdrawAvailableBalanceView!
@@ -30,6 +30,7 @@ class WithdrawTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
+        fireGetWithdrawalBalance()
         addViews()
     }
     
@@ -46,6 +47,7 @@ class WithdrawTableViewController: UITableViewController {
     func getAvailableBalanceView() -> WithdrawAvailableBalanceView {
         if self.availableBalanceView == nil {
             self.availableBalanceView = XibHelper.puffViewWithNibName("BalanceWithdrawalViewsViewController", index: 0) as! WithdrawAvailableBalanceView
+            self.availableBalanceView.delegate = self
         }
         return self.availableBalanceView
     }
@@ -126,6 +128,45 @@ class WithdrawTableViewController: UITableViewController {
         newFrame = view.frame
         newFrame.origin.y = CGRectGetMaxY(from.frame) + 20
         view.frame = newFrame
+    }
+    
+    // MARK: - Requests
+    
+    func fireGetWithdrawalBalance() {
+        let parameters: NSDictionary = ["access_token": /*SessionManager.accessToken()*/"MDZiNzJkNGFlNjg1ZDQzZmUyZjhmYzFjNmMyMzk3ZWI4OTVjOGNlMDE5ZDY1YzFjODRiMTI2MDgyYjZjM2E5NA", "dateTo": "", "dateFrom": "", "page": 1, "perPage": 1]
+        
+        WebServiceManager.fireGetBalanceRecordRequestWithUrl(APIAtlas.getBalanceRecordDetails, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                println(responseObject)
+            } else {
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                } else {
+                    println(responseObject)
+                }
+            }
+        })
+    }
+    
+    func submitWithdrawal() {
+        
+    }
+    
+    // MARK: - Delegates
+    
+    // MARK: - Available Balance Delegate
+    func gotoPayoutSummary(view: WithdrawAvailableBalanceView) {
+        let payoutSummary = PayoutSummaryViewController(nibName: "PayoutSummaryViewController", bundle: nil)
+        self.navigationController?.pushViewController(payoutSummary, animated: true)
     }
     
     // MARK: - Table view data source

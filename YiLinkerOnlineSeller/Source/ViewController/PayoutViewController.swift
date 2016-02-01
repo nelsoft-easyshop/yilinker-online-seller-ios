@@ -15,7 +15,7 @@ class PayoutViewController: UIViewController {
     @IBOutlet weak var containerView: UIView!
     
     // Tabs
-    var pageTitle: [String] = ["WITHDRAW", "REQUESTS", "RECORD", "EARNINGS"]
+    var tabsName: [String] = ["WITHDRAW", "REQUESTS", "RECORD", "EARNINGS"]
     var selectedImage: [String] = ["withdraw", "request", "record", "earning"]
     var deselectedImage: [String] = ["withdraw2", "request2", "record2", "earning2"]
     var selectedIndex: Int = 0
@@ -27,6 +27,7 @@ class PayoutViewController: UIViewController {
     var earningVC: SelectDateViewController?
     // Arrays of view controllers
     var viewControllers = [UIViewController]()
+    var controllersName: [String] = ["Balance Withdrawal", "Withdrawal Request List", "Balance Record", "Earnings"]
     // Current View Controller
     var currentChildViewController: UIViewController?
     // Child controllers frame
@@ -153,7 +154,7 @@ class PayoutViewController: UIViewController {
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: ProductManagementCollectionViewCell = self.tabsCollectionView.dequeueReusableCellWithReuseIdentifier("ProductManagementIdentifier", forIndexPath: indexPath) as! ProductManagementCollectionViewCell
         
-        cell.titleLabel.text = pageTitle[indexPath.row]
+        cell.titleLabel.text = tabsName[indexPath.row]
         
         if indexPath.row == selectedIndex {
             cell.backgroundColor = .whiteColor()
@@ -175,6 +176,7 @@ class PayoutViewController: UIViewController {
         if selectedIndex != indexPath.row {
             selectedIndex = indexPath.row
             self.tabsCollectionView.reloadData()
+            self.title = controllersName[indexPath.row]
             setSelectedViewControllerWithIndex(indexPath.row, transition: UIViewAnimationOptions.TransitionNone)
         }
     }

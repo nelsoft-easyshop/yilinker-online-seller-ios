@@ -8,10 +8,22 @@
 
 import UIKit
 
+protocol AvailableBalanceDelegate {
+    func gotoPayoutSummary(view: WithdrawAvailableBalanceView)
+}
+
 class WithdrawAvailableBalanceView: UIView {
 
+    var delegate: AvailableBalanceDelegate?
+    
     override func awakeFromNib() {
         self.frame.size.width = UIScreen.mainScreen().bounds.width
+        
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "gotoPayoutSummary:"))
+    }
+    
+    func gotoPayoutSummary(gesture: UIGestureRecognizer) {
+        delegate?.gotoPayoutSummary(self)
     }
 
 }
