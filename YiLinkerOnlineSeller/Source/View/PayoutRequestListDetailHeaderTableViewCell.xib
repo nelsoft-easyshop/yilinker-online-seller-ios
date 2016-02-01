@@ -14,21 +14,21 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" restorationIdentifier="PayoutRequestListDetailHeaderTableViewCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="PayoutRequestListDetailHeaderTableViewCell" rowHeight="72" id="KGk-i7-Jjw" customClass="PayoutRequestListDetailHeaderTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
+        <tableViewCell contentMode="scaleToFill" restorationIdentifier="PayoutRequestListDetailHeaderTableViewCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="PayoutRequestListDetailHeaderTableViewCell" rowHeight="81" id="KGk-i7-Jjw" customClass="PayoutRequestListDetailHeaderTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="81"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bank Deposit: Nelson Liao" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="eod-oJ-Lsr">
-                        <rect key="frame" x="8" y="37" width="359" height="21"/>
+                        <rect key="frame" x="8" y="41" width="359" height="21"/>
                         <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="16"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deposit To/Pay To" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="ugr-eb-5Mw">
-                        <rect key="frame" x="8" y="13" width="359" height="21"/>
+                        <rect key="frame" x="8" y="17" width="359" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="zd5-HH-ZyT"/>
                         </constraints>
@@ -39,16 +39,16 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="ugr-eb-5Mw" secondAttribute="trailing" constant="8" id="8hK-Eg-VXE"/>
-                    <constraint firstItem="ugr-eb-5Mw" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="MRM-XH-rF2"/>
+                    <constraint firstItem="ugr-eb-5Mw" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="17" id="MRM-XH-rF2"/>
                     <constraint firstAttribute="trailing" secondItem="eod-oJ-Lsr" secondAttribute="trailing" constant="8" id="Qwg-HZ-I1L"/>
                     <constraint firstItem="eod-oJ-Lsr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="diy-74-Mo3"/>
                     <constraint firstItem="ugr-eb-5Mw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="j5F-oX-c4x"/>
-                    <constraint firstAttribute="bottom" secondItem="eod-oJ-Lsr" secondAttribute="bottom" constant="13" id="kef-wv-nt2"/>
+                    <constraint firstAttribute="bottom" secondItem="eod-oJ-Lsr" secondAttribute="bottom" constant="18" id="kef-wv-nt2"/>
                     <constraint firstItem="eod-oJ-Lsr" firstAttribute="top" secondItem="ugr-eb-5Mw" secondAttribute="bottom" constant="3" id="ygw-OV-uTe"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <point key="canvasLocation" x="328.5" y="192"/>
+            <point key="canvasLocation" x="328.5" y="196.5"/>
         </tableViewCell>
     </objects>
 </document>
