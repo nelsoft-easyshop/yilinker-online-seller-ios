@@ -21,6 +21,8 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     
     var newFrame: CGRect!
     
+    var balanceRecordModel: BalanceRecordModel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -130,14 +132,19 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         view.frame = newFrame
     }
     
+    func populateData() {
+        self.availableBalanceView.setAvailableBalance(balanceRecordModel.availableBalance)
+    }
+    
     // MARK: - Requests
     
     func fireGetWithdrawalBalance() {
-        let parameters: NSDictionary = ["access_token": /*SessionManager.accessToken()*/"MDZiNzJkNGFlNjg1ZDQzZmUyZjhmYzFjNmMyMzk3ZWI4OTVjOGNlMDE5ZDY1YzFjODRiMTI2MDgyYjZjM2E5NA", "dateTo": "", "dateFrom": "", "page": 1, "perPage": 1]
+        let parameters: NSDictionary = ["access_token": /*SessionManager.accessToken()*/"ZDY5ZWNlMTQyNTJjNzJlODIzNjE3YTJmNDYyZDQzMmI0MTczODRmNjZkNjZmYmZmN2YzYTE4OGIwNjUwYWNiMw", "dateTo": "", "dateFrom": "", "page": 1, "perPage": 1]
         
         WebServiceManager.fireGetBalanceRecordRequestWithUrl(APIAtlas.getBalanceRecordDetails, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
-                println(responseObject)
+                self.balanceRecordModel = BalanceRecordModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                self.populateData()
             } else {
                 if requestErrorType == .ResponseError {
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)

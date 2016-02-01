@@ -14,6 +14,8 @@ protocol AvailableBalanceDelegate {
 
 class WithdrawAvailableBalanceView: UIView {
 
+    @IBOutlet weak var availableBalanceLabel: UILabel!
+    
     var delegate: AvailableBalanceDelegate?
     
     override func awakeFromNib() {
@@ -24,6 +26,10 @@ class WithdrawAvailableBalanceView: UIView {
     
     func gotoPayoutSummary(gesture: UIGestureRecognizer) {
         delegate?.gotoPayoutSummary(self)
+    }
+    
+    func setAvailableBalance(balance: Int) {
+        self.availableBalanceLabel.text = "P " + String(balance)
     }
 
 }

@@ -238,6 +238,7 @@
 		26BD5E641B8E1A3500739488 /* ProductDescriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26BD5E621B8E1A3500739488 /* ProductDescriptionViewController.xib */; };
 		26C2854D1B91C21A005EBD3A /* ProductManagementCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C2854B1B91C21A005EBD3A /* ProductManagementCollectionViewCell.swift */; };
 		26C2854E1B91C21A005EBD3A /* ProductManagementCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26C2854C1B91C21A005EBD3A /* ProductManagementCollectionViewCell.xib */; };
+		26D2BB9F1C5F596C00485F27 /* ParseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D2BB9E1C5F596C00485F27 /* ParseHelper.swift */; };
 		26DB062B1B97F9EB00D38EA8 /* RemovedItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DB06291B97F9EB00D38EA8 /* RemovedItemTableViewCell.swift */; };
 		26DB062C1B97F9EB00D38EA8 /* RemovedItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DB062A1B97F9EB00D38EA8 /* RemovedItemTableViewCell.xib */; };
 		26DB06351B98BF2C00D38EA8 /* TransactionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DB062F1B98BF2C00D38EA8 /* TransactionCollectionViewCell.swift */; };
@@ -878,6 +879,7 @@
 		26BD5E621B8E1A3500739488 /* ProductDescriptionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductDescriptionViewController.xib; path = ../ViewController/ProductDescriptionViewController.xib; sourceTree = "<group>"; };
 		26C2854B1B91C21A005EBD3A /* ProductManagementCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductManagementCollectionViewCell.swift; sourceTree = "<group>"; };
 		26C2854C1B91C21A005EBD3A /* ProductManagementCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductManagementCollectionViewCell.xib; path = ../ViewController/ProductManagementCollectionViewCell.xib; sourceTree = "<group>"; };
+		26D2BB9E1C5F596C00485F27 /* ParseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseHelper.swift; sourceTree = "<group>"; };
 		26DB06291B97F9EB00D38EA8 /* RemovedItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemovedItemTableViewCell.swift; sourceTree = "<group>"; };
 		26DB062A1B97F9EB00D38EA8 /* RemovedItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemovedItemTableViewCell.xib; sourceTree = "<group>"; };
 		26DB062F1B98BF2C00D38EA8 /* TransactionCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionCollectionViewCell.swift; path = YiLinkerOnlineSeller/Source/ViewController/TransactionCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -1371,6 +1373,7 @@
 		0CF28EB91B8C85E4005B2E54 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				26D2BB9E1C5F596C00485F27 /* ParseHelper.swift */,
 				260EBB421C48D2AE006D83D6 /* Toast.swift */,
 				260EBB401C48CD1A006D83D6 /* WebServiceManager.swift */,
 				0C11795B1BA9A5C900AA1554 /* StringHelper.swift */,
@@ -2637,6 +2640,7 @@
 				265C9C511C5B5E30002181CD /* PayoutSummaryViewController.swift in Sources */,
 				265C9C4D1C5B5E1C002181CD /* PayoutBalanceWithdrawalViewController.swift in Sources */,
 				B7BADAF81BA563FF005F59F9 /* ConversationTVC.swift in Sources */,
+				26D2BB9F1C5F596C00485F27 /* ParseHelper.swift in Sources */,
 				B7BADAE91BA563A5005F59F9 /* W_Messages.swift in Sources */,
 				0C11795C1BA9A5C900AA1554 /* StringHelper.swift in Sources */,
 				7985D3661BB050F40060E5F5 /* TransactionDeliveryLogTableViewCell.swift in Sources */,
