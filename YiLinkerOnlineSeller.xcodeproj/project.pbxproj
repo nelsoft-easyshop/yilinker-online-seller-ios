@@ -604,12 +604,17 @@
 		F7E465841B9F2D7B00FAB97D /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E465821B9F2D7B00FAB97D /* SearchTableViewCell.swift */; };
 		F7E465851B9F2D7B00FAB97D /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E465831B9F2D7B00FAB97D /* SearchTableViewCell.xib */; };
 		F7E465871B9F36C600FAB97D /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E465861B9F36C600FAB97D /* SearchModel.swift */; };
+		F7E4BA891C5EE6740019A309 /* PayoutRequestListDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BA871C5EE6740019A309 /* PayoutRequestListDetailViewController.swift */; };
+		F7E4BA8A1C5EE6740019A309 /* PayoutRequestListDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E4BA881C5EE6740019A309 /* PayoutRequestListDetailViewController.xib */; };
+		F7E4BA8D1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BA8B1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.swift */; };
+		F7E4BA8E1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E4BA8C1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.xib */; };
+		F7E4BA901C5EF0AE0019A309 /* PayoutRequestListDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BA8F1C5EF0AE0019A309 /* PayoutRequestListDetailHeaderView.swift */; };
+		F7E4BA971C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BA951C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.swift */; };
+		F7E4BA981C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E4BA961C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.xib */; };
 		F7E5F1811C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E5F17F1C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.swift */; };
 		F7E5F1821C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E5F1801C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.xib */; };
 		F7E739F31BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E739F11BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.swift */; };
 		F7E739F41BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E739F21BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.xib */; };
-		F7E96F8E1C5B449A00DAC58F /* PayoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E96F8C1C5B449A00DAC58F /* PayoutViewController.swift */; };
-		F7E96F8F1C5B449A00DAC58F /* PayoutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E96F8D1C5B449A00DAC58F /* PayoutViewController.xib */; };
 		F7E96F961C5B4C7800DAC58F /* PayoutRequestListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E96F941C5B4C7800DAC58F /* PayoutRequestListTableViewController.swift */; };
 		F7E96F971C5B4C7800DAC58F /* PayoutRequestListTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E96F951C5B4C7800DAC58F /* PayoutRequestListTableViewController.xib */; };
 		F7E96F9A1C5B4C9D00DAC58F /* PayoutRequestListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E96F981C5B4C9D00DAC58F /* PayoutRequestListTableViewCell.swift */; };
@@ -1246,12 +1251,17 @@
 		F7E465821B9F2D7B00FAB97D /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		F7E465831B9F2D7B00FAB97D /* SearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
 		F7E465861B9F36C600FAB97D /* SearchModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
+		F7E4BA871C5EE6740019A309 /* PayoutRequestListDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutRequestListDetailViewController.swift; sourceTree = "<group>"; };
+		F7E4BA881C5EE6740019A309 /* PayoutRequestListDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutRequestListDetailViewController.xib; sourceTree = "<group>"; };
+		F7E4BA8B1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutRequestListDetailHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		F7E4BA8C1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutRequestListDetailHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		F7E4BA8F1C5EF0AE0019A309 /* PayoutRequestListDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutRequestListDetailHeaderView.swift; sourceTree = "<group>"; };
+		F7E4BA951C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutRequestListItemTableViewCell.swift; sourceTree = "<group>"; };
+		F7E4BA961C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutRequestListItemTableViewCell.xib; sourceTree = "<group>"; };
 		F7E5F17F1C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoReferralCodeTableViewCell.swift; sourceTree = "<group>"; };
 		F7E5F1801C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoReferralCodeTableViewCell.xib; sourceTree = "<group>"; };
 		F7E739F11BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterResultsCollectionViewCell.swift; sourceTree = "<group>"; };
 		F7E739F21BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterResultsCollectionViewCell.xib; sourceTree = "<group>"; };
-		F7E96F8C1C5B449A00DAC58F /* PayoutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutViewController.swift; sourceTree = "<group>"; };
-		F7E96F8D1C5B449A00DAC58F /* PayoutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutViewController.xib; sourceTree = "<group>"; };
 		F7E96F941C5B4C7800DAC58F /* PayoutRequestListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutRequestListTableViewController.swift; sourceTree = "<group>"; };
 		F7E96F951C5B4C7800DAC58F /* PayoutRequestListTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutRequestListTableViewController.xib; sourceTree = "<group>"; };
 		F7E96F981C5B4C9D00DAC58F /* PayoutRequestListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutRequestListTableViewCell.swift; sourceTree = "<group>"; };
@@ -1571,6 +1581,11 @@
 				F7E5F1801C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.xib */,
 				F7E96F981C5B4C9D00DAC58F /* PayoutRequestListTableViewCell.swift */,
 				F7E96F991C5B4C9D00DAC58F /* PayoutRequestListTableViewCell.xib */,
+				F7E4BA8B1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.swift */,
+				F7E4BA8C1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.xib */,
+				F7E4BA8F1C5EF0AE0019A309 /* PayoutRequestListDetailHeaderView.swift */,
+				F7E4BA951C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.swift */,
+				F7E4BA961C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1672,9 +1687,9 @@
 				F7CCEEF81BBEC41D00D876C2 /* FilterResultsRiderNameViewController.swift */,
 				F7CCEEF91BBEC41D00D876C2 /* FilterResultsRiderNameViewController.xib */,
 				F721FCB21BFB08850009E645 /* ResolutionCenterViewControllerV2.swift */,
-				F7E96F8C1C5B449A00DAC58F /* PayoutViewController.swift */,
-				F7E96F8D1C5B449A00DAC58F /* PayoutViewController.xib */,
 				F7E96F941C5B4C7800DAC58F /* PayoutRequestListTableViewController.swift */,
+				F7E4BA871C5EE6740019A309 /* PayoutRequestListDetailViewController.swift */,
+				F7E4BA881C5EE6740019A309 /* PayoutRequestListDetailViewController.xib */,
 				F7E96F951C5B4C7800DAC58F /* PayoutRequestListTableViewController.xib */,
 			);
 			path = ViewController;
@@ -2412,6 +2427,7 @@
 				26B5B23E1B94D88D00CBDDE5 /* CustomizedCategoryTableViewCell.xib in Resources */,
 				79EF7AC81B99FB200082CD35 /* TransactionConsigneeTableViewCell.xib in Resources */,
 				79EF7AB01B9984640082CD35 /* TransactionTableViewController.xib in Resources */,
+				F7E4BA8A1C5EE6740019A309 /* PayoutRequestListDetailViewController.xib in Resources */,
 				F7C40FCE1B983CD90091C16C /* back-white.png in Resources */,
 				F7E96F971C5B4C7800DAC58F /* PayoutRequestListTableViewController.xib in Resources */,
 				F7E739F41BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.xib in Resources */,
@@ -2430,6 +2446,7 @@
 				79E6336D1B9AC2310062DB14 /* TransactionProductPurchaseTableViewCell.xib in Resources */,
 				79EDA4141B9205080037558A /* PointsDetailsTableViewCell.xib in Resources */,
 				0CF28F041B8CA2E9005B2E54 /* Panton Thin.otf in Resources */,
+				F7E4BA981C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.xib in Resources */,
 				79EFF7791B8D9274008A9E7D /* SalesReportViewController.xib in Resources */,
 				2686E3771B956C4A00E8FA80 /* ItemImagesHorizontalCollectionViewCell.xib in Resources */,
 				79EFF75E1B8D6DD3008A9E7D /* ActivityLogTableViewCell.xib in Resources */,
@@ -2455,7 +2472,6 @@
 				F7C40FD51B983CD90091C16C /* dropdown.png in Resources */,
 				F7C40FA71B983C020091C16C /* CreateNewBankAccountViewController.xib in Resources */,
 				F7C40FAD1B983C200091C16C /* ChangeMobileNumberViewController.xib in Resources */,
-				F7E96F8F1C5B449A00DAC58F /* PayoutViewController.xib in Resources */,
 				0CF28EFC1B8CA2E9005B2E54 /* Panton Heavy Italic.otf in Resources */,
 				0C65F8D91B8E0C4600504D86 /* ProductUploadDimensionsAndWeightTableViewCell.xib in Resources */,
 				F7C40FA11B983BE90091C16C /* FilterFooterTableViewCell.xib in Resources */,
@@ -2482,6 +2498,7 @@
 				F7C40FD81B983CD90091C16C /* oops.png in Resources */,
 				79E633AB1B9B2AC10062DB14 /* TransactionShipItemTableViewCell.xib in Resources */,
 				0CF28EF51B8CA2E9005B2E54 /* Panton Black.otf in Resources */,
+				F7E4BA8E1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.xib in Resources */,
 				F7C40F971B983BC90091C16C /* StoreInfoAddressTableViewCell.xib in Resources */,
 				0C8D7F881B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.xib in Resources */,
 			);
@@ -2562,6 +2579,7 @@
 				795B0D281BA3093000FC373C /* ActivityLogItemsModel.swift in Sources */,
 				0C51C2FD1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.swift in Sources */,
 				F7D8C9011BBBC0AB00305EF2 /* SearchProductNameModel.swift in Sources */,
+				F7E4BA891C5EE6740019A309 /* PayoutRequestListDetailViewController.swift in Sources */,
 				0C51C2F01BB00A6800F4D2D6 /* AddProductHeaderView.swift in Sources */,
 				0C8D7FBD1B8FCC5800B3FA4E /* ProductUploadCombinationHeaderTableViewCell.swift in Sources */,
 				F7C40F6D1B983B210091C16C /* CreateNewAddressViewController.swift in Sources */,
@@ -2579,6 +2597,7 @@
 				26378F511B8CEE82008533B6 /* ProductManagementTableViewCell.swift in Sources */,
 				2625FEA51B96A92500DD24AF /* EditSubCategoriesViewController.swift in Sources */,
 				26BD5E5B1B8DCF9B00739488 /* ProductImagesCollectionViewCell.swift in Sources */,
+				F7E4BA901C5EF0AE0019A309 /* PayoutRequestListDetailHeaderView.swift in Sources */,
 				0CF28ED41B8C85E5005B2E54 /* Reachability.swift in Sources */,
 				26B5B2481B94E36400CBDDE5 /* CCCategoryDetailsView.swift in Sources */,
 				79E633671B9AB22F0062DB14 /* TransactionImageCollectionViewCell.swift in Sources */,
@@ -2834,6 +2853,7 @@
 				0CF28ED51B8C85E5005B2E54 /* SessionManager.swift in Sources */,
 				F7E96F9D1C5B567800DAC58F /* PayoutRequestListModel.swift in Sources */,
 				79ED2F621B9BF09700C5BC0A /* TransactionModel.swift in Sources */,
+				F7E4BA971C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.swift in Sources */,
 				26B5B24F1B94E93F00CBDDE5 /* AddCustomizedCategoryTableViewCell.swift in Sources */,
 				792876091B8DF89F00762A39 /* BarChartDataEntry.swift in Sources */,
 				792876181B8DF89F00762A39 /* LineChartDataSet.swift in Sources */,
@@ -2917,12 +2937,12 @@
 				961F702A1B97EEEC007D0EA5 /* ButtonToTabBehaviorizer.swift in Sources */,
 				F7C40F611B983AC50091C16C /* ChangeAddressFooterCollectionViewCell.swift in Sources */,
 				794A965B1B9EAAEA002F32A0 /* FollowersModel.swift in Sources */,
-				F7E96F8E1C5B449A00DAC58F /* PayoutViewController.swift in Sources */,
 				0CF28ED11B8C85E5005B2E54 /* HexaColor.swift in Sources */,
 				0CAB52A31B91F9FB00EA441A /* ConditionParserModel.swift in Sources */,
 				2618DD791B9788470030C6D2 /* EdititemsViewController.swift in Sources */,
 				26BD5E601B8DFA6400739488 /* ProductDescriptionView.swift in Sources */,
 				792876391B8DF89F00762A39 /* LineScatterCandleRadarChartRenderer.swift in Sources */,
+				F7E4BA8D1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.swift in Sources */,
 				F7E96F9A1C5B4C9D00DAC58F /* PayoutRequestListTableViewCell.swift in Sources */,
 				F7C40F851B983B7C0091C16C /* StoreInfoTableViewCell.swift in Sources */,
 				7928760C1B8DF89F00762A39 /* BarLineScatterCandleChartDataSet.swift in Sources */,
