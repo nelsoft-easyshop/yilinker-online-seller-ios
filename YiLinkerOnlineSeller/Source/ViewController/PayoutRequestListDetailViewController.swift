@@ -156,7 +156,7 @@ class PayoutRequestListDetailViewController: UIViewController, UITableViewDelega
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
-            return 72
+            return 81
         } else {
             return 44
         }
