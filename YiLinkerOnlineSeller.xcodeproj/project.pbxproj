@@ -100,6 +100,8 @@
 		0CAACCC41B9D8EA500BE5EF3 /* ResellerItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAACCC21B9D8EA500BE5EF3 /* ResellerItemViewController.swift */; };
 		0CAACCC71B9D950C00BE5EF3 /* ResellerItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAACCC61B9D950C00BE5EF3 /* ResellerItemModel.swift */; };
 		0CAACCC91B9D9C0A00BE5EF3 /* ResellerItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAACCC81B9D9C0A00BE5EF3 /* ResellerItemViewController.xib */; };
+		0CAAE9211C5F344B009BE3E0 /* ReferralCodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAAE91F1C5F344B009BE3E0 /* ReferralCodeTableViewCell.swift */; };
+		0CAAE9221C5F344B009BE3E0 /* ReferralCodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAAE9201C5F344B009BE3E0 /* ReferralCodeTableViewCell.xib */; };
 		0CAB52A11B91F42300EA441A /* ConditionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB52A01B91F42300EA441A /* ConditionModel.swift */; };
 		0CAB52A31B91F9FB00EA441A /* ConditionParserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB52A21B91F9FB00EA441A /* ConditionParserModel.swift */; };
 		0CAB52A51B92023E00EA441A /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB52A41B92023E00EA441A /* CategoryModel.swift */; };
@@ -729,6 +731,8 @@
 		0CAACCC21B9D8EA500BE5EF3 /* ResellerItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResellerItemViewController.swift; sourceTree = "<group>"; };
 		0CAACCC61B9D950C00BE5EF3 /* ResellerItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResellerItemModel.swift; sourceTree = "<group>"; };
 		0CAACCC81B9D9C0A00BE5EF3 /* ResellerItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResellerItemViewController.xib; sourceTree = "<group>"; };
+		0CAAE91F1C5F344B009BE3E0 /* ReferralCodeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReferralCodeTableViewCell.swift; sourceTree = "<group>"; };
+		0CAAE9201C5F344B009BE3E0 /* ReferralCodeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReferralCodeTableViewCell.xib; sourceTree = "<group>"; };
 		0CAB52A01B91F42300EA441A /* ConditionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConditionModel.swift; sourceTree = "<group>"; };
 		0CAB52A21B91F9FB00EA441A /* ConditionParserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConditionParserModel.swift; sourceTree = "<group>"; };
 		0CAB52A41B92023E00EA441A /* CategoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
@@ -1311,6 +1315,15 @@
 			path = Strings;
 			sourceTree = "<group>";
 		};
+		0CAAE91E1C5F3401009BE3E0 /* Referral Code */ = {
+			isa = PBXGroup;
+			children = (
+				0CAAE91F1C5F344B009BE3E0 /* ReferralCodeTableViewCell.swift */,
+				0CAAE9201C5F344B009BE3E0 /* ReferralCodeTableViewCell.xib */,
+			);
+			name = "Referral Code";
+			sourceTree = "<group>";
+		};
 		0CF28EB51B8C85E4005B2E54 /* Source */ = {
 			isa = PBXGroup;
 			children = (
@@ -1464,6 +1477,7 @@
 		0CF28EC61B8C85E5005B2E54 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0CAAE91E1C5F3401009BE3E0 /* Referral Code */,
 				B7BADADE1BA56265005F59F9 /* Messaging */,
 				79EFF7601B8D6DE4008A9E7D /* ActivityLogTableViewCell.swift */,
 				26B5B24D1B94E93F00CBDDE5 /* AddCustomizedCategoryTableViewCell.swift */,
@@ -2333,6 +2347,7 @@
 				F7C40F8D1B983B9D0091C16C /* VerifyViewController.xib in Resources */,
 				79E6337F1B9AF4FD0062DB14 /* TransactionCancelOrderViewController.xib in Resources */,
 				F7C40FA51B983BFC0091C16C /* FilterByTableViewCell.xib in Resources */,
+				0CAAE9221C5F344B009BE3E0 /* ReferralCodeTableViewCell.xib in Resources */,
 				26BD5E4E1B8DC49800739488 /* ProductDetailsTableViewCell.xib in Resources */,
 				79E633751B9AD0740062DB14 /* TransactionProductDescriptionTableViewCell.xib in Resources */,
 				26B5B2421B94DE4200CBDDE5 /* AddCustomizedCategoryViewController.xib in Resources */,
@@ -2729,6 +2744,7 @@
 				0C65F8EC1B8E377500504D86 /* ProductUploadAttributeCollectionViewCell.swift in Sources */,
 				F7C40F591B983A7B0091C16C /* DynamicRoundedTextField.swift in Sources */,
 				F7AE35FA1C08054B00A1C9CE /* AlbumTableViewCell.swift in Sources */,
+				0CAAE9211C5F344B009BE3E0 /* ReferralCodeTableViewCell.swift in Sources */,
 				F7C40F731B983B390091C16C /* FilterCollectionViewCell.swift in Sources */,
 				7928764B1B8E049400762A39 /* SalesReportTableViewCell.swift in Sources */,
 				2690ED1A1B999354009343E0 /* ProductManagementProductsModel.swift in Sources */,
