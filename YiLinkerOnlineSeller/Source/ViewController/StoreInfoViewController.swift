@@ -187,9 +187,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         var storeInfoPreferredCategories = UINib(nibName: storeInfoPreferredCategoriesTableViewCellIdentifier, bundle: nil)
         self.tableView.registerNib(storeInfoPreferredCategories, forCellReuseIdentifier: storeInfoPreferredCategoriesTableViewCellIdentifier)
         
-        var storeInfoReferralCode = UINib(nibName: storeInfoReferralCodeTableViewCellIdentifier, bundle: nil)
-        self.tableView.registerNib(storeInfoReferralCode, forCellReuseIdentifier: storeInfoReferralCodeTableViewCellIdentifier)
-        
+        var referralCodeNibName = UINib(nibName: ReferralCodeTableViewCell.nibNameAndIdentifier(), bundle: nil)
+        self.tableView.registerNib(referralCodeNibName, forCellReuseIdentifier: ReferralCodeTableViewCell.nibNameAndIdentifier())
     }
 
     //MARK: Navigation bar
@@ -352,7 +351,6 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     }
     
     func shareFBAction(postImage: UIImageView, title: String) {
-        
         let vc = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
         
         var socialVC :SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
@@ -384,12 +382,9 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         socialVC.completionHandler = {
             (result:SLComposeViewControllerResult) in
             if result == SLComposeViewControllerResult.Done{
-                //self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"))
-                //self.view.makeToast(StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"), duration: 3.0, position: CSToastPositionCenter)
                 Toast.displayToastBottomWithMessage(StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"), duration: 1.5, view: self.tabBarController!.view)
             } else {
                 Toast.displayToastBottomWithMessage("Cancelled", duration: 1.5, view: self.tabBarController!.view)
-                //self.view.makeToast("Cancelled", duration: 3.0, position: CSToastPositionBottom)
             }
         }
         presentViewController(socialVC, animated: true, completion: nil)
@@ -734,16 +729,13 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 return cell
             }
         } else if indexPath.section == 3 {
-            let cell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoReferralCodeTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoReferralCodeTableViewCell
-            cell.selectionStyle = UITableViewCellSelectionStyle.None
-            cell.delegate = self
             // TODO: Add delegate methods
-            if self.storeInfoModel != nil {
+            /*if self.storeInfoModel != nil {
                 cell.referralCodeTextField.text = self.storeInfoModel?.referralCode
                 cell.referralPersonNameTextField.text = self.storeInfoModel?.referralPerson
-            }
+            }*/
             
-            return cell
+            return self.referralCodeWithIndexPath(indexPath)
         } else if indexPath.section == 4 {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoAddressTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAddressTableViewCell
             cell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -835,7 +827,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 return 208
             }
         } else if indexPath.section == 3 {
-            return 347
+            return 190
         } else if indexPath.section == 4 {
             return 163
         } else if indexPath.section == 5 {
@@ -1275,15 +1267,12 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             }
         })
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    //MARK: - 
+    //MARK: - Referral Code
+    func referralCodeWithIndexPath(indexPath: NSIndexPath) -> ReferralCodeTableViewCell {
+        let cell: ReferralCodeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ReferralCodeTableViewCell.nibNameAndIdentifier()) as! ReferralCodeTableViewCell
+        return cell
     }
-    */
 
 }
