@@ -22,8 +22,10 @@ class PayoutRequestListDetailViewController: UIViewController, UITableViewDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Request Detail"
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.backButton()
         self.registerCell()
         
         // Sample data for payout request details
@@ -38,12 +40,31 @@ class PayoutRequestListDetailViewController: UIViewController, UITableViewDelega
         self.payoutRequestModel.bankName[0] = "China Bank"
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    // MARK: Navigation bar
+    // MARK: - Add Back Button in navigation bar
+    func backButton() {
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButton.frame = CGRectMake(0, 0, 40, 40)
+        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    //MARK: - Navigation bar back button action
+    func back() {
+        self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
+    }
+
     // MARK: - Regiter nib files
     func registerCell() {
         let nib: UINib = UINib(nibName: "PayoutRequestListItemTableViewCell", bundle: nil)
