@@ -115,7 +115,9 @@ class PayoutViewController: UIViewController {
         self.containerView.addSubview(viewController.view)
         
         if self.currentChildViewController != nil {
+            println("before transition")
             self.transitionFromViewController(self.currentChildViewController!, toViewController: viewController, duration: 0, options: transition, animations: nil) { (Bool) -> Void in
+                println("after transition")
                 viewController.didMoveToParentViewController(self)
                 if !(self.currentChildViewController == viewController) {
                     if self.isViewLoaded() {

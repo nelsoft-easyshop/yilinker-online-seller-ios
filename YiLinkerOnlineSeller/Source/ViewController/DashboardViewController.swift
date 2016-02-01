@@ -53,14 +53,14 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         super.viewDidAppear(animated)
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         
-        if SessionManager.isLoggedIn() {
-            self.loginBlockerView.hidden = true
-            fireStoreInfo(true)
-            setupGCM()
-        } else {
-            self.loginBlockerView.hidden = false
-        }
-        
+//        if SessionManager.isLoggedIn() {
+//            self.loginBlockerView.hidden = true
+//            fireStoreInfo(true)
+//            setupGCM()
+//        } else {
+//            self.loginBlockerView.hidden = false
+//        }
+        self.loginBlockerView.hidden = true
 //        if NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
 //            if ctr == 0{
 //                fireStoreInfo(true)
@@ -461,9 +461,12 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             transaction.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(transaction, animated: true)
         } else if indexPath.row == 3 {
-            let productManagement = ProductManagementViewController(nibName: "ProductManagementViewController", bundle: nil)
-            productManagement.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(productManagement, animated: true)
+//            let productManagement = ProductManagementViewController(nibName: "ProductManagementViewController", bundle: nil)
+//            productManagement.hidesBottomBarWhenPushed = true
+//            self.navigationController?.pushViewController(productManagement, animated: true)
+            let payoutVC = PayoutViewController(nibName: "PayoutViewController", bundle: nil)
+            payoutVC.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(payoutVC, animated: true)
         } else if indexPath.row == 4 {
             var customizedCategory = CustomizedCategoryViewController(nibName: "CustomizedCategoryViewController", bundle: nil)
             self.navigationController?.pushViewController(customizedCategory, animated:true)
