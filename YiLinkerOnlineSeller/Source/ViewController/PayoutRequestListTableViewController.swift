@@ -139,6 +139,12 @@ class PayoutRequestListTableViewController: UITableViewController {
         return 65
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var payoutRequestListDetailViewController = PayoutRequestListDetailViewController(nibName: "PayoutRequestListDetailViewController", bundle: nil)
+        self.navigationController?.presentViewController(payoutRequestListDetailViewController, animated: true, completion: nil)
+        //self.navigationController?.pushViewController(payoutRequestListDetailViewController, animated:true)
+    }
+    
     func fireRequestList() {
         self.showHUD()
         var parameters: NSDictionary = [:]
