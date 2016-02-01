@@ -487,7 +487,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                 self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
             }
         } else if indexPath.row == 6 {
-            /*let payoutViewController: PayoutRequestListTableViewController = PayoutRequestListTableViewController(nibName: "PayoutRequestListTableViewController", bundle: nil)
+            /*let payoutViewController: PayoutRequestListViewController = PayoutRequestListViewController(nibName: "PayoutRequestListViewController", bundle: nil)
             payoutViewController.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(payoutViewController, animated:true)*/
             var payoutRequestListDetailViewController = PayoutRequestListDetailViewController(nibName: "PayoutRequestListDetailViewController", bundle: nil)

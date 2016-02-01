@@ -10,21 +10,61 @@ import UIKit
 
 class PayoutRequestListDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    // Tableview
     @IBOutlet weak var tableView: UITableView!
+    
+    // Models
+    var payoutRequestModel: PayoutRequestListModel = PayoutRequestListModel(date: [""], withdrawalMethod: [""], totalAmount: [""], charge: [""], netAmount: [""], currencyCode: [""], status: [""], payTo: [""], bankName: [""], accountNumber: [""], accountName: [""])
+    
+    // Global varialbles
+    var payoutRequestDetails: [String] = ["Date", "Method", "Requested", "Bank Charge", "Amount", "Status"]
+    var bankDetails: [String] = ["Bank Account Name", "Bank Number", "Bank Name"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Request Detail"
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.backButton()
         self.registerCell()
+        
+        // Sample data for payout request details
+        self.payoutRequestModel.date[0] = "02/01/2016"
+        self.payoutRequestModel.withdrawalMethod[0] = "bank"
+        self.payoutRequestModel.totalAmount[0] = "10000.0000".formatToTwoDecimal().formatToPeso()
+        self.payoutRequestModel.charge[0] = "50.0000".formatToTwoDecimal().formatToPeso()
+        self.payoutRequestModel.netAmount[0] = "10000.0000".formatToTwoDecimal().formatToPeso()
+        self.payoutRequestModel.status[0] = "IN PROCESS"
+        self.payoutRequestModel.accountName[0] = "Nelson Liao"
+        self.payoutRequestModel.accountNumber[0] = "00551458614562"
+        self.payoutRequestModel.bankName[0] = "China Bank"
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    // MARK: Navigation bar
+    // MARK: - Add Back Button in navigation bar
+    func backButton() {
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButton.frame = CGRectMake(0, 0, 40, 40)
+        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    //MARK: - Navigation bar back button action
+    func back() {
+        self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
+    }
+
     // MARK: - Regiter nib files
     func registerCell() {
         let nib: UINib = UINib(nibName: "PayoutRequestListItemTableViewCell", bundle: nil)
@@ -32,6 +72,9 @@ class PayoutRequestListDetailViewController: UIViewController, UITableViewDelega
         
         let nib2: UINib = UINib(nibName: "PayoutRequestListDetailHeaderTableViewCell", bundle: nil)
         self.tableView.registerNib(nib2, forCellReuseIdentifier: "PayoutRequestListDetailHeaderTableViewCell")
+        
+        let nib3: UINib = UINib(nibName: "PayoutRequestListBankDetailHeaderTableViewCell", bundle: nil)
+        self.tableView.registerNib(nib3, forCellReuseIdentifier: "PayoutRequestListBankDetailHeaderTableViewCell")
     }
     
     // MARK: - Table view data source
@@ -39,18 +82,76 @@ class PayoutRequestListDetailViewController: UIViewController, UITableViewDelega
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return 1
+        if self.payoutRequestModel.withdrawalMethod[0] == "bank" {
+            return 2
+        } else {
+            return 1
+        }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 6
+        if section == 0 {
+            return self.payoutRequestDetails.count
+        } else {
+            return self.bankDetails.count
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("PayoutRequestListItemTableViewCell", forIndexPath: indexPath) as! PayoutRequestListItemTableViewCell
-
+          let cell = self.tableView.dequeueReusableCellWithIdentifier("PayoutRequestListItemTableViewCell", forIndexPath: indexPath) as! PayoutRequestListItemTableViewCell
+        
+        if indexPath.section == 0 {
+            cell.itemLabel.text = self.payoutRequestDetails[indexPath.row]
+            switch indexPath.row {
+            case 0:
+                cell.itemDetailLabel.text = self.payoutRequestModel.date[0]
+                break
+            case 1:
+                if self.payoutRequestModel.withdrawalMethod[0] == "bank" {
+                    cell.itemDetailLabel.text = "Bank Deposit"
+                } else {
+                    cell.itemDetailLabel.text = "Bank Cheque"
+                }
+                
+                break
+            case 2:
+                cell.itemDetailLabel.text = self.payoutRequestModel.totalAmount[0]
+                break
+            case 3:
+                cell.itemDetailLabel.text = self.payoutRequestModel.charge[0]
+                break
+            case 4:
+                cell.itemDetailLabel.text = self.payoutRequestModel.netAmount[0]
+                break
+            case 5:
+                cell.itemDetailLabel.text = self.payoutRequestModel.status[0]
+                break
+                
+            default:
+                
+                break
+            }
+        } else {
+            cell.itemLabel.text = self.bankDetails[indexPath.row]
+            switch indexPath.row {
+            case 0:
+                cell.itemDetailLabel.text = self.payoutRequestModel.accountName[0]
+                break
+            case 1:
+                cell.itemDetailLabel.text = self.payoutRequestModel.accountNumber[0]
+                break
+            case 2:
+                cell.itemDetailLabel.text = self.payoutRequestModel.bankName[0]
+                break
+                
+            default:
+                
+                break
+            }
+        }
+        
         return cell
     }
     
@@ -65,14 +166,21 @@ class PayoutRequestListDetailViewController: UIViewController, UITableViewDelega
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        var tableHeaderView = self.tableView.dequeueReusableCellWithIdentifier("PayoutRequestListDetailHeaderTableViewCell") as! PayoutRequestListDetailHeaderTableViewCell
-        //self.tableView.tableHeaderView = nil
-        //self.tableView.tableHeaderView = tableHeaderView
-        return tableHeaderView
+        if section == 0 {
+            var tableHeaderView = self.tableView.dequeueReusableCellWithIdentifier("PayoutRequestListDetailHeaderTableViewCell") as! PayoutRequestListDetailHeaderTableViewCell
+            return tableHeaderView
+        } else {
+            var tableHeaderView = self.tableView.dequeueReusableCellWithIdentifier("PayoutRequestListBankDetailHeaderTableViewCell") as! PayoutRequestListBankDetailHeaderTableViewCell
+            return tableHeaderView
+        }
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 72
+        if section == 0 {
+            return 81
+        } else {
+            return 44
+        }
     }
     
     

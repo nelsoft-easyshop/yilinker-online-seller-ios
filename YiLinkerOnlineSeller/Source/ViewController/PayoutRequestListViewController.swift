@@ -1,15 +1,17 @@
 //
-//  PayoutRequestListTableViewController.swift
+//  PayoutRequestListViewController.swift
 //  YiLinkerOnlineSeller
 //
-//  Created by Joriel Oller Fronda on 1/29/16.
+//  Created by Joriel Oller Fronda on 2/1/16.
 //  Copyright (c) 2016 YiLinker. All rights reserved.
 //
 
 import UIKit
 
-class PayoutRequestListTableViewController: UITableViewController {
+class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    // Tableview
+    @IBOutlet weak var tableView: UITableView!
     
     // Local Strings
     let cellIdentifier: String = "PayoutRequestListTableViewCell"
@@ -24,17 +26,19 @@ class PayoutRequestListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Withdrawal Request List"
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         self.backButton()
         self.footerView()
         self.registerCell()
         self.fireRequestList()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: Navigation bar
     // MARK: - Add Back Button in navigation bar
     func backButton() {
@@ -53,7 +57,7 @@ class PayoutRequestListTableViewController: UITableViewController {
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
-
+    
     // MARK: - Private methods
     // Remove tableview footer
     func footerView() {
@@ -96,14 +100,14 @@ class PayoutRequestListTableViewController: UITableViewController {
     }
     
     // MARK: - Table view data source
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
         return 1
     }
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         if self.requestListModel != nil {
@@ -112,8 +116,8 @@ class PayoutRequestListTableViewController: UITableViewController {
             return 0
         }
     }
-
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier(self.cellIdentifier, forIndexPath: indexPath) as! PayoutRequestListTableViewCell
         
         if self.requestListModel != nil {
@@ -121,7 +125,7 @@ class PayoutRequestListTableViewController: UITableViewController {
             if self.requestListModel!.withdrawalMethod[indexPath.row] == "bank" {
                 cell.requestDetailLabel.text =   "Bank Deposit | \(self.requestListModel!.totalAmount[indexPath.row].formatToTwoDecimal().formatToPeso())"
             } else {
-                 cell.requestDetailLabel.text =   "Bank Cheque | \(self.requestListModel!.totalAmount[indexPath.row].formatToTwoDecimal().formatToPeso())"
+                cell.requestDetailLabel.text =   "Bank Cheque | \(self.requestListModel!.totalAmount[indexPath.row].formatToTwoDecimal().formatToPeso())"
             }
             
             if self.requestListModel!.charge[indexPath.row] != "0.0000" {
@@ -135,11 +139,11 @@ class PayoutRequestListTableViewController: UITableViewController {
         
         return cell
     }
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 65
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var payoutRequestListDetailViewController = PayoutRequestListDetailViewController(nibName: "PayoutRequestListDetailViewController", bundle: nil)
         self.navigationController?.presentViewController(payoutRequestListDetailViewController, animated: true, completion: nil)
         //self.navigationController?.pushViewController(payoutRequestListDetailViewController, animated:true)

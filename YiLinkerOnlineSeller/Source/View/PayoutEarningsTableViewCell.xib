@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton SemiBold.otf">
+            <string>Panton-SemiBold</string>
+        </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PayoutEarningsTableViewCell" rowHeight="53" id="KGk-i7-Jjw" customClass="PayoutEarningsTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="1" width="375" height="53"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P100.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="3kI-2O-Syn">
+                        <rect key="frame" x="277" y="20" width="73" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="73" id="BBr-bg-GkM"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right2" translatesAutoresizingMaskIntoConstraints="NO" id="5SH-1m-fXQ">
+                        <rect key="frame" x="358" y="15" width="9" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="9" id="8Y2-zL-X1n"/>
+                            <constraint firstAttribute="height" constant="21" id="lYx-RB-dwO"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transaction" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="O9i-1X-eTD">
+                        <rect key="frame" x="51" y="15" width="182" height="21"/>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="14"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view alpha="0.20000000298023224" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uvt-c8-t9t">
+                        <rect key="frame" x="0.0" y="52" width="375" height="1"/>
+                        <color key="backgroundColor" red="0.50588235290000005" green="0.50588235290000005" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="aii-Ks-aBX"/>
+                        </constraints>
+                    </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="earning-transation" translatesAutoresizingMaskIntoConstraints="NO" id="2sF-f3-Ok3">
+                        <rect key="frame" x="8" y="8" width="35" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="35" id="4Sy-tM-fQh"/>
+                            <constraint firstAttribute="height" constant="35" id="M5V-VI-uaS"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="5SH-1m-fXQ" secondAttribute="trailing" constant="8" id="1b1-GM-fBH"/>
+                    <constraint firstAttribute="trailing" secondItem="Uvt-c8-t9t" secondAttribute="trailing" id="6Pc-86-ySD"/>
+                    <constraint firstItem="3kI-2O-Syn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="E18-1H-DbV"/>
+                    <constraint firstItem="O9i-1X-eTD" firstAttribute="leading" secondItem="2sF-f3-Ok3" secondAttribute="trailing" constant="8" id="EGJ-0t-ZrG"/>
+                    <constraint firstItem="5SH-1m-fXQ" firstAttribute="leading" secondItem="3kI-2O-Syn" secondAttribute="trailing" constant="8" id="I38-rd-ATo"/>
+                    <constraint firstAttribute="bottom" secondItem="Uvt-c8-t9t" secondAttribute="bottom" constant="-1" id="K7Y-Og-86a"/>
+                    <constraint firstItem="Uvt-c8-t9t" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="PbC-ah-pCR"/>
+                    <constraint firstItem="2sF-f3-Ok3" firstAttribute="bottom" secondItem="Uvt-c8-t9t" secondAttribute="bottom" constant="-10" id="cOU-1W-54B"/>
+                    <constraint firstItem="5SH-1m-fXQ" firstAttribute="bottom" secondItem="Uvt-c8-t9t" secondAttribute="bottom" constant="-17" id="cQi-Vz-TPT"/>
+                    <constraint firstItem="2sF-f3-Ok3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="e0d-Kg-GPm"/>
+                    <constraint firstAttribute="bottom" secondItem="O9i-1X-eTD" secondAttribute="bottom" constant="16" id="kuh-7r-NlM"/>
+                    <constraint firstItem="O9i-1X-eTD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="mPQ-Sf-ESj"/>
+                    <constraint firstItem="3kI-2O-Syn" firstAttribute="leading" secondItem="O9i-1X-eTD" secondAttribute="trailing" constant="44" id="tDl-5e-zhG"/>
+                    <constraint firstAttribute="bottom" secondItem="3kI-2O-Syn" secondAttribute="bottom" constant="20" id="xI3-2h-rkF"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="earningTypeAmountLabel" destination="3kI-2O-Syn" id="EPv-YK-FVe"/>
+                <outlet property="earningTypeImageView" destination="2sF-f3-Ok3" id="d4o-7n-1p6"/>
+                <outlet property="earningTypeLabel" destination="O9i-1X-eTD" id="Ffv-yN-Url"/>
+            </connections>
+            <point key="canvasLocation" x="385.5" y="288.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="earning-transation" width="200" height="200"/>
+        <image name="right2" width="97" height="200"/>
+    </resources>
+</document>
