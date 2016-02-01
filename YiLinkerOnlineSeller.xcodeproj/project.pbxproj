@@ -625,6 +625,8 @@
 		F7E4BAB21C5F36A00019A309 /* PayoutEarningsTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E4BAB01C5F36A00019A309 /* PayoutEarningsTypeTableViewCell.xib */; };
 		F7E4BAB51C5F405C0019A309 /* PayoutEarningsTransactionTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BAB31C5F405B0019A309 /* PayoutEarningsTransactionTypeTableViewCell.swift */; };
 		F7E4BAB61C5F405C0019A309 /* PayoutEarningsTransactionTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E4BAB41C5F405B0019A309 /* PayoutEarningsTransactionTypeTableViewCell.xib */; };
+		F7E4BAB81C5F4D1A0019A309 /* PayoutEarningsTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BAB71C5F4D1A0019A309 /* PayoutEarningsTypeModel.swift */; };
+		F7E4BABA1C5F4D3B0019A309 /* PayoutEarningsTransactionTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BAB91C5F4D3B0019A309 /* PayoutEarningsTransactionTypeModel.swift */; };
 		F7E5F1811C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E5F17F1C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.swift */; };
 		F7E5F1821C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E5F1801C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.xib */; };
 		F7E739F31BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E739F11BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.swift */; };
@@ -1284,6 +1286,8 @@
 		F7E4BAB01C5F36A00019A309 /* PayoutEarningsTypeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutEarningsTypeTableViewCell.xib; sourceTree = "<group>"; };
 		F7E4BAB31C5F405B0019A309 /* PayoutEarningsTransactionTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutEarningsTransactionTypeTableViewCell.swift; sourceTree = "<group>"; };
 		F7E4BAB41C5F405B0019A309 /* PayoutEarningsTransactionTypeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutEarningsTransactionTypeTableViewCell.xib; sourceTree = "<group>"; };
+		F7E4BAB71C5F4D1A0019A309 /* PayoutEarningsTypeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutEarningsTypeModel.swift; sourceTree = "<group>"; };
+		F7E4BAB91C5F4D3B0019A309 /* PayoutEarningsTransactionTypeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutEarningsTransactionTypeModel.swift; sourceTree = "<group>"; };
 		F7E5F17F1C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoReferralCodeTableViewCell.swift; sourceTree = "<group>"; };
 		F7E5F1801C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoReferralCodeTableViewCell.xib; sourceTree = "<group>"; };
 		F7E739F11BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterResultsCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1473,6 +1477,8 @@
 				F7CF662E1BD9102F008B8226 /* StoreInfoPreferredCategoriesModel.swift */,
 				F7E96F9C1C5B567800DAC58F /* PayoutRequestListModel.swift */,
 				F7E4BAA51C5F266F0019A309 /* PayoutEarningsModel.swift */,
+				F7E4BAB71C5F4D1A0019A309 /* PayoutEarningsTypeModel.swift */,
+				F7E4BAB91C5F4D3B0019A309 /* PayoutEarningsTransactionTypeModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2885,6 +2891,7 @@
 				26B282F51B91E92B00A7C2B1 /* ProductManagementAllTableViewCell.swift in Sources */,
 				F7AC5F721B9AA2DC00227D18 /* ProvinceModel.swift in Sources */,
 				792876191B8DF89F00762A39 /* LineRadarChartDataSet.swift in Sources */,
+				F7E4BABA1C5F4D3B0019A309 /* PayoutEarningsTransactionTypeModel.swift in Sources */,
 				F7E4BAA61C5F266F0019A309 /* PayoutEarningsModel.swift in Sources */,
 				0C942BB71BAFF8700049A6B0 /* NewDisputeTableViewController2.swift in Sources */,
 				26B5B24A1B94E37A00CBDDE5 /* CCSubCategoriesView.swift in Sources */,
@@ -2936,6 +2943,7 @@
 				792875FE1B8DF89F00762A39 /* PieRadarChartViewBase.swift in Sources */,
 				0CAACCC41B9D8EA500BE5EF3 /* ResellerItemViewController.swift in Sources */,
 				26DB062B1B97F9EB00D38EA8 /* RemovedItemTableViewCell.swift in Sources */,
+				F7E4BAB81C5F4D1A0019A309 /* PayoutEarningsTypeModel.swift in Sources */,
 				F7C40F871B983B810091C16C /* StoreInfoViewController.swift in Sources */,
 				F7AE36071C08730600A1C9CE /* ImageCropperViewController.swift in Sources */,
 				79EFF7711B8D6E35008A9E7D /* ActivityModel.swift in Sources */,
