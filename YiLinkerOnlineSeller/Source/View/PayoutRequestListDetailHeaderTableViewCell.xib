@@ -47,6 +47,7 @@
                     <constraint firstItem="eod-oJ-Lsr" firstAttribute="top" secondItem="ugr-eb-5Mw" secondAttribute="bottom" constant="3" id="ygw-OV-uTe"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <point key="canvasLocation" x="328.5" y="192"/>
         </tableViewCell>
     </objects>
