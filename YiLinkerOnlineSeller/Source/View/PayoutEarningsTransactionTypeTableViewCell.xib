@@ -143,6 +143,15 @@
                     <constraint firstItem="w7G-Bq-AhG" firstAttribute="leading" secondItem="Ekp-IL-hZn" secondAttribute="leading" id="ySc-Kc-8qm"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="amountLabel" destination="pn0-sb-LrO" id="hMd-Lq-HD3"/>
+                <outlet property="boughtByLabel" destination="qzs-QV-BeZ" id="cVr-ar-LAc"/>
+                <outlet property="dateLabel" destination="w7G-Bq-AhG" id="Y2z-wO-oMe"/>
+                <outlet property="productNameLabel" destination="zEt-A0-A6Y" id="TbZ-TH-btj"/>
+                <outlet property="statusLabel" destination="IHn-23-sWS" id="uq2-Q6-PS5"/>
+                <outlet property="statusView" destination="Eq3-5k-wGs" id="Kpi-Qo-1Up"/>
+                <outlet property="transactionNoLabel" destination="Ekp-IL-hZn" id="O6A-c7-Mu8"/>
+            </connections>
             <point key="canvasLocation" x="205.5" y="144.5"/>
         </tableViewCell>
     </objects>

@@ -10,6 +10,18 @@ import UIKit
 
 class PayoutEarningsTransactionTypeTableViewCell: UITableViewCell {
 
+    // Labels
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var transactionNoLabel: UILabel!
+    @IBOutlet weak var productNameLabel: UILabel!
+    @IBOutlet weak var boughtByLabel: UILabel!
+    @IBOutlet weak var amountLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
+    
+    // Views
+    @IBOutlet weak var statusView: DynamicRoundedView!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
