@@ -27,6 +27,8 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
         super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.title = "Earnings"
+        self.backButton()
         self.registerCell()
         self.fireEarningGroupList()
         // Do any additional setup after loading the view.
@@ -35,6 +37,30 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: Navigation bar
+    // MARK: - Add Back Button in navigation bar
+    func backButton() {
+        //Add Nav Bar
+        if self.respondsToSelector("edgesForExtendedLayout") {
+            self.edgesForExtendedLayout = UIRectEdge.None
+        }
+        
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButton.frame = CGRectMake(0, 0, 40, 40)
+        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    //MARK: - Navigation bar back button action
+    func back() {
+        self.navigationController!.popViewControllerAnimated(true)
     }
     
     // MARK: - Regiter nib files
@@ -91,7 +117,7 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier(self.cellIdentifier, forIndexPath: indexPath) as! PayoutEarningsTableViewCell
-        
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
         if self.earningsModel != nil {
             switch indexPath.row {
             case 0:
@@ -140,8 +166,9 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var payoutEarningsTypeViewController = PayoutEarningsTypeViewController(nibName: "PayoutEarningsTypeViewController", bundle: nil)
-        self.navigationController?.presentViewController(payoutEarningsTypeViewController, animated: true, completion: nil)
-        //self.navigationController?.pushViewController(payoutRequestListDetailViewController, animated:true)
+        payoutEarningsTypeViewController.earningTypeId = self.earningsModel!.earningTypeId[indexPath.row]
+        //self.presentViewController(payoutEarningsTypeViewController, animated: true, completion: nil)
+        self.navigationController?.pushViewController(payoutEarningsTypeViewController, animated:true)
     }
     
     func fireEarningGroupList() {
