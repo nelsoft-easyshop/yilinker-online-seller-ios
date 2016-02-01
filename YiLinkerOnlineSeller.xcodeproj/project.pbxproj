@@ -608,7 +608,6 @@
 		F7E4BA8A1C5EE6740019A309 /* PayoutRequestListDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E4BA881C5EE6740019A309 /* PayoutRequestListDetailViewController.xib */; };
 		F7E4BA8D1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BA8B1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.swift */; };
 		F7E4BA8E1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E4BA8C1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.xib */; };
-		F7E4BA901C5EF0AE0019A309 /* PayoutRequestListDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BA8F1C5EF0AE0019A309 /* PayoutRequestListDetailHeaderView.swift */; };
 		F7E4BA971C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BA951C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.swift */; };
 		F7E4BA981C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E4BA961C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.xib */; };
 		F7E5F1811C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E5F17F1C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.swift */; };
@@ -1255,7 +1254,6 @@
 		F7E4BA881C5EE6740019A309 /* PayoutRequestListDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutRequestListDetailViewController.xib; sourceTree = "<group>"; };
 		F7E4BA8B1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutRequestListDetailHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		F7E4BA8C1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutRequestListDetailHeaderTableViewCell.xib; sourceTree = "<group>"; };
-		F7E4BA8F1C5EF0AE0019A309 /* PayoutRequestListDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutRequestListDetailHeaderView.swift; sourceTree = "<group>"; };
 		F7E4BA951C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutRequestListItemTableViewCell.swift; sourceTree = "<group>"; };
 		F7E4BA961C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutRequestListItemTableViewCell.xib; sourceTree = "<group>"; };
 		F7E5F17F1C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoReferralCodeTableViewCell.swift; sourceTree = "<group>"; };
@@ -1583,7 +1581,6 @@
 				F7E96F991C5B4C9D00DAC58F /* PayoutRequestListTableViewCell.xib */,
 				F7E4BA8B1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.swift */,
 				F7E4BA8C1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.xib */,
-				F7E4BA8F1C5EF0AE0019A309 /* PayoutRequestListDetailHeaderView.swift */,
 				F7E4BA951C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.swift */,
 				F7E4BA961C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.xib */,
 			);
@@ -2597,7 +2594,6 @@
 				26378F511B8CEE82008533B6 /* ProductManagementTableViewCell.swift in Sources */,
 				2625FEA51B96A92500DD24AF /* EditSubCategoriesViewController.swift in Sources */,
 				26BD5E5B1B8DCF9B00739488 /* ProductImagesCollectionViewCell.swift in Sources */,
-				F7E4BA901C5EF0AE0019A309 /* PayoutRequestListDetailHeaderView.swift in Sources */,
 				0CF28ED41B8C85E5005B2E54 /* Reachability.swift in Sources */,
 				26B5B2481B94E36400CBDDE5 /* CCCategoryDetailsView.swift in Sources */,
 				79E633671B9AB22F0062DB14 /* TransactionImageCollectionViewCell.swift in Sources */,
