@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate, CongratulationsViewControllerDelegate, UzysAssetsPickerControllerDelegate, StoreInfoQrCodeTableViewCellDelegate, MFMailComposeViewControllerDelegate, GPPSignInDelegate {
+class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate, CongratulationsViewControllerDelegate, UzysAssetsPickerControllerDelegate, StoreInfoQrCodeTableViewCellDelegate, MFMailComposeViewControllerDelegate, GPPSignInDelegate, StoreInfoReferralCodeTableViewCellDelegate {
     
     //Global variables declarations
     //Variables that can be accessed inside the class
@@ -20,6 +20,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     let storeInfoBankAccountTableViewCellIdentifier: String = "StoreInfoBankAccountTableViewCell"
     let storeInfoAccountInformationTableViewCellIdentifier: String = "StoreInfoAccountInformationTableViewCell"
     let storeInfoPreferredCategoriesTableViewCellIdentifier: String = "StoreInfoPreferredCategoriesTableViewCell"
+    let storeInfoReferralCodeTableViewCellIdentifier: String = "StoreInfoReferralCodeTableViewCell"
     
     let storeInfoTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_TITLE_LOCALIZE_KEY")
     let addPhoto: String = StringHelper.localizedStringWithKey("STORE_INFO_ADD_PHOTO_LOCALIZE_KEY")
@@ -185,6 +186,9 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         var storeInfoPreferredCategories = UINib(nibName: storeInfoPreferredCategoriesTableViewCellIdentifier, bundle: nil)
         self.tableView.registerNib(storeInfoPreferredCategories, forCellReuseIdentifier: storeInfoPreferredCategoriesTableViewCellIdentifier)
+        
+        var referralCodeNibName = UINib(nibName: ReferralCodeTableViewCell.nibNameAndIdentifier(), bundle: nil)
+        self.tableView.registerNib(referralCodeNibName, forCellReuseIdentifier: ReferralCodeTableViewCell.nibNameAndIdentifier())
     }
 
     //MARK: Navigation bar
@@ -347,7 +351,6 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     }
     
     func shareFBAction(postImage: UIImageView, title: String) {
-        
         let vc = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
         
         var socialVC :SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
@@ -379,16 +382,22 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         socialVC.completionHandler = {
             (result:SLComposeViewControllerResult) in
             if result == SLComposeViewControllerResult.Done{
-                //self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"))
-                //self.view.makeToast(StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"), duration: 3.0, position: CSToastPositionCenter)
                 Toast.displayToastBottomWithMessage(StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"), duration: 1.5, view: self.tabBarController!.view)
             } else {
                 Toast.displayToastBottomWithMessage("Cancelled", duration: 1.5, view: self.tabBarController!.view)
-                //self.view.makeToast("Cancelled", duration: 3.0, position: CSToastPositionBottom)
             }
         }
         presentViewController(socialVC, animated: true, completion: nil)
         
+    }
+    
+    //MARK: StoreInfoReferralCodeTableViewCell Delegate methods 
+    func copyReferralCode(code: String) {
+        UIPasteboard.generalPasteboard().string = code
+    }
+    
+    func saveReferralPerson(referralName: String) {
+        self.storeInfoModel?.referralPerson = referralName
     }
     
     //MARK: Google Plus Sign In
@@ -603,7 +612,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     //MARK: Tableview delegate methods
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 6
+        return 7
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -720,6 +729,14 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 return cell
             }
         } else if indexPath.section == 3 {
+            // TODO: Add delegate methods
+            /*if self.storeInfoModel != nil {
+                cell.referralCodeTextField.text = self.storeInfoModel?.referralCode
+                cell.referralPersonNameTextField.text = self.storeInfoModel?.referralPerson
+            }*/
+            
+            return self.referralCodeWithIndexPath(indexPath)
+        } else if indexPath.section == 4 {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoAddressTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoAddressTableViewCell
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.delegate = self
@@ -738,7 +755,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             }
             
             return cell
-        } else if indexPath.section == 4 {
+        } else if indexPath.section == 5 {
             let cell = self.tableView.dequeueReusableCellWithIdentifier( storeInfoBankAccountTableViewCellIdentifier, forIndexPath: indexPath) as! StoreInfoBankAccountTableViewCell
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.delegate = self
@@ -810,8 +827,10 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 return 208
             }
         } else if indexPath.section == 3 {
-            return 163
+            return 190
         } else if indexPath.section == 4 {
+            return 163
+        } else if indexPath.section == 5 {
             return 163
         } else {
             return 221
@@ -1248,15 +1267,12 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             }
         })
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    //MARK: - 
+    //MARK: - Referral Code
+    func referralCodeWithIndexPath(indexPath: NSIndexPath) -> ReferralCodeTableViewCell {
+        let cell: ReferralCodeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ReferralCodeTableViewCell.nibNameAndIdentifier()) as! ReferralCodeTableViewCell
+        return cell
     }
-    */
 
 }

@@ -17,19 +17,20 @@ class ActivityLogTableViewController: UITableViewController {
     var hud: MBProgressHUD?
     var isPageEnd: Bool = false
     var page: Int = 1
+    var perPage: Int = 15
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        initializeViews()
-        initializeNavigationBar()
-        registerNibs()
+        self.initializeViews()
+        self.initializeNavigationBar()
+        self.registerNibs()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        page = 0
-        fireGetActivityLogs()
+        self.page = 0
+        self.fireGetActivityLogs()
     }
 
     override func didReceiveMemoryWarning() {
@@ -75,15 +76,13 @@ class ActivityLogTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return tableData.count
+        return self.tableData.count
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableData[section].activities.count
+        return self.tableData[section].activities.count
     }
 
-    
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ActivityLogTableViewCell", forIndexPath: indexPath) as! ActivityLogTableViewCell
 
@@ -94,7 +93,7 @@ class ActivityLogTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return setSectionHeader(tableData[section].date)
+        return self.setSectionHeader(tableData[section].date)
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -111,7 +110,7 @@ class ActivityLogTableViewController: UITableViewController {
         var reload_distance: CGFloat = 10
         var temp: CGFloat = h + reload_distance
         if y > temp {
-            fireGetActivityLogs()
+            self.fireGetActivityLogs()
         }
     }
     
@@ -154,23 +153,22 @@ class ActivityLogTableViewController: UITableViewController {
         self.hud?.show(true)
     }
     
+    //Function to sort activity logs items
     func initializeActivityLogsItem() {
-        tableData.removeAll(keepCapacity: false)
+        self.tableData.removeAll(keepCapacity: false)
         var tempDates: [String] = []
     
-        for subValue in activities.activities {
-            if !contains(tempDates, formatDateToCompleteString(formatStringToDate(subValue.date))) {
-                tempDates.append(formatDateToCompleteString(formatStringToDate(subValue.date)))
-                tableData.append(ActivityLogModel(date: formatDateToCompleteString(formatStringToDate(subValue.date)), activities: []))
+        for subValue in self.activities.activities {
+            if !contains(tempDates, self.formatDateToCompleteString(formatStringToDate(subValue.date))) {
+                tempDates.append(self.formatDateToCompleteString(formatStringToDate(subValue.date)))
+                self.tableData.append(ActivityLogModel(date: self.formatDateToCompleteString(self.formatStringToDate(subValue.date)), activities: []))
             }
         }
         
-        println(tempDates)
-        
-        for var i = 0; i < tableData.count; i++ {
-            for subValue in activities.activities {
-                if formatDateToCompleteString(formatStringToDate(subValue.date)) == tableData[i].date {
-                    tableData[i].activities.append(ActivityModel(time: formatDateToTimeString(formatStringToDate(subValue.date)), details: subValue.text))
+        for var i = 0; i < self.tableData.count; i++ {
+            for subValue in self.activities.activities {
+                if self.formatDateToCompleteString(self.formatStringToDate(subValue.date)) == self.tableData[i].date {
+                    self.tableData[i].activities.append(ActivityModel(time: self.formatDateToTimeString(self.formatStringToDate(subValue.date)), details: subValue.text))
                 }
             }
         }
@@ -178,111 +176,92 @@ class ActivityLogTableViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
+    //MARK: - API Requests
+    //MARK: - Get Activity logs items
     func fireGetActivityLogs() {
-        if !isPageEnd {
+        if !self.isPageEnd {
+            self.showHUD()
+            self.page++
             
-            showHUD()
-            let manager = APIManager.sharedInstance
+            let url = APIAtlas.getActivityLogs
             
-            page++
-            
-            let url: String = "\(APIAtlas.getActivityLogs)?access_token=\(SessionManager.accessToken())&perPage=15&page=\(page)"
-            
-            manager.GET(url, parameters: nil, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            WebServiceManager.fireGetActivityLogsRequestWithUrl(url, access_token: SessionManager.accessToken(), page: "\(self.page)", perPage: "\(self.perPage)",  actionHandler:  { (successful, responseObject, requestErrorType) -> Void in
                 
+                self.hud?.hide(true)
+                if successful {
                     let activityLogs: ActivityLogItemsModel = ActivityLogItemsModel.parseDataWithDictionary(responseObject as! NSDictionary)
-                
+                    
                     if activityLogs.activities.count < 15 {
                         self.isPageEnd = true
                     }
-                
+                    
                     if activityLogs.isSuccessful {
                         self.activities.activities += activityLogs.activities
                         self.initializeActivityLogsItem()
                     } else {
                         self.isPageEnd = true
                     }
-                
-                    self.hud?.hide(true)
-                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    
-                    if task.statusCode == 401 {
+                } else {
+                    if requestErrorType == .ResponseError {
+                        //Error in api requirements
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .AccessTokenExpired {
                         self.fireRefreshToken()
-                    } else {
-                        if Reachability.isConnectedToNetwork() {
-                            if error.userInfo != nil {
-                                let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                                let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                                self.showAlert(Constants.Localized.error, message: errorModel.message)
-                            } else {
-                                self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-                            }
-                        } else {
-                            UIAlertController.displayNoInternetConnectionError(self)
-                        }
-                        self.hud?.hide(true)
+                    } else if requestErrorType == .PageNotFound {
+                        //Page not found
+                        Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .NoInternetConnection {
+                        //No internet connection
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .RequestTimeOut {
+                        //Request timeout
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .UnRecognizeError {
+                        //Unhandled error
+                        Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
                     }
+
+                }
             })
+            
         } else {
             self.hud?.hide(true)
             let titleString = StringHelper.localizedStringWithKey("ACTIVITY_LOGS_TITLE_LOCALIZE_KEY")
             let noMoreDataString = StringHelper.localizedStringWithKey("NO_MORE_DATA_LOCALIZE_KEY")
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noMoreDataString, title: titleString)
         }
-        
     }
     
+    //MARK: - Fire Refresh Token
+    /* Function called when access_token is already expired.
+    * (Parameter) params: TemporaryParameters -- collection of all params
+    * needed by all API request in the Wishlist.
+    *
+    * This function is for requesting of access token and parse it to save in SessionManager.
+    * If request is successful, it will check the requestType and redirect/call the API request
+    * function based on the requestType.
+    * If the request us unsuccessful, it will forcely logout the user
+    */
     func fireRefreshToken() {
         self.showHUD()
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = [
-            "client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            
-            self.fireGetActivityLogs()
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 401 {
-                    self.fireRefreshToken()
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(Constants.Localized.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-                    }
-                }
-                self.hud?.hide(true)
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.fireGetActivityLogs()
+            } else {
+                //Show UIAlert and force the user to logout
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                })
+            }
         })
-        
     }
     
-    //MARK: Alert view
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        
-        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
-        
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-        }
-    }
     
+    
+    //MARK: - Date Helper Functions
     func formatStringToDate(date: String) -> NSDate {
         var dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"

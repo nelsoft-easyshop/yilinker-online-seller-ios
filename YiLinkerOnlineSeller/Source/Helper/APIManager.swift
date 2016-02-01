@@ -125,7 +125,10 @@ struct APIAtlas {
     // Sprint1
     static let getBalanceRecordDetails = "auth/bank/balanceRecordDetails"
     
-
+    // Payout
+    static let payoutRequestList = "auth/withdraw-list?access_token="
+    static let payoutEarningsGroup = "auth/earning-groups?access_token="
+    static let payoutEarningsList = "auth/earning-groups?access_token="
 }
 
 class APIManager: AFHTTPSessionManager {

@@ -201,12 +201,48 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
     */
     func fireCategoryWithParentID(parentID: Int) {
         self.showHUD()
-        let manager: APIManager = APIManager.sharedInstance
         
         let parentIDKey = "parentId"
         let accessTokenKey = "access_token"
         let parameters: NSDictionary = [accessTokenKey: SessionManager.accessToken(), parentIDKey: parentID]
         
+        WebServiceManager.fireGetProductUploadRequestWithUrl(APIAtlas.categoryUrl, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                
+                let dictionary: NSDictionary = responseObject as! NSDictionary
+                let data: NSArray = dictionary["data"] as! NSArray
+                
+                for categoryDictionary in data as! [NSDictionary] {
+                    let categoryModel: CategoryModel = CategoryModel(uid: categoryDictionary["productCategoryId"] as! Int, name: categoryDictionary["name"] as! String, hasChildren: categoryDictionary["hasChildren"] as! String)
+                    self.categories.append(categoryModel)
+                }
+                self.tableView.reloadData()
+                self.hud?.hide(true)
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken(parentID)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        })
+        /*
+        let manager: APIManager = APIManager.sharedInstance
         manager.GET(APIAtlas.categoryUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
@@ -239,7 +275,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
                     }
                 }
                 self.hud?.hide(true)
-        })
+        })*/
     }
     
     //MARK: POST METHOD - Refresh token

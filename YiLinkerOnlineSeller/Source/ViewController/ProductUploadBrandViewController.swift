@@ -167,12 +167,46 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
     *
     */
     func fireBrandWithKeyWord(keyWord: String) {
-        let manager: APIManager = APIManager.sharedInstance
+        
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "brandKeyword": keyWord]
         
-        if self.searchTask != nil {
+        /*if self.searchTask != nil {
             self.searchTask!.cancel()
-        }
+        }*/
+        
+        WebServiceManager.fireGetProductUploadRequestWithUrl(APIAtlas.brandUrl, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                let data: [NSDictionary] = responseObject["data"] as! [NSDictionary]
+                self.brands.removeAllObjects()
+                for brandDictionary in data {
+                    let brandModel: BrandModel = BrandModel(name: brandDictionary["name"] as! String, brandId: brandDictionary["brandId"] as! Int)
+                    self.brands.addObject(brandModel)
+                }
+                self.tableView.reloadData()
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshTokenWithKeyWord(keyWord)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        })
+        /*
+        let manager: APIManager = APIManager.sharedInstance
         
         self.searchTask = manager.GET(APIAtlas.brandUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -206,7 +240,7 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
                         }
                     }
                 }
-            })
+            })*/
     }
     
     // MARK: POST METHOD - Refresh token

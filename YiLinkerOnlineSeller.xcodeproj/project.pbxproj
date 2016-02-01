@@ -100,6 +100,8 @@
 		0CAACCC41B9D8EA500BE5EF3 /* ResellerItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAACCC21B9D8EA500BE5EF3 /* ResellerItemViewController.swift */; };
 		0CAACCC71B9D950C00BE5EF3 /* ResellerItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAACCC61B9D950C00BE5EF3 /* ResellerItemModel.swift */; };
 		0CAACCC91B9D9C0A00BE5EF3 /* ResellerItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAACCC81B9D9C0A00BE5EF3 /* ResellerItemViewController.xib */; };
+		0CAAE9211C5F344B009BE3E0 /* ReferralCodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAAE91F1C5F344B009BE3E0 /* ReferralCodeTableViewCell.swift */; };
+		0CAAE9221C5F344B009BE3E0 /* ReferralCodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAAE9201C5F344B009BE3E0 /* ReferralCodeTableViewCell.xib */; };
 		0CAB52A11B91F42300EA441A /* ConditionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB52A01B91F42300EA441A /* ConditionModel.swift */; };
 		0CAB52A31B91F9FB00EA441A /* ConditionParserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB52A21B91F9FB00EA441A /* ConditionParserModel.swift */; };
 		0CAB52A51B92023E00EA441A /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB52A41B92023E00EA441A /* CategoryModel.swift */; };
@@ -629,8 +631,36 @@
 		F7E465841B9F2D7B00FAB97D /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E465821B9F2D7B00FAB97D /* SearchTableViewCell.swift */; };
 		F7E465851B9F2D7B00FAB97D /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E465831B9F2D7B00FAB97D /* SearchTableViewCell.xib */; };
 		F7E465871B9F36C600FAB97D /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E465861B9F36C600FAB97D /* SearchModel.swift */; };
+		F7E4BA891C5EE6740019A309 /* PayoutRequestListDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BA871C5EE6740019A309 /* PayoutRequestListDetailViewController.swift */; };
+		F7E4BA8A1C5EE6740019A309 /* PayoutRequestListDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E4BA881C5EE6740019A309 /* PayoutRequestListDetailViewController.xib */; };
+		F7E4BA8D1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BA8B1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.swift */; };
+		F7E4BA8E1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E4BA8C1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.xib */; };
+		F7E4BA971C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BA951C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.swift */; };
+		F7E4BA981C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E4BA961C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.xib */; };
+		F7E4BA9B1C5F03B70019A309 /* PayoutRequestListBankDetailHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BA991C5F03B70019A309 /* PayoutRequestListBankDetailHeaderTableViewCell.swift */; };
+		F7E4BA9C1C5F03B70019A309 /* PayoutRequestListBankDetailHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E4BA9A1C5F03B70019A309 /* PayoutRequestListBankDetailHeaderTableViewCell.xib */; };
+		F7E4BA9F1C5F1F8E0019A309 /* PayoutRequestListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BA9D1C5F1F8E0019A309 /* PayoutRequestListViewController.swift */; };
+		F7E4BAA01C5F1F8E0019A309 /* PayoutRequestListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E4BA9E1C5F1F8E0019A309 /* PayoutRequestListViewController.xib */; };
+		F7E4BAA31C5F236C0019A309 /* PayoutEarningsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BAA11C5F236C0019A309 /* PayoutEarningsViewController.swift */; };
+		F7E4BAA41C5F236C0019A309 /* PayoutEarningsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E4BAA21C5F236C0019A309 /* PayoutEarningsViewController.xib */; };
+		F7E4BAA61C5F266F0019A309 /* PayoutEarningsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BAA51C5F266F0019A309 /* PayoutEarningsModel.swift */; };
+		F7E4BAA91C5F28A80019A309 /* PayoutEarningsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BAA71C5F28A80019A309 /* PayoutEarningsTableViewCell.swift */; };
+		F7E4BAAA1C5F28A80019A309 /* PayoutEarningsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E4BAA81C5F28A80019A309 /* PayoutEarningsTableViewCell.xib */; };
+		F7E4BAAD1C5F36770019A309 /* PayoutEarningsTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BAAB1C5F36770019A309 /* PayoutEarningsTypeViewController.swift */; };
+		F7E4BAAE1C5F36770019A309 /* PayoutEarningsTypeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E4BAAC1C5F36770019A309 /* PayoutEarningsTypeViewController.xib */; };
+		F7E4BAB11C5F36A00019A309 /* PayoutEarningsTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BAAF1C5F36A00019A309 /* PayoutEarningsTypeTableViewCell.swift */; };
+		F7E4BAB21C5F36A00019A309 /* PayoutEarningsTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E4BAB01C5F36A00019A309 /* PayoutEarningsTypeTableViewCell.xib */; };
+		F7E4BAB51C5F405C0019A309 /* PayoutEarningsTransactionTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BAB31C5F405B0019A309 /* PayoutEarningsTransactionTypeTableViewCell.swift */; };
+		F7E4BAB61C5F405C0019A309 /* PayoutEarningsTransactionTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E4BAB41C5F405B0019A309 /* PayoutEarningsTransactionTypeTableViewCell.xib */; };
+		F7E4BAB81C5F4D1A0019A309 /* PayoutEarningsTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BAB71C5F4D1A0019A309 /* PayoutEarningsTypeModel.swift */; };
+		F7E4BABA1C5F4D3B0019A309 /* PayoutEarningsTransactionTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BAB91C5F4D3B0019A309 /* PayoutEarningsTransactionTypeModel.swift */; };
+		F7E5F1811C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E5F17F1C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.swift */; };
+		F7E5F1821C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E5F1801C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.xib */; };
 		F7E739F31BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E739F11BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.swift */; };
 		F7E739F41BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E739F21BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.xib */; };
+		F7E96F9A1C5B4C9D00DAC58F /* PayoutRequestListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E96F981C5B4C9D00DAC58F /* PayoutRequestListTableViewCell.swift */; };
+		F7E96F9B1C5B4C9D00DAC58F /* PayoutRequestListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E96F991C5B4C9D00DAC58F /* PayoutRequestListTableViewCell.xib */; };
+		F7E96F9D1C5B567800DAC58F /* PayoutRequestListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E96F9C1C5B567800DAC58F /* PayoutRequestListModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -740,6 +770,8 @@
 		0CAACCC21B9D8EA500BE5EF3 /* ResellerItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResellerItemViewController.swift; sourceTree = "<group>"; };
 		0CAACCC61B9D950C00BE5EF3 /* ResellerItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResellerItemModel.swift; sourceTree = "<group>"; };
 		0CAACCC81B9D9C0A00BE5EF3 /* ResellerItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResellerItemViewController.xib; sourceTree = "<group>"; };
+		0CAAE91F1C5F344B009BE3E0 /* ReferralCodeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReferralCodeTableViewCell.swift; sourceTree = "<group>"; };
+		0CAAE9201C5F344B009BE3E0 /* ReferralCodeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReferralCodeTableViewCell.xib; sourceTree = "<group>"; };
 		0CAB52A01B91F42300EA441A /* ConditionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConditionModel.swift; sourceTree = "<group>"; };
 		0CAB52A21B91F9FB00EA441A /* ConditionParserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConditionParserModel.swift; sourceTree = "<group>"; };
 		0CAB52A41B92023E00EA441A /* CategoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
@@ -1287,8 +1319,36 @@
 		F7E465821B9F2D7B00FAB97D /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		F7E465831B9F2D7B00FAB97D /* SearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
 		F7E465861B9F36C600FAB97D /* SearchModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
+		F7E4BA871C5EE6740019A309 /* PayoutRequestListDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutRequestListDetailViewController.swift; sourceTree = "<group>"; };
+		F7E4BA881C5EE6740019A309 /* PayoutRequestListDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutRequestListDetailViewController.xib; sourceTree = "<group>"; };
+		F7E4BA8B1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutRequestListDetailHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		F7E4BA8C1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutRequestListDetailHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		F7E4BA951C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutRequestListItemTableViewCell.swift; sourceTree = "<group>"; };
+		F7E4BA961C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutRequestListItemTableViewCell.xib; sourceTree = "<group>"; };
+		F7E4BA991C5F03B70019A309 /* PayoutRequestListBankDetailHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutRequestListBankDetailHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		F7E4BA9A1C5F03B70019A309 /* PayoutRequestListBankDetailHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutRequestListBankDetailHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		F7E4BA9D1C5F1F8E0019A309 /* PayoutRequestListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutRequestListViewController.swift; sourceTree = "<group>"; };
+		F7E4BA9E1C5F1F8E0019A309 /* PayoutRequestListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutRequestListViewController.xib; sourceTree = "<group>"; };
+		F7E4BAA11C5F236C0019A309 /* PayoutEarningsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutEarningsViewController.swift; sourceTree = "<group>"; };
+		F7E4BAA21C5F236C0019A309 /* PayoutEarningsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutEarningsViewController.xib; sourceTree = "<group>"; };
+		F7E4BAA51C5F266F0019A309 /* PayoutEarningsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutEarningsModel.swift; sourceTree = "<group>"; };
+		F7E4BAA71C5F28A80019A309 /* PayoutEarningsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutEarningsTableViewCell.swift; sourceTree = "<group>"; };
+		F7E4BAA81C5F28A80019A309 /* PayoutEarningsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutEarningsTableViewCell.xib; sourceTree = "<group>"; };
+		F7E4BAAB1C5F36770019A309 /* PayoutEarningsTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutEarningsTypeViewController.swift; sourceTree = "<group>"; };
+		F7E4BAAC1C5F36770019A309 /* PayoutEarningsTypeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutEarningsTypeViewController.xib; sourceTree = "<group>"; };
+		F7E4BAAF1C5F36A00019A309 /* PayoutEarningsTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutEarningsTypeTableViewCell.swift; sourceTree = "<group>"; };
+		F7E4BAB01C5F36A00019A309 /* PayoutEarningsTypeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutEarningsTypeTableViewCell.xib; sourceTree = "<group>"; };
+		F7E4BAB31C5F405B0019A309 /* PayoutEarningsTransactionTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutEarningsTransactionTypeTableViewCell.swift; sourceTree = "<group>"; };
+		F7E4BAB41C5F405B0019A309 /* PayoutEarningsTransactionTypeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutEarningsTransactionTypeTableViewCell.xib; sourceTree = "<group>"; };
+		F7E4BAB71C5F4D1A0019A309 /* PayoutEarningsTypeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutEarningsTypeModel.swift; sourceTree = "<group>"; };
+		F7E4BAB91C5F4D3B0019A309 /* PayoutEarningsTransactionTypeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutEarningsTransactionTypeModel.swift; sourceTree = "<group>"; };
+		F7E5F17F1C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoReferralCodeTableViewCell.swift; sourceTree = "<group>"; };
+		F7E5F1801C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoReferralCodeTableViewCell.xib; sourceTree = "<group>"; };
 		F7E739F11BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterResultsCollectionViewCell.swift; sourceTree = "<group>"; };
 		F7E739F21BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterResultsCollectionViewCell.xib; sourceTree = "<group>"; };
+		F7E96F981C5B4C9D00DAC58F /* PayoutRequestListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutRequestListTableViewCell.swift; sourceTree = "<group>"; };
+		F7E96F991C5B4C9D00DAC58F /* PayoutRequestListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutRequestListTableViewCell.xib; sourceTree = "<group>"; };
+		F7E96F9C1C5B567800DAC58F /* PayoutRequestListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutRequestListModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1331,6 +1391,15 @@
 				0C1179561BA9A58F00AA1554 /* LocalizableString.strings */,
 			);
 			path = Strings;
+			sourceTree = "<group>";
+		};
+		0CAAE91E1C5F3401009BE3E0 /* Referral Code */ = {
+			isa = PBXGroup;
+			children = (
+				0CAAE91F1C5F344B009BE3E0 /* ReferralCodeTableViewCell.swift */,
+				0CAAE9201C5F344B009BE3E0 /* ReferralCodeTableViewCell.xib */,
+			);
+			name = "Referral Code";
 			sourceTree = "<group>";
 		};
 		0CF28EB51B8C85E4005B2E54 /* Source */ = {
@@ -1470,6 +1539,10 @@
 				F7CCEEF41BBE714A00D876C2 /* SearchRiderNameModel.swift */,
 				0C574A2F1BC651B700913F29 /* EditImageModel.swift */,
 				F7CF662E1BD9102F008B8226 /* StoreInfoPreferredCategoriesModel.swift */,
+				F7E96F9C1C5B567800DAC58F /* PayoutRequestListModel.swift */,
+				F7E4BAA51C5F266F0019A309 /* PayoutEarningsModel.swift */,
+				F7E4BAB71C5F4D1A0019A309 /* PayoutEarningsTypeModel.swift */,
+				F7E4BAB91C5F4D3B0019A309 /* PayoutEarningsTransactionTypeModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1486,6 +1559,7 @@
 		0CF28EC61B8C85E5005B2E54 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0CAAE91E1C5F3401009BE3E0 /* Referral Code */,
 				B7BADADE1BA56265005F59F9 /* Messaging */,
 				79EFF7601B8D6DE4008A9E7D /* ActivityLogTableViewCell.swift */,
 				26B5B24D1B94E93F00CBDDE5 /* AddCustomizedCategoryTableViewCell.swift */,
@@ -1599,6 +1673,22 @@
 				0C568A241BCABF1A00E35B12 /* ResellerItemCollectionViewCell.swift */,
 				0C568A251BCABF1A00E35B12 /* ResellerItemCollectionViewCell.xib */,
 				F7CF662C1BD8FE2E008B8226 /* StoreInfoPreferredCategoriesSectionView.swift */,
+				F7E5F17F1C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.swift */,
+				F7E5F1801C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.xib */,
+				F7E96F981C5B4C9D00DAC58F /* PayoutRequestListTableViewCell.swift */,
+				F7E96F991C5B4C9D00DAC58F /* PayoutRequestListTableViewCell.xib */,
+				F7E4BA8B1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.swift */,
+				F7E4BA8C1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.xib */,
+				F7E4BA951C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.swift */,
+				F7E4BA961C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.xib */,
+				F7E4BA991C5F03B70019A309 /* PayoutRequestListBankDetailHeaderTableViewCell.swift */,
+				F7E4BA9A1C5F03B70019A309 /* PayoutRequestListBankDetailHeaderTableViewCell.xib */,
+				F7E4BAA71C5F28A80019A309 /* PayoutEarningsTableViewCell.swift */,
+				F7E4BAA81C5F28A80019A309 /* PayoutEarningsTableViewCell.xib */,
+				F7E4BAAF1C5F36A00019A309 /* PayoutEarningsTypeTableViewCell.swift */,
+				F7E4BAB01C5F36A00019A309 /* PayoutEarningsTypeTableViewCell.xib */,
+				F7E4BAB31C5F405B0019A309 /* PayoutEarningsTransactionTypeTableViewCell.swift */,
+				F7E4BAB41C5F405B0019A309 /* PayoutEarningsTransactionTypeTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1724,6 +1814,14 @@
 				267C52761C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.swift */,
 				267C52771C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.xib */,
 				267C527A1C5F520600739850 /* BalanceRecordModel.swift */,
+				F7E4BA9D1C5F1F8E0019A309 /* PayoutRequestListViewController.swift */,
+				F7E4BA9E1C5F1F8E0019A309 /* PayoutRequestListViewController.xib */,
+				F7E4BA871C5EE6740019A309 /* PayoutRequestListDetailViewController.swift */,
+				F7E4BA881C5EE6740019A309 /* PayoutRequestListDetailViewController.xib */,
+				F7E4BAA11C5F236C0019A309 /* PayoutEarningsViewController.swift */,
+				F7E4BAA21C5F236C0019A309 /* PayoutEarningsViewController.xib */,
+				F7E4BAAB1C5F36770019A309 /* PayoutEarningsTypeViewController.swift */,
+				F7E4BAAC1C5F36770019A309 /* PayoutEarningsTypeViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2347,6 +2445,7 @@
 				0C8739DB1B96E172005D2EF8 /* SuccessUploadViewController.xib in Resources */,
 				F7C40FDF1B98443B0091C16C /* StoreInfoSectionTableViewCell.xib in Resources */,
 				F7C40FD71B983CD90091C16C /* filter2.png in Resources */,
+				F7E96F9B1C5B4C9D00DAC58F /* PayoutRequestListTableViewCell.xib in Resources */,
 				79EFF7811B8DB3C8008A9E7D /* RecentProductsTableViewController.xib in Resources */,
 				79EFF7851B8DBB97008A9E7D /* RecentProductsTableViewCell.xib in Resources */,
 				F7C40FD01B983CD90091C16C /* cart3.png in Resources */,
@@ -2357,6 +2456,7 @@
 				79E633A61B9B27E70062DB14 /* Info.plist in Resources */,
 				0CF28F051B8CA2E9005B2E54 /* Panton.otf in Resources */,
 				26BD5E641B8E1A3500739488 /* ProductDescriptionViewController.xib in Resources */,
+				F7E4BAAA1C5F28A80019A309 /* PayoutEarningsTableViewCell.xib in Resources */,
 				79E633791B9AE9AA0062DB14 /* TransactionDetailsFooterView.xib in Resources */,
 				F727FF591B99C94700872E11 /* edit.png in Resources */,
 				7985D3641BB048A90060E5F5 /* TransactionDeliveryLogTableViewCell.xib in Resources */,
@@ -2367,6 +2467,7 @@
 				F7C40F8D1B983B9D0091C16C /* VerifyViewController.xib in Resources */,
 				79E6337F1B9AF4FD0062DB14 /* TransactionCancelOrderViewController.xib in Resources */,
 				F7C40FA51B983BFC0091C16C /* FilterByTableViewCell.xib in Resources */,
+				0CAAE9221C5F344B009BE3E0 /* ReferralCodeTableViewCell.xib in Resources */,
 				26BD5E4E1B8DC49800739488 /* ProductDetailsTableViewCell.xib in Resources */,
 				79E633751B9AD0740062DB14 /* TransactionProductDescriptionTableViewCell.xib in Resources */,
 				26B5B2421B94DE4200CBDDE5 /* AddCustomizedCategoryViewController.xib in Resources */,
@@ -2397,6 +2498,7 @@
 				2625FEA61B96A92500DD24AF /* EditSubCategoriesViewController.xib in Resources */,
 				26B5B2501B94E93F00CBDDE5 /* AddCustomizedCategoryTableViewCell.xib in Resources */,
 				2671424D1B94C6AF00B66458 /* CustomizedCategoryViewController.xib in Resources */,
+				F7E4BAA41C5F236C0019A309 /* PayoutEarningsViewController.xib in Resources */,
 				0C11794E1BA9A49700AA1554 /* LaunchScreen.xib in Resources */,
 				265C9C4E1C5B5E1C002181CD /* PayoutBalanceWithdrawalViewController.xib in Resources */,
 				0CF28EFD1B8CA2E9005B2E54 /* Panton Heavy.otf in Resources */,
@@ -2454,6 +2556,7 @@
 				F7C40FB31B983C310091C16C /* ChangeAddressViewController.xib in Resources */,
 				26378F521B8CEE82008533B6 /* ProductManagementTableViewCell.xib in Resources */,
 				79E633871B9B15FD0062DB14 /* TransactionShipItemTableViewController.xib in Resources */,
+				F7E4BAAE1C5F36770019A309 /* PayoutEarningsTypeViewController.xib in Resources */,
 				F7AE35F91C08054B00A1C9CE /* FaImagePicker.storyboard in Resources */,
 				267C52791C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.xib in Resources */,
 				0CE2244E1BBAF8AE00853AC9 /* SaveButtonView.xib in Resources */,
@@ -2465,6 +2568,7 @@
 				26B5B23E1B94D88D00CBDDE5 /* CustomizedCategoryTableViewCell.xib in Resources */,
 				79EF7AC81B99FB200082CD35 /* TransactionConsigneeTableViewCell.xib in Resources */,
 				79EF7AB01B9984640082CD35 /* TransactionTableViewController.xib in Resources */,
+				F7E4BA8A1C5EE6740019A309 /* PayoutRequestListDetailViewController.xib in Resources */,
 				F7C40FCE1B983CD90091C16C /* back-white.png in Resources */,
 				F7E739F41BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.xib in Resources */,
 				7928764F1B8E1FD800762A39 /* DatePickerViewController.xib in Resources */,
@@ -2476,12 +2580,14 @@
 				0CF28EF71B8CA2E9005B2E54 /* Panton Bold.otf in Resources */,
 				F7C40FCC1B983CD90091C16C /* addressRight.png in Resources */,
 				79EDA4041B9204CA0037558A /* MyPointsTableViewController.xib in Resources */,
+				F7E4BAB61C5F405C0019A309 /* PayoutEarningsTransactionTypeTableViewCell.xib in Resources */,
 				F7C40FCB1B983CD90091C16C /* address.png in Resources */,
 				F7C40FCD1B983CD90091C16C /* arrow_up.png in Resources */,
 				0CAACCB11B9D2DC000BE5EF3 /* ResellerViewController.xib in Resources */,
 				79E6336D1B9AC2310062DB14 /* TransactionProductPurchaseTableViewCell.xib in Resources */,
 				79EDA4141B9205080037558A /* PointsDetailsTableViewCell.xib in Resources */,
 				0CF28F041B8CA2E9005B2E54 /* Panton Thin.otf in Resources */,
+				F7E4BA981C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.xib in Resources */,
 				79EFF7791B8D9274008A9E7D /* SalesReportViewController.xib in Resources */,
 				2686E3771B956C4A00E8FA80 /* ItemImagesHorizontalCollectionViewCell.xib in Resources */,
 				79EFF75E1B8D6DD3008A9E7D /* ActivityLogTableViewCell.xib in Resources */,
@@ -2492,12 +2598,14 @@
 				B76DE7511BF1BA2F006D9974 /* GoogleService-Info.plist in Resources */,
 				F7C40FB51B983C370091C16C /* ChangeAddressFooterCollectionViewCell.xib in Resources */,
 				967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */,
+				F7E4BAA01C5F1F8E0019A309 /* PayoutRequestListViewController.xib in Resources */,
 				F7C40F911B983BA60091C16C /* StoreInfoViewController.xib in Resources */,
 				0CF28F171B8CCD3E005B2E54 /* ProductUploadUploadImageTableViewCell.xib in Resources */,
 				0C8D7FA81B8F573800B3FA4E /* ProductUploadAddFooterView.xib in Resources */,
 				F7CB78441B9D822C001AF766 /* FilterCalendarTableViewCell.xib in Resources */,
 				0C6661A91B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.xib in Resources */,
 				0C8D7FAE1B8FBDB400B3FA4E /* ProductUploadCombinationListViewController.xib in Resources */,
+				F7E4BA9C1C5F03B70019A309 /* PayoutRequestListBankDetailHeaderTableViewCell.xib in Resources */,
 				F7C40FDA1B983CD90091C16C /* sort.png in Resources */,
 				F7C40F8F1B983BA10091C16C /* VerifyNumberViewController.xib in Resources */,
 				79EDA4151B9205080037558A /* PointsEarnedTableViewCell.xib in Resources */,
@@ -2525,15 +2633,18 @@
 				2686E37B1B9585D600E8FA80 /* ParentCategoryViewController.xib in Resources */,
 				F7C40FD21B983CD90091C16C /* checkBox.png in Resources */,
 				0C8D7FBA1B8FC79E00B3FA4E /* ProductUploadCombinationFooterTableViewCell.xib in Resources */,
+				F7E4BAB21C5F36A00019A309 /* PayoutEarningsTypeTableViewCell.xib in Resources */,
 				0CF28EF61B8CA2E9005B2E54 /* Panton Bold Italic.otf in Resources */,
 				0C65F8AF1B8DBC3400504D86 /* ProductUploadTextViewTableViewCell.xib in Resources */,
 				26C2854E1B91C21A005EBD3A /* ProductManagementCollectionViewCell.xib in Resources */,
 				79E633611B9AA6790062DB14 /* TransactionProductDetailsHeaderView.xib in Resources */,
 				0C1C3A871B9453BE00E6180D /* ProductUploadTableHeaderView.xib in Resources */,
+				F7E5F1821C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.xib in Resources */,
 				26BD5E4A1B8DC18B00739488 /* ProductDetailsViewController.xib in Resources */,
 				F7C40FD81B983CD90091C16C /* oops.png in Resources */,
 				79E633AB1B9B2AC10062DB14 /* TransactionShipItemTableViewCell.xib in Resources */,
 				0CF28EF51B8CA2E9005B2E54 /* Panton Black.otf in Resources */,
+				F7E4BA8E1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.xib in Resources */,
 				F7C40F971B983BC90091C16C /* StoreInfoAddressTableViewCell.xib in Resources */,
 				0C8D7F881B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.xib in Resources */,
 			);
@@ -2614,6 +2725,7 @@
 				795B0D281BA3093000FC373C /* ActivityLogItemsModel.swift in Sources */,
 				0C51C2FD1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.swift in Sources */,
 				F7D8C9011BBBC0AB00305EF2 /* SearchProductNameModel.swift in Sources */,
+				F7E4BA891C5EE6740019A309 /* PayoutRequestListDetailViewController.swift in Sources */,
 				0C51C2F01BB00A6800F4D2D6 /* AddProductHeaderView.swift in Sources */,
 				0C8D7FBD1B8FCC5800B3FA4E /* ProductUploadCombinationHeaderTableViewCell.swift in Sources */,
 				F7C40F6D1B983B210091C16C /* CreateNewAddressViewController.swift in Sources */,
@@ -2669,6 +2781,7 @@
 				792875FB1B8DF89F00762A39 /* HorizontalBarChartView.swift in Sources */,
 				792876011B8DF89F00762A39 /* ChartAxisBase.swift in Sources */,
 				79EF7ACE1B9A0A8A0082CD35 /* TransactionDeliveryTableViewCell.swift in Sources */,
+				F7E4BAA31C5F236C0019A309 /* PayoutEarningsViewController.swift in Sources */,
 				7928762B1B8DF89F00762A39 /* ChartAxisRendererBase.swift in Sources */,
 				794880761B94C3FD0090B259 /* CustomizedCategoryModel.swift in Sources */,
 				0C942BBB1BAFF8F10049A6B0 /* DisputeTextFieldTableViewCell.swift in Sources */,
@@ -2706,14 +2819,17 @@
 				B7BADAE71BA563A5005F59F9 /* W_Contact.swift in Sources */,
 				7928764E1B8E1FD800762A39 /* DatePickerViewController.swift in Sources */,
 				2690ED191B999354009343E0 /* ProductManagementProductModel.swift in Sources */,
+				F7E4BA9F1C5F1F8E0019A309 /* PayoutRequestListViewController.swift in Sources */,
 				7928762F1B8DF89F00762A39 /* ChartXAxisRenderer.swift in Sources */,
 				F7CF662F1BD9102F008B8226 /* StoreInfoPreferredCategoriesModel.swift in Sources */,
 				F7C282EF1B9AE97500864451 /* BankModel.swift in Sources */,
 				F7C971D51BC3B83100F8A04F /* ResolutionCenterDisputeReasonsModel.swift in Sources */,
 				F7AC5F7C1B9AA75300227D18 /* GetAddressesModel.swift in Sources */,
 				792876031B8DF89F00762A39 /* ChartLegend.swift in Sources */,
+				F7E4BAB11C5F36A00019A309 /* PayoutEarningsTypeTableViewCell.swift in Sources */,
 				7928763E1B8DF89F00762A39 /* ChartFillFormatter.swift in Sources */,
 				265C9C551C5B5E70002181CD /* PayoutBalanceRecordViewController.swift in Sources */,
+				F7E4BAAD1C5F36770019A309 /* PayoutEarningsTypeViewController.swift in Sources */,
 				792876061B8DF89F00762A39 /* ChartXAxis.swift in Sources */,
 				795B0D261BA307CB00FC373C /* ActivityLogItemModel.swift in Sources */,
 				792875F51B8DF89F00762A39 /* BarChartView.swift in Sources */,
@@ -2769,6 +2885,7 @@
 				0C65F8EC1B8E377500504D86 /* ProductUploadAttributeCollectionViewCell.swift in Sources */,
 				F7C40F591B983A7B0091C16C /* DynamicRoundedTextField.swift in Sources */,
 				F7AE35FA1C08054B00A1C9CE /* AlbumTableViewCell.swift in Sources */,
+				0CAAE9211C5F344B009BE3E0 /* ReferralCodeTableViewCell.swift in Sources */,
 				F7C40F731B983B390091C16C /* FilterCollectionViewCell.swift in Sources */,
 				7928764B1B8E049400762A39 /* SalesReportTableViewCell.swift in Sources */,
 				2690ED1A1B999354009343E0 /* ProductManagementProductsModel.swift in Sources */,
@@ -2817,6 +2934,7 @@
 				0C8D7FB51B8FC4AC00B3FA4E /* ProductUploadCombinationTableViewCell.swift in Sources */,
 				0C8739DA1B96E172005D2EF8 /* SuccessUploadViewController.swift in Sources */,
 				F7AE35FE1C08054B00A1C9CE /* AssetCollectionViewController.swift in Sources */,
+				F7E5F1811C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.swift in Sources */,
 				0C6661AC1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.swift in Sources */,
 				0C8739D71B96CFA5005D2EF8 /* CommonHelper.swift in Sources */,
 				F7C40F511B983A590091C16C /* BankAccountModel.swift in Sources */,
@@ -2824,6 +2942,7 @@
 				260725F51BA0A2B900C24DDB /* ProductAvailableAttributeCombinationModel.swift in Sources */,
 				79E633A31B9B27E70062DB14 /* FSCalendarConstance.m in Sources */,
 				F7C40F521B983A590091C16C /* StoreAddressModel.swift in Sources */,
+				F7E4BAA91C5F28A80019A309 /* PayoutEarningsTableViewCell.swift in Sources */,
 				F7C40F711B983B320091C16C /* FilterByTableViewCell.swift in Sources */,
 				0C65F8CC1B8DF8A000504D86 /* ProductUploadSearchViewController.swift in Sources */,
 				792F6E581B9D7F2300F0CB03 /* SalesReportModel.swift in Sources */,
@@ -2885,6 +3004,8 @@
 				26B282F51B91E92B00A7C2B1 /* ProductManagementAllTableViewCell.swift in Sources */,
 				F7AC5F721B9AA2DC00227D18 /* ProvinceModel.swift in Sources */,
 				792876191B8DF89F00762A39 /* LineRadarChartDataSet.swift in Sources */,
+				F7E4BABA1C5F4D3B0019A309 /* PayoutEarningsTransactionTypeModel.swift in Sources */,
+				F7E4BAA61C5F266F0019A309 /* PayoutEarningsModel.swift in Sources */,
 				0C942BB71BAFF8700049A6B0 /* NewDisputeTableViewController2.swift in Sources */,
 				26B5B24A1B94E37A00CBDDE5 /* CCSubCategoriesView.swift in Sources */,
 				7928760D1B8DF89F00762A39 /* BubbleChartData.swift in Sources */,
@@ -2896,7 +3017,9 @@
 				792876041B8DF89F00762A39 /* ChartLimitLine.swift in Sources */,
 				792875F41B8DF89F00762A39 /* ChartAnimator.swift in Sources */,
 				0CF28ED51B8C85E5005B2E54 /* SessionManager.swift in Sources */,
+				F7E96F9D1C5B567800DAC58F /* PayoutRequestListModel.swift in Sources */,
 				79ED2F621B9BF09700C5BC0A /* TransactionModel.swift in Sources */,
+				F7E4BA971C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.swift in Sources */,
 				26B5B24F1B94E93F00CBDDE5 /* AddCustomizedCategoryTableViewCell.swift in Sources */,
 				792876091B8DF89F00762A39 /* BarChartDataEntry.swift in Sources */,
 				792876181B8DF89F00762A39 /* LineChartDataSet.swift in Sources */,
@@ -2910,6 +3033,7 @@
 				79E6339F1B9B27E70062DB14 /* FSCalendar+IBExtension.m in Sources */,
 				2686E3761B956C4A00E8FA80 /* ItemImagesHorizontalCollectionViewCell.swift in Sources */,
 				79E633A81B9B27E70062DB14 /* NSString+FSExtension.m in Sources */,
+				F7E4BAB51C5F405C0019A309 /* PayoutEarningsTransactionTypeTableViewCell.swift in Sources */,
 				792875FA1B8DF89F00762A39 /* CombinedChartView.swift in Sources */,
 				79EFF7871B8DBEA7008A9E7D /* RecentProductsTableViewCell.swift in Sources */,
 				792876431B8DF89F00762A39 /* ChartViewPortHandler.swift in Sources */,
@@ -2932,6 +3056,7 @@
 				792875FE1B8DF89F00762A39 /* PieRadarChartViewBase.swift in Sources */,
 				0CAACCC41B9D8EA500BE5EF3 /* ResellerItemViewController.swift in Sources */,
 				26DB062B1B97F9EB00D38EA8 /* RemovedItemTableViewCell.swift in Sources */,
+				F7E4BAB81C5F4D1A0019A309 /* PayoutEarningsTypeModel.swift in Sources */,
 				F7C40F871B983B810091C16C /* StoreInfoViewController.swift in Sources */,
 				F7AE36071C08730600A1C9CE /* ImageCropperViewController.swift in Sources */,
 				79EFF7711B8D6E35008A9E7D /* ActivityModel.swift in Sources */,
@@ -2988,6 +3113,8 @@
 				2618DD791B9788470030C6D2 /* EdititemsViewController.swift in Sources */,
 				26BD5E601B8DFA6400739488 /* ProductDescriptionView.swift in Sources */,
 				792876391B8DF89F00762A39 /* LineScatterCandleRadarChartRenderer.swift in Sources */,
+				F7E4BA8D1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.swift in Sources */,
+				F7E96F9A1C5B4C9D00DAC58F /* PayoutRequestListTableViewCell.swift in Sources */,
 				F7C40F851B983B7C0091C16C /* StoreInfoTableViewCell.swift in Sources */,
 				7928760C1B8DF89F00762A39 /* BarLineScatterCandleChartDataSet.swift in Sources */,
 				79EFF7831B8DB809008A9E7D /* RecentOrderModel.swift in Sources */,
@@ -2995,6 +3122,7 @@
 				792876161B8DF89F00762A39 /* CombinedChartData.swift in Sources */,
 				F79403031BC00E8D00CD21DD /* FilterSeactionHeaderView.swift in Sources */,
 				7928762A1B8DF89F00762A39 /* CandleStickChartRenderer.swift in Sources */,
+				F7E4BA9B1C5F03B70019A309 /* PayoutRequestListBankDetailHeaderTableViewCell.swift in Sources */,
 				F7C40F7B1B983B570091C16C /* FilterViewController.swift in Sources */,
 				79EF7ABA1B99950E0082CD35 /* TransactionsFilterModel.swift in Sources */,
 				F7CF662D1BD8FE2E008B8226 /* StoreInfoPreferredCategoriesSectionView.swift in Sources */,

@@ -131,6 +131,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         } else {
             uploadItemString = StringHelper.localizedStringWithKey("UPLOAD_ITEMS_LOCALIZE_KEY")
         }
+        let payout: String = StringHelper.localizedStringWithKey("PAYOUT_LOCALIZE_KEY")
         let followersString = StringHelper.localizedStringWithKey("FOLLOWERS_LOCALIZE_KEY")
         let activityLogsString = StringHelper.localizedStringWithKey("ACTIVITY_LOGS_LOCALIZE_KEY")
         let myPointsString = StringHelper.localizedStringWithKey("MY_POINTS_LOCALIZE_KEY")
@@ -145,6 +146,9 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         tableData.append(productManagementString)
         tableData.append(customizedCategoryString)
         tableData.append(uploadItemString)
+        // Payout module
+        tableData.append(payout)
+        
         tableData.append(followersString)
         tableData.append(activityLogsString)
         tableData.append(myPointsString)
@@ -161,6 +165,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         tableImages.append("product")
         tableImages.append("category")
         tableImages.append("uploadItem")
+        tableImages.append("withdraw2")
         tableImages.append("followers")
         tableImages.append("activityLog")
         tableImages.append("points")
@@ -485,16 +490,24 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                 self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
             }
         } else if indexPath.row == 6 {
+            /*let payoutViewController: PayoutRequestListViewController = PayoutRequestListViewController(nibName: "PayoutRequestListViewController", bundle: nil)
+            payoutViewController.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(payoutViewController, animated:true)*/
+            var payoutRequestListDetailViewController = PayoutEarningsViewController(nibName: "PayoutEarningsViewController", bundle: nil)
+            //self.navigationController?.presentViewController(payoutRequestListDetailViewController, animated: true, completion: nil)
+            payoutRequestListDetailViewController.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(payoutRequestListDetailViewController, animated:true)
+        } else if indexPath.row == 7 {
             var followerController = FollowersViewController(nibName: "FollowersViewController", bundle: nil)
             self.navigationController?.pushViewController(followerController, animated:true)
-        } else if indexPath.row == 7 {
+        } else if indexPath.row == 8 {
             var activityViewController = ActivityLogTableViewController(nibName: "ActivityLogTableViewController", bundle: nil)
             self.navigationController?.pushViewController(activityViewController, animated:true)
-        } else if indexPath.row == 8 {
+        } else if indexPath.row == 9 {
             var myPointsViewController = MyPointsTableViewController(nibName: "MyPointsTableViewController", bundle: nil)
             self.navigationController?.pushViewController(myPointsViewController, animated:true)
             
-        } else if indexPath.row == (10 - temp) {
+        } else if indexPath.row == (11 - temp) {
 //            let alertController = UIAlertController(title: StringHelper.localizedStringWithKey("HELP_ALERT_TITLE_LOCALIZE_KEY"), message: StringHelper.localizedStringWithKey("HELP_ALERT_MESSAGE_LOCALIZE_KEY"), preferredStyle: .Alert)
 //            
 //            let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
@@ -509,12 +522,12 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             help.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(help, animated: true)
 
-        } else if indexPath.row == 9 {
+        } else if indexPath.row == 10 {
             let resolutionCenter = self.storyboard?.instantiateViewControllerWithIdentifier("ResolutionCenterViewControllerV2")
                 as! ResolutionCenterViewControllerV2
             resolutionCenter.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(resolutionCenter, animated:true)
-        } else if indexPath.row == (11 - temp) {
+        } else if indexPath.row == (12 - temp) {
             let areYouSUreString = StringHelper.localizedStringWithKey("ARE_YOU_SURE_LOGOUT_LOCALIZE_KEY")
             let logoutString = StringHelper.localizedStringWithKey("LOGOUT_LOCALIZE_KEY")
             let cancelString = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
@@ -629,7 +642,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                         self.fireRefreshToken(showHUD)
                     } else {
                         UIAlertController.displaySomethingWentWrongError(self)
-                        self.storeInfo = StoreInfoModel(name: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", account_number: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "", isReseller: false, isEmailSubscribed: false, isSmsSubscribed: false, productId: [""], productCategoryName: [""], isSelected: [false], tin: "", messageCount: 0)
+                        self.storeInfo = StoreInfoModel(name: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", account_number: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "", isReseller: false, isEmailSubscribed: false, isSmsSubscribed: false, productId: [""], productCategoryName: [""], isSelected: [false], tin: "", messageCount: 0, referralCode: "", referralPerson: "")
                         
                         
                         var store_name1 = NSUserDefaults.standardUserDefaults().stringForKey("storeName")

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -70,10 +70,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shop Account" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uBs-1U-8tg">
-                                <rect key="frame" x="12" y="44" width="271" height="21"/>
+                                <rect key="frame" x="12" y="44" width="309" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="RTe-LM-6JZ"/>
-                                    <constraint firstAttribute="width" constant="271" id="mkt-Hx-yLG"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -94,6 +93,7 @@
                             <constraint firstItem="TCx-Cp-dTo" firstAttribute="top" secondItem="5Ys-Dp-kcC" secondAttribute="bottom" constant="2" id="ZoA-qi-PqK"/>
                             <constraint firstAttribute="bottom" secondItem="JBC-8U-Zrf" secondAttribute="bottom" constant="54" id="dR6-3o-AmH"/>
                             <constraint firstItem="JBC-8U-Zrf" firstAttribute="leading" secondItem="QkY-nl-exk" secondAttribute="trailing" constant="15" id="dWG-yh-j9f"/>
+                            <constraint firstItem="QkY-nl-exk" firstAttribute="leading" secondItem="uBs-1U-8tg" secondAttribute="trailing" constant="14" id="gHq-r0-21l"/>
                             <constraint firstItem="TCx-Cp-dTo" firstAttribute="leading" secondItem="dof-UE-QQx" secondAttribute="leading" constant="12" id="hvw-vf-rno"/>
                             <constraint firstAttribute="bottom" secondItem="QkY-nl-exk" secondAttribute="bottom" constant="54" id="jVp-dH-15P"/>
                             <constraint firstItem="TCx-Cp-dTo" firstAttribute="leading" secondItem="5Ys-Dp-kcC" secondAttribute="leading" id="kJc-hi-re6"/>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton SemiBold.otf">
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StoreInfoReferralCodeTableViewCell" rowHeight="347" id="KGk-i7-Jjw" customClass="StoreInfoReferralCodeTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="347"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Referral Code" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4h6-sd-bhy">
+                        <rect key="frame" x="14" y="26" width="123" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="123" id="KoC-b0-mik"/>
+                            <constraint firstAttribute="height" constant="21" id="Vhg-jN-BB1"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vov-88-uA4">
+                        <rect key="frame" x="14" y="55" width="360" height="1"/>
+                        <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="RVm-x2-sug"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E5H-z0-NKZ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="21"/>
+                        <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="7Bb-9z-2Hk"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oM4-mC-9DY">
+                        <rect key="frame" x="14" y="64" width="346" height="95"/>
+                        <string key="text">This is your personal referral code that you can share with anyone that wants to sign up with YiLinker. Each successful registration will earn you a certain amount of points which entitles you to some of our available freebies/promos.</string>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ebb-Wt-l8k">
+                        <rect key="frame" x="8" y="167" width="359" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="bPy-y1-BGT"/>
+                        </constraints>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                        <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                    </textField>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7oE-ge-Vz8" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+                        <rect key="frame" x="291" y="168" width="73" height="28"/>
+                        <color key="backgroundColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="73" id="gW9-HP-AEs"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                        <state key="normal" title="Copy">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="copyReferralCode:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Zmy-Kh-E4K"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Referral Person" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DlQ-CH-FwP">
+                        <rect key="frame" x="14" y="249" width="123" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="123" id="fCA-2g-0DA"/>
+                            <constraint firstAttribute="height" constant="21" id="fi1-gL-3gM"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qKV-mv-djc">
+                        <rect key="frame" x="14" y="278" width="360" height="1"/>
+                        <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="7BB-XM-o9r"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qpf-Kk-yvd">
+                        <rect key="frame" x="0.0" y="220" width="375" height="21"/>
+                        <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="j5I-K2-eVJ"/>
+                        </constraints>
+                    </view>
+                    <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dgn-Xe-Imm">
+                        <rect key="frame" x="8" y="292" width="359" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="4nb-cB-O0o"/>
+                        </constraints>
+                        <nil key="textColor"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                        <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                    </textField>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fAq-JK-bWi" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+                        <rect key="frame" x="291" y="293" width="73" height="28"/>
+                        <color key="backgroundColor" red="0.17254901959999999" green="0.59607843140000005" blue="0.48627450979999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="73" id="DW6-ku-1ex"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                        <state key="normal" title="Save">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="saveReferralPerson:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Xs7-A6-d8U"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Dgn-Xe-Imm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="0up-Xs-Cs5"/>
+                    <constraint firstItem="E5H-z0-NKZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="0yr-S1-tPY"/>
+                    <constraint firstItem="qKV-mv-djc" firstAttribute="top" secondItem="DlQ-CH-FwP" secondAttribute="bottom" constant="8" id="71M-0q-pD8"/>
+                    <constraint firstItem="Dgn-Xe-Imm" firstAttribute="top" secondItem="qKV-mv-djc" secondAttribute="bottom" constant="13" id="83G-3C-lvT"/>
+                    <constraint firstItem="Dgn-Xe-Imm" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="A4b-zG-GEa"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Dgn-Xe-Imm" secondAttribute="bottom" constant="16" id="ACV-D5-1Cw"/>
+                    <constraint firstItem="qpf-Kk-yvd" firstAttribute="top" secondItem="Ebb-Wt-l8k" secondAttribute="bottom" constant="23" id="DT1-WH-bPR"/>
+                    <constraint firstItem="qpf-Kk-yvd" firstAttribute="top" secondItem="7oE-ge-Vz8" secondAttribute="bottom" constant="24" id="Dtc-RB-N7w"/>
+                    <constraint firstItem="Vov-88-uA4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="14" id="Jqf-gp-7jI"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="oM4-mC-9DY" secondAttribute="trailing" constant="7" id="KqT-C3-gBh"/>
+                    <constraint firstItem="oM4-mC-9DY" firstAttribute="top" secondItem="Vov-88-uA4" secondAttribute="bottom" constant="8" id="Shf-UP-QUC"/>
+                    <constraint firstItem="Vov-88-uA4" firstAttribute="top" secondItem="4h6-sd-bhy" secondAttribute="bottom" constant="8" id="Tag-yD-uML"/>
+                    <constraint firstItem="fAq-JK-bWi" firstAttribute="top" secondItem="qKV-mv-djc" secondAttribute="bottom" constant="14" id="a1a-Ay-vAF"/>
+                    <constraint firstItem="oM4-mC-9DY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="6" id="aQe-To-2fW"/>
+                    <constraint firstItem="DlQ-CH-FwP" firstAttribute="top" secondItem="qpf-Kk-yvd" secondAttribute="bottom" constant="8" id="c07-Qe-kQ8"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="fAq-JK-bWi" secondAttribute="bottom" constant="17" id="c7e-cw-fO3"/>
+                    <constraint firstItem="qpf-Kk-yvd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="cHH-fh-U3I"/>
+                    <constraint firstItem="Ebb-Wt-l8k" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="cfm-gR-8yu"/>
+                    <constraint firstAttribute="trailing" secondItem="qKV-mv-djc" secondAttribute="trailing" constant="1" id="dAd-qP-cO9"/>
+                    <constraint firstItem="4h6-sd-bhy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="6" id="gRX-zl-u5z"/>
+                    <constraint firstItem="Ebb-Wt-l8k" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="iTF-sp-atK"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="fAq-JK-bWi" secondAttribute="trailing" constant="3" id="jja-EC-pP9"/>
+                    <constraint firstAttribute="trailing" secondItem="Vov-88-uA4" secondAttribute="trailing" constant="1" id="kZk-pK-mYl"/>
+                    <constraint firstItem="qKV-mv-djc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="14" id="kjp-he-pnp"/>
+                    <constraint firstItem="E5H-z0-NKZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="qHC-VA-nwB"/>
+                    <constraint firstItem="DlQ-CH-FwP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="14" id="t1s-cg-ZsN"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="7oE-ge-Vz8" secondAttribute="trailing" constant="3" id="v9o-Xe-jfi"/>
+                    <constraint firstAttribute="trailing" secondItem="E5H-z0-NKZ" secondAttribute="trailing" id="vjp-0M-l78"/>
+                    <constraint firstItem="4h6-sd-bhy" firstAttribute="top" secondItem="E5H-z0-NKZ" secondAttribute="bottom" constant="5" id="vzR-Ya-xCS"/>
+                    <constraint firstItem="Ebb-Wt-l8k" firstAttribute="top" secondItem="oM4-mC-9DY" secondAttribute="bottom" constant="8" id="wl1-8W-jVH"/>
+                    <constraint firstAttribute="trailing" secondItem="qpf-Kk-yvd" secondAttribute="trailing" id="ze2-p3-rSZ"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="copyButton" destination="7oE-ge-Vz8" id="Htp-JV-10J"/>
+                <outlet property="referralCodeInfoLabel" destination="oM4-mC-9DY" id="56C-Ub-Vhl"/>
+                <outlet property="referralCodeLabel" destination="4h6-sd-bhy" id="bil-cc-nSI"/>
+                <outlet property="referralCodeTextField" destination="Ebb-Wt-l8k" id="KCl-1D-bgn"/>
+                <outlet property="referralPersonLabel" destination="DlQ-CH-FwP" id="4LM-B8-RTx"/>
+                <outlet property="referralPersonNameTextField" destination="Dgn-Xe-Imm" id="77A-VS-p3m"/>
+                <outlet property="saveReferralPersonButton" destination="fAq-JK-bWi" id="3UJ-Ii-UVy"/>
+            </connections>
+            <point key="canvasLocation" x="194.5" y="261.5"/>
+        </tableViewCell>
+    </objects>
+</document>
