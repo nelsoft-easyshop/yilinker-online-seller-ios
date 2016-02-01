@@ -38,6 +38,15 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lK4-u3-2Br">
                         <rect key="frame" x="278" y="9" width="89" height="46"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P100.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="iOw-Ue-oq3">
+                                <rect key="frame" x="5" y="4" width="78" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="Ev7-V5-hzs"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="12"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BRv-MH-FUe" customClass="DynamicRoundedView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="20" width="89" height="18"/>
                                 <subviews>
@@ -61,15 +70,6 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P100.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="iOw-Ue-oq3">
-                                <rect key="frame" x="5" y="4" width="78" height="15"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="15" id="Ev7-V5-hzs"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="12"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="iOw-Ue-oq3" secondAttribute="trailing" constant="6" id="D2v-Hx-0EO"/>
@@ -107,6 +107,13 @@
                     <constraint firstItem="TXM-aG-kjC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="31" id="utt-Jk-y4u"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="amountLabel" destination="iOw-Ue-oq3" id="eVg-pz-HMh"/>
+                <outlet property="dateLabel" destination="0Ch-Su-kn2" id="c26-Lg-Thk"/>
+                <outlet property="itemLabel" destination="TXM-aG-kjC" id="SZE-Fj-WoE"/>
+                <outlet property="statusLabel" destination="hlq-RT-TCZ" id="BsK-1i-1dr"/>
+                <outlet property="statusView" destination="BRv-MH-FUe" id="x4K-Cp-Pob"/>
+            </connections>
             <point key="canvasLocation" x="205.5" y="130"/>
         </tableViewCell>
     </objects>

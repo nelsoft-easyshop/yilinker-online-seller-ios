@@ -10,6 +10,16 @@ import UIKit
 
 class PayoutEarningsTypeTableViewCell: UITableViewCell {
 
+    // Labels
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var itemLabel: UILabel!
+    @IBOutlet weak var amountLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
+    
+    //Views
+    @IBOutlet weak var statusView: DynamicRoundedView!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
