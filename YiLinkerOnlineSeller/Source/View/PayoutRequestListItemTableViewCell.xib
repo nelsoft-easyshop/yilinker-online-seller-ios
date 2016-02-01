@@ -19,22 +19,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="02/01/2016" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="MTj-ft-vbz">
-                        <rect key="frame" x="186" y="10" width="181" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="Qs1-Xo-adU"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="16"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <view alpha="0.19999999999999968" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GjP-Cf-XTr">
-                        <rect key="frame" x="0.0" y="38" width="375" height="1"/>
-                        <color key="backgroundColor" red="0.50588235290000005" green="0.50588235290000005" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="1" id="qc7-oj-PQ6"/>
-                        </constraints>
-                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" preferredMaxLayoutWidth="170" translatesAutoresizingMaskIntoConstraints="NO" id="JOA-kf-e72">
                         <rect key="frame" x="8" y="10" width="170" height="21"/>
                         <constraints>
@@ -45,18 +29,35 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="02/01/2016" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="MTj-ft-vbz">
+                        <rect key="frame" x="186" y="10" width="181" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="Qs1-Xo-adU"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="16"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view alpha="0.19999999999999968" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GjP-Cf-XTr">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
+                        <color key="backgroundColor" red="0.50588235290000005" green="0.50588235290000005" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="vqs-eZ-BOY"/>
+                        </constraints>
+                    </view>
                 </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
-                    <constraint firstItem="GjP-Cf-XTr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="2oN-Wg-emu"/>
                     <constraint firstItem="MTj-ft-vbz" firstAttribute="leading" secondItem="JOA-kf-e72" secondAttribute="trailing" constant="8" id="8SQ-ag-lCn"/>
                     <constraint firstItem="MTj-ft-vbz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="8Ys-co-c6p"/>
+                    <constraint firstItem="GjP-Cf-XTr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="HdJ-We-HU3"/>
                     <constraint firstItem="JOA-kf-e72" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="IqY-cL-zjw"/>
                     <constraint firstAttribute="trailing" secondItem="MTj-ft-vbz" secondAttribute="trailing" constant="8" id="JFn-Hs-mIp"/>
                     <constraint firstAttribute="bottom" secondItem="JOA-kf-e72" secondAttribute="bottom" constant="8" id="JbY-P8-IgA"/>
-                    <constraint firstAttribute="trailing" secondItem="GjP-Cf-XTr" secondAttribute="trailing" id="dfZ-Li-SIA"/>
+                    <constraint firstAttribute="trailing" secondItem="GjP-Cf-XTr" secondAttribute="trailing" id="blX-yo-hsa"/>
+                    <constraint firstItem="MTj-ft-vbz" firstAttribute="top" secondItem="GjP-Cf-XTr" secondAttribute="bottom" constant="9" id="cYQ-5U-Jpz"/>
                     <constraint firstItem="JOA-kf-e72" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="iiL-9l-Psb"/>
-                    <constraint firstAttribute="bottom" secondItem="GjP-Cf-XTr" secondAttribute="bottom" id="n4l-f9-cLf"/>
-                    <constraint firstItem="GjP-Cf-XTr" firstAttribute="top" secondItem="MTj-ft-vbz" secondAttribute="bottom" constant="7" id="wga-A1-mNE"/>
+                    <constraint firstItem="GjP-Cf-XTr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="rfA-Zh-1Wf"/>
                     <constraint firstAttribute="bottom" secondItem="MTj-ft-vbz" secondAttribute="bottom" constant="8" id="x8a-VA-Tg4"/>
                 </constraints>
             </tableViewCellContentView>
