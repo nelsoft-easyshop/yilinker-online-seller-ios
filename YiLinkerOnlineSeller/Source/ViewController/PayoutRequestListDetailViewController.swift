@@ -27,8 +27,11 @@ class PayoutRequestListDetailViewController: UIViewController, UITableViewDelega
     
     // MARK: - Regiter nib files
     func registerCell() {
-        let nib: UINib = UINib(nibName: "PayoutRequestListDetailHeaderTableViewCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: "PayoutRequestListDetailHeaderTableViewCell")
+        let nib: UINib = UINib(nibName: "PayoutRequestListItemTableViewCell", bundle: nil)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: "PayoutRequestListItemTableViewCell")
+        
+        let nib2: UINib = UINib(nibName: "PayoutRequestListDetailHeaderTableViewCell", bundle: nil)
+        self.tableView.registerNib(nib2, forCellReuseIdentifier: "PayoutRequestListDetailHeaderTableViewCell")
     }
     
     // MARK: - Table view data source
