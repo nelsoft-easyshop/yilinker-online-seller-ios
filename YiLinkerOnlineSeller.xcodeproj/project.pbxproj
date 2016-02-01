@@ -610,6 +610,8 @@
 		F7E4BA8E1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E4BA8C1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.xib */; };
 		F7E4BA971C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BA951C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.swift */; };
 		F7E4BA981C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E4BA961C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.xib */; };
+		F7E4BA9B1C5F03B70019A309 /* PayoutRequestListBankDetailHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4BA991C5F03B70019A309 /* PayoutRequestListBankDetailHeaderTableViewCell.swift */; };
+		F7E4BA9C1C5F03B70019A309 /* PayoutRequestListBankDetailHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E4BA9A1C5F03B70019A309 /* PayoutRequestListBankDetailHeaderTableViewCell.xib */; };
 		F7E5F1811C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E5F17F1C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.swift */; };
 		F7E5F1821C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E5F1801C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.xib */; };
 		F7E739F31BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E739F11BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.swift */; };
@@ -1256,6 +1258,8 @@
 		F7E4BA8C1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutRequestListDetailHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		F7E4BA951C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutRequestListItemTableViewCell.swift; sourceTree = "<group>"; };
 		F7E4BA961C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutRequestListItemTableViewCell.xib; sourceTree = "<group>"; };
+		F7E4BA991C5F03B70019A309 /* PayoutRequestListBankDetailHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutRequestListBankDetailHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		F7E4BA9A1C5F03B70019A309 /* PayoutRequestListBankDetailHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutRequestListBankDetailHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		F7E5F17F1C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfoReferralCodeTableViewCell.swift; sourceTree = "<group>"; };
 		F7E5F1801C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreInfoReferralCodeTableViewCell.xib; sourceTree = "<group>"; };
 		F7E739F11BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterResultsCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1583,6 +1587,8 @@
 				F7E4BA8C1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.xib */,
 				F7E4BA951C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.swift */,
 				F7E4BA961C5EFEAB0019A309 /* PayoutRequestListItemTableViewCell.xib */,
+				F7E4BA991C5F03B70019A309 /* PayoutRequestListBankDetailHeaderTableViewCell.swift */,
+				F7E4BA9A1C5F03B70019A309 /* PayoutRequestListBankDetailHeaderTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2460,6 +2466,7 @@
 				F7CB78441B9D822C001AF766 /* FilterCalendarTableViewCell.xib in Resources */,
 				0C6661A91B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.xib in Resources */,
 				0C8D7FAE1B8FBDB400B3FA4E /* ProductUploadCombinationListViewController.xib in Resources */,
+				F7E4BA9C1C5F03B70019A309 /* PayoutRequestListBankDetailHeaderTableViewCell.xib in Resources */,
 				F7C40FDA1B983CD90091C16C /* sort.png in Resources */,
 				F7C40F8F1B983BA10091C16C /* VerifyNumberViewController.xib in Resources */,
 				79EDA4151B9205080037558A /* PointsEarnedTableViewCell.xib in Resources */,
@@ -2947,6 +2954,7 @@
 				792876161B8DF89F00762A39 /* CombinedChartData.swift in Sources */,
 				F79403031BC00E8D00CD21DD /* FilterSeactionHeaderView.swift in Sources */,
 				7928762A1B8DF89F00762A39 /* CandleStickChartRenderer.swift in Sources */,
+				F7E4BA9B1C5F03B70019A309 /* PayoutRequestListBankDetailHeaderTableViewCell.swift in Sources */,
 				F7C40F7B1B983B570091C16C /* FilterViewController.swift in Sources */,
 				79EF7ABA1B99950E0082CD35 /* TransactionsFilterModel.swift in Sources */,
 				F7CF662D1BD8FE2E008B8226 /* StoreInfoPreferredCategoriesSectionView.swift in Sources */,
