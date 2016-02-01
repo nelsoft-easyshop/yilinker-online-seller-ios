@@ -22,7 +22,7 @@ class PayoutViewController: UIViewController {
     
     // Controllers
     var withdrawVC: WithdrawTableViewController?
-    var requestVC: PayoutSummaryViewController?
+    var requestVC: PayoutRequestListViewController?
     var recordVC: PayoutBalanceRecordViewController?
     var earningVC: PayoutEarningsViewController?
     // Arrays of view controllers
@@ -88,7 +88,7 @@ class PayoutViewController: UIViewController {
     func initViewControllers() {
 //        withdrawVC = PayoutBalanceWithdrawalViewController(nibName: "PayoutBalanceWithdrawalViewController", bundle: nil)
         withdrawVC = WithdrawTableViewController(nibName: "WithdrawTableViewController", bundle: nil)
-        requestVC = PayoutSummaryViewController(nibName: "PayoutSummaryViewController", bundle: nil)
+        requestVC = PayoutRequestListViewController(nibName: "PayoutRequestListViewController", bundle: nil)
         recordVC = PayoutBalanceRecordViewController(nibName: "PayoutBalanceRecordViewController", bundle: nil)
         earningVC = PayoutEarningsViewController(nibName: "PayoutEarningsViewController", bundle: nil)
         
