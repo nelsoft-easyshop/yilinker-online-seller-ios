@@ -21,7 +21,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bank Deposit: Nelson Liao" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="eod-oJ-Lsr">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bank Deposit: Nelson Liao" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" preferredMaxLayoutWidth="359" translatesAutoresizingMaskIntoConstraints="NO" id="eod-oJ-Lsr">
                         <rect key="frame" x="8" y="41" width="359" height="21"/>
                         <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="16"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
