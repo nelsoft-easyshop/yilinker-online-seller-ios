@@ -21,7 +21,7 @@ class PayoutViewController: UIViewController {
     var selectedIndex: Int = 0
     
     // Controllers
-    var withdrawVC: PayoutBalanceWithdrawalViewController?
+    var withdrawVC: WithdrawTableViewController?
     var requestVC: PayoutSummaryViewController?
     var recordVC: PayoutBalanceRecordViewController?
     var earningVC: SelectDateViewController?
@@ -31,6 +31,8 @@ class PayoutViewController: UIViewController {
     var currentChildViewController: UIViewController?
     // Child controllers frame
     var containerViewFrame: CGRect?
+    
+    var headerView: UIView!
     
     // MARK: - View Life Cycle
     
@@ -83,7 +85,8 @@ class PayoutViewController: UIViewController {
     
     // MARK: - Init View Controllers
     func initViewControllers() {
-        withdrawVC = PayoutBalanceWithdrawalViewController(nibName: "PayoutBalanceWithdrawalViewController", bundle: nil)
+//        withdrawVC = PayoutBalanceWithdrawalViewController(nibName: "PayoutBalanceWithdrawalViewController", bundle: nil)
+        withdrawVC = WithdrawTableViewController(nibName: "WithdrawTableViewController", bundle: nil)
         requestVC = PayoutSummaryViewController(nibName: "PayoutSummaryViewController", bundle: nil)
         recordVC = PayoutBalanceRecordViewController(nibName: "PayoutBalanceRecordViewController", bundle: nil)
         earningVC = SelectDateViewController(nibName: "SelectDateViewController", bundle: nil)

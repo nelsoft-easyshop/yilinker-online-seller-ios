@@ -192,6 +192,10 @@
 		267C526D1C5F19BE00739850 /* WithdrawMobileNoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C526C1C5F19BE00739850 /* WithdrawMobileNoView.swift */; };
 		267C526F1C5F19D800739850 /* WithdrawConfirmationCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C526E1C5F19D800739850 /* WithdrawConfirmationCodeView.swift */; };
 		267C52711C5F19E700739850 /* WithdrawProceedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C52701C5F19E700739850 /* WithdrawProceedView.swift */; };
+		267C52741C5F1F1700739850 /* WithdrawTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C52721C5F1F1700739850 /* WithdrawTableViewController.swift */; };
+		267C52751C5F1F1700739850 /* WithdrawTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267C52731C5F1F1700739850 /* WithdrawTableViewController.xib */; };
+		267C52781C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C52761C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.swift */; };
+		267C52791C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267C52771C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.xib */; };
 		2686E3731B956B7400E8FA80 /* CCCItemImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2686E3721B956B7400E8FA80 /* CCCItemImagesView.swift */; };
 		2686E3761B956C4A00E8FA80 /* ItemImagesHorizontalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2686E3741B956C4A00E8FA80 /* ItemImagesHorizontalCollectionViewCell.swift */; };
 		2686E3771B956C4A00E8FA80 /* ItemImagesHorizontalCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2686E3751B956C4A00E8FA80 /* ItemImagesHorizontalCollectionViewCell.xib */; };
@@ -827,6 +831,10 @@
 		267C526C1C5F19BE00739850 /* WithdrawMobileNoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithdrawMobileNoView.swift; sourceTree = "<group>"; };
 		267C526E1C5F19D800739850 /* WithdrawConfirmationCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithdrawConfirmationCodeView.swift; sourceTree = "<group>"; };
 		267C52701C5F19E700739850 /* WithdrawProceedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithdrawProceedView.swift; sourceTree = "<group>"; };
+		267C52721C5F1F1700739850 /* WithdrawTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithdrawTableViewController.swift; sourceTree = "<group>"; };
+		267C52731C5F1F1700739850 /* WithdrawTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WithdrawTableViewController.xib; sourceTree = "<group>"; };
+		267C52761C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceWithdrawalViewsViewController.swift; sourceTree = "<group>"; };
+		267C52771C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BalanceWithdrawalViewsViewController.xib; sourceTree = "<group>"; };
 		2686E3721B956B7400E8FA80 /* CCCItemImagesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CCCItemImagesView.swift; sourceTree = "<group>"; };
 		2686E3741B956C4A00E8FA80 /* ItemImagesHorizontalCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemImagesHorizontalCollectionViewCell.swift; sourceTree = "<group>"; };
 		2686E3751B956C4A00E8FA80 /* ItemImagesHorizontalCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ItemImagesHorizontalCollectionViewCell.xib; path = ../View/ItemImagesHorizontalCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -1706,6 +1714,10 @@
 				267C526C1C5F19BE00739850 /* WithdrawMobileNoView.swift */,
 				267C526E1C5F19D800739850 /* WithdrawConfirmationCodeView.swift */,
 				267C52701C5F19E700739850 /* WithdrawProceedView.swift */,
+				267C52721C5F1F1700739850 /* WithdrawTableViewController.swift */,
+				267C52731C5F1F1700739850 /* WithdrawTableViewController.xib */,
+				267C52761C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.swift */,
+				267C52771C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2384,6 +2396,7 @@
 				0CF28EFD1B8CA2E9005B2E54 /* Panton Heavy.otf in Resources */,
 				26B5B2461B94DE6700CBDDE5 /* CustomizedCategoryViews.xib in Resources */,
 				0C65F8E91B8E34C200504D86 /* ProductUploadDetailHeaderViewCollectionViewCell.xib in Resources */,
+				267C52751C5F1F1700739850 /* WithdrawTableViewController.xib in Resources */,
 				F7AC5F7A1B9AA49400227D18 /* NewAddressTableViewCell.xib in Resources */,
 				0C8D7FC21B8FE50900B3FA4E /* ProductUploadAttributeValuesCollectionViewCell.xib in Resources */,
 				0C65F8D11B8E059A00504D86 /* ProductUploadButtonTableViewCell.xib in Resources */,
@@ -2436,6 +2449,7 @@
 				26378F521B8CEE82008533B6 /* ProductManagementTableViewCell.xib in Resources */,
 				79E633871B9B15FD0062DB14 /* TransactionShipItemTableViewController.xib in Resources */,
 				F7AE35F91C08054B00A1C9CE /* FaImagePicker.storyboard in Resources */,
+				267C52791C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.xib in Resources */,
 				0CE2244E1BBAF8AE00853AC9 /* SaveButtonView.xib in Resources */,
 				0C51C2F21BB00A7900F4D2D6 /* AddProductHeaderView.xib in Resources */,
 				0CF28EFE1B8CA2E9005B2E54 /* Panton Light Italic.otf in Resources */,
@@ -2710,6 +2724,7 @@
 				7985D36C1BB05C500060E5F5 /* DeliveryLogsModel.swift in Sources */,
 				F7AC5F741B9AA32D00227D18 /* AddressModelV2.swift in Sources */,
 				7928763F1B8DF89F00762A39 /* ChartSelectionDetail.swift in Sources */,
+				267C52781C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.swift in Sources */,
 				7928760B1B8DF89F00762A39 /* BarLineScatterCandleChartData.swift in Sources */,
 				7928760E1B8DF89F00762A39 /* BubbleChartDataEntry.swift in Sources */,
 				265C9C591C5B5E92002181CD /* SelectDateViewController.swift in Sources */,
@@ -2955,6 +2970,7 @@
 				B7BADAFB1BA563FF005F59F9 /* ImageVC.swift in Sources */,
 				961F702E1B97F077007D0EA5 /* DisputeViewController.swift in Sources */,
 				792876131B8DF89F00762A39 /* ChartData.swift in Sources */,
+				267C52741C5F1F1700739850 /* WithdrawTableViewController.swift in Sources */,
 				792876381B8DF89F00762A39 /* LineChartRenderer.swift in Sources */,
 				961F702A1B97EEEC007D0EA5 /* ButtonToTabBehaviorizer.swift in Sources */,
 				F7C40F611B983AC50091C16C /* ChangeAddressFooterCollectionViewCell.swift in Sources */,

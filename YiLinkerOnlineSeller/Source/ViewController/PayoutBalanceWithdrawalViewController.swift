@@ -10,26 +10,38 @@ import UIKit
 
 class PayoutBalanceWithdrawalViewController: UIViewController {
 
+    @IBOutlet weak var tableView: UITableView!
+    var headerView: UIView!
+    var availableBalanceView: WithdrawAvailableBalanceView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.getHeaderView().addSubview(getAvailableBalanceView())
+        
+        var newFrame: CGRect!
+        newFrame = self.headerView.frame
+        newFrame.size.height = CGRectGetMaxY(self.availableBalanceView.frame)
+        self.headerView.frame = newFrame
+        
+        self.tableView.tableHeaderView = nil
+        self.tableView.tableHeaderView = self.headerView
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func getHeaderView() -> UIView {
+        if self.headerView == nil {
+            self.headerView = UIView(frame: CGRectZero)
+            self.headerView.autoresizesSubviews = false
+        }
+        return self.headerView
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func getAvailableBalanceView() -> WithdrawAvailableBalanceView {
+        if self.availableBalanceView == nil {
+            self.availableBalanceView = XibHelper.puffViewWithNibName("BalanceWithdrawalViewsViewController", index: 0) as! WithdrawAvailableBalanceView
+        }
+        return self.availableBalanceView
     }
-    */
 
 }

@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+        </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BalanceWithdrawalViewsViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="XSM-ng-4YJ" customClass="WithdrawAvailableBalanceView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="angle-right" translatesAutoresizingMaskIntoConstraints="NO" id="IUE-4V-qG1">
+                    <rect key="frame" x="300" y="32" width="12" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="12" id="XM4-Uv-gGX"/>
+                        <constraint firstAttribute="height" constant="22" id="dvR-KT-R2I"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 1,280.00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p2E-sJ-BGC">
+                    <rect key="frame" x="8" y="44" width="284" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="5qQ-sy-kMD"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Available Balance:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aii-q3-Z1D">
+                    <rect key="frame" x="8" y="15" width="284" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="ONb-R2-1oF"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="aii-q3-Z1D" firstAttribute="leading" secondItem="XSM-ng-4YJ" secondAttribute="leading" constant="8" id="1hT-1D-ebf"/>
+                <constraint firstAttribute="trailing" secondItem="IUE-4V-qG1" secondAttribute="trailing" constant="8" id="9DF-bj-jE4"/>
+                <constraint firstItem="p2E-sJ-BGC" firstAttribute="leading" secondItem="XSM-ng-4YJ" secondAttribute="leading" constant="8" id="WWi-Gu-sUt"/>
+                <constraint firstAttribute="bottom" secondItem="IUE-4V-qG1" secondAttribute="bottom" constant="26" id="Zc3-dW-Ias"/>
+                <constraint firstItem="aii-q3-Z1D" firstAttribute="top" secondItem="XSM-ng-4YJ" secondAttribute="top" constant="15" id="aBI-fX-Jnp"/>
+                <constraint firstItem="IUE-4V-qG1" firstAttribute="top" secondItem="XSM-ng-4YJ" secondAttribute="top" constant="32" id="nOq-5B-pcG"/>
+                <constraint firstItem="p2E-sJ-BGC" firstAttribute="top" secondItem="aii-q3-Z1D" secondAttribute="bottom" constant="8" id="qfF-Hu-ROH"/>
+                <constraint firstItem="IUE-4V-qG1" firstAttribute="leading" secondItem="p2E-sJ-BGC" secondAttribute="trailing" constant="8" id="uw8-SX-xt1"/>
+                <constraint firstItem="IUE-4V-qG1" firstAttribute="leading" secondItem="aii-q3-Z1D" secondAttribute="trailing" constant="8" id="yPs-SD-xZW"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="254" y="-7"/>
+        </view>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="g3P-jf-Agh" customClass="WithdrawAmountView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 50.00 bank charge for withdrawal below P 5,000.00 " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hl4-4J-vlP">
+                    <rect key="frame" x="8" y="49" width="304" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="ubP-Lg-8Sh"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="958.00" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4gP-sA-5Ve">
+                    <rect key="frame" x="8" y="20" width="304" height="30"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="X8p-dS-F4T"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="23"/>
+                    <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                </textField>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Withdrawal Amount: *" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HO5-5o-cK9">
+                    <rect key="frame" x="8" y="0.0" width="304" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="0lJ-C0-Iou"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="HO5-5o-cK9" firstAttribute="top" secondItem="g3P-jf-Agh" secondAttribute="top" id="Bko-QF-3cG"/>
+                <constraint firstAttribute="trailing" secondItem="4gP-sA-5Ve" secondAttribute="trailing" constant="8" id="GSH-5G-OHH"/>
+                <constraint firstItem="4gP-sA-5Ve" firstAttribute="leading" secondItem="g3P-jf-Agh" secondAttribute="leading" constant="8" id="J88-ll-aC3"/>
+                <constraint firstItem="hl4-4J-vlP" firstAttribute="leading" secondItem="g3P-jf-Agh" secondAttribute="leading" constant="8" id="N6E-BE-xW3"/>
+                <constraint firstAttribute="trailing" secondItem="hl4-4J-vlP" secondAttribute="trailing" constant="8" id="S7b-u1-ftd"/>
+                <constraint firstItem="4gP-sA-5Ve" firstAttribute="top" secondItem="g3P-jf-Agh" secondAttribute="top" constant="20" id="eFh-Ni-hIw"/>
+                <constraint firstAttribute="trailing" secondItem="HO5-5o-cK9" secondAttribute="trailing" constant="8" id="esW-O8-Sh8"/>
+                <constraint firstItem="HO5-5o-cK9" firstAttribute="leading" secondItem="g3P-jf-Agh" secondAttribute="leading" constant="8" id="l46-al-vN8"/>
+                <constraint firstItem="hl4-4J-vlP" firstAttribute="top" secondItem="HO5-5o-cK9" secondAttribute="bottom" constant="28" id="lpj-mO-aGK"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="254" y="142"/>
+        </view>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="egc-Ue-u1o" customClass="WithdrawMethodView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="5" width="369" height="78"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ORd-eq-gKd">
+                    <rect key="frame" x="0.0" y="29" width="184" height="49"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bank-deposit" translatesAutoresizingMaskIntoConstraints="NO" id="HII-tU-330">
+                            <rect key="frame" x="8" y="7" width="35" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="35" id="BOY-1B-haZ"/>
+                                <constraint firstAttribute="width" constant="35" id="fhm-hx-0sK"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bank Deposit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="snk-Od-fZT">
+                            <rect key="frame" x="51" y="14" width="86" height="21"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check" translatesAutoresizingMaskIntoConstraints="NO" id="dMs-7R-k2V">
+                            <rect key="frame" x="154" y="16" width="22" height="17"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="22" id="IoU-t3-mc4"/>
+                                <constraint firstAttribute="height" constant="17" id="vtP-rj-qed"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="dMs-7R-k2V" secondAttribute="bottom" constant="16" id="0m5-MY-Bl8"/>
+                        <constraint firstAttribute="trailing" secondItem="dMs-7R-k2V" secondAttribute="trailing" constant="8" id="1xc-1M-86w"/>
+                        <constraint firstItem="HII-tU-330" firstAttribute="leading" secondItem="ORd-eq-gKd" secondAttribute="leading" constant="8" id="7WB-G2-ThQ"/>
+                        <constraint firstItem="snk-Od-fZT" firstAttribute="leading" secondItem="HII-tU-330" secondAttribute="trailing" constant="8" id="7gr-Nt-lVI"/>
+                        <constraint firstAttribute="bottom" secondItem="HII-tU-330" secondAttribute="bottom" constant="7" id="JVO-W6-GoS"/>
+                        <constraint firstAttribute="bottom" secondItem="snk-Od-fZT" secondAttribute="bottom" constant="14" id="Nt0-nX-esi"/>
+                        <constraint firstItem="snk-Od-fZT" firstAttribute="top" secondItem="ORd-eq-gKd" secondAttribute="top" constant="14" id="Y2P-Zc-gjJ"/>
+                        <constraint firstItem="HII-tU-330" firstAttribute="top" secondItem="ORd-eq-gKd" secondAttribute="top" constant="7" id="YzD-LM-q4m"/>
+                        <constraint firstItem="dMs-7R-k2V" firstAttribute="top" secondItem="ORd-eq-gKd" secondAttribute="top" constant="16" id="dNw-nm-EJ7"/>
+                        <constraint firstAttribute="height" constant="49" id="keo-d3-wB4"/>
+                        <constraint firstItem="dMs-7R-k2V" firstAttribute="leading" secondItem="snk-Od-fZT" secondAttribute="trailing" constant="17" id="nJX-6f-4qF"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A4T-Ca-z5R">
+                    <rect key="frame" x="186" y="29" width="183" height="49"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bank-cheque" translatesAutoresizingMaskIntoConstraints="NO" id="CWE-y0-1oQ">
+                            <rect key="frame" x="8" y="7" width="40" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="35" id="Wht-wK-Bap"/>
+                                <constraint firstAttribute="width" constant="40" id="rht-rj-Ikm"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bank Cheque" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2h-Mq-z3N">
+                            <rect key="frame" x="48" y="14" width="86" height="21"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check" translatesAutoresizingMaskIntoConstraints="NO" id="YMi-an-Vc5">
+                            <rect key="frame" x="153" y="16" width="22" height="17"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="22" id="g3Y-3i-bL0"/>
+                                <constraint firstAttribute="height" constant="17" id="uGC-Ap-HOA"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="K2h-Mq-z3N" firstAttribute="leading" secondItem="CWE-y0-1oQ" secondAttribute="trailing" id="1PU-Uo-wZP"/>
+                        <constraint firstAttribute="bottom" secondItem="K2h-Mq-z3N" secondAttribute="bottom" constant="14" id="1md-SX-VC1"/>
+                        <constraint firstItem="CWE-y0-1oQ" firstAttribute="leading" secondItem="A4T-Ca-z5R" secondAttribute="leading" constant="8" id="5mX-8i-3bC"/>
+                        <constraint firstItem="YMi-an-Vc5" firstAttribute="leading" secondItem="K2h-Mq-z3N" secondAttribute="trailing" constant="19" id="AuR-V9-8VG"/>
+                        <constraint firstAttribute="trailing" secondItem="YMi-an-Vc5" secondAttribute="trailing" constant="8" id="Ie4-dh-U0m"/>
+                        <constraint firstAttribute="height" constant="49" id="SYb-We-by3"/>
+                        <constraint firstItem="YMi-an-Vc5" firstAttribute="top" secondItem="A4T-Ca-z5R" secondAttribute="top" constant="16" id="eOw-wO-hzP"/>
+                        <constraint firstAttribute="bottom" secondItem="YMi-an-Vc5" secondAttribute="bottom" constant="16" id="enR-ya-wG5"/>
+                        <constraint firstItem="CWE-y0-1oQ" firstAttribute="top" secondItem="A4T-Ca-z5R" secondAttribute="top" constant="7" id="gI2-K3-H7d"/>
+                        <constraint firstAttribute="bottom" secondItem="CWE-y0-1oQ" secondAttribute="bottom" constant="7" id="p5t-bQ-6dh"/>
+                        <constraint firstItem="K2h-Mq-z3N" firstAttribute="top" secondItem="A4T-Ca-z5R" secondAttribute="top" constant="14" id="rNR-0l-ipP"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WITHDRAWAL METHOD" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3sd-yP-65t">
+                    <rect key="frame" x="8" y="0.0" width="353" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="ENM-zt-Fan"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="3sd-yP-65t" firstAttribute="top" secondItem="egc-Ue-u1o" secondAttribute="top" id="3kr-69-q7f"/>
+                <constraint firstAttribute="bottom" secondItem="ORd-eq-gKd" secondAttribute="bottom" id="4Nv-Yx-noD"/>
+                <constraint firstItem="A4T-Ca-z5R" firstAttribute="leading" secondItem="ORd-eq-gKd" secondAttribute="trailing" constant="2" id="4pS-Px-GmC"/>
+                <constraint firstItem="ORd-eq-gKd" firstAttribute="height" secondItem="A4T-Ca-z5R" secondAttribute="height" id="60K-gZ-gnk"/>
+                <constraint firstAttribute="trailing" secondItem="3sd-yP-65t" secondAttribute="trailing" constant="8" id="Gq4-h5-THw"/>
+                <constraint firstAttribute="trailing" secondItem="A4T-Ca-z5R" secondAttribute="trailing" id="Ox7-il-pVA"/>
+                <constraint firstItem="3sd-yP-65t" firstAttribute="leading" secondItem="egc-Ue-u1o" secondAttribute="leading" constant="8" id="WPd-tn-eKA"/>
+                <constraint firstAttribute="bottom" secondItem="A4T-Ca-z5R" secondAttribute="bottom" id="cCi-Tw-dS2"/>
+                <constraint firstItem="ORd-eq-gKd" firstAttribute="width" secondItem="A4T-Ca-z5R" secondAttribute="width" id="oJi-Q7-DNv"/>
+                <constraint firstItem="ORd-eq-gKd" firstAttribute="leading" secondItem="egc-Ue-u1o" secondAttribute="leading" id="tm8-xS-Gz1"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="278.5" y="298"/>
+        </view>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="J7h-nN-ufL" customClass="WithdrawDepositToView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="5" width="320" height="78"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DEPOSIT TO" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZTc-dV-ake">
+                    <rect key="frame" x="8" y="0.0" width="304" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="z8Z-1S-V7a"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HPK-ip-JI4">
+                    <rect key="frame" x="0.0" y="29" width="320" height="49"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BDO | Nelson Liao | 1234567890" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cg7-au-SUI">
+                            <rect key="frame" x="8" y="24" width="304" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="qn7-Xu-y1m"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nelson Liao" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xqC-Uj-OoZ">
+                            <rect key="frame" x="8" y="4" width="304" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="lhc-bS-hfz"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="49" id="6TP-Oe-wuN"/>
+                        <constraint firstAttribute="trailing" secondItem="xqC-Uj-OoZ" secondAttribute="trailing" constant="8" id="FxP-jK-gLY"/>
+                        <constraint firstItem="Cg7-au-SUI" firstAttribute="leading" secondItem="HPK-ip-JI4" secondAttribute="leading" constant="8" id="GEy-Xr-1WB"/>
+                        <constraint firstAttribute="trailing" secondItem="Cg7-au-SUI" secondAttribute="trailing" constant="8" id="LdF-YM-lU9"/>
+                        <constraint firstItem="Cg7-au-SUI" firstAttribute="top" secondItem="HPK-ip-JI4" secondAttribute="top" constant="24" id="Ohg-jj-g0v"/>
+                        <constraint firstItem="xqC-Uj-OoZ" firstAttribute="top" secondItem="HPK-ip-JI4" secondAttribute="top" constant="4" id="bEu-I5-Kql"/>
+                        <constraint firstItem="xqC-Uj-OoZ" firstAttribute="leading" secondItem="HPK-ip-JI4" secondAttribute="leading" constant="8" id="f5P-c1-4Pz"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="ZTc-dV-ake" firstAttribute="leading" secondItem="J7h-nN-ufL" secondAttribute="leading" constant="8" id="3B6-c1-9UD"/>
+                <constraint firstItem="HPK-ip-JI4" firstAttribute="top" secondItem="ZTc-dV-ake" secondAttribute="bottom" constant="8" id="3BT-g6-Ous"/>
+                <constraint firstAttribute="trailing" secondItem="HPK-ip-JI4" secondAttribute="trailing" id="HV3-JH-iOB"/>
+                <constraint firstAttribute="trailing" secondItem="ZTc-dV-ake" secondAttribute="trailing" constant="8" id="Ss5-ID-Klx"/>
+                <constraint firstItem="ZTc-dV-ake" firstAttribute="top" secondItem="J7h-nN-ufL" secondAttribute="top" id="YBR-rd-Cz0"/>
+                <constraint firstItem="HPK-ip-JI4" firstAttribute="leading" secondItem="J7h-nN-ufL" secondAttribute="leading" id="doS-uJ-vpM"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="254" y="457"/>
+        </view>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="7wN-Jt-zuq" customClass="WithdrawMobileNoView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="5" width="320" height="63"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vre-wT-dSe">
+                    <rect key="frame" x="0.0" y="29" width="320" height="34"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="09271234567" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CT6-py-etW">
+                            <rect key="frame" x="8" y="6" width="304" height="21"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MOBILE NUMBER" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PgM-Rm-bH7">
+                    <rect key="frame" x="8" y="0.0" width="304" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="vTV-7O-mDQ"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="PgM-Rm-bH7" secondAttribute="trailing" constant="8" id="Dxa-Lo-NUf"/>
+                <constraint firstItem="PgM-Rm-bH7" firstAttribute="top" secondItem="7wN-Jt-zuq" secondAttribute="top" id="QBM-So-ydA"/>
+                <constraint firstItem="PgM-Rm-bH7" firstAttribute="leading" secondItem="7wN-Jt-zuq" secondAttribute="leading" constant="8" id="nPM-LZ-wdx"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="254" y="619.5"/>
+        </view>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="P0o-lh-jzB" customClass="WithdrawConfirmationCodeView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="54"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Confirmation Code: *" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mxy-Mw-EIZ">
+                    <rect key="frame" x="8" y="0.0" width="304" height="21"/>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="5JCD123" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kwd-9Z-COw">
+                    <rect key="frame" x="8" y="24" width="151" height="30"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="23"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fe5-8z-MJ8">
+                    <rect key="frame" x="162" y="24" width="151" height="30"/>
+                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
+                    <state key="normal" title="GET CODE">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="kwd-9Z-COw" firstAttribute="leading" secondItem="P0o-lh-jzB" secondAttribute="leading" constant="8" id="6i4-wH-taG"/>
+                <constraint firstItem="kwd-9Z-COw" firstAttribute="width" secondItem="Fe5-8z-MJ8" secondAttribute="height" multiplier="151:30" id="I95-Y5-UKU"/>
+                <constraint firstItem="kwd-9Z-COw" firstAttribute="height" secondItem="Fe5-8z-MJ8" secondAttribute="height" id="III-Lv-pJH"/>
+                <constraint firstAttribute="bottom" secondItem="Fe5-8z-MJ8" secondAttribute="bottom" id="WDE-yt-S63"/>
+                <constraint firstAttribute="trailing" secondItem="Fe5-8z-MJ8" secondAttribute="trailing" constant="7" id="Z2m-YX-pha"/>
+                <constraint firstItem="Fe5-8z-MJ8" firstAttribute="leading" secondItem="kwd-9Z-COw" secondAttribute="trailing" constant="3" id="c4X-uS-Pnz"/>
+                <constraint firstAttribute="bottom" secondItem="kwd-9Z-COw" secondAttribute="bottom" id="fJ0-oJ-oiP"/>
+                <constraint firstItem="kwd-9Z-COw" firstAttribute="width" secondItem="Fe5-8z-MJ8" secondAttribute="width" id="s3H-eT-rw2"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="254" y="757"/>
+        </view>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Vzc-zj-ogV" customClass="WithdrawProceedView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="58"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AmZ-3b-t33">
+                    <rect key="frame" x="8" y="0.0" width="304" height="46"/>
+                    <color key="backgroundColor" red="0.27450980390000002" green="0.66274509800000003" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="46" id="585-fA-6X6"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="15"/>
+                    <state key="normal" title="PROCEED">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="AmZ-3b-t33" secondAttribute="trailing" constant="8" id="KzK-Wj-f0S"/>
+                <constraint firstItem="AmZ-3b-t33" firstAttribute="top" secondItem="Vzc-zj-ogV" secondAttribute="top" id="QnX-xU-zln"/>
+                <constraint firstItem="AmZ-3b-t33" firstAttribute="leading" secondItem="Vzc-zj-ogV" secondAttribute="leading" constant="8" id="hup-up-8ba"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="254" y="933"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="angle-right" width="102" height="200"/>
+        <image name="bank-cheque" width="253" height="200"/>
+        <image name="bank-deposit" width="207" height="200"/>
+        <image name="check" width="200" height="140"/>
+    </resources>
+</document>
