@@ -14,10 +14,10 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
     @IBOutlet weak var tableView: UITableView!
     
     // Strings
-    var cellNibName: String = "PayoutEarningsTypeTableViewCell"
-    var cellIdentifier: String = "PayoutEarningsTypeTableViewCell"
     
     // Models
+    var earningsTypeModel: PayoutEarningsTypeModel?
+    var earningsTransactionTypeModel: PayoutEarningsTransactionTypeModel?
     
     // Global variables
     var hud: MBProgressHUD?
@@ -65,8 +65,8 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
     
     // MARK: - Regiter nib files
     func registerCell() {
-        let nib: UINib = UINib(nibName: self.cellNibName, bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: self.cellIdentifier)
+        let nib: UINib = UINib(nibName: "PayoutEarningsTypeTableViewCell", bundle: nil)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: "PayoutEarningsTypeTableViewCell")
         
         let nib2: UINib = UINib(nibName: "PayoutEarningsTransactionTypeTableViewCell", bundle: nil)
         self.tableView.registerNib(nib2, forCellReuseIdentifier: "PayoutEarningsTransactionTypeTableViewCell")
@@ -111,17 +111,46 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 6
+        if self.earningTypeId == 1{
+            if self.earningsTransactionTypeModel != nil {
+                return self.earningsTransactionTypeModel!.date.count
+            } else {
+                return 0
+            }
+        } else {
+            if self.earningsTypeModel != nil {
+                return self.earningsTypeModel!.date.count
+            } else {
+                return 0
+            }
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if self.earningTypeId == 1 {
             let cell = self.tableView.dequeueReusableCellWithIdentifier("PayoutEarningsTransactionTypeTableViewCell", forIndexPath: indexPath) as! PayoutEarningsTransactionTypeTableViewCell
+            if self.earningsTypeModel != nil {
+                if self.earningsTypeModel?.status[indexPath.row] == "completed" {
+                    cell.statusLabel.text = "COMPLETED"
+                    cell.statusView.backgroundColor = UIColor(netHex: 0x4DB5A6)
+                } else {
+                    cell.statusLabel.text = "TENTATIVE"
+                    cell.statusView.backgroundColor = UIColor(netHex: 0x5181D4)
+                }
+            }
             
             return cell
         } else {
-            let cell = self.tableView.dequeueReusableCellWithIdentifier(self.cellIdentifier, forIndexPath: indexPath) as! PayoutEarningsTypeTableViewCell
-            
+            let cell = self.tableView.dequeueReusableCellWithIdentifier("PayoutEarningsTypeTableViewCell", forIndexPath: indexPath) as! PayoutEarningsTypeTableViewCell
+            if self.earningsTransactionTypeModel != nil {
+                if self.earningsTransactionTypeModel?.status[indexPath.row] == "completed" {
+                    cell.statusLabel.text = "COMPLETED"
+                    cell.statusView.backgroundColor = UIColor(netHex: 0x4DB5A6)
+                } else {
+                    cell.statusLabel.text = "TENTATIVE"
+                    cell.statusView.backgroundColor = UIColor(netHex: 0x5181D4)
+                }
+            }
             return cell
         }
     }
@@ -144,7 +173,11 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
         var parameters: NSDictionary = [:]
         WebServiceManager.fireGetResolutionCenterRequestWithUrl(APIAtlas.payoutEarningsList+"\(SessionManager.accessToken())", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
-                //self.earningsModel = PayoutEarningsModel.parseDataWithDictionary(responseObject)
+                if self.earningTypeId == 1 {
+                    self.earningsTypeModel = PayoutEarningsTypeModel.parseDataWithDictionary(responseObject)
+                } else {
+                    self.earningsTransactionTypeModel = PayoutEarningsTransactionTypeModel.parseDataWithDictionary(responseObject)
+                }
                 self.tableView.reloadData()
                 self.hud?.hide(true)
             } else {
