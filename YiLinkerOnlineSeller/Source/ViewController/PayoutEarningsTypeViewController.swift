@@ -22,6 +22,8 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
     // Global variables
     var hud: MBProgressHUD?
     
+    var earningTypeId: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.delegate = self
@@ -40,6 +42,11 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
     // MARK: Navigation bar
     // MARK: - Add Back Button in navigation bar
     func backButton() {
+        //Add Nav Bar
+        if self.respondsToSelector("edgesForExtendedLayout") {
+            self.edgesForExtendedLayout = UIRectEdge.None
+        }
+        
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
@@ -53,13 +60,16 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
     
     //MARK: - Navigation bar back button action
     func back() {
-        self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController!.popViewControllerAnimated(true)
     }
     
     // MARK: - Regiter nib files
     func registerCell() {
         let nib: UINib = UINib(nibName: self.cellNibName, bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: self.cellIdentifier)
+        
+        let nib2: UINib = UINib(nibName: "PayoutEarningsTransactionTypeTableViewCell", bundle: nil)
+        self.tableView.registerNib(nib2, forCellReuseIdentifier: "PayoutEarningsTransactionTypeTableViewCell")
     }
     
     // MARK: Alert view
@@ -105,12 +115,22 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier(self.cellIdentifier, forIndexPath: indexPath) as! PayoutEarningsTableViewCell
-        
-        return cell
+        if self.earningTypeId == 1 {
+            let cell = self.tableView.dequeueReusableCellWithIdentifier("PayoutEarningsTransactionTypeTableViewCell", forIndexPath: indexPath) as! PayoutEarningsTransactionTypeTableViewCell
+            
+            return cell
+        } else {
+            let cell = self.tableView.dequeueReusableCellWithIdentifier(self.cellIdentifier, forIndexPath: indexPath) as! PayoutEarningsTypeTableViewCell
+            
+            return cell
+        }
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 64
+        if self.earningTypeId == 1 {
+            return 93
+        } else {
+            return 64
+        }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
