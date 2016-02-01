@@ -10,6 +10,9 @@ import UIKit
 
 class PayoutRequestListItemTableViewCell: UITableViewCell {
 
+    // Labels
+    @IBOutlet weak var itemLabel: UILabel!
+    @IBOutlet weak var itemDetailLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
