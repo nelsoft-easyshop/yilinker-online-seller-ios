@@ -20,20 +20,17 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
     // Tableview
     @IBOutlet weak var tableView: UITableView!
     
-    // Strings
-    
     // Models
     var earningsTypeModel: [PayoutEarningsTypeModel] = []
     
     // Global variables
     var hud: MBProgressHUD?
     
-    var earningTypeId: Int = 0
-    
     //Boolean - used ad indicator for pagination
     var isPageEnd: Bool = false
     //Integer - used to store number of page 1 to ...
     var page: Int = 0
+    var earningTypeId: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,8 +55,9 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
         //return true
     }
     
-    // MARK: Navigation bar
-    // MARK: - Add Back Button in navigation bar
+    // MARK: -
+    // MARK: Navigation bar - Add Back Button in navigation bar
+    
     func backButton() {
         //Add Nav Bar
         if self.respondsToSelector("edgesForExtendedLayout") {
@@ -77,21 +75,27 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
-    //MARK: - Navigation bar back button action
+    // MARK: -
+    // MARK: - Navigation bar back button action
+    
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
     
-    // MARK: - Regiter nib files
+    // MARK: -
+    // MARK: - Register Cell
+    
     func registerCell() {
-        let nib: UINib = UINib(nibName: "PayoutEarningsTypeTableViewCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: "PayoutEarningsTypeTableViewCell")
+        let nib: UINib = UINib(nibName: PayoutEarningsTypeTableViewCell.earningsTypeNibNameAndIdentifier(), bundle: nil)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: PayoutEarningsTypeTableViewCell.earningsTypeNibNameAndIdentifier())
         
-        let nib2: UINib = UINib(nibName: "PayoutEarningsTransactionTypeTableViewCell", bundle: nil)
-        self.tableView.registerNib(nib2, forCellReuseIdentifier: "PayoutEarningsTransactionTypeTableViewCell")
+        let nib2: UINib = UINib(nibName: PayoutEarningsTransactionTypeTableViewCell.transactionsNibNameAndIdentifier(), bundle: nil)
+        self.tableView.registerNib(nib2, forCellReuseIdentifier: PayoutEarningsTransactionTypeTableViewCell.transactionsNibNameAndIdentifier())
     }
     
-    // MARK: Alert view
+    // MARK: -
+    // MARK: - Show Alert view
+    
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         
@@ -105,7 +109,9 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
         }
     }
     
-    // Show loader
+    // MARK: -
+    // MARK: - Show loader
+    
     func showHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
@@ -119,6 +125,7 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
         self.hud?.show(true)
     }
     
+    // MARK: -
     // MARK: - Table view data source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -144,10 +151,10 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
             if self.earningsTypeModel.count != 0 {
                 if self.earningsTypeModel[indexPath.row].status == "completed" {
                     cell.statusLabel.text = PayoutEarningsTransactionTypeStrings.kCompleted
-                    cell.statusView.backgroundColor = UIColor(netHex: 0x4DB5A6)
+                    cell.statusView.backgroundColor = Constants.Colors.completedColor
                 } else {
                     cell.statusLabel.text = PayoutEarningsTransactionTypeStrings.kTentative
-                    cell.statusView.backgroundColor = UIColor(netHex: 0x5181D4)
+                    cell.statusView.backgroundColor = Constants.Colors.tentativeColor
                 }
             }
             
@@ -157,10 +164,10 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
             if self.earningsTypeModel.count != 0 {
                 if self.earningsTypeModel[indexPath.row].status == "completed" {
                     cell.statusLabel.text = PayoutEarningsTypeStrings.kCompleted
-                    cell.statusView.backgroundColor = UIColor(netHex: 0x4DB5A6)
+                    cell.statusView.backgroundColor = Constants.Colors.completedColor
                 } else {
                     cell.statusLabel.text = PayoutEarningsTypeStrings.kTentative
-                    cell.statusView.backgroundColor = UIColor(netHex: 0x5181D4)
+                    cell.statusView.backgroundColor = Constants.Colors.tentativeColor
                 }
             }
             return cell

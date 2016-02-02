@@ -54,8 +54,9 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
         //return true
     }
     
-    // MARK: Navigation bar
-    // MARK: - Add Back Button in navigation bar
+    // MARK: -
+    // MARK: Navigation bar - Add Back Button in navigation bar
+    
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -68,11 +69,14 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
-    //MARK: - Navigation bar back button action
+    // MARK: -
+    // MARK: - Navigation bar back button action
+    
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
     
+    // MARK: -
     // MARK: - Private methods
     // Remove tableview footer
     func footerView() {
@@ -80,13 +84,17 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
         self.tableView.tableFooterView = footerView
     }
     
-    // MARK: - Regiter nib files
+    // MARK: -
+    // MARK: - Register Cell
+    
     func registerCell() {
         let nib: UINib = UINib(nibName: PayoutRequestListTableViewCell.listNibNameAndIdentifier(), bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: PayoutRequestListTableViewCell.listNibNameAndIdentifier())
     }
     
-    // MARK: Alert view
+    // MARK: -
+    // MARK: - Alert view
+    
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         
@@ -100,7 +108,9 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
         }
     }
     
-    // Show loader
+    // MARK: -
+    // MARK: - Show loader
+    
     func showHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
@@ -149,11 +159,20 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
                 cell.bankChargeLabel.hidden = true
             }
             
+            if self.requestListModel[indexPath.row].status == "completed" {
+                cell.statusView.backgroundColor = Constants.Colors.completedColor
+            } else if self.requestListModel[indexPath.row].status == "tentative" {
+                cell.statusView.backgroundColor = Constants.Colors.tentativeColor
+            } else {
+                cell.statusView.backgroundColor = Constants.Colors.inProgressColor
+            }
+            
             cell.statusLabel.text = (self.requestListModel[indexPath.row].status).uppercaseString
         }
         
         return cell
     }
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return PayoutRequestList.kRowHeight
     }
@@ -200,7 +219,6 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
                     earnings = PayoutRequestListModel.parseDataWithDictionary(responseObject)
                     
                     if earnings.count != 0 {
-                        
                         if earnings.count < 15 {
                             self.isPageEnd = true
                         }
@@ -283,6 +301,5 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
                 }
                 self.hud?.hide(true)
         })
-        
     }
 }
