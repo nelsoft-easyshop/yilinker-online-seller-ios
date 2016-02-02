@@ -53,14 +53,14 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         super.viewDidAppear(animated)
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         
-        if SessionManager.isLoggedIn() {
-            self.loginBlockerView.hidden = true
-            fireStoreInfo(true)
-            setupGCM()
-        } else {
-            self.loginBlockerView.hidden = false
-        }
-        
+//        if SessionManager.isLoggedIn() {
+//            self.loginBlockerView.hidden = true
+//            fireStoreInfo(true)
+//            setupGCM()
+//        } else {
+//            self.loginBlockerView.hidden = false
+//        }
+        self.loginBlockerView.hidden = true
 //        if NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
 //            if ctr == 0{
 //                fireStoreInfo(true)
@@ -487,13 +487,9 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                 self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
             }
         } else if indexPath.row == 6 {
-            /*let payoutViewController: PayoutRequestListViewController = PayoutRequestListViewController(nibName: "PayoutRequestListViewController", bundle: nil)
-            payoutViewController.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(payoutViewController, animated:true)*/
-            var payoutRequestListDetailViewController = PayoutEarningsViewController(nibName: "PayoutEarningsViewController", bundle: nil)
-            //self.navigationController?.presentViewController(payoutRequestListDetailViewController, animated: true, completion: nil)
-            payoutRequestListDetailViewController.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(payoutRequestListDetailViewController, animated:true)
+            let payoutVC = PayoutViewController(nibName: "PayoutViewController", bundle: nil)
+            payoutVC.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(payoutVC, animated: true)
         } else if indexPath.row == 7 {
             var followerController = FollowersViewController(nibName: "FollowersViewController", bundle: nil)
             self.navigationController?.pushViewController(followerController, animated:true)
