@@ -25,6 +25,12 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     
     var dimView: UIView!
     
+    var timer = NSTimer()
+    var cooldown: Int = 60
+    
+    
+    // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -141,6 +147,19 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         self.availableBalanceView.setAvailableBalance(balanceRecordModel.availableBalance)
     }
     
+    func startCooldown() {
+        cooldown--
+        if cooldown == 0 {
+            timer.invalidate()
+            cooldown = 60
+            self.confimationCodeView.getCodeButton.setTitle("GET CODE", forState: .Normal)
+            self.confimationCodeView.getCodeButton.userInteractionEnabled = true
+        } else {
+            self.confimationCodeView.getCodeButton.setTitle("00:" + String(cooldown), forState: .Normal)
+        }
+        
+    }
+    
     // validate requirements
     
     func didMeetRequirements() -> Bool {
@@ -205,6 +224,42 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         })
     }
     
+    func fireGetCode() {
+        
+        let parameters: NSDictionary = ["access_token": /*SessionManager.accessToken()*/"NTliMzM0ZjQzMGE1OWMzNmQzZWMwODIwNTk5Mzc0MmVhNzE3YmNhYmQxM2ZjMGUyYzlmZGQ3N2IzZTdlMzg2Yg", "type": "withdrawal"]
+        
+        var url: String = APIAtlas.baseUrl
+        url = url.stringByReplacingOccurrencesOfString("v1", withString: APIAtlas.OTPAuth, options: nil, range: nil)
+        println(url)
+        
+        WebServiceManager.fireOTPAuthenticatedRequestWithUrl(url, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                println(responseObject)
+                
+                self.confimationCodeView.getCodeButton.userInteractionEnabled = false
+                
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Confirmation code has been sent to your mobile number.", title: "Code Request Sent")
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("startCooldown"), userInfo: nil, repeats: true)
+                
+            } else {
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                } else {
+                    println(responseObject)
+                }
+            }
+        })
+    }
+    
     func submitWithdrawal() {
         
     }
@@ -221,14 +276,30 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     
     // MARK: - Amount View Delegate 
     func amountDidChanged(view: WithdrawAmountView) {
+        
+        if count(amountView.amountTextField.text) > 2 { // digit is greater than 2
+            
+        }
+        
         if (amountView.amountTextField.text as NSString).doubleValue >= 100.0 {
+            self.amountView.bottomLabel.text = "Available balance should be P 100.0 or above to withdraw"
+            self.amountView.bottomLabel.textColor = UIColor.redColor()
             self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
+        } else if /*Double(balanceRecordModel.availableBalance)*/0.0 < (amountView.amountTextField.text as NSString).doubleValue {
+            self.amountView.bottomLabel.text = "Withdrawal amount should be less than available balance"
+            self.amountView.bottomLabel.textColor = UIColor.redColor()
         } else {
             self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
+            self.amountView.bottomLabel.text = "P 50.00 bank charge for withdrawal below P 5,000.00"
+            self.amountView.bottomLabel.textColor = UIColor.blackColor()
         }
     }
     
     // MARK: - Confimation Code View Delegate
+    func getCodeAction(view: WithdrawConfirmationCodeView) {
+        fireGetCode()
+    }
+    
     func codeDidChanged(view: WithdrawConfirmationCodeView) {
         if self.confimationCodeView.getCodeButton.backgroundColor == UIColor.darkGrayColor() && 
             count(self.confimationCodeView.codeTextField.text) == 6 {

@@ -124,6 +124,7 @@ struct APIAtlas {
     
     // Sprint1
     static let getBalanceRecordDetails = "auth/bank/balanceRecordDetails"
+    static let OTPAuth = "v2/auth/sms/send"
     
     // Payout
     static let payoutRequestList = "auth/withdraw-list?access_token="

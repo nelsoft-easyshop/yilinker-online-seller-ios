@@ -9,11 +9,13 @@
 import UIKit
 
 protocol WithdrawConfirmationCodeViewDelegate {
+    func getCodeAction(view: WithdrawConfirmationCodeView)
     func codeDidChanged(view: WithdrawConfirmationCodeView)
 }
 
 class WithdrawConfirmationCodeView: UIView {
 
+    @IBOutlet weak var confirmationCodeLabel: UILabel!
     @IBOutlet weak var codeTextField: UITextField!
     @IBOutlet weak var getCodeButton: UIButton!
     
@@ -32,10 +34,12 @@ class WithdrawConfirmationCodeView: UIView {
         codeTextField.leftViewMode = UITextFieldViewMode.Always
         
         codeTextField.addTarget(self, action: "codeDidTextChanged", forControlEvents: UIControlEvents.EditingChanged)
+        
+        confirmationCodeLabel.required()
     }
 
     @IBAction func getCodeAction(sender: AnyObject) {
-        
+        delegate?.getCodeAction(self)
     }
     
     func keyboardDoneAction() {
