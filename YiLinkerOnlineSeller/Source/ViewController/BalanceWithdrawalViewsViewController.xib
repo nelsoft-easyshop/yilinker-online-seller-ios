@@ -9,6 +9,9 @@
             <string>Panton-Bold</string>
             <string>Panton-Bold</string>
         </mutableArray>
+        <mutableArray key="Panton Light.otf">
+            <string>Panton-Light</string>
+        </mutableArray>
         <mutableArray key="Panton.otf">
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
@@ -87,13 +90,14 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" placeholder="  Amount must be atleast P 100.00" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4gP-sA-5Ve">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Amount must be atleast P 100.00" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4gP-sA-5Ve">
                     <rect key="frame" x="8" y="20" width="304" height="30"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="X8p-dS-F4T"/>
                     </constraints>
-                    <attributedString key="attributedText"/>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" name="Panton-Light" family="Panton" pointSize="18"/>
                     <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                 </textField>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Withdrawal Amount: *" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HO5-5o-cK9">
@@ -133,9 +137,9 @@
                     <rect key="frame" x="0.0" y="29" width="184" height="49"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bank-deposit" translatesAutoresizingMaskIntoConstraints="NO" id="HII-tU-330">
-                            <rect key="frame" x="8" y="7" width="35" height="35"/>
+                            <rect key="frame" x="8" y="10" width="35" height="30"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="35" id="BOY-1B-haZ"/>
+                                <constraint firstAttribute="height" constant="30" id="BOY-1B-haZ"/>
                                 <constraint firstAttribute="width" constant="35" id="fhm-hx-0sK"/>
                             </constraints>
                         </imageView>
@@ -159,10 +163,10 @@
                         <constraint firstAttribute="trailing" secondItem="dMs-7R-k2V" secondAttribute="trailing" constant="8" id="1xc-1M-86w"/>
                         <constraint firstItem="HII-tU-330" firstAttribute="leading" secondItem="ORd-eq-gKd" secondAttribute="leading" constant="8" id="7WB-G2-ThQ"/>
                         <constraint firstItem="snk-Od-fZT" firstAttribute="leading" secondItem="HII-tU-330" secondAttribute="trailing" constant="8" id="7gr-Nt-lVI"/>
-                        <constraint firstAttribute="bottom" secondItem="HII-tU-330" secondAttribute="bottom" constant="7" id="JVO-W6-GoS"/>
+                        <constraint firstAttribute="bottom" secondItem="HII-tU-330" secondAttribute="bottom" constant="9" id="JVO-W6-GoS"/>
                         <constraint firstAttribute="bottom" secondItem="snk-Od-fZT" secondAttribute="bottom" constant="14" id="Nt0-nX-esi"/>
                         <constraint firstItem="snk-Od-fZT" firstAttribute="top" secondItem="ORd-eq-gKd" secondAttribute="top" constant="14" id="Y2P-Zc-gjJ"/>
-                        <constraint firstItem="HII-tU-330" firstAttribute="top" secondItem="ORd-eq-gKd" secondAttribute="top" constant="7" id="YzD-LM-q4m"/>
+                        <constraint firstItem="HII-tU-330" firstAttribute="top" secondItem="ORd-eq-gKd" secondAttribute="top" constant="10" id="YzD-LM-q4m"/>
                         <constraint firstItem="dMs-7R-k2V" firstAttribute="top" secondItem="ORd-eq-gKd" secondAttribute="top" constant="16" id="dNw-nm-EJ7"/>
                         <constraint firstAttribute="height" constant="49" id="keo-d3-wB4"/>
                         <constraint firstItem="dMs-7R-k2V" firstAttribute="leading" secondItem="snk-Od-fZT" secondAttribute="trailing" constant="17" id="nJX-6f-4qF"/>
@@ -172,9 +176,9 @@
                     <rect key="frame" x="186" y="29" width="183" height="49"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bank-cheque" translatesAutoresizingMaskIntoConstraints="NO" id="CWE-y0-1oQ">
-                            <rect key="frame" x="8" y="7" width="40" height="35"/>
+                            <rect key="frame" x="8" y="10" width="40" height="30"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="35" id="Wht-wK-Bap"/>
+                                <constraint firstAttribute="height" constant="30" id="Wht-wK-Bap"/>
                                 <constraint firstAttribute="width" constant="40" id="rht-rj-Ikm"/>
                             </constraints>
                         </imageView>
@@ -202,8 +206,8 @@
                         <constraint firstAttribute="height" constant="49" id="SYb-We-by3"/>
                         <constraint firstItem="YMi-an-Vc5" firstAttribute="top" secondItem="A4T-Ca-z5R" secondAttribute="top" constant="16" id="eOw-wO-hzP"/>
                         <constraint firstAttribute="bottom" secondItem="YMi-an-Vc5" secondAttribute="bottom" constant="16" id="enR-ya-wG5"/>
-                        <constraint firstItem="CWE-y0-1oQ" firstAttribute="top" secondItem="A4T-Ca-z5R" secondAttribute="top" constant="7" id="gI2-K3-H7d"/>
-                        <constraint firstAttribute="bottom" secondItem="CWE-y0-1oQ" secondAttribute="bottom" constant="7" id="p5t-bQ-6dh"/>
+                        <constraint firstItem="CWE-y0-1oQ" firstAttribute="top" secondItem="A4T-Ca-z5R" secondAttribute="top" constant="10" id="gI2-K3-H7d"/>
+                        <constraint firstAttribute="bottom" secondItem="CWE-y0-1oQ" secondAttribute="bottom" constant="9" id="p5t-bQ-6dh"/>
                         <constraint firstItem="K2h-Mq-z3N" firstAttribute="top" secondItem="A4T-Ca-z5R" secondAttribute="top" constant="14" id="rNR-0l-ipP"/>
                     </constraints>
                 </view>

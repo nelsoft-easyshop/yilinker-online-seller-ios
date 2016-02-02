@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WithdrawTableViewController: UITableViewController, AvailableBalanceDelegate {
+class WithdrawTableViewController: UITableViewController, AvailableBalanceDelegate, WithdrawProceedViewDelegate {
     
     var headerView: UIView!
     var availableBalanceView: WithdrawAvailableBalanceView!
@@ -22,6 +22,8 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     var newFrame: CGRect!
     
     var balanceRecordModel: BalanceRecordModel!
+    
+    var dimView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,6 +94,7 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     func getProceedView() -> WithdrawProceedView {
         if self.proceedView == nil {
             self.proceedView = XibHelper.puffViewWithNibName("BalanceWithdrawalViewsViewController", index: 6) as! WithdrawProceedView
+            self.proceedView.delegate = self
         }
         return self.proceedView
     }
@@ -176,6 +179,27 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         self.navigationController?.pushViewController(payoutSummary, animated: true)
     }
     
+    
+    // MARK: - Proceed View Delegate
+    
+    func showConfimationModal(view: WithdrawProceedView) {
+        var withdrawModal = WithdrawModalViewController(nibName: "WithdrawModalViewController", bundle: nil)
+//        withdrawModal.delegate = self
+        withdrawModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        withdrawModal.providesPresentationContextTransitionStyle = true
+        withdrawModal.definesPresentationContext = true
+        withdrawModal.view.backgroundColor = UIColor.clearColor()
+        self.tabBarController?.presentViewController(withdrawModal, animated: true, completion: nil)
+        
+//        dimView = UIView(frame: self.view.bounds)
+//        dimView.backgroundColor = .blackColor()
+//        dimView.alpha = 0.0
+//        self.navigationController?.navigationBar.addSubview(dimView)
+//        
+//        UIView.animateWithDuration(0.25, animations: {
+//            self.dimView.alpha = 0.60
+//        })
+    }
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {

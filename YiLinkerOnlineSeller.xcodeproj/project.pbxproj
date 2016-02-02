@@ -241,6 +241,8 @@
 		26C2854D1B91C21A005EBD3A /* ProductManagementCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C2854B1B91C21A005EBD3A /* ProductManagementCollectionViewCell.swift */; };
 		26C2854E1B91C21A005EBD3A /* ProductManagementCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26C2854C1B91C21A005EBD3A /* ProductManagementCollectionViewCell.xib */; };
 		26D2BB9F1C5F596C00485F27 /* ParseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D2BB9E1C5F596C00485F27 /* ParseHelper.swift */; };
+		26D2BBA21C60424100485F27 /* WithdrawModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D2BBA01C60424100485F27 /* WithdrawModalViewController.swift */; };
+		26D2BBA31C60424100485F27 /* WithdrawModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D2BBA11C60424100485F27 /* WithdrawModalViewController.xib */; };
 		26DB062B1B97F9EB00D38EA8 /* RemovedItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DB06291B97F9EB00D38EA8 /* RemovedItemTableViewCell.swift */; };
 		26DB062C1B97F9EB00D38EA8 /* RemovedItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DB062A1B97F9EB00D38EA8 /* RemovedItemTableViewCell.xib */; };
 		26DB06351B98BF2C00D38EA8 /* TransactionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DB062F1B98BF2C00D38EA8 /* TransactionCollectionViewCell.swift */; };
@@ -912,6 +914,8 @@
 		26C2854B1B91C21A005EBD3A /* ProductManagementCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductManagementCollectionViewCell.swift; sourceTree = "<group>"; };
 		26C2854C1B91C21A005EBD3A /* ProductManagementCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductManagementCollectionViewCell.xib; path = ../ViewController/ProductManagementCollectionViewCell.xib; sourceTree = "<group>"; };
 		26D2BB9E1C5F596C00485F27 /* ParseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseHelper.swift; sourceTree = "<group>"; };
+		26D2BBA01C60424100485F27 /* WithdrawModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithdrawModalViewController.swift; sourceTree = "<group>"; };
+		26D2BBA11C60424100485F27 /* WithdrawModalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WithdrawModalViewController.xib; sourceTree = "<group>"; };
 		26DB06291B97F9EB00D38EA8 /* RemovedItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemovedItemTableViewCell.swift; sourceTree = "<group>"; };
 		26DB062A1B97F9EB00D38EA8 /* RemovedItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemovedItemTableViewCell.xib; sourceTree = "<group>"; };
 		26DB062F1B98BF2C00D38EA8 /* TransactionCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionCollectionViewCell.swift; path = YiLinkerOnlineSeller/Source/ViewController/TransactionCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -1822,6 +1826,8 @@
 				F7E4BAA21C5F236C0019A309 /* PayoutEarningsViewController.xib */,
 				F7E4BAAB1C5F36770019A309 /* PayoutEarningsTypeViewController.swift */,
 				F7E4BAAC1C5F36770019A309 /* PayoutEarningsTypeViewController.xib */,
+				26D2BBA01C60424100485F27 /* WithdrawModalViewController.swift */,
+				26D2BBA11C60424100485F27 /* WithdrawModalViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2551,6 +2557,7 @@
 				F7C40FB71B983C410091C16C /* ChangeAddressCollectionViewCell.xib in Resources */,
 				26DB06361B98BF2C00D38EA8 /* TransactionCollectionViewCell.xib in Resources */,
 				F79403011BC00D6E00CD21DD /* FilterHeaderSectiionViewController.xib in Resources */,
+				26D2BBA31C60424100485F27 /* WithdrawModalViewController.xib in Resources */,
 				0CF28EF41B8CA2E9005B2E54 /* Black Italic.otf in Resources */,
 				79EF7AC41B99F7060082CD35 /* TransactionProductTableViewCell.xib in Resources */,
 				F7C40FB31B983C310091C16C /* ChangeAddressViewController.xib in Resources */,
@@ -2732,6 +2739,7 @@
 				F7C40F651B983AD10091C16C /* ChangeBankAccountViewController.swift in Sources */,
 				0C65F8D41B8E089200504D86 /* ProductUploadQuantityTableViewCell.swift in Sources */,
 				0CAB52A51B92023E00EA441A /* CategoryModel.swift in Sources */,
+				26D2BBA21C60424100485F27 /* WithdrawModalViewController.swift in Sources */,
 				F7C40F691B983B120091C16C /* ChangeMobileNumberViewController.swift in Sources */,
 				B7BADAFF1BA563FF005F59F9 /* TextViewAutoHeight.swift in Sources */,
 				0CAB52A11B91F42300EA441A /* ConditionModel.swift in Sources */,

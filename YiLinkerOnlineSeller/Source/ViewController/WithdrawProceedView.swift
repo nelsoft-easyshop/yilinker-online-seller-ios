@@ -8,9 +8,15 @@
 
 import UIKit
 
+protocol WithdrawProceedViewDelegate {
+    func showConfimationModal(view: WithdrawProceedView)
+}
+
 class WithdrawProceedView: UIView {
 
     @IBOutlet weak var proceedButton: UIButton!
+    
+    var delegate: WithdrawProceedViewDelegate?
     
     override func awakeFromNib() {
         self.frame.size.width = UIScreen.mainScreen().bounds.width
@@ -18,7 +24,7 @@ class WithdrawProceedView: UIView {
     }
 
     @IBAction func proceedAction(sender: AnyObject) {
-    
+        delegate?.showConfimationModal(self)
     }
 
 }

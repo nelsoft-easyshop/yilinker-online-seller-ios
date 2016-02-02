@@ -10,26 +10,42 @@ import UIKit
 
 class WithdrawModalViewController: UIViewController {
 
+    @IBOutlet weak var dimView: UIView!
+    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var headerLabel: UILabel!
+    @IBOutlet weak var bodyLabel: UILabel!
+    @IBOutlet weak var requestedAmountLabel: UILabel!
+    @IBOutlet weak var bankChargeLabel: UILabel!
+    @IBOutlet weak var amountToBeReceivedLabel: UILabel!
+    @IBOutlet weak var buttonContainerView: UIView!
+    @IBOutlet weak var yesButton: UIButton!
+    @IBOutlet weak var noButton: UIButton!
+    
+    // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        self.containerView.layer.cornerRadius = 3.0
+        self.yesButton.layer.cornerRadius = 5.0
+        self.noButton.layer.cornerRadius = 5.0
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView.alpha = 0.5
+        })
+        
     }
-    */
 
+    @IBAction func yesAction(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func noAction(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 }
