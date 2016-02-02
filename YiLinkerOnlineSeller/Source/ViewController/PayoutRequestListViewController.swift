@@ -9,7 +9,7 @@
 import UIKit
 
 struct PayoutRequestList {
-    static let kNumberOfSections: Int = 0
+    static let kNumberOfSections: Int = 1
     static let kRowHeight: CGFloat = 65
 }
 
@@ -144,6 +144,7 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier(PayoutRequestListTableViewCell.listNibNameAndIdentifier(), forIndexPath: indexPath) as! PayoutRequestListTableViewCell
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
         
         if self.requestListModel.count != 0 {
             cell.dateLabel.text = self.requestListModel[indexPath.row].date
@@ -161,7 +162,7 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
             
             if self.requestListModel[indexPath.row].status == "completed" {
                 cell.statusView.backgroundColor = Constants.Colors.completedColor
-            } else if self.requestListModel[indexPath.row].status == "tentative" {
+            } else if self.requestListModel[indexPath.row].status == "Pending" {
                 cell.statusView.backgroundColor = Constants.Colors.tentativeColor
             } else {
                 cell.statusView.backgroundColor = Constants.Colors.inProgressColor
@@ -179,7 +180,8 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var payoutRequestListDetailViewController: PayoutRequestListDetailViewController = PayoutRequestListDetailViewController(nibName: "PayoutRequestListDetailViewController", bundle: nil)
-        self.navigationController?.presentViewController(payoutRequestListDetailViewController, animated: true, completion: nil)
+        payoutRequestListDetailViewController.payoutRequestModel = self.requestListModel[indexPath.row]
+        self.navigationController?.pushViewController(payoutRequestListDetailViewController, animated: true)
     }
     
     func scrollViewDidEndDragging(aScrollView: UIScrollView, willDecelerate decelerate: Bool) {
