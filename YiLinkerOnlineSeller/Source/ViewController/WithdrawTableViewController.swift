@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WithdrawTableViewController: UITableViewController, AvailableBalanceDelegate, WithdrawProceedViewDelegate {
+class WithdrawTableViewController: UITableViewController, AvailableBalanceDelegate, WithdrawAmountViewDelegate, WithdrawConfirmationCodeViewDelegate, WithdrawProceedViewDelegate {
     
     var headerView: UIView!
     var availableBalanceView: WithdrawAvailableBalanceView!
@@ -59,6 +59,7 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     func getAmountView() -> WithdrawAmountView {
         if self.amountView == nil {
             self.amountView = XibHelper.puffViewWithNibName("BalanceWithdrawalViewsViewController", index: 1) as! WithdrawAmountView
+            self.amountView.delegate = self
         }
         return self.amountView
     }
@@ -87,6 +88,7 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     func getConfimationCodeView() -> WithdrawConfirmationCodeView {
         if self.confimationCodeView == nil {
             self.confimationCodeView = XibHelper.puffViewWithNibName("BalanceWithdrawalViewsViewController", index: 5) as! WithdrawConfirmationCodeView
+            self.confimationCodeView.delegate = self
         }
         return self.confimationCodeView
     }
@@ -139,6 +141,42 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         self.availableBalanceView.setAvailableBalance(balanceRecordModel.availableBalance)
     }
     
+    // validate requirements
+    
+    func didMeetRequirements() -> Bool {
+        
+        if self.amountView.amountTextField.text == "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Amount is required.", title: "Unable to Proceed")
+            return false
+        } else if (self.amountView.amountTextField.text as NSString).doubleValue < 100.0 {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Amount must be higher or equal than P100.0.", title: "Unable to Proceed")
+            return false
+        }
+        
+        return true
+    }
+    
+    // show confirmation modal
+    
+    func showConfirmationModal() {
+        var withdrawModal = WithdrawModalViewController(nibName: "WithdrawModalViewController", bundle: nil)
+        //        withdrawModal.delegate = self
+        withdrawModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        withdrawModal.providesPresentationContextTransitionStyle = true
+        withdrawModal.definesPresentationContext = true
+        withdrawModal.view.backgroundColor = UIColor.clearColor()
+        self.tabBarController?.presentViewController(withdrawModal, animated: true, completion: nil)
+        
+        //        dimView = UIView(frame: self.view.bounds)
+        //        dimView.backgroundColor = .blackColor()
+        //        dimView.alpha = 0.0
+        //        self.navigationController?.navigationBar.addSubview(dimView)
+        //
+        //        UIView.animateWithDuration(0.25, animations: {
+        //            self.dimView.alpha = 0.60
+        //        })
+    }
+    
     // MARK: - Requests
     
     func fireGetWithdrawalBalance() {
@@ -179,27 +217,44 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         self.navigationController?.pushViewController(payoutSummary, animated: true)
     }
     
+    // MARK: - Amount View Delegate 
+    func amountDidChanged(view: WithdrawAmountView) {
+        if (amountView.amountTextField.text as NSString).doubleValue >= 100.0 {
+            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
+        } else {
+            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
+        }
+    }
+    
+    // MARK: - Confimation Code View Delegate
+    func codeDidChanged(view: WithdrawConfirmationCodeView) {
+        if self.confimationCodeView.getCodeButton.backgroundColor == UIColor.darkGrayColor() && 
+            count(self.confimationCodeView.codeTextField.text) == 6 {
+            self.proceedView.proceedButton.backgroundColor = Constants.Colors.pmYesGreenColor
+        } else {
+            self.proceedView.proceedButton.backgroundColor = UIColor.lightGrayColor()
+        }
+    }
     
     // MARK: - Proceed View Delegate
-    
-    func showConfimationModal(view: WithdrawProceedView) {
-        var withdrawModal = WithdrawModalViewController(nibName: "WithdrawModalViewController", bundle: nil)
-//        withdrawModal.delegate = self
-        withdrawModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        withdrawModal.providesPresentationContextTransitionStyle = true
-        withdrawModal.definesPresentationContext = true
-        withdrawModal.view.backgroundColor = UIColor.clearColor()
-        self.tabBarController?.presentViewController(withdrawModal, animated: true, completion: nil)
+    func proceedAction(view: WithdrawProceedView) {
         
-//        dimView = UIView(frame: self.view.bounds)
-//        dimView.backgroundColor = .blackColor()
-//        dimView.alpha = 0.0
-//        self.navigationController?.navigationBar.addSubview(dimView)
-//        
-//        UIView.animateWithDuration(0.25, animations: {
-//            self.dimView.alpha = 0.60
-//        })
+        if didMeetRequirements() {
+            showConfirmationModal()
+        } else {
+            
+        }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {

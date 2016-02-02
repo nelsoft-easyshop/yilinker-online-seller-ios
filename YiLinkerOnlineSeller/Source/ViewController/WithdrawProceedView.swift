@@ -9,7 +9,7 @@
 import UIKit
 
 protocol WithdrawProceedViewDelegate {
-    func showConfimationModal(view: WithdrawProceedView)
+    func proceedAction(view: WithdrawProceedView)
 }
 
 class WithdrawProceedView: UIView {
@@ -21,10 +21,13 @@ class WithdrawProceedView: UIView {
     override func awakeFromNib() {
         self.frame.size.width = UIScreen.mainScreen().bounds.width
         self.proceedButton.layer.cornerRadius = 5.0
+//        self.proceedButton.backgroundColor = .lightGrayColor()
     }
 
     @IBAction func proceedAction(sender: AnyObject) {
-        delegate?.showConfimationModal(self)
+        if proceedButton.backgroundColor != UIColor.lightGrayColor() {
+            delegate?.proceedAction(self)
+        }
     }
 
 }

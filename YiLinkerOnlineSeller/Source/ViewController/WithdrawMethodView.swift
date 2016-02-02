@@ -18,7 +18,12 @@ class WithdrawMethodView: UIView {
     override func awakeFromNib() {
         self.frame.size.width = UIScreen.mainScreen().bounds.width
         self.depositView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "depositAction:"))
-        self.chequeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "chequeAction:"))
+        
+        if SessionManager.isSeller() {
+            self.chequeView.backgroundColor = .lightGrayColor()
+        } else {
+            self.chequeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "chequeAction:"))
+        }
     }
     
     

@@ -8,10 +8,19 @@
 
 import UIKit
 
-class WithdrawAmountView: UIView, UITextFieldDelegate {
+protocol WithdrawAmountViewDelegate {
+    func amountDidChanged(view: WithdrawAmountView)
+}
 
+class WithdrawAmountView: UIView, UITextFieldDelegate {
+    
+    @IBOutlet weak var aboveLabel: UILabel!
     @IBOutlet weak var amountTextField: UITextField!
     @IBOutlet weak var bottomLabel: UILabel!
+    
+    var delegate: WithdrawAmountViewDelegate?
+    
+    var availableBalanceView: WithdrawAvailableBalanceView!
     
     override func awakeFromNib() {
         self.frame.size.width = UIScreen.mainScreen().bounds.width
@@ -21,6 +30,20 @@ class WithdrawAmountView: UIView, UITextFieldDelegate {
         leftPadding.backgroundColor = .whiteColor()
         amountTextField.leftView = leftPadding
         amountTextField.leftViewMode = UITextFieldViewMode.Always
+
+        aboveLabel.required()
+        
+        amountTextField.addTarget(self, action: "amountDidTextChanged", forControlEvents: UIControlEvents.EditingChanged)
+        
+        amountTextField.addToolBarWithDoneTarget(self, done: "keyboardDoneAction")
+    }
+    
+    func amountDidTextChanged() {
+        delegate?.amountDidChanged(self)
+    }
+    
+    func keyboardDoneAction() {
+        amountTextField.resignFirstResponder()
     }
     
 }
