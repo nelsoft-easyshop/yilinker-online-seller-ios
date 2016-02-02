@@ -490,7 +490,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             /*let payoutViewController: PayoutRequestListViewController = PayoutRequestListViewController(nibName: "PayoutRequestListViewController", bundle: nil)
             payoutViewController.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(payoutViewController, animated:true)*/
-            var payoutRequestListDetailViewController = PayoutEarningsViewController(nibName: "PayoutEarningsViewController", bundle: nil)
+            var payoutRequestListDetailViewController = PayoutRequestListViewController(nibName: "PayoutRequestListViewController", bundle: nil)
             //self.navigationController?.presentViewController(payoutRequestListDetailViewController, animated: true, completion: nil)
             payoutRequestListDetailViewController.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(payoutRequestListDetailViewController, animated:true)
