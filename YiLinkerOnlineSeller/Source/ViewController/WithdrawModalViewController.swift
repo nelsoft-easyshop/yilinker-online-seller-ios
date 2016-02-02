@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol WithdrawModalViewControllerDelegate {
+    func modalYesAction(controller: WithdrawModalViewController)
+}
+
 class WithdrawModalViewController: UIViewController {
 
     @IBOutlet weak var dimView: UIView!
@@ -20,6 +24,8 @@ class WithdrawModalViewController: UIViewController {
     @IBOutlet weak var buttonContainerView: UIView!
     @IBOutlet weak var yesButton: UIButton!
     @IBOutlet weak var noButton: UIButton!
+    
+    var delegate: WithdrawModalViewControllerDelegate?
     
     // MARK: - View Life Cycle
     
@@ -43,6 +49,7 @@ class WithdrawModalViewController: UIViewController {
 
     @IBAction func yesAction(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
+        delegate?.modalYesAction(self)
     }
     
     @IBAction func noAction(sender: AnyObject) {

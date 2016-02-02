@@ -28,7 +28,6 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     var timer = NSTimer()
     var cooldown: Int = 60
     
-    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -226,7 +225,7 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     
     func fireGetCode() {
         
-        let parameters: NSDictionary = ["access_token": /*SessionManager.accessToken()*/"NTliMzM0ZjQzMGE1OWMzNmQzZWMwODIwNTk5Mzc0MmVhNzE3YmNhYmQxM2ZjMGUyYzlmZGQ3N2IzZTdlMzg2Yg", "type": "withdrawal"]
+        let parameters: NSDictionary = ["access_token": /*SessionManager.accessToken()*/"ZTJkMjVmYmEyNjExODcyMDViZmZmMTkwZTVlM2QxODY2OThjYzNmOThkZGFlODQ1MjQwY2I0MGMzYjNmYzIyNA", "type": "withdrawal"]
         
         var url: String = APIAtlas.baseUrl
         url = url.stringByReplacingOccurrencesOfString("v1", withString: APIAtlas.OTPAuth, options: nil, range: nil)
@@ -260,8 +259,39 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         })
     }
     
-    func submitWithdrawal() {
+    func fireSubmitWithdrawal() {
+        var method: String = "bank"
         
+        if !self.methodView.chequeCheckImageView.hidden {
+            method = "cheque"
+        }
+        
+        let parameters: NSDictionary = ["access_token": "ZTJkMjVmYmEyNjExODcyMDViZmZmMTkwZTVlM2QxODY2OThjYzNmOThkZGFlODQ1MjQwY2I0MGMzYjNmYzIyNA",
+            "withdrawalMethod": method,
+            "otp": self.confimationCodeView.codeTextField.text,
+            "amount": self.amountView.amountTextField.text]
+        
+        WebServiceManager.fireSubmitWithdrawalRequestWithUrl(APIAtlas.submitWithdrawalRequest, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                println(responseObject)
+            } else {
+                println(responseObject)
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                } else {
+                    println(responseObject)
+                }
+            }
+        })
     }
     
     // MARK: - Delegates
@@ -311,12 +341,12 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     
     // MARK: - Proceed View Delegate
     func proceedAction(view: WithdrawProceedView) {
-        
-        if didMeetRequirements() {
-            showConfirmationModal()
-        } else {
-            
-        }
+        fireSubmitWithdrawal()
+//        if didMeetRequirements() {
+//            showConfirmationModal()
+//        } else {
+//            
+//        }
     }
     
     
