@@ -87,7 +87,7 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     // MARK: -
-    // MARK: - Alert view
+    // MARK: - Show Alert view
     
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
