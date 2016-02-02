@@ -36,15 +36,18 @@ class PayoutRequestListDetailViewController: UIViewController, UITableViewDelega
     // Models
     var payoutRequestModel: PayoutRequestListModel = PayoutRequestListModel(date: "", withdrawalMethod: "", totalAmount: "", charge: "", netAmount: "", currencyCode: "", status: "", payTo: "", bankName: "", accountNumber: "", accountName: "")
     
-    // Global varialbles
+    // Global variables
     var payoutRequestDetails: [String] = [PayoutRequestListDetailStrings.kDate, PayoutRequestListDetailStrings.kMethod, PayoutRequestListDetailStrings.kRequested, PayoutRequestListDetailStrings.kBankCharge, PayoutRequestListDetailStrings.kAmount, PayoutRequestListDetailStrings.kStatus]
     var bankDetails: [String] = [PayoutRequestListDetailStrings.kBankAccountName, PayoutRequestListDetailStrings.kBankAccountNumber, PayoutRequestListDetailStrings.kBankName]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Set navigation bar title
         self.title = "Request Detail"
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        
         self.backButton()
         self.registerCell()
         
@@ -66,8 +69,9 @@ class PayoutRequestListDetailViewController: UIViewController, UITableViewDelega
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: Navigation bar
-    // MARK: - Add Back Button in navigation bar
+    // MARK: -
+    // MARK: Navigation bar - Add Back Button in navigation bar
+    
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -80,12 +84,16 @@ class PayoutRequestListDetailViewController: UIViewController, UITableViewDelega
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
-    //MARK: - Navigation bar back button action
+    // MARK: -
+    // MARK: - Navigation bar back button action
+    
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
 
-    // MARK: - Regiter nib files
+    // MARK: -
+    // MARK: - Register Cell
+    
     func registerCell() {
         let nibNameAndIdentifierListItem: UINib = UINib(nibName: PayoutRequestListItemTableViewCell.listItemNibNameAndIdentifier(), bundle: nil)
         self.tableView.registerNib(nibNameAndIdentifierListItem, forCellReuseIdentifier: PayoutRequestListItemTableViewCell.listItemNibNameAndIdentifier())
@@ -97,6 +105,7 @@ class PayoutRequestListDetailViewController: UIViewController, UITableViewDelega
         self.tableView.registerNib(nibNameAndIdentifierListBankHeader, forCellReuseIdentifier: PayoutRequestListBankDetailHeaderTableViewCell.bankHeaderNibNameAndIdentifier())
     }
     
+    // MARK: -
     // MARK: - Table view data source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
