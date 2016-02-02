@@ -18,10 +18,15 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
     let cellNibName: String = "PayoutRequestListTableViewCell"
     
     // Models
-    var requestListModel: PayoutRequestListModel?
+    var requestListModel: [PayoutRequestListModel] = []
     
     // Global Variables
     var hud: MBProgressHUD?
+    
+    //Boolean - used ad indicator for pagination
+    var isPageEnd: Bool = false
+    //Integer - used to store number of page 1 to ...
+    var page: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,12 +36,19 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
         self.backButton()
         self.footerView()
         self.registerCell()
-        self.fireRequestList()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.requestListModel.removeAll(keepCapacity: false)
+        self.page = 0
+        self.isPageEnd = false
+        self.fireRequestList()
+        //return true
     }
     
     // MARK: Navigation bar
@@ -110,8 +122,8 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        if self.requestListModel != nil {
-            return self.requestListModel!.date.count
+        if self.requestListModel.count != 0 {
+            return self.requestListModel.count
         } else {
             return 0
         }
@@ -120,21 +132,21 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier(self.cellIdentifier, forIndexPath: indexPath) as! PayoutRequestListTableViewCell
         
-        if self.requestListModel != nil {
-            cell.dateLabel.text = self.requestListModel!.date[indexPath.row]
-            if self.requestListModel!.withdrawalMethod[indexPath.row] == "bank" {
-                cell.requestDetailLabel.text =   "Bank Deposit | \(self.requestListModel!.totalAmount[indexPath.row].formatToTwoDecimal().formatToPeso())"
+        if self.requestListModel.count != 0 {
+            cell.dateLabel.text = self.requestListModel[indexPath.row].date2
+            if self.requestListModel[indexPath.row].bankName2 == "bank" {
+                cell.requestDetailLabel.text =   "Bank Deposit | \(self.requestListModel[indexPath.row].totalAmount2.formatToTwoDecimal().formatToPeso())"
             } else {
-                cell.requestDetailLabel.text =   "Bank Cheque | \(self.requestListModel!.totalAmount[indexPath.row].formatToTwoDecimal().formatToPeso())"
+                cell.requestDetailLabel.text =   "Bank Cheque | \(self.requestListModel[indexPath.row].totalAmount2.formatToTwoDecimal().formatToPeso())"
             }
             
-            if self.requestListModel!.charge[indexPath.row] != "0.0000" {
-                cell.bankChargeLabel.text = "Bank Charge: \(self.requestListModel!.charge[indexPath.row].formatToTwoDecimal().formatToPeso())"
+            if self.requestListModel[indexPath.row].charge2 != "0.0000" {
+                cell.bankChargeLabel.text = "Bank Charge: \(self.requestListModel[indexPath.row].charge2.formatToTwoDecimal().formatToPeso())"
             } else {
                 cell.bankChargeLabel.hidden = true
             }
             
-            cell.statusLabel.text = (self.requestListModel!.status[indexPath.row]).uppercaseString
+            cell.statusLabel.text = (self.requestListModel[indexPath.row].status2).uppercaseString
         }
         
         return cell
@@ -149,37 +161,74 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
         //self.navigationController?.pushViewController(payoutRequestListDetailViewController, animated:true)
     }
     
+    func scrollViewDidEndDragging(aScrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        var offset: CGPoint = aScrollView.contentOffset
+        var bounds: CGRect = aScrollView.bounds
+        var size: CGSize = aScrollView.contentSize
+        var inset: UIEdgeInsets = aScrollView.contentInset
+        var y: CGFloat = offset.y + bounds.size.height - inset.bottom
+        var h: CGFloat = size.height
+        var reload_distance: CGFloat = 10
+        var temp: CGFloat = h + reload_distance
+        if y > temp {
+            self.fireRequestList()
+        }
+    }
+    
     func fireRequestList() {
-        self.showHUD()
-        var parameters: NSDictionary = [:]
-        WebServiceManager.fireGetResolutionCenterRequestWithUrl(APIAtlas.payoutRequestList+"\(SessionManager.accessToken())", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
-            if successful {
-                self.requestListModel = PayoutRequestListModel.parseDataWithDictionary(responseObject)
-                self.tableView.reloadData()
-                self.hud?.hide(true)
-            } else {
-                if requestErrorType == .ResponseError {
-                    //Error in api requirements
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    self.showAlert(Constants.Localized.error, message: errorModel.message)
-                } else if requestErrorType == .AccessTokenExpired {
-                    self.fireRefreshToken()
-                } else if requestErrorType == .PageNotFound {
-                    //Page not found
-                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.tabBarController!.view)
-                } else if requestErrorType == .NoInternetConnection {
-                    //No internet connection
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.tabBarController!.view)
-                } else if requestErrorType == .RequestTimeOut {
-                    //Request timeout
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.tabBarController!.view)
-                } else if requestErrorType == .UnRecognizeError {
-                    //Unhandled error
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+        if !self.isPageEnd {
+            self.page++
+            
+            self.showHUD()
+            var parameters: NSDictionary = [:]
+            WebServiceManager.fireGetResolutionCenterRequestWithUrl(APIAtlas.payoutRequestList+"\(SessionManager.accessToken())&page=\(self.page)&perPage=15", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+                if successful {
+                    var requestList: PayoutRequestListModel?
+                    requestList = PayoutRequestListModel.parseDataWithDictionary(responseObject)
+                    
+                    if requestList!.date.count != 0 {
+                        
+                        if requestList!.date.count < 15 {
+                            self.isPageEnd = true
+                        }
+                        
+                        if successful {
+                            for i in 0..<requestList!.date.count {
+                                self.requestListModel.append(PayoutRequestListModel(date2: requestList!.date[i], withdrawalMethod2: requestList!.withdrawalMethod[i], totalAmount2: requestList!.totalAmount[i], charge2: requestList!.charge[i], netAmount2: requestList!.netAmount[i], currencyCode2: requestList!.currencyCode[i], status2: requestList!.status[i], payTo2: requestList!.payTo[i], bankName2: requestList!.bankName[i], accountNumber2: requestList!.accountNumber[i], accountName2: requestList!.accountName[i]))
+                            }
+                        } else {
+                            self.isPageEnd = true
+                        }
+                        
+                        self.tableView.hidden = false
+                    }
+                    
+                    self.tableView.reloadData()
+                    self.hud?.hide(true)
+                } else {
+                    if requestErrorType == .ResponseError {
+                        //Error in api requirements
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        self.showAlert(Constants.Localized.error, message: errorModel.message)
+                    } else if requestErrorType == .AccessTokenExpired {
+                        self.fireRefreshToken()
+                    } else if requestErrorType == .PageNotFound {
+                        //Page not found
+                        Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.tabBarController!.view)
+                    } else if requestErrorType == .NoInternetConnection {
+                        //No internet connection
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.tabBarController!.view)
+                    } else if requestErrorType == .RequestTimeOut {
+                        //Request timeout
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.tabBarController!.view)
+                    } else if requestErrorType == .UnRecognizeError {
+                        //Unhandled error
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                    }
+                    self.hud?.hide(true)
                 }
-                self.hud?.hide(true)
-            }
-        })
+            })
+        }
     }
     // MARK: POST METHOD - Refresh token
     /*
