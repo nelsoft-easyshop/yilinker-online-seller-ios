@@ -8,8 +8,15 @@
 
 import UIKit
 
+struct PayoutRequestListDetailHeaderStrings {
+    static let kDepositTo: String = StringHelper.localizedStringWithKey("PAYOUT_DEPOSIT_TO_LOCALIZE_KEY")
+}
+
 class PayoutRequestListDetailHeaderTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var depositToLabel: UILabel!
+    @IBOutlet weak var depositNameLabel: UILabel!
+    
     // Private Strings
     private static let nibNameAndIdentifier: String = "PayoutRequestListDetailHeaderTableViewCell"
     
