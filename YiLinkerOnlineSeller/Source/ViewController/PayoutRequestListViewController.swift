@@ -181,7 +181,7 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
             
             self.showHUD()
             var parameters: NSDictionary = [:]
-            WebServiceManager.fireGetResolutionCenterRequestWithUrl(APIAtlas.payoutRequestList+"\(SessionManager.accessToken())&page=\(self.page)&perPage=15", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            WebServiceManager.fireGetPayoutRequestEarningsRequestWithUrl(APIAtlas.payoutRequestList+"\(SessionManager.accessToken())&page=\(self.page)&perPage=15", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
                 if successful {
                     var requestList: PayoutRequestListModel?
                     requestList = PayoutRequestListModel.parseDataWithDictionary(responseObject)

@@ -174,7 +174,7 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
     func fireEarningGroupList() {
         self.showHUD()
         var parameters: NSDictionary = [:]
-        WebServiceManager.fireGetResolutionCenterRequestWithUrl(APIAtlas.payoutEarningsGroup+"\(SessionManager.accessToken())", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        WebServiceManager.fireGetPayoutRequestEarningsRequestWithUrl(APIAtlas.payoutEarningsGroup+"\(SessionManager.accessToken())", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 self.earningsModel = PayoutEarningsModel.parseDataWithDictionary(responseObject)
                 self.tableView.reloadData()

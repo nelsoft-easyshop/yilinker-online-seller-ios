@@ -202,7 +202,7 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
             
             self.showHUD()
             var parameters: NSDictionary = [:]
-            WebServiceManager.fireGetResolutionCenterRequestWithUrl(APIAtlas.payoutEarningsList+"\(SessionManager.accessToken())&page=\(self.page)&perPage=15", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            WebServiceManager.fireGetPayoutRequestEarningsRequestWithUrl(APIAtlas.payoutEarningsList+"\(SessionManager.accessToken())&page=\(self.page)&perPage=15", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
                 if successful {
                     if self.earningTypeId == 1 {
                         var earnings = PayoutEarningsTypeModel.parseDataWithDictionary(responseObject)
