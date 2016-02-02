@@ -10,7 +10,6 @@ import UIKit
 
 class BalanceWithdrawalViewsViewController: UIViewController {
 
-    @IBOutlet weak var numberLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
 

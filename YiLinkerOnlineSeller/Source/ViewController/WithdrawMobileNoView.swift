@@ -10,6 +10,8 @@ import UIKit
 
 class WithdrawMobileNoView: UIView {
 
+    @IBOutlet weak var numberLabel: UILabel!
+    
     override func awakeFromNib() {
         self.frame.size.width = UIScreen.mainScreen().bounds.width
     }

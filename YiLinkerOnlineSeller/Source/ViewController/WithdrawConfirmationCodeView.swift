@@ -12,8 +12,11 @@ class WithdrawConfirmationCodeView: UIView {
 
     @IBOutlet weak var codeTextField: UITextField!
     @IBOutlet weak var getCodeButton: UIButton!
+    
     override func awakeFromNib() {
         self.frame.size.width = UIScreen.mainScreen().bounds.width
+        self.codeTextField.layer.cornerRadius = 3.0
+        self.getCodeButton.layer.cornerRadius = 3.0
     }
 
     @IBAction func getCodeAction(sender: AnyObject) {
