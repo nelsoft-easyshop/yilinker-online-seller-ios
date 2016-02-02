@@ -125,7 +125,7 @@ struct APIAtlas {
     // Payout
     static let payoutRequestList = "auth/withdraw-list?access_token="
     static let payoutEarningsGroup = "auth/earning-groups?access_token="
-    static let payoutEarningsList = "auth/earning-groups?access_token="
+    static let payoutEarningsList = "auth/earning-list?access_token="
 }
 
 class APIManager: AFHTTPSessionManager {
