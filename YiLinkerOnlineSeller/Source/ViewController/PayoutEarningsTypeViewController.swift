@@ -86,11 +86,11 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
     // MARK: - Register Cell
     
     func registerCell() {
-        let nib: UINib = UINib(nibName: PayoutEarningsTypeTableViewCell.earningsTypeNibNameAndIdentifier(), bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: PayoutEarningsTypeTableViewCell.earningsTypeNibNameAndIdentifier())
+        let earningsTypeNib: UINib = UINib(nibName: PayoutEarningsTypeTableViewCell.earningsTypeNibNameAndIdentifier(), bundle: nil)
+        self.tableView.registerNib(earningsTypeNib, forCellReuseIdentifier: PayoutEarningsTypeTableViewCell.earningsTypeNibNameAndIdentifier())
         
-        let nib2: UINib = UINib(nibName: PayoutEarningsTransactionTypeTableViewCell.transactionsNibNameAndIdentifier(), bundle: nil)
-        self.tableView.registerNib(nib2, forCellReuseIdentifier: PayoutEarningsTransactionTypeTableViewCell.transactionsNibNameAndIdentifier())
+        let earningsTransactionTypeNib: UINib = UINib(nibName: PayoutEarningsTransactionTypeTableViewCell.transactionsNibNameAndIdentifier(), bundle: nil)
+        self.tableView.registerNib(earningsTransactionTypeNib, forCellReuseIdentifier: PayoutEarningsTransactionTypeTableViewCell.transactionsNibNameAndIdentifier())
     }
     
     // MARK: -
