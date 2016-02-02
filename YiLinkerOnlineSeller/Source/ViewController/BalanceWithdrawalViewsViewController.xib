@@ -26,7 +26,11 @@
         </mutableArray>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BalanceWithdrawalViewsViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BalanceWithdrawalViewsViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <connections>
+                <outlet property="numberLabel" destination="CT6-py-etW" id="kZk-4h-mqW"/>
+            </connections>
+        </placeholder>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="XSM-ng-4YJ" customClass="WithdrawAvailableBalanceView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -120,6 +124,10 @@
                 <constraint firstItem="hl4-4J-vlP" firstAttribute="top" secondItem="HO5-5o-cK9" secondAttribute="bottom" constant="28" id="lpj-mO-aGK"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="amountTextField" destination="4gP-sA-5Ve" id="CUH-Sm-jb9"/>
+                <outlet property="bottomLabel" destination="hl4-4J-vlP" id="1dN-ok-VbX"/>
+            </connections>
             <point key="canvasLocation" x="254" y="142"/>
         </view>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="egc-Ue-u1o" customClass="WithdrawMethodView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
@@ -228,6 +236,12 @@
                 <constraint firstItem="ORd-eq-gKd" firstAttribute="leading" secondItem="egc-Ue-u1o" secondAttribute="leading" id="tm8-xS-Gz1"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="chequeCheckImageView" destination="YMi-an-Vc5" id="V0J-M3-UB1"/>
+                <outlet property="chequeView" destination="A4T-Ca-z5R" id="2Wo-74-lYa"/>
+                <outlet property="depositCheckImageView" destination="dMs-7R-k2V" id="Aj6-mq-Hxq"/>
+                <outlet property="depositView" destination="ORd-eq-gKd" id="Rbz-N8-a3j"/>
+            </connections>
             <point key="canvasLocation" x="278.5" y="298"/>
         </view>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="J7h-nN-ufL" customClass="WithdrawDepositToView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
@@ -287,6 +301,10 @@
                 <constraint firstItem="HPK-ip-JI4" firstAttribute="leading" secondItem="J7h-nN-ufL" secondAttribute="leading" id="doS-uJ-vpM"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="detailsLabel" destination="Cg7-au-SUI" id="aGK-rw-UCh"/>
+                <outlet property="nameLabel" destination="xqC-Uj-OoZ" id="cE9-xo-aKc"/>
+            </connections>
             <point key="canvasLocation" x="254" y="457"/>
         </view>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -294,18 +312,6 @@
             <rect key="frame" x="0.0" y="5" width="320" height="63"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vre-wT-dSe">
-                    <rect key="frame" x="0.0" y="29" width="320" height="34"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="09271234567" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CT6-py-etW">
-                            <rect key="frame" x="8" y="6" width="304" height="21"/>
-                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MOBILE NUMBER" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PgM-Rm-bH7">
                     <rect key="frame" x="8" y="0.0" width="304" height="21"/>
                     <constraints>
@@ -315,11 +321,24 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="09271234567" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CT6-py-etW">
+                    <rect key="frame" x="0.0" y="29" width="320" height="34"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="34" id="KHo-E4-1T6"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="PgM-Rm-bH7" secondAttribute="trailing" constant="8" id="Dxa-Lo-NUf"/>
+                <constraint firstItem="CT6-py-etW" firstAttribute="leading" secondItem="7wN-Jt-zuq" secondAttribute="leading" id="PGg-oM-37n"/>
                 <constraint firstItem="PgM-Rm-bH7" firstAttribute="top" secondItem="7wN-Jt-zuq" secondAttribute="top" id="QBM-So-ydA"/>
+                <constraint firstAttribute="trailing" secondItem="CT6-py-etW" secondAttribute="trailing" id="T2e-wG-Tx8"/>
+                <constraint firstAttribute="bottom" secondItem="CT6-py-etW" secondAttribute="bottom" id="W70-kZ-G2r"/>
                 <constraint firstItem="PgM-Rm-bH7" firstAttribute="leading" secondItem="7wN-Jt-zuq" secondAttribute="leading" constant="8" id="nPM-LZ-wdx"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -349,6 +368,9 @@
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="getCodeAction:" destination="P0o-lh-jzB" eventType="touchUpInside" id="Cnq-bb-0pZ"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -363,6 +385,10 @@
                 <constraint firstItem="kwd-9Z-COw" firstAttribute="width" secondItem="Fe5-8z-MJ8" secondAttribute="width" id="s3H-eT-rw2"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="codeTextField" destination="kwd-9Z-COw" id="IPw-yD-VNe"/>
+                <outlet property="getCodeButton" destination="Fe5-8z-MJ8" id="zG0-Nz-H2T"/>
+            </connections>
             <point key="canvasLocation" x="254" y="757"/>
         </view>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Vzc-zj-ogV" customClass="WithdrawProceedView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
@@ -380,6 +406,9 @@
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="proceedAction:" destination="Vzc-zj-ogV" eventType="touchUpInside" id="tfq-tC-6n6"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -389,6 +418,9 @@
                 <constraint firstItem="AmZ-3b-t33" firstAttribute="leading" secondItem="Vzc-zj-ogV" secondAttribute="leading" constant="8" id="hup-up-8ba"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="proceedButton" destination="AmZ-3b-t33" id="WDQ-WN-BzG"/>
+            </connections>
             <point key="canvasLocation" x="254" y="933"/>
         </view>
     </objects>

@@ -10,6 +10,10 @@ import UIKit
 
 class WithdrawMethodView: UIView {
 
+    @IBOutlet weak var depositView: UIView!
+    @IBOutlet weak var chequeView: UIView!
+    @IBOutlet weak var depositCheckImageView: UIImageView!
+    @IBOutlet weak var chequeCheckImageView: UIImageView!
     override func awakeFromNib() {
         self.frame.size.width = UIScreen.mainScreen().bounds.width
     }

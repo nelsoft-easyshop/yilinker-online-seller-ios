@@ -10,8 +10,12 @@ import UIKit
 
 class WithdrawConfirmationCodeView: UIView {
 
+    @IBOutlet weak var codeTextField: UITextField!
+    @IBOutlet weak var getCodeButton: UIButton!
     override func awakeFromNib() {
         self.frame.size.width = UIScreen.mainScreen().bounds.width
     }
 
+    @IBAction func getCodeAction(sender: AnyObject) {
+    }
 }

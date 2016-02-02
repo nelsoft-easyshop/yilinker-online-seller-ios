@@ -10,8 +10,12 @@ import UIKit
 
 class WithdrawProceedView: UIView {
 
+    @IBOutlet weak var proceedButton: UIButton!
     override func awakeFromNib() {
         self.frame.size.width = UIScreen.mainScreen().bounds.width
+    }
+
+    @IBAction func proceedAction(sender: AnyObject) {
     }
 
 }

@@ -10,6 +10,8 @@ import UIKit
 
 class WithdrawAmountView: UIView {
 
+    @IBOutlet weak var amountTextField: UITextField!
+    @IBOutlet weak var bottomLabel: UILabel!
     override func awakeFromNib() {
         self.frame.size.width = UIScreen.mainScreen().bounds.width
     }
