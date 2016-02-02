@@ -148,7 +148,7 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
         
         if self.requestListModel.count != 0 {
             cell.dateLabel.text = self.requestListModel[indexPath.row].date
-            if self.requestListModel[indexPath.row].bankName == "bank" {
+            if self.requestListModel[indexPath.row].withdrawalMethod == "bank" {
                 cell.requestDetailLabel.text =   "\(PayoutRequestListStrings.kBank) | \(self.requestListModel[indexPath.row].totalAmount.formatToTwoDecimal().formatToPeso())"
             } else {
                 cell.requestDetailLabel.text =   "\(PayoutRequestListStrings.kCheque) | \(self.requestListModel[indexPath.row].totalAmount.formatToTwoDecimal().formatToPeso())"
