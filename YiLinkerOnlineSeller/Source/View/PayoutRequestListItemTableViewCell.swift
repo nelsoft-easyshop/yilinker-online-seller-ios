@@ -36,5 +36,4 @@ class PayoutRequestListItemTableViewCell: UITableViewCell {
     class func listItemNibNameAndIdentifier() -> String {
         return PayoutRequestListItemTableViewCell.nibNameAndIdentifier
     }
-    
 }

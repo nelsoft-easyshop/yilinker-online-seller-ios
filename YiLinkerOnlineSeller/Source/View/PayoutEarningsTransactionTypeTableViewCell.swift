@@ -22,14 +22,13 @@ class PayoutEarningsTransactionTypeTableViewCell: UITableViewCell {
     @IBOutlet weak var boughtByLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
-    
-    // Private Strings
-    private static let nibNameAndIdentifier: String = "PayoutEarningsTransactionTypeTableViewCell"
-    
+
     // Views
     @IBOutlet weak var statusView: DynamicRoundedView!
     
-    
+    // Private Strings
+    private static let nibNameAndIdentifier: String = "PayoutEarningsTransactionTypeTableViewCell"
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
