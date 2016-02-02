@@ -264,6 +264,7 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
                         //Unhandled error
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                     }
+                    self.tableView.hidden = true
                     self.hud?.hide(true)
                 }
             })
