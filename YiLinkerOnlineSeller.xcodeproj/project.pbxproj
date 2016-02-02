@@ -243,6 +243,8 @@
 		26D2BB9F1C5F596C00485F27 /* ParseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D2BB9E1C5F596C00485F27 /* ParseHelper.swift */; };
 		26D2BBA21C60424100485F27 /* WithdrawModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D2BBA01C60424100485F27 /* WithdrawModalViewController.swift */; };
 		26D2BBA31C60424100485F27 /* WithdrawModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D2BBA11C60424100485F27 /* WithdrawModalViewController.xib */; };
+		26D2BBA61C6080DC00485F27 /* PayoutSummaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D2BBA41C6080DC00485F27 /* PayoutSummaryTableViewCell.swift */; };
+		26D2BBA71C6080DC00485F27 /* PayoutSummaryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D2BBA51C6080DC00485F27 /* PayoutSummaryTableViewCell.xib */; };
 		26DB062B1B97F9EB00D38EA8 /* RemovedItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DB06291B97F9EB00D38EA8 /* RemovedItemTableViewCell.swift */; };
 		26DB062C1B97F9EB00D38EA8 /* RemovedItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DB062A1B97F9EB00D38EA8 /* RemovedItemTableViewCell.xib */; };
 		26DB06351B98BF2C00D38EA8 /* TransactionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DB062F1B98BF2C00D38EA8 /* TransactionCollectionViewCell.swift */; };
@@ -916,6 +918,8 @@
 		26D2BB9E1C5F596C00485F27 /* ParseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseHelper.swift; sourceTree = "<group>"; };
 		26D2BBA01C60424100485F27 /* WithdrawModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithdrawModalViewController.swift; sourceTree = "<group>"; };
 		26D2BBA11C60424100485F27 /* WithdrawModalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WithdrawModalViewController.xib; sourceTree = "<group>"; };
+		26D2BBA41C6080DC00485F27 /* PayoutSummaryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutSummaryTableViewCell.swift; sourceTree = "<group>"; };
+		26D2BBA51C6080DC00485F27 /* PayoutSummaryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutSummaryTableViewCell.xib; sourceTree = "<group>"; };
 		26DB06291B97F9EB00D38EA8 /* RemovedItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemovedItemTableViewCell.swift; sourceTree = "<group>"; };
 		26DB062A1B97F9EB00D38EA8 /* RemovedItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemovedItemTableViewCell.xib; sourceTree = "<group>"; };
 		26DB062F1B98BF2C00D38EA8 /* TransactionCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionCollectionViewCell.swift; path = YiLinkerOnlineSeller/Source/ViewController/TransactionCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -1828,6 +1832,8 @@
 				F7E4BAAC1C5F36770019A309 /* PayoutEarningsTypeViewController.xib */,
 				26D2BBA01C60424100485F27 /* WithdrawModalViewController.swift */,
 				26D2BBA11C60424100485F27 /* WithdrawModalViewController.xib */,
+				26D2BBA41C6080DC00485F27 /* PayoutSummaryTableViewCell.swift */,
+				26D2BBA51C6080DC00485F27 /* PayoutSummaryTableViewCell.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2617,6 +2623,7 @@
 				F7C40F8F1B983BA10091C16C /* VerifyNumberViewController.xib in Resources */,
 				79EDA4151B9205080037558A /* PointsEarnedTableViewCell.xib in Resources */,
 				0CF28EF81B8CA2E9005B2E54 /* Panton ExtraBold Italic.otf in Resources */,
+				26D2BBA71C6080DC00485F27 /* PayoutSummaryTableViewCell.xib in Resources */,
 				2618DD721B970E210030C6D2 /* AddSubCategoriesViewController.xib in Resources */,
 				79F20E4E1BAA878A0008A2E8 /* TransactionProductDetailsFooterView.xib in Resources */,
 				F7C40FD51B983CD90091C16C /* dropdown.png in Resources */,
@@ -2818,6 +2825,7 @@
 				79EDA40C1B9204F20037558A /* PointsTableViewCell.swift in Sources */,
 				79E633A71B9B27E70062DB14 /* NSDate+FSExtension.m in Sources */,
 				26B5B24C1B94E39A00CBDDE5 /* CCCategoryItemsView.swift in Sources */,
+				26D2BBA61C6080DC00485F27 /* PayoutSummaryTableViewCell.swift in Sources */,
 				79EDA40E1B9204FE0037558A /* PointModel.swift in Sources */,
 				792F6E521B9D44EC00F0CB03 /* MyPointsModel.swift in Sources */,
 				79EDA4021B9204B10037558A /* MyPointsTableViewController.swift in Sources */,

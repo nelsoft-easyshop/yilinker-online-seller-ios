@@ -180,7 +180,7 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     // MARK: - Requests
     
     func fireGetWithdrawalBalance() {
-        let parameters: NSDictionary = ["access_token": /*SessionManager.accessToken()*/"ZDY5ZWNlMTQyNTJjNzJlODIzNjE3YTJmNDYyZDQzMmI0MTczODRmNjZkNjZmYmZmN2YzYTE4OGIwNjUwYWNiMw", "dateTo": "", "dateFrom": "", "page": 1, "perPage": 1]
+        let parameters: NSDictionary = ["access_token": /*SessionManager.accessToken()*/"YTBhM2RiYjczMzliYTk3ZGI4ZTBiZThlYzM1YmUxNDJkZGIwMzE4N2IxOTVjNTFlYTEwYmM0M2QyZGM4NjlhYw", "dateTo": "", "dateFrom": "", "page": 1, "perPage": 1]
         
         WebServiceManager.fireGetBalanceRecordRequestWithUrl(APIAtlas.getBalanceRecordDetails, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
@@ -214,6 +214,8 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     // MARK: - Available Balance Delegate
     func gotoPayoutSummary(view: WithdrawAvailableBalanceView) {
         let payoutSummary = PayoutSummaryViewController(nibName: "PayoutSummaryViewController", bundle: nil)
+        payoutSummary.prices = [String(balanceRecordModel.totalEarning), String(balanceRecordModel.tentativeEarning), String(balanceRecordModel.totalWithdrew), String(balanceRecordModel.availableBalance)]
+        payoutSummary.inProcess = String(balanceRecordModel.totalWithdrewInProcess)
         self.navigationController?.pushViewController(payoutSummary, animated: true)
     }
     
