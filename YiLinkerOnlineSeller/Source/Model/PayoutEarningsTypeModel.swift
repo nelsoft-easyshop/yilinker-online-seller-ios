@@ -49,29 +49,33 @@ class PayoutEarningsTypeModel: NSObject {
         var currencyCode: String = ""
         var status: String = ""
         
-        if let request: AnyObject = dictionary["data"] {
-            if let value = request["earnings"] as? NSArray {
-                for subValue in value as NSArray {
-                    if let tempDate = subValue["date"] as? String {
-                        date = tempDate
+        if dictionary.isKindOfClass(NSDictionary) {
+            if let request: AnyObject = dictionary["data"] {
+                if let value = request["earnings"] as? NSArray {
+                    for subValue in value as NSArray {
+                        
+                        if let tempDate = subValue["date"] as? String {
+                            date = tempDate
+                        }
+                        
+                        if let tempTypeId = subValue["earningTypeId"] as? Int {
+                            earningTypeId = tempTypeId
+                        }
+                        
+                        if let tempAmount = subValue["amount"] as? String {
+                            amount = tempAmount
+                        }
+                        
+                        if let tempCurrencyCode = subValue["currencyCode"] as? String {
+                            currencyCode = tempCurrencyCode
+                        }
+                        
+                        if let tempStatus = subValue["status"] as? String {
+                            status = tempStatus
+                        }
+                        
+                        self.payoutEarningsTypeModel.append(PayoutEarningsTypeModel(date: date, earningTypeId: earningTypeId, amount: amount, currencyCode: currencyCode, status: status))
                     }
-                    
-                    if let tempTypeId = subValue["earningTypeId"] as? Int {
-                        earningTypeId = tempTypeId
-                    }
-                    
-                    if let tempAmount = subValue["amount"] as? String {
-                        amount = tempAmount
-                    }
-                    
-                    if let tempCurrencyCode = subValue["currencyCode"] as? String {
-                        currencyCode = tempCurrencyCode
-                    }
-                    
-                    if let tempStatus = subValue["status"] as? String {
-                        status = tempStatus
-                    }
-                    self.payoutEarningsTypeModel.append(PayoutEarningsTypeModel(date: date, earningTypeId: earningTypeId, amount: amount, currencyCode: currencyCode, status: status))
                 }
             }
         }
@@ -90,42 +94,45 @@ class PayoutEarningsTypeModel: NSObject {
         var productName: String = ""
         var transactionNo: String = ""
         
-        if let request: AnyObject = dictionary["data"] {
-            if let value = request["earnings"] as? NSArray {
-                for subValue in value as NSArray {
-                    if let tempDate = subValue["date"] as? String {
-                        date = tempDate
+        if dictionary.isKindOfClass(NSDictionary) {
+            if let request: AnyObject = dictionary["data"] {
+                if let value = request["earnings"] as? NSArray {
+                    for subValue in value as NSArray {
+                        
+                        if let tempDate = subValue["date"] as? String {
+                            date = tempDate
+                        }
+                        
+                        if let tempTypeId = subValue["earningTypeId"] as? Int {
+                            earningTypeId = tempTypeId
+                        }
+                        
+                        if let tempAmount = subValue["amount"] as? String {
+                            amount = tempAmount
+                        }
+                        
+                        if let tempCurrencyCode = subValue["currencyCode"] as? String {
+                            currencyCode = tempCurrencyCode
+                        }
+                        
+                        if let tempStatus = subValue["status"] as? String {
+                            status = tempStatus
+                        }
+                        
+                        if let tempBoughtBy = subValue["boughtBy"] as? String {
+                            boughtBy = tempBoughtBy
+                        }
+                        
+                        if let tempProductName = subValue["productName"] as? String {
+                            productName = tempProductName
+                        }
+                        
+                        if let tempTransctionNo = subValue["transactionNo"] as? String {
+                            transactionNo = tempTransctionNo
+                        }
+                        
+                        self.payoutEarningsTypeModel.append(PayoutEarningsTypeModel(date: date, earningTypeId: earningTypeId, amount: amount, currencyCode: currencyCode, status: status, boughtBy: boughtBy, productName: productName, transactionNo: transactionNo))
                     }
-                    
-                    if let tempTypeId = subValue["earningTypeId"] as? Int {
-                        earningTypeId = tempTypeId
-                    }
-                    
-                    if let tempAmount = subValue["amount"] as? String {
-                        amount = tempAmount
-                    }
-                    
-                    if let tempCurrencyCode = subValue["currencyCode"] as? String {
-                        currencyCode = tempCurrencyCode
-                    }
-                    
-                    if let tempStatus = subValue["status"] as? String {
-                        status = tempStatus
-                    }
-                    
-                    if let tempBoughtBy = subValue["boughtBy"] as? String {
-                        boughtBy = tempBoughtBy
-                    }
-                    
-                    if let tempProductName = subValue["productName"] as? String {
-                        productName = tempProductName
-                    }
-                    
-                    if let tempTransctionNo = subValue["transactionNo"] as? String {
-                        transactionNo = tempTransctionNo
-                    }
-                    
-                    self.payoutEarningsTypeModel.append(PayoutEarningsTypeModel(date: date, earningTypeId: earningTypeId, amount: amount, currencyCode: currencyCode, status: status, boughtBy: boughtBy, productName: productName, transactionNo: transactionNo))
                 }
             }
         }

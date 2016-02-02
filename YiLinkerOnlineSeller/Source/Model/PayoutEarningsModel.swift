@@ -35,6 +35,7 @@ class PayoutEarningsModel: NSObject {
             if let request: AnyObject = dictionary["data"] {
                 if let value = request["earningGroups"] as? NSArray {
                     for subValue in value as NSArray {
+                        
                         if let tempName = subValue["name"] as? String {
                             earningType = tempName
                         }
@@ -50,6 +51,7 @@ class PayoutEarningsModel: NSObject {
                         if let tempCurrencyCode = subValue["currencyCode"] as? String {
                             currencyCode = tempCurrencyCode
                         }
+                        
                         self.payoutEarningsModel.append(PayoutEarningsModel(earningType: earningType, earningTypeId: earningTypeId, earningAmount: earningAmount, currencyCode: currencyCode))
                     }
                 }
