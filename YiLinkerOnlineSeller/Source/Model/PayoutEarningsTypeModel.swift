@@ -20,8 +20,6 @@ class PayoutEarningsTypeModel: NSObject {
     var productName: String = ""
     var transactionNo: String = ""
     
-    static var payoutEarningsTypeModel: [PayoutEarningsTypeModel] = []
-    
     init(date: String, earningTypeId: Int, amount: String, currencyCode: String, status: String) {
         self.date = date as String
         self.earningTypeId = earningTypeId as Int
@@ -42,6 +40,8 @@ class PayoutEarningsTypeModel: NSObject {
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> [PayoutEarningsTypeModel] {
+        
+        var payoutEarningsTypeModel: [PayoutEarningsTypeModel] = []
         
         var date: String = ""
         var earningTypeId: Int = 0
@@ -74,16 +74,18 @@ class PayoutEarningsTypeModel: NSObject {
                             status = tempStatus
                         }
                         
-                        self.payoutEarningsTypeModel.append(PayoutEarningsTypeModel(date: date, earningTypeId: earningTypeId, amount: amount, currencyCode: currencyCode, status: status))
+                        payoutEarningsTypeModel.append(PayoutEarningsTypeModel(date: date, earningTypeId: earningTypeId, amount: amount, currencyCode: currencyCode, status: status))
                     }
                 }
             }
         }
         
-        return self.payoutEarningsTypeModel
+        return payoutEarningsTypeModel
     }
     
     class func parseTransactionDataWithDictionary(dictionary: AnyObject) -> [PayoutEarningsTypeModel] {
+        
+        var payoutEarningsTypeModel: [PayoutEarningsTypeModel] = []
         
         var date: String = ""
         var earningTypeId: Int = 0
@@ -131,12 +133,12 @@ class PayoutEarningsTypeModel: NSObject {
                             transactionNo = tempTransctionNo
                         }
                         
-                        self.payoutEarningsTypeModel.append(PayoutEarningsTypeModel(date: date, earningTypeId: earningTypeId, amount: amount, currencyCode: currencyCode, status: status, boughtBy: boughtBy, productName: productName, transactionNo: transactionNo))
+                        payoutEarningsTypeModel.append(PayoutEarningsTypeModel(date: date, earningTypeId: earningTypeId, amount: amount, currencyCode: currencyCode, status: status, boughtBy: boughtBy, productName: productName, transactionNo: transactionNo))
                     }
                 }
             }
         }
         
-        return self.payoutEarningsTypeModel
+        return payoutEarningsTypeModel
     }
 }

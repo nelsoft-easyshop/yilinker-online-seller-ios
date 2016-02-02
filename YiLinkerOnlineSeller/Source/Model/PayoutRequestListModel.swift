@@ -22,8 +22,6 @@ class PayoutRequestListModel: NSObject {
     var accountNumber: String = ""
     var accountName: String = ""
     
-    static var payoutRequestListModel: [PayoutRequestListModel] = []
-    
     init(date: String, withdrawalMethod: String, totalAmount: String, charge: String, netAmount: String, currencyCode: String, status: String, payTo: String, bankName: String, accountNumber: String, accountName: String) {
         self.date = date as String
         self.withdrawalMethod = withdrawalMethod as String
@@ -39,6 +37,8 @@ class PayoutRequestListModel: NSObject {
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> [PayoutRequestListModel] {
+        
+        var payoutRequestListModel: [PayoutRequestListModel] = []
         
         var date: String = ""
         var withdrawalMethod: String = ""
@@ -101,12 +101,12 @@ class PayoutRequestListModel: NSObject {
                             accountName = tempAccountName
                         }
                         
-                        self.payoutRequestListModel.append(PayoutRequestListModel(date: date, withdrawalMethod: withdrawalMethod, totalAmount: totalAmount, charge: charge, netAmount: netAmount, currencyCode: currencyCode, status: status, payTo: payTo, bankName: bankName, accountNumber: accountNumber, accountName: accountName))
+                        payoutRequestListModel.append(PayoutRequestListModel(date: date, withdrawalMethod: withdrawalMethod, totalAmount: totalAmount, charge: charge, netAmount: netAmount, currencyCode: currencyCode, status: status, payTo: payTo, bankName: bankName, accountNumber: accountNumber, accountName: accountName))
                     }
                 }
             }
         }
         
-        return self.payoutRequestListModel
+        return payoutRequestListModel
     }
 }

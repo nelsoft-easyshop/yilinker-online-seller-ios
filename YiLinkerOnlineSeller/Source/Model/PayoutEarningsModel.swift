@@ -15,8 +15,6 @@ class PayoutEarningsModel: NSObject {
     var earningAmount: String = ""
     var currencyCode: String = ""
     
-    static var payoutEarningsModel: [PayoutEarningsModel] = []
-    
     init(earningType: String, earningTypeId: Int, earningAmount: String, currencyCode: String) {
         self.earningType = earningType as String
         self.earningTypeId = earningTypeId as Int
@@ -25,6 +23,8 @@ class PayoutEarningsModel: NSObject {
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> [PayoutEarningsModel] {
+        
+        var payoutEarningsModel: [PayoutEarningsModel] = []
         
         var earningType: String = ""
         var earningTypeId: Int = 0
@@ -52,12 +52,12 @@ class PayoutEarningsModel: NSObject {
                             currencyCode = tempCurrencyCode
                         }
                         
-                        self.payoutEarningsModel.append(PayoutEarningsModel(earningType: earningType, earningTypeId: earningTypeId, earningAmount: earningAmount, currencyCode: currencyCode))
+                        payoutEarningsModel.append(PayoutEarningsModel(earningType: earningType, earningTypeId: earningTypeId, earningAmount: earningAmount, currencyCode: currencyCode))
                     }
                 }
             }
         }
         
-        return self.payoutEarningsModel
+        return payoutEarningsModel
     }
 }
