@@ -10,6 +10,9 @@ import UIKit
 
 class PayoutRequestListDetailHeaderTableViewCell: UITableViewCell {
 
+    // Private Strings
+    private static let nibNameAndIdentifier: String = "PayoutRequestListDetailHeaderTableViewCell"
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -19,6 +22,10 @@ class PayoutRequestListDetailHeaderTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    class func listHeaderNibNameAndIdentifier() -> String {
+        return PayoutRequestListDetailHeaderTableViewCell.nibNameAndIdentifier
     }
     
 }

@@ -8,6 +8,11 @@
 
 import UIKit
 
+struct PayoutEarningsTransactionTypeStrings {
+    static let kCompleted: String = StringHelper.localizedStringWithKey("PAYOUT_COMPLETED_LOCALIZE_KEY")
+    static let kTentative: String = StringHelper.localizedStringWithKey("PAYOUT_TENTATIVE_LOCALIZE_KEY")
+}
+
 class PayoutEarningsTransactionTypeTableViewCell: UITableViewCell {
 
     // Labels
@@ -17,6 +22,9 @@ class PayoutEarningsTransactionTypeTableViewCell: UITableViewCell {
     @IBOutlet weak var boughtByLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
+    
+    // Private Strings
+    private static let nibNameAndIdentifier: String = "PayoutEarningsTransactionTypeTableViewCell"
     
     // Views
     @IBOutlet weak var statusView: DynamicRoundedView!
@@ -33,4 +41,7 @@ class PayoutEarningsTransactionTypeTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    class func transactionsNibNameAndIdentifier() -> String {
+        return PayoutEarningsTransactionTypeTableViewCell.nibNameAndIdentifier
+    }
 }
