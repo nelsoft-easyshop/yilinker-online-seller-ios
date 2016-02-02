@@ -34,7 +34,7 @@ class PayoutRequestListDetailViewController: UIViewController, UITableViewDelega
     @IBOutlet weak var tableView: UITableView!
     
     // Models
-    var payoutRequestModel: PayoutRequestListModel = PayoutRequestListModel(date: "", withdrawalMethod: "", totalAmount: "", charge: "", netAmount: "", currencyCode: "", status: "", payTo: "", bankName: "", accountNumber: "", accountName: "")
+    var payoutRequestModel: PayoutRequestListModel?
     
     // Global variables
     var payoutRequestDetails: [String] = [PayoutRequestListDetailStrings.kDate, PayoutRequestListDetailStrings.kMethod, PayoutRequestListDetailStrings.kRequested, PayoutRequestListDetailStrings.kBankCharge, PayoutRequestListDetailStrings.kAmount, PayoutRequestListDetailStrings.kStatus]
@@ -50,17 +50,6 @@ class PayoutRequestListDetailViewController: UIViewController, UITableViewDelega
         
         self.backButton()
         self.registerCell()
-        
-        // Sample data for payout request details
-        self.payoutRequestModel.date = "02/01/2016"
-        self.payoutRequestModel.withdrawalMethod = "bank"
-        self.payoutRequestModel.totalAmount = "10000.0000".formatToTwoDecimal().formatToPeso()
-        self.payoutRequestModel.charge = "50.0000".formatToTwoDecimal().formatToPeso()
-        self.payoutRequestModel.netAmount = "10000.0000".formatToTwoDecimal().formatToPeso()
-        self.payoutRequestModel.status = "IN PROCESS".uppercaseString
-        self.payoutRequestModel.accountName = "Nelson Liao"
-        self.payoutRequestModel.accountNumber = "00551458614562"
-        self.payoutRequestModel.bankName = "China Bank"
         // Do any additional setup after loading the view.
     }
     
@@ -111,7 +100,7 @@ class PayoutRequestListDetailViewController: UIViewController, UITableViewDelega
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        if self.payoutRequestModel.withdrawalMethod == "bank" {
+        if self.payoutRequestModel!.withdrawalMethod == "bank" {
             return PayoutRequestListDetailCellHeight.kSectionCountTwo
         } else {
             return PayoutRequestListDetailCellHeight.kSectionCountOne
@@ -129,32 +118,32 @@ class PayoutRequestListDetailViewController: UIViewController, UITableViewDelega
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-          let cell = self.tableView.dequeueReusableCellWithIdentifier(PayoutRequestListItemTableViewCell.listItemNibNameAndIdentifier(), forIndexPath: indexPath) as! PayoutRequestListItemTableViewCell
-        
+        let cell = self.tableView.dequeueReusableCellWithIdentifier(PayoutRequestListItemTableViewCell.listItemNibNameAndIdentifier(), forIndexPath: indexPath) as! PayoutRequestListItemTableViewCell
+    
         if indexPath.section == 0 {
             cell.itemLabel.text = self.payoutRequestDetails[indexPath.row]
             switch indexPath.row {
             case 0:
-                cell.itemDetailLabel.text = self.payoutRequestModel.date
+                cell.itemDetailLabel.text = self.payoutRequestModel!.date
                 break
             case 1:
-                if self.payoutRequestModel.withdrawalMethod == "bank" {
+                if self.payoutRequestModel!.withdrawalMethod == "bank" {
                     cell.itemDetailLabel.text = PayoutRequestListItemStrings.kDeposit
                 } else {
                     cell.itemDetailLabel.text = PayoutRequestListItemStrings.kCheque
                 }
                 break
             case 2:
-                cell.itemDetailLabel.text = self.payoutRequestModel.totalAmount
+                cell.itemDetailLabel.text = self.payoutRequestModel!.totalAmount.formatToTwoDecimal().formatToPeso()
                 break
             case 3:
-                cell.itemDetailLabel.text = self.payoutRequestModel.charge
+                cell.itemDetailLabel.text = self.payoutRequestModel!.charge.formatToTwoDecimal().formatToPeso()
                 break
             case 4:
-                cell.itemDetailLabel.text = self.payoutRequestModel.netAmount
+                cell.itemDetailLabel.text = self.payoutRequestModel!.netAmount.formatToTwoDecimal().formatToPeso()
                 break
             case 5:
-                cell.itemDetailLabel.text = self.payoutRequestModel.status
+                cell.itemDetailLabel.text = self.payoutRequestModel!.status
                 break
             default:
                 
@@ -164,13 +153,13 @@ class PayoutRequestListDetailViewController: UIViewController, UITableViewDelega
             cell.itemLabel.text = self.bankDetails[indexPath.row]
             switch indexPath.row {
             case 0:
-                cell.itemDetailLabel.text = self.payoutRequestModel.accountName
+                cell.itemDetailLabel.text = self.payoutRequestModel!.accountName
                 break
             case 1:
-                cell.itemDetailLabel.text = self.payoutRequestModel.accountNumber
+                cell.itemDetailLabel.text = self.payoutRequestModel!.accountNumber
                 break
             case 2:
-                cell.itemDetailLabel.text = self.payoutRequestModel.bankName
+                cell.itemDetailLabel.text = self.payoutRequestModel!.bankName
                 break
             default:
                 
@@ -193,9 +182,12 @@ class PayoutRequestListDetailViewController: UIViewController, UITableViewDelega
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
             var tableHeaderView = self.tableView.dequeueReusableCellWithIdentifier(PayoutRequestListDetailHeaderTableViewCell.listHeaderNibNameAndIdentifier()) as! PayoutRequestListDetailHeaderTableViewCell
+            tableHeaderView.depositToLabel.text = PayoutRequestListDetailHeaderStrings.kDepositTo
+            tableHeaderView.depositNameLabel.text = self.payoutRequestModel!.payTo
             return tableHeaderView
         } else {
             var tableHeaderView = self.tableView.dequeueReusableCellWithIdentifier(PayoutRequestListBankDetailHeaderTableViewCell.bankHeaderNibNameAndIdentifier()) as! PayoutRequestListBankDetailHeaderTableViewCell
+            tableHeaderView.bankDepositLabel.text = PayoutRequestListBankDetailHeaderStrings.kBankDepositDetails
             return tableHeaderView
         }
     }
