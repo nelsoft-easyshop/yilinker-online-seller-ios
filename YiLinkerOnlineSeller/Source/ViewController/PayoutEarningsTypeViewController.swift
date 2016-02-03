@@ -94,22 +94,6 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
     }
     
     // MARK: -
-    // MARK: - Show Alert view
-    
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        
-        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
-        
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-        }
-    }
-    
-    // MARK: -
     // MARK: - Show loader
     
     func showHUD() {
@@ -254,7 +238,7 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
                     if requestErrorType == .ResponseError {
                         //Error in api requirements
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                        self.showAlert(Constants.Localized.error, message: errorModel.message)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message)
                     } else if requestErrorType == .AccessTokenExpired {
                         self.fireRefreshToken()
                     } else if requestErrorType == .PageNotFound {
@@ -309,9 +293,9 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
                 if error.userInfo != nil {
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message)
                 } else {
-                    self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                    UIAlertController.displaySomethingWentWrongError(self)
                 }
                 self.hud?.hide(true)
         })
