@@ -93,22 +93,6 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
     }
     
     // MARK: -
-    // MARK: - Alert view
-    
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        
-        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
-        
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-        }
-    }
-    
-    // MARK: -
     // MARK: - Show loader
     
     func showHUD() {
@@ -160,15 +144,16 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
                 cell.bankChargeLabel.hidden = true
             }
             
-            if self.requestListModel[indexPath.row].status == "completed" {
+            if self.requestListModel[indexPath.row].status.lowercaseString == "paid" {
                 cell.statusView.backgroundColor = Constants.Colors.completedColor
-            } else if self.requestListModel[indexPath.row].status == "Pending" {
+                cell.statusLabel.text = PayoutRequestListStrings.kCompleted
+            } else if self.requestListModel[indexPath.row].status.lowercaseString == "pending" {
                 cell.statusView.backgroundColor = Constants.Colors.tentativeColor
+                cell.statusLabel.text = PayoutRequestListStrings.kTentative
             } else {
                 cell.statusView.backgroundColor = Constants.Colors.inProgressColor
+                cell.statusLabel.text = PayoutRequestListStrings.kInProgress
             }
-            
-            cell.statusLabel.text = (self.requestListModel[indexPath.row].status).uppercaseString
         }
         
         return cell
@@ -225,12 +210,8 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
                             self.isPageEnd = true
                         }
                         
-                        if successful {
-                            for i in 0..<earnings.count {
-                                self.requestListModel.append(PayoutRequestListModel(date: earnings[i].date, withdrawalMethod: earnings[i].withdrawalMethod, totalAmount: earnings[i].totalAmount, charge: earnings[i].charge, netAmount: earnings[i].netAmount, currencyCode: earnings[i].currencyCode, status: earnings[i].status, payTo: earnings[i].payTo, bankName: earnings[i].bankName, accountNumber: earnings[i].accountNumber, accountName: earnings[i].accountName))
-                            }
-                        } else {
-                            self.isPageEnd = true
+                        for i in 0..<earnings.count {
+                            self.requestListModel.append(PayoutRequestListModel(date: earnings[i].date, withdrawalMethod: earnings[i].withdrawalMethod, totalAmount: earnings[i].totalAmount, charge: earnings[i].charge, netAmount: earnings[i].netAmount, currencyCode: earnings[i].currencyCode, status: earnings[i].status, payTo: earnings[i].payTo, bankName: earnings[i].bankName, accountNumber: earnings[i].accountNumber, accountName: earnings[i].accountName))
                         }
                         
                         self.tableView.hidden = false
@@ -242,7 +223,7 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
                     if requestErrorType == .ResponseError {
                         //Error in api requirements
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                        self.showAlert(Constants.Localized.error, message: errorModel.message)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message)
                     } else if requestErrorType == .AccessTokenExpired {
                         self.fireRefreshToken()
                     } else if requestErrorType == .PageNotFound {
@@ -297,9 +278,9 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
                 if error.userInfo != nil {
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message)
                 } else {
-                    self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                    UIAlertController.displaySomethingWentWrongError(self)
                 }
                 self.hud?.hide(true)
         })

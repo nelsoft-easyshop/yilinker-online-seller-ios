@@ -16,10 +16,10 @@ class PayoutEarningsModel: NSObject {
     var currencyCode: String = ""
     
     init(earningType: String, earningTypeId: Int, earningAmount: String, currencyCode: String) {
-        self.earningType = earningType as String
-        self.earningTypeId = earningTypeId as Int
-        self.earningAmount = earningAmount as String
-        self.currencyCode = currencyCode as String
+        self.earningType = earningType
+        self.earningTypeId = earningTypeId
+        self.earningAmount = earningAmount
+        self.currencyCode = currencyCode 
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> [PayoutEarningsModel] {
@@ -36,21 +36,10 @@ class PayoutEarningsModel: NSObject {
                 if let value = request["earningGroups"] as? NSArray {
                     for subValue in value as NSArray {
                         
-                        if let tempName = subValue["name"] as? String {
-                            earningType = tempName
-                        }
-                        
-                        if let tempTypeId = subValue["earningTypeId"] as? Int {
-                            earningTypeId = tempTypeId
-                        }
-                        
-                        if let tempTotalAmount = subValue["totalAmount"] as? String {
-                            earningAmount = tempTotalAmount
-                        }
-                        
-                        if let tempCurrencyCode = subValue["currencyCode"] as? String {
-                            currencyCode = tempCurrencyCode
-                        }
+                        earningType = ParseHelper.string(subValue, key: "name", defaultValue: "")
+                        earningTypeId = ParseHelper.int(subValue, key: "earningTypeId", defaultValue: 0)
+                        earningAmount = ParseHelper.string(subValue, key: "totalAmount", defaultValue: "")
+                        currencyCode = ParseHelper.string(subValue, key: "currencyCode", defaultValue: "")
                         
                         payoutEarningsModel.append(PayoutEarningsModel(earningType: earningType, earningTypeId: earningTypeId, earningAmount: earningAmount, currencyCode: currencyCode))
                     }

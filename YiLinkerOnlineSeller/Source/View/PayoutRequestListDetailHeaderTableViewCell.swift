@@ -11,6 +11,7 @@ import UIKit
 struct PayoutRequestListDetailHeaderStrings {
     static let kDepositTo: String = StringHelper.localizedStringWithKey("PAYOUT_DEPOSIT_TO_LOCALIZE_KEY")
     static let kBankDepositTo: String = StringHelper.localizedStringWithKey("PAYOUT_BANK_DEPOSIT_LOCALIZE_KEY")
+    static let kBankChequeTo: String = StringHelper.localizedStringWithKey("PAYOUT_CHEQUE_LOCALIZE_KEY")
 }
 
 class PayoutRequestListDetailHeaderTableViewCell: UITableViewCell {
