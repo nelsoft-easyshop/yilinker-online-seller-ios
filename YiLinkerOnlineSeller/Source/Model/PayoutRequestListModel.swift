@@ -58,7 +58,7 @@ class PayoutRequestListModel: NSObject {
                     for subValue in value as NSArray {
                         
                         if let tempDate = subValue["date"] as? String {
-                            date = tempDate
+                            date = formatDate(tempDate)
                         }
                         
                         if let tempWithdrawalMethod = subValue["withdrawalMethod"] as? String {
@@ -108,5 +108,19 @@ class PayoutRequestListModel: NSObject {
         }
         
         return payoutRequestListModel
+    }
+    
+    class func formatDate(date: String) -> String {
+        
+        let date: String? = "\(date)"
+        let dateFromString = NSDateFormatter()
+        dateFromString.dateFormat = "yyyy-MM-dd"
+        dateFromString.dateFromString(date!)
+        
+        let stringFromDate = NSDateFormatter()
+        stringFromDate.dateFormat = "MM/dd/yyyy"
+        let formattedDate = stringFromDate.stringFromDate(dateFromString.dateFromString(date!)!)
+
+        return formattedDate
     }
 }
