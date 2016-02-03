@@ -143,7 +143,17 @@ class PayoutRequestListDetailViewController: UIViewController, UITableViewDelega
                 cell.itemDetailLabel.text = self.payoutRequestModel!.netAmount.formatToTwoDecimal().formatToPeso()
                 break
             case 5:
-                cell.itemDetailLabel.text = self.payoutRequestModel!.status
+                var status: String = ""
+                
+                if self.payoutRequestModel!.status.lowercaseString == "paid" {
+                    status =  PayoutRequestListStrings.kCompleted
+                } else if self.payoutRequestModel!.status.lowercaseString == "pending" {
+                    status = PayoutRequestListStrings.kTentative
+                } else {
+                    status = PayoutRequestListStrings.kInProgress
+                }
+                cell.itemDetailLabel.text = status
+                
                 break
             default:
                 

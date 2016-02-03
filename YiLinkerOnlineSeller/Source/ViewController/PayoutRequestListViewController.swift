@@ -144,10 +144,10 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
                 cell.bankChargeLabel.hidden = true
             }
             
-            if self.requestListModel[indexPath.row].status == "completed" {
+            if self.requestListModel[indexPath.row].status.lowercaseString == "paid" {
                 cell.statusView.backgroundColor = Constants.Colors.completedColor
                 cell.statusLabel.text = PayoutRequestListStrings.kCompleted
-            } else if self.requestListModel[indexPath.row].status == "Pending" {
+            } else if self.requestListModel[indexPath.row].status.lowercaseString == "pending" {
                 cell.statusView.backgroundColor = Constants.Colors.tentativeColor
                 cell.statusLabel.text = PayoutRequestListStrings.kTentative
             } else {
