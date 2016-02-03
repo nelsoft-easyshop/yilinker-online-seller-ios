@@ -122,6 +122,9 @@ struct APIAtlas {
     static let ACTION_GCM_UPDATE            = "/device/auth/updateRegistrationId"
     static let uploadFileType = "jpeg"
     
+    // Sprint1
+    static let getBalanceRecordDetails = "auth/bank/balanceRecordDetails"
+    
     // Payout
     static let payoutRequestList = "auth/withdraw-list?access_token="
     static let payoutEarningsGroup = "auth/earning-groups?access_token="
