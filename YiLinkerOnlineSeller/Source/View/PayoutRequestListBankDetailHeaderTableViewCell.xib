@@ -33,6 +33,9 @@
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.90588235294117647" green="0.90588235294117647" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="bankDepositLabel" destination="R0p-31-RjM" id="NgD-1G-K8B"/>
+            </connections>
             <point key="canvasLocation" x="328.5" y="178"/>
         </tableViewCell>
     </objects>

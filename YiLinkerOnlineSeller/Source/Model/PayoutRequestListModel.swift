@@ -9,65 +9,86 @@
 import UIKit
 
 class PayoutRequestListModel: NSObject {
-   
-    var date: [String] = []
-    var withdrawalMethod: [String] = []
-    var totalAmount: [String] = []
-    var charge: [String] = []
-    var netAmount: [String] = []
-    var currencyCode: [String] = []
-    var status: [String] = []
-    var payTo: [String] = []
-    var bankName: [String] = []
-    var accountNumber: [String] = []
-    var accountName: [String] = []
     
-    init(date: NSArray, withdrawalMethod: NSArray, totalAmount: NSArray, charge: NSArray, netAmount: NSArray, currencyCode: NSArray, status: NSArray, payTo: NSArray, bankName: NSArray, accountNumber: NSArray, accountName: NSArray) {
-        self.date = date as! [String]
-        self.withdrawalMethod = withdrawalMethod as! [String]
-        self.totalAmount = totalAmount as! [String]
-        self.charge = charge as! [String]
-        self.netAmount = netAmount as! [String]
-        self.currencyCode = currencyCode as! [String]
-        self.status = status as! [String]
-        self.payTo = payTo as! [String]
-        self.bankName = bankName as! [String]
-        self.accountName = accountName as! [String]
-        self.accountNumber = accountNumber as! [String]
+    var date: String = ""
+    var withdrawalMethod: String = ""
+    var totalAmount: String = ""
+    var charge: String = ""
+    var netAmount: String = ""
+    var currencyCode: String = ""
+    var status: String = ""
+    var payTo: String = ""
+    var bankName: String = ""
+    var accountNumber: String = ""
+    var accountName: String = ""
+    
+    init(date: String, withdrawalMethod: String, totalAmount: String, charge: String, netAmount: String, currencyCode: String, status: String, payTo: String, bankName: String, accountNumber: String, accountName: String) {
+        self.date = date
+        self.withdrawalMethod = withdrawalMethod
+        self.totalAmount = totalAmount
+        self.charge = charge
+        self.netAmount = netAmount
+        self.currencyCode = currencyCode
+        self.status = status
+        self.payTo = payTo
+        self.bankName = bankName
+        self.accountName = accountName
+        self.accountNumber = accountNumber 
     }
     
-    class func parseDataWithDictionary(dictionary: AnyObject) -> PayoutRequestListModel {
+    class func parseDataWithDictionary(dictionary: AnyObject) -> [PayoutRequestListModel] {
         
-        var date: [String] = []
-        var withdrawalMethod: [String] = []
-        var totalAmount: [String] = []
-        var charge: [String] = []
-        var netAmount: [String] = []
-        var currencyCode: [String] = []
-        var status: [String] = []
-        var payTo: [String] = []
-        var bankName: [String] = []
-        var accountNumber: [String] = []
-        var accountName: [String] = []
+        var payoutRequestListModel: [PayoutRequestListModel] = []
         
-        if let request: AnyObject = dictionary["data"] {
-            if let value = request["requests"] as? NSArray {
-                for subValue in value as NSArray {
-                    date.append(subValue["date"] as! String)
-                    withdrawalMethod.append(subValue["withdrawalMethod"] as! String)
-                    totalAmount.append(subValue["totalAmount"] as! String)
-                    charge.append(subValue["charge"] as! String)
-                    netAmount.append(subValue["netAmount"] as! String)
-                    currencyCode.append(subValue["currencyCode"] as! String)
-                    status.append(subValue["status"] as! String)
-                    payTo.append(subValue["payTo"] as! String)
-                    bankName.append(subValue["bankName"] as! String)
-                    accountNumber.append(subValue["accountNumber"] as! String)
-                    accountName.append(subValue["accountName"] as! String)
+        var date: String = ""
+        var withdrawalMethod: String = ""
+        var totalAmount: String = ""
+        var charge: String = ""
+        var netAmount: String = ""
+        var currencyCode: String = ""
+        var status: String = ""
+        var payTo: String = ""
+        var bankName: String = ""
+        var accountNumber: String = ""
+        var accountName: String = ""
+        
+        if dictionary.isKindOfClass(NSDictionary) {
+            if let request: AnyObject = dictionary["data"] {
+                if let value = request["requests"] as? NSArray {
+                    for subValue in value as NSArray {
+                        
+                        date = formatDate(ParseHelper.string(subValue, key: "date", defaultValue: ""))
+                        withdrawalMethod = ParseHelper.string(subValue, key: "withdrawalMethod", defaultValue: "")
+                        totalAmount = ParseHelper.string(subValue, key: "totalAmount", defaultValue: "")
+                        charge = ParseHelper.string(subValue, key: "charge", defaultValue: "")
+                        netAmount = ParseHelper.string(subValue, key: "netAmount", defaultValue: "")
+                        currencyCode = ParseHelper.string(subValue, key: "currencyCode", defaultValue: "")
+                        status = ParseHelper.string(subValue, key: "status", defaultValue: "")
+                        payTo = ParseHelper.string(subValue, key: "payTo", defaultValue: "")
+                        bankName = ParseHelper.string(subValue, key: "bankName", defaultValue: "")
+                        accountNumber = ParseHelper.string(subValue, key: "accountNumber", defaultValue: "")
+                        accountName = ParseHelper.string(subValue, key: "accountName", defaultValue: "")
+                        
+                        payoutRequestListModel.append(PayoutRequestListModel(date: date, withdrawalMethod: withdrawalMethod, totalAmount: totalAmount, charge: charge, netAmount: netAmount, currencyCode: currencyCode, status: status, payTo: payTo, bankName: bankName, accountNumber: accountNumber, accountName: accountName))
+                    }
                 }
             }
         }
         
-        return PayoutRequestListModel(date: date, withdrawalMethod: withdrawalMethod, totalAmount: totalAmount, charge: charge, netAmount: netAmount, currencyCode: currencyCode, status: status, payTo: payTo, bankName: bankName, accountNumber: accountNumber, accountName: accountName)
+        return payoutRequestListModel
+    }
+    
+    class func formatDate(date: String) -> String {
+        
+        let date: String? = "\(date)"
+        let dateFromString = NSDateFormatter()
+        dateFromString.dateFormat = "yyyy-MM-dd"
+        dateFromString.dateFromString(date!)
+        
+        let stringFromDate = NSDateFormatter()
+        stringFromDate.dateFormat = "MM/dd/yyyy"
+        let formattedDate = stringFromDate.stringFromDate(dateFromString.dateFromString(date!)!)
+
+        return formattedDate
     }
 }

@@ -8,20 +8,28 @@
 
 import UIKit
 
+struct PayoutEarningsType {
+    static let kNumberOfSection: Int = 1
+    static let kRowHeightTransaction: CGFloat = 93
+    static let kRowHeight: CGFloat = 64
+    
+}
+
 class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     // Tableview
     @IBOutlet weak var tableView: UITableView!
     
-    // Strings
-    
     // Models
-    var earningsTypeModel: PayoutEarningsTypeModel?
-    var earningsTransactionTypeModel: PayoutEarningsTransactionTypeModel?
+    var earningsTypeModel: [PayoutEarningsTypeModel] = []
     
     // Global variables
     var hud: MBProgressHUD?
     
+    //Boolean - used ad indicator for pagination
+    var isPageEnd: Bool = false
+    //Integer - used to store number of page 1 to ...
+    var page: Int = 0
     var earningTypeId: Int = 0
     
     override func viewDidLoad() {
@@ -39,8 +47,17 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: Navigation bar
-    // MARK: - Add Back Button in navigation bar
+    override func viewDidAppear(animated: Bool) {
+        self.earningsTypeModel.removeAll(keepCapacity: false)
+        self.page = 0
+        self.isPageEnd = false
+        self.fireEarningsList()
+        //return true
+    }
+    
+    // MARK: -
+    // MARK: Navigation bar - Add Back Button in navigation bar
+    
     func backButton() {
         //Add Nav Bar
         if self.respondsToSelector("edgesForExtendedLayout") {
@@ -58,35 +75,27 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
-    //MARK: - Navigation bar back button action
+    // MARK: -
+    // MARK: - Navigation bar back button action
+    
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
     
-    // MARK: - Regiter nib files
+    // MARK: -
+    // MARK: - Register Cell
+    
     func registerCell() {
-        let nib: UINib = UINib(nibName: "PayoutEarningsTypeTableViewCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: "PayoutEarningsTypeTableViewCell")
+        let nibNameAndIdentifierEarningsType: UINib = UINib(nibName: PayoutEarningsTypeTableViewCell.earningsTypeNibNameAndIdentifier(), bundle: nil)
+        self.tableView.registerNib(nibNameAndIdentifierEarningsType, forCellReuseIdentifier: PayoutEarningsTypeTableViewCell.earningsTypeNibNameAndIdentifier())
         
-        let nib2: UINib = UINib(nibName: "PayoutEarningsTransactionTypeTableViewCell", bundle: nil)
-        self.tableView.registerNib(nib2, forCellReuseIdentifier: "PayoutEarningsTransactionTypeTableViewCell")
+        let nibNameAndIdentifierEarningsTransactionType: UINib = UINib(nibName: PayoutEarningsTransactionTypeTableViewCell.transactionsNibNameAndIdentifier(), bundle: nil)
+        self.tableView.registerNib(nibNameAndIdentifierEarningsTransactionType, forCellReuseIdentifier: PayoutEarningsTransactionTypeTableViewCell.transactionsNibNameAndIdentifier())
     }
     
-    // MARK: Alert view
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        
-        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
-        
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-        }
-    }
+    // MARK: -
+    // MARK: - Show loader
     
-    // Show loader
     func showHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
@@ -100,55 +109,49 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
         self.hud?.show(true)
     }
     
+    // MARK: -
     // MARK: - Table view data source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return 1
+        return PayoutEarningsType.kNumberOfSection
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        if self.earningTypeId == 1{
-            if self.earningsTransactionTypeModel != nil {
-                return self.earningsTransactionTypeModel!.date.count
-            } else {
-                return 0
-            }
+    
+        if self.earningsTypeModel.count != 0 {
+            return self.earningsTypeModel.count
         } else {
-            if self.earningsTypeModel != nil {
-                return self.earningsTypeModel!.date.count
-            } else {
-                return 0
-            }
+            return 0
         }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if self.earningTypeId == 1 {
-            let cell = self.tableView.dequeueReusableCellWithIdentifier("PayoutEarningsTransactionTypeTableViewCell", forIndexPath: indexPath) as! PayoutEarningsTransactionTypeTableViewCell
-            if self.earningsTypeModel != nil {
-                if self.earningsTypeModel?.status[indexPath.row] == "completed" {
-                    cell.statusLabel.text = "COMPLETED"
-                    cell.statusView.backgroundColor = UIColor(netHex: 0x4DB5A6)
+            let cell = self.tableView.dequeueReusableCellWithIdentifier(PayoutEarningsTransactionTypeTableViewCell.transactionsNibNameAndIdentifier(), forIndexPath: indexPath) as! PayoutEarningsTransactionTypeTableViewCell
+            if self.earningsTypeModel.count != 0 {
+                if self.earningsTypeModel[indexPath.row].status == "completed" {
+                    cell.statusLabel.text = PayoutEarningsTransactionTypeStrings.kCompleted
+                    cell.statusView.backgroundColor = Constants.Colors.completedColor
                 } else {
-                    cell.statusLabel.text = "TENTATIVE"
-                    cell.statusView.backgroundColor = UIColor(netHex: 0x5181D4)
+                    cell.statusLabel.text = PayoutEarningsTransactionTypeStrings.kTentative
+                    cell.statusView.backgroundColor = Constants.Colors.tentativeColor
                 }
             }
             
             return cell
         } else {
-            let cell = self.tableView.dequeueReusableCellWithIdentifier("PayoutEarningsTypeTableViewCell", forIndexPath: indexPath) as! PayoutEarningsTypeTableViewCell
-            if self.earningsTransactionTypeModel != nil {
-                if self.earningsTransactionTypeModel?.status[indexPath.row] == "completed" {
-                    cell.statusLabel.text = "COMPLETED"
-                    cell.statusView.backgroundColor = UIColor(netHex: 0x4DB5A6)
+            let cell = self.tableView.dequeueReusableCellWithIdentifier(PayoutEarningsTypeTableViewCell.earningsTypeNibNameAndIdentifier(), forIndexPath: indexPath) as! PayoutEarningsTypeTableViewCell
+            if self.earningsTypeModel.count != 0 {
+                if self.earningsTypeModel[indexPath.row].status == "completed" {
+                    cell.statusLabel.text = PayoutEarningsTypeStrings.kCompleted
+                    cell.statusView.backgroundColor = Constants.Colors.completedColor
                 } else {
-                    cell.statusLabel.text = "TENTATIVE"
-                    cell.statusView.backgroundColor = UIColor(netHex: 0x5181D4)
+                    cell.statusLabel.text = PayoutEarningsTypeStrings.kTentative
+                    cell.statusView.backgroundColor = Constants.Colors.tentativeColor
                 }
             }
             return cell
@@ -156,55 +159,109 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if self.earningTypeId == 1 {
-            return 93
+            return PayoutEarningsType.kRowHeightTransaction
         } else {
-            return 64
+            return PayoutEarningsType.kRowHeight
         }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //var payoutRequestListDetailViewController = PayoutRequestListDetailViewController(nibName: "PayoutRequestListDetailViewController", bundle: nil)
-        //self.navigationController?.presentViewController(payoutRequestListDetailViewController, animated: true, completion: nil)
-        //self.navigationController?.pushViewController(payoutRequestListDetailViewController, animated:true)
+       
     }
+    
+    func scrollViewDidEndDragging(aScrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        var offset: CGPoint = aScrollView.contentOffset
+        var bounds: CGRect = aScrollView.bounds
+        var size: CGSize = aScrollView.contentSize
+        var inset: UIEdgeInsets = aScrollView.contentInset
+        var y: CGFloat = offset.y + bounds.size.height - inset.bottom
+        var h: CGFloat = size.height
+        var reload_distance: CGFloat = 10
+        var temp: CGFloat = h + reload_distance
+        if y > temp {
+            self.fireEarningsList()
+        }
+    }
+    
+    // MARK: -
+    // MARK: - Rest API Request
+    // MARK: GET METHOD - Fire Earning List
+    /*
+    *
+    * (Parameters) - access_token, page, perPage, earningTypeId
+    *
+    * Function to get earnings list based on
+    *
+    */
     
     func fireEarningsList() {
-        self.showHUD()
-        var parameters: NSDictionary = [:]
-        WebServiceManager.fireGetResolutionCenterRequestWithUrl(APIAtlas.payoutEarningsList+"\(SessionManager.accessToken())", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
-            if successful {
-                if self.earningTypeId == 1 {
-                    self.earningsTypeModel = PayoutEarningsTypeModel.parseDataWithDictionary(responseObject)
+        if !self.isPageEnd {
+            self.page++
+            
+            self.showHUD()
+            var parameters: NSDictionary = [:]
+            WebServiceManager.fireGetPayoutRequestEarningsRequestWithUrl(APIAtlas.payoutEarningsList+"\(SessionManager.accessToken())&page=\(self.page)&perPage=15&earningTypeId\(self.earningTypeId)", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+                if successful {
+                    if self.earningTypeId == 1 {
+                        var earnings = PayoutEarningsTypeModel.parseDataWithDictionary(responseObject)
+                        if earnings.count != 0 {
+                            
+                            if earnings.count < 15 {
+                                self.isPageEnd = true
+                            }
+                            
+                            for i in 0..<earnings.count {
+                                self.earningsTypeModel.append(PayoutEarningsTypeModel(date: earnings[i].date, earningTypeId: earnings[i].earningTypeId, amount: earnings[i].amount, currencyCode: earnings[i].currencyCode, status: earnings[i].status))
+                            }
+                            
+                            self.tableView.hidden = false
+                        }
+                    } else {
+                        var earnings = PayoutEarningsTypeModel.parseTransactionDataWithDictionary(responseObject)
+                        if earnings.count != 0 {
+                            
+                            if earnings.count < 15 {
+                                self.isPageEnd = true
+                            }
+                            
+                            for i in 0..<earnings.count {
+                                self.earningsTypeModel.append(PayoutEarningsTypeModel(date: earnings[i].date, earningTypeId: earnings[i].earningTypeId, amount: earnings[i].amount, currencyCode: earnings[i].currencyCode, status: earnings[i].status, boughtBy: earnings[i].boughtBy, productName: earnings[i].productName, transactionNo: earnings[i].transactionNo))
+                            }
+                            
+                            self.tableView.hidden = false
+                        }
+                    }
+                    
+                    self.tableView.reloadData()
+                    self.hud?.hide(true)
                 } else {
-                    self.earningsTransactionTypeModel = PayoutEarningsTransactionTypeModel.parseDataWithDictionary(responseObject)
+                    if requestErrorType == .ResponseError {
+                        //Error in api requirements
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message)
+                    } else if requestErrorType == .AccessTokenExpired {
+                        self.fireRefreshToken()
+                    } else if requestErrorType == .PageNotFound {
+                        //Page not found
+                        Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.tabBarController!.view)
+                    } else if requestErrorType == .NoInternetConnection {
+                        //No internet connection
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.tabBarController!.view)
+                    } else if requestErrorType == .RequestTimeOut {
+                        //Request timeout
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.tabBarController!.view)
+                    } else if requestErrorType == .UnRecognizeError {
+                        //Unhandled error
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                    }
+                    self.tableView.hidden = true
+                    self.hud?.hide(true)
                 }
-                self.tableView.reloadData()
-                self.hud?.hide(true)
-            } else {
-                if requestErrorType == .ResponseError {
-                    //Error in api requirements
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    self.showAlert(Constants.Localized.error, message: errorModel.message)
-                } else if requestErrorType == .AccessTokenExpired {
-                    self.fireRefreshToken()
-                } else if requestErrorType == .PageNotFound {
-                    //Page not found
-                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.tabBarController!.view)
-                } else if requestErrorType == .NoInternetConnection {
-                    //No internet connection
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.tabBarController!.view)
-                } else if requestErrorType == .RequestTimeOut {
-                    //Request timeout
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.tabBarController!.view)
-                } else if requestErrorType == .UnRecognizeError {
-                    //Unhandled error
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
-                }
-                self.hud?.hide(true)
-            }
-        })
+            })
+        }
     }
     
+    // MARK: -
     // MARK: POST METHOD - Refresh token
     /*
     *
@@ -213,6 +270,7 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
     * Function to refresh token to get another access token
     *
     */
+    
     func fireRefreshToken() {
         self.showHUD()
         let manager = APIManager.sharedInstance
@@ -235,9 +293,9 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
                 if error.userInfo != nil {
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message)
                 } else {
-                    self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                    UIAlertController.displaySomethingWentWrongError(self)
                 }
                 self.hud?.hide(true)
         })

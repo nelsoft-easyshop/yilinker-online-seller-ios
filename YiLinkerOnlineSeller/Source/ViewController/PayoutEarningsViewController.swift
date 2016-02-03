@@ -8,26 +8,38 @@
 
 import UIKit
 
+struct EarningsTypeStrings {
+    static let kTransactions: String = StringHelper.localizedStringWithKey("PAYOUT_EARNINGS_TRANSACTION_LOCALIZE_KEY")
+    static let kComments: String = StringHelper.localizedStringWithKey("PAYOUT_EARNINGS_COMMENTS_LOCALIZE_KEY")
+    static let kFollowers: String = StringHelper.localizedStringWithKey("PAYOUT_EARNINGS_FOLLOWERS_LOCALIZE_KEY")
+    static let kBuyerNetwork: String = StringHelper.localizedStringWithKey("PAYOUT_EARNINGS_BUYER_LOCALIZE_KEY")
+    static let kAffiliateNetwork: String = StringHelper.localizedStringWithKey("PAYOUT_EARNINGS_AFFILIATE_LOCALIZE_KEY")
+    static let kWithdrawal: String = StringHelper.localizedStringWithKey("PAYOUT_EARNINGS_WITHDRAWAL_LOCALIZE_KEY")
+}
+
+struct EarningsType {
+    static let kNumberOfSection: Int = 1
+    static let kNumberOfRowsInSection: Int = 6
+    static let kRowHeight: CGFloat = 53
+}
+
 class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     // Tableview
     @IBOutlet weak var tableView: UITableView!
     
-    // Strings
-    var cellNibName: String = "PayoutEarningsTableViewCell"
-    var cellIdentifier: String = "PayoutEarningsTableViewCell"
-    
     // Models
-    var earningsModel: PayoutEarningsModel?
+    var earningsModel: [PayoutEarningsModel] = []
     
     // Global variables
     var hud: MBProgressHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.title = "Earnings"
+        
         self.backButton()
         self.registerCell()
         self.fireEarningGroupList()
@@ -39,8 +51,9 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: Navigation bar
-    // MARK: - Add Back Button in navigation bar
+    // MARK: -
+    // MARK: Navigation bar - Add Back Button in navigation bar
+    
     func backButton() {
         //Add Nav Bar
         if self.respondsToSelector("edgesForExtendedLayout") {
@@ -58,32 +71,24 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
-    //MARK: - Navigation bar back button action
+    // MARK: -
+    // MARK: - Navigation bar back button action
+    
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
     
-    // MARK: - Regiter nib files
+    // MARK: -
+    // MARK: - Register PayoutEarningsTableViewCell
+    
     func registerCell() {
-        let nib: UINib = UINib(nibName: self.cellNibName, bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: self.cellIdentifier)
+        let nib: UINib = UINib(nibName: PayoutEarningsTableViewCell.nibNameAndidentifier(), bundle: nil)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: PayoutEarningsTableViewCell.nibNameAndidentifier())
     }
     
-    // MARK: Alert view
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        
-        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
-        
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-        }
-    }
+    // MARK: - 
+    // MARK: - Show loader
     
-    // Show loader
     func showHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
@@ -97,60 +102,61 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
         self.hud?.show(true)
     }
     
+    // MARK: -
     // MARK: - Table view data source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return 1
+        return EarningsType.kNumberOfSection
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        if self.earningsModel != nil {
-            return 6
+        if self.earningsModel.count != 0 {
+            return EarningsType.kNumberOfRowsInSection
         } else {
             return 0
         }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier(self.cellIdentifier, forIndexPath: indexPath) as! PayoutEarningsTableViewCell
+        let cell: PayoutEarningsTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(PayoutEarningsTableViewCell.nibNameAndidentifier(), forIndexPath: indexPath) as! PayoutEarningsTableViewCell
         cell.selectionStyle = UITableViewCellSelectionStyle.None
-        if self.earningsModel != nil {
+        if self.earningsModel.count != 0 {
             switch indexPath.row {
             case 0:
                 cell.earningTypeImageView.image = UIImage(named: "earning-transation")
-                cell.earningTypeLabel.text = "Transaction"
-                cell.earningTypeAmountLabel.text = self.earningsModel!.earningAmount[0].formatToPeso()
+                cell.earningTypeLabel.text = EarningsTypeStrings.kTransactions
+                cell.earningTypeAmountLabel.text = self.earningsModel[0].earningAmount.formatToPeso()
                 break
             case 1:
                 cell.earningTypeImageView.image = UIImage(named: "earning-comment")
-                cell.earningTypeLabel.text = "Comments"
-                cell.earningTypeAmountLabel.text = self.earningsModel!.earningAmount[3].formatToPeso()
+                cell.earningTypeLabel.text = EarningsTypeStrings.kComments
+                cell.earningTypeAmountLabel.text = self.earningsModel[3].earningAmount.formatToPeso()
                 break
             case 2:
                 cell.earningTypeImageView.image = UIImage(named: "earning-follower")
-                cell.earningTypeLabel.text = "Followers"
-                cell.earningTypeAmountLabel.text = self.earningsModel!.earningAmount[2].formatToPeso()
+                cell.earningTypeLabel.text = EarningsTypeStrings.kFollowers
+                cell.earningTypeAmountLabel.text = self.earningsModel[2].earningAmount.formatToPeso()
                 break
             case 3:
                 cell.earningTypeImageView.image = UIImage(named: "earning-buyer")
-                cell.earningTypeLabel.text = "Buyer Network"
-                var totalAmount: String = "\(self.earningsModel!.earningAmount[1].floatValue + self.earningsModel!.earningAmount[4].floatValue + self.earningsModel!.earningAmount[5].floatValue)"
-                cell.earningTypeAmountLabel.text = totalAmount.formatToPeso()
+                cell.earningTypeLabel.text = EarningsTypeStrings.kBuyerNetwork
+                var totalAmount: String = "\(self.earningsModel[1].earningAmount.floatValue + self.earningsModel[4].earningAmount.floatValue + self.earningsModel[5].earningAmount.floatValue)"
+                cell.earningTypeAmountLabel.text = totalAmount.formatToTwoDecimal().formatToPeso()
                 break
             case 4:
                 cell.earningTypeImageView.image = UIImage(named: "earning-affiliate")
-                cell.earningTypeLabel.text = "Affiliate Network"
-                var totalAmount: String = "\(self.earningsModel!.earningAmount[6].floatValue + self.earningsModel!.earningAmount[7].floatValue)"
-                cell.earningTypeAmountLabel.text = totalAmount.formatToPeso()
+                cell.earningTypeLabel.text = EarningsTypeStrings.kAffiliateNetwork
+                var totalAmount: String = "\(self.earningsModel[6].earningAmount.floatValue + self.earningsModel[7].earningAmount.floatValue + self.earningsModel[1].earningAmount.floatValue)"
+                cell.earningTypeAmountLabel.text = totalAmount.formatToTwoDecimal().formatToPeso()
                 break
             case 5:
                 cell.earningTypeImageView.image = UIImage(named: "earning-withdrawal")
-                cell.earningTypeLabel.text = "Withdrawal"
-                cell.earningTypeAmountLabel.text = self.earningsModel!.earningAmount[8].formatToPeso()
+                cell.earningTypeLabel.text = EarningsTypeStrings.kWithdrawal
+                cell.earningTypeAmountLabel.text = self.earningsModel[8].earningAmount.formatToPeso()
                 break
             default:
                 
@@ -160,21 +166,32 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
         
         return cell
     }
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 53
+        return EarningsType.kRowHeight
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var payoutEarningsTypeViewController = PayoutEarningsTypeViewController(nibName: "PayoutEarningsTypeViewController", bundle: nil)
-        payoutEarningsTypeViewController.earningTypeId = self.earningsModel!.earningTypeId[indexPath.row]
-        //self.presentViewController(payoutEarningsTypeViewController, animated: true, completion: nil)
+        var payoutEarningsTypeViewController: PayoutEarningsTypeViewController = PayoutEarningsTypeViewController(nibName: "PayoutEarningsTypeViewController", bundle: nil)
+        payoutEarningsTypeViewController.earningTypeId = self.earningsModel[indexPath.row].earningTypeId
         self.navigationController?.pushViewController(payoutEarningsTypeViewController, animated:true)
     }
     
+    // MARK: -
+    // MARK: -  Rest API Request
+    // MARK: GET METHOD - Fire Earning Group List
+    /*
+    *
+    * (Parameters) - access_token
+    *
+    * Function to get the list of earnings group eg. Transactions, Comments, Followers etc.
+    *
+    */
+    
     func fireEarningGroupList() {
         self.showHUD()
-        var parameters: NSDictionary = [:]
-        WebServiceManager.fireGetResolutionCenterRequestWithUrl(APIAtlas.payoutEarningsGroup+"\(SessionManager.accessToken())", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        let parameters: NSDictionary = [:]
+        WebServiceManager.fireGetPayoutRequestEarningsRequestWithUrl(APIAtlas.payoutEarningsGroup+"\(SessionManager.accessToken())", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 self.earningsModel = PayoutEarningsModel.parseDataWithDictionary(responseObject)
                 self.tableView.reloadData()
@@ -183,7 +200,7 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message)
                 } else if requestErrorType == .AccessTokenExpired {
                     self.fireRefreshToken()
                 } else if requestErrorType == .PageNotFound {
@@ -204,7 +221,8 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
         })
     }
     
-    // MARK: POST METHOD - Refresh token
+    // MARK: -
+    // MARK: POST METHOD - Fire Refresh token
     /*
     *
     * (Parameters) - client_id, client_secret, grant_type, refresh_token
@@ -212,6 +230,7 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
     * Function to refresh token to get another access token
     *
     */
+    
     func fireRefreshToken() {
         self.showHUD()
         let manager = APIManager.sharedInstance
@@ -234,23 +253,11 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
                 if error.userInfo != nil {
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message)
                 } else {
-                    self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                    UIAlertController.displaySomethingWentWrongError(self)
                 }
                 self.hud?.hide(true)
         })
-        
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

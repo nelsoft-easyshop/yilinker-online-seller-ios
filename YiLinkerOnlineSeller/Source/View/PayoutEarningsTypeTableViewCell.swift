@@ -8,6 +8,11 @@
 
 import UIKit
 
+struct PayoutEarningsTypeStrings {
+    static let kCompleted: String = StringHelper.localizedStringWithKey("PAYOUT_COMPLETED_LOCALIZE_KEY")
+    static let kTentative: String = StringHelper.localizedStringWithKey("PAYOUT_TENTATIVE_LOCALIZE_KEY")
+}
+
 class PayoutEarningsTypeTableViewCell: UITableViewCell {
 
     // Labels
@@ -19,6 +24,8 @@ class PayoutEarningsTypeTableViewCell: UITableViewCell {
     //Views
     @IBOutlet weak var statusView: DynamicRoundedView!
     
+    // Private Strings 
+    private static let nibNameAndIdentifier: String = "PayoutEarningsTypeTableViewCell"
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,4 +38,7 @@ class PayoutEarningsTypeTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    class func earningsTypeNibNameAndIdentifier() -> String {
+        return PayoutEarningsTypeTableViewCell.nibNameAndIdentifier
+    }
 }

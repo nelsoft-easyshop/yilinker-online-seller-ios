@@ -17,6 +17,8 @@ class PayoutEarningsTableViewCell: UITableViewCell {
     @IBOutlet weak var earningTypeLabel: UILabel!
     @IBOutlet weak var earningTypeAmountLabel: UILabel!
     
+    // Private Strings 
+    private static let nibNameAndIdentifierKey: String = "PayoutEarningsTableViewCell"
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,4 +31,7 @@ class PayoutEarningsTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    class func nibNameAndidentifier() -> String {
+        return PayoutEarningsTableViewCell.nibNameAndIdentifierKey
+    }
 }
