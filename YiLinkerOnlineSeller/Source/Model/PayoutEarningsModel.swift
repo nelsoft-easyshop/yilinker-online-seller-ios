@@ -16,10 +16,10 @@ class PayoutEarningsModel: NSObject {
     var currencyCode: String = ""
     
     init(earningType: String, earningTypeId: Int, earningAmount: String, currencyCode: String) {
-        self.earningType = earningType as String
-        self.earningTypeId = earningTypeId as Int
-        self.earningAmount = earningAmount as String
-        self.currencyCode = currencyCode as String
+        self.earningType = earningType
+        self.earningTypeId = earningTypeId
+        self.earningAmount = earningAmount
+        self.currencyCode = currencyCode 
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> [PayoutEarningsModel] {

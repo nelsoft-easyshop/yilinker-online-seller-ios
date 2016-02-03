@@ -23,17 +23,17 @@ class PayoutRequestListModel: NSObject {
     var accountName: String = ""
     
     init(date: String, withdrawalMethod: String, totalAmount: String, charge: String, netAmount: String, currencyCode: String, status: String, payTo: String, bankName: String, accountNumber: String, accountName: String) {
-        self.date = date as String
-        self.withdrawalMethod = withdrawalMethod as String
-        self.totalAmount = totalAmount as String
-        self.charge = charge as String
-        self.netAmount = netAmount as String
-        self.currencyCode = currencyCode as String
-        self.status = status as String
-        self.payTo = payTo as String
-        self.bankName = bankName as String
-        self.accountName = accountName as String
-        self.accountNumber = accountNumber as String
+        self.date = date
+        self.withdrawalMethod = withdrawalMethod
+        self.totalAmount = totalAmount
+        self.charge = charge
+        self.netAmount = netAmount
+        self.currencyCode = currencyCode
+        self.status = status
+        self.payTo = payTo
+        self.bankName = bankName
+        self.accountName = accountName
+        self.accountNumber = accountNumber 
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> [PayoutRequestListModel] {

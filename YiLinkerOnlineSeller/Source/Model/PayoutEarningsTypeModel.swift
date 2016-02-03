@@ -21,22 +21,22 @@ class PayoutEarningsTypeModel: NSObject {
     var transactionNo: String = ""
     
     init(date: String, earningTypeId: Int, amount: String, currencyCode: String, status: String) {
-        self.date = date as String
-        self.earningTypeId = earningTypeId as Int
-        self.amount = amount as String
-        self.currencyCode = currencyCode as String
-        self.status = status as String
+        self.date = date
+        self.earningTypeId = earningTypeId
+        self.amount = amount
+        self.currencyCode = currencyCode
+        self.status = status
     }
     
     init(date: String, earningTypeId: Int, amount: String, currencyCode: String, status: String, boughtBy: String, productName: String, transactionNo: String) {
-        self.date = date as String
-        self.earningTypeId = earningTypeId as Int
-        self.amount = amount as String
-        self.currencyCode = currencyCode as String
-        self.status = status as String
-        self.boughtBy = boughtBy as String
-        self.productName = productName as String
-        self.transactionNo = transactionNo as String
+        self.date = date
+        self.earningTypeId = earningTypeId
+        self.amount = amount
+        self.currencyCode = currencyCode
+        self.status = status
+        self.boughtBy = boughtBy
+        self.productName = productName
+        self.transactionNo = transactionNo
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> [PayoutEarningsTypeModel] {
