@@ -130,33 +130,39 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
                 cell.earningTypeImageView.image = UIImage(named: "earning-transation")
                 cell.earningTypeLabel.text = EarningsTypeStrings.kTransactions
                 cell.earningTypeAmountLabel.text = self.earningsModel[0].earningAmount.formatToPeso()
+                self.earningsModel[indexPath.row].earningTypeId = 1
                 break
             case 1:
                 cell.earningTypeImageView.image = UIImage(named: "earning-comment")
                 cell.earningTypeLabel.text = EarningsTypeStrings.kComments
                 cell.earningTypeAmountLabel.text = self.earningsModel[3].earningAmount.formatToPeso()
+                self.earningsModel[indexPath.row].earningTypeId = 4
                 break
             case 2:
                 cell.earningTypeImageView.image = UIImage(named: "earning-follower")
                 cell.earningTypeLabel.text = EarningsTypeStrings.kFollowers
                 cell.earningTypeAmountLabel.text = self.earningsModel[2].earningAmount.formatToPeso()
+                self.earningsModel[indexPath.row].earningTypeId = 3
                 break
             case 3:
                 cell.earningTypeImageView.image = UIImage(named: "earning-buyer")
                 cell.earningTypeLabel.text = EarningsTypeStrings.kBuyerNetwork
                 var totalAmount: String = "\(self.earningsModel[1].earningAmount.floatValue + self.earningsModel[4].earningAmount.floatValue + self.earningsModel[5].earningAmount.floatValue)"
                 cell.earningTypeAmountLabel.text = totalAmount.formatToTwoDecimal().formatToPeso()
+                self.earningsModel[indexPath.row].earningTypeId = 5
                 break
             case 4:
                 cell.earningTypeImageView.image = UIImage(named: "earning-affiliate")
                 cell.earningTypeLabel.text = EarningsTypeStrings.kAffiliateNetwork
                 var totalAmount: String = "\(self.earningsModel[6].earningAmount.floatValue + self.earningsModel[7].earningAmount.floatValue + self.earningsModel[1].earningAmount.floatValue)"
                 cell.earningTypeAmountLabel.text = totalAmount.formatToTwoDecimal().formatToPeso()
+                self.earningsModel[indexPath.row].earningTypeId = 7
                 break
             case 5:
                 cell.earningTypeImageView.image = UIImage(named: "earning-withdrawal")
                 cell.earningTypeLabel.text = EarningsTypeStrings.kWithdrawal
                 cell.earningTypeAmountLabel.text = self.earningsModel[8].earningAmount.formatToPeso()
+                self.earningsModel[indexPath.row].earningTypeId = 9
                 break
             default:
                 
