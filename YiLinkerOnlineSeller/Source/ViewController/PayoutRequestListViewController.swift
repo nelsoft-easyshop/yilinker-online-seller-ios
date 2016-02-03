@@ -162,13 +162,14 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
             
             if self.requestListModel[indexPath.row].status == "completed" {
                 cell.statusView.backgroundColor = Constants.Colors.completedColor
+                cell.statusLabel.text = PayoutRequestListStrings.kCompleted
             } else if self.requestListModel[indexPath.row].status == "Pending" {
                 cell.statusView.backgroundColor = Constants.Colors.tentativeColor
+                cell.statusLabel.text = PayoutRequestListStrings.kTentative
             } else {
                 cell.statusView.backgroundColor = Constants.Colors.inProgressColor
+                cell.statusLabel.text = PayoutRequestListStrings.kInProgress
             }
-            
-            cell.statusLabel.text = (self.requestListModel[indexPath.row].status).uppercaseString
         }
         
         return cell
