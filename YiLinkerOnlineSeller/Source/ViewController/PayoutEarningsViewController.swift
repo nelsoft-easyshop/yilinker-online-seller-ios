@@ -166,7 +166,7 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
             case 4:
                 cell.earningTypeImageView.image = UIImage(named: "earning-affiliate")
                 cell.earningTypeLabel.text = EarningsTypeStrings.kAffiliateNetwork
-                var totalAmount: String = "\(self.earningsModel[6].earningAmount.floatValue + self.earningsModel[7].earningAmount.floatValue)"
+                var totalAmount: String = "\(self.earningsModel[6].earningAmount.floatValue + self.earningsModel[7].earningAmount.floatValue + self.earningsModel[1].earningAmount.floatValue)"
                 cell.earningTypeAmountLabel.text = totalAmount.formatToTwoDecimal().formatToPeso()
                 break
             case 5:
