@@ -182,8 +182,15 @@ class PayoutRequestListDetailViewController: UIViewController, UITableViewDelega
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
             var tableHeaderView = self.tableView.dequeueReusableCellWithIdentifier(PayoutRequestListDetailHeaderTableViewCell.listHeaderNibNameAndIdentifier()) as! PayoutRequestListDetailHeaderTableViewCell
+           
+            if self.payoutRequestModel!.withdrawalMethod == "bank" {
+                tableHeaderView.depositNameLabel.text = PayoutRequestListDetailHeaderStrings.kBankDepositTo + " " + self.payoutRequestModel!.payTo
+            } else {
+                tableHeaderView.depositNameLabel.text = PayoutRequestListDetailHeaderStrings.kBankChequeTo + ": " + self.payoutRequestModel!.payTo
+            }
+            
             tableHeaderView.depositToLabel.text = PayoutRequestListDetailHeaderStrings.kDepositTo
-            tableHeaderView.depositNameLabel.text = PayoutRequestListDetailHeaderStrings.kBankDepositTo + " " + self.payoutRequestModel!.payTo
+            
             return tableHeaderView
         } else {
             var tableHeaderView = self.tableView.dequeueReusableCellWithIdentifier(PayoutRequestListBankDetailHeaderTableViewCell.bankHeaderNibNameAndIdentifier()) as! PayoutRequestListBankDetailHeaderTableViewCell
