@@ -226,12 +226,8 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
                                 self.isPageEnd = true
                             }
                             
-                            if successful {
-                                for i in 0..<earnings.count {
-                                    self.earningsTypeModel.append(PayoutEarningsTypeModel(date: earnings[i].date, earningTypeId: earnings[i].earningTypeId, amount: earnings[i].amount, currencyCode: earnings[i].currencyCode, status: earnings[i].status))
-                                }
-                            } else {
-                                self.isPageEnd = true
+                            for i in 0..<earnings.count {
+                                self.earningsTypeModel.append(PayoutEarningsTypeModel(date: earnings[i].date, earningTypeId: earnings[i].earningTypeId, amount: earnings[i].amount, currencyCode: earnings[i].currencyCode, status: earnings[i].status))
                             }
                             
                             self.tableView.hidden = false
@@ -244,12 +240,8 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
                                 self.isPageEnd = true
                             }
                             
-                            if successful {
-                                for i in 0..<earnings.count {
-                                    self.earningsTypeModel.append(PayoutEarningsTypeModel(date: earnings[i].date, earningTypeId: earnings[i].earningTypeId, amount: earnings[i].amount, currencyCode: earnings[i].currencyCode, status: earnings[i].status, boughtBy: earnings[i].boughtBy, productName: earnings[i].productName, transactionNo: earnings[i].transactionNo))
-                                }
-                            } else {
-                                self.isPageEnd = true
+                            for i in 0..<earnings.count {
+                                self.earningsTypeModel.append(PayoutEarningsTypeModel(date: earnings[i].date, earningTypeId: earnings[i].earningTypeId, amount: earnings[i].amount, currencyCode: earnings[i].currencyCode, status: earnings[i].status, boughtBy: earnings[i].boughtBy, productName: earnings[i].productName, transactionNo: earnings[i].transactionNo))
                             }
                             
                             self.tableView.hidden = false

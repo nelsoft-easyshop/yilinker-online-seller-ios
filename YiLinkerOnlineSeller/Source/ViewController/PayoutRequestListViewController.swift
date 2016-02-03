@@ -225,12 +225,8 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
                             self.isPageEnd = true
                         }
                         
-                        if successful {
-                            for i in 0..<earnings.count {
-                                self.requestListModel.append(PayoutRequestListModel(date: earnings[i].date, withdrawalMethod: earnings[i].withdrawalMethod, totalAmount: earnings[i].totalAmount, charge: earnings[i].charge, netAmount: earnings[i].netAmount, currencyCode: earnings[i].currencyCode, status: earnings[i].status, payTo: earnings[i].payTo, bankName: earnings[i].bankName, accountNumber: earnings[i].accountNumber, accountName: earnings[i].accountName))
-                            }
-                        } else {
-                            self.isPageEnd = true
+                        for i in 0..<earnings.count {
+                            self.requestListModel.append(PayoutRequestListModel(date: earnings[i].date, withdrawalMethod: earnings[i].withdrawalMethod, totalAmount: earnings[i].totalAmount, charge: earnings[i].charge, netAmount: earnings[i].netAmount, currencyCode: earnings[i].currencyCode, status: earnings[i].status, payTo: earnings[i].payTo, bankName: earnings[i].bankName, accountNumber: earnings[i].accountNumber, accountName: earnings[i].accountName))
                         }
                         
                         self.tableView.hidden = false
