@@ -8,14 +8,17 @@
 
 import UIKit
 
+struct PayoutRequestList {
+    static let kNumberOfSections: Int = 1
+    static let kRowHeight: CGFloat = 65
+}
+
 class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // Tableview
     @IBOutlet weak var tableView: UITableView!
     
     // Local Strings
-    let cellIdentifier: String = "PayoutRequestListTableViewCell"
-    let cellNibName: String = "PayoutRequestListTableViewCell"
     
     // Models
     var requestListModel: [PayoutRequestListModel] = []
@@ -51,8 +54,9 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
         //return true
     }
     
-    // MARK: Navigation bar
-    // MARK: - Add Back Button in navigation bar
+    // MARK: -
+    // MARK: Navigation bar - Add Back Button in navigation bar
+    
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -65,11 +69,14 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
-    //MARK: - Navigation bar back button action
+    // MARK: -
+    // MARK: - Navigation bar back button action
+    
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
     
+    // MARK: -
     // MARK: - Private methods
     // Remove tableview footer
     func footerView() {
@@ -77,27 +84,17 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
         self.tableView.tableFooterView = footerView
     }
     
-    // MARK: - Regiter nib files
+    // MARK: -
+    // MARK: - Register Cell
+    
     func registerCell() {
-        let nib: UINib = UINib(nibName: self.cellNibName, bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: self.cellIdentifier)
+        let nib: UINib = UINib(nibName: PayoutRequestListTableViewCell.listNibNameAndIdentifier(), bundle: nil)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: PayoutRequestListTableViewCell.listNibNameAndIdentifier())
     }
     
-    // MARK: Alert view
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        
-        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
-        
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-        }
-    }
+    // MARK: -
+    // MARK: - Show loader
     
-    // Show loader
     func showHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
@@ -116,7 +113,7 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return 1
+        return PayoutRequestList.kNumberOfSections
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -130,35 +127,46 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier(self.cellIdentifier, forIndexPath: indexPath) as! PayoutRequestListTableViewCell
+        let cell = self.tableView.dequeueReusableCellWithIdentifier(PayoutRequestListTableViewCell.listNibNameAndIdentifier(), forIndexPath: indexPath) as! PayoutRequestListTableViewCell
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
         
         if self.requestListModel.count != 0 {
-            cell.dateLabel.text = self.requestListModel[indexPath.row].date2
-            if self.requestListModel[indexPath.row].bankName2 == "bank" {
-                cell.requestDetailLabel.text =   "Bank Deposit | \(self.requestListModel[indexPath.row].totalAmount2.formatToTwoDecimal().formatToPeso())"
+            cell.dateLabel.text = self.requestListModel[indexPath.row].date
+            if self.requestListModel[indexPath.row].withdrawalMethod == "bank" {
+                cell.requestDetailLabel.text =   "\(PayoutRequestListStrings.kBank) | \(self.requestListModel[indexPath.row].totalAmount.formatToTwoDecimal().formatToPeso())"
             } else {
-                cell.requestDetailLabel.text =   "Bank Cheque | \(self.requestListModel[indexPath.row].totalAmount2.formatToTwoDecimal().formatToPeso())"
+                cell.requestDetailLabel.text =   "\(PayoutRequestListStrings.kCheque) | \(self.requestListModel[indexPath.row].totalAmount.formatToTwoDecimal().formatToPeso())"
             }
             
-            if self.requestListModel[indexPath.row].charge2 != "0.0000" {
-                cell.bankChargeLabel.text = "Bank Charge: \(self.requestListModel[indexPath.row].charge2.formatToTwoDecimal().formatToPeso())"
+            if self.requestListModel[indexPath.row].charge != "0.0000" {
+                cell.bankChargeLabel.text = "\(PayoutRequestListStrings.kBankCharge): \(self.requestListModel[indexPath.row].charge.formatToTwoDecimal().formatToPeso())"
             } else {
                 cell.bankChargeLabel.hidden = true
             }
             
-            cell.statusLabel.text = (self.requestListModel[indexPath.row].status2).uppercaseString
+            if self.requestListModel[indexPath.row].status.lowercaseString == "paid" {
+                cell.statusView.backgroundColor = Constants.Colors.completedColor
+                cell.statusLabel.text = PayoutRequestListStrings.kCompleted
+            } else if self.requestListModel[indexPath.row].status.lowercaseString == "pending" {
+                cell.statusView.backgroundColor = Constants.Colors.tentativeColor
+                cell.statusLabel.text = PayoutRequestListStrings.kTentative
+            } else {
+                cell.statusView.backgroundColor = Constants.Colors.inProgressColor
+                cell.statusLabel.text = PayoutRequestListStrings.kInProgress
+            }
         }
         
         return cell
     }
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 65
+        return PayoutRequestList.kRowHeight
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var payoutRequestListDetailViewController = PayoutRequestListDetailViewController(nibName: "PayoutRequestListDetailViewController", bundle: nil)
-        self.navigationController?.presentViewController(payoutRequestListDetailViewController, animated: true, completion: nil)
-        //self.navigationController?.pushViewController(payoutRequestListDetailViewController, animated:true)
+        var payoutRequestListDetailViewController: PayoutRequestListDetailViewController = PayoutRequestListDetailViewController(nibName: "PayoutRequestListDetailViewController", bundle: nil)
+        payoutRequestListDetailViewController.payoutRequestModel = self.requestListModel[indexPath.row]
+        self.navigationController?.pushViewController(payoutRequestListDetailViewController, animated: true)
     }
     
     func scrollViewDidEndDragging(aScrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -175,6 +183,17 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
         }
     }
     
+    // MARK: -
+    // MARK: -  Rest API Request
+    // MARK: GET METHOD - Fire Request List
+    /*
+    *
+    * (Parameters) - access_token, page, perPage
+    *
+    * Function to get the list of withdrawals
+    *
+    */
+    
     func fireRequestList() {
         if !self.isPageEnd {
             self.page++
@@ -183,21 +202,16 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
             var parameters: NSDictionary = [:]
             WebServiceManager.fireGetPayoutRequestEarningsRequestWithUrl(APIAtlas.payoutRequestList+"\(SessionManager.accessToken())&page=\(self.page)&perPage=15", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
                 if successful {
-                    var requestList: PayoutRequestListModel?
-                    requestList = PayoutRequestListModel.parseDataWithDictionary(responseObject)
+                    var earnings: [PayoutRequestListModel] = []
+                    earnings = PayoutRequestListModel.parseDataWithDictionary(responseObject)
                     
-                    if requestList!.date.count != 0 {
-                        
-                        if requestList!.date.count < 15 {
+                    if earnings.count != 0 {
+                        if earnings.count < 15 {
                             self.isPageEnd = true
                         }
                         
-                        if successful {
-                            for i in 0..<requestList!.date.count {
-                                self.requestListModel.append(PayoutRequestListModel(date2: requestList!.date[i], withdrawalMethod2: requestList!.withdrawalMethod[i], totalAmount2: requestList!.totalAmount[i], charge2: requestList!.charge[i], netAmount2: requestList!.netAmount[i], currencyCode2: requestList!.currencyCode[i], status2: requestList!.status[i], payTo2: requestList!.payTo[i], bankName2: requestList!.bankName[i], accountNumber2: requestList!.accountNumber[i], accountName2: requestList!.accountName[i]))
-                            }
-                        } else {
-                            self.isPageEnd = true
+                        for i in 0..<earnings.count {
+                            self.requestListModel.append(PayoutRequestListModel(date: earnings[i].date, withdrawalMethod: earnings[i].withdrawalMethod, totalAmount: earnings[i].totalAmount, charge: earnings[i].charge, netAmount: earnings[i].netAmount, currencyCode: earnings[i].currencyCode, status: earnings[i].status, payTo: earnings[i].payTo, bankName: earnings[i].bankName, accountNumber: earnings[i].accountNumber, accountName: earnings[i].accountName))
                         }
                         
                         self.tableView.hidden = false
@@ -209,7 +223,7 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
                     if requestErrorType == .ResponseError {
                         //Error in api requirements
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                        self.showAlert(Constants.Localized.error, message: errorModel.message)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message)
                     } else if requestErrorType == .AccessTokenExpired {
                         self.fireRefreshToken()
                     } else if requestErrorType == .PageNotFound {
@@ -231,6 +245,8 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
             })
         }
     }
+    
+    // MARK: -
     // MARK: POST METHOD - Refresh token
     /*
     *
@@ -239,6 +255,7 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
     * Function to refresh token to get another access token
     *
     */
+    
     func fireRefreshToken() {
         self.showHUD()
         let manager = APIManager.sharedInstance
@@ -261,12 +278,11 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
                 if error.userInfo != nil {
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message)
                 } else {
-                    self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                    UIAlertController.displaySomethingWentWrongError(self)
                 }
                 self.hud?.hide(true)
         })
-        
     }
 }
