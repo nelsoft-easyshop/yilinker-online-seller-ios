@@ -57,49 +57,17 @@ class PayoutRequestListModel: NSObject {
                 if let value = request["requests"] as? NSArray {
                     for subValue in value as NSArray {
                         
-                        if let tempDate = subValue["date"] as? String {
-                            date = formatDate(tempDate)
-                        }
-                        
-                        if let tempWithdrawalMethod = subValue["withdrawalMethod"] as? String {
-                            withdrawalMethod = tempWithdrawalMethod
-                        }
-                        
-                        if let tempTotalAmount = subValue["totalAmount"] as? String {
-                            totalAmount = tempTotalAmount
-                        }
-                        
-                        if let tempCharge = subValue["charge"] as? String {
-                            charge = tempCharge
-                        }
-                        
-                        if let tempNetAmount = subValue["netAmount"] as? String {
-                            netAmount = tempNetAmount
-                        }
-                        
-                        if let tempcCurrencyCode = subValue["currencyCode"] as? String {
-                            currencyCode = tempcCurrencyCode
-                        }
-                        
-                        if let tempStatus = subValue["status"] as? String {
-                            status = tempStatus
-                        }
-                        
-                        if let tempPayTo = subValue["payTo"] as? String {
-                            payTo = tempPayTo
-                        }
-                        
-                        if let tempBankName = subValue["bankName"] as? String {
-                            bankName = tempBankName
-                        }
-                        
-                        if let tempAccountNumber = subValue["accountNumber"] as? String {
-                            accountNumber = tempAccountNumber
-                        }
-                        
-                        if let tempAccountName = subValue["accountName"] as? String {
-                            accountName = tempAccountName
-                        }
+                        date = formatDate(ParseHelper.string(subValue, key: "date", defaultValue: ""))
+                        withdrawalMethod = ParseHelper.string(subValue, key: "withdrawalMethod", defaultValue: "")
+                        totalAmount = ParseHelper.string(subValue, key: "totalAmount", defaultValue: "")
+                        charge = ParseHelper.string(subValue, key: "charge", defaultValue: "")
+                        netAmount = ParseHelper.string(subValue, key: "netAmount", defaultValue: "")
+                        currencyCode = ParseHelper.string(subValue, key: "currencyCode", defaultValue: "")
+                        status = ParseHelper.string(subValue, key: "status", defaultValue: "")
+                        payTo = ParseHelper.string(subValue, key: "payTo", defaultValue: "")
+                        bankName = ParseHelper.string(subValue, key: "bankName", defaultValue: "")
+                        accountNumber = ParseHelper.string(subValue, key: "accountNumber", defaultValue: "")
+                        accountName = ParseHelper.string(subValue, key: "accountName", defaultValue: "")
                         
                         payoutRequestListModel.append(PayoutRequestListModel(date: date, withdrawalMethod: withdrawalMethod, totalAmount: totalAmount, charge: charge, netAmount: netAmount, currencyCode: currencyCode, status: status, payTo: payTo, bankName: bankName, accountNumber: accountNumber, accountName: accountName))
                     }
