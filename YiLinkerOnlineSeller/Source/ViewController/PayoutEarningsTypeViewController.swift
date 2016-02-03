@@ -146,13 +146,22 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
         } else {
             let cell = self.tableView.dequeueReusableCellWithIdentifier(PayoutEarningsTypeTableViewCell.earningsTypeNibNameAndIdentifier(), forIndexPath: indexPath) as! PayoutEarningsTypeTableViewCell
             if self.earningsTypeModel.count != 0 {
-                if self.earningsTypeModel[indexPath.row].status == "completed" {
+                if self.earningTypeId == 3 || self.earningTypeId == 4 {
                     cell.statusLabel.text = PayoutEarningsTypeStrings.kCompleted
                     cell.statusView.backgroundColor = Constants.Colors.completedColor
                 } else {
-                    cell.statusLabel.text = PayoutEarningsTypeStrings.kTentative
-                    cell.statusView.backgroundColor = Constants.Colors.tentativeColor
+                    if self.earningsTypeModel[indexPath.row].status.lowercaseString == "paid" {
+                        cell.statusLabel.text = PayoutEarningsTypeStrings.kCompleted
+                        cell.statusView.backgroundColor = Constants.Colors.completedColor
+                    } else {
+                        cell.statusLabel.text = PayoutEarningsTypeStrings.kTentative
+                        cell.statusView.backgroundColor = Constants.Colors.tentativeColor
+                    }
+
                 }
+                cell.dateLabel.text = self.earningsTypeModel[indexPath.row].date
+                cell.itemLabel.text = self.earningsTypeModel[indexPath.row].status+"No description"
+                cell.amountLabel.text = self.earningsTypeModel[indexPath.row].amount.formatToPeso()
             }
             return cell
         }
@@ -200,23 +209,9 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
             
             self.showHUD()
             var parameters: NSDictionary = [:]
-            WebServiceManager.fireGetPayoutRequestEarningsRequestWithUrl(APIAtlas.payoutEarningsList+"\(SessionManager.accessToken())&page=\(self.page)&perPage=15&earningTypeId\(self.earningTypeId)", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            WebServiceManager.fireGetPayoutRequestEarningsRequestWithUrl(APIAtlas.payoutEarningsList+"\(SessionManager.accessToken())&page=\(self.page)&perPage=15&earningTypeId=\(self.earningTypeId)", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
                 if successful {
                     if self.earningTypeId == 1 {
-                        var earnings = PayoutEarningsTypeModel.parseDataWithDictionary(responseObject)
-                        if earnings.count != 0 {
-                            
-                            if earnings.count < 15 {
-                                self.isPageEnd = true
-                            }
-                            
-                            for i in 0..<earnings.count {
-                                self.earningsTypeModel.append(PayoutEarningsTypeModel(date: earnings[i].date, earningTypeId: earnings[i].earningTypeId, amount: earnings[i].amount, currencyCode: earnings[i].currencyCode, status: earnings[i].status))
-                            }
-                            
-                            self.tableView.hidden = false
-                        }
-                    } else {
                         var earnings = PayoutEarningsTypeModel.parseTransactionDataWithDictionary(responseObject)
                         if earnings.count != 0 {
                             
@@ -226,6 +221,20 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
                             
                             for i in 0..<earnings.count {
                                 self.earningsTypeModel.append(PayoutEarningsTypeModel(date: earnings[i].date, earningTypeId: earnings[i].earningTypeId, amount: earnings[i].amount, currencyCode: earnings[i].currencyCode, status: earnings[i].status, boughtBy: earnings[i].boughtBy, productName: earnings[i].productName, transactionNo: earnings[i].transactionNo))
+                            }
+                            
+                            self.tableView.hidden = false
+                        }
+                    } else {
+                        var earnings = PayoutEarningsTypeModel.parseDataWithDictionary(responseObject)
+                        if earnings.count != 0 {
+                            
+                            if earnings.count < 15 {
+                                self.isPageEnd = true
+                            }
+                            
+                            for i in 0..<earnings.count {
+                                self.earningsTypeModel.append(PayoutEarningsTypeModel(date: earnings[i].date, earningTypeId: earnings[i].earningTypeId, amount: earnings[i].amount, currencyCode: earnings[i].currencyCode, status: earnings[i].status, descriptions: earnings[i].descriptions))
                             }
                             
                             self.tableView.hidden = false
