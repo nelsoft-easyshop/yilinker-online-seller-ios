@@ -22,6 +22,32 @@ class PayoutRequestListModel: NSObject {
     var accountNumber: [String] = []
     var accountName: [String] = []
     
+    var date2: String = ""
+    var withdrawalMethod2: String = ""
+    var totalAmount2: String = ""
+    var charge2: String = ""
+    var netAmount2: String = ""
+    var currencyCode2: String = ""
+    var status2: String = ""
+    var payTo2: String = ""
+    var bankName2: String = ""
+    var accountNumber2: String = ""
+    var accountName2: String = ""
+    
+    init(date2: String, withdrawalMethod2: String, totalAmount2: String, charge2: String, netAmount2: String, currencyCode2: String, status2: String, payTo2: String, bankName2: String, accountNumber2: String, accountName2: String) {
+        self.date2 = date2 as String
+        self.withdrawalMethod2 = withdrawalMethod2 as String
+        self.totalAmount2 = totalAmount2 as String
+        self.charge2 = charge2 as String
+        self.netAmount2 = netAmount2 as String
+        self.currencyCode2 = currencyCode2 as String
+        self.status2 = status2 as String
+        self.payTo2 = payTo2 as String
+        self.bankName2 = bankName2 as String
+        self.accountName2 = accountName2 as String
+        self.accountNumber2 = accountNumber2 as String
+    }
+    
     init(date: NSArray, withdrawalMethod: NSArray, totalAmount: NSArray, charge: NSArray, netAmount: NSArray, currencyCode: NSArray, status: NSArray, payTo: NSArray, bankName: NSArray, accountNumber: NSArray, accountName: NSArray) {
         self.date = date as! [String]
         self.withdrawalMethod = withdrawalMethod as! [String]
