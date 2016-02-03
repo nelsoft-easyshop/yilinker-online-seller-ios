@@ -3,9 +3,15 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PayoutEarningsTypeViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
             <connections>
+                <outlet property="noResultLabel" destination="lTx-k3-2XD" id="dX9-95-rfr"/>
                 <outlet property="tableView" destination="EZj-iK-XoH" id="bJT-mI-Fb9"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -19,13 +25,23 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="600"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Transactions Available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="lTx-k3-2XD">
+                    <rect key="frame" x="8" y="289" width="359" height="21"/>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="EZj-iK-XoH" secondAttribute="trailing" id="HuG-T0-LdX"/>
                 <constraint firstAttribute="bottom" secondItem="EZj-iK-XoH" secondAttribute="bottom" id="X8w-HM-H4V"/>
+                <constraint firstItem="lTx-k3-2XD" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="Yqh-Mw-8aF"/>
+                <constraint firstAttribute="centerY" secondItem="lTx-k3-2XD" secondAttribute="centerY" id="f3L-Di-iyu"/>
+                <constraint firstAttribute="trailing" secondItem="lTx-k3-2XD" secondAttribute="trailing" constant="8" id="gxE-Ui-Snc"/>
                 <constraint firstItem="EZj-iK-XoH" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ppb-Jd-CCu"/>
                 <constraint firstItem="EZj-iK-XoH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="qXF-UA-IZU"/>
+                <constraint firstAttribute="centerX" secondItem="lTx-k3-2XD" secondAttribute="centerX" id="uyI-Lc-W35"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
