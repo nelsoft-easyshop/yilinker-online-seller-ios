@@ -73,6 +73,11 @@ struct Constants {
         static let soldLineColor: UIColor = HexaColor.colorWithHexa(0x409185)
         static let cancelledColor: UIColor = HexaColor.colorWithHexa(0xF1B54D)
         static let cancelledLineColor: UIColor = HexaColor.colorWithHexa(0xF1B54D)
+        
+        //Payout
+        static let completedColor: UIColor = HexaColor.colorWithHexa(0x4DB5A6)
+        static let tentativeColor: UIColor = HexaColor.colorWithHexa(0x5181D4)
+        static let inProgressColor: UIColor = HexaColor.colorWithHexa(0x717171)
     }
     
     struct Credentials {

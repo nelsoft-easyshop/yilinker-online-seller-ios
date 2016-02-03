@@ -8,8 +8,17 @@
 
 import UIKit
 
+struct PayoutRequestListBankDetailHeaderStrings {
+    static let kBankDepositDetails: String = StringHelper.localizedStringWithKey("PAYOUT_BANK_DEPOSIT_DETAILS_LOCALIZE_KEY")
+}
 class PayoutRequestListBankDetailHeaderTableViewCell: UITableViewCell {
 
+    // Labels
+    @IBOutlet weak var bankDepositLabel: UILabel!
+    
+    // Private Strings
+    private static let nibNameAndIdentifier: String = "PayoutRequestListBankDetailHeaderTableViewCell"
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -21,4 +30,7 @@ class PayoutRequestListBankDetailHeaderTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    class func bankHeaderNibNameAndIdentifier() -> String {
+        return PayoutRequestListBankDetailHeaderTableViewCell.nibNameAndIdentifier
+    }
 }

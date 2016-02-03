@@ -48,6 +48,10 @@
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="depositNameLabel" destination="eod-oJ-Lsr" id="JZH-81-oto"/>
+                <outlet property="depositToLabel" destination="ugr-eb-5Mw" id="ds7-fa-pNd"/>
+            </connections>
             <point key="canvasLocation" x="328.5" y="196.5"/>
         </tableViewCell>
     </objects>

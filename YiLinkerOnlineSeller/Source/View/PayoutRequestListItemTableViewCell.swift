@@ -8,11 +8,20 @@
 
 import UIKit
 
+struct PayoutRequestListItemStrings {
+    static let kDeposit: String = StringHelper.localizedStringWithKey("PAYOUT_DEPOSIT_LOCALIZE_KEY")
+    static let kCheque: String = StringHelper.localizedStringWithKey("PAYOUT_CHEQUE_LOCALIZE_KEY")
+}
+
 class PayoutRequestListItemTableViewCell: UITableViewCell {
 
     // Labels
     @IBOutlet weak var itemLabel: UILabel!
     @IBOutlet weak var itemDetailLabel: UILabel!
+    
+    // Private Strings
+    private static let nibNameAndIdentifier: String = "PayoutRequestListItemTableViewCell"
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -24,4 +33,7 @@ class PayoutRequestListItemTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    class func listItemNibNameAndIdentifier() -> String {
+        return PayoutRequestListItemTableViewCell.nibNameAndIdentifier
+    }
 }
