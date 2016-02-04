@@ -57,7 +57,7 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
         
         if recordModel != nil {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-            fireGetWithdrawalBalance(self.formatDateToString(self.startDate, type: .Key), endDate: self.formatDateToString(self.endDate, type: .Key))
+            fireGetWithdrawalBalance(self.formatDateToString(self.startDate, type: .Key), endDate: self.formatDateToString(self.endDate.addDays(1), type: .Key))
         }
         
     }
@@ -68,8 +68,8 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
     func selectDate(gesture: UIGestureRecognizer) {
         var datePickerController: DatePickerViewController = DatePickerViewController(nibName: "DatePickerViewController", bundle: nil)
         datePickerController.delegate = self
-        datePickerController.startDate = defaultStartDate
-        datePickerController.endDate = defaultEndDate
+        datePickerController.startDate = self.startDate
+        datePickerController.endDate = self.endDate
         self.navigationController?.pushViewController(datePickerController, animated:true)
     }
     
@@ -114,7 +114,7 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
     
     // show graph's data
     func displayGraph() {
-        println("displaying graph")
+
         var dates: [String] = []
         var amounts: [String] = []
         var earningEntries: [ChartDataEntry] = []
@@ -191,9 +191,9 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
         // update calendar dates
         // get the first value and the last value for dates
         if dateLabel.text == " - " {
-            defaultStartDate = formatStringToDate(recordModel.earnings[recordModel.earnings.count - 1].date)
-            defaultEndDate = formatStringToDate(recordModel.earnings[0].date)
-            self.dateLabel.text = formatDateToString(defaultStartDate, type: .Calendar) + " - " + formatDateToString(defaultEndDate, type: .Calendar)
+            self.startDate = formatStringToDate(recordModel.earnings[recordModel.earnings.count - 1].date)
+            self.endDate = formatStringToDate(recordModel.earnings[0].date)
+            self.dateLabel.text = formatDateToString(self.startDate, type: .Calendar) + " - " + formatDateToString(self.endDate, type: .Calendar)
         }
     }
     
@@ -221,6 +221,7 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
                 if successful {
                     self.recordModel = BalanceRecordModel.parseDataWithDictionary(responseObject as! NSDictionary)
                     self.populateData()
+                    println(responseObject)
                 } else {
                     if requestErrorType == .ResponseError {
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -253,7 +254,7 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
             WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.loginUrl, actionHandler: { (successful, responseObject, RequestErrorType) -> Void in
                 self.hud?.hide(true)
                 if successful {
-                    self.fireGetWithdrawalBalance(self.formatDateToString(self.startDate, type: .Key), endDate: self.formatDateToString(self.endDate, type: .Key))
+                    self.fireGetWithdrawalBalance(self.formatDateToString(self.startDate, type: .Key), endDate: self.formatDateToString(self.endDate.addDays(1), type: .Key))
                 } else {
                     //Forcing user to logout.
                     UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
