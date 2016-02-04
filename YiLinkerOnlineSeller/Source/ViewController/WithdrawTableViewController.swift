@@ -460,7 +460,7 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
             } else {
                 self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
                 self.amountView.bottomLabel.text = "P 50.00 bank charge for withdrawal below P 5,000.00"
-                self.amountView.bottomLabel.textColor = UIColor.blackColor()
+                self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
             }
         }
     }
