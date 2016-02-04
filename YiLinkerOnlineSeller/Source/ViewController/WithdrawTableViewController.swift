@@ -279,6 +279,8 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         }
         
         self.confimationCodeView.codeTextField.text = ""
+        self.timer.invalidate()
+        self.confimationCodeView.getCodeButton.setTitle("GET CODE", forState: .Normal)
         
         self.proceedView.proceedButton.userInteractionEnabled = false
         self.proceedView.proceedButton.backgroundColor = .lightGrayColor()
