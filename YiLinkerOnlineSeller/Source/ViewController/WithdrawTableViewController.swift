@@ -59,18 +59,11 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-
-        if !firstLoad {
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        }
-    }
-    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
         if !firstLoad {
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             fireGetWithdrawalBalance()
         }
         
@@ -338,13 +331,14 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
                     self.confimationCodeView.getCodeButton.userInteractionEnabled = false
                     self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
                     
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Confirmation code has been sent to your mobile number.", title: "Code Request Sent")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Confirmation code has been sent to your mobile number.", title: "Request Sent")
                     self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("startCooldown"), userInfo: nil, repeats: true)
                     
                 } else {
                     if requestErrorType == .ResponseError {
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+//                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: "Request Failed")
                     } else if requestErrorType == .PageNotFound {
                         Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
                     } else if requestErrorType == .NoInternetConnection {
@@ -497,13 +491,6 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     func modalYesAction(controller: WithdrawModalViewController) {
         fireSubmitWithdrawal()
     }
-    
-    
-    
-    
-    
-    
-    
     
     // MARK: - Table view data source
 
