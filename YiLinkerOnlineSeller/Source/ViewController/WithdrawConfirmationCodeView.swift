@@ -43,9 +43,7 @@ class WithdrawConfirmationCodeView: UIView {
     }
     
     func keyboardDoneAction() {
-        if getCodeButton.backgroundColor != UIColor.lightGrayColor() {
-            codeTextField.resignFirstResponder()
-        }
+        codeTextField.resignFirstResponder()
     }
     
     func codeDidTextChanged() {

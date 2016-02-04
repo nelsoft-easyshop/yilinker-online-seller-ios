@@ -8,7 +8,11 @@
 
 import UIKit
 
-class PayoutViewController: UIViewController {
+protocol PayoutViewControllerDelegate {
+    func passStoreInfo(controller: PayoutViewController, storeInfo: StoreInfoModel)
+}
+
+class PayoutViewController: UIViewController, WithdrawTableViewControllerDelegate {
 
     // Xibs
     @IBOutlet weak var tabsCollectionView: UICollectionView!
@@ -34,6 +38,10 @@ class PayoutViewController: UIViewController {
     var containerViewFrame: CGRect?
     
     var headerView: UIView!
+    
+    var storeInfo: StoreInfoModel!
+    
+    var delegate: PayoutViewControllerDelegate?
     
     // MARK: - View Life Cycle
     
@@ -86,11 +94,12 @@ class PayoutViewController: UIViewController {
     
     // MARK: - Init View Controllers
     func initViewControllers() {
-//        withdrawVC = PayoutBalanceWithdrawalViewController(nibName: "PayoutBalanceWithdrawalViewController", bundle: nil)
         withdrawVC = WithdrawTableViewController(nibName: "WithdrawTableViewController", bundle: nil)
         requestVC = PayoutRequestListViewController(nibName: "PayoutRequestListViewController", bundle: nil)
         recordVC = PayoutBalanceRecordViewController(nibName: "PayoutBalanceRecordViewController", bundle: nil)
         earningVC = PayoutEarningsViewController(nibName: "PayoutEarningsViewController", bundle: nil)
+        
+        withdrawVC!.delegate = self
         
         self.viewControllers.append(withdrawVC!)
         self.viewControllers.append(requestVC!)
@@ -99,6 +108,7 @@ class PayoutViewController: UIViewController {
         
         // set withdraw view controller as default view
         setSelectedViewControllerWithIndex(0, transition: UIViewAnimationOptions.TransitionNone)
+        delegate?.passStoreInfo(self, storeInfo: self.storeInfo)
     }
     
     //MARK: - Set Selected View Controller With Index
@@ -118,10 +128,17 @@ class PayoutViewController: UIViewController {
         
         self.containerView.addSubview(viewController.view)
         
+        if let controller = viewController as? WithdrawTableViewController {
+            println("benga")
+            controller.storeInfo = self.storeInfo
+//            delegate?.passStoreInfo(self, storeInfo: self.storeInfo)
+        }
+        
         if self.currentChildViewController != nil {
             println("before transition")
             self.transitionFromViewController(self.currentChildViewController!, toViewController: viewController, duration: 0, options: transition, animations: nil) { (Bool) -> Void in
                 println("after transition")
+                
                 viewController.didMoveToParentViewController(self)
                 if !(self.currentChildViewController == viewController) {
                     if self.isViewLoaded() {
@@ -145,6 +162,18 @@ class PayoutViewController: UIViewController {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
+    
+    // MARK: - Withdraw Table View Controller Delegate
+    
+    func withdrawToRequest(controller: WithdrawTableViewController) {
+        selectedIndex = 1
+        self.tabsCollectionView.reloadData()
+        setSelectedViewControllerWithIndex(1, transition: UIViewAnimationOptions.TransitionNone)
+    }
+    
+    func passAmount(controller: WithdrawTableViewController, amount: Double) {
+        
+    }
     // MARK: - Collection View Data Source
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

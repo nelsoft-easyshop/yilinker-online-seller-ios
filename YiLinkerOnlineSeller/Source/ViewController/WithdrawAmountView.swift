@@ -31,6 +31,8 @@ class WithdrawAmountView: UIView, UITextFieldDelegate {
         amountTextField.leftView = leftPadding
         amountTextField.leftViewMode = UITextFieldViewMode.Always
 
+        amountTextField.layer.cornerRadius = 3.0
+        
         aboveLabel.required()
         
         amountTextField.addTarget(self, action: "amountDidTextChanged", forControlEvents: UIControlEvents.EditingChanged)
