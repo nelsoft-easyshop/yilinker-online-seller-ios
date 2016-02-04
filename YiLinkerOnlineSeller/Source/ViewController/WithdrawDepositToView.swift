@@ -10,6 +10,8 @@ import UIKit
 
 class WithdrawDepositToView: UIView {
 
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var detailsLabel: UILabel!
     override func awakeFromNib() {
         self.frame.size.width = UIScreen.mainScreen().bounds.width
     }

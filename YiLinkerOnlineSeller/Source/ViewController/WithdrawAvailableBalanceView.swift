@@ -28,8 +28,8 @@ class WithdrawAvailableBalanceView: UIView {
         delegate?.gotoPayoutSummary(self)
     }
     
-    func setAvailableBalance(balance: Int) {
-        self.availableBalanceLabel.text = "P " + String(balance)
+    func setAvailableBalance(balance: String) {
+        self.availableBalanceLabel.text = "P " + balance
     }
 
 }

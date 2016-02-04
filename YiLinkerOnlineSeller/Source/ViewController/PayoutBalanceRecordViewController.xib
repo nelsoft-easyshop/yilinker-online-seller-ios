@@ -2,10 +2,36 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+        </mutableArray>
+        <mutableArray key="Panton SemiBold.otf">
+            <string>Panton-SemiBold</string>
+        </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PayoutBalanceRecordViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
             <connections>
+                <outlet property="activeEarningLabel" destination="h1S-9m-sno" id="JbD-Sb-352"/>
+                <outlet property="dateContainerView" destination="EVu-yQ-ZdR" id="r59-Nh-QE6"/>
+                <outlet property="dateLabel" destination="29c-Wk-xUj" id="VRw-4e-WlB"/>
+                <outlet property="myChart" destination="HSr-zv-TCL" id="xDM-Rf-5xI"/>
+                <outlet property="tentativeEarningLabel" destination="3Z6-LJ-TPD" id="fV9-VE-WZr"/>
+                <outlet property="totalEarningLabel" destination="12m-LB-tCE" id="GRa-B9-2Qv"/>
+                <outlet property="totalWithdrewLabel" destination="2pK-mT-JZq" id="3Q9-DI-e58"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -14,15 +40,219 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="record" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w4J-6N-I9J">
-                    <rect key="frame" x="87" y="61" width="50" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HSr-zv-TCL" customClass="LineChartView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="57" width="320" height="319"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EVu-yQ-ZdR" userLabel="Calendar View">
+                    <rect key="frame" x="162" y="14" width="150" height="35"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="right2" translatesAutoresizingMaskIntoConstraints="NO" id="GaR-zq-jGj">
+                            <rect key="frame" x="130" y="12" width="12" height="12"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" - " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="29c-Wk-xUj" userLabel="Date">
+                            <rect key="frame" x="23" y="10" width="104" height="15"/>
+                            <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="12"/>
+                            <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="calendar" translatesAutoresizingMaskIntoConstraints="NO" id="Ntq-Zd-dDy">
+                            <rect key="frame" x="0.0" y="9" width="18" height="18"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="150" id="7ac-aH-VJL"/>
+                        <constraint firstAttribute="height" constant="35" id="Hlb-SK-YJo"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BGh-eG-Bzt" userLabel="xx">
+                    <rect key="frame" x="0.0" y="494" width="160" height="74"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Tentative Earning" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T1A-7m-4LB" userLabel="Total Sales Label">
+                            <rect key="frame" x="0.0" y="48" width="160" height="12"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="12" id="WHI-3j-1C9"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="10"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="3Z6-LJ-TPD" userLabel="Total Sales">
+                            <rect key="frame" x="0.0" y="23" width="160" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="aEs-xF-bw6"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="18"/>
+                            <color key="textColor" red="0.70196078429999997" green="0.69803921570000005" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="T1A-7m-4LB" firstAttribute="top" secondItem="3Z6-LJ-TPD" secondAttribute="bottom" constant="5" id="73K-mz-DYz"/>
+                        <constraint firstItem="T1A-7m-4LB" firstAttribute="leading" secondItem="BGh-eG-Bzt" secondAttribute="leading" id="AOB-aa-nrT"/>
+                        <constraint firstAttribute="trailing" secondItem="3Z6-LJ-TPD" secondAttribute="trailing" id="FDZ-6Z-qyI"/>
+                        <constraint firstItem="3Z6-LJ-TPD" firstAttribute="leading" secondItem="BGh-eG-Bzt" secondAttribute="leading" id="X2G-mh-4h4"/>
+                        <constraint firstItem="3Z6-LJ-TPD" firstAttribute="top" secondItem="BGh-eG-Bzt" secondAttribute="top" constant="23" id="mCe-k7-36i"/>
+                        <constraint firstAttribute="trailing" secondItem="T1A-7m-4LB" secondAttribute="trailing" id="qLf-bG-686"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JE9-xr-Hd9">
+                    <rect key="frame" x="160" y="494" width="160" height="74"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Total Withdrew" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wDp-56-pUz" userLabel="Total Sales Label">
+                            <rect key="frame" x="0.0" y="46" width="160" height="12"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="12" id="pTo-lm-PYC"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="10"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="2pK-mT-JZq" userLabel="Total Sales">
+                            <rect key="frame" x="0.0" y="21" width="160" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="a3G-2u-zZ3"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="18"/>
+                            <color key="textColor" red="0.70196078429999997" green="0.69803921570000005" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="wDp-56-pUz" firstAttribute="leading" secondItem="JE9-xr-Hd9" secondAttribute="leading" id="72Y-Ab-i94"/>
+                        <constraint firstItem="2pK-mT-JZq" firstAttribute="top" secondItem="JE9-xr-Hd9" secondAttribute="top" constant="21" id="DtZ-Cs-rX3"/>
+                        <constraint firstItem="2pK-mT-JZq" firstAttribute="leading" secondItem="JE9-xr-Hd9" secondAttribute="leading" id="FNk-YI-aKn"/>
+                        <constraint firstAttribute="trailing" secondItem="2pK-mT-JZq" secondAttribute="trailing" id="SAt-X3-9hm"/>
+                        <constraint firstItem="wDp-56-pUz" firstAttribute="top" secondItem="2pK-mT-JZq" secondAttribute="bottom" constant="5" id="lY3-T1-aLJ"/>
+                        <constraint firstAttribute="trailing" secondItem="wDp-56-pUz" secondAttribute="trailing" id="xBj-AG-XKT"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qtu-EV-QXf" userLabel="below separator">
+                    <rect key="frame" x="0.0" y="493" width="320" height="1"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="i4K-dT-Iep"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jCc-zN-W1m">
+                    <rect key="frame" x="0.0" y="420" width="160" height="74"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Total Earning" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u5p-1x-sBe" userLabel="Total Sales Label">
+                            <rect key="frame" x="0.0" y="46" width="160" height="12"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="12" id="8qm-lt-FQh"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="10"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="12m-LB-tCE" userLabel="Total Sales">
+                            <rect key="frame" x="0.0" y="21" width="160" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="yU7-et-PDV"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="18"/>
+                            <color key="textColor" red="0.70196078429999997" green="0.69803921570000005" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="u5p-1x-sBe" firstAttribute="leading" secondItem="jCc-zN-W1m" secondAttribute="leading" id="2eO-A7-Bmy"/>
+                        <constraint firstItem="12m-LB-tCE" firstAttribute="leading" secondItem="jCc-zN-W1m" secondAttribute="leading" id="HSd-qG-7ZN"/>
+                        <constraint firstAttribute="trailing" secondItem="12m-LB-tCE" secondAttribute="trailing" id="QhI-RU-REI"/>
+                        <constraint firstItem="12m-LB-tCE" firstAttribute="top" secondItem="jCc-zN-W1m" secondAttribute="top" constant="21" id="UCP-H6-e3C"/>
+                        <constraint firstAttribute="trailing" secondItem="u5p-1x-sBe" secondAttribute="trailing" id="ZH8-kX-sA2"/>
+                        <constraint firstItem="u5p-1x-sBe" firstAttribute="top" secondItem="12m-LB-tCE" secondAttribute="bottom" constant="5" id="mCg-p4-irg"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sXu-WM-CBf" userLabel="above separator">
+                    <rect key="frame" x="0.0" y="419" width="320" height="1"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="D6n-g5-YFy"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ejb-3K-oY8">
+                    <rect key="frame" x="160" y="420" width="160" height="74"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Active Earning" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xij-hq-cVk" userLabel="Total Sales Label">
+                            <rect key="frame" x="0.0" y="46" width="160" height="12"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="12" id="BS7-Tu-8jU"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="10"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="h1S-9m-sno" userLabel="Total Sales">
+                            <rect key="frame" x="0.0" y="21" width="160" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="chH-XI-UBf"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="18"/>
+                            <color key="textColor" red="0.70196078429999997" green="0.69803921570000005" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="Xij-hq-cVk" firstAttribute="top" secondItem="h1S-9m-sno" secondAttribute="bottom" constant="5" id="8rV-bb-FKz"/>
+                        <constraint firstAttribute="trailing" secondItem="Xij-hq-cVk" secondAttribute="trailing" id="BLK-qc-3FQ"/>
+                        <constraint firstItem="h1S-9m-sno" firstAttribute="leading" secondItem="Ejb-3K-oY8" secondAttribute="leading" id="GjR-sf-TaG"/>
+                        <constraint firstAttribute="trailing" secondItem="h1S-9m-sno" secondAttribute="trailing" id="ZyX-Cy-X7N"/>
+                        <constraint firstItem="Xij-hq-cVk" firstAttribute="leading" secondItem="Ejb-3K-oY8" secondAttribute="leading" id="lv0-q0-5bc"/>
+                        <constraint firstItem="h1S-9m-sno" firstAttribute="top" secondItem="Ejb-3K-oY8" secondAttribute="top" constant="21" id="t4G-fb-79L"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Total Earnings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dKG-JY-E1C" userLabel="Total Sales Label">
+                    <rect key="frame" x="0.0" y="384" width="320" height="27"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="27" id="cKH-is-CLL"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="BGh-eG-Bzt" firstAttribute="width" secondItem="JE9-xr-Hd9" secondAttribute="width" id="2OF-Bq-b2E"/>
+                <constraint firstItem="BGh-eG-Bzt" firstAttribute="top" secondItem="jCc-zN-W1m" secondAttribute="bottom" id="47K-31-pzD"/>
+                <constraint firstAttribute="trailing" secondItem="JE9-xr-Hd9" secondAttribute="trailing" id="5dg-kB-Xut"/>
+                <constraint firstItem="Ejb-3K-oY8" firstAttribute="width" secondItem="jCc-zN-W1m" secondAttribute="width" id="7y1-qN-MRy"/>
+                <constraint firstItem="JE9-xr-Hd9" firstAttribute="leading" secondItem="BGh-eG-Bzt" secondAttribute="trailing" id="846-Y6-Oti"/>
+                <constraint firstItem="EVu-yQ-ZdR" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="14" id="9Js-Xa-A7o"/>
+                <constraint firstItem="Ejb-3K-oY8" firstAttribute="width" secondItem="jCc-zN-W1m" secondAttribute="height" multiplier="80:37" id="B04-H4-p2z"/>
+                <constraint firstItem="BGh-eG-Bzt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="I2L-Yr-gAi"/>
+                <constraint firstItem="Ejb-3K-oY8" firstAttribute="height" secondItem="jCc-zN-W1m" secondAttribute="height" id="IDC-vu-Tjf"/>
+                <constraint firstItem="dKG-JY-E1C" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Oqg-of-56V"/>
+                <constraint firstAttribute="trailing" secondItem="Ejb-3K-oY8" secondAttribute="trailing" id="Ur1-SI-QvV"/>
+                <constraint firstAttribute="bottom" secondItem="JE9-xr-Hd9" secondAttribute="bottom" id="UvR-xt-49P"/>
+                <constraint firstAttribute="trailing" secondItem="EVu-yQ-ZdR" secondAttribute="trailing" constant="8" id="Zfb-qT-VPW"/>
+                <constraint firstItem="Ejb-3K-oY8" firstAttribute="top" secondItem="sXu-WM-CBf" secondAttribute="bottom" id="cZL-BB-ZeC"/>
+                <constraint firstItem="HSr-zv-TCL" firstAttribute="top" secondItem="EVu-yQ-ZdR" secondAttribute="bottom" constant="8" id="dL5-Un-xzD"/>
+                <constraint firstAttribute="bottom" secondItem="BGh-eG-Bzt" secondAttribute="bottom" id="dNT-4Q-qhh"/>
+                <constraint firstItem="qtu-EV-QXf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="eh0-vJ-9Up"/>
+                <constraint firstAttribute="trailing" secondItem="HSr-zv-TCL" secondAttribute="trailing" id="fAh-TF-NaP"/>
+                <constraint firstItem="Ejb-3K-oY8" firstAttribute="leading" secondItem="jCc-zN-W1m" secondAttribute="trailing" id="fo7-nz-B2V"/>
+                <constraint firstItem="sXu-WM-CBf" firstAttribute="top" secondItem="dKG-JY-E1C" secondAttribute="bottom" constant="8" id="jaK-51-Ryv"/>
+                <constraint firstItem="BGh-eG-Bzt" firstAttribute="width" secondItem="JE9-xr-Hd9" secondAttribute="height" multiplier="80:37" id="nnv-v6-eKO"/>
+                <constraint firstItem="BGh-eG-Bzt" firstAttribute="height" secondItem="JE9-xr-Hd9" secondAttribute="height" id="piy-7K-MYw"/>
+                <constraint firstItem="dKG-JY-E1C" firstAttribute="top" secondItem="HSr-zv-TCL" secondAttribute="bottom" constant="8" id="qVS-qM-OvL"/>
+                <constraint firstItem="JE9-xr-Hd9" firstAttribute="top" secondItem="qtu-EV-QXf" secondAttribute="bottom" id="qiZ-zH-tzr"/>
+                <constraint firstItem="HSr-zv-TCL" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="rHG-lp-pJC"/>
+                <constraint firstItem="JE9-xr-Hd9" firstAttribute="top" secondItem="Ejb-3K-oY8" secondAttribute="bottom" id="s4L-fP-3Ov"/>
+                <constraint firstItem="jCc-zN-W1m" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="tZq-ga-FB3"/>
+                <constraint firstItem="sXu-WM-CBf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="uqM-P2-Kva"/>
+                <constraint firstAttribute="trailing" secondItem="sXu-WM-CBf" secondAttribute="trailing" id="wgo-vO-qbx"/>
+                <constraint firstAttribute="trailing" secondItem="qtu-EV-QXf" secondAttribute="trailing" id="xGH-x7-Gp8"/>
+                <constraint firstAttribute="trailing" secondItem="dKG-JY-E1C" secondAttribute="trailing" id="yUc-fs-Slt"/>
+            </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
     </objects>
+    <resources>
+        <image name="calendar" width="200" height="200"/>
+        <image name="right2" width="97" height="200"/>
+    </resources>
 </document>
