@@ -3,9 +3,15 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PayoutRequestListViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
             <connections>
+                <outlet property="noResultLabel" destination="Vpm-7d-kK4" id="B3a-RQ-8VE"/>
                 <outlet property="tableView" destination="Cze-Zc-HtT" id="zAj-OY-2Gg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -15,17 +21,28 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Cze-Zc-HtT">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Cze-Zc-HtT">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="600"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                 </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Withdrawal Request Available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="Vpm-7d-kK4">
+                    <rect key="frame" x="8" y="289" width="359" height="21"/>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="Cze-Zc-HtT" secondAttribute="trailing" id="2dy-cV-vKf"/>
+                <constraint firstAttribute="centerX" secondItem="Vpm-7d-kK4" secondAttribute="centerX" id="36i-Hj-Ruj"/>
+                <constraint firstAttribute="centerY" secondItem="Vpm-7d-kK4" secondAttribute="centerY" id="43M-6b-GsK"/>
                 <constraint firstItem="Cze-Zc-HtT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9T5-7v-fhw"/>
                 <constraint firstItem="Cze-Zc-HtT" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Pnv-ts-b0n"/>
                 <constraint firstAttribute="bottom" secondItem="Cze-Zc-HtT" secondAttribute="bottom" id="Ykb-ZK-Rx3"/>
+                <constraint firstItem="Vpm-7d-kK4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="ka5-YQ-jk1"/>
+                <constraint firstAttribute="trailing" secondItem="Vpm-7d-kK4" secondAttribute="trailing" constant="8" id="r2E-ey-KGC"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="130.5" y="209"/>

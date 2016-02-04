@@ -19,13 +19,15 @@ class PayoutEarningsTypeModel: NSObject {
     var boughtBy: String = ""
     var productName: String = ""
     var transactionNo: String = ""
+    var descriptions: String = ""
     
-    init(date: String, earningTypeId: Int, amount: String, currencyCode: String, status: String) {
+    init(date: String, earningTypeId: Int, amount: String, currencyCode: String, status: String, descriptions: String) {
         self.date = date
         self.earningTypeId = earningTypeId
         self.amount = amount
         self.currencyCode = currencyCode
         self.status = status
+        self.descriptions = descriptions
     }
     
     init(date: String, earningTypeId: Int, amount: String, currencyCode: String, status: String, boughtBy: String, productName: String, transactionNo: String) {
@@ -48,6 +50,7 @@ class PayoutEarningsTypeModel: NSObject {
         var amount: String = ""
         var currencyCode: String = ""
         var status: String = ""
+        var descriptions: String = ""
         
         if dictionary.isKindOfClass(NSDictionary) {
             if let request: AnyObject = dictionary["data"] {
@@ -59,8 +62,9 @@ class PayoutEarningsTypeModel: NSObject {
                         amount = ParseHelper.string(subValue, key: "amount", defaultValue: "")
                         currencyCode = ParseHelper.string(subValue, key: "currencyCode", defaultValue: "")
                         status = ParseHelper.string(subValue, key: "status", defaultValue: "")
+                        descriptions = ParseHelper.string(subValue, key: "description", defaultValue: "")
                         
-                        payoutEarningsTypeModel.append(PayoutEarningsTypeModel(date: date, earningTypeId: earningTypeId, amount: amount, currencyCode: currencyCode, status: status))
+                        payoutEarningsTypeModel.append(PayoutEarningsTypeModel(date: date, earningTypeId: earningTypeId, amount: amount, currencyCode: currencyCode, status: status, descriptions: descriptions))
                     }
                 }
             }

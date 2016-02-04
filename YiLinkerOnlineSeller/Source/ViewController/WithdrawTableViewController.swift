@@ -198,7 +198,7 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     // MARK: - Requests
     
     func fireGetWithdrawalBalance() {
-        let parameters: NSDictionary = ["access_token": /*SessionManager.accessToken()*/"YTBhM2RiYjczMzliYTk3ZGI4ZTBiZThlYzM1YmUxNDJkZGIwMzE4N2IxOTVjNTFlYTEwYmM0M2QyZGM4NjlhYw", "dateTo": "", "dateFrom": "", "page": 1, "perPage": 1]
+        let parameters: NSDictionary = ["access_token": "NWNjYWUzNTIwZjg4ZjdlOTM3MjNiYWM3YWEyMDVhYWRlNWJhNTJmZDE1YzYwYmEyM2VhOGIyNDFmZWZlM2UyOQ", "dateTo": "", "dateFrom": "", "page": 1, "perPage": 1]
         
         WebServiceManager.fireGetBalanceRecordRequestWithUrl(APIAtlas.getBalanceRecordDetails, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
@@ -266,7 +266,7 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
             method = "cheque"
         }
         
-        let parameters: NSDictionary = ["access_token": "ZTJkMjVmYmEyNjExODcyMDViZmZmMTkwZTVlM2QxODY2OThjYzNmOThkZGFlODQ1MjQwY2I0MGMzYjNmYzIyNA",
+        let parameters: NSDictionary = ["access_token": "NWNjYWUzNTIwZjg4ZjdlOTM3MjNiYWM3YWEyMDVhYWRlNWJhNTJmZDE1YzYwYmEyM2VhOGIyNDFmZWZlM2UyOQ",
             "withdrawalMethod": method,
             "otp": self.confimationCodeView.codeTextField.text,
             "amount": self.amountView.amountTextField.text]

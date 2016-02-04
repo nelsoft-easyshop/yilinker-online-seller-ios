@@ -137,3 +137,9 @@ enum RequestErrorType {
     case NoError
     case Cancel
 }
+
+enum DateType {
+    case Calendar
+    case Graph
+    case Key
+}
