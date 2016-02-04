@@ -96,7 +96,7 @@
                                         <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
                                     </attributes>
                                 </fragment>
-                                <fragment content=" P 500.00">
+                                <fragment content=" -">
                                     <attributes>
                                         <color key="NSColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <font key="NSFont" size="12" name="Herculanum"/>
@@ -126,7 +126,7 @@
                                         <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
                                     </attributes>
                                 </fragment>
-                                <fragment content="P 50.00">
+                                <fragment content="-">
                                     <attributes>
                                         <color key="NSColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <font key="NSFont" size="13" name="HelveticaNeue"/>
@@ -174,7 +174,7 @@
                                         <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
                                     </attributes>
                                 </fragment>
-                                <fragment content="P 450.00">
+                                <fragment content="-">
                                     <attributes>
                                         <color key="NSColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <font key="NSFont" size="13" name="HelveticaNeue"/>

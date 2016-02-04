@@ -54,12 +54,12 @@ class PayoutSummaryViewController: UIViewController {
         let cell: PayoutSummaryTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("PayoutSummaryIdentifier") as! PayoutSummaryTableViewCell
         
         cell.titleLabel.text = titles[indexPath.row]
-        cell.priceLabel.text = "P " + prices[indexPath.row] + ".00"
+        cell.priceLabel.text = "P " + prices[indexPath.row]
         cell.priceLabel.textColor = colors[indexPath.row]
         
         if indexPath.row == 2 {
             cell.inProcessLabel.hidden = false
-            cell.inProcessLabel.text = "IN PROCESS P " + inProcess + ".00"
+            cell.inProcessLabel.text = "IN PROCESS P " + inProcess
         }
         
         return cell
