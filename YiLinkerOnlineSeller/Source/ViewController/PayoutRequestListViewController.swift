@@ -226,8 +226,12 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
                         
                         self.tableView.hidden = false
                     } else {
-                        self.noResultLabel.hidden = false
-                        self.tableView.hidden = true
+                        if self.requestListModel.count == 0 {
+                            self.noResultLabel.hidden = false
+                            self.tableView.hidden = true
+                        } else {
+                            self.isPageEnd = true
+                        }
                     }
                     
                     self.tableView.reloadData()
