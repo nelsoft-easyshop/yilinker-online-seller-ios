@@ -11,7 +11,7 @@ import UIKit
 struct PayoutEarningsType {
     static let kNumberOfSection: Int = 1
     static let kRowHeightTransaction: CGFloat = 93
-    static let kRowHeight: CGFloat = 64
+    static let kRowHeight: CGFloat = 76
 }
 
 struct PayoutEarningsTypesStrings {
@@ -171,13 +171,18 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
         if self.earningTypeId == 1 {
             let cell = self.tableView.dequeueReusableCellWithIdentifier(PayoutEarningsTransactionTypeTableViewCell.transactionsNibNameAndIdentifier(), forIndexPath: indexPath) as! PayoutEarningsTransactionTypeTableViewCell
             if self.earningsTypeModel.count != 0 {
-                if self.earningsTypeModel[indexPath.row].status == "completed" {
-                    cell.statusLabel.text = PayoutEarningsTransactionTypeStrings.kCompleted
+                if self.earningsTypeModel[indexPath.row].status.lowercaseString == "paid" {
+                    cell.statusLabel.text = PayoutEarningsTypeStrings.kCompleted
                     cell.statusView.backgroundColor = Constants.Colors.completedColor
                 } else {
-                    cell.statusLabel.text = PayoutEarningsTransactionTypeStrings.kTentative
+                    cell.statusLabel.text = PayoutEarningsTypeStrings.kTentative
                     cell.statusView.backgroundColor = Constants.Colors.tentativeColor
                 }
+                cell.dateLabel.text = self.earningsTypeModel[indexPath.row].date
+                var transactionNo = (self.earningsTypeModel[indexPath.row].descriptions as NSString).substringWithRange(NSRange(location: 0, length: 21))
+                cell.transactionNoLabel.text = transactionNo
+                cell.productNameLabel.text = self.earningsTypeModel[indexPath.row].descriptions.stringByReplacingOccurrencesOfString(transactionNo+"\\n", withString: "").stringByReplacingOccurrencesOfString("\\n", withString: "\r\n")
+                cell.amountLabel.text = self.earningsTypeModel[indexPath.row].amount.formatToPeso()
             }
             
             return cell
@@ -198,7 +203,7 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
 
                 }
                 cell.dateLabel.text = self.earningsTypeModel[indexPath.row].date
-                cell.itemLabel.text = self.earningsTypeModel[indexPath.row].status+"No description"
+                cell.itemLabel.text = self.earningsTypeModel[indexPath.row].descriptions
                 cell.amountLabel.text = self.earningsTypeModel[indexPath.row].amount.formatToPeso()
             }
             return cell
@@ -249,42 +254,26 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
             var parameters: NSDictionary = [:]
             WebServiceManager.fireGetPayoutRequestEarningsRequestWithUrl(APIAtlas.payoutEarningsList+"\(SessionManager.accessToken())&page=\(self.page)&perPage=15&earningTypeId=\(self.earningTypeId)", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
                 if successful {
-                    if self.earningTypeId == 1 {
-                        var earnings = PayoutEarningsTypeModel.parseTransactionDataWithDictionary(responseObject)
-                        if earnings.count != 0 {
-                            
-                            if earnings.count < 15 {
-                                self.isPageEnd = true
-                            }
-                            
-                            for i in 0..<earnings.count {
-                                self.earningsTypeModel.append(PayoutEarningsTypeModel(date: earnings[i].date, earningTypeId: earnings[i].earningTypeId, amount: earnings[i].amount, currencyCode: earnings[i].currencyCode, status: earnings[i].status, boughtBy: earnings[i].boughtBy, productName: earnings[i].productName, transactionNo: earnings[i].transactionNo))
-                            }
-                            
-                            self.tableView.hidden = false
-                        } else {
-                            self.noResultLabel.hidden = false
-                            self.tableView.hidden = true
+                    var earnings = PayoutEarningsTypeModel.parseDataWithDictionary(responseObject)
+                    if earnings.count != 0 {
+                        
+                        if earnings.count < 15 {
+                            self.isPageEnd = true
                         }
+                        
+                        for i in 0..<earnings.count {
+                            self.earningsTypeModel.append(PayoutEarningsTypeModel(date: earnings[i].date, earningTypeId: earnings[i].earningTypeId, amount: earnings[i].amount, currencyCode: earnings[i].currencyCode, status: earnings[i].status, descriptions: earnings[i].descriptions))
+                        }
+                        
+                        self.tableView.hidden = false
                     } else {
-                        var earnings = PayoutEarningsTypeModel.parseDataWithDictionary(responseObject)
-                        if earnings.count != 0 {
-                            
-                            if earnings.count < 15 {
-                                self.isPageEnd = true
-                            }
-                            
-                            for i in 0..<earnings.count {
-                                self.earningsTypeModel.append(PayoutEarningsTypeModel(date: earnings[i].date, earningTypeId: earnings[i].earningTypeId, amount: earnings[i].amount, currencyCode: earnings[i].currencyCode, status: earnings[i].status, descriptions: earnings[i].descriptions))
-                            }
-                            
-                            self.tableView.hidden = false
-                        } else {
+                        if self.earningsTypeModel.count == 0 {
                             self.noResultLabel.hidden = false
                             self.tableView.hidden = true
+                        } else {
+                            self.isPageEnd = true
                         }
                     }
-                    
                     self.tableView.reloadData()
                     self.hud?.hide(true)
                 } else {
