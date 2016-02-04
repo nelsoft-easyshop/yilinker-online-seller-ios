@@ -11,7 +11,7 @@ import UIKit
 struct PayoutEarningsType {
     static let kNumberOfSection: Int = 1
     static let kRowHeightTransaction: CGFloat = 93
-    static let kRowHeight: CGFloat = 76
+    static let kRowHeight: CGFloat = 64
 }
 
 struct PayoutEarningsTypesStrings {
@@ -49,6 +49,8 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
         self.title = self.earningType
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView.setNeedsLayout()
+        self.tableView.layoutIfNeeded()
         self.noResultLabel.hidden = true
         
         switch self.earningTypeId {
