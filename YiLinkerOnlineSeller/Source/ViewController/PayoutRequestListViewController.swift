@@ -13,7 +13,14 @@ struct PayoutRequestList {
     static let kRowHeight: CGFloat = 65
 }
 
+struct PayoutRequestStrings {
+    static let kNoResult: String = StringHelper.localizedStringWithKey("PAYOUT_EARNINGS_NO_WITHDRAWAL_REQUEST_LOCALIZE_KEY")
+}
+
 class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    // Labels
+    @IBOutlet weak var noResultLabel: UILabel!
     
     // Tableview
     @IBOutlet weak var tableView: UITableView!
@@ -36,6 +43,10 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
         self.title = "Withdrawal Request List"
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView.layoutMargins = UIEdgeInsetsZero
+        self.tableView.separatorInset = UIEdgeInsetsZero
+        self.noResultLabel.hidden = true
+        self.noResultLabel.text = PayoutRequestStrings.kNoResult
         self.backButton()
         self.footerView()
         self.registerCell()
@@ -129,7 +140,6 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier(PayoutRequestListTableViewCell.listNibNameAndIdentifier(), forIndexPath: indexPath) as! PayoutRequestListTableViewCell
         cell.selectionStyle = UITableViewCellSelectionStyle.None
-        
         if self.requestListModel.count != 0 {
             cell.dateLabel.text = self.requestListModel[indexPath.row].date
             if self.requestListModel[indexPath.row].withdrawalMethod == "bank" {
@@ -215,6 +225,9 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
                         }
                         
                         self.tableView.hidden = false
+                    } else {
+                        self.noResultLabel.hidden = false
+                        self.tableView.hidden = true
                     }
                     
                     self.tableView.reloadData()

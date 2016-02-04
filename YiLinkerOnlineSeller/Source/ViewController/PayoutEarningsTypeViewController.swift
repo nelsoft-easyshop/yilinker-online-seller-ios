@@ -12,11 +12,22 @@ struct PayoutEarningsType {
     static let kNumberOfSection: Int = 1
     static let kRowHeightTransaction: CGFloat = 93
     static let kRowHeight: CGFloat = 64
-    
+}
+
+struct PayoutEarningsTypesStrings {
+    static let kNoTransaction: String = StringHelper.localizedStringWithKey("PAYOUT_EARNINGS_NO_TRANSACTION_LOCALIZE_KEY")
+    static let kNoComments: String = StringHelper.localizedStringWithKey("PAYOUT_EARNINGS_NO_COMMENTS_LOCALIZE_KEY")
+    static let kNoFollowers: String = StringHelper.localizedStringWithKey("PAYOUT_EARNINGS_NO_FOLLOWERS_LOCALIZE_KEY")
+    static let kNoBuyer: String = StringHelper.localizedStringWithKey("PAYOUT_EARNINGS_NO_BUYER_LOCALIZE_KEY")
+    static let kNoAffiliate: String = StringHelper.localizedStringWithKey("PAYOUT_EARNINGS_NO_AFFILIATE_LOCALIZE_KEY")
+    static let kNoWithdrawal: String = StringHelper.localizedStringWithKey("PAYOUT_EARNINGS_NO_WITHDRAWAL_LOCALIZE_KEY")
 }
 
 class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    // Label
+    @IBOutlet weak var noResultLabel: UILabel!
+    
     // Tableview
     @IBOutlet weak var tableView: UITableView!
     
@@ -31,11 +42,38 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
     //Integer - used to store number of page 1 to ...
     var page: Int = 0
     var earningTypeId: Int = 0
+    var earningType: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = self.earningType
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.noResultLabel.hidden = true
+        
+        switch self.earningTypeId {
+        case 1:
+            self.noResultLabel.text = PayoutEarningsTypesStrings.kNoTransaction
+            break
+        case 3:
+            self.noResultLabel.text = PayoutEarningsTypesStrings.kNoFollowers
+            break
+        case 4:
+            self.noResultLabel.text = PayoutEarningsTypesStrings.kNoComments
+            break
+        case 5:
+            self.noResultLabel.text = PayoutEarningsTypesStrings.kNoBuyer
+            break
+        case 7:
+            self.noResultLabel.text = PayoutEarningsTypesStrings.kNoAffiliate
+            break
+        case 9:
+            self.noResultLabel.text = PayoutEarningsTypesStrings.kNoWithdrawal
+            break
+        default:
+            break
+        }
+       
         self.backButton()
         self.registerCell()
         //self.fireEarningsList()
@@ -146,13 +184,22 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
         } else {
             let cell = self.tableView.dequeueReusableCellWithIdentifier(PayoutEarningsTypeTableViewCell.earningsTypeNibNameAndIdentifier(), forIndexPath: indexPath) as! PayoutEarningsTypeTableViewCell
             if self.earningsTypeModel.count != 0 {
-                if self.earningsTypeModel[indexPath.row].status == "completed" {
+                if self.earningTypeId == 3 || self.earningTypeId == 4 || self.earningTypeId == 9 {
                     cell.statusLabel.text = PayoutEarningsTypeStrings.kCompleted
                     cell.statusView.backgroundColor = Constants.Colors.completedColor
                 } else {
-                    cell.statusLabel.text = PayoutEarningsTypeStrings.kTentative
-                    cell.statusView.backgroundColor = Constants.Colors.tentativeColor
+                    if self.earningsTypeModel[indexPath.row].status.lowercaseString == "paid" {
+                        cell.statusLabel.text = PayoutEarningsTypeStrings.kCompleted
+                        cell.statusView.backgroundColor = Constants.Colors.completedColor
+                    } else {
+                        cell.statusLabel.text = PayoutEarningsTypeStrings.kTentative
+                        cell.statusView.backgroundColor = Constants.Colors.tentativeColor
+                    }
+
                 }
+                cell.dateLabel.text = self.earningsTypeModel[indexPath.row].date
+                cell.itemLabel.text = self.earningsTypeModel[indexPath.row].status+"No description"
+                cell.amountLabel.text = self.earningsTypeModel[indexPath.row].amount.formatToPeso()
             }
             return cell
         }
@@ -200,23 +247,9 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
             
             self.showHUD()
             var parameters: NSDictionary = [:]
-            WebServiceManager.fireGetPayoutRequestEarningsRequestWithUrl(APIAtlas.payoutEarningsList+"\(SessionManager.accessToken())&page=\(self.page)&perPage=15&earningTypeId\(self.earningTypeId)", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            WebServiceManager.fireGetPayoutRequestEarningsRequestWithUrl(APIAtlas.payoutEarningsList+"\(SessionManager.accessToken())&page=\(self.page)&perPage=15&earningTypeId=\(self.earningTypeId)", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
                 if successful {
                     if self.earningTypeId == 1 {
-                        var earnings = PayoutEarningsTypeModel.parseDataWithDictionary(responseObject)
-                        if earnings.count != 0 {
-                            
-                            if earnings.count < 15 {
-                                self.isPageEnd = true
-                            }
-                            
-                            for i in 0..<earnings.count {
-                                self.earningsTypeModel.append(PayoutEarningsTypeModel(date: earnings[i].date, earningTypeId: earnings[i].earningTypeId, amount: earnings[i].amount, currencyCode: earnings[i].currencyCode, status: earnings[i].status))
-                            }
-                            
-                            self.tableView.hidden = false
-                        }
-                    } else {
                         var earnings = PayoutEarningsTypeModel.parseTransactionDataWithDictionary(responseObject)
                         if earnings.count != 0 {
                             
@@ -229,6 +262,26 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
                             }
                             
                             self.tableView.hidden = false
+                        } else {
+                            self.noResultLabel.hidden = false
+                            self.tableView.hidden = true
+                        }
+                    } else {
+                        var earnings = PayoutEarningsTypeModel.parseDataWithDictionary(responseObject)
+                        if earnings.count != 0 {
+                            
+                            if earnings.count < 15 {
+                                self.isPageEnd = true
+                            }
+                            
+                            for i in 0..<earnings.count {
+                                self.earningsTypeModel.append(PayoutEarningsTypeModel(date: earnings[i].date, earningTypeId: earnings[i].earningTypeId, amount: earnings[i].amount, currencyCode: earnings[i].currencyCode, status: earnings[i].status, descriptions: earnings[i].descriptions))
+                            }
+                            
+                            self.tableView.hidden = false
+                        } else {
+                            self.noResultLabel.hidden = false
+                            self.tableView.hidden = true
                         }
                     }
                     
