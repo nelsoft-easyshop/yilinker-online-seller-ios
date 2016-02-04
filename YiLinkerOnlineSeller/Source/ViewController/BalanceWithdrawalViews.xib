@@ -103,7 +103,7 @@
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bank Deposit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o05-ax-Rl4">
-                            <rect key="frame" x="51" y="14" width="86" height="21"/>
+                            <rect key="frame" x="51" y="14" width="95" height="21"/>
                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
@@ -118,7 +118,7 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="qcS-Sc-n8W" firstAttribute="leading" secondItem="o05-ax-Rl4" secondAttribute="trailing" constant="17" id="8uJ-iT-h1e"/>
+                        <constraint firstItem="qcS-Sc-n8W" firstAttribute="leading" secondItem="o05-ax-Rl4" secondAttribute="trailing" constant="8" id="8uJ-iT-h1e"/>
                         <constraint firstAttribute="bottom" secondItem="o05-ax-Rl4" secondAttribute="bottom" constant="14" id="A72-xJ-41q"/>
                         <constraint firstAttribute="height" constant="49" id="Dse-Sz-7FD"/>
                         <constraint firstItem="NRw-7O-Fcq" firstAttribute="top" secondItem="OfS-AH-1pk" secondAttribute="top" constant="7" id="IUC-bM-sce"/>
@@ -142,7 +142,7 @@
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bank Cheque" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dfz-j7-vKk">
-                            <rect key="frame" x="48" y="14" width="86" height="21"/>
+                            <rect key="frame" x="48" y="14" width="97" height="21"/>
                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
@@ -161,7 +161,7 @@
                         <constraint firstAttribute="bottom" secondItem="Dfz-j7-vKk" secondAttribute="bottom" constant="14" id="1lk-Sx-USz"/>
                         <constraint firstItem="BZA-kO-ciH" firstAttribute="leading" secondItem="iri-Fj-W79" secondAttribute="leading" constant="8" id="2ck-tN-zdE"/>
                         <constraint firstItem="BZA-kO-ciH" firstAttribute="top" secondItem="iri-Fj-W79" secondAttribute="top" constant="7" id="Bwq-RG-xSz"/>
-                        <constraint firstItem="DgX-6U-LV6" firstAttribute="leading" secondItem="Dfz-j7-vKk" secondAttribute="trailing" constant="19" id="W2a-34-QfD"/>
+                        <constraint firstItem="DgX-6U-LV6" firstAttribute="leading" secondItem="Dfz-j7-vKk" secondAttribute="trailing" constant="8" id="W2a-34-QfD"/>
                         <constraint firstItem="DgX-6U-LV6" firstAttribute="top" secondItem="iri-Fj-W79" secondAttribute="top" constant="16" id="a74-1U-xfk"/>
                         <constraint firstAttribute="bottom" secondItem="BZA-kO-ciH" secondAttribute="bottom" constant="7" id="c5Q-W1-1Qe"/>
                         <constraint firstAttribute="bottom" secondItem="DgX-6U-LV6" secondAttribute="bottom" constant="16" id="hIe-L9-97b"/>

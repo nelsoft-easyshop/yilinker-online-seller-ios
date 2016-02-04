@@ -61,15 +61,18 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         if !firstLoad {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-            fireGetWithdrawalBalance()
         }
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
+        if !firstLoad {
+            fireGetWithdrawalBalance()
+        }
         
         if self.storeInfo.name == "" {
             self.amountView.amountTextField.userInteractionEnabled = false
