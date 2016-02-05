@@ -359,6 +359,16 @@ class WebServiceManager: NSObject {
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
+
+    // TODO: Remove this static login for affiliate
+    // MARK: - Fire Login Request With URL
+    class func fireAffiliateLoginRequestWithUrl(url: String, emailAddress: String, password: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.emailKey: emailAddress, self.passwordKey: password, self.clientIdKey: "3_4qzm05tv6uwwko4c4c8gs00sco0c40os08owg8sg0wswoo0w8o", self.clientSecretKey: "1vgsjw5b0u74kssco8cooock0oc8c0sscoksk0sgsc08s8k4gw", self.grantTypeKey: "http://yilinker-online.com/grant/affiliate"]
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
     
     // MARK: - Product Management Calls
     // MARK: - Fire Product List Request With URL
