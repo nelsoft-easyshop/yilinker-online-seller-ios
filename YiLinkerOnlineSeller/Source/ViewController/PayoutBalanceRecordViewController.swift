@@ -23,12 +23,8 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
     var recordModel: BalanceRecordModel!
     
     // Keys
-    var startDate: NSDate = NSDate()
+    var startDate: NSDate = NSDate().addDays(-30)
     var endDate: NSDate = NSDate()
-    
-    // default dates
-    var defaultStartDate: NSDate = NSDate().addDays(-30)
-    var defaultEndDate: NSDate = NSDate()
     
     // y axis for the graph
     var yAxisLeft: ChartYAxis!
@@ -116,23 +112,46 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
     // show graph's data
     func displayGraph() {
 
+        var availableDates: [String] = []
         var dates: [String] = []
         var amounts: [String] = []
         var earningEntries: [ChartDataEntry] = []
         
-        var ctr: Int = recordModel.earnings.count
-        for i in 0..<recordModel.earnings.count {
-            dates.append(formatDateToString(formatStringToDate(recordModel.earnings[i].date), type: .Graph).uppercaseString)
-            amounts.append(recordModel.earnings[i].amount)
-            
-            ctr--
-            var yValue: String = recordModel.earnings[ctr].amount
-            yValue = yValue.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
-            earningEntries.append(ChartDataEntry(value: (yValue as NSString).doubleValue, xIndex: i))
+        // get dates and amounts from api response
+        for earning in recordModel.earnings {
+            availableDates.append(formatDateToString(formatStringToDate(earning.date), type: .Graph).uppercaseString)
+            amounts.append(earning.amount)
         }
         
-        dates = dates.reverse()
-        amounts = amounts.reverse()
+        // adding days to to dates to complete the dates of the month
+        let cal = NSCalendar.currentCalendar()
+        let unit: NSCalendarUnit = .CalendarUnitDay
+        let difference = cal.components(unit, fromDate: self.startDate, toDate: self.endDate.addDays(1), options: nil)
+        
+        for i in 0..<difference.day {
+            dates.append(formatDateToString(startDate.addDays(i), type: .Graph).uppercaseString)
+        }
+        
+        // adding values to amount to equal the items of dates
+        // add data to chart
+        var index: Int = 0
+        var amountIndex: Int = recordModel.earnings.count
+        for date in dates {
+            if contains(availableDates, date) {
+                if amountIndex != 0 {
+                    amountIndex--
+                }
+                
+                var yValue: String = recordModel.earnings[amountIndex].amount
+                yValue = yValue.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
+                earningEntries.append(ChartDataEntry(value: (yValue as NSString).doubleValue, xIndex: index))
+            } else {
+                earningEntries.append(ChartDataEntry(value: 0, xIndex: index))
+            }
+            
+            index++
+        }
+        
 
         // line data sets
         var earningsDataSet: LineChartDataSet = LineChartDataSet(yVals: earningEntries, label: "")
@@ -143,7 +162,7 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
         earningsDataSet.circleRadius = 6
         earningsDataSet.setCircleColor(Constants.Colors.soldColor)
         earningsDataSet.drawCircleHoleEnabled = false
-        earningsDataSet.valueTextColor = UIColor.clearColor()//Constants.Colors.soldColor
+        earningsDataSet.valueTextColor = Constants.Colors.soldColor//UIColor.clearColor()
 
         // Line of graph
         var lineDataSets: [LineChartDataSet] = []
@@ -192,8 +211,8 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
         // update calendar dates
         // get the first value and the last value for dates
         if dateLabel.text == " - " {
-            self.startDate = formatStringToDate(recordModel.earnings[recordModel.earnings.count - 1].date)
-            self.endDate = formatStringToDate(recordModel.earnings[0].date)
+//            self.startDate = formatStringToDate(recordModel.earnings[recordModel.earnings.count - 1].date)
+//            self.endDate = formatStringToDate(recordModel.earnings[0].date)
             self.dateLabel.text = formatDateToString(self.startDate, type: .Calendar) + " - " + formatDateToString(self.endDate, type: .Calendar)
         }
     }
