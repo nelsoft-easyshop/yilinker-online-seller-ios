@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate, CongratulationsViewControllerDelegate, UzysAssetsPickerControllerDelegate, StoreInfoQrCodeTableViewCellDelegate, MFMailComposeViewControllerDelegate, GPPSignInDelegate, StoreInfoReferralCodeTableViewCellDelegate {
+class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, StoreInfoTableViewCellDelegate, StoreInfoSectionTableViewCellDelegate, StoreInfoBankAccountTableViewCellDelegate , StoreInfoAccountInformationTableViewCellDelegate, ChangeBankAccountViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, StoreInfoAddressTableViewCellDelagate, ChangeEmailViewControllerDelegate, VerifyViewControllerDelegate, CongratulationsViewControllerDelegate, UzysAssetsPickerControllerDelegate, StoreInfoQrCodeTableViewCellDelegate, MFMailComposeViewControllerDelegate, GPPSignInDelegate, ReferralCodeTableViewCellDelegate {
     
     //Global variables declarations
     //Variables that can be accessed inside the class
@@ -54,6 +54,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     let tinTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_TIN_LOCALIZE_KEY")
     let bankNotSet: String = StringHelper.localizedStringWithKey("STORE_INFO_NO_BANK_LOCALIZE_KEY")
     let addressNotSet: String = StringHelper.localizedStringWithKey("STORE_INFO_NO_ADDRESS_LOCALIZE_KEY")
+    let copiedToClipBoard = StringHelper.localizedStringWithKey("COPY_LOCALIZE_KEY")
+    let successfullyUpdateProfile = StringHelper.localizedStringWithKey("UPDATE_PROF_LOCALIZE_KEY")
     
     var hasQRCode: Bool = false
     var refresh: Bool = false
@@ -87,6 +89,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     var storeInfoModel: StoreInfoModel?
     var storeAddressModel: StoreAddressModel?
+    
+    var referrerCode: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -389,15 +393,6 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         }
         presentViewController(socialVC, animated: true, completion: nil)
         
-    }
-    
-    //MARK: StoreInfoReferralCodeTableViewCell Delegate methods 
-    func copyReferralCode(code: String) {
-        UIPasteboard.generalPasteboard().string = code
-    }
-    
-    func saveReferralPerson(referralName: String) {
-        self.storeInfoModel?.referralPerson = referralName
     }
     
     //MARK: Google Plus Sign In
@@ -976,7 +971,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             if successful {
                 //Parsed returned response from the API
                 self.storeInfoModel = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
-                
+                println(responseObject)
                 //if response is successful generate for-loop in storeInfoModel and append each category in tableData
                 for i in 0..<self.storeInfoModel!.productCategoryName.count {
                     self.tableData.append(StoreInfoPreferredCategoriesModel(title: self.storeInfoModel!.productCategoryName[i], isChecked: self.storeInfoModel!.isSelected[i], productId: self.storeInfoModel!.productId[i]))
@@ -1115,9 +1110,9 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         
         //Set the parameter of the POST method
         if self.storeInfoModel!.isReseller {
-            parameters = ["storeName" : self.storeInfoModel!.store_name, "storeDescription" : self.storeInfoModel!.store_description, "categoryIds" : formattedCategories, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
+            parameters = ["storeName" : self.storeInfoModel!.store_name, "storeDescription" : self.storeInfoModel!.store_description, "categoryIds" : formattedCategories, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover, "referralCode": self.referrerCode];
         } else {
-            parameters = ["storeName" : self.storeInfoModel!.store_name, "storeDescription" : self.storeInfoModel!.store_description, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover];
+            parameters = ["storeName" : self.storeInfoModel!.store_name, "storeDescription" : self.storeInfoModel!.store_description, "profilePhoto" : imagesKeyProfile, "coverPhoto" : imagesKeyCover, "referralCode": self.referrerCode];
         }
         
         if !self.storeInfoModel!.store_name.isEmpty && !self.storeInfoModel!.store_description.isEmpty {
@@ -1271,8 +1266,34 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     //MARK: - 
     //MARK: - Referral Code
     func referralCodeWithIndexPath(indexPath: NSIndexPath) -> ReferralCodeTableViewCell {
-        let cell: ReferralCodeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ReferralCodeTableViewCell.nibNameAndIdentifier()) as! ReferralCodeTableViewCell
+        let cell: ReferralCodeTableViewCell = tableView.dequeueReusableCellWithIdentifier(ReferralCodeTableViewCell.nibNameAndIdentifier(), forIndexPath: indexPath) as! ReferralCodeTableViewCell
+        
+        if self.storeInfoModel!.referralCode != "" {
+            cell.setYourReferralCodeWithCode(self.storeInfoModel!.referralCode)
+        }
+        
+        if self.storeInfoModel!.referrerCode != "" {
+            cell.setReferrerCodeWithCode("\(self.storeInfoModel!.referrerCode) - \(self.storeInfoModel!.referrerName)")
+        }
+        
+        cell.delegate = self
+        
         return cell
+    }
+    
+    //MARK: - 
+    //MARK: - Referral Code With Index Path
+    func referralCodeTableViewCell(referralCodeTableViewCell: ReferralCodeTableViewCell, didClickCopyButtonWithString yourReferralCodeTextFieldText: String) {
+        UIPasteboard.generalPasteboard().string = yourReferralCodeTextFieldText
+        Toast.displayToastWithMessage(self.copiedToClipBoard, duration: 2.0, view: self.navigationController!.view)
+    }
+    
+    func referralCodeTableViewCell(referralCodeTableViewCell: ReferralCodeTableViewCell, didTappedReturn textField: UITextField) {
+        self.tableView.endEditing(true)
+    }
+    
+    func referralCodeTableViewCell(referralCodeTableViewCell: ReferralCodeTableViewCell, didChangeValueAtTextField textField: UITextField, textValue: String) {
+        self.referrerCode = textValue
     }
 
 }
