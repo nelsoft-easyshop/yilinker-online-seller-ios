@@ -10,6 +10,7 @@ import UIKit
 
 protocol WithdrawModalViewControllerDelegate {
     func modalYesAction(controller: WithdrawModalViewController)
+    func modalNoAction(controller: WithdrawModalViewController)
 }
 
 class WithdrawModalViewController: UIViewController, WithdrawTableViewControllerDelegate {
@@ -29,6 +30,8 @@ class WithdrawModalViewController: UIViewController, WithdrawTableViewController
     
     var delegate: WithdrawModalViewControllerDelegate?
     
+    var balanceWithdrawal: WithdrawTableViewController!
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -38,6 +41,13 @@ class WithdrawModalViewController: UIViewController, WithdrawTableViewController
         self.containerView.layer.cornerRadius = 3.0
         self.yesButton.layer.cornerRadius = 5.0
         self.noButton.layer.cornerRadius = 5.0
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        balanceWithdrawal = WithdrawTableViewController()
+        balanceWithdrawal.delegate = self
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -51,31 +61,33 @@ class WithdrawModalViewController: UIViewController, WithdrawTableViewController
         }
         self.amountToBeReceivedLabel.text = "Amount to be Received: P " + String(stringInterpolationSegment: amountToWithdraw - 50.0)
         
-        UIView.animateWithDuration(0.3, animations: {
-            self.dimView.alpha = 0.5
-        })
+//        UIView.animateWithDuration(0.3, animations: {
+//            self.dimView.alpha = 0.5
+//        })
         
     }
 
     @IBAction func yesAction(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-        delegate?.modalYesAction(self)
+        self.dismissViewControllerAnimated(true, completion: { finished in
+            delegate?.modalYesAction(self)
+        })
     }
     
     @IBAction func noAction(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
+        delegate?.modalNoAction(self)
     }
     
     func passAmount(controller: WithdrawTableViewController, amount: Double) {
         amountToWithdraw = amount
         
-        self.requestedAmountLabel.text = "Requested Amount: P " + String(stringInterpolationSegment: amountToWithdraw)
-        if amountToWithdraw < 5000.0 {
-            self.bankChargeLabel.text = "Bank Charge: P 50.00"
-        } else {
-            self.bankChargeLabel.text = "Bank Charge: P 0.00"
-        }
-        self.amountToBeReceivedLabel.text = "Amount to be Received: P " + String(stringInterpolationSegment: amountToWithdraw - 50.0)
+//        self.requestedAmountLabel.text = "Requested Amount: P " + String(stringInterpolationSegment: amountToWithdraw)
+//        if amountToWithdraw < 5000.0 {
+//            self.bankChargeLabel.text = "Bank Charge: P 50.00"
+//        } else {
+//            self.bankChargeLabel.text = "Bank Charge: P 0.00"
+//        }
+//        self.amountToBeReceivedLabel.text = "Amount to be Received: P " + String(stringInterpolationSegment: amountToWithdraw - 50.0)
     }
     
     func withdrawToRequest(controller: WithdrawTableViewController) {

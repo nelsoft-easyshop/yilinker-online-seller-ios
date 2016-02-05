@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Panton Bold.otf">
@@ -48,6 +47,10 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RSX-dH-b35">
                                     <rect key="frame" x="146" y="17" width="110" height="34"/>
                                     <color key="backgroundColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="110" id="SM3-5B-9YG"/>
+                                        <constraint firstAttribute="height" constant="34" id="ukm-0m-v96"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
                                     <state key="normal" title="NO">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -60,6 +63,10 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fF3-oj-iL8">
                                     <rect key="frame" x="19" y="17" width="110" height="34"/>
                                     <color key="backgroundColor" red="0.20000000000000001" green="0.65098039220000004" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="34" id="cnk-SD-nBG"/>
+                                        <constraint firstAttribute="width" constant="110" id="wQY-33-dUz"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
                                     <state key="normal" title="YES">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -72,15 +79,11 @@
                             </subviews>
                             <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstItem="RSX-dH-b35" firstAttribute="width" secondItem="fF3-oj-iL8" secondAttribute="height" multiplier="125:34" constant="-15" id="5FW-lr-q7G"/>
                                 <constraint firstAttribute="height" constant="68" id="7bZ-Zq-13X"/>
-                                <constraint firstItem="RSX-dH-b35" firstAttribute="width" secondItem="fF3-oj-iL8" secondAttribute="width" id="BvW-Zc-tH2"/>
-                                <constraint firstItem="fF3-oj-iL8" firstAttribute="leading" secondItem="1xB-S4-8cR" secondAttribute="leading" constant="19" id="E7Z-tt-FmS"/>
-                                <constraint firstAttribute="bottom" secondItem="fF3-oj-iL8" secondAttribute="bottom" constant="17" id="SL6-U4-NKj"/>
-                                <constraint firstAttribute="trailing" secondItem="RSX-dH-b35" secondAttribute="trailing" constant="19" id="fFJ-vi-5Sd"/>
-                                <constraint firstAttribute="bottom" secondItem="RSX-dH-b35" secondAttribute="bottom" constant="17" id="lfi-Z6-Trb"/>
-                                <constraint firstItem="RSX-dH-b35" firstAttribute="leading" secondItem="fF3-oj-iL8" secondAttribute="trailing" constant="17" id="m7l-kV-iHC"/>
-                                <constraint firstItem="RSX-dH-b35" firstAttribute="height" secondItem="fF3-oj-iL8" secondAttribute="height" id="yd4-X1-1KF"/>
+                                <constraint firstAttribute="centerX" secondItem="RSX-dH-b35" secondAttribute="centerX" constant="-63.5" id="DcR-oG-bTK"/>
+                                <constraint firstAttribute="centerY" secondItem="fF3-oj-iL8" secondAttribute="centerY" id="VPj-6f-9iF"/>
+                                <constraint firstAttribute="centerX" secondItem="fF3-oj-iL8" secondAttribute="centerX" constant="63.5" id="eTu-s9-fft"/>
+                                <constraint firstAttribute="centerY" secondItem="RSX-dH-b35" secondAttribute="centerY" id="egq-X5-vTO"/>
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4nr-PP-Z2w">
