@@ -42,6 +42,10 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     // loader
     var hud: MBProgressHUD?
     
+    // 
+    
+    var canGotoPayoutSummary: Bool = true
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -79,6 +83,8 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
             self.mobileNoView.numberLabel.text = "  " + String(self.storeInfo.contact_number)
         }
 
+        
+        canGotoPayoutSummary = true
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -290,7 +296,6 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
             
             WebServiceManager.fireGetBalanceRecordRequestWithUrl(APIAtlas.getBalanceRecordDetails, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
                 self.hud?.hidden = true
-//                NSNotificationCenter.defaultCenter().postNotificationName("hideLoaderInPayoutScreen", object: nil)
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 
                 if successful {
@@ -433,10 +438,13 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     
     // MARK: - Available Balance Delegate
     func gotoPayoutSummary(view: WithdrawAvailableBalanceView) {
-        let payoutSummary = PayoutSummaryViewController(nibName: "PayoutSummaryViewController", bundle: nil)
-        payoutSummary.prices = [String(balanceRecordModel.totalEarning), String(balanceRecordModel.tentativeEarning), String(balanceRecordModel.totalWithdrew), String(balanceRecordModel.availableBalance)]
-        payoutSummary.inProcess = String(balanceRecordModel.totalWithdrewInProcess)
-        self.navigationController?.pushViewController(payoutSummary, animated: true)
+        if canGotoPayoutSummary {
+            canGotoPayoutSummary = false
+            let payoutSummary = PayoutSummaryViewController(nibName: "PayoutSummaryViewController", bundle: nil)
+            payoutSummary.prices = [String(balanceRecordModel.totalEarning), String(balanceRecordModel.tentativeEarning), String(balanceRecordModel.totalWithdrew), String(balanceRecordModel.availableBalance)]
+            payoutSummary.inProcess = String(balanceRecordModel.totalWithdrewInProcess)
+            self.navigationController?.pushViewController(payoutSummary, animated: true)
+        }
     }
     
     // MARK: - Amount View Delegate 
