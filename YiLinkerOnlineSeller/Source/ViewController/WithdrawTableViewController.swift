@@ -13,7 +13,7 @@ protocol WithdrawTableViewControllerDelegate {
     func passAmount(controller: WithdrawTableViewController, amount: Double)
 }
 
-class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, AvailableBalanceDelegate, WithdrawAmountViewDelegate, WithdrawConfirmationCodeViewDelegate, WithdrawProceedViewDelegate, WithdrawModalViewControllerDelegate {
+class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, AvailableBalanceDelegate, WithdrawAmountViewDelegate, WithdrawConfirmationCodeViewDelegate, WithdrawProceedViewDelegate, WithdrawModalViewControllerDelegate, WithdrawMethodViewDelegate {
     
     var headerView: UIView!
     var availableBalanceView: WithdrawAvailableBalanceView!
@@ -122,6 +122,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
     func getMethodView() -> WithdrawMethodView {
         if self.methodView == nil {
             self.methodView = XibHelper.puffViewWithNibName("BalanceWithdrawalViewsViewController", index: 2) as! WithdrawMethodView
+            self.methodView.delegate = self
         }
         return self.methodView
     }
@@ -201,7 +202,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
         if availableBalance.doubleValue < 100 {
             self.amountView.amountTextField.userInteractionEnabled = false
             self.amountView.amountTextField.backgroundColor = UIColor.lightGrayColor()
-            self.amountView.bottomLabel.text = "Available balance should be above than P 100.0 to withdraw"
+            self.amountView.bottomLabel.text = "Available Balance is less than P100.00"
             self.amountView.bottomLabel.textColor = UIColor.redColor()
             self.amountView.amountTextField.placeholder = ""
         }
@@ -252,6 +253,20 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
         }
     }
     
+    func enableProceedButton() {
+        let withdrawalAmount: Double = self.amountView.amountTextField.text.doubleValue
+        var availableBalance: String = balanceRecordModel.availableBalance
+        availableBalance = availableBalance.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
+        
+        if self.confimationCodeView.codeTextField.text != "" && withdrawalAmount >= 100.0 && withdrawalAmount <= availableBalance.doubleValue {
+            self.proceedView.proceedButton.backgroundColor = Constants.Colors.pmYesGreenColor
+            self.proceedView.proceedButton.userInteractionEnabled = true
+        } else {
+            self.proceedView.proceedButton.backgroundColor = UIColor.lightGrayColor()
+            self.proceedView.proceedButton.userInteractionEnabled = false
+        }
+    }
+    
     // validate requirements
     
     func didMeetRequirements() -> Bool {
@@ -277,17 +292,17 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
         withdrawModal.definesPresentationContext = true
         withdrawModal.view.backgroundColor = UIColor.clearColor()
         withdrawModal.amountToWithdraw = self.amountView.amountTextField.text.doubleValue
-//        self.delegate?.passAmount(self, amount: (self.amountView.amountTextField.text as NSString).doubleValue)
+        self.delegate?.passAmount(self, amount: self.amountView.amountTextField.text.doubleValue)
         self.tabBarController?.presentViewController(withdrawModal, animated: true, completion: nil)
         
-        //        dimView = UIView(frame: self.view.bounds)
-        //        dimView.backgroundColor = .blackColor()
-        //        dimView.alpha = 0.0
-        //        self.navigationController?.navigationBar.addSubview(dimView)
-        //
-        //        UIView.animateWithDuration(0.25, animations: {
-        //            self.dimView.alpha = 0.60
-        //        })
+        dimView = UIView(frame: UIScreen.mainScreen().bounds)
+        dimView.backgroundColor = .blackColor()
+        dimView.alpha = 0.0
+        self.navigationController?.view.addSubview(dimView)
+
+        UIView.animateWithDuration(0.25, animations: {
+            self.dimView.alpha = 0.60
+        })
     }
     
     func clearInputData() {
@@ -305,6 +320,8 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
         
         self.proceedView.proceedButton.userInteractionEnabled = false
         self.proceedView.proceedButton.backgroundColor = .lightGrayColor()
+        
+        self.tableView.setContentOffset(CGPointMake(0, 0), animated: true)
     }
     
     // MARK: - Requests
@@ -321,6 +338,9 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
                     self.balanceRecordModel = BalanceRecordModel.parseDataWithDictionary(responseObject as! NSDictionary)
                     self.populateData()
                 } else {
+                    if self.balanceRecordModel == nil {
+//                        self.addEmptyView()
+                    }
                     if requestErrorType == .ResponseError {
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                         Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
@@ -338,6 +358,9 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
                 }
             })
         } else {
+            if self.balanceRecordModel == nil {
+//                self.addEmptyView()
+            }
             self.hud?.hidden = true
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.failed)
         }
@@ -403,14 +426,14 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
                 self.hud?.hidden = true
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 
-                if successful {
+                if responseObject["isSuccessful"] as! Bool {
                     self.clearInputData()
                     self.delegate?.withdrawToRequest(self)
                 } else {
-                    println(responseObject)
                     if requestErrorType == .ResponseError {
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+//                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: "Request Failed")
                     } else if requestErrorType == .PageNotFound {
                         Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
                     } else if requestErrorType == .NoInternetConnection {
@@ -420,9 +443,30 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
                     } else if requestErrorType == .UnRecognizeError {
                         Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
                     } else {
-                        println(responseObject)
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: "Request Failed")
                     }
                 }
+                
+//                if successful {
+//                    self.clearInputData()
+//                    self.delegate?.withdrawToRequest(self)
+//                } else {
+//                    if requestErrorType == .ResponseError {
+//                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+//                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+//                    } else if requestErrorType == .PageNotFound {
+//                        Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+//                    } else if requestErrorType == .NoInternetConnection {
+//                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+//                    } else if requestErrorType == .RequestTimeOut {
+//                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+//                    } else if requestErrorType == .UnRecognizeError {
+//                        Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+//                    } else {
+//                        println(responseObject)
+//                    }
+//                }
             })
         } else {
             self.hud?.hidden = true
@@ -477,61 +521,73 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
             availableBalance = availableBalance.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
 
             if amountView.amountTextField.text.doubleValue < 100.0 {
-                self.amountView.bottomLabel.text = "Minimum withdrawal amount is P 100.0"
+                self.amountView.bottomLabel.text = "Minimum withdrawal amount is P100.00"
                 self.amountView.bottomLabel.textColor = UIColor.redColor()
                 self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
             } else if amountView.amountTextField.text.doubleValue > availableBalance.doubleValue {
-                self.amountView.bottomLabel.text = "Withdrawal amount should be less than available balance"
+                self.amountView.bottomLabel.text = "Withdrawal amount is greater than available balance"
                 self.amountView.bottomLabel.textColor = UIColor.redColor()
                 self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
             } else {
                 self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
                 self.amountView.bottomLabel.text = "P 50.00 bank charge for withdrawal below P 5,000.00"
                 self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
+                
+                enableProceedButton()
             }
         } else {
             self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
             self.amountView.bottomLabel.text = "P 50.00 bank charge for withdrawal below P 5,000.00"
             self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
             self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
+            
+            enableProceedButton()
         }
+    }
+    
+    // MARK: - Method View Delegate
+    func depositAction(view: WithdrawMethodView) {
+        self.depositToView.detailsLabel.hidden = false
+//        self.depositToView.nameLabel.font = UIFont.systemFontOfSize(13.0)
+//        self.depositToView.frame.origin.y = 4.0
+    }
+    
+    func chequeAction(view: WithdrawMethodView) {
+        self.depositToView.detailsLabel.hidden = true
+//        self.depositToView.nameLabel.center.y = self.depositToView.center.y
+//        self.depositToView.nameLabel.font = UIFont.systemFontOfSize(15.0)
     }
     
     // MARK: - Confimation Code View Delegate
     func getCodeAction(view: WithdrawConfirmationCodeView) {
-        fireGetCode()
+        if self.confimationCodeView.getCodeButton.backgroundColor == UIColor.darkGrayColor() {
+            fireGetCode()
+        }
     }
     
     func codeDidChanged(view: WithdrawConfirmationCodeView) {
-        let withdrawalAmount: Double = self.amountView.amountTextField.text.doubleValue
-        var availableBalance: String = balanceRecordModel.availableBalance
-        availableBalance = availableBalance.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
-        
-        if self.confimationCodeView.codeTextField.text != "" && withdrawalAmount >= 100.0 && withdrawalAmount <= availableBalance.doubleValue {
-            self.proceedView.proceedButton.backgroundColor = Constants.Colors.pmYesGreenColor
-            self.proceedView.proceedButton.userInteractionEnabled = true
-        } else {
-            self.proceedView.proceedButton.backgroundColor = UIColor.lightGrayColor()
-        }
+        enableProceedButton()
     }
     
     // MARK: - Proceed View Delegate
     func proceedAction(view: WithdrawProceedView) {
-        showConfirmationModal()
-//        fireSubmitWithdrawal()
-//        if didMeetRequirements() {
-//            showConfirmationModal()
-//        } else {
-//            
-//        }
+        if self.proceedView.proceedButton.backgroundColor == Constants.Colors.pmYesGreenColor  {
+            showConfirmationModal()
+        }
     }
     
     // MARK: - Withdraw Modal View Controller Delegate
     
     func modalYesAction(controller: WithdrawModalViewController) {
+        self.showHUD()
         fireSubmitWithdrawal()
     }
     
+    func modalNoAction(controller: WithdrawModalViewController) {
+        UIView.animateWithDuration(0.25, animations: {
+            self.dimView.alpha = 0.0
+        })
+    }
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
