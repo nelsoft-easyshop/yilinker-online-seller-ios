@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="IUn-ml-5gS" userLabel="Empty View" customClass="EmptyView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="IUn-ml-5gS" userLabel="Empty View" customClass="EmptyView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
@@ -51,7 +51,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="centerY" secondItem="P86-8c-g7K" secondAttribute="centerY" id="Fnc-X1-YBN"/>
                 <constraint firstAttribute="centerX" secondItem="P86-8c-g7K" secondAttribute="centerX" id="XWE-PJ-gEW"/>

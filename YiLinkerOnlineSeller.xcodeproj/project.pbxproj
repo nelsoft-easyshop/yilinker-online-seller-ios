@@ -173,6 +173,7 @@
 		26378F221B8CC45A008533B6 /* ProductManagementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26378F201B8CC45A008533B6 /* ProductManagementViewController.xib */; };
 		26378F511B8CEE82008533B6 /* ProductManagementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26378F4F1B8CEE82008533B6 /* ProductManagementTableViewCell.swift */; };
 		26378F521B8CEE82008533B6 /* ProductManagementTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26378F501B8CEE82008533B6 /* ProductManagementTableViewCell.xib */; };
+		265033831C64837900320685 /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 265033821C64837900320685 /* EmptyView.xib */; };
 		265C9C2D1C5B5B91002181CD /* PayoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265C9C2B1C5B5B91002181CD /* PayoutViewController.swift */; };
 		265C9C2E1C5B5B91002181CD /* PayoutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 265C9C2C1C5B5B91002181CD /* PayoutViewController.xib */; };
 		265C9C4D1C5B5E1C002181CD /* PayoutBalanceWithdrawalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265C9C4B1C5B5E1C002181CD /* PayoutBalanceWithdrawalViewController.swift */; };
@@ -848,6 +849,7 @@
 		26378F201B8CC45A008533B6 /* ProductManagementViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductManagementViewController.xib; path = ../ViewController/ProductManagementViewController.xib; sourceTree = "<group>"; };
 		26378F4F1B8CEE82008533B6 /* ProductManagementTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductManagementTableViewCell.swift; sourceTree = "<group>"; };
 		26378F501B8CEE82008533B6 /* ProductManagementTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductManagementTableViewCell.xib; path = ../ViewController/ProductManagementTableViewCell.xib; sourceTree = "<group>"; };
+		265033821C64837900320685 /* EmptyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
 		265C9C2B1C5B5B91002181CD /* PayoutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutViewController.swift; sourceTree = "<group>"; };
 		265C9C2C1C5B5B91002181CD /* PayoutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutViewController.xib; sourceTree = "<group>"; };
 		265C9C4B1C5B5E1C002181CD /* PayoutBalanceWithdrawalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayoutBalanceWithdrawalViewController.swift; sourceTree = "<group>"; };
@@ -1841,6 +1843,7 @@
 		0CF28ECC1B8C85E5005B2E54 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				265033821C64837900320685 /* EmptyView.xib */,
 				79DE3D8C1C0E019800984E69 /* HelpViewController.xib */,
 				79EFF75C1B8D6DD3008A9E7D /* ActivityLogTableViewCell.xib */,
 				79EFF75D1B8D6DD3008A9E7D /* ActivityLogTableViewController.xib */,
@@ -2538,6 +2541,7 @@
 				F7C40F951B983BC40091C16C /* StoreInfoBankAccountTableViewCell.xib in Resources */,
 				799893051B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib in Resources */,
 				0CF28EFA1B8CA2E9005B2E54 /* Panton ExtraLight Italic.otf in Resources */,
+				265033831C64837900320685 /* EmptyView.xib in Resources */,
 				F7C6A94E1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.xib in Resources */,
 				79E633B11B9B3C330062DB14 /* TransactionDeliveryLogTableViewController.xib in Resources */,
 				79E633651B9AB1E60062DB14 /* TransactionImageCollectionViewCell.xib in Resources */,
