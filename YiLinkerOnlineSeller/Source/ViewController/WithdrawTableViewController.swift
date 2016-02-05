@@ -54,6 +54,7 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         self.showHUD()
+//        NSNotificationCenter.defaultCenter().postNotificationName("showLoaderInPayoutScreen", object: nil)
 //        fireGetWithdrawalBalance()
         addViews()
         
@@ -67,14 +68,16 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         }
         fireGetWithdrawalBalance()
         
-        if self.storeInfo.name == "" {
-            self.amountView.amountTextField.userInteractionEnabled = false
-            self.amountView.amountTextField.backgroundColor = UIColor.lightGrayColor()
-        } else {
-            self.depositToView.nameLabel.text = self.storeInfo.name
-            self.depositToView.detailsLabel.text = self.storeInfo.bankName + " | " + self.storeInfo.accountName + " | " + self.storeInfo.accountNumber
+        if self.storeInfo != nil {
+            if self.storeInfo.name == "" {
+                self.amountView.amountTextField.userInteractionEnabled = false
+                self.amountView.amountTextField.backgroundColor = UIColor.lightGrayColor()
+            } else {
+                self.depositToView.nameLabel.text = self.storeInfo.name
+                self.depositToView.detailsLabel.text = self.storeInfo.bankName + " | " + self.storeInfo.accountName + " | " + self.storeInfo.accountNumber
+            }
+            self.mobileNoView.numberLabel.text = "  " + String(self.storeInfo.contact_number)
         }
-        self.mobileNoView.numberLabel.text = "  " + String(self.storeInfo.contact_number)
 
     }
     
@@ -188,7 +191,7 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         self.availableBalanceView.setAvailableBalance(availableBalance)
         
         availableBalance = availableBalance.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
-        if (availableBalance as NSString).doubleValue < 100 {
+        if availableBalance.doubleValue < 100 {
             self.amountView.amountTextField.userInteractionEnabled = false
             self.amountView.amountTextField.backgroundColor = UIColor.lightGrayColor()
             self.amountView.bottomLabel.text = "Available balance should be above than P 100.0 to withdraw"
@@ -231,7 +234,7 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         if self.amountView.amountTextField.text == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Amount is required.", title: "Unable to Proceed")
             return false
-        } else if (self.amountView.amountTextField.text as NSString).doubleValue < 100.0 {
+        } else if self.amountView.amountTextField.text.doubleValue < 100.0 {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Amount must be higher or equal than P100.0.", title: "Unable to Proceed")
             return false
         }
@@ -248,7 +251,7 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         withdrawModal.providesPresentationContextTransitionStyle = true
         withdrawModal.definesPresentationContext = true
         withdrawModal.view.backgroundColor = UIColor.clearColor()
-        withdrawModal.amountToWithdraw = (self.amountView.amountTextField.text as NSString).doubleValue
+        withdrawModal.amountToWithdraw = self.amountView.amountTextField.text.doubleValue
 //        self.delegate?.passAmount(self, amount: (self.amountView.amountTextField.text as NSString).doubleValue)
         self.tabBarController?.presentViewController(withdrawModal, animated: true, completion: nil)
         
@@ -287,6 +290,7 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
             
             WebServiceManager.fireGetBalanceRecordRequestWithUrl(APIAtlas.getBalanceRecordDetails, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
                 self.hud?.hidden = true
+//                NSNotificationCenter.defaultCenter().postNotificationName("hideLoaderInPayoutScreen", object: nil)
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 
                 if successful {
@@ -445,11 +449,11 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
             var availableBalance: String = balanceRecordModel.availableBalance
             availableBalance = availableBalance.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
 
-            if (amountView.amountTextField.text as NSString).doubleValue < 100.0 {
+            if amountView.amountTextField.text.doubleValue < 100.0 {
                 self.amountView.bottomLabel.text = "Minimum withdrawal amount is P 100.0"
                 self.amountView.bottomLabel.textColor = UIColor.redColor()
                 self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
-            } else if (amountView.amountTextField.text as NSString).doubleValue > (availableBalance as NSString).doubleValue {
+            } else if amountView.amountTextField.text.doubleValue > availableBalance.doubleValue {
                 self.amountView.bottomLabel.text = "Withdrawal amount should be less than available balance"
                 self.amountView.bottomLabel.textColor = UIColor.redColor()
                 self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
@@ -458,6 +462,11 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
                 self.amountView.bottomLabel.text = "P 50.00 bank charge for withdrawal below P 5,000.00"
                 self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
             }
+        } else {
+            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
+            self.amountView.bottomLabel.text = "P 50.00 bank charge for withdrawal below P 5,000.00"
+            self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
+            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
         }
     }
     
@@ -467,7 +476,11 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     }
     
     func codeDidChanged(view: WithdrawConfirmationCodeView) {
-        if self.confimationCodeView.codeTextField.text != "" && self.amountView.amountTextField.text != ""  {
+        let withdrawalAmount: Double = self.amountView.amountTextField.text.doubleValue
+        var availableBalance: String = balanceRecordModel.availableBalance
+        availableBalance = availableBalance.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
+        
+        if self.confimationCodeView.codeTextField.text != "" && withdrawalAmount >= 100.0 && withdrawalAmount <= availableBalance.doubleValue {
             self.proceedView.proceedButton.backgroundColor = Constants.Colors.pmYesGreenColor
             self.proceedView.proceedButton.userInteractionEnabled = true
         } else {
