@@ -216,7 +216,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
             timer.invalidate()
             cooldown = 60
             self.confimationCodeView.getCodeButton.setTitle("GET CODE", forState: .Normal)
-            self.confimationCodeView.getCodeButton.userInteractionEnabled = true
+//            self.confimationCodeView.getCodeButton.userInteractionEnabled = true
             self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
         } else {
             self.confimationCodeView.getCodeButton.setTitle("00:" + String(cooldown), forState: .Normal)
@@ -262,10 +262,10 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
         
         if self.confimationCodeView.codeTextField.text != "" && withdrawalAmount >= 100.0 && withdrawalAmount <= availableBalance.doubleValue {
             self.proceedView.proceedButton.backgroundColor = Constants.Colors.pmYesGreenColor
-            self.proceedView.proceedButton.userInteractionEnabled = true
+//            self.proceedView.proceedButton.userInteractionEnabled = true
         } else {
             self.proceedView.proceedButton.backgroundColor = UIColor.lightGrayColor()
-            self.proceedView.proceedButton.userInteractionEnabled = false
+//            self.proceedView.proceedButton.userInteractionEnabled = false
         }
     }
     
@@ -320,7 +320,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
         self.timer.invalidate()
         self.confimationCodeView.getCodeButton.setTitle("GET CODE", forState: .Normal)
         
-        self.proceedView.proceedButton.userInteractionEnabled = false
+//        self.proceedView.proceedButton.userInteractionEnabled = false
         self.proceedView.proceedButton.backgroundColor = .lightGrayColor()
         
         self.tableView.setContentOffset(CGPointMake(0, 0), animated: true)
@@ -381,8 +381,8 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 
                 if successful {
-                    self.confimationCodeView.getCodeButton.userInteractionEnabled = false
-                    self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
+//                    self.confimationCodeView.getCodeButton.userInteractionEnabled = false
+//                    self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
                     
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Confirmation code has been sent to your mobile number.", title: "Request Sent")
                     self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("startCooldown"), userInfo: nil, repeats: true)

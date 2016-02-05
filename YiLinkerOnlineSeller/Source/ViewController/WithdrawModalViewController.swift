@@ -56,10 +56,11 @@ class WithdrawModalViewController: UIViewController, WithdrawTableViewController
         self.requestedAmountLabel.text = "Requested Amount: P " + String(stringInterpolationSegment: amountToWithdraw)
         if amountToWithdraw < 5000.0 {
             self.bankChargeLabel.text = "Bank Charge: P 50.00"
+            self.amountToBeReceivedLabel.text = "Amount to be Received: P " + String(stringInterpolationSegment: amountToWithdraw - 50.0)
         } else {
             self.bankChargeLabel.text = "Bank Charge: P 0.00"
+            self.amountToBeReceivedLabel.text = "Amount to be Received: P " + String(stringInterpolationSegment: amountToWithdraw)
         }
-        self.amountToBeReceivedLabel.text = "Amount to be Received: P " + String(stringInterpolationSegment: amountToWithdraw - 50.0)
         
 //        UIView.animateWithDuration(0.3, animations: {
 //            self.dimView.alpha = 0.5
