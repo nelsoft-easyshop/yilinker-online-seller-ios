@@ -49,7 +49,6 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
         dateContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "selectDate:"))
         
         self.showHUD()
-        fireGetWithdrawalBalance("", endDate: "")
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -58,6 +57,8 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
         if recordModel != nil {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             fireGetWithdrawalBalance(self.formatDateToString(self.startDate, type: .Key), endDate: self.formatDateToString(self.endDate.addDays(1), type: .Key))
+        } else {
+            fireGetWithdrawalBalance("", endDate: "")
         }
         
     }
