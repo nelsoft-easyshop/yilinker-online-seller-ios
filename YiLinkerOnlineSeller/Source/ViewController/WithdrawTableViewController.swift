@@ -54,7 +54,7 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         self.showHUD()
-        fireGetWithdrawalBalance()
+//        fireGetWithdrawalBalance()
         addViews()
         
     }
@@ -64,8 +64,8 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         
         if !firstLoad {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-            fireGetWithdrawalBalance()
         }
+        fireGetWithdrawalBalance()
         
         if self.storeInfo.name == "" {
             self.amountView.amountTextField.userInteractionEnabled = false

@@ -146,10 +146,12 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         alert.addAction(UIAlertAction(title: AlertStrings.cancel, style: UIAlertActionStyle.Cancel, handler: nil))
         
         alert.addAction(UIAlertAction(title: SignInStrings.sheetMerchant, style: UIAlertActionStyle.Default) { UIAlertAction in
+            self.showHUD()
             self.requestSignin()
             })
         
         alert.addAction(UIAlertAction(title: SignInStrings.sheetAffiliate, style: UIAlertActionStyle.Default) { UIAlertAction in
+            self.showHUD()
             self.requestSigninAffiliate()
             })
         
@@ -289,7 +291,6 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     
     func requestSignin() {
         NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isSeller")
-        self.showHUD()
         WebServiceManager.fireLoginRequestWithUrl(APIAtlas.loginUrl, emailAddress: self.emailAddressTextField.text!, password: self.passwordTextField.text!, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
@@ -301,8 +302,6 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
                 self.hud?.hide(true)
                 self.signInButton.setTitle(SignInStrings.signin, forState: .Normal)
                 if requestErrorType == .ResponseError {
-//                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-//                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
                     self.showAlert(title: AlertStrings.error, message: responseObject["error_description"] as! String)
                 } else if requestErrorType == .PageNotFound {
                     Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
@@ -433,7 +432,6 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     
     func requestSigninAffiliate() {
         NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isSeller")
-        self.showHUD()
         WebServiceManager.fireAffiliateLoginRequestWithUrl(APIAtlas.loginUrl, emailAddress: self.emailAddressTextField.text!, password: self.passwordTextField.text!, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
