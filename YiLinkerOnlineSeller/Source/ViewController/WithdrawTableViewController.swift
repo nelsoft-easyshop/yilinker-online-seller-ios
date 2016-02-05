@@ -13,7 +13,7 @@ protocol WithdrawTableViewControllerDelegate {
     func passAmount(controller: WithdrawTableViewController, amount: Double)
 }
 
-class WithdrawTableViewController: UITableViewController, AvailableBalanceDelegate, WithdrawAmountViewDelegate, WithdrawConfirmationCodeViewDelegate, WithdrawProceedViewDelegate, WithdrawModalViewControllerDelegate {
+class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, AvailableBalanceDelegate, WithdrawAmountViewDelegate, WithdrawConfirmationCodeViewDelegate, WithdrawProceedViewDelegate, WithdrawModalViewControllerDelegate {
     
     var headerView: UIView!
     var availableBalanceView: WithdrawAvailableBalanceView!
@@ -43,7 +43,8 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     var hud: MBProgressHUD?
     
     // 
-    
+    var emptyView: EmptyView?
+    //
     var canGotoPayoutSummary: Bool = true
     
     // MARK: - View Life Cycle
@@ -231,6 +232,24 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         self.hud?.dimBackground = false
         self.navigationController?.view.addSubview(self.hud!)
         self.hud?.show(true)
+    }
+    
+    func addEmptyView() {
+        if self.emptyView == nil {
+            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+            self.emptyView!.delegate = self
+            self.emptyView!.frame = UIScreen.mainScreen().bounds
+            self.view.addSubview(self.emptyView!)
+        } else {
+            self.emptyView!.hidden = false
+        }
+    }
+    
+    func didTapReload() {
+        if Reachability.isConnectedToNetwork() {
+            self.emptyView?.hidden = true
+            fireGetWithdrawalBalance()
+        }
     }
     
     // validate requirements
