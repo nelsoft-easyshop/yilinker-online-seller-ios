@@ -80,6 +80,8 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
             } else {
                 self.depositToView.nameLabel.text = self.storeInfo.name
                 self.depositToView.detailsLabel.text = self.storeInfo.bankName + " | " + self.storeInfo.accountName + " | " + self.storeInfo.accountNumber
+                
+                self.depositToView.chequeLabel.text = self.storeInfo.name
             }
             self.mobileNoView.numberLabel.text = "  " + String(self.storeInfo.contact_number)
         }
@@ -547,15 +549,17 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
     
     // MARK: - Method View Delegate
     func depositAction(view: WithdrawMethodView) {
+        self.depositToView.nameLabel.hidden = false
         self.depositToView.detailsLabel.hidden = false
-//        self.depositToView.nameLabel.font = UIFont.systemFontOfSize(13.0)
-//        self.depositToView.frame.origin.y = 4.0
+        
+        self.depositToView.chequeLabel.hidden = true
     }
     
     func chequeAction(view: WithdrawMethodView) {
+        self.depositToView.nameLabel.hidden = true
         self.depositToView.detailsLabel.hidden = true
-//        self.depositToView.nameLabel.center.y = self.depositToView.center.y
-//        self.depositToView.nameLabel.font = UIFont.systemFontOfSize(15.0)
+        
+        self.depositToView.chequeLabel.hidden = false
     }
     
     // MARK: - Confimation Code View Delegate

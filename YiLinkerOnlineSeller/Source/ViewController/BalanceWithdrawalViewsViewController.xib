@@ -27,6 +27,7 @@
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -260,7 +261,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HPK-ip-JI4">
                     <rect key="frame" x="0.0" y="26" width="320" height="49"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cg7-au-SUI">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cg7-au-SUI">
                             <rect key="frame" x="8" y="24" width="304" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="qn7-Xu-y1m"/>
@@ -269,7 +270,7 @@
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xqC-Uj-OoZ">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xqC-Uj-OoZ">
                             <rect key="frame" x="8" y="4" width="304" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="lhc-bS-hfz"/>
@@ -278,16 +279,26 @@
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sample" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LQE-d9-ZdT">
+                            <rect key="frame" x="8" y="0.0" width="304" height="49"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="49" id="6TP-Oe-wuN"/>
+                        <constraint firstItem="LQE-d9-ZdT" firstAttribute="leading" secondItem="HPK-ip-JI4" secondAttribute="leading" constant="8" id="CDm-FV-nNQ"/>
                         <constraint firstAttribute="trailing" secondItem="xqC-Uj-OoZ" secondAttribute="trailing" constant="8" id="FxP-jK-gLY"/>
                         <constraint firstItem="Cg7-au-SUI" firstAttribute="leading" secondItem="HPK-ip-JI4" secondAttribute="leading" constant="8" id="GEy-Xr-1WB"/>
                         <constraint firstAttribute="trailing" secondItem="Cg7-au-SUI" secondAttribute="trailing" constant="8" id="LdF-YM-lU9"/>
                         <constraint firstItem="Cg7-au-SUI" firstAttribute="top" secondItem="HPK-ip-JI4" secondAttribute="top" constant="24" id="Ohg-jj-g0v"/>
+                        <constraint firstItem="LQE-d9-ZdT" firstAttribute="top" secondItem="HPK-ip-JI4" secondAttribute="top" id="URA-Za-7B0"/>
                         <constraint firstItem="xqC-Uj-OoZ" firstAttribute="top" secondItem="HPK-ip-JI4" secondAttribute="top" constant="4" id="bEu-I5-Kql"/>
                         <constraint firstItem="xqC-Uj-OoZ" firstAttribute="leading" secondItem="HPK-ip-JI4" secondAttribute="leading" constant="8" id="f5P-c1-4Pz"/>
+                        <constraint firstAttribute="trailing" secondItem="LQE-d9-ZdT" secondAttribute="trailing" constant="8" id="lGD-n9-gB4"/>
+                        <constraint firstAttribute="bottom" secondItem="LQE-d9-ZdT" secondAttribute="bottom" id="ukE-yA-z5j"/>
                     </constraints>
                 </view>
             </subviews>
@@ -302,6 +313,7 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="chequeLabel" destination="LQE-d9-ZdT" id="1jn-iU-R7i"/>
                 <outlet property="detailsLabel" destination="Cg7-au-SUI" id="aGK-rw-UCh"/>
                 <outlet property="nameLabel" destination="xqC-Uj-OoZ" id="cE9-xo-aKc"/>
             </connections>

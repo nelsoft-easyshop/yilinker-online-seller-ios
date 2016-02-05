@@ -12,7 +12,7 @@ class PayoutSummaryViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    var titles: [String] = ["Total Earning", "Tentative Receivable", "Total Withdrew", "Available Balance"]
+    var titles: [String] = ["Total Earnings", "Tentative Receivable", "Total Withdrew", "Available Balance"]
     var prices: [String] = []
     var colors: [UIColor] = [Constants.Colors.appTheme, UIColor.blueColor(), UIColor.redColor(), Constants.Colors.pmYesGreenColor]
     var inProcess: String = ""
