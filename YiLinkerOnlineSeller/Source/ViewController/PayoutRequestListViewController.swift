@@ -143,7 +143,7 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
         if self.requestListModel.count != 0 {
             cell.dateLabel.text = self.requestListModel[indexPath.row].date
             cell.requestDetailLabel.text =   "\(self.requestListModel[indexPath.row].withdrawalMethod) | \(self.requestListModel[indexPath.row].currencyCode) \(self.requestListModel[indexPath.row].totalAmount)"
-            cell.statusLabel.text = self.requestListModel[indexPath.row].status
+            cell.statusLabel.text = self.requestListModel[indexPath.row].status.uppercaseString
             
             if self.requestListModel[indexPath.row].status.lowercaseString == "Completed".lowercaseString {
                 cell.statusView.backgroundColor = Constants.Colors.completedColor

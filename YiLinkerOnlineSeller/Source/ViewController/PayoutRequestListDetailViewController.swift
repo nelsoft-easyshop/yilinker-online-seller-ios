@@ -100,7 +100,7 @@ class PayoutRequestListDetailViewController: UIViewController, UITableViewDelega
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        if self.payoutRequestModel!.withdrawalMethod == "bank" {
+        if self.payoutRequestModel!.withdrawalMethod == "Bank Deposit" {
             return PayoutRequestListDetailCellHeight.kSectionCountTwo
         } else {
             return PayoutRequestListDetailCellHeight.kSectionCountOne
@@ -127,32 +127,19 @@ class PayoutRequestListDetailViewController: UIViewController, UITableViewDelega
                 cell.itemDetailLabel.text = self.payoutRequestModel!.date
                 break
             case 1:
-                if self.payoutRequestModel!.withdrawalMethod == "bank" {
-                    cell.itemDetailLabel.text = PayoutRequestListItemStrings.kDeposit
-                } else {
-                    cell.itemDetailLabel.text = PayoutRequestListItemStrings.kCheque
-                }
+                cell.itemDetailLabel.text = self.payoutRequestModel!.withdrawalMethod
                 break
             case 2:
-                cell.itemDetailLabel.text = self.payoutRequestModel!.totalAmount.formatToTwoDecimal().formatToPeso()
+                cell.itemDetailLabel.text = self.payoutRequestModel!.currencyCode + " " + self.payoutRequestModel!.totalAmount
                 break
             case 3:
-                cell.itemDetailLabel.text = self.payoutRequestModel!.charge.formatToTwoDecimal().formatToPeso()
+                cell.itemDetailLabel.text = self.payoutRequestModel!.currencyCode + " " + self.payoutRequestModel!.charge
                 break
             case 4:
-                cell.itemDetailLabel.text = self.payoutRequestModel!.netAmount.formatToTwoDecimal().formatToPeso()
+                cell.itemDetailLabel.text = self.payoutRequestModel!.currencyCode + " " + self.payoutRequestModel!.netAmount
                 break
             case 5:
-                var status: String = ""
-                
-                if self.payoutRequestModel!.status.lowercaseString == "paid" {
-                    status =  PayoutRequestListStrings.kCompleted
-                } else if self.payoutRequestModel!.status.lowercaseString == "pending" {
-                    status = PayoutRequestListStrings.kTentative
-                } else {
-                    status = PayoutRequestListStrings.kInProgress
-                }
-                cell.itemDetailLabel.text = status
+                cell.itemDetailLabel.text = self.payoutRequestModel!.status.uppercaseString
                 
                 break
             default:
@@ -193,11 +180,7 @@ class PayoutRequestListDetailViewController: UIViewController, UITableViewDelega
         if section == 0 {
             var tableHeaderView = self.tableView.dequeueReusableCellWithIdentifier(PayoutRequestListDetailHeaderTableViewCell.listHeaderNibNameAndIdentifier()) as! PayoutRequestListDetailHeaderTableViewCell
            
-            if self.payoutRequestModel!.withdrawalMethod == "bank" {
-                tableHeaderView.depositNameLabel.text = PayoutRequestListDetailHeaderStrings.kBankDepositTo + " " + self.payoutRequestModel!.payTo
-            } else {
-                tableHeaderView.depositNameLabel.text = PayoutRequestListDetailHeaderStrings.kBankChequeTo + ": " + self.payoutRequestModel!.payTo
-            }
+            tableHeaderView.depositNameLabel.text = self.payoutRequestModel!.withdrawalMethod + ": " + self.payoutRequestModel!.payTo
             
             tableHeaderView.depositToLabel.text = PayoutRequestListDetailHeaderStrings.kDepositTo
             
