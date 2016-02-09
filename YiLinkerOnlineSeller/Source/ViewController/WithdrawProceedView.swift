@@ -21,7 +21,6 @@ class WithdrawProceedView: UIView {
     override func awakeFromNib() {
         self.frame.size.width = UIScreen.mainScreen().bounds.width
         self.proceedButton.layer.cornerRadius = 5.0
-//        self.proceedButton.backgroundColor = .lightGrayColor()
     }
 
     @IBAction func proceedAction(sender: AnyObject) {

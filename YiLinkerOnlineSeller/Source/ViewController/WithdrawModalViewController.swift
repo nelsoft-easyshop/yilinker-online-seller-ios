@@ -62,10 +62,6 @@ class WithdrawModalViewController: UIViewController, WithdrawTableViewController
             self.amountToBeReceivedLabel.text = "Amount to be Received: P " + String(stringInterpolationSegment: amountToWithdraw)
         }
         
-//        UIView.animateWithDuration(0.3, animations: {
-//            self.dimView.alpha = 0.5
-//        })
-        
     }
 
     @IBAction func yesAction(sender: AnyObject) {

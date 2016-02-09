@@ -216,7 +216,6 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
             timer.invalidate()
             cooldown = 60
             self.confimationCodeView.getCodeButton.setTitle("GET CODE", forState: .Normal)
-//            self.confimationCodeView.getCodeButton.userInteractionEnabled = true
             self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
         } else {
             self.confimationCodeView.getCodeButton.setTitle("00:" + String(cooldown), forState: .Normal)
@@ -262,10 +261,8 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
         
         if self.confimationCodeView.codeTextField.text != "" && withdrawalAmount >= 100.0 && withdrawalAmount <= availableBalance.doubleValue {
             self.proceedView.proceedButton.backgroundColor = Constants.Colors.pmYesGreenColor
-//            self.proceedView.proceedButton.userInteractionEnabled = true
         } else {
             self.proceedView.proceedButton.backgroundColor = UIColor.lightGrayColor()
-//            self.proceedView.proceedButton.userInteractionEnabled = false
         }
     }
     
@@ -320,7 +317,6 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
         self.timer.invalidate()
         self.confimationCodeView.getCodeButton.setTitle("GET CODE", forState: .Normal)
         
-//        self.proceedView.proceedButton.userInteractionEnabled = false
         self.proceedView.proceedButton.backgroundColor = .lightGrayColor()
         
         self.tableView.setContentOffset(CGPointMake(0, 0), animated: true)
@@ -381,16 +377,12 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 
                 if successful {
-//                    self.confimationCodeView.getCodeButton.userInteractionEnabled = false
-//                    self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
-                    
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Confirmation code has been sent to your mobile number.", title: "Request Sent")
                     self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("startCooldown"), userInfo: nil, repeats: true)
                     
                 } else {
                     if requestErrorType == .ResponseError {
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-//                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: "Request Failed")
                     } else if requestErrorType == .PageNotFound {
                         Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
@@ -434,7 +426,6 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
                 } else {
                     if requestErrorType == .ResponseError {
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-//                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: "Request Failed")
                     } else if requestErrorType == .PageNotFound {
                         Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
@@ -449,26 +440,6 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: "Request Failed")
                     }
                 }
-                
-//                if successful {
-//                    self.clearInputData()
-//                    self.delegate?.withdrawToRequest(self)
-//                } else {
-//                    if requestErrorType == .ResponseError {
-//                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-//                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
-//                    } else if requestErrorType == .PageNotFound {
-//                        Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
-//                    } else if requestErrorType == .NoInternetConnection {
-//                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-//                    } else if requestErrorType == .RequestTimeOut {
-//                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-//                    } else if requestErrorType == .UnRecognizeError {
-//                        Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
-//                    } else {
-//                        println(responseObject)
-//                    }
-//                }
             })
         } else {
             self.hud?.hidden = true
@@ -503,7 +474,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
     
     // MARK: - Available Balance Delegate
     func gotoPayoutSummary(view: WithdrawAvailableBalanceView) {
-        if canGotoPayoutSummary {
+        if canGotoPayoutSummary && balanceRecordModel != nil {
             canGotoPayoutSummary = false
             let payoutSummary = PayoutSummaryViewController(nibName: "PayoutSummaryViewController", bundle: nil)
             payoutSummary.prices = [String(balanceRecordModel.totalEarning), String(balanceRecordModel.tentativeEarning), String(balanceRecordModel.totalWithdrew), String(balanceRecordModel.availableBalance)]
@@ -605,60 +576,4 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
         // Return the number of rows in the section.
         return 0
     }
-
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
 }

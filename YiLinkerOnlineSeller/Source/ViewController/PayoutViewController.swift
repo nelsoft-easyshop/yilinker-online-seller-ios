@@ -129,7 +129,6 @@ class PayoutViewController: UIViewController, WithdrawTableViewControllerDelegat
         self.containerView.addSubview(viewController.view)
         
         if let controller = viewController as? WithdrawTableViewController {
-            println("benga")
             controller.storeInfo = self.storeInfo
 //            delegate?.passStoreInfo(self, storeInfo: self.storeInfo)
         }

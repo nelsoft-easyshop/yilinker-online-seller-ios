@@ -184,10 +184,10 @@
 		265C9C561C5B5E70002181CD /* PayoutBalanceRecordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 265C9C541C5B5E70002181CD /* PayoutBalanceRecordViewController.xib */; };
 		265C9C591C5B5E92002181CD /* SelectDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265C9C571C5B5E92002181CD /* SelectDateViewController.swift */; };
 		265C9C5A1C5B5E92002181CD /* SelectDateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 265C9C581C5B5E92002181CD /* SelectDateViewController.xib */; };
+		266DA2361C698ED5007BFA47 /* BalanceWithdrawalViewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266DA2341C698ED5007BFA47 /* BalanceWithdrawalViewsViewController.swift */; };
+		266DA2371C698ED5007BFA47 /* BalanceWithdrawalViewsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 266DA2351C698ED5007BFA47 /* BalanceWithdrawalViewsViewController.xib */; };
 		2671424C1B94C6AF00B66458 /* CustomizedCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2671424A1B94C6AF00B66458 /* CustomizedCategoryViewController.swift */; };
 		2671424D1B94C6AF00B66458 /* CustomizedCategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2671424B1B94C6AF00B66458 /* CustomizedCategoryViewController.xib */; };
-		267C52621C5F0AC800739850 /* BalanceWithdrawalViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C52601C5F0AC800739850 /* BalanceWithdrawalViews.swift */; };
-		267C52631C5F0AC800739850 /* BalanceWithdrawalViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267C52611C5F0AC800739850 /* BalanceWithdrawalViews.xib */; };
 		267C52651C5F195300739850 /* WithdrawAvailableBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C52641C5F195300739850 /* WithdrawAvailableBalanceView.swift */; };
 		267C52671C5F197500739850 /* WithdrawAmountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C52661C5F197500739850 /* WithdrawAmountView.swift */; };
 		267C52691C5F199100739850 /* WithdrawMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C52681C5F199100739850 /* WithdrawMethodView.swift */; };
@@ -197,8 +197,6 @@
 		267C52711C5F19E700739850 /* WithdrawProceedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C52701C5F19E700739850 /* WithdrawProceedView.swift */; };
 		267C52741C5F1F1700739850 /* WithdrawTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C52721C5F1F1700739850 /* WithdrawTableViewController.swift */; };
 		267C52751C5F1F1700739850 /* WithdrawTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267C52731C5F1F1700739850 /* WithdrawTableViewController.xib */; };
-		267C52781C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C52761C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.swift */; };
-		267C52791C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267C52771C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.xib */; };
 		267C527B1C5F520600739850 /* BalanceRecordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C527A1C5F520600739850 /* BalanceRecordModel.swift */; };
 		2686E3731B956B7400E8FA80 /* CCCItemImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2686E3721B956B7400E8FA80 /* CCCItemImagesView.swift */; };
 		2686E3761B956C4A00E8FA80 /* ItemImagesHorizontalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2686E3741B956C4A00E8FA80 /* ItemImagesHorizontalCollectionViewCell.swift */; };
@@ -860,10 +858,10 @@
 		265C9C541C5B5E70002181CD /* PayoutBalanceRecordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayoutBalanceRecordViewController.xib; sourceTree = "<group>"; };
 		265C9C571C5B5E92002181CD /* SelectDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateViewController.swift; sourceTree = "<group>"; };
 		265C9C581C5B5E92002181CD /* SelectDateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectDateViewController.xib; sourceTree = "<group>"; };
+		266DA2341C698ED5007BFA47 /* BalanceWithdrawalViewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceWithdrawalViewsViewController.swift; sourceTree = "<group>"; };
+		266DA2351C698ED5007BFA47 /* BalanceWithdrawalViewsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BalanceWithdrawalViewsViewController.xib; sourceTree = "<group>"; };
 		2671424A1B94C6AF00B66458 /* CustomizedCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomizedCategoryViewController.swift; sourceTree = "<group>"; };
 		2671424B1B94C6AF00B66458 /* CustomizedCategoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CustomizedCategoryViewController.xib; path = ../ViewController/CustomizedCategoryViewController.xib; sourceTree = "<group>"; };
-		267C52601C5F0AC800739850 /* BalanceWithdrawalViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceWithdrawalViews.swift; sourceTree = "<group>"; };
-		267C52611C5F0AC800739850 /* BalanceWithdrawalViews.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BalanceWithdrawalViews.xib; sourceTree = "<group>"; };
 		267C52641C5F195300739850 /* WithdrawAvailableBalanceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithdrawAvailableBalanceView.swift; sourceTree = "<group>"; };
 		267C52661C5F197500739850 /* WithdrawAmountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithdrawAmountView.swift; sourceTree = "<group>"; };
 		267C52681C5F199100739850 /* WithdrawMethodView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithdrawMethodView.swift; sourceTree = "<group>"; };
@@ -873,8 +871,6 @@
 		267C52701C5F19E700739850 /* WithdrawProceedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithdrawProceedView.swift; sourceTree = "<group>"; };
 		267C52721C5F1F1700739850 /* WithdrawTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithdrawTableViewController.swift; sourceTree = "<group>"; };
 		267C52731C5F1F1700739850 /* WithdrawTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WithdrawTableViewController.xib; sourceTree = "<group>"; };
-		267C52761C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceWithdrawalViewsViewController.swift; sourceTree = "<group>"; };
-		267C52771C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BalanceWithdrawalViewsViewController.xib; sourceTree = "<group>"; };
 		267C527A1C5F520600739850 /* BalanceRecordModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceRecordModel.swift; sourceTree = "<group>"; };
 		2686E3721B956B7400E8FA80 /* CCCItemImagesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CCCItemImagesView.swift; sourceTree = "<group>"; };
 		2686E3741B956C4A00E8FA80 /* ItemImagesHorizontalCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemImagesHorizontalCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1706,6 +1702,8 @@
 		0CF28EC71B8C85E5005B2E54 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				266DA2341C698ED5007BFA47 /* BalanceWithdrawalViewsViewController.swift */,
+				266DA2351C698ED5007BFA47 /* BalanceWithdrawalViewsViewController.xib */,
 				B7BADADD1BA5625D005F59F9 /* Messaging */,
 				960374931BA7F4050028DA96 /* NewDisputeTableViewController.swift */,
 				79DE3D8A1C0E018900984E69 /* HelpViewController.swift */,
@@ -1810,8 +1808,6 @@
 				265C9C541C5B5E70002181CD /* PayoutBalanceRecordViewController.xib */,
 				265C9C571C5B5E92002181CD /* SelectDateViewController.swift */,
 				265C9C581C5B5E92002181CD /* SelectDateViewController.xib */,
-				267C52601C5F0AC800739850 /* BalanceWithdrawalViews.swift */,
-				267C52611C5F0AC800739850 /* BalanceWithdrawalViews.xib */,
 				267C52641C5F195300739850 /* WithdrawAvailableBalanceView.swift */,
 				267C52661C5F197500739850 /* WithdrawAmountView.swift */,
 				267C52681C5F199100739850 /* WithdrawMethodView.swift */,
@@ -1821,8 +1817,6 @@
 				267C52701C5F19E700739850 /* WithdrawProceedView.swift */,
 				267C52721C5F1F1700739850 /* WithdrawTableViewController.swift */,
 				267C52731C5F1F1700739850 /* WithdrawTableViewController.xib */,
-				267C52761C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.swift */,
-				267C52771C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.xib */,
 				267C527A1C5F520600739850 /* BalanceRecordModel.swift */,
 				F7E4BA9D1C5F1F8E0019A309 /* PayoutRequestListViewController.swift */,
 				F7E4BA9E1C5F1F8E0019A309 /* PayoutRequestListViewController.xib */,
@@ -2529,6 +2523,7 @@
 				795111E81BBC0E7800ADDEE1 /* TransactionProductDescriptionViewController.xib in Resources */,
 				7948807E1B94DAA50090B259 /* FollowerTableViewCell.xib in Resources */,
 				7985D3681BB0556B0060E5F5 /* TransactionDeliveryLogSignatureTableViewCell.xib in Resources */,
+				266DA2371C698ED5007BFA47 /* BalanceWithdrawalViewsViewController.xib in Resources */,
 				0CEB3AC21BB052BE00139AFE /* SelectedProductTableViewCell.xib in Resources */,
 				0C65F8B31B8DC9AC00504D86 /* ProductUploadCategoryViewController.xib in Resources */,
 				F7C40FAF1B983C250091C16C /* ChangeEmailViewController.xib in Resources */,
@@ -2575,7 +2570,6 @@
 				79E633871B9B15FD0062DB14 /* TransactionShipItemTableViewController.xib in Resources */,
 				F7E4BAAE1C5F36770019A309 /* PayoutEarningsTypeViewController.xib in Resources */,
 				F7AE35F91C08054B00A1C9CE /* FaImagePicker.storyboard in Resources */,
-				267C52791C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.xib in Resources */,
 				0CE2244E1BBAF8AE00853AC9 /* SaveButtonView.xib in Resources */,
 				0C51C2F21BB00A7900F4D2D6 /* AddProductHeaderView.xib in Resources */,
 				0CF28EFE1B8CA2E9005B2E54 /* Panton Light Italic.otf in Resources */,
@@ -2638,7 +2632,6 @@
 				F7C40FA11B983BE90091C16C /* FilterFooterTableViewCell.xib in Resources */,
 				0C8D7FB21B8FC1A400B3FA4E /* ProductUploadCombinationTableViewController.xib in Resources */,
 				0C568A271BCABF1A00E35B12 /* ResellerItemCollectionViewCell.xib in Resources */,
-				267C52631C5F0AC800739850 /* BalanceWithdrawalViews.xib in Resources */,
 				0C942BB81BAFF8700049A6B0 /* NewDisputeTableViewController2.xib in Resources */,
 				265C9C2E1C5B5B91002181CD /* PayoutViewController.xib in Resources */,
 				0CF28F021B8CA2E9005B2E54 /* Panton SemiBold.otf in Resources */,
@@ -2867,7 +2860,6 @@
 				7985D36C1BB05C500060E5F5 /* DeliveryLogsModel.swift in Sources */,
 				F7AC5F741B9AA32D00227D18 /* AddressModelV2.swift in Sources */,
 				7928763F1B8DF89F00762A39 /* ChartSelectionDetail.swift in Sources */,
-				267C52781C5F2BBE00739850 /* BalanceWithdrawalViewsViewController.swift in Sources */,
 				7928760B1B8DF89F00762A39 /* BarLineScatterCandleChartData.swift in Sources */,
 				7928760E1B8DF89F00762A39 /* BubbleChartDataEntry.swift in Sources */,
 				265C9C591C5B5E92002181CD /* SelectDateViewController.swift in Sources */,
@@ -2899,7 +2891,6 @@
 				0C8D7FC11B8FE50900B3FA4E /* ProductUploadAttributeValuesCollectionViewCell.swift in Sources */,
 				0C65F8C81B8DEE6400504D86 /* ProductUploadPriceTableViewCell.swift in Sources */,
 				0CAB52A71B920A5800EA441A /* BrandModel.swift in Sources */,
-				267C52621C5F0AC800739850 /* BalanceWithdrawalViews.swift in Sources */,
 				0C8D7F921B8F0A7D00B3FA4E /* ProductModel.swift in Sources */,
 				0C6661A51B906FBF005ADFDD /* JSONResponseSerializer.swift in Sources */,
 				0C65F8EC1B8E377500504D86 /* ProductUploadAttributeCollectionViewCell.swift in Sources */,
@@ -3119,6 +3110,7 @@
 				793C41E31B9824AD009CE671 /* CategoryProductsModel.swift in Sources */,
 				792876421B8DF89F00762A39 /* ChartUtils.swift in Sources */,
 				792876121B8DF89F00762A39 /* CandleChartDataSet.swift in Sources */,
+				266DA2361C698ED5007BFA47 /* BalanceWithdrawalViewsViewController.swift in Sources */,
 				799892F91B8CC7EC00F4CFE2 /* DashBoardItemCollectionViewCell.swift in Sources */,
 				B7BADAFB1BA563FF005F59F9 /* ImageVC.swift in Sources */,
 				961F702E1B97F077007D0EA5 /* DisputeViewController.swift in Sources */,

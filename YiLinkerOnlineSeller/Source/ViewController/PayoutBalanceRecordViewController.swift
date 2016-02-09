@@ -211,8 +211,6 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
         // update calendar dates
         // get the first value and the last value for dates
         if dateLabel.text == " - " {
-//            self.startDate = formatStringToDate(recordModel.earnings[recordModel.earnings.count - 1].date)
-//            self.endDate = formatStringToDate(recordModel.earnings[0].date)
             self.dateLabel.text = formatDateToString(self.startDate, type: .Calendar) + " - " + formatDateToString(self.endDate, type: .Calendar)
         }
     }
