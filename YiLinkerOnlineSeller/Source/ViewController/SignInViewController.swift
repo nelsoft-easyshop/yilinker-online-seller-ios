@@ -275,7 +275,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         if self.emailAddressTextField.isValidEmail() {
             self.emailAddressTextField.rightView?.hidden = false
         } else {
-            self.emailAddressTextField.rightView?.hidden = true
+            self.emailAddressTextField.rightView?.hidden = false
         }
     }
     
