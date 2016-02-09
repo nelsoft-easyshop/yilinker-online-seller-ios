@@ -155,6 +155,7 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
             
             if self.requestListModel[indexPath.row].charge != "0.00" {
                 cell.bankChargeLabel.text = "\(PayoutRequestListStrings.kBankCharge): \(self.requestListModel[indexPath.row].currencyCode)  \(self.requestListModel[indexPath.row].charge)"
+                cell.bankChargeLabel.hidden = false
             } else {
                 cell.bankChargeLabel.hidden = true
             }
