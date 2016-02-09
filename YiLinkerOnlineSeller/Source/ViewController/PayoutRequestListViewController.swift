@@ -155,6 +155,7 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
             
             if self.requestListModel[indexPath.row].charge != "0.00" {
                 cell.bankChargeLabel.text = "\(PayoutRequestListStrings.kBankCharge): \(self.requestListModel[indexPath.row].currencyCode)  \(self.requestListModel[indexPath.row].charge)"
+                cell.bankChargeLabel.hidden = false
             } else {
                 cell.bankChargeLabel.hidden = true
             }
@@ -200,7 +201,10 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
     
     func fireRequestList() {
         if !self.isPageEnd {
-            self.page++
+            
+            if Reachability.isConnectedToNetwork() {
+                self.page++
+            }
             
             self.showHUD()
             var parameters: NSDictionary = [:]
@@ -224,7 +228,9 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
                             self.noResultLabel.hidden = false
                             self.tableView.hidden = true
                         } else {
+                            self.noResultLabel.hidden = true
                             self.isPageEnd = true
+                            self.tableView.hidden = false
                         }
                     }
                     
@@ -250,7 +256,7 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
                         //Unhandled error
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                     }
-                    self.tableView.hidden = true
+                    //self.tableView.hidden = true
                     self.hud?.hide(true)
                 }
             })

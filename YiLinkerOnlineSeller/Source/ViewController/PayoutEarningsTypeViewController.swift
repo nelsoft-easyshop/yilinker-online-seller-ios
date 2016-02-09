@@ -250,7 +250,10 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
     
     func fireEarningsList() {
         if !self.isPageEnd {
-            self.page++
+            
+            if Reachability.isConnectedToNetwork() {
+                self.page++
+            }
             
             self.showHUD()
             var parameters: NSDictionary = [:]
@@ -273,7 +276,9 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
                             self.noResultLabel.hidden = false
                             self.tableView.hidden = true
                         } else {
+                            self.noResultLabel.hidden = true
                             self.isPageEnd = true
+                            self.tableView.hidden = false
                         }
                     }
                     self.tableView.reloadData()
@@ -298,7 +303,7 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
                         //Unhandled error
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                     }
-                    self.tableView.hidden = true
+                    //self.tableView.hidden = true
                     self.hud?.hide(true)
                 }
             })
