@@ -135,7 +135,7 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
         cell.selectionStyle = UITableViewCellSelectionStyle.None
         if self.earningsModel.count != 0 {
             
-            var url: NSURL = NSURL(fileURLWithPath:(self.earningsModel[indexPath.row].imageLocation))!
+            var url: NSURL = NSURL(string: self.earningsModel[indexPath.row].imageLocation)!
             var earningType: String = self.earningsModel[indexPath.row].earningType
             var currencyCode: String = self.earningsModel[indexPath.row].currencyCode
             var totalAmount: String = self.earningsModel[indexPath.row].earningAmount
