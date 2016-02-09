@@ -142,22 +142,18 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
         cell.selectionStyle = UITableViewCellSelectionStyle.None
         if self.requestListModel.count != 0 {
             cell.dateLabel.text = self.requestListModel[indexPath.row].date
-            if self.requestListModel[indexPath.row].withdrawalMethod == "bank" {
-                cell.requestDetailLabel.text =   "\(PayoutRequestListStrings.kBank) | \(self.requestListModel[indexPath.row].totalAmount.formatToTwoDecimal().formatToPeso())"
-            } else {
-                cell.requestDetailLabel.text =   "\(PayoutRequestListStrings.kCheque) | \(self.requestListModel[indexPath.row].totalAmount.formatToTwoDecimal().formatToPeso())"
-            }
+            cell.requestDetailLabel.text =   "\(self.requestListModel[indexPath.row].withdrawalMethod) | \(self.requestListModel[indexPath.row].currencyCode) \(self.requestListModel[indexPath.row].totalAmount)"
             
-            if self.requestListModel[indexPath.row].charge != "0.0000" {
-                cell.bankChargeLabel.text = "\(PayoutRequestListStrings.kBankCharge): \(self.requestListModel[indexPath.row].charge.formatToTwoDecimal().formatToPeso())"
+            if self.requestListModel[indexPath.row].charge != "0.00" {
+                cell.bankChargeLabel.text = "\(PayoutRequestListStrings.kBankCharge): \(self.requestListModel[indexPath.row].currencyCode)  \(self.requestListModel[indexPath.row].charge)"
             } else {
                 cell.bankChargeLabel.hidden = true
             }
             
-            if self.requestListModel[indexPath.row].status.lowercaseString == "paid" {
+            if self.requestListModel[indexPath.row].status.lowercaseString == "Completed" {
                 cell.statusView.backgroundColor = Constants.Colors.completedColor
                 cell.statusLabel.text = PayoutRequestListStrings.kCompleted
-            } else if self.requestListModel[indexPath.row].status.lowercaseString == "pending" {
+            } else if self.requestListModel[indexPath.row].status.lowercaseString == "Tentative" {
                 cell.statusView.backgroundColor = Constants.Colors.tentativeColor
                 cell.statusLabel.text = PayoutRequestListStrings.kTentative
             } else {
