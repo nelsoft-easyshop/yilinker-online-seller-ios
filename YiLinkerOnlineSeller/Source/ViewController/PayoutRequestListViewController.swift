@@ -143,22 +143,20 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
         if self.requestListModel.count != 0 {
             cell.dateLabel.text = self.requestListModel[indexPath.row].date
             cell.requestDetailLabel.text =   "\(self.requestListModel[indexPath.row].withdrawalMethod) | \(self.requestListModel[indexPath.row].currencyCode) \(self.requestListModel[indexPath.row].totalAmount)"
+            cell.statusLabel.text = self.requestListModel[indexPath.row].status
+            
+            if self.requestListModel[indexPath.row].status.lowercaseString == "Completed".lowercaseString {
+                cell.statusView.backgroundColor = Constants.Colors.completedColor
+            } else if self.requestListModel[indexPath.row].status.lowercaseString == "Tentative".lowercaseString {
+                cell.statusView.backgroundColor = Constants.Colors.tentativeColor
+            } else {
+                cell.statusView.backgroundColor = Constants.Colors.inProgressColor
+            }
             
             if self.requestListModel[indexPath.row].charge != "0.00" {
                 cell.bankChargeLabel.text = "\(PayoutRequestListStrings.kBankCharge): \(self.requestListModel[indexPath.row].currencyCode)  \(self.requestListModel[indexPath.row].charge)"
             } else {
                 cell.bankChargeLabel.hidden = true
-            }
-            
-            if self.requestListModel[indexPath.row].status.lowercaseString == "Completed" {
-                cell.statusView.backgroundColor = Constants.Colors.completedColor
-                cell.statusLabel.text = PayoutRequestListStrings.kCompleted
-            } else if self.requestListModel[indexPath.row].status.lowercaseString == "Tentative" {
-                cell.statusView.backgroundColor = Constants.Colors.tentativeColor
-                cell.statusLabel.text = PayoutRequestListStrings.kTentative
-            } else {
-                cell.statusView.backgroundColor = Constants.Colors.inProgressColor
-                cell.statusLabel.text = PayoutRequestListStrings.kInProgress
             }
         }
         
