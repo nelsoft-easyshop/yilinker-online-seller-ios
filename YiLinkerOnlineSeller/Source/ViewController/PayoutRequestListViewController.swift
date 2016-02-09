@@ -201,7 +201,10 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
     
     func fireRequestList() {
         if !self.isPageEnd {
-            self.page++
+            
+            if Reachability.isConnectedToNetwork() {
+                self.page++
+            }
             
             self.showHUD()
             var parameters: NSDictionary = [:]
@@ -225,7 +228,9 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
                             self.noResultLabel.hidden = false
                             self.tableView.hidden = true
                         } else {
+                            self.noResultLabel.hidden = true
                             self.isPageEnd = true
+                            self.tableView.hidden = false
                         }
                     }
                     
