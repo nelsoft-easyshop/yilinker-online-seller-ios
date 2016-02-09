@@ -47,4 +47,15 @@ class WithdrawAmountView: UIView, UITextFieldDelegate {
         amountTextField.resignFirstResponder()
     }
     
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        
+        let countdots = textField.text.componentsSeparatedByString(".").count - 1
+        
+        if countdots > 0 && string == "." {
+            return false
+        }
+        
+        return true
+    }
+    
 }

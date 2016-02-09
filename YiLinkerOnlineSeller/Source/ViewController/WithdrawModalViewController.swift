@@ -65,9 +65,11 @@ class WithdrawModalViewController: UIViewController, WithdrawTableViewController
     }
 
     @IBAction func yesAction(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: { finished in
-            delegate?.modalYesAction(self)
-        })
+        delegate?.modalYesAction(self)
+        self.dismissViewControllerAnimated(true, completion: nil)
+//        self.dismissViewControllerAnimated(true, completion: { finished in
+//            delegate?.modalYesAction(self)
+//        })
     }
     
     @IBAction func noAction(sender: AnyObject) {

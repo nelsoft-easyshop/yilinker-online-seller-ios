@@ -81,7 +81,7 @@ class PayoutViewController: UIViewController, WithdrawTableViewControllerDelegat
     @IBOutlet weak var containerView: UIView!
     
     // Tabs
-    var tabsName: [String] = [PayoutStrings.tabWithdraw, PayoutStrings.tabRecord, PayoutStrings.tabRecord, PayoutStrings.tabEarning]
+    var tabsName: [String] = [PayoutStrings.tabWithdraw, PayoutStrings.tabRequest, PayoutStrings.tabRecord, PayoutStrings.tabEarning]
     var selectedImage: [String] = ["withdraw", "request", "record", "earning"]
     var deselectedImage: [String] = ["withdraw2", "request2", "record2", "earning2"]
     var selectedIndex: Int = 0
