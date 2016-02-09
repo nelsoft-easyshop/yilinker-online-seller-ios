@@ -14,12 +14,15 @@ protocol AvailableBalanceDelegate {
 
 class WithdrawAvailableBalanceView: UIView {
 
+    @IBOutlet weak var availableBalanceTextLabel: UILabel!
     @IBOutlet weak var availableBalanceLabel: UILabel!
     
     var delegate: AvailableBalanceDelegate?
     
     override func awakeFromNib() {
         self.frame.size.width = UIScreen.mainScreen().bounds.width
+        
+        self.availableBalanceTextLabel.text = PayoutStrings.withdrawalAvailableBalance
         
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "gotoPayoutSummary:"))
     }

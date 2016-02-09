@@ -11,9 +11,12 @@ import UIKit
 class WithdrawMobileNoView: UIView {
 
     @IBOutlet weak var numberLabel: UILabel!
+    @IBOutlet weak var mobileNumberTextLabel: UILabel!
     
     override func awakeFromNib() {
         self.frame.size.width = UIScreen.mainScreen().bounds.width
+        
+        self.mobileNumberTextLabel.text = PayoutStrings.withdrawalMobileNumber
     }
 
 }

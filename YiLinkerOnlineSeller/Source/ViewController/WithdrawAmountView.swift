@@ -30,14 +30,13 @@ class WithdrawAmountView: UIView, UITextFieldDelegate {
         leftPadding.backgroundColor = .whiteColor()
         amountTextField.leftView = leftPadding
         amountTextField.leftViewMode = UITextFieldViewMode.Always
-
         amountTextField.layer.cornerRadius = 3.0
-        
-        aboveLabel.required()
-        
         amountTextField.addTarget(self, action: "amountDidTextChanged", forControlEvents: UIControlEvents.EditingChanged)
-        
         amountTextField.addToolBarWithDoneTarget(self, done: "keyboardDoneAction")
+        
+        aboveLabel.text = PayoutStrings.withdrawalAmount + ":"
+        bottomLabel.text = PayoutStrings.withdrawalAmountCharge
+        aboveLabel.required()
     }
     
     func amountDidTextChanged() {

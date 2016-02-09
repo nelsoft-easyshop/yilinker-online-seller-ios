@@ -76,6 +76,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="availableBalanceLabel" destination="p2E-sJ-BGC" id="hAb-tB-LbU"/>
+                <outlet property="availableBalanceTextLabel" destination="aii-q3-Z1D" id="aQa-dg-irw"/>
             </connections>
             <point key="canvasLocation" x="254" y="-7"/>
         </view>
@@ -242,6 +243,7 @@
                 <outlet property="chequeView" destination="A4T-Ca-z5R" id="2Wo-74-lYa"/>
                 <outlet property="depositCheckImageView" destination="dMs-7R-k2V" id="Aj6-mq-Hxq"/>
                 <outlet property="depositView" destination="ORd-eq-gKd" id="Rbz-N8-a3j"/>
+                <outlet property="withdrawalMethodTextLabel" destination="3sd-yP-65t" id="NJG-eg-xBj"/>
             </connections>
             <point key="canvasLocation" x="278.5" y="298"/>
         </view>
@@ -314,6 +316,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="chequeLabel" destination="LQE-d9-ZdT" id="1jn-iU-R7i"/>
+                <outlet property="depositToTextLabel" destination="ZTc-dV-ake" id="yNJ-l5-dEf"/>
                 <outlet property="detailsLabel" destination="Cg7-au-SUI" id="aGK-rw-UCh"/>
                 <outlet property="nameLabel" destination="xqC-Uj-OoZ" id="cE9-xo-aKc"/>
             </connections>
@@ -354,6 +357,7 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="mobileNumberTextLabel" destination="PgM-Rm-bH7" id="8K6-W8-xEX"/>
                 <outlet property="numberLabel" destination="CT6-py-etW" id="wLl-7y-KkL"/>
             </connections>
             <point key="canvasLocation" x="254" y="619.5"/>

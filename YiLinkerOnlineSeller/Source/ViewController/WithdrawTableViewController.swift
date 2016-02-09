@@ -204,7 +204,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
         if availableBalance.doubleValue < 100 {
             self.amountView.amountTextField.userInteractionEnabled = false
             self.amountView.amountTextField.backgroundColor = UIColor.lightGrayColor()
-            self.amountView.bottomLabel.text = "Available Balance is less than P100.00"
+            self.amountView.bottomLabel.text = PayoutStrings.withdrawalLessThanMinimum
             self.amountView.bottomLabel.textColor = UIColor.redColor()
             self.amountView.amountTextField.placeholder = ""
         }
@@ -215,7 +215,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
         if cooldown == 0 {
             timer.invalidate()
             cooldown = 60
-            self.confimationCodeView.getCodeButton.setTitle("GET CODE", forState: .Normal)
+            self.confimationCodeView.getCodeButton.setTitle(PayoutStrings.withdrawalGetCode, forState: .Normal)
             self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
         } else {
             self.confimationCodeView.getCodeButton.setTitle("00:" + String(cooldown), forState: .Normal)
@@ -315,7 +315,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
         
         self.confimationCodeView.codeTextField.text = ""
         self.timer.invalidate()
-        self.confimationCodeView.getCodeButton.setTitle("GET CODE", forState: .Normal)
+        self.confimationCodeView.getCodeButton.setTitle(PayoutStrings.withdrawalGetCode, forState: .Normal)
         
         self.proceedView.proceedButton.backgroundColor = .lightGrayColor()
         
@@ -377,13 +377,13 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 
                 if successful {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Confirmation code has been sent to your mobile number.", title: "Request Sent")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: PayoutStrings.alertRequestSuccessful, title: PayoutStrings.alertRequestSent)
                     self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("startCooldown"), userInfo: nil, repeats: true)
                     
                 } else {
                     if requestErrorType == .ResponseError {
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: "Request Failed")
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: PayoutStrings.alertRequestFailed)
                     } else if requestErrorType == .PageNotFound {
                         Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
                     } else if requestErrorType == .NoInternetConnection {
@@ -426,7 +426,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
                 } else {
                     if requestErrorType == .ResponseError {
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: "Request Failed")
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: PayoutStrings.alertRequestFailed)
                     } else if requestErrorType == .PageNotFound {
                         Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
                     } else if requestErrorType == .NoInternetConnection {
@@ -437,7 +437,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
                         Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
                     } else {
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: "Request Failed")
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: PayoutStrings.alertRequestFailed)
                     }
                 }
             })
@@ -494,23 +494,23 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
             availableBalance = availableBalance.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
 
             if amountView.amountTextField.text.doubleValue < 100.0 {
-                self.amountView.bottomLabel.text = "Minimum withdrawal amount is P100.00"
+                self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountMinimum
                 self.amountView.bottomLabel.textColor = UIColor.redColor()
                 self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
             } else if amountView.amountTextField.text.doubleValue > availableBalance.doubleValue {
-                self.amountView.bottomLabel.text = "Withdrawal amount is greater than available balance"
+                self.amountView.bottomLabel.text = PayoutStrings.withdrawalGreaterThanBalance
                 self.amountView.bottomLabel.textColor = UIColor.redColor()
                 self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
             } else {
                 self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
-                self.amountView.bottomLabel.text = "P 50.00 bank charge for withdrawal below P 5,000.00"
+                self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountCharge
                 self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
                 
                 enableProceedButton()
             }
         } else {
             self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
-            self.amountView.bottomLabel.text = "P 50.00 bank charge for withdrawal below P 5,000.00"
+            self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountCharge
             self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
             self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
             

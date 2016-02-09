@@ -12,7 +12,7 @@ class PayoutSummaryViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    var titles: [String] = ["Total Earnings", "Tentative Receivable", "Total Withdrew", "Available Balance"]
+    var titles: [String] = [PayoutStrings.summaryTotalEarnings, PayoutStrings.summaryTentative, PayoutStrings.summaryTotalWithdrew, PayoutStrings.summaryAvailableBalance]
     var prices: [String] = []
     var colors: [UIColor] = [Constants.Colors.appTheme, UIColor.blueColor(), UIColor.redColor(), Constants.Colors.pmYesGreenColor]
     var inProcess: String = ""
@@ -21,7 +21,7 @@ class PayoutSummaryViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.title = "Payout Summary"
+        self.title = PayoutStrings.titlePayoutSummary
         let nibTVC = UINib(nibName: "PayoutSummaryTableViewCell", bundle: nil)
         self.tableView.registerNib(nibTVC, forCellReuseIdentifier: "PayoutSummaryIdentifier")
         
@@ -59,7 +59,7 @@ class PayoutSummaryViewController: UIViewController {
         
         if indexPath.row == 2 {
             cell.inProcessLabel.hidden = false
-            cell.inProcessLabel.text = "IN PROCESS P " + inProcess
+            cell.inProcessLabel.text = PayoutStrings.summaryInProcess + " P " + inProcess
         }
         
         return cell

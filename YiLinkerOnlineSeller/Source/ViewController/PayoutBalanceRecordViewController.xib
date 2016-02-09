@@ -26,12 +26,17 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PayoutBalanceRecordViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
             <connections>
                 <outlet property="activeEarningLabel" destination="h1S-9m-sno" id="JbD-Sb-352"/>
+                <outlet property="activeEarningsTextLabel" destination="Xij-hq-cVk" id="OdT-wZ-ujX"/>
                 <outlet property="dateContainerView" destination="EVu-yQ-ZdR" id="r59-Nh-QE6"/>
                 <outlet property="dateLabel" destination="29c-Wk-xUj" id="VRw-4e-WlB"/>
                 <outlet property="myChart" destination="HSr-zv-TCL" id="xDM-Rf-5xI"/>
                 <outlet property="tentativeEarningLabel" destination="3Z6-LJ-TPD" id="fV9-VE-WZr"/>
+                <outlet property="tentativeEarningsTextLabel" destination="T1A-7m-4LB" id="y7p-qd-Sx9"/>
                 <outlet property="totalEarningLabel" destination="12m-LB-tCE" id="GRa-B9-2Qv"/>
+                <outlet property="totalEarningsHeaderLabel" destination="dKG-JY-E1C" id="LX6-rd-fXp"/>
+                <outlet property="totalEarningsLabel" destination="u5p-1x-sBe" id="akV-Kd-hmI"/>
                 <outlet property="totalWithdrewLabel" destination="2pK-mT-JZq" id="3Q9-DI-e58"/>
+                <outlet property="totalWithdrewTextLabel" destination="wDp-56-pUz" id="uiE-wS-Eey"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

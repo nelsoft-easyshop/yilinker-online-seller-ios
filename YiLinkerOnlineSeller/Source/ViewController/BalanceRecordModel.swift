@@ -51,8 +51,8 @@ class BalanceRecordModel: NSObject {
                 activeEarning = ParseHelper.string(data, key: "activeEarning", defaultValue: "0.00")
                 tentativeEarning = ParseHelper.string(data, key: "tentativeEarning", defaultValue: "0.00")
                 totalEarning = ParseHelper.string(data, key: "totalEarning", defaultValue: "0.00")
-                totalWithdrew = ParseHelper.string(data, key: "totalWidthrew", defaultValue: "0.00")
-                totalWithdrewInProcess = ParseHelper.string(data, key: "totalWidthrewInProcess", defaultValue: "0.00")
+                totalWithdrew = ParseHelper.string(data, key: "totalWithdrew", defaultValue: "0.00")
+                totalWithdrewInProcess = ParseHelper.string(data, key: "totalWithdrewInProcess", defaultValue: "0.00")
                 
                 var element: EarningsElement
                 for earning in data["earnings"] as! NSArray {

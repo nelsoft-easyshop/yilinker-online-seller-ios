@@ -53,13 +53,13 @@ class WithdrawModalViewController: UIViewController, WithdrawTableViewController
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.requestedAmountLabel.text = "Requested Amount: P " + String(stringInterpolationSegment: amountToWithdraw)
+        self.requestedAmountLabel.text = PayoutStrings.modalRequestedAmount + ": P " + String(stringInterpolationSegment: amountToWithdraw)
         if amountToWithdraw < 5000.0 {
-            self.bankChargeLabel.text = "Bank Charge: P 50.00"
-            self.amountToBeReceivedLabel.text = "Amount to be Received: P " + String(stringInterpolationSegment: amountToWithdraw - 50.0)
+            self.bankChargeLabel.text =  PayoutStrings.modalBankCharge + ": P 50.0"
+            self.amountToBeReceivedLabel.text = PayoutStrings.modalAmountToReceived  + ": P " + String(stringInterpolationSegment: amountToWithdraw - 50.0)
         } else {
-            self.bankChargeLabel.text = "Bank Charge: P 0.00"
-            self.amountToBeReceivedLabel.text = "Amount to be Received: P " + String(stringInterpolationSegment: amountToWithdraw)
+            self.bankChargeLabel.text = PayoutStrings.modalBankCharge + ": P 0.0"
+            self.amountToBeReceivedLabel.text = PayoutStrings.modalAmountToReceived  + ": P " + String(stringInterpolationSegment: amountToWithdraw)
         }
         
     }

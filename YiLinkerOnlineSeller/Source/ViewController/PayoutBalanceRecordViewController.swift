@@ -19,6 +19,12 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
     @IBOutlet weak var tentativeEarningLabel: UILabel!
     @IBOutlet weak var totalWithdrewLabel: UILabel!
     
+    @IBOutlet weak var totalEarningsHeaderLabel: UILabel!
+    @IBOutlet weak var totalEarningsLabel: UILabel!
+    @IBOutlet weak var activeEarningsTextLabel: UILabel!
+    @IBOutlet weak var tentativeEarningsTextLabel: UILabel!
+    @IBOutlet weak var totalWithdrewTextLabel: UILabel!
+    
     // Model
     var recordModel: BalanceRecordModel!
     
@@ -45,6 +51,12 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
         dateContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "selectDate:"))
         
         self.showHUD()
+        
+        self.totalEarningsHeaderLabel.text = PayoutStrings.recordTotalEarnings
+        self.totalEarningsLabel.text = PayoutStrings.recordTotalEarnings
+        self.activeEarningsTextLabel.text = PayoutStrings.recordActiveEarnings
+        self.tentativeEarningsTextLabel.text = PayoutStrings.recordTentativeEarnings
+        self.totalWithdrewTextLabel.text = PayoutStrings.recordTotalWithdrew
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -73,7 +85,7 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
     // initialize graph
     func initializeGraph() {
         
-        myChart.noDataText = "No Available Data"
+        myChart.noDataText = PayoutStrings.recordNoData
         myChart.descriptionText = ""
         
         // x axis
@@ -162,7 +174,7 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
         earningsDataSet.circleRadius = 6
         earningsDataSet.setCircleColor(Constants.Colors.soldColor)
         earningsDataSet.drawCircleHoleEnabled = false
-        earningsDataSet.valueTextColor = Constants.Colors.soldColor//UIColor.clearColor()
+        earningsDataSet.valueTextColor = /*Constants.Colors.soldColor*/UIColor.clearColor()
 
         // Line of graph
         var lineDataSets: [LineChartDataSet] = []
@@ -203,10 +215,10 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
     func populateData() {
         displayGraph()
         
-        self.totalEarningLabel.text = "P " + String(recordModel.totalEarning)
-        self.activeEarningLabel.text = "P " + String(recordModel.activeEarning)
-        self.tentativeEarningLabel.text = "P " + String(recordModel.tentativeEarning)
-        self.totalWithdrewLabel.text = "P " + String(recordModel.totalWithdrew)
+        self.totalEarningLabel.text = recordModel.currencyCode + String(recordModel.totalEarning)
+        self.activeEarningLabel.text = recordModel.currencyCode + String(recordModel.activeEarning)
+        self.tentativeEarningLabel.text = recordModel.currencyCode + String(recordModel.tentativeEarning)
+        self.totalWithdrewLabel.text = recordModel.currencyCode + String(recordModel.totalWithdrew)
         
         // update calendar dates
         // get the first value and the last value for dates
