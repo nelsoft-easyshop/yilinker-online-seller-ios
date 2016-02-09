@@ -572,6 +572,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                         } else {
                             if Reachability.isConnectedToNetwork() {
                                 var info = error.userInfo!
+                                
                                  self.logoutUser()
 //                                if info["data"] != nil {
 //                                    self.logoutUser()
