@@ -23,6 +23,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
     var mobileNoView: WithdrawMobileNoView!
     var confimationCodeView: WithdrawConfirmationCodeView!
     var proceedView: WithdrawProceedView!
+    var contactCSRView: WithdrawContactCSR!
     
     var newFrame: CGRect!
     
@@ -34,6 +35,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
     var cooldown: Int = 60
     
     var firstLoad: Bool = true
+    var noBankAccount: Bool = false
     
     var storeInfo: StoreInfoModel!
     
@@ -62,7 +64,6 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
 //        NSNotificationCenter.defaultCenter().postNotificationName("showLoaderInPayoutScreen", object: nil)
 //        fireGetWithdrawalBalance()
         addViews()
-        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -85,6 +86,16 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
                 self.depositToView.chequeLabel.text = self.storeInfo.name
             }
             self.mobileNoView.numberLabel.text = "  " + String(self.storeInfo.contact_number)
+            
+            // check bank account
+            if self.storeInfo.accountName == "" {
+                for view in self.tableView.subviews {
+                    view.removeFromSuperview()
+                }
+                
+                noBankAccount = true
+                addViews()
+            }
         }
 
         
@@ -160,6 +171,13 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
         return self.proceedView
     }
     
+    func getContactCSRView() -> WithdrawContactCSR {
+        if self.contactCSRView == nil {
+            self.contactCSRView = XibHelper.puffViewWithNibName("BalanceWithdrawalViewsViewController", index: 7) as! WithdrawContactCSR
+        }
+        return self.contactCSRView
+    }
+    
     // MARK: - Functions
     
     func addViews() {
@@ -169,6 +187,9 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
         self.getHeaderView().addSubview(self.getDepositToView())
         self.getHeaderView().addSubview(self.getMobileNoView())
         self.getHeaderView().addSubview(self.getConfimationCodeView())
+        if noBankAccount {
+            self.getHeaderView().addSubview(self.getContactCSRView())
+        }
         self.getHeaderView().addSubview(self.getProceedView())
         
         positionViews()
@@ -180,7 +201,12 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
         self.setPosition(self.depositToView, from: self.methodView)
         self.setPosition(self.mobileNoView, from: self.depositToView)
         self.setPosition(self.confimationCodeView, from: self.mobileNoView)
-        self.setPosition(self.proceedView, from: self.confimationCodeView)
+        if noBankAccount {
+            self.setPosition(self.contactCSRView, from: self.confimationCodeView)
+            self.setPosition(self.proceedView, from: self.contactCSRView)
+        } else {
+            self.setPosition(self.proceedView, from: self.confimationCodeView)
+        }
         
         newFrame = self.headerView.frame
         newFrame.size.height = CGRectGetMaxY(self.proceedView.frame)
@@ -219,7 +245,11 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
             self.confimationCodeView.getCodeButton.setTitle(PayoutStrings.withdrawalGetCode, forState: .Normal)
             self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
         } else {
-            self.confimationCodeView.getCodeButton.setTitle("00:" + String(cooldown), forState: .Normal)
+            if cooldown >= 10 {
+                self.confimationCodeView.getCodeButton.setTitle("00:" + String(cooldown), forState: .Normal)
+            } else {
+                self.confimationCodeView.getCodeButton.setTitle("00:0" + String(cooldown), forState: .Normal)
+            }
         }
         
     }

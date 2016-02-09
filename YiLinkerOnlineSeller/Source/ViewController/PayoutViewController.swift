@@ -38,6 +38,7 @@ struct PayoutStrings {
     static let withdrawalAmountMinimum = StringHelper.localizedStringWithKey("PAYOUT_BALANCE_WITHDRAWAL_AMOUNT_MINIMUM_KEY")
     static let withdrawalGreaterThanBalance = StringHelper.localizedStringWithKey("PAYOUT_BALANCE_WITHDRAWAL_AMOUNT_GREATER_THAN_BALANCE_KEY")
     static let withdrawalAmountCharge = StringHelper.localizedStringWithKey("PAYOUT_BALANCE_WITHDRAWAL_AMOUNT_CHARGE_KEY")
+    static let withdrawalContactCSR = StringHelper.localizedStringWithKey("PAYOUT_BALANCE_WITHDRAWAL_CONTACT_CSR_KEY")
     
     // Alert
     static let alertRequestSent = StringHelper.localizedStringWithKey("PAYOUT_BALANCE_WITHDRAWAL_CODE_ALERT_REQUEST_SENT_KEY")
