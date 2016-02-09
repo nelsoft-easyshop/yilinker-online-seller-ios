@@ -178,12 +178,14 @@
                             </attributedString>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum sit dolor amet ipsum sit dolor amet?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RnO-sH-LvB">
-                            <rect key="frame" x="8" y="46" width="259" height="21"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="11" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RnO-sH-LvB">
+                            <rect key="frame" x="8" y="44" width="259" height="31"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="21" id="h0f-Vg-MnF"/>
+                                <constraint firstAttribute="height" constant="31" id="h0f-Vg-MnF"/>
                             </constraints>
-                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                            <string key="text">Request cannot be edited once submitted. 
+Are you sure you want to proceed?</string>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -195,7 +197,7 @@
                         <constraint firstItem="BAF-f7-sPX" firstAttribute="top" secondItem="5PT-1M-2YV" secondAttribute="top" constant="23" id="CEP-eO-w3p"/>
                         <constraint firstAttribute="trailing" secondItem="tgU-Sj-LEo" secondAttribute="trailing" id="CJc-kG-k9i"/>
                         <constraint firstItem="BAF-f7-sPX" firstAttribute="leading" secondItem="5PT-1M-2YV" secondAttribute="leading" constant="8" id="Dq4-Z6-ddF"/>
-                        <constraint firstItem="RnO-sH-LvB" firstAttribute="top" secondItem="BAF-f7-sPX" secondAttribute="bottom" constant="2" id="Jm5-et-hbG"/>
+                        <constraint firstItem="RnO-sH-LvB" firstAttribute="top" secondItem="BAF-f7-sPX" secondAttribute="bottom" id="Jm5-et-hbG"/>
                         <constraint firstItem="1xB-S4-8cR" firstAttribute="leading" secondItem="5PT-1M-2YV" secondAttribute="leading" id="LbD-Lw-JLn"/>
                         <constraint firstAttribute="trailing" secondItem="4nr-PP-Z2w" secondAttribute="trailing" id="O6Q-7h-wo8"/>
                         <constraint firstAttribute="bottom" secondItem="1xB-S4-8cR" secondAttribute="bottom" id="TlN-dV-a8G"/>
@@ -208,7 +210,7 @@
                         <constraint firstAttribute="trailing" secondItem="pTG-jd-dUM" secondAttribute="trailing" id="gS8-8c-IYO"/>
                         <constraint firstItem="pTG-jd-dUM" firstAttribute="leading" secondItem="5PT-1M-2YV" secondAttribute="leading" id="nGv-2M-vqa"/>
                         <constraint firstItem="tgU-Sj-LEo" firstAttribute="top" secondItem="4nr-PP-Z2w" secondAttribute="bottom" constant="8" id="sXe-dK-p8U"/>
-                        <constraint firstItem="4nr-PP-Z2w" firstAttribute="top" secondItem="RnO-sH-LvB" secondAttribute="bottom" constant="11" id="v78-Lp-usj"/>
+                        <constraint firstItem="4nr-PP-Z2w" firstAttribute="top" secondItem="RnO-sH-LvB" secondAttribute="bottom" constant="3" id="v78-Lp-usj"/>
                         <constraint firstAttribute="trailing" secondItem="BAF-f7-sPX" secondAttribute="trailing" constant="8" id="xVz-yB-rNW"/>
                     </constraints>
                 </view>

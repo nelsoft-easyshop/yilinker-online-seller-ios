@@ -41,6 +41,12 @@ class WithdrawModalViewController: UIViewController, WithdrawTableViewController
         self.containerView.layer.cornerRadius = 3.0
         self.yesButton.layer.cornerRadius = 5.0
         self.noButton.layer.cornerRadius = 5.0
+        
+        self.headerLabel.text = PayoutStrings.modalTitle
+        self.bodyLabel.text = PayoutStrings.modalMessage
+        self.requestedAmountLabel.text = PayoutStrings.modalRequestedAmount + ": -"
+        self.bankChargeLabel.text = PayoutStrings.modalBankCharge + ": -"
+        self.amountToBeReceivedLabel.text = PayoutStrings.modalAmountToReceived + ": -"
     }
     
     override func viewWillAppear(animated: Bool) {

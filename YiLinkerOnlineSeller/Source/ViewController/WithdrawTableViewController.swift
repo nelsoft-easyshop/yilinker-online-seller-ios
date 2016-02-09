@@ -88,7 +88,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
             self.mobileNoView.numberLabel.text = "  " + String(self.storeInfo.contact_number)
             
             // check bank account
-            if self.storeInfo.accountName == "" {
+            if self.storeInfo.accountName != "" {
                 for view in self.tableView.subviews {
                     view.removeFromSuperview()
                 }
