@@ -118,7 +118,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
             self.mobileNoView.numberLabel.text = "  " + String(self.storeInfo.contact_number)
             
             // check bank account
-            if self.storeInfo.accountName == "" {
+            if self.storeInfo.bankId == 0 || self.storeInfo.accountName == "" || self.storeInfo.accountNumber == "" {
                 for view in self.tableView.subviews {
                     view.removeFromSuperview()
                 }
@@ -299,10 +299,12 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
     }
     
     func addEmptyView() {
+        self.tableView.scrollEnabled = false
         if self.emptyView == nil {
             self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
             self.emptyView!.delegate = self
             self.emptyView!.frame = UIScreen.mainScreen().bounds
+            self.emptyView?.center = self.view.center
             self.view.addSubview(self.emptyView!)
         } else {
             self.emptyView!.hidden = false
@@ -311,6 +313,8 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
     
     func didTapReload() {
         if Reachability.isConnectedToNetwork() {
+            self.tableView.scrollEnabled = true
+            self.showHUD()
             self.emptyView?.hidden = true
             fireGetWithdrawalBalance()
         }
@@ -399,7 +403,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
                     self.populateData()
                 } else {
                     if self.balanceRecordModel == nil {
-//                        self.addEmptyView()
+                        self.addEmptyView()
                     }
                     if requestErrorType == .ResponseError {
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -421,7 +425,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
             })
         } else {
             if self.balanceRecordModel == nil {
-//                self.addEmptyView()
+                self.addEmptyView()
             }
             self.hud?.hidden = true
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.failed)
@@ -558,11 +562,8 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
         availableBalance = availableBalance.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
         
         if count(amountView.amountTextField.text) == 0 {
-            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
             self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountCharge
             self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
-            
-            enableProceedButton()
         } else if amountView.amountTextField.text.doubleValue < 100.0 {
             self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountMinimum
             self.amountView.bottomLabel.textColor = UIColor.redColor()
