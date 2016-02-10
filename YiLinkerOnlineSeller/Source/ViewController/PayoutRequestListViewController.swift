@@ -17,7 +17,7 @@ struct PayoutRequestStrings {
     static let kNoResult: String = StringHelper.localizedStringWithKey("PAYOUT_EARNINGS_NO_WITHDRAWAL_REQUEST_LOCALIZE_KEY")
 }
 
-class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EmptyViewDelegate {
     
     // Labels
     @IBOutlet weak var noResultLabel: UILabel!
@@ -25,7 +25,8 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
     // Tableview
     @IBOutlet weak var tableView: UITableView!
     
-    // Local Strings
+    // View Controller
+    var emptyView: EmptyView?
     
     // Models
     var requestListModel: [PayoutRequestListModel] = []
@@ -90,9 +91,31 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
     // MARK: -
     // MARK: - Private methods
     // Remove tableview footer
+    
     func footerView() {
         let footerView: UIView = UIView(frame: CGRectZero)
         self.tableView.tableFooterView = footerView
+    }
+    
+    // MARK: - 
+    // MARK: - Add Empty empty view
+    
+    func addEmptyView() {
+        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+        self.emptyView?.frame = self.view.frame
+        self.emptyView!.delegate = self
+        self.view.addSubview(self.emptyView!)
+    }
+    
+    // MARK: -
+    // MARK: - Empty View Delegate Method
+    
+    func didTapReload() {
+        if Reachability.isConnectedToNetwork() {
+            self.showHUD()
+            self.emptyView?.hidden = true
+            self.fireRequestList()
+        }
     }
     
     // MARK: -
@@ -237,6 +260,11 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
                     self.tableView.reloadData()
                     self.hud?.hide(true)
                 } else {
+                    
+                    if self.requestListModel.count == 0 {
+                        self.addEmptyView()
+                    }
+                    
                     if requestErrorType == .ResponseError {
                         //Error in api requirements
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
