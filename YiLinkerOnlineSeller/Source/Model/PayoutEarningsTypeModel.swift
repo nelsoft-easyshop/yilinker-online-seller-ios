@@ -60,7 +60,7 @@ class PayoutEarningsTypeModel: NSObject {
                 if let value = request["earnings"] as? NSArray {
                     for subValue in value as NSArray {
                         
-                        date = formatDate(ParseHelper.string(subValue, key: "date", defaultValue: ""))
+                        date = ParseHelper.string(subValue, key: "date", defaultValue: "")
                         earningTypeId = ParseHelper.int(subValue, key: "earningTypeId", defaultValue: 0)
                         amount = ParseHelper.string(subValue, key: "amount", defaultValue: "")
                         currencyCode = ParseHelper.string(subValue, key: "currencyCode", defaultValue: "")
