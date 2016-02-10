@@ -88,15 +88,35 @@ class BalanceRecordModel: NSObject {
                     earnings.append(element)
                 }
                 
-                fullName = ParseHelper.string(data, key: "fullName", defaultValue: "")
-                contact_number = ParseHelper.string(data, key: "contactNumber", defaultValue: "")
+                fullName = ParseHelper.string(data, key: "fullName", defaultValue: " - ")
+                contact_number = ParseHelper.string(data, key: "contactNumber", defaultValue: " - ")
+                
+                if fullName == "" {
+                    fullName = " - "
+                }
+                
+                if contact_number == "" {
+                    contact_number = " - "
+                }
                 
                 if let bank: AnyObject = data["bankDetails"] {
                     accountTitle = ParseHelper.string(bank, key: "accountTitle", defaultValue: "")
                     bankId = ParseHelper.int(bank, key: "bankId", defaultValue: 0)
-                    bankName = ParseHelper.string(bank, key: "bankName", defaultValue: "")
-                    accountName = ParseHelper.string(bank, key: "accountName", defaultValue: "")
-                    accountNumber = ParseHelper.string(bank, key: "accountNumber", defaultValue: "")
+                    bankName = ParseHelper.string(bank, key: "bankName", defaultValue: " - ")
+                    accountName = ParseHelper.string(bank, key: "accountName", defaultValue: " - ")
+                    accountNumber = ParseHelper.string(bank, key: "accountNumber", defaultValue: " - ")
+                    if bankName == "" {
+                        bankName = " - "
+                    }
+                    
+                    if accountName == "" {
+                        accountName = " - "
+                    }
+                    
+                    if accountNumber == "" {
+                        accountNumber = " - "
+                    }
+                    
                     bankAccount = bankName + " | " + accountName + " | " + accountNumber
                 }
             }
