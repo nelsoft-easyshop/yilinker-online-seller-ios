@@ -93,9 +93,12 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
             setCooldownValue(60)
             self.timer.invalidate()
             cooldown = 60
-            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
+
             self.confimationCodeView.getCodeButton.setTitle(PayoutStrings.withdrawalGetCode, forState: .Normal)
+
+            self.setStateForGetCodeButton()
         }
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -355,6 +358,34 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
         }
     }
     
+    func setStateForGetCodeButton() {
+        
+        var availableBalance: String = balanceRecordModel.availableBalance
+        availableBalance = availableBalance.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
+        
+        if count(amountView.amountTextField.text) == 0 {
+            self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountCharge
+            self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
+        } else if amountView.amountTextField.text.doubleValue < 100.0 {
+            self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountMinimum
+            self.amountView.bottomLabel.textColor = UIColor.redColor()
+            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
+        } else if amountView.amountTextField.text.doubleValue > availableBalance.doubleValue {
+            self.amountView.bottomLabel.text = PayoutStrings.withdrawalGreaterThanBalance
+            self.amountView.bottomLabel.textColor = UIColor.redColor()
+            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
+        } else {
+            if self.confimationCodeView.getCodeButton.titleLabel!.text == PayoutStrings.withdrawalGetCode {
+                
+                self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
+                self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountCharge
+                self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
+                
+                enableProceedButton()
+            }
+        }
+    }
+    
     // validate requirements
     
     func didMeetRequirements() -> Bool {
@@ -601,61 +632,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
     // MARK: - Amount View Delegate 
     func amountDidChanged(view: WithdrawAmountView) {
         
-        var availableBalance: String = balanceRecordModel.availableBalance
-        availableBalance = availableBalance.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
-        
-        if count(amountView.amountTextField.text) == 0 {
-            self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountCharge
-            self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
-        } else if amountView.amountTextField.text.doubleValue < 100.0 {
-            self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountMinimum
-            self.amountView.bottomLabel.textColor = UIColor.redColor()
-            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
-        } else if amountView.amountTextField.text.doubleValue > availableBalance.doubleValue {
-            self.amountView.bottomLabel.text = PayoutStrings.withdrawalGreaterThanBalance
-            self.amountView.bottomLabel.textColor = UIColor.redColor()
-            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
-        } else {
-            if self.confimationCodeView.getCodeButton.titleLabel!.text == PayoutStrings.withdrawalGetCode {
-                
-                self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
-                self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountCharge
-                self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
-                
-                enableProceedButton()
-            }
-        }
-        
-        // check if amount is greater than available balance
-        // check if amount is less than 100
-        
-//        if count(amountView.amountTextField.text) > 2 {
-//            var availableBalance: String = balanceRecordModel.availableBalance
-//            availableBalance = availableBalance.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
-//
-//            if amountView.amountTextField.text.doubleValue < 100.0 {
-//                self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountMinimum
-//                self.amountView.bottomLabel.textColor = UIColor.redColor()
-//                self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
-//            } else if amountView.amountTextField.text.doubleValue > availableBalance.doubleValue {
-//                self.amountView.bottomLabel.text = PayoutStrings.withdrawalGreaterThanBalance
-//                self.amountView.bottomLabel.textColor = UIColor.redColor()
-//                self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
-//            } else {
-//                self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
-//                self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountCharge
-//                self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
-//                
-//                enableProceedButton()
-//            }
-//        } else {
-//            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
-//            self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountCharge
-//            self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
-//            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
-//            
-//            enableProceedButton()
-//        }
+        setStateForGetCodeButton()
     }
     
     // MARK: - Method View Delegate
