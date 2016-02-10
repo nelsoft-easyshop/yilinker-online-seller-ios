@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControllerDelegate {
+class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControllerDelegate, EmptyViewDelegate {
     
     // Views from Xib
     @IBOutlet weak var myChart: LineChartView!
@@ -37,6 +37,9 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
     
     // loader
     var hud: MBProgressHUD?
+    
+    //
+    var emptyView: EmptyView?
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {
@@ -241,6 +244,29 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
         self.hud?.show(true)
     }
     
+    func addEmptyView() {
+        if self.emptyView == nil {
+            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+            self.emptyView!.delegate = self
+            self.emptyView?.frame = self.view.frame
+            self.view.addSubview(self.emptyView!)
+        } else {
+            self.emptyView!.hidden = false
+        }
+    }
+    
+    func didTapReload() {
+        if Reachability.isConnectedToNetwork() {
+            self.showHUD()
+            self.emptyView?.hidden = true
+            if self.recordModel == nil {
+                fireGetWithdrawalBalance("", endDate: "")
+            } else {
+                fireGetWithdrawalBalance(formatDateToString(self.startDate, type: .Key), endDate: formatDateToString(self.endDate, type: .Key))
+            }
+        }
+    }
+    
     // MARK: - Requests
     
     func fireGetWithdrawalBalance(startDate: String, endDate: String) {
@@ -254,6 +280,7 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
                     self.populateData()
                     println(responseObject)
                 } else {
+                    self.addEmptyView()
                     if requestErrorType == .ResponseError {
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                         Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
@@ -273,6 +300,7 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
                 }
             })
         } else {
+            self.addEmptyView()
             self.hud?.hidden = true
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.failed)
         }
