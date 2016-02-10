@@ -91,6 +91,40 @@ struct Constants {
 //        
         static let grantRefreshToken = "refresh_token"
         static let grantSeller = "http://yilinker-online.com/grant/seller"
+        
+        //development
+        static func getClientId(isSeller: Bool) -> String {
+            if isSeller {
+                return "1_167rxzqvid8g8swggwokcoswococscocc8ck44wo0g88owgkcc"
+            } else {
+                return "3_4qzm05tv6uwwko4c4c8gs00sco0c40os08owg8sg0wswoo0w8o"
+            }
+        }
+        
+        static func getClientSecret(isSeller: Bool) -> String {
+            if isSeller {
+                return "317eq8nohry84ooc0o8woo8000c0k844c4cggws84g80scwwog"
+            } else {
+                return "1vgsjw5b0u74kssco8cooock0oc8c0sscoksk0sgsc08s8k4gw"
+            }
+        }
+        
+        //production
+//        func getClientId(isSeller: Bool) -> String {
+//            if isSeller {
+//                return "1_167rxzqvid8g8swggwokcoswococscocc8ck44wo0g88owgkcc"
+//            } else {
+//                return "3_4qzm05tv6uwwko4c4c8gs00sco0c40os08owg8sg0wswoo0w8o"
+//            }
+//        }
+//        
+//        func getClientSecret(isSeller: Bool) -> String {
+//            if isSeller {
+//                return "317eq8nohry84ooc0o8woo8000c0k844c4cggws84g80scwwog"
+//            } else {
+//                return "1vgsjw5b0u74kssco8cooock0oc8c0sscoksk0sgsc08s8k4gw"
+//            }
+//        }
     }
     
     struct Checkout {
