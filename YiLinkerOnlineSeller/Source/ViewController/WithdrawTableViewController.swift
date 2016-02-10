@@ -79,7 +79,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
     func updateLabel(notification: NSNotificationCenter) {
         
         cooldown--
-        println("NSNotification here > \(cooldown)")
+
         if cooldown != 0 {
             if cooldown < 10 {
                 self.confimationCodeView.getCodeButton.setTitle("00:0" + String(cooldown), forState: .Normal)
@@ -96,7 +96,20 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
 
             self.confimationCodeView.getCodeButton.setTitle(PayoutStrings.withdrawalGetCode, forState: .Normal)
 
-            self.setStateForGetCodeButton()
+//            self.setStateForGetCodeButton()
+//            
+            var availableBalance: String = balanceRecordModel.availableBalance
+            availableBalance = availableBalance.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
+            
+            if count(amountView.amountTextField.text) == 0 || amountView.amountTextField.text.doubleValue < 100.0 || amountView.amountTextField.text.doubleValue > availableBalance.doubleValue {
+                self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
+            } else {
+                if self.confimationCodeView.getCodeButton.titleLabel!.text == PayoutStrings.withdrawalGetCode {
+                    self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
+                }
+                
+                enableProceedButton()
+            }
         }
         
     }
@@ -359,30 +372,30 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
     
     func setStateForGetCodeButton() {
         
-        var availableBalance: String = balanceRecordModel.availableBalance
-        availableBalance = availableBalance.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
-        
-        if count(amountView.amountTextField.text) == 0 {
-            self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountCharge
-            self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
-        } else if amountView.amountTextField.text.doubleValue < 100.0 {
-            self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountMinimum
-            self.amountView.bottomLabel.textColor = UIColor.redColor()
-            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
-        } else if amountView.amountTextField.text.doubleValue > availableBalance.doubleValue {
-            self.amountView.bottomLabel.text = PayoutStrings.withdrawalGreaterThanBalance
-            self.amountView.bottomLabel.textColor = UIColor.redColor()
-            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
-        } else {
-            if self.confimationCodeView.getCodeButton.titleLabel!.text == PayoutStrings.withdrawalGetCode {
-                
-                self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
-                self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountCharge
-                self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
-            }
-            
-            enableProceedButton()
-        }
+//        var availableBalance: String = balanceRecordModel.availableBalance
+//        availableBalance = availableBalance.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
+//        
+//        if count(amountView.amountTextField.text) == 0 {
+//            self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountCharge
+//            self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
+//        } else if amountView.amountTextField.text.doubleValue < 100.0 {
+//            self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountMinimum
+//            self.amountView.bottomLabel.textColor = UIColor.redColor()
+//            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
+//        } else if amountView.amountTextField.text.doubleValue > availableBalance.doubleValue {
+//            self.amountView.bottomLabel.text = PayoutStrings.withdrawalGreaterThanBalance
+//            self.amountView.bottomLabel.textColor = UIColor.redColor()
+//            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
+//        } else {
+//            if self.confimationCodeView.getCodeButton.titleLabel!.text == PayoutStrings.withdrawalGetCode {
+//                
+//                self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
+//                self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountCharge
+//                self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
+//            }
+//            
+//            enableProceedButton()
+//        }
     }
     
     // validate requirements
@@ -507,6 +520,8 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
                 if successful {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: PayoutStrings.alertRequestSuccessful, title: PayoutStrings.alertRequestSent)
 //                    self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("startCooldown"), userInfo: nil, repeats: true)
+                    self.cooldown = 60
+                    self.setCooldownValue(60)
                     self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
                     
                 } else {
@@ -631,7 +646,34 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
     // MARK: - Amount View Delegate 
     func amountDidChanged(view: WithdrawAmountView) {
         
-        setStateForGetCodeButton()
+        var availableBalance: String = balanceRecordModel.availableBalance
+        availableBalance = availableBalance.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
+        
+        println(amountView.amountTextField.text.doubleValue)
+        if count(amountView.amountTextField.text) == 0 {
+            self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountCharge
+            self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
+        } else if amountView.amountTextField.text.doubleValue < 100.0 {
+            println("benga")
+            self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountMinimum
+            self.amountView.bottomLabel.textColor = UIColor.redColor()
+            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
+        } else if amountView.amountTextField.text.doubleValue > availableBalance.doubleValue {
+            self.amountView.bottomLabel.text = PayoutStrings.withdrawalGreaterThanBalance
+            self.amountView.bottomLabel.textColor = UIColor.redColor()
+            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
+        } else {
+            
+            self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountCharge
+            self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
+            
+            if self.confimationCodeView.getCodeButton.titleLabel!.text == PayoutStrings.withdrawalGetCode {
+                self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
+            }
+            
+            enableProceedButton()
+        }
+        
     }
     
     // MARK: - Method View Delegate
