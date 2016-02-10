@@ -266,6 +266,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
             
             self.depositToView.nameLabel.text = self.balanceRecordModel.fullName
             self.depositToView.detailsLabel.text = self.balanceRecordModel.bankAccount
+            self.depositToView.chequeLabel.text = self.balanceRecordModel.fullName
             
         } else {
             // if no bank account
@@ -283,12 +284,13 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
             self.amountView.amountTextField.userInteractionEnabled = false
             self.amountView.amountTextField.backgroundColor = UIColor.lightGrayColor()
             
+            // disable method buttons
+//            self.methodView.depositView.backgroundColor = UIColor.lightGrayColor()
+//            self.methodView.depositCheckImageView.hidden = true
+            
             // disable code text field
             self.confimationCodeView.codeTextField.userInteractionEnabled = false
             self.confimationCodeView.codeTextField.backgroundColor = UIColor.lightGrayColor()
-            
-            self.depositToView.chequeLabel.text = self.balanceRecordModel.fullName
-            self.depositToView.chequeLabel.hidden = false
             
             self.depositToView.nameLabel.hidden = true
             self.depositToView.detailsLabel.hidden = true
