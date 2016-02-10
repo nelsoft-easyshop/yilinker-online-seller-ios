@@ -32,7 +32,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
     var dimView: UIView!
     
     var timer = NSTimer()
-    var cooldown: Int = 60
+    var cooldown: Int = NSUserDefaults.standardUserDefaults().valueForKey("cooldownKey") as! Int
     
     var firstLoad: Bool = true
     var noBankAccount: Bool = false
@@ -64,6 +64,36 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
 //        NSNotificationCenter.defaultCenter().postNotificationName("showLoaderInPayoutScreen", object: nil)
 //        fireGetWithdrawalBalance()
         addViews()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateLabel:", name: "UpdateTimerLabel", object: nil)
+    }
+    
+    func setCooldownValue(value: Int) {
+        NSUserDefaults.standardUserDefaults().setObject(value, forKey: "cooldownKey")
+    }
+    
+    func updateTimer() {
+        NSNotificationCenter.defaultCenter().postNotificationName("UpdateTimerLabel", object: nil)
+    }
+    
+    func updateLabel(notification: NSNotificationCenter) {
+        
+        cooldown--
+        println("NSNotification here > \(cooldown)")
+        if cooldown != 0 {
+            if cooldown < 10 {
+                self.confimationCodeView.getCodeButton.setTitle("00:0" + String(cooldown), forState: .Normal)
+            } else {
+                 self.confimationCodeView.getCodeButton.setTitle("00:" + String(cooldown), forState: .Normal)
+            }
+            
+            setCooldownValue(cooldown)
+        } else {
+            setCooldownValue(60)
+            self.timer.invalidate()
+            cooldown = 60
+            self.confimationCodeView.getCodeButton.setTitle(PayoutStrings.withdrawalGetCode, forState: .Normal)
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -88,7 +118,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
             self.mobileNoView.numberLabel.text = "  " + String(self.storeInfo.contact_number)
             
             // check bank account
-            if self.storeInfo.accountName != "" {
+            if self.storeInfo.accountName == "" {
                 for view in self.tableView.subviews {
                     view.removeFromSuperview()
                 }
@@ -410,7 +440,8 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
                 
                 if successful {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: PayoutStrings.alertRequestSuccessful, title: PayoutStrings.alertRequestSent)
-                    self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("startCooldown"), userInfo: nil, repeats: true)
+//                    self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("startCooldown"), userInfo: nil, repeats: true)
+                    self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
                     
                 } else {
                     if requestErrorType == .ResponseError {
