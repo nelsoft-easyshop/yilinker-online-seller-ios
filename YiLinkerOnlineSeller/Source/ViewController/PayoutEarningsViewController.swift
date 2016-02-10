@@ -121,16 +121,10 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
     // MARK: - Add Empty empty view
     
     func addEmptyView() {
-        self.tableView.scrollEnabled = false
-        if self.emptyView == nil {
-            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
-            self.emptyView!.delegate = self
-            self.emptyView!.frame = UIScreen.mainScreen().bounds
-            self.emptyView?.center = self.view.center
-            self.view.addSubview(self.emptyView!)
-        } else {
-            self.emptyView!.hidden = false
-        }
+        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+        self.emptyView?.frame = self.view.frame
+        self.emptyView!.delegate = self
+        self.view.addSubview(self.emptyView!)
     }
     
     // MARK: -
@@ -138,7 +132,6 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
     
     func didTapReload() {
         if Reachability.isConnectedToNetwork() {
-            self.tableView.scrollEnabled = true
             self.showHUD()
             self.emptyView?.hidden = true
             self.fireEarningGroupList()
