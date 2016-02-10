@@ -41,6 +41,17 @@ class WebServiceManager: NSObject {
     static let pageKey = "page"
     static let perPageKey = "perPage"
     
+    //Unathenticated OTP
+    static let areaCodeKey = "areaCode"
+    static let typeKey = "type"
+    static let storeTypeKey = "storeType"
+    
+    //Register
+    static let verificationCodeKey = "verificationCode"
+    static let contactNumberKey = "contactNumber"
+    static let newPasswordKey = "newPassword"
+    static let referralCodeKey = "referralCode"
+    
     // MARK: - CALLS
     // MARK: - Post Request With Url
     // This function is for removing repeated codes in handler
@@ -534,6 +545,134 @@ class WebServiceManager: NSObject {
     class func fireGetPayoutRequestEarningsRequestWithUrl(url: String, parameters: NSDictionary, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         self.fireGetRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Fire Email Login Request With URL
+    class func fireEmailLoginRequestWithUrl(url: String, emailAddress: String, password: String, grantType: String, isSeller: Bool, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = [self.emailKey: emailAddress, self.passwordKey: password, self.clientIdKey: Constants.Credentials.getClientId(isSeller), self.clientSecretKey: Constants.Credentials.getClientSecret(isSeller), self.grantTypeKey: grantType]
+        
+        let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        
+        return sessionDataTask
+    }
+    
+    //MARK: -
+    //MARK: - Fire Contact Number Login Request With URL
+    class func fireContactNumberLoginRequestWithUrl(url: String, contactNo: String, password: String, grantType: String, isSeller: Bool, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        let manager: APIManager = APIManager.sharedInstance
+        
+        //self.emailKey is used for contact number because the API is not yet configured to accept the 'contactNo' parameter
+        let parameters: NSDictionary = [self.emailKey: contactNo, self.passwordKey: password, self.clientIdKey: Constants.Credentials.getClientId(isSeller), self.clientSecretKey: Constants.Credentials.getClientSecret(isSeller), self.grantTypeKey: grantType]
+        
+        println(parameters)
+        let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        
+        return sessionDataTask
+    }
+    
+    //MARK: -
+    //MARK: - Fire Forgot Password Request With URL
+    class func fireForgotPasswordrRequestWithUrl(url: String, verficationCode: String, newPassword: String, storeType: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let manager: APIManager = APIManager()
+        
+        let parameters: NSDictionary = [self.verificationCodeKey: verficationCode, self.newPasswordKey: newPassword, self.storeTypeKey: storeType]
+        
+        if Reachability.isConnectedToNetwork() {
+            manager.POST(url, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    if let task = task.response as? NSHTTPURLResponse {
+                        if error.userInfo != nil {
+                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
+                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
+                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
+                        } else {
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
+                        }
+                    } else {
+                        actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+                    }
+            })
+        } else {
+            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Fire Register Request With URL v2
+    class func fireRegisterRequestWithUrl(url: String, contactNumber: String, password: String, areaCode: String, referralCode: String,  verificationCode: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = [self.contactNumberKey: contactNumber, self.passwordKey: password, self.areaCodeKey: areaCode, self.referralCodeKey: referralCode, self.verificationCodeKey: verificationCode]
+        
+        if Reachability.isConnectedToNetwork() {
+            manager.POST(url, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    println(error)
+                    if let task = task.response as? NSHTTPURLResponse {
+                        if error.userInfo != nil {
+                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
+                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
+                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
+                        } else {
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
+                        }
+                    } else {
+                        actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+                    }
+            })
+        } else {
+            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Fire Get Unauthenticated OTP (One Time Password) With URL
+    //Parameters  "type":"register/forgot-password"
+    class func fireUnauthenticatedOTPRequestWithUrl(url: String, contactNumber: String, areaCode: String, type: String, storeType: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let manager: APIManager = APIManager()
+        
+        let parameters: NSDictionary = [self.contactNumberKey: contactNumber, self.areaCodeKey: areaCode, self.typeKey: type, self.storeTypeKey: storeType]
+        
+        if Reachability.isConnectedToNetwork() {
+            manager.POST(url, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    if let task = task.response as? NSHTTPURLResponse {
+                        if error.userInfo != nil {
+                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
+                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
+                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
+                        } else {
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
+                        }
+                    } else {
+                        actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+                    }
+            })
+        } else {
+            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
         }
     }
 }
