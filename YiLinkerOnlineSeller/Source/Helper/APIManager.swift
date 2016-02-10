@@ -131,6 +131,16 @@ struct APIAtlas {
     static let payoutRequestList = "auth/withdraw-list?access_token="
     static let payoutEarningsGroup = "auth/earning-groups?access_token="
     static let payoutEarningsList = "auth/earning-list?access_token="
+    
+    //MARK: - V2 APIs
+    //OTP
+    static let unauthenticateOTP = "v2/sms/send"
+    
+    //Register
+    static let registerV2 = "v2/user/register"
+    
+    //Fogot Password
+    static let forgotPasswordV2 = "v2/user/resetPassword"
 }
 
 class APIManager: AFHTTPSessionManager {
