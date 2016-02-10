@@ -570,7 +570,6 @@ class WebServiceManager: NSObject {
         //self.emailKey is used for contact number because the API is not yet configured to accept the 'contactNo' parameter
         let parameters: NSDictionary = [self.emailKey: contactNo, self.passwordKey: password, self.clientIdKey: Constants.Credentials.getClientId(isSeller), self.clientSecretKey: Constants.Credentials.getClientSecret(isSeller), self.grantTypeKey: grantType]
         
-        println(parameters)
         let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
