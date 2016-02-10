@@ -319,8 +319,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
         self.hud = MBProgressHUD(frame: CGRectZero)
         self.hud?.removeFromSuperViewOnHide = true
         self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.center = self.view.center
+        UIApplication.sharedApplication().keyWindow?.addSubview(self.hud!)
         self.hud?.show(true)
     }
     
