@@ -379,9 +379,9 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
                 self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
                 self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountCharge
                 self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
-                
-                enableProceedButton()
             }
+            
+            enableProceedButton()
         }
     }
     
