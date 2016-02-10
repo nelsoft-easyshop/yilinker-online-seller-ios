@@ -403,7 +403,9 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
                     }
                     if requestErrorType == .ResponseError {
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                        if errorModel.message != "" {
+                            Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                        }
                     } else if requestErrorType == .PageNotFound {
                         Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
                     } else if requestErrorType == .NoInternetConnection {
@@ -482,14 +484,14 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
             WebServiceManager.fireSubmitWithdrawalRequestWithUrl(APIAtlas.submitWithdrawalRequest, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
                 self.hud?.hidden = true
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                if self.dimView != nil {
+                    self.dimView.removeFromSuperview()
+                }
                 
                 if responseObject["isSuccessful"] as! Bool {
                     self.clearInputData()
                     self.delegate?.withdrawToRequest(self)
                 } else {
-                    if self.dimView != nil {
-                        self.dimView.removeFromSuperview()
-                    }
                     if requestErrorType == .ResponseError {
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: PayoutStrings.alertRequestFailed)
