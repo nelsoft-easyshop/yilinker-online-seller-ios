@@ -23,13 +23,16 @@ struct PayoutEarningsTypesStrings {
     static let kNoWithdrawal: String = StringHelper.localizedStringWithKey("PAYOUT_EARNINGS_NO_WITHDRAWAL_LOCALIZE_KEY")
 }
 
-class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EmptyViewDelegate {
 
     // Label
     @IBOutlet weak var noResultLabel: UILabel!
     
     // Tableview
     @IBOutlet weak var tableView: UITableView!
+    
+    // View Controller
+    var emptyView: EmptyView?
     
     // Models
     var earningsTypeModel: [PayoutEarningsTypeModel] = []
@@ -145,6 +148,34 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
         self.hud?.dimBackground = false
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
+    }
+    
+    // MARK: -
+    // MARK: - Add Empty empty view
+    
+    func addEmptyView() {
+        self.tableView.scrollEnabled = false
+        if self.emptyView == nil {
+            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+            self.emptyView!.delegate = self
+            self.emptyView!.frame = UIScreen.mainScreen().bounds
+            self.emptyView?.center = self.view.center
+            self.view.addSubview(self.emptyView!)
+        } else {
+            self.emptyView!.hidden = false
+        }
+    }
+    
+    // MARK: -
+    // MARK: - Empty View Delegate Method
+    
+    func didTapReload() {
+        if Reachability.isConnectedToNetwork() {
+            self.tableView.scrollEnabled = true
+            self.showHUD()
+            self.emptyView?.hidden = true
+            self.fireEarningsList()
+        }
     }
     
     // MARK: -
@@ -284,6 +315,11 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
                     self.tableView.reloadData()
                     self.hud?.hide(true)
                 } else {
+                    
+                    if self.earningsTypeModel.count == 0 {
+                        self.addEmptyView()
+                    }
+                    
                     if requestErrorType == .ResponseError {
                         //Error in api requirements
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)

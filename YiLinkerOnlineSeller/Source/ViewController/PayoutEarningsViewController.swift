@@ -23,10 +23,13 @@ struct EarningsType {
     static let kRowHeight: CGFloat = 53
 }
 
-class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EmptyViewDelegate {
 
     // Tableview
     @IBOutlet weak var tableView: UITableView!
+    
+    // View Controller
+    var emptyView: EmptyView?
     
     // Models
     var earningsModel: [PayoutEarningsModel] = []
@@ -115,6 +118,34 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     // MARK: -
+    // MARK: - Add Empty empty view
+    
+    func addEmptyView() {
+        self.tableView.scrollEnabled = false
+        if self.emptyView == nil {
+            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+            self.emptyView!.delegate = self
+            self.emptyView!.frame = UIScreen.mainScreen().bounds
+            self.emptyView?.center = self.view.center
+            self.view.addSubview(self.emptyView!)
+        } else {
+            self.emptyView!.hidden = false
+        }
+    }
+    
+    // MARK: -
+    // MARK: - Empty View Delegate Method
+    
+    func didTapReload() {
+        if Reachability.isConnectedToNetwork() {
+            self.tableView.scrollEnabled = true
+            self.showHUD()
+            self.emptyView?.hidden = true
+            self.fireEarningGroupList()
+        }
+    }
+    
+    // MARK: -
     // MARK: - Table view data source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -182,6 +213,11 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
                 self.tableView.reloadData()
                 self.hud?.hide(true)
             } else {
+                
+                if self.earningsModel.count == 0 {
+                    self.addEmptyView()
+                }
+                
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
