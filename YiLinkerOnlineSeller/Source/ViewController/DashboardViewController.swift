@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DashboardViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, SignInViewControllerDelegate {
+class DashboardViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     let dashBoardHeaderIdentifier: String = "DashBoardHeaderCollectionViewCell"
     let dashBoardItemIdentifier: String = "DashBoardItemCollectionViewCell"
@@ -68,20 +68,6 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         } else {
             self.loginBlockerView.hidden = false
         }
-
-//        if NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
-//            if ctr == 0{
-//                fireStoreInfo(true)
-//                setupGCM()
-//
-//            } else {
-//                fireStoreInfo(true)
-//            }
-//        } else {
-//        if SessionManager.isLoggedIn() {
-//            
-//        }
-//        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -95,8 +81,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
 //        if !NSUserDefaults.standardUserDefaults().boolForKey("rememberMe") {
             if !SessionManager.isLoggedIn() {
                 SessionManager.setAccessToken("")
-                let signInViewController = SignInViewController(nibName: "SignInViewController", bundle: nil)
-                signInViewController.delegate = self
+                let signInViewController = LoginAndRegisterTableViewController(nibName: "LoginAndRegisterTableViewController", bundle: nil)
                 self.presentViewController(signInViewController, animated: false, completion: nil)
             }
 //        }
@@ -391,13 +376,6 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         self.collectionView?.registerNib(cellNib, forCellWithReuseIdentifier: dashBoardItemIdentifier)
     }
     
-    
-    // MARK: SignInViewControllerDelegate
-    func passStoreInfoModel(storeInfoModel: StoreInfoModel) {
-        storeInfo = storeInfoModel
-        collectionView.reloadData()
-    }
-    
     // MARK: UICollectionViewDataSource
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
@@ -581,9 +559,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                             if Reachability.isConnectedToNetwork() {
                                 var info = error.userInfo!
                                 
-                                 self.logoutUser()
 //                                if info["data"] != nil {
-//                                    self.logoutUser()
+                                    self.logoutUser()
 //                                } else {
 //                                    UIAlertController.displaySomethingWentWrongError(self)
 //                                }
@@ -645,7 +622,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                         self.fireRefreshToken(showHUD)
                     } else {
                         UIAlertController.displaySomethingWentWrongError(self)
-                        self.storeInfo = StoreInfoModel(name: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", account_number: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "", isReseller: false, isEmailSubscribed: false, isSmsSubscribed: false, productId: [""], productCategoryName: [""], isSelected: [false], tin: "", messageCount: 0, referralCode: "", referralPerson: "", accountName: "", bankName: "")
+//                        self.storeInfo = StoreInfoModel(name: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", account_number: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "", isReseller: false, isEmailSubscribed: false, isSmsSubscribed: false, productId: [""], productCategoryName: [""], isSelected: [false], tin: "", messageCount: 0, referralCode: "", referralPerson: "", accountName: "", bankName: "")
+                        self.storeInfo = StoreInfoModel(name: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", account_number: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "", isReseller: false, isEmailSubscribed: false, isSmsSubscribed: false, productId: [""], productCategoryName: [""], isSelected: [false], tin: "", messageCount: 0, referralCode: "", referrerCode: "", accountName: "", bankName: "")
                         
                         
                         var store_name1 = NSUserDefaults.standardUserDefaults().stringForKey("storeName")
