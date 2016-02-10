@@ -15,9 +15,8 @@ protocol LoginTableViewCellDelegate {
     func loginTableViewCell(loginTableViewCell: LoginTableViewCell, didTapForgotPassword forgotPasswordButton: UIButton)
 }
 
-class LoginTableViewCell: UITableViewCell, UITextFieldDelegate, FBSDKLoginButtonDelegate {
+class LoginTableViewCell: UITableViewCell, UITextFieldDelegate {
 
-    @IBOutlet weak var facebookButton: FBSDKLoginButton!
     @IBOutlet weak var siginInButton: UIButton!
     @IBOutlet weak var forgotPasswordButton: UIButton!
     
@@ -33,7 +32,6 @@ class LoginTableViewCell: UITableViewCell, UITextFieldDelegate, FBSDKLoginButton
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.facebookButton.layer.cornerRadius = 5
         self.siginInButton.layer.cornerRadius = 5
         
         self.passwordTextField.delegate = self
@@ -43,13 +41,6 @@ class LoginTableViewCell: UITableViewCell, UITextFieldDelegate, FBSDKLoginButton
         self.passwordTextField.placeholder = LoginStrings.enterPassword
         self.orLabel.text = LoginStrings.or
         self.forgotPasswordButton.setTitle(LoginStrings.forgotPasswordd, forState: UIControlState.Normal)
-        
-        if (FBSDKAccessToken.currentAccessToken() != nil) {
-            self.returnUserData()
-        } else {
-            self.facebookButton.readPermissions = ["public_profile", "email"]
-            self.facebookButton.delegate = self
-        }
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -71,41 +62,6 @@ class LoginTableViewCell: UITableViewCell, UITextFieldDelegate, FBSDKLoginButton
         self.delegate?.loginTableViewCell(self, didTapSignIn: sender)
     }
     
-    //MARK: - 
-    //MARK: - Login Button
-    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
-        println("User Logged In")
-        
-        if ((error) != nil) {
-            // Process error
-        }
-        else if result.isCancelled {
-            // Handle cancellations
-        } else {
-            // If you ask for multiple permissions at once, you
-            // should check if specific permissions missing
-            if result.grantedPermissions.contains("email") {
-                self.delegate?.loginTableViewCell(self, didTapSuccessOnFacebookSignIn: self.facebookButton)
-            }
-        }
-    }
-    
-    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
-        println("User Logged Out")
-    }
-    
-    func returnUserData() {
-        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: nil)
-        graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
-            if ((error) != nil) {
-                // Process error
-               FBSDKLoginManager().logOut()
-            }
-            else {
-                self.delegate?.loginTableViewCell(self, didTapSuccessOnFacebookSignIn: self.facebookButton)
-            }
-        })
-    }
     
     //MARK: - 
     //MARK: - Forgot Password

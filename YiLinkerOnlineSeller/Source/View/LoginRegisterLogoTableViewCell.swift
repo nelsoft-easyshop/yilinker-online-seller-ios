@@ -10,6 +10,9 @@ import UIKit
 
 class LoginRegisterLogoTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var logoImageView: UIImageView!
+    
+    @IBOutlet weak var allInOnePlaceLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

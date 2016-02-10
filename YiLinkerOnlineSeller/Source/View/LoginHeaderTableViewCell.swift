@@ -31,8 +31,10 @@ class LoginHeaderTableViewCell: UITableViewCell {
     
     func setBackButtonToClose(close: Bool) {
         if close {
-            self.navBarButton.setImage(UIImage(named: "filter-close"), forState: .Normal)
+//            self.navBarButton.setImage(UIImage(named: "filter-close"), forState: .Normal)
+            self.navBarButton.hidden = true
         } else{
+            self.navBarButton.hidden = false
             self.navBarButton.setImage(UIImage(named: "back-white"), forState: .Normal)
         }
     }
