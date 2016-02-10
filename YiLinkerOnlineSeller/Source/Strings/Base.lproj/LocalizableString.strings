@@ -648,9 +648,11 @@ RESELLER_ADDITEMS_LOCALIZE_KEY = "ADD ITEMS";
 RESELLER_HEADER_LOCALIZE_KEY = "Select the products that you would like to sell.";
 
 //MARK: - Referral Codes
-REFERRAL_LOCALIZE_KEY = "Referral Codes";
-YOUR_REFERRAL_LOCALIZE_KEY = "Your Referral Codes";
-REFERRAL_PERSON_LOCALIZE_KEY = "Referral Person";
+REFERRAL_LOCALIZE_KEY = "Referral Code";
+YOUR_REFERRAL_LOCALIZE_KEY = "Your Referral Code";
+REFERRAL_PERSON_LOCALIZE_KEY = "Referred By";
+COPY_LOCALIZE_KEY = "Copied to clipboard";
+UPDATE_PROF_LOCALIZE_KEY = "Successfully updated your profile";
 
 // MARK: - Payout
 PAYOUT_DEPOSIT_TO_LOCALIZE_KEY = "Deposit To/Pay To";
