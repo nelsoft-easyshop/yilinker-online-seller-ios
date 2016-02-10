@@ -35,7 +35,7 @@ class WithdrawConfirmationCodeView: UIView {
         
         codeTextField.addTarget(self, action: "codeDidTextChanged", forControlEvents: UIControlEvents.EditingChanged)
         
-        confirmationCodeLabel.text = PayoutStrings.withdrawalMobileNumber + ":"
+        confirmationCodeLabel.text = PayoutStrings.withdrawalConfirmationCode + ":"
         confirmationCodeLabel.required()
         
         
