@@ -155,7 +155,9 @@ class PayoutEarningsTypeViewController: UIViewController, UITableViewDelegate, U
     
     func addEmptyView() {
         self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
-        self.emptyView?.frame = self.view.frame
+//        self.emptyView?.frame = self.view.frame
+//        self.emptyView?.center = self.view.center
+        self.emptyView?.frame = UIScreen.mainScreen().bounds
         self.emptyView!.delegate = self
         self.view.addSubview(self.emptyView!)
     }
