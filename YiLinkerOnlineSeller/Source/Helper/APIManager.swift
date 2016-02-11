@@ -133,6 +133,9 @@ struct APIAtlas {
     static let payoutEarningsList = "auth/earning-list?access_token="
     
     //MARK: - V2 APIs
+    
+    //Login
+    static let loginUrlV2 = "v2/login"
     //OTP
     static let unauthenticateOTP = "v2/sms/send"
     
