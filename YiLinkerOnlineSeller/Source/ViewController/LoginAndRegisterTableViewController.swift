@@ -293,7 +293,8 @@ class LoginAndRegisterTableViewController: UITableViewController {
     //MARK: - Fire Login With Email
     func fireLoginWithEmail(email: String, password: String) {
         self.showLoader()
-        self.loginSessionDataTask = WebServiceManager.fireEmailLoginRequestWithUrl(APIAtlas.loginUrl, emailAddress: email, password: password, grantType: self.grantType, isSeller: self.isSellerLogin, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        let url: String = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("v1", withString: "") + APIAtlas.loginUrlV2
+        self.loginSessionDataTask = WebServiceManager.fireEmailLoginRequestWithUrl(url, emailAddress: email, password: password, grantType: self.grantType, isSeller: self.isSellerLogin, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 self.dismissLoader()
@@ -323,7 +324,8 @@ class LoginAndRegisterTableViewController: UITableViewController {
     //MARK: - Fire Login With Contact Number
     func fireLoginWithContactNumber(contactNo: String, password: String) {
         self.showLoader()
-        self.loginSessionDataTask = WebServiceManager.fireContactNumberLoginRequestWithUrl(APIAtlas.loginUrl, contactNo: contactNo, password: password, grantType: self.grantType, isSeller: self.isSellerLogin, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        let url: String = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("v1", withString: "") + APIAtlas.loginUrlV2
+        self.loginSessionDataTask = WebServiceManager.fireContactNumberLoginRequestWithUrl(url, contactNo: contactNo, password: password, grantType: self.grantType, isSeller: self.isSellerLogin, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             println(responseObject)
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
