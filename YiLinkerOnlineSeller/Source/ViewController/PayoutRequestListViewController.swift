@@ -168,12 +168,14 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
             cell.requestDetailLabel.text =   "\(self.requestListModel[indexPath.row].withdrawalMethod) | \(self.requestListModel[indexPath.row].currencyCode) \(self.requestListModel[indexPath.row].totalAmount)"
             cell.statusLabel.text = self.requestListModel[indexPath.row].status.uppercaseString
             
-            if self.requestListModel[indexPath.row].status.lowercaseString == "Completed".lowercaseString {
+            if self.requestListModel[indexPath.row].statusId == 2 {
                 cell.statusView.backgroundColor = Constants.Colors.completedColor
-            } else if self.requestListModel[indexPath.row].status.lowercaseString == "Tentative".lowercaseString {
+            } else if self.requestListModel[indexPath.row].statusId == 1 {
                 cell.statusView.backgroundColor = Constants.Colors.tentativeColor
-            } else {
+            } else if self.requestListModel[indexPath.row].statusId == 4 {
                 cell.statusView.backgroundColor = Constants.Colors.inProgressColor
+            } else {
+                cell.statusView.backgroundColor = Constants.Colors.pmCheckRedColor
             }
             
             if self.requestListModel[indexPath.row].charge != "0.00" {
@@ -242,7 +244,7 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
                         }
                         
                         for i in 0..<earnings.count {
-                            self.requestListModel.append(PayoutRequestListModel(date: earnings[i].date, withdrawalMethod: earnings[i].withdrawalMethod, totalAmount: earnings[i].totalAmount, charge: earnings[i].charge, netAmount: earnings[i].netAmount, currencyCode: earnings[i].currencyCode, status: earnings[i].status, payTo: earnings[i].payTo, bankName: earnings[i].bankName, accountNumber: earnings[i].accountNumber, accountName: earnings[i].accountName))
+                            self.requestListModel.append(PayoutRequestListModel(date: earnings[i].date, withdrawalMethod: earnings[i].withdrawalMethod, totalAmount: earnings[i].totalAmount, charge: earnings[i].charge, netAmount: earnings[i].netAmount, currencyCode: earnings[i].currencyCode, status: earnings[i].status, statusId: earnings[i].statusId, payTo: earnings[i].payTo, bankName: earnings[i].bankName, accountNumber: earnings[i].accountNumber, accountName: earnings[i].accountName))
                         }
                         
                         self.tableView.hidden = false
