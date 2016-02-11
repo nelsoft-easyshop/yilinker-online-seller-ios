@@ -13,4 +13,32 @@ class StringHelper: NSObject {
         let string: String = NSLocalizedString(key, tableName: "LocalizableString", comment: "comment")
         return string
     }
+    
+    class func required(text: String) -> NSAttributedString {
+        var string = "\(text)*"
+        var myMutableString = NSMutableAttributedString(string: string)
+        let stringCount: Int = count(string)
+        myMutableString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSRange(location: stringCount - 1,length:1))
+        return myMutableString
+    }
+    
+    class func convertDictionaryToJsonString(dictionary: NSDictionary) -> NSString {
+        let data = NSJSONSerialization.dataWithJSONObject(dictionary, options: nil, error: nil)
+        let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
+        
+        return string!
+    }
+    
+    class func convertStringToDictionary(text: String) -> NSDictionary {
+        if let data = text.dataUsingEncoding(NSUTF8StringEncoding) {
+            var error: NSError?
+            let json: NSDictionary = (NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: &error) as? NSDictionary)!
+            if error != nil {
+                println(error)
+            }
+            return json
+        }
+        
+        return NSDictionary()
+    }
 }

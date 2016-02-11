@@ -260,12 +260,25 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
             self.amountView.amountTextField.placeholder = ""
         }
         
+        self.depositToView.nameLabel.text = self.balanceRecordModel.fullName
+        self.depositToView.detailsLabel.text = self.balanceRecordModel.bankAccount
+        self.depositToView.chequeLabel.text = self.balanceRecordModel.fullName
         
         // check bank account
         if hasBankAccount() {
             
-            self.depositToView.nameLabel.text = self.balanceRecordModel.fullName
-            self.depositToView.detailsLabel.text = self.balanceRecordModel.bankAccount
+//            self.depositToView.nameLabel.text = self.balanceRecordModel.fullName
+//            self.depositToView.detailsLabel.text = self.balanceRecordModel.bankAccount
+//            self.depositToView.chequeLabel.text = self.balanceRecordModel.fullName
+            self.methodView.depositView.userInteractionEnabled = true
+            noBankAccount = false
+            
+            for view in self.tableView.subviews {
+                view.removeFromSuperview()
+            }
+            
+            // add views, but this time with the error message for incomplete details
+            addViews()
             
         } else {
             // if no bank account
@@ -283,15 +296,17 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
             self.amountView.amountTextField.userInteractionEnabled = false
             self.amountView.amountTextField.backgroundColor = UIColor.lightGrayColor()
             
+            // disable method buttons
+//            self.methodView.depositView.backgroundColor = UIColor.lightGrayColor()
+            self.methodView.depositView.userInteractionEnabled = false
+            
             // disable code text field
-            self.confimationCodeView.codeTextField.userInteractionEnabled = false
-            self.confimationCodeView.codeTextField.backgroundColor = UIColor.lightGrayColor()
+//            self.confimationCodeView.codeTextField.userInteractionEnabled = false
+//            self.confimationCodeView.codeTextField.backgroundColor = UIColor.lightGrayColor()
             
-            self.depositToView.chequeLabel.text = self.balanceRecordModel.fullName
-            self.depositToView.chequeLabel.hidden = false
-            
-            self.depositToView.nameLabel.hidden = true
-            self.depositToView.detailsLabel.hidden = true
+//            self.depositToView.nameLabel.hidden = true
+//            self.depositToView.detailsLabel.hidden = true
+//            self.depositToView.chequeLabel.hidden = false
         }
         
         // mobile number
@@ -299,7 +314,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
     }
     
     func hasBankAccount() -> Bool {
-        if self.balanceRecordModel.bankName == "" || self.balanceRecordModel.accountName == "" || self.balanceRecordModel.accountNumber == "" {
+        if self.balanceRecordModel.bankName == " - " || self.balanceRecordModel.accountName == " - " || self.balanceRecordModel.accountNumber == " - " {
             return false
         }
         
@@ -437,6 +452,10 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
     }
     
     func clearInputData() {
+        self.timer.invalidate()
+        setCooldownValue(60)
+        cooldown = 60
+        
         self.amountView.amountTextField.text = ""
         
         self.methodView.chequeCheckImageView.hidden = true
@@ -453,10 +472,6 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
         self.proceedView.proceedButton.backgroundColor = .lightGrayColor()
         
         self.tableView.setContentOffset(CGPointMake(0, 0), animated: true)
-        
-        self.timer.invalidate()
-        setCooldownValue(60)
-        cooldown = 60
     }
     
     // MARK: - Requests

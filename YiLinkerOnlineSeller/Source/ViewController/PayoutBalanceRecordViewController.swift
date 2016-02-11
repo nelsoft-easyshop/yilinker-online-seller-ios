@@ -65,14 +65,9 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        if recordModel != nil {
 //            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-            self.showHUD()
-            fireGetWithdrawalBalance(self.formatDateToString(self.startDate, type: .Key), endDate: self.formatDateToString(self.endDate.addDays(1), type: .Key))
-        } else {
-            fireGetWithdrawalBalance("", endDate: "")
-        }
-        
+        self.showHUD()
+        fireGetWithdrawalBalance(self.formatDateToString(self.startDate, type: .Key), endDate: self.formatDateToString(self.endDate.addDays(1), type: .Key))
     }
     
     // MARK: - Functions
