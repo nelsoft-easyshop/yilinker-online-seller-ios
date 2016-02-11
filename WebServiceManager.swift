@@ -580,7 +580,15 @@ class WebServiceManager: NSObject {
     //MARK: -
     //MARK: - Fire Forgot Password Request With URL
     class func fireForgotPasswordrRequestWithUrl(url: String, verficationCode: String, newPassword: String, storeType: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
-        let manager: APIManager = APIManager()
+        let manager: APIManager = APIManager(baseURL: NSURL(string: url))
+        
+        manager.securityPolicy = AFSecurityPolicy(pinningMode: AFSSLPinningMode.Certificate)
+        let certificatePath = NSBundle.mainBundle().pathForResource("yilinker_pinned_certificate", ofType: "cer")!
+        let certificateData = NSData(contentsOfFile: certificatePath)!
+        manager.securityPolicy.pinnedCertificates = [certificateData];
+        manager.securityPolicy.validatesDomainName = true
+        manager.securityPolicy.allowInvalidCertificates = true
+        manager.responseSerializer = JSONResponseSerializer()
         
         let parameters: NSDictionary = [self.verificationCodeKey: verficationCode, self.newPasswordKey: newPassword, self.storeTypeKey: storeType]
         
