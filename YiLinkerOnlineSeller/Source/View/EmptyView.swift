@@ -15,8 +15,15 @@ class EmptyView: UIView {
     
     var delegate: EmptyViewDelegate?
     
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var tapToReloadLabel: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+
     }
     
     @IBAction func tapToReload(sender: AnyObject) {

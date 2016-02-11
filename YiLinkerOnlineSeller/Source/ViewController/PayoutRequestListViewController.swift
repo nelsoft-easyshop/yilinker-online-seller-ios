@@ -17,7 +17,7 @@ struct PayoutRequestStrings {
     static let kNoResult: String = StringHelper.localizedStringWithKey("PAYOUT_EARNINGS_NO_WITHDRAWAL_REQUEST_LOCALIZE_KEY")
 }
 
-class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EmptyViewDelegate {
     
     // Labels
     @IBOutlet weak var noResultLabel: UILabel!
@@ -25,7 +25,8 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
     // Tableview
     @IBOutlet weak var tableView: UITableView!
     
-    // Local Strings
+    // View Controller
+    var emptyView: EmptyView?
     
     // Models
     var requestListModel: [PayoutRequestListModel] = []
@@ -90,9 +91,31 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
     // MARK: -
     // MARK: - Private methods
     // Remove tableview footer
+    
     func footerView() {
         let footerView: UIView = UIView(frame: CGRectZero)
         self.tableView.tableFooterView = footerView
+    }
+    
+    // MARK: - 
+    // MARK: - Add Empty empty view
+    
+    func addEmptyView() {
+        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+        self.emptyView?.frame = self.view.frame
+        self.emptyView!.delegate = self
+        self.view.addSubview(self.emptyView!)
+    }
+    
+    // MARK: -
+    // MARK: - Empty View Delegate Method
+    
+    func didTapReload() {
+        if Reachability.isConnectedToNetwork() {
+            self.showHUD()
+            self.emptyView?.hidden = true
+            self.fireRequestList()
+        }
     }
     
     // MARK: -
@@ -142,27 +165,22 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
         cell.selectionStyle = UITableViewCellSelectionStyle.None
         if self.requestListModel.count != 0 {
             cell.dateLabel.text = self.requestListModel[indexPath.row].date
-            if self.requestListModel[indexPath.row].withdrawalMethod == "bank" {
-                cell.requestDetailLabel.text =   "\(PayoutRequestListStrings.kBank) | \(self.requestListModel[indexPath.row].totalAmount.formatToTwoDecimal().formatToPeso())"
-            } else {
-                cell.requestDetailLabel.text =   "\(PayoutRequestListStrings.kCheque) | \(self.requestListModel[indexPath.row].totalAmount.formatToTwoDecimal().formatToPeso())"
-            }
+            cell.requestDetailLabel.text =   "\(self.requestListModel[indexPath.row].withdrawalMethod) | \(self.requestListModel[indexPath.row].currencyCode) \(self.requestListModel[indexPath.row].totalAmount)"
+            cell.statusLabel.text = self.requestListModel[indexPath.row].status.uppercaseString
             
-            if self.requestListModel[indexPath.row].charge != "0.0000" {
-                cell.bankChargeLabel.text = "\(PayoutRequestListStrings.kBankCharge): \(self.requestListModel[indexPath.row].charge.formatToTwoDecimal().formatToPeso())"
-            } else {
-                cell.bankChargeLabel.hidden = true
-            }
-            
-            if self.requestListModel[indexPath.row].status.lowercaseString == "paid" {
+            if self.requestListModel[indexPath.row].status.lowercaseString == "Completed".lowercaseString {
                 cell.statusView.backgroundColor = Constants.Colors.completedColor
-                cell.statusLabel.text = PayoutRequestListStrings.kCompleted
-            } else if self.requestListModel[indexPath.row].status.lowercaseString == "pending" {
+            } else if self.requestListModel[indexPath.row].status.lowercaseString == "Tentative".lowercaseString {
                 cell.statusView.backgroundColor = Constants.Colors.tentativeColor
-                cell.statusLabel.text = PayoutRequestListStrings.kTentative
             } else {
                 cell.statusView.backgroundColor = Constants.Colors.inProgressColor
-                cell.statusLabel.text = PayoutRequestListStrings.kInProgress
+            }
+            
+            if self.requestListModel[indexPath.row].charge != "0.00" {
+                cell.bankChargeLabel.text = "\(PayoutRequestListStrings.kBankCharge): \(self.requestListModel[indexPath.row].currencyCode)  \(self.requestListModel[indexPath.row].charge)"
+                cell.bankChargeLabel.hidden = false
+            } else {
+                cell.bankChargeLabel.hidden = true
             }
         }
         
@@ -206,7 +224,10 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
     
     func fireRequestList() {
         if !self.isPageEnd {
-            self.page++
+            
+            if Reachability.isConnectedToNetwork() {
+                self.page++
+            }
             
             self.showHUD()
             var parameters: NSDictionary = [:]
@@ -226,13 +247,24 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
                         
                         self.tableView.hidden = false
                     } else {
-                        self.noResultLabel.hidden = false
-                        self.tableView.hidden = true
+                        if self.requestListModel.count == 0 {
+                            self.noResultLabel.hidden = false
+                            self.tableView.hidden = true
+                        } else {
+                            self.noResultLabel.hidden = true
+                            self.isPageEnd = true
+                            self.tableView.hidden = false
+                        }
                     }
                     
                     self.tableView.reloadData()
                     self.hud?.hide(true)
                 } else {
+                    
+                    if self.requestListModel.count == 0 {
+                        self.addEmptyView()
+                    }
+                    
                     if requestErrorType == .ResponseError {
                         //Error in api requirements
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -252,7 +284,7 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
                         //Unhandled error
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                     }
-                    self.tableView.hidden = true
+                    //self.tableView.hidden = true
                     self.hud?.hide(true)
                 }
             })

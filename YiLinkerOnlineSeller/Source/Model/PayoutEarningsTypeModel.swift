@@ -15,18 +15,20 @@ class PayoutEarningsTypeModel: NSObject {
     var amount: String = ""
     var currencyCode: String = ""
     var status: String = ""
+    var statusId: Int = 0
     
     var boughtBy: String = ""
     var productName: String = ""
     var transactionNo: String = ""
     var descriptions: String = ""
     
-    init(date: String, earningTypeId: Int, amount: String, currencyCode: String, status: String, descriptions: String) {
+    init(date: String, earningTypeId: Int, amount: String, currencyCode: String, status: String, statusId: Int, descriptions: String) {
         self.date = date
         self.earningTypeId = earningTypeId
         self.amount = amount
         self.currencyCode = currencyCode
         self.status = status
+        self.statusId = statusId
         self.descriptions = descriptions
     }
     
@@ -50,6 +52,7 @@ class PayoutEarningsTypeModel: NSObject {
         var amount: String = ""
         var currencyCode: String = ""
         var status: String = ""
+        var statusId: Int = 0
         var descriptions: String = ""
         
         if dictionary.isKindOfClass(NSDictionary) {
@@ -57,14 +60,15 @@ class PayoutEarningsTypeModel: NSObject {
                 if let value = request["earnings"] as? NSArray {
                     for subValue in value as NSArray {
                         
-                        date = formatDate(ParseHelper.string(subValue, key: "date", defaultValue: ""))
+                        date = ParseHelper.string(subValue, key: "date", defaultValue: "")
                         earningTypeId = ParseHelper.int(subValue, key: "earningTypeId", defaultValue: 0)
                         amount = ParseHelper.string(subValue, key: "amount", defaultValue: "")
                         currencyCode = ParseHelper.string(subValue, key: "currencyCode", defaultValue: "")
                         status = ParseHelper.string(subValue, key: "status", defaultValue: "")
+                        statusId = ParseHelper.int(subValue, key: "statusId", defaultValue: 0)
                         descriptions = ParseHelper.string(subValue, key: "description", defaultValue: "")
                         
-                        payoutEarningsTypeModel.append(PayoutEarningsTypeModel(date: date, earningTypeId: earningTypeId, amount: amount, currencyCode: currencyCode, status: status, descriptions: descriptions))
+                        payoutEarningsTypeModel.append(PayoutEarningsTypeModel(date: date, earningTypeId: earningTypeId, amount: amount, currencyCode: currencyCode, status: status, statusId: statusId, descriptions: descriptions))
                     }
                 }
             }

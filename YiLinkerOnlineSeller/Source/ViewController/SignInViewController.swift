@@ -142,16 +142,32 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     }
     
     @IBAction func signInAction(sender: AnyObject) {
-        if self.emailAddressTextField.rightView?.hidden == false && self.passwordTextField.rightView?.hidden == false {
-            if Reachability.isConnectedToNetwork() {
-                self.signInButton.setTitle(SignInStrings.signingin, forState: .Normal)
-                self.requestSignin()
-            } else {
-                showAlert(title: AlertStrings.failed, message: AlertStrings.checkInternet)
-            }
-        } else {
-            showAlert(title: AlertStrings.error, message: SignInStrings.please)
-        }
+        var alert = UIAlertController(title: SignInStrings.sheetAccountType, message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        alert.addAction(UIAlertAction(title: AlertStrings.cancel, style: UIAlertActionStyle.Cancel, handler: nil))
+        
+        alert.addAction(UIAlertAction(title: SignInStrings.sheetMerchant, style: UIAlertActionStyle.Default) { UIAlertAction in
+            self.showHUD()
+            self.requestSignin()
+            })
+        
+        alert.addAction(UIAlertAction(title: SignInStrings.sheetAffiliate, style: UIAlertActionStyle.Default) { UIAlertAction in
+            self.showHUD()
+            self.requestSigninAffiliate()
+            })
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+//        if self.emailAddressTextField.rightView?.hidden == false && self.passwordTextField.rightView?.hidden == false {
+//            // for login seller and reseller
+//            if Reachability.isConnectedToNetwork() {
+//                // default
+//                self.signInButton.setTitle(SignInStrings.signingin, forState: .Normal)
+//                self.requestSignin()
+//            } else {
+//                showAlert(title: AlertStrings.failed, message: AlertStrings.checkInternet)
+//            }
+//        } else {
+//            showAlert(title: AlertStrings.error, message: SignInStrings.please)
+//        }
     }
     
     func rememberMeAction(gesture: UIGestureRecognizer) {
@@ -259,7 +275,7 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
         if self.emailAddressTextField.isValidEmail() {
             self.emailAddressTextField.rightView?.hidden = false
         } else {
-            self.emailAddressTextField.rightView?.hidden = true
+            self.emailAddressTextField.rightView?.hidden = false
         }
     }
     
@@ -275,7 +291,6 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     
     func requestSignin() {
         NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isSeller")
-        self.showHUD()
         WebServiceManager.fireLoginRequestWithUrl(APIAtlas.loginUrl, emailAddress: self.emailAddressTextField.text!, password: self.passwordTextField.text!, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
@@ -287,8 +302,6 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
                 self.hud?.hide(true)
                 self.signInButton.setTitle(SignInStrings.signin, forState: .Normal)
                 if requestErrorType == .ResponseError {
-//                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-//                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
                     self.showAlert(title: AlertStrings.error, message: responseObject["error_description"] as! String)
                 } else if requestErrorType == .PageNotFound {
                     Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
@@ -412,6 +425,35 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
                         
                     }
                 }
+        })
+    }
+    
+    // static login for affiliate
+    
+    func requestSigninAffiliate() {
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isSeller")
+        WebServiceManager.fireAffiliateLoginRequestWithUrl(APIAtlas.loginUrl, emailAddress: self.emailAddressTextField.text!, password: self.passwordTextField.text!, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.hideKeyboard(UIGestureRecognizer())
+                self.signInButton.setTitle(SignInStrings.welcome, forState: .Normal)
+                self.signinSuccessful()
+                self.fireCreateRegistration(SessionManager.gcmToken())
+            } else {
+                self.hud?.hide(true)
+                self.signInButton.setTitle(SignInStrings.signin, forState: .Normal)
+                if requestErrorType == .ResponseError {
+                    self.showAlert(title: AlertStrings.error, message: responseObject["error_description"] as! String)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
         })
     }
     

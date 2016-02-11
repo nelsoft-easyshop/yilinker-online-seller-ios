@@ -43,6 +43,14 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         registerNibs()
         initializeViews()
         initializeLocalizedString()
+        
+        // Payout Withdrawal Timer
+        if NSUserDefaults.standardUserDefaults().valueForKey("cooldownKey") == nil {
+            NSUserDefaults.standardUserDefaults().setObject(60, forKey: "cooldownKey")
+        } else if NSUserDefaults.standardUserDefaults().valueForKey("cooldownKey") as! Int == 0 {
+            NSUserDefaults.standardUserDefaults().setObject(60, forKey: "cooldownKey")
+        }
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -57,9 +65,9 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             self.loginBlockerView.hidden = true
             fireStoreInfo(true)
             setupGCM()
+        } else {
+            self.loginBlockerView.hidden = false
         }
-        
-        self.loginBlockerView.hidden = true
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -465,16 +473,9 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                 self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
             }
         } else if indexPath.row == 6 {
-            /*let payoutViewController: PayoutRequestListViewController = PayoutRequestListViewController(nibName: "PayoutRequestListViewController", bundle: nil)
-            payoutViewController.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(payoutViewController, animated:true)*/
-            /*var payoutRequestListDetailViewController = PayoutRequestListViewController(nibName: "PayoutRequestListViewController", bundle: nil)
-            //self.navigationController?.presentViewController(payoutRequestListDetailViewController, animated: true, completion: nil)
-            payoutRequestListDetailViewController.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(payoutRequestListDetailViewController, animated:true)
-            */
             let payoutVC = PayoutViewController(nibName: "PayoutViewController", bundle: nil)
             payoutVC.hidesBottomBarWhenPushed = true
+            payoutVC.storeInfo = self.storeInfo
             self.navigationController?.pushViewController(payoutVC, animated: true)
         } else if indexPath.row == 7 {
             var followerController = FollowersViewController(nibName: "FollowersViewController", bundle: nil)
@@ -621,7 +622,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                         self.fireRefreshToken(showHUD)
                     } else {
                         UIAlertController.displaySomethingWentWrongError(self)
-                        self.storeInfo = StoreInfoModel(name: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", account_number: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "", isReseller: false, isEmailSubscribed: false, isSmsSubscribed: false, productId: [""], productCategoryName: [""], isSelected: [false], tin: "", messageCount: 0, referralCode: "", referrerCode: "")
+//                        self.storeInfo = StoreInfoModel(name: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", account_number: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "", isReseller: false, isEmailSubscribed: false, isSmsSubscribed: false, productId: [""], productCategoryName: [""], isSelected: [false], tin: "", messageCount: 0, referralCode: "", referralPerson: "", accountName: "", bankName: "")
+                        self.storeInfo = StoreInfoModel(name: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", account_number: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "", isReseller: false, isEmailSubscribed: false, isSmsSubscribed: false, productId: [""], productCategoryName: [""], isSelected: [false], tin: "", messageCount: 0, referralCode: "", referrerCode: "", accountName: "", bankName: "")
                         
                         
                         var store_name1 = NSUserDefaults.standardUserDefaults().stringForKey("storeName")

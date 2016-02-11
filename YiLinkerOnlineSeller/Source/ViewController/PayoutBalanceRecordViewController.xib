@@ -26,12 +26,17 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PayoutBalanceRecordViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
             <connections>
                 <outlet property="activeEarningLabel" destination="h1S-9m-sno" id="JbD-Sb-352"/>
+                <outlet property="activeEarningsTextLabel" destination="Xij-hq-cVk" id="OdT-wZ-ujX"/>
                 <outlet property="dateContainerView" destination="EVu-yQ-ZdR" id="r59-Nh-QE6"/>
                 <outlet property="dateLabel" destination="29c-Wk-xUj" id="VRw-4e-WlB"/>
                 <outlet property="myChart" destination="HSr-zv-TCL" id="xDM-Rf-5xI"/>
                 <outlet property="tentativeEarningLabel" destination="3Z6-LJ-TPD" id="fV9-VE-WZr"/>
+                <outlet property="tentativeEarningsTextLabel" destination="T1A-7m-4LB" id="y7p-qd-Sx9"/>
                 <outlet property="totalEarningLabel" destination="12m-LB-tCE" id="GRa-B9-2Qv"/>
+                <outlet property="totalEarningsHeaderLabel" destination="dKG-JY-E1C" id="LX6-rd-fXp"/>
+                <outlet property="totalEarningsLabel" destination="u5p-1x-sBe" id="akV-Kd-hmI"/>
                 <outlet property="totalWithdrewLabel" destination="2pK-mT-JZq" id="3Q9-DI-e58"/>
+                <outlet property="totalWithdrewTextLabel" destination="wDp-56-pUz" id="uiE-wS-Eey"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -69,7 +74,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BGh-eG-Bzt" userLabel="xx">
                     <rect key="frame" x="0.0" y="494" width="160" height="74"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Tentative Earning" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T1A-7m-4LB" userLabel="Total Sales Label">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Tentative Earnings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T1A-7m-4LB" userLabel="Total Sales Label">
                             <rect key="frame" x="0.0" y="48" width="160" height="12"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="12" id="WHI-3j-1C9"/>
@@ -138,7 +143,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jCc-zN-W1m">
                     <rect key="frame" x="0.0" y="420" width="160" height="74"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Total Earning" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u5p-1x-sBe" userLabel="Total Sales Label">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Total Earnings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u5p-1x-sBe" userLabel="Total Sales Label">
                             <rect key="frame" x="0.0" y="46" width="160" height="12"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="12" id="8qm-lt-FQh"/>
@@ -176,7 +181,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ejb-3K-oY8">
                     <rect key="frame" x="160" y="420" width="160" height="74"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Active Earning" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xij-hq-cVk" userLabel="Total Sales Label">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Active Earnings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xij-hq-cVk" userLabel="Total Sales Label">
                             <rect key="frame" x="0.0" y="46" width="160" height="12"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="12" id="BS7-Tu-8jU"/>

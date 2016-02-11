@@ -35,7 +35,10 @@ class WithdrawConfirmationCodeView: UIView {
         
         codeTextField.addTarget(self, action: "codeDidTextChanged", forControlEvents: UIControlEvents.EditingChanged)
         
+        confirmationCodeLabel.text = PayoutStrings.withdrawalConfirmationCode + ":"
         confirmationCodeLabel.required()
+        
+        
     }
 
     @IBAction func getCodeAction(sender: AnyObject) {
@@ -43,9 +46,7 @@ class WithdrawConfirmationCodeView: UIView {
     }
     
     func keyboardDoneAction() {
-        if getCodeButton.backgroundColor != UIColor.lightGrayColor() {
-            codeTextField.resignFirstResponder()
-        }
+        codeTextField.resignFirstResponder()
     }
     
     func codeDidTextChanged() {

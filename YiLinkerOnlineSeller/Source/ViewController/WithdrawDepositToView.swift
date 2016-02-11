@@ -12,8 +12,13 @@ class WithdrawDepositToView: UIView {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var detailsLabel: UILabel!
+    @IBOutlet weak var chequeLabel: UILabel!
+    @IBOutlet weak var depositToTextLabel: UILabel!
+    
     override func awakeFromNib() {
         self.frame.size.width = UIScreen.mainScreen().bounds.width
+        
+        self.depositToTextLabel.text = PayoutStrings.withdrawalDepositTo
     }
 
 }

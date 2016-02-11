@@ -30,12 +30,13 @@ class WithdrawAmountView: UIView, UITextFieldDelegate {
         leftPadding.backgroundColor = .whiteColor()
         amountTextField.leftView = leftPadding
         amountTextField.leftViewMode = UITextFieldViewMode.Always
-
-        aboveLabel.required()
-        
+        amountTextField.layer.cornerRadius = 3.0
         amountTextField.addTarget(self, action: "amountDidTextChanged", forControlEvents: UIControlEvents.EditingChanged)
-        
         amountTextField.addToolBarWithDoneTarget(self, done: "keyboardDoneAction")
+        
+        aboveLabel.text = PayoutStrings.withdrawalAmount + ":"
+        bottomLabel.text = PayoutStrings.withdrawalAmountCharge
+        aboveLabel.required()
     }
     
     func amountDidTextChanged() {
@@ -44,6 +45,17 @@ class WithdrawAmountView: UIView, UITextFieldDelegate {
     
     func keyboardDoneAction() {
         amountTextField.resignFirstResponder()
+    }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        
+        let countdots = textField.text.componentsSeparatedByString(".").count - 1
+        
+        if countdots > 0 && string == "." {
+            return false
+        }
+        
+        return true
     }
     
 }

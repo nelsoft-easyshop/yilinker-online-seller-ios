@@ -19,14 +19,17 @@ struct EarningsTypeStrings {
 
 struct EarningsType {
     static let kNumberOfSection: Int = 1
-    static let kNumberOfRowsInSection: Int = 6
+    static let kNumberOfRowsInSection: Int = 5
     static let kRowHeight: CGFloat = 53
 }
 
-class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EmptyViewDelegate {
 
     // Tableview
     @IBOutlet weak var tableView: UITableView!
+    
+    // View Controller
+    var emptyView: EmptyView?
     
     // Models
     var earningsModel: [PayoutEarningsModel] = []
@@ -42,13 +45,16 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
         
         self.backButton()
         self.registerCell()
-        self.fireEarningGroupList()
         // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.fireEarningGroupList()
     }
     
     // MARK: -
@@ -79,6 +85,15 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     // MARK: -
+    // MARK: - Download data from URL
+    
+    func getDataFromUrl(url:NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
+        NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
+            completion(data: data, response: response, error: error)
+            }.resume()
+    }
+    
+    // MARK: -
     // MARK: - Register PayoutEarningsTableViewCell
     
     func registerCell() {
@@ -103,6 +118,27 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     // MARK: -
+    // MARK: - Add Empty empty view
+    
+    func addEmptyView() {
+        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+        self.emptyView?.frame = self.view.frame
+        self.emptyView!.delegate = self
+        self.view.addSubview(self.emptyView!)
+    }
+    
+    // MARK: -
+    // MARK: - Empty View Delegate Method
+    
+    func didTapReload() {
+        if Reachability.isConnectedToNetwork() {
+            self.showHUD()
+            self.emptyView?.hidden = true
+            self.fireEarningGroupList()
+        }
+    }
+    
+    // MARK: -
     // MARK: - Table view data source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -115,7 +151,7 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         if self.earningsModel.count != 0 {
-            return EarningsType.kNumberOfRowsInSection
+            return self.earningsModel.count
         } else {
             return 0
         }
@@ -125,55 +161,15 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
         let cell: PayoutEarningsTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(PayoutEarningsTableViewCell.nibNameAndidentifier(), forIndexPath: indexPath) as! PayoutEarningsTableViewCell
         cell.selectionStyle = UITableViewCellSelectionStyle.None
         if self.earningsModel.count != 0 {
-            switch indexPath.row {
-            case 0:
-                cell.earningTypeImageView.image = UIImage(named: "earning-transation")
-                cell.earningTypeLabel.text = EarningsTypeStrings.kTransactions
-                cell.earningTypeAmountLabel.text = self.earningsModel[0].earningAmount.formatToPeso()
-                self.earningsModel[indexPath.row].earningTypeId = 1
-                self.earningsModel[indexPath.row].earningType = EarningsTypeStrings.kTransactions
-                break
-            case 1:
-                cell.earningTypeImageView.image = UIImage(named: "earning-comment")
-                cell.earningTypeLabel.text = EarningsTypeStrings.kComments
-                cell.earningTypeAmountLabel.text = self.earningsModel[3].earningAmount.formatToPeso()
-                self.earningsModel[indexPath.row].earningTypeId = 4
-                self.earningsModel[indexPath.row].earningType = EarningsTypeStrings.kComments
-                break
-            case 2:
-                cell.earningTypeImageView.image = UIImage(named: "earning-follower")
-                cell.earningTypeLabel.text = EarningsTypeStrings.kFollowers
-                cell.earningTypeAmountLabel.text = self.earningsModel[2].earningAmount.formatToPeso()
-                self.earningsModel[indexPath.row].earningTypeId = 3
-                self.earningsModel[indexPath.row].earningType = EarningsTypeStrings.kFollowers
-                break
-            case 3:
-                cell.earningTypeImageView.image = UIImage(named: "earning-buyer")
-                cell.earningTypeLabel.text = EarningsTypeStrings.kBuyerNetwork
-                var totalAmount: String = "\(self.earningsModel[1].earningAmount.floatValue + self.earningsModel[4].earningAmount.floatValue + self.earningsModel[5].earningAmount.floatValue)"
-                cell.earningTypeAmountLabel.text = totalAmount.formatToTwoDecimal().formatToPeso()
-                self.earningsModel[indexPath.row].earningTypeId = 5
-                self.earningsModel[indexPath.row].earningType = EarningsTypeStrings.kBuyerNetwork
-                break
-            case 4:
-                cell.earningTypeImageView.image = UIImage(named: "earning-affiliate")
-                cell.earningTypeLabel.text = EarningsTypeStrings.kAffiliateNetwork
-                var totalAmount: String = "\(self.earningsModel[6].earningAmount.floatValue + self.earningsModel[7].earningAmount.floatValue + self.earningsModel[1].earningAmount.floatValue)"
-                cell.earningTypeAmountLabel.text = totalAmount.formatToTwoDecimal().formatToPeso()
-                self.earningsModel[indexPath.row].earningTypeId = 7
-                self.earningsModel[indexPath.row].earningType = EarningsTypeStrings.kAffiliateNetwork
-                break
-            case 5:
-                cell.earningTypeImageView.image = UIImage(named: "earning-withdrawal")
-                cell.earningTypeLabel.text = EarningsTypeStrings.kWithdrawal
-                cell.earningTypeAmountLabel.text = self.earningsModel[8].earningAmount.formatToPeso()
-                self.earningsModel[indexPath.row].earningTypeId = 9
-                self.earningsModel[indexPath.row].earningType = EarningsTypeStrings.kWithdrawal
-                break
-            default:
-                
-                break
-            }
+            
+            var url: NSURL = NSURL(string: self.earningsModel[indexPath.row].imageLocation)!
+            var earningType: String = self.earningsModel[indexPath.row].earningType
+            var currencyCode: String = self.earningsModel[indexPath.row].currencyCode
+            var totalAmount: String = self.earningsModel[indexPath.row].earningAmount
+            
+            cell.earningTypeImageView.sd_setImageWithURL(url, placeholderImage: UIImage(named: "dummy-placeholder"))
+            cell.earningTypeLabel.text = earningType
+            cell.earningTypeAmountLabel.text = currencyCode + " " + totalAmount
         }
         
         return cell
@@ -185,7 +181,7 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var payoutEarningsTypeViewController: PayoutEarningsTypeViewController = PayoutEarningsTypeViewController(nibName: "PayoutEarningsTypeViewController", bundle: nil)
-        payoutEarningsTypeViewController.earningTypeId = self.earningsModel[indexPath.row].earningTypeId
+        payoutEarningsTypeViewController.earningTypeId = self.earningsModel[indexPath.row].earningTypeId.toInt()!
         payoutEarningsTypeViewController.earningType = self.earningsModel[indexPath.row].earningType
         self.navigationController?.pushViewController(payoutEarningsTypeViewController, animated:true)
     }
@@ -210,6 +206,11 @@ class PayoutEarningsViewController: UIViewController, UITableViewDelegate, UITab
                 self.tableView.reloadData()
                 self.hud?.hide(true)
             } else {
+                
+                if self.earningsModel.count == 0 {
+                    self.addEmptyView()
+                }
+                
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)

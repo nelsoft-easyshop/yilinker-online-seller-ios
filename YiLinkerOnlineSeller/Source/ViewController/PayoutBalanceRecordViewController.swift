@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControllerDelegate {
+class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControllerDelegate, EmptyViewDelegate {
     
     // Views from Xib
     @IBOutlet weak var myChart: LineChartView!
@@ -19,22 +19,27 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
     @IBOutlet weak var tentativeEarningLabel: UILabel!
     @IBOutlet weak var totalWithdrewLabel: UILabel!
     
+    @IBOutlet weak var totalEarningsHeaderLabel: UILabel!
+    @IBOutlet weak var totalEarningsLabel: UILabel!
+    @IBOutlet weak var activeEarningsTextLabel: UILabel!
+    @IBOutlet weak var tentativeEarningsTextLabel: UILabel!
+    @IBOutlet weak var totalWithdrewTextLabel: UILabel!
+    
     // Model
     var recordModel: BalanceRecordModel!
     
     // Keys
-    var startDate: NSDate = NSDate()
+    var startDate: NSDate = NSDate().addDays(-30)
     var endDate: NSDate = NSDate()
-    
-    // default dates
-    var defaultStartDate: NSDate = NSDate().addDays(-30)
-    var defaultEndDate: NSDate = NSDate()
     
     // y axis for the graph
     var yAxisLeft: ChartYAxis!
     
     // loader
     var hud: MBProgressHUD?
+    
+    //
+    var emptyView: EmptyView?
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {
@@ -49,17 +54,20 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
         dateContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "selectDate:"))
         
         self.showHUD()
-        fireGetWithdrawalBalance("", endDate: "")
+        
+        self.totalEarningsHeaderLabel.text = PayoutStrings.recordTotalEarnings
+        self.totalEarningsLabel.text = PayoutStrings.recordTotalEarnings
+        self.activeEarningsTextLabel.text = PayoutStrings.recordActiveEarnings
+        self.tentativeEarningsTextLabel.text = PayoutStrings.recordTentativeEarnings
+        self.totalWithdrewTextLabel.text = PayoutStrings.recordTotalWithdrew
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        if recordModel != nil {
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-            fireGetWithdrawalBalance(self.formatDateToString(self.startDate, type: .Key), endDate: self.formatDateToString(self.endDate, type: .Key))
-        }
-        
+//            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        self.showHUD()
+        fireGetWithdrawalBalance(self.formatDateToString(self.startDate, type: .Key), endDate: self.formatDateToString(self.endDate.addDays(1), type: .Key))
     }
     
     // MARK: - Functions
@@ -68,15 +76,15 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
     func selectDate(gesture: UIGestureRecognizer) {
         var datePickerController: DatePickerViewController = DatePickerViewController(nibName: "DatePickerViewController", bundle: nil)
         datePickerController.delegate = self
-        datePickerController.startDate = defaultStartDate
-        datePickerController.endDate = defaultEndDate
+        datePickerController.startDate = self.startDate
+        datePickerController.endDate = self.endDate
         self.navigationController?.pushViewController(datePickerController, animated:true)
     }
     
     // initialize graph
     func initializeGraph() {
         
-        myChart.noDataText = "No Available Data"
+        myChart.noDataText = PayoutStrings.recordNoData
         myChart.descriptionText = ""
         
         // x axis
@@ -114,24 +122,47 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
     
     // show graph's data
     func displayGraph() {
-        println("displaying graph")
+
+        var availableDates: [String] = []
         var dates: [String] = []
         var amounts: [String] = []
         var earningEntries: [ChartDataEntry] = []
         
-        var ctr: Int = recordModel.earnings.count
-        for i in 0..<recordModel.earnings.count {
-            dates.append(formatDateToString(formatStringToDate(recordModel.earnings[i].date), type: .Graph).uppercaseString)
-            amounts.append(recordModel.earnings[i].amount)
-            
-            ctr--
-            var yValue: String = recordModel.earnings[ctr].amount
-            yValue = yValue.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
-            earningEntries.append(ChartDataEntry(value: (yValue as NSString).doubleValue, xIndex: i))
+        // get dates and amounts from api response
+        for earning in recordModel.earnings {
+            availableDates.append(formatDateToString(formatStringToDate(earning.date), type: .Graph).uppercaseString)
+            amounts.append(earning.amount)
         }
         
-        dates = dates.reverse()
-        amounts = amounts.reverse()
+        // adding days to to dates to complete the dates of the month
+        let cal = NSCalendar.currentCalendar()
+        let unit: NSCalendarUnit = .CalendarUnitDay
+        let difference = cal.components(unit, fromDate: self.startDate, toDate: self.endDate.addDays(1), options: nil)
+        
+        for i in 0..<difference.day {
+            dates.append(formatDateToString(startDate.addDays(i), type: .Graph).uppercaseString)
+        }
+        
+        // adding values to amount to equal the items of dates
+        // add data to chart
+        var index: Int = 0
+        var amountIndex: Int = recordModel.earnings.count
+        for date in dates {
+            if contains(availableDates, date) {
+                if amountIndex != 0 {
+                    amountIndex--
+                }
+                
+                var yValue: String = recordModel.earnings[amountIndex].amount
+                yValue = yValue.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
+                earningEntries.append(ChartDataEntry(value: (yValue as NSString).doubleValue, xIndex: index))
+            } else {
+                earningEntries.append(ChartDataEntry(value: 0, xIndex: index))
+            }
+            
+            index++
+        }
+        
 
         // line data sets
         var earningsDataSet: LineChartDataSet = LineChartDataSet(yVals: earningEntries, label: "")
@@ -142,7 +173,7 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
         earningsDataSet.circleRadius = 6
         earningsDataSet.setCircleColor(Constants.Colors.soldColor)
         earningsDataSet.drawCircleHoleEnabled = false
-        earningsDataSet.valueTextColor = UIColor.clearColor()//Constants.Colors.soldColor
+        earningsDataSet.valueTextColor = /*Constants.Colors.soldColor*/UIColor.clearColor()
 
         // Line of graph
         var lineDataSets: [LineChartDataSet] = []
@@ -183,17 +214,15 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
     func populateData() {
         displayGraph()
         
-        self.totalEarningLabel.text = "P " + String(recordModel.totalEarning)
-        self.activeEarningLabel.text = "P " + String(recordModel.activeEarning)
-        self.tentativeEarningLabel.text = "P " + String(recordModel.tentativeEarning)
-        self.totalWithdrewLabel.text = "P " + String(recordModel.totalWithdrew)
+        self.totalEarningLabel.text = recordModel.currencyCode + String(recordModel.totalEarning)
+        self.activeEarningLabel.text = recordModel.currencyCode + String(recordModel.activeEarning)
+        self.tentativeEarningLabel.text = recordModel.currencyCode + String(recordModel.tentativeEarning)
+        self.totalWithdrewLabel.text = recordModel.currencyCode + String(recordModel.totalWithdrew)
         
         // update calendar dates
         // get the first value and the last value for dates
         if dateLabel.text == " - " {
-            defaultStartDate = formatStringToDate(recordModel.earnings[recordModel.earnings.count - 1].date)
-            defaultEndDate = formatStringToDate(recordModel.earnings[0].date)
-            self.dateLabel.text = formatDateToString(defaultStartDate, type: .Calendar) + " - " + formatDateToString(defaultEndDate, type: .Calendar)
+            self.dateLabel.text = formatDateToString(self.startDate, type: .Calendar) + " - " + formatDateToString(self.endDate, type: .Calendar)
         }
     }
     
@@ -210,6 +239,29 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
         self.hud?.show(true)
     }
     
+    func addEmptyView() {
+        if self.emptyView == nil {
+            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+            self.emptyView!.delegate = self
+            self.emptyView?.frame = self.view.frame
+            self.view.addSubview(self.emptyView!)
+        } else {
+            self.emptyView!.hidden = false
+        }
+    }
+    
+    func didTapReload() {
+        if Reachability.isConnectedToNetwork() {
+            self.showHUD()
+            self.emptyView?.hidden = true
+            if self.recordModel == nil {
+                fireGetWithdrawalBalance("", endDate: "")
+            } else {
+                fireGetWithdrawalBalance(formatDateToString(self.startDate, type: .Key), endDate: formatDateToString(self.endDate, type: .Key))
+            }
+        }
+    }
+    
     // MARK: - Requests
     
     func fireGetWithdrawalBalance(startDate: String, endDate: String) {
@@ -221,7 +273,9 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
                 if successful {
                     self.recordModel = BalanceRecordModel.parseDataWithDictionary(responseObject as! NSDictionary)
                     self.populateData()
+                    println(responseObject)
                 } else {
+                    self.addEmptyView()
                     if requestErrorType == .ResponseError {
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                         Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
@@ -241,6 +295,7 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
                 }
             })
         } else {
+            self.addEmptyView()
             self.hud?.hidden = true
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.failed)
         }
@@ -253,7 +308,7 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
             WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.loginUrl, actionHandler: { (successful, responseObject, RequestErrorType) -> Void in
                 self.hud?.hide(true)
                 if successful {
-                    self.fireGetWithdrawalBalance(self.formatDateToString(self.startDate, type: .Key), endDate: self.formatDateToString(self.endDate, type: .Key))
+                    self.fireGetWithdrawalBalance(self.formatDateToString(self.startDate, type: .Key), endDate: self.formatDateToString(self.endDate.addDays(1), type: .Key))
                 } else {
                     //Forcing user to logout.
                     UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in

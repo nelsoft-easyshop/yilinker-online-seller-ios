@@ -347,6 +347,10 @@ extension String {
         return (self as NSString).floatValue
     }
     
+    var doubleValue: Double {
+        return (self as NSString).doubleValue
+    }
+    
     func isValidEmail() -> Bool {
         // println("validate calendar: \(testStr)")
         let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"

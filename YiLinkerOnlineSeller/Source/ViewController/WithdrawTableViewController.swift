@@ -8,7 +8,12 @@
 
 import UIKit
 
-class WithdrawTableViewController: UITableViewController, AvailableBalanceDelegate, WithdrawAmountViewDelegate, WithdrawConfirmationCodeViewDelegate, WithdrawProceedViewDelegate {
+protocol WithdrawTableViewControllerDelegate {
+    func withdrawToRequest(controller: WithdrawTableViewController)
+    func passAmount(controller: WithdrawTableViewController, amount: Double)
+}
+
+class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, AvailableBalanceDelegate, WithdrawAmountViewDelegate, WithdrawConfirmationCodeViewDelegate, WithdrawProceedViewDelegate, WithdrawModalViewControllerDelegate, WithdrawMethodViewDelegate {
     
     var headerView: UIView!
     var availableBalanceView: WithdrawAvailableBalanceView!
@@ -18,6 +23,7 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     var mobileNoView: WithdrawMobileNoView!
     var confimationCodeView: WithdrawConfirmationCodeView!
     var proceedView: WithdrawProceedView!
+    var contactCSRView: WithdrawContactCSR!
     
     var newFrame: CGRect!
     
@@ -26,7 +32,22 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     var dimView: UIView!
     
     var timer = NSTimer()
-    var cooldown: Int = 60
+    var cooldown: Int = NSUserDefaults.standardUserDefaults().valueForKey("cooldownKey") as! Int
+    
+    var firstLoad: Bool = true
+    var noBankAccount: Bool = false
+    
+    var storeInfo: StoreInfoModel!
+    
+    var delegate: WithdrawTableViewControllerDelegate?
+    
+    // loader
+    var hud: MBProgressHUD?
+    
+    // 
+    var emptyView: EmptyView?
+    //
+    var canGotoPayoutSummary: Bool = true
     
     // MARK: - View Life Cycle
     
@@ -39,8 +60,75 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        fireGetWithdrawalBalance()
+        self.showHUD()
+//        NSNotificationCenter.defaultCenter().postNotificationName("showLoaderInPayoutScreen", object: nil)
+//        fireGetWithdrawalBalance()
         addViews()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateLabel:", name: "UpdateTimerLabel", object: nil)
+    }
+    
+    func setCooldownValue(value: Int) {
+        NSUserDefaults.standardUserDefaults().setObject(value, forKey: "cooldownKey")
+    }
+    
+    func updateTimer() {
+        NSNotificationCenter.defaultCenter().postNotificationName("UpdateTimerLabel", object: nil)
+    }
+    
+    func updateLabel(notification: NSNotificationCenter) {
+        
+        cooldown--
+
+        if cooldown != 0 {
+            if cooldown < 10 {
+                self.confimationCodeView.getCodeButton.setTitle("00:0" + String(cooldown), forState: .Normal)
+            } else {
+                 self.confimationCodeView.getCodeButton.setTitle("00:" + String(cooldown), forState: .Normal)
+            }
+            
+            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
+            setCooldownValue(cooldown)
+        } else {
+            setCooldownValue(60)
+            self.timer.invalidate()
+            cooldown = 60
+
+            self.confimationCodeView.getCodeButton.setTitle(PayoutStrings.withdrawalGetCode, forState: .Normal)
+
+//            self.setStateForGetCodeButton()
+//            
+            var availableBalance: String = balanceRecordModel.availableBalance
+            availableBalance = availableBalance.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
+            
+            if count(amountView.amountTextField.text) == 0 || amountView.amountTextField.text.doubleValue < 100.0 || amountView.amountTextField.text.doubleValue > availableBalance.doubleValue {
+                self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
+            } else {
+                if self.confimationCodeView.getCodeButton.titleLabel!.text == PayoutStrings.withdrawalGetCode {
+                    self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
+                }
+                
+                enableProceedButton()
+            }
+        }
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if !firstLoad {
+//            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            self.showHUD()
+        }
+        fireGetWithdrawalBalance()
+        
+        canGotoPayoutSummary = true
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        firstLoad = false
     }
     
     // MARK: - Initialize Views
@@ -72,6 +160,7 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     func getMethodView() -> WithdrawMethodView {
         if self.methodView == nil {
             self.methodView = XibHelper.puffViewWithNibName("BalanceWithdrawalViewsViewController", index: 2) as! WithdrawMethodView
+            self.methodView.delegate = self
         }
         return self.methodView
     }
@@ -106,6 +195,13 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         return self.proceedView
     }
     
+    func getContactCSRView() -> WithdrawContactCSR {
+        if self.contactCSRView == nil {
+            self.contactCSRView = XibHelper.puffViewWithNibName("BalanceWithdrawalViewsViewController", index: 7) as! WithdrawContactCSR
+        }
+        return self.contactCSRView
+    }
+    
     // MARK: - Functions
     
     func addViews() {
@@ -115,6 +211,9 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         self.getHeaderView().addSubview(self.getDepositToView())
         self.getHeaderView().addSubview(self.getMobileNoView())
         self.getHeaderView().addSubview(self.getConfimationCodeView())
+        if noBankAccount {
+            self.getHeaderView().addSubview(self.getContactCSRView())
+        }
         self.getHeaderView().addSubview(self.getProceedView())
         
         positionViews()
@@ -126,7 +225,12 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         self.setPosition(self.depositToView, from: self.methodView)
         self.setPosition(self.mobileNoView, from: self.depositToView)
         self.setPosition(self.confimationCodeView, from: self.mobileNoView)
-        self.setPosition(self.proceedView, from: self.confimationCodeView)
+        if noBankAccount {
+            self.setPosition(self.contactCSRView, from: self.confimationCodeView)
+            self.setPosition(self.proceedView, from: self.contactCSRView)
+        } else {
+            self.setPosition(self.proceedView, from: self.confimationCodeView)
+        }
         
         newFrame = self.headerView.frame
         newFrame.size.height = CGRectGetMaxY(self.proceedView.frame)
@@ -143,7 +247,78 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     }
     
     func populateData() {
-        self.availableBalanceView.setAvailableBalance(balanceRecordModel.availableBalance)
+        // check available balance to disable textfield when balance is less than 100
+        var availableBalance: String = balanceRecordModel.availableBalance
+        self.availableBalanceView.setAvailableBalance(availableBalance)
+        
+        availableBalance = availableBalance.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
+        if availableBalance.doubleValue < 100 {
+            self.amountView.amountTextField.userInteractionEnabled = false
+            self.amountView.amountTextField.backgroundColor = UIColor.lightGrayColor()
+            self.amountView.bottomLabel.text = PayoutStrings.withdrawalLessThanMinimum
+            self.amountView.bottomLabel.textColor = UIColor.redColor()
+            self.amountView.amountTextField.placeholder = ""
+        }
+        
+        self.depositToView.nameLabel.text = self.balanceRecordModel.fullName
+        self.depositToView.detailsLabel.text = self.balanceRecordModel.bankAccount
+        self.depositToView.chequeLabel.text = self.balanceRecordModel.fullName
+        
+        // check bank account
+        if hasBankAccount() {
+            
+//            self.depositToView.nameLabel.text = self.balanceRecordModel.fullName
+//            self.depositToView.detailsLabel.text = self.balanceRecordModel.bankAccount
+//            self.depositToView.chequeLabel.text = self.balanceRecordModel.fullName
+            self.methodView.depositView.userInteractionEnabled = true
+            noBankAccount = false
+            
+            for view in self.tableView.subviews {
+                view.removeFromSuperview()
+            }
+            
+            // add views, but this time with the error message for incomplete details
+            addViews()
+            
+        } else {
+            // if no bank account
+            // remove views
+            for view in self.tableView.subviews {
+                view.removeFromSuperview()
+            }
+            
+            noBankAccount = true
+            
+            // add views, but this time with the error message for incomplete details
+            addViews()
+            
+            // disable amount text field
+            self.amountView.amountTextField.userInteractionEnabled = false
+            self.amountView.amountTextField.backgroundColor = UIColor.lightGrayColor()
+            
+            // disable method buttons
+//            self.methodView.depositView.backgroundColor = UIColor.lightGrayColor()
+            self.methodView.depositView.userInteractionEnabled = false
+            
+            // disable code text field
+//            self.confimationCodeView.codeTextField.userInteractionEnabled = false
+//            self.confimationCodeView.codeTextField.backgroundColor = UIColor.lightGrayColor()
+            
+//            self.depositToView.nameLabel.hidden = true
+//            self.depositToView.detailsLabel.hidden = true
+//            self.depositToView.chequeLabel.hidden = false
+        }
+        
+        // mobile number
+        self.mobileNoView.numberLabel.text = "  " + String(self.balanceRecordModel.contact_number)
+    }
+    
+    func hasBankAccount() -> Bool {
+        if self.balanceRecordModel.bankName == " - " || self.balanceRecordModel.accountName == " - " || self.balanceRecordModel.accountNumber == " - " {
+            return false
+        }
+        
+        return true
     }
     
     func startCooldown() {
@@ -151,12 +326,91 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         if cooldown == 0 {
             timer.invalidate()
             cooldown = 60
-            self.confimationCodeView.getCodeButton.setTitle("GET CODE", forState: .Normal)
-            self.confimationCodeView.getCodeButton.userInteractionEnabled = true
+            self.confimationCodeView.getCodeButton.setTitle(PayoutStrings.withdrawalGetCode, forState: .Normal)
+            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
         } else {
-            self.confimationCodeView.getCodeButton.setTitle("00:" + String(cooldown), forState: .Normal)
+            if cooldown >= 10 {
+                self.confimationCodeView.getCodeButton.setTitle("00:" + String(cooldown), forState: .Normal)
+            } else {
+                self.confimationCodeView.getCodeButton.setTitle("00:0" + String(cooldown), forState: .Normal)
+            }
         }
         
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(frame: CGRectZero)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        UIApplication.sharedApplication().keyWindow?.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    func addEmptyView() {
+        self.tableView.scrollEnabled = false
+        if self.emptyView == nil {
+            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+            self.emptyView!.delegate = self
+            self.emptyView!.frame = UIScreen.mainScreen().bounds
+            self.emptyView?.center = self.view.center
+            self.view.addSubview(self.emptyView!)
+        } else {
+            self.emptyView!.hidden = false
+        }
+    }
+    
+    func didTapReload() {
+        if Reachability.isConnectedToNetwork() {
+            self.tableView.scrollEnabled = true
+            self.showHUD()
+            self.emptyView?.hidden = true
+            fireGetWithdrawalBalance()
+        }
+    }
+    
+    func enableProceedButton() {
+        let withdrawalAmount: Double = self.amountView.amountTextField.text.doubleValue
+        var availableBalance: String = balanceRecordModel.availableBalance
+        availableBalance = availableBalance.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
+        
+        if self.confimationCodeView.codeTextField.text != "" && withdrawalAmount >= 100.0 && withdrawalAmount <= availableBalance.doubleValue {
+            self.proceedView.proceedButton.backgroundColor = Constants.Colors.pmYesGreenColor
+        } else {
+            self.proceedView.proceedButton.backgroundColor = UIColor.lightGrayColor()
+        }
+    }
+    
+    func setStateForGetCodeButton() {
+        
+//        var availableBalance: String = balanceRecordModel.availableBalance
+//        availableBalance = availableBalance.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
+//        
+//        if count(amountView.amountTextField.text) == 0 {
+//            self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountCharge
+//            self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
+//        } else if amountView.amountTextField.text.doubleValue < 100.0 {
+//            self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountMinimum
+//            self.amountView.bottomLabel.textColor = UIColor.redColor()
+//            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
+//        } else if amountView.amountTextField.text.doubleValue > availableBalance.doubleValue {
+//            self.amountView.bottomLabel.text = PayoutStrings.withdrawalGreaterThanBalance
+//            self.amountView.bottomLabel.textColor = UIColor.redColor()
+//            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
+//        } else {
+//            if self.confimationCodeView.getCodeButton.titleLabel!.text == PayoutStrings.withdrawalGetCode {
+//                
+//                self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
+//                self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountCharge
+//                self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
+//            }
+//            
+//            enableProceedButton()
+//        }
     }
     
     // validate requirements
@@ -166,7 +420,7 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         if self.amountView.amountTextField.text == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Amount is required.", title: "Unable to Proceed")
             return false
-        } else if (self.amountView.amountTextField.text as NSString).doubleValue < 100.0 {
+        } else if self.amountView.amountTextField.text.doubleValue < 100.0 {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Amount must be higher or equal than P100.0.", title: "Unable to Proceed")
             return false
         }
@@ -178,186 +432,314 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
     
     func showConfirmationModal() {
         var withdrawModal = WithdrawModalViewController(nibName: "WithdrawModalViewController", bundle: nil)
-        //        withdrawModal.delegate = self
+        withdrawModal.delegate = self
         withdrawModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         withdrawModal.providesPresentationContextTransitionStyle = true
         withdrawModal.definesPresentationContext = true
         withdrawModal.view.backgroundColor = UIColor.clearColor()
+        withdrawModal.amountToWithdraw = self.amountView.amountTextField.text.doubleValue
+        self.delegate?.passAmount(self, amount: self.amountView.amountTextField.text.doubleValue)
         self.tabBarController?.presentViewController(withdrawModal, animated: true, completion: nil)
         
-        //        dimView = UIView(frame: self.view.bounds)
-        //        dimView.backgroundColor = .blackColor()
-        //        dimView.alpha = 0.0
-        //        self.navigationController?.navigationBar.addSubview(dimView)
-        //
-        //        UIView.animateWithDuration(0.25, animations: {
-        //            self.dimView.alpha = 0.60
-        //        })
+        dimView = UIView(frame: UIScreen.mainScreen().bounds)
+        dimView.backgroundColor = .blackColor()
+        dimView.alpha = 0.0
+        self.navigationController?.view.addSubview(dimView)
+
+        UIView.animateWithDuration(0.25, animations: {
+            self.dimView.alpha = 0.60
+        })
+    }
+    
+    func clearInputData() {
+        self.timer.invalidate()
+        setCooldownValue(60)
+        cooldown = 60
+        
+        self.amountView.amountTextField.text = ""
+        
+        self.methodView.chequeCheckImageView.hidden = true
+        self.methodView.depositCheckImageView.hidden = false
+        if SessionManager.isSeller() {
+            self.methodView.chequeView.backgroundColor = .lightGrayColor()
+        }
+        
+        self.confimationCodeView.codeTextField.text = ""
+        self.timer.invalidate()
+        self.confimationCodeView.getCodeButton.setTitle(PayoutStrings.withdrawalGetCode, forState: .Normal)
+        
+        self.confimationCodeView.getCodeButton.backgroundColor = .lightGrayColor()
+        self.proceedView.proceedButton.backgroundColor = .lightGrayColor()
+        
+        self.tableView.setContentOffset(CGPointMake(0, 0), animated: true)
     }
     
     // MARK: - Requests
     
     func fireGetWithdrawalBalance() {
-        let parameters: NSDictionary = ["access_token": "NWNjYWUzNTIwZjg4ZjdlOTM3MjNiYWM3YWEyMDVhYWRlNWJhNTJmZDE1YzYwYmEyM2VhOGIyNDFmZWZlM2UyOQ", "dateTo": "", "dateFrom": "", "page": 1, "perPage": 1]
-        
-        WebServiceManager.fireGetBalanceRecordRequestWithUrl(APIAtlas.getBalanceRecordDetails, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
-            if successful {
-                self.balanceRecordModel = BalanceRecordModel.parseDataWithDictionary(responseObject as! NSDictionary)
-                self.populateData()
-            } else {
-                if requestErrorType == .ResponseError {
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
-                } else if requestErrorType == .PageNotFound {
-                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
-                } else if requestErrorType == .NoInternetConnection {
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                } else if requestErrorType == .RequestTimeOut {
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                } else if requestErrorType == .UnRecognizeError {
-                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+        if Reachability.isConnectedToNetwork() {
+            let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "dateTo": "", "dateFrom": "", "page": "", "perPage": ""]
+            
+            WebServiceManager.fireGetBalanceRecordRequestWithUrl(APIAtlas.getBalanceRecordDetails, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+                self.hud?.hidden = true
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                
+                if successful {
+                    self.balanceRecordModel = BalanceRecordModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                    self.populateData()
                 } else {
-                    println(responseObject)
+                    if self.balanceRecordModel == nil {
+                        self.addEmptyView()
+                    }
+                    if requestErrorType == .ResponseError {
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        if errorModel.message != "" {
+                            Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                        }
+                    } else if requestErrorType == .AccessTokenExpired {
+                        self.fireRefreshToken("details")
+                    } else if requestErrorType == .PageNotFound {
+                        Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                    } else if requestErrorType == .NoInternetConnection {
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .RequestTimeOut {
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .UnRecognizeError {
+                        Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                    } else {
+                        println(responseObject)
+                    }
                 }
+            })
+        } else {
+            if self.balanceRecordModel == nil {
+                self.addEmptyView()
             }
-        })
+            self.hud?.hidden = true
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.failed)
+        }
     }
     
     func fireGetCode() {
-        
-        let parameters: NSDictionary = ["access_token": /*SessionManager.accessToken()*/"ZTJkMjVmYmEyNjExODcyMDViZmZmMTkwZTVlM2QxODY2OThjYzNmOThkZGFlODQ1MjQwY2I0MGMzYjNmYzIyNA", "type": "withdrawal"]
-        
-        var url: String = APIAtlas.baseUrl
-        url = url.stringByReplacingOccurrencesOfString("v1", withString: APIAtlas.OTPAuth, options: nil, range: nil)
-        println(url)
-        
-        WebServiceManager.fireOTPAuthenticatedRequestWithUrl(url, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
-            if successful {
-                println(responseObject)
+        if Reachability.isConnectedToNetwork() {
+            self.showHUD()
+            let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "type": "withdrawal"]
+            
+            var url: String = APIAtlas.baseUrl
+            url = url.stringByReplacingOccurrencesOfString("v1", withString: APIAtlas.OTPAuth, options: nil, range: nil)
+            
+            WebServiceManager.fireOTPAuthenticatedRequestWithUrl(url, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+                self.hud?.hidden = true
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 
-                self.confimationCodeView.getCodeButton.userInteractionEnabled = false
-                
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Confirmation code has been sent to your mobile number.", title: "Code Request Sent")
-                self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("startCooldown"), userInfo: nil, repeats: true)
-                
-            } else {
-                if requestErrorType == .ResponseError {
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
-                } else if requestErrorType == .PageNotFound {
-                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
-                } else if requestErrorType == .NoInternetConnection {
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                } else if requestErrorType == .RequestTimeOut {
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                } else if requestErrorType == .UnRecognizeError {
-                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                if successful {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: PayoutStrings.alertRequestSuccessful, title: PayoutStrings.alertRequestSent)
+//                    self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("startCooldown"), userInfo: nil, repeats: true)
+                    self.cooldown = 60
+                    self.setCooldownValue(60)
+                    self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
+                    
                 } else {
-                    println(responseObject)
+                    if requestErrorType == .ResponseError {
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: PayoutStrings.alertRequestFailed)
+                    } else if requestErrorType == .AccessTokenExpired {
+                        self.fireRefreshToken("code")
+                    } else if requestErrorType == .PageNotFound {
+                        Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                    } else if requestErrorType == .NoInternetConnection {
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .RequestTimeOut {
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .UnRecognizeError {
+                        Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                    } else {
+                        println(responseObject)
+                    }
                 }
-            }
-        })
+            })
+        } else {
+            self.hud?.hidden = true
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.failed)
+        }
     }
     
     func fireSubmitWithdrawal() {
-        var method: String = "bank"
-        
-        if !self.methodView.chequeCheckImageView.hidden {
-            method = "cheque"
+        if Reachability.isConnectedToNetwork() {
+            self.showHUD()
+            var method: String = "bank"
+            if !self.methodView.chequeCheckImageView.hidden {
+                method = "cheque"
+            }
+            
+            let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
+                "withdrawalMethod": method,
+                "otp": self.confimationCodeView.codeTextField.text,
+                "amount": self.amountView.amountTextField.text]
+            println(parameters)
+            WebServiceManager.fireSubmitWithdrawalRequestWithUrl(APIAtlas.submitWithdrawalRequest, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+                self.hud?.hidden = true
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                if self.dimView != nil {
+                    self.dimView.removeFromSuperview()
+                }
+                
+                if responseObject["isSuccessful"] as! Bool {
+                    self.clearInputData()
+                    self.delegate?.withdrawToRequest(self)
+                } else {
+                    if requestErrorType == .ResponseError {
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: PayoutStrings.alertRequestFailed)
+                    } else if requestErrorType == .AccessTokenExpired {
+                        self.fireRefreshToken("submit")
+                    } else if requestErrorType == .PageNotFound {
+                        Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                    } else if requestErrorType == .NoInternetConnection {
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .RequestTimeOut {
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .UnRecognizeError {
+                        Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                    } else {
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: PayoutStrings.alertRequestFailed)
+                    }
+                }
+            })
+        } else {
+            self.hud?.hidden = true
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.failed)
+        }
+    }
+    
+    func fireRefreshToken(type: String) {
+        if Reachability.isConnectedToNetwork() {
+            self.showHUD()
+            WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.loginUrl, actionHandler: { (successful, responseObject, RequestErrorType) -> Void in
+                self.hud?.hide(true)
+                if successful {
+                    self.showHUD()
+                    
+                    if type == "details" {
+                        self.fireGetWithdrawalBalance()
+                    } else if type == "code" {
+                        self.fireGetCode()
+                    } else if type == "submit" {
+                        self.fireSubmitWithdrawal()
+                    }
+                    
+                } else {
+                    //Forcing user to logout.
+                    UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                        SessionManager.logout()
+                        GPPSignIn.sharedInstance().signOut()
+                        self.navigationController?.popToRootViewControllerAnimated(false)
+                    })
+                }
+            })
+        } else {
+            self.hud?.hide(true)
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.failed)
         }
         
-        let parameters: NSDictionary = ["access_token": "NWNjYWUzNTIwZjg4ZjdlOTM3MjNiYWM3YWEyMDVhYWRlNWJhNTJmZDE1YzYwYmEyM2VhOGIyNDFmZWZlM2UyOQ",
-            "withdrawalMethod": method,
-            "otp": self.confimationCodeView.codeTextField.text,
-            "amount": self.amountView.amountTextField.text]
-        
-        WebServiceManager.fireSubmitWithdrawalRequestWithUrl(APIAtlas.submitWithdrawalRequest, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
-            if successful {
-                println(responseObject)
-            } else {
-                println(responseObject)
-                if requestErrorType == .ResponseError {
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
-                } else if requestErrorType == .PageNotFound {
-                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
-                } else if requestErrorType == .NoInternetConnection {
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                } else if requestErrorType == .RequestTimeOut {
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                } else if requestErrorType == .UnRecognizeError {
-                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
-                } else {
-                    println(responseObject)
-                }
-            }
-        })
     }
     
     // MARK: - Delegates
     
     // MARK: - Available Balance Delegate
     func gotoPayoutSummary(view: WithdrawAvailableBalanceView) {
-        let payoutSummary = PayoutSummaryViewController(nibName: "PayoutSummaryViewController", bundle: nil)
-        payoutSummary.prices = [String(balanceRecordModel.totalEarning), String(balanceRecordModel.tentativeEarning), String(balanceRecordModel.totalWithdrew), String(balanceRecordModel.availableBalance)]
-        payoutSummary.inProcess = String(balanceRecordModel.totalWithdrewInProcess)
-        self.navigationController?.pushViewController(payoutSummary, animated: true)
+        if canGotoPayoutSummary && balanceRecordModel != nil {
+            canGotoPayoutSummary = false
+            let payoutSummary = PayoutSummaryViewController(nibName: "PayoutSummaryViewController", bundle: nil)
+            payoutSummary.prices = [String(balanceRecordModel.totalEarning), String(balanceRecordModel.tentativeEarning), String(balanceRecordModel.totalWithdrew), String(balanceRecordModel.availableBalance)]
+            payoutSummary.inProcess = String(balanceRecordModel.totalWithdrewInProcess)
+            self.navigationController?.pushViewController(payoutSummary, animated: true)
+        }
     }
     
     // MARK: - Amount View Delegate 
     func amountDidChanged(view: WithdrawAmountView) {
         
-        if count(amountView.amountTextField.text) > 2 { // digit is greater than 2
+        var availableBalance: String = balanceRecordModel.availableBalance
+        availableBalance = availableBalance.stringByReplacingOccurrencesOfString(",", withString: "", options: nil, range: nil)
+        
+        println(amountView.amountTextField.text.doubleValue)
+        if count(amountView.amountTextField.text) == 0 {
+            self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountCharge
+            self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
+        } else if amountView.amountTextField.text.doubleValue < 100.0 {
+            println("benga")
+            self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountMinimum
+            self.amountView.bottomLabel.textColor = UIColor.redColor()
+            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
+        } else if amountView.amountTextField.text.doubleValue > availableBalance.doubleValue {
+            self.amountView.bottomLabel.text = PayoutStrings.withdrawalGreaterThanBalance
+            self.amountView.bottomLabel.textColor = UIColor.redColor()
+            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
+        } else {
             
+            self.amountView.bottomLabel.text = PayoutStrings.withdrawalAmountCharge
+            self.amountView.bottomLabel.textColor = UIColor.darkGrayColor()
+            
+            if self.confimationCodeView.getCodeButton.titleLabel!.text == PayoutStrings.withdrawalGetCode {
+                self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
+            }
+            
+            enableProceedButton()
         }
         
-        if (amountView.amountTextField.text as NSString).doubleValue >= 100.0 {
-            self.amountView.bottomLabel.text = "Available balance should be P 100.0 or above to withdraw"
-            self.amountView.bottomLabel.textColor = UIColor.redColor()
-            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.darkGrayColor()
-        } else if /*Double(balanceRecordModel.availableBalance)*/0.0 < (amountView.amountTextField.text as NSString).doubleValue {
-            self.amountView.bottomLabel.text = "Withdrawal amount should be less than available balance"
-            self.amountView.bottomLabel.textColor = UIColor.redColor()
-        } else {
-            self.confimationCodeView.getCodeButton.backgroundColor = UIColor.lightGrayColor()
-            self.amountView.bottomLabel.text = "P 50.00 bank charge for withdrawal below P 5,000.00"
-            self.amountView.bottomLabel.textColor = UIColor.blackColor()
-        }
+    }
+    
+    // MARK: - Method View Delegate
+    func depositAction(view: WithdrawMethodView) {
+        self.depositToView.nameLabel.hidden = false
+        self.depositToView.detailsLabel.hidden = false
+        
+        self.depositToView.chequeLabel.hidden = true
+    }
+    
+    func chequeAction(view: WithdrawMethodView) {
+        self.depositToView.nameLabel.hidden = true
+        self.depositToView.detailsLabel.hidden = true
+        
+        self.depositToView.chequeLabel.hidden = false
     }
     
     // MARK: - Confimation Code View Delegate
     func getCodeAction(view: WithdrawConfirmationCodeView) {
-        fireGetCode()
+        if self.confimationCodeView.getCodeButton.backgroundColor == UIColor.darkGrayColor() {
+            fireGetCode()
+        }
     }
     
     func codeDidChanged(view: WithdrawConfirmationCodeView) {
-        if self.confimationCodeView.getCodeButton.backgroundColor == UIColor.darkGrayColor() && 
-            count(self.confimationCodeView.codeTextField.text) == 6 {
-            self.proceedView.proceedButton.backgroundColor = Constants.Colors.pmYesGreenColor
-        } else {
-            self.proceedView.proceedButton.backgroundColor = UIColor.lightGrayColor()
-        }
+        enableProceedButton()
     }
     
     // MARK: - Proceed View Delegate
     func proceedAction(view: WithdrawProceedView) {
-        fireSubmitWithdrawal()
-//        if didMeetRequirements() {
-//            showConfirmationModal()
-//        } else {
-//            
-//        }
+        if self.proceedView.proceedButton.backgroundColor == Constants.Colors.pmYesGreenColor  {
+            showConfirmationModal()
+        }
     }
     
+    // MARK: - Withdraw Modal View Controller Delegate
     
+    func modalYesAction(controller: WithdrawModalViewController) {
+        self.showHUD()
+        fireSubmitWithdrawal()
+    }
     
-    
-    
-    
-    
-    
-    
-    
+    func modalNoAction(controller: WithdrawModalViewController) {
+        UIView.animateWithDuration(0.25, animations: {
+            self.dimView.alpha = 0.0
+        })
+        
+//        if self.dimView != nil {
+//            self.dimView.removeFromSuperview()
+//        }
+    }
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -371,60 +753,4 @@ class WithdrawTableViewController: UITableViewController, AvailableBalanceDelega
         // Return the number of rows in the section.
         return 0
     }
-
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
 }

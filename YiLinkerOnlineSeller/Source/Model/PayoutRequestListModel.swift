@@ -57,7 +57,7 @@ class PayoutRequestListModel: NSObject {
                 if let value = request["requests"] as? NSArray {
                     for subValue in value as NSArray {
                         
-                        date = formatDate(ParseHelper.string(subValue, key: "date", defaultValue: ""))
+                        date = ParseHelper.string(subValue, key: "date", defaultValue: "")
                         withdrawalMethod = ParseHelper.string(subValue, key: "withdrawalMethod", defaultValue: "")
                         totalAmount = ParseHelper.string(subValue, key: "totalAmount", defaultValue: "")
                         charge = ParseHelper.string(subValue, key: "charge", defaultValue: "")
