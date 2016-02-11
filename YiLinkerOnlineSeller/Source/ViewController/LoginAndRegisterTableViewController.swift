@@ -85,6 +85,7 @@ struct RegisterStrings {
     static let activationCodeRequired: String = StringHelper.localizedStringWithKey("ACTIVATION_CODE_REQUIRED_LOCALIZE_KEY")
     static let contactRequired: String = StringHelper.localizedStringWithKey("CONTACT_REQUIRED_LOCALIZE_KEY")
     static let numbersAndLettersOnly: String = StringHelper.localizedStringWithKey("NUMBER_LETTERS_LOCALIZE_KEY")
+    static let numbersAndLettersCombination: String = StringHelper.localizedStringWithKey("NUMBER_LETTERS_COMBINATION_LOCALIZE_KEY")
     static let successRegister: String = StringHelper.localizedStringWithKey("SUCCESS_REGISTER_LOCALIZED_KEY")
     static let thankyou: String = StringHelper.localizedStringWithKey("THANKYOU_LOCALIZED_KEY")
     
@@ -642,12 +643,14 @@ extension LoginAndRegisterTableViewController: ForgotPasswordTableViewCellDelega
             errorMessage = RegisterStrings.contactRequired
         } else if !forgotPasswordCell.passwordTextField.isNotEmpty() {
             errorMessage = RegisterStrings.passwordRequired
-        } else if !forgotPasswordCell.passwordTextField.isAlphaNumeric() {
-            errorMessage = RegisterStrings.illegalPassword
-        } else if !forgotPasswordCell.passwordTextField.isValidPassword() {
-            errorMessage = RegisterStrings.numbersAndLettersOnly
+        } else if forgotPasswordCell.passwordTextField.isNumericOnly() || forgotPasswordCell.passwordTextField.isAphaOnly() {
+            errorMessage = RegisterStrings.numbersAndLettersCombination
         } else if !forgotPasswordCell.passwordTextField.isGreaterThanEightCharacters() {
             errorMessage = RegisterStrings.eightCharacters
+        } else if !forgotPasswordCell.passwordTextField.isValidPassword() {
+            errorMessage = RegisterStrings.numbersAndLettersOnly
+        }  else if !forgotPasswordCell.passwordTextField.isAlphaNumeric() {
+            errorMessage = RegisterStrings.illegalPassword
         } else if !forgotPasswordCell.confirmPasswordTextField.isNotEmpty() {
             errorMessage = RegisterStrings.reTypePasswordError
         } else if forgotPasswordCell.passwordTextField.text != forgotPasswordCell.confirmPasswordTextField.text {
@@ -655,6 +658,7 @@ extension LoginAndRegisterTableViewController: ForgotPasswordTableViewCellDelega
         } else if forgotPasswordCell.activationCodeTextField.text.isEmpty {
             errorMessage = RegisterStrings.activationCodeRequired
         }
+        
         
         return errorMessage
     }
