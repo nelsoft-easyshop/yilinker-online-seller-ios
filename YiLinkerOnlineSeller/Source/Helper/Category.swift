@@ -118,6 +118,20 @@ extension UITextField {
         return result
     }
     
+    func isAphaOnly() -> Bool {
+        let passwordRegEx = "[A-Za-z]*"
+        let passwordTest = NSPredicate(format: "SELF MATCHES %@", passwordRegEx)
+        
+        return passwordTest.evaluateWithObject(self.text)
+    }
+    
+    func isNumericOnly() -> Bool {
+        let passwordRegEx = "[0-9]*"
+        let passwordTest = NSPredicate(format: "SELF MATCHES %@", passwordRegEx)
+        
+        return passwordTest.evaluateWithObject(self.text)
+    }
+    
     func isGreaterThanOrEqualEightCharacters() -> Bool {
         var result: Bool = true
         if count(self.text) < 11 {
