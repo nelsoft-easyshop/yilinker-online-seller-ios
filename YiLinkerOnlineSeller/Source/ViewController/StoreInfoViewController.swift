@@ -822,7 +822,11 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 return 208
             }
         } else if indexPath.section == 3 {
-            return 190
+            if SessionManager.isSeller() {
+                return 125
+            } else {
+                return 190
+            }
         } else if indexPath.section == 4 {
             return 163
         } else if indexPath.section == 5 {
@@ -1277,6 +1281,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         }
         
         cell.delegate = self
+        cell.clipsToBounds = true
         
         return cell
     }
