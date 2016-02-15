@@ -782,6 +782,8 @@ MOBILE_LOCALIZED_KEY = "Mobile Number";
 REFERRAL_LOCALIZED_KEY = "Referral Code";
 GET_ACTIVATION_LOCALIZED_KEY = "Get Confirmation Code";
 ACTIVATION_CODE_LOCALIZED_KEY = "Activation Code";
+CONFIRMATION_LOCALIZED_KEY = "Confirmation Code";
+LOGIN_LOCALIZE_KEY = "Login";
 
 // MARK: - Register Error
 FIRST_NAME_REQUIRED_LOCALIZE_KEY = "First name is required";

@@ -37,6 +37,7 @@ struct LoginStrings {
     static let accountTitle: String = StringHelper.localizedStringWithKey("ACCOUNT_TITLE_LOCLAIZE_KEY")
     static let registerTitle: String = StringHelper.localizedStringWithKey("REGISTER_TITLE_LOCALIZE_KEY")
     static let resetTitle: String = StringHelper.localizedStringWithKey("RESET_PASSWORD_TITLE_LOCALIZE_KEY")
+    static let login: String = StringHelper.localizedStringWithKey("LOGIN_LOCALIZE_KEY")
 }
 
 
@@ -94,7 +95,7 @@ struct RegisterStrings {
     static let eightCharacters: String = StringHelper.localizedStringWithKey("EIGHT_CHARACTERS_LOCALIZED_KEY")
     static let register: String = StringHelper.localizedStringWithKey("REGISTER_HIDDEN_LOCALIZE_KEY")
     static let getActivation: String = StringHelper.localizedStringWithKey("GET_ACTIVATION_LOCALIZED_KEY")
-    static let activationCode: String = StringHelper.localizedStringWithKey("ACTIVATION_CODE_LOCALIZED_KEY")
+    static let activationCode: String = StringHelper.localizedStringWithKey("CONFIRMATION_LOCALIZED_KEY")
     static let resetPassword: String = StringHelper.localizedStringWithKey("RESET_PASSWORD_LOCALIZED_KEY")
 }
 
@@ -345,7 +346,25 @@ class LoginAndRegisterTableViewController: UITableViewController {
                 self.dismissLoader()
                 if requestErrorType == .ResponseError {
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    
+                    let paragraphStyle = NSMutableParagraphStyle()
+                    paragraphStyle.alignment = NSTextAlignment.Left
+                    
+                    let messageText = NSMutableAttributedString(
+                        string: errorModel.message,
+                        attributes: [
+                            NSParagraphStyleAttributeName: paragraphStyle,
+                            NSFontAttributeName : UIFont.preferredFontForTextStyle(UIFontTextStyleBody),
+                            NSForegroundColorAttributeName : UIColor.blackColor()
+                        ]
+                    )
+                    
+                    let alert = UIAlertController(title: "Your account is not yet accredited", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+                    let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in }
+                    alert.addAction(OKAction)
+                    alert.setValue(messageText, forKey: "attributedMessage")
+                    self.presentViewController(alert, animated: true, completion: nil)
+//                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
                 } else if requestErrorType == .PageNotFound {
                     Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
                 } else if requestErrorType == .NoInternetConnection {
