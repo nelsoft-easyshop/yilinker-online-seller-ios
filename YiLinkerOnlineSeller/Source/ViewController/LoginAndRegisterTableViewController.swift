@@ -65,6 +65,8 @@ struct RegisterStrings {
     static let emailAddress: String = StringHelper.localizedStringWithKey("EMAIL_ADDRESS_LOCALIZE_KEY")
     static let password: String = StringHelper.localizedStringWithKey("PASSWORD_LOCALIZE_KEY")
     static let confirmPassword: String = StringHelper.localizedStringWithKey("CONFIRMPASSWORD_LOCALIZE_KEY")
+    static let newPassword: String = StringHelper.localizedStringWithKey("NEWPASSWORD_LOCALIZE_KEY")
+    static let confirmNewPassword: String = StringHelper.localizedStringWithKey("CONFIRMPASSWORD_NEW_LOCALIZE_KEY")
     static let mobileNumber: String = StringHelper.localizedStringWithKey("MOBILE_LOCALIZED_KEY")
     static let referral: String = StringHelper.localizedStringWithKey("REFERRAL_LOCALIZED_KEY")
     
@@ -208,8 +210,14 @@ class LoginAndRegisterTableViewController: UITableViewController {
             let logoRegisterTableViewCell: LoginRegisterLogoTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.logoRegisterTableViewCellNibName) as! LoginRegisterLogoTableViewCell
             if self.isLogin || self.isResetPassword {
                 logoRegisterTableViewCell.allInOnePlaceLabel.hidden = true
+                if self.isSellerLogin {
+                    logoRegisterTableViewCell.logoImageView.image = UIImage(named: "login_seller_logo")
+                } else {
+                    logoRegisterTableViewCell.logoImageView.image = UIImage(named: "login_affiliate_logo")
+                }
             } else {
                 logoRegisterTableViewCell.allInOnePlaceLabel.hidden = false
+                logoRegisterTableViewCell.logoImageView.image = UIImage(named: "YiLinker-main")
             }
             logoRegisterTableViewCell.selectionStyle = .None
             return logoRegisterTableViewCell
