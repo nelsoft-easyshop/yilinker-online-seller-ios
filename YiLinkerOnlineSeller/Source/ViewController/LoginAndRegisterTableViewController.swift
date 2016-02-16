@@ -37,6 +37,7 @@ struct LoginStrings {
     static let accountTitle: String = StringHelper.localizedStringWithKey("ACCOUNT_TITLE_LOCLAIZE_KEY")
     static let registerTitle: String = StringHelper.localizedStringWithKey("REGISTER_TITLE_LOCALIZE_KEY")
     static let resetTitle: String = StringHelper.localizedStringWithKey("RESET_PASSWORD_TITLE_LOCALIZE_KEY")
+    static let login: String = StringHelper.localizedStringWithKey("LOGIN_LOCALIZE_KEY")
 }
 
 
@@ -65,6 +66,8 @@ struct RegisterStrings {
     static let emailAddress: String = StringHelper.localizedStringWithKey("EMAIL_ADDRESS_LOCALIZE_KEY")
     static let password: String = StringHelper.localizedStringWithKey("PASSWORD_LOCALIZE_KEY")
     static let confirmPassword: String = StringHelper.localizedStringWithKey("CONFIRMPASSWORD_LOCALIZE_KEY")
+    static let newPassword: String = StringHelper.localizedStringWithKey("NEWPASSWORD_LOCALIZE_KEY")
+    static let confirmNewPassword: String = StringHelper.localizedStringWithKey("CONFIRMPASSWORD_NEW_LOCALIZE_KEY")
     static let mobileNumber: String = StringHelper.localizedStringWithKey("MOBILE_LOCALIZED_KEY")
     static let referral: String = StringHelper.localizedStringWithKey("REFERRAL_LOCALIZED_KEY")
     
@@ -92,7 +95,7 @@ struct RegisterStrings {
     static let eightCharacters: String = StringHelper.localizedStringWithKey("EIGHT_CHARACTERS_LOCALIZED_KEY")
     static let register: String = StringHelper.localizedStringWithKey("REGISTER_HIDDEN_LOCALIZE_KEY")
     static let getActivation: String = StringHelper.localizedStringWithKey("GET_ACTIVATION_LOCALIZED_KEY")
-    static let activationCode: String = StringHelper.localizedStringWithKey("ACTIVATION_CODE_LOCALIZED_KEY")
+    static let activationCode: String = StringHelper.localizedStringWithKey("CONFIRMATION_LOCALIZED_KEY")
     static let resetPassword: String = StringHelper.localizedStringWithKey("RESET_PASSWORD_LOCALIZED_KEY")
 }
 
@@ -208,8 +211,14 @@ class LoginAndRegisterTableViewController: UITableViewController {
             let logoRegisterTableViewCell: LoginRegisterLogoTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.logoRegisterTableViewCellNibName) as! LoginRegisterLogoTableViewCell
             if self.isLogin || self.isResetPassword {
                 logoRegisterTableViewCell.allInOnePlaceLabel.hidden = true
+                if self.isSellerLogin {
+                    logoRegisterTableViewCell.logoImageView.image = UIImage(named: "login_seller_logo")
+                } else {
+                    logoRegisterTableViewCell.logoImageView.image = UIImage(named: "login_affiliate_logo")
+                }
             } else {
                 logoRegisterTableViewCell.allInOnePlaceLabel.hidden = false
+                logoRegisterTableViewCell.logoImageView.image = UIImage(named: "YiLinker-main")
             }
             logoRegisterTableViewCell.selectionStyle = .None
             return logoRegisterTableViewCell
@@ -337,7 +346,25 @@ class LoginAndRegisterTableViewController: UITableViewController {
                 self.dismissLoader()
                 if requestErrorType == .ResponseError {
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    
+                    let paragraphStyle = NSMutableParagraphStyle()
+                    paragraphStyle.alignment = NSTextAlignment.Left
+                    
+                    let messageText = NSMutableAttributedString(
+                        string: errorModel.message,
+                        attributes: [
+                            NSParagraphStyleAttributeName: paragraphStyle,
+                            NSFontAttributeName : UIFont.preferredFontForTextStyle(UIFontTextStyleBody),
+                            NSForegroundColorAttributeName : UIColor.blackColor()
+                        ]
+                    )
+                    
+                    let alert = UIAlertController(title: "Your account is not yet accredited", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+                    let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in }
+                    alert.addAction(OKAction)
+                    alert.setValue(messageText, forKey: "attributedMessage")
+                    self.presentViewController(alert, animated: true, completion: nil)
+//                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
                 } else if requestErrorType == .PageNotFound {
                     Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
                 } else if requestErrorType == .NoInternetConnection {
