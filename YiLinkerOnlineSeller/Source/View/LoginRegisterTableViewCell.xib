@@ -23,10 +23,20 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                     </collectionView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y5P-fW-J0P">
+                        <rect key="frame" x="16" y="0.0" width="376" height="1"/>
+                        <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="Okw-Oa-V7q"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="ENh-4Y-xDb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="8d9-9w-vGE"/>
+                    <constraint firstAttribute="trailing" secondItem="y5P-fW-J0P" secondAttribute="trailing" constant="8" id="KoI-wS-qOJ"/>
                     <constraint firstItem="ENh-4Y-xDb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="aHj-5F-Dok"/>
+                    <constraint firstItem="y5P-fW-J0P" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="blQ-xM-LM8"/>
+                    <constraint firstItem="y5P-fW-J0P" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="iKX-H5-RNx"/>
                     <constraint firstAttribute="trailing" secondItem="ENh-4Y-xDb" secondAttribute="trailing" id="vAU-b2-mHq"/>
                     <constraint firstAttribute="bottom" secondItem="ENh-4Y-xDb" secondAttribute="bottom" id="xpQ-6d-apt"/>
                 </constraints>
