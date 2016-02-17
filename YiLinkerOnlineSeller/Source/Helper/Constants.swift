@@ -96,9 +96,21 @@ struct Constants {
         //development
         static func getClientId(isSeller: Bool) -> String {
             if isSeller {
-                return "1_167rxzqvid8g8swggwokcoswococscocc8ck44wo0g88owgkcc"
+                if APIEnvironment.development {
+                    return "1_167rxzqvid8g8swggwokcoswococscocc8ck44wo0g88owgkcc"
+                } else if APIEnvironment.development {
+                    return "1_167rxzqvid8g8swggwokcoswococscocc8ck44wo0g88owgkcc"
+                } else {
+                    return "1_9t2337riou0wsws84ckw8gkck8os8skw8cokoooc04gc0kssc"
+                }
             } else {
-                return "3_4qzm05tv6uwwko4c4c8gs00sco0c40os08owg8sg0wswoo0w8o"
+                if APIEnvironment.development {
+                    return "3_4qzm05tv6uwwko4c4c8gs00sco0c40os08owg8sg0wswoo0w8o"
+                } else if APIEnvironment.development {
+                    return "3_4qzm05tv6uwwko4c4c8gs00sco0c40os08owg8sg0wswoo0w8o"
+                } else {
+                    return "4_5scc2qrbwwkc0w0k0s0488o404kswgw8s0884k8kkw4w8ks488"
+                }
             }
         }
         
