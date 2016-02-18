@@ -43,6 +43,7 @@ struct Constants {
         static let grayText: UIColor = HexaColor.colorWithHexa(0x666666)
         static let selectedGreenColor: UIColor = HexaColor.colorWithHexa(0x44A491)
         static let selectedCellColor: UIColor = HexaColor.colorWithHexa(0xE1E1E1)
+        static let lightBackgroundColor: UIColor = HexaColor.colorWithHexa(0xE7E7E7)
         
         // Product Management
         static let pmActiveGreenColor: UIColor = HexaColor.colorWithHexa(0x01aa01)
