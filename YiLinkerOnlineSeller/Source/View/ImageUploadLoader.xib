@@ -1,15 +1,77 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ImageUploadLoader" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <subviews>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vs8-i5-aLC">
+                    <rect key="frame" x="25" y="0.0" width="50" height="5"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo.png" translatesAutoresizingMaskIntoConstraints="NO" id="WxZ-qB-bxx">
+                    <rect key="frame" x="28" y="8" width="45" height="45"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="45" id="4vP-Rf-ilx"/>
+                        <constraint firstAttribute="height" constant="45" id="fe6-vo-aVD"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="61q-Rr-Vgb">
+                    <rect key="frame" x="8" y="50" width="84" height="42"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="42" id="4kR-mP-Zb0"/>
+                        <constraint firstAttribute="width" constant="84" id="lld-2B-GQe"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gul-zC-163">
+                    <rect key="frame" x="25" y="95" width="50" height="5"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="djL-vq-QpY">
+                    <rect key="frame" x="40" y="22" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="57h-pS-OSf"/>
+                        <constraint firstAttribute="height" constant="20" id="KPP-VA-Jua"/>
+                    </constraints>
+                </activityIndicatorView>
+            </subviews>
+            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="vs8-i5-aLC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="25" id="009-dl-LLz"/>
+                <constraint firstItem="gul-zC-163" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="25" id="4rK-cW-c8Y"/>
+                <constraint firstAttribute="trailing" secondItem="61q-Rr-Vgb" secondAttribute="trailing" constant="8" id="6Cz-7i-L0f"/>
+                <constraint firstAttribute="centerX" secondItem="WxZ-qB-bxx" secondAttribute="centerX" id="AFK-sT-el6"/>
+                <constraint firstItem="WxZ-qB-bxx" firstAttribute="top" secondItem="vs8-i5-aLC" secondAttribute="bottom" constant="3" id="BhR-Xi-uGH"/>
+                <constraint firstItem="61q-Rr-Vgb" firstAttribute="top" secondItem="djL-vq-QpY" secondAttribute="bottom" constant="8" id="Ex5-k7-gDh"/>
+                <constraint firstAttribute="centerX" secondItem="djL-vq-QpY" secondAttribute="centerX" id="M9J-Mc-b8D"/>
+                <constraint firstItem="61q-Rr-Vgb" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="S7l-dZ-00E"/>
+                <constraint firstItem="61q-Rr-Vgb" firstAttribute="top" secondItem="vs8-i5-aLC" secondAttribute="bottom" constant="45" id="aKp-Da-cRM"/>
+                <constraint firstAttribute="bottom" secondItem="gul-zC-163" secondAttribute="bottom" id="aMf-b5-c8x"/>
+                <constraint firstAttribute="trailing" secondItem="gul-zC-163" secondAttribute="trailing" constant="25" id="afM-Mm-TYj"/>
+                <constraint firstItem="WxZ-qB-bxx" firstAttribute="top" secondItem="vs8-i5-aLC" secondAttribute="bottom" constant="3" id="dut-3g-Tzs"/>
+                <constraint firstItem="vs8-i5-aLC" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="e6B-Ce-rEY"/>
+                <constraint firstItem="gul-zC-163" firstAttribute="height" secondItem="vs8-i5-aLC" secondAttribute="height" id="kDS-wc-GYz"/>
+                <constraint firstAttribute="trailing" secondItem="vs8-i5-aLC" secondAttribute="trailing" constant="25" id="p42-JA-3qO"/>
+                <constraint firstItem="gul-zC-163" firstAttribute="top" secondItem="61q-Rr-Vgb" secondAttribute="bottom" constant="3" id="zVu-QR-0gT"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="243" y="-16"/>
         </view>
     </objects>
+    <resources>
+        <image name="photo.png" width="200" height="159"/>
+    </resources>
 </document>

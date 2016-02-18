@@ -8,10 +8,17 @@
 
 import UIKit
 
+enum EditProfileRequestType {
+    case SendEmailVerification
+    case SaveProfile
+}
+
 class EditProfileTableViewController: UITableViewController {
     
     let personalCellIdentifier: String = "EditProfilePersonalTableViewCell"
     let addressCellIdentifier: String = "EditProfileAddressTableViewCell"
+    
+    var hud: MBProgressHUD?
     
     var storeInfo: StoreInfoModel?
         
@@ -67,6 +74,124 @@ class EditProfileTableViewController: UITableViewController {
         self.view.endEditing(true)
     }
     
+    //Loader function
+    func showLoader() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.navigationController?.view!)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    //Hide loader
+    func dismissLoader() {
+        self.hud?.hide(true)
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+    }
+    
+    // MARK: - API Requests
+    //MARK: -
+    //MARK: - Fire Send Email Verification
+    func fireSaveProfile(firstName: String, lastName: String, tin: String, email: String, isSent: String) {
+        self.showLoader()
+        WebServiceManager.fireSaveProfileWithUrl(APIAtlas.saveEditProfile, firstName: firstName, lastName: lastName, tin: tin, email: email, isSent: isSent, accessToken: SessionManager.accessToken(),  actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            println(responseObject)
+            if successful {
+                self.dismissLoader()
+                let response: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                Toast.displayToastWithMessage(response.message, duration: 1.5, view: self.view)
+            } else {
+                self.dismissLoader()
+                self.handleErrorWithType(requestErrorType, responseObject: responseObject, requestType: .SaveProfile, params: [firstName, lastName, tin, email, isSent])
+            }
+        })
+    }
+    
+    //MARK: -
+    //MARK: - Fire Save Profile
+    func fireSendVerification(email: String) {
+        self.showLoader()
+        WebServiceManager.fireSendEmailVerificationRequestWithUrl(APIAtlas.sendEmailVerification, email: email, accessToken: SessionManager.accessToken(),  actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            println(responseObject)
+            if successful {
+                self.dismissLoader()
+                let response: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                Toast.displayToastWithMessage(response.message, duration: 1.5, view: self.view)
+            } else {
+                self.dismissLoader()
+                self.handleErrorWithType(requestErrorType, responseObject: responseObject, requestType: .SendEmailVerification, params: [email])
+            }
+        })
+    }
+    
+    //MARK: - Handling of API Request Error
+    /* Function to handle the error and proceed/do some actions based on the error type
+    *
+    * (Parameters) requestErrorType: RequestErrorType -- type of error being thrown by the web service. It is used to identify what specific action is needed to be execute based on the error type.
+    *              responseObject: AnyObject -- response coming from the server. It is used to identify what specific error message is being thrown by the server
+    *              params: TemporaryParameters -- collection of all params needed by all API request in the Wishlist.
+    *
+    * This function is for checking of 'requestErrorType' and proceed/do some actions based on the error type
+    */
+    func handleErrorWithType(requestErrorType: RequestErrorType, responseObject: AnyObject, requestType: EditProfileRequestType, params: [String]) {
+        if requestErrorType == .ResponseError {
+            //Error in api requirements
+            let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+            Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+        } else if requestErrorType == .AccessTokenExpired {
+            self.fireRefreshToken(params, requestType: requestType)
+        } else if requestErrorType == .PageNotFound {
+            //Page not found
+            Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+        } else if requestErrorType == .NoInternetConnection {
+            //No internet connection
+            Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+        } else if requestErrorType == .RequestTimeOut {
+            //Request timeout
+            Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+        } else if requestErrorType == .UnRecognizeError {
+            //Unhandled error
+            Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+        }
+    }
+    
+    //MARK: - Fire Refresh Token
+    /* Function called when access_token is already expired.
+    * (Parameter) params: TemporaryParameters -- collection of all params
+    * needed by all API request in the Wishlist.
+    *
+    * This function is for requesting of access token and parse it to save in SessionManager.
+    * If request is successful, it will check the requestType and redirect/call the API request
+    * function based on the requestType.
+    * If the request us unsuccessful, it will forcely logout the user
+    */
+    func fireRefreshToken(params: [String], requestType: EditProfileRequestType) {
+        self.showLoader()
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.dismissLoader()
+            
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                
+                switch requestType {
+                case .SendEmailVerification:
+                    self.fireSendVerification(params[0])
+                case .SaveProfile:
+                    self.fireSaveProfile(params[0], lastName: params[1], tin: params[2], email: params[3], isSent: params[4])
+                }
+                
+            } else {
+                UIAlertController.displaySomethingWentWrongError(self)
+            }
+        })
+    }
+    
     
     // MARK: - Table view data source
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -74,7 +199,7 @@ class EditProfileTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 3
     }
 
     
@@ -85,6 +210,11 @@ class EditProfileTableViewController: UITableViewController {
             cell.delegate = self
             return cell
         } else if indexPath.row == 1 {
+            let cell: EditProfileAddressTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.addressCellIdentifier, forIndexPath: indexPath) as! EditProfileAddressTableViewCell
+            cell.passValue(self.storeInfo!)
+            cell.delegate = self
+            return cell
+        } else if indexPath.row == 2 {
             let cell: EditProfileAddressTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.addressCellIdentifier, forIndexPath: indexPath) as! EditProfileAddressTableViewCell
             cell.passValue(self.storeInfo!)
             cell.delegate = self
@@ -127,7 +257,7 @@ extension EditProfileTableViewController: EditProfilePersonalTableViewCellDelega
     }
     
     func editProfilePersonalCell(editProfilePersonalCell: EditProfilePersonalTableViewCell, didTapSendVerification button: UIButton) {
-        
+        self.fireSendVerification(editProfilePersonalCell.emailTextField.text)
     }
 }
 
