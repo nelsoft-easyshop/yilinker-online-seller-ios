@@ -431,11 +431,16 @@ class LoginAndRegisterTableViewController: UITableViewController {
         let url: String = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("v1", withString: "") + APIAtlas.registerV2
         
         WebServiceManager.fireRegisterRequestWithUrl(url, contactNumber: contactNumber, password: password, areaCode: areaCode, referralCode: referralCode, verificationCode: verificationCode, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            println(responseObject)
             if successful {
                 self.dismissLoader()
                 let registerModel: RegisterModel = RegisterModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 if registerModel.isSuccessful {
-                    self.fireLoginWithContactNumber(self.tempSimplifiedRegistrationCell!.mobileNumberTextField.text!, password: self.tempSimplifiedRegistrationCell!.passwordTextField.text)
+                    SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                    self.dismissLoader()
+                    self.showSuccessMessage()
+                    self.fireCreateRegistration(SessionManager.gcmToken())
+//                    self.fireLoginWithContactNumber(self.tempSimplifiedRegistrationCell!.mobileNumberTextField.text!, password: self.tempSimplifiedRegistrationCell!.passwordTextField.text)
                 } else {
                     Toast.displayToastWithMessage(registerModel.message, duration: 2.0, view: self.view)
                 }
