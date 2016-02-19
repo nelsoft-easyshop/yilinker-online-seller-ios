@@ -9,7 +9,15 @@
 import UIKit
 
 class SelectCategoryCollectionViewCell: UICollectionViewCell {
-
+    
+    @IBOutlet weak var checkBoxImageView: UIImageView!
+    @IBOutlet weak var categoryNameLabel: UILabel!
+    //MARK: - 
+    //MARK: - Nib Name And Identifier
+    class func nibNameAndIdentifier() -> String {
+        return "SelectCategoryCollectionViewCell"
+    }
+        
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
