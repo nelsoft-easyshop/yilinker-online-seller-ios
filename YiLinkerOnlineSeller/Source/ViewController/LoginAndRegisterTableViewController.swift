@@ -430,7 +430,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
         
         let url: String = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("v1", withString: "") + APIAtlas.registerV2
         
-        WebServiceManager.fireRegisterRequestWithUrl(url, contactNumber: contactNumber, password: password, areaCode: areaCode, referralCode: referralCode, verificationCode: verificationCode, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        WebServiceManager.fireRegisterRequestWithUrl(url, contactNumber: contactNumber, password: password, areaCode: areaCode, referralCode: referralCode, verificationCode: verificationCode, grant_type: Constants.Credentials.getGrantType(self.isSellerLogin), client_id: Constants.Credentials.getClientId(self.isSellerLogin), client_secret: Constants.Credentials.getClientSecret(self.isSellerLogin), actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             println(responseObject)
             if successful {
                 self.dismissLoader()
