@@ -25,6 +25,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     var hud: MBProgressHUD?
     
     var ctr: Int = 0
+    var openCtr: Int = 0
     
     var errorLocalizeString: String  = ""
     var somethingWrongLocalizeString: String = ""
@@ -619,11 +620,12 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             
             self.hideHud()
             
-            if self.checkIfNewUser() {
+            if self.checkIfNewUser() && self.openCtr == 0 {
                 var editProfileViewController = EditProfileTableViewController(nibName: "EditProfileTableViewController", bundle: nil)
                 editProfileViewController.storeInfo = self.storeInfo
                 editProfileViewController.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(editProfileViewController, animated:true)
+                self.openCtr++
             }
             
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
