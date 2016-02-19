@@ -94,7 +94,26 @@ struct Constants {
         static let grantRefreshToken = "refresh_token"
         static let grantSeller = "http://yilinker-online.com/grant/seller"
         
-        //development
+        static func getGrantType(isSeller: Bool) -> String {
+            if isSeller {
+                if APIEnvironment.development {
+                    return "http://yilinker-online.com/grant/seller"
+                } else if APIEnvironment.development {
+                    return "http://yilinker-online.com/grant/seller"
+                } else {
+                    return "http://yilinker-online.com/grant/seller"
+                }
+            } else {
+                if APIEnvironment.development {
+                    return "http://yilinker-online.com/grant/affiliate"
+                } else if APIEnvironment.development {
+                    return "http://yilinker-online.com/grant/affiliate"
+                } else {
+                    return "http://yilinker-online.com/grant/affiliate"
+                }
+            }
+        }
+        
         static func getClientId(isSeller: Bool) -> String {
             if isSeller {
                 if APIEnvironment.development {

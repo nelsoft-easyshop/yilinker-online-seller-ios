@@ -624,9 +624,18 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                         
                         var store_name1 = NSUserDefaults.standardUserDefaults().stringForKey("storeName")
                         println("Store name \(store_name1)")
-                        self.storeInfo.store_name = NSUserDefaults.standardUserDefaults().stringForKey("storeName")!
-                        self.storeInfo.store_address = NSUserDefaults.standardUserDefaults().stringForKey("storeAddress")!
-                        self.storeInfo.totalSales = NSUserDefaults.standardUserDefaults().stringForKey("totalSales")!
+                        if NSUserDefaults.standardUserDefaults().stringForKey("storeName") != nil {
+                            self.storeInfo.store_name = NSUserDefaults.standardUserDefaults().stringForKey("storeName")!
+                        }
+                        
+                        if NSUserDefaults.standardUserDefaults().stringForKey("storeAddress") != nil {
+                            self.storeInfo.store_address = NSUserDefaults.standardUserDefaults().stringForKey("storeAddress")!
+                        }
+                        
+                        if NSUserDefaults.standardUserDefaults().stringForKey("totalSales") != nil {
+                            self.storeInfo.totalSales = NSUserDefaults.standardUserDefaults().stringForKey("totalSales")!
+                        }
+                        
                         self.storeInfo.productCount = NSUserDefaults.standardUserDefaults().integerForKey("productCount")
                         self.storeInfo.transactionCount = NSUserDefaults.standardUserDefaults().integerForKey("transactionCount")
                         

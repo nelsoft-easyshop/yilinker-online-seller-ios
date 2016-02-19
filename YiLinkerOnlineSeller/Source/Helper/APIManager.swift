@@ -14,7 +14,7 @@ struct APIEnvironment {
     
     static func baseUrl() -> String {
         if development {
-            return "http://seller.online.api.easydeal.ph/api/"
+            return "http://sprint.seller.online.api.easydeal.ph/api/v1"
         } else if staging {
             return "http://seller.online.api.easydeal.ph/api/"
         } else  {
