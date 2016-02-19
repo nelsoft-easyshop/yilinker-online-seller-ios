@@ -101,7 +101,7 @@
                             <constraint firstAttribute="width" constant="140" id="dTV-8E-2cM"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
-                        <state key="normal" title="Send Confirmation Code">
+                        <state key="normal" title="Send Activivation Code">
                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
@@ -109,16 +109,6 @@
                             <action selector="buttonAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="Cpq-ZE-6IN"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Resend Code in 60 Seconds" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1lw-4c-vgA">
-                        <rect key="frame" x="219" y="208" width="140" height="35"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="35" id="JCc-6E-RNf"/>
-                            <constraint firstAttribute="width" constant="140" id="lMi-I0-IyF"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -132,10 +122,8 @@
                 <constraint firstAttribute="trailing" secondItem="vOc-Jg-uDZ" secondAttribute="trailing" constant="20" id="Lrt-PS-ph0"/>
                 <constraint firstItem="pfo-Nv-Oqt" firstAttribute="top" secondItem="0ik-Ag-uNF" secondAttribute="bottom" constant="32" id="Rq9-NQ-N3A"/>
                 <constraint firstItem="NPw-da-yDo" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="SKV-2i-kId"/>
-                <constraint firstAttribute="trailing" secondItem="1lw-4c-vgA" secondAttribute="trailing" constant="20" id="T1a-VG-AIX"/>
                 <constraint firstItem="0ik-Ag-uNF" firstAttribute="top" secondItem="d98-k9-bVg" secondAttribute="bottom" constant="12" id="TrY-6H-HQ8"/>
                 <constraint firstItem="Ekh-6d-zIq" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="20" id="Wct-S5-jt5"/>
-                <constraint firstItem="1lw-4c-vgA" firstAttribute="top" secondItem="d98-k9-bVg" secondAttribute="bottom" constant="12" id="XNN-tY-qfv"/>
                 <constraint firstItem="IKW-Ge-ZNg" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="a9V-yR-HDm"/>
                 <constraint firstAttribute="trailing" secondItem="NPw-da-yDo" secondAttribute="trailing" constant="20" id="d7v-2C-59k"/>
                 <constraint firstItem="IKW-Ge-ZNg" firstAttribute="top" secondItem="Ekh-6d-zIq" secondAttribute="bottom" constant="12" id="dfW-RS-xGQ"/>
@@ -159,7 +147,6 @@
                 <outlet property="passwordTextField" destination="IKW-Ge-ZNg" id="48w-nx-vMj"/>
                 <outlet property="referralCodeTextField" destination="d98-k9-bVg" id="bVv-Ar-8ZL"/>
                 <outlet property="registerButton" destination="pfo-Nv-Oqt" id="0Jn-ZC-grc"/>
-                <outlet property="resendActivationLabel" destination="1lw-4c-vgA" id="jhu-Wp-lUQ"/>
                 <outlet property="sendActivationCodeButton" destination="0ik-Ag-uNF" id="76v-nW-qb0"/>
             </connections>
             <point key="canvasLocation" x="242.5" y="173"/>

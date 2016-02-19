@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         self.window?.makeKeyAndVisible()
-        self.window?.backgroundColor = UIColor.whiteColor()
+        
         if let font = UIFont(name: "Panton-Regular", size: 20) {
             UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.whiteColor()]
         }
@@ -263,14 +263,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let tabBarController: UITabBarController = storyBoard.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
         self.window?.rootViewController = tabBarController
     }
-    
-    /*func changeRootToAffiliateSelectProduct() {
-        let affiliateSelectProductViewController: AffiliateSelectProductViewController = AffiliateSelectProductViewController(nibName: AffiliateSelectProductViewController.nibName(), bundle: nil) as AffiliateSelectProductViewController
-        let navigationController: UINavigationController = UINavigationController(rootViewController: affiliateSelectProductViewController)
-        navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-
-        self.window?.rootViewController = navigationController
-    }*/
 
 }
 
