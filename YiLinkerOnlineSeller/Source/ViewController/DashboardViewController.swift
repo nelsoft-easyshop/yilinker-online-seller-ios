@@ -293,7 +293,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     func showHUD() {
         
         if SessionManager.isLoggedIn() {
-            if ctr == 0 {
+            if ctr == 0 || self.checkIfNewUser() {
                 displayHUD()
                 ctr++
             } else if ctr != 0 {
@@ -332,6 +332,14 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     func hideHud() {
         self.hud?.hide(true)
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+    }
+    
+    func checkIfNewUser() -> Bool {
+        if self.storeInfo.firstName.isEmpty && self.storeInfo.lastName.isEmpty && self.storeInfo.email.isEmpty {
+            return true
+        } else {
+            return false
+        }
     }
     
     func initializeViews() {
@@ -610,6 +618,13 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             self.collectionView.reloadData()
             
             self.hideHud()
+            
+            if self.checkIfNewUser() {
+                var editProfileViewController = EditProfileTableViewController(nibName: "EditProfileTableViewController", bundle: nil)
+                editProfileViewController.storeInfo = self.storeInfo
+                editProfileViewController.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(editProfileViewController, animated:true)
+            }
             
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hideHud()

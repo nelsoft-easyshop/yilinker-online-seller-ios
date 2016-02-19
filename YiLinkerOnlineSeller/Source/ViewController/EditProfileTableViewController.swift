@@ -221,8 +221,13 @@ class EditProfileTableViewController: UITableViewController {
             //Todo Strings
             cell.setTitle("Bank Account Information")
             cell.setValueChangeable(true)
-            let accountInfo: String = "\(self.storeInfo?.accountNumber)\n\(self.storeInfo?.accountName)\n\(self.storeInfo?.bankName)"
-            cell.setValue(self.storeInfo!.accountTitle, value: accountInfo)
+            if self.storeInfo != nil {
+                let accountInfo: String = self.storeInfo!.accountNumber + "\n" + self.storeInfo!.accountName + "\n" + self.storeInfo!.bankName
+                cell.setValue(self.storeInfo!.accountTitle, value: accountInfo)
+            } else {
+                cell.setValue(self.storeInfo!.accountTitle, value: "")
+            }
+            
             return cell
         } else {
             let cell: EditProfilePersonalTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.personalCellIdentifier, forIndexPath: indexPath) as! EditProfilePersonalTableViewCell
