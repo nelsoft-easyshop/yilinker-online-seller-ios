@@ -393,8 +393,8 @@ class LoginAndRegisterTableViewController: UITableViewController {
     //MARK: - Fire Login With Contact Number
     func fireGetOTP(contactNumber: String, areaCode: String, type: String, storeType: String) {
         self.showLoader()
-        let url: String = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("v1", withString: "") + APIAtlas.unauthenticateOTP
-        WebServiceManager.fireUnauthenticatedOTPRequestWithUrl(url, contactNumber: contactNumber, areaCode: areaCode, type: type, storeType: storeType, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+//        let url: String = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("v1", withString: "") + APIAtlas.unauthenticateOTP
+        WebServiceManager.fireUnauthenticatedOTPRequestWithUrl(APIAtlas.unauthenticateOTP, contactNumber: contactNumber, areaCode: areaCode, type: type, storeType: storeType, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             println(responseObject)
             if successful {
                 self.dismissLoader()
