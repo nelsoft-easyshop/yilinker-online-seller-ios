@@ -9,5 +9,7 @@
 import UIKit
 
 class AffiliateCategoryModel: NSObject {
-   
+    var productCategoryId: Int = 0
+    var name: String = ""
+    var isSelected: Bool = false
 }
