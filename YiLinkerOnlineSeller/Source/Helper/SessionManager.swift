@@ -96,15 +96,29 @@ class SessionManager {
             var accessToken: String = ""
             var refreshToken: String = ""
             
-            if let val: AnyObject = dictionary["access_token"] {
-                if let tempAccessToken = dictionary["access_token"] as? String {
-                    accessToken = tempAccessToken
+            if let data = dictionary["data"] as? NSDictionary {
+                if let val: AnyObject = data["access_token"] {
+                    if let tempAccessToken = data["access_token"] as? String {
+                        accessToken = tempAccessToken
+                    }
                 }
-            }
-            
-            if let val: AnyObject = dictionary["refresh_token"] {
-                if let tempRefreshAccessToken = dictionary["refresh_token"] as? String {
-                    refreshToken = tempRefreshAccessToken
+                
+                if let val: AnyObject = data["refresh_token"] {
+                    if let tempRefreshAccessToken = data["refresh_token"] as? String {
+                        refreshToken = tempRefreshAccessToken
+                    }
+                }
+            } else {
+                if let val: AnyObject = dictionary["access_token"] {
+                    if let tempAccessToken = dictionary["access_token"] as? String {
+                        accessToken = tempAccessToken
+                    }
+                }
+                
+                if let val: AnyObject = dictionary["refresh_token"] {
+                    if let tempRefreshAccessToken = dictionary["refresh_token"] as? String {
+                        refreshToken = tempRefreshAccessToken
+                    }
                 }
             }
             
@@ -202,8 +216,11 @@ class SessionManager {
     }
     
     class func isSeller() -> Bool {
-        let isSeller: Bool = NSUserDefaults.standardUserDefaults().objectForKey("isSeller") as! Bool
-        return isSeller
+        if let isSeller: Bool = NSUserDefaults.standardUserDefaults().objectForKey("isSeller") as? Bool {
+            return isSeller
+        } else {
+            return false
+        }
     }
     
     class func isReseller() -> Bool {
@@ -215,12 +232,18 @@ class SessionManager {
     }
     
     class func isEmailSubscribed() -> Bool {
-        let isEmailSubscribed: Bool = NSUserDefaults.standardUserDefaults().objectForKey("isEmailSubscribed") as! Bool
-        return isEmailSubscribed
+        if let isEmailSubscribed: Bool = NSUserDefaults.standardUserDefaults().objectForKey("isEmailSubscribed") as? Bool {
+            return isEmailSubscribed
+        } else {
+            return false
+        }
     }
     
     class func isSmsSubscribed() -> Bool {
-        let isSmsSubscribed: Bool = NSUserDefaults.standardUserDefaults().objectForKey("isSmsSubscribed") as! Bool
-        return isSmsSubscribed
+        if let isSmsSubscribed: Bool = NSUserDefaults.standardUserDefaults().objectForKey("isSmsSubscribed") as? Bool {
+            return isSmsSubscribed
+        } else {
+            return false
+        }
     }
 }

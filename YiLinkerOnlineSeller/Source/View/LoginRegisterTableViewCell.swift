@@ -12,33 +12,55 @@ protocol LoginRegisterTableViewCellDelegate {
     func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, textFieldShouldReturn textField: UITextField)
     func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapForgotPassword forgotPasswordButton: UIButton)
     func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapSignin signInButton: UIButton)
+    
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, textFieldShouldReturn textField: UITextField)
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapAreaCode areaCodeView: UIView)
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapSendActivationCode sendActivationCodeButton: UIButton)
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapRegister registerButton: UIButton)
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTimerEnded registerButton: UIButton)
+    
+    func loginRegisterTableViewCell(loginRegisterTableViewCell: LoginRegisterTableViewCell, didTapSignIn signInButton: UIButton)
+    func loginRegisterTableViewCell(loginRegisterTableViewCell: LoginRegisterTableViewCell, didTapRegister registerButton: UIButton)
 }
 
 class LoginRegisterTableViewCell: UITableViewCell {
     
     var delegate: LoginRegisterTableViewCellDelegate?
-
+    
     //Cell Identifier
     let reuseIdentifierLogin: String = "SimplifiedLoginUICollectionViewCell"
     let reuseIdentifierRegistration: String = "SimplifiedRegistrationUICollectionViewCell"
     
+    @IBOutlet weak var signInButton: UIButton!
+    @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var buttonConstraint: NSLayoutConstraint!
     
     var screenWidth: CGFloat = 0
+    
+    var tempCtr: Int = 0
+    var oldScrollValue: CGFloat = 0
+    var isSellerLogin: Bool = true
+    var cellCount: Int = 0
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         self.initializeViews()
         self.registerNibs()
+        self.activateButton(self.signInButton)
+        self.deActivateButton(self.registerButton)
     }
-
+    
     func initializeViews() {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         self.screenWidth = screenSize.width
         
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
+        
+        self.signInButton.setTitle(LoginStrings.login.uppercaseString, forState: .Normal)
+        self.registerButton.setTitle(RegisterStrings.register.uppercaseString, forState: .Normal)
     }
     
     func registerNibs() {
@@ -47,6 +69,39 @@ class LoginRegisterTableViewCell: UITableViewCell {
         
         var cellNibRegistration = UINib(nibName: reuseIdentifierRegistration, bundle: nil)
         self.collectionView?.registerNib(cellNibRegistration, forCellWithReuseIdentifier: reuseIdentifierRegistration)
+    }
+    
+    @IBAction func buttonAction(sender: UIButton) {
+        if sender == self.signInButton {
+            self.delegate?.loginRegisterTableViewCell(self, didTapSignIn: sender)
+            self.activateButton(self.signInButton)
+            self.deActivateButton(self.registerButton)
+            self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
+        } else if sender == self.registerButton {
+            self.delegate?.loginRegisterTableViewCell(self, didTapRegister: sender)
+            self.deActivateButton(self.signInButton)
+            self.activateButton(self.registerButton)
+            self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: 1, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
+        }
+    }
+    //MARK: -
+    //MARK: - Activate Button
+    func activateButton(button: UIButton) {
+        button.layer.cornerRadius = 20
+        button.backgroundColor = Constants.Colors.appTheme
+        button.layer.borderColor = Constants.Colors.appTheme.CGColor
+        button.layer.borderWidth = 1
+        button.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+    }
+    
+    //MARK: -
+    //MARK: - De Activate Button
+    func deActivateButton(button: UIButton) {
+        button.layer.cornerRadius = 20
+        button.backgroundColor = .clearColor()
+        button.layer.borderColor = Constants.Colors.appTheme.CGColor
+        button.layer.borderWidth = 1
+        button.setTitleColor(Constants.Colors.appTheme, forState: UIControlState.Normal)
     }
 }
 
@@ -59,17 +114,46 @@ extension LoginRegisterTableViewCell: UICollectionViewDataSource, UICollectionVi
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return self.cellCount
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell: SimplifiedLoginUICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierLogin, forIndexPath: indexPath) as! SimplifiedLoginUICollectionViewCell
-        cell.delegate = self
-        return cell
+        if indexPath.row == 0 {
+            let cell: SimplifiedLoginUICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierLogin, forIndexPath: indexPath) as! SimplifiedLoginUICollectionViewCell
+            cell.delegate = self
+            return cell
+        } else {
+            let cell: SimplifiedRegistrationUICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierRegistration, forIndexPath: indexPath) as! SimplifiedRegistrationUICollectionViewCell
+            cell.delegate = self
+            return cell
+        }
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         return CGSize(width: self.screenWidth, height:342)
+    }
+    
+    //MARK: -  UICollectionViewDelegate
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if self.tempCtr == 0 {
+            let contentOffset = scrollView.contentOffset.x
+            
+            if self.oldScrollValue > contentOffset {
+                self.delegate?.loginRegisterTableViewCell(self, didTapSignIn: self.signInButton)
+                self.activateButton(self.signInButton)
+                self.deActivateButton(self.registerButton)
+            } else {
+                self.delegate?.loginRegisterTableViewCell(self, didTapRegister: self.registerButton)
+                self.deActivateButton(self.signInButton)
+                self.activateButton(self.registerButton)
+            }
+            
+            self.oldScrollValue = contentOffset
+        }
+    }
+    
+    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+        self.tempCtr = 0
     }
 }
 
@@ -86,5 +170,28 @@ extension LoginRegisterTableViewCell: SimplifiedLoginUICollectionViewCellDelegat
     
     func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapSignin signInButton: UIButton) {
         self.delegate?.simplifiedLoginCell(simplifiedLoginCell, didTapSignin: signInButton)
+    }
+}
+
+//MARK: -  SimplifiedRegistrationUICollectionViewCellDelegate
+extension LoginRegisterTableViewCell: SimplifiedRegistrationUICollectionViewCellDelegate {
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, textFieldShouldReturn textField: UITextField) {
+        self.delegate?.simplifiedRegistrationCell(simplifiedRegistrationCell, textFieldShouldReturn: textField)
+    }
+    
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapAreaCode areaCodeView: UIView) {
+        self.delegate?.simplifiedRegistrationCell(simplifiedRegistrationCell, didTapAreaCode: areaCodeView)
+    }
+    
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapSendActivationCode sendActivationCodeButton: UIButton) {
+        self.delegate?.simplifiedRegistrationCell(simplifiedRegistrationCell, didTapSendActivationCode: sendActivationCodeButton)
+    }
+    
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapRegister registerButton: UIButton) {
+        self.delegate?.simplifiedRegistrationCell(simplifiedRegistrationCell, didTapRegister: registerButton)
+    }
+    
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTimerEnded sendActivationCodeButton: UIButton) {
+        self.delegate?.simplifiedRegistrationCell(simplifiedRegistrationCell, didTimerEnded: sendActivationCodeButton)
     }
 }

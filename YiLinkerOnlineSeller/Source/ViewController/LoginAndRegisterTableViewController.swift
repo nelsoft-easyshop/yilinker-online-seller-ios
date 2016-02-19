@@ -231,8 +231,17 @@ class LoginAndRegisterTableViewController: UITableViewController {
                 return resetPasswordTableViewCell
             } else if self.isLogin {
                 let loginRegisterTableViewCell: LoginRegisterTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.loginResgisterTableViewCellNibName) as! LoginRegisterTableViewCell
+                loginRegisterTableViewCell.isSellerLogin = self.isSellerLogin
+                if self.isSellerLogin {
+                    loginRegisterTableViewCell.buttonConstraint.constant = 10
+                    loginRegisterTableViewCell.cellCount = 1
+                } else {
+                    loginRegisterTableViewCell.buttonConstraint.constant = 70
+                    loginRegisterTableViewCell.cellCount = 2
+                }
                 loginRegisterTableViewCell.delegate = self
                 loginRegisterTableViewCell.selectionStyle = .None
+                loginRegisterTableViewCell.collectionView.reloadData()
                 return loginRegisterTableViewCell
             } else {
                 let userPickerTableViewCell: LoginUserTypeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.userTypeTableViewCellNibName) as! LoginUserTypeTableViewCell
@@ -419,12 +428,19 @@ class LoginAndRegisterTableViewController: UITableViewController {
     func fireRegisterUser(contactNumber: String, password: String, areaCode: String, referralCode: String, verificationCode: String) {
         self.showLoader()
         
-        WebServiceManager.fireRegisterRequestWithUrl(APIAtlas.registerV2, contactNumber: contactNumber, password: password, areaCode: areaCode, referralCode: referralCode, verificationCode: verificationCode, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        let url: String = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("v1", withString: "") + APIAtlas.registerV2
+        
+        WebServiceManager.fireRegisterRequestWithUrl(url, contactNumber: contactNumber, password: password, areaCode: areaCode, referralCode: referralCode, verificationCode: verificationCode, grant_type: Constants.Credentials.getGrantType(self.isSellerLogin), client_id: Constants.Credentials.getClientId(self.isSellerLogin), client_secret: Constants.Credentials.getClientSecret(self.isSellerLogin), actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            println(responseObject)
             if successful {
                 self.dismissLoader()
                 let registerModel: RegisterModel = RegisterModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 if registerModel.isSuccessful {
-                    self.fireLoginWithContactNumber(self.tempSimplifiedRegistrationCell!.mobileNumberTextField.text!, password: self.tempSimplifiedRegistrationCell!.passwordTextField.text)
+                    SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                    self.dismissLoader()
+                    self.showSuccessMessage()
+                    self.fireCreateRegistration(SessionManager.gcmToken())
+//                    self.fireLoginWithContactNumber(self.tempSimplifiedRegistrationCell!.mobileNumberTextField.text!, password: self.tempSimplifiedRegistrationCell!.passwordTextField.text)
                 } else {
                     Toast.displayToastWithMessage(registerModel.message, duration: 2.0, view: self.view)
                 }
@@ -624,7 +640,7 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
     func loginRegisterTableViewCell(loginRegisterTableViewCell: LoginRegisterTableViewCell, didTapSignIn signInButton: UIButton) {
         self.pageTitle = LoginStrings.accountTitle
         self.isResetPassword = false
-        self.isCloseButton = true
+        self.isCloseButton = false
         var indexPath = NSIndexPath(forRow: 1, inSection: 0)
         self.tableView.reloadData()
     }
@@ -632,7 +648,7 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
     func loginRegisterTableViewCell(loginRegisterTableViewCell: LoginRegisterTableViewCell, didTapRegister registerButton: UIButton) {
         self.pageTitle = LoginStrings.registerTitle
         self.isResetPassword = false
-        self.isCloseButton = true
+        self.isCloseButton = false
         var indexPath = NSIndexPath(forRow: 1, inSection: 0)
         self.tableView.reloadData()
     }

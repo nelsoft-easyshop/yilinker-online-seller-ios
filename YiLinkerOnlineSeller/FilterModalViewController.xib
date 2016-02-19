@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton SemiBold.otf">
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+        </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FilterModalViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <connections>
+                <outlet property="allButton" destination="oso-2Q-JDf" id="Ggn-Z8-NZP"/>
+                <outlet property="applyFilterButton" destination="PoB-tj-xZf" id="9UJ-0f-Q8r"/>
+                <outlet property="availableButton" destination="sRI-eB-iRI" id="EIi-Pl-sRg"/>
+                <outlet property="cancelButton" destination="cSW-Fv-N6h" id="cGr-Q2-JH3"/>
+                <outlet property="categoryFilesLabel" destination="KOL-B2-t7r" id="JBK-eb-0Uc"/>
+                <outlet property="collectionView" destination="YAY-gk-eMw" id="XwP-Kn-XqA"/>
+                <outlet property="earningButton" destination="kNE-x4-HaM" id="jWh-bc-WmQ"/>
+                <outlet property="latestButton" destination="qxP-Ga-Ipw" id="EgA-DX-7ub"/>
+                <outlet property="resetButton" destination="9bI-Ay-kwo" id="YLN-76-udq"/>
+                <outlet property="selectedButton" destination="3ja-Ni-LNB" id="aUp-6m-Spc"/>
+                <outlet property="sortByLabel" destination="51x-bd-wBV" id="OvB-cu-QJf"/>
+                <outlet property="statusLabel" destination="Uvi-1L-zJ9" id="QbR-TY-ldO"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UQE-Hq-HZl">
+                    <rect key="frame" x="0.0" y="75" width="320" height="493"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cSW-Fv-N6h">
+                            <rect key="frame" x="8" y="8" width="58" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="58" id="Xvz-hZ-CSh"/>
+                                <constraint firstAttribute="height" constant="21" id="ap2-oE-Phn"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="14"/>
+                            <state key="normal" title="CANCEL">
+                                <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="cancelAction:" destination="-1" eventType="touchUpInside" id="UDq-MR-fYx"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9bI-Ay-kwo">
+                            <rect key="frame" x="265" y="8" width="47" height="29"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="29" id="YMK-tM-8zO"/>
+                                <constraint firstAttribute="width" constant="47" id="gTe-oF-P7H"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="14"/>
+                            <state key="normal" title="RESET">
+                                <color key="titleColor" red="0.3803921569" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZFn-Yv-cof">
+                            <rect key="frame" x="0.0" y="36" width="320" height="1"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="GKQ-mr-DGD"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sort By:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="51x-bd-wBV">
+                            <rect key="frame" x="8" y="54" width="62" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="62" id="Ch0-FC-Ygg"/>
+                                <constraint firstAttribute="height" constant="21" id="cpx-5W-8hD"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qxP-Ga-Ipw">
+                            <rect key="frame" x="21" y="83" width="76" height="30"/>
+                            <color key="backgroundColor" red="0.3803921569" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="76" id="Nx9-0T-LMi"/>
+                                <constraint firstAttribute="height" constant="30" id="uVW-6d-Noz"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                            <state key="normal" title="Latest">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="disSelectItemAction:" destination="-1" eventType="touchUpInside" id="Fwb-Yb-yC4"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kNE-x4-HaM">
+                            <rect key="frame" x="114" y="83" width="92" height="30"/>
+                            <color key="backgroundColor" red="0.3803921569" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="Bt3-0P-tjF"/>
+                                <constraint firstAttribute="width" constant="92" id="kHX-UW-qWt"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                            <state key="normal" title="Earning">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="disSelectItemAction:" destination="-1" eventType="touchUpInside" id="e2M-oT-9vV"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6H2-ck-278">
+                            <rect key="frame" x="0.0" y="134" width="320" height="1"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="4AM-Rv-Irh"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uvi-1L-zJ9">
+                            <rect key="frame" x="8" y="152" width="62" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="62" id="NRb-dO-vgj"/>
+                                <constraint firstAttribute="height" constant="21" id="XtV-h0-b2E"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sRI-eB-iRI">
+                            <rect key="frame" x="95" y="181" width="83" height="30"/>
+                            <color key="backgroundColor" red="0.3803921569" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="83" id="0M5-zN-EnI"/>
+                                <constraint firstAttribute="height" constant="30" id="blB-ir-wIC"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                            <state key="normal" title="Available">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="disSelectItemAction:" destination="-1" eventType="touchUpInside" id="aep-U9-hDd"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3ja-Ni-LNB">
+                            <rect key="frame" x="193" y="181" width="83" height="30"/>
+                            <color key="backgroundColor" red="0.3803921569" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="83" id="NDA-1V-i77"/>
+                                <constraint firstAttribute="height" constant="30" id="U05-Wf-iNo"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                            <state key="normal" title="Selected">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="disSelectItemAction:" destination="-1" eventType="touchUpInside" id="2Mg-vs-pTO"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YZo-zm-2Oa">
+                            <rect key="frame" x="0.0" y="232" width="320" height="1"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="Ni8-sf-7ot"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category Files:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KOL-B2-t7r">
+                            <rect key="frame" x="8" y="251" width="114" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="114" id="6aY-u4-ZXT"/>
+                                <constraint firstAttribute="height" constant="21" id="Dzy-Wt-Cl2"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="YAY-gk-eMw">
+                            <rect key="frame" x="0.0" y="280" width="320" height="163"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="aEr-4w-ONc">
+                                <size key="itemSize" width="50" height="50"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PoB-tj-xZf">
+                            <rect key="frame" x="10" y="451" width="300" height="34"/>
+                            <color key="backgroundColor" red="0.3803921569" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="34" id="s37-We-DI7"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                            <state key="normal" title="APPLY FILTER">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="applyFilterAction:" destination="-1" eventType="touchUpInside" id="EaJ-e0-11R"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oso-2Q-JDf">
+                            <rect key="frame" x="21" y="181" width="57" height="30"/>
+                            <color key="backgroundColor" red="0.3803921569" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="57" id="aVV-Y1-RIW"/>
+                                <constraint firstAttribute="height" constant="30" id="uOb-ln-I6X"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                            <state key="normal" title="All">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="disSelectItemAction:" destination="-1" eventType="touchUpInside" id="AmY-YN-LlU"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="PoB-tj-xZf" firstAttribute="leading" secondItem="UQE-Hq-HZl" secondAttribute="leading" constant="10" id="1pe-O1-S7o"/>
+                        <constraint firstItem="cSW-Fv-N6h" firstAttribute="top" secondItem="UQE-Hq-HZl" secondAttribute="top" constant="8" id="2DR-rh-CaW"/>
+                        <constraint firstAttribute="trailing" secondItem="6H2-ck-278" secondAttribute="trailing" id="4kh-Es-Ekm"/>
+                        <constraint firstItem="Uvi-1L-zJ9" firstAttribute="top" secondItem="6H2-ck-278" secondAttribute="bottom" constant="17" id="6jy-fh-Y50"/>
+                        <constraint firstAttribute="trailing" secondItem="9bI-Ay-kwo" secondAttribute="trailing" constant="8" id="8Qo-K7-agF"/>
+                        <constraint firstItem="qxP-Ga-Ipw" firstAttribute="leading" secondItem="UQE-Hq-HZl" secondAttribute="leading" constant="21" id="A4c-Dl-YiH"/>
+                        <constraint firstItem="cSW-Fv-N6h" firstAttribute="leading" secondItem="UQE-Hq-HZl" secondAttribute="leading" constant="8" id="C0N-L0-eIz"/>
+                        <constraint firstItem="3ja-Ni-LNB" firstAttribute="top" secondItem="6H2-ck-278" secondAttribute="bottom" constant="46" id="D2d-bb-4yf"/>
+                        <constraint firstItem="oso-2Q-JDf" firstAttribute="top" secondItem="Uvi-1L-zJ9" secondAttribute="bottom" constant="8" id="Igy-1S-mzc"/>
+                        <constraint firstItem="9bI-Ay-kwo" firstAttribute="top" secondItem="UQE-Hq-HZl" secondAttribute="top" constant="8" id="IiL-BQ-aCg"/>
+                        <constraint firstAttribute="trailing" secondItem="PoB-tj-xZf" secondAttribute="trailing" constant="10" id="Kel-Nf-BhZ"/>
+                        <constraint firstItem="YAY-gk-eMw" firstAttribute="leading" secondItem="UQE-Hq-HZl" secondAttribute="leading" id="N2f-PY-p0S"/>
+                        <constraint firstItem="qxP-Ga-Ipw" firstAttribute="top" secondItem="51x-bd-wBV" secondAttribute="bottom" constant="8" id="Udr-IA-3tz"/>
+                        <constraint firstAttribute="height" constant="493" id="VKz-iA-nat"/>
+                        <constraint firstItem="ZFn-Yv-cof" firstAttribute="top" secondItem="cSW-Fv-N6h" secondAttribute="bottom" constant="7" id="Won-kc-FH7"/>
+                        <constraint firstAttribute="trailing" secondItem="YZo-zm-2Oa" secondAttribute="trailing" id="ZMv-YY-Uw1"/>
+                        <constraint firstItem="sRI-eB-iRI" firstAttribute="leading" secondItem="oso-2Q-JDf" secondAttribute="trailing" constant="17" id="a5i-Hy-qqQ"/>
+                        <constraint firstItem="6H2-ck-278" firstAttribute="top" secondItem="kNE-x4-HaM" secondAttribute="bottom" constant="21" id="aGi-OE-00P"/>
+                        <constraint firstAttribute="trailing" secondItem="YAY-gk-eMw" secondAttribute="trailing" id="aly-sv-iu8"/>
+                        <constraint firstItem="sRI-eB-iRI" firstAttribute="top" secondItem="6H2-ck-278" secondAttribute="bottom" constant="46" id="cWS-gm-uzp"/>
+                        <constraint firstItem="kNE-x4-HaM" firstAttribute="leading" secondItem="qxP-Ga-Ipw" secondAttribute="trailing" constant="17" id="cmK-Ga-Ph1"/>
+                        <constraint firstItem="YZo-zm-2Oa" firstAttribute="leading" secondItem="UQE-Hq-HZl" secondAttribute="leading" id="gS3-f7-C52"/>
+                        <constraint firstItem="6H2-ck-278" firstAttribute="leading" secondItem="UQE-Hq-HZl" secondAttribute="leading" id="hb4-so-ePV"/>
+                        <constraint firstItem="51x-bd-wBV" firstAttribute="leading" secondItem="UQE-Hq-HZl" secondAttribute="leading" constant="8" id="jDq-I7-zNh"/>
+                        <constraint firstAttribute="bottom" secondItem="PoB-tj-xZf" secondAttribute="bottom" constant="8" id="jbD-dS-p7w"/>
+                        <constraint firstItem="PoB-tj-xZf" firstAttribute="top" secondItem="YAY-gk-eMw" secondAttribute="bottom" constant="8" id="kI5-0V-Hc4"/>
+                        <constraint firstItem="KOL-B2-t7r" firstAttribute="top" secondItem="YZo-zm-2Oa" secondAttribute="bottom" constant="18" id="kyK-2N-gk4"/>
+                        <constraint firstItem="ZFn-Yv-cof" firstAttribute="leading" secondItem="UQE-Hq-HZl" secondAttribute="leading" id="nBT-6O-aNA"/>
+                        <constraint firstItem="3ja-Ni-LNB" firstAttribute="leading" secondItem="sRI-eB-iRI" secondAttribute="trailing" constant="15" id="nS3-ej-BRT"/>
+                        <constraint firstItem="kNE-x4-HaM" firstAttribute="top" secondItem="ZFn-Yv-cof" secondAttribute="bottom" constant="46" id="oUb-EU-dMq"/>
+                        <constraint firstItem="51x-bd-wBV" firstAttribute="top" secondItem="ZFn-Yv-cof" secondAttribute="bottom" constant="17" id="p41-nk-AbW"/>
+                        <constraint firstItem="YZo-zm-2Oa" firstAttribute="top" secondItem="3ja-Ni-LNB" secondAttribute="bottom" constant="21" id="syb-CC-4st"/>
+                        <constraint firstItem="YAY-gk-eMw" firstAttribute="top" secondItem="KOL-B2-t7r" secondAttribute="bottom" constant="8" id="tnk-T9-tHR"/>
+                        <constraint firstItem="oso-2Q-JDf" firstAttribute="leading" secondItem="UQE-Hq-HZl" secondAttribute="leading" constant="21" id="uD3-lT-IHD"/>
+                        <constraint firstItem="KOL-B2-t7r" firstAttribute="leading" secondItem="UQE-Hq-HZl" secondAttribute="leading" constant="8" id="wo8-Yp-8yR"/>
+                        <constraint firstItem="Uvi-1L-zJ9" firstAttribute="leading" secondItem="UQE-Hq-HZl" secondAttribute="leading" constant="8" id="yHs-qv-FyD"/>
+                        <constraint firstAttribute="trailing" secondItem="ZFn-Yv-cof" secondAttribute="trailing" id="zfP-1G-EmE"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="UQE-Hq-HZl" secondAttribute="trailing" id="S9E-A7-e9G"/>
+                <constraint firstItem="UQE-Hq-HZl" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="WPV-pN-DRN"/>
+                <constraint firstAttribute="bottom" secondItem="UQE-Hq-HZl" secondAttribute="bottom" id="vKE-6v-6fG"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <point key="canvasLocation" x="303" y="329"/>
+        </view>
+    </objects>
+</document>
