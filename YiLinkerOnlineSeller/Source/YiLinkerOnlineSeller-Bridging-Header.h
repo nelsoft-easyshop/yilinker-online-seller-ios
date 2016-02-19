@@ -13,4 +13,3 @@
 #import <Social/Social.h>
 #import <GooglePlus/GooglePlus.h>
 #import <GoogleOpenSource/GoogleOpenSource.h>
-#import <pop/POP.h>

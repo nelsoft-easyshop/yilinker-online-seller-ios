@@ -60,11 +60,6 @@
 		0C8739D71B96CFA5005D2EF8 /* CommonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8739D61B96CFA5005D2EF8 /* CommonHelper.swift */; };
 		0C8739DA1B96E172005D2EF8 /* SuccessUploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8739D81B96E172005D2EF8 /* SuccessUploadViewController.swift */; };
 		0C8739DB1B96E172005D2EF8 /* SuccessUploadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C8739D91B96E172005D2EF8 /* SuccessUploadViewController.xib */; };
-		0C8D51DF1C741A8900345C2C /* AffiliateSelectProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D51DD1C741A8900345C2C /* AffiliateSelectProductViewController.swift */; };
-		0C8D51E01C741A8900345C2C /* AffiliateSelectProductViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C8D51DE1C741A8900345C2C /* AffiliateSelectProductViewController.xib */; };
-		0C8D51E31C7455CE00345C2C /* SelectProductCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D51E11C7455CE00345C2C /* SelectProductCollectionViewCell.swift */; };
-		0C8D51E41C7455CE00345C2C /* SelectProductCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C8D51E21C7455CE00345C2C /* SelectProductCollectionViewCell.xib */; };
-		0C8D51E61C7457B200345C2C /* DiscountLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D51E51C7457B200345C2C /* DiscountLabel.swift */; };
 		0C8D7F871B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7F851B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.swift */; };
 		0C8D7F881B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C8D7F861B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.xib */; };
 		0C8D7F8D1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8D7F8B1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.swift */; };
@@ -112,16 +107,8 @@
 		0CAB52A51B92023E00EA441A /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB52A41B92023E00EA441A /* CategoryModel.swift */; };
 		0CAB52A71B920A5800EA441A /* BrandModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB52A61B920A5800EA441A /* BrandModel.swift */; };
 		0CB1F0D81B931160004C7BA0 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CB1F0D71B931160004C7BA0 /* SignInViewController.xib */; };
-		0CD4B0BD1C7588B100C0D9E6 /* FilterModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4B0BB1C7588B100C0D9E6 /* FilterModalViewController.swift */; };
-		0CD4B0BE1C7588B100C0D9E6 /* FilterModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD4B0BC1C7588B100C0D9E6 /* FilterModalViewController.xib */; };
-		0CD4B0C11C75A01B00C0D9E6 /* SelectCategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4B0BF1C75A01B00C0D9E6 /* SelectCategoryCollectionViewCell.swift */; };
-		0CD4B0C21C75A01B00C0D9E6 /* SelectCategoryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD4B0C01C75A01B00C0D9E6 /* SelectCategoryCollectionViewCell.xib */; };
-		0CD4B0C41C75AD8600C0D9E6 /* AffiliateCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4B0C31C75AD8600C0D9E6 /* AffiliateCategoryModel.swift */; };
-		0CD4B0C61C75BBD700C0D9E6 /* AffiliateProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4B0C51C75BBD700C0D9E6 /* AffiliateProductModel.swift */; };
 		0CE2244C1BBAF89800853AC9 /* SaveButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE2244B1BBAF89800853AC9 /* SaveButtonView.swift */; };
 		0CE2244E1BBAF8AE00853AC9 /* SaveButtonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CE2244D1BBAF8AE00853AC9 /* SaveButtonView.xib */; };
-		0CEA7A071C7475B70072BE3A /* SelectProductFooterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CEA7A051C7475B70072BE3A /* SelectProductFooterCollectionViewCell.swift */; };
-		0CEA7A081C7475B70072BE3A /* SelectProductFooterCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CEA7A061C7475B70072BE3A /* SelectProductFooterCollectionViewCell.xib */; };
 		0CEB3AC11BB052BE00139AFE /* SelectedProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CEB3ABF1BB052BE00139AFE /* SelectedProductTableViewCell.swift */; };
 		0CEB3AC21BB052BE00139AFE /* SelectedProductTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CEB3AC01BB052BE00139AFE /* SelectedProductTableViewCell.xib */; };
 		0CEB3AC41BB0895F00139AFE /* ProductImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BD5E5D1B8DFA5200739488 /* ProductImagesView.swift */; };
@@ -769,11 +756,6 @@
 		0C8739D61B96CFA5005D2EF8 /* CommonHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonHelper.swift; sourceTree = "<group>"; };
 		0C8739D81B96E172005D2EF8 /* SuccessUploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessUploadViewController.swift; sourceTree = "<group>"; };
 		0C8739D91B96E172005D2EF8 /* SuccessUploadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SuccessUploadViewController.xib; path = ../ViewController/SuccessUploadViewController.xib; sourceTree = "<group>"; };
-		0C8D51DD1C741A8900345C2C /* AffiliateSelectProductViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AffiliateSelectProductViewController.swift; sourceTree = "<group>"; };
-		0C8D51DE1C741A8900345C2C /* AffiliateSelectProductViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AffiliateSelectProductViewController.xib; sourceTree = "<group>"; };
-		0C8D51E11C7455CE00345C2C /* SelectProductCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectProductCollectionViewCell.swift; sourceTree = "<group>"; };
-		0C8D51E21C7455CE00345C2C /* SelectProductCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectProductCollectionViewCell.xib; sourceTree = "<group>"; };
-		0C8D51E51C7457B200345C2C /* DiscountLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscountLabel.swift; sourceTree = "<group>"; };
 		0C8D7F851B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadDetailHeaderViewTableViewCell.swift; sourceTree = "<group>"; };
 		0C8D7F861B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadDetailHeaderViewTableViewCell.xib; path = ../View/ProductUploadDetailHeaderViewTableViewCell.xib; sourceTree = "<group>"; };
 		0C8D7F8B1B8EF00C00B3FA4E /* ProductUploadAttributeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadAttributeTableViewCell.swift; sourceTree = "<group>"; };
@@ -821,16 +803,8 @@
 		0CAB52A41B92023E00EA441A /* CategoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		0CAB52A61B920A5800EA441A /* BrandModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrandModel.swift; sourceTree = "<group>"; };
 		0CB1F0D71B931160004C7BA0 /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
-		0CD4B0BB1C7588B100C0D9E6 /* FilterModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilterModalViewController.swift; path = ../../FilterModalViewController.swift; sourceTree = "<group>"; };
-		0CD4B0BC1C7588B100C0D9E6 /* FilterModalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FilterModalViewController.xib; path = ../../FilterModalViewController.xib; sourceTree = "<group>"; };
-		0CD4B0BF1C75A01B00C0D9E6 /* SelectCategoryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCategoryCollectionViewCell.swift; sourceTree = "<group>"; };
-		0CD4B0C01C75A01B00C0D9E6 /* SelectCategoryCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectCategoryCollectionViewCell.xib; sourceTree = "<group>"; };
-		0CD4B0C31C75AD8600C0D9E6 /* AffiliateCategoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AffiliateCategoryModel.swift; sourceTree = "<group>"; };
-		0CD4B0C51C75BBD700C0D9E6 /* AffiliateProductModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AffiliateProductModel.swift; sourceTree = "<group>"; };
 		0CE2244B1BBAF89800853AC9 /* SaveButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveButtonView.swift; sourceTree = "<group>"; };
 		0CE2244D1BBAF8AE00853AC9 /* SaveButtonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SaveButtonView.xib; sourceTree = "<group>"; };
-		0CEA7A051C7475B70072BE3A /* SelectProductFooterCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectProductFooterCollectionViewCell.swift; sourceTree = "<group>"; };
-		0CEA7A061C7475B70072BE3A /* SelectProductFooterCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectProductFooterCollectionViewCell.xib; sourceTree = "<group>"; };
 		0CEB3ABF1BB052BE00139AFE /* SelectedProductTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedProductTableViewCell.swift; sourceTree = "<group>"; };
 		0CEB3AC01BB052BE00139AFE /* SelectedProductTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectedProductTableViewCell.xib; sourceTree = "<group>"; };
 		0CF28EB71B8C85E4005B2E54 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -1623,8 +1597,6 @@
 				F7E4BAA51C5F266F0019A309 /* PayoutEarningsModel.swift */,
 				F7E4BAB71C5F4D1A0019A309 /* PayoutEarningsTypeModel.swift */,
 				F7E4BAB91C5F4D3B0019A309 /* PayoutEarningsTransactionTypeModel.swift */,
-				0CD4B0C31C75AD8600C0D9E6 /* AffiliateCategoryModel.swift */,
-				0CD4B0C51C75BBD700C0D9E6 /* AffiliateProductModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1641,7 +1613,6 @@
 		0CF28EC61B8C85E5005B2E54 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				0C8D51E51C7457B200345C2C /* DiscountLabel.swift */,
 				79A941021C648ABE000682CC /* Login */,
 				0CAAE91E1C5F3401009BE3E0 /* Referral Code */,
 				B7BADADE1BA56265005F59F9 /* Messaging */,
@@ -1773,12 +1744,6 @@
 				F7E4BAB01C5F36A00019A309 /* PayoutEarningsTypeTableViewCell.xib */,
 				F7E4BAB31C5F405B0019A309 /* PayoutEarningsTransactionTypeTableViewCell.swift */,
 				F7E4BAB41C5F405B0019A309 /* PayoutEarningsTransactionTypeTableViewCell.xib */,
-				0C8D51E11C7455CE00345C2C /* SelectProductCollectionViewCell.swift */,
-				0C8D51E21C7455CE00345C2C /* SelectProductCollectionViewCell.xib */,
-				0CEA7A051C7475B70072BE3A /* SelectProductFooterCollectionViewCell.swift */,
-				0CEA7A061C7475B70072BE3A /* SelectProductFooterCollectionViewCell.xib */,
-				0CD4B0BF1C75A01B00C0D9E6 /* SelectCategoryCollectionViewCell.swift */,
-				0CD4B0C01C75A01B00C0D9E6 /* SelectCategoryCollectionViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1786,14 +1751,17 @@
 		0CF28EC71B8C85E5005B2E54 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				266DA2341C698ED5007BFA47 /* BalanceWithdrawalViewsViewController.swift */,
+				266DA2351C698ED5007BFA47 /* BalanceWithdrawalViewsViewController.xib */,
+				79A940FF1C648AA5000682CC /* Login */,
+				B7BADADD1BA5625D005F59F9 /* Messaging */,
+				960374931BA7F4050028DA96 /* NewDisputeTableViewController.swift */,
+				79DE3D8A1C0E018900984E69 /* HelpViewController.swift */,
+				961F702B1B97F057007D0EA5 /* CaseDetailsTableViewController.swift */,
 				79EFF75A1B8D6DC1008A9E7D /* ActivityLogTableViewController.swift */,
 				F7AC5F5D1B9A9C8C00227D18 /* AddAddressTableViewController.swift */,
 				26B5B23F1B94DE4200CBDDE5 /* AddCustomizedCategoryViewController.swift */,
 				2618DD6F1B970E210030C6D2 /* AddSubCategoriesViewController.swift */,
-				267C527A1C5F520600739850 /* BalanceRecordModel.swift */,
-				266DA2341C698ED5007BFA47 /* BalanceWithdrawalViewsViewController.swift */,
-				266DA2351C698ED5007BFA47 /* BalanceWithdrawalViewsViewController.xib */,
-				961F702B1B97F057007D0EA5 /* CaseDetailsTableViewController.swift */,
 				F7C40F621B983ACD0091C16C /* ChangeAddressViewController.swift */,
 				F7C40F641B983AD10091C16C /* ChangeBankAccountViewController.swift */,
 				F7C40F661B983AD60091C16C /* ChangeEmailViewController.swift */,
@@ -1806,52 +1774,17 @@
 				26B5B2511B94F37000CBDDE5 /* CustomizedCategoryViewsViewController.swift */,
 				0CF28EC81B8C85E5005B2E54 /* DashboardViewController.swift */,
 				7928764C1B8E1FD800762A39 /* DatePickerViewController.swift */,
-				7985D35B1BB0259F0060E5F5 /* DeactivateModalViewController.swift */,
-				7985D35C1BB0259F0060E5F5 /* DeactivateModalViewController.xib */,
 				961F702D1B97F077007D0EA5 /* DisputeViewController.swift */,
 				2618DD731B975E910030C6D2 /* EditSubCategoriesRemovedTableViewCell.swift */,
 				2625FEA31B96A92500DD24AF /* EditSubCategoriesViewController.swift */,
-				F7CB78411B9D822C001AF766 /* FilterCalendarTableViewCell.swift */,
-				F7CB78421B9D822C001AF766 /* FilterCalendarTableViewCell.xib */,
-				F79402FE1BC00D6E00CD21DD /* FilterHeaderSectiionViewController.swift */,
-				F79402FF1BC00D6E00CD21DD /* FilterHeaderSectiionViewController.xib */,
-				F7E739F11BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.swift */,
-				F7E739F21BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.xib */,
-				F7CCEEF81BBEC41D00D876C2 /* FilterResultsRiderNameViewController.swift */,
-				F7CCEEF91BBEC41D00D876C2 /* FilterResultsRiderNameViewController.xib */,
 				F7C40F761B983B490091C16C /* FilterResultsViewController.swift */,
-				F79403021BC00E8D00CD21DD /* FilterSeactionHeaderView.swift */,
 				F7C40F7A1B983B570091C16C /* FilterViewController.swift */,
 				794880791B94D9BD0090B259 /* FollowersViewController.swift */,
-				79DE3D8A1C0E018900984E69 /* HelpViewController.swift */,
-				79A940FF1C648AA5000682CC /* Login */,
 				0CF28EC91B8C85E5005B2E54 /* MessageViewController.swift */,
-				B7BADADD1BA5625D005F59F9 /* Messaging */,
 				79EDA4011B9204B10037558A /* MyPointsTableViewController.swift */,
 				F7AC5F811B9ACB6500227D18 /* NewAddressHeaderTableViewCell.swift */,
 				F7AC5F821B9ACB6500227D18 /* NewAddressHeaderTableViewCell.xib */,
 				F7AC5F771B9AA45D00227D18 /* NewAddressTableViewCell.swift */,
-				960374931BA7F4050028DA96 /* NewDisputeTableViewController.swift */,
-				0C942BB51BAFF8700049A6B0 /* NewDisputeTableViewController2.swift */,
-				0C942BB61BAFF8700049A6B0 /* NewDisputeTableViewController2.xib */,
-				265C9C531C5B5E70002181CD /* PayoutBalanceRecordViewController.swift */,
-				265C9C541C5B5E70002181CD /* PayoutBalanceRecordViewController.xib */,
-				265C9C4B1C5B5E1C002181CD /* PayoutBalanceWithdrawalViewController.swift */,
-				265C9C4C1C5B5E1C002181CD /* PayoutBalanceWithdrawalViewController.xib */,
-				F7E4BAAB1C5F36770019A309 /* PayoutEarningsTypeViewController.swift */,
-				F7E4BAAC1C5F36770019A309 /* PayoutEarningsTypeViewController.xib */,
-				F7E4BAA11C5F236C0019A309 /* PayoutEarningsViewController.swift */,
-				F7E4BAA21C5F236C0019A309 /* PayoutEarningsViewController.xib */,
-				F7E4BA871C5EE6740019A309 /* PayoutRequestListDetailViewController.swift */,
-				F7E4BA881C5EE6740019A309 /* PayoutRequestListDetailViewController.xib */,
-				F7E4BA9D1C5F1F8E0019A309 /* PayoutRequestListViewController.swift */,
-				F7E4BA9E1C5F1F8E0019A309 /* PayoutRequestListViewController.xib */,
-				26D2BBA41C6080DC00485F27 /* PayoutSummaryTableViewCell.swift */,
-				26D2BBA51C6080DC00485F27 /* PayoutSummaryTableViewCell.xib */,
-				265C9C4F1C5B5E30002181CD /* PayoutSummaryViewController.swift */,
-				265C9C501C5B5E30002181CD /* PayoutSummaryViewController.xib */,
-				265C9C2B1C5B5B91002181CD /* PayoutViewController.swift */,
-				265C9C2C1C5B5B91002181CD /* PayoutViewController.xib */,
 				26BD5E5F1B8DFA6400739488 /* ProductDescriptionView.swift */,
 				26BD5E611B8E1A3500739488 /* ProductDescriptionViewController.swift */,
 				26BD5E4B1B8DC49800739488 /* ProductDetailsTableViewCell.swift */,
@@ -1875,16 +1808,11 @@
 				79EFF77E1B8DB3C8008A9E7D /* RecentProductsTableViewController.swift */,
 				0CAACCC21B9D8EA500BE5EF3 /* ResellerItemViewController.swift */,
 				0CAACCAE1B9D2DC000BE5EF3 /* ResellerViewController.swift */,
-				0C51C2FB1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.swift */,
-				0C51C2FC1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.xib */,
 				961F70331B97F7A5007D0EA5 /* ResolutionCenterViewController.swift */,
-				F721FCB21BFB08850009E645 /* ResolutionCenterViewControllerV2.swift */,
 				961F70351B983E50007D0EA5 /* ResolutionFilterViewController.swift */,
 				79EFF7881B8DCFA2008A9E7D /* SalesReportTableViewController.swift */,
 				79EFF7761B8D9274008A9E7D /* SalesReportViewController.swift */,
 				0CF28ECA1B8C85E5005B2E54 /* SearchViewController.swift */,
-				265C9C571C5B5E92002181CD /* SelectDateViewController.swift */,
-				265C9C581C5B5E92002181CD /* SelectDateViewController.xib */,
 				0CF28ECB1B8C85E5005B2E54 /* SettingsViewController.swift */,
 				26374D9E1B8F50A4006C639B /* SignInViewController.swift */,
 				F7C40F861B983B810091C16C /* StoreInfoViewController.swift */,
@@ -1895,8 +1823,6 @@
 				26DB062F1B98BF2C00D38EA8 /* TransactionCollectionViewCell.swift */,
 				79E633AE1B9B3C330062DB14 /* TransactionDeliveryLogTableViewController.swift */,
 				79EF7ABB1B99C3F60082CD35 /* TransactionDetailsTableViewController.swift */,
-				795111E51BBC0E7800ADDEE1 /* TransactionProductDescriptionViewController.swift */,
-				795111E61BBC0E7800ADDEE1 /* TransactionProductDescriptionViewController.xib */,
 				79E633681B9AB59A0062DB14 /* TransactionProductTableViewController.swift */,
 				79E633841B9B15FD0062DB14 /* TransactionShipItemTableViewController.swift */,
 				26DB06311B98BF2C00D38EA8 /* TransactionTableViewCell.swift */,
@@ -1904,22 +1830,57 @@
 				26DB06331B98BF2C00D38EA8 /* TransactionViewController.swift */,
 				F7C40F881B983B860091C16C /* VerifyNumberViewController.swift */,
 				F7C40F8A1B983B8D0091C16C /* VerifyViewController.swift */,
-				267C52661C5F197500739850 /* WithdrawAmountView.swift */,
+				F7CB78411B9D822C001AF766 /* FilterCalendarTableViewCell.swift */,
+				F7CB78421B9D822C001AF766 /* FilterCalendarTableViewCell.xib */,
+				F7E739F11BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.swift */,
+				F7E739F21BA7E0C300F9C5B8 /* FilterResultsCollectionViewCell.xib */,
+				0C942BB51BAFF8700049A6B0 /* NewDisputeTableViewController2.swift */,
+				0C942BB61BAFF8700049A6B0 /* NewDisputeTableViewController2.xib */,
+				0C51C2FB1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.swift */,
+				0C51C2FC1BB03A4200F4D2D6 /* ResolutionCenterProductListViewController.xib */,
+				7985D35B1BB0259F0060E5F5 /* DeactivateModalViewController.swift */,
+				7985D35C1BB0259F0060E5F5 /* DeactivateModalViewController.xib */,
+				795111E51BBC0E7800ADDEE1 /* TransactionProductDescriptionViewController.swift */,
+				795111E61BBC0E7800ADDEE1 /* TransactionProductDescriptionViewController.xib */,
+				F79402FE1BC00D6E00CD21DD /* FilterHeaderSectiionViewController.swift */,
+				F79403021BC00E8D00CD21DD /* FilterSeactionHeaderView.swift */,
+				F79402FF1BC00D6E00CD21DD /* FilterHeaderSectiionViewController.xib */,
+				F7CCEEF81BBEC41D00D876C2 /* FilterResultsRiderNameViewController.swift */,
+				F7CCEEF91BBEC41D00D876C2 /* FilterResultsRiderNameViewController.xib */,
+				F721FCB21BFB08850009E645 /* ResolutionCenterViewControllerV2.swift */,
+				265C9C2B1C5B5B91002181CD /* PayoutViewController.swift */,
+				265C9C2C1C5B5B91002181CD /* PayoutViewController.xib */,
+				265C9C4B1C5B5E1C002181CD /* PayoutBalanceWithdrawalViewController.swift */,
+				265C9C4C1C5B5E1C002181CD /* PayoutBalanceWithdrawalViewController.xib */,
+				265C9C4F1C5B5E30002181CD /* PayoutSummaryViewController.swift */,
+				265C9C501C5B5E30002181CD /* PayoutSummaryViewController.xib */,
+				265C9C531C5B5E70002181CD /* PayoutBalanceRecordViewController.swift */,
+				265C9C541C5B5E70002181CD /* PayoutBalanceRecordViewController.xib */,
+				265C9C571C5B5E92002181CD /* SelectDateViewController.swift */,
+				265C9C581C5B5E92002181CD /* SelectDateViewController.xib */,
 				267C52641C5F195300739850 /* WithdrawAvailableBalanceView.swift */,
-				267C526E1C5F19D800739850 /* WithdrawConfirmationCodeView.swift */,
-				26335AAA1C69E8D600018423 /* WithdrawContactCSR.swift */,
-				267C526A1C5F19A800739850 /* WithdrawDepositToView.swift */,
+				267C52661C5F197500739850 /* WithdrawAmountView.swift */,
 				267C52681C5F199100739850 /* WithdrawMethodView.swift */,
+				267C526A1C5F19A800739850 /* WithdrawDepositToView.swift */,
 				267C526C1C5F19BE00739850 /* WithdrawMobileNoView.swift */,
-				26D2BBA01C60424100485F27 /* WithdrawModalViewController.swift */,
-				26D2BBA11C60424100485F27 /* WithdrawModalViewController.xib */,
+				267C526E1C5F19D800739850 /* WithdrawConfirmationCodeView.swift */,
 				267C52701C5F19E700739850 /* WithdrawProceedView.swift */,
 				267C52721C5F1F1700739850 /* WithdrawTableViewController.swift */,
 				267C52731C5F1F1700739850 /* WithdrawTableViewController.xib */,
-				0C8D51DD1C741A8900345C2C /* AffiliateSelectProductViewController.swift */,
-				0C8D51DE1C741A8900345C2C /* AffiliateSelectProductViewController.xib */,
-				0CD4B0BB1C7588B100C0D9E6 /* FilterModalViewController.swift */,
-				0CD4B0BC1C7588B100C0D9E6 /* FilterModalViewController.xib */,
+				267C527A1C5F520600739850 /* BalanceRecordModel.swift */,
+				F7E4BA9D1C5F1F8E0019A309 /* PayoutRequestListViewController.swift */,
+				F7E4BA9E1C5F1F8E0019A309 /* PayoutRequestListViewController.xib */,
+				F7E4BA871C5EE6740019A309 /* PayoutRequestListDetailViewController.swift */,
+				F7E4BA881C5EE6740019A309 /* PayoutRequestListDetailViewController.xib */,
+				F7E4BAA11C5F236C0019A309 /* PayoutEarningsViewController.swift */,
+				F7E4BAA21C5F236C0019A309 /* PayoutEarningsViewController.xib */,
+				F7E4BAAB1C5F36770019A309 /* PayoutEarningsTypeViewController.swift */,
+				F7E4BAAC1C5F36770019A309 /* PayoutEarningsTypeViewController.xib */,
+				26D2BBA01C60424100485F27 /* WithdrawModalViewController.swift */,
+				26D2BBA11C60424100485F27 /* WithdrawModalViewController.xib */,
+				26D2BBA41C6080DC00485F27 /* PayoutSummaryTableViewCell.swift */,
+				26D2BBA51C6080DC00485F27 /* PayoutSummaryTableViewCell.xib */,
+				26335AAA1C69E8D600018423 /* WithdrawContactCSR.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2591,7 +2552,6 @@
 				79E633A61B9B27E70062DB14 /* Info.plist in Resources */,
 				0CF28F051B8CA2E9005B2E54 /* Panton.otf in Resources */,
 				26BD5E641B8E1A3500739488 /* ProductDescriptionViewController.xib in Resources */,
-				0CEA7A081C7475B70072BE3A /* SelectProductFooterCollectionViewCell.xib in Resources */,
 				F7E4BAAA1C5F28A80019A309 /* PayoutEarningsTableViewCell.xib in Resources */,
 				79E633791B9AE9AA0062DB14 /* TransactionDetailsFooterView.xib in Resources */,
 				79A9411E1C648AD6000682CC /* SimplifiedLoginUICollectionViewCell.xib in Resources */,
@@ -2614,7 +2574,6 @@
 				2625FEA21B95F5E800DD24AF /* AddItemTableViewCell.xib in Resources */,
 				F7AC5F841B9ACB6500227D18 /* NewAddressHeaderTableViewCell.xib in Resources */,
 				0C65F8F11B8E3CB000504D86 /* ProductUploadDetailTableViewController.xib in Resources */,
-				0CD4B0C21C75A01B00C0D9E6 /* SelectCategoryCollectionViewCell.xib in Resources */,
 				79EDA4161B9205080037558A /* PointsTableViewCell.xib in Resources */,
 				79E6336B1B9AB59A0062DB14 /* TransactionProductTableViewController.xib in Resources */,
 				7948807C1B94D9BD0090B259 /* FollowersViewController.xib in Resources */,
@@ -2650,7 +2609,6 @@
 				0C65F8D11B8E059A00504D86 /* ProductUploadButtonTableViewCell.xib in Resources */,
 				0C8D7F961B8F12C200B3FA4E /* ProductUploadAttributeListTableViewController.xib in Resources */,
 				F7C40FD61B983CD90091C16C /* dummy-placeholder.jpg in Resources */,
-				0C8D51E41C7455CE00345C2C /* SelectProductCollectionViewCell.xib in Resources */,
 				0C6661AD1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.xib in Resources */,
 				795111E81BBC0E7800ADDEE1 /* TransactionProductDescriptionViewController.xib in Resources */,
 				7948807E1B94DAA50090B259 /* FollowerTableViewCell.xib in Resources */,
@@ -2695,7 +2653,6 @@
 				26B282FA1B921BAF00A7C2B1 /* ProductManagementModelViewController.xib in Resources */,
 				F7C40FB71B983C410091C16C /* ChangeAddressCollectionViewCell.xib in Resources */,
 				26DB06361B98BF2C00D38EA8 /* TransactionCollectionViewCell.xib in Resources */,
-				0C8D51E01C741A8900345C2C /* AffiliateSelectProductViewController.xib in Resources */,
 				F79403011BC00D6E00CD21DD /* FilterHeaderSectiionViewController.xib in Resources */,
 				26D2BBA31C60424100485F27 /* WithdrawModalViewController.xib in Resources */,
 				0CF28EF41B8CA2E9005B2E54 /* Black Italic.otf in Resources */,
@@ -2741,7 +2698,6 @@
 				2686E37F1B95D44D00E8FA80 /* AddItemViewController.xib in Resources */,
 				79EDA4131B9205080037558A /* PointsBreakdownTableViewCell.xib in Resources */,
 				0CAACCBC1B9D857900BE5EF3 /* ResellerCollectionReusableView.xib in Resources */,
-				0CD4B0BE1C7588B100C0D9E6 /* FilterModalViewController.xib in Resources */,
 				F7C40FB11B983C2B0091C16C /* ChangeBankAccountViewController.xib in Resources */,
 				B76DE7511BF1BA2F006D9974 /* GoogleService-Info.plist in Resources */,
 				F7C40FB51B983C370091C16C /* ChangeAddressFooterCollectionViewCell.xib in Resources */,
@@ -2890,7 +2846,6 @@
 				0C6E7D391BAD67420079EF78 /* ResellerGetProductModel.swift in Sources */,
 				79E633771B9AD2570062DB14 /* TransactionProductDescriptionTableViewCell.swift in Sources */,
 				26B282FC1B929BE300A7C2B1 /* APIManager.swift in Sources */,
-				0CEA7A071C7475B70072BE3A /* SelectProductFooterCollectionViewCell.swift in Sources */,
 				F7AE35FF1C08054B00A1C9CE /* FaImagePickerController.swift in Sources */,
 				26378F511B8CEE82008533B6 /* ProductManagementTableViewCell.swift in Sources */,
 				2625FEA51B96A92500DD24AF /* EditSubCategoriesViewController.swift in Sources */,
@@ -2996,17 +2951,14 @@
 				792876321B8DF89F00762A39 /* ChartXAxisRendererRadarChart.swift in Sources */,
 				79E633A11B9B27E70062DB14 /* FSCalendarAppearance.m in Sources */,
 				7928762E1B8DF89F00762A39 /* ChartRendererBase.swift in Sources */,
-				0CD4B0C61C75BBD700C0D9E6 /* AffiliateProductModel.swift in Sources */,
 				792876301B8DF89F00762A39 /* ChartXAxisRendererBarChart.swift in Sources */,
 				F7AC5F761B9AA3B400227D18 /* ErrorModel.swift in Sources */,
-				0CD4B0BD1C7588B100C0D9E6 /* FilterModalViewController.swift in Sources */,
 				F7CCEEFA1BBEC41D00D876C2 /* FilterResultsRiderNameViewController.swift in Sources */,
 				26B5B2411B94DE4200CBDDE5 /* AddCustomizedCategoryViewController.swift in Sources */,
 				792876351B8DF89F00762A39 /* ChartYAxisRendererRadarChart.swift in Sources */,
 				7985D36C1BB05C500060E5F5 /* DeliveryLogsModel.swift in Sources */,
 				F7AC5F741B9AA32D00227D18 /* AddressModelV2.swift in Sources */,
 				7928763F1B8DF89F00762A39 /* ChartSelectionDetail.swift in Sources */,
-				0C8D51E61C7457B200345C2C /* DiscountLabel.swift in Sources */,
 				7928760B1B8DF89F00762A39 /* BarLineScatterCandleChartData.swift in Sources */,
 				79A941171C648AD6000682CC /* LoginTableViewCell.swift in Sources */,
 				7928760E1B8DF89F00762A39 /* BubbleChartDataEntry.swift in Sources */,
@@ -3027,7 +2979,6 @@
 				792876101B8DF89F00762A39 /* CandleChartData.swift in Sources */,
 				0CF28ED21B8C85E5005B2E54 /* IPhoneType.swift in Sources */,
 				79E6336A1B9AB59A0062DB14 /* TransactionProductTableViewController.swift in Sources */,
-				0C8D51E31C7455CE00345C2C /* SelectProductCollectionViewCell.swift in Sources */,
 				0C8D7F871B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.swift in Sources */,
 				79E633A91B9B27E70062DB14 /* UIView+FSExtension.m in Sources */,
 				0C65F8F01B8E3CB000504D86 /* ProductUploadDetailTableViewController.swift in Sources */,
@@ -3042,6 +2993,7 @@
 				0C65F8C81B8DEE6400504D86 /* ProductUploadPriceTableViewCell.swift in Sources */,
 				0CAB52A71B920A5800EA441A /* BrandModel.swift in Sources */,
 				79A9411D1C648AD6000682CC /* SimplifiedLoginUICollectionViewCell.swift in Sources */,
+				267C52621C5F0AC800739850 /* BalanceWithdrawalViews.swift in Sources */,
 				79A941211C648AD6000682CC /* ForgotPasswordTableViewCell.swift in Sources */,
 				0C8D7F921B8F0A7D00B3FA4E /* ProductModel.swift in Sources */,
 				0C6661A51B906FBF005ADFDD /* JSONResponseSerializer.swift in Sources */,
@@ -3101,7 +3053,6 @@
 				F7AE35FE1C08054B00A1C9CE /* AssetCollectionViewController.swift in Sources */,
 				F7E5F1811C57749C00B34D60 /* StoreInfoReferralCodeTableViewCell.swift in Sources */,
 				0C6661AC1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.swift in Sources */,
-				0C8D51DF1C741A8900345C2C /* AffiliateSelectProductViewController.swift in Sources */,
 				0C8739D71B96CFA5005D2EF8 /* CommonHelper.swift in Sources */,
 				F7C40F511B983A590091C16C /* BankAccountModel.swift in Sources */,
 				0C8D7FB91B8FC79E00B3FA4E /* ProductUploadCombinationFooterTableViewCell.swift in Sources */,
@@ -3128,7 +3079,6 @@
 				0C65F8B21B8DC9AC00504D86 /* ProductUploadCategoryViewController.swift in Sources */,
 				0CE2244C1BBAF89800853AC9 /* SaveButtonView.swift in Sources */,
 				0C8D7FAD1B8FBDB400B3FA4E /* ProductUploadCombinationListViewController.swift in Sources */,
-				0CD4B0C41C75AD8600C0D9E6 /* AffiliateCategoryModel.swift in Sources */,
 				2686E3731B956B7400E8FA80 /* CCCItemImagesView.swift in Sources */,
 				0C8D7F9F1B8F1B7800B3FA4E /* PUAttributeSetHeaderTableViewCell.swift in Sources */,
 				B7BADAE81BA563A5005F59F9 /* W_Conversation.swift in Sources */,
@@ -3283,7 +3233,6 @@
 				0CAB52A31B91F9FB00EA441A /* ConditionParserModel.swift in Sources */,
 				2618DD791B9788470030C6D2 /* EdititemsViewController.swift in Sources */,
 				26BD5E601B8DFA6400739488 /* ProductDescriptionView.swift in Sources */,
-				0CD4B0C11C75A01B00C0D9E6 /* SelectCategoryCollectionViewCell.swift in Sources */,
 				792876391B8DF89F00762A39 /* LineScatterCandleRadarChartRenderer.swift in Sources */,
 				F7E4BA8D1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.swift in Sources */,
 				F7E96F9A1C5B4C9D00DAC58F /* PayoutRequestListTableViewCell.swift in Sources */,
