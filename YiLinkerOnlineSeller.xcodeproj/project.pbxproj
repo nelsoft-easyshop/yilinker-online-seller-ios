@@ -403,6 +403,8 @@
 		79A9412C1C64927F000682CC /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A9412B1C64927F000682CC /* Delay.swift */; };
 		79A9412F1C64A447000682CC /* LoginUserTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A9412D1C64A447000682CC /* LoginUserTypeTableViewCell.swift */; };
 		79A941301C64A447000682CC /* LoginUserTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79A9412E1C64A447000682CC /* LoginUserTypeTableViewCell.xib */; };
+		79B629F11C76B66000D6F052 /* EditProfileChangeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B629EF1C76B66000D6F052 /* EditProfileChangeTableViewCell.swift */; };
+		79B629F21C76B66000D6F052 /* EditProfileChangeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79B629F01C76B66000D6F052 /* EditProfileChangeTableViewCell.xib */; };
 		79C071151B9F2B7D0032B7A5 /* TransactionOrderProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C071141B9F2B7D0032B7A5 /* TransactionOrderProductModel.swift */; };
 		79C071171B9F2CCF0032B7A5 /* TransactionDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C071161B9F2CCF0032B7A5 /* TransactionDetailsModel.swift */; };
 		79DE3D8B1C0E018900984E69 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DE3D8A1C0E018900984E69 /* HelpViewController.swift */; };
@@ -1111,6 +1113,8 @@
 		79A9412B1C64927F000682CC /* Delay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Delay.swift; sourceTree = "<group>"; };
 		79A9412D1C64A447000682CC /* LoginUserTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginUserTypeTableViewCell.swift; sourceTree = "<group>"; };
 		79A9412E1C64A447000682CC /* LoginUserTypeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginUserTypeTableViewCell.xib; sourceTree = "<group>"; };
+		79B629EF1C76B66000D6F052 /* EditProfileChangeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileChangeTableViewCell.swift; sourceTree = "<group>"; };
+		79B629F01C76B66000D6F052 /* EditProfileChangeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileChangeTableViewCell.xib; sourceTree = "<group>"; };
 		79C071141B9F2B7D0032B7A5 /* TransactionOrderProductModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionOrderProductModel.swift; sourceTree = "<group>"; };
 		79C071161B9F2CCF0032B7A5 /* TransactionDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionDetailsModel.swift; sourceTree = "<group>"; };
 		79DE3D8A1C0E018900984E69 /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
@@ -1766,6 +1770,8 @@
 				79F07FFC1C74578A007F2998 /* EditProfileAddressTableViewCell.xib */,
 				79F07FF71C7450B2007F2998 /* ImageUploadLoader.swift */,
 				79F07FF91C7450D2007F2998 /* ImageUploadLoader.xib */,
+				79B629EF1C76B66000D6F052 /* EditProfileChangeTableViewCell.swift */,
+				79B629F01C76B66000D6F052 /* EditProfileChangeTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2694,6 +2700,7 @@
 				79E633831B9B07670062DB14 /* TransactionCancelOrderSuccessViewController.xib in Resources */,
 				F7C40F9B1B983BD90091C16C /* FilterViewController.xib in Resources */,
 				79A941221C648AD6000682CC /* ForgotPasswordTableViewCell.xib in Resources */,
+				79B629F21C76B66000D6F052 /* EditProfileChangeTableViewCell.xib in Resources */,
 				0C65F8CD1B8DF8A000504D86 /* ProductUploadSearchViewController.xib in Resources */,
 				26B5B23E1B94D88D00CBDDE5 /* CustomizedCategoryTableViewCell.xib in Resources */,
 				79EF7AC81B99FB200082CD35 /* TransactionConsigneeTableViewCell.xib in Resources */,
@@ -3009,6 +3016,7 @@
 				792876101B8DF89F00762A39 /* CandleChartData.swift in Sources */,
 				0CF28ED21B8C85E5005B2E54 /* IPhoneType.swift in Sources */,
 				79E6336A1B9AB59A0062DB14 /* TransactionProductTableViewController.swift in Sources */,
+				79B629F11C76B66000D6F052 /* EditProfileChangeTableViewCell.swift in Sources */,
 				0C8D7F871B8EBD7C00B3FA4E /* ProductUploadDetailHeaderViewTableViewCell.swift in Sources */,
 				79E633A91B9B27E70062DB14 /* UIView+FSExtension.m in Sources */,
 				0C65F8F01B8E3CB000504D86 /* ProductUploadDetailTableViewController.swift in Sources */,

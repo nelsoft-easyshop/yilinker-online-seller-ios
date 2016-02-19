@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+        </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="EditProfileChangeTableViewCell" rowHeight="117" id="KGk-i7-Jjw" customClass="EditProfileChangeTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OF9-ok-FVn" userLabel="Address View">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="115"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kvi-Jm-kXC">
+                                <rect key="frame" x="12" y="8" width="351" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="EQz-bX-ad3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="12"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lNh-ol-rmr" userLabel="Line Separator">
+                                <rect key="frame" x="12" y="34" width="351" height="1"/>
+                                <color key="backgroundColor" red="0.90588235289999997" green="0.90588235289999997" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="F5i-hG-YML"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AOq-BL-yaY">
+                                <rect key="frame" x="12" y="47" width="280" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="N01-9P-eFt"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="12"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fdX-Te-jHw">
+                                <rect key="frame" x="12" y="63" width="280" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="hbh-mG-aSZ"/>
+                                </constraints>
+                                <string key="text">Value
+Value
+value</string>
+                                <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vcg-Hg-v7I">
+                                <rect key="frame" x="300" y="57" width="50" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="Lfl-F6-N8i"/>
+                                    <constraint firstAttribute="width" constant="50" id="djN-Nq-1i2"/>
+                                </constraints>
+                                <string key="text">Change
+Button</string>
+                                <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
+                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addressRight.png" translatesAutoresizingMaskIntoConstraints="NO" id="3Qd-dB-Gvl">
+                                <rect key="frame" x="353" y="62" width="10" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="2nb-y4-urN"/>
+                                    <constraint firstAttribute="width" constant="10" id="Kmh-DP-0ON"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="lNh-ol-rmr" secondAttribute="trailing" constant="12" id="Axo-8v-Idy"/>
+                            <constraint firstItem="fdX-Te-jHw" firstAttribute="leading" secondItem="OF9-ok-FVn" secondAttribute="leading" constant="12" id="BKh-nO-12t"/>
+                            <constraint firstItem="kvi-Jm-kXC" firstAttribute="leading" secondItem="OF9-ok-FVn" secondAttribute="leading" constant="12" id="F5T-Ly-Fp9"/>
+                            <constraint firstItem="AOq-BL-yaY" firstAttribute="top" secondItem="lNh-ol-rmr" secondAttribute="bottom" constant="12" id="IaM-UW-H7F"/>
+                            <constraint firstAttribute="trailing" secondItem="3Qd-dB-Gvl" secondAttribute="trailing" constant="12" id="IlZ-mM-OHy"/>
+                            <constraint firstItem="fdX-Te-jHw" firstAttribute="top" secondItem="AOq-BL-yaY" secondAttribute="bottom" constant="1" id="KvQ-ti-6aC"/>
+                            <constraint firstItem="3Qd-dB-Gvl" firstAttribute="leading" secondItem="vcg-Hg-v7I" secondAttribute="trailing" constant="3" id="MDo-1u-qEV"/>
+                            <constraint firstItem="kvi-Jm-kXC" firstAttribute="top" secondItem="OF9-ok-FVn" secondAttribute="top" constant="8" id="SJK-MY-myQ"/>
+                            <constraint firstItem="vcg-Hg-v7I" firstAttribute="leading" secondItem="fdX-Te-jHw" secondAttribute="trailing" constant="8" id="XOe-m6-rxS"/>
+                            <constraint firstAttribute="trailing" secondItem="kvi-Jm-kXC" secondAttribute="trailing" constant="12" id="ZXH-fI-4fi"/>
+                            <constraint firstItem="vcg-Hg-v7I" firstAttribute="top" secondItem="lNh-ol-rmr" secondAttribute="bottom" constant="22" id="few-YW-drR"/>
+                            <constraint firstItem="vcg-Hg-v7I" firstAttribute="leading" secondItem="AOq-BL-yaY" secondAttribute="trailing" constant="8" id="mXm-hA-Oes"/>
+                            <constraint firstItem="lNh-ol-rmr" firstAttribute="leading" secondItem="OF9-ok-FVn" secondAttribute="leading" constant="12" id="tu9-0H-eGb"/>
+                            <constraint firstItem="3Qd-dB-Gvl" firstAttribute="top" secondItem="lNh-ol-rmr" secondAttribute="bottom" constant="27" id="tvz-jL-7Bx"/>
+                            <constraint firstItem="AOq-BL-yaY" firstAttribute="leading" secondItem="OF9-ok-FVn" secondAttribute="leading" constant="12" id="uJl-XZ-Rkr"/>
+                            <constraint firstItem="lNh-ol-rmr" firstAttribute="top" secondItem="kvi-Jm-kXC" secondAttribute="bottom" constant="5" id="yjN-TR-fYi"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" red="0.90588235289999997" green="0.90588235289999997" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="OF9-ok-FVn" secondAttribute="trailing" id="Z5c-aA-JjJ"/>
+                    <constraint firstItem="OF9-ok-FVn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="aMa-Fw-te1"/>
+                    <constraint firstItem="OF9-ok-FVn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="e32-aI-ggc"/>
+                    <constraint firstAttribute="bottom" secondItem="OF9-ok-FVn" secondAttribute="bottom" constant="14" id="t6o-1Y-Y2T"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="arrowImageView" destination="3Qd-dB-Gvl" id="Rsl-cT-LKp"/>
+                <outlet property="changeLabel" destination="vcg-Hg-v7I" id="aE4-Vf-xwf"/>
+                <outlet property="titleLabel" destination="kvi-Jm-kXC" id="aYv-55-nfL"/>
+                <outlet property="valueLabel" destination="fdX-Te-jHw" id="VAJ-kp-iFU"/>
+                <outlet property="valueTitleLabel" destination="AOq-BL-yaY" id="6pk-3Z-Xzu"/>
+            </connections>
+            <point key="canvasLocation" x="271.5" y="177.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="addressRight.png" width="97" height="200"/>
+    </resources>
+</document>

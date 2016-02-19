@@ -16,7 +16,7 @@ enum EditProfileRequestType {
 class EditProfileTableViewController: UITableViewController {
     
     let personalCellIdentifier: String = "EditProfilePersonalTableViewCell"
-    let addressCellIdentifier: String = "EditProfileAddressTableViewCell"
+    let changeCellIdentifier: String = "EditProfileChangeTableViewCell"
     
     var hud: MBProgressHUD?
     
@@ -61,8 +61,8 @@ class EditProfileTableViewController: UITableViewController {
         let personalNib = UINib(nibName: self.personalCellIdentifier, bundle: nil)
         self.tableView.registerNib(personalNib, forCellReuseIdentifier: self.personalCellIdentifier)
         
-        let addressNib = UINib(nibName: self.addressCellIdentifier, bundle: nil)
-        self.tableView.registerNib(addressNib, forCellReuseIdentifier: self.addressCellIdentifier)
+        let changeNib = UINib(nibName: self.changeCellIdentifier, bundle: nil)
+        self.tableView.registerNib(changeNib, forCellReuseIdentifier: self.changeCellIdentifier)
     }
     
     func backAction() {
@@ -210,14 +210,19 @@ class EditProfileTableViewController: UITableViewController {
             cell.delegate = self
             return cell
         } else if indexPath.row == 1 {
-            let cell: EditProfileAddressTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.addressCellIdentifier, forIndexPath: indexPath) as! EditProfileAddressTableViewCell
-            cell.passValue(self.storeInfo!)
-            cell.delegate = self
+            let cell: EditProfileChangeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.changeCellIdentifier, forIndexPath: indexPath) as! EditProfileChangeTableViewCell
+            //Todo Strings
+            cell.setTitle("Store Address")
+            cell.setValueChangeable(true)
+            cell.setValue(self.storeInfo!.title, value: self.storeInfo!.address)
             return cell
         } else if indexPath.row == 2 {
-            let cell: EditProfileAddressTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.addressCellIdentifier, forIndexPath: indexPath) as! EditProfileAddressTableViewCell
-            cell.passValue(self.storeInfo!)
-            cell.delegate = self
+            let cell: EditProfileChangeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.changeCellIdentifier, forIndexPath: indexPath) as! EditProfileChangeTableViewCell
+            //Todo Strings
+            cell.setTitle("Bank Account Information")
+            cell.setValueChangeable(true)
+            let accountInfo: String = "\(self.storeInfo?.accountNumber)\n\(self.storeInfo?.accountName)\n\(self.storeInfo?.bankName)"
+            cell.setValue(self.storeInfo!.accountTitle, value: accountInfo)
             return cell
         } else {
             let cell: EditProfilePersonalTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.personalCellIdentifier, forIndexPath: indexPath) as! EditProfilePersonalTableViewCell
