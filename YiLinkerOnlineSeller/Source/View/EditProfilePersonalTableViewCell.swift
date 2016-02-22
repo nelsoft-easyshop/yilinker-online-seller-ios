@@ -22,16 +22,26 @@ class EditProfilePersonalTableViewCell: UITableViewCell {
     @IBOutlet weak var firstNameLabel: UILabel!
     @IBOutlet weak var lastNameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var passwordLabel: UILabel!
     @IBOutlet weak var tinLabel: UILabel!
     @IBOutlet weak var tinIDLabel: UILabel!
+    @IBOutlet weak var remarksLabel: UILabel!
     
     @IBOutlet weak var mobilePhoneTextField: UITextField!
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var tinTextField: UITextField!
     
     @IBOutlet weak var sendVerificationButton: UIButton!
+    @IBOutlet weak var changePasswordButton: UIButton!
+    @IBOutlet weak var remarksButton: UIButton!
+    @IBOutlet weak var uploadIDButton: UIButton!
+    @IBOutlet weak var remarksConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var remarksView: UIView!
+    @IBOutlet weak var uploadActivityIndicator: UIActivityIndicatorView!
     
     var storeInfo: StoreInfoModel?
     var isEmailVerified: Bool = true
@@ -43,6 +53,8 @@ class EditProfilePersonalTableViewCell: UITableViewCell {
     }
     
     func initializeViews() {
+        self.uploadActivityIndicator.hidden = true
+        
         self.mobilePhoneTextField.delegate = self
         self.firstNameTextField.delegate = self
         self.lastNameTextField.delegate = self
@@ -51,6 +63,8 @@ class EditProfilePersonalTableViewCell: UITableViewCell {
         
         //Set button to round rect
         self.sendVerificationButton.layer.cornerRadius = 5
+        self.changePasswordButton.layer.cornerRadius = 5
+        self.uploadIDButton.layer.cornerRadius = 5
     }
     
     func passValue(storeInfo: StoreInfoModel) {
@@ -82,8 +96,26 @@ class EditProfilePersonalTableViewCell: UITableViewCell {
         }
     }
     
+    func setRemarksStatusHidden(hide: Bool) {
+        if hide {
+            self.remarksLabel.text = ""
+            self.remarksConstraint.constant = 0
+            self.remarksView.hidden = hidden
+        } else {
+            self.remarksConstraint.constant = 20
+            self.remarksView.hidden = hidden
+        }
+    }
+    
     @IBAction func buttonAction(sender: UIButton) {
-        self.delegate?.editProfilePersonalCell(self, didTapSendVerification: sender)
+        if sender == self.sendVerificationButton {
+            self.delegate?.editProfilePersonalCell(self, didTapSendVerification: sender)
+        } else if sender == self.uploadIDButton {
+            self.uploadActivityIndicator.hidden = false
+            self.uploadActivityIndicator.startAnimating()
+        } else if sender == self.changePasswordButton {
+            
+        }
     }
     
     @IBAction func textFieldAction(sender: UITextField) {

@@ -17,6 +17,7 @@ class EditProfileTableViewController: UITableViewController {
     
     let personalCellIdentifier: String = "EditProfilePersonalTableViewCell"
     let changeCellIdentifier: String = "EditProfileChangeTableViewCell"
+    let buttonCellIdentifier: String = "EditProfileButtonTableViewCell"
     
     var hud: MBProgressHUD?
     
@@ -35,6 +36,7 @@ class EditProfileTableViewController: UITableViewController {
     
     // MARK: - Initializations
     func initializeViews() {
+        self.tableView.estimatedRowHeight = 190
         self.view.backgroundColor = Constants.Colors.lightBackgroundColor
         
         //Add Back Button
@@ -63,6 +65,12 @@ class EditProfileTableViewController: UITableViewController {
         
         let changeNib = UINib(nibName: self.changeCellIdentifier, bundle: nil)
         self.tableView.registerNib(changeNib, forCellReuseIdentifier: self.changeCellIdentifier)
+        
+        var referralCodeNibName = UINib(nibName: ReferralCodeTableViewCell.nibNameAndIdentifier(), bundle: nil)
+        self.tableView.registerNib(referralCodeNibName, forCellReuseIdentifier: ReferralCodeTableViewCell.nibNameAndIdentifier())
+        
+        var buttonNibName = UINib(nibName: self.buttonCellIdentifier, bundle: nil)
+        self.tableView.registerNib(buttonNibName, forCellReuseIdentifier: self.buttonCellIdentifier)
     }
     
     func backAction() {
@@ -199,7 +207,7 @@ class EditProfileTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 5
     }
 
     
@@ -207,6 +215,7 @@ class EditProfileTableViewController: UITableViewController {
         if indexPath.row == 0 {
             let cell: EditProfilePersonalTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.personalCellIdentifier, forIndexPath: indexPath) as! EditProfilePersonalTableViewCell
             cell.passValue(self.storeInfo!)
+            cell.setRemarksStatusHidden(false)
             cell.delegate = self
             return cell
         } else if indexPath.row == 1 {
@@ -229,6 +238,22 @@ class EditProfileTableViewController: UITableViewController {
             }
             
             return cell
+        } else if indexPath.row == 3 {
+            let cell: ReferralCodeTableViewCell = tableView.dequeueReusableCellWithIdentifier(ReferralCodeTableViewCell.nibNameAndIdentifier(), forIndexPath: indexPath) as! ReferralCodeTableViewCell
+            
+            if self.storeInfo!.referralCode != "" {
+                cell.setYourReferralCodeWithCode(self.storeInfo!.referralCode)
+            }
+            
+            if self.storeInfo!.referrerCode != "" {
+                cell.setReferrerCodeWithCode("\(self.storeInfo!.referrerCode) - \(self.storeInfo!.referrerName)")
+            }
+            cell.clipsToBounds = true
+            return cell
+        } else if indexPath.row == 4 {
+            let cell: EditProfileButtonTableViewCell = tableView.dequeueReusableCellWithIdentifier(self.buttonCellIdentifier, forIndexPath: indexPath) as! EditProfileButtonTableViewCell
+            cell.clipsToBounds = true
+            return cell
         } else {
             let cell: EditProfilePersonalTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.personalCellIdentifier, forIndexPath: indexPath) as! EditProfilePersonalTableViewCell
             cell.delegate = self
@@ -238,9 +263,13 @@ class EditProfileTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            return 405
-        } else if indexPath.row == 1 {
+            return UITableViewAutomaticDimension
+        } else if indexPath.row == 1 || indexPath.row == 2 {
             return 155
+        } else if indexPath.row == 3 {
+            return 190
+        } else if indexPath.row == 4 {
+            return 55
         } else {
             return 155
         }

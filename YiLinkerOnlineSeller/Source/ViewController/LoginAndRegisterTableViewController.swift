@@ -574,11 +574,13 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
             errorMessage = RegisterStrings.contactRequired
         } else if !simplifiedRegistrationCell.passwordTextField.isNotEmpty() {
             errorMessage = RegisterStrings.passwordRequired
-        } else if simplifiedRegistrationCell.passwordTextField.isNumericOnly() || simplifiedRegistrationCell.passwordTextField.isAphaOnly() {
+        } else if simplifiedRegistrationCell.passwordTextField.isNumericOnly() || simplifiedRegistrationCell.passwordTextField.isAphaOnly() || !simplifiedRegistrationCell.passwordTextField.isGreaterThanEightCharacters(){
             errorMessage = RegisterStrings.numbersAndLettersCombination
-        } else if !simplifiedRegistrationCell.passwordTextField.isGreaterThanEightCharacters() {
-            errorMessage = RegisterStrings.eightCharacters
-        } else if !simplifiedRegistrationCell.passwordTextField.isValidPassword() {
+        }
+//        else if !simplifiedRegistrationCell.passwordTextField.isGreaterThanEightCharacters() {
+//            errorMessage = RegisterStrings.eightCharacters
+//        }
+        else if !simplifiedRegistrationCell.passwordTextField.isValidPassword() {
             errorMessage = RegisterStrings.numbersAndLettersOnly
         }  else if !simplifiedRegistrationCell.passwordTextField.isAlphaNumeric() {
             errorMessage = RegisterStrings.illegalPassword
@@ -618,7 +620,7 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
         self.closeKeyboard()
         self.tempSimplifiedRegistrationCell = simplifiedRegistrationCell
         if simplifiedRegistrationCell.mobileNumberTextField.isNotEmpty() {
-            self.fireGetOTP(simplifiedRegistrationCell.mobileNumberTextField.text, areaCode: "63", type: "register", storeType: "")
+            self.fireGetOTP(simplifiedRegistrationCell.mobileNumberTextField.text, areaCode: "63", type: "register", storeType: "1")
         } else {
             Toast.displayToastWithMessage(RegisterStrings.contactRequired, duration: 1.5, view: self.view)
         }
@@ -685,10 +687,11 @@ extension LoginAndRegisterTableViewController: ForgotPasswordTableViewCellDelega
             errorMessage = RegisterStrings.contactRequired
         } else if !forgotPasswordCell.passwordTextField.isNotEmpty() {
             errorMessage = RegisterStrings.passwordRequired
-        } else if forgotPasswordCell.passwordTextField.isNumericOnly() || forgotPasswordCell.passwordTextField.isAphaOnly() {
+        } else if forgotPasswordCell.passwordTextField.isNumericOnly() || forgotPasswordCell.passwordTextField.isAphaOnly() || !forgotPasswordCell.passwordTextField.isGreaterThanEightCharacters() {
             errorMessage = RegisterStrings.numbersAndLettersCombination
-        } else if !forgotPasswordCell.passwordTextField.isGreaterThanEightCharacters() {
-            errorMessage = RegisterStrings.eightCharacters
+//        }
+//        else if !forgotPasswordCell.passwordTextField.isGreaterThanEightCharacters() {
+//            errorMessage = RegisterStrings.eightCharacters
         } else if !forgotPasswordCell.passwordTextField.isValidPassword() {
             errorMessage = RegisterStrings.numbersAndLettersOnly
         }  else if !forgotPasswordCell.passwordTextField.isAlphaNumeric() {
@@ -700,7 +703,6 @@ extension LoginAndRegisterTableViewController: ForgotPasswordTableViewCellDelega
         } else if forgotPasswordCell.activationCodeTextField.text.isEmpty {
             errorMessage = RegisterStrings.activationCodeRequired
         }
-        
         
         return errorMessage
     }
