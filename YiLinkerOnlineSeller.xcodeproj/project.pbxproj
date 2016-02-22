@@ -456,6 +456,8 @@
 		79E633AD1B9B328E0062DB14 /* TransactionShipItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E633AC1B9B328E0062DB14 /* TransactionShipItemTableViewCell.swift */; };
 		79E633B01B9B3C330062DB14 /* TransactionDeliveryLogTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E633AE1B9B3C330062DB14 /* TransactionDeliveryLogTableViewController.swift */; };
 		79E633B11B9B3C330062DB14 /* TransactionDeliveryLogTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E633AF1B9B3C330062DB14 /* TransactionDeliveryLogTableViewController.xib */; };
+		79E7C8291C7AD33F00E1FFAC /* EditProfileButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E7C8271C7AD33F00E1FFAC /* EditProfileButtonTableViewCell.swift */; };
+		79E7C82A1C7AD33F00E1FFAC /* EditProfileButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E7C8281C7AD33F00E1FFAC /* EditProfileButtonTableViewCell.xib */; };
 		79ED2F621B9BF09700C5BC0A /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79ED2F611B9BF09700C5BC0A /* TransactionModel.swift */; };
 		79ED2F641B9BF2CA00C5BC0A /* TransactionsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79ED2F631B9BF2CA00C5BC0A /* TransactionsModel.swift */; };
 		79EDA4021B9204B10037558A /* MyPointsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EDA4011B9204B10037558A /* MyPointsTableViewController.swift */; };
@@ -1191,6 +1193,8 @@
 		79E633AC1B9B328E0062DB14 /* TransactionShipItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionShipItemTableViewCell.swift; sourceTree = "<group>"; };
 		79E633AE1B9B3C330062DB14 /* TransactionDeliveryLogTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionDeliveryLogTableViewController.swift; sourceTree = "<group>"; };
 		79E633AF1B9B3C330062DB14 /* TransactionDeliveryLogTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionDeliveryLogTableViewController.xib; path = ../ViewController/TransactionDeliveryLogTableViewController.xib; sourceTree = "<group>"; };
+		79E7C8271C7AD33F00E1FFAC /* EditProfileButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileButtonTableViewCell.swift; sourceTree = "<group>"; };
+		79E7C8281C7AD33F00E1FFAC /* EditProfileButtonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileButtonTableViewCell.xib; sourceTree = "<group>"; };
 		79ED2F611B9BF09700C5BC0A /* TransactionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionModel.swift; sourceTree = "<group>"; };
 		79ED2F631B9BF2CA00C5BC0A /* TransactionsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsModel.swift; sourceTree = "<group>"; };
 		79EDA4011B9204B10037558A /* MyPointsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsTableViewController.swift; sourceTree = "<group>"; };
@@ -1807,6 +1811,8 @@
 				0CEA7A061C7475B70072BE3A /* SelectProductFooterCollectionViewCell.xib */,
 				0CD4B0BF1C75A01B00C0D9E6 /* SelectCategoryCollectionViewCell.swift */,
 				0CD4B0C01C75A01B00C0D9E6 /* SelectCategoryCollectionViewCell.xib */,
+				79E7C8271C7AD33F00E1FFAC /* EditProfileButtonTableViewCell.swift */,
+				79E7C8281C7AD33F00E1FFAC /* EditProfileButtonTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1818,7 +1824,6 @@
 				F7AC5F5D1B9A9C8C00227D18 /* AddAddressTableViewController.swift */,
 				26B5B23F1B94DE4200CBDDE5 /* AddCustomizedCategoryViewController.swift */,
 				2618DD6F1B970E210030C6D2 /* AddSubCategoriesViewController.swift */,
-				267C527A1C5F520600739850 /* BalanceRecordModel.swift */,
 				266DA2341C698ED5007BFA47 /* BalanceWithdrawalViewsViewController.swift */,
 				266DA2351C698ED5007BFA47 /* BalanceWithdrawalViewsViewController.xib */,
 				961F702B1B97F057007D0EA5 /* CaseDetailsTableViewController.swift */,
@@ -1866,16 +1871,6 @@
 				265C9C541C5B5E70002181CD /* PayoutBalanceRecordViewController.xib */,
 				265C9C4B1C5B5E1C002181CD /* PayoutBalanceWithdrawalViewController.swift */,
 				265C9C4C1C5B5E1C002181CD /* PayoutBalanceWithdrawalViewController.xib */,
-				F7E4BAAB1C5F36770019A309 /* PayoutEarningsTypeViewController.swift */,
-				F7E4BAAC1C5F36770019A309 /* PayoutEarningsTypeViewController.xib */,
-				F7E4BAA11C5F236C0019A309 /* PayoutEarningsViewController.swift */,
-				F7E4BAA21C5F236C0019A309 /* PayoutEarningsViewController.xib */,
-				F7E4BA871C5EE6740019A309 /* PayoutRequestListDetailViewController.swift */,
-				F7E4BA881C5EE6740019A309 /* PayoutRequestListDetailViewController.xib */,
-				F7E4BA9D1C5F1F8E0019A309 /* PayoutRequestListViewController.swift */,
-				F7E4BA9E1C5F1F8E0019A309 /* PayoutRequestListViewController.xib */,
-				26D2BBA41C6080DC00485F27 /* PayoutSummaryTableViewCell.swift */,
-				26D2BBA51C6080DC00485F27 /* PayoutSummaryTableViewCell.xib */,
 				265C9C4F1C5B5E30002181CD /* PayoutSummaryViewController.swift */,
 				265C9C501C5B5E30002181CD /* PayoutSummaryViewController.xib */,
 				265C9C2B1C5B5B91002181CD /* PayoutViewController.swift */,
@@ -1935,12 +1930,9 @@
 				267C52661C5F197500739850 /* WithdrawAmountView.swift */,
 				267C52641C5F195300739850 /* WithdrawAvailableBalanceView.swift */,
 				267C526E1C5F19D800739850 /* WithdrawConfirmationCodeView.swift */,
-				26335AAA1C69E8D600018423 /* WithdrawContactCSR.swift */,
 				267C526A1C5F19A800739850 /* WithdrawDepositToView.swift */,
 				267C52681C5F199100739850 /* WithdrawMethodView.swift */,
 				267C526C1C5F19BE00739850 /* WithdrawMobileNoView.swift */,
-				26D2BBA01C60424100485F27 /* WithdrawModalViewController.swift */,
-				26D2BBA11C60424100485F27 /* WithdrawModalViewController.xib */,
 				267C52701C5F19E700739850 /* WithdrawProceedView.swift */,
 				267C52721C5F1F1700739850 /* WithdrawTableViewController.swift */,
 				267C52731C5F1F1700739850 /* WithdrawTableViewController.xib */,
@@ -2627,6 +2619,7 @@
 				F7E96F9B1C5B4C9D00DAC58F /* PayoutRequestListTableViewCell.xib in Resources */,
 				79EFF7811B8DB3C8008A9E7D /* RecentProductsTableViewController.xib in Resources */,
 				79EFF7851B8DBB97008A9E7D /* RecentProductsTableViewCell.xib in Resources */,
+				79E7C82A1C7AD33F00E1FFAC /* EditProfileButtonTableViewCell.xib in Resources */,
 				F7C40FD01B983CD90091C16C /* cart3.png in Resources */,
 				79EF7AB21B9986D40082CD35 /* TransactionFilterTableViewCell.xib in Resources */,
 				0CB1F0D81B931160004C7BA0 /* SignInViewController.xib in Resources */,
@@ -3031,6 +3024,7 @@
 				7928762F1B8DF89F00762A39 /* ChartXAxisRenderer.swift in Sources */,
 				F7CF662F1BD9102F008B8226 /* StoreInfoPreferredCategoriesModel.swift in Sources */,
 				F7C282EF1B9AE97500864451 /* BankModel.swift in Sources */,
+				79E7C8291C7AD33F00E1FFAC /* EditProfileButtonTableViewCell.swift in Sources */,
 				F7C971D51BC3B83100F8A04F /* ResolutionCenterDisputeReasonsModel.swift in Sources */,
 				F7AC5F7C1B9AA75300227D18 /* GetAddressesModel.swift in Sources */,
 				792876031B8DF89F00762A39 /* ChartLegend.swift in Sources */,

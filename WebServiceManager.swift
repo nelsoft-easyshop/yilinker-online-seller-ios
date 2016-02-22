@@ -673,7 +673,7 @@ class WebServiceManager: NSObject {
     class func fireUnauthenticatedOTPRequestWithUrl(url: String, contactNumber: String, areaCode: String, type: String, storeType: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager: APIManager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = [self.contactNoKey: contactNumber, self.areaCodeKey: areaCode, self.typeKey: type, self.storeTypeKey: storeType]
+        let parameters: NSDictionary = [self.contactNumberKey: contactNumber, self.areaCodeKey: areaCode, self.typeKey: type, self.storeTypeKey: storeType]
         
         if Reachability.isConnectedToNetwork() {
             manager.POST(url, parameters: parameters, success: {
