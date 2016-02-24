@@ -32,6 +32,7 @@ class StoreInfoModel: NSObject {
     var streetName: String = ""
     var subdivision: String = ""
     var zipCode: String = ""
+    var storeSlug: String = ""
     /*var streetAddress: String = ""
     var province: String = ""
     var city: String = ""
@@ -63,6 +64,8 @@ class StoreInfoModel: NSObject {
     
 //    init(name : String, email : String, gender : String, nickname : String, contact_number : String, specialty : String, birthdate : String, store_name : String, store_description : String, avatar : NSURL, cover_photo : NSURL, is_allowed : Bool, title: String, unit_number: String, bldg_name: String, street_number: String, street_name: String, subdivision: String, zip_code: String, full_address: String, account_title: String, account_number: String, bank_account: String, bank_id: Int, productCount: Int, transactionCount: Int, totalSales: String, isReseller: Bool, isEmailSubscribed: Bool, isSmsSubscribed: Bool, productId: NSArray, productCategoryName: NSArray, isSelected: NSArray, tin: String, messageCount: Int, referralCode: String, referralPerson: String, accountName: String, bankName: String) {
 
+    override init() {}
+    
     init(name : String, email : String, gender : String, nickname : String, contact_number : String, specialty : String, birthdate : String, store_name : String, store_description : String, avatar : NSURL, cover_photo : NSURL, is_allowed : Bool, title: String, unit_number: String, bldg_name: String, street_number: String, street_name: String, subdivision: String, zip_code: String, full_address: String, account_title: String, account_number: String, bank_account: String, bank_id: Int, productCount: Int, transactionCount: Int, totalSales: String, isReseller: Bool, isEmailSubscribed: Bool, isSmsSubscribed: Bool, productId: NSArray, productCategoryName: NSArray, isSelected: NSArray, tin: String, messageCount: Int, referralCode: String = "", referrerCode: String = "", referrerName: String = "", accountName: String, bankName: String) {
 
         self.name = name

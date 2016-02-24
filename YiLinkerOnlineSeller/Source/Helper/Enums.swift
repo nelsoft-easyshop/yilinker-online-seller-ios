@@ -143,3 +143,28 @@ enum DateType {
     case Graph
     case Key
 }
+
+enum UploadImageType {
+    case ProfilePhoto
+    case CoverPhoto
+}
+
+enum UploadImageStatus {
+    case NoPhoto
+    case UploadError
+    case UploadSuccess
+}
+
+enum SetupStoreRefreshType {
+    case Cover
+    case Profile
+    case QRCode
+    case SaveInfo
+}
+
+enum AffiliateSelectProductRefreshType {
+    case GetCategory
+    case Search
+    case GetProduct
+    case Add
+}

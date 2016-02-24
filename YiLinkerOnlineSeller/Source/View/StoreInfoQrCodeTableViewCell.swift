@@ -15,10 +15,26 @@ protocol StoreInfoQrCodeTableViewCellDelegate {
     func shareTWAction(postImage: UIImageView, title: String)
     func shareEMAction(postImage: UIImageView, title: String)
     func shareGPAction(postImage: UIImageView, title: String)
+    func storeInfoQrCodeTableViewCell(storeInfoQrCodeTableViewCell: StoreInfoQrCodeTableViewCell, didTapGenerateQRButton button: UIButton)
 }
 
 class StoreInfoQrCodeTableViewCell: UITableViewCell {
-
+    
+    class func heightIfQRCodeIsHidden() -> CGFloat {
+        return 190.0
+    }
+    
+    class func heightIfQRCodeIsNotHidden() -> CGFloat {
+        return 320.0
+    }
+    
+    class func nibNameAndIdentifier() -> String {
+        return "StoreInfoQrCodeTableViewCell"
+    }
+    
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet weak var generateQrButton: UIButton!
+    @IBOutlet weak var shareButtonContainerView: UIView!
     //Buttons
     @IBOutlet var emailButton: UIButton!
     @IBOutlet var facebookButton: UIButton!
@@ -36,6 +52,7 @@ class StoreInfoQrCodeTableViewCell: UITableViewCell {
     @IBOutlet var shareWithGoogleLabel: UILabel!
     @IBOutlet var shareWithTwitterLabel: UILabel!
     
+    @IBOutlet weak var shareContainerVerticalSpaceConstraint: NSLayoutConstraint!
     //Global variables declarations
     //Variables that can only be accessed withis the class
     var qrCodeDesc: String = StringHelper.localizedStringWithKey("STORE_INFO_SPREAD_LOCALIZE_KEY")
@@ -55,6 +72,8 @@ class StoreInfoQrCodeTableViewCell: UITableViewCell {
         self.shareWithFbLabel.text = shareWith
         self.shareWithGoogleLabel.text = shareWith
         self.shareWithTwitterLabel.text = shareWith
+        self.shareButtonContainerView.userInteractionEnabled = false
+        self.generateQrButton.layer.cornerRadius = 5
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -80,4 +99,19 @@ class StoreInfoQrCodeTableViewCell: UITableViewCell {
         self.delegate?.shareTWAction(self.qrCodeImageView, title: qrCode)
     }
     
+    @IBAction func generateQRAction(sender: UIButton) {
+        self.delegate?.storeInfoQrCodeTableViewCell(self, didTapGenerateQRButton: sender)
+    }
+    
+    //MARK: - 
+    //MARK: - Start Loading
+    func startLoading() {
+        self.activityIndicatorView.startAnimating()
+    }
+    
+    //MARK: - 
+    //MARK: - Stop Loading
+    func stopLoading() {
+        self.activityIndicatorView.stopAnimating()
+    }
 }

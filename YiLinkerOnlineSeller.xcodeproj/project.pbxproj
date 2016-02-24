@@ -23,6 +23,9 @@
 		0C574A321BC6531A00913F29 /* ServerUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C574A311BC6531A00913F29 /* ServerUIImage.swift */; };
 		0C5E9D8E1B91E2E200F32CFE /* ProductUploadFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5E9D8D1B91E2E200F32CFE /* ProductUploadFooterView.swift */; };
 		0C5E9D901B91E2F700F32CFE /* ProductUploadFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C5E9D8F1B91E2F700F32CFE /* ProductUploadFooterView.xib */; };
+		0C5FA8361C7BEFCE0045C501 /* AffiliateStoreInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5FA8351C7BEFCE0045C501 /* AffiliateStoreInfoModel.swift */; };
+		0C5FA8381C7C2FF40045C501 /* AffiliateGenerateQrCodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5FA8371C7C2FF40045C501 /* AffiliateGenerateQrCodeModel.swift */; };
+		0C61DC661C7D9227009C1B87 /* AffiliateGetProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C61DC651C7D9227009C1B87 /* AffiliateGetProductModel.swift */; };
 		0C65F8A51B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C65F8A31B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.xib */; };
 		0C65F8A71B8DB99100504D86 /* ProductUploadTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8A61B8DB99100504D86 /* ProductUploadTableHeaderView.swift */; };
 		0C65F8AE1B8DBC3400504D86 /* ProductUploadTextViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C65F8AC1B8DBC3400504D86 /* ProductUploadTextViewTableViewCell.swift */; };
@@ -56,7 +59,18 @@
 		0C6661A91B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C6661A71B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.xib */; };
 		0C6661AC1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6661AA1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.swift */; };
 		0C6661AD1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C6661AB1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.xib */; };
+		0C6B66971C7FEC8C00142FEC /* AffiliateSaveProductResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6B66961C7FEC8C00142FEC /* AffiliateSaveProductResponseModel.swift */; };
 		0C6E7D391BAD67420079EF78 /* ResellerGetProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6E7D381BAD67420079EF78 /* ResellerGetProductModel.swift */; };
+		0C7DDD801C76BD1E008BF26A /* AffiliateSetupStoreTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7DDD7E1C76BD1E008BF26A /* AffiliateSetupStoreTableViewController.swift */; };
+		0C7DDD811C76BD1E008BF26A /* AffiliateSetupStoreTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C7DDD7F1C76BD1E008BF26A /* AffiliateSetupStoreTableViewController.xib */; };
+		0C7DDD831C76BF4D008BF26A /* CustomUploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7DDD821C76BF4D008BF26A /* CustomUploadView.swift */; };
+		0C7DDD851C76BF58008BF26A /* CustomUploadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C7DDD841C76BF58008BF26A /* CustomUploadView.xib */; };
+		0C7DDD871C76C139008BF26A /* AffiliateStoreHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7DDD861C76C139008BF26A /* AffiliateStoreHeaderView.swift */; };
+		0C7DDD891C76C14D008BF26A /* AffiliateStoreHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C7DDD881C76C14D008BF26A /* AffiliateStoreHeaderView.xib */; };
+		0C7DDD8C1C76E8E0008BF26A /* SetupStoreFormTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7DDD8A1C76E8E0008BF26A /* SetupStoreFormTableViewCell.swift */; };
+		0C7DDD8D1C76E8E0008BF26A /* SetupStoreFormTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C7DDD8B1C76E8E0008BF26A /* SetupStoreFormTableViewCell.xib */; };
+		0C7DDD941C771BCD008BF26A /* AffiliateStoreHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7DDD921C771BCD008BF26A /* AffiliateStoreHeaderTableViewCell.swift */; };
+		0C7DDD951C771BCD008BF26A /* AffiliateStoreHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C7DDD931C771BCD008BF26A /* AffiliateStoreHeaderTableViewCell.xib */; };
 		0C8739D71B96CFA5005D2EF8 /* CommonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8739D61B96CFA5005D2EF8 /* CommonHelper.swift */; };
 		0C8739DA1B96E172005D2EF8 /* SuccessUploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8739D81B96E172005D2EF8 /* SuccessUploadViewController.swift */; };
 		0C8739DB1B96E172005D2EF8 /* SuccessUploadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C8739D91B96E172005D2EF8 /* SuccessUploadViewController.xib */; };
@@ -96,6 +110,7 @@
 		0C942BB81BAFF8700049A6B0 /* NewDisputeTableViewController2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C942BB61BAFF8700049A6B0 /* NewDisputeTableViewController2.xib */; };
 		0C942BBB1BAFF8F10049A6B0 /* DisputeTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C942BB91BAFF8F10049A6B0 /* DisputeTextFieldTableViewCell.swift */; };
 		0C942BBC1BAFF8F10049A6B0 /* DisputeTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C942BBA1BAFF8F10049A6B0 /* DisputeTextFieldTableViewCell.xib */; };
+		0CA2BD111C7B0C9D003B2F3C /* UploadImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA2BD101C7B0C9D003B2F3C /* UploadImageModel.swift */; };
 		0CAACCB01B9D2DC000BE5EF3 /* ResellerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAACCAE1B9D2DC000BE5EF3 /* ResellerViewController.swift */; };
 		0CAACCB11B9D2DC000BE5EF3 /* ResellerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAACCAF1B9D2DC000BE5EF3 /* ResellerViewController.xib */; };
 		0CAACCBC1B9D857900BE5EF3 /* ResellerCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAACCBA1B9D857900BE5EF3 /* ResellerCollectionReusableView.xib */; };
@@ -112,6 +127,8 @@
 		0CAB52A51B92023E00EA441A /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB52A41B92023E00EA441A /* CategoryModel.swift */; };
 		0CAB52A71B920A5800EA441A /* BrandModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB52A61B920A5800EA441A /* BrandModel.swift */; };
 		0CB1F0D81B931160004C7BA0 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CB1F0D71B931160004C7BA0 /* SignInViewController.xib */; };
+		0CD452481C7AD35200B3FB18 /* FooterButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD452461C7AD35200B3FB18 /* FooterButtonTableViewCell.swift */; };
+		0CD452491C7AD35200B3FB18 /* FooterButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD452471C7AD35200B3FB18 /* FooterButtonTableViewCell.xib */; };
 		0CD4B0BD1C7588B100C0D9E6 /* FilterModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4B0BB1C7588B100C0D9E6 /* FilterModalViewController.swift */; };
 		0CD4B0BE1C7588B100C0D9E6 /* FilterModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD4B0BC1C7588B100C0D9E6 /* FilterModalViewController.xib */; };
 		0CD4B0C11C75A01B00C0D9E6 /* SelectCategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4B0BF1C75A01B00C0D9E6 /* SelectCategoryCollectionViewCell.swift */; };
@@ -731,6 +748,9 @@
 		0C574A311BC6531A00913F29 /* ServerUIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerUIImage.swift; sourceTree = "<group>"; };
 		0C5E9D8D1B91E2E200F32CFE /* ProductUploadFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadFooterView.swift; sourceTree = "<group>"; };
 		0C5E9D8F1B91E2F700F32CFE /* ProductUploadFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadFooterView.xib; path = ../View/ProductUploadFooterView.xib; sourceTree = "<group>"; };
+		0C5FA8351C7BEFCE0045C501 /* AffiliateStoreInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AffiliateStoreInfoModel.swift; sourceTree = "<group>"; };
+		0C5FA8371C7C2FF40045C501 /* AffiliateGenerateQrCodeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AffiliateGenerateQrCodeModel.swift; sourceTree = "<group>"; };
+		0C61DC651C7D9227009C1B87 /* AffiliateGetProductModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AffiliateGetProductModel.swift; sourceTree = "<group>"; };
 		0C65F8A21B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadTextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		0C65F8A31B8DB07100504D86 /* ProductUploadTextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadTextFieldTableViewCell.xib; path = ../View/ProductUploadTextFieldTableViewCell.xib; sourceTree = "<group>"; };
 		0C65F8A61B8DB99100504D86 /* ProductUploadTableHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadTableHeaderView.swift; sourceTree = "<group>"; };
@@ -765,7 +785,18 @@
 		0C6661A71B9098E6005ADFDD /* ProductUploadPlainDetailCombinationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadPlainDetailCombinationTableViewCell.xib; path = ../View/ProductUploadPlainDetailCombinationTableViewCell.xib; sourceTree = "<group>"; };
 		0C6661AA1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadAttributeSummaryTableViewCell.swift; sourceTree = "<group>"; };
 		0C6661AB1B90B94C005ADFDD /* ProductUploadAttributeSummaryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductUploadAttributeSummaryTableViewCell.xib; path = ../View/ProductUploadAttributeSummaryTableViewCell.xib; sourceTree = "<group>"; };
+		0C6B66961C7FEC8C00142FEC /* AffiliateSaveProductResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AffiliateSaveProductResponseModel.swift; sourceTree = "<group>"; };
 		0C6E7D381BAD67420079EF78 /* ResellerGetProductModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResellerGetProductModel.swift; sourceTree = "<group>"; };
+		0C7DDD7E1C76BD1E008BF26A /* AffiliateSetupStoreTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AffiliateSetupStoreTableViewController.swift; sourceTree = "<group>"; };
+		0C7DDD7F1C76BD1E008BF26A /* AffiliateSetupStoreTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AffiliateSetupStoreTableViewController.xib; sourceTree = "<group>"; };
+		0C7DDD821C76BF4D008BF26A /* CustomUploadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomUploadView.swift; sourceTree = "<group>"; };
+		0C7DDD841C76BF58008BF26A /* CustomUploadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomUploadView.xib; sourceTree = "<group>"; };
+		0C7DDD861C76C139008BF26A /* AffiliateStoreHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AffiliateStoreHeaderView.swift; sourceTree = "<group>"; };
+		0C7DDD881C76C14D008BF26A /* AffiliateStoreHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AffiliateStoreHeaderView.xib; sourceTree = "<group>"; };
+		0C7DDD8A1C76E8E0008BF26A /* SetupStoreFormTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupStoreFormTableViewCell.swift; sourceTree = "<group>"; };
+		0C7DDD8B1C76E8E0008BF26A /* SetupStoreFormTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetupStoreFormTableViewCell.xib; sourceTree = "<group>"; };
+		0C7DDD921C771BCD008BF26A /* AffiliateStoreHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AffiliateStoreHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		0C7DDD931C771BCD008BF26A /* AffiliateStoreHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AffiliateStoreHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		0C8739D61B96CFA5005D2EF8 /* CommonHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonHelper.swift; sourceTree = "<group>"; };
 		0C8739D81B96E172005D2EF8 /* SuccessUploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessUploadViewController.swift; sourceTree = "<group>"; };
 		0C8739D91B96E172005D2EF8 /* SuccessUploadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SuccessUploadViewController.xib; path = ../ViewController/SuccessUploadViewController.xib; sourceTree = "<group>"; };
@@ -805,6 +836,7 @@
 		0C942BB61BAFF8700049A6B0 /* NewDisputeTableViewController2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewDisputeTableViewController2.xib; sourceTree = "<group>"; };
 		0C942BB91BAFF8F10049A6B0 /* DisputeTextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisputeTextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		0C942BBA1BAFF8F10049A6B0 /* DisputeTextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DisputeTextFieldTableViewCell.xib; sourceTree = "<group>"; };
+		0CA2BD101C7B0C9D003B2F3C /* UploadImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadImageModel.swift; sourceTree = "<group>"; };
 		0CAACCAE1B9D2DC000BE5EF3 /* ResellerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResellerViewController.swift; sourceTree = "<group>"; };
 		0CAACCAF1B9D2DC000BE5EF3 /* ResellerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ResellerViewController.xib; path = ../ViewController/ResellerViewController.xib; sourceTree = "<group>"; };
 		0CAACCBA1B9D857900BE5EF3 /* ResellerCollectionReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResellerCollectionReusableView.xib; sourceTree = "<group>"; };
@@ -821,6 +853,8 @@
 		0CAB52A41B92023E00EA441A /* CategoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		0CAB52A61B920A5800EA441A /* BrandModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrandModel.swift; sourceTree = "<group>"; };
 		0CB1F0D71B931160004C7BA0 /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
+		0CD452461C7AD35200B3FB18 /* FooterButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FooterButtonTableViewCell.swift; sourceTree = "<group>"; };
+		0CD452471C7AD35200B3FB18 /* FooterButtonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FooterButtonTableViewCell.xib; sourceTree = "<group>"; };
 		0CD4B0BB1C7588B100C0D9E6 /* FilterModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilterModalViewController.swift; path = ../../FilterModalViewController.swift; sourceTree = "<group>"; };
 		0CD4B0BC1C7588B100C0D9E6 /* FilterModalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FilterModalViewController.xib; path = ../../FilterModalViewController.xib; sourceTree = "<group>"; };
 		0CD4B0BF1C75A01B00C0D9E6 /* SelectCategoryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCategoryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1625,6 +1659,11 @@
 				F7E4BAB91C5F4D3B0019A309 /* PayoutEarningsTransactionTypeModel.swift */,
 				0CD4B0C31C75AD8600C0D9E6 /* AffiliateCategoryModel.swift */,
 				0CD4B0C51C75BBD700C0D9E6 /* AffiliateProductModel.swift */,
+				0CA2BD101C7B0C9D003B2F3C /* UploadImageModel.swift */,
+				0C5FA8351C7BEFCE0045C501 /* AffiliateStoreInfoModel.swift */,
+				0C5FA8371C7C2FF40045C501 /* AffiliateGenerateQrCodeModel.swift */,
+				0C61DC651C7D9227009C1B87 /* AffiliateGetProductModel.swift */,
+				0C6B66961C7FEC8C00142FEC /* AffiliateSaveProductResponseModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1779,6 +1818,16 @@
 				0CEA7A061C7475B70072BE3A /* SelectProductFooterCollectionViewCell.xib */,
 				0CD4B0BF1C75A01B00C0D9E6 /* SelectCategoryCollectionViewCell.swift */,
 				0CD4B0C01C75A01B00C0D9E6 /* SelectCategoryCollectionViewCell.xib */,
+				0C7DDD821C76BF4D008BF26A /* CustomUploadView.swift */,
+				0C7DDD841C76BF58008BF26A /* CustomUploadView.xib */,
+				0C7DDD861C76C139008BF26A /* AffiliateStoreHeaderView.swift */,
+				0C7DDD881C76C14D008BF26A /* AffiliateStoreHeaderView.xib */,
+				0C7DDD8A1C76E8E0008BF26A /* SetupStoreFormTableViewCell.swift */,
+				0C7DDD8B1C76E8E0008BF26A /* SetupStoreFormTableViewCell.xib */,
+				0C7DDD921C771BCD008BF26A /* AffiliateStoreHeaderTableViewCell.swift */,
+				0C7DDD931C771BCD008BF26A /* AffiliateStoreHeaderTableViewCell.xib */,
+				0CD452461C7AD35200B3FB18 /* FooterButtonTableViewCell.swift */,
+				0CD452471C7AD35200B3FB18 /* FooterButtonTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1920,6 +1969,8 @@
 				0C8D51DE1C741A8900345C2C /* AffiliateSelectProductViewController.xib */,
 				0CD4B0BB1C7588B100C0D9E6 /* FilterModalViewController.swift */,
 				0CD4B0BC1C7588B100C0D9E6 /* FilterModalViewController.xib */,
+				0C7DDD7E1C76BD1E008BF26A /* AffiliateSetupStoreTableViewController.swift */,
+				0C7DDD7F1C76BD1E008BF26A /* AffiliateSetupStoreTableViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2569,7 +2620,9 @@
 				0C942BBC1BAFF8F10049A6B0 /* DisputeTextFieldTableViewCell.xib in Resources */,
 				0CF28F121B8CAA31005B2E54 /* ProductUploadTableViewController.xib in Resources */,
 				0C8D7FB61B8FC4AC00B3FA4E /* ProductUploadCombinationTableViewCell.xib in Resources */,
+				0C7DDD8D1C76E8E0008BF26A /* SetupStoreFormTableViewCell.xib in Resources */,
 				79F107661BA18E5800B6CE51 /* TransactionCancelReasonOrderViewController.xib in Resources */,
+				0C7DDD851C76BF58008BF26A /* CustomUploadView.xib in Resources */,
 				F7CCEEF31BBE607100D876C2 /* FilterResultsCollectionViewCellV2.xib in Resources */,
 				265C9C521C5B5E30002181CD /* PayoutSummaryViewController.xib in Resources */,
 				F7C40FA91B983C0D0091C16C /* CreateNewAddressViewController.xib in Resources */,
@@ -2581,6 +2634,7 @@
 				F7C40FD71B983CD90091C16C /* filter2.png in Resources */,
 				F7E96F9B1C5B4C9D00DAC58F /* PayoutRequestListTableViewCell.xib in Resources */,
 				79EFF7811B8DB3C8008A9E7D /* RecentProductsTableViewController.xib in Resources */,
+				0C7DDD811C76BD1E008BF26A /* AffiliateSetupStoreTableViewController.xib in Resources */,
 				79EFF7851B8DBB97008A9E7D /* RecentProductsTableViewCell.xib in Resources */,
 				F7C40FD01B983CD90091C16C /* cart3.png in Resources */,
 				79EF7AB21B9986D40082CD35 /* TransactionFilterTableViewCell.xib in Resources */,
@@ -2601,6 +2655,7 @@
 				26B282F61B91E92B00A7C2B1 /* ProductManagementAllTableViewCell.xib in Resources */,
 				265C9C561C5B5E70002181CD /* PayoutBalanceRecordViewController.xib in Resources */,
 				79EF7ACC1B9A092E0082CD35 /* TransactionDeliveryTableViewCell.xib in Resources */,
+				0C7DDD951C771BCD008BF26A /* AffiliateStoreHeaderTableViewCell.xib in Resources */,
 				F7C40F8D1B983B9D0091C16C /* VerifyViewController.xib in Resources */,
 				79E6337F1B9AF4FD0062DB14 /* TransactionCancelOrderViewController.xib in Resources */,
 				F7C40FA51B983BFC0091C16C /* FilterByTableViewCell.xib in Resources */,
@@ -2667,6 +2722,7 @@
 				79A941281C648BD5000682CC /* LoginAndRegisterTableViewController.xib in Resources */,
 				0CAACCC91B9D9C0A00BE5EF3 /* ResellerItemViewController.xib in Resources */,
 				79A941141C648AD6000682CC /* LoginHeaderTableViewCell.xib in Resources */,
+				0CD452491C7AD35200B3FB18 /* FooterButtonTableViewCell.xib in Resources */,
 				F7C40F951B983BC40091C16C /* StoreInfoBankAccountTableViewCell.xib in Resources */,
 				799893051B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib in Resources */,
 				0CF28EFA1B8CA2E9005B2E54 /* Panton ExtraLight Italic.otf in Resources */,
@@ -2769,6 +2825,7 @@
 				F7C40FA11B983BE90091C16C /* FilterFooterTableViewCell.xib in Resources */,
 				0C8D7FB21B8FC1A400B3FA4E /* ProductUploadCombinationTableViewController.xib in Resources */,
 				0C568A271BCABF1A00E35B12 /* ResellerItemCollectionViewCell.xib in Resources */,
+				0C7DDD891C76C14D008BF26A /* AffiliateStoreHeaderView.xib in Resources */,
 				0C942BB81BAFF8700049A6B0 /* NewDisputeTableViewController2.xib in Resources */,
 				265C9C2E1C5B5B91002181CD /* PayoutViewController.xib in Resources */,
 				0CF28F021B8CA2E9005B2E54 /* Panton SemiBold.otf in Resources */,
@@ -2879,6 +2936,7 @@
 				0C51C2F01BB00A6800F4D2D6 /* AddProductHeaderView.swift in Sources */,
 				0C8D7FBD1B8FCC5800B3FA4E /* ProductUploadCombinationHeaderTableViewCell.swift in Sources */,
 				F7C40F6D1B983B210091C16C /* CreateNewAddressViewController.swift in Sources */,
+				0CD452481C7AD35200B3FB18 /* FooterButtonTableViewCell.swift in Sources */,
 				F7C40F651B983AD10091C16C /* ChangeBankAccountViewController.swift in Sources */,
 				0C65F8D41B8E089200504D86 /* ProductUploadQuantityTableViewCell.swift in Sources */,
 				0CAB52A51B92023E00EA441A /* CategoryModel.swift in Sources */,
@@ -2891,6 +2949,7 @@
 				79E633771B9AD2570062DB14 /* TransactionProductDescriptionTableViewCell.swift in Sources */,
 				26B282FC1B929BE300A7C2B1 /* APIManager.swift in Sources */,
 				0CEA7A071C7475B70072BE3A /* SelectProductFooterCollectionViewCell.swift in Sources */,
+				0C61DC661C7D9227009C1B87 /* AffiliateGetProductModel.swift in Sources */,
 				F7AE35FF1C08054B00A1C9CE /* FaImagePickerController.swift in Sources */,
 				26378F511B8CEE82008533B6 /* ProductManagementTableViewCell.swift in Sources */,
 				2625FEA51B96A92500DD24AF /* EditSubCategoriesViewController.swift in Sources */,
@@ -2937,6 +2996,7 @@
 				792876011B8DF89F00762A39 /* ChartAxisBase.swift in Sources */,
 				79EF7ACE1B9A0A8A0082CD35 /* TransactionDeliveryTableViewCell.swift in Sources */,
 				F7E4BAA31C5F236C0019A309 /* PayoutEarningsViewController.swift in Sources */,
+				0C5FA8381C7C2FF40045C501 /* AffiliateGenerateQrCodeModel.swift in Sources */,
 				7928762B1B8DF89F00762A39 /* ChartAxisRendererBase.swift in Sources */,
 				794880761B94C3FD0090B259 /* CustomizedCategoryModel.swift in Sources */,
 				0C942BBB1BAFF8F10049A6B0 /* DisputeTextFieldTableViewCell.swift in Sources */,
@@ -2954,12 +3014,14 @@
 				793607011BA99C080032EA8B /* OrderProductDetailsModel.swift in Sources */,
 				26B35CB01B9B06800067793A /* SubCategoryModel.swift in Sources */,
 				0CAACCBD1B9D857900BE5EF3 /* ResellerCollectionReusableView.swift in Sources */,
+				0C6B66971C7FEC8C00142FEC /* AffiliateSaveProductResponseModel.swift in Sources */,
 				B7BADAEB1BA563BE005F59F9 /* RoundedView.swift in Sources */,
 				792876261B8DF89F00762A39 /* ChartRange.swift in Sources */,
 				792876001B8DF89F00762A39 /* ScatterChartView.swift in Sources */,
 				792875FF1B8DF89F00762A39 /* RadarChartView.swift in Sources */,
 				F7C6A94D1BC186D9005DB85E /* StoreInfoQrCodeTableViewCell.swift in Sources */,
 				B7BADAF61BA563FF005F59F9 /* ContactListTVC.swift in Sources */,
+				0C7DDD941C771BCD008BF26A /* AffiliateStoreHeaderTableViewCell.swift in Sources */,
 				26B5B23D1B94D88D00CBDDE5 /* CustomizedCategoryTableViewCell.swift in Sources */,
 				799893011B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift in Sources */,
 				79EDA40C1B9204F20037558A /* PointsTableViewCell.swift in Sources */,
@@ -2979,6 +3041,7 @@
 				F7E4BA9F1C5F1F8E0019A309 /* PayoutRequestListViewController.swift in Sources */,
 				7928762F1B8DF89F00762A39 /* ChartXAxisRenderer.swift in Sources */,
 				F7CF662F1BD9102F008B8226 /* StoreInfoPreferredCategoriesModel.swift in Sources */,
+				0C5FA8361C7BEFCE0045C501 /* AffiliateStoreInfoModel.swift in Sources */,
 				F7C282EF1B9AE97500864451 /* BankModel.swift in Sources */,
 				F7C971D51BC3B83100F8A04F /* ResolutionCenterDisputeReasonsModel.swift in Sources */,
 				F7AC5F7C1B9AA75300227D18 /* GetAddressesModel.swift in Sources */,
@@ -3165,6 +3228,7 @@
 				0CF28ED91B8C85E5005B2E54 /* DashboardViewController.swift in Sources */,
 				0C574A321BC6531A00913F29 /* ServerUIImage.swift in Sources */,
 				79EF7AC61B99F8980082CD35 /* TransactionProductTableViewCell.swift in Sources */,
+				0C7DDD801C76BD1E008BF26A /* AffiliateSetupStoreTableViewController.swift in Sources */,
 				792876141B8DF89F00762A39 /* ChartDataEntry.swift in Sources */,
 				0CF28EDC1B8C85E5005B2E54 /* SettingsViewController.swift in Sources */,
 				79EFF7801B8DB3C8008A9E7D /* RecentProductsTableViewController.swift in Sources */,
@@ -3193,6 +3257,7 @@
 				792876181B8DF89F00762A39 /* LineChartDataSet.swift in Sources */,
 				F7C40FDD1B9840490091C16C /* FilterAttributeModel.swift in Sources */,
 				F721FCB31BFB08850009E645 /* ResolutionCenterViewControllerV2.swift in Sources */,
+				0C7DDD8C1C76E8E0008BF26A /* SetupStoreFormTableViewCell.swift in Sources */,
 				792876221B8DF89F00762A39 /* ChartDataBaseFilter.swift in Sources */,
 				79ED2F641B9BF2CA00C5BC0A /* TransactionsModel.swift in Sources */,
 				F7AC5F711B9AA2DC00227D18 /* CityModel.swift in Sources */,
@@ -3202,6 +3267,7 @@
 				2686E3761B956C4A00E8FA80 /* ItemImagesHorizontalCollectionViewCell.swift in Sources */,
 				79E633A81B9B27E70062DB14 /* NSString+FSExtension.m in Sources */,
 				F7E4BAB51C5F405C0019A309 /* PayoutEarningsTransactionTypeTableViewCell.swift in Sources */,
+				0CA2BD111C7B0C9D003B2F3C /* UploadImageModel.swift in Sources */,
 				792875FA1B8DF89F00762A39 /* CombinedChartView.swift in Sources */,
 				79EFF7871B8DBEA7008A9E7D /* RecentProductsTableViewCell.swift in Sources */,
 				792876431B8DF89F00762A39 /* ChartViewPortHandler.swift in Sources */,
@@ -3260,6 +3326,7 @@
 				79DE3D8B1C0E018900984E69 /* HelpViewController.swift in Sources */,
 				794AFDA21BA405BF0063976E /* DeliveryLogsItemModel.swift in Sources */,
 				792876281B8DF89F00762A39 /* BarChartRenderer.swift in Sources */,
+				0C7DDD871C76C139008BF26A /* AffiliateStoreHeaderView.swift in Sources */,
 				26B5B2451B94DE6700CBDDE5 /* CustomizedCategoryViews.swift in Sources */,
 				F7C40F751B983B3D0091C16C /* FilterFooterTableViewCell.swift in Sources */,
 				F7C40F831B983B700091C16C /* StoreInfoSectionTableViewCell.swift in Sources */,
@@ -3286,6 +3353,7 @@
 				0CD4B0C11C75A01B00C0D9E6 /* SelectCategoryCollectionViewCell.swift in Sources */,
 				792876391B8DF89F00762A39 /* LineScatterCandleRadarChartRenderer.swift in Sources */,
 				F7E4BA8D1C5EEE2F0019A309 /* PayoutRequestListDetailHeaderTableViewCell.swift in Sources */,
+				0C7DDD831C76BF4D008BF26A /* CustomUploadView.swift in Sources */,
 				F7E96F9A1C5B4C9D00DAC58F /* PayoutRequestListTableViewCell.swift in Sources */,
 				F7C40F851B983B7C0091C16C /* StoreInfoTableViewCell.swift in Sources */,
 				7928760C1B8DF89F00762A39 /* BarLineScatterCandleChartDataSet.swift in Sources */,
