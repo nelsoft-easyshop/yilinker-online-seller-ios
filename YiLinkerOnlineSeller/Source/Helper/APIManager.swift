@@ -146,8 +146,8 @@ struct APIAtlas {
     static let forgotPasswordV2 = "v2/user/resetPassword"
     
     //Edit Profile
-    static let sendEmailVerification = "v2/auth/merchant/verifyEmail"
-    static let saveEditProfile = "v2/auth/merchant/updateUser"
+    static let sendEmailVerificationAffiliate = "v2/auth/affiliate/verifyEmail"
+    static let saveEditProfileAffiliate = "v2/auth/affiliate/updateUser"
 }
 
 class APIManager: AFHTTPSessionManager {
