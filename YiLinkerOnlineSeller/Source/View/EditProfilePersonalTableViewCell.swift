@@ -11,6 +11,8 @@ import UIKit
 protocol EditProfilePersonalTableViewCellDelegate {
     func editProfilePersonalCell(editProfilePersonalCell: EditProfilePersonalTableViewCell, textFieldShouldReturn textField: UITextField)
     func editProfilePersonalCell(editProfilePersonalCell: EditProfilePersonalTableViewCell, didTapSendVerification button: UIButton)
+    func editProfilePersonalCell(editProfilePersonalCell: EditProfilePersonalTableViewCell, didTapChangePassword button: UIButton)
+    func editProfilePersonalCell(editProfilePersonalCell: EditProfilePersonalTableViewCell, didTapUploadID button: UIButton)
 }
 
 class EditProfilePersonalTableViewCell: UITableViewCell {
@@ -62,6 +64,7 @@ class EditProfilePersonalTableViewCell: UITableViewCell {
         self.tinTextField.delegate = self
         
         //Set button to round rect
+        self.remarksButton.layer.cornerRadius = 10
         self.sendVerificationButton.layer.cornerRadius = 5
         self.changePasswordButton.layer.cornerRadius = 5
         self.uploadIDButton.layer.cornerRadius = 5
@@ -81,7 +84,13 @@ class EditProfilePersonalTableViewCell: UITableViewCell {
         self.emailTextField.text = storeInfo.email
         self.tinTextField.text = storeInfo.tin
         
-        self.sendVerificationButton(self.isEmailVerified)
+        if storeInfo.isBusinessEditable {
+            self.tinTextField.enabled = false
+        } else {
+            self.tinTextField.enabled = true
+        }
+        
+        self.sendVerificationButton(storeInfo.isEmailVerified)
     }
     
     func sendVerificationButton(isVerified: Bool) {
@@ -107,14 +116,23 @@ class EditProfilePersonalTableViewCell: UITableViewCell {
         }
     }
     
+    func setActivityIndicationHidden(hidden: Bool) {
+        if hidden {
+            self.uploadActivityIndicator.stopAnimating()
+            self.uploadActivityIndicator.hidden = hidden
+        } else {
+            self.uploadActivityIndicator.startAnimating()
+            self.uploadActivityIndicator.hidden = hidden
+        }
+    }
+    
     @IBAction func buttonAction(sender: UIButton) {
         if sender == self.sendVerificationButton {
             self.delegate?.editProfilePersonalCell(self, didTapSendVerification: sender)
         } else if sender == self.uploadIDButton {
-            self.uploadActivityIndicator.hidden = false
-            self.uploadActivityIndicator.startAnimating()
+            self.delegate?.editProfilePersonalCell(self, didTapUploadID: sender)
         } else if sender == self.changePasswordButton {
-            
+            self.delegate?.editProfilePersonalCell(self, didTapChangePassword: sender)
         }
     }
     
