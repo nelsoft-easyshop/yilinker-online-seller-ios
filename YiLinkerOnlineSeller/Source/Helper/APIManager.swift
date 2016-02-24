@@ -14,7 +14,7 @@ struct APIEnvironment {
     
     static func baseUrl() -> String {
         if development {
-            return "http://merchant.online.api.easydeal.ph/api/v1"
+            return "http://sprint.affiliate.online.api.easydeal.ph/api/"
         } else if staging {
             return "http://merchant.online.api.easydeal.ph/api/v1"
         } else  {
@@ -33,7 +33,7 @@ struct APIAtlas {
     static let brandUrl = "product/getBrands"
     static let uploadUrl = "product/upload"
     static let getProductDetails = "product/upload-details"
-    static let sellerStoreInfo = "auth/merchant/getUserInfo"
+    static let sellerStoreInfo = "v1/auth/merchant/getUserInfo"
     static let sellerBankAccountList = "auth/bank/account/getBankAccounts"
     static let sellerAddBankAccount = "auth/bank/account/addBankAccount"
     static let sellerDeleteBankAccount = "auth/bank/account/deleteBankAccount"
@@ -53,7 +53,7 @@ struct APIAtlas {
     static let sellerMobileNumberVerification = "auth/sms/verify"
     static let sellerChangePassword = "auth/user/changePassword"
     static let sellerUpdateSellerInfo = "auth/merchant/updateUserInfo"
-    static let sellerGenerateQrCode = "auth/merchant/getQrCode"
+    static let sellerGenerateQrCode = "v1/auth/merchant/getQrCode"
     static let getCustomizedCategories   = "category/getCustomCategories"           // Applied
     static let getCategoryDetails        = "category/getCategoryDetails"            // Applied
     static let editCustomizedCategory    = "auth/category/updateCustomCategory"
@@ -144,6 +144,18 @@ struct APIAtlas {
     
     //Fogot Password
     static let forgotPasswordV2 = "v2/user/resetPassword"
+    
+    //Upload Image
+    static let uploadImageUrl = "v2/auth/image/upload"
+    
+    //Affiliate Store Setup
+    static let affiliateStoreSetupUrl = "v2/auth/store/setup"
+    
+    static let affiliateGetProduct = "v1/auth/product/getAffiliateProducts"
+    
+    static let affiliateSaveOrRemoveProductUrl = "v1/auth/product/saveAffiliateProducts"
+    
+    static let affiliateGetCategories = "v1/auth/product/getCategories"
 }
 
 class APIManager: AFHTTPSessionManager {

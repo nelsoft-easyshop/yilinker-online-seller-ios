@@ -359,7 +359,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         layout.sectionInset = UIEdgeInsetsMake(0, 16.0, 0, 16.0)
         collectionView.setCollectionViewLayout(layout, animated: true)
         collectionView?.backgroundColor = UIColor.whiteColor()
-        collectionView?.bounces = false
+        //collectionView?.bounces = false
         collectionView?.alwaysBounceVertical = true
         
         var gradient: CAGradientLayer = CAGradientLayer()
@@ -441,9 +441,17 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         
         if indexPath.row == 0 {
             var storeInfoViewController = StoreInfoViewController(nibName: "StoreInfoViewController", bundle: nil)
-            self.navigationController?.pushViewController(storeInfoViewController, animated:true)
-        } else if indexPath.row == 0 {
-           
+            if SessionManager.isReseller() {
+                let affiliateSelectProductViewController: AffiliateSetupStoreTableViewController = AffiliateSetupStoreTableViewController(nibName: AffiliateSetupStoreTableViewController.nibName(), bundle: nil) as AffiliateSetupStoreTableViewController
+                
+                println(self.storeInfo.streetName)
+                
+                affiliateSelectProductViewController.storeInfoModel = self.storeInfo
+                
+                self.navigationController?.pushViewController(affiliateSelectProductViewController, animated:true)
+            } else {
+                self.navigationController?.pushViewController(storeInfoViewController, animated:true)
+            }
         } else if indexPath.row == 1 {
             var salesViewController = SalesReportViewController(nibName: "SalesReportViewController", bundle: nil)
             self.navigationController?.pushViewController(salesViewController, animated:true)
@@ -599,7 +607,14 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             
             SessionManager.setFullAddress(self.storeInfo.store_address)
             SessionManager.setUserFullName(self.storeInfo.name)
-
+            
+            var tempD: NSDictionary = responseObject as! NSDictionary
+            println(tempD)
+            if let data: NSDictionary = tempD["data"] as? NSDictionary {
+                if let storeSlug = data["storeSlug"] as? String {
+                    self.storeInfo.storeSlug = storeSlug
+                }
+            }
             
             NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.store_name, forKey: "storeName")
             NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.store_address, forKey: "storeAddress")
