@@ -49,34 +49,8 @@ class WebServiceManager: NSObject {
     //Register
     static let verificationCodeKey = "verificationCode"
     static let contactNumberKey = "contactNumber"
-    static let contactNoKey = "contactNo"
     static let newPasswordKey = "newPassword"
     static let referralCodeKey = "referralCode"
-    
-    //Image Upload
-    static let imageKey = "image"
-    
-    //Affiliate Store Setup
-    static let storeSlugKey = "storeSlug"
-    static let storeNamekey = "storeName"
-    static let storeDescriptionKey = "storeDescription"
-    static let coverPhotoKey = "coverPhoto"
-    static let profilePhotoKey = "profilePhoto"
-    
-    static let categoryIdsKey = "categoryIds"
-    static let sortbyKey = "sortby"
-    static let limitKey = "limit"
-    static let nameKey = "name"
-    
-    static let manufacturerProductIdsKey = "manufacturerProductIds"
-    static let removeManufacturerProductIdsKey = "removeManufacturerProductIds"
-    
-    // MARK: profile Keys
-    static let firstNameKey = "firstName"
-    static let lastNameKey = "lastName"
-    static let tinKey = "tin"
-    static let isSentKey = "isSent"
-    static let validIdKey = "validId"
     
     // MARK: - CALLS
     // MARK: - Post Request With Url
@@ -244,10 +218,8 @@ class WebServiceManager: NSObject {
     //MARK: - Post Request With Image
     //This function is for removing repeated codes in handler
     private static func firePostRequestWithImage(url: String, parameters: AnyObject, image: UIImage, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
-        //let manager = APIManager.sharedInstance
+        let manager = APIManager.sharedInstance
         if Reachability.isConnectedToNetwork() {
-            
-            let manager: APIManager = APIManager(baseURL: NSURL(string: "http://sprint.affiliate.online.api.easydeal.ph/api/"))
             
             self.postTask = manager.POST(url, parameters: parameters,
                 constructingBodyWithBlock: { (formData: AFMultipartFormData!) -> Void in
@@ -256,7 +228,6 @@ class WebServiceManager: NSObject {
                     actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
                     if let task = task.response as? NSHTTPURLResponse {
-                        println(error)
                         if error.userInfo != nil {
                             //Request is successful but encounter error in server
                             actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
@@ -278,6 +249,7 @@ class WebServiceManager: NSObject {
                         actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
                     }
             })
+            
         } else {
             actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
         }
@@ -618,7 +590,15 @@ class WebServiceManager: NSObject {
     //MARK: -
     //MARK: - Fire Forgot Password Request With URL
     class func fireForgotPasswordrRequestWithUrl(url: String, verficationCode: String, newPassword: String, storeType: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
-        let manager: APIManager = APIManager.sharedInstance
+        let manager: APIManager = APIManager(baseURL: NSURL(string: url))
+        
+        manager.securityPolicy = AFSecurityPolicy(pinningMode: AFSSLPinningMode.Certificate)
+        let certificatePath = NSBundle.mainBundle().pathForResource("yilinker_pinned_certificate", ofType: "cer")!
+        let certificateData = NSData(contentsOfFile: certificatePath)!
+        manager.securityPolicy.pinnedCertificates = [certificateData];
+        manager.securityPolicy.validatesDomainName = true
+        manager.securityPolicy.allowInvalidCertificates = true
+        manager.responseSerializer = JSONResponseSerializer()
         
         let parameters: NSDictionary = [self.verificationCodeKey: verficationCode, self.newPasswordKey: newPassword, self.storeTypeKey: storeType]
         
@@ -649,10 +629,10 @@ class WebServiceManager: NSObject {
     
     //MARK: -
     //MARK: - Fire Register Request With URL v2
-    class func fireRegisterRequestWithUrl(url: String, contactNumber: String, password: String, areaCode: String, referralCode: String,  verificationCode: String, grant_type: String, client_id: String, client_secret: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+    class func fireRegisterRequestWithUrl(url: String, contactNumber: String, password: String, areaCode: String, referralCode: String,  verificationCode: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager: APIManager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = [self.contactNumberKey: contactNumber, self.passwordKey: password, self.areaCodeKey: areaCode, self.referralCodeKey: referralCode, self.verificationCodeKey: verificationCode, self.grantTypeKey: grant_type, self.clientIdKey: client_id, self.clientSecretKey: client_secret]
+        let parameters: NSDictionary = [self.contactNumberKey: contactNumber, self.passwordKey: password, self.areaCodeKey: areaCode, self.referralCodeKey: referralCode, self.verificationCodeKey: verificationCode]
         
         if Reachability.isConnectedToNetwork() {
             manager.POST(url, parameters: parameters, success: {
@@ -679,128 +659,14 @@ class WebServiceManager: NSObject {
             actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
         }
     }
-
     
     //MARK: -
     //MARK: - Fire Get Unauthenticated OTP (One Time Password) With URL
     //Parameters  "type":"register/forgot-password"
     class func fireUnauthenticatedOTPRequestWithUrl(url: String, contactNumber: String, areaCode: String, type: String, storeType: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
-        let manager: APIManager = APIManager.sharedInstance
+        let manager: APIManager = APIManager()
         
         let parameters: NSDictionary = [self.contactNumberKey: contactNumber, self.areaCodeKey: areaCode, self.typeKey: type, self.storeTypeKey: storeType]
-        
-        if Reachability.isConnectedToNetwork() {
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    if let task = task.response as? NSHTTPURLResponse {
-                        if error.userInfo != nil {
-                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
-                        } else {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
-                        }
-                    } else {
-                        actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
-                    }
-            })
-        } else {
-            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
-        }
-    }
-    
-    //MARK: -
-    //MARK: - Fire Send Email Verification
-    class func fireSendEmailVerificationRequestWithUrl(url: String, email: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
-        let manager: APIManager = APIManager.sharedInstance
-        let parameters: NSDictionary = [self.emailKey: email, self.accessTokenKey: accessToken]
-        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
-            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
-        }
-    }
-    
-    class func fireUploadImageWithUrl(url: String, accessToken: String, image: UIImage, type: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
-        let manager: APIManager = APIManager.sharedInstance
-        let parameters: NSDictionary = [self.imageKey: image, typeKey: type]
-        
-        var finalUrl: String = "\(url)?\(self.accessTokenKey)=\(accessToken)"
-        
-        if Reachability.isConnectedToNetwork() {
-            self.firePostRequestWithImage(finalUrl, parameters: parameters, image: image, actionHandler: {
-                (successful, responseObject, requestErrorType) -> Void in
-                actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
-            })
-        } else {
-            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
-        }
-    }
-    
-    //MARK: -
-    //MARK: - Fire Affilate Store Setup With Url
-    class func fireAffiliateStoreSetupWithUrl(url: String, storeLink: String, storeName: String, storeDescription: String, profilePhoto: String, coverPhoto: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
-       
-        let parameters: NSDictionary = [self.storeSlugKey: storeLink, self.storeNamekey: storeName, self.storeDescriptionKey: storeDescription, self.accessTokenKey: SessionManager.accessToken(), self.profilePhotoKey: profilePhoto, self.coverPhotoKey: coverPhoto]
-        
-        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
-            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
-        }
-    }
-    
-    //MARK: -
-    //MARK: - Fire Affiliate Get Seller Product From Url
-    class func fireAffiliateGetSellerProductFromUrl(url: String, categoryIds: String, sortby: String, limit: String, page: String, status: String, name: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
-        
-        let manager: APIManager = APIManager.sharedInstance
-        
-        var parameters: NSDictionary = NSDictionary()
-        
-        if name != "" {
-             parameters = [self.accessTokenKey: SessionManager.accessToken(), self.categoryIdsKey: categoryIds, self.limitKey: limit, self.pageKey: page, self.nameKey: name]
-        } else {
-            parameters = [self.accessTokenKey: SessionManager.accessToken(), self.categoryIdsKey: categoryIds, self.sortbyKey: sortby, self.limitKey: limit, self.pageKey: page, self.statusKey: status]
-        }
-        
-        let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
-            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
-        }
-    }
-    
-    //MARK: -
-    //MARK: - Fire Affiliate Save Product From Url
-    class func fireAffiliateSaveProductFromUrl(url: String, productIds: String, removeManufacturerProductIds: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
-        
-        let manager: APIManager = APIManager.sharedInstance
-        
-        let parameters: NSDictionary = [self.accessTokenKey: SessionManager.accessToken(), self.manufacturerProductIdsKey: productIds, self.removeManufacturerProductIdsKey: removeManufacturerProductIds]
-        
-        let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
-            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
-        }
-    }
-    
-    //MARK: -
-    //MARK: - Fire Affilate Get Categories From Url
-    class func fireAffiliateGetCategoriesFromUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
-        
-        let manager: APIManager = APIManager.sharedInstance
-        
-        let parameters: NSDictionary = [self.accessTokenKey: SessionManager.accessToken()]
-        
-        let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
-            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
-        }
-    }
-    
-    //MARK: - Fire Save Profile
-    class func fireSaveProfileWithUrl(url: String, firstName: String, lastName: String, tin: String, email: String, isSent: String, validId: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
-        let manager: APIManager = APIManager.sharedInstance
-        
-        let parameters: NSDictionary = [self.firstNameKey: firstName, self.lastNameKey: lastName, self.tinKey: tin, self.emailKey: email, self.accessTokenKey: accessToken, self.validIdKey: validId, self.isSentKey: isSent]
         
         if Reachability.isConnectedToNetwork() {
             manager.POST(url, parameters: parameters, success: {

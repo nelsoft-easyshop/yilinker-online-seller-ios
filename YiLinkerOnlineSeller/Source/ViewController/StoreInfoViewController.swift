@@ -374,10 +374,6 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         presentViewController(socialVC, animated: true, completion: nil)
     }
     
-    func storeInfoQrCodeTableViewCell(storeInfoQrCodeTableViewCell: StoreInfoQrCodeTableViewCell, didTapGenerateQRButton button: UIButton) {
-        
-    }
-    
     func shareTWAction(postImage: UIImageView, title: String) {
         
         let vc = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
@@ -707,9 +703,6 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             if self.hasQRCode {
                 let cell: StoreInfoQrCodeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(storeInfoQRCodeTableViewCellIndentifier, forIndexPath: indexPath) as! StoreInfoQrCodeTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
-                cell.shareButtonContainerView.hidden = false
-                cell.generateQrButton.hidden = true
-                cell.shareButtonContainerView.userInteractionEnabled = true
                 
                 if let url = NSURL(string: "\(self.qrUrl)") {
                     if let data = NSData(contentsOfURL: url){

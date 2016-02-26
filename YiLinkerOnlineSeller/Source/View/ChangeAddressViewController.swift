@@ -352,7 +352,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         
         WebServiceManager.fireStoreInfoRequestWithUrl(APIAtlas.sellerSetDefaultStoreAddress, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
-//                self.showAlert(title: self.information, message: responseObject["message"] as! String)
+                self.showAlert(title: self.information, message: responseObject["message"] as! String)
                 self.delegate?.updateStoreAddressDetail(self.getAddressModel.listOfAddress[self.defaultAddress].title, storeAddress:self.getAddressModel.listOfAddress[self.defaultAddress].fullLocation)
                 self.navigationController!.popViewControllerAnimated(true)
                 

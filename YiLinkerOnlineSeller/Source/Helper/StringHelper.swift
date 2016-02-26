@@ -29,13 +29,6 @@ class StringHelper: NSObject {
         return string!
     }
     
-    class func convertArrayToJsonString(array: NSArray) -> NSString {
-        let data = NSJSONSerialization.dataWithJSONObject(array, options: nil, error: nil)
-        let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
-        
-        return string!
-    }
-    
     class func convertStringToDictionary(text: String) -> NSDictionary {
         if let data = text.dataUsingEncoding(NSUTF8StringEncoding) {
             var error: NSError?
