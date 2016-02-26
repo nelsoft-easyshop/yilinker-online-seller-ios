@@ -10,6 +10,7 @@ import UIKit
 
 protocol EditProfilePersonalTableViewCellDelegate {
     func editProfilePersonalCell(editProfilePersonalCell: EditProfilePersonalTableViewCell, textFieldShouldReturn textField: UITextField)
+    func editProfilePersonalCell(editProfilePersonalCell: EditProfilePersonalTableViewCell, textFieldValueChanged textField: UITextField)
     func editProfilePersonalCell(editProfilePersonalCell: EditProfilePersonalTableViewCell, didTapSendVerification button: UIButton)
     func editProfilePersonalCell(editProfilePersonalCell: EditProfilePersonalTableViewCell, didTapChangePassword button: UIButton)
     func editProfilePersonalCell(editProfilePersonalCell: EditProfilePersonalTableViewCell, didTapUploadID button: UIButton)
@@ -40,13 +41,19 @@ class EditProfilePersonalTableViewCell: UITableViewCell {
     @IBOutlet weak var changePasswordButton: UIButton!
     @IBOutlet weak var remarksButton: UIButton!
     @IBOutlet weak var uploadIDButton: UIButton!
-    @IBOutlet weak var remarksConstraint: NSLayoutConstraint!
-    
-    @IBOutlet weak var remarksView: UIView!
     @IBOutlet weak var uploadActivityIndicator: UIActivityIndicatorView!
     
+    
+    @IBOutlet weak var uploadTinIdLabelConstraint: NSLayoutConstraint!
+    @IBOutlet weak var checkIconHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var checkIconWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var uploadButtonHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var activityIndicatorHeightConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var uploadView: UIView!
     var storeInfo: StoreInfoModel?
     var isEmailVerified: Bool = true
+    var isNewUpload: Bool = false
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -83,14 +90,75 @@ class EditProfilePersonalTableViewCell: UITableViewCell {
         self.lastNameTextField.text = storeInfo.lastName
         self.emailTextField.text = storeInfo.email
         self.tinTextField.text = storeInfo.tin
+        self.remarksLabel.text = storeInfo.validIdMessage
         
-        if storeInfo.isBusinessEditable {
-            self.tinTextField.enabled = false
-        } else {
-            self.tinTextField.enabled = true
-        }
+        self.tinTextField.enabled = storeInfo.isBusinessEditable
         
         self.sendVerificationButton(storeInfo.isEmailVerified)
+        
+        if storeInfo.validIdMessage.isEmpty && storeInfo.validId.isEmpty {
+            self.setCheckIconHide(true)
+        } else {
+            self.setCheckIconHide(false)
+        }
+        
+        if !storeInfo.validId.isEmpty && !storeInfo.validIdMessage.isEmpty {
+            self.setUploadViewHidden(false)
+            self.setCheckIconHide(true)
+        }
+        
+        if storeInfo.isLegalDocsEditable {
+            self.uploadView.hidden = false
+            self.setUploadViewHidden(false)
+        } else {
+            self.uploadView.hidden = true
+            self.remarksLabel.text = ""
+            self.setUploadViewHidden(true)
+        }
+        
+    }
+    
+    func setUploadSuccessful(isSuccessful: Bool) {
+        self.setCheckIconHide(!isSuccessful)
+        if isSuccessful {
+            self.remarksLabel.text = "You've Successfully Upload an ID"
+        }
+    }
+    
+    func setUploadViewHidden(hide: Bool) {
+        if hide {
+            self.uploadTinIdLabelConstraint.constant = 0
+            self.uploadButtonHeightConstraint.constant = 0
+            self.activityIndicatorHeightConstraint.constant = 0
+        } else {
+            self.uploadTinIdLabelConstraint.constant = 15
+            self.uploadButtonHeightConstraint.constant = 30
+            self.activityIndicatorHeightConstraint.constant = 20
+        }
+        self.setCheckIconHide(hide)
+    }
+    
+    func setCheckIconHide(hide: Bool) {
+        if hide {
+            self.checkIconHeightConstraint.constant = 0
+            self.checkIconWidthConstraint.constant = 0
+            self.remarksLabel.textColor = UIColor.redColor()
+        } else {
+            self.checkIconHeightConstraint.constant = 20
+            self.checkIconWidthConstraint.constant = 20
+            self.remarksLabel.textColor = Constants.Colors.pmPurpleButtonColor
+        }
+    }
+    
+    func setUploadRemarksSuccessful(isSuccessful: Bool, text: String) {
+        self.remarksLabel.text = text
+        if isSuccessful {
+            self.checkIconHeightConstraint.constant = 20
+            self.checkIconWidthConstraint.constant = 20
+        } else {
+            self.checkIconHeightConstraint.constant = 0
+            self.checkIconWidthConstraint.constant = 0
+        }
     }
     
     func sendVerificationButton(isVerified: Bool) {
@@ -105,22 +173,13 @@ class EditProfilePersonalTableViewCell: UITableViewCell {
         }
     }
     
-    func setRemarksStatusHidden(hide: Bool) {
-        if hide {
-            self.remarksLabel.text = ""
-            self.remarksConstraint.constant = 0
-            self.remarksView.hidden = hidden
-        } else {
-            self.remarksConstraint.constant = 20
-            self.remarksView.hidden = hidden
-        }
-    }
-    
     func setActivityIndicationHidden(hidden: Bool) {
         if hidden {
+            self.uploadIDButton.setTitle("Upload", forState: .Normal)
             self.uploadActivityIndicator.stopAnimating()
             self.uploadActivityIndicator.hidden = hidden
         } else {
+            self.uploadIDButton.setTitle("Uploading", forState: .Normal)
             self.uploadActivityIndicator.startAnimating()
             self.uploadActivityIndicator.hidden = hidden
         }
@@ -141,7 +200,7 @@ class EditProfilePersonalTableViewCell: UITableViewCell {
             if sender.text != self.storeInfo?.email {
                 self.sendVerificationButton(false)
             } else {
-                if self.isEmailVerified {
+                if self.storeInfo!.isEmailVerified {
                     self.sendVerificationButton(true)
                 }
             }
@@ -167,6 +226,8 @@ extension EditProfilePersonalTableViewCell: UITextFieldDelegate {
                 }
             }
         }
+        self.delegate?.editProfilePersonalCell(self, textFieldValueChanged: textField)
+        
         return true
     }
 }

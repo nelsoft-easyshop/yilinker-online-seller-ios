@@ -46,7 +46,9 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     var lastName: String = ""
     var emailAddress: String = ""
     var tin: String = ""
+    var validId: String = ""
     var referrerCode: String = ""
+    var isUploadSuccessFul: Bool = false
     
     var dimView: UIView = UIView()
     
@@ -162,9 +164,9 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     // MARK: - API Requests
     //MARK: -
     //MARK: - Fire Send Email Verification
-    func fireSaveProfile(firstName: String, lastName: String, tin: String, email: String, isSent: String) {
+    func fireSaveProfile(firstName: String, lastName: String, tin: String, email: String, isSent: String, validId: String) {
         self.showLoader()
-        WebServiceManager.fireSaveProfileWithUrl(APIAtlas.saveEditProfileAffiliate, firstName: firstName, lastName: lastName, tin: tin, email: email, isSent: isSent, accessToken: SessionManager.accessToken(),  actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        WebServiceManager.fireSaveProfileWithUrl(APIAtlas.saveEditProfileAffiliate, firstName: firstName, lastName: lastName, tin: tin, email: email, isSent: isSent, validId: validId, accessToken: SessionManager.accessToken(),  actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             println(responseObject)
             if successful {
                 self.dismissLoader()
@@ -172,8 +174,28 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 Toast.displayToastWithMessage(response.message, duration: 1.5, view: self.navigationController!.view!)
             } else {
                 self.dismissLoader()
-                self.handleErrorWithType(requestErrorType, responseObject: responseObject, requestType: .SaveProfile, params: [firstName, lastName, tin, email, isSent])
+                self.handleErrorWithType(requestErrorType, responseObject: responseObject, requestType: .SaveProfile, params: [firstName, lastName, tin, email, isSent, validId])
             }
+        })
+    }
+    
+    // MARK: - API Requests
+    //MARK: -
+    //MARK: - Fire Send Email Verification
+    func fireUploadID(image: UIImage, type: String) {
+        self.personalInfoCell!.setActivityIndicationHidden(false)
+        WebServiceManager.fireUploadImageWithUrl(APIAtlas.uploadImage, accessToken: SessionManager.accessToken(), image: image, type: type, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            println(responseObject)
+            self.personalInfoCell?.setActivityIndicationHidden(true)
+            if successful {
+                self.validId = UploadImageModel.parseDataFromDictionary(responseObject as! NSDictionary).fileName
+                self.isUploadSuccessFul = true
+            } else {
+                Toast.displayToastWithMessage(Constants.Localized.someThingWentWrong, duration: 1.5, view: self.navigationController!.view!)
+                self.dismissLoader()
+                self.isUploadSuccessFul = false
+            }
+            self.tableView.reloadData()
         })
     }
     
@@ -250,7 +272,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 case .SendEmailVerification:
                     self.fireSendVerification(params[0])
                 case .SaveProfile:
-                    self.fireSaveProfile(params[0], lastName: params[1], tin: params[2], email: params[3], isSent: params[4])
+                    self.fireSaveProfile(params[0], lastName: params[1], tin: params[2], email: params[3], isSent: params[4], validId: params[5])
                 }
                 
             } else {
@@ -273,7 +295,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         if indexPath.row == 0 {
             let cell: EditProfilePersonalTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.personalCellIdentifier, forIndexPath: indexPath) as! EditProfilePersonalTableViewCell
             cell.passValue(self.storeInfo!)
-            cell.setRemarksStatusHidden(true)
+            cell.setUploadSuccessful(self.isUploadSuccessFul)
             cell.delegate = self
             cell.selectionStyle = .None
             self.personalInfoCell = cell
@@ -420,7 +442,7 @@ extension EditProfileTableViewController: UIImagePickerControllerDelegate, UIAct
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         self.dismissViewControllerAnimated(true, completion: nil)
         self.validIDImage = image
-        self.personalInfoCell?.setActivityIndicationHidden(false)
+        self.fireUploadID(image, type: "valid_id")
     }
     
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
@@ -452,22 +474,46 @@ extension EditProfileTableViewController: EditProfilePersonalTableViewCellDelega
     func editProfilePersonalCell(editProfilePersonalCell: EditProfilePersonalTableViewCell, textFieldShouldReturn textField: UITextField) {
         if textField == editProfilePersonalCell.mobilePhoneTextField {
             self.mobileNumber = editProfilePersonalCell.mobilePhoneTextField.text
+            self.storeInfo?.contact_number = editProfilePersonalCell.mobilePhoneTextField.text
             editProfilePersonalCell.firstNameTextField.becomeFirstResponder()
         } else if textField == editProfilePersonalCell.firstNameTextField {
             self.firstName = editProfilePersonalCell.firstNameTextField.text
+            self.storeInfo?.firstName = editProfilePersonalCell.firstNameTextField.text
             editProfilePersonalCell.lastNameTextField.becomeFirstResponder()
         } else if textField == editProfilePersonalCell.lastNameTextField {
             self.lastName = editProfilePersonalCell.lastNameTextField.text
+            self.storeInfo?.lastName = editProfilePersonalCell.lastNameTextField.text
             editProfilePersonalCell.emailLabel.becomeFirstResponder()
         } else if textField == editProfilePersonalCell.emailTextField {
             self.emailAddress = editProfilePersonalCell.emailTextField.text
+            self.storeInfo?.email = editProfilePersonalCell.emailTextField.text
             editProfilePersonalCell.tinTextField.becomeFirstResponder()
         } else if textField == editProfilePersonalCell.tinTextField {
             self.tin = editProfilePersonalCell.tinTextField.text
+            self.storeInfo?.tin = editProfilePersonalCell.tinTextField.text
             self.closeKeyboard()
         } else {
             self.closeKeyboard()
         }
+    }
+    
+    func editProfilePersonalCell(editProfilePersonalCell: EditProfilePersonalTableViewCell, textFieldValueChanged textField: UITextField) {
+        if textField == editProfilePersonalCell.mobilePhoneTextField {
+            self.mobileNumber = editProfilePersonalCell.mobilePhoneTextField.text
+            self.storeInfo?.contact_number = editProfilePersonalCell.mobilePhoneTextField.text
+        } else if textField == editProfilePersonalCell.firstNameTextField {
+            self.firstName = editProfilePersonalCell.firstNameTextField.text
+            self.storeInfo?.firstName = editProfilePersonalCell.firstNameTextField.text
+        } else if textField == editProfilePersonalCell.lastNameTextField {
+            self.lastName = editProfilePersonalCell.lastNameTextField.text
+            self.storeInfo?.lastName = editProfilePersonalCell.lastNameTextField.text
+        } else if textField == editProfilePersonalCell.emailTextField {
+            self.emailAddress = editProfilePersonalCell.emailTextField.text
+            self.storeInfo?.email = editProfilePersonalCell.emailTextField.text
+        } else if textField == editProfilePersonalCell.tinTextField {
+            self.tin = editProfilePersonalCell.tinTextField.text
+            self.storeInfo?.tin = editProfilePersonalCell.tinTextField.text
+        } 
     }
     
     func editProfilePersonalCell(editProfilePersonalCell: EditProfilePersonalTableViewCell, didTapSendVerification button: UIButton) {
@@ -563,6 +609,26 @@ extension EditProfileTableViewController: ReferralCodeTableViewCellDelegate {
 
 extension EditProfileTableViewController: EditProfileButtonTableViewCellDelegate {
     func editProfileButtonCell(editProfileButtonCell: EditProfileButtonTableViewCell, didTapButton button: UIButton) {
-        self.fireSaveProfile(self.personalInfoCell!.firstNameTextField.text, lastName: self.personalInfoCell!.lastNameTextField.text, tin: self.personalInfoCell!.tinTextField.text, email: self.personalInfoCell!.emailTextField.text, isSent: "false")
+        var errorMessage: String = ""
+        
+        if self.personalInfoCell!.firstNameTextField.text.isEmpty {
+            errorMessage = RegisterStrings.firstNameRequired
+        } else if !self.personalInfoCell!.firstNameTextField.text.isValidName() {
+            errorMessage = RegisterStrings.illegalFirstName
+        } else if self.personalInfoCell!.lastNameTextField.text.isEmpty {
+            errorMessage = RegisterStrings.lastNameRequired
+        } else if !self.personalInfoCell!.lastNameTextField.text.isValidName() {
+            errorMessage = RegisterStrings.invalidLastName
+        } else if self.personalInfoCell!.emailTextField.text.isEmpty {
+            errorMessage = RegisterStrings.emailRequired
+        } else if !self.personalInfoCell!.emailTextField.text.isValidEmail() {
+            errorMessage = RegisterStrings.invalidEmail
+        }
+        
+        if errorMessage.isEmpty {
+            self.fireSaveProfile(self.personalInfoCell!.firstNameTextField.text, lastName: self.personalInfoCell!.lastNameTextField.text, tin: self.personalInfoCell!.tinTextField.text, email: self.personalInfoCell!.emailTextField.text, isSent: "\(self.isSendVerificationSent)", validId: self.validId)
+        } else {
+            Toast.displayToastWithMessage(errorMessage, duration: 2.0, view: self.navigationController!.view)
+        }
     }
 }

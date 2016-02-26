@@ -394,6 +394,7 @@
 		799893011B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799893001B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift */; };
 		799893031B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799893021B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib */; };
 		799893051B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799893041B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib */; };
+		79A139FC1C7D852300BCB8E6 /* UploadImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A139FB1C7D852300BCB8E6 /* UploadImageModel.swift */; };
 		79A941131C648AD6000682CC /* LoginHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A941031C648AD6000682CC /* LoginHeaderTableViewCell.swift */; };
 		79A941141C648AD6000682CC /* LoginHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79A941041C648AD6000682CC /* LoginHeaderTableViewCell.xib */; };
 		79A941151C648AD6000682CC /* LoginRegisterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A941051C648AD6000682CC /* LoginRegisterTableViewCell.swift */; };
@@ -1119,6 +1120,7 @@
 		799893001B8CEBED00F4CFE2 /* SettingDeactivateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingDeactivateTableViewCell.swift; sourceTree = "<group>"; };
 		799893021B8CF0A300F4CFE2 /* SettingsHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		799893041B8CF0C300F4CFE2 /* SettingsItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsItemTableViewCell.xib; sourceTree = "<group>"; };
+		79A139FB1C7D852300BCB8E6 /* UploadImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadImageModel.swift; sourceTree = "<group>"; };
 		79A941031C648AD6000682CC /* LoginHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		79A941041C648AD6000682CC /* LoginHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		79A941051C648AD6000682CC /* LoginRegisterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRegisterTableViewCell.swift; sourceTree = "<group>"; };
@@ -1572,6 +1574,7 @@
 		0CF28EC21B8C85E4005B2E54 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				79A139FB1C7D852300BCB8E6 /* UploadImageModel.swift */,
 				79A941291C648D62000682CC /* RegisterModel.swift */,
 				F7C971D21BC3B83100F8A04F /* ResolutionCenterDisputeReasonModel.swift */,
 				F7C971D31BC3B83100F8A04F /* ResolutionCenterDisputeReasonsModel.swift */,
@@ -3248,6 +3251,7 @@
 				792876361B8DF89F00762A39 /* CombinedChartRenderer.swift in Sources */,
 				79E6339F1B9B27E70062DB14 /* FSCalendar+IBExtension.m in Sources */,
 				2686E3761B956C4A00E8FA80 /* ItemImagesHorizontalCollectionViewCell.swift in Sources */,
+				79A139FC1C7D852300BCB8E6 /* UploadImageModel.swift in Sources */,
 				79E633A81B9B27E70062DB14 /* NSString+FSExtension.m in Sources */,
 				F7E4BAB51C5F405C0019A309 /* PayoutEarningsTransactionTypeTableViewCell.swift in Sources */,
 				792875FA1B8DF89F00762A39 /* CombinedChartView.swift in Sources */,

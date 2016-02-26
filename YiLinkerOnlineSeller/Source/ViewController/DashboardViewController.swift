@@ -225,6 +225,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             } else {
                 cell.iconView.alpha = 0.5
             }
+        } else {
+            cell.iconView.alpha = 1.0
         }
         
         cell.layoutIfNeeded()
@@ -480,7 +482,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                         self.fireRefreshToken(showHUD)
                     } else {
                         UIAlertController.displaySomethingWentWrongError(self)
-                        self.storeInfo = StoreInfoModel(name: "", firstName: "", lastName: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", storeSlug: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", account_number: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "", isReseller: false, isEmailVerified: false, isEmailSubscribed: false, isSmsSubscribed: false, productId: [], productCategoryName: [], isSelected: [], tin: "", messageCount: 0, referralCode: "", referrerCode: "", referrerName: "", accountName: "", bankName: "", validId: "", isBankEditable: false, isBusinessEditable: false, isLegalDocsEditable: false)
+                        self.storeInfo = StoreInfoModel(name: "", firstName: "", lastName: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", storeSlug: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", account_number: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "", isReseller: false, isEmailVerified: false, isEmailSubscribed: false, isSmsSubscribed: false, productId: [], productCategoryName: [], isSelected: [], tin: "", messageCount: 0, referralCode: "", referrerCode: "", referrerName: "", accountName: "", bankName: "", validId: "", isBankEditable: false, isBusinessEditable: false, isLegalDocsEditable: false, validIdMessage: "")
                         
                         
                         var store_name1 = NSUserDefaults.standardUserDefaults().stringForKey("storeName")
