@@ -185,7 +185,9 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 Toast.displayToastWithMessage(response.message, duration: 1.5, view: self.navigationController!.view!)
                 
                 if self.isNewUser {
-                    //Redirect to setup store
+                    let affiliateSelectProductViewController: AffiliateSetupStoreTableViewController = AffiliateSetupStoreTableViewController(nibName: AffiliateSetupStoreTableViewController.nibName(), bundle: nil) as AffiliateSetupStoreTableViewController
+                    affiliateSelectProductViewController.storeInfoModel = self.storeInfo!
+                    self.navigationController!.pushViewController(affiliateSelectProductViewController, animated:true)
                 }
             } else {
                 self.dismissLoader()

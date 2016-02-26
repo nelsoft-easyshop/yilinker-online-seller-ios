@@ -71,6 +71,10 @@ extension UITextField {
         
     }
     
+    func trim() -> String{
+        return self.text.stringByReplacingOccurrencesOfString(" ", withString: "")
+    }
+    
     func isValidPassword() -> Bool {
         // println("validate calendar: \(testStr)")
         let emailRegEx = "^(?=.*\\d)(?=.*[a-zA-Z])[^ ]{0,}$"
@@ -349,6 +353,10 @@ extension String {
     
     var doubleValue: Double {
         return (self as NSString).doubleValue
+    }
+    
+    func trim() -> String{
+        return self.stringByReplacingOccurrencesOfString(" ", withString: "")
     }
     
     func isValidEmail() -> Bool {

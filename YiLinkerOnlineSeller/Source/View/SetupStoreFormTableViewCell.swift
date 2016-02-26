@@ -75,4 +75,9 @@ class SetupStoreFormTableViewCell: UITableViewCell, UITextFieldDelegate, UITextV
     func textFieldDidChange(textField: UITextField) {
         self.delegate?.setupStoreFormTableViewCell(self, didTextFieldChange: textField)
     }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        self.delegate?.setupStoreFormTableViewCell(self, didTextFieldChange: textField)
+        return true
+    }
 }

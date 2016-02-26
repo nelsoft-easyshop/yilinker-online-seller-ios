@@ -120,9 +120,9 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         super.viewWillAppear(animated)
         
         if !SessionManager.isLoggedIn() {
-                SessionManager.setAccessToken("")
-                let signInViewController = LoginAndRegisterTableViewController(nibName: "LoginAndRegisterTableViewController", bundle: nil)
-                self.presentViewController(signInViewController, animated: false, completion: nil)
+            SessionManager.setAccessToken("")
+            let signInViewController = LoginAndRegisterTableViewController(nibName: "LoginAndRegisterTableViewController", bundle: nil)
+            self.presentViewController(signInViewController, animated: false, completion: nil)
         }
         
         self.navigationController?.navigationBarHidden = true
@@ -229,6 +229,19 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             cell.iconView.alpha = 1.0
         }
         
+        if self.checkIfNewStore() {
+            if self.tableData[indexPath.row] == DashboardViewConstants.editProfileString ||
+                self.tableData[indexPath.row] == DashboardViewConstants.helpString ||
+                self.tableData[indexPath.row] == DashboardViewConstants.logoutString ||
+                self.tableData[indexPath.row] == DashboardViewConstants.setupStoreString {
+                    cell.iconView.alpha = 1.0
+            } else {
+                cell.iconView.alpha = 0.5
+            }
+        } else {
+            cell.iconView.alpha = 1.0
+        }
+        
         cell.layoutIfNeeded()
         return cell
     }
@@ -271,25 +284,25 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             let affiliateSelectProductViewController: AffiliateSetupStoreTableViewController = AffiliateSetupStoreTableViewController(nibName: AffiliateSetupStoreTableViewController.nibName(), bundle: nil) as AffiliateSetupStoreTableViewController
             affiliateSelectProductViewController.storeInfoModel = self.storeInfo
             self.navigationController?.pushViewController(affiliateSelectProductViewController, animated:true)
-        } else if self.tableData[indexPath.row] == DashboardViewConstants.salesReportString && !self.checkIfNewUser() {
+        } else if self.tableData[indexPath.row] == DashboardViewConstants.salesReportString && !self.checkIfNewUser() && !self.checkIfNewStore() {
             var salesViewController = SalesReportViewController(nibName: "SalesReportViewController", bundle: nil)
             self.navigationController?.pushViewController(salesViewController, animated:true)
             
-        } else if self.tableData[indexPath.row] == DashboardViewConstants.transactionsString && !self.checkIfNewUser() {
+        } else if self.tableData[indexPath.row] == DashboardViewConstants.transactionsString && !self.checkIfNewUser() && !self.checkIfNewStore() {
             let transaction = TransactionViewController(nibName: "TransactionViewController", bundle: nil)
             transaction.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(transaction, animated: true)
             
-        } else if self.tableData[indexPath.row] == DashboardViewConstants.productManagementString && !self.checkIfNewUser() {
+        } else if self.tableData[indexPath.row] == DashboardViewConstants.productManagementString && !self.checkIfNewUser() && !self.checkIfNewStore() {
             let productManagement = ProductManagementViewController(nibName: "ProductManagementViewController", bundle: nil)
             productManagement.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(productManagement, animated: true)
             
-        } else if self.tableData[indexPath.row] == DashboardViewConstants.customizedCategoryString  && !self.checkIfNewUser() {
+        } else if self.tableData[indexPath.row] == DashboardViewConstants.customizedCategoryString  && !self.checkIfNewUser() && !self.checkIfNewStore() {
             var customizedCategory = CustomizedCategoryViewController(nibName: "CustomizedCategoryViewController", bundle: nil)
             self.navigationController?.pushViewController(customizedCategory, animated:true)
             
-        } else if self.tableData[indexPath.row] == DashboardViewConstants.uploadItemString && !self.checkIfNewUser() {
+        } else if self.tableData[indexPath.row] == DashboardViewConstants.uploadItemString && !self.checkIfNewUser() && !self.checkIfNewStore() {
             let productUploadTableViewController: ProductUploadTableViewController = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
             let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadTableViewController)
             ProductUploadCombination.draft = true
@@ -297,32 +310,35 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
             self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
             
-        } else if self.tableData[indexPath.row] == DashboardViewConstants.selectProduct && !self.checkIfNewUser() {
+        } else if self.tableData[indexPath.row] == DashboardViewConstants.selectProduct && !self.checkIfNewUser() && !self.checkIfNewStore() {
             //Setup Store
-            let resellerViewController: ResellerViewController = ResellerViewController(nibName: "ResellerViewController", bundle: nil)
-            let navigationController: UINavigationController = UINavigationController(rootViewController: resellerViewController)
-            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-            self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
+//            let resellerViewController: ResellerViewController = ResellerViewController(nibName: "ResellerViewController", bundle: nil)
+//            let navigationController: UINavigationController = UINavigationController(rootViewController: resellerViewController)
+//            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+//            self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
+
+            let vc: AffiliateSelectProductViewController = AffiliateSelectProductViewController(nibName: AffiliateSelectProductViewController.nibName(), bundle: nil) as AffiliateSelectProductViewController
             
-        } else if self.tableData[indexPath.row] == DashboardViewConstants.payout && !self.checkIfNewUser() {
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else if self.tableData[indexPath.row] == DashboardViewConstants.payout && !self.checkIfNewUser() && !self.checkIfNewStore() {
             let payoutVC = PayoutViewController(nibName: "PayoutViewController", bundle: nil)
             payoutVC.hidesBottomBarWhenPushed = true
             payoutVC.storeInfo = self.storeInfo
             self.navigationController?.pushViewController(payoutVC, animated: true)
             
-        } else if self.tableData[indexPath.row] == DashboardViewConstants.followersString && !self.checkIfNewUser() {
+        } else if self.tableData[indexPath.row] == DashboardViewConstants.followersString && !self.checkIfNewUser() && !self.checkIfNewStore() {
             var followerController = FollowersViewController(nibName: "FollowersViewController", bundle: nil)
             self.navigationController?.pushViewController(followerController, animated:true)
             
-        } else if self.tableData[indexPath.row] == DashboardViewConstants.activityLogsString && !self.checkIfNewUser() {
+        } else if self.tableData[indexPath.row] == DashboardViewConstants.activityLogsString && !self.checkIfNewUser() && !self.checkIfNewStore() {
             var activityViewController = ActivityLogTableViewController(nibName: "ActivityLogTableViewController", bundle: nil)
             self.navigationController?.pushViewController(activityViewController, animated:true)
             
-        } else if self.tableData[indexPath.row] == DashboardViewConstants.myPointsString && !self.checkIfNewUser() {
+        } else if self.tableData[indexPath.row] == DashboardViewConstants.myPointsString && !self.checkIfNewUser() && !self.checkIfNewStore() {
             var myPointsViewController = MyPointsTableViewController(nibName: "MyPointsTableViewController", bundle: nil)
             self.navigationController?.pushViewController(myPointsViewController, animated:true)
             
-        } else if self.tableData[indexPath.row] == DashboardViewConstants.resolutionCenterString && !self.checkIfNewUser() {
+        } else if self.tableData[indexPath.row] == DashboardViewConstants.resolutionCenterString && !self.checkIfNewUser() && !self.checkIfNewStore() {
             let resolutionCenter = self.storyboard?.instantiateViewControllerWithIdentifier("ResolutionCenterViewControllerV2")
                 as! ResolutionCenterViewControllerV2
             resolutionCenter.hidesBottomBarWhenPushed = true
@@ -470,6 +486,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             if self.checkIfNewUser() && self.openCtr == 0 {
                 var editProfileViewController = EditProfileTableViewController(nibName: "EditProfileTableViewController", bundle: nil)
                 editProfileViewController.storeInfo = self.storeInfo
+                editProfileViewController.isNewUser = self.checkIfNewUser()
                 editProfileViewController.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(editProfileViewController, animated:true)
                 self.openCtr++
@@ -650,7 +667,19 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     
     func checkIfNewUser() -> Bool {
         if self.storeInfo != nil {
-            if self.storeInfo.firstName.isEmpty && self.storeInfo.lastName.isEmpty && self.storeInfo.email.isEmpty {
+            if self.storeInfo.firstName.trim().isEmpty && self.storeInfo.lastName.trim().isEmpty && self.storeInfo.email.trim().isEmpty {
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return false
+        }
+    }
+    
+    func checkIfNewStore() -> Bool {
+        if self.storeInfo != nil {
+            if self.storeInfo.store_name.trim().isEmpty {
                 return true
             } else {
                 return false
