@@ -18,7 +18,7 @@ class ProductModel {
     var images: [UIImage] = []
     var imagesCropped: [UIImage] = []
     
-    var category: CategoryModel = CategoryModel()
+    var category: CategoryModel = CategoryModel(uid: 0, name: "", hasChildren: "")
     var brand: BrandModel = BrandModel(name: "", brandId:1)
     var condition: ConditionModel = ConditionModel(uid: 0, name: "")
     var quantity: Int = 1
@@ -80,7 +80,7 @@ class ProductModel {
         self.validCombinations = []
         self.images = []
         
-        self.category = CategoryModel()
+        self.category = CategoryModel(uid: 0, name: "", hasChildren: "")
         self.brand = BrandModel(name: "", brandId:1)
         self.condition = ConditionModel(uid: 0, name: "")
         self.quantity = 1
@@ -119,7 +119,7 @@ class ProductModel {
         var images: [String] = []
         var imageIds: [String] = []
         
-        var category: CategoryModel = CategoryModel()
+        var category: CategoryModel = CategoryModel(uid: 0, name: "", hasChildren: "")
         var brand: BrandModel = BrandModel(name: "", brandId:1)
         var condition: ConditionModel = ConditionModel(uid: 0, name: "")
         
