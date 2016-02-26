@@ -96,6 +96,7 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
     //MARK: - Show Product Count
     func showProductCount() {
         self.selectYourProductLabel.text = "SELECT YOUR PRODUCT (\(self.affiliateGetProductModel.selectedProductCount)/\(self.affiliateGetProductModel.storeSpace))"
+        self.doneButton.setTitle("\(self.doneButton.titleLabel!.text!) (\(self.affiliateGetProductModel.selectedProductCount)/\(self.affiliateGetProductModel.storeSpace))", forState: .Normal)
     }
     
     //MARK: - 
