@@ -58,6 +58,8 @@ class WebServiceManager: NSObject {
     static let lastNameKey = "lastName"
     static let tinKey = "tin"
     static let isSentKey = "isSent"
+    static let imageKey = "image"
+    static let validIdKey = "validId"
     
     // MARK: - CALLS
     // MARK: - Post Request With Url
@@ -235,6 +237,7 @@ class WebServiceManager: NSObject {
                     actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
                     if let task = task.response as? NSHTTPURLResponse {
+                        println(error)
                         if error.userInfo != nil {
                             //Request is successful but encounter error in server
                             actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
@@ -702,12 +705,30 @@ class WebServiceManager: NSObject {
         }
     }
     
-    //MARK: -
-    //MARK: - Fire Save Profile
-    class func fireSaveProfileWithUrl(url: String, firstName: String, lastName: String, tin: String, email: String, isSent: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+    class func fireUploadImageWithUrl(url: String, accessToken: String, image: UIImage, type: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager: APIManager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = [self.firstNameKey: firstName, self.lastNameKey: lastName, self.tinKey: tin, self.emailKey: email, self.emailKey: email, self.accessTokenKey: accessToken]
+        let parameters: NSDictionary = [self.imageKey: image, typeKey: type]
+        
+        var finalUrl: String = "\(url)?\(self.accessTokenKey)=\(accessToken)"
+        
+        if Reachability.isConnectedToNetwork() {
+            self.firePostRequestWithImage(finalUrl, parameters: parameters, image: image, actionHandler: {
+                (successful, responseObject, requestErrorType) -> Void in
+                println(responseObject)
+                actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+            })
+        } else {
+            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Fire Save Profile
+    class func fireSaveProfileWithUrl(url: String, firstName: String, lastName: String, tin: String, email: String, isSent: String, validId: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = [self.firstNameKey: firstName, self.lastNameKey: lastName, self.tinKey: tin, self.emailKey: email, self.accessTokenKey: accessToken, self.validIdKey: validId]
         
         if Reachability.isConnectedToNetwork() {
             manager.POST(url, parameters: parameters, success: {
