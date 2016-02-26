@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+        </mutableArray>
+        <mutableArray key="Panton SemiBold.otf">
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+        </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SelectProductCollectionViewCell" id="gTV-IL-0wX" customClass="SelectProductCollectionViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="180" height="220"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="180" height="220"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="ssF-55-Zce">
+                        <rect key="frame" x="0.0" y="0.0" width="180" height="130"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="130" id="zdn-L6-GqW"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 % OFF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="aZT-z1-yF8">
+                        <rect key="frame" x="105" y="8" width="69" height="18"/>
+                        <color key="backgroundColor" red="0.78823529410000004" green="0.062745098040000002" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="kao-hv-lG4"/>
+                            <constraint firstAttribute="width" constant="69" id="oQb-H5-Zsg"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beats Studio Type 20 Headphones" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="Vv9-kj-yii">
+                        <rect key="frame" x="8" y="134" width="166" height="37"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="37" id="1fh-wT-hAZ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P32,275" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="nfG-9z-bJy" customClass="DiscountLabel" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+                        <rect key="frame" x="8" y="174" width="84" height="23"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="23" id="pkm-k1-IKq"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P10,000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="GsK-GC-g0q">
+                        <rect key="frame" x="8" y="191" width="84" height="23"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="23" id="0Fb-6c-zvW"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="17"/>
+                        <color key="textColor" red="0.3803921569" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9b7-YY-VVD">
+                        <rect key="frame" x="111" y="179" width="69" height="41"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EARNING" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W1Q-zj-C6f">
+                                <rect key="frame" x="6" y="5" width="58" height="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="14" id="cgN-Nl-ADz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="12"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P1,000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FvP-oX-gRK">
+                                <rect key="frame" x="4" y="19" width="60" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="zQD-yl-HSt"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.58431372550000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="W1Q-zj-C6f" firstAttribute="leading" secondItem="9b7-YY-VVD" secondAttribute="leading" constant="6" id="0zB-4A-Fd7"/>
+                            <constraint firstAttribute="height" constant="41" id="17o-OC-dr0"/>
+                            <constraint firstAttribute="width" constant="69" id="1ku-JN-v3O"/>
+                            <constraint firstAttribute="trailing" secondItem="FvP-oX-gRK" secondAttribute="trailing" constant="5" id="6m2-gE-rbI"/>
+                            <constraint firstItem="W1Q-zj-C6f" firstAttribute="top" secondItem="9b7-YY-VVD" secondAttribute="top" constant="5" id="ahq-Cv-b6W"/>
+                            <constraint firstAttribute="trailing" secondItem="W1Q-zj-C6f" secondAttribute="trailing" constant="5" id="bCu-l0-uqE"/>
+                            <constraint firstAttribute="bottom" secondItem="FvP-oX-gRK" secondAttribute="bottom" constant="6" id="e9z-4a-wgY"/>
+                            <constraint firstItem="FvP-oX-gRK" firstAttribute="leading" secondItem="9b7-YY-VVD" secondAttribute="leading" constant="4" id="jsl-My-wtT"/>
+                        </constraints>
+                    </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="old-check" translatesAutoresizingMaskIntoConstraints="NO" id="9Ou-W6-xIw">
+                        <rect key="frame" x="8" y="8" width="30" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="GGn-2C-buE"/>
+                            <constraint firstAttribute="height" constant="30" id="iWF-VO-Zq3"/>
+                        </constraints>
+                    </imageView>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Q4c-pX-nCN">
+                        <rect key="frame" x="13" y="14" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="8Oc-a3-qEw"/>
+                            <constraint firstAttribute="height" constant="20" id="dE9-2v-oH4"/>
+                        </constraints>
+                        <color key="color" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    </activityIndicatorView>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="nfG-9z-bJy" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="2C4-eE-ZNp"/>
+                <constraint firstAttribute="bottom" secondItem="9b7-YY-VVD" secondAttribute="bottom" id="5oe-b8-F3v"/>
+                <constraint firstItem="Q4c-pX-nCN" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="13" id="6yN-cd-Uul"/>
+                <constraint firstAttribute="bottom" secondItem="GsK-GC-g0q" secondAttribute="bottom" constant="6" id="8u0-hy-ZHm"/>
+                <constraint firstAttribute="trailing" secondItem="9b7-YY-VVD" secondAttribute="trailing" id="9Z1-MY-Ami"/>
+                <constraint firstItem="Vv9-kj-yii" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="Hsk-8d-Gbr"/>
+                <constraint firstItem="9Ou-W6-xIw" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="J64-ek-8Mx"/>
+                <constraint firstItem="ssF-55-Zce" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Ltz-3Y-UUD"/>
+                <constraint firstItem="Q4c-pX-nCN" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="14" id="MTc-ZP-KUL"/>
+                <constraint firstItem="9b7-YY-VVD" firstAttribute="leading" secondItem="GsK-GC-g0q" secondAttribute="trailing" constant="19" id="S5s-Zr-bKR"/>
+                <constraint firstItem="GsK-GC-g0q" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="b8z-T0-8bP"/>
+                <constraint firstItem="aZT-z1-yF8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="e1P-J9-zev"/>
+                <constraint firstAttribute="trailing" secondItem="ssF-55-Zce" secondAttribute="trailing" id="hYj-OH-qXR"/>
+                <constraint firstItem="Vv9-kj-yii" firstAttribute="top" secondItem="ssF-55-Zce" secondAttribute="bottom" constant="4" id="kAN-rq-1KL"/>
+                <constraint firstItem="9Ou-W6-xIw" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="kyg-q6-fvs"/>
+                <constraint firstItem="9b7-YY-VVD" firstAttribute="leading" secondItem="nfG-9z-bJy" secondAttribute="trailing" constant="19" id="wvY-rR-SGU"/>
+                <constraint firstAttribute="trailing" secondItem="aZT-z1-yF8" secondAttribute="trailing" constant="6" id="yET-gE-1r6"/>
+                <constraint firstAttribute="trailing" secondItem="Vv9-kj-yii" secondAttribute="trailing" constant="6" id="yGL-gH-faA"/>
+                <constraint firstItem="ssF-55-Zce" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="z3j-yz-jfZ"/>
+                <constraint firstAttribute="bottom" secondItem="nfG-9z-bJy" secondAttribute="bottom" constant="23" id="ziq-SE-jhU"/>
+            </constraints>
+            <size key="customSize" width="186" height="211"/>
+            <connections>
+                <outlet property="activityIndicatorView" destination="Q4c-pX-nCN" id="PqJ-OA-vrl"/>
+                <outlet property="checkBoxImageView" destination="9Ou-W6-xIw" id="9jE-BO-afn"/>
+                <outlet property="discountPercentageLabel" destination="aZT-z1-yF8" id="kDq-GE-dtN"/>
+                <outlet property="discountedPriceLabel" destination="GsK-GC-g0q" id="y3R-1N-SAf"/>
+                <outlet property="earningLabel" destination="FvP-oX-gRK" id="Oyl-dM-EZT"/>
+                <outlet property="earningTitleLabel" destination="W1Q-zj-C6f" id="9b5-TC-EGY"/>
+                <outlet property="imageView" destination="ssF-55-Zce" id="yQb-WU-1sU"/>
+                <outlet property="originalPriceLabel" destination="nfG-9z-bJy" id="FZr-gP-sNx"/>
+                <outlet property="productNameLabel" destination="Vv9-kj-yii" id="zME-wm-q8l"/>
+            </connections>
+            <point key="canvasLocation" x="346" y="392"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="dummy-placeholder.jpg" width="1280" height="800"/>
+        <image name="old-check" width="236" height="236"/>
+    </resources>
+</document>

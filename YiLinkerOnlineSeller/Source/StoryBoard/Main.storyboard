@@ -1493,7 +1493,7 @@
                                     <outlet property="delegate" destination="nOb-Vl-TXr" id="7Gh-fd-Ggt"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No result found." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAN-Ux-RhM">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No result found." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAN-Ux-RhM">
                                 <rect key="frame" x="8" y="323" width="359" height="21"/>
                                 <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
                                 <nil key="highlightedColor"/>

@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+        </mutableArray>
+        <mutableArray key="Panton SemiBold.otf">
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+        </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="EditProfilePersonalTableViewCell" rowHeight="36" id="KGk-i7-Jjw" customClass="EditProfilePersonalTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="490"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bjd-eo-6aB">
+                        <rect key="frame" x="0.0" y="8" width="375" height="30"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Personal Information" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sc6-Ii-LCn">
+                                <rect key="frame" x="12" y="4" width="351" height="21"/>
+                                <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="12"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="Sc6-Ii-LCn" secondAttribute="bottom" constant="5" id="2Nj-Sj-DyW"/>
+                            <constraint firstItem="Sc6-Ii-LCn" firstAttribute="top" secondItem="Bjd-eo-6aB" secondAttribute="top" constant="4" id="Odu-ne-Xi1"/>
+                            <constraint firstItem="Sc6-Ii-LCn" firstAttribute="leading" secondItem="Bjd-eo-6aB" secondAttribute="leading" constant="12" id="Xve-kR-2L8"/>
+                            <constraint firstAttribute="trailing" secondItem="Sc6-Ii-LCn" secondAttribute="trailing" constant="12" id="fhs-iu-zUQ"/>
+                            <constraint firstAttribute="height" constant="30" id="qSd-mP-sNw"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mobile Phone" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EXD-7L-gGw">
+                        <rect key="frame" x="12" y="50" width="170" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="aSL-e3-wf5"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="12"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PLr-Qr-UqS">
+                        <rect key="frame" x="12" y="65" width="170" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="Pb7-qd-KVz"/>
+                        </constraints>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                        <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                    </textField>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nC5-AE-mg1">
+                        <rect key="frame" x="12" y="107" width="170" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="iAE-r7-aBZ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="12"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5jI-oE-ejI">
+                        <rect key="frame" x="12" y="122" width="170" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="W5e-L6-0gE"/>
+                        </constraints>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                    </textField>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yZy-Ah-9w1">
+                        <rect key="frame" x="12" y="164" width="170" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="ENL-bT-OG1"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="12"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lja-UH-GFe">
+                        <rect key="frame" x="12" y="179" width="351" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="bbB-I7-RQo"/>
+                        </constraints>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                        <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                        <connections>
+                            <action selector="textFieldAction:" destination="KGk-i7-Jjw" eventType="editingChanged" id="78D-ck-DtX"/>
+                        </connections>
+                    </textField>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lju-CE-wo8">
+                        <rect key="frame" x="193" y="107" width="170" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="QcH-qL-0rx"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="12"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Be7-cc-BrF">
+                        <rect key="frame" x="193" y="122" width="170" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="H2o-fH-TWS"/>
+                        </constraints>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                    </textField>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m1D-ri-edg">
+                        <rect key="frame" x="248" y="179" width="115" height="30"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="ZFj-Uy-k4H"/>
+                            <constraint firstAttribute="width" constant="115" id="rBg-d6-SXX"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="9"/>
+                        <state key="normal" title="SEND VERIFICATION">
+                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="buttonAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="LgV-B4-O80"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y1x-MN-pwV">
+                        <rect key="frame" x="12" y="217" width="170" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="9Fn-ZL-fG6"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="12"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="********" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="k0d-ED-BRH">
+                        <rect key="frame" x="12" y="232" width="351" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="Zf1-gF-PDn"/>
+                        </constraints>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                        <connections>
+                            <action selector="textFieldAction:" destination="KGk-i7-Jjw" eventType="editingChanged" id="gl3-Y0-s6Z"/>
+                        </connections>
+                    </textField>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z4C-Rj-sYL">
+                        <rect key="frame" x="248" y="232" width="115" height="30"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="115" id="Hsw-ya-imK"/>
+                            <constraint firstAttribute="height" constant="30" id="gfk-bM-TCl"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="9"/>
+                        <state key="normal" title="CHANGE">
+                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="buttonAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="za1-l1-wbk"/>
+                        </connections>
+                    </button>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AAh-7c-6YF">
+                        <rect key="frame" x="12" y="323" width="351" height="158"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eqb-JI-nyK">
+                                <rect key="frame" x="0.0" y="25" width="20" height="20"/>
+                                <color key="backgroundColor" red="0.37647058820000001" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="YKQ-bM-i9L"/>
+                                    <constraint firstAttribute="width" constant="20" id="mlJ-kY-Jsh"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="4" minY="5" maxX="4" maxY="5"/>
+                                <state key="normal" image="check-1">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WAQ-eu-gnG">
+                                <rect key="frame" x="28" y="25" width="323" height="87"/>
+                                <string key="text">Upload you TIN/ID
+Upload you TIN/ID</string>
+                                <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="16"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload you TIN/ID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iha-um-KnX">
+                                <rect key="frame" x="0.0" y="0.0" width="170" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="v4w-xd-NT4"/>
+                                    <constraint firstAttribute="width" constant="170" id="yZw-TK-z4P"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="12"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SfN-XN-CyO">
+                                <rect key="frame" x="0.0" y="128" width="115" height="30"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="ENz-19-TPv"/>
+                                    <constraint firstAttribute="width" constant="115" id="Pjk-mG-ScI"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="9"/>
+                                <state key="normal" title="UPLOAD">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="MEp-83-Agb"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="co8-jv-XLT">
+                                <rect key="frame" x="88" y="133" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="QK8-4S-kTX"/>
+                                    <constraint firstAttribute="width" constant="20" id="Vbq-Uk-2qx"/>
+                                </constraints>
+                                <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="SfN-XN-CyO" secondAttribute="bottom" id="8nM-lM-ck1"/>
+                            <constraint firstItem="SfN-XN-CyO" firstAttribute="leading" secondItem="AAh-7c-6YF" secondAttribute="leading" id="8nS-Qd-Lh1"/>
+                            <constraint firstItem="SfN-XN-CyO" firstAttribute="top" secondItem="WAQ-eu-gnG" secondAttribute="bottom" constant="16" id="BFQ-Mg-Cej"/>
+                            <constraint firstItem="Iha-um-KnX" firstAttribute="leading" secondItem="AAh-7c-6YF" secondAttribute="leading" id="I6t-z8-cuh"/>
+                            <constraint firstAttribute="bottom" secondItem="co8-jv-XLT" secondAttribute="bottom" constant="5" id="ISf-dB-lM7"/>
+                            <constraint firstItem="WAQ-eu-gnG" firstAttribute="leading" secondItem="Eqb-JI-nyK" secondAttribute="trailing" constant="8" id="OLD-g4-SU2"/>
+                            <constraint firstItem="Eqb-JI-nyK" firstAttribute="top" secondItem="Iha-um-KnX" secondAttribute="bottom" constant="10" id="SRW-vc-BJS"/>
+                            <constraint firstItem="Iha-um-KnX" firstAttribute="top" secondItem="AAh-7c-6YF" secondAttribute="top" id="cni-DW-BVt"/>
+                            <constraint firstItem="Eqb-JI-nyK" firstAttribute="leading" secondItem="AAh-7c-6YF" secondAttribute="leading" id="ibc-wR-tnF"/>
+                            <constraint firstItem="co8-jv-XLT" firstAttribute="leading" secondItem="AAh-7c-6YF" secondAttribute="leading" constant="88" id="lIO-OZ-PtX"/>
+                            <constraint firstItem="WAQ-eu-gnG" firstAttribute="top" secondItem="Iha-um-KnX" secondAttribute="bottom" constant="10" id="mRQ-Nc-l3T"/>
+                            <constraint firstAttribute="trailing" secondItem="WAQ-eu-gnG" secondAttribute="trailing" id="u4H-7c-9Wf"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TIN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ej-4R-F88">
+                        <rect key="frame" x="12" y="270" width="170" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="3EH-ZA-6m8"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="12"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ygt-XZ-iQ7">
+                        <rect key="frame" x="12" y="285" width="170" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="pFf-jZ-cUK"/>
+                        </constraints>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                    </textField>
+                </subviews>
+                <color key="backgroundColor" red="0.90588235294117647" green="0.90588235294117647" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstItem="k0d-ED-BRH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="2Mj-fi-fPt"/>
+                    <constraint firstAttribute="trailing" secondItem="Be7-cc-BrF" secondAttribute="trailing" constant="12" id="2w1-Ce-Xkd"/>
+                    <constraint firstAttribute="trailing" secondItem="Lja-UH-GFe" secondAttribute="trailing" constant="12" id="3Le-wX-f3R"/>
+                    <constraint firstItem="Bjd-eo-6aB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="47E-EU-wEf"/>
+                    <constraint firstItem="1Ej-4R-F88" firstAttribute="width" secondItem="5jI-oE-ejI" secondAttribute="width" id="4XS-5m-bGc"/>
+                    <constraint firstItem="PLr-Qr-UqS" firstAttribute="top" secondItem="EXD-7L-gGw" secondAttribute="bottom" id="6aE-qc-lSS"/>
+                    <constraint firstItem="nC5-AE-mg1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="7h9-AR-gsc"/>
+                    <constraint firstAttribute="bottom" secondItem="AAh-7c-6YF" secondAttribute="bottom" constant="8" id="AOJ-IA-Enu"/>
+                    <constraint firstItem="Ygt-XZ-iQ7" firstAttribute="top" secondItem="1Ej-4R-F88" secondAttribute="bottom" id="Bu3-xN-LxY"/>
+                    <constraint firstItem="Lju-CE-wo8" firstAttribute="leading" secondItem="nC5-AE-mg1" secondAttribute="trailing" constant="11" id="GRg-7d-wpL"/>
+                    <constraint firstItem="yZy-Ah-9w1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="Ign-3i-edS"/>
+                    <constraint firstItem="5jI-oE-ejI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="KbY-7Q-7WU"/>
+                    <constraint firstAttribute="trailing" secondItem="Lju-CE-wo8" secondAttribute="trailing" constant="12" id="NYg-BX-fcD"/>
+                    <constraint firstItem="k0d-ED-BRH" firstAttribute="top" secondItem="y1x-MN-pwV" secondAttribute="bottom" id="OUY-Hf-h0f"/>
+                    <constraint firstItem="Lja-UH-GFe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="PhR-5m-U0u"/>
+                    <constraint firstItem="Lja-UH-GFe" firstAttribute="top" secondItem="yZy-Ah-9w1" secondAttribute="bottom" id="Qes-oM-wpE"/>
+                    <constraint firstItem="nC5-AE-mg1" firstAttribute="top" secondItem="PLr-Qr-UqS" secondAttribute="bottom" constant="12" id="R5l-IQ-rBH"/>
+                    <constraint firstItem="Z4C-Rj-sYL" firstAttribute="top" secondItem="m1D-ri-edg" secondAttribute="bottom" constant="23" id="RB1-Ee-Grd"/>
+                    <constraint firstItem="1Ej-4R-F88" firstAttribute="width" secondItem="EXD-7L-gGw" secondAttribute="width" id="Tph-Cg-X5C"/>
+                    <constraint firstItem="Be7-cc-BrF" firstAttribute="leading" secondItem="5jI-oE-ejI" secondAttribute="trailing" constant="11" id="UjA-r4-JTz"/>
+                    <constraint firstItem="Ygt-XZ-iQ7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="XC1-8S-W84"/>
+                    <constraint firstItem="1Ej-4R-F88" firstAttribute="width" secondItem="Ygt-XZ-iQ7" secondAttribute="width" id="XWP-M0-mGh"/>
+                    <constraint firstItem="1Ej-4R-F88" firstAttribute="width" secondItem="y1x-MN-pwV" secondAttribute="width" id="Yqx-xP-PYl"/>
+                    <constraint firstAttribute="trailing" secondItem="k0d-ED-BRH" secondAttribute="trailing" constant="12" id="Z8W-9f-JNp"/>
+                    <constraint firstItem="Bjd-eo-6aB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="apn-fW-2Kf"/>
+                    <constraint firstItem="1Ej-4R-F88" firstAttribute="width" secondItem="nC5-AE-mg1" secondAttribute="width" id="bGL-nk-g4W"/>
+                    <constraint firstAttribute="trailing" secondItem="AAh-7c-6YF" secondAttribute="trailing" constant="12" id="bd6-uF-u29"/>
+                    <constraint firstAttribute="trailing" secondItem="Bjd-eo-6aB" secondAttribute="trailing" id="ckB-Da-Iu2"/>
+                    <constraint firstItem="Be7-cc-BrF" firstAttribute="top" secondItem="Lju-CE-wo8" secondAttribute="bottom" id="d61-qd-maR"/>
+                    <constraint firstAttribute="trailing" secondItem="m1D-ri-edg" secondAttribute="trailing" constant="12" id="eyp-dx-gBg"/>
+                    <constraint firstAttribute="trailing" secondItem="Z4C-Rj-sYL" secondAttribute="trailing" constant="12" id="fAJ-kv-fPq"/>
+                    <constraint firstItem="AAh-7c-6YF" firstAttribute="top" secondItem="Ygt-XZ-iQ7" secondAttribute="bottom" constant="8" id="lZy-Hu-KWH"/>
+                    <constraint firstItem="m1D-ri-edg" firstAttribute="top" secondItem="Be7-cc-BrF" secondAttribute="bottom" constant="27" id="lfE-PR-vkV"/>
+                    <constraint firstItem="PLr-Qr-UqS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="oAK-B5-AB5"/>
+                    <constraint firstItem="1Ej-4R-F88" firstAttribute="width" secondItem="Lju-CE-wo8" secondAttribute="width" id="oAm-yM-6fJ"/>
+                    <constraint firstItem="1Ej-4R-F88" firstAttribute="width" secondItem="Be7-cc-BrF" secondAttribute="width" id="pSK-kb-cfa"/>
+                    <constraint firstItem="y1x-MN-pwV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="po2-dm-JKy"/>
+                    <constraint firstItem="1Ej-4R-F88" firstAttribute="top" secondItem="k0d-ED-BRH" secondAttribute="bottom" constant="8" id="qxh-dS-KVX"/>
+                    <constraint firstItem="Lju-CE-wo8" firstAttribute="top" secondItem="Bjd-eo-6aB" secondAttribute="bottom" constant="69" id="r4n-bQ-dBS"/>
+                    <constraint firstItem="y1x-MN-pwV" firstAttribute="top" secondItem="Lja-UH-GFe" secondAttribute="bottom" constant="8" id="s6W-Zd-Txr"/>
+                    <constraint firstItem="Be7-cc-BrF" firstAttribute="leading" secondItem="5jI-oE-ejI" secondAttribute="trailing" constant="11" id="sOw-aH-CGr"/>
+                    <constraint firstItem="yZy-Ah-9w1" firstAttribute="top" secondItem="5jI-oE-ejI" secondAttribute="bottom" constant="12" id="t1g-k1-SR4"/>
+                    <constraint firstItem="AAh-7c-6YF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="t6v-po-dmP"/>
+                    <constraint firstItem="EXD-7L-gGw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="u79-m8-TE1"/>
+                    <constraint firstItem="1Ej-4R-F88" firstAttribute="width" secondItem="PLr-Qr-UqS" secondAttribute="width" id="uV0-A2-NrS"/>
+                    <constraint firstItem="5jI-oE-ejI" firstAttribute="top" secondItem="nC5-AE-mg1" secondAttribute="bottom" id="uwh-BF-7e5"/>
+                    <constraint firstItem="EXD-7L-gGw" firstAttribute="top" secondItem="Bjd-eo-6aB" secondAttribute="bottom" constant="12" id="v5Q-QT-Ooe"/>
+                    <constraint firstItem="1Ej-4R-F88" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="xj2-mf-v1V"/>
+                    <constraint firstItem="1Ej-4R-F88" firstAttribute="width" secondItem="yZy-Ah-9w1" secondAttribute="width" id="zfN-9w-WVT"/>
+                    <constraint firstItem="Lju-CE-wo8" firstAttribute="leading" secondItem="nC5-AE-mg1" secondAttribute="trailing" constant="11" id="zhD-87-FSQ"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="activityIndicatorHeightConstraint" destination="QK8-4S-kTX" id="En2-ta-bKa"/>
+                <outlet property="changePasswordButton" destination="Z4C-Rj-sYL" id="Qvb-uO-GCx"/>
+                <outlet property="checkIconHeightConstraint" destination="YKQ-bM-i9L" id="6jO-La-QZz"/>
+                <outlet property="checkIconWidthConstraint" destination="mlJ-kY-Jsh" id="gam-Hy-bBj"/>
+                <outlet property="emailLabel" destination="yZy-Ah-9w1" id="TIa-rt-vjW"/>
+                <outlet property="emailTextField" destination="Lja-UH-GFe" id="MGt-e9-tkk"/>
+                <outlet property="firstNameLabel" destination="nC5-AE-mg1" id="d7P-g2-Ryn"/>
+                <outlet property="firstNameTextField" destination="5jI-oE-ejI" id="X3j-Ta-qTC"/>
+                <outlet property="lastNameLabel" destination="Lju-CE-wo8" id="KAh-B9-JcO"/>
+                <outlet property="lastNameTextField" destination="Be7-cc-BrF" id="czN-Cq-C2s"/>
+                <outlet property="mobilePhoneLabel" destination="EXD-7L-gGw" id="GMf-EZ-k3s"/>
+                <outlet property="mobilePhoneTextField" destination="PLr-Qr-UqS" id="RoV-5D-8vL"/>
+                <outlet property="passwordLabel" destination="y1x-MN-pwV" id="OMU-8Y-Ivh"/>
+                <outlet property="passwordTextField" destination="k0d-ED-BRH" id="PHa-Bq-103"/>
+                <outlet property="personalInformationLabel" destination="Sc6-Ii-LCn" id="UPp-JD-acn"/>
+                <outlet property="remarksButton" destination="Eqb-JI-nyK" id="d9G-Ij-ApM"/>
+                <outlet property="remarksLabel" destination="WAQ-eu-gnG" id="MGt-1J-7nD"/>
+                <outlet property="sendVerificationButton" destination="m1D-ri-edg" id="4HR-ZL-i8G"/>
+                <outlet property="tinIDLabel" destination="Iha-um-KnX" id="bJD-jI-m69"/>
+                <outlet property="tinLabel" destination="1Ej-4R-F88" id="ypH-vg-ZlY"/>
+                <outlet property="tinTextField" destination="Ygt-XZ-iQ7" id="8rJ-4Q-W77"/>
+                <outlet property="uploadActivityIndicator" destination="co8-jv-XLT" id="H3w-23-Dcy"/>
+                <outlet property="uploadButtonHeightConstraint" destination="ENz-19-TPv" id="biP-3R-ODD"/>
+                <outlet property="uploadIDButton" destination="SfN-XN-CyO" id="Kcy-sz-XkV"/>
+                <outlet property="uploadTinIdLabelConstraint" destination="v4w-xd-NT4" id="bTn-qx-X0k"/>
+                <outlet property="uploadView" destination="AAh-7c-6YF" id="q1t-hU-G4S"/>
+            </connections>
+            <point key="canvasLocation" x="254.5" y="116"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="check-1" width="150" height="112"/>
+    </resources>
+</document>
