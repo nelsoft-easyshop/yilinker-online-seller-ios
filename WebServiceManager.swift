@@ -49,9 +49,17 @@ class WebServiceManager: NSObject {
     //Register
     static let verificationCodeKey = "verificationCode"
     static let contactNumberKey = "contactNumber"
+    static let contactNoKey = "contactNo"
     static let newPasswordKey = "newPassword"
     static let referralCodeKey = "referralCode"
     
+    // MARK: profile Keys
+    static let firstNameKey = "firstName"
+    static let lastNameKey = "lastName"
+    static let tinKey = "tin"
+    static let isSentKey = "isSent"
+    static let validIdKey = "validId"
+
     //Image Upload
     static let imageKey = "image"
     
@@ -248,6 +256,7 @@ class WebServiceManager: NSObject {
                     actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
                     if let task = task.response as? NSHTTPURLResponse {
+                        println(error)
                         if error.userInfo != nil {
                             //Request is successful but encounter error in server
                             actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
@@ -609,15 +618,7 @@ class WebServiceManager: NSObject {
     //MARK: -
     //MARK: - Fire Forgot Password Request With URL
     class func fireForgotPasswordrRequestWithUrl(url: String, verficationCode: String, newPassword: String, storeType: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
-        let manager: APIManager = APIManager(baseURL: NSURL(string: url))
-        
-        manager.securityPolicy = AFSecurityPolicy(pinningMode: AFSSLPinningMode.Certificate)
-        let certificatePath = NSBundle.mainBundle().pathForResource("yilinker_pinned_certificate", ofType: "cer")!
-        let certificateData = NSData(contentsOfFile: certificatePath)!
-        manager.securityPolicy.pinnedCertificates = [certificateData];
-        manager.securityPolicy.validatesDomainName = true
-        manager.securityPolicy.allowInvalidCertificates = true
-        manager.responseSerializer = JSONResponseSerializer()
+        let manager: APIManager = APIManager.sharedInstance
         
         let parameters: NSDictionary = [self.verificationCodeKey: verficationCode, self.newPasswordKey: newPassword, self.storeTypeKey: storeType]
         
@@ -648,10 +649,10 @@ class WebServiceManager: NSObject {
     
     //MARK: -
     //MARK: - Fire Register Request With URL v2
-    class func fireRegisterRequestWithUrl(url: String, contactNumber: String, password: String, areaCode: String, referralCode: String,  verificationCode: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+    class func fireRegisterRequestWithUrl(url: String, contactNumber: String, password: String, areaCode: String, referralCode: String,  verificationCode: String, grant_type: String, client_id: String, client_secret: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager: APIManager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = [self.contactNumberKey: contactNumber, self.passwordKey: password, self.areaCodeKey: areaCode, self.referralCodeKey: referralCode, self.verificationCodeKey: verificationCode]
+        let parameters: NSDictionary = [self.contactNumberKey: contactNumber, self.passwordKey: password, self.areaCodeKey: areaCode, self.referralCodeKey: referralCode, self.verificationCodeKey: verificationCode, self.grantTypeKey: grant_type, self.clientIdKey: client_id, self.clientSecretKey: client_secret]
         
         if Reachability.isConnectedToNetwork() {
             manager.POST(url, parameters: parameters, success: {
@@ -683,7 +684,7 @@ class WebServiceManager: NSObject {
     //MARK: - Fire Get Unauthenticated OTP (One Time Password) With URL
     //Parameters  "type":"register/forgot-password"
     class func fireUnauthenticatedOTPRequestWithUrl(url: String, contactNumber: String, areaCode: String, type: String, storeType: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
-        let manager: APIManager = APIManager()
+        let manager: APIManager = APIManager.sharedInstance
         
         let parameters: NSDictionary = [self.contactNumberKey: contactNumber, self.areaCodeKey: areaCode, self.typeKey: type, self.storeTypeKey: storeType]
         
@@ -712,8 +713,19 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: -
+    //MARK: - Fire Send Email Verification
+    class func fireSendEmailVerificationRequestWithUrl(url: String, email: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let manager: APIManager = APIManager.sharedInstance
+        let parameters: NSDictionary = [self.emailKey: email, self.accessTokenKey: accessToken]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
     class func fireUploadImageWithUrl(url: String, accessToken: String, image: UIImage, type: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
-        let manager: APIManager = APIManager()
+        let manager: APIManager = APIManager.sharedInstance
+
         
         let parameters: NSDictionary = [self.imageKey: image, typeKey: type]
         
@@ -730,6 +742,37 @@ class WebServiceManager: NSObject {
     }
     
     //MARK: -
+    //MARK: - Fire Save Profile
+    class func fireSaveProfileWithUrl(url: String, firstName: String, lastName: String, tin: String, email: String, isSent: String, validId: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = [self.firstNameKey: firstName, self.lastNameKey: lastName, self.tinKey: tin, self.emailKey: email, self.accessTokenKey: accessToken, self.validIdKey: validId, self.isSentKey: isSent]
+        
+        if Reachability.isConnectedToNetwork() {
+            manager.POST(url, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    if let task = task.response as? NSHTTPURLResponse {
+                        if error.userInfo != nil {
+                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
+                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
+                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
+                        } else {
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
+                        }
+                    } else {
+                        actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+                    }
+            })
+        } else {
+            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        }
+    }
+    
     //MARK: - Fire Affilate Store Setup With Url
     class func fireAffiliateStoreSetupWithUrl(url: String, storeLink: String, storeName: String, storeDescription: String, profilePhoto: String, coverPhoto: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
        

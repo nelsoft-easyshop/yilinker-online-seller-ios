@@ -14,123 +14,123 @@ struct APIEnvironment {
     
     static func baseUrl() -> String {
         if development {
-            return "http://sprint.affiliate.online.api.easydeal.ph/api/"
+            return "http://sprint.seller.online.api.easydeal.ph/api/"
         } else if staging {
-            return "http://merchant.online.api.easydeal.ph/api/v1"
+            return "http://seller.online.api.easydeal.ph/api/"
         } else  {
-            return "https://merchant.yilinker.com/api/v1"
+            return "https://seller.yilinker.com/api/"
         }
     }
 }
 
 struct APIAtlas {
     
-    static let loginUrl = "login"
-    static let refreshTokenUrl = "login"
-    static let registerUrl = "user/register"
-    static let conditionUrl = "product/getProductConditions"
-    static let categoryUrl = "product/getCategories"
-    static let brandUrl = "product/getBrands"
-    static let uploadUrl = "product/upload"
-    static let getProductDetails = "product/upload-details"
+    static let loginUrl = "v1/login"
+    static let refreshTokenUrl = "v1/login"
+    static let registerUrl = "v1/user/register"
+    static let conditionUrl = "v1/product/getProductConditions"
+    static let categoryUrl = "v1/product/getCategories"
+    static let brandUrl = "v1/product/getBrands"
+    static let uploadUrl = "v1/product/upload"
+    static let getProductDetails = "v1/product/upload-details"
     static let sellerStoreInfo = "v1/auth/merchant/getUserInfo"
-    static let sellerBankAccountList = "auth/bank/account/getBankAccounts"
-    static let sellerAddBankAccount = "auth/bank/account/addBankAccount"
-    static let sellerDeleteBankAccount = "auth/bank/account/deleteBankAccount"
-    static let sellerSetDefaultBankAccount = "auth/bank/account/setDefaultBankAccount"
-    static let sellerStoreAddresses = "auth/address/getUserAddresses"
-    static let sellerSetDefaultStoreAddress = "auth/address/setDefaultAddress"
-    static let sellerDeleteStoreAddress = "auth/address/deleteUserAddress"
-    static let transactionList = "auth/getTransactionList"
-    static let transactionDetails = "auth/getTransaction"
-    static let orderProductDetails = "auth/getOrderProductDetail"
-    static let transactionCancellation = "auth/cancellation/reasons"
-    static let transactionConsignee = "auth/getTransactionConsignee"
-    static let postTransactionCancellation = "auth/transaction/cancel"
-    static let shipItem = "auth/transaction/pickup"
-    static let sellerChangeMobileNumber = "auth/user/changeContactNumber"
-    static let sellerResendVerification = "auth/sms/getCode?access_token="
-    static let sellerMobileNumberVerification = "auth/sms/verify"
-    static let sellerChangePassword = "auth/user/changePassword"
-    static let sellerUpdateSellerInfo = "auth/merchant/updateUserInfo"
+    static let sellerBankAccountList = "v1/auth/bank/account/getBankAccounts"
+    static let sellerAddBankAccount = "v1/auth/bank/account/addBankAccount"
+    static let sellerDeleteBankAccount = "v1/auth/bank/account/deleteBankAccount"
+    static let sellerSetDefaultBankAccount = "v1/auth/bank/account/setDefaultBankAccount"
+    static let sellerStoreAddresses = "v1/auth/address/getUserAddresses"
+    static let sellerSetDefaultStoreAddress = "v1/auth/address/setDefaultAddress"
+    static let sellerDeleteStoreAddress = "v1/auth/address/deleteUserAddress"
+    static let transactionList = "v1/auth/getTransactionList"
+    static let transactionDetails = "v1/auth/getTransaction"
+    static let orderProductDetails = "v1/auth/getOrderProductDetail"
+    static let transactionCancellation = "v1/auth/cancellation/reasons"
+    static let transactionConsignee = "v1/auth/getTransactionConsignee"
+    static let postTransactionCancellation = "v1/auth/transaction/cancel"
+    static let shipItem = "v1/auth/transaction/pickup"
+    static let sellerChangeMobileNumber = "v1/auth/user/changeContactNumber"
+    static let sellerResendVerification = "v1/auth/sms/getCode?access_token="
+    static let sellerMobileNumberVerification = "v1/auth/sms/verify"
+    static let sellerChangePassword = "v1/auth/user/changePassword"
+    static let sellerUpdateSellerInfo = "v1/auth/merchant/updateUserInfo"
     static let sellerGenerateQrCode = "v1/auth/merchant/getQrCode"
-    static let getCustomizedCategories   = "category/getCustomCategories"           // Applied
-    static let getCategoryDetails        = "category/getCategoryDetails"            // Applied
-    static let editCustomizedCategory    = "auth/category/updateCustomCategory"
-    static let addCustomizedCategory     = "auth/category/addCustomCategory"        // Applied
-    static let deleteCustomizedCategory  = "auth/category/deleteCustomCategory"     // Applied
-    static let sortParentCategory        = "auth/category/sortParentCategories"
-    static let checkIfCategoryNameExists = "auth/category/checkIfCategoryExists"
-    static let getAllCategoryProducts    = "auth/category/getAllCategoryProducts"
+    static let getCustomizedCategories   = "v1/category/getCustomCategories"           // Applied
+    static let getCategoryDetails        = "v1/category/getCategoryDetails"            // Applied
+    static let editCustomizedCategory    = "v1/auth/category/updateCustomCategory"
+    static let addCustomizedCategory     = "v1/auth/category/addCustomCategory"        // Applied
+    static let deleteCustomizedCategory  = "v1/auth/category/deleteCustomCategory"     // Applied
+    static let sortParentCategory        = "v1/auth/category/sortParentCategories"
+    static let checkIfCategoryNameExists = "v1/auth/category/checkIfCategoryExists"
+    static let getAllCategoryProducts    = "v1/auth/category/getAllCategoryProducts"
     
-    static let managementGetProductList = "auth/product/getProductList"
-    static let managementUpdateProductStatus = "auth/product/updateProductStatus"
-    static let editAddress = "auth/address/editUserAddress"
-    static let provinceUrl = "location/getAllProvinces"
-    static let citiesUrl = "location/getChildCities"
-    static let barangay = "location/getBarangaysByCity"
-    static let addAddressUrl = "auth/address/addNewAddress"
-    static let sellerBank = "auth/bank/getEnabledBanks"
-    static let sellerEditBankAccount = "auth/bank/account/editBankAccount"
+    static let managementGetProductList = "v1/auth/product/getProductList"
+    static let managementUpdateProductStatus = "v1/auth/product/updateProductStatus"
+    static let editAddress = "v1/auth/address/editUserAddress"
+    static let provinceUrl = "v1/location/getAllProvinces"
+    static let citiesUrl = "v1/location/getChildCities"
+    static let barangay = "v1/location/getBarangaysByCity"
+    static let addAddressUrl = "v1/auth/address/addNewAddress"
+    static let sellerBank = "v1/auth/bank/getEnabledBanks"
+    static let sellerEditBankAccount = "v1/auth/bank/account/editBankAccount"
     
     //My Points
-    static let getPointsTotal = "auth/user/getPoints"
-    static let getPointsHistory = "auth/user/getPointHistory"
+    static let getPointsTotal = "v1/auth/user/getPoints"
+    static let getPointsHistory = "v1/auth/user/getPointHistory"
     
-    static let getSalesReport = "auth/merchant/getSalesReport"
-    static let getFollowers = "auth/merchant/getFollowers"
+    static let getSalesReport = "v1/auth/merchant/getSalesReport"
+    static let getFollowers = "v1/auth/merchant/getFollowers"
     
-    static let getActivityLogs = "auth/user/activityLog"
+    static let getActivityLogs = "v1/auth/user/activityLog"
     
-    static let getDeliveryLogs = "auth/getTransactionDeliveryLogs"
+    static let getDeliveryLogs = "v1/auth/getTransactionDeliveryLogs"
     
-    static let postEmailNotif = "auth/email/subscription"
-    static let postSMSNotif = "auth/sms/subscription"
-    static let deactivate = "auth/account/disable"
+    static let postEmailNotif = "v1/auth/email/subscription"
+    static let postSMSNotif = "v1/auth/sms/subscription"
+    static let deactivate = "v1/auth/account/disable"
     
     //Search
-    static let transaction = "auth/transaction/searchKeyword?access_token="
-    static let searchNameSuggestion = "auth/product/name-suggestion?access_token="
-    static let searchRiderSuggestion = "auth/suggestPackageHandler?access_token="
-    static let transactionLogs = "auth/getTransactionList?access_token="
+    static let transaction = "v1/auth/transaction/searchKeyword?access_token="
+    static let searchNameSuggestion = "v1/auth/product/name-suggestion?access_token="
+    static let searchRiderSuggestion = "v1/auth/suggestPackageHandler?access_token="
+    static let transactionLogs = "v1/auth/getTransactionList?access_token="
     
     //Resolution Center
-    static let getResolutionCenterCases = "auth/dispute/get-case"
-    static let getResolutionCenterCaseDetails = "auth/dispute/get-case-detail"
-    static let resolutionCenterProductListUrl = "auth/getTransactionList"
-    static let resolutionCenterGetTransactionItems = "auth/getTransaction"
-    static let resolutionCenterAddCaseUrl = "auth/dispute/add-case"
-    static let resolutionCenterReasons = "auth/dispute/get-seller-reasons?access_token="
+    static let getResolutionCenterCases = "v1/auth/dispute/get-case"
+    static let getResolutionCenterCaseDetails = "v1/auth/dispute/get-case-detail"
+    static let resolutionCenterProductListUrl = "v1/auth/getTransactionList"
+    static let resolutionCenterGetTransactionItems = "v1/auth/getTransaction"
+    static let resolutionCenterAddCaseUrl = "v1/auth/dispute/add-case"
+    static let resolutionCenterReasons = "v1/auth/dispute/get-seller-reasons?access_token="
     //Reseller
-    static let resellerUrl = "auth/reseller/products"
-    static let resellerUploadUrl = "auth/reseller/upload"
+    static let resellerUrl = "v1/auth/reseller/products"
+    static let resellerUploadUrl = "v1/auth/reseller/upload"
     
     static let baseUrl = APIEnvironment.baseUrl()
     
-    static let uploadDraftUrl = "product/upload/draft"
-    static let uploadEditUrl = "product/edit"
+    static let uploadDraftUrl = "v1/product/upload/draft"
+    static let uploadEditUrl = "v1/product/edit"
     
     /* MESSAGING CONSTANTS */
-    static let ACTION_SEND_MESSAGE          = "/message/sendMessage"
-    static let ACTION_GET_CONVERSATION_HEAD = "/message/getConversationHead"
-    static let ACTION_GET_CONTACTS          = "/message/getContacts"
-    static let ACTION_GET_CONVERSATION_MESSAGES = "/message/getConversationMessages"
-    static let ACTION_SET_AS_READ           = "/message/setConversationAsRead"
-    static let ACTION_IMAGE_ATTACH          = "/message/imageAttach"
-    static let ACTION_GCM_CREATE            = "/auth/device/addRegistrationId"
-    static let ACTION_GCM_DELETE            = "/auth/device/deleteRegistrationId"
-    static let ACTION_GCM_UPDATE            = "/device/auth/updateRegistrationId"
+    static let ACTION_SEND_MESSAGE          = "v1/message/sendMessage"
+    static let ACTION_GET_CONVERSATION_HEAD = "v1/message/getConversationHead"
+    static let ACTION_GET_CONTACTS          = "v1/message/getContacts"
+    static let ACTION_GET_CONVERSATION_MESSAGES = "v1/message/getConversationMessages"
+    static let ACTION_SET_AS_READ           = "v1/message/setConversationAsRead"
+    static let ACTION_IMAGE_ATTACH          = "v1/message/imageAttach"
+    static let ACTION_GCM_CREATE            = "v1/auth/device/addRegistrationId"
+    static let ACTION_GCM_DELETE            = "v1/auth/device/deleteRegistrationId"
+    static let ACTION_GCM_UPDATE            = "v1/device/auth/updateRegistrationId"
     static let uploadFileType = "jpeg"
     
     // Sprint1
-    static let getBalanceRecordDetails = "auth/bank/balanceRecordDetails"
+    static let getBalanceRecordDetails = "v1/auth/bank/balanceRecordDetails"
     static let OTPAuth = "v2/auth/sms/send"
-    static let submitWithdrawalRequest = "auth/withdrawal-request"
+    static let submitWithdrawalRequest = "v1/auth/withdrawal-request"
     
     // Payout
-    static let payoutRequestList = "auth/withdraw-list?access_token="
-    static let payoutEarningsGroup = "auth/earning-groups?access_token="
-    static let payoutEarningsList = "auth/earning-list?access_token="
+    static let payoutRequestList = "v1/auth/withdraw-list?access_token="
+    static let payoutEarningsGroup = "v1/auth/earning-groups?access_token="
+    static let payoutEarningsList = "v1/auth/earning-list?access_token="
     
     //MARK: - V2 APIs
     
@@ -145,6 +145,13 @@ struct APIAtlas {
     //Fogot Password
     static let forgotPasswordV2 = "v2/user/resetPassword"
     
+    //Edit Profile
+    static let sendEmailVerificationAffiliate = "v2/auth/affiliate/verify-email"
+    static let saveEditProfileAffiliate = "v2/auth/affiliate/update-user-info"
+    
+    //Uploade Image
+    static let uploadImage = "v2/auth/image/upload"
+
     //Upload Image
     static let uploadImageUrl = "v2/auth/image/upload"
     
@@ -182,5 +189,4 @@ class APIManager: AFHTTPSessionManager {
         
         return Static.instance!
     }
-    
 }

@@ -231,8 +231,17 @@ class LoginAndRegisterTableViewController: UITableViewController {
                 return resetPasswordTableViewCell
             } else if self.isLogin {
                 let loginRegisterTableViewCell: LoginRegisterTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.loginResgisterTableViewCellNibName) as! LoginRegisterTableViewCell
+                loginRegisterTableViewCell.isSellerLogin = self.isSellerLogin
+                if self.isSellerLogin {
+                    loginRegisterTableViewCell.buttonConstraint.constant = 10
+                    loginRegisterTableViewCell.cellCount = 1
+                } else {
+                    loginRegisterTableViewCell.buttonConstraint.constant = 70
+                    loginRegisterTableViewCell.cellCount = 2
+                }
                 loginRegisterTableViewCell.delegate = self
                 loginRegisterTableViewCell.selectionStyle = .None
+                loginRegisterTableViewCell.collectionView.reloadData()
                 return loginRegisterTableViewCell
             } else {
                 let userPickerTableViewCell: LoginUserTypeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.userTypeTableViewCellNibName) as! LoginUserTypeTableViewCell
@@ -303,8 +312,8 @@ class LoginAndRegisterTableViewController: UITableViewController {
     //MARK: - Fire Login With Email
     func fireLoginWithEmail(email: String, password: String) {
         self.showLoader()
-        let url: String = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("v1", withString: "") + APIAtlas.loginUrlV2
-        self.loginSessionDataTask = WebServiceManager.fireEmailLoginRequestWithUrl(url, emailAddress: email, password: password, grantType: self.grantType, isSeller: self.isSellerLogin, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        
+        self.loginSessionDataTask = WebServiceManager.fireEmailLoginRequestWithUrl(APIAtlas.loginUrlV2, emailAddress: email, password: password, grantType: self.grantType, isSeller: self.isSellerLogin, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 self.dismissLoader()
@@ -334,8 +343,8 @@ class LoginAndRegisterTableViewController: UITableViewController {
     //MARK: - Fire Login With Contact Number
     func fireLoginWithContactNumber(contactNo: String, password: String) {
         self.showLoader()
-        let url: String = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("v1", withString: "") + APIAtlas.loginUrlV2
-        self.loginSessionDataTask = WebServiceManager.fireContactNumberLoginRequestWithUrl(url, contactNo: contactNo, password: password, grantType: self.grantType, isSeller: self.isSellerLogin, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+    
+        self.loginSessionDataTask = WebServiceManager.fireContactNumberLoginRequestWithUrl(APIAtlas.loginUrlV2, contactNo: contactNo, password: password, grantType: self.grantType, isSeller: self.isSellerLogin, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             println(responseObject)
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
@@ -347,24 +356,24 @@ class LoginAndRegisterTableViewController: UITableViewController {
                 if requestErrorType == .ResponseError {
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     
-                    let paragraphStyle = NSMutableParagraphStyle()
-                    paragraphStyle.alignment = NSTextAlignment.Left
-                    
-                    let messageText = NSMutableAttributedString(
-                        string: errorModel.message,
-                        attributes: [
-                            NSParagraphStyleAttributeName: paragraphStyle,
-                            NSFontAttributeName : UIFont.preferredFontForTextStyle(UIFontTextStyleBody),
-                            NSForegroundColorAttributeName : UIColor.blackColor()
-                        ]
-                    )
-                    
-                    let alert = UIAlertController(title: "Your account is not yet accredited", message: "", preferredStyle: UIAlertControllerStyle.Alert)
-                    let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in }
-                    alert.addAction(OKAction)
-                    alert.setValue(messageText, forKey: "attributedMessage")
-                    self.presentViewController(alert, animated: true, completion: nil)
-//                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+//                    let paragraphStyle = NSMutableParagraphStyle()
+//                    paragraphStyle.alignment = NSTextAlignment.Left
+//                    
+//                    let messageText = NSMutableAttributedString(
+//                        string: errorModel.message,
+//                        attributes: [
+//                            NSParagraphStyleAttributeName: paragraphStyle,
+//                            NSFontAttributeName : UIFont.preferredFontForTextStyle(UIFontTextStyleBody),
+//                            NSForegroundColorAttributeName : UIColor.blackColor()
+//                        ]
+//                    )
+//                    
+//                    let alert = UIAlertController(title: "Your account is not yet accredited", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+//                    let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in }
+//                    alert.addAction(OKAction)
+//                    alert.setValue(messageText, forKey: "attributedMessage")
+//                    self.presentViewController(alert, animated: true, completion: nil)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
                 } else if requestErrorType == .PageNotFound {
                     Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
                 } else if requestErrorType == .NoInternetConnection {
@@ -384,8 +393,8 @@ class LoginAndRegisterTableViewController: UITableViewController {
     //MARK: - Fire Login With Contact Number
     func fireGetOTP(contactNumber: String, areaCode: String, type: String, storeType: String) {
         self.showLoader()
-        let url: String = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("v1", withString: "") + APIAtlas.unauthenticateOTP
-        WebServiceManager.fireUnauthenticatedOTPRequestWithUrl(url, contactNumber: contactNumber, areaCode: areaCode, type: type, storeType: storeType, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        
+        WebServiceManager.fireUnauthenticatedOTPRequestWithUrl(APIAtlas.unauthenticateOTP, contactNumber: contactNumber, areaCode: areaCode, type: type, storeType: storeType, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             println(responseObject)
             if successful {
                 self.dismissLoader()
@@ -419,12 +428,16 @@ class LoginAndRegisterTableViewController: UITableViewController {
     func fireRegisterUser(contactNumber: String, password: String, areaCode: String, referralCode: String, verificationCode: String) {
         self.showLoader()
         
-        WebServiceManager.fireRegisterRequestWithUrl(APIAtlas.registerV2, contactNumber: contactNumber, password: password, areaCode: areaCode, referralCode: referralCode, verificationCode: verificationCode, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        WebServiceManager.fireRegisterRequestWithUrl(APIAtlas.registerV2, contactNumber: contactNumber, password: password, areaCode: areaCode, referralCode: referralCode, verificationCode: verificationCode, grant_type: Constants.Credentials.getGrantType(self.isSellerLogin), client_id: Constants.Credentials.getClientId(self.isSellerLogin), client_secret: Constants.Credentials.getClientSecret(self.isSellerLogin), actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            println(responseObject)
             if successful {
                 self.dismissLoader()
                 let registerModel: RegisterModel = RegisterModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 if registerModel.isSuccessful {
-                    self.fireLoginWithContactNumber(self.tempSimplifiedRegistrationCell!.mobileNumberTextField.text!, password: self.tempSimplifiedRegistrationCell!.passwordTextField.text)
+                    SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                    self.dismissLoader()
+                    self.showSuccessMessage()
+                    self.fireCreateRegistration(SessionManager.gcmToken())
                 } else {
                     Toast.displayToastWithMessage(registerModel.message, duration: 2.0, view: self.view)
                 }
@@ -561,12 +574,16 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
             errorMessage = RegisterStrings.contactRequired
         } else if !simplifiedRegistrationCell.passwordTextField.isNotEmpty() {
             errorMessage = RegisterStrings.passwordRequired
-        } else if !simplifiedRegistrationCell.passwordTextField.isAlphaNumeric() {
-            errorMessage = RegisterStrings.illegalPassword
-        } else if !simplifiedRegistrationCell.passwordTextField.isValidPassword() {
+        } else if simplifiedRegistrationCell.passwordTextField.isNumericOnly() || simplifiedRegistrationCell.passwordTextField.isAphaOnly() || !simplifiedRegistrationCell.passwordTextField.isGreaterThanEightCharacters(){
+            errorMessage = RegisterStrings.numbersAndLettersCombination
+        }
+//        else if !simplifiedRegistrationCell.passwordTextField.isGreaterThanEightCharacters() {
+//            errorMessage = RegisterStrings.eightCharacters
+//        }
+        else if !simplifiedRegistrationCell.passwordTextField.isValidPassword() {
             errorMessage = RegisterStrings.numbersAndLettersOnly
-        } else if !simplifiedRegistrationCell.passwordTextField.isGreaterThanEightCharacters() {
-            errorMessage = RegisterStrings.eightCharacters
+        }  else if !simplifiedRegistrationCell.passwordTextField.isAlphaNumeric() {
+            errorMessage = RegisterStrings.illegalPassword
         } else if !simplifiedRegistrationCell.confirmPasswordTextField.isNotEmpty() {
             errorMessage = RegisterStrings.reTypePasswordError
         } else if simplifiedRegistrationCell.passwordTextField.text != simplifiedRegistrationCell.confirmPasswordTextField.text {
@@ -603,7 +620,7 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
         self.closeKeyboard()
         self.tempSimplifiedRegistrationCell = simplifiedRegistrationCell
         if simplifiedRegistrationCell.mobileNumberTextField.isNotEmpty() {
-            self.fireGetOTP(simplifiedRegistrationCell.mobileNumberTextField.text, areaCode: "63", type: "register", storeType: "")
+            self.fireGetOTP(simplifiedRegistrationCell.mobileNumberTextField.text, areaCode: "63", type: "register", storeType: "1")
         } else {
             Toast.displayToastWithMessage(RegisterStrings.contactRequired, duration: 1.5, view: self.view)
         }
@@ -624,7 +641,7 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
     func loginRegisterTableViewCell(loginRegisterTableViewCell: LoginRegisterTableViewCell, didTapSignIn signInButton: UIButton) {
         self.pageTitle = LoginStrings.accountTitle
         self.isResetPassword = false
-        self.isCloseButton = true
+        self.isCloseButton = false
         var indexPath = NSIndexPath(forRow: 1, inSection: 0)
         self.tableView.reloadData()
     }
@@ -632,7 +649,7 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
     func loginRegisterTableViewCell(loginRegisterTableViewCell: LoginRegisterTableViewCell, didTapRegister registerButton: UIButton) {
         self.pageTitle = LoginStrings.registerTitle
         self.isResetPassword = false
-        self.isCloseButton = true
+        self.isCloseButton = false
         var indexPath = NSIndexPath(forRow: 1, inSection: 0)
         self.tableView.reloadData()
     }
@@ -670,10 +687,11 @@ extension LoginAndRegisterTableViewController: ForgotPasswordTableViewCellDelega
             errorMessage = RegisterStrings.contactRequired
         } else if !forgotPasswordCell.passwordTextField.isNotEmpty() {
             errorMessage = RegisterStrings.passwordRequired
-        } else if forgotPasswordCell.passwordTextField.isNumericOnly() || forgotPasswordCell.passwordTextField.isAphaOnly() {
+        } else if forgotPasswordCell.passwordTextField.isNumericOnly() || forgotPasswordCell.passwordTextField.isAphaOnly() || !forgotPasswordCell.passwordTextField.isGreaterThanEightCharacters() {
             errorMessage = RegisterStrings.numbersAndLettersCombination
-        } else if !forgotPasswordCell.passwordTextField.isGreaterThanEightCharacters() {
-            errorMessage = RegisterStrings.eightCharacters
+//        }
+//        else if !forgotPasswordCell.passwordTextField.isGreaterThanEightCharacters() {
+//            errorMessage = RegisterStrings.eightCharacters
         } else if !forgotPasswordCell.passwordTextField.isValidPassword() {
             errorMessage = RegisterStrings.numbersAndLettersOnly
         }  else if !forgotPasswordCell.passwordTextField.isAlphaNumeric() {
@@ -685,7 +703,6 @@ extension LoginAndRegisterTableViewController: ForgotPasswordTableViewCellDelega
         } else if forgotPasswordCell.activationCodeTextField.text.isEmpty {
             errorMessage = RegisterStrings.activationCodeRequired
         }
-        
         
         return errorMessage
     }

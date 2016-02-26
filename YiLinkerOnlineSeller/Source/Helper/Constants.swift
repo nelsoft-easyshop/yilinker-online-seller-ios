@@ -43,6 +43,7 @@ struct Constants {
         static let grayText: UIColor = HexaColor.colorWithHexa(0x666666)
         static let selectedGreenColor: UIColor = HexaColor.colorWithHexa(0x44A491)
         static let selectedCellColor: UIColor = HexaColor.colorWithHexa(0xE1E1E1)
+        static let lightBackgroundColor: UIColor = HexaColor.colorWithHexa(0xE7E7E7)
         
         // Product Management
         static let pmActiveGreenColor: UIColor = HexaColor.colorWithHexa(0x01aa01)
@@ -61,7 +62,7 @@ struct Constants {
 
         static let uploadViewColor: UIColor = HexaColor.colorWithHexa(0x54B6A7)
         
-        //Transactions 
+        //Transactions
         static let transactionGreen: UIColor = HexaColor.colorWithHexa(0x6ec850)
         static let transactionGrey: UIColor = HexaColor.colorWithHexa(0xB6B6B6)
         static let transactionNew: UIColor = HexaColor.colorWithHexa(0xF6B300)
@@ -89,24 +90,67 @@ struct Constants {
 //        //production
 //        static let clientID = "1_9t2337riou0wsws84ckw8gkck8os8skw8cokoooc04gc0kssc"
 //        static let clientSecret = "1vmep15il4cgw8gc0g8gokokk0wwkko0cg0go0s4c484kwswo4"
-//        
+//
         static let grantRefreshToken = "refresh_token"
         static let grantSeller = "http://yilinker-online.com/grant/seller"
         
-        //development
+        static func getGrantType(isSeller: Bool) -> String {
+            if isSeller {
+                if APIEnvironment.development {
+                    return "http://yilinker-online.com/grant/seller"
+                } else if APIEnvironment.development {
+                    return "http://yilinker-online.com/grant/seller"
+                } else {
+                    return "http://yilinker-online.com/grant/seller"
+                }
+            } else {
+                if APIEnvironment.development {
+                    return "http://yilinker-online.com/grant/affiliate"
+                } else if APIEnvironment.development {
+                    return "http://yilinker-online.com/grant/affiliate"
+                } else {
+                    return "http://yilinker-online.com/grant/affiliate"
+                }
+            }
+        }
+        
         static func getClientId(isSeller: Bool) -> String {
             if isSeller {
-                return "1_167rxzqvid8g8swggwokcoswococscocc8ck44wo0g88owgkcc"
+                if APIEnvironment.development {
+                    return "3_4qzm05tv6uwwko4c4c8gs00sco0c40os08owg8sg0wswoo0w8o"
+                } else if APIEnvironment.staging {
+                    return "1_167rxzqvid8g8swggwokcoswococscocc8ck44wo0g88owgkcc"
+                } else {
+                    return "1_9t2337riou0wsws84ckw8gkck8os8skw8cokoooc04gc0kssc"
+                }
             } else {
-                return "3_4qzm05tv6uwwko4c4c8gs00sco0c40os08owg8sg0wswoo0w8o"
+                if APIEnvironment.development {
+                    return "3_4qzm05tv6uwwko4c4c8gs00sco0c40os08owg8sg0wswoo0w8o"
+                } else if APIEnvironment.staging {
+                    return "3_4qzm05tv6uwwko4c4c8gs00sco0c40os08owg8sg0wswoo0w8o"
+                } else {
+                    return "4_5scc2qrbwwkc0w0k0s0488o404kswgw8s0884k8kkw4w8ks488"
+                }
             }
         }
         
         static func getClientSecret(isSeller: Bool) -> String {
             if isSeller {
-                return "317eq8nohry84ooc0o8woo8000c0k844c4cggws84g80scwwog"
+                if APIEnvironment.development {
+                    return "1vgsjw5b0u74kssco8cooock0oc8c0sscoksk0sgsc08s8k4gw"
+                } else if APIEnvironment.staging {
+                    return "317eq8nohry84ooc0o8woo8000c0k844c4cggws84g80scwwog"
+                } else {
+                    return "1vmep15il4cgw8gc0g8gokokk0wwkko0cg0go0s4c484kwswo4"
+                }
             } else {
-                return "1vgsjw5b0u74kssco8cooock0oc8c0sscoksk0sgsc08s8k4gw"
+                if APIEnvironment.development {
+                    return "1vgsjw5b0u74kssco8cooock0oc8c0sscoksk0sgsc08s8k4gw"
+                } else if APIEnvironment.staging {
+                    return "1vgsjw5b0u74kssco8cooock0oc8c0sscoksk0sgsc08s8k4gw"
+                } else {
+                    return "5jztr6if1u04kok4w0gkwkco400csgg8gc4gcoogooogscc8s0"
+                }
             }
         }
         
@@ -118,7 +162,7 @@ struct Constants {
 //                return "3_4qzm05tv6uwwko4c4c8gs00sco0c40os08owg8sg0wswoo0w8o"
 //            }
 //        }
-//        
+//
 //        func getClientSecret(isSeller: Bool) -> String {
 //            if isSeller {
 //                return "317eq8nohry84ooc0o8woo8000c0k844c4cggws84g80scwwog"
