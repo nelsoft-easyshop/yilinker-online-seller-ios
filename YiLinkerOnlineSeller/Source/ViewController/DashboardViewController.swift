@@ -263,6 +263,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         } else if self.tableData[indexPath.row] == DashboardViewConstants.editProfileString {
             var editProfileViewController = EditProfileTableViewController(nibName: "EditProfileTableViewController", bundle: nil)
             editProfileViewController.storeInfo = self.storeInfo
+            editProfileViewController.isNewUser = self.checkIfNewUser()
             editProfileViewController.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(editProfileViewController, animated:true)
             

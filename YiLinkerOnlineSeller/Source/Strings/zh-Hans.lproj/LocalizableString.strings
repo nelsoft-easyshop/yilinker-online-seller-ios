@@ -83,6 +83,14 @@ VALID_ID_LOCALIZED_KEY = "有效的身份证明"; //No Chinese String
 VALID_ID_PLACEHOLDER_LOCALIZED_KEY = "上传证件照"; //No Chinese String
 VIEW_IMAGE_LOCALIZED_KEY = "查看图像"; //No Chinese String
 ADD_LOCALIZED_KEY = "添加"; //No Chinese String
+UPLOAD_TIN_ID_LOCALIZED_KEY = "上传 TIN/ID"; //No Chinese String
+SUCCESS_ID_UPLOAD_LOCALIZED_KEY = "您已经成功上传ID"; //No Chinese String
+VERIFIED_LOCALIZED_KEY = "验证"; //No Chinese String
+SEND_VERIFICATION_LOCALIZED_KEY = "发送验证"; //No Chinese String
+UPLOAD_ID_LOCALIZED_KEY = "上载"; //No Chinese String
+UPLOADING_LOCALIZED_KEY = "上传"; //No Chinese String
+SAVE_SETUP_LOCALIZE_KEY = "保存和设置"; //No Chinese String
+PERSONAL_INFO_LOCALIZE_KEY = "个人信息"; //No Chinese String
 
 // MARK: - Sales Report
 REPORT_TITLE_LOCALIZE_KEY = "报告";

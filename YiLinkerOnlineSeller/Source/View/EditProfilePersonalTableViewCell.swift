@@ -75,6 +75,24 @@ class EditProfilePersonalTableViewCell: UITableViewCell {
         self.sendVerificationButton.layer.cornerRadius = 5
         self.changePasswordButton.layer.cornerRadius = 5
         self.uploadIDButton.layer.cornerRadius = 5
+        
+        self.personalInformationLabel.text = EditProfileLocalizedStrings.personalInformation
+        self.mobilePhoneLabel.text = EditProfileLocalizedStrings.mobileNumber
+        self.firstNameLabel.text = EditProfileLocalizedStrings.firstName
+        self.lastNameLabel.text = EditProfileLocalizedStrings.lastName
+        self.emailLabel.text = EditProfileLocalizedStrings.emailAddress
+        self.passwordLabel.text = EditProfileLocalizedStrings.password
+        self.tinLabel.text = EditProfileLocalizedStrings.tin
+        self.tinIDLabel.text = EditProfileLocalizedStrings.uploadId
+        
+        self.sendVerificationButton.setTitle(EditProfileLocalizedStrings.sendVerification.uppercaseString, forState: .Normal)
+        self.changePasswordButton.setTitle(EditProfileLocalizedStrings.change.uppercaseString, forState: .Normal)
+        self.uploadIDButton.setTitle(EditProfileLocalizedStrings.upload.uppercaseString, forState: .Normal)
+        
+        self.firstNameLabel.required()
+        self.lastNameLabel.required()
+        self.emailLabel.required()
+        
     }
     
     func passValue(storeInfo: StoreInfoModel) {
@@ -121,7 +139,7 @@ class EditProfilePersonalTableViewCell: UITableViewCell {
     func setUploadSuccessful(isSuccessful: Bool) {
         self.setCheckIconHide(!isSuccessful)
         if isSuccessful {
-            self.remarksLabel.text = "You've Successfully Upload an ID"
+            self.remarksLabel.text = EditProfileLocalizedStrings.uploadIdSuccess
         }
     }
     
@@ -165,21 +183,21 @@ class EditProfilePersonalTableViewCell: UITableViewCell {
         if isVerified {
             self.sendVerificationButton.enabled = false
             self.sendVerificationButton.backgroundColor = Constants.Colors.uploadViewColor
-            self.sendVerificationButton.setTitle("VERIFIED", forState: .Normal)
+            self.sendVerificationButton.setTitle(EditProfileLocalizedStrings.verified.uppercaseString, forState: .Normal)
         } else {
             self.sendVerificationButton.enabled = true
             self.sendVerificationButton.backgroundColor = Constants.Colors.grayText
-            self.sendVerificationButton.setTitle("SEND VERIFICATION", forState: .Normal)
+            self.sendVerificationButton.setTitle(EditProfileLocalizedStrings.sendVerification.uppercaseString, forState: .Normal)
         }
     }
     
     func setActivityIndicationHidden(hidden: Bool) {
         if hidden {
-            self.uploadIDButton.setTitle("Upload", forState: .Normal)
+            self.uploadIDButton.setTitle(EditProfileLocalizedStrings.upload.uppercaseString, forState: .Normal)
             self.uploadActivityIndicator.stopAnimating()
             self.uploadActivityIndicator.hidden = hidden
         } else {
-            self.uploadIDButton.setTitle("Uploading", forState: .Normal)
+            self.uploadIDButton.setTitle(EditProfileLocalizedStrings.uploading.uppercaseString, forState: .Normal)
             self.uploadActivityIndicator.startAnimating()
             self.uploadActivityIndicator.hidden = hidden
         }

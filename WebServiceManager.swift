@@ -728,7 +728,7 @@ class WebServiceManager: NSObject {
     class func fireSaveProfileWithUrl(url: String, firstName: String, lastName: String, tin: String, email: String, isSent: String, validId: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager: APIManager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = [self.firstNameKey: firstName, self.lastNameKey: lastName, self.tinKey: tin, self.emailKey: email, self.accessTokenKey: accessToken, self.validIdKey: validId]
+        let parameters: NSDictionary = [self.firstNameKey: firstName, self.lastNameKey: lastName, self.tinKey: tin, self.emailKey: email, self.accessTokenKey: accessToken, self.validIdKey: validId, self.isSentKey: isSent]
         
         if Reachability.isConnectedToNetwork() {
             manager.POST(url, parameters: parameters, success: {

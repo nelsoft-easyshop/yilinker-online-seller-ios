@@ -22,6 +22,27 @@ struct EditProfileLocalizedStrings {
     static let cancelLocalizeString = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
     static let copiedToClipBoard = StringHelper.localizedStringWithKey("COPY_LOCALIZE_KEY")
     static let successfullyUpdateProfile = StringHelper.localizedStringWithKey("UPDATE_PROF_LOCALIZE_KEY")
+    
+    static let personalInformation: String = StringHelper.localizedStringWithKey("PERSONAL_INFO_LOCALIZE_KEY")
+    static let mobileNumber: String = StringHelper.localizedStringWithKey("MOBILE_LOCALIZED_KEY")
+    static let firstName: String = StringHelper.localizedStringWithKey("FIRST_NAME_LOCALIZE_KEY")
+    static let lastName: String = StringHelper.localizedStringWithKey("LAST_NAME_LOCALIZE_KEY")
+    static let emailAddress: String = StringHelper.localizedStringWithKey("EMAIL_ADDRESS_LOCALIZE_KEY")
+    static let password: String = StringHelper.localizedStringWithKey("PASSWORD_LOCALIZE_KEY")
+    static let change: String = StringHelper.localizedStringWithKey("STORE_INFO_CHANGE_LOCALIZE_KEY")
+    static let tin: String = StringHelper.localizedStringWithKey("STORE_INFO_TIN_LOCALIZE_KEY")
+    static let uploadId: String = StringHelper.localizedStringWithKey("UPLOAD_TIN_ID_LOCALIZED_KEY")
+    static let uploadIdSuccess: String = StringHelper.localizedStringWithKey("SUCCESS_ID_UPLOAD_LOCALIZED_KEY")
+    static let verified: String = StringHelper.localizedStringWithKey("VERIFIED_LOCALIZED_KEY")
+    static let sendVerification: String = StringHelper.localizedStringWithKey("SEND_VERIFICATION_LOCALIZED_KEY")
+    static let upload: String = StringHelper.localizedStringWithKey("UPLOAD_ID_LOCALIZED_KEY")
+    static let uploading: String = StringHelper.localizedStringWithKey("UPLOADING_LOCALIZED_KEY")
+    static let storeAddress: String = StringHelper.localizedStringWithKey("STORE_INFO_STORE_ADDRESS_LOCALIZE_KEY")
+    static let bankAccountInfo: String = StringHelper.localizedStringWithKey("STORE_INFO_BANK_ACCOUNT_LOCALIZE_KEY")
+    static let changeAddress: String = StringHelper.localizedStringWithKey("STORE_INFO_CHANGE_ADDRESS_LOCALIZE_KEY")
+    static let changeBankAccount: String = StringHelper.localizedStringWithKey("STORE_INFO_NEW_ACCOUNT_LOCALIZE_KEY")
+    static let save: String = StringHelper.localizedStringWithKey("STORE_INFO_SAVE_LOCALIZE_KEY")
+    static let saveAndSetup: String = StringHelper.localizedStringWithKey("SAVE_SETUP_LOCALIZE_KEY")
 }
 
 class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate {
@@ -49,6 +70,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     var validId: String = ""
     var referrerCode: String = ""
     var isUploadSuccessFul: Bool = false
+    var isNewUser: Bool = false
     
     var dimView: UIView = UIView()
     
@@ -91,7 +113,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
         
         //Set title
-        self.title = "Edit Profile"
+        self.title = EditProfileLocalizedStrings.editProfileLocalizeString
         
         //Add tap getsure to close keyboard
         let tapGesture = UITapGestureRecognizer(target: self, action: "closeKeyboard")
@@ -117,17 +139,6 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     }
     
     // MARK: - Functions
-    func checkIfNewUser() -> Bool {
-        if self.storeInfo != nil {
-            if self.storeInfo!.firstName.isEmpty && self.storeInfo!.lastName.isEmpty && self.storeInfo!.email.isEmpty {
-                return true
-            } else {
-                return false
-            }
-        } else {
-            return false
-        }
-    }
     
     func closeKeyboard() {
         self.view.endEditing(true)
@@ -172,6 +183,10 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 self.dismissLoader()
                 let response: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                 Toast.displayToastWithMessage(response.message, duration: 1.5, view: self.navigationController!.view!)
+                
+                if self.isNewUser {
+                    //Redirect to setup store
+                }
             } else {
                 self.dismissLoader()
                 self.handleErrorWithType(requestErrorType, responseObject: responseObject, requestType: .SaveProfile, params: [firstName, lastName, tin, email, isSent, validId])
@@ -303,10 +318,10 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         } else if indexPath.row == 1 {
             let cell: EditProfileChangeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.changeCellIdentifier, forIndexPath: indexPath) as! EditProfileChangeTableViewCell
             //Todo Strings
-            cell.setTitle("Store Address")
+            cell.setTitle(EditProfileLocalizedStrings.storeAddress)
             cell.setValueChangeable(true)
             cell.delegate = self
-            cell.setChangeButtonTitle("Change\nAddress")
+            cell.setChangeButtonTitle(EditProfileLocalizedStrings.changeAddress)
             if (self.storeInfo?.store_address == nil) {
                 if self.storeInfo!.store_address.isEmpty {
                     cell.setValue("No Address yet.", value: "")
@@ -322,12 +337,12 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         } else if indexPath.row == 2 {
             let cell: EditProfileChangeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.changeCellIdentifier, forIndexPath: indexPath) as! EditProfileChangeTableViewCell
             //Todo Strings
-            cell.setTitle("Bank Account Information")
+            cell.setTitle(EditProfileLocalizedStrings.bankAccountInfo)
             if self.storeInfo?.isBankEditable != nil {
                 cell.setValueChangeable(self.storeInfo!.isBankEditable)
             }
             cell.delegate = self
-            cell.setChangeButtonTitle("Change\nAccount")
+            cell.setChangeButtonTitle(EditProfileLocalizedStrings.changeBankAccount)
             if (self.storeInfo?.bankAccount != nil) {
                 if self.storeInfo!.bankAccount.isEmpty {
                     cell.setValue("No Bank Account yet.", value: "")
@@ -359,10 +374,10 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             return cell
         } else if indexPath.row == 4 {
             let cell: EditProfileButtonTableViewCell = tableView.dequeueReusableCellWithIdentifier(self.buttonCellIdentifier, forIndexPath: indexPath) as! EditProfileButtonTableViewCell
-            if self.checkIfNewUser() {
-                cell.setButtonTitle("SAVE AND SETUP STORE")
+            if self.isNewUser {
+                cell.setButtonTitle(EditProfileLocalizedStrings.saveAndSetup.uppercaseString)
             } else {
-                cell.setButtonTitle("SAVE")
+                cell.setButtonTitle(EditProfileLocalizedStrings.save.uppercaseString)
             }
             cell.delegate = self
             cell.clipsToBounds = true
@@ -559,11 +574,11 @@ extension EditProfileTableViewController: ChangeEmailViewControllerDelegate {
 //MARK: - Change Address ViewController Delegate
 extension EditProfileTableViewController: EditProfileChangeTableViewCellDelegate {
     func editProfileChangeCell(editProfileChangeCell: EditProfileChangeTableViewCell, didTapSendButton sendButton: UIButton) {
-        if sendButton.titleLabel?.text == "Change\nAddress" {
+        if sendButton.titleLabel?.text == EditProfileLocalizedStrings.changeAddress {
             var changeAddressViewController = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
             changeAddressViewController.delegate = self
             self.navigationController?.pushViewController(changeAddressViewController, animated:true)
-        } else if sendButton.titleLabel?.text == "Change\nAccount" {
+        } else if sendButton.titleLabel?.text == EditProfileLocalizedStrings.changeBankAccount {
             var changeBankAccountViewController = ChangeBankAccountViewController(nibName: "ChangeBankAccountViewController", bundle: nil)
             changeBankAccountViewController.delegate = self
             self.navigationController?.pushViewController(changeBankAccountViewController, animated:true)
