@@ -110,6 +110,14 @@
                             <constraint firstAttribute="height" constant="30" id="iWF-VO-Zq3"/>
                         </constraints>
                     </imageView>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Q4c-pX-nCN">
+                        <rect key="frame" x="13" y="14" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="8Oc-a3-qEw"/>
+                            <constraint firstAttribute="height" constant="20" id="dE9-2v-oH4"/>
+                        </constraints>
+                        <color key="color" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    </activityIndicatorView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -117,11 +125,13 @@
             <constraints>
                 <constraint firstItem="nfG-9z-bJy" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="2C4-eE-ZNp"/>
                 <constraint firstAttribute="bottom" secondItem="9b7-YY-VVD" secondAttribute="bottom" id="5oe-b8-F3v"/>
+                <constraint firstItem="Q4c-pX-nCN" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="13" id="6yN-cd-Uul"/>
                 <constraint firstAttribute="bottom" secondItem="GsK-GC-g0q" secondAttribute="bottom" constant="6" id="8u0-hy-ZHm"/>
                 <constraint firstAttribute="trailing" secondItem="9b7-YY-VVD" secondAttribute="trailing" id="9Z1-MY-Ami"/>
                 <constraint firstItem="Vv9-kj-yii" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="Hsk-8d-Gbr"/>
                 <constraint firstItem="9Ou-W6-xIw" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="J64-ek-8Mx"/>
                 <constraint firstItem="ssF-55-Zce" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Ltz-3Y-UUD"/>
+                <constraint firstItem="Q4c-pX-nCN" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="14" id="MTc-ZP-KUL"/>
                 <constraint firstItem="9b7-YY-VVD" firstAttribute="leading" secondItem="GsK-GC-g0q" secondAttribute="trailing" constant="19" id="S5s-Zr-bKR"/>
                 <constraint firstItem="GsK-GC-g0q" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="b8z-T0-8bP"/>
                 <constraint firstItem="aZT-z1-yF8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="e1P-J9-zev"/>
@@ -136,6 +146,7 @@
             </constraints>
             <size key="customSize" width="186" height="211"/>
             <connections>
+                <outlet property="activityIndicatorView" destination="Q4c-pX-nCN" id="PqJ-OA-vrl"/>
                 <outlet property="checkBoxImageView" destination="9Ou-W6-xIw" id="9jE-BO-afn"/>
                 <outlet property="discountPercentageLabel" destination="aZT-z1-yF8" id="kDq-GE-dtN"/>
                 <outlet property="discountedPriceLabel" destination="GsK-GC-g0q" id="y3R-1N-SAf"/>

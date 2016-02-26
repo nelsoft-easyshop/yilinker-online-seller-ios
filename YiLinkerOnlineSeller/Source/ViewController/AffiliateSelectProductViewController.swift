@@ -27,6 +27,8 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    var footerView: SelectProductFooterCollectionViewCell = SelectProductFooterCollectionViewCell()
+    
     var tempCollectionViewCount: Int = 16
     private var lastContentOffset: CGFloat = 0
     private var detectScroll: Bool = true
@@ -34,6 +36,18 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
     var dimView: UIView?
     var firstHide: Bool = true
     private var affiliateProductModels: [AffiliateProductModel] = []
+    
+    private var categoryIds: [String] = []
+    
+    var sortBy: String = "latest"
+    var status: String = "all"
+    var limit: String = "6"
+    var page: Int = 1
+    var name: String = ""
+    
+    private var affiliateGetProductModel: AffiliateGetProductModel = AffiliateGetProductModel()
+    
+    var categories: [CategoryModel] = []
     
     //MARK: - 
     //MARK: - Nib Name
@@ -69,8 +83,19 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
         self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 30, 0)
         self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, -30, 0)
         
-        self.dummyFunction()
         self.localizedString()
+        
+        self.fireAffiliateGetProduct { (successful) -> Void in
+            self.collectionView.reloadData()
+        }
+        
+        self.fireGetCategories()
+    }
+    
+    //MARK: - 
+    //MARK: - Show Product Count
+    func showProductCount() {
+        self.selectYourProductLabel.text = "SELECT YOUR PRODUCT (\(self.affiliateGetProductModel.selectedProductCount)/\(self.affiliateGetProductModel.storeSpace))"
     }
     
     //MARK: - 
@@ -204,11 +229,25 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
     //MARK: - 
     //MARK: - Search Bar Delegate
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        
+        if count(searchText) >= 3 {
+            self.name = searchText
+            self.page = 1
+            self.affiliateProductModels.removeAll(keepCapacity: false)
+            self.fireAffiliateGetProduct({ (successful) -> Void in
+                self.collectionView.reloadData()
+            })
+        } else {
+            self.name = ""
+        }
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         self.search()
+        self.affiliateProductModels.removeAll(keepCapacity: false)
+        self.page == 0
+        self.fireAffiliateGetProduct { (successful) -> Void in
+            self.collectionView.reloadData()
+        }
     }
     
     //MARK: - 
@@ -221,7 +260,13 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
             filterModalViewController.definesPresentationContext = true
             filterModalViewController.view.backgroundColor = UIColor.clearColor()
             filterModalViewController.delegate = self
-            self.navigationController!.presentViewController(filterModalViewController, animated: true, completion: nil)
+            filterModalViewController.categories = self.categories
+            
+            filterModalViewController.status = self.status
+            filterModalViewController.sortBy = self.sortBy
+
+            filterModalViewController.initButtons()
+            self.tabBarController!.presentViewController(filterModalViewController, animated: true, completion: nil)
             self.showDimView()
         }
     }
@@ -229,7 +274,20 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
     //MARK: - 
     //MARK: - Done Action
     @IBAction func doneAction(sender: AnyObject) {
+        var isLoading = false
         
+        for product in self.affiliateProductModels {
+            if product.isLoading {
+                isLoading = true
+                break
+            }
+        }
+        
+        if isLoading {
+           Toast.displayToastBottomWithMessage("Some of your selected/unselected products is still loading.", duration: 2.0, view: self.tabBarController!.view!)
+        } else {
+            self.navigationController?.popToRootViewControllerAnimated(true)
+        }
     }
     
     //MARK: - 
@@ -247,17 +305,22 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
     //MARK: -
     //MARK: - Add Back Button
     func addBackButton() {
-        var customBackButton:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "back")
-        customBackButton.tintColor = UIColor.whiteColor()
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButton.frame = CGRectMake(0, 0, 40, 40)
+        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
     //MARK: - 
     //MARK: - Back
     func back() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController!.popViewControllerAnimated(true)
     }
     
     //MARK: - 
@@ -289,13 +352,31 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
         
         let affiliateProductModel: AffiliateProductModel = self.affiliateProductModels[indexPath.row]
         
-        cell.productNameLabel.text = affiliateProductModel.productName
+        cell.productNameLabel.text = affiliateProductModel.name
         
         if affiliateProductModel.isSelected {
             cell.checkBoxImageView.image = UIImage(named: "new-check")
         } else {
             cell.checkBoxImageView.image = UIImage(named: "old-check")
         }
+        
+        if affiliateProductModel.isLoading {
+            cell.checkBoxImageView.hidden = true
+            cell.activityIndicatorView.startAnimating()
+        } else {
+            cell.checkBoxImageView.hidden = false
+            cell.activityIndicatorView.stopAnimating()
+        }
+        
+        cell.productNameLabel.text = affiliateProductModel.name
+        cell.originalPriceLabel.text = affiliateProductModel.originalPrice
+        cell.originalPriceLabel.drawDiscountLine(false)
+        cell.discountedPriceLabel.text = affiliateProductModel.discountedPrice
+        
+        cell.discountedPriceLabel.text = affiliateProductModel.discountedPrice
+        
+        cell.discountPercentageLabel.text = "\(affiliateProductModel.discount)% OFF"
+        cell.imageView.sd_setImageWithURL(NSURL(string: affiliateProductModel.images[0])!, placeholderImage: UIImage(named: "dummy-placeholder"))
         
         return cell
     }
@@ -308,11 +389,13 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        println("product count: \(self.affiliateGetProductModel.products.count)")
         return self.affiliateProductModels.count
     }
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        let footerView: SelectProductFooterCollectionViewCell = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionFooter, withReuseIdentifier: SelectProductFooterCollectionViewCell.nibNameAndIdentifier(), forIndexPath: indexPath) as! SelectProductFooterCollectionViewCell
+        self.footerView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionFooter, withReuseIdentifier: SelectProductFooterCollectionViewCell.nibNameAndIdentifier(), forIndexPath: indexPath) as! SelectProductFooterCollectionViewCell
+        
         return footerView
     }
     
@@ -365,8 +448,7 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
                 self.detectScroll = false
                 self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 20, 0)
                 self.collectionView.setContentOffset(CGPointMake(0, self.collectionView.contentSize.height - self.collectionView.frame.size.height), animated: true)
-                Delay.delayWithDuration(2.0, completionHandler: { (success) -> Void in
-                    self.dummyFunction()
+                self.fireAffiliateGetProduct({ (successful) -> Void in
                     self.collectionView.reloadData()
                     self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, -30, 0)
                     self.detectScroll = true
@@ -382,41 +464,236 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
         sprintAnimation.toValue = NSValue(CGPoint: CGPointMake(1.0, 1.0))
         sprintAnimation.velocity = NSValue(CGPoint: CGPointMake(2.0, 2.0))
         sprintAnimation.springBounciness = 10.0
+       
         let cell: SelectProductCollectionViewCell = self.collectionView.cellForItemAtIndexPath(indexPath) as! SelectProductCollectionViewCell
         cell.pop_addAnimation(sprintAnimation, forKey: "springAnimation")
         
         
         let affiliateProductModel: AffiliateProductModel = self.affiliateProductModels[indexPath.row]
+        affiliateProductModel.isLoading = true
+        
+        cell.checkBoxImageView.hidden = true
         
         if affiliateProductModel.isSelected {
             affiliateProductModel.isSelected = false
             cell.checkBoxImageView.image = UIImage(named: "old-check")
+            self.fireSaveAffiliateProductsWithProductId("", removeProductId: "\(affiliateProductModel.manufacturerProductId)", index: indexPath.row)
         } else {
             affiliateProductModel.isSelected = true
             cell.checkBoxImageView.image = UIImage(named: "new-check")
+            
+            self.fireSaveAffiliateProductsWithProductId("\(affiliateProductModel.manufacturerProductId)", removeProductId: "", index: indexPath.row)
         }
+        
+        cell.activityIndicatorView.startAnimating()
+        
     }
     
     //MARK: - 
     //MARK: - Filter Modal View Controller Delegate
     func filterModalViewController(filterModalViewController: FilterModalViewController, didTapButton button: UIButton) {
+        if button == filterModalViewController.allButton {
+            self.status = "all"
+        } else if button == filterModalViewController.availableButton {
+            self.status = "available"
+        } else if button == filterModalViewController.selectedButton {
+            self.status = "selected"
+        }
+        
+        if button == filterModalViewController.latestButton {
+            self.sortBy = "latest"
+        } else if button == filterModalViewController.earningButton {
+            self.sortBy = "earning"
+        }
+        
         if button == filterModalViewController.cancelButton {
             self.hideDimView()
             filterModalViewController.dismissViewControllerAnimated(true, completion: nil)
         } else if button == filterModalViewController.applyFilterButton {
             self.hideDimView()
             filterModalViewController.dismissViewControllerAnimated(true, completion: nil)
+            
+            self.affiliateProductModels.removeAll(keepCapacity: false)
+            self.page = 1
+            
+            self.fireAffiliateGetProduct { (successful) -> Void in
+                
+                self.collectionView.reloadData()
+                
+                if self.affiliateProductModels.count <= 5 {
+                    self.footerView.activityIndicatorView.stopAnimating()
+                } else {
+                    self.footerView.activityIndicatorView.startAnimating()
+                }
+            }
         }
     }
     
     //MARK: - 
-    //MARK: - Dummy Function
-    func dummyFunction() {
-        for i in 0..<16 {
-            let affiliateProductModel: AffiliateProductModel = AffiliateProductModel()
-            affiliateProductModel.productName = "Product \(i + 1)"
-            affiliateProductModel.uid = i
-            self.affiliateProductModels.append(affiliateProductModel)
+    //MARK: - Fire Affiliate Get Product
+    func fireAffiliateGetProduct(actionHandler: (successful: Bool) -> Void) {
+        var categoryArray: [Int] = []
+        
+        for cat in self.categories {
+            if cat.isSelected {
+                categoryArray.append(cat.uid)
+            }
         }
+        
+        println(StringHelper.convertArrayToJsonString(categoryArray as NSArray) as String)
+        
+        var categoryIdsString: String = StringHelper.convertArrayToJsonString(categoryArray as NSArray) as String
+        
+        if categoryIdsString == "[]" {
+            categoryIdsString = ""
+        }
+        
+        WebServiceManager.fireAffiliateGetSellerProductFromUrl(APIAtlas.affiliateGetProduct, categoryIds: categoryIdsString, sortby: self.sortBy, limit: self.limit, page: "\(self.page)", status: self.status, name: self.name) { (successful, responseObject, requestErrorType) -> Void in
+            
+            if successful {
+                self.affiliateGetProductModel = AffiliateGetProductModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                self.showProductCount()
+                
+                println(responseObject as! NSDictionary)
+                
+                for product in self.affiliateGetProductModel.products {
+                    self.affiliateProductModels.append(product)
+                }
+                
+                self.page++
+                
+                if self.affiliateProductModels.count <= 5 {
+                    self.footerView.activityIndicatorView.stopAnimating()
+                } else {
+                    self.footerView.activityIndicatorView.startAnimating()
+                }
+                
+                self.collectionView.reloadData()
+                actionHandler(successful: true)
+            } else {
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.tabBarController!.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                   self.fireRefreshTokenWithRefreshType(.GetProduct, params: [])
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Fire Save Affiliate Products
+    func fireSaveAffiliateProductsWithProductId(addProductId: String, removeProductId: String, index: Int) {
+        WebServiceManager.fireAffiliateSaveProductFromUrl(APIAtlas.affiliateSaveOrRemoveProductUrl, productIds: "[\(addProductId)]", removeManufacturerProductIds: "[\(removeProductId)]") {
+            (successful, responseObject, requestErrorType) -> Void in
+            
+            if successful {
+                let affiliateSaveProductResponseModel: AffiliateSaveProductResponseModel = AffiliateSaveProductResponseModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                
+                if affiliateSaveProductResponseModel.save.count != 0 {
+                    self.affiliateProductModels[index].isSelected = true
+                    self.affiliateGetProductModel.selectedProductCount++
+                }
+                
+                if affiliateSaveProductResponseModel.remove.count != 0 {
+                    self.affiliateProductModels[index].isSelected = false
+                    self.affiliateGetProductModel.selectedProductCount--
+                }
+                
+                self.showProductCount()
+                self.affiliateProductModels[index].isLoading = false
+                self.collectionView.reloadData()
+            } else {
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.tabBarController!.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshTokenWithRefreshType(.Add, params: [addProductId, removeProductId, index])
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
+        }
+    }
+    
+    //MARK: - 
+    //MARK: - Fire Get Categories
+    func fireGetCategories() {
+        WebServiceManager.fireAffiliateGetCategoriesFromUrl(APIAtlas.affiliateGetCategories, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                let mainDictioanry = responseObject as! NSDictionary
+                let dictionaries = mainDictioanry["data"] as! [NSDictionary]
+                
+                for dictionary in dictionaries {
+                   self.categories.append(CategoryModel.parseDataFromDictionary(dictionary))
+                }
+            } else {
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.tabBarController!.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshTokenWithRefreshType(.GetCategory, params: [])
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
+        })
+    }
+    
+    //MARK: -
+    //MARK: - Fire Refresh Token With Refresh Type
+    func fireRefreshTokenWithRefreshType(affiliateSelectProductRefreshType: AffiliateSelectProductRefreshType, params: [AnyObject]) {
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                if affiliateSelectProductRefreshType == .GetProduct {
+                    self.fireAffiliateGetProduct({ (successful) -> Void in
+                        self.collectionView.reloadData()
+                    })
+                } else if affiliateSelectProductRefreshType == .GetCategory {
+                    self.fireGetCategories()
+                } else {
+                    self.fireSaveAffiliateProductsWithProductId(params[0] as! String, removeProductId: params[1] as! String, index: params[2] as! Int)
+                }
+            } else {
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                })
+            }
+        })
     }
 }

@@ -19,6 +19,7 @@ class SelectProductCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var earningTitleLabel: UILabel!
     @IBOutlet weak var earningLabel: UILabel!
     
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     class func nibNameAndIdentifier() -> String {
         return "SelectProductCollectionViewCell"
     }

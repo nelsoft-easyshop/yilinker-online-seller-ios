@@ -16,7 +16,7 @@ private struct Strings {
     static let cancel = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
     
     static let all = StringHelper.localizedStringWithKey("ALL_LOCALIZE_KEY")
-    static let available = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
+    static let available = StringHelper.localizedStringWithKey("AVAILABLE_LOCALIZE_KEY")
     static let selected = StringHelper.localizedStringWithKey("SELECTED_LOCALIZE_KEY")
     
     static let latest = StringHelper.localizedStringWithKey("LATEST_LOCALIZE_KEY")
@@ -46,7 +46,10 @@ class FilterModalViewController: UIViewController, UICollectionViewDelegate, UIC
     
     var delegate: FilterModalViewControllerDelegate?
     
-    var categories: [AffiliateCategoryModel] = []
+    var categories: [CategoryModel] = []
+    
+    var sortBy: String = ""
+    var status: String = ""
     
     //MARK: - 
     //MARK: - Nib Name
@@ -67,26 +70,21 @@ class FilterModalViewController: UIViewController, UICollectionViewDelegate, UIC
         super.viewDidLoad()
         self.initButtons()
         
-        self.activateButton(self.latestButton)
-        self.deActivateButton(self.earningButton)
-        
-        self.activateButton(self.allButton)
-        self.deActivateButton(self.availableButton)
-        self.deActivateButton(self.selectedButton)
-        
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         
         self.registerCell()
         
-        self.dummyFunction()
         self.localizedStrings()
+        
+        self.initButtons()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     
     //MARK: - 
     //MARK: - Localized Strings
@@ -125,6 +123,29 @@ class FilterModalViewController: UIViewController, UICollectionViewDelegate, UIC
         self.selectedButton.layer.cornerRadius = 15
         
         self.applyFilterButton.layer.cornerRadius = 5
+        
+        if self.sortBy == "latest" {
+            self.activateButton(self.latestButton)
+            self.deActivateButton(self.earningButton)
+        } else if self.sortBy  == "earning" {
+            self.activateButton(self.earningButton)
+            self.deActivateButton(self.latestButton)
+        }
+        
+        if self.status  == "all" {
+            self.activateButton(self.allButton)
+            self.deActivateButton(self.availableButton)
+            self.deActivateButton(self.selectedButton)
+            
+        } else if self.status == "available" {
+            self.activateButton(self.availableButton)
+            self.deActivateButton(self.allButton)
+            self.deActivateButton(self.selectedButton)
+        } else if self.status == "selected" {
+            self.activateButton(self.selectedButton)
+            self.deActivateButton(self.allButton)
+            self.deActivateButton(self.availableButton)
+        }
     }
     
     //MARK: -
@@ -140,6 +161,8 @@ class FilterModalViewController: UIViewController, UICollectionViewDelegate, UIC
             self.activateButton(self.allButton)
             self.deActivateButton(self.availableButton)
             self.deActivateButton(self.selectedButton)
+            
+            self.status = "all"
         } else if sender == self.availableButton {
             self.activateButton(self.availableButton)
             self.deActivateButton(self.allButton)
@@ -150,6 +173,7 @@ class FilterModalViewController: UIViewController, UICollectionViewDelegate, UIC
             self.deActivateButton(self.availableButton)
         }
         
+        self.delegate?.filterModalViewController(self, didTapButton: sender)
         self.bounceButton(sender)
     }
     
@@ -195,6 +219,7 @@ class FilterModalViewController: UIViewController, UICollectionViewDelegate, UIC
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: SelectCategoryCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(SelectCategoryCollectionViewCell.nibNameAndIdentifier(), forIndexPath: indexPath) as! SelectCategoryCollectionViewCell
+       
         cell.categoryNameLabel.text = self.categories[indexPath.row].name
         
         if self.categories[indexPath.row].isSelected {
@@ -231,7 +256,7 @@ class FilterModalViewController: UIViewController, UICollectionViewDelegate, UIC
         let cell: SelectCategoryCollectionViewCell = self.collectionView.cellForItemAtIndexPath(indexPath) as! SelectCategoryCollectionViewCell
         cell.pop_addAnimation(sprintAnimation, forKey: "springAnimation")
         
-        let category: AffiliateCategoryModel = self.categories[indexPath.row]
+        let category: CategoryModel = self.categories[indexPath.row]
         
         if category.isSelected {
             category.isSelected = false
@@ -239,17 +264,6 @@ class FilterModalViewController: UIViewController, UICollectionViewDelegate, UIC
         } else {
             category.isSelected = true
             cell.checkBoxImageView.image = UIImage(named: "category-checked")
-        }
-    }
-    
-    //MARK: - 
-    //MARK: - Dummy Function
-    func dummyFunction() {
-        for i in 0..<10 {
-            let category: AffiliateCategoryModel = AffiliateCategoryModel()
-            category.productCategoryId = i + 1
-            category.name = "Category \(i+1)"
-            self.categories.append(category)
         }
     }
 }

@@ -176,7 +176,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         layout.sectionInset = UIEdgeInsetsMake(0, 16.0, 0, 16.0)
         collectionView.setCollectionViewLayout(layout, animated: true)
         collectionView?.backgroundColor = UIColor.whiteColor()
-        collectionView?.bounces = false
+        //collectionView?.bounces = false
         collectionView?.alwaysBounceVertical = true
         
         var gradient: CAGradientLayer = CAGradientLayer()
@@ -268,8 +268,9 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             self.navigationController?.pushViewController(editProfileViewController, animated:true)
             
         } else if self.tableData[indexPath.row] == DashboardViewConstants.setupStoreString && !self.checkIfNewUser() {
-            //Setup Store
-            
+            let affiliateSelectProductViewController: AffiliateSetupStoreTableViewController = AffiliateSetupStoreTableViewController(nibName: AffiliateSetupStoreTableViewController.nibName(), bundle: nil) as AffiliateSetupStoreTableViewController
+            affiliateSelectProductViewController.storeInfoModel = self.storeInfo
+            self.navigationController?.pushViewController(affiliateSelectProductViewController, animated:true)
         } else if self.tableData[indexPath.row] == DashboardViewConstants.salesReportString && !self.checkIfNewUser() {
             var salesViewController = SalesReportViewController(nibName: "SalesReportViewController", bundle: nil)
             self.navigationController?.pushViewController(salesViewController, animated:true)
@@ -452,7 +453,6 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             
             SessionManager.setFullAddress(self.storeInfo.store_address)
             SessionManager.setUserFullName(self.storeInfo.name)
-            
             
             NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.store_name, forKey: "storeName")
             NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.store_address, forKey: "storeAddress")

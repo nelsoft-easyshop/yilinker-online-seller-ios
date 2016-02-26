@@ -151,6 +151,18 @@ struct APIAtlas {
     
     //Uploade Image
     static let uploadImage = "v2/auth/image/upload"
+
+    //Upload Image
+    static let uploadImageUrl = "v2/auth/image/upload"
+    
+    //Affiliate Store Setup
+    static let affiliateStoreSetupUrl = "v2/auth/store/setup"
+    
+    static let affiliateGetProduct = "v1/auth/product/getAffiliateProducts"
+    
+    static let affiliateSaveOrRemoveProductUrl = "v1/auth/product/saveAffiliateProducts"
+    
+    static let affiliateGetCategories = "v1/auth/product/getCategories"
 }
 
 class APIManager: AFHTTPSessionManager {
