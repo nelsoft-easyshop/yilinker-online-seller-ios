@@ -32,8 +32,8 @@ class FooterButtonTableViewCell: UITableViewCell {
     //MARK: -
     //MARK: Action methods for buttons
     @IBAction func action(sender: UIButton) {
-        self.delegate?.footerButtonTableViewCell(self, didTapButton: sender)
         self.activityIndicatorView.startAnimating()
+        self.delegate?.footerButtonTableViewCell(self, didTapButton: sender)
     }
     
     

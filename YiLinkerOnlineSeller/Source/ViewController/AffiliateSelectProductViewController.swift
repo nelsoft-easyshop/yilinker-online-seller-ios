@@ -96,7 +96,7 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
     //MARK: - Show Product Count
     func showProductCount() {
         self.selectYourProductLabel.text = "SELECT YOUR PRODUCT (\(self.affiliateGetProductModel.selectedProductCount)/\(self.affiliateGetProductModel.storeSpace))"
-        self.doneButton.setTitle("\(self.doneButton.titleLabel!.text!) (\(self.affiliateGetProductModel.selectedProductCount)/\(self.affiliateGetProductModel.storeSpace))", forState: .Normal)
+        self.doneButton.setTitle("DONE (\(self.affiliateGetProductModel.selectedProductCount)/\(self.affiliateGetProductModel.storeSpace))", forState: .Normal)
     }
     
     //MARK: - 
@@ -377,6 +377,16 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
         cell.discountedPriceLabel.text = affiliateProductModel.discountedPrice
         
         cell.discountPercentageLabel.text = "\(affiliateProductModel.discount)% OFF"
+        
+        
+        if affiliateProductModel.discountedPrice == affiliateProductModel.originalPrice {
+            cell.originalPriceLabel.hidden = true
+            cell.discountPercentageLabel.hidden = true
+        } else {
+            cell.originalPriceLabel.hidden = false
+            cell.discountPercentageLabel.hidden = false
+        }
+        
         cell.imageView.sd_setImageWithURL(NSURL(string: affiliateProductModel.images[0])!, placeholderImage: UIImage(named: "dummy-placeholder"))
         
         return cell
@@ -469,25 +479,25 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
         let cell: SelectProductCollectionViewCell = self.collectionView.cellForItemAtIndexPath(indexPath) as! SelectProductCollectionViewCell
         cell.pop_addAnimation(sprintAnimation, forKey: "springAnimation")
         
-        
-        let affiliateProductModel: AffiliateProductModel = self.affiliateProductModels[indexPath.row]
-        affiliateProductModel.isLoading = true
-        
-        cell.checkBoxImageView.hidden = true
-        
-        if affiliateProductModel.isSelected {
-            affiliateProductModel.isSelected = false
-            cell.checkBoxImageView.image = UIImage(named: "old-check")
-            self.fireSaveAffiliateProductsWithProductId("", removeProductId: "\(affiliateProductModel.manufacturerProductId)", index: indexPath.row)
-        } else {
-            affiliateProductModel.isSelected = true
-            cell.checkBoxImageView.image = UIImage(named: "new-check")
+        if indexPath.row < self.affiliateProductModels.count {
+            let affiliateProductModel: AffiliateProductModel = self.affiliateProductModels[indexPath.row]
+            affiliateProductModel.isLoading = true
             
-            self.fireSaveAffiliateProductsWithProductId("\(affiliateProductModel.manufacturerProductId)", removeProductId: "", index: indexPath.row)
+            cell.checkBoxImageView.hidden = true
+            
+            if affiliateProductModel.isSelected {
+                affiliateProductModel.isSelected = false
+                cell.checkBoxImageView.image = UIImage(named: "old-check")
+                self.fireSaveAffiliateProductsWithProductId("", removeProductId: "\(affiliateProductModel.manufacturerProductId)", index: indexPath.row)
+            } else {
+                affiliateProductModel.isSelected = true
+                cell.checkBoxImageView.image = UIImage(named: "new-check")
+                
+                self.fireSaveAffiliateProductsWithProductId("\(affiliateProductModel.manufacturerProductId)", removeProductId: "", index: indexPath.row)
+            }
         }
         
         cell.activityIndicatorView.startAnimating()
-        
     }
     
     //MARK: - 
