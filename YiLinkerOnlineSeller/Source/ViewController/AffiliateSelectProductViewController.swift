@@ -102,7 +102,7 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
     //MARK: - 
     //MARK: - Localized String
     func localizedString() {
-        self.selectYourProductLabel.text = "\(Strings.selecttYourProduct) (48/150)"
+        self.selectYourProductLabel.text = "\(Strings.selecttYourProduct) (00/00)"
         self.doneButton.setTitle(Constants.Localized.done, forState: .Normal)
         self.filterButton.setTitle(Strings.filter, forState: .Normal)
     }
@@ -234,6 +234,8 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
             self.name = searchText
             self.page = 1
             self.affiliateProductModels.removeAll(keepCapacity: false)
+            self.collectionView.reloadData()
+            
             self.fireAffiliateGetProduct({ (successful) -> Void in
                 self.collectionView.reloadData()
             })
@@ -245,7 +247,12 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         self.search()
         self.affiliateProductModels.removeAll(keepCapacity: false)
-        self.page == 0
+        
+        self.sortBy = "latest"
+        self.status = "all"
+        self.limit = "20"
+        self.page = 1
+        
         self.fireAffiliateGetProduct { (successful) -> Void in
             self.collectionView.reloadData()
         }
@@ -267,7 +274,7 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
             filterModalViewController.sortBy = self.sortBy
 
             filterModalViewController.initButtons()
-            self.tabBarController!.presentViewController(filterModalViewController, animated: true, completion: nil)
+            self.navigationController!.presentViewController(filterModalViewController, animated: true, completion: nil)
             self.showDimView()
         }
     }
@@ -285,7 +292,7 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
         }
         
         if isLoading {
-           Toast.displayToastBottomWithMessage("Some of your selected/unselected products is still loading.", duration: 2.0, view: self.tabBarController!.view!)
+           Toast.displayToastBottomWithMessage("Some of your selected/unselected products is still loading.", duration: 2.0, view: self.navigationController!.view!)
         } else {
             self.navigationController?.popToRootViewControllerAnimated(true)
         }
@@ -351,44 +358,46 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: SelectProductCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(SelectProductCollectionViewCell.nibNameAndIdentifier(), forIndexPath: indexPath) as! SelectProductCollectionViewCell
         
-        let affiliateProductModel: AffiliateProductModel = self.affiliateProductModels[indexPath.row]
-        
-        cell.productNameLabel.text = affiliateProductModel.name
-        
-        if affiliateProductModel.isSelected {
-            cell.checkBoxImageView.image = UIImage(named: "new-check")
-        } else {
-            cell.checkBoxImageView.image = UIImage(named: "old-check")
+        if indexPath.row < self.affiliateProductModels.count {
+            let affiliateProductModel: AffiliateProductModel = self.affiliateProductModels[indexPath.row]
+            
+            cell.productNameLabel.text = affiliateProductModel.name
+            
+            if affiliateProductModel.isSelected {
+                cell.checkBoxImageView.image = UIImage(named: "new-check")
+            } else {
+                cell.checkBoxImageView.image = UIImage(named: "old-check")
+            }
+            
+            if affiliateProductModel.isLoading {
+                cell.checkBoxImageView.hidden = true
+                cell.activityIndicatorView.startAnimating()
+            } else {
+                cell.checkBoxImageView.hidden = false
+                cell.activityIndicatorView.stopAnimating()
+            }
+            
+            cell.productNameLabel.text = affiliateProductModel.name
+            cell.originalPriceLabel.text = affiliateProductModel.originalPrice
+            cell.originalPriceLabel.drawDiscountLine(false)
+            cell.discountedPriceLabel.text = affiliateProductModel.discountedPrice
+            
+            cell.discountedPriceLabel.text = affiliateProductModel.discountedPrice
+            
+            cell.discountPercentageLabel.text = "\(affiliateProductModel.discount)% OFF"
+            
+            
+            if affiliateProductModel.discountedPrice == affiliateProductModel.originalPrice {
+                cell.originalPriceLabel.hidden = true
+                cell.discountPercentageLabel.hidden = true
+            } else {
+                cell.originalPriceLabel.hidden = false
+                cell.discountPercentageLabel.hidden = false
+            }
+            
+            cell.imageView.sd_setImageWithURL(NSURL(string: affiliateProductModel.images[0])!, placeholderImage: UIImage(named: "logo-selection"))
         }
-        
-        if affiliateProductModel.isLoading {
-            cell.checkBoxImageView.hidden = true
-            cell.activityIndicatorView.startAnimating()
-        } else {
-            cell.checkBoxImageView.hidden = false
-            cell.activityIndicatorView.stopAnimating()
-        }
-        
-        cell.productNameLabel.text = affiliateProductModel.name
-        cell.originalPriceLabel.text = affiliateProductModel.originalPrice
-        cell.originalPriceLabel.drawDiscountLine(false)
-        cell.discountedPriceLabel.text = affiliateProductModel.discountedPrice
-        
-        cell.discountedPriceLabel.text = affiliateProductModel.discountedPrice
-        
-        cell.discountPercentageLabel.text = "\(affiliateProductModel.discount)% OFF"
-        
-        
-        if affiliateProductModel.discountedPrice == affiliateProductModel.originalPrice {
-            cell.originalPriceLabel.hidden = true
-            cell.discountPercentageLabel.hidden = true
-        } else {
-            cell.originalPriceLabel.hidden = false
-            cell.discountPercentageLabel.hidden = false
-        }
-        
-        cell.imageView.sd_setImageWithURL(NSURL(string: affiliateProductModel.images[0])!, placeholderImage: UIImage(named: "dummy-placeholder"))
-        
+      
         return cell
     }
     
@@ -584,7 +593,7 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
             } else {
                 if requestErrorType == .ResponseError {
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.tabBarController!.view)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.navigationController!.view)
                 } else if requestErrorType == .AccessTokenExpired {
                    self.fireRefreshTokenWithRefreshType(.GetProduct, params: [])
                 } else if requestErrorType == .PageNotFound {
@@ -611,25 +620,49 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
             (successful, responseObject, requestErrorType) -> Void in
             
             if successful {
-                let affiliateSaveProductResponseModel: AffiliateSaveProductResponseModel = AffiliateSaveProductResponseModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                let indexPath: NSIndexPath = NSIndexPath(forItem: index, inSection: 0)
                 
-                if affiliateSaveProductResponseModel.save.count != 0 {
-                    self.affiliateProductModels[index].isSelected = true
-                    self.affiliateGetProductModel.selectedProductCount++
+                if index < self.collectionView.numberOfItemsInSection(0) {
+                    
+                    let affiliateSaveProductResponseModel: AffiliateSaveProductResponseModel = AffiliateSaveProductResponseModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                    
+                    if affiliateSaveProductResponseModel.save.count != 0 {
+                        if index < self.affiliateProductModels.count {
+                            self.affiliateProductModels[index].isSelected = true
+                            self.affiliateGetProductModel.selectedProductCount++
+                        }
+                        
+                    }
+                    
+                    if affiliateSaveProductResponseModel.remove.count != 0 {
+                        if index < self.affiliateProductModels.count {
+                            self.affiliateProductModels[index].isSelected = false
+                            self.affiliateGetProductModel.selectedProductCount--
+                        }
+                    }
+                    
+                    self.showProductCount()
+                    
+                    var indexPaths: [NSIndexPath] = self.collectionView.indexPathsForVisibleItems() as! [NSIndexPath]
+                    
+                    var reloadCell: Bool = false
+                    
+                    for i in indexPaths {
+                        if i == indexPath {
+                            reloadCell = true
+                            break
+                        }
+                    }
+                    
+                    if reloadCell {
+                        self.affiliateProductModels[index].isLoading = false
+                        self.collectionView.reloadItemsAtIndexPaths([indexPath])
+                    }
                 }
-                
-                if affiliateSaveProductResponseModel.remove.count != 0 {
-                    self.affiliateProductModels[index].isSelected = false
-                    self.affiliateGetProductModel.selectedProductCount--
-                }
-                
-                self.showProductCount()
-                self.affiliateProductModels[index].isLoading = false
-                self.collectionView.reloadData()
             } else {
                 if requestErrorType == .ResponseError {
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.tabBarController!.view)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.navigationController!.view)
                 } else if requestErrorType == .AccessTokenExpired {
                     self.fireRefreshTokenWithRefreshType(.Add, params: [addProductId, removeProductId, index])
                 } else if requestErrorType == .PageNotFound {
@@ -664,7 +697,7 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
             } else {
                 if requestErrorType == .ResponseError {
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.tabBarController!.view)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.navigationController!.view)
                 } else if requestErrorType == .AccessTokenExpired {
                     self.fireRefreshTokenWithRefreshType(.GetCategory, params: [])
                 } else if requestErrorType == .PageNotFound {

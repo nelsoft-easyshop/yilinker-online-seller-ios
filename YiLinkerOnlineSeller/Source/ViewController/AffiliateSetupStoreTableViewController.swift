@@ -24,6 +24,8 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
     
     var storeInfoModel: StoreInfoModel = StoreInfoModel()
     
+    var numberOfRows: Int = 2
+    
     //MARK: -
     //MARK: - Nib Name
     class func nibName() -> String {
@@ -89,7 +91,7 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 2
+        return self.numberOfRows
     }
 
     
@@ -182,6 +184,8 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
         
         if self.storeInfoModel.name != "" && self.storeInfoModel.storeSlug != "" {
             footerButtonTableViewCell.button.setTitle("SAVE", forState: UIControlState.Normal)
+        } else {
+            self.numberOfRows = 1
         }
         
         self.tableView.tableFooterView = footerButtonTableViewCell
@@ -279,7 +283,12 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
     }
     
     func setupStoreFormTableViewCell(setupStoreFormTableViewCell: SetupStoreFormTableViewCell, didTapReturnInTextViewtextField: UITextView) {
-        setupStoreFormTableViewCell.storeLinkTextField.becomeFirstResponder()
+        if setupStoreFormTableViewCell.storeLinkTextField.enabled == false {
+            self.tableView.endEditing(true)
+        } else {
+            setupStoreFormTableViewCell.storeLinkTextField.becomeFirstResponder()
+        }
+        
     }
 
     func setupStoreFormTableViewCell(setupStoreFormTableViewCell: SetupStoreFormTableViewCell, didTextFieldChange textField: UITextField) {
@@ -297,16 +306,13 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
     //MARK: - 
     //MARK: - Footer View Delegate
     func footerButtonTableViewCell(footerButtonTableViewCell: FooterButtonTableViewCell, didTapButton button: UIButton) {
+        self.tableView.endEditing(true)
         self.tableView.userInteractionEnabled = false
-        
-        println("store name: \(affiliateStoreInfoModel.name)")
-        println("store description: \(affiliateStoreInfoModel.storeDescription)")
-        println("store Link: \(affiliateStoreInfoModel.storeLink)")
         
         if affiliateStoreInfoModel.name != "" && affiliateStoreInfoModel.storeDescription != "" && affiliateStoreInfoModel.storeLink != "" {
                 self.fireSetupStoreInfoWithUrl(footerButtonTableViewCell)
         } else {
-            Toast.displayToastBottomWithMessage("Incomplete Information", duration: 2.0, view: self.tabBarController!.view)
+            Toast.displayToastBottomWithMessage("Incomplete Information", duration: 2.0, view: self.navigationController!.view)
             self.tableView.userInteractionEnabled = true
             footerButtonTableViewCell.stopActivityIndicatorViewFromAnimating()
         }
@@ -503,7 +509,9 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
                     }
                 } else {
                     if requestErrorType == .ResponseError {
-                        println("error: \(responseObject as! NSDictionary)")
+                        //Error in api requirements
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.navigationController!.view)
                         footerButtonTableViewCell.stopActivityIndicatorViewFromAnimating()
                         self.tableView.userInteractionEnabled = true
                     } else if requestErrorType == .AccessTokenExpired {

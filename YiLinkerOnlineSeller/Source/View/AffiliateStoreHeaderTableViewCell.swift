@@ -59,8 +59,14 @@ class AffiliateStoreHeaderTableViewCell: UITableViewCell, CustomUploadViewDelega
         self.profilePhotoCustomView.frame = CGRectMake(0, 0, profilePhotoContainerView.frame.size.width, profilePhotoContainerView.frame.size.height)
         self.profilePhotoContainerView.addSubview(self.profilePhotoCustomView)
         
+        self.profilePhotoContainerView.clipsToBounds = true
+        self.profilePhotoContainerView.layer.cornerRadius = profilePhotoContainerView.frame.size.width / 2
+        
+        self.profilePhotoCustomView.clipsToBounds = true
+        self.profilePhotoCustomView.layer.cornerRadius = profilePhotoCustomView.frame.size.width / 2
+        
         self.profilePhotoCustomView.layer.borderColor = UIColor.whiteColor().CGColor
-        self.profilePhotoCustomView.layer.borderWidth = 2
+        self.profilePhotoCustomView.layer.borderWidth = 4
     }
     
     //MARK: - 

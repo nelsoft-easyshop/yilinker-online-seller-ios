@@ -25,7 +25,7 @@ class StoreInfoQrCodeTableViewCell: UITableViewCell {
     }
     
     class func heightIfQRCodeIsNotHidden() -> CGFloat {
-        return 320.0
+        return 280.0
     }
     
     class func nibNameAndIdentifier() -> String {
