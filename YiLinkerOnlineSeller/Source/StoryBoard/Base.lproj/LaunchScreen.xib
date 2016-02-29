@@ -16,29 +16,29 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ALL IN ONE PLACE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M8w-xQ-3to">
-                    <rect key="frame" x="0.0" y="326" width="320" height="21"/>
+                    <rect key="frame" x="0.0" y="351" width="320" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="1fg-I8-bGQ"/>
+                        <constraint firstAttribute="height" constant="21" id="Aoa-DE-n5S"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="17"/>
                     <color key="textColor" red="0.3803921569" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="YiLinkerLogo" translatesAutoresizingMaskIntoConstraints="NO" id="wUJ-0X-1hI">
-                    <rect key="frame" x="68" y="70" width="185" height="210"/>
+                    <rect key="frame" x="115" y="234" width="91" height="100"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="210" id="3v4-Yo-n6g"/>
-                        <constraint firstAttribute="width" constant="185" id="pdL-aY-9lI"/>
+                        <constraint firstAttribute="width" constant="91" id="1JO-O2-D98"/>
+                        <constraint firstAttribute="height" constant="100" id="3u6-me-VPQ"/>
                     </constraints>
                 </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="wUJ-0X-1hI" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="70" id="5uS-Rm-2lL"/>
-                <constraint firstItem="M8w-xQ-3to" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="7U5-9h-fod"/>
-                <constraint firstAttribute="trailing" secondItem="M8w-xQ-3to" secondAttribute="trailing" id="ojK-SJ-jd2"/>
-                <constraint firstAttribute="centerX" secondItem="wUJ-0X-1hI" secondAttribute="centerX" id="yrU-nk-VKo"/>
-                <constraint firstItem="M8w-xQ-3to" firstAttribute="top" secondItem="wUJ-0X-1hI" secondAttribute="bottom" constant="46" id="zRa-lO-vIs"/>
+                <constraint firstItem="M8w-xQ-3to" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="NgS-ic-4Du"/>
+                <constraint firstItem="M8w-xQ-3to" firstAttribute="top" secondItem="wUJ-0X-1hI" secondAttribute="bottom" constant="17" id="ZhK-04-lea"/>
+                <constraint firstAttribute="centerY" secondItem="wUJ-0X-1hI" secondAttribute="centerY" id="geP-CH-GpA"/>
+                <constraint firstAttribute="centerX" secondItem="wUJ-0X-1hI" secondAttribute="centerX" id="n9W-v4-oTJ"/>
+                <constraint firstAttribute="trailing" secondItem="M8w-xQ-3to" secondAttribute="trailing" id="tgU-ZT-upv"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
