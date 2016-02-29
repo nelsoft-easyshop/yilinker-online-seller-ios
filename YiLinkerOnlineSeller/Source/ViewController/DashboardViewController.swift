@@ -416,6 +416,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     
     func fireDeleteRegistration(registrationID : String) {
         if Reachability.isConnectedToNetwork() {
+            self.logoutUser()
             if(SessionManager.isLoggedIn()){
                 let manager: APIManager = APIManager.sharedInstance
                 let parameters: NSDictionary = [

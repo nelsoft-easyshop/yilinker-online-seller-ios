@@ -346,15 +346,20 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             cell.delegate = self
             cell.setChangeButtonTitle(EditProfileLocalizedStrings.changeBankAccount)
             if (self.storeInfo?.bankAccount != nil) {
-                if self.storeInfo!.bankAccount.isEmpty {
+                if self.storeInfo!.accountNumber.isEmpty {
                     cell.setValue("No Bank Account yet.", value: "")
+                    cell.setValueChangeable(true)
                 } else {
                     let accountInfo: String = self.storeInfo!.accountNumber + "\n" + self.storeInfo!.accountName + "\n" + self.storeInfo!.bankName
                     cell.setValue(self.storeInfo!.accountTitle, value: accountInfo)
+                    cell.setValueChangeable(false)
                 }
             } else {
-                let accountInfo: String = self.storeInfo!.accountNumber + "\n" + self.storeInfo!.accountName + "\n" + self.storeInfo!.bankName
-                cell.setValue(self.storeInfo!.accountTitle, value: accountInfo)
+//                let accountInfo: String = self.storeInfo!.accountNumber + "\n" + self.storeInfo!.accountName + "\n" + self.storeInfo!.bankName
+//                cell.setValue(self.storeInfo!.accountTitle, value: accountInfo)
+//                cell.setValueChangeable(false)
+                cell.setValue("No Bank Account yet.", value: "")
+                cell.setValueChangeable(true)
             }
             
             cell.selectionStyle = .None
@@ -605,6 +610,7 @@ extension EditProfileTableViewController: ChangeBankAccountViewControllerDelegat
         self.storeInfo?.accountNumber = accountNumber
         self.storeInfo?.accountName = accountName
         self.storeInfo?.bankName = bankName
+        self.storeInfo?.isBankEditable = false
         self.tableView.reloadData()
     }
 }
