@@ -179,6 +179,11 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
     //MARK: - Add Footer View
     func addFooterView() {
         footerButtonTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(FooterButtonTableViewCell.nibNameAndIdentifer()) as! FooterButtonTableViewCell
+        
+        if self.storeInfoModel.name != "" && self.storeInfoModel.storeSlug != "" {
+            footerButtonTableViewCell.button.setTitle("SAVE", forState: UIControlState.Normal)
+        }
+        
         self.tableView.tableFooterView = footerButtonTableViewCell
         footerButtonTableViewCell.delegate = self
     }
@@ -299,7 +304,7 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
         println("store Link: \(affiliateStoreInfoModel.storeLink)")
         
         if affiliateStoreInfoModel.name != "" && affiliateStoreInfoModel.storeDescription != "" && affiliateStoreInfoModel.storeLink != "" {
-            self.fireSetupStoreInfoWithUrl(footerButtonTableViewCell)
+                self.fireSetupStoreInfoWithUrl(footerButtonTableViewCell)
         } else {
             Toast.displayToastBottomWithMessage("Incomplete Information", duration: 2.0, view: self.tabBarController!.view)
             self.tableView.userInteractionEnabled = true
@@ -489,9 +494,13 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
                     footerButtonTableViewCell.stopActivityIndicatorViewFromAnimating()
                     self.tableView.userInteractionEnabled = true
                     
-                    let vc: AffiliateSelectProductViewController = AffiliateSelectProductViewController(nibName: AffiliateSelectProductViewController.nibName(), bundle: nil) as AffiliateSelectProductViewController
-                    
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    if footerButtonTableViewCell.button.titleLabel!.text == "SAVE" {
+                        self.navigationController!.popToRootViewControllerAnimated(true)
+                    } else {
+                        let vc: AffiliateSelectProductViewController = AffiliateSelectProductViewController(nibName: AffiliateSelectProductViewController.nibName(), bundle: nil) as AffiliateSelectProductViewController
+                        
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
                 } else {
                     if requestErrorType == .ResponseError {
                         println("error: \(responseObject as! NSDictionary)")
