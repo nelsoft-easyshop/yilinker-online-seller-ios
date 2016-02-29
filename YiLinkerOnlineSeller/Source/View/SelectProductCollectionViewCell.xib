@@ -25,8 +25,9 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="180" height="220"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="ssF-55-Zce">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-selection" translatesAutoresizingMaskIntoConstraints="NO" id="ssF-55-Zce">
                         <rect key="frame" x="0.0" y="0.0" width="180" height="130"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="130" id="zdn-L6-GqW"/>
                         </constraints>
@@ -160,7 +161,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="dummy-placeholder.jpg" width="1280" height="800"/>
+        <image name="logo-selection" width="246" height="192"/>
         <image name="old-check" width="236" height="236"/>
     </resources>
 </document>

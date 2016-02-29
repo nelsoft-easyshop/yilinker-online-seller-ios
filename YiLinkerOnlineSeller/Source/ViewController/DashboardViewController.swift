@@ -283,6 +283,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         } else if self.tableData[indexPath.row] == DashboardViewConstants.setupStoreString && !self.checkIfNewUser() {
             let affiliateSelectProductViewController: AffiliateSetupStoreTableViewController = AffiliateSetupStoreTableViewController(nibName: AffiliateSetupStoreTableViewController.nibName(), bundle: nil) as AffiliateSetupStoreTableViewController
             affiliateSelectProductViewController.storeInfoModel = self.storeInfo
+            affiliateSelectProductViewController.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(affiliateSelectProductViewController, animated:true)
         } else if self.tableData[indexPath.row] == DashboardViewConstants.salesReportString && !self.checkIfNewUser() && !self.checkIfNewStore() {
             var salesViewController = SalesReportViewController(nibName: "SalesReportViewController", bundle: nil)
@@ -318,7 +319,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
 //            self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
 
             let vc: AffiliateSelectProductViewController = AffiliateSelectProductViewController(nibName: AffiliateSelectProductViewController.nibName(), bundle: nil) as AffiliateSelectProductViewController
-            
+             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
         } else if self.tableData[indexPath.row] == DashboardViewConstants.payout && !self.checkIfNewUser() && !self.checkIfNewStore() {
             let payoutVC = PayoutViewController(nibName: "PayoutViewController", bundle: nil)

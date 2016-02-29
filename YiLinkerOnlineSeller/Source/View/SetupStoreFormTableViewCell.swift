@@ -29,7 +29,7 @@ class SetupStoreFormTableViewCell: UITableViewCell, UITextFieldDelegate, UITextV
     }
     
     class func height() -> CGFloat {
-        return 320.0
+        return 330.0
     }
 
     override func awakeFromNib() {
