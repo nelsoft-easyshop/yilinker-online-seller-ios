@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FooterButtonTableViewCell" rowHeight="52" id="KGk-i7-Jjw" customClass="FooterButtonTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bld-te-cPG">
+                        <rect key="frame" x="8" y="8" width="304" height="36"/>
+                        <color key="backgroundColor" red="0.2666666667" green="0.64313725489999995" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <state key="normal" title="SAVE AND SELECT PRODUCT">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="action:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="DgE-Sc-71K"/>
+                        </connections>
+                    </button>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="yFb-WR-NeF">
+                        <rect key="frame" x="281" y="16" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="3rU-yS-lk5"/>
+                            <constraint firstAttribute="height" constant="20" id="AbU-8Y-QJ7"/>
+                        </constraints>
+                        <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </activityIndicatorView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottomMargin" secondItem="bld-te-cPG" secondAttribute="bottom" constant="-3" id="0T1-Ht-v3C"/>
+                    <constraint firstItem="bld-te-cPG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="7ul-bZ-kav"/>
+                    <constraint firstItem="yFb-WR-NeF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="8" id="IqA-8U-aYF"/>
+                    <constraint firstItem="bld-te-cPG" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="VgD-vs-tpg"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="yFb-WR-NeF" secondAttribute="trailing" constant="11" id="heV-Ng-1yR"/>
+                    <constraint firstItem="bld-te-cPG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="li2-mh-dHI"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="activityIndicatorView" destination="yFb-WR-NeF" id="poD-g7-DSQ"/>
+                <outlet property="button" destination="bld-te-cPG" id="os5-qY-rqB"/>
+            </connections>
+            <point key="canvasLocation" x="263" y="318"/>
+        </tableViewCell>
+    </objects>
+</document>

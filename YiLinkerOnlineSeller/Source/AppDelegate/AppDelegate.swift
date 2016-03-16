@@ -41,10 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         self.window?.makeKeyAndVisible()
-        
-        if let font = UIFont(name: "Panton-Regular", size: 20) {
-            UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.whiteColor()]
-        }
+        self.window?.backgroundColor = UIColor.whiteColor()
         
         var configureError: NSError?
         GGLContext.sharedInstance().configureWithError(&configureError)
@@ -53,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         println(gcmSenderID)
         //GIDSignIn.sharedInstance().clientID = "613594712632-q9iak1vgc6ua44fkc9kg5tut0s5vuo5m.apps.googleusercontent.com"
         
-        if let font = UIFont(name: "Panton-Regular", size: 20) {
+        if let font = UIFont(name: "Panton-SEMIBOLD", size: 15) {
             UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.whiteColor()]
         }
         
@@ -64,6 +61,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerForRemoteNotifications()
         
         GCMService.sharedInstance().startWithConfig(GCMConfig.defaultConfig())
+        
+        //self.changeRootToAffiliateSelectProduct()
         
         return true
     }
@@ -262,6 +261,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let tabBarController: UITabBarController = storyBoard.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
         self.window?.rootViewController = tabBarController
+    }
+    
+    func changeRootToAffiliateSelectProduct() {
+        let affiliateSelectProductViewController: AffiliateSetupStoreTableViewController = AffiliateSetupStoreTableViewController(nibName: AffiliateSetupStoreTableViewController.nibName(), bundle: nil) as AffiliateSetupStoreTableViewController
+        let navigationController: UINavigationController = UINavigationController(rootViewController: affiliateSelectProductViewController)
+        navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+
+        self.window?.rootViewController = navigationController
     }
 
 }

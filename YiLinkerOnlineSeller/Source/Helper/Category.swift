@@ -71,6 +71,10 @@ extension UITextField {
         
     }
     
+    func trim() -> String{
+        return self.text.stringByReplacingOccurrencesOfString(" ", withString: "")
+    }
+    
     func isValidPassword() -> Bool {
         // println("validate calendar: \(testStr)")
         let emailRegEx = "^(?=.*\\d)(?=.*[a-zA-Z])[^ ]{0,}$"
@@ -116,6 +120,20 @@ extension UITextField {
             result = true
         }
         return result
+    }
+    
+    func isAphaOnly() -> Bool {
+        let passwordRegEx = "[A-Za-z]*"
+        let passwordTest = NSPredicate(format: "SELF MATCHES %@", passwordRegEx)
+        
+        return passwordTest.evaluateWithObject(self.text)
+    }
+    
+    func isNumericOnly() -> Bool {
+        let passwordRegEx = "[0-9]*"
+        let passwordTest = NSPredicate(format: "SELF MATCHES %@", passwordRegEx)
+        
+        return passwordTest.evaluateWithObject(self.text)
     }
     
     func isGreaterThanOrEqualEightCharacters() -> Bool {
@@ -335,6 +353,10 @@ extension String {
     
     var doubleValue: Double {
         return (self as NSString).doubleValue
+    }
+    
+    func trim() -> String{
+        return self.stringByReplacingOccurrencesOfString(" ", withString: "")
     }
     
     func isValidEmail() -> Bool {

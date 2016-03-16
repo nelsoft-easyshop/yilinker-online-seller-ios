@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton SemiBold.otf">
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+        </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AffiliateSelectProductViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <connections>
+                <outlet property="collectionView" destination="Ni2-Th-Mfz" id="fMZ-za-dUV"/>
+                <outlet property="doneButton" destination="KGQ-im-RqB" id="yAF-34-L3F"/>
+                <outlet property="filterButton" destination="kV5-FL-cfy" id="v0G-AL-Lkx"/>
+                <outlet property="mainContainerVerticalConstraint" destination="How-tP-yfY" id="brF-vO-DqD"/>
+                <outlet property="mainContainerView" destination="kLe-8I-1CK" id="LKn-Mo-SOw"/>
+                <outlet property="searchBar" destination="iwV-YW-be7" id="vyH-Eg-CdV"/>
+                <outlet property="searchBarHeightConstraint" destination="dyB-vB-77i" id="NSU-yt-V7a"/>
+                <outlet property="selectYourProductLabel" destination="XjR-eZ-Z0c" id="hEG-XZ-PqY"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <searchBar contentMode="redraw" placeholder="Type Product Name" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iwV-YW-be7">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="dyB-vB-77i"/>
+                    </constraints>
+                    <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="barTintColor" red="0.3803921569" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <textInputTraits key="textInputTraits"/>
+                </searchBar>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kLe-8I-1CK">
+                    <rect key="frame" x="0.0" y="93" width="320" height="475"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SELECT YOUR PRODUCT (00/150)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XjR-eZ-Z0c">
+                            <rect key="frame" x="8" y="13" width="304" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="4hY-60-DGf"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Ni2-Th-Mfz">
+                            <rect key="frame" x="0.0" y="46" width="320" height="374"/>
+                            <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="uov-g5-dPK">
+                                <size key="itemSize" width="50" height="50"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="30"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KGQ-im-RqB">
+                            <rect key="frame" x="10" y="424" width="300" height="44"/>
+                            <color key="backgroundColor" red="0.2666666667" green="0.64313725489999995" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="ulh-Je-eWP"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                            <state key="normal" title="DONE 48/150">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="doneAction:" destination="-1" eventType="touchUpInside" id="d2q-xG-fcS"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="KGQ-im-RqB" secondAttribute="bottom" constant="7" id="13D-X6-Pf0"/>
+                        <constraint firstItem="KGQ-im-RqB" firstAttribute="leading" secondItem="kLe-8I-1CK" secondAttribute="leading" constant="10" id="GST-ZO-7Yp"/>
+                        <constraint firstItem="XjR-eZ-Z0c" firstAttribute="leading" secondItem="kLe-8I-1CK" secondAttribute="leading" constant="8" id="S0F-8j-Yot"/>
+                        <constraint firstItem="XjR-eZ-Z0c" firstAttribute="top" secondItem="kLe-8I-1CK" secondAttribute="top" constant="13" id="b3Q-lW-7of"/>
+                        <constraint firstAttribute="trailing" secondItem="Ni2-Th-Mfz" secondAttribute="trailing" id="cGX-7v-4hk"/>
+                        <constraint firstAttribute="trailing" secondItem="XjR-eZ-Z0c" secondAttribute="trailing" constant="8" id="gzK-IH-rbs"/>
+                        <constraint firstItem="Ni2-Th-Mfz" firstAttribute="leading" secondItem="kLe-8I-1CK" secondAttribute="leading" id="pHc-dF-b5M"/>
+                        <constraint firstItem="KGQ-im-RqB" firstAttribute="top" secondItem="Ni2-Th-Mfz" secondAttribute="bottom" constant="4" id="swV-U0-91K"/>
+                        <constraint firstItem="Ni2-Th-Mfz" firstAttribute="top" secondItem="XjR-eZ-Z0c" secondAttribute="bottom" constant="12" id="ukp-g7-BGX"/>
+                        <constraint firstAttribute="trailing" secondItem="KGQ-im-RqB" secondAttribute="trailing" constant="10" id="xE0-gb-eVn"/>
+                    </constraints>
+                </view>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="odd-CS-HBb">
+                    <rect key="frame" x="0.0" y="44" width="320" height="44"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kV5-FL-cfy">
+                            <rect key="frame" x="113" y="0.0" width="94" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="Evb-ND-uAN"/>
+                                <constraint firstAttribute="width" constant="94" id="omm-hB-nXo"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="12"/>
+                            <state key="normal" title="  Filter" image="filter">
+                                <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="filterAction:" destination="-1" eventType="touchUpInside" id="ucy-cC-vdy"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="centerX" secondItem="kV5-FL-cfy" secondAttribute="centerX" id="RtS-hI-PLg"/>
+                        <constraint firstAttribute="height" constant="44" id="T53-Js-QgM"/>
+                        <constraint firstItem="kV5-FL-cfy" firstAttribute="top" secondItem="odd-CS-HBb" secondAttribute="top" id="mt2-Vk-bYM"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="kLe-8I-1CK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="5rQ-Gc-oD8"/>
+                <constraint firstItem="odd-CS-HBb" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="BbC-aR-PRY"/>
+                <constraint firstItem="kLe-8I-1CK" firstAttribute="top" secondItem="iwV-YW-be7" secondAttribute="bottom" constant="49" id="How-tP-yfY"/>
+                <constraint firstAttribute="trailing" secondItem="odd-CS-HBb" secondAttribute="trailing" id="Me1-O0-XR9"/>
+                <constraint firstAttribute="bottom" secondItem="kLe-8I-1CK" secondAttribute="bottom" id="bWW-1v-3HS"/>
+                <constraint firstAttribute="trailing" secondItem="iwV-YW-be7" secondAttribute="trailing" id="gT0-1B-7VR"/>
+                <constraint firstAttribute="trailing" secondItem="kLe-8I-1CK" secondAttribute="trailing" id="hIR-gY-fyJ"/>
+                <constraint firstItem="odd-CS-HBb" firstAttribute="top" secondItem="iwV-YW-be7" secondAttribute="bottom" id="pYP-kc-mqK"/>
+                <constraint firstItem="iwV-YW-be7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="x4T-hv-xSj"/>
+                <constraint firstItem="iwV-YW-be7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="zWA-Mm-avI"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <point key="canvasLocation" x="224" y="242"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="filter" width="22" height="20"/>
+    </resources>
+</document>

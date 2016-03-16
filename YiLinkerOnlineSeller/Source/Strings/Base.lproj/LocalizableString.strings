@@ -32,6 +32,8 @@ PASSWORD_SUCCESS_CHANGE_LOCALIZE_KEY = "You have successfully changed your passw
 TOTAL_SALES_LOCALIZE_KEY = "Gross Sales";
 TOTAL_PRODUCTS_LOCALIZE_KEY = "Total Products";
 TOTAL_TRANSACTIONS_LOCALIZE_KEY = "Total Transactions";
+EDIT_PROFILE_LOCALIZE_KEY = "Edit\nProfile";
+SETUP_STORE_LOCALIZE_KEY = "Setup\nStore";
 MY_STORE_LOCALIZE_KEY = "My\nStore";
 SALES_REPORT_LOCALIZE_KEY = "Sales\nReport";
 TRANSACTIONS_LOCALIZE_KEY = "Transactions";
@@ -53,6 +55,40 @@ HELP_ALERT_MESSAGE_LOCALIZE_KEY = "Help will be available on the next release.";
 HELP_FOR_CUSTOMER_SERVICE= "For Customer Service Assistance";
 HELP_EMAIL = "Email  :";
 HELP_CALL = "Call     :";
+
+//Edit Profile
+EDITPROFILE_TRY_AGAIN = "Please try again.";
+EDITPROFILE_LOCALIZE_KEY = "Edit Profile";
+EDITPHOTO_LOCALIZE_KEY = "Edit Photo";
+ADDPHOTO_LOCALIZE_KEY = "Add Photo";
+SELECTPHOTO_LOCALIZE_KEY = "Select photo from library";
+TAKEPHOTO_LOCALIZE_KEY = "Take a picture";
+CHANGEPASSWORD_LOCALIZE_KEY = "Change Password";
+SUCCESSCHANGEPASSWORD_LOCALIZE_KEY = "Successfully changed password!";
+SUCCESS_LOCALIZE_KEY = "Success";
+SUCCESSUPDATEPROFILE_LOCALIZE_KEY = "Successfully updated profile!";
+CONGRATULATIONS_LOCALIZED_KEY = "Congratulations!";
+SUCCESS_VERIFIED_LOCALIZED_KEY = "You have successfully verified your account.";
+OOOOPS_LOCALIZE_KEY = "Ooooops!!";
+FAILED_VERIFIED_LOCALIZED_KEY = "You have either entered an incorrect code or it has already expired.";
+VERIFY_NUMBER_LOCALIZED_KEY = "Verify Number";
+PLEASE_ENTER_VERIFY_NUMBER_LOCALIZED_KEY = "Please enter the 6 digit code that was sent to your mobile phone";
+TIME_LEFT_LOCALIZED_KEY = "Time Left:";
+VERIFY_NUMBER_LOCALIZED_KEY = "VERIFY";
+REQUEST_NEW_CODE_LOCALIZED_KEY = "Request new verification code";
+SEND_CODE_LOCALIZED_KEY = "SEND CODE";
+VALID_ID_LOCALIZED_KEY = "Valid ID";
+VALID_ID_PLACEHOLDER_LOCALIZED_KEY = "Upload Identification Photo";
+VIEW_IMAGE_LOCALIZED_KEY = "View Image";
+ADD_LOCALIZED_KEY = "ADD";
+UPLOAD_TIN_ID_LOCALIZED_KEY = "Upload your TIN/ID";
+SUCCESS_ID_UPLOAD_LOCALIZED_KEY = "You've Successfully Upload an ID";
+VERIFIED_LOCALIZED_KEY = "Verified";
+SEND_VERIFICATION_LOCALIZED_KEY = "Send Verification";
+UPLOAD_ID_LOCALIZED_KEY = "Upload";
+UPLOADING_LOCALIZED_KEY = "Uploading";
+SAVE_SETUP_LOCALIZE_KEY = "Save and Setup";
+PERSONAL_INFO_LOCALIZE_KEY = "Personal Information";
 
 // MARK: - Sales Report
 REPORT_TITLE_LOCALIZE_KEY = "Report";
@@ -769,17 +805,21 @@ SUCCESS_LOGIN_LOCALIZE_KEY = "Successfully login.";
 // MARK: - Register
 FIRST_NAME_LOCALIZE_KEY = "First Name";
 LAST_NAME_LOCALIZE_KEY = "Last Name";
-EMAIL_ADDRESS_LOCALIZE_KEY = "email address";
-PASSWORD_LOCALIZE_KEY = "password";
+EMAIL_ADDRESS_LOCALIZE_KEY = "Email address";
+PASSWORD_LOCALIZE_KEY = "Password";
+PASSWORD_NEW_LOCALIZE_KEY = " New Password";
 RE_TYPE_PASSWORD_LOCALIZE_KEY = "Re-type password";
 REGISTER_ME_NOW_LOCALIZE_KEY = "REGISTER ME NOW";
 NUMBER_LETTERS_LOCALIZE_KEY = "Password must be a minimum of 8 alphanumeric characters.";
+NUMBER_LETTERS_COMBINATION_LOCALIZE_KEY = "Password must be a minimum combination of 8 alphanumeric characters.";
 SUCCESS_REGISTER_LOCALIZED_KEY = "Successfully registered.";
 THANKYOU_LOCALIZED_KEY = "Thank you";
 MOBILE_LOCALIZED_KEY = "Mobile Number";
 REFERRAL_LOCALIZED_KEY = "Referral Code";
-GET_ACTIVATION_LOCALIZED_KEY = "Get Activation Key";
+GET_ACTIVATION_LOCALIZED_KEY = "Get Confirmation Code";
 ACTIVATION_CODE_LOCALIZED_KEY = "Activation Code";
+CONFIRMATION_LOCALIZED_KEY = "Confirmation Code";
+LOGIN_LOCALIZE_KEY = "Login";
 
 // MARK: - Register Error
 FIRST_NAME_REQUIRED_LOCALIZE_KEY = "First name is required";
@@ -805,3 +845,21 @@ MOBILE_NUMBER_LOCALIZE_KEY = "Mobile Number";
 SIGNIN_HIDDEN_LOCALIZE_KEY = "Sign In";
 CONFIRMPASSWORD_LOCALIZE_KEY = "Confirm Password";
 REGISTER_HIDDEN_LOCALIZE_KEY = "Register";
+
+//Change Password
+CONFIRMPASSWORD_NEW_LOCALIZE_KEY = "Confirm New Password";
+NEWPASSWORD_LOCALIZE_KEY = "New Password";
+
+//Affiliate Select Product
+SELECT_PRODUCT_LOCALIZE_KEY = "Select Product";
+SELECT_YOUR_PRODUCT_LOCALIZE_KEY = "SELECT YOUR PRODUCT";
+SORT_BY_LOCALIZE_KEY = "Sort By:";
+LATEST_LOCALIZE_KEY = "Latest";
+EARNING_LOCALIZE_KEY = "Earning";
+STATUS_LOCALIZE_KEY = "Status:";
+ALL_LOCALIZE_KEY = "All";
+AVAILABLE_LOCALIZE_KEY = "Available";
+SELECTED_LOCALIZE_KEY = "Selected";
+CATEGORY_FILES_LOCALIZE_KEY = "Category Files";
+APPLY_FILTER_LOCALIZE_KEY = "APPLY FILTER";
+RESET_LOCALIZE_KEY = "RESET";
