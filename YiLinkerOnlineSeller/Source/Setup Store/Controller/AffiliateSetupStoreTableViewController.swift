@@ -220,30 +220,38 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
             var facebookSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
             facebookSheet.setInitialText(self.affiliateStoreInfoModel.qrCodeImageUrl)
             self.presentViewController(facebookSheet, animated: true, completion: nil)
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Facebook app is not available on your device", title: "Unable to proceed")
         }
     }
     
     func shareTWAction(postImage: UIImageView, title: String) {
         if SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter) {
-            
             var tweetShare: SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
             tweetShare.setInitialText(self.affiliateStoreInfoModel.qrCodeImageUrl)
             self.presentViewController(tweetShare, animated: true, completion: nil)
             
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Twitter app is not available on your device", title: "Unable to proceed")
         }
     }
     
     func shareEMAction(postImage: UIImageView, title: String) {
-        let myController = MFMailComposeViewController()
-        myController.mailComposeDelegate = self
-        myController.setSubject("QR Code")
-        myController.setMessageBody("", isHTML: false)
-        myController.setToRecipients([])
+        if MFMailComposeViewController.canSendMail() {
+            let myController = MFMailComposeViewController()
+            myController.mailComposeDelegate = self
+            myController.setSubject("QR Code")
+            myController.setMessageBody("", isHTML: false)
+            myController.setToRecipients([])
+            
+            let imageData = UIImagePNGRepresentation(postImage.image)
+            myController.addAttachmentData(imageData!, mimeType: "image/png", fileName: "image")
+            
+            self.presentViewController(myController, animated: true, completion: nil)
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Email composer is not available on your device", title: "Unable to proceed")
+        }
         
-        let imageData = UIImagePNGRepresentation(postImage.image)
-        myController.addAttachmentData(imageData!, mimeType: "image/png", fileName: "image")
-        
-        self.presentViewController(myController, animated: true, completion: nil)
     }
     
     func shareGPAction(postImage: UIImageView, title: String) {
@@ -310,7 +318,12 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
         self.tableView.userInteractionEnabled = false
         
         if affiliateStoreInfoModel.name != "" && affiliateStoreInfoModel.storeDescription != "" && affiliateStoreInfoModel.storeLink != "" {
+            if self.affiliateStoreInfoModel.storeLink.isValidName() {
                 self.fireSetupStoreInfoWithUrl(footerButtonTableViewCell)
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Store link must not contain special characters", title: "Unable to proceed")
+            }
+            
         } else {
             Toast.displayToastBottomWithMessage("Incomplete Information", duration: 2.0, view: self.navigationController!.view)
             self.tableView.userInteractionEnabled = true
