@@ -102,6 +102,17 @@ CANCELLED_LOCALIZE_KEY = "Cancelled";
 STARTS_LOCALIZE_KEY = "STARTS";
 ENDS_LOCALIZE_KEY = "ENDS";
 
+// MARK: - Suggestion Feedback
+SUGGESTION_HEADLINE = "Do you want to send a feedback?";
+SUGGESTION_SUB_HEADLINE = "We'd love to know how we can make YiLinker even better.";
+SUGGESTION_TITLE = "Feedback";
+SUGGESTION_TITLE_LABEL = "Title";
+SUGGESTION_DESCRIPTION = "Description";
+SUGGESTION_SEND = "SEND";
+SUGGESTION_TITLE_REQUIRED = "Title is required!";
+SUGGESTION_DESC_REQUIRED = "Description is required!";
+HELP_SEND_FEEDBACK = "SEND A FEEDBACK";
+
 // MARK: - Followers
 FOLLOWERS_TITLE_LOCALIZE_KEY = "Followers";
 NO_FOLLOWER_LOCALIZE_KEY = "No followers found.";
