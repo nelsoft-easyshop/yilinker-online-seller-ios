@@ -234,8 +234,6 @@
 		798D82AC1C8686EB00D2A1F7 /* FollowersModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D7FB11C8686EB00D2A1F7 /* FollowersModel.swift */; };
 		798D82AD1C8686EB00D2A1F7 /* FollowerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D7FB31C8686EB00D2A1F7 /* FollowerTableViewCell.swift */; };
 		798D82AE1C8686EB00D2A1F7 /* FollowerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D7FB41C8686EB00D2A1F7 /* FollowerTableViewCell.xib */; };
-		798D82AF1C8686EB00D2A1F7 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D7FB71C8686EB00D2A1F7 /* HelpViewController.swift */; };
-		798D82B01C8686EB00D2A1F7 /* HelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D7FB81C8686EB00D2A1F7 /* HelpViewController.xib */; };
 		798D82B11C8686EB00D2A1F7 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D7FBC1C8686EB00D2A1F7 /* APIManager.swift */; };
 		798D82B21C8686EB00D2A1F7 /* ButtonToTabBehaviorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D7FBD1C8686EB00D2A1F7 /* ButtonToTabBehaviorizer.swift */; };
 		798D82B31C8686EB00D2A1F7 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D7FBE1C8686EB00D2A1F7 /* Category.swift */; };
@@ -699,6 +697,11 @@
 		798D847D1C8686EB00D2A1F7 /* TextViewAutoHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D81C71C8686EB00D2A1F7 /* TextViewAutoHeight.swift */; };
 		798D847E1C8686EB00D2A1F7 /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D81C91C8686EB00D2A1F7 /* EmptyView.xib */; };
 		798D847F1C8686EB00D2A1F7 /* SaveButtonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D81CA1C8686EB00D2A1F7 /* SaveButtonView.xib */; };
+		79EF66261CA107DF000CDA6B /* SuggestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EF66221CA107DF000CDA6B /* SuggestionViewController.swift */; };
+		79EF66271CA107DF000CDA6B /* SuggestionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EF66231CA107DF000CDA6B /* SuggestionViewController.xib */; };
+		79EF66281CA107DF000CDA6B /* SuggestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EF66251CA107DF000CDA6B /* SuggestionViewModel.swift */; };
+		79EF662F1CA1088B000CDA6B /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EF662B1CA1088B000CDA6B /* HelpViewController.swift */; };
+		79EF66301CA1088B000CDA6B /* HelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EF662C1CA1088B000CDA6B /* HelpViewController.xib */; };
 		967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 967EE1C01B8AEA25000591AC /* Images.xcassets */; };
 		967EE1D01B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */; };
 		9F02F9361BF0BAEC00F44E2F /* yilinker_pinned_certificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 9F02F9351BF0BAEC00F44E2F /* yilinker_pinned_certificate.cer */; };
@@ -989,8 +992,6 @@
 		798D7FB11C8686EB00D2A1F7 /* FollowersModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowersModel.swift; sourceTree = "<group>"; };
 		798D7FB31C8686EB00D2A1F7 /* FollowerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowerTableViewCell.swift; sourceTree = "<group>"; };
 		798D7FB41C8686EB00D2A1F7 /* FollowerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowerTableViewCell.xib; sourceTree = "<group>"; };
-		798D7FB71C8686EB00D2A1F7 /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
-		798D7FB81C8686EB00D2A1F7 /* HelpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpViewController.xib; sourceTree = "<group>"; };
 		798D7FBC1C8686EB00D2A1F7 /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		798D7FBD1C8686EB00D2A1F7 /* ButtonToTabBehaviorizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonToTabBehaviorizer.swift; sourceTree = "<group>"; };
 		798D7FBE1C8686EB00D2A1F7 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
@@ -1458,6 +1459,11 @@
 		798D81C91C8686EB00D2A1F7 /* EmptyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
 		798D81CA1C8686EB00D2A1F7 /* SaveButtonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SaveButtonView.xib; sourceTree = "<group>"; };
 		798D81CB1C8686EB00D2A1F7 /* YiLinkerOnlineSeller-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YiLinkerOnlineSeller-Bridging-Header.h"; sourceTree = "<group>"; };
+		79EF66221CA107DF000CDA6B /* SuggestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionViewController.swift; sourceTree = "<group>"; };
+		79EF66231CA107DF000CDA6B /* SuggestionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SuggestionViewController.xib; sourceTree = "<group>"; };
+		79EF66251CA107DF000CDA6B /* SuggestionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionViewModel.swift; sourceTree = "<group>"; };
+		79EF662B1CA1088B000CDA6B /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
+		79EF662C1CA1088B000CDA6B /* HelpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpViewController.xib; sourceTree = "<group>"; };
 		967EE1B41B8AEA25000591AC /* YiLinkerOnlineSeller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YiLinkerOnlineSeller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		967EE1B81B8AEA25000591AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		967EE1C01B8AEA25000591AC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -1547,6 +1553,8 @@
 		798D7EA01C8686EA00D2A1F7 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				79EF66291CA1088B000CDA6B /* Help */,
+				79EF661E1CA107DF000CDA6B /* Suggestions */,
 				798D7EA11C8686EA00D2A1F7 /* Actvity Logs */,
 				798D7EAD1C8686EA00D2A1F7 /* AppDelegate */,
 				798D7EAF1C8686EA00D2A1F7 /* Balance Withdrawal */,
@@ -1555,7 +1563,6 @@
 				798D7F151C8686EA00D2A1F7 /* Edit Profile */,
 				798D7F231C8686EA00D2A1F7 /* External */,
 				798D7FAB1C8686EB00D2A1F7 /* Followers */,
-				798D7FB51C8686EB00D2A1F7 /* Help */,
 				798D7FBB1C8686EB00D2A1F7 /* Helper */,
 				798D7FD21C8686EB00D2A1F7 /* Login And Registration */,
 				798D7FEE1C8686EB00D2A1F7 /* Messaging */,
@@ -2111,39 +2118,6 @@
 			children = (
 				798D7FB31C8686EB00D2A1F7 /* FollowerTableViewCell.swift */,
 				798D7FB41C8686EB00D2A1F7 /* FollowerTableViewCell.xib */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		798D7FB51C8686EB00D2A1F7 /* Help */ = {
-			isa = PBXGroup;
-			children = (
-				798D7FB61C8686EB00D2A1F7 /* Controller */,
-				798D7FB91C8686EB00D2A1F7 /* Model */,
-				798D7FBA1C8686EB00D2A1F7 /* View */,
-			);
-			path = Help;
-			sourceTree = "<group>";
-		};
-		798D7FB61C8686EB00D2A1F7 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				798D7FB71C8686EB00D2A1F7 /* HelpViewController.swift */,
-				798D7FB81C8686EB00D2A1F7 /* HelpViewController.xib */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		798D7FB91C8686EB00D2A1F7 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		798D7FBA1C8686EB00D2A1F7 /* View */ = {
-			isa = PBXGroup;
-			children = (
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3063,6 +3037,81 @@
 			path = Xib;
 			sourceTree = "<group>";
 		};
+		79EF661E1CA107DF000CDA6B /* Suggestions */ = {
+			isa = PBXGroup;
+			children = (
+				79EF661F1CA107DF000CDA6B /* Model */,
+				79EF66201CA107DF000CDA6B /* View  */,
+				79EF66211CA107DF000CDA6B /* View Controller */,
+				79EF66241CA107DF000CDA6B /* View Model */,
+			);
+			path = Suggestions;
+			sourceTree = "<group>";
+		};
+		79EF661F1CA107DF000CDA6B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		79EF66201CA107DF000CDA6B /* View  */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View ";
+			sourceTree = "<group>";
+		};
+		79EF66211CA107DF000CDA6B /* View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				79EF66221CA107DF000CDA6B /* SuggestionViewController.swift */,
+				79EF66231CA107DF000CDA6B /* SuggestionViewController.xib */,
+			);
+			path = "View Controller";
+			sourceTree = "<group>";
+		};
+		79EF66241CA107DF000CDA6B /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				79EF66251CA107DF000CDA6B /* SuggestionViewModel.swift */,
+			);
+			path = "View Model";
+			sourceTree = "<group>";
+		};
+		79EF66291CA1088B000CDA6B /* Help */ = {
+			isa = PBXGroup;
+			children = (
+				79EF662A1CA1088B000CDA6B /* Controller */,
+				79EF662D1CA1088B000CDA6B /* Model */,
+				79EF662E1CA1088B000CDA6B /* View */,
+			);
+			path = Help;
+			sourceTree = "<group>";
+		};
+		79EF662A1CA1088B000CDA6B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				79EF662B1CA1088B000CDA6B /* HelpViewController.swift */,
+				79EF662C1CA1088B000CDA6B /* HelpViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		79EF662D1CA1088B000CDA6B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		79EF662E1CA1088B000CDA6B /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		967EE1AB1B8AEA25000591AC = {
 			isa = PBXGroup;
 			children = (
@@ -3293,6 +3342,7 @@
 				798D84321C8686EB00D2A1F7 /* TransactionTableViewController.xib in Resources */,
 				798D82911C8686EB00D2A1F7 /* Panton ExtraLight.otf in Resources */,
 				798D81FD1C8686EB00D2A1F7 /* PayoutRequestListTableViewCell.xib in Resources */,
+				79EF66301CA1088B000CDA6B /* HelpViewController.xib in Resources */,
 				798D84301C8686EB00D2A1F7 /* TransactionShipItemTableViewController.xib in Resources */,
 				798D841C1C8686EB00D2A1F7 /* SetupStoreFormTableViewCell.xib in Resources */,
 				798D81E81C8686EB00D2A1F7 /* WithdrawModalViewController.xib in Resources */,
@@ -3416,7 +3466,6 @@
 				967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */,
 				798D83351C8686EB00D2A1F7 /* StoreInfoTableViewCell.xib in Resources */,
 				798D820D1C8686EB00D2A1F7 /* CustomizedCategoryViewController.xib in Resources */,
-				798D82B01C8686EB00D2A1F7 /* HelpViewController.xib in Resources */,
 				798D83BC1C8686EB00D2A1F7 /* RemarksTableViewCell.xib in Resources */,
 				F7C40FDA1B983CD90091C16C /* sort.png in Resources */,
 				798D83641C8686EB00D2A1F7 /* ProductUploadCategoryViewController.xib in Resources */,
@@ -3475,6 +3524,7 @@
 				798D83411C8686EB00D2A1F7 /* SelectDateViewController.xib in Resources */,
 				798D82D21C8686EB00D2A1F7 /* LoginRegisterLogoTableViewCell.xib in Resources */,
 				798D82CB1C8686EB00D2A1F7 /* SignInViewController.xib in Resources */,
+				79EF66271CA107DF000CDA6B /* SuggestionViewController.xib in Resources */,
 				798D83531C8686EB00D2A1F7 /* ProductDetailViews.xib in Resources */,
 				798D83391C8686EB00D2A1F7 /* ProductDescriptionViewController.xib in Resources */,
 				798D84561C8686EB00D2A1F7 /* TransactionProductDescriptionTableViewCell.xib in Resources */,
@@ -3687,6 +3737,7 @@
 				798D83291C8686EB00D2A1F7 /* StoreInfoBankAccountTableViewCell.swift in Sources */,
 				798D82791C8686EB00D2A1F7 /* ChartYAxisRenderer.swift in Sources */,
 				798D82601C8686EB00D2A1F7 /* LineScatterCandleChartDataSet.swift in Sources */,
+				79EF66261CA107DF000CDA6B /* SuggestionViewController.swift in Sources */,
 				798D83D21C8686EB00D2A1F7 /* FilterResultsViewController.swift in Sources */,
 				798D83711C8686EB00D2A1F7 /* AttributeModel.swift in Sources */,
 				798D831A1C8686EB00D2A1F7 /* StoreInfoPreferredCategoriesModel.swift in Sources */,
@@ -3729,6 +3780,7 @@
 				798D829D1C8686EB00D2A1F7 /* FSCalendar.m in Sources */,
 				798D82021C8686EB00D2A1F7 /* WithdrawConfirmationCodeView.swift in Sources */,
 				798D82441C8686EB00D2A1F7 /* PieRadarChartViewBase.swift in Sources */,
+				79EF662F1CA1088B000CDA6B /* HelpViewController.swift in Sources */,
 				798D83D41C8686EB00D2A1F7 /* FilterSeactionHeaderView.swift in Sources */,
 				798D83E81C8686EB00D2A1F7 /* SearchTableViewCell.swift in Sources */,
 				798D827E1C8686EB00D2A1F7 /* LineChartRenderer.swift in Sources */,
@@ -3778,6 +3830,7 @@
 				798D82F01C8686EB00D2A1F7 /* MyPointsModel.swift in Sources */,
 				798D83791C8686EB00D2A1F7 /* ProductUploadAddFooterView.swift in Sources */,
 				798D84041C8686EB00D2A1F7 /* SelectProductCollectionViewCell.swift in Sources */,
+				79EF66281CA107DF000CDA6B /* SuggestionViewModel.swift in Sources */,
 				798D81EB1C8686EB00D2A1F7 /* BalanceRecordModel.swift in Sources */,
 				798D81E51C8686EB00D2A1F7 /* PayoutViewController.swift in Sources */,
 				798D844F1C8686EB00D2A1F7 /* TransactionDetailsTableViewCell.swift in Sources */,
@@ -3947,7 +4000,6 @@
 				798D82AB1C8686EB00D2A1F7 /* FollowerModel.swift in Sources */,
 				798D83021C8686EB00D2A1F7 /* ChangeEmailViewController.swift in Sources */,
 				798D84451C8686EB00D2A1F7 /* TransactionConsigneeTableViewCell.swift in Sources */,
-				798D82AF1C8686EB00D2A1F7 /* HelpViewController.swift in Sources */,
 				798D83081C8686EB00D2A1F7 /* CreateNewAddressViewController.swift in Sources */,
 				798D839F1C8686EB00D2A1F7 /* ProductUploadTableHeaderView.swift in Sources */,
 				798D82811C8686EB00D2A1F7 /* RadarChartRenderer.swift in Sources */,

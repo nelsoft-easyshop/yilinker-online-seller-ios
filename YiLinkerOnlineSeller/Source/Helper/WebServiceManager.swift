@@ -78,6 +78,13 @@ class WebServiceManager: NSObject {
     static let manufacturerProductIdsKey = "manufacturerProductIds"
     static let removeManufacturerProductIdsKey = "removeManufacturerProductIds"
     
+    //Feedback suggestion
+    static let titleKey = "title"
+    static let descriptionKey = "description"
+    static let phoneModelKey = "phoneModel"
+    static let osVersionKey = "osVersion"
+    static let osNameKey = "osName"
+    
     // MARK: - CALLS
     // MARK: - Post Request With Url
     // This function is for removing repeated codes in handler
@@ -824,6 +831,14 @@ class WebServiceManager: NSObject {
         let parameters: NSDictionary = [self.accessTokenKey: SessionManager.accessToken()]
         
         let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: - Fire Save Feedback
+    class func fireSaveFeedBackWithUrl(url: String, title: String, description: String,  phoneModel: String,  osVersion: String,  osName: String,  access_token: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.accessTokenKey: access_token, self.titleKey: title, self.descriptionKey: description, self.phoneModelKey: phoneModel, self.osVersionKey: osVersion, self.osNameKey: osName]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
