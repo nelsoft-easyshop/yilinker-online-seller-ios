@@ -104,6 +104,8 @@ class SuggestionViewController: UIViewController {
         self.subLineLabel.text = SuggestionStrings.subHeader
         self.descriptionTextView.text = SuggestionStrings.descriptionPlaceholder
         self.titleTextField.text = SuggestionStrings.titlePlaceholder
+        self.titleTextField.required()
+        self.descriptionTextView.required()
         self.sendButton.setTitle(SuggestionStrings.send, forState: .Normal)
         
         self.titleTextField.delegate = self
@@ -123,6 +125,7 @@ class SuggestionViewController: UIViewController {
         
         self.originalTopMarginConstant = self.topMarginConstraint.constant
     }
+
     
     //Add cutomize back button to the navigation bar
     func addBackButton() {
@@ -148,13 +151,13 @@ class SuggestionViewController: UIViewController {
     @IBAction func sendAction(sender: UIButton) {
         self.closeKeyboard()
         
-        if self.titleTextField.text == SuggestionStrings.titlePlaceholder {
+        if self.titleTextField.attributedText?.string == "\(SuggestionStrings.titlePlaceholder)*" {
             self.suggestionViewModel.title = ""
         } else {
             self.suggestionViewModel.title = self.titleTextField.text
         }
         
-        if self.descriptionTextView.text == SuggestionStrings.descriptionPlaceholder {
+        if self.descriptionTextView.attributedText.string == "\(SuggestionStrings.descriptionPlaceholder)*" {
             self.suggestionViewModel.description = ""
         } else {
             self.suggestionViewModel.description = self.descriptionTextView.text
@@ -240,7 +243,7 @@ class SuggestionViewController: UIViewController {
 
 extension SuggestionViewController: UITextViewDelegate {
     func textViewDidBeginEditing(textView: UITextView) {
-        if textView.text == SuggestionStrings.descriptionPlaceholder {
+        if textView.attributedText.string == "\(SuggestionStrings.descriptionPlaceholder)*" {
             textView.text = ""
             textView.textColor = UIColor.darkGrayColor()
         }
@@ -252,6 +255,7 @@ extension SuggestionViewController: UITextViewDelegate {
         if textView.text == "" {
             textView.text = SuggestionStrings.descriptionPlaceholder
             textView.textColor = UIColor.lightGrayColor()
+            textView.required()
         }
         
         textView.resignFirstResponder()
@@ -260,7 +264,7 @@ extension SuggestionViewController: UITextViewDelegate {
 
 extension SuggestionViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(textField: UITextField) {
-        if textField.text == SuggestionStrings.titlePlaceholder {
+        if textField.attributedText?.string == "\(SuggestionStrings.titlePlaceholder)*" {
             textField.text = ""
             textField.textColor = UIColor.darkGrayColor()
         }
@@ -271,7 +275,8 @@ extension SuggestionViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(textField: UITextField) {
         if textField.text == "" {
             textField.text = SuggestionStrings.titlePlaceholder
-            textField.textColor = UIColor.darkGrayColor()
+            textField.textColor = UIColor.lightGrayColor()
+            textField.required()
         }
         
         textField.resignFirstResponder()
