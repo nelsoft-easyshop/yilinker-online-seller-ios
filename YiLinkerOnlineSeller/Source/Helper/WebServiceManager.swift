@@ -52,6 +52,7 @@ class WebServiceManager: NSObject {
     static let contactNoKey = "contactNo"
     static let newPasswordKey = "newPassword"
     static let referralCodeKey = "referralCode"
+    static let referrerCodeKey = "referrerCode"
     
     // MARK: profile Keys
     static let firstNameKey = "firstName"
@@ -659,7 +660,7 @@ class WebServiceManager: NSObject {
     class func fireRegisterRequestWithUrl(url: String, contactNumber: String, password: String, areaCode: String, referralCode: String,  verificationCode: String, grant_type: String, client_id: String, client_secret: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager: APIManager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = [self.contactNumberKey: contactNumber, self.passwordKey: password, self.areaCodeKey: areaCode, self.referralCodeKey: referralCode, self.verificationCodeKey: verificationCode, self.grantTypeKey: grant_type, self.clientIdKey: client_id, self.clientSecretKey: client_secret]
+        let parameters: NSDictionary = [self.contactNumberKey: contactNumber, self.passwordKey: password, self.areaCodeKey: areaCode, self.referrerCodeKey: referralCode, self.verificationCodeKey: verificationCode, self.grantTypeKey: grant_type, self.clientIdKey: client_id, self.clientSecretKey: client_secret]
         
         if Reachability.isConnectedToNetwork() {
             manager.POST(url, parameters: parameters, success: {
@@ -750,10 +751,10 @@ class WebServiceManager: NSObject {
     
     //MARK: -
     //MARK: - Fire Save Profile
-    class func fireSaveProfileWithUrl(url: String, firstName: String, lastName: String, tin: String, email: String, isSent: String, validId: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+    class func fireSaveProfileWithUrl(url: String, firstName: String, lastName: String, tin: String, email: String, referralCode: String, isSent: String, validId: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager: APIManager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = [self.firstNameKey: firstName, self.lastNameKey: lastName, self.tinKey: tin, self.emailKey: email, self.accessTokenKey: accessToken, self.validIdKey: validId, self.isSentKey: isSent]
+        let parameters: NSDictionary = [self.firstNameKey: firstName, self.lastNameKey: lastName, self.tinKey: tin, self.emailKey: email, self.referralCodeKey: referralCode, self.accessTokenKey: accessToken, self.validIdKey: validId, self.isSentKey: isSent]
         
         if Reachability.isConnectedToNetwork() {
             manager.POST(url, parameters: parameters, success: {
