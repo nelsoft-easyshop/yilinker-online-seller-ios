@@ -405,6 +405,16 @@ extension String {
         return nameTest.evaluateWithObject(self)
     }
     
+    func isNoSpecialCharacters() -> Bool {
+        let regex = NSRegularExpression(pattern: ".*[^A-Za-z0-9].*", options: nil, error: nil)!
+        if regex.firstMatchInString(self, options: nil, range: NSMakeRange(0, count(self))) != nil {
+            println("could not handle special characters")
+            return false
+        }
+        
+        return true
+    }
+    
     func isGreaterThanEightCharacters() -> Bool {
         var result: Bool = false
         if count(self) >= 8 {
