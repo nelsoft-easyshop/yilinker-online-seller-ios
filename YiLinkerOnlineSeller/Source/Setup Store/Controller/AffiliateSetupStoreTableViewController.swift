@@ -318,7 +318,7 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
         self.tableView.userInteractionEnabled = false
         
         if affiliateStoreInfoModel.name != "" && affiliateStoreInfoModel.storeDescription != "" && affiliateStoreInfoModel.storeLink != "" {
-            if self.affiliateStoreInfoModel.storeLink.isValidName() {
+            if self.affiliateStoreInfoModel.storeLink.isNoSpecialCharacters() {
                 self.fireSetupStoreInfoWithUrl(footerButtonTableViewCell)
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Store link must not contain special characters", title: "Unable to proceed")
