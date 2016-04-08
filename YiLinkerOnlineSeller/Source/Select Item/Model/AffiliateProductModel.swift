@@ -93,6 +93,8 @@ class AffiliateProductModel: NSObject {
         discountedPrice = ParseHelper.string(dictionary, key: "discountedPrice", defaultValue: "")
         commission = ParseHelper.string(dictionary, key: "commission", defaultValue: "")
         discount = ParseHelper.string(dictionary, key: "discount", defaultValue: "")
+        earning = ParseHelper.string(dictionary, key: "commission", defaultValue: "")
+
         
         if let arrayOfImages = dictionary["images"] as? NSArray {
             for image in arrayOfImages {
