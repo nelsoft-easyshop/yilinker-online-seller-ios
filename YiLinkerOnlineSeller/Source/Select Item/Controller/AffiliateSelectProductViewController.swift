@@ -396,6 +396,8 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
             }
             
             cell.imageView.sd_setImageWithURL(NSURL(string: affiliateProductModel.images[0])!, placeholderImage: UIImage(named: "logo-selection"))
+            
+            cell.earningLabel.text = affiliateProductModel.earning
         }
       
         return cell
