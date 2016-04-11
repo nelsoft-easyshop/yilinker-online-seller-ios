@@ -38,7 +38,7 @@ class WithdrawConfirmationCodeView: UIView {
         confirmationCodeLabel.text = PayoutStrings.withdrawalConfirmationCode + ":"
         confirmationCodeLabel.required()
         
-        
+        self.getCodeButton.setTitle(PayoutStrings.withdrawalGetCode, forState: .Normal)
     }
 
     @IBAction func getCodeAction(sender: AnyObject) {

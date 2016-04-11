@@ -240,6 +240,8 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="bankCheque" destination="K2h-Mq-z3N" id="gUw-0I-coE"/>
+                <outlet property="bankDepositLabel" destination="snk-Od-fZT" id="GWY-0h-LKy"/>
                 <outlet property="chequeCheckImageView" destination="YMi-an-Vc5" id="V0J-M3-UB1"/>
                 <outlet property="chequeView" destination="A4T-Ca-z5R" id="2Wo-74-lYa"/>
                 <outlet property="depositCheckImageView" destination="dMs-7R-k2V" id="Aj6-mq-Hxq"/>

@@ -86,6 +86,9 @@ class WebServiceManager: NSObject {
     static let osVersionKey = "osVersion"
     static let osNameKey = "osName"
     
+    //GCM
+    static let deviceTypeKey = "deviceType"
+    
     // MARK: - CALLS
     // MARK: - Post Request With Url
     // This function is for removing repeated codes in handler
@@ -843,4 +846,59 @@ class WebServiceManager: NSObject {
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
+    
+    //MARK: - Fire Post General
+    class func firePostGeneralWithUrl(url: String, params: NSDictionary, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = params
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: - Fire Add Subcategory
+    class func fireAddSubCategoryWithUrl(url: String, categoryId: String, access_token: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.accessTokenKey: access_token, self.categoryIdKey: categoryId]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: Store infp With URL
+    class func fireGetStoreInfoWithUrl(url: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.accessTokenKey: accessToken]
+        self.fireGetRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: Create GCM Registration ID
+    class func fireCreateGCMRegistrationIDWithUrl(url: String, registrationId: String, deviceType: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.registrationIdKey: registrationId, self.deviceTypeKey: deviceTypeKey, self.accessTokenKey: accessToken]
+        self.fireGetRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: Delete GCM Registration ID
+    class func fireDeleteGCMRegistrationIDWithUrl(url: String, registrationId: String, deviceType: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.registrationIdKey: registrationId, self.deviceTypeKey: deviceTypeKey, self.accessTokenKey: accessToken]
+        self.fireGetRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: - Fire Affilate Get Categories From Url
+    class func fireGetFollowersFromUrl(url: String, page: String, perPage: String, searchKeyword: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = [self.accessTokenKey: SessionManager.accessToken()]
+        
+        let sessionDataTask: NSURLSessionDataTask = self.fireGetRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        
+        return sessionDataTask
+    }
+    
 }

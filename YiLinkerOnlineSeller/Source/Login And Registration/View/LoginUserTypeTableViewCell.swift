@@ -45,6 +45,8 @@ class LoginUserTypeTableViewCell: UITableViewCell {
         
         self.sellerButton.layer.borderWidth = 1
         self.affiliateButton.layer.borderWidth = 1
+        
+        self.loginAsLabel.text = StringHelper.localizedStringWithKey("LOGIN_AS_LOCALIZE_KEY")
     }
     
     @IBAction func buttonAction(sender: UIButton) {

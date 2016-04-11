@@ -74,6 +74,7 @@ class StoreInfoQrCodeTableViewCell: UITableViewCell {
         self.shareWithTwitterLabel.text = shareWith
         self.shareButtonContainerView.userInteractionEnabled = false
         self.generateQrButton.layer.cornerRadius = 5
+        self.generateQrButton.setTitle(StringHelper.localizedStringWithKey("STORE_INFO_GENERATE_QR_LOCALIZE_KEY"), forState: .Normal)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
