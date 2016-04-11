@@ -22,6 +22,12 @@ class SetupStoreFormTableViewCell: UITableViewCell, UITextFieldDelegate, UITextV
     @IBOutlet weak var storeNameTextField: UITextField!
     @IBOutlet weak var storeDescriptionTextView: UITextView!
     
+    @IBOutlet weak var storeInfoLabel: UILabel!
+    @IBOutlet weak var storeNameLabel: UILabel!
+    @IBOutlet weak var storeDescriptionLabel: UILabel!
+    @IBOutlet weak var storeLinkLabel: UILabel!
+    
+    
     var delegate: SetupStoreFormTableViewCellDelegate?
     
     class func nibNameAndIdentifier() -> String {
@@ -42,6 +48,11 @@ class SetupStoreFormTableViewCell: UITableViewCell, UITextFieldDelegate, UITextV
         self.storeDescriptionTextView.layer.cornerRadius = 5
         
         self.storeLinkTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        
+        self.storeInfoLabel.text = StringHelper.localizedStringWithKey("SETUP_STORE_INFORMATION_LOCALIZE_KEY")
+        self.storeNameLabel.text = StringHelper.localizedStringWithKey("SETUP_STORE_NAME_LOCALIZE_KEY")
+        self.storeDescriptionLabel.text = StringHelper.localizedStringWithKey("SETUP_STORE_DESCRIPTION_LOCALIZE_KEY")
+        self.storeLinkLabel.text = StringHelper.localizedStringWithKey("SETUP_STORE_LINK_LOCALIZE_KEY")
     }
     
     //MARK: - 

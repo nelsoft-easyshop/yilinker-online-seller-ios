@@ -21,6 +21,9 @@ class WithdrawMethodView: UIView {
     @IBOutlet weak var chequeCheckImageView: UIImageView!
     @IBOutlet weak var withdrawalMethodTextLabel: UILabel!
     
+    @IBOutlet weak var bankDepositLabel: UILabel!
+    @IBOutlet weak var bankCheque: UILabel!
+    
     var delegate: WithdrawMethodViewDelegate?
     
     override func awakeFromNib() {
@@ -34,6 +37,8 @@ class WithdrawMethodView: UIView {
         }
         
         self.withdrawalMethodTextLabel.text = PayoutStrings.withdrawalMethod + ":"
+        self.bankCheque.text = PayoutStrings.withdrawalBankCheque
+        self.bankDepositLabel.text = PayoutStrings.withdrawalBankDeposit
     }
     
     

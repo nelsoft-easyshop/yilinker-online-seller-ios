@@ -21,6 +21,7 @@ struct PayoutStrings {
     static let titleRecord = StringHelper.localizedStringWithKey("PAYOUT_CONTROLLER_BALANCE_RECORD_KEY")
     static let titleEarnings = StringHelper.localizedStringWithKey("PAYOUT_CONTROLLER_EARNINGS_KEY")
     static let titlePayoutSummary = StringHelper.localizedStringWithKey("PAYOUT_CONTROLLER_SUMMARY_KEY")
+    static let titleRequestDetails = StringHelper.localizedStringWithKey("PAYOUT_REQUEST_DETAILS_KEY")
     
     // Balance Withdrawal
     static let withdrawalAvailableBalance = StringHelper.localizedStringWithKey("PAYOUT_BALANCE_WITHDRAWAL_AVAILABLE_BALANCE_KEY")

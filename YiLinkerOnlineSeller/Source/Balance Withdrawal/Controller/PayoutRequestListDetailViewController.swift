@@ -43,7 +43,7 @@ class PayoutRequestListDetailViewController: UIViewController, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         // Set navigation bar title
-        self.title = "Request Detail"
+        self.title = PayoutStrings.titleRequestDetails
         
         self.tableView.delegate = self
         self.tableView.dataSource = self

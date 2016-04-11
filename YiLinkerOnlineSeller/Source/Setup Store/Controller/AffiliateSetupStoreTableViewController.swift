@@ -55,7 +55,7 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
         self.addHeaderView()
         self.addFooterView()
         
-        self.setViewTitleToTitle("Setup Store")
+        self.setViewTitleToTitle(StringHelper.localizedStringWithKey("SETUP_STORE_TITLE_LOCALIZE_KEY"))
         println(self.storeInfoModel.store_name)
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -183,7 +183,7 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
         footerButtonTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(FooterButtonTableViewCell.nibNameAndIdentifer()) as! FooterButtonTableViewCell
         
         if self.storeInfoModel.name != "" && self.storeInfoModel.storeSlug != "" {
-            footerButtonTableViewCell.button.setTitle("SAVE", forState: UIControlState.Normal)
+            footerButtonTableViewCell.button.setTitle(StringHelper.localizedStringWithKey("STORE_INFO_SAVE_LOCALIZE_KEY"), forState: UIControlState.Normal)
         } else {
             self.numberOfRows = 1
         }
@@ -221,7 +221,7 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
             facebookSheet.setInitialText(self.affiliateStoreInfoModel.qrCodeImageUrl)
             self.presentViewController(facebookSheet, animated: true, completion: nil)
         } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Facebook app is not available on your device", title: "Unable to proceed")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("SETUP_STORE_FB_ERROR_LOCALIZE_KEY"), title: StringHelper.localizedStringWithKey("SETUP_STORE_UNABLE_ERROR_LOCALIZE_KEY"))
         }
     }
     
@@ -232,7 +232,7 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
             self.presentViewController(tweetShare, animated: true, completion: nil)
             
         } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Twitter app is not available on your device", title: "Unable to proceed")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("SETUP_STORE_TWITTER_ERROR_LOCALIZE_KEY"), title: StringHelper.localizedStringWithKey("SETUP_STORE_UNABLE_ERROR_LOCALIZE_KEY"))
         }
     }
     
@@ -249,7 +249,7 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
             
             self.presentViewController(myController, animated: true, completion: nil)
         } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Email composer is not available on your device", title: "Unable to proceed")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("SETUP_STORE_EMAIL_ERROR_LOCALIZE_KEY"), title: StringHelper.localizedStringWithKey("SETUP_STORE_UNABLE_ERROR_LOCALIZE_KEY"))
         }
         
     }
@@ -321,11 +321,11 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
             if self.affiliateStoreInfoModel.storeLink.isNoSpecialCharacters() {
                 self.fireSetupStoreInfoWithUrl(footerButtonTableViewCell)
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Store link must not contain special characters", title: "Unable to proceed")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("SETUP_STORE_LINK_ERROR_LOCALIZE_KEY"), title: StringHelper.localizedStringWithKey("SETUP_STORE_UNABLE_ERROR_LOCALIZE_KEY"))
             }
             
         } else {
-            Toast.displayToastBottomWithMessage("Incomplete Information", duration: 2.0, view: self.navigationController!.view)
+            Toast.displayToastBottomWithMessage(StringHelper.localizedStringWithKey("SETUP_STORE_INCOMPLETE_ERROR_LOCALIZE_KEY"), duration: 2.0, view: self.navigationController!.view)
             self.tableView.userInteractionEnabled = true
             footerButtonTableViewCell.stopActivityIndicatorViewFromAnimating()
         }
@@ -513,7 +513,7 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
                     footerButtonTableViewCell.stopActivityIndicatorViewFromAnimating()
                     self.tableView.userInteractionEnabled = true
                     
-                    if footerButtonTableViewCell.button.titleLabel!.text == "SAVE" {
+                    if footerButtonTableViewCell.button.titleLabel!.text == StringHelper.localizedStringWithKey("STORE_INFO_SAVE_LOCALIZE_KEY") {
                         self.navigationController!.popToRootViewControllerAnimated(true)
                     } else {
                         let vc: AffiliateSelectProductViewController = AffiliateSelectProductViewController(nibName: AffiliateSelectProductViewController.nibName(), bundle: nil) as AffiliateSelectProductViewController

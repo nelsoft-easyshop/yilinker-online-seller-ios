@@ -378,185 +378,325 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     //MARK: - API Requests
     func fireCreateRegistration(registrationID : String) {
         self.showHUD()
-        
-        let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
-        let parameters: NSDictionary = [
-            "registrationId": "\(registrationID)",
-            "access_token"  : SessionManager.accessToken(),
-            "deviceType"    : "1"
-            ]   as Dictionary<String, String>
-        
-        let url = APIAtlas.baseUrl + APIAtlas.ACTION_GCM_CREATE
-        
-        manager.POST(url, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            //SVProgressHUD.dismiss()
+        WebServiceManager.fireCreateGCMRegistrationIDWithUrl(APIAtlas.ACTION_GCM_CREATE, registrationId: "\(registrationID)", deviceType: "1", accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
             self.hideHud()
-            //self.showSuccessMessage()
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                
-                println(task.response?.description)
-                
-                println(error.description)
-                if (Reachability.isConnectedToNetwork()) {
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    
-                    if task.statusCode == 401 {
-                        self.fireRefreshToken(true)
-                    } else {
-                        UIAlertController.displaySomethingWentWrongError(self)
-                    }
+            println(responseObject)
+        
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+//                    self.fireRefreshToken(true)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
                 }
-                self.hideHud()
-        })
+                
+            }
+
+        }
+        
+        //Old Request
+//        self.showHUD()
+//        
+//        let manager: APIManager = APIManager.sharedInstance
+//        //seller@easyshop.ph
+//        //password
+//        let parameters: NSDictionary = [
+//            "registrationId": "\(registrationID)",
+//            "access_token"  : SessionManager.accessToken(),
+//            "deviceType"    : "1"
+//            ]   as Dictionary<String, String>
+//        
+//        let url = APIAtlas.baseUrl + APIAtlas.ACTION_GCM_CREATE
+//        
+//        manager.POST(url, parameters: parameters, success: {
+//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+//            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+//            //SVProgressHUD.dismiss()
+//            self.hideHud()
+//            //self.showSuccessMessage()
+//            }, failure: {
+//                (task: NSURLSessionDataTask!, error: NSError!) in
+//                
+//                println(task.response?.description)
+//                
+//                println(error.description)
+//                if (Reachability.isConnectedToNetwork()) {
+//                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+//                    
+//                    if task.statusCode == 401 {
+//                        self.fireRefreshToken(true)
+//                    } else {
+//                        UIAlertController.displaySomethingWentWrongError(self)
+//                    }
+//                }
+//                self.hideHud()
+//        })
     }
     
     func fireDeleteRegistration(registrationID : String) {
-        if Reachability.isConnectedToNetwork() {
-            self.logoutUser()
-            if(SessionManager.isLoggedIn()){
-                let manager: APIManager = APIManager.sharedInstance
-                let parameters: NSDictionary = [
-                    
-                    "registrationId": "\(registrationID)",
-                    "deviceType"    : "1"
-                    ]   as Dictionary<String, String>
+        self.showHUD()
+        let url = "\(APIAtlas.ACTION_GCM_DELETE)?access_token=\(SessionManager.accessToken())"
+        WebServiceManager.fireDeleteGCMRegistrationIDWithUrl(url, registrationId: "\(registrationID)", deviceType: "1", accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
+            self.hideHud()
+            println(responseObject)
+            if !successful {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+//                    self.fireRefreshToken(true)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
                 
-                let url = "\(APIAtlas.ACTION_GCM_DELETE)?access_token=\(SessionManager.accessToken())"
-                self.showHUD()
-                manager.POST(url, parameters: parameters, success: {
-                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                    println(responseObject)
-                    println("Registration successful!")
-                    self.logoutUser()
-                    self.hud?.hide(true)
-                    }, failure: {
-                        (task: NSURLSessionDataTask!, error: NSError!) in
-                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                        println("Registration unsuccessful!")
-                        self.hud?.hide(true)
-                        if task.statusCode == 401 {
-                        } else {
-                            if Reachability.isConnectedToNetwork() {
-                                var info = error.userInfo!
-                                self.logoutUser()
-                                
-                            } else {
-                                UIAlertController.displayNoInternetConnectionError(self)
-                            }
-                        }
-                        
-                })
             }
-        } else {
-            UIAlertController.displayNoInternetConnectionError(self)
+            self.logoutUser()
         }
         
+        //Old Request
+        
+//        if Reachability.isConnectedToNetwork() {
+//            self.logoutUser()
+//            if(SessionManager.isLoggedIn()){
+//                let manager: APIManager = APIManager.sharedInstance
+//                let parameters: NSDictionary = [
+//                    
+//                    "registrationId": "\(registrationID)",
+//                    "deviceType"    : "1"
+//                    ]   as Dictionary<String, String>
+//                
+//                let url = "\(APIAtlas.ACTION_GCM_DELETE)?access_token=\(SessionManager.accessToken())"
+//                self.showHUD()
+//                manager.POST(url, parameters: parameters, success: {
+//                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+//                    println(responseObject)
+//                    println("Registration successful!")
+//                    self.logoutUser()
+//                    self.hud?.hide(true)
+//                    }, failure: {
+//                        (task: NSURLSessionDataTask!, error: NSError!) in
+//                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+//                        println("Registration unsuccessful!")
+//                        self.hud?.hide(true)
+//                        if task.statusCode == 401 {
+//                        } else {
+//                            if Reachability.isConnectedToNetwork() {
+//                                var info = error.userInfo!
+//                                self.logoutUser()
+//                                
+//                            } else {
+//                                UIAlertController.displayNoInternetConnectionError(self)
+//                            }
+//                        }
+//                        
+//                })
+//            }
+//        } else {
+//            UIAlertController.displayNoInternetConnectionError(self)
+//        }
+//        
     }
     
     func fireStoreInfo(showHUD: Bool){
         if showHUD {
             self.showHUD()
         }
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
         
-        manager.POST(APIAtlas.sellerStoreInfo, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.storeInfo = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
-            
-            SessionManager.setFullAddress(self.storeInfo.store_address)
-            SessionManager.setUserFullName(self.storeInfo.name)
-            
-            NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.store_name, forKey: "storeName")
-            NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.store_address, forKey: "storeAddress")
-            NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.totalSales, forKey: "totalSales")
-            NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.productCount, forKey: "productCount")
-            NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.transactionCount, forKey: "transactionCount")
-            
-            NSUserDefaults.standardUserDefaults().synchronize()
-            
-            self.intializeCollectionViewData()
-            self.collectionView.reloadData()
+        WebServiceManager.fireGetStoreInfoWithUrl(APIAtlas.sellerStoreInfo, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
             
             self.hideHud()
-            
-            if self.checkIfNewUser() && self.openCtr == 0 {
-                var editProfileViewController = EditProfileTableViewController(nibName: "EditProfileTableViewController", bundle: nil)
-                editProfileViewController.storeInfo = self.storeInfo
-                editProfileViewController.isNewUser = self.checkIfNewUser()
-                editProfileViewController.hidesBottomBarWhenPushed = true
-                self.navigationController?.pushViewController(editProfileViewController, animated:true)
-                self.openCtr++
-            }
-            
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+            if successful {
+                self.storeInfo = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
+                
+                SessionManager.setFullAddress(self.storeInfo.store_address)
+                SessionManager.setUserFullName(self.storeInfo.name)
+                
+                NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.store_name, forKey: "storeName")
+                NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.store_address, forKey: "storeAddress")
+                NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.totalSales, forKey: "totalSales")
+                NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.productCount, forKey: "productCount")
+                NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.transactionCount, forKey: "transactionCount")
+                
+                NSUserDefaults.standardUserDefaults().synchronize()
+                
+                self.intializeCollectionViewData()
+                self.collectionView.reloadData()
+                
                 self.hideHud()
                 
-                if let taskReponse = task.response as? NSHTTPURLResponse {
-                    if taskReponse.statusCode == 401 {
-                        self.fireRefreshToken(showHUD)
-                    } else {
-                        UIAlertController.displaySomethingWentWrongError(self)
-                        self.storeInfo = StoreInfoModel(name: "", firstName: "", lastName: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", storeSlug: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", account_number: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "", isReseller: false, isEmailVerified: false, isEmailSubscribed: false, isSmsSubscribed: false, productId: [], productCategoryName: [], isSelected: [], tin: "", messageCount: 0, referralCode: "", referrerCode: "", referrerName: "", accountName: "", bankName: "", validId: "", isBankEditable: false, isBusinessEditable: false, isLegalDocsEditable: false, validIdMessage: "")
-                        
-                        
-                        var store_name1 = NSUserDefaults.standardUserDefaults().stringForKey("storeName")
-                        println("Store name \(store_name1)")
-                        if NSUserDefaults.standardUserDefaults().stringForKey("storeName") != nil {
-                            self.storeInfo.store_name = NSUserDefaults.standardUserDefaults().stringForKey("storeName")!
-                        }
-                        
-                        if NSUserDefaults.standardUserDefaults().stringForKey("storeAddress") != nil {
-                            self.storeInfo.store_address = NSUserDefaults.standardUserDefaults().stringForKey("storeAddress")!
-                        }
-                        
-                        if NSUserDefaults.standardUserDefaults().stringForKey("totalSales") != nil {
-                            self.storeInfo.totalSales = NSUserDefaults.standardUserDefaults().stringForKey("totalSales")!
-                        }
-                        
-                        self.storeInfo.productCount = NSUserDefaults.standardUserDefaults().integerForKey("productCount")
-                        self.storeInfo.transactionCount = NSUserDefaults.standardUserDefaults().integerForKey("transactionCount")
-                        
-                        self.collectionView.reloadData()
-                    }
-                } else {
-                    if !Reachability.isConnectedToNetwork() {
-                        UIAlertController.displayNoInternetConnectionError(self)
-                    } else {
-                        UIAlertController.displaySomethingWentWrongError(self)
-                    }
+                if self.checkIfNewUser() && self.openCtr == 0 {
+                    var editProfileViewController = EditProfileTableViewController(nibName: "EditProfileTableViewController", bundle: nil)
+                    editProfileViewController.storeInfo = self.storeInfo
+                    editProfileViewController.isNewUser = self.checkIfNewUser()
+                    editProfileViewController.hidesBottomBarWhenPushed = true
+                    self.navigationController?.pushViewController(editProfileViewController, animated:true)
+                    self.openCtr++
+                }
+
+            } else {
+                self.storeInfo = StoreInfoModel(name: "", firstName: "", lastName: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", storeSlug: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", account_number: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "", isReseller: false, isEmailVerified: false, isEmailSubscribed: false, isSmsSubscribed: false, productId: [], productCategoryName: [], isSelected: [], tin: "", messageCount: 0, referralCode: "", referrerCode: "", referrerName: "", accountName: "", bankName: "", validId: "", isBankEditable: false, isBusinessEditable: false, isLegalDocsEditable: false, validIdMessage: "")
+                
+                
+                var store_name1 = NSUserDefaults.standardUserDefaults().stringForKey("storeName")
+                println("Store name \(store_name1)")
+                if NSUserDefaults.standardUserDefaults().stringForKey("storeName") != nil {
+                    self.storeInfo.store_name = NSUserDefaults.standardUserDefaults().stringForKey("storeName")!
                 }
                 
+                if NSUserDefaults.standardUserDefaults().stringForKey("storeAddress") != nil {
+                    self.storeInfo.store_address = NSUserDefaults.standardUserDefaults().stringForKey("storeAddress")!
+                }
                 
-                println(error)
-        })
+                if NSUserDefaults.standardUserDefaults().stringForKey("totalSales") != nil {
+                    self.storeInfo.totalSales = NSUserDefaults.standardUserDefaults().stringForKey("totalSales")!
+                }
+                
+                self.storeInfo.productCount = NSUserDefaults.standardUserDefaults().integerForKey("productCount")
+                self.storeInfo.transactionCount = NSUserDefaults.standardUserDefaults().integerForKey("transactionCount")
+                
+                self.collectionView.reloadData()
+                
+                
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken(showHUD)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+                
+            }
+        }
+        
+        //Old Request
+//        
+//        let manager = APIManager.sharedInstance
+//        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
+//        
+//        manager.POST(APIAtlas.sellerStoreInfo, parameters: parameters, success: {
+//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+//            self.storeInfo = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
+//            
+//            SessionManager.setFullAddress(self.storeInfo.store_address)
+//            SessionManager.setUserFullName(self.storeInfo.name)
+//            
+//            NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.store_name, forKey: "storeName")
+//            NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.store_address, forKey: "storeAddress")
+//            NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.totalSales, forKey: "totalSales")
+//            NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.productCount, forKey: "productCount")
+//            NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.transactionCount, forKey: "transactionCount")
+//            
+//            NSUserDefaults.standardUserDefaults().synchronize()
+//            
+//            self.intializeCollectionViewData()
+//            self.collectionView.reloadData()
+//            
+//            self.hideHud()
+//            
+//            if self.checkIfNewUser() && self.openCtr == 0 {
+//                var editProfileViewController = EditProfileTableViewController(nibName: "EditProfileTableViewController", bundle: nil)
+//                editProfileViewController.storeInfo = self.storeInfo
+//                editProfileViewController.isNewUser = self.checkIfNewUser()
+//                editProfileViewController.hidesBottomBarWhenPushed = true
+//                self.navigationController?.pushViewController(editProfileViewController, animated:true)
+//                self.openCtr++
+//            }
+//            
+//            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+//                self.hideHud()
+//                
+//                if let taskReponse = task.response as? NSHTTPURLResponse {
+//                    if taskReponse.statusCode == 401 {
+//                        self.fireRefreshToken(showHUD)
+//                    } else {
+//                        UIAlertController.displaySomethingWentWrongError(self)
+//                        self.storeInfo = StoreInfoModel(name: "", firstName: "", lastName: "", email: "", gender: "", nickname: "", contact_number: "", specialty: "", birthdate: "", store_name: "", store_description: "", storeSlug: "", avatar: NSURL(string: "")!, cover_photo: NSURL(string: "")!, is_allowed: false, title: "", unit_number: "", bldg_name: "", street_number: "", street_name: "", subdivision: "", zip_code: "", full_address: "", account_title: "", account_number: "", bank_account: "", bank_id: 0, productCount: 0, transactionCount: 0, totalSales: "", isReseller: false, isEmailVerified: false, isEmailSubscribed: false, isSmsSubscribed: false, productId: [], productCategoryName: [], isSelected: [], tin: "", messageCount: 0, referralCode: "", referrerCode: "", referrerName: "", accountName: "", bankName: "", validId: "", isBankEditable: false, isBusinessEditable: false, isLegalDocsEditable: false, validIdMessage: "")
+//                        
+//                        
+//                        var store_name1 = NSUserDefaults.standardUserDefaults().stringForKey("storeName")
+//                        println("Store name \(store_name1)")
+//                        if NSUserDefaults.standardUserDefaults().stringForKey("storeName") != nil {
+//                            self.storeInfo.store_name = NSUserDefaults.standardUserDefaults().stringForKey("storeName")!
+//                        }
+//                        
+//                        if NSUserDefaults.standardUserDefaults().stringForKey("storeAddress") != nil {
+//                            self.storeInfo.store_address = NSUserDefaults.standardUserDefaults().stringForKey("storeAddress")!
+//                        }
+//                        
+//                        if NSUserDefaults.standardUserDefaults().stringForKey("totalSales") != nil {
+//                            self.storeInfo.totalSales = NSUserDefaults.standardUserDefaults().stringForKey("totalSales")!
+//                        }
+//                        
+//                        self.storeInfo.productCount = NSUserDefaults.standardUserDefaults().integerForKey("productCount")
+//                        self.storeInfo.transactionCount = NSUserDefaults.standardUserDefaults().integerForKey("transactionCount")
+//                        
+//                        self.collectionView.reloadData()
+//                    }
+//                } else {
+//                    if !Reachability.isConnectedToNetwork() {
+//                        UIAlertController.displayNoInternetConnectionError(self)
+//                    } else {
+//                        UIAlertController.displaySomethingWentWrongError(self)
+//                    }
+//                }
+//                
+//                
+//                println(error)
+//        })
     }
     
     func fireRefreshToken(showHud: Bool) {
         self.showHUD()
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = [
-            "client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.fireStoreInfo(showHud)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                self.hideHud()
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+               self.fireStoreInfo(showHud)
+            } else {
+                //Show UIAlert and force the user to logout
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                })
+            }
         })
-        
     }
     
     //MARK: -

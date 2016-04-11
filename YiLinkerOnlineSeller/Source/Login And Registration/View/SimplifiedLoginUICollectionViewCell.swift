@@ -67,6 +67,7 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
         self.signInButton.setTitle(LoginStrings.login.uppercaseString, forState: .Normal)
         self.emailMobileTextField.placeholder = LoginStrings.mobileNUmber
         self.passwordTextField.placeholder = LoginStrings.password
+        self.forgotPasswordButton.setTitle(LoginStrings.forgotPassword, forState: .Normal)
         
         self.buttonAction(self.byMobileButton)
     }
