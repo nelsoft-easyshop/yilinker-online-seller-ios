@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProductManagementMenuTableViewCell" id="KGk-i7-Jjw" customClass="ProductManagementMenuTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="angle-right" translatesAutoresizingMaskIntoConstraints="NO" id="vhQ-FX-0vI">
+                        <rect key="frame" x="345" y="10" width="14" height="24"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="BLk-ne-miO"/>
+                            <constraint firstAttribute="width" constant="14" id="CP3-qf-bwQ"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6eR-RT-aUL">
+                        <rect key="frame" x="16" y="11" width="321" height="21"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="ooa-ua-5BN"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <animations/>
+                <constraints>
+                    <constraint firstAttribute="centerY" secondItem="6eR-RT-aUL" secondAttribute="centerY" id="2t4-PU-C5I"/>
+                    <constraint firstItem="vhQ-FX-0vI" firstAttribute="leading" secondItem="6eR-RT-aUL" secondAttribute="trailing" constant="8" id="4y0-yV-9sM"/>
+                    <constraint firstAttribute="trailing" secondItem="vhQ-FX-0vI" secondAttribute="trailing" constant="16" id="dK7-gn-qM0"/>
+                    <constraint firstItem="6eR-RT-aUL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="jpH-ZB-I6n"/>
+                    <constraint firstAttribute="centerY" secondItem="vhQ-FX-0vI" secondAttribute="centerY" id="kIa-xy-bTS"/>
+                </constraints>
+            </tableViewCellContentView>
+            <animations/>
+            <connections>
+                <outlet property="cellTextLabel" destination="6eR-RT-aUL" id="1WP-Iq-nqG"/>
+                <outlet property="textLabel" destination="6eR-RT-aUL" id="9pR-Z4-axW"/>
+            </connections>
+            <point key="canvasLocation" x="352.5" y="324"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="angle-right" width="102" height="200"/>
+    </resources>
+</document>

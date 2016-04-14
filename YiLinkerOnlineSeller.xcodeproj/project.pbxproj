@@ -704,6 +704,10 @@
 		79EF66301CA1088B000CDA6B /* HelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EF662C1CA1088B000CDA6B /* HelpViewController.xib */; };
 		967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 967EE1C01B8AEA25000591AC /* Images.xcassets */; };
 		967EE1D01B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */; };
+		9B8E7CC01CBE7E5800DF9DFF /* ProductManagementMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8E7CBE1CBE7E5800DF9DFF /* ProductManagementMenuTableViewController.swift */; };
+		9B8E7CC11CBE7E5800DF9DFF /* ProductManagementMenuTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B8E7CBF1CBE7E5800DF9DFF /* ProductManagementMenuTableViewController.xib */; };
+		9B8E7CC41CBE7E6400DF9DFF /* ProductManagementMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8E7CC21CBE7E6400DF9DFF /* ProductManagementMenuTableViewCell.swift */; };
+		9B8E7CC51CBE7E6400DF9DFF /* ProductManagementMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B8E7CC31CBE7E6400DF9DFF /* ProductManagementMenuTableViewCell.xib */; };
 		9F02F9361BF0BAEC00F44E2F /* yilinker_pinned_certificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 9F02F9351BF0BAEC00F44E2F /* yilinker_pinned_certificate.cer */; };
 		E72BD5070233EC6FF42DDA3A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B825E81D3B27E563C7C3C53 /* libPods.a */; };
 		F727FF591B99C94700872E11 /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = F727FF581B99C94700872E11 /* edit.png */; };
@@ -1470,6 +1474,10 @@
 		967EE1C91B8AEA25000591AC /* YiLinkerOnlineSellerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YiLinkerOnlineSellerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		967EE1CE1B8AEA25000591AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		967EE1CF1B8AEA25000591AC /* YiLinkerOnlineSellerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YiLinkerOnlineSellerTests.swift; sourceTree = "<group>"; };
+		9B8E7CBE1CBE7E5800DF9DFF /* ProductManagementMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductManagementMenuTableViewController.swift; sourceTree = "<group>"; };
+		9B8E7CBF1CBE7E5800DF9DFF /* ProductManagementMenuTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductManagementMenuTableViewController.xib; sourceTree = "<group>"; };
+		9B8E7CC21CBE7E6400DF9DFF /* ProductManagementMenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductManagementMenuTableViewCell.swift; sourceTree = "<group>"; };
+		9B8E7CC31CBE7E6400DF9DFF /* ProductManagementMenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductManagementMenuTableViewCell.xib; sourceTree = "<group>"; };
 		9F02F9351BF0BAEC00F44E2F /* yilinker_pinned_certificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = yilinker_pinned_certificate.cer; sourceTree = "<group>"; };
 		D4D17EE114265F93B1630151 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F727FF581B99C94700872E11 /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
@@ -2406,6 +2414,8 @@
 		798D80531C8686EB00D2A1F7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				9B8E7CBE1CBE7E5800DF9DFF /* ProductManagementMenuTableViewController.swift */,
+				9B8E7CBF1CBE7E5800DF9DFF /* ProductManagementMenuTableViewController.xib */,
 				798D80541C8686EB00D2A1F7 /* EdititemsViewController.swift */,
 				798D80551C8686EB00D2A1F7 /* EdititemsViewController.xib */,
 				798D80561C8686EB00D2A1F7 /* ProductDescriptionViewController.swift */,
@@ -2439,6 +2449,8 @@
 		798D80681C8686EB00D2A1F7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9B8E7CC21CBE7E6400DF9DFF /* ProductManagementMenuTableViewCell.swift */,
+				9B8E7CC31CBE7E6400DF9DFF /* ProductManagementMenuTableViewCell.xib */,
 				798D80691C8686EB00D2A1F7 /* AddItemTableViewCell.swift */,
 				798D806A1C8686EB00D2A1F7 /* AddItemTableViewCell.xib */,
 				798D806B1C8686EB00D2A1F7 /* AddItemViewController.swift */,
@@ -3427,6 +3439,7 @@
 				798D84581C8686EB00D2A1F7 /* TransactionProductDetailsFooterView.xib in Resources */,
 				798D821C1C8686EB00D2A1F7 /* CategoryTableViewCell.xib in Resources */,
 				798D84721C8686EB00D2A1F7 /* ImageUploadLoader.xib in Resources */,
+				9B8E7CC51CBE7E6400DF9DFF /* ProductManagementMenuTableViewCell.xib in Resources */,
 				798D82951C8686EB00D2A1F7 /* Panton Light.otf in Resources */,
 				798D83FA1C8686EB00D2A1F7 /* ResellerCollectionReusableView.xib in Resources */,
 				798D82961C8686EB00D2A1F7 /* Panton Regular Italic.otf in Resources */,
@@ -3484,6 +3497,7 @@
 				798D841D1C8686EB00D2A1F7 /* LaunchScreen.xib in Resources */,
 				798D845E1C8686EB00D2A1F7 /* TransactionProductPurchaseTableViewCell.xib in Resources */,
 				798D83981C8686EB00D2A1F7 /* ProductUploadImageCollectionViewCell.xib in Resources */,
+				9B8E7CC11CBE7E5800DF9DFF /* ProductManagementMenuTableViewController.xib in Resources */,
 				798D833F1C8686EB00D2A1F7 /* ProductManagementViewController.xib in Resources */,
 				798D82FD1C8686EB00D2A1F7 /* AddAddressTableViewController.xib in Resources */,
 				F7C40FD51B983CD90091C16C /* dropdown.png in Resources */,
@@ -3754,6 +3768,7 @@
 				798D82A51C8686EB00D2A1F7 /* NSString+FSExtension.m in Sources */,
 				798D83141C8686EB00D2A1F7 /* BankModel.swift in Sources */,
 				798D84411C8686EB00D2A1F7 /* TransactionsFilterModel.swift in Sources */,
+				9B8E7CC41CBE7E6400DF9DFF /* ProductManagementMenuTableViewCell.swift in Sources */,
 				798D82CC1C8686EB00D2A1F7 /* RegisterModel.swift in Sources */,
 				798D83911C8686EB00D2A1F7 /* ProductUploadDetailHeaderViewTableViewCell.swift in Sources */,
 				798D83EC1C8686EB00D2A1F7 /* FilterModalViewController.swift in Sources */,
@@ -3980,6 +3995,7 @@
 				798D82B71C8686EB00D2A1F7 /* DateUtility.swift in Sources */,
 				798D83001C8686EB00D2A1F7 /* ChangeBankAccountViewController.swift in Sources */,
 				798D82501C8686EB00D2A1F7 /* BarChartDataSet.swift in Sources */,
+				9B8E7CC01CBE7E5800DF9DFF /* ProductManagementMenuTableViewController.swift in Sources */,
 				798D81EE1C8686EB00D2A1F7 /* PayoutEarningsTypeModel.swift in Sources */,
 				798D823C1C8686EB00D2A1F7 /* BarLineChartViewBase.swift in Sources */,
 				798D827D1C8686EB00D2A1F7 /* HorizontalBarChartRenderer.swift in Sources */,
