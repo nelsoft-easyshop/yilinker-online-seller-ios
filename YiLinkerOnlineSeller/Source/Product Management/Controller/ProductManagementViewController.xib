@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -52,6 +52,7 @@
             <subviews>
                 <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LTb-gA-wY0" userLabel="Dim View">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <animations/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3F0-RF-3Em" userLabel="searchBarView">
@@ -59,6 +60,7 @@
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Pes-BY-ovq">
                             <rect key="frame" x="8" y="7" width="359" height="30"/>
+                            <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
@@ -68,6 +70,7 @@
                             </connections>
                         </textField>
                     </subviews>
+                    <animations/>
                     <color key="backgroundColor" red="0.50122048590000001" green="0.0" blue="0.7202493687" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="Pes-BY-ovq" firstAttribute="leading" secondItem="3F0-RF-3Em" secondAttribute="leading" constant="8" id="6WW-Km-5sF"/>
@@ -79,6 +82,7 @@
                 </view>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="vPo-r1-Ubn">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="61"/>
+                    <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="61" id="wOL-8O-55p"/>
@@ -96,6 +100,7 @@
                 </collectionView>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" style="plain" separatorStyle="none" rowHeight="65" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="NPe-9O-VXY">
                     <rect key="frame" x="0.0" y="60" width="375" height="607"/>
+                    <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="qpv-c4-TLf"/>
@@ -113,20 +118,24 @@
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DELETE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mg7-XC-aQG">
                                             <rect key="frame" x="25" y="14" width="47" height="21"/>
+                                            <animations/>
                                             <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="delete-white" translatesAutoresizingMaskIntoConstraints="NO" id="6Zn-ek-WeU">
                                             <rect key="frame" x="0.0" y="15" width="17" height="16"/>
+                                            <animations/>
                                         </imageView>
                                     </subviews>
+                                    <animations/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="50" id="PEH-A6-D6y"/>
                                         <constraint firstAttribute="width" constant="72" id="ekK-P3-V4n"/>
                                     </constraints>
                                 </view>
                             </subviews>
+                            <animations/>
                             <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="centerX" secondItem="oGC-VH-UxX" secondAttribute="centerX" id="ARK-Xs-DyH"/>
@@ -144,20 +153,24 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="moveToInactive" translatesAutoresizingMaskIntoConstraints="NO" id="zlc-Iu-gh6">
                                                     <rect key="frame" x="0.0" y="14" width="15" height="18"/>
+                                                    <animations/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MOVE TO INACTIVE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="49l-9b-qQ8">
                                                     <rect key="frame" x="25" y="14" width="116" height="21"/>
+                                                    <animations/>
                                                     <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="141" id="IL6-Rl-Cd7"/>
                                                 <constraint firstAttribute="height" constant="50" id="niD-Sq-3hF"/>
                                             </constraints>
                                         </view>
                                     </subviews>
+                                    <animations/>
                                     <color key="backgroundColor" red="0.50122048590000001" green="0.0" blue="0.7202493687" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="centerX" secondItem="lu8-yD-w5D" secondAttribute="centerX" id="KE8-JX-Sva"/>
@@ -172,20 +185,24 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="delete-white" translatesAutoresizingMaskIntoConstraints="NO" id="182-Om-Hgg">
                                                     <rect key="frame" x="0.0" y="14" width="16" height="19"/>
+                                                    <animations/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DELETE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UyK-yn-GHc">
                                                     <rect key="frame" x="29" y="14" width="48" height="21"/>
+                                                    <animations/>
                                                     <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="dIS-Me-EHX"/>
                                                 <constraint firstAttribute="width" constant="77" id="nme-fN-ib8"/>
                                             </constraints>
                                         </view>
                                     </subviews>
+                                    <animations/>
                                     <color key="backgroundColor" red="0.94901960780000005" green="0.12941176469999999" blue="0.15686274510000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="centerX" secondItem="AA5-dZ-M2d" secondAttribute="centerX" id="B8l-Nq-4Vd"/>
@@ -193,6 +210,7 @@
                                     </constraints>
                                 </view>
                             </subviews>
+                            <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="BuB-K0-wgf" firstAttribute="width" secondItem="Y4h-6r-cj3" secondAttribute="height" multiplier="9:2" id="1iw-Ru-2a3"/>
@@ -217,20 +235,24 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="moveToInactive" translatesAutoresizingMaskIntoConstraints="NO" id="nFn-bY-duz">
                                                     <rect key="frame" x="0.0" y="14" width="15" height="18"/>
+                                                    <animations/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MOVE TO INACTIVE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aca-Pl-63Q">
                                                     <rect key="frame" x="25" y="14" width="116" height="21"/>
+                                                    <animations/>
                                                     <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="141" id="SMJ-mj-0LD"/>
                                                 <constraint firstAttribute="height" constant="50" id="tLb-sp-Syp"/>
                                             </constraints>
                                         </view>
                                     </subviews>
+                                    <animations/>
                                     <color key="backgroundColor" red="0.50122048590000001" green="0.0" blue="0.7202493687" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="centerY" secondItem="4Bs-8E-slb" secondAttribute="centerY" id="VfJ-H4-dCj"/>
@@ -245,20 +267,24 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="moveToInactive" translatesAutoresizingMaskIntoConstraints="NO" id="aVu-BD-6vR">
                                                     <rect key="frame" x="4" y="14" width="15" height="18"/>
+                                                    <animations/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MOVE TO ACTIVE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3LD-u1-oGz" userLabel="MOVE TO ACTIVE">
                                                     <rect key="frame" x="29" y="14" width="104" height="21"/>
+                                                    <animations/>
                                                     <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="O0U-pQ-kVS"/>
                                                 <constraint firstAttribute="width" constant="133" id="SIv-Fb-uxs"/>
                                             </constraints>
                                         </view>
                                     </subviews>
+                                    <animations/>
                                     <color key="backgroundColor" red="0.43529411759999997" green="0.20392156859999999" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="centerX" secondItem="3fH-Si-rMy" secondAttribute="centerX" id="Qqo-iO-wkZ"/>
@@ -273,20 +299,24 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="moveToInactive" translatesAutoresizingMaskIntoConstraints="NO" id="BZq-nS-awX">
                                                     <rect key="frame" x="0.0" y="14" width="15" height="18"/>
+                                                    <animations/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="RESTORE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rOk-P0-KqO" userLabel="RESTORE">
                                                     <rect key="frame" x="25" y="14" width="60" height="21"/>
+                                                    <animations/>
                                                     <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="Dsd-6k-5xy"/>
                                                 <constraint firstAttribute="width" constant="85" id="rOo-5G-7mg"/>
                                             </constraints>
                                         </view>
                                     </subviews>
+                                    <animations/>
                                     <color key="backgroundColor" red="0.50122048590000001" green="0.0" blue="0.7202493687" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="centerX" secondItem="hI7-Yu-THW" secondAttribute="centerX" id="3Wo-Sv-loR"/>
@@ -294,6 +324,7 @@
                                     </constraints>
                                 </view>
                             </subviews>
+                            <animations/>
                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="8gV-eA-Elr" firstAttribute="leading" secondItem="YSL-EU-QIf" secondAttribute="leading" id="A6j-03-nYj"/>
@@ -312,6 +343,7 @@
                             </constraints>
                         </view>
                     </subviews>
+                    <animations/>
                     <constraints>
                         <constraint firstItem="YSL-EU-QIf" firstAttribute="leading" secondItem="zrT-wQ-HdY" secondAttribute="leading" id="0sT-xA-ihz"/>
                         <constraint firstItem="CIM-d9-GI2" firstAttribute="top" secondItem="zrT-wQ-HdY" secondAttribute="top" id="6o8-q0-U8h"/>
@@ -330,15 +362,18 @@
                 </view>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uuA-ht-XIf">
                     <rect key="frame" x="0.0" y="60" width="375" height="607"/>
+                    <animations/>
                 </view>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No products found" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FUn-ar-xOV">
                     <rect key="frame" x="0.0" y="60" width="375" height="607"/>
+                    <animations/>
                     <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" name="Panton-Light" family="Panton" pointSize="20"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
+            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="FUn-ar-xOV" secondAttribute="bottom" id="3DK-FZ-zEV"/>

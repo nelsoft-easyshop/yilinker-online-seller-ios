@@ -175,9 +175,9 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     // MARK: - API Requests
     //MARK: -
     //MARK: - Fire Send Email Verification
-    func fireSaveProfile(firstName: String, lastName: String, tin: String, email: String, isSent: String, validId: String) {
+    func fireSaveProfile(firstName: String, lastName: String, tin: String, email: String, referralCode: String, isSent: String, validId: String) {
         self.showLoader()
-        WebServiceManager.fireSaveProfileWithUrl(APIAtlas.saveEditProfileAffiliate, firstName: firstName, lastName: lastName, tin: tin, email: email, isSent: isSent, validId: validId, accessToken: SessionManager.accessToken(),  actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        WebServiceManager.fireSaveProfileWithUrl(APIAtlas.saveEditProfileAffiliate, firstName: firstName, lastName: lastName, tin: tin, email: email, referralCode: referrerCode, isSent: isSent, validId: validId, accessToken: SessionManager.accessToken(),  actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             println(responseObject)
             if successful {
                 self.dismissLoader()
@@ -191,7 +191,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 }
             } else {
                 self.dismissLoader()
-                self.handleErrorWithType(requestErrorType, responseObject: responseObject, requestType: .SaveProfile, params: [firstName, lastName, tin, email, isSent, validId])
+                self.handleErrorWithType(requestErrorType, responseObject: responseObject, requestType: .SaveProfile, params: [firstName, lastName, tin, email, referralCode, isSent, validId])
             }
         })
     }
@@ -289,7 +289,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 case .SendEmailVerification:
                     self.fireSendVerification(params[0])
                 case .SaveProfile:
-                    self.fireSaveProfile(params[0], lastName: params[1], tin: params[2], email: params[3], isSent: params[4], validId: params[5])
+                    self.fireSaveProfile(params[0], lastName: params[1], tin: params[2], email: params[3],referralCode: params[4], isSent: params[5], validId: params[6])
                 }
                 
             } else {
@@ -649,7 +649,7 @@ extension EditProfileTableViewController: EditProfileButtonTableViewCellDelegate
         }
         
         if errorMessage.isEmpty {
-            self.fireSaveProfile(self.personalInfoCell!.firstNameTextField.text, lastName: self.personalInfoCell!.lastNameTextField.text, tin: self.personalInfoCell!.tinTextField.text, email: self.personalInfoCell!.emailTextField.text, isSent: "\(self.isSendVerificationSent)", validId: self.validId)
+            self.fireSaveProfile(self.personalInfoCell!.firstNameTextField.text, lastName: self.personalInfoCell!.lastNameTextField.text, tin: self.personalInfoCell!.tinTextField.text, email: self.personalInfoCell!.emailTextField.text, referralCode: self.referrerCode, isSent: "\(self.isSendVerificationSent)", validId: self.validId)
         } else {
             Toast.displayToastWithMessage(errorMessage, duration: 2.0, view: self.navigationController!.view)
         }

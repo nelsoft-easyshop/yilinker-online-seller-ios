@@ -52,6 +52,7 @@ class WebServiceManager: NSObject {
     static let contactNoKey = "contactNo"
     static let newPasswordKey = "newPassword"
     static let referralCodeKey = "referralCode"
+    static let referrerCodeKey = "referrerCode"
     
     // MARK: profile Keys
     static let firstNameKey = "firstName"
@@ -77,6 +78,16 @@ class WebServiceManager: NSObject {
     
     static let manufacturerProductIdsKey = "manufacturerProductIds"
     static let removeManufacturerProductIdsKey = "removeManufacturerProductIds"
+    
+    //Feedback suggestion
+    static let titleKey = "title"
+    static let descriptionKey = "description"
+    static let phoneModelKey = "phoneModel"
+    static let osVersionKey = "osVersion"
+    static let osNameKey = "osName"
+    
+    //GCM
+    static let deviceTypeKey = "deviceType"
     
     // MARK: - CALLS
     // MARK: - Post Request With Url
@@ -652,7 +663,7 @@ class WebServiceManager: NSObject {
     class func fireRegisterRequestWithUrl(url: String, contactNumber: String, password: String, areaCode: String, referralCode: String,  verificationCode: String, grant_type: String, client_id: String, client_secret: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager: APIManager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = [self.contactNumberKey: contactNumber, self.passwordKey: password, self.areaCodeKey: areaCode, self.referralCodeKey: referralCode, self.verificationCodeKey: verificationCode, self.grantTypeKey: grant_type, self.clientIdKey: client_id, self.clientSecretKey: client_secret]
+        let parameters: NSDictionary = [self.contactNumberKey: contactNumber, self.passwordKey: password, self.areaCodeKey: areaCode, self.referrerCodeKey: referralCode, self.verificationCodeKey: verificationCode, self.grantTypeKey: grant_type, self.clientIdKey: client_id, self.clientSecretKey: client_secret]
         
         if Reachability.isConnectedToNetwork() {
             manager.POST(url, parameters: parameters, success: {
@@ -743,10 +754,10 @@ class WebServiceManager: NSObject {
     
     //MARK: -
     //MARK: - Fire Save Profile
-    class func fireSaveProfileWithUrl(url: String, firstName: String, lastName: String, tin: String, email: String, isSent: String, validId: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+    class func fireSaveProfileWithUrl(url: String, firstName: String, lastName: String, tin: String, email: String, referralCode: String, isSent: String, validId: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager: APIManager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = [self.firstNameKey: firstName, self.lastNameKey: lastName, self.tinKey: tin, self.emailKey: email, self.accessTokenKey: accessToken, self.validIdKey: validId, self.isSentKey: isSent]
+        let parameters: NSDictionary = [self.firstNameKey: firstName, self.lastNameKey: lastName, self.tinKey: tin, self.emailKey: email, self.referralCodeKey: referralCode, self.accessTokenKey: accessToken, self.validIdKey: validId, self.isSentKey: isSent]
         
         if Reachability.isConnectedToNetwork() {
             manager.POST(url, parameters: parameters, success: {
@@ -827,4 +838,67 @@ class WebServiceManager: NSObject {
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
+    
+    //MARK: - Fire Save Feedback
+    class func fireSaveFeedBackWithUrl(url: String, title: String, description: String,  phoneModel: String,  osVersion: String,  osName: String,  access_token: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.accessTokenKey: access_token, self.titleKey: title, self.descriptionKey: description, self.phoneModelKey: phoneModel, self.osVersionKey: osVersion, self.osNameKey: osName]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: - Fire Post General
+    class func firePostGeneralWithUrl(url: String, params: NSDictionary, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = params
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: - Fire Add Subcategory
+    class func fireAddSubCategoryWithUrl(url: String, categoryId: String, access_token: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.accessTokenKey: access_token, self.categoryIdKey: categoryId]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: Store infp With URL
+    class func fireGetStoreInfoWithUrl(url: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.accessTokenKey: accessToken]
+        self.fireGetRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: Create GCM Registration ID
+    class func fireCreateGCMRegistrationIDWithUrl(url: String, registrationId: String, deviceType: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.registrationIdKey: registrationId, self.deviceTypeKey: deviceTypeKey, self.accessTokenKey: accessToken]
+        self.fireGetRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: Delete GCM Registration ID
+    class func fireDeleteGCMRegistrationIDWithUrl(url: String, registrationId: String, deviceType: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.registrationIdKey: registrationId, self.deviceTypeKey: deviceTypeKey, self.accessTokenKey: accessToken]
+        self.fireGetRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: - Fire Affilate Get Categories From Url
+    class func fireGetFollowersFromUrl(url: String, page: String, perPage: String, searchKeyword: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = [self.accessTokenKey: SessionManager.accessToken()]
+        
+        let sessionDataTask: NSURLSessionDataTask = self.fireGetRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        
+        return sessionDataTask
+    }
+    
 }

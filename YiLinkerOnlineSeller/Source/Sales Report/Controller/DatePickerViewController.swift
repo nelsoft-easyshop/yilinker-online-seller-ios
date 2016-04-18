@@ -66,7 +66,7 @@ class DatePickerViewController: UIViewController {
     }
     
     func initializeNavigationBar() {
-        self.title = "Select Date"
+        self.title = StringHelper.localizedStringWithKey("SELECT_DATE_LOCALIZE_KEY")
         
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)

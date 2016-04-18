@@ -49,9 +49,10 @@ class MyPointsModel: NSObject {
             }
             
             if dictionary["dateAdded"] != nil {
-                let tempDict: NSDictionary = dictionary["dateAdded"] as! NSDictionary
-                if let tempVar = tempDict["date"] as? String {
-                    date = tempVar
+                if let tempDict: NSDictionary = dictionary["dateAdded"] as? NSDictionary {
+                    if let tempVar = tempDict["date"] as? String {
+                        date = tempVar
+                    }
                 }
             }
             

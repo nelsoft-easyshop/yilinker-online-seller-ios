@@ -217,7 +217,6 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
     func fireGetFollower(searchKey: String) {
         
         if !isPageEnd {
-            
             if (self.searchTask != nil) {
                 searchTask?.cancel()
                 manager.operationQueue.cancelAllOperations()
@@ -226,98 +225,172 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
             
             self.emptyLabel.hidden = true
             
-            var params: Dictionary = ["access_token" : SessionManager.accessToken(), "page": "\(page)", "perPage": "15"]
+            let accessToken = SessionManager.accessToken()
+            let pageKey = "\(page)"
+            let perPage = "15"
+            var searchKeyword = ""
+            
             if searchKey.isEmpty {
                 if getCtr == 0{
                     showHUD()
                 }
             } else {
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-                params["searchKeyword"] = searchKey
+                searchKeyword = searchKey
             }
             
             getCtr++
-            searchTask = manager.GET(APIAtlas.getFollowers, parameters: params, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            searchTask = WebServiceManager.fireGetFollowersFromUrl(APIAtlas.getFollowers, page: pageKey, perPage: perPage, searchKeyword: searchKeyword, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
                 
-                let followerModel: FollowersModel = FollowersModel.parseDataWithDictionary(responseObject as! NSDictionary)
-                
-                if followerModel.isSuccessful {
-                    self.page++
-                    self.followersModel.data += followerModel.data
-                    if self.followersModel.data.count == 0 {
-                        self.emptyLabel.hidden = false
-                    }
-                    
-                    if followerModel.data.count < 15 {
-                        self.isPageEnd = true
-                    }
-                    
-                    self.tableView.reloadData()
-                    
-                    
-                } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.followersModel.message, title: self.errorLocalizeString)
-                }
                 self.hud?.hide(true)
-                
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                    self.hud?.hide(true)
-                    println(error)
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    if (task.response as? NSHTTPURLResponse != nil) {
-                        let response: NSHTTPURLResponse  = task.response as! NSHTTPURLResponse
-                        let statusCode: Int = response.statusCode
-                        println("STATUS CODE \(statusCode)")
-                        if statusCode == 401 {
-                            self.fireRefreshToken(searchKey)
-                        } else if statusCode == -1009 {
-                            if !Reachability.isConnectedToNetwork() {
-                                UIAlertController.displayNoInternetConnectionError(self)
-                            }
-                        } else if(statusCode != -999) {
-                            UIAlertController.displaySomethingWentWrongError(self)
-                        } else {
-                            self.fireGetFollower(searchKey)
+                
+                if successful {
+                    let followerModel: FollowersModel = FollowersModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                    
+                    if followerModel.isSuccessful {
+                        self.page++
+                        self.followersModel.data += followerModel.data
+                        if self.followersModel.data.count == 0 {
+                            self.emptyLabel.hidden = false
                         }
+                        
+                        if followerModel.data.count < 15 {
+                            self.isPageEnd = true
+                        }
+                        
+                        self.tableView.reloadData()
+                        
                     } else {
-                        if !Reachability.isConnectedToNetwork() {
-                            UIAlertController.displayNoInternetConnectionError(self)
-                        }
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.followersModel.message, title: self.errorLocalizeString)
                     }
+                } else {
+                    if requestErrorType == .ResponseError {
+                        //Error in api requirements
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .AccessTokenExpired {
+                        self.fireRefreshToken()
+                    } else if requestErrorType == .PageNotFound {
+                        //Page not found
+                        Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .NoInternetConnection {
+                        //No internet connection
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .RequestTimeOut {
+                        //Request timeout
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .Cancel {
+                    } else if requestErrorType == .UnRecognizeError {
+                        //Unhandled error
+                        Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                    }
+                }
             })
+            
         } else {
             self.hud?.hide(true)
             let titleString = StringHelper.localizedStringWithKey("FOLLOWERS_TITLE_LOCALIZE_KEY")
             let noMoreDataString = StringHelper.localizedStringWithKey("NO_MORE_DATA_LOCALIZE_KEY")
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noMoreDataString, title: titleString)
         }
+        
+        //Old Request
+//        if !isPageEnd {
+//            
+//            if (self.searchTask != nil) {
+//                searchTask?.cancel()
+//                manager.operationQueue.cancelAllOperations()
+//                searchTask = nil
+//            }
+//            
+//            self.emptyLabel.hidden = true
+//            
+//            var params: Dictionary = ["access_token" : SessionManager.accessToken(), "page": "\(page)", "perPage": "15"]
+//            if searchKey.isEmpty {
+//                if getCtr == 0{
+//                    showHUD()
+//                }
+//            } else {
+//                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+//                params["searchKeyword"] = searchKey
+//            }
+//            
+//            getCtr++
+//            searchTask = manager.GET(APIAtlas.getFollowers, parameters: params, success: {
+//                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+//                
+//                let followerModel: FollowersModel = FollowersModel.parseDataWithDictionary(responseObject as! NSDictionary)
+//                
+//                if followerModel.isSuccessful {
+//                    self.page++
+//                    self.followersModel.data += followerModel.data
+//                    if self.followersModel.data.count == 0 {
+//                        self.emptyLabel.hidden = false
+//                    }
+//                    
+//                    if followerModel.data.count < 15 {
+//                        self.isPageEnd = true
+//                    }
+//                    
+//                    self.tableView.reloadData()
+//                    
+//                    
+//                } else {
+//                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.followersModel.message, title: self.errorLocalizeString)
+//                }
+//                self.hud?.hide(true)
+//                
+//                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+//                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+//                    self.hud?.hide(true)
+//                    println(error)
+//                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+//                    if (task.response as? NSHTTPURLResponse != nil) {
+//                        let response: NSHTTPURLResponse  = task.response as! NSHTTPURLResponse
+//                        let statusCode: Int = response.statusCode
+//                        println("STATUS CODE \(statusCode)")
+//                        if statusCode == 401 {
+//                            self.fireRefreshToken(searchKey)
+//                        } else if statusCode == -1009 {
+//                            if !Reachability.isConnectedToNetwork() {
+//                                UIAlertController.displayNoInternetConnectionError(self)
+//                            }
+//                        } else if(statusCode != -999) {
+//                            UIAlertController.displaySomethingWentWrongError(self)
+//                        } else {
+//                            self.fireGetFollower(searchKey)
+//                        }
+//                    } else {
+//                        if !Reachability.isConnectedToNetwork() {
+//                            UIAlertController.displayNoInternetConnectionError(self)
+//                        }
+//                    }
+//            })
+//        } else {
+//            self.hud?.hide(true)
+//            let titleString = StringHelper.localizedStringWithKey("FOLLOWERS_TITLE_LOCALIZE_KEY")
+//            let noMoreDataString = StringHelper.localizedStringWithKey("NO_MORE_DATA_LOCALIZE_KEY")
+//            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noMoreDataString, title: titleString)
+//        }
     }
     
     func fireRefreshToken(searchKey: String) {
         self.showHUD()
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = [
-            "client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            self.fireGetFollower(searchKey)
-            
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                UIAlertController.displaySomethingWentWrongError(self)
-                self.hud?.hide(true)
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.fireGetFollower(searchKey)
+            } else {
+                //Show UIAlert and force the user to logout
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                })
+            }
         })
-        
     }
+    
     
     func getContactsFromEndpoint(keyword: String){
         //SVProgressHUD.show()

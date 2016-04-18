@@ -329,63 +329,109 @@ class AddSubCategoriesViewController: UIViewController, CCCategoryDetailsViewDel
     
     func requestGetSubCategoryDetails(#parentName: String, categoryId: Int) {
         self.showHUD()
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
-                                          "categoryId": String(categoryId)]
         
-        manager.POST(APIAtlas.getCategoryDetails, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            println(responseObject)
-            
-//            let subCategoryDetail: SubCategoryModel = SubCategoryModel.parseSubCategories(responseObject as! NSDictionary)
-            self.subCategoryDetailModel = SubCategoryModel.parseSubCategories(responseObject as! NSDictionary)
-            self.subCategoryDetailModel.parentName = parentName
-            
-//            self.subCategoryDetailModel = (SubCategoryModel(message: subCategoryDetail.message,
-//                isSuccessful: subCategoryDetail.isSuccessful,
-//                categoryId: subCategoryDetail.categoryId,
-//                categoryName: subCategoryDetail.categoryName,
-//                parentName: parentName,
-//                parentId: subCategoryDetail.parentId,
-//                sortOrder: subCategoryDetail.sortOrder,
-//                products: subCategoryDetail.products))
-            
-            for i in 0..<self.subCategoryDetailModel.products.count {
-                println(self.subCategoryDetailModel.products[i].image)
-                let categoryProducts = ProductManagementProductsModel()
-                categoryProducts.id = self.subCategoryDetailModel.products[i].productId
-                categoryProducts.name = self.subCategoryDetailModel.products[i].productName
-                categoryProducts.image = self.subCategoryDetailModel.products[i].image
-                self.subCategoriesProducts.append(categoryProducts)
+        WebServiceManager.fireAddSubCategoryWithUrl(APIAtlas.getCategoryDetails, categoryId: String(categoryId), access_token: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                println(responseObject)
+                self.subCategoryDetailModel = SubCategoryModel.parseSubCategories(responseObject as! NSDictionary)
+                self.subCategoryDetailModel.parentName = parentName
+                
+                for i in 0..<self.subCategoryDetailModel.products.count {
+                    println(self.subCategoryDetailModel.products[i].image)
+                    let categoryProducts = ProductManagementProductsModel()
+                    categoryProducts.id = self.subCategoryDetailModel.products[i].productId
+                    categoryProducts.name = self.subCategoryDetailModel.products[i].productName
+                    categoryProducts.image = self.subCategoryDetailModel.products[i].image
+                    self.subCategoriesProducts.append(categoryProducts)
+                }
+                
+                self.populateDetails()
+                
+                self.categoryDetailsView.frame.size.height = 153.0
+                self.setUpViews()
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+//                    self.fireRefreshToken()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+                
             }
-            
-            self.populateDetails()
-            
-            self.categoryDetailsView.frame.size.height = 153.0
-            self.setUpViews()
-//            self.categoryDetailsModel = CategoryDetailsModel.parseDataWithDictionary(responseObject as! NSDictionary)
-//            self.customizedSubCategories = self.categoryDetailsModel.subcategories
-//            self.customizedCategoryProducts = self.categoryDetailsModel.products
+        }
+        
+        //Old Request
+//        let manager = APIManager.sharedInstance
+//        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(),
+//                                          "categoryId": String(categoryId)]
+//        
+//        manager.POST(APIAtlas.getCategoryDetails, parameters: parameters, success: {
+//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
 //            
-//            for i in 0..<self.customizedCategoryProducts.count {
+//            println(responseObject)
+//            
+////            let subCategoryDetail: SubCategoryModel = SubCategoryModel.parseSubCategories(responseObject as! NSDictionary)
+//            self.subCategoryDetailModel = SubCategoryModel.parseSubCategories(responseObject as! NSDictionary)
+//            self.subCategoryDetailModel.parentName = parentName
+//            
+////            self.subCategoryDetailModel = (SubCategoryModel(message: subCategoryDetail.message,
+////                isSuccessful: subCategoryDetail.isSuccessful,
+////                categoryId: subCategoryDetail.categoryId,
+////                categoryName: subCategoryDetail.categoryName,
+////                parentName: parentName,
+////                parentId: subCategoryDetail.parentId,
+////                sortOrder: subCategoryDetail.sortOrder,
+////                products: subCategoryDetail.products))
+//            
+//            for i in 0..<self.subCategoryDetailModel.products.count {
+//                println(self.subCategoryDetailModel.products[i].image)
 //                let categoryProducts = ProductManagementProductsModel()
-//                categoryProducts.id = self.customizedCategoryProducts[i].productId
-//                categoryProducts.name = self.customizedCategoryProducts[i].productName
-//                categoryProducts.image = self.customizedCategoryProducts[i].image
-//                self.selectedProductsModel.append(categoryProducts)
+//                categoryProducts.id = self.subCategoryDetailModel.products[i].productId
+//                categoryProducts.name = self.subCategoryDetailModel.products[i].productName
+//                categoryProducts.image = self.subCategoryDetailModel.products[i].image
+//                self.subCategoriesProducts.append(categoryProducts)
 //            }
 //            
-//            self.initializeViews()
-//            self.applyDetails()
-            
-            self.hud?.hide(true)
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                println(error)
-                self.hud?.hide(true)
-        })
+//            self.populateDetails()
+//            
+//            self.categoryDetailsView.frame.size.height = 153.0
+//            self.setUpViews()
+////            self.categoryDetailsModel = CategoryDetailsModel.parseDataWithDictionary(responseObject as! NSDictionary)
+////            self.customizedSubCategories = self.categoryDetailsModel.subcategories
+////            self.customizedCategoryProducts = self.categoryDetailsModel.products
+////            
+////            for i in 0..<self.customizedCategoryProducts.count {
+////                let categoryProducts = ProductManagementProductsModel()
+////                categoryProducts.id = self.customizedCategoryProducts[i].productId
+////                categoryProducts.name = self.customizedCategoryProducts[i].productName
+////                categoryProducts.image = self.customizedCategoryProducts[i].image
+////                self.selectedProductsModel.append(categoryProducts)
+////            }
+////            
+////            self.initializeViews()
+////            self.applyDetails()
+//            
+//            self.hud?.hide(true)
+//            
+//            }, failure: {
+//                (task: NSURLSessionDataTask!, error: NSError!) in
+//                println(error)
+//                self.hud?.hide(true)
+//        })
     }
     
     // MARK: - Table View Data Source and Delegates

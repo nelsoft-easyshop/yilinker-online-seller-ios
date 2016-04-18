@@ -132,8 +132,12 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="storeDescriptionLabel" destination="G9u-oZ-bJO" id="txT-1n-w6d"/>
                 <outlet property="storeDescriptionTextView" destination="8gU-S2-duA" id="TDH-mx-LOp"/>
+                <outlet property="storeInfoLabel" destination="2dS-xl-1I2" id="3YZ-0H-7KS"/>
+                <outlet property="storeLinkLabel" destination="duD-9W-8nZ" id="9tq-VW-v9S"/>
                 <outlet property="storeLinkTextField" destination="iNG-AI-Jlv" id="adi-M7-gpC"/>
+                <outlet property="storeNameLabel" destination="IHw-hI-r2l" id="E6Q-zM-Pxf"/>
                 <outlet property="storeNameTextField" destination="mIR-1l-KYK" id="3HO-Ay-g5k"/>
             </connections>
             <point key="canvasLocation" x="250" y="260"/>
