@@ -18,8 +18,21 @@ class ProductUploadTC: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.title = "Product Upload"
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        
+        self.registerNib()
     }
 
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -30,24 +43,35 @@ class ProductUploadTC: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 0
+        return 1
     }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 166
+    }
+    
+    // MARK: -
+    // MARK: Register table view cells
+    
+    func registerNib() {
+        let nib: UINib = UINib(nibName: "ProductUploadImageTVC", bundle: nil)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: "ProductUploadImageTVC")
+    }
+    
 
-    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("ProductUploadImageTVC", forIndexPath: indexPath) as! ProductUploadImageTVC
 
         // Configure the cell...
-
         return cell
     }
-    */
+
 
     /*
     // Override to support conditional editing of the table view.
