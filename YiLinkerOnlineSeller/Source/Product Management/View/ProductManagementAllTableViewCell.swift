@@ -15,6 +15,8 @@ class ProductManagementAllTableViewCell: UITableViewCell {
     @IBOutlet weak var subTitleLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var arrowImageView: UIImageView!
+    @IBOutlet weak var storesLabel: UILabel!
+    @IBOutlet weak var languageLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -76,6 +78,49 @@ class ProductManagementAllTableViewCell: UITableViewCell {
         self.titleLabel.alpha = 1.0
         self.subTitleLabel.alpha = 1.0
         self.statusLabel.alpha = 1.0
+    }
+    
+    func setCountries(countries: [String]) {
+        
+        let random = 4 + Int(arc4random_uniform(3))
+        
+        for i in 0..<random {
+            
+            let flagImageView: UIImageView = UIImageView(frame: CGRectMake(CGRectGetWidth(storesLabel.frame) + (CGFloat(i) * 24.0), 2.5, 20, 10))
+
+            if i > 4 {
+                flagImageView.image = UIImage(named: "flags_more")
+            } else {
+                flagImageView.sd_setImageWithURL(NSURL(string: countries[i]))
+            }
+            
+            self.storesLabel.addSubview(flagImageView)
+        }
+        
+    }
+    
+    func setLanguages(language: [String]) {
+        
+        let random = 3 + Int(arc4random_uniform(4))
+        
+        for i in 0..<random {
+            
+            if i > 4 {
+                let flagImageView: UIImageView = UIImageView(frame: CGRectMake(CGRectGetWidth(storesLabel.frame) + 179, 2.5, 20, 10))
+                flagImageView.image = UIImage(named: "flags_more")
+                self.languageLabel.addSubview(flagImageView)
+            } else {
+                let langLabel: UILabel = UILabel(frame: CGRectMake(CGRectGetWidth(languageLabel.frame) + (CGFloat(i) * 33.0), 2.5, 30, 10))
+                langLabel.backgroundColor = Constants.Colors.lightBackgroundColor
+                langLabel.font = UIFont(name: "Helvetica-Light", size: 7.0)
+                langLabel.text = language[i]
+                langLabel.textAlignment = .Center
+                self.languageLabel.addSubview(langLabel)
+            }
+            
+            
+        }
+        
     }
     
 }
