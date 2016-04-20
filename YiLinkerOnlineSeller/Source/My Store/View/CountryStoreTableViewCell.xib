@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="countryId" id="KGk-i7-Jjw" customClass="CountryStoreTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="YiLinker-main" translatesAutoresizingMaskIntoConstraints="NO" id="vID-7o-1Lh">
+                        <rect key="frame" x="15" y="9" width="50" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="50" id="7fF-84-qGE"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Country Here" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Z7-6x-aiZ">
+                        <rect key="frame" x="69" y="11" width="156" height="21"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="next" translatesAutoresizingMaskIntoConstraints="NO" id="FH0-Vd-wsG">
+                        <rect key="frame" x="297" y="13" width="17" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="17" id="aTj-ry-bC0"/>
+                            <constraint firstAttribute="width" constant="17" id="dIO-8y-HMp"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Available" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OTU-t9-4vA">
+                        <rect key="frame" x="233" y="11" width="69" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="R1F-ZY-BGO"/>
+                            <constraint firstAttribute="width" constant="69" id="VfT-gU-KWQ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
+                        <color key="textColor" red="0.83921568629999999" green="0.83921568629999999" blue="0.83921568629999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="vID-7o-1Lh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="9" id="9Bf-X8-2Ke"/>
+                    <constraint firstAttribute="bottom" secondItem="FH0-Vd-wsG" secondAttribute="bottom" constant="13" id="CN9-0A-rbY"/>
+                    <constraint firstItem="OTU-t9-4vA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="DrK-cV-iAO"/>
+                    <constraint firstItem="0Z7-6x-aiZ" firstAttribute="leading" secondItem="vID-7o-1Lh" secondAttribute="trailing" constant="4" id="Me5-xt-Ivc"/>
+                    <constraint firstAttribute="trailing" secondItem="OTU-t9-4vA" secondAttribute="trailing" constant="18" id="Qf8-gM-ePp"/>
+                    <constraint firstItem="OTU-t9-4vA" firstAttribute="leading" secondItem="0Z7-6x-aiZ" secondAttribute="trailing" constant="8" id="SIc-1D-ibx"/>
+                    <constraint firstAttribute="trailing" secondItem="FH0-Vd-wsG" secondAttribute="trailing" constant="6" id="YDU-IZ-X9U"/>
+                    <constraint firstAttribute="bottom" secondItem="OTU-t9-4vA" secondAttribute="bottom" constant="11" id="gfN-0y-cQr"/>
+                    <constraint firstAttribute="bottom" secondItem="vID-7o-1Lh" secondAttribute="bottom" constant="9" id="gvb-Tn-eTI"/>
+                    <constraint firstItem="0Z7-6x-aiZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="m4X-aI-hIA"/>
+                    <constraint firstItem="FH0-Vd-wsG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="nwU-dI-ezx"/>
+                    <constraint firstItem="vID-7o-1Lh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="rI5-kd-Vvx"/>
+                    <constraint firstAttribute="bottom" secondItem="0Z7-6x-aiZ" secondAttribute="bottom" constant="11" id="reT-V5-RB6"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="arrowImageView" destination="FH0-Vd-wsG" id="EAH-hE-AVK"/>
+                <outlet property="availableLabel" destination="OTU-t9-4vA" id="YRH-JT-MJU"/>
+                <outlet property="countryLabel" destination="0Z7-6x-aiZ" id="aAc-xd-Mie"/>
+                <outlet property="flagImageView" destination="vID-7o-1Lh" id="Dqd-ML-ht3"/>
+            </connections>
+            <point key="canvasLocation" x="190" y="345"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="YiLinker-main" width="537" height="498"/>
+        <image name="next" width="22" height="22"/>
+    </resources>
+</document>

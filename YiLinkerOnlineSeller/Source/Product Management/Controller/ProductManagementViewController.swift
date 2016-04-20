@@ -90,7 +90,13 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     var productModel: ProductManagementProductModel!
     var requestTask: NSURLSessionDataTask!
     
-    let flags = ["http://images-mediawiki-sites.thefullwiki.org/04/3/7/0/95484361858573992.png", "http://wiki.erepublik.com/images/thumb/2/21/Flag-China.jpg/50px-Flag-China.jpg", "https://jeetkunedomalaysia.files.wordpress.com/2014/10/jeet-kune-do-jkd-malaysia-flag.gif", "http://www.thailanguagehut.com/wp-content/uploads/2010/04/Thai-Flag.gif", "http://flaglane.com/download/singaporean-flag/singaporean-flag-graphic.png", "http://flaglane.com/download/singaporean-flag/singaporean-flag-graphic.png", "http://flaglane.com/download/singaporean-flag/singaporean-flag-graphic.png"]
+    let flags = ["http://images-mediawiki-sites.thefullwiki.org/04/3/7/0/95484361858573992.png",
+        "http://wiki.erepublik.com/images/thumb/2/21/Flag-China.jpg/50px-Flag-China.jpg",
+        "https://jeetkunedomalaysia.files.wordpress.com/2014/10/jeet-kune-do-jkd-malaysia-flag.gif",
+        "http://www.thailanguagehut.com/wp-content/uploads/2010/04/Thai-Flag.gif",
+        "http://flaglane.com/download/singaporean-flag/singaporean-flag-graphic.png",
+        "http://flaglane.com/download/singaporean-flag/singaporean-flag-graphic.png",
+        "http://flaglane.com/download/singaporean-flag/singaporean-flag-graphic.png"]
     let languages = ["PH - EN", "UK - EN", "SG - CN", "CA - EN", "CA - FR", "RJ 08"]
     
     // MARK: - View Life Cycle
