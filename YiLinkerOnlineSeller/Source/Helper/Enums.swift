@@ -29,6 +29,7 @@ enum CustomizeShoppingType {
 enum ProductTextFieldType {
     case Brand
     case Category
+    case ShippingCategory
     case Condition
     case ProductName
     case ProductShortDescription
