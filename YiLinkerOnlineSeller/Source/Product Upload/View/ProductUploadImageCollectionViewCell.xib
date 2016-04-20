@@ -22,7 +22,7 @@
                             <constraint firstAttribute="width" constant="20" id="L0d-0V-zfD"/>
                             <constraint firstAttribute="height" constant="20" id="aEd-6T-FhO"/>
                         </constraints>
-                        <state key="normal" title="x">
+                        <state key="normal" title="X">
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
@@ -35,14 +35,29 @@
                             <action selector="close:" destination="gTV-IL-0wX" eventType="touchUpInside" id="hXi-vF-Akz"/>
                         </connections>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DLV-Xj-fNj">
+                        <rect key="frame" x="9" y="87" width="22" height="23"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="23" id="Rmg-K0-rh0"/>
+                            <constraint firstAttribute="width" constant="22" id="pJJ-6M-NWu"/>
+                        </constraints>
+                        <state key="normal" image="active">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="star:" destination="gTV-IL-0wX" eventType="touchUpInside" id="8jh-Bu-H4O"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="Rgy-pw-CZG" secondAttribute="trailing" id="Cd0-Ml-a6y"/>
                 <constraint firstAttribute="trailing" secondItem="qht-bm-xcM" secondAttribute="trailing" constant="5" id="Lqd-Z2-r7m"/>
+                <constraint firstAttribute="bottom" secondItem="DLV-Xj-fNj" secondAttribute="bottom" constant="10" id="XqW-2J-IgZ"/>
                 <constraint firstItem="qht-bm-xcM" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="jLU-Mb-nQc"/>
                 <constraint firstItem="Rgy-pw-CZG" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="mbg-u1-cvN"/>
+                <constraint firstItem="DLV-Xj-fNj" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="9" id="myn-uj-SEL"/>
                 <constraint firstItem="qht-bm-xcM" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="qkR-3p-mjZ"/>
                 <constraint firstAttribute="bottom" secondItem="qht-bm-xcM" secondAttribute="bottom" constant="5" id="vpz-Qd-5sQ"/>
             </constraints>
@@ -50,11 +65,13 @@
             <connections>
                 <outlet property="closeButton" destination="Rgy-pw-CZG" id="52A-Hu-bWb"/>
                 <outlet property="imageView" destination="qht-bm-xcM" id="Idh-jH-plj"/>
+                <outlet property="starButton" destination="DLV-Xj-fNj" id="bry-FE-UOm"/>
             </connections>
             <point key="canvasLocation" x="631" y="347"/>
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="active" width="200" height="200"/>
         <image name="dummy-placeholder" width="1280" height="800"/>
     </resources>
 </document>
