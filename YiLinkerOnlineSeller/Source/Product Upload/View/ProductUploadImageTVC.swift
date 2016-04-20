@@ -74,7 +74,9 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
         self.delegate!.productUploadUploadImageTableViewCell(didDeleteAtRowIndexPath: indexPath, collectionView: self.collectionView)
     }
     
+    // MARK: -
     // MARK: - Tap the star button
+    // TODO: - Add action to set the button checked
     
     func productUploadImageCollectionViewCell(didTapStarButtonAtCell cell: ProductUploadImageCollectionViewCell) {
         cell.starButton.setBackgroundImage(UIImage(named: "active2"), forState: UIControlState.Normal)
