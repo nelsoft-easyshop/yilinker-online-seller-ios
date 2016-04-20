@@ -75,8 +75,6 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     var pageTitle: [String] = [ManagementStrings.all, ManagementStrings.active, ManagementStrings.inactive, ManagementStrings.drafts, ManagementStrings.deleted, ManagementStrings.underReview, ManagementStrings.rejected]
     var selectedImage: [String] = ["all2", "active2", "inactive2", "drafts2", "deleted2", "review2", "review2"]
     var deSelectedImage: [String] = ["all", "active", "inactive", "drafts", "deleted", "review", "review"]
-//status : Active = 2, Inactive = 3, Draft = 0, Deleted =4, For Review = 1, Rejected = 5, All = all
-//    draft = 0, review = 1, active = 2, delete = 3, reject = 5, inactive = 6
     var statusId: [Int] = [Status.all, Status.active, Status.inactive, Status.draft, Status.deleted, Status.review, Status.rejected]
     
     var selectedIndex: Int = 0
@@ -91,6 +89,11 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     
     var productModel: ProductManagementProductModel!
     var requestTask: NSURLSessionDataTask!
+    
+    let flags = ["http://images-mediawiki-sites.thefullwiki.org/04/3/7/0/95484361858573992.png", "http://wiki.erepublik.com/images/thumb/2/21/Flag-China.jpg/50px-Flag-China.jpg", "https://jeetkunedomalaysia.files.wordpress.com/2014/10/jeet-kune-do-jkd-malaysia-flag.gif", "http://www.thailanguagehut.com/wp-content/uploads/2010/04/Thai-Flag.gif", "http://flaglane.com/download/singaporean-flag/singaporean-flag-graphic.png", "http://flaglane.com/download/singaporean-flag/singaporean-flag-graphic.png", "http://flaglane.com/download/singaporean-flag/singaporean-flag-graphic.png"]
+    let languages = ["PH - EN", "UK - EN", "SG - CN", "CA - EN", "CA - FR", "RJ 08"]
+    
+    // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -608,6 +611,8 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
                 cell.statusLabel.hidden = true
             } else {
                 cell.statusLabel.hidden = false
+                cell.setCountries(flags)
+                cell.setLanguages(languages)
             }
             
             if SessionManager.isReseller() {
@@ -660,6 +665,9 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             return 0.0
         }
         
+        if self.selectedIndex == 0 {
+            return 88.0
+        }
         return 65.0
     }
     
