@@ -23,6 +23,8 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         self.title = "Product Upload"
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "hideKeyboard")
+        self.tableView.addGestureRecognizer(tap)
         
         self.addFooter()
         self.backButton()
@@ -54,14 +56,12 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        if section == 0 {
+        if section == 0 || section == 3 || section == 4 {
             return 1
         } else if section == 1 {
             return 3
-        } else if section == 2 {
-            return 6
         } else {
-            return 1
+            return 6
         }
     }
     
@@ -94,7 +94,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             cell.collectionView.reloadData()
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             
-            // Configure the cell...
             return cell
         } else if indexPath.section == 1 {
             if indexPath.row == 0 {
@@ -309,6 +308,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         } else {
             let cell: ProductUploadDimensionsAndWeightTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier) as! ProductUploadDimensionsAndWeightTableViewCell
             cell.delegate = self
+           
             // TODO: Add delegate to textfields and add action to delegate methods
             cell.addTextFieldDelegate()
             
@@ -337,9 +337,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         var sectionHeight: CGFloat = 0
         
-        if section == 0 {
-            sectionHeight = 0
-        } else if section == 3 {
+        if section == 0 || section == 3 {
             sectionHeight = 0
         } else if section == 4 {
             return 41
@@ -408,6 +406,13 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         } else {
             return false
         }
+    }
+    
+    // MARK: -
+    // MARK: - Hide keyboard
+    
+    func hideKeyboard() {
+        self.tableView.endEditing(true)
     }
     
     // MARK: -
@@ -520,14 +525,24 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     
     // MARK: -
     // MARK: - ProductUploadDimensionsAndWeightTableViewCell Delegate Method
+    // TODO: - Save values from the textfields in variables
     
     func productUploadDimensionsAndWeightTableViewCell(textFieldDidChange textField: UITextField, text: String, cell: ProductUploadDimensionsAndWeightTableViewCell) {
         
+        if textField == cell.lengthTextField {
+            println("length \(text)")
+        } else if textField == cell.weightTextField {
+             println("weight \(text)")
+        } else if textField == cell.widthTextField {
+             println("width \(text)")
+        } else {
+             println("height \(text)")
+        }
     }
     
     // MARK: - 
     // MARK: - ProductUploadFooterView Delegate Method
-    // TODO: Add action to upload product details
+    // TODO: - Add action to upload product details
     
     func productUploadFooterView(didClickUpload view: ProductUploadFooterView) {
         
