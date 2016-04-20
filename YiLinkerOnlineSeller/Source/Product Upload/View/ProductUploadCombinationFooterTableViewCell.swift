@@ -118,6 +118,10 @@ class ProductUploadCombinationFooterTableViewCell: UITableViewCell, UICollection
         self.delegate!.productUploadCombinationFooterTableViewCell(didDeleteUploadImage: self, indexPath: indexPath)
     }
     
+    func productUploadImageCollectionViewCell(didTapStarButtonAtCell cell: ProductUploadImageCollectionViewCell) {
+        cell.starButton.setBackgroundImage(UIImage(named:"active2"), forState: UIControlState.Normal)
+    }
+    
     // MARK: Textfield delegate methods
     func textFieldDidChange(sender: UITextField) {
         self.delegate!.productUploadCombinationFooterTableViewCell(textFieldDidChange: sender, text: sender.text, cell: self)
