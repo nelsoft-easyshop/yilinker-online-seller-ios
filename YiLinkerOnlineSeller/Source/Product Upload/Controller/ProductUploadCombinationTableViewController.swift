@@ -182,7 +182,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
             
             return cellHeight
         } else {
-            return 320
+            return 294
         }
     }
     

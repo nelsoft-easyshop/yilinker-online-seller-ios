@@ -113,11 +113,14 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         
         let weightAndHeightNib: UINib = UINib(nibName: ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(weightAndHeightNib, forCellReuseIdentifier: ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier)
+        
+        let skuDimensionsAndWeightNib: UINib = UINib(nibName: "ProductUploadCombinationFooterTVC", bundle: nil)
+        self.tableView.registerNib(skuDimensionsAndWeightNib, forCellReuseIdentifier: "ProductUploadCombinationFooterTVC")
     }
     
     // MARK: Table view data source methods
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 3
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -156,7 +159,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             
             return cellHeight
         } else {
-            return 271
+            return 294
         }
     }
     
@@ -179,13 +182,13 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             cell.collectionView.reloadData()
             cell.userInteractionEnabled = false
             return cell
-        } else if indexPath.row == 2 {
+        } /*else if indexPath.row == 2 {
             let cell: ProductUploadPlainDetailCombinationTableViewCell = tableView.dequeueReusableCellWithIdentifier(PUCLVCConstant.productUploadPlainCombinationTableViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ProductUploadPlainDetailCombinationTableViewCell
             
             let combination: CombinationModel = self.productModel!.validCombinations[indexPath.section]
             cell.collectionView.reloadData()
             
-            let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
+            let viewController: ProductUploadTC = self.navigationController?.viewControllers[0] as! ProductUploadTC
             
             if viewController.uploadType == UploadType.NewProduct {
                 cell.images = combination.images
@@ -204,7 +207,8 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             cell.discountedPriceTextField.enabled = false
             cell.userInteractionEnabled = false
             return cell
-        } else {
+        }*/
+        else {
             
             let cell: ProductUploadCombinationFooterTVC = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadCombinationFooterTVC") as! ProductUploadCombinationFooterTVC
             
