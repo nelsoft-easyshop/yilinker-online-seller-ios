@@ -39,6 +39,8 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         // Set navigation bar title
         self.title = self.pageTitle
         
@@ -92,7 +94,9 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         self.navigationItem.rightBarButtonItems = [navigationSpacer, customSearchButton]
     }
 
-    // Navigation bar button actions
+    // MARK: -
+    // MARK: - Navigation bar button actions
+    
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
@@ -106,8 +110,10 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         self.presentViewController(navigationController, animated: true, completion: nil)
     }
     
-    // MARK: Private methods
-    // MARK: Remove table view footer
+    // MARK: -
+    // MARK: - Private methods
+    // MARK: - Remove table view footer
+    
     func footerView() {
         let footerView: UIView = UIView(frame: CGRectZero)
         self.tableView.tableFooterView = footerView
@@ -177,8 +183,8 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
                 productUploadCategoryViewController.userType = self.userType
                 self.navigationController!.pushViewController(productUploadCategoryViewController, animated: true)
             } else {
-                let uploadViewController: ProductUploadTableViewController = self.navigationController!.viewControllers[0] as! ProductUploadTableViewController
-                uploadViewController.didSelecteCategory(categoryModel)
+                let uploadViewController: ProductUploadTC = self.navigationController!.viewControllers[0] as! ProductUploadTC
+                uploadViewController.selectedCategory(categoryModel)
                 self.navigationController!.popToRootViewControllerAnimated(true)
                 
             }

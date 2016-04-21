@@ -43,16 +43,16 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
             self.edgesForExtendedLayout = UIRectEdge.None
         }
         
-        self.backButton()
-        self.checkButton()
-        self.registerCell()
+        // Remove tableview footer
+        let footerView: UIView = UIView(frame: CGRectZero)
+        self.tableView.tableFooterView = footerView
         
         // Add texfield action
         self.brandTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         
-        // Remove tableview footer
-        let footerView: UIView = UIView(frame: CGRectZero)
-        self.tableView.tableFooterView = footerView
+        self.backButton()
+        self.checkButton()
+        self.registerCell()
     }
     
     override func didReceiveMemoryWarning() {
@@ -60,8 +60,10 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: Navigation Bar
-    // Add back button in navigation bar
+    // MARK: -
+    // MARK: - Navigation Bar
+    // MARK: - Add back button in navigation bar
+    
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -75,37 +77,49 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
-    // Add check button in navigation bar
+    // MARK: -
+    // MARK: - Add check button in navigation bar
+    
     func checkButton() {
         var checkButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
-        checkButton.frame = CGRectMake(0, 0, 40, 40)
+        checkButton.frame = CGRectMake(0, 0, 25, 25)
         checkButton.addTarget(self, action: "check", forControlEvents: UIControlEvents.TouchUpInside)
-        checkButton.setImage(UIImage(named: "check"), forState: UIControlState.Normal)
+        checkButton.setImage(UIImage(named: "check-white"), forState: UIControlState.Normal)
         var customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: checkButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
-        navigationSpacer.width = -20
+        navigationSpacer.width = -10
         
         self.navigationItem.rightBarButtonItems = [navigationSpacer, customCheckButton]
     }
     
-    // Navigation bar button actions
+    // MARK: -
+    // MARK: - Navigation bar back button action
+    
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
+    
+    // MARK: -
+    // MARK: - Navigation bar check button action
     
     func check() {
         self.delegate!.productUploadBrandViewController(didSelectBrand: self.brandTextField.text, brandModel: self.selectedBrandModel)
         self.back()
     }
     
-    // MARK: Private Methods
+    // MARK: -
+    // MARK: - Private Methods
+    // MARK: - Register Cell
+    
     func registerCell() {
         let nib: UINib = UINib(nibName: ProductUploadCategoryViewControllerConstant.productUploadCategoryTableViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: ProductUploadCategoryViewControllerConstant.productUploadCategoryTableViewCellNibNameAndIdentifier)
     }
     
-    // MARK: Alert view
+    // MARK: -
+    // MARK: - Show Alert view
+    
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         
@@ -119,7 +133,9 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
         }
     }
     
+    // MARK: -
     // MARK: - Show HUD
+    
     func showHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
@@ -132,6 +148,9 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
         self.navigationController?.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
+    
+    // MARK: -
+    // MARK: - Brand TextField action
     
     func textFieldDidChange(sender: UITextField) {
         self.fireBrandWithKeyWord(sender.text)
@@ -158,7 +177,7 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
 
     // MARK: -
     // MARK: - REST API request
-    // MARK: GET METHOD - Fire Brand
+    // MARK: - GET METHOD: Fire Brand With Keyword
     /*
     *
     * (Parameters) - access_token, brandKeyword
@@ -166,22 +185,22 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
     * Function to get brand list
     *
     */
+    
     func fireBrandWithKeyWord(keyWord: String) {
         
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "brandKeyword": keyWord]
         
-        /*if self.searchTask != nil {
-            self.searchTask!.cancel()
-        }*/
-        
         WebServiceManager.fireGetProductUploadRequestWithUrl(APIAtlas.brandUrl, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
+                
                 let data: [NSDictionary] = responseObject["data"] as! [NSDictionary]
                 self.brands.removeAllObjects()
+                
                 for brandDictionary in data {
                     let brandModel: BrandModel = BrandModel(name: brandDictionary["name"] as! String, brandId: brandDictionary["brandId"] as! Int)
                     self.brands.addObject(brandModel)
                 }
+                
                 self.tableView.reloadData()
             } else {
                 if requestErrorType == .ResponseError {
@@ -205,45 +224,10 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
                 }
             }
         })
-        /*
-        let manager: APIManager = APIManager.sharedInstance
-        
-        self.searchTask = manager.GET(APIAtlas.brandUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            let dictionary: NSDictionary = responseObject as! NSDictionary
-            let isSuccessful = dictionary["isSuccessful"] as! Bool
-            let data: [NSDictionary] = dictionary["data"] as! [NSDictionary]
-            if isSuccessful {
-                self.brands.removeAllObjects()
-                for brandDictionary in data {
-                    let brandModel: BrandModel = BrandModel(name: brandDictionary["name"] as! String, brandId: brandDictionary["brandId"] as! Int)
-                    self.brands.addObject(brandModel)
-                }
-                self.tableView.reloadData()
-            }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                if error.code != NSURLErrorCancelled {
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    
-                    if task.statusCode == 401 {
-                        self.fireRefreshTokenWithKeyWord(keyWord)
-                    } else {
-                        if error.userInfo != nil {
-                            let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                            let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                            self.showAlert(Constants.Localized.error, message: errorModel.message)
-                        } else {
-                            self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-                        }
-                    }
-                }
-            })*/
     }
     
-    // MARK: POST METHOD - Refresh token
+    // MARK: -
+    // MARK: - POST METHOD: Refresh token
     /*
     *
     * (Parameters) - client_id, client_secret, grant_type, refresh_token
@@ -251,6 +235,7 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
     * Function to refresh token to get another access token
     *
     */
+    
     func fireRefreshTokenWithKeyWord(keyWord: String) {
         self.showHUD()
         let manager = APIManager.sharedInstance
@@ -262,8 +247,11 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
         
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            
             self.fireBrandWithKeyWord(keyWord)
+            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -276,7 +264,6 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
                 }
                 self.hud?.hide(true)
         })
-        
     }
 
     // Dealloc
