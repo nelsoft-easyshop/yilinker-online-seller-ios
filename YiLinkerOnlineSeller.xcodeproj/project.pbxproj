@@ -11,6 +11,10 @@
 		26239D551CC872A90099A87C /* CountryStoreSetupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26239D531CC872A90099A87C /* CountryStoreSetupViewController.xib */; };
 		26239D581CC8B55C0099A87C /* CommisionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26239D561CC8B55C0099A87C /* CommisionViewController.swift */; };
 		26239D591CC8B55C0099A87C /* CommisionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26239D571CC8B55C0099A87C /* CommisionViewController.xib */; };
+		26239D5C1CC8BC9B0099A87C /* InventoryLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26239D5A1CC8BC9B0099A87C /* InventoryLocationViewController.swift */; };
+		26239D5D1CC8BC9B0099A87C /* InventoryLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26239D5B1CC8BC9B0099A87C /* InventoryLocationViewController.xib */; };
+		26239D601CC8BF060099A87C /* ProductCombinationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26239D5E1CC8BF060099A87C /* ProductCombinationViewController.swift */; };
+		26239D611CC8BF060099A87C /* ProductCombinationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26239D5F1CC8BF060099A87C /* ProductCombinationViewController.xib */; };
 		262BEDEA1CC71A6D004882DF /* CountryStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262BEDE81CC71A6D004882DF /* CountryStoreViewController.swift */; };
 		262BEDEB1CC71A6D004882DF /* CountryStoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 262BEDE91CC71A6D004882DF /* CountryStoreViewController.xib */; };
 		262BEDEE1CC71C8B004882DF /* CountryStoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262BEDEC1CC71C8B004882DF /* CountryStoreTableViewCell.swift */; };
@@ -768,6 +772,10 @@
 		26239D531CC872A90099A87C /* CountryStoreSetupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryStoreSetupViewController.xib; sourceTree = "<group>"; };
 		26239D561CC8B55C0099A87C /* CommisionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommisionViewController.swift; sourceTree = "<group>"; };
 		26239D571CC8B55C0099A87C /* CommisionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommisionViewController.xib; sourceTree = "<group>"; };
+		26239D5A1CC8BC9B0099A87C /* InventoryLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InventoryLocationViewController.swift; sourceTree = "<group>"; };
+		26239D5B1CC8BC9B0099A87C /* InventoryLocationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InventoryLocationViewController.xib; sourceTree = "<group>"; };
+		26239D5E1CC8BF060099A87C /* ProductCombinationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductCombinationViewController.swift; sourceTree = "<group>"; };
+		26239D5F1CC8BF060099A87C /* ProductCombinationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductCombinationViewController.xib; sourceTree = "<group>"; };
 		262BEDE81CC71A6D004882DF /* CountryStoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryStoreViewController.swift; sourceTree = "<group>"; };
 		262BEDE91CC71A6D004882DF /* CountryStoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryStoreViewController.xib; sourceTree = "<group>"; };
 		262BEDEC1CC71C8B004882DF /* CountryStoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryStoreTableViewCell.swift; sourceTree = "<group>"; };
@@ -2452,6 +2460,10 @@
 				26239D531CC872A90099A87C /* CountryStoreSetupViewController.xib */,
 				26239D561CC8B55C0099A87C /* CommisionViewController.swift */,
 				26239D571CC8B55C0099A87C /* CommisionViewController.xib */,
+				26239D5A1CC8BC9B0099A87C /* InventoryLocationViewController.swift */,
+				26239D5B1CC8BC9B0099A87C /* InventoryLocationViewController.xib */,
+				26239D5E1CC8BF060099A87C /* ProductCombinationViewController.swift */,
+				26239D5F1CC8BF060099A87C /* ProductCombinationViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -3344,6 +3356,7 @@
 				798D82D41C8686EB00D2A1F7 /* LoginRegisterTableViewCell.xib in Resources */,
 				798D83051C8686EB00D2A1F7 /* ChangeMobileNumberViewController.xib in Resources */,
 				798D83D11C8686EB00D2A1F7 /* FilterResultsRiderNameViewController.xib in Resources */,
+				26239D611CC8BF060099A87C /* ProductCombinationViewController.xib in Resources */,
 				798D841E1C8686EB00D2A1F7 /* Main.storyboard in Resources */,
 				798D82FF1C8686EB00D2A1F7 /* ChangeAddressViewController.xib in Resources */,
 				798D83BE1C8686EB00D2A1F7 /* ResolutionCenterCell.xib in Resources */,
@@ -3369,6 +3382,7 @@
 				798D837E1C8686EB00D2A1F7 /* ProductUploadAttributeSummaryTableViewCell.xib in Resources */,
 				798D82D61C8686EB00D2A1F7 /* LoginTableViewCell.xib in Resources */,
 				798D82241C8686EB00D2A1F7 /* CustomizedCategoryViews.xib in Resources */,
+				26239D5D1CC8BC9B0099A87C /* InventoryLocationViewController.xib in Resources */,
 				798D831E1C8686EB00D2A1F7 /* ChangeAddressFooterCollectionViewCell.xib in Resources */,
 				F7C40FD01B983CD90091C16C /* cart3.png in Resources */,
 				798D81F91C8686EB00D2A1F7 /* PayoutRequestListDetailHeaderTableViewCell.xib in Resources */,
@@ -3742,6 +3756,7 @@
 				798D82651C8686EB00D2A1F7 /* ScatterChartData.swift in Sources */,
 				798D83851C8686EB00D2A1F7 /* ProductUploadCategoryTableViewCell.swift in Sources */,
 				798D825F1C8686EB00D2A1F7 /* LineRadarChartDataSet.swift in Sources */,
+				26239D5C1CC8BC9B0099A87C /* InventoryLocationViewController.swift in Sources */,
 				798D82721C8686EB00D2A1F7 /* ChartDataRendererBase.swift in Sources */,
 				798D81DF1C8686EB00D2A1F7 /* PayoutRequestListDetailViewController.swift in Sources */,
 				798D84191C8686EB00D2A1F7 /* FooterButtonTableViewCell.swift in Sources */,
@@ -4050,6 +4065,7 @@
 				798D839F1C8686EB00D2A1F7 /* ProductUploadTableHeaderView.swift in Sources */,
 				798D82811C8686EB00D2A1F7 /* RadarChartRenderer.swift in Sources */,
 				798D842B1C8686EB00D2A1F7 /* TransactionProductDescriptionViewController.swift in Sources */,
+				26239D601CC8BF060099A87C /* ProductCombinationViewController.swift in Sources */,
 				798D81E91C8686EB00D2A1F7 /* WithdrawTableViewController.swift in Sources */,
 				798D83D51C8686EB00D2A1F7 /* FilterViewController.swift in Sources */,
 				798D820C1C8686EB00D2A1F7 /* CustomizedCategoryViewController.swift in Sources */,

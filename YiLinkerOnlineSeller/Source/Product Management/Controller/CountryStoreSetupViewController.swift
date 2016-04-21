@@ -94,12 +94,18 @@ class CountryStoreSetupViewController: UIViewController {
     // MARK: - Actions
     
     func productCombinationAction(gesture: UIGestureRecognizer) {
+        let productCombinations: ProductCombinationViewController = ProductCombinationViewController(nibName: "ProductCombinationViewController", bundle: nil)
+        self.navigationController!.pushViewController(productCombinations, animated: true)
     }
     
     func primaryLocationAction(gesture: UIGestureRecognizer) {
+        let inventoryLocation: InventoryLocationViewController = InventoryLocationViewController(nibName: "InventoryLocationViewController", bundle: nil)
+        self.navigationController!.pushViewController(inventoryLocation, animated: true)
     }
     
     func secondaryLocationAction(gesture: UIGestureRecognizer) {
+        let inventoryLocation: InventoryLocationViewController = InventoryLocationViewController(nibName: "InventoryLocationViewController", bundle: nil)
+        self.navigationController!.pushViewController(inventoryLocation, animated: true)
     }
     
     func commisionAction(gesture: UIGestureRecognizer) {
