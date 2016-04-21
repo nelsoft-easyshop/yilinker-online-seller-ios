@@ -82,7 +82,7 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
     
     func checkButton() {
         var checkButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
-        checkButton.frame = CGRectMake(0, 0, 25, 25)
+        checkButton.frame = CGRectMake(0, 0, 28, 28)
         checkButton.addTarget(self, action: "check", forControlEvents: UIControlEvents.TouchUpInside)
         checkButton.setImage(UIImage(named: "check-white"), forState: UIControlState.Normal)
         var customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: checkButton)
