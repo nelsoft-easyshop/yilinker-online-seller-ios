@@ -14,8 +14,8 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="l7w-sq-R1s">
-                        <rect key="frame" x="8" y="8" width="320" height="88"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <rect key="frame" x="0.0" y="0.0" width="343" height="101"/>
+                        <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Uva-gU-jAy">
                             <size key="itemSize" width="98" height="40"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -29,10 +29,10 @@
                     </collectionView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="l7w-sq-R1s" firstAttribute="top" secondItem="FaF-uc-4Tg" secondAttribute="top" constant="8" id="0WY-4M-8y5"/>
-                    <constraint firstAttribute="trailing" secondItem="l7w-sq-R1s" secondAttribute="trailing" constant="15" id="I7t-9X-W0N"/>
-                    <constraint firstItem="l7w-sq-R1s" firstAttribute="leading" secondItem="FaF-uc-4Tg" secondAttribute="leading" constant="8" id="KAE-ZM-QHO"/>
-                    <constraint firstAttribute="bottom" secondItem="l7w-sq-R1s" secondAttribute="bottom" constant="5" id="uWD-4A-RMA"/>
+                    <constraint firstItem="l7w-sq-R1s" firstAttribute="top" secondItem="FaF-uc-4Tg" secondAttribute="top" id="0WY-4M-8y5"/>
+                    <constraint firstAttribute="trailing" secondItem="l7w-sq-R1s" secondAttribute="trailing" id="I7t-9X-W0N"/>
+                    <constraint firstItem="l7w-sq-R1s" firstAttribute="leading" secondItem="FaF-uc-4Tg" secondAttribute="leading" id="KAE-ZM-QHO"/>
+                    <constraint firstAttribute="bottom" secondItem="l7w-sq-R1s" secondAttribute="bottom" id="uWD-4A-RMA"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
