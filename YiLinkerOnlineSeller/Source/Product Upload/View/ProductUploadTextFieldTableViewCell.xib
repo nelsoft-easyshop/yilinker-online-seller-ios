@@ -7,6 +7,7 @@
     <customFonts key="customFonts">
         <mutableArray key="Panton.otf">
             <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -33,7 +34,7 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="e2g-Nu-ugz"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
                         <textInputTraits key="textInputTraits" returnKeyType="done"/>
                     </textField>
                 </subviews>
