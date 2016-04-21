@@ -31,6 +31,7 @@ class ProductUploadTextViewTableViewCell: UITableViewCell, UITextViewDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.productUploadTextView.delegate = self
+        self.productUploadTextView.layer.cornerRadius = 3.0
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
