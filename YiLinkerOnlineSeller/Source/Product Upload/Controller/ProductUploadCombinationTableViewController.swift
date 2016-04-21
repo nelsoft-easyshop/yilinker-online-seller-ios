@@ -23,7 +23,7 @@ protocol ProductUploadCombinationTableViewControllerDelegate {
     func productUploadCombinationTableViewController(appendCombination combination: CombinationModel, isEdit: Bool, indexPath: NSIndexPath)
 }
 
-class ProductUploadCombinationTableViewController: UITableViewController, ProductUploadCombinationFooterTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, SaveButtonViewDelegate {
+class ProductUploadCombinationTableViewController: UITableViewController, ProductUploadCombinationFooterTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, SaveButtonViewDelegate, ProductUploadCombinationFooterTVCDelegate {
     
     // Models
     var attributes: [AttributeModel]?
@@ -147,6 +147,9 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         
         let weightAndHeightNib: UINib = UINib(nibName: ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(weightAndHeightNib, forCellReuseIdentifier: ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier)
+        
+        let skuDimensionsAndWeightNib: UINib = UINib(nibName: "ProductUploadCombinationFooterTVC", bundle: nil)
+        self.tableView.registerNib(skuDimensionsAndWeightNib, forCellReuseIdentifier: "ProductUploadCombinationFooterTVC")
     }
 
     // MARK: - Table view data source
@@ -159,7 +162,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 3
+        return 2
     }
    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -173,7 +176,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
             }
             
             return cell
-        } else if indexPath.row == 1 {
+        } /* else if indexPath.row == 1 {
             let cell: ProductUploadCombinationFooterTableViewCell = tableView.dequeueReusableCellWithIdentifier(PUCTVCConstant.productUploadCombinationFooterTableViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ProductUploadCombinationFooterTableViewCell
             cell.delegate = self
             
@@ -192,7 +195,21 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             
             return cell
-        } else {
+        } */
+        else {
+            let cell: ProductUploadCombinationFooterTVC = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadCombinationFooterTVC") as! ProductUploadCombinationFooterTVC
+            
+            if self.productModel != nil {
+                let combination: CombinationModel = self.productModel!.validCombinations[self.selectedIndexpath!.section]
+                cell.selectionStyle = UITableViewCellSelectionStyle.None
+                cell.weightTextField.text = combination.weight
+                cell.lengthTextField.text = combination.length
+                cell.heightTextField.text = combination.height
+                cell.widthTextField.text = combination.width
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell.delegate = self
+            /*
             let cell: ProductUploadDimensionsAndWeightTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier) as! ProductUploadDimensionsAndWeightTableViewCell
 
             if self.productModel != nil {
@@ -205,6 +222,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
             }
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.delegate = self
+            */
             
             return cell
         }
@@ -246,6 +264,21 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         self.presentViewController(picker, animated: true, completion: nil)
     }
     
+    // MARK: - 
+    // MARK: - ProductUploadCombinationFooterTVC Delegate Method
+    
+    func productUploadSkuDimensionsAndWeightTableViewCell(textFieldDidChange textField: UITextField, text: String, cell:
+        ProductUploadCombinationFooterTVC) {
+            if textField == cell.weightTextField {
+                self.combination.weight = text
+            } else if textField == cell.heightTextField {
+                self.combination.height = text
+            } else if textField == cell.lengthTextField {
+                self.combination.length = text
+            } else if textField == cell.widthTextField {
+                self.combination.width = text
+            }
+    }
     // MARK: UzysAssetsPickerController data source and delegate methods
     func uzyConfig() -> UzysAppearanceConfig {
         let config: UzysAppearanceConfig = UzysAppearanceConfig()
@@ -258,7 +291,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         let alaSset: ALAsset = assets[0] as! ALAsset
         
         for allaSset in assets as! [ALAsset] {
-            let viewController: ProductUploadTC = self.navigationController?.viewControllers[0] as! ProductUploadTC
+            let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
            
             if viewController.uploadType == UploadType.NewProduct {
                 // Insert selected images on the first index of self.images array
@@ -298,7 +331,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
     func productUploadCombinationFooterTableViewCell(didDeleteUploadImage cell: ProductUploadCombinationFooterTableViewCell, indexPath: NSIndexPath) {
         if self.productModel == nil {
             
-            let viewController: ProductUploadTC = self.navigationController?.viewControllers[0] as! ProductUploadTC
+            let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
             
             if viewController.uploadType == UploadType.NewProduct {
                self.images.removeAtIndex(indexPath.row)
