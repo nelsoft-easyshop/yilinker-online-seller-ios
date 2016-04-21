@@ -138,6 +138,8 @@ class ProductUploadCombinationFooterTVC: UITableViewCell, UITextFieldDelegate, U
         self.weightTextField.delegate = self
         self.lengthTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         self.lengthTextField.delegate = self
+        self.skuTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        self.skuTextField.delegate = self
     }
     
     // MARK: -
