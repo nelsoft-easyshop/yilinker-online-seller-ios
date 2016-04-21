@@ -14,6 +14,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     var conditions: [ConditionModel] = []
     var productModel: ProductModel = ProductModel()
     var hud: MBProgressHUD?
+    var uploadType: UploadType = UploadType.NewProduct
     
     // Product Information
     var productName: String = ""
@@ -23,6 +24,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // Product Details
     var productCategory: String = ""
     var productShippingCategory: String = ""
+    var productBrand: String = ""
     var productCondition: String = ""
     var productSKU: String = ""
     var productGroup: String = ""
@@ -126,7 +128,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.userInteractionEnabled = true
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.productName
-                cell.cellTexField.text = "Sample Product Name" //self.productModel!.name
+                cell.cellTexField.text = self.productName
                 
                 cell.cellTexField.placeholder = ProductUploadStrings.productName
                 
@@ -141,7 +143,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.userInteractionEnabled = true
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.shortDescription
-                cell.productUploadTextView.text = "Sample short description" //self.productModel.shortDescription
+                cell.productUploadTextView.text = self.productModel.shortDescription
                 
                 cell.cellTitleLabel.required()
                 cell.textFieldType = ProductTextFieldType.ProductShortDescription
@@ -154,7 +156,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.userInteractionEnabled = true
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.completeDescription
-                cell.productUploadTextView.text = "Sample Complete Description" //self.productModel.completeDescription
+                cell.productUploadTextView.text = self.productCompleteDescription
                 
                 cell.cellTitleLabel.required()
                 cell.textFieldType = ProductTextFieldType.ProductCompleteDescription
@@ -169,9 +171,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.userInteractionEnabled = self.checkIfSeller()
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.category
-                cell.cellTexField.text = "YiLinker Category" //self.productModel.category.name
-                
-                cell.cellTexField.placeholder = ProductUploadStrings.selectCategory
+                cell.cellTexField.text = ProductUploadStrings.selectCategory
                 
                 cell.cellTexField.rightView = self.addRightView("cell-right")
                 cell.cellTexField.rightViewMode = UITextFieldViewMode.Always
@@ -179,7 +179,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.cellTitleLabel.required()
                 cell.textFieldType = ProductTextFieldType.Category
                 cell.delegate = self
-                println(self.productModel.category.name)
+                
                 if self.productModel.category.name != "" {
                     cell.cellTexField.text = self.productModel.category.name
                 }
@@ -192,8 +192,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                
                 cell.cellTitleLabel.text = "Shipping Category" //ProductUploadStrings.brand
                 cell.cellTexField.text = "YiLinker Shipping Category" //self.productModel.brand.name
-                
-                cell.cellTexField.placeholder = "Select Category" //ProductUploadStrings.brand
                 
                 cell.cellTexField.rightView = self.addRightView("cell-right")
                 cell.cellTexField.rightViewMode = UITextFieldViewMode.Always
@@ -217,9 +215,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.userInteractionEnabled = self.checkIfSeller()
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.brand
-                cell.cellTexField.text = "YiLinker Brand" //self.productModel.brand.name
-                
-                cell.cellTexField.placeholder = ProductUploadStrings.brand
+                cell.cellTexField.text = ProductUploadStrings.addBrand
                 
                 cell.cellTexField.rightView = self.addRightView("arrow_down")
                 cell.cellTexField.rightViewMode = UITextFieldViewMode.Always
@@ -240,7 +236,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.userInteractionEnabled = self.checkIfSeller()
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.condition
-                cell.cellTexField.text = "Condition" //self.productModel.condition.name
+                cell.cellTexField.text = self.productCondition
                 
                 cell.cellTexField.placeholder = ProductUploadStrings.condition
                 
@@ -270,29 +266,18 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = self.checkIfSeller()
                 
-                cell.cellTitleLabel.text = "SKU[Stock Keeping Unit]"//ProductUploadStrings.condition
-                cell.cellTexField.text = "SKU123"
+                cell.cellTitleLabel.text = "SKU[Stock Keeping Unit]"
+                cell.cellTexField.text = self.productSKU
                 
-                cell.cellTexField.placeholder = "" //ProductUploadStrings.condition
+                cell.cellTexField.placeholder = "SKU"
                 
                 cell.cellTitleLabel.required()
                 cell.textFieldType = ProductTextFieldType.ProductSKU
-                cell.delegate = self //self.productModel.condition.name
+                cell.delegate = self
                 
-                /*
-                var values: [String] = []
-                
-                if self.conditions.count != 0 {
-                    for condition in self.conditions as [ConditionModel] {
-                        values.append(condition.name)
-                    }
-                
-                    if indexPath.row == 2 {
-                        cell.values = values
-                        cell.addPicker()
-                    }
+                if self.productModel.sku != "" {
+                    cell.cellTexField.text = self.productModel.sku
                 }
-                */
                 
                 return cell
             } else {
@@ -303,25 +288,8 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.cellTitleLabel.text = "Product Group"//ProductUploadStrings.condition
                 cell.cellTexField.text = "Product Group" //self.productModel.condition.name
                 
-                cell.cellTexField.placeholder = ""//ProductUploadStrings.condition
-                
                 cell.textFieldType = ProductTextFieldType.Condition
                 cell.delegate = self
-                
-                /*
-                var values: [String] = []
-                
-                if self.conditions.count != 0 {
-                    for condition in self.conditions as [ConditionModel] {
-                        values.append(condition.name)
-                    }
-                
-                    if indexPath.row == 2 {
-                        cell.values = values
-                        cell.addPicker()
-                    }
-                }
-                */
             
                 return cell
             }
@@ -331,6 +299,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             
             // TODO: Add delegate to button and add action to delegate methods
             cell.cellButton.setTitle("ADD MORE DETAILS ", forState: UIControlState.Normal)
+            cell.cellButton.addTarget(self, action: "addMoreDetails:", forControlEvents: UIControlEvents.TouchUpInside)
             
             return cell
         } else {
@@ -377,6 +346,15 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     
     // MARK: -
     // MARK: - Local Methods
+    // MARK: - Add More Details
+    
+    func addMoreDetails(sender: UIButton) {
+        let productUploadAttributeListTableViewController: ProductUploadAttributeListTableViewController = ProductUploadAttributeListTableViewController(nibName: "ProductUploadAttributeListTableViewController", bundle: nil)
+        productUploadAttributeListTableViewController.productModel = self.productModel.copy()
+        self.navigationController!.pushViewController(productUploadAttributeListTableViewController, animated: true)
+    }
+    
+    // MARK: -
     // MARK: - Add table view footer
     
     func addFooter() {
@@ -494,6 +472,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - Selected Category
     
     func selectedCategory(categoryModel: CategoryModel) {
+        self.productCategory = categoryModel.name
         self.productModel.category = categoryModel
         self.reloadTableViewRowInSection(2, row: 0)
     }
@@ -502,7 +481,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - Product Shipping Category
     // TODO: - Add/Reuse controller to select Product Shipping Category
     
-    func shippingCategory() {
+    func selectedShippingCategory() {
         /*
         let productUploadCategoryViewController: ProductUploadCategoryViewController = ProductUploadCategoryViewController(nibName: "ProductUploadCategoryViewController", bundle: nil)
         productUploadCategoryViewController.delegate = self
@@ -640,32 +619,31 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     func productUploadTextFieldTableViewCell(textFieldDidChange text: String, cell: ProductUploadTextFieldTableViewCell, textFieldType: ProductTextFieldType) {
         if textFieldType ==  ProductTextFieldType.ProductName {
             self.productName  = text
+            self.productModel.name = self.productName
         } else if textFieldType ==  ProductTextFieldType.Category {
             self.category()
-            // self.productCategory = text
         } else if textFieldType ==  ProductTextFieldType.Brand {
             self.brand()
         } else if textFieldType ==  ProductTextFieldType.ShippingCategory {
-            self.shippingCategory()
-            //self.productShippingCategory = text
+            self.selectedShippingCategory()
         } else if textFieldType ==  ProductTextFieldType.Condition {
             self.productCondition = text
+            self.productModel.condition.name = self.productCondition
         } else if textFieldType ==  ProductTextFieldType.ProductSKU {
-            self.productCondition = text
+            self.productSKU = text
+            self.productModel.sku = self.productSKU
         }
-        
-        println(text)
     }
     
     func productUploadTextViewTableViewCell(textFieldDidChange text: String, cell: ProductUploadTextViewTableViewCell, textFieldType: ProductTextFieldType) {
         
         if textFieldType ==  ProductTextFieldType.ProductShortDescription {
             self.productShortDescription = text
+            self.productModel.shortDescription = self.productShortDescription
         } else if textFieldType ==  ProductTextFieldType.ProductCompleteDescription {
             self.productCompleteDescription = text
+            self.productModel.completeDescription = self.productCompleteDescription
         }
-        
-        println(text)
     }
     
     // MARK: -
@@ -675,13 +653,17 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     func productUploadDimensionsAndWeightTableViewCell(textFieldDidChange textField: UITextField, text: String, cell: ProductUploadDimensionsAndWeightTableViewCell) {
         
         if textField == cell.lengthTextField {
-            println("length \(text)")
+            self.productLength = text
+            self.productModel.length = self.productLength
         } else if textField == cell.weightTextField {
-             println("weight \(text)")
+            self.productWeight = text
+            self.productModel.weigth = self.productWeight
         } else if textField == cell.widthTextField {
-             println("width \(text)")
+            self.productWidth = text
+            self.productModel.width = self.productWidth
         } else {
-             println("height \(text)")
+            self.productHeight = text
+            self.productModel.height = self.productHeight
         }
     }
     
@@ -698,7 +680,9 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // TODO: - Store brand in a variable
     
     func productUploadBrandViewController(didSelectBrand brand: String, brandModel: BrandModel) {
-        self.productModel.brand.name = brand
+        
+        self.productBrand = brand
+        self.productModel.brand.name = self.productBrand
         self.reloadTableViewRowInSection(2, row: 2)
     }
     

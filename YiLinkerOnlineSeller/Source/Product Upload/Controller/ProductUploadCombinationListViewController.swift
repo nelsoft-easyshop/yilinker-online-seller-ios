@@ -205,13 +205,27 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             cell.userInteractionEnabled = false
             return cell
         } else {
-            let cell: ProductUploadDimensionsAndWeightTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier) as! ProductUploadDimensionsAndWeightTableViewCell
+            
+            let cell: ProductUploadCombinationFooterTVC = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadCombinationFooterTVC") as! ProductUploadCombinationFooterTVC
+            
+            //let cell: ProductUploadDimensionsAndWeightTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier) as! ProductUploadDimensionsAndWeightTableViewCell
             
             if self.productModel != nil {
-                let combination: CombinationModel = self.productModel!.validCombinations[indexPath.section]
-                cell.userInteractionEnabled = false
                 
+                let combination: CombinationModel = self.productModel!.validCombinations[indexPath.section]
+                
+                let viewController: ProductUploadTC = self.navigationController?.viewControllers[0] as! ProductUploadTC
+                
+                if viewController.uploadType == UploadType.NewProduct {
+                    cell.images = combination.images
+                } else {
+                    cell.images = combination.editedImages
+                }
+                
+                cell.userInteractionEnabled = false
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
+                
+                cell.skuTextField.text = combination.sku
                 cell.weightTextField.text = combination.weight
                 cell.lengthTextField.text = combination.length
                 cell.heightTextField.text = combination.height

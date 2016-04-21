@@ -214,6 +214,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
             } else {
                 cell.images = self.images
             }
+            
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.viewController = self
             cell.delegate = self
@@ -317,6 +318,8 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
                 self.combination.length = text
             } else if textField == cell.widthTextField {
                 self.combination.width = text
+            } else {
+                self.combination.sku = text
             }
     }
     
@@ -407,11 +410,12 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
         let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
         dispatch_after(delayTime, dispatch_get_main_queue()) {
             // Error valiadtion if any of the required fields is empty
-            if self.combination.retailPrice == "" {
+            /*if self.combination.retailPrice == "" {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.retailPriceRequired, title: ProductUploadStrings.incompleteProductDetails)
             } else if self.combination.quantity == "" {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.quantityRequired, title: ProductUploadStrings.incompleteProductDetails)
-            } else if self.combination.sku == "" {
+            } else */
+            if self.combination.sku == "" {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.skuRequried, title: ProductUploadStrings.incompleteProductDetails)
             } else if self.combination.length == "" {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.lengthRequried, title: ProductUploadStrings.incompleteProductDetails)
@@ -422,6 +426,36 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
             } else if self.combination.height == "" {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.heightRequried, title: ProductUploadStrings.incompleteProductDetails)
             } else {
+                let cell: ProductUploadCombinationFooterTVC = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as! ProductUploadCombinationFooterTVC
+                
+                self.combination.images = cell.uploadedImages()
+                
+                let cell2: ProductUploadCombinationTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! ProductUploadCombinationTableViewCell
+                
+                let combination2: CombinationModel = cell2.data()
+                self.combination.attributes = combination2.attributes
+                
+                // Check if SKU is already used
+                // SKU's must be unique
+                if self.productModel == nil {
+                    if find(ProductSku.SKUS, self.combination.sku) != nil {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_AVAILABLE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
+                    } else {
+                        self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: false, indexPath: NSIndexPath())
+                        ProductSku.SKUS.append(self.combination.sku)
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }
+                } else {
+                    ProductSku.SKUS[self.selectedIndexpath!.section] = ""
+                    if find(ProductSku.SKUS, self.combination.sku) != nil {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_AVAILABLE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
+                    } else {
+                        self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: true, indexPath: self.selectedIndexpath!)
+                        ProductSku.SKUS[self.selectedIndexpath!.section] = self.combination.sku
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }
+                }
+                /*
                 if self.combination.discountedPrice.toInt() > self.combination.retailPrice.toInt() {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRICE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
                     self.combination.discountedPrice = self.combination.retailPrice
@@ -455,7 +489,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
                             self.navigationController?.popViewControllerAnimated(true)
                         }
                     }
-                }
+                }*/
             }
         }
     }
