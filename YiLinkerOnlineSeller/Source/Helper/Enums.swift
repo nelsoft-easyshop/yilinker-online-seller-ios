@@ -37,7 +37,7 @@ enum ProductTextFieldType {
     case ProductSKU
     case ProductRetailPrice
     case ProductDiscountPrice
-    case ProductLenght
+    case ProductLength
     case ProductWidth
     case ProductWeight
     case ProductHeight
