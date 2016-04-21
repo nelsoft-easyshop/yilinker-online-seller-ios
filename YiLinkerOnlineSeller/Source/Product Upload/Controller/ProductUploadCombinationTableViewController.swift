@@ -55,6 +55,9 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
             self.title = "Add Combination"
         }
 
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "hideKeyboard")
+        self.tableView.addGestureRecognizer(tap)
+        
         self.tableView.tableFooterView = self.footerView()
         
         self.addDummyPhoto()
@@ -68,90 +71,6 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: Navigation bar
-    // Add back button in navigation bar
-    func backButton() {
-        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
-        backButton.frame = CGRectMake(0, 0, 40, 40)
-        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
-        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
-        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
-        
-        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
-        navigationSpacer.width = -20
-        
-        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
-    }
-    
-    // Navigation bar back button action
-    func back() {
-        self.navigationController?.popViewControllerAnimated(true)
-    }
-    
-    // MARK: Private methods
-    // Add dummy photo in self.image array
-    func addDummyPhoto() {
-        let viewController: ProductUploadTC = self.navigationController?.viewControllers[0] as! ProductUploadTC
-        
-        if viewController.uploadType == UploadType.NewProduct {
-            if self.productModel != nil {
-                self.images = self.productModel!.validCombinations[self.selectedIndexpath!.section].images
-                self.images.append(UIImage(named: "addPhoto")!)
-            } else {
-                self.images.append(UIImage(named: "addPhoto")!)
-            }
-        } else {
-            
-            for image in self.images {
-                let i: ServerUIImage = image as! ServerUIImage
-            }
-            
-            if self.productModel != nil {
-                self.images = self.productModel!.validCombinations[self.selectedIndexpath!.section].editedImages
-                let image: UIImage = UIImage(named: "addPhoto")!
-                let serverImage: ServerUIImage  = ServerUIImage(data: UIImagePNGRepresentation(image)!)!
-                self.images.append(serverImage)
-            } else {
-                let image: UIImage = UIImage(named: "addPhoto")!
-                let serverImage: ServerUIImage  = ServerUIImage(data: UIImagePNGRepresentation(image)!)!
-                self.images.append(serverImage)
-            }
-        }
-    }
-    
-    // MARK: - Footer View
-    func footerView() -> SaveButtonView {
-        let saveButtonView: SaveButtonView = XibHelper.puffViewWithNibName("SaveButtonView", index: 0) as! SaveButtonView
-        saveButtonView.delegate = self
-        return saveButtonView
-    }
-    
-    // MARK: Header view
-    // Add table view header
-    func headerView() {
-        let headerView: ProductUploadCombinationHeaderTableViewCell = XibHelper.puffViewWithNibName("ProductUploadCombinationHeaderTableViewCell", index: 0) as! ProductUploadCombinationHeaderTableViewCell
-        self.tableView.tableHeaderView = headerView
-        headerView.combinationLabel.text = self.headerTitle
-    }
-    
-    // MARK: Register table view cells
-    func registerCell() {
-        let footerNib: UINib = UINib(nibName: PUCTVCConstant.productUploadCombinationFooterTableViewCellNibNameAndIdentifier, bundle: nil)
-        self.tableView.registerNib(footerNib, forCellReuseIdentifier: PUCTVCConstant.productUploadCombinationFooterTableViewCellNibNameAndIdentifier)
-        
-        let combinationCell: UINib = UINib(nibName: PUCTVCConstant.productUploadCombinationTableViewCellNibNameAndIdentifier, bundle: nil)
-        self.tableView.registerNib(combinationCell, forCellReuseIdentifier: PUCTVCConstant.productUploadCombinationTableViewCellNibNameAndIdentifier)
-        
-        let valuesNib: UINib = UINib(nibName: PUCTVCConstant.productUploadAttributeValluesCollectionViewCellNibNameAndIdentifier, bundle: nil)
-        self.tableView.registerNib(valuesNib, forCellReuseIdentifier: PUCTVCConstant.productUploadAttributeValluesCollectionViewCellNibNameAndIdentifier)
-        
-        let weightAndHeightNib: UINib = UINib(nibName: ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier, bundle: nil)
-        self.tableView.registerNib(weightAndHeightNib, forCellReuseIdentifier: ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier)
-        
-        let skuDimensionsAndWeightNib: UINib = UINib(nibName: "ProductUploadCombinationFooterTVC", bundle: nil)
-        self.tableView.registerNib(skuDimensionsAndWeightNib, forCellReuseIdentifier: "ProductUploadCombinationFooterTVC")
-    }
-
     // MARK: -
     // MARK: - Table view data source
     
@@ -160,13 +79,13 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
         // Return the number of sections.
         return 1
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         return 2
     }
-   
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell: ProductUploadCombinationTableViewCell = tableView.dequeueReusableCellWithIdentifier(PUCTVCConstant.productUploadCombinationTableViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ProductUploadCombinationTableViewCell
@@ -183,21 +102,21 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
             cell.delegate = self
             
             if self.productModel != nil {
-                let combination: CombinationModel = self.productModel!.validCombinations[self.selectedIndexpath!.section]
-                cell.images = self.images
-                cell.discountedPriceTextField.text = combination.discountedPrice
-                cell.quantityTextField.text = combination.quantity
-                cell.retailPriceTextField.text = combination.retailPrice
-                cell.skuTextField.text = combination.sku
+            let combination: CombinationModel = self.productModel!.validCombinations[self.selectedIndexpath!.section]
+            cell.images = self.images
+            cell.discountedPriceTextField.text = combination.discountedPrice
+            cell.quantityTextField.text = combination.quantity
+            cell.retailPriceTextField.text = combination.retailPrice
+            cell.skuTextField.text = combination.sku
             } else {
-                cell.images = self.images
-                cell.quantityTextField.text = self.combination.quantity
+            cell.images = self.images
+            cell.quantityTextField.text = self.combination.quantity
             }
             cell.viewController = self
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             
             return cell
-        } */
+            } */
         else {
             let cell: ProductUploadCombinationFooterTVC = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadCombinationFooterTVC") as! ProductUploadCombinationFooterTVC
             
@@ -220,14 +139,14 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
             cell.delegate = self
             /*
             let cell: ProductUploadDimensionsAndWeightTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier) as! ProductUploadDimensionsAndWeightTableViewCell
-
+            
             if self.productModel != nil {
-                let combination: CombinationModel = self.productModel!.validCombinations[self.selectedIndexpath!.section]
-                cell.selectionStyle = UITableViewCellSelectionStyle.None
-                cell.weightTextField.text = combination.weight
-                cell.lengthTextField.text = combination.length
-                cell.heightTextField.text = combination.height
-                cell.widthTextField.text = combination.width
+            let combination: CombinationModel = self.productModel!.validCombinations[self.selectedIndexpath!.section]
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell.weightTextField.text = combination.weight
+            cell.lengthTextField.text = combination.length
+            cell.heightTextField.text = combination.height
+            cell.widthTextField.text = combination.width
             }
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.delegate = self
@@ -265,6 +184,105 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
         } else {
             return 320
         }
+    }
+    
+    // MARK: -
+    // MARK: - Private methods
+    // MARK: - Add dummy photo in self.image array
+    
+    func addDummyPhoto() {
+        let viewController: ProductUploadTC = self.navigationController?.viewControllers[0] as! ProductUploadTC
+        
+        if viewController.uploadType == UploadType.NewProduct {
+            if self.productModel != nil {
+                self.images = self.productModel!.validCombinations[self.selectedIndexpath!.section].images
+                self.images.append(UIImage(named: "addPhoto")!)
+            } else {
+                self.images.append(UIImage(named: "addPhoto")!)
+            }
+        } else {
+            
+            for image in self.images {
+                let i: ServerUIImage = image as! ServerUIImage
+            }
+            
+            if self.productModel != nil {
+                self.images = self.productModel!.validCombinations[self.selectedIndexpath!.section].editedImages
+                let image: UIImage = UIImage(named: "addPhoto")!
+                let serverImage: ServerUIImage  = ServerUIImage(data: UIImagePNGRepresentation(image)!)!
+                self.images.append(serverImage)
+            } else {
+                let image: UIImage = UIImage(named: "addPhoto")!
+                let serverImage: ServerUIImage  = ServerUIImage(data: UIImagePNGRepresentation(image)!)!
+                self.images.append(serverImage)
+            }
+        }
+    }
+    
+    // MARK: -
+    // MARK: - Navigation bar
+    // MARK: - Add back button in navigation bar
+    
+    func backButton() {
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButton.frame = CGRectMake(0, 0, 40, 40)
+        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    // MARK: -
+    // MARK: - Navigation bar back button action
+    
+    func back() {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    // MARK: -
+    // MARK: - Footer View
+    
+    func footerView() -> SaveButtonView {
+        let saveButtonView: SaveButtonView = XibHelper.puffViewWithNibName("SaveButtonView", index: 0) as! SaveButtonView
+        saveButtonView.delegate = self
+        return saveButtonView
+    }
+    
+    // MARK: Header view
+    // Add table view header
+    func headerView() {
+        let headerView: ProductUploadCombinationHeaderTableViewCell = XibHelper.puffViewWithNibName("ProductUploadCombinationHeaderTableViewCell", index: 0) as! ProductUploadCombinationHeaderTableViewCell
+        self.tableView.tableHeaderView = headerView
+        headerView.combinationLabel.text = self.headerTitle
+    }
+    
+    // MARK: -
+    // MARK: - Hide Keyboard
+    
+    func hideKeyboard() {
+        self.tableView.endEditing(true)
+    }
+    
+    // MARK: Register table view cells
+    func registerCell() {
+        let footerNib: UINib = UINib(nibName: PUCTVCConstant.productUploadCombinationFooterTableViewCellNibNameAndIdentifier, bundle: nil)
+        self.tableView.registerNib(footerNib, forCellReuseIdentifier: PUCTVCConstant.productUploadCombinationFooterTableViewCellNibNameAndIdentifier)
+        
+        let combinationCell: UINib = UINib(nibName: PUCTVCConstant.productUploadCombinationTableViewCellNibNameAndIdentifier, bundle: nil)
+        self.tableView.registerNib(combinationCell, forCellReuseIdentifier: PUCTVCConstant.productUploadCombinationTableViewCellNibNameAndIdentifier)
+        
+        let valuesNib: UINib = UINib(nibName: PUCTVCConstant.productUploadAttributeValluesCollectionViewCellNibNameAndIdentifier, bundle: nil)
+        self.tableView.registerNib(valuesNib, forCellReuseIdentifier: PUCTVCConstant.productUploadAttributeValluesCollectionViewCellNibNameAndIdentifier)
+        
+        let weightAndHeightNib: UINib = UINib(nibName: ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier, bundle: nil)
+        self.tableView.registerNib(weightAndHeightNib, forCellReuseIdentifier: ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier)
+        
+        let skuDimensionsAndWeightNib: UINib = UINib(nibName: "ProductUploadCombinationFooterTVC", bundle: nil)
+        self.tableView.registerNib(skuDimensionsAndWeightNib, forCellReuseIdentifier: "ProductUploadCombinationFooterTVC")
     }
     
     // MARK: -

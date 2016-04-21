@@ -272,7 +272,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         
         if isValidCombination {
             
-            let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
+            let viewController: ProductUploadTC = self.navigationController?.viewControllers[0] as! ProductUploadTC
             
             if viewController.uploadType == UploadType.NewProduct {
                 if !isEdit {
