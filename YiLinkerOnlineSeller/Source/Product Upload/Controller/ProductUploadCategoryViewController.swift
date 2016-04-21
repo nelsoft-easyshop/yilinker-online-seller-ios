@@ -187,7 +187,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
     
     //MARK: -
     //MARK: - REST API request
-    //MARK: GET METHOD - Fire Category With Parent ID
+    //MARK: - GET METHOD: Fire Category With Parent ID
     /*
     *
     * (Parameters) - access_token, parentId
@@ -195,6 +195,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
     *Function to get list of category
     *
     */
+    
     func fireCategoryWithParentID(parentID: Int) {
         self.showHUD()
         
@@ -212,6 +213,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
                     let categoryModel: CategoryModel = CategoryModel(uid: categoryDictionary["productCategoryId"] as! Int, name: categoryDictionary["name"] as! String, hasChildren: categoryDictionary["hasChildren"] as! String)
                     self.categories.append(categoryModel)
                 }
+                
                 self.tableView.reloadData()
                 self.hud?.hide(true)
             } else {
@@ -237,44 +239,10 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
                 }
             }
         })
-        /*
-        let manager: APIManager = APIManager.sharedInstance
-        manager.GET(APIAtlas.categoryUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            let dictionary: NSDictionary = responseObject as! NSDictionary
-            let isSuccessful = dictionary["isSuccessful"] as! Bool
-            
-            if isSuccessful {
-                let data: NSArray = dictionary["data"] as! NSArray
-                
-                for categoryDictionary in data as! [NSDictionary] {
-                    let categoryModel: CategoryModel = CategoryModel(uid: categoryDictionary["productCategoryId"] as! Int, name: categoryDictionary["name"] as! String, hasChildren: categoryDictionary["hasChildren"] as! String)
-                    self.categories.append(categoryModel)
-                }
-            }
-            self.tableView.reloadData()
-            self.hud?.hide(true)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    self.fireRefreshToken(parentID)
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(Constants.Localized.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-                    }
-                }
-                self.hud?.hide(true)
-        })*/
     }
     
-    //MARK: POST METHOD - Refresh token
+    // MARK: -
+    // MARK: - POST METHOD: Refresh token
     /*
     *
     * (Parameters) - client_id, client_secret, grant_type, refresh_token
@@ -282,6 +250,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
     *Function to refresh token to get another access token
     *
     */
+    
     func fireRefreshToken(parentID: Int) {
         self.showHUD()
         let manager = APIManager.sharedInstance
@@ -295,7 +264,9 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            
             self.fireCategoryWithParentID(parentID)
+            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -308,7 +279,6 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
                 }
                 self.hud?.hide(true)
         })
-        
     }
 
     // Dealloc

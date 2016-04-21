@@ -91,7 +91,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
     // MARK: Private methods
     // Add dummy photo in self.image array
     func addDummyPhoto() {
-        let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
+        let viewController: ProductUploadTC = self.navigationController?.viewControllers[0] as! ProductUploadTC
         
         if viewController.uploadType == UploadType.NewProduct {
             if self.productModel != nil {
@@ -258,7 +258,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         let alaSset: ALAsset = assets[0] as! ALAsset
         
         for allaSset in assets as! [ALAsset] {
-            let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
+            let viewController: ProductUploadTC = self.navigationController?.viewControllers[0] as! ProductUploadTC
            
             if viewController.uploadType == UploadType.NewProduct {
                 // Insert selected images on the first index of self.images array
@@ -298,7 +298,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
     func productUploadCombinationFooterTableViewCell(didDeleteUploadImage cell: ProductUploadCombinationFooterTableViewCell, indexPath: NSIndexPath) {
         if self.productModel == nil {
             
-            let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
+            let viewController: ProductUploadTC = self.navigationController?.viewControllers[0] as! ProductUploadTC
             
             if viewController.uploadType == UploadType.NewProduct {
                self.images.removeAtIndex(indexPath.row)

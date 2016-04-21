@@ -41,7 +41,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         self.backButton()
         self.registerCell()
         
-        let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
+        let viewController: ProductUploadTC = self.navigationController?.viewControllers[0] as! ProductUploadTC
     }
     
     override func viewWillAppear(animated: Bool) {
