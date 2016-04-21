@@ -23,7 +23,7 @@ protocol ProductUploadCombinationTableViewControllerDelegate {
     func productUploadCombinationTableViewController(appendCombination combination: CombinationModel, isEdit: Bool, indexPath: NSIndexPath)
 }
 
-class ProductUploadCombinationTableViewController: UITableViewController, ProductUploadCombinationFooterTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, SaveButtonViewDelegate, ProductUploadCombinationFooterTVCDelegate {
+class ProductUploadCombinationTableViewController: UITableViewController, UzysAssetsPickerControllerDelegate, SaveButtonViewDelegate, ProductUploadCombinationFooterTVCDelegate {
     
     // Models
     var attributes: [AttributeModel]?
@@ -152,7 +152,9 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         self.tableView.registerNib(skuDimensionsAndWeightNib, forCellReuseIdentifier: "ProductUploadCombinationFooterTVC")
     }
 
+    // MARK: -
     // MARK: - Table view data source
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
@@ -200,14 +202,20 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
             let cell: ProductUploadCombinationFooterTVC = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadCombinationFooterTVC") as! ProductUploadCombinationFooterTVC
             
             if self.productModel != nil {
+                
+                cell.images = self.images
+                
                 let combination: CombinationModel = self.productModel!.validCombinations[self.selectedIndexpath!.section]
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.weightTextField.text = combination.weight
                 cell.lengthTextField.text = combination.length
                 cell.heightTextField.text = combination.height
                 cell.widthTextField.text = combination.width
+            } else {
+                cell.images = self.images
             }
             cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell.viewController = self
             cell.delegate = self
             /*
             let cell: ProductUploadDimensionsAndWeightTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier) as! ProductUploadDimensionsAndWeightTableViewCell
@@ -228,20 +236,49 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         }
     }
     
-    // MARK: ProductUploadCombinationFooterTableViewCell Delegate methods
-    func productUploadCombinationFooterTableViewCell(didClickDoneButton cell: ProductUploadCombinationFooterTableViewCell, sku: String, quantity: String, discountedPrice: String, retailPrice: String, uploadImages: [UIImage]) {
-        self.tableView.endEditing(true)
-        self.tableView.reloadData()
-        
+    // MARK: -
+    // MARK: - Table view data source method
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let rowInitialHeight: CGFloat = 14
+        if indexPath.row == 0 {
+            
+            let rowHeight: CGFloat = 95
+            
+            let cellCount: Int = self.attributes!.count
+            
+            var numberOfRows: CGFloat = CGFloat(cellCount) / 2
+            
+            if numberOfRows == 0 {
+                numberOfRows = 1
+            } else if floor(numberOfRows) != numberOfRows {
+                numberOfRows++
+            }
+            
+            var dynamicHeight: CGFloat = floor(numberOfRows) * rowHeight
+            
+            var cellHeight: CGFloat = rowInitialHeight + dynamicHeight
+            
+            
+            return cellHeight
+        } else {
+            return 320
+        }
+    }
+    
+    // MARK: -
+    // MARK: - ProductUploadCombinationFooterTVCDelegate Method - productUploadCombinationFooterTVC
+    
+    func productUploadCombinationFooterTVC(didClickDoneButton cell: ProductUploadCombinationFooterTVC, sku: String, length: String, width: String, height: String, weight: String, uploadImages: [UIImage]) {
         let cell: ProductUploadCombinationTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! ProductUploadCombinationTableViewCell
-       
+        
         let combination: CombinationModel = cell.data()
         
         combination.images = uploadImages
-        combination.quantity = quantity
-        combination.discountedPrice = discountedPrice
+        combination.length = length
+        combination.width = width
         combination.sku = sku
-        combination.retailPrice = retailPrice
+        combination.weight = weight
         
         if self.productModel == nil {
             self.delegate!.productUploadCombinationTableViewController(appendCombination: combination, isEdit: false, indexPath: NSIndexPath())
@@ -249,10 +286,13 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
             self.delegate!.productUploadCombinationTableViewController(appendCombination: combination, isEdit: true, indexPath: self.selectedIndexpath!)
         }
         
-         self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
-    func productUploadCombinationFooterTableViewCell(didClickUploadImage cell: ProductUploadCombinationFooterTableViewCell) {
+    // MARK: -
+    // MARK: - ProductUploadCombinationFooterTVC Delegate Method - productUploadCombinationFooterTVC
+    
+    func productUploadCombinationFooterTVC(didClickUploadImage cell: ProductUploadCombinationFooterTVC) {
         let picker: UzysAssetsPickerController = UzysAssetsPickerController()
         let maxCount: Int = 6
         
@@ -264,8 +304,8 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         self.presentViewController(picker, animated: true, completion: nil)
     }
     
-    // MARK: - 
-    // MARK: - ProductUploadCombinationFooterTVC Delegate Method
+    // MARK: -
+    // MARK: - ProductUploadCombinationFooterTVC Delegate Method - productUploadSkuDimensionsAndWeightTableViewCell
     
     func productUploadSkuDimensionsAndWeightTableViewCell(textFieldDidChange textField: UITextField, text: String, cell:
         ProductUploadCombinationFooterTVC) {
@@ -279,7 +319,40 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
                 self.combination.width = text
             }
     }
-    // MARK: UzysAssetsPickerController data source and delegate methods
+    
+    // MARK: -
+    // MARK: - ProductUploadCombinationFooterTableViewCell Delegate Method
+    
+    func productUploadCombinationFooterTVC(didDeleteUploadImage cell: ProductUploadCombinationFooterTVC, indexPath: NSIndexPath) {
+        if self.productModel == nil {
+            
+            let viewController: ProductUploadTC = self.navigationController?.viewControllers[0] as! ProductUploadTC
+            
+            if viewController.uploadType == UploadType.NewProduct {
+                self.images.removeAtIndex(indexPath.row)
+            } else {
+                self.images.removeAtIndex(indexPath.row)
+            }
+            
+        } else {
+            self.images.removeAtIndex(indexPath.row)
+            if indexPath.row < self.productModel!.validCombinations[self.selectedIndexpath!.section].imagesId.count {
+                if !contains(ProductUploadCombination.deleted, self.productModel!.validCombinations[self.selectedIndexpath!.section].imagesId[indexPath.row]) {
+                    ProductUploadCombination.deleted.append(self.productModel!.validCombinations[self.selectedIndexpath!.section].imagesId[indexPath.row])
+                }
+            }
+            
+            if indexPath.row < self.productModel!.validCombinations[self.selectedIndexpath!.section].images.count {
+                self.productModel!.validCombinations[self.selectedIndexpath!.section].images.removeAtIndex(indexPath.row)
+            }
+            
+        }
+    }
+    
+    // MARK: -
+    // MARK: - UzysAssetsPickerController
+    // MARK: - UzysAssetsPickerController data source and delegate methods
+    
     func uzyConfig() -> UzysAppearanceConfig {
         let config: UzysAppearanceConfig = UzysAppearanceConfig()
         config.finishSelectionButtonColor = Constants.Colors.appTheme
@@ -291,8 +364,8 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         let alaSset: ALAsset = assets[0] as! ALAsset
         
         for allaSset in assets as! [ALAsset] {
-            let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
-           
+            let viewController: ProductUploadTC = self.navigationController?.viewControllers[0] as! ProductUploadTC
+            
             if viewController.uploadType == UploadType.NewProduct {
                 // Insert selected images on the first index of self.images array
                 let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullScreenImage().takeUnretainedValue())!
@@ -311,7 +384,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         let indexPath: NSIndexPath = NSIndexPath(forRow: 1, inSection: 0)
         
         // Pass 'self.images' to ProductUploadCombinationFooterTableViewCell 'images'
-        let cell: ProductUploadCombinationFooterTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! ProductUploadCombinationFooterTableViewCell
+        let cell: ProductUploadCombinationFooterTVC = self.tableView.cellForRowAtIndexPath(indexPath) as! ProductUploadCombinationFooterTVC
         cell.images = self.images
         
         let lastIndexPath: NSIndexPath = NSIndexPath(forItem: self.images.count - 1, inSection: 0)
@@ -325,46 +398,6 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
     
     func uzysAssetsPickerControllerDidExceedMaximumNumberOfSelection(picker: UzysAssetsPickerController!) {
         
-    }
-    
-    // MARK: ProductUploadCombinationFooterTableViewCell Delegate Method
-    func productUploadCombinationFooterTableViewCell(didDeleteUploadImage cell: ProductUploadCombinationFooterTableViewCell, indexPath: NSIndexPath) {
-        if self.productModel == nil {
-            
-            let viewController: ProductUploadTableViewController = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
-            
-            if viewController.uploadType == UploadType.NewProduct {
-               self.images.removeAtIndex(indexPath.row)
-            } else {
-               self.images.removeAtIndex(indexPath.row)
-            }
-            
-        } else {
-            self.images.removeAtIndex(indexPath.row)
-            if indexPath.row < self.productModel!.validCombinations[self.selectedIndexpath!.section].imagesId.count {
-                if !contains(ProductUploadCombination.deleted, self.productModel!.validCombinations[self.selectedIndexpath!.section].imagesId[indexPath.row]) {
-                    ProductUploadCombination.deleted.append(self.productModel!.validCombinations[self.selectedIndexpath!.section].imagesId[indexPath.row])
-                }
-            }
-    
-            if indexPath.row < self.productModel!.validCombinations[self.selectedIndexpath!.section].images.count {
-                self.productModel!.validCombinations[self.selectedIndexpath!.section].images.removeAtIndex(indexPath.row)
-            }
-            
-        }
-    }
-    
-    // MARK: ProductUploadDimensionsAndWeightTableViewCell Delegate Method
-    func productUploadDimensionsAndWeightTableViewCell(textFieldDidChange textField: UITextField, text: String, cell: ProductUploadDimensionsAndWeightTableViewCell) {
-        if textField.isEqual(cell.weightTextField) {
-            self.combination.weight = text
-        } else if textField.isEqual(cell.heightTextField) {
-            self.combination.height = text
-        } else if textField.isEqual(cell.lengthTextField) {
-            self.combination.length = text
-        } else if textField.isEqual(cell.widthTextField) {
-            self.combination.width = text
-        }
     }
     
     // MARK: SaveButtonView Delegate method
@@ -393,7 +426,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRICE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
                     self.combination.discountedPrice = self.combination.retailPrice
                 } else {
-                    let cell: ProductUploadCombinationFooterTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as! ProductUploadCombinationFooterTableViewCell
+                    let cell: ProductUploadCombinationFooterTVC = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as! ProductUploadCombinationFooterTVC
                     
                     self.combination.images = cell.uploadedImages()
                     
@@ -427,54 +460,48 @@ class ProductUploadCombinationTableViewController: UITableViewController, Produc
         }
     }
     
-    // MARK: - Product Upload Combination Footer Delegate method
-    func productUploadCombinationFooterTableViewCell(textFieldDidChange textField: UITextField, text: String, cell: ProductUploadCombinationFooterTableViewCell) {
-        if textField.isEqual(cell.skuTextField) {
-            self.combination.sku = text
-        } else if textField.isEqual(cell.discountedPriceTextField) {
-            self.combination.discountedPrice = text
-        } else if textField.isEqual(cell.quantityTextField) {
-            self.combination.quantity = text
-        } else if textField.isEqual(cell.retailPriceTextField) {
-            self.combination.retailPrice = text
-            self.combination.discountedPrice = text
-            cell.discountedPriceTextField.text = text
-        }
-    }
-    
-    // MARK: Table view data source method
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let rowInitialHeight: CGFloat = 14
-        if indexPath.row == 0 {
-            
-            let rowHeight: CGFloat = 95
-            
-            let cellCount: Int = self.attributes!.count
-            
-            var numberOfRows: CGFloat = CGFloat(cellCount) / 2
-            
-            if numberOfRows == 0 {
-                numberOfRows = 1
-            } else if floor(numberOfRows) != numberOfRows {
-                numberOfRows++
-            }
-            
-            var dynamicHeight: CGFloat = floor(numberOfRows) * rowHeight
-            
-            var cellHeight: CGFloat = rowInitialHeight + dynamicHeight
-            
-            
-            return cellHeight
-        } else if indexPath.row == 1 {
-            return PUCTVCConstant.footerHeight
-        } else {
-            return 245
-        }
-    }
-    
     // Dealloc
     deinit {
         self.tableView.delegate = nil
         self.tableView.dataSource = nil
     }
+    
+    /*
+    // MARK: ProductUploadCombinationFooterTableViewCell Delegate methods
+    func productUploadCombinationFooterTVC(didClickDoneButton cell: ProductUploadCombinationFooterTVC, sku: String, quantity: String, discountedPrice: String, retailPrice: String, uploadImages: [UIImage]) {
+        self.tableView.endEditing(true)
+        self.tableView.reloadData()
+        
+        let cell: ProductUploadCombinationTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! ProductUploadCombinationTableViewCell
+       
+        let combination: CombinationModel = cell.data()
+        
+        combination.images = uploadImages
+        combination.quantity = quantity
+        combination.discountedPrice = discountedPrice
+        combination.sku = sku
+        combination.retailPrice = retailPrice
+        
+        if self.productModel == nil {
+            self.delegate!.productUploadCombinationTableViewController(appendCombination: combination, isEdit: false, indexPath: NSIndexPath())
+        } else {
+            self.delegate!.productUploadCombinationTableViewController(appendCombination: combination, isEdit: true, indexPath: self.selectedIndexpath!)
+        }
+        
+         self.navigationController?.popViewControllerAnimated(true)
+    }*/
+    
+    /*
+    // MARK: ProductUploadDimensionsAndWeightTableViewCell Delegate Method
+    func productUploadDimensionsAndWeightTableViewCell(textFieldDidChange textField: UITextField, text: String, cell: ProductUploadDimensionsAndWeightTableViewCell) {
+        if textField.isEqual(cell.weightTextField) {
+            self.combination.weight = text
+        } else if textField.isEqual(cell.heightTextField) {
+            self.combination.height = text
+        } else if textField.isEqual(cell.lengthTextField) {
+            self.combination.length = text
+        } else if textField.isEqual(cell.widthTextField) {
+            self.combination.width = text
+        }
+    }*/
 }
