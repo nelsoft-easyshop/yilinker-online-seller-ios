@@ -61,5 +61,12 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
     
     
     // MARK: - Table View Delegate
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let countryStoreSetup: CountryStoreSetupViewController = CountryStoreSetupViewController(nibName: "CountryStoreSetupViewController", bundle: nil)
+        self.navigationController?.pushViewController(countryStoreSetup, animated: true)
+        
+    }
 
 }
