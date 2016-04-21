@@ -94,19 +94,17 @@ class CountryStoreSetupViewController: UIViewController {
     // MARK: - Actions
     
     func productCombinationAction(gesture: UIGestureRecognizer) {
-        println("product combination")
     }
     
     func primaryLocationAction(gesture: UIGestureRecognizer) {
-        println("primary location")
     }
     
     func secondaryLocationAction(gesture: UIGestureRecognizer) {
-        println("secondary location")
     }
     
     func commisionAction(gesture: UIGestureRecognizer) {
-        println("commission")
+        let commision: CommisionViewController = CommisionViewController(nibName: "CommisionViewController", bundle: nil)
+        self.navigationController!.pushViewController(commision, animated: true)
     }
 
 }

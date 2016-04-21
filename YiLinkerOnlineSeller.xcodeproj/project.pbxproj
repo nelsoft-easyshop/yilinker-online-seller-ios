@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		26239D541CC872A90099A87C /* CountryStoreSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26239D521CC872A90099A87C /* CountryStoreSetupViewController.swift */; };
 		26239D551CC872A90099A87C /* CountryStoreSetupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26239D531CC872A90099A87C /* CountryStoreSetupViewController.xib */; };
+		26239D581CC8B55C0099A87C /* CommisionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26239D561CC8B55C0099A87C /* CommisionViewController.swift */; };
+		26239D591CC8B55C0099A87C /* CommisionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26239D571CC8B55C0099A87C /* CommisionViewController.xib */; };
 		262BEDEA1CC71A6D004882DF /* CountryStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262BEDE81CC71A6D004882DF /* CountryStoreViewController.swift */; };
 		262BEDEB1CC71A6D004882DF /* CountryStoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 262BEDE91CC71A6D004882DF /* CountryStoreViewController.xib */; };
 		262BEDEE1CC71C8B004882DF /* CountryStoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262BEDEC1CC71C8B004882DF /* CountryStoreTableViewCell.swift */; };
@@ -764,6 +766,8 @@
 /* Begin PBXFileReference section */
 		26239D521CC872A90099A87C /* CountryStoreSetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryStoreSetupViewController.swift; sourceTree = "<group>"; };
 		26239D531CC872A90099A87C /* CountryStoreSetupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryStoreSetupViewController.xib; sourceTree = "<group>"; };
+		26239D561CC8B55C0099A87C /* CommisionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommisionViewController.swift; sourceTree = "<group>"; };
+		26239D571CC8B55C0099A87C /* CommisionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommisionViewController.xib; sourceTree = "<group>"; };
 		262BEDE81CC71A6D004882DF /* CountryStoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryStoreViewController.swift; sourceTree = "<group>"; };
 		262BEDE91CC71A6D004882DF /* CountryStoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryStoreViewController.xib; sourceTree = "<group>"; };
 		262BEDEC1CC71C8B004882DF /* CountryStoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryStoreTableViewCell.swift; sourceTree = "<group>"; };
@@ -2446,6 +2450,8 @@
 				262BEDE91CC71A6D004882DF /* CountryStoreViewController.xib */,
 				26239D521CC872A90099A87C /* CountryStoreSetupViewController.swift */,
 				26239D531CC872A90099A87C /* CountryStoreSetupViewController.xib */,
+				26239D561CC8B55C0099A87C /* CommisionViewController.swift */,
+				26239D571CC8B55C0099A87C /* CommisionViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -3446,6 +3452,7 @@
 				798D84501C8686EB00D2A1F7 /* TransactionDetailsTableViewCell.xib in Resources */,
 				F7C40FCE1B983CD90091C16C /* back-white.png in Resources */,
 				798D82DA1C8686EB00D2A1F7 /* RegisterTableViewCell.xib in Resources */,
+				26239D591CC8B55C0099A87C /* CommisionViewController.xib in Resources */,
 				798D82A31C8686EB00D2A1F7 /* Info.plist in Resources */,
 				798D82DE1C8686EB00D2A1F7 /* SimplifiedRegistrationUICollectionViewCell.xib in Resources */,
 				798D81DE1C8686EB00D2A1F7 /* PayoutEarningsViewController.xib in Resources */,
@@ -4049,6 +4056,7 @@
 				26239D541CC872A90099A87C /* CountryStoreSetupViewController.swift in Sources */,
 				798D83431C8686EB00D2A1F7 /* ProductAvailableAttributeCombinationModel.swift in Sources */,
 				798D83181C8686EB00D2A1F7 /* ProvinceModel.swift in Sources */,
+				26239D581CC8B55C0099A87C /* CommisionViewController.swift in Sources */,
 				798D82531C8686EB00D2A1F7 /* BubbleChartData.swift in Sources */,
 				798D82C71C8686EB00D2A1F7 /* LoginAndRegisterTableViewController.swift in Sources */,
 				798D81DB1C8686EB00D2A1F7 /* PayoutEarningsTypeViewController.swift in Sources */,
