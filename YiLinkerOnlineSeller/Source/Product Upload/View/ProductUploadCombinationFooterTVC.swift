@@ -143,6 +143,13 @@ class ProductUploadCombinationFooterTVC: UITableViewCell, UITextFieldDelegate, U
     }
     
     // MARK: -
+    // MARK: - Hide Keyboard
+    
+    func hideKeyboard() {
+        //self.contentView.endEditing(true)
+    }
+    
+    // MARK: -
     // MARK: - Register Cell
     
     func registerCell() {

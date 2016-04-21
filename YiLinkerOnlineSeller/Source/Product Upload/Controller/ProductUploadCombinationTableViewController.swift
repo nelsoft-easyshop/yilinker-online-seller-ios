@@ -54,9 +54,6 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
         } else {
             self.title = "Add Combination"
         }
-
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "hideKeyboard")
-        self.tableView.addGestureRecognizer(tap)
         
         self.tableView.tableFooterView = self.footerView()
         
@@ -134,8 +131,8 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
                 cell.images = self.images
             }
             
-            cell.selectionStyle = UITableViewCellSelectionStyle.None
-            cell.viewController = self
+            //cell.selectionStyle = UITableViewCellSelectionStyle.None
+            //cell.viewController = self
             cell.delegate = self
             /*
             let cell: ProductUploadDimensionsAndWeightTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier) as! ProductUploadDimensionsAndWeightTableViewCell
@@ -252,8 +249,8 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
         return saveButtonView
     }
     
-    // MARK: Header view
-    // Add table view header
+    // MARK: - Header view
+    // MARK: - Add table view header
     func headerView() {
         let headerView: ProductUploadCombinationHeaderTableViewCell = XibHelper.puffViewWithNibName("ProductUploadCombinationHeaderTableViewCell", index: 0) as! ProductUploadCombinationHeaderTableViewCell
         self.tableView.tableHeaderView = headerView
@@ -261,13 +258,8 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
     }
     
     // MARK: -
-    // MARK: - Hide Keyboard
+    // MARK: - Register table view cells
     
-    func hideKeyboard() {
-        self.tableView.endEditing(true)
-    }
-    
-    // MARK: Register table view cells
     func registerCell() {
         let footerNib: UINib = UINib(nibName: PUCTVCConstant.productUploadCombinationFooterTableViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(footerNib, forCellReuseIdentifier: PUCTVCConstant.productUploadCombinationFooterTableViewCellNibNameAndIdentifier)
