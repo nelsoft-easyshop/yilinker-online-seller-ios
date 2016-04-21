@@ -8,12 +8,6 @@
 
 import UIKit
 
-// MARK: Delegate
-// ProductUploadCategoryViewController delegate method
-protocol ProductUploadCategoryViewControllerDelegate {
-    func productUploadCategoryViewController(didSelectCategory category: String)
-}
-
 // MARK: Constant variable declarations
 struct ProductUploadCategoryViewControllerConstant {
     static let productUploadCategoryTableViewCellNibNameAndIdentifier = "ProductUploadCategoryTableViewCell"
@@ -33,9 +27,6 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
     
     var parentID: Int = 1
     var pageTitle: String = ""
-    
-    // Initialize ProductUploadCategoryViewControllerDelegate
-    var delegate: ProductUploadCategoryViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -186,7 +177,6 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
                 let uploadViewController: ProductUploadTC = self.navigationController!.viewControllers[0] as! ProductUploadTC
                 uploadViewController.selectedCategory(categoryModel)
                 self.navigationController!.popToRootViewControllerAnimated(true)
-                
             }
         } else {
             let resellerViewController: ResellerItemViewController = ResellerItemViewController(nibName: "ResellerItemViewController", bundle: nil)

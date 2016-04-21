@@ -157,7 +157,7 @@ struct ProductUploadCombination {
     static var draft: Bool = false
 }
 
-class ProductUploadTableViewController: UITableViewController, ProductUploadUploadImageTableViewCellDataSource, ProductUploadUploadImageTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadCategoryViewControllerDelegate, ProductUploadFooterViewDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadPriceTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadBrandViewControllerDelegate, ProductUploadQuantityTableViewCellDelegate, SuccessUploadViewControllerDelegate {
+class ProductUploadTableViewController: UITableViewController, ProductUploadUploadImageTableViewCellDataSource, ProductUploadUploadImageTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadFooterViewDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadPriceTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadBrandViewControllerDelegate, ProductUploadQuantityTableViewCellDelegate, SuccessUploadViewControllerDelegate {
     
     // Models
     var conditions: [ConditionModel] = []
@@ -299,7 +299,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     // MARK: - Category
     func category() {
         let productUploadCategoryViewController: ProductUploadCategoryViewController = ProductUploadCategoryViewController(nibName: "ProductUploadCategoryViewController", bundle: nil)
-        productUploadCategoryViewController.delegate = self
         productUploadCategoryViewController.pageTitle = ProductUploadStrings.selectCategory
         productUploadCategoryViewController.userType = UserType.Seller
         self.navigationController!.pushViewController(productUploadCategoryViewController, animated: true)
@@ -959,11 +958,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         
         let indexPath: NSIndexPath = NSIndexPath(forItem: 1, inSection: 2)
         self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
-    }
-    
-    // MARK: - Product Upload Category View Controller Delegate Method
-    func productUploadCategoryViewController(didSelectCategory category: String) {
-        println(category)
     }
     
     // MARK: - Product Upload Upload Image Table View Cell Delegate method
