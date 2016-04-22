@@ -58,8 +58,8 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         if self.productModel!.validCombinations.count == 0 {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.combinationRequired, title: ProductUploadStrings.incompleteProductDetails)
         } else {
-            let productUploadTableViewController: ProductUploadTableViewController
-            = self.navigationController?.viewControllers[0] as! ProductUploadTableViewController
+            let productUploadTableViewController: ProductUploadTC
+            = self.navigationController?.viewControllers[0] as! ProductUploadTC
             productUploadTableViewController.replaceProductAttributeWithAttribute(self.productModel!.attributes, combinations: self.productModel!.validCombinations)
             self.navigationController?.popToRootViewControllerAnimated(true)
             ProductSku.SKUS.removeAll(keepCapacity: false)
@@ -211,12 +211,13 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         else {
             
             let cell: ProductUploadCombinationFooterTVC = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadCombinationFooterTVC") as! ProductUploadCombinationFooterTVC
-            
+            cell.isPreview = true
             //let cell: ProductUploadDimensionsAndWeightTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier) as! ProductUploadDimensionsAndWeightTableViewCell
             
             if self.productModel != nil {
                 
                 let combination: CombinationModel = self.productModel!.validCombinations[indexPath.section]
+                cell.collectionView.reloadData()
                 
                 let viewController: ProductUploadTC = self.navigationController?.viewControllers[0] as! ProductUploadTC
                 
@@ -234,6 +235,8 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
                 cell.lengthTextField.text = combination.length
                 cell.heightTextField.text = combination.height
                 cell.widthTextField.text = combination.width
+                cell.availableSwitch.setOn(combination.isAvailable, animated: true)
+                
             }
             
             return cell
