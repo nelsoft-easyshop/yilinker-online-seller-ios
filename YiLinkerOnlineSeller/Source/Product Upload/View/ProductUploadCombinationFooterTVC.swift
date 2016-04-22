@@ -9,6 +9,8 @@
 import UIKit
 
 protocol ProductUploadCombinationFooterTVCDelegate {
+    func productUploadIsAvailableTableViewCell(switchValueChanged sender: UISwitch, value: Bool, cell:
+        ProductUploadCombinationFooterTVC)
     func productUploadSkuDimensionsAndWeightTableViewCell(textFieldDidChange textField: UITextField, text: String, cell:
         ProductUploadCombinationFooterTVC)
     func productUploadCombinationFooterTVC(didClickUploadImage cell: ProductUploadCombinationFooterTVC)
@@ -45,9 +47,9 @@ class ProductUploadCombinationFooterTVC: UITableViewCell, UITextFieldDelegate, U
     
     // Global variables
     var images: [UIImage] = []
+    var isPreview: Bool = false
     
     var delegate: ProductUploadCombinationFooterTVCDelegate?
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -97,6 +99,16 @@ class ProductUploadCombinationFooterTVC: UITableViewCell, UITextFieldDelegate, U
         }
     }
     
+    @IBAction func switchValueChanged(sender: UISwitch) {
+        if sender.on {
+            println("on")
+            self.delegate?.productUploadIsAvailableTableViewCell(switchValueChanged: sender, value: true, cell: self)
+        } else {
+            println("off")
+            self.delegate?.productUploadIsAvailableTableViewCell(switchValueChanged: sender, value: false, cell: self)
+        }
+    }
+    
     // MARK: Collection view delegate and data source methods
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.images.count
@@ -106,14 +118,19 @@ class ProductUploadCombinationFooterTVC: UITableViewCell, UITextFieldDelegate, U
         let cell: ProductUploadImageCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(ProductUploadUploadImageTableViewCellConstant.productUploadImageCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ProductUploadImageCollectionViewCell
         cell.delegate = self
         cell.imageView.image = self.images[indexPath.row]
-        cell.starButton.hidden = true 
-
-        if indexPath.row == self.images.count - 1 {
+        cell.starButton.hidden = true
+        
+        if self.isPreview {
             cell.closeButton.hidden = true
             cell.imageView.contentMode = UIViewContentMode.ScaleAspectFit
         } else {
-            cell.closeButton.hidden = false
-            cell.imageView.contentMode = UIViewContentMode.ScaleAspectFill
+            if indexPath.row == self.images.count - 1 {
+                cell.closeButton.hidden = true
+                cell.imageView.contentMode = UIViewContentMode.ScaleAspectFit
+            } else {
+                cell.closeButton.hidden = false
+                cell.imageView.contentMode = UIViewContentMode.ScaleAspectFill
+            }
         }
         
         return cell
