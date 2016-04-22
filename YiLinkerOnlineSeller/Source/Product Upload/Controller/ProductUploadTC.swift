@@ -35,6 +35,11 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     var productHeight: String = ""
     var productWeight: String = ""
     
+    var dimensionsHeaderViewHeight: CGFloat = 41
+    var productUploadWeightAndHeightCellHeight: CGFloat = 244
+    var sectionPriceHeaderHeight: CGFloat = 41
+    var sectionFourRows: Int = 2
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -469,6 +474,15 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     }
     
     // MARK: -
+    // MARK: - Replace Product Attribute With Attribute
+    
+    func replaceProductAttributeWithAttribute(attributes: [AttributeModel], combinations: [CombinationModel]) {
+        self.productModel.attributes = attributes
+        self.productModel.validCombinations = combinations
+        self.updateCombinationListRow()
+    }
+    
+    // MARK: -
     // MARK: - Selected Category
     
     func selectedCategory(categoryModel: CategoryModel) {
@@ -521,6 +535,23 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         self.hud?.dimBackground = false
         self.navigationController?.view.addSubview(self.hud!)
         self.hud?.show(true)
+    }
+    
+    // MARK: - Update Combination List Row
+    func updateCombinationListRow() {
+        if self.productModel.validCombinations.count == 0 {
+            self.sectionFourRows = 2
+            self.productUploadWeightAndHeightCellHeight = 245
+            self.dimensionsHeaderViewHeight = 41
+        } else {
+            self.sectionFourRows = 0
+            self.productUploadWeightAndHeightCellHeight = 0
+            self.dimensionsHeaderViewHeight = 0
+        }
+        
+        self.sectionPriceHeaderHeight = 0
+        self.tableView.clipsToBounds = true
+        self.tableView.reloadData()
     }
     
     // MARK: -
