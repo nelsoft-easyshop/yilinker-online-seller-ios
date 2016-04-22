@@ -13,13 +13,16 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="00.0" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fgi-V2-flK">
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0.00" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fgi-V2-flK">
                         <rect key="frame" x="10" y="38" width="142" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="JvG-gN-gex"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits"/>
+                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                        <connections>
+                            <outlet property="delegate" destination="KGk-i7-Jjw" id="C1i-AL-3Ei"/>
+                        </connections>
                     </textField>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Red" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Qb-so-M4Z">
                         <rect key="frame" x="168" y="38" width="142" height="30"/>
@@ -27,7 +30,10 @@
                             <constraint firstAttribute="height" constant="30" id="5CD-fW-C86"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits"/>
+                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                        <connections>
+                            <outlet property="delegate" destination="KGk-i7-Jjw" id="jFU-FI-juy"/>
+                        </connections>
                     </textField>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Original Price (MYR)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W6A-eJ-ehA">
                         <rect key="frame" x="10" y="15" width="142" height="21"/>
@@ -75,6 +81,12 @@
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="discountLabel" destination="4bd-28-f8Y" id="D5p-uQ-79V"/>
+                <outlet property="discountTextField" destination="3Qb-so-M4Z" id="Sns-qa-QYr"/>
+                <outlet property="originalPriceLabel" destination="W6A-eJ-ehA" id="pBy-09-Gq3"/>
+                <outlet property="originalTextField" destination="fgi-V2-flK" id="V9Y-Om-aQG"/>
+            </connections>
             <point key="canvasLocation" x="442" y="288.5"/>
         </tableViewCell>
     </objects>

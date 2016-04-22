@@ -109,7 +109,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         } else {
             self.loginBlockerView.hidden = false
         }
-
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
