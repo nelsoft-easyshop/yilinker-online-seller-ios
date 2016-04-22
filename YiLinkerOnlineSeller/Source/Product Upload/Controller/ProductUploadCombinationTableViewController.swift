@@ -127,12 +127,15 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
                 cell.lengthTextField.text = combination.length
                 cell.heightTextField.text = combination.height
                 cell.widthTextField.text = combination.width
+                cell.skuTextField.text = combination.sku
+                cell.availableSwitch.setOn(combination.isAvailable, animated: true)
             } else {
                 cell.images = self.images
+                cell.availableSwitch.setOn(false, animated: true)
             }
             
-            //cell.selectionStyle = UITableViewCellSelectionStyle.None
-            //cell.viewController = self
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell.viewController = self
             cell.delegate = self
             /*
             let cell: ProductUploadDimensionsAndWeightTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier) as! ProductUploadDimensionsAndWeightTableViewCell
@@ -360,6 +363,13 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
             }
             
         }
+    }
+    
+    // MARK: -
+    // MARK: - ProductUploadIsAvailableTableViewCell Delegate Method - productUploadIsAvailableTableViewCell
+    
+    func productUploadIsAvailableTableViewCell(switchValueChanged sender: UISwitch, value: Bool, cell: ProductUploadCombinationFooterTVC) {
+        self.combination.isAvailable = value
     }
     
     // MARK: -
