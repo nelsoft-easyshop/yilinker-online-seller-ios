@@ -21,6 +21,12 @@ class InventoryLocationViewController: UIViewController {
     
     var isPrimary: Bool = true
     
+//    var selectedValues: [String] = ["", "", "", ""]
+    var location = ""
+    var isCOD = true
+    var logistic = ""
+    var shippingFee = "0.00"
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -32,6 +38,8 @@ class InventoryLocationViewController: UIViewController {
         setupNavigationBar()
         setupTableView()
         cellValues = [locations, cods, logistics]
+        location = locations[0]
+        logistic = logistics[0]
     }
     
     // MARK: - Functions
@@ -60,9 +68,9 @@ class InventoryLocationViewController: UIViewController {
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.backgroundColor = Constants.Colors.backgroundGray
         
-        let footerView: UIView = UIView(frame: CGRectMake(0, 0, self.tableView.frame.size.width, 80.0))
-        let saveButton: UIButton = UIButton(frame: CGRectMake(15, 0, self.tableView.frame.size.width - 30, 50.0))
-        saveButton.backgroundColor = Constants.Colors.pmCheckGreenColor
+        let footerView: UIView = UIView(frame: CGRectMake(0, 0, self.tableView.frame.size.width, 100.0))
+        let saveButton: UIButton = UIButton(frame: CGRectMake(15, 5, self.tableView.frame.size.width - 30, 50.0))
+        saveButton.backgroundColor = Constants.Colors.pmYesGreenColor
         saveButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Bold", size: 12.0)
         saveButton.layer.cornerRadius = 2.0
         saveButton.setTitle("SAVE INVENTORY LOCATION", forState: .Normal)
@@ -76,10 +84,26 @@ class InventoryLocationViewController: UIViewController {
         self.tableView.registerNib(UINib(nibName: "InventoryLocationTableViewCell", bundle: nil), forCellReuseIdentifier: "locationId")
     }
     
+    func getShippingFeeValue() {
+        let indexPath = NSIndexPath(forRow: 0, inSection: 3)
+        let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! InventoryLocationTableViewCell
+        
+        if cell.inputTextField.text == "" {
+            shippingFee = "0.00"
+        } else {
+            shippingFee = cell.inputTextField.text
+        }
+    }
+    
     // MARK: - Actions
     
     func saveAction() {
+        getShippingFeeValue()
         
+        println(location)
+        println(isCOD)
+        println(logistic)
+        println(shippingFee)
     }
     
     func backAction() {
@@ -87,7 +111,7 @@ class InventoryLocationViewController: UIViewController {
     }
     
     func checkAction() {
-        
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
 }
@@ -119,21 +143,30 @@ extension InventoryLocationViewController: UITableViewDataSource, UITableViewDel
         
         let cell: InventoryLocationTableViewCell = tableView.dequeueReusableCellWithIdentifier("locationId") as! InventoryLocationTableViewCell
         
-        let backgroundView = UIView()
-        backgroundView.backgroundColor = UIColor.clearColor()
-//        cell.selectedBackgroundView = backgroundView
         cell.selectionStyle = .None
-        
+        cell.checkImageView.hidden = true
         if indexPath.section == 0 {
             cell.label.text = locations[indexPath.row]
+            if cell.label.text == location {
+                cell.checkImageView.hidden = false
+            }
         } else if indexPath.section == 1 {
             cell.label.text = cods[indexPath.row]
+            if isCOD && indexPath.row == 0 || !isCOD && indexPath.row == 1 {
+                cell.checkImageView.hidden = false
+            }
         } else if indexPath.section == 2 {
             cell.label.text = logistics[indexPath.row]
+            if cell.label.text == logistic {
+                cell.checkImageView.hidden = false
+            }
         } else if indexPath.section == 3 {
             cell.label.hidden = true
             cell.inputTextField.hidden = false
             cell.checkImageView.hidden = true
+            if shippingFee != "0.00" {
+                cell.inputTextField.text = shippingFee
+            }
             cell.backgroundColor = UIColor.clearColor()
         }
         
@@ -167,17 +200,22 @@ extension InventoryLocationViewController: UITableViewDataSource, UITableViewDel
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell: InventoryLocationTableViewCell = tableView.dequeueReusableCellWithIdentifier("locationId") as! InventoryLocationTableViewCell
-        
-        if indexPath.section != 4 {
-            if cell.checkImageView.hidden {
-                println("hidden")
-                cell.checkImageView.hidden = false
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! InventoryLocationTableViewCell
+
+        if indexPath.section == 0 {
+            location = cell.label.text!
+        } else if indexPath.section == 1 {
+            if indexPath.row == 0 {
+                isCOD = true
             } else {
-                println("showed")
-                cell.checkImageView.hidden = true
+                isCOD = false
             }
+        } else if indexPath.section == 2 {
+            logistic = cell.label.text!
         }
+        
+        self.tableView.reloadData()
+        
     }
     
     func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
