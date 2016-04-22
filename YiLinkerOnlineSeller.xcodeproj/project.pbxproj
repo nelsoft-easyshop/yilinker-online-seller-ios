@@ -15,6 +15,14 @@
 		26239D5D1CC8BC9B0099A87C /* InventoryLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26239D5B1CC8BC9B0099A87C /* InventoryLocationViewController.xib */; };
 		26239D601CC8BF060099A87C /* ProductCombinationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26239D5E1CC8BF060099A87C /* ProductCombinationViewController.swift */; };
 		26239D611CC8BF060099A87C /* ProductCombinationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26239D5F1CC8BF060099A87C /* ProductCombinationViewController.xib */; };
+		2623DE1F1CC8CFA200EA241C /* ProductCombinationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623DE1D1CC8CFA200EA241C /* ProductCombinationTableViewCell.swift */; };
+		2623DE201CC8CFA200EA241C /* ProductCombinationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2623DE1E1CC8CFA200EA241C /* ProductCombinationTableViewCell.xib */; };
+		2623DE231CC8DA2F00EA241C /* ProductCombination2TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623DE211CC8DA2F00EA241C /* ProductCombination2TableViewCell.swift */; };
+		2623DE241CC8DA2F00EA241C /* ProductCombination2TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2623DE221CC8DA2F00EA241C /* ProductCombination2TableViewCell.xib */; };
+		2623DE271CC8DA3C00EA241C /* ProductCombination3TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623DE251CC8DA3C00EA241C /* ProductCombination3TableViewCell.swift */; };
+		2623DE281CC8DA3C00EA241C /* ProductCombination3TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2623DE261CC8DA3C00EA241C /* ProductCombination3TableViewCell.xib */; };
+		2623DE2B1CC8EB9500EA241C /* InventoryLocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623DE291CC8EB9500EA241C /* InventoryLocationTableViewCell.swift */; };
+		2623DE2C1CC8EB9500EA241C /* InventoryLocationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2623DE2A1CC8EB9500EA241C /* InventoryLocationTableViewCell.xib */; };
 		262BEDEA1CC71A6D004882DF /* CountryStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262BEDE81CC71A6D004882DF /* CountryStoreViewController.swift */; };
 		262BEDEB1CC71A6D004882DF /* CountryStoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 262BEDE91CC71A6D004882DF /* CountryStoreViewController.xib */; };
 		262BEDEE1CC71C8B004882DF /* CountryStoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262BEDEC1CC71C8B004882DF /* CountryStoreTableViewCell.swift */; };
@@ -776,6 +784,14 @@
 		26239D5B1CC8BC9B0099A87C /* InventoryLocationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InventoryLocationViewController.xib; sourceTree = "<group>"; };
 		26239D5E1CC8BF060099A87C /* ProductCombinationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductCombinationViewController.swift; sourceTree = "<group>"; };
 		26239D5F1CC8BF060099A87C /* ProductCombinationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductCombinationViewController.xib; sourceTree = "<group>"; };
+		2623DE1D1CC8CFA200EA241C /* ProductCombinationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductCombinationTableViewCell.swift; sourceTree = "<group>"; };
+		2623DE1E1CC8CFA200EA241C /* ProductCombinationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductCombinationTableViewCell.xib; sourceTree = "<group>"; };
+		2623DE211CC8DA2F00EA241C /* ProductCombination2TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductCombination2TableViewCell.swift; sourceTree = "<group>"; };
+		2623DE221CC8DA2F00EA241C /* ProductCombination2TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductCombination2TableViewCell.xib; sourceTree = "<group>"; };
+		2623DE251CC8DA3C00EA241C /* ProductCombination3TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductCombination3TableViewCell.swift; sourceTree = "<group>"; };
+		2623DE261CC8DA3C00EA241C /* ProductCombination3TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductCombination3TableViewCell.xib; sourceTree = "<group>"; };
+		2623DE291CC8EB9500EA241C /* InventoryLocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InventoryLocationTableViewCell.swift; sourceTree = "<group>"; };
+		2623DE2A1CC8EB9500EA241C /* InventoryLocationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InventoryLocationTableViewCell.xib; sourceTree = "<group>"; };
 		262BEDE81CC71A6D004882DF /* CountryStoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryStoreViewController.swift; sourceTree = "<group>"; };
 		262BEDE91CC71A6D004882DF /* CountryStoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryStoreViewController.xib; sourceTree = "<group>"; };
 		262BEDEC1CC71C8B004882DF /* CountryStoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryStoreTableViewCell.swift; sourceTree = "<group>"; };
@@ -2509,6 +2525,14 @@
 				798D807C1C8686EB00D2A1F7 /* ProductManagementTableViewCell.xib */,
 				798D807D1C8686EB00D2A1F7 /* RemovedItemTableViewCell.swift */,
 				798D807E1C8686EB00D2A1F7 /* RemovedItemTableViewCell.xib */,
+				2623DE1D1CC8CFA200EA241C /* ProductCombinationTableViewCell.swift */,
+				2623DE1E1CC8CFA200EA241C /* ProductCombinationTableViewCell.xib */,
+				2623DE211CC8DA2F00EA241C /* ProductCombination2TableViewCell.swift */,
+				2623DE221CC8DA2F00EA241C /* ProductCombination2TableViewCell.xib */,
+				2623DE251CC8DA3C00EA241C /* ProductCombination3TableViewCell.swift */,
+				2623DE261CC8DA3C00EA241C /* ProductCombination3TableViewCell.xib */,
+				2623DE291CC8EB9500EA241C /* InventoryLocationTableViewCell.swift */,
+				2623DE2A1CC8EB9500EA241C /* InventoryLocationTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3350,6 +3374,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				798D847E1C8686EB00D2A1F7 /* EmptyView.xib in Resources */,
+				2623DE281CC8DA3C00EA241C /* ProductCombination3TableViewCell.xib in Resources */,
 				798D81FB1C8686EB00D2A1F7 /* PayoutRequestListItemTableViewCell.xib in Resources */,
 				798D82C91C8686EB00D2A1F7 /* SignInViewController copy.xib in Resources */,
 				798D836E1C8686EB00D2A1F7 /* ProductUploadTableViewController.xib in Resources */,
@@ -3368,6 +3393,7 @@
 				798D83C61C8686EB00D2A1F7 /* SalesReportViewController.xib in Resources */,
 				F7C40FD11B983CD90091C16C /* check.png in Resources */,
 				798D84621C8686EB00D2A1F7 /* TransactionShipItemTableViewCell.xib in Resources */,
+				2623DE201CC8CFA200EA241C /* ProductCombinationTableViewCell.xib in Resources */,
 				798D82341C8686EB00D2A1F7 /* EditProfileButtonTableViewCell.xib in Resources */,
 				F7C40FD71B983CD90091C16C /* filter2.png in Resources */,
 				798D82F71C8686EB00D2A1F7 /* PointsDetailsTableViewCell.xib in Resources */,
@@ -3505,6 +3531,7 @@
 				798D83901C8686EB00D2A1F7 /* ProductUploadDetailHeaderViewCollectionViewCell.xib in Resources */,
 				798D83CF1C8686EB00D2A1F7 /* FilterHeaderSectiionViewController.xib in Resources */,
 				798D833B1C8686EB00D2A1F7 /* ProductDetailsViewController.xib in Resources */,
+				2623DE241CC8DA2F00EA241C /* ProductCombination2TableViewCell.xib in Resources */,
 				798D83701C8686EB00D2A1F7 /* SuccessUploadViewController.xib in Resources */,
 				798D839C1C8686EB00D2A1F7 /* ProductUploadPriceTableViewCell.xib in Resources */,
 				798D82321C8686EB00D2A1F7 /* EditProfileAddressTableViewCell.xib in Resources */,
@@ -3596,6 +3623,7 @@
 				798D83DE1C8686EB00D2A1F7 /* FilterCalendarTableViewCell.xib in Resources */,
 				798D83281C8686EB00D2A1F7 /* StoreInfoAddressTableViewCell.xib in Resources */,
 				798D838C1C8686EB00D2A1F7 /* ProductUploadCombinationTableViewCell.xib in Resources */,
+				2623DE2C1CC8EB9500EA241C /* InventoryLocationTableViewCell.xib in Resources */,
 				798D84181C8686EB00D2A1F7 /* AffiliateStoreHeaderView.xib in Resources */,
 				798D82A81C8686EB00D2A1F7 /* old_GoogleService-Info.plist in Resources */,
 				798D83621C8686EB00D2A1F7 /* ProductUploadBrandViewController.xib in Resources */,
@@ -3758,6 +3786,7 @@
 				798D825F1C8686EB00D2A1F7 /* LineRadarChartDataSet.swift in Sources */,
 				26239D5C1CC8BC9B0099A87C /* InventoryLocationViewController.swift in Sources */,
 				798D82721C8686EB00D2A1F7 /* ChartDataRendererBase.swift in Sources */,
+				2623DE271CC8DA3C00EA241C /* ProductCombination3TableViewCell.swift in Sources */,
 				798D81DF1C8686EB00D2A1F7 /* PayoutRequestListDetailViewController.swift in Sources */,
 				798D84191C8686EB00D2A1F7 /* FooterButtonTableViewCell.swift in Sources */,
 				798D81CE1C8686EB00D2A1F7 /* ActivityLogItemModel.swift in Sources */,
@@ -3925,6 +3954,7 @@
 				798D847B1C8686EB00D2A1F7 /* FaImagePickerController.swift in Sources */,
 				798D83471C8686EB00D2A1F7 /* ProductManagementProductsModel.swift in Sources */,
 				798D822B1C8686EB00D2A1F7 /* DashBoardHeaderCollectionViewCell.swift in Sources */,
+				2623DE2B1CC8EB9500EA241C /* InventoryLocationTableViewCell.swift in Sources */,
 				798D825C1C8686EB00D2A1F7 /* CombinedChartData.swift in Sources */,
 				798D83421C8686EB00D2A1F7 /* ProductAttributeModel.swift in Sources */,
 				798D82741C8686EB00D2A1F7 /* ChartRendererBase.swift in Sources */,
@@ -4096,6 +4126,7 @@
 				798D82471C8686EB00D2A1F7 /* ChartAxisBase.swift in Sources */,
 				798D82201C8686EB00D2A1F7 /* CCSubCategoriesView.swift in Sources */,
 				798D82571C8686EB00D2A1F7 /* CandleChartDataEntry.swift in Sources */,
+				2623DE1F1CC8CFA200EA241C /* ProductCombinationTableViewCell.swift in Sources */,
 				798D81DD1C8686EB00D2A1F7 /* PayoutEarningsViewController.swift in Sources */,
 				798D84061C8686EB00D2A1F7 /* SelectProductFooterCollectionViewCell.swift in Sources */,
 				798D82251C8686EB00D2A1F7 /* EditSubCategoriesRemovedTableViewCell.swift in Sources */,
@@ -4110,6 +4141,7 @@
 				798D82E11C8686EB00D2A1F7 /* ConversationTVC.swift in Sources */,
 				798D82FA1C8686EB00D2A1F7 /* PointsTableViewCell.swift in Sources */,
 				798D821F1C8686EB00D2A1F7 /* CCCItemImagesView.swift in Sources */,
+				2623DE231CC8DA2F00EA241C /* ProductCombination2TableViewCell.swift in Sources */,
 				798D83731C8686EB00D2A1F7 /* CategoryModel.swift in Sources */,
 				798D84251C8686EB00D2A1F7 /* TransactionCancelReasonOrderViewController.swift in Sources */,
 				798D83C91C8686EB00D2A1F7 /* SalesReportTransactionModel.swift in Sources */,

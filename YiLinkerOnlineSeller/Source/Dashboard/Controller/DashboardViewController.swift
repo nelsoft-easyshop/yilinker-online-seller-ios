@@ -102,16 +102,14 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         super.viewDidAppear(animated)
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         
-//        if SessionManager.isLoggedIn() {
-//            self.loginBlockerView.hidden = true
-//            self.fireStoreInfo(true)
-//            self.setupGCM()
-//        } else {
-//            self.loginBlockerView.hidden = false
-//        }
-        
-        let countryStore: CountryStoreViewController = CountryStoreViewController(nibName: "CountryStoreViewController", bundle: nil)
-        self.navigationController?.pushViewController(countryStore, animated: true)
+        if SessionManager.isLoggedIn() {
+            self.loginBlockerView.hidden = true
+            self.fireStoreInfo(true)
+            self.setupGCM()
+        } else {
+            self.loginBlockerView.hidden = false
+        }
+
     }
     
     override func viewWillDisappear(animated: Bool) {
