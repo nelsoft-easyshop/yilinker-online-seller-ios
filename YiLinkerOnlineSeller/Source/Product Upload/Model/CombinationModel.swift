@@ -25,4 +25,5 @@ class CombinationModel {
     var length: String = ""
     var width: String = ""
     var productUnitId: String = ""
+    var isAvailable: Bool = false
 }
