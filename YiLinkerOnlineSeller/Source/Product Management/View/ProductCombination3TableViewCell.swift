@@ -8,8 +8,17 @@
 
 import UIKit
 
+protocol ProductCombination3TableViewCellDelegate {
+    func getSwitchValue(view: ProductCombination3TableViewCell, section: Int, value: Bool)
+}
+
 class ProductCombination3TableViewCell: UITableViewCell {
 
+    @IBOutlet weak var availableLabel: UILabel!
+    @IBOutlet weak var availableSwitch: UISwitch!
+    
+    var delegate: ProductCombination3TableViewCellDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -20,5 +29,17 @@ class ProductCombination3TableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    @IBAction func availableAction(sender: UISwitch) {
+        
+        if sender.on {
+            delegate?.getSwitchValue(self, section: self.tag, value: true)
+        } else {
+            delegate?.getSwitchValue(self, section: self.tag, value: false)
+        }
+        
+    }
+
+    
     
 }

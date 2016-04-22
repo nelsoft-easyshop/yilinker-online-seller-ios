@@ -20,7 +20,7 @@
                             <constraint firstAttribute="width" constant="79" id="qLk-N0-4uw"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="textColor" red="0.43529411764705883" green="0.44313725490196076" blue="0.47450980392156861" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="moT-Cg-nQo">
@@ -29,6 +29,9 @@
                             <constraint firstAttribute="width" constant="49" id="Mjc-xv-vZ4"/>
                             <constraint firstAttribute="height" constant="31" id="tNK-TU-DqR"/>
                         </constraints>
+                        <connections>
+                            <action selector="availableAction:" destination="KGk-i7-Jjw" eventType="valueChanged" id="Xfw-Qq-e61"/>
+                        </connections>
                     </switch>
                 </subviews>
                 <constraints>
@@ -41,6 +44,10 @@
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="availableLabel" destination="nE9-2f-2Iu" id="umA-I8-Kez"/>
+                <outlet property="availableSwitch" destination="moT-Cg-nQo" id="XDT-p2-KPs"/>
+            </connections>
             <point key="canvasLocation" x="442" y="293.5"/>
         </tableViewCell>
     </objects>

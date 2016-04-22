@@ -110,6 +110,9 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             self.loginBlockerView.hidden = false
         }
 
+        let vc: ProductCombinationViewController = ProductCombinationViewController(nibName: "ProductCombinationViewController", bundle: nil)
+        self.navigationController?.pushViewController(vc, animated: true)
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
