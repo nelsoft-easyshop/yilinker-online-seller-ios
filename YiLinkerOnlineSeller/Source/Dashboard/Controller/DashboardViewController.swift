@@ -109,9 +109,6 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         } else {
             self.loginBlockerView.hidden = false
         }
-
-        let vc: ProductCombinationViewController = ProductCombinationViewController(nibName: "ProductCombinationViewController", bundle: nil)
-        self.navigationController?.pushViewController(vc, animated: true)
         
     }
     
