@@ -10,11 +10,189 @@ import UIKit
 
 class InventoryLocationViewController: UIViewController {
 
+    @IBOutlet weak var tableView: UITableView!
+    let sectionTitles = ["Inventory Location", "Is COD Available?", "Logistics", "Shipping Cost"]
+    let locations = ["6th Floor pacific tower, Five E-com Cnter, Mall of Asia Pacific Drive, 1300 Pasay City, philippines",
+        "8/F Marc 2000 Tower, 1980 San Andress Street Malate, Manila, Philippines",
+        "1660 Bulacan Street, Santa, Cruz Manila, Philippines"]
+    let cods = ["Yes", "No"]
+    let logistics = ["YiLinker Express", "Other Third Party Logistics"]
+    var cellValues: [NSArray] = []
+    
+    var isPrimary: Bool = true
+    
+    // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.title = "Inventory Location"
+        
+        
+        setupNavigationBar()
+        setupTableView()
+        cellValues = [locations, cods, logistics]
     }
+    
+    // MARK: - Functions
+    
+    func setupNavigationBar() {
+        self.title = "Inventory Location"
+        
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButton.frame = CGRectMake(0, 0, 40, 40)
+        backButton.addTarget(self, action: "backAction", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -10
+        
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, UIBarButtonItem(image: UIImage(named: "nav-back"), style: .Plain, target: self, action: "backAction")]
+        self.navigationItem.rightBarButtonItems = [navigationSpacer, UIBarButtonItem(image: UIImage(named: "nav-check"), style: .Plain, target: self, action: "checkAction")]
+    }
+    
+    func setupTableView() {
+        
+        self.tableView.estimatedRowHeight = 44.0
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.backgroundColor = Constants.Colors.backgroundGray
+        
+        let footerView: UIView = UIView(frame: CGRectMake(0, 0, self.tableView.frame.size.width, 80.0))
+        let saveButton: UIButton = UIButton(frame: CGRectMake(15, 0, self.tableView.frame.size.width - 30, 50.0))
+        saveButton.backgroundColor = Constants.Colors.pmCheckGreenColor
+        saveButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Bold", size: 12.0)
+        saveButton.layer.cornerRadius = 2.0
+        saveButton.setTitle("SAVE INVENTORY LOCATION", forState: .Normal)
+        saveButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        saveButton.addTarget(self, action: "saveAction", forControlEvents: .TouchUpInside)
+        footerView.addSubview(saveButton)
+        self.tableView.tableFooterView = footerView
+        
+        // registering cells
+        
+        self.tableView.registerNib(UINib(nibName: "InventoryLocationTableViewCell", bundle: nil), forCellReuseIdentifier: "locationId")
+    }
+    
+    // MARK: - Actions
+    
+    func saveAction() {
+        
+    }
+    
+    func backAction() {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func checkAction() {
+        
+    }
+    
+}
 
+extension InventoryLocationViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    // MARK: - Table View Data Source
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 4
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if section == 0 {
+            return locations.count
+        } else if section == 1 {
+            return cods.count
+        } else if section == 2 {
+            return logistics.count
+        } else if section == 3 {
+            return 1
+        }
+        
+        return 0
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell: InventoryLocationTableViewCell = tableView.dequeueReusableCellWithIdentifier("locationId") as! InventoryLocationTableViewCell
+        
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor.clearColor()
+//        cell.selectedBackgroundView = backgroundView
+        cell.selectionStyle = .None
+        
+        if indexPath.section == 0 {
+            cell.label.text = locations[indexPath.row]
+        } else if indexPath.section == 1 {
+            cell.label.text = cods[indexPath.row]
+        } else if indexPath.section == 2 {
+            cell.label.text = logistics[indexPath.row]
+        } else if indexPath.section == 3 {
+            cell.label.hidden = true
+            cell.inputTextField.hidden = false
+            cell.checkImageView.hidden = true
+            cell.backgroundColor = UIColor.clearColor()
+        }
+        
+        return cell
+    }
+    
+    // MARK: - Table View Delegate
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let headerView: UIView = UIView(frame: CGRectMake(0, 0, self.tableView.frame.size.width, 40.0))
+        headerView.backgroundColor = UIColor.whiteColor()
+        
+        let textLabel: UILabel = UILabel(frame: CGRectMake(10, 0, headerView.frame.size.width - 15, headerView.frame.size.height))
+        textLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 14.0)
+        textLabel.textColor = UIColor.darkGrayColor()
+        textLabel.text = sectionTitles[section]
+        
+        if isPrimary && section == 0 {
+            textLabel.text = textLabel.text! + " (PRIMARY)"
+        } else if !isPrimary && section == 0 {
+            textLabel.text = textLabel.text! + " (SECONDARY)"
+        }
+        headerView.addSubview(textLabel)
+        
+        return headerView
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40.0
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell: InventoryLocationTableViewCell = tableView.dequeueReusableCellWithIdentifier("locationId") as! InventoryLocationTableViewCell
+        
+        if indexPath.section != 4 {
+            if cell.checkImageView.hidden {
+                println("hidden")
+                cell.checkImageView.hidden = false
+            } else {
+                println("showed")
+                cell.checkImageView.hidden = true
+            }
+        }
+    }
+    
+    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        let selectedIndexPaths = indexPathsForSelectedRowsInSection(indexPath.section)
+
+        if selectedIndexPaths?.count == 1 {
+            tableView.deselectRowAtIndexPath(selectedIndexPaths!.first!, animated: false)
+        }
+        
+        return indexPath
+    }
+    
+    func indexPathsForSelectedRowsInSection(section: Int) -> [NSIndexPath]? {
+        return (tableView.indexPathsForSelectedRows() as? [NSIndexPath])?.filter({ (indexPath) -> Bool in
+            indexPath.section == section
+        })
+    }
 }

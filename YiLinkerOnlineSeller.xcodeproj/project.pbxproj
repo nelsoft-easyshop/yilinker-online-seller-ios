@@ -21,6 +21,8 @@
 		2623DE241CC8DA2F00EA241C /* ProductCombination2TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2623DE221CC8DA2F00EA241C /* ProductCombination2TableViewCell.xib */; };
 		2623DE271CC8DA3C00EA241C /* ProductCombination3TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623DE251CC8DA3C00EA241C /* ProductCombination3TableViewCell.swift */; };
 		2623DE281CC8DA3C00EA241C /* ProductCombination3TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2623DE261CC8DA3C00EA241C /* ProductCombination3TableViewCell.xib */; };
+		2623DE2B1CC8EB9500EA241C /* InventoryLocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623DE291CC8EB9500EA241C /* InventoryLocationTableViewCell.swift */; };
+		2623DE2C1CC8EB9500EA241C /* InventoryLocationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2623DE2A1CC8EB9500EA241C /* InventoryLocationTableViewCell.xib */; };
 		262BEDEA1CC71A6D004882DF /* CountryStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262BEDE81CC71A6D004882DF /* CountryStoreViewController.swift */; };
 		262BEDEB1CC71A6D004882DF /* CountryStoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 262BEDE91CC71A6D004882DF /* CountryStoreViewController.xib */; };
 		262BEDEE1CC71C8B004882DF /* CountryStoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262BEDEC1CC71C8B004882DF /* CountryStoreTableViewCell.swift */; };
@@ -788,6 +790,8 @@
 		2623DE221CC8DA2F00EA241C /* ProductCombination2TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductCombination2TableViewCell.xib; sourceTree = "<group>"; };
 		2623DE251CC8DA3C00EA241C /* ProductCombination3TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductCombination3TableViewCell.swift; sourceTree = "<group>"; };
 		2623DE261CC8DA3C00EA241C /* ProductCombination3TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductCombination3TableViewCell.xib; sourceTree = "<group>"; };
+		2623DE291CC8EB9500EA241C /* InventoryLocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InventoryLocationTableViewCell.swift; sourceTree = "<group>"; };
+		2623DE2A1CC8EB9500EA241C /* InventoryLocationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InventoryLocationTableViewCell.xib; sourceTree = "<group>"; };
 		262BEDE81CC71A6D004882DF /* CountryStoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryStoreViewController.swift; sourceTree = "<group>"; };
 		262BEDE91CC71A6D004882DF /* CountryStoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryStoreViewController.xib; sourceTree = "<group>"; };
 		262BEDEC1CC71C8B004882DF /* CountryStoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryStoreTableViewCell.swift; sourceTree = "<group>"; };
@@ -2527,6 +2531,8 @@
 				2623DE221CC8DA2F00EA241C /* ProductCombination2TableViewCell.xib */,
 				2623DE251CC8DA3C00EA241C /* ProductCombination3TableViewCell.swift */,
 				2623DE261CC8DA3C00EA241C /* ProductCombination3TableViewCell.xib */,
+				2623DE291CC8EB9500EA241C /* InventoryLocationTableViewCell.swift */,
+				2623DE2A1CC8EB9500EA241C /* InventoryLocationTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3617,6 +3623,7 @@
 				798D83DE1C8686EB00D2A1F7 /* FilterCalendarTableViewCell.xib in Resources */,
 				798D83281C8686EB00D2A1F7 /* StoreInfoAddressTableViewCell.xib in Resources */,
 				798D838C1C8686EB00D2A1F7 /* ProductUploadCombinationTableViewCell.xib in Resources */,
+				2623DE2C1CC8EB9500EA241C /* InventoryLocationTableViewCell.xib in Resources */,
 				798D84181C8686EB00D2A1F7 /* AffiliateStoreHeaderView.xib in Resources */,
 				798D82A81C8686EB00D2A1F7 /* old_GoogleService-Info.plist in Resources */,
 				798D83621C8686EB00D2A1F7 /* ProductUploadBrandViewController.xib in Resources */,
@@ -3947,6 +3954,7 @@
 				798D847B1C8686EB00D2A1F7 /* FaImagePickerController.swift in Sources */,
 				798D83471C8686EB00D2A1F7 /* ProductManagementProductsModel.swift in Sources */,
 				798D822B1C8686EB00D2A1F7 /* DashBoardHeaderCollectionViewCell.swift in Sources */,
+				2623DE2B1CC8EB9500EA241C /* InventoryLocationTableViewCell.swift in Sources */,
 				798D825C1C8686EB00D2A1F7 /* CombinedChartData.swift in Sources */,
 				798D83421C8686EB00D2A1F7 /* ProductAttributeModel.swift in Sources */,
 				798D82741C8686EB00D2A1F7 /* ChartRendererBase.swift in Sources */,

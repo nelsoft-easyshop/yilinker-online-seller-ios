@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="locationId" id="KGk-i7-Jjw" customClass="InventoryLocationTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MQV-8b-p5U" userLabel="separator view">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="GCu-pk-2HX"/>
+                        </constraints>
+                    </view>
+                    <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0.00" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kiC-pB-us1">
+                        <rect key="frame" x="8" y="7" width="304" height="30"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n4z-oO-ofL">
+                        <rect key="frame" x="10" y="14" width="269" height="17"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check" translatesAutoresizingMaskIntoConstraints="NO" id="V4H-73-xOf">
+                        <rect key="frame" x="287" y="11" width="25" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="25" id="QrJ-jU-Wx1"/>
+                            <constraint firstAttribute="height" constant="21" id="uCN-7K-bPJ"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="kiC-pB-us1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="3I5-OG-Bqz"/>
+                    <constraint firstItem="n4z-oO-ofL" firstAttribute="top" secondItem="MQV-8b-p5U" secondAttribute="bottom" constant="13" id="5dj-5y-twg"/>
+                    <constraint firstAttribute="trailing" secondItem="V4H-73-xOf" secondAttribute="trailing" constant="8" id="8A1-6X-27q"/>
+                    <constraint firstItem="V4H-73-xOf" firstAttribute="top" secondItem="MQV-8b-p5U" secondAttribute="bottom" constant="10" id="FrN-PF-4Q8"/>
+                    <constraint firstAttribute="bottom" secondItem="kiC-pB-us1" secondAttribute="bottom" constant="6" id="GaB-6d-5wI"/>
+                    <constraint firstAttribute="trailing" secondItem="n4z-oO-ofL" secondAttribute="trailing" constant="41" id="Hrw-Gh-8cR"/>
+                    <constraint firstItem="MQV-8b-p5U" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Lc8-9S-5Xh"/>
+                    <constraint firstItem="n4z-oO-ofL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="QsT-hL-QKk"/>
+                    <constraint firstAttribute="trailing" secondItem="MQV-8b-p5U" secondAttribute="trailing" id="We0-GE-Qab"/>
+                    <constraint firstItem="MQV-8b-p5U" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="YM7-N0-Uki"/>
+                    <constraint firstItem="kiC-pB-us1" firstAttribute="top" secondItem="MQV-8b-p5U" secondAttribute="bottom" constant="6" id="cjj-YP-ior"/>
+                    <constraint firstAttribute="trailing" secondItem="kiC-pB-us1" secondAttribute="trailing" constant="8" id="hmK-zJ-l5A"/>
+                    <constraint firstAttribute="bottom" secondItem="n4z-oO-ofL" secondAttribute="bottom" constant="12" id="oUz-re-idi"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="checkImageView" destination="V4H-73-xOf" id="uFg-vP-hDS"/>
+                <outlet property="inputTextField" destination="kiC-pB-us1" id="OkZ-01-d1B"/>
+                <outlet property="label" destination="n4z-oO-ofL" id="OuR-X6-tL6"/>
+            </connections>
+            <point key="canvasLocation" x="257" y="287"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="check" width="200" height="140"/>
+    </resources>
+</document>

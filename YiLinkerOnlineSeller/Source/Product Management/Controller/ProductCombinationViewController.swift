@@ -33,11 +33,9 @@ class ProductCombinationViewController: UIViewController {
         self.tableView.backgroundColor = Constants.Colors.backgroundGray
         
         let headerView: UIView = UIView(frame: CGRectMake(0, 0, self.tableView.frame.size.width, 10.0))
-//        headerView.backgroundColor = UIColor.lightGrayColor()
         self.tableView.tableHeaderView = headerView
         
         let footerView: UIView = UIView(frame: CGRectMake(0, 0, self.tableView.frame.size.width, 80.0))
-//        footerView.backgroundColor = UIColor.lightGrayColor()
         let saveButton: UIButton = UIButton(frame: CGRectMake(15, 0, self.tableView.frame.size.width - 30, 50.0))
         saveButton.backgroundColor = Constants.Colors.pmCheckGreenColor
         saveButton.titleLabel!.font = UIFont(name: "Helvetica-Neue", size: 12.0)

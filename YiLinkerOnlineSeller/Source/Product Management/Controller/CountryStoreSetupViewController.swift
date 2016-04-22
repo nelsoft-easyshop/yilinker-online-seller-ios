@@ -105,6 +105,7 @@ class CountryStoreSetupViewController: UIViewController {
     
     func secondaryLocationAction(gesture: UIGestureRecognizer) {
         let inventoryLocation: InventoryLocationViewController = InventoryLocationViewController(nibName: "InventoryLocationViewController", bundle: nil)
+        inventoryLocation.isPrimary = false
         self.navigationController!.pushViewController(inventoryLocation, animated: true)
     }
     
