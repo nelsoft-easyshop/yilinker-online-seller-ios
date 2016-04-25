@@ -73,14 +73,16 @@
                             <constraint firstAttribute="height" constant="14" id="zsz-FA-eGl"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="10"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="textColor" red="0.80392163991928101" green="0.11372549831867218" blue="0.10196079313755035" alpha="1" colorSpace="deviceRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Lpt-id-XQr" firstAttribute="leading" secondItem="jME-Ig-8p9" secondAttribute="trailing" constant="16" id="0F7-wY-69f"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Lpt-id-XQr" secondAttribute="trailing" constant="3" id="0TN-cO-vaV"/>
+                    <constraint firstItem="Lpt-id-XQr" firstAttribute="leading" secondItem="tTh-OL-n3S" secondAttribute="leading" constant="8" id="7fp-JY-el5"/>
                     <constraint firstAttribute="bottom" secondItem="gCO-SS-ui8" secondAttribute="bottom" constant="2" id="7nI-0e-YWx"/>
+                    <constraint firstItem="gCO-SS-ui8" firstAttribute="leading" secondItem="jME-Ig-8p9" secondAttribute="leading" constant="-5" id="BzC-UU-dSb"/>
                     <constraint firstItem="jME-Ig-8p9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-4" id="Cjp-RV-rnA"/>
                     <constraint firstItem="tTh-OL-n3S" firstAttribute="leading" secondItem="gCO-SS-ui8" secondAttribute="trailing" constant="6" id="Cmn-Ok-cyd"/>
                     <constraint firstItem="tTh-OL-n3S" firstAttribute="top" secondItem="Lpt-id-XQr" secondAttribute="bottom" constant="3" id="H0T-Bd-Alh"/>
@@ -88,8 +90,8 @@
                     <constraint firstItem="Hhn-0N-cCA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="KDn-PH-Azh"/>
                     <constraint firstItem="gCO-SS-ui8" firstAttribute="top" secondItem="jME-Ig-8p9" secondAttribute="bottom" constant="3" id="Kni-zd-feD"/>
                     <constraint firstItem="Hhn-0N-cCA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="PZI-vN-NGG"/>
-                    <constraint firstAttribute="trailing" secondItem="tTh-OL-n3S" secondAttribute="trailing" constant="3" id="Uyd-0u-y9a"/>
                     <constraint firstAttribute="bottom" secondItem="tTh-OL-n3S" secondAttribute="bottom" constant="2" id="kxL-UO-OoT"/>
+                    <constraint firstItem="gCO-SS-ui8" firstAttribute="leading" secondItem="Hhn-0N-cCA" secondAttribute="trailing" constant="18" id="lfB-m2-gau"/>
                     <constraint firstItem="jME-Ig-8p9" firstAttribute="leading" secondItem="Hhn-0N-cCA" secondAttribute="trailing" constant="23" id="u5T-UX-fyl"/>
                 </constraints>
             </tableViewCellContentView>
