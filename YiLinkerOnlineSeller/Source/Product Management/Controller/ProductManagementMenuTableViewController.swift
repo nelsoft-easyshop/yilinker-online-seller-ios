@@ -88,6 +88,8 @@ class ProductManagementMenuTableViewController: UITableViewController {
         } else if indexPath.row == 1 {
             //Redirect to Stores Available
             Toast.displayToastWithMessage("Stores Available", duration: 1.5, view: self.view)
+            let countryStore: CountryStoreSetupViewController = CountryStoreSetupViewController(nibName: "CountryStoreSetupViewController", bundle: nil)
+            self.navigationController?.pushViewController(countryStore, animated: true)
         } else if indexPath.row == 2 {
             //Redirect to Product Details
             Toast.displayToastWithMessage("Product Details", duration: 1.5, view: self.view)

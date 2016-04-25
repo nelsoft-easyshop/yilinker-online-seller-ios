@@ -25,9 +25,9 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        setupNavigationBar()
         
         self.tableView.contentInset = UIEdgeInsetsMake(-36, 0, 0, 0)
-        self.title = "Country Store"
         self.tableView.registerNib(UINib(nibName: "CountryStoreTableViewCell", bundle: nil), forCellReuseIdentifier: "countryId")
     }
 
@@ -36,6 +36,22 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
         
         
     }
+    
+    // MARK: - Functions
+    
+    func setupNavigationBar() {
+        
+        self.title = "Country Store"
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -10
+        
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, UIBarButtonItem(image: UIImage(named: "nav-back"), style: .Plain, target: self, action: "backAction")]
+    }
+    
+    func backAction() {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

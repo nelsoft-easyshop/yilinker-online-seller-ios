@@ -115,6 +115,7 @@ struct Constants {
         }
         
         static func getClientId(isSeller: Bool) -> String {
+            return "1_9t2337riou0wsws84ckw8gkck8os8skw8cokoooc04gc0kssc"
             if isSeller {
                 if APIEnvironment.development {
                     return "3_4qzm05tv6uwwko4c4c8gs00sco0c40os08owg8sg0wswoo0w8o"
@@ -135,6 +136,7 @@ struct Constants {
         }
         
         static func getClientSecret(isSeller: Bool) -> String {
+            return "1vmep15il4cgw8gc0g8gokokk0wwkko0cg0go0s4c484kwswo4"
             if isSeller {
                 if APIEnvironment.development {
                     return "1vgsjw5b0u74kssco8cooock0oc8c0sscoksk0sgsc08s8k4gw"
