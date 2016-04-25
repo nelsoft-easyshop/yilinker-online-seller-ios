@@ -354,7 +354,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - Add More Details
     
     func addMoreDetails(sender: UIButton) {
-        let productUploadAttributeListTableViewController: ProductUploadAttributeListTableViewController = ProductUploadAttributeListTableViewController(nibName: "ProductUploadAttributeListTableViewController", bundle: nil)
+        let productUploadAttributeListTableViewController: ProductUploadAttributeListVC = ProductUploadAttributeListVC(nibName: "ProductUploadAttributeListVC", bundle: nil)
         productUploadAttributeListTableViewController.productModel = self.productModel.copy()
         self.navigationController!.pushViewController(productUploadAttributeListTableViewController, animated: true)
     }
