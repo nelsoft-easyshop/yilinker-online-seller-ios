@@ -32,6 +32,7 @@ class ProductUploadAttributeTableViewCell: UITableViewCell, UICollectionViewData
     
     // Global variable
     var attributes: [String] = []
+    var productModel: ProductModel?
     
     // Initialized ProductUploadAttributeTableViewCellDelegate
     var delegate: ProductUploadAttributeTableViewCellDelegate?
@@ -94,8 +95,8 @@ class ProductUploadAttributeTableViewCell: UITableViewCell, UICollectionViewData
         
         let attributeValue: String = cell.attributeLabel.text!
         
-        if self.parentViewController!.productModel != nil {
-            for (index, combination) in enumerate(self.parentViewController!.productModel!.validCombinations){
+        if self.productModel != nil {
+            for (index, combination) in enumerate(self.productModel!.validCombinations){
                 for dictionary in combination.attributes as [NSMutableDictionary] {
                     if attributeValue == dictionary["value"] as! String {
                         isValidToDelete = false
