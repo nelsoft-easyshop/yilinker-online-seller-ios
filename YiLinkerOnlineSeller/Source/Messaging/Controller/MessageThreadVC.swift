@@ -631,18 +631,29 @@ class MessageThreadVC: UIViewController {
     }
     
     func fireRefreshToken() {
-        let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
-        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
+//        let manager = APIManager.sharedInstance
+//        //seller@easyshop.ph
+//        //password
+//        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
+//        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+//            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+//            }, failure: {
+//                (task: NSURLSessionDataTask!, error: NSError!) in
+//                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+//                
+//                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
+//        })
+        
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            } else {
+                //Show UIAlert and force the user to logout
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
+            }
         })
         
     }

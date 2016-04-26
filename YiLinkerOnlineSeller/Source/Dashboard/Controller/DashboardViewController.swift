@@ -410,43 +410,6 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
 
         }
         
-        //Old Request
-//        self.showHUD()
-//        
-//        let manager: APIManager = APIManager.sharedInstance
-//        //seller@easyshop.ph
-//        //password
-//        let parameters: NSDictionary = [
-//            "registrationId": "\(registrationID)",
-//            "access_token"  : SessionManager.accessToken(),
-//            "deviceType"    : "1"
-//            ]   as Dictionary<String, String>
-//        
-//        let url = APIAtlas.baseUrl + APIAtlas.ACTION_GCM_CREATE
-//        
-//        manager.POST(url, parameters: parameters, success: {
-//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-//            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-//            //SVProgressHUD.dismiss()
-//            self.hideHud()
-//            //self.showSuccessMessage()
-//            }, failure: {
-//                (task: NSURLSessionDataTask!, error: NSError!) in
-//                
-//                println(task.response?.description)
-//                
-//                println(error.description)
-//                if (Reachability.isConnectedToNetwork()) {
-//                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-//                    
-//                    if task.statusCode == 401 {
-//                        self.fireRefreshToken(true)
-//                    } else {
-//                        UIAlertController.displaySomethingWentWrongError(self)
-//                    }
-//                }
-//                self.hideHud()
-//        })
     }
     
     func fireDeleteRegistration(registrationID : String) {
@@ -480,48 +443,6 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             self.logoutUser()
         }
         
-        //Old Request
-        
-//        if Reachability.isConnectedToNetwork() {
-//            self.logoutUser()
-//            if(SessionManager.isLoggedIn()){
-//                let manager: APIManager = APIManager.sharedInstance
-//                let parameters: NSDictionary = [
-//                    
-//                    "registrationId": "\(registrationID)",
-//                    "deviceType"    : "1"
-//                    ]   as Dictionary<String, String>
-//                
-//                let url = "\(APIAtlas.ACTION_GCM_DELETE)?access_token=\(SessionManager.accessToken())"
-//                self.showHUD()
-//                manager.POST(url, parameters: parameters, success: {
-//                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-//                    println(responseObject)
-//                    println("Registration successful!")
-//                    self.logoutUser()
-//                    self.hud?.hide(true)
-//                    }, failure: {
-//                        (task: NSURLSessionDataTask!, error: NSError!) in
-//                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-//                        println("Registration unsuccessful!")
-//                        self.hud?.hide(true)
-//                        if task.statusCode == 401 {
-//                        } else {
-//                            if Reachability.isConnectedToNetwork() {
-//                                var info = error.userInfo!
-//                                self.logoutUser()
-//                                
-//                            } else {
-//                                UIAlertController.displayNoInternetConnectionError(self)
-//                            }
-//                        }
-//                        
-//                })
-//            }
-//        } else {
-//            UIAlertController.displayNoInternetConnectionError(self)
-//        }
-//        
     }
     
     func fireStoreInfo(showHUD: Bool){
