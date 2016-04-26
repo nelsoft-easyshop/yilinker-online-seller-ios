@@ -117,6 +117,8 @@ struct Constants {
         static func getClientId(isSeller: Bool) -> String {
             if isSeller {
                 if APIEnvironment.development {
+                    return "1_9t2337riou0wsws84ckw8gkck8os8skw8cokoooc04gc0kssc"
+                } else if APIEnvironment.sprint {
                     return "3_4qzm05tv6uwwko4c4c8gs00sco0c40os08owg8sg0wswoo0w8o"
                 } else if APIEnvironment.staging {
                     return "1_167rxzqvid8g8swggwokcoswococscocc8ck44wo0g88owgkcc"
@@ -125,6 +127,8 @@ struct Constants {
                 }
             } else {
                 if APIEnvironment.development {
+                    return "4_5scc2qrbwwkc0w0k0s0488o404kswgw8s0884k8kkw4w8ks488"
+                } else if APIEnvironment.sprint {
                     return "3_4qzm05tv6uwwko4c4c8gs00sco0c40os08owg8sg0wswoo0w8o"
                 } else if APIEnvironment.staging {
                     return "3_4qzm05tv6uwwko4c4c8gs00sco0c40os08owg8sg0wswoo0w8o"
@@ -137,6 +141,8 @@ struct Constants {
         static func getClientSecret(isSeller: Bool) -> String {
             if isSeller {
                 if APIEnvironment.development {
+                    return "1vmep15il4cgw8gc0g8gokokk0wwkko0cg0go0s4c484kwswo4"
+                } else if APIEnvironment.sprint {
                     return "1vgsjw5b0u74kssco8cooock0oc8c0sscoksk0sgsc08s8k4gw"
                 } else if APIEnvironment.staging {
                     return "317eq8nohry84ooc0o8woo8000c0k844c4cggws84g80scwwog"
@@ -145,6 +151,8 @@ struct Constants {
                 }
             } else {
                 if APIEnvironment.development {
+                    return "5jztr6if1u04kok4w0gkwkco400csgg8gc4gcoogooogscc8s0"
+                } else if APIEnvironment.sprint {
                     return "1vgsjw5b0u74kssco8cooock0oc8c0sscoksk0sgsc08s8k4gw"
                 } else if APIEnvironment.staging {
                     return "1vgsjw5b0u74kssco8cooock0oc8c0sscoksk0sgsc08s8k4gw"
