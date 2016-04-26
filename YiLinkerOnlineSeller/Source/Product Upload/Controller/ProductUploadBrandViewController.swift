@@ -205,42 +205,6 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
                 }
             }
         })
-        /*
-        let manager: APIManager = APIManager.sharedInstance
-        
-        self.searchTask = manager.GET(APIAtlas.brandUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            let dictionary: NSDictionary = responseObject as! NSDictionary
-            let isSuccessful = dictionary["isSuccessful"] as! Bool
-            let data: [NSDictionary] = dictionary["data"] as! [NSDictionary]
-            if isSuccessful {
-                self.brands.removeAllObjects()
-                for brandDictionary in data {
-                    let brandModel: BrandModel = BrandModel(name: brandDictionary["name"] as! String, brandId: brandDictionary["brandId"] as! Int)
-                    self.brands.addObject(brandModel)
-                }
-                self.tableView.reloadData()
-            }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                if error.code != NSURLErrorCancelled {
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    
-                    if task.statusCode == 401 {
-                        self.fireRefreshTokenWithKeyWord(keyWord)
-                    } else {
-                        if error.userInfo != nil {
-                            let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                            let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                            self.showAlert(Constants.Localized.error, message: errorModel.message)
-                        } else {
-                            self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-                        }
-                    }
-                }
-            })*/
     }
     
     // MARK: POST METHOD - Refresh token

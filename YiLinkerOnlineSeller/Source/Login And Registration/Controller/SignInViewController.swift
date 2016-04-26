@@ -317,39 +317,10 @@ class SignInViewController: UIViewController, UITableViewDelegate, UITextFieldDe
     }
     
     func fireCreateRegistration(registrationID : String) {
-        println("fireCreateRegistration")
-        if(SessionManager.isLoggedIn()){
-            
-            let manager: APIManager = APIManager.sharedInstance
-            //seller@easyshop.ph
-            //password
-            let parameters: NSDictionary = [
-                "registrationId": "\(registrationID)",
-                "access_token"  : SessionManager.accessToken(),
-                "deviceType"    : "1"
-                ]   as Dictionary<String, String>
-            
-            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GCM_CREATE
-            
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                println("Registration successful!")
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    
-                    println("Registration unsuccessful!")
-            })
-        }
+
     }
     
     func signinSuccessful() {
-        
-//        if self.rememberMeImageView.image != nil {
-//            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "rememberMe")
-//        } else {
-//            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
-//        }
-//        NSUserDefaults.standardUserDefaults().synchronize()
         
         fireStoreInfo()
     }

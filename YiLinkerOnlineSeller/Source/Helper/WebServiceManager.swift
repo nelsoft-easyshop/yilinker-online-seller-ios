@@ -902,5 +902,40 @@ class WebServiceManager: NSObject {
         
         return sessionDataTask
     }
+ 
+    // MARK: - Get Contacts
+    class func fireGetContacts(url: String, keyword: String, page: String, limit: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        let manager: APIManager = APIManager.sharedInstance
+        manager.requestSerializer = AFHTTPRequestSerializer()
+        
+        let parameters: NSDictionary = [
+            "page"          : page,
+            "limit"         : limit,
+            "keyword"       : keyword,
+            "access_token"  : SessionManager.accessToken()
+            ]   as Dictionary<String, String>
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: - Get Conversation
+    class func fireGetConversation(url: String, page: String, limit: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        let manager: APIManager = APIManager.sharedInstance
+        manager.requestSerializer = AFHTTPRequestSerializer()
+        
+        let parameters: NSDictionary = [
+            "page"          : page,
+            "limit"         : limit,
+            "access_token"  : SessionManager.accessToken()
+            ]   as Dictionary<String, String>
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
     
 }
