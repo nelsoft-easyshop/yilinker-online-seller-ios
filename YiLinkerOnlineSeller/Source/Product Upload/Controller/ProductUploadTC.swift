@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSource, ProductUploadUploadImageTVCDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadFooterViewDelegate, ProductUploadBrandViewControllerDelegate {
+class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSource, ProductUploadUploadImageTVCDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadFooterViewDelegate, ProductUploadBrandViewControllerDelegate, UzysAssetsPickerControllerDelegate {
     
     // Variables// Models
     var conditions: [ConditionModel] = []
@@ -50,10 +50,11 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         self.title = "Product Upload"
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "hideKeyboard")
-        self.tableView.addGestureRecognizer(tap)
+        //let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "hideKeyboard")
+        //self.tableView.addGestureRecognizer(tap)
         
         self.addFooter()
+        self.addPhoto()
         self.backButton()
         self.registerNib()
         
@@ -119,11 +120,11 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell: ProductUploadImageTVC = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadImageTVC") as! ProductUploadImageTVC
-            cell.selectionStyle = UITableViewCellSelectionStyle.None
-            
+            cell.productModel = self.productModel
             cell.dataSource = self
             cell.delegate = self
             cell.collectionView.reloadData()
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             
             return cell
         } else if indexPath.section == 1 {
@@ -351,6 +352,15 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     
     // MARK: -
     // MARK: - Local Methods
+    // MARK: - Add table view footer
+    
+    func addFooter() {
+        let footerView: ProductUploadFooterView = XibHelper.puffViewWithNibName("ProductUploadFooterView", index: 0) as! ProductUploadFooterView
+        self.tableView.tableFooterView = footerView
+        footerView.delegate = self
+    }
+    
+    // MARK: -
     // MARK: - Add More Details
     
     func addMoreDetails(sender: UIButton) {
@@ -360,12 +370,15 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     }
     
     // MARK: -
-    // MARK: - Add table view footer
-    
-    func addFooter() {
-        let footerView: ProductUploadFooterView = XibHelper.puffViewWithNibName("ProductUploadFooterView", index: 0) as! ProductUploadFooterView
-        self.tableView.tableFooterView = footerView
-        footerView.delegate = self
+    // MARK: - Append dummy photo
+    func addPhoto() {
+        if self.uploadType == UploadType.EditProduct {
+            let image: UIImage = UIImage(named: "addPhoto")!
+            let serverImage: ServerUIImage  = ServerUIImage(data: UIImagePNGRepresentation(image)!)!
+            self.productModel.editedImage.append(serverImage)
+        } else {
+            self.productModel.images.append(UIImage(named: "addPhoto")!)
+        }
     }
     
     // MARK: -
@@ -474,6 +487,25 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     }
     
     // MARK: -
+    // MARK: - Reupload Cell Collection View Data
+    
+    func reloadUploadCellCollectionViewData() {
+        let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
+        let cell: ProductUploadImageTVC = self.tableView.cellForRowAtIndexPath(indexPath) as! ProductUploadImageTVC
+        cell.collectionView.reloadData()
+        
+        var lastIndexPath: NSIndexPath = NSIndexPath()
+        
+        if self.uploadType == UploadType.EditProduct {
+            lastIndexPath = NSIndexPath(forItem: self.productModel.editedImage.count - 1, inSection: 0)
+        } else {
+            lastIndexPath = NSIndexPath(forItem: self.productModel.images.count - 1, inSection: 0)
+        }
+        
+        cell.collectionView.scrollToItemAtIndexPath(lastIndexPath, atScrollPosition: UICollectionViewScrollPosition.Right, animated: true)
+    }
+    
+    // MARK: -
     // MARK: - Replace Product Attribute With Attribute
     
     func replaceProductAttributeWithAttribute(attributes: [AttributeModel], combinations: [CombinationModel]) {
@@ -559,13 +591,11 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - Product Upload Upload Image Table View Cell Delegate method
     
     func productUploadUploadImageTableViewCell(numberOfCollectionViewRows cell: ProductUploadImageTVC) -> Int {
-        /*if self.uploadType == UploadType.EditProduct {
+        if self.uploadType == UploadType.EditProduct {
             return self.productModel.editedImage.count
         } else {
             return self.productModel.images.count
-        }*/
-        return 2
-
+        }
     }
     
     // MARK: -
@@ -573,6 +603,19 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     
     func productUploadUploadImageTableViewCell(didSelecteRowAtIndexPath indexPath: NSIndexPath, cell: ProductUploadImageTVC) {
         println("tap image")
+        
+        if indexPath.row == self.productModel.images.count - 1 && self.productModel.images.count <= 5 {
+            let picker: UzysAssetsPickerController = UzysAssetsPickerController()
+            let maxCount: Int = 6
+            
+            let imageLimit: Int = maxCount - self.productModel.images.count
+            picker.delegate = self
+            picker.maximumNumberOfSelectionVideo = 0
+            picker.maximumNumberOfSelectionPhoto = 100
+            UzysAssetsPickerController.setUpAppearanceConfig(self.uzyConfig())
+            self.presentViewController(picker, animated: true, completion: nil)
+        }
+        
         /*if self.uploadType == UploadType.EditProduct {
             if indexPath.row == self.productModel.editedImage.count - 1 && self.productModel.editedImage.count <= 5 {
                 let picker: UzysAssetsPickerController = UzysAssetsPickerController()
@@ -623,8 +666,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - ProductUploadImageCollectionViewCell Delegate Method
     
     func productUploadUploadImageTableViewCell(didTapStarAtRowIndexPath indexPath: NSIndexPath, cell: ProductUploadImageCollectionViewCell, collectionView: UICollectionView) {
-        cell.imageView.image = UIImage(named: "active")
-        cell.starButton.setBackgroundImage(UIImage(named: "active2"), forState: UIControlState.Normal)
         collectionView.reloadData()
     }
     
@@ -632,16 +673,12 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - ProductUploadImageTVC Delegate Method
     
     func productUploadUploadImageTableViewCell(images cell: ProductUploadImageTVC) -> [UIImage] {
-        /*
+        
         if self.uploadType == UploadType.EditProduct {
             return self.productModel.editedImage
         } else {
             return self.productModel.images
-        }*/
-        var images: [UIImage] = []
-        images.append(UIImage(named: "YiLinkerLogo")!)
-        images.append(UIImage(named: "addPhoto")!)
-        return images
+        }
     }
     
     // MARK: -
@@ -715,6 +752,63 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         self.productBrand = brand
         self.productModel.brand.name = self.productBrand
         self.reloadTableViewRowInSection(2, row: 2)
+    }
+    
+    // MARK: UzysAssetsPickerView Controller Data Source and Delegate methods
+    // MARK: - Uzy Config
+    func uzyConfig() -> UzysAppearanceConfig {
+        let config: UzysAppearanceConfig = UzysAppearanceConfig()
+        config.finishSelectionButtonColor = Constants.Colors.appTheme
+        return config
+    }
+    
+    // MARK: - Uzzy Picker Delegate
+    func uzysAssetsPickerController(picker: UzysAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) {
+        let assetsLibrary = ALAssetsLibrary()
+        let alaSset: ALAsset = assets[0] as! ALAsset
+        
+        for allaSset in assets as! [ALAsset] {
+            
+            if self.uploadType == UploadType.EditProduct {
+                // Insert newly added images in 'productModel' editedImages,
+                // Set 'isNew' to true
+                let image: ServerUIImage = ServerUIImage(CGImage: allaSset.defaultRepresentation().fullScreenImage().takeUnretainedValue())!
+                image.isNew = true
+                image.isRemoved = false
+                self.productModel.editedImage.insert(image, atIndex: self.productModel.editedImage.count - 1)
+            } else {
+                // Insert iamges in 'productModel' array of images
+                // Call CropAssetViewController to crop images
+                let representation: ALAssetRepresentation = allaSset.defaultRepresentation()
+                let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullScreenImage().takeUnretainedValue(), scale: 1.0, orientation: UIImageOrientation.Up)!
+                
+                self.productModel.images.insert(image, atIndex: self.productModel.images.count - 1)
+                println(self.productModel.images.count - 1)
+                self.productModel.isPrimaryPhoto.append(false)
+                /*let storyboard = UIStoryboard(name: "FaImagePicker", bundle: nil)
+                
+                let faImagePicker = storyboard.instantiateViewControllerWithIdentifier("FaCropper") as! CropAssetViewController!
+                faImagePicker.image = image
+                faImagePicker.imageCount = ProductCroppedImages.imagesCropped.count - 1
+                //faImagePicker.imagePickerDelegate = self
+                faImagePicker.edgesForExtendedLayout = .None
+                self.navigationController!.pushViewController(faImagePicker, animated: true)
+                */
+            }
+        }
+        
+        self.reloadUploadCellCollectionViewData()
+        //self.tableView.reloadData()
+        //self.reloadTable()
+    }
+    
+    // MARK: - Uzy Delegate
+    func uzysAssetsPickerControllerDidCancel(picker: UzysAssetsPickerController!) {
+        
+    }
+    
+    func uzysAssetsPickerControllerDidExceedMaximumNumberOfSelection(picker: UzysAssetsPickerController!) {
+        
     }
     
     // MARK: -

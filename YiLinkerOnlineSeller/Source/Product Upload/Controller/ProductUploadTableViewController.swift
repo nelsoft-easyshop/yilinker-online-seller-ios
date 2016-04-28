@@ -1019,6 +1019,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     func productUploadUploadImageTableViewCell(didTapStarAtRowIndexPath indexPath: NSIndexPath, cell: ProductUploadImageCollectionViewCell) {
         cell.starButton.setBackgroundImage(UIImage(named: "active2"), forState: UIControlState.Normal)
     }
+    
     func productUploadUploadImageTableViewCell(images cell: ProductUploadUploadImageTableViewCell) -> [UIImage] {
         if self.uploadType == UploadType.EditProduct {
             return self.productModel.editedImage
