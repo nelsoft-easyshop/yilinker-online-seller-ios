@@ -352,15 +352,7 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
         self.productModel = productModel
         self.productModel.attributes.removeAtIndex(indexPath.section)
         self.productModel.attributes.append(attribute)
-        
-        let range = NSMakeRange(0, self.tableView.numberOfSections())
-        let sections = NSIndexSet(indexesInRange: range)
-        
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.tableView.reloadSections(sections, withRowAnimation: UITableViewRowAnimation.Fade)
-        })
-        
-        //self.tableView.reload
+        self.tableView.reloadData()
         self.cellIsInEdit = false
         self.removeFooter()
     }
