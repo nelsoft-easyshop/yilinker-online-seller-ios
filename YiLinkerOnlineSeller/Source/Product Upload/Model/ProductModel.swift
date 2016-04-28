@@ -35,6 +35,7 @@ class ProductModel {
     var length: String = ""
     var weigth: String = ""
     var isAvailable: Bool = false
+    var isPrimaryPhoto: [Bool] = []
     
     var message: String = ""
     var isSuccessful: Bool = false
@@ -49,7 +50,7 @@ class ProductModel {
         self.validCombinations = validCombinations
     }
     
-    init (isSuccessful: Bool, message: String, attributes: [AttributeModel], validCombinations: [CombinationModel], images: [String], imageIds: [String], category: CategoryModel, brand: BrandModel, condition: ConditionModel, name: String, shortDescription: String, completeDescription: String, productId: String,  quantity: Int, retailPrice: String, discountedPrice: String, weight: String, height: String, length: String, width: String, sku: String, productUnitId: String, isAvailable: Bool) {
+    init (isSuccessful: Bool, message: String, attributes: [AttributeModel], validCombinations: [CombinationModel], images: [String], imageIds: [String], category: CategoryModel, brand: BrandModel, condition: ConditionModel, name: String, shortDescription: String, completeDescription: String, productId: String,  quantity: Int, retailPrice: String, discountedPrice: String, weight: String, height: String, length: String, width: String, sku: String, productUnitId: String, isAvailable: Bool, isPrimaryPhoto: [Bool]) {
     
         self.isSuccessful = isSuccessful
         self.message = message
@@ -75,6 +76,7 @@ class ProductModel {
         self.sku = sku
         self.productUnitId = productUnitId
         self.isAvailable = isAvailable
+        self.isPrimaryPhoto = isPrimaryPhoto
     }
     
     init() {
@@ -99,6 +101,7 @@ class ProductModel {
         self.length = ""
         self.weigth = ""
         self.isAvailable = true
+        self.isPrimaryPhoto = []
         
         self.message = ""
         self.isSuccessful = false
@@ -141,6 +144,7 @@ class ProductModel {
         var productUnitId: String = ""
         var quantity: Int = 0
         var isAvailable: Bool = false
+        var isPrimaryPhoto: [Bool] = []
         
         if dictionary.isKindOfClass(NSDictionary) {
             
@@ -212,6 +216,7 @@ class ProductModel {
                     combination.length = "0.0"
                     combination.width = "0.0"
                     combination.isAvailable = false
+                    combination.isPrimaryPhoto.append(false)
 //                    validCombinations.append(combination)
                     
                     
@@ -232,7 +237,7 @@ class ProductModel {
                             }
                         } else {
                             
-                            // TODO: Parse isAvailable
+                            // TODO: Parse isAvailable, isPrimaryPhoto
                             
                             for subValue in value["productProperties"] as! NSArray {
                                 var combination = CombinationModel()
@@ -360,7 +365,7 @@ class ProductModel {
             } // data
         } // dictionary
         
-        return ProductModel(isSuccessful: isSuccessful, message: message, attributes: attributes, validCombinations: validCombinations, images: images, imageIds: imageIds, category: category, brand: brand, condition: condition, name: name, shortDescription: shortDescription, completeDescription: completeDescription, productId: uid, quantity: quantity, retailPrice: retailPrice, discountedPrice: discoutedPrice, weight: weigth, height: height, length: length, width: width, sku: sku, productUnitId: productUnitId, isAvailable: isAvailable)
+        return ProductModel(isSuccessful: isSuccessful, message: message, attributes: attributes, validCombinations: validCombinations, images: images, imageIds: imageIds, category: category, brand: brand, condition: condition, name: name, shortDescription: shortDescription, completeDescription: completeDescription, productId: uid, quantity: quantity, retailPrice: retailPrice, discountedPrice: discoutedPrice, weight: weigth, height: height, length: length, width: width, sku: sku, productUnitId: productUnitId, isAvailable: isAvailable, isPrimaryPhoto: isPrimaryPhoto)
         
     } // parseDataWithDictionary
 }
