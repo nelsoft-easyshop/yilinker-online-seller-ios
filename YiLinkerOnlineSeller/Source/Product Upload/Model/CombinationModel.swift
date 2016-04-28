@@ -26,4 +26,5 @@ class CombinationModel {
     var width: String = ""
     var productUnitId: String = ""
     var isAvailable: Bool = false
+    var isPrimaryPhoto: [Bool] = []
 }
