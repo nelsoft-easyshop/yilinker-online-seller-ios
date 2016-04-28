@@ -41,6 +41,8 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
     // Initialiaze ProductUploadImageTVCDataSource and ProductUploadImageTVCDelegate
     var dataSource: ProductUploadUploadImageTVCDataSource?
     var delegate: ProductUploadUploadImageTVCDelegate?
+    var productModel: ProductModel?
+    var selectedPrimaryPhoto: [String] = []
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -81,7 +83,15 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
     func productUploadImageCollectionViewCell(didTapStarButtonAtCell cell: ProductUploadImageCollectionViewCell) {
         cell.starButton.setBackgroundImage(UIImage(named: "active2"), forState: UIControlState.Normal)
         let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
+        
+        self.selectedPrimaryPhoto.removeAll(keepCapacity: false)
+        
+        if cell.starButton.tag != 1001 {
+            self.selectedPrimaryPhoto.append("\(cell.starButton.tag)")
+        }
+        
         self.delegate!.productUploadUploadImageTableViewCell(didTapStarAtRowIndexPath: indexPath, cell: cell, collectionView: self.collectionView)
+  
         self.collectionView.reloadData()
     }
     
@@ -94,14 +104,22 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: ProductUploadImageCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(ProductUploadImageTVCConstant.productUploadImageCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ProductUploadImageCollectionViewCell
-        
+        cell.starButton.tag = indexPath.row
         cell.imageView.image = self.dataSource!.productUploadUploadImageTableViewCell(images: self)[indexPath.row]
         
         if indexPath.row == self.dataSource!.productUploadUploadImageTableViewCell(numberOfCollectionViewRows: self) - 1 {
             cell.closeButton.hidden = true
+            cell.starButton.hidden = true
             cell.imageView.contentMode = UIViewContentMode.ScaleAspectFit
         } else {
+            if contains(self.selectedPrimaryPhoto, "\(indexPath.row)") && cell.starButton.tag != 1001{
+                cell.starButton.backgroundColor = UIColor.yellowColor()
+                cell.starButton.tag = 1001
+            } else {
+                cell.starButton.backgroundColor = UIColor.redColor()
+            }
             cell.closeButton.hidden = false
+            cell.starButton.hidden = false
             cell.imageView.contentMode = UIViewContentMode.ScaleAspectFill
         }
         
