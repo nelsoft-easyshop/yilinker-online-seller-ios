@@ -123,7 +123,7 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
 //                //SVProgressHUD.show()
 //                self.showHUD()
 //                
-//                let manager: APIManager = APIManager.sharedInstance
+//                let manager = APIManager.sharedInstance
 //                manager.requestSerializer = AFHTTPRequestSerializer()
 //                
 //                let parameters: NSDictionary = [
