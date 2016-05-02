@@ -404,41 +404,78 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         if (Reachability.isConnectedToNetwork()) {
             self.showHUD()
             
-            let manager: APIManager = APIManager.sharedInstance
-            manager.requestSerializer = AFHTTPRequestSerializer()
-            
-            let parameters: NSDictionary = [
-                "page"          : "1",
-                "limit"         : "1",
-                "keyword"       : keyword,
-                "access_token"  : SessionManager.accessToken()
-                ]   as Dictionary<String, String>
-            
             let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
             
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
-                self.goToMessaging()
-                //SVProgressHUD.dismiss()
-                self.hud?.hide(true)
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+            WebServiceManager.fireGetContacts(APIAtlas.ACTION_GET_CONTACTS, keyword: keyword, page: "1", limit: "1", actionHandler:
+                { (successful, responseObject, requestErrorType) -> Void in
                     
-                    if task.statusCode == 401 {
-                        if (SessionManager.isLoggedIn()){
-                            self.fireRefreshToken()
-                        }
+                    if successful {
+                        self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
+                        self.goToMessaging()
+                        self.hud?.hide(true)
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        self.contacts = Array<W_Contact>()
+                        //SVProgressHUD.dismiss()
+                        self.hud?.hide(true)
+                        
+                        if requestErrorType == .ResponseError {
+                            //Error in api requirements
+                            let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                            Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                        } else if requestErrorType == .AccessTokenExpired {
+                            self.fireRefreshToken()
+                        } else if requestErrorType == .PageNotFound {
+                            //Page not found
+                            Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                        } else if requestErrorType == .NoInternetConnection {
+                            //No internet connection
+                            Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                        } else if requestErrorType == .RequestTimeOut {
+                            //Request timeout
+                            Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                        } else if requestErrorType == .UnRecognizeError {
+                            //Unhandled error
+                            Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                        }
                     }
                     
-                    self.contacts = Array<W_Contact>()
-                    
-                    //SVProgressHUD.dismiss()
-                    self.hud?.hide(true)
             })
+            
+//            let manager = APIManager.sharedInstance
+//            manager.requestSerializer = AFHTTPRequestSerializer()
+//            
+//            let parameters: NSDictionary = [
+//                "page"          : "1",
+//                "limit"         : "1",
+//                "keyword"       : keyword,
+//                "access_token"  : SessionManager.accessToken()
+//                ]   as Dictionary<String, String>
+//            
+//            let urls = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
+//            
+//            manager.POST(urls, parameters: parameters, success: {
+//                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+//                self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
+//                self.goToMessaging()
+//                //SVProgressHUD.dismiss()
+//                self.hud?.hide(true)
+//                }, failure: {
+//                    (task: NSURLSessionDataTask!, error: NSError!) in
+//                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+//                    
+//                    if task.statusCode == 401 {
+//                        if (SessionManager.isLoggedIn()){
+//                            self.fireRefreshToken()
+//                        }
+//                    } else {
+//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+//                    }
+//                    
+//                    self.contacts = Array<W_Contact>()
+//                    
+//                    //SVProgressHUD.dismiss()
+//                    self.hud?.hide(true)
+//            })
         }
         
     }

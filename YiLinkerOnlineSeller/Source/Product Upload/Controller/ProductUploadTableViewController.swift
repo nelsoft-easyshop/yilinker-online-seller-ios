@@ -1647,8 +1647,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             parameters[ProductUploadTableViewControllerConstant.uploadProductUnitId] = self.productModel.productUnitId
         }
         
-        let manager: APIManager = APIManager.sharedInstance
-        
         var url: String = ""
         
         if uploadType == UploadType.Draft {
@@ -1787,53 +1785,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             }
         })
         
-        /*
-        let manager: APIManager = APIManager.sharedInstance
-        manager.POST(ProductUploadCombination.url, parameters: ProductUploadCombination.parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
-            for (index, data) in enumerate(ProductUploadCombination.datas) {
-                println("multipart index: \(index)")
-                formData.appendPartWithFileData(data, name: "images[]", fileName: "\(index)", mimeType: "image/jpeg")
-            }
-            
-            }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
-                self.hud?.hide(true)
-                let dictionary: NSDictionary = response as! NSDictionary
-                
-                if dictionary["isSuccessful"] as! Bool == true {
-                    if uploadType == UploadType.Draft {
-                        ProductUploadEdit.edit = false
-                        self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyDraft)
-                    } else if uploadType == UploadType.EditProduct {
-                        ProductUploadEdit.edit = false
-                        self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyEdited)
-                    } else {
-                        self.success()
-                    }
-                } else {
-                    self.showAlert(Constants.Localized.invalid, message: dictionary["message"] as! String)
-                }
-                uploaded = true
-                println(response)
-            }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                let data = NSJSONSerialization.dataWithJSONObject(error.userInfo!, options: nil, error: nil)
-                let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
-                println("error response: \(string)")
-                if task.statusCode == 401 {
-                    self.fireRefreshToken2()
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(Constants.Localized.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-                    }
-                    self.tableView.reloadData()
-                    uploaded = false
-                }
-                self.hud?.hide(true)
-        }*/
         return uploaded
     }
     
@@ -1894,46 +1845,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             }
         })
         
-        /*
-        let manager: APIManager = APIManager.sharedInstance
-        manager.GET(APIAtlas.conditionUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            let conditionParseModel: ConditionParserModel = ConditionParserModel.parseDataFromDictionary(responseObject as! NSDictionary)
-            
-            let uidKey = "productConditionId"
-            let nameKey = "name"
-            
-            if conditionParseModel.isSuccessful {
-                for dictionary in conditionParseModel.data as [NSDictionary] {
-                    let condition: ConditionModel = ConditionModel(uid: dictionary[uidKey] as! Int, name: dictionary[nameKey] as! String)
-                    self.conditions.append(condition)
-                }
-                
-                let indexPath: NSIndexPath = NSIndexPath(forItem: 2, inSection: 2)
-                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
-            }
-            
-            self.productModel.condition = self.conditions[0]
-            
-            self.hud?.hide(true)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    self.fireRefreshToken()
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(Constants.Localized.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-                    }
-                }
-                
-                self.hud?.hide(true)
-        })*/
     }
     
     // Dealloc

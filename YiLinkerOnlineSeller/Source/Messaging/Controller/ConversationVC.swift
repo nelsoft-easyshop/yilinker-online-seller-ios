@@ -244,41 +244,74 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
     
     func fireCreateRegistration(registrationID : String) {
         
+//        self.showHUD()
+//        
+//        let manager = APIManager.sharedInstance
+//        //seller@easyshop.ph
+//        //password
+//        let parameters: NSDictionary = [
+//            "registrationId": "\(registrationID)",
+//            "access_token"  : SessionManager.accessToken(),
+//            "deviceType"    : "1"
+//            ]   as Dictionary<String, String>
+//        
+//        let url = APIAtlas.baseUrl + APIAtlas.ACTION_GCM_CREATE
+//        
+//        manager.POST(url, parameters: parameters, success: {
+//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+//            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+//            //SVProgressHUD.dismiss()
+//            self.hud?.hide(true)
+//            //self.showSuccessMessage()
+//            }, failure: {
+//                (task: NSURLSessionDataTask!, error: NSError!) in
+//                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+//                
+//                if task.statusCode == 401 {
+//                    if (SessionManager.isLoggedIn()){
+//                        self.fireRefreshToken()
+//                    }
+//                } else {
+//                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
+//                }
+//                
+//                //SVProgressHUD.dismiss()
+//                self.hud?.hide(true)
+//                self.addEmptyView()
+//        })
+        
         self.showHUD()
-        
-        let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
-        let parameters: NSDictionary = [
-            "registrationId": "\(registrationID)",
-            "access_token"  : SessionManager.accessToken(),
-            "deviceType"    : "1"
-            ]   as Dictionary<String, String>
-        
-        let url = APIAtlas.baseUrl + APIAtlas.ACTION_GCM_CREATE
-        
-        manager.POST(url, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            //SVProgressHUD.dismiss()
-            self.hud?.hide(true)
-            //self.showSuccessMessage()
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    if (SessionManager.isLoggedIn()){
-                        self.fireRefreshToken()
-                    }
-                } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
-                }
-                
-                //SVProgressHUD.dismiss()
+        WebServiceManager.fireCreateGCMRegistrationIDWithUrl(APIAtlas.ACTION_GCM_CREATE, registrationId: "\(registrationID)", deviceType: "1", accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
+            
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.hud?.hide(true)
+            } else {
                 self.hud?.hide(true)
                 self.addEmptyView()
-        })
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    //                    self.fireRefreshToken(true)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+                
+            }
+            
+        }
     }
     
     func fireLogin() {
@@ -287,109 +320,177 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
         
             self.showHUD()
             
-            let manager: APIManager = APIManager.sharedInstance
-            //seller@easyshop.ph
-            //password
-            let parameters: NSDictionary = ["email": "buyer@easyshop.ph","password": "password", "client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantSeller]
+//            let manager = APIManager.sharedInstance
+//            //seller@easyshop.ph
+//            //password
+//            let parameters: NSDictionary = ["email": "buyer@easyshop.ph","password": "password", "client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantSeller]
+//            
+//            manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
+//                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+//                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+//                //SVProgressHUD.dismiss()
+//                self.hud?.hide(true)
+//                //self.showSuccessMessage()
+//                }, failure: {
+//                    (task: NSURLSessionDataTask!, error: NSError!) in
+//                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+//                    
+//                    if task.statusCode == 401 {
+//                        if (SessionManager.isLoggedIn()){
+//                            self.fireRefreshToken()
+//                        }
+//                    } else {
+//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
+//                    }
+//                    
+//                    //SVProgressHUD.dismiss()
+//                    self.hud?.hide(true)
+//                    self.addEmptyView()
+//            })
             
-            manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                //SVProgressHUD.dismiss()
-                self.hud?.hide(true)
-                //self.showSuccessMessage()
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    
-                    if task.statusCode == 401 {
-                        if (SessionManager.isLoggedIn()){
-                            self.fireRefreshToken()
-                        }
-                    } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
-                    }
-                    
+            WebServiceManager.fireEmailLoginRequestWithUrl(APIAtlas.loginUrlV2, emailAddress: "buyer@easyshop.ph", password: "password", grantType: Constants.Credentials.grantSeller, isSeller: true, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+                if successful {
+                    SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                    //SVProgressHUD.dismiss()
+                    self.hud?.hide(true)
+                    //self.showSuccessMessage()
+                } else {
                     //SVProgressHUD.dismiss()
                     self.hud?.hide(true)
                     self.addEmptyView()
+                    if requestErrorType == .ResponseError {
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .PageNotFound {
+                        Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                    } else if requestErrorType == .NoInternetConnection {
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .RequestTimeOut {
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .UnRecognizeError {
+                        Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .Cancel {
+                        //Do nothing
+                    }
+                }
             })
+
         } else {
             self.addEmptyView()
         }
         
     }
 
-    func getConversationsFromEndpoint(
-        page : String,
-        limit : String){
+    func getConversationsFromEndpoint(page : String, limit : String){
             
             self.showHUD()
             //SVProgressHUD.show()
             
-            let manager: APIManager = APIManager.sharedInstance
-            manager.requestSerializer = AFHTTPRequestSerializer()
+//            let manager = APIManager.sharedInstance
+//            manager.requestSerializer = AFHTTPRequestSerializer()
+//            
+//            let parameters: NSDictionary = [
+//                "page"          : "\(page)",
+//                "limit"         : "\(limit)",
+//                "access_token"  : SessionManager.accessToken()
+//                ]   as Dictionary<String, String>
+//            
+//            /* uncomment + "a" to test retry sending */
+//            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONVERSATION_HEAD //+ "a"
+//            manager.POST(url, parameters: parameters, success: {
+//                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+//                self.conversations = W_Conversation.parseConversations(responseObject as! NSDictionary)
+//                self.conversationTableView.reloadData()
+//                
+//                self.hud?.hide(true)
+//                //SVProgressHUD.dismiss()
+//                }, failure: {
+//                    (task: NSURLSessionDataTask!, error: NSError!) in
+//                    
+//                    println("REACHABILITY \(Reachability.isConnectedToNetwork())")
+//                    if (Reachability.isConnectedToNetwork()){
+//                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+//                        
+//                        if task.statusCode == 401 {
+//                            if (SessionManager.isLoggedIn()){
+//                                self.fireRefreshToken()
+//                            }
+//                        } else {
+//                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
+//                        }
+//                        
+//                        self.conversations = Array<W_Conversation>()
+//                        self.conversationTableView.reloadData()
+//                        
+//                        self.hud?.hide(true)
+//                        //SVProgressHUD.dismiss()
+//                        
+//                        self.addEmptyView()
+//                        
+//                    } else {
+//                        self.addEmptyView()
+//                    }
+//            })
+        
+        
+        WebServiceManager.fireGetConversation(APIAtlas.ACTION_GET_CONVERSATION_HEAD, page: "\(page)", limit: "\(limit)", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             
-            let parameters: NSDictionary = [
-                "page"          : "\(page)",
-                "limit"         : "\(limit)",
-                "access_token"  : SessionManager.accessToken()
-                ]   as Dictionary<String, String>
-            
-            /* uncomment + "a" to test retry sending */
-            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONVERSATION_HEAD //+ "a"
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            if successful {
                 self.conversations = W_Conversation.parseConversations(responseObject as! NSDictionary)
                 self.conversationTableView.reloadData()
                 
                 self.hud?.hide(true)
-                //SVProgressHUD.dismiss()
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    
-                    println("REACHABILITY \(Reachability.isConnectedToNetwork())")
-                    if (Reachability.isConnectedToNetwork()){
-                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                        
-                        if task.statusCode == 401 {
-                            if (SessionManager.isLoggedIn()){
-                                self.fireRefreshToken()
-                            }
-                        } else {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
-                        }
-                        
-                        self.conversations = Array<W_Conversation>()
-                        self.conversationTableView.reloadData()
-                        
-                        self.hud?.hide(true)
-                        //SVProgressHUD.dismiss()
-                        
-                        self.addEmptyView()
-                        
-                    } else {
-                        self.addEmptyView()
-                    }
-            })
+            } else {
+                self.conversations = Array<W_Conversation>()
+                self.conversationTableView.reloadData()
+                self.hud?.hide(true)
+                self.addEmptyView()
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken()
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                } else if requestErrorType == .Cancel {
+                    //Do nothing
+                }
+            }
             
+        })
     }
     
     func fireRefreshToken() {
-        let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
-        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
-        })
+//        let manager = APIManager.sharedInstance
+//        //seller@easyshop.ph
+//        //password
+//        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
+//        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+//            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+//            }, failure: {
+//                (task: NSURLSessionDataTask!, error: NSError!) in
+//                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+//                
+//                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
+//        })
+     
         
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            } else {
+                //Show UIAlert and force the user to logout
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
+            }
+        })
     }
     
 }
