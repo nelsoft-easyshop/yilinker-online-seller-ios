@@ -80,49 +80,87 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     
     func sendImageByFile(){
         if (imageView.image != nil){
+            let url = APIAtlas.baseUrl + APIAtlas.ACTION_IMAGE_ATTACH + "?access_token=\(SessionManager.accessToken())"
+            var imageData : NSData = UIImageJPEGRepresentation(imageView.image, 1)
+            var sequence = DateUtility.convertDateToString(NSDate())
+            self.showHUD()
             
-            if (Reachability.isConnectedToNetwork()) {
-                //SVProgressHUD.show()
-                self.showHUD()
+            WebServiceManager.fireSendImageByFile(url, sequence: sequence as String, image: imageData, recipiendId: self.recipient!.userId, senderId: self.sender!.userId, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
                 
-                let manager: APIManager = APIManager.sharedInstance
-                manager.requestSerializer = AFHTTPRequestSerializer()
                 
-                let parameters: NSDictionary = [
-                    "access_token"  : SessionManager.accessToken()
-                    ]   as Dictionary<String, String>
-                
-                let url = APIAtlas.baseUrl + APIAtlas.ACTION_IMAGE_ATTACH + "?access_token=\(SessionManager.accessToken())"
-                
-                var imageData : NSData = UIImageJPEGRepresentation(imageView.image, 1)
-                var sequence = DateUtility.convertDateToString(NSDate())
-                //println(parameters)
-                manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (data: AFMultipartFormData) -> Void in
-                    data.appendPartWithFileData(imageData, name: "image", fileName: "image_\(self.recipient?.userId)_\(self.sender?.userId)_\(sequence)", mimeType: "image/JPEG")
-                    }, success: { (task : NSURLSessionDataTask!, responseObject: AnyObject!) -> Void in
-                        self.imageVCDelegate?.sendMessage(W_Messages.parseUploadImageResponse(responseObject))
-                        self.hud?.hide(true)
-                        //SVProgressHUD.dismiss()
-                        self.goBack()
-                    }) { (task : NSURLSessionDataTask!, error: NSError!) -> Void in
-                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                        
-                        if task.statusCode == 401 {
-                            if (SessionManager.isLoggedIn()){
-                                self.fireRefreshToken()
-                            }
-                        } else {
-                            
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "\(LocalizedStrings.errorMessage) (\(error.description))", title: LocalizedStrings.errorTitle)
-                        }
-                        
-                        println(error.description)
-                        self.hud?.hide(true)
-                        //SVProgressHUD.dismiss()
+                if successful {
+                    self.imageVCDelegate?.sendMessage(W_Messages.parseUploadImageResponse(responseObject))
+                    self.hud?.hide(true)
+                    //SVProgressHUD.dismiss()
+                    self.goBack()
+                } else {
+                    self.hud?.hide(true)
+                    
+                    if requestErrorType == .ResponseError {
+                        //Error in api requirements
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .AccessTokenExpired {
+                        self.fireRefreshToken()
+                    } else if requestErrorType == .PageNotFound {
+                        //Page not found
+                        Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .NoInternetConnection {
+                        //No internet connection
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .RequestTimeOut {
+                        //Request timeout
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .UnRecognizeError {
+                        //Unhandled error
+                        Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                    }
                 }
-            } else {
-                self.showAlert(LocalizedStrings.connectionUnreachableTitle, message: LocalizedStrings.connectionUnreachableMessage)
-            }
+                
+            })
+            
+//            if (Reachability.isConnectedToNetwork()) {
+//                //SVProgressHUD.show()
+//                self.showHUD()
+//                
+//                let manager: APIManager = APIManager.sharedInstance
+//                manager.requestSerializer = AFHTTPRequestSerializer()
+//                
+//                let parameters: NSDictionary = [
+//                    "access_token"  : SessionManager.accessToken()
+//                    ]   as Dictionary<String, String>
+//                
+//                let url = APIAtlas.baseUrl + APIAtlas.ACTION_IMAGE_ATTACH + "?access_token=\(SessionManager.accessToken())"
+//                
+//                var imageData : NSData = UIImageJPEGRepresentation(imageView.image, 1)
+//                var sequence = DateUtility.convertDateToString(NSDate())
+//                //println(parameters)
+//                manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (data: AFMultipartFormData) -> Void in
+//                    data.appendPartWithFileData(imageData, name: "image", fileName: "image_\(self.recipient?.userId)_\(self.sender?.userId)_\(sequence)", mimeType: "image/JPEG")
+//                    }, success: { (task : NSURLSessionDataTask!, responseObject: AnyObject!) -> Void in
+//                        self.imageVCDelegate?.sendMessage(W_Messages.parseUploadImageResponse(responseObject))
+//                        self.hud?.hide(true)
+//                        //SVProgressHUD.dismiss()
+//                        self.goBack()
+//                    }) { (task : NSURLSessionDataTask!, error: NSError!) -> Void in
+//                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+//                        
+//                        if task.statusCode == 401 {
+//                            if (SessionManager.isLoggedIn()){
+//                                self.fireRefreshToken()
+//                            }
+//                        } else {
+//                            
+//                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "\(LocalizedStrings.errorMessage) (\(error.description))", title: LocalizedStrings.errorTitle)
+//                        }
+//                        
+//                        println(error.description)
+//                        self.hud?.hide(true)
+//                        //SVProgressHUD.dismiss()
+//                }
+//            } else {
+//                self.showAlert(LocalizedStrings.connectionUnreachableTitle, message: LocalizedStrings.connectionUnreachableMessage)
+//            }
             
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.pickImageFirst, title: LocalizedStrings.errorTitle)

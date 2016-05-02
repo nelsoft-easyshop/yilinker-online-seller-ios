@@ -903,6 +903,9 @@ class WebServiceManager: NSObject {
         return sessionDataTask
     }
  
+    // MARK: -
+    // MARK: - MESSAGES
+    
     // MARK: - Get Contacts
     class func fireGetContacts(url: String, keyword: String, page: String, limit: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         
@@ -935,6 +938,93 @@ class WebServiceManager: NSObject {
         
         self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: - Send Message
+    class func fireSendMessageToEndpoint(url: String, lastMessage: String, recipientId: String, isImage: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        let parameters: NSDictionary = [
+            "message"       : "\(lastMessage)",
+            "recipientId"  : "\(recipientId)",
+            "isImage"      : isImage,
+            "access_token"  : SessionManager.accessToken()
+            ]   as Dictionary<String, String>
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: - Get Message
+    class func fireGetMessagesFromEndpoint(url: String, page: String, limit: String, userId: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        let parameters: NSDictionary = [
+            "page"          : "\(page)",
+            "limit"         : "\(limit)",
+            "userId"        : userId, //get user id from somewhere
+            "access_token"  : SessionManager.accessToken()
+            ]   as Dictionary<String, AnyObject>
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: - Set Conversation As Read From
+    class func fireSetConversationAsReadFromEndpoint(url: String, userId: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        let parameters: NSDictionary = [
+            "userId"        : "\(userId)", //get user id from somewhere
+            "access_token"  : SessionManager.accessToken()
+            ]   as Dictionary<String, String>
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: - Send Image by File
+    class func fireSendImageByFile(url: String, sequence: String, image: NSData, recipiendId: String, senderId: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
+        let manager = APIManager.sharedInstance
+        
+        if Reachability.isConnectedToNetwork() {
+            
+            self.postTask = manager.POST(url, parameters: parameters,
+                constructingBodyWithBlock: { (formData: AFMultipartFormData!) -> Void in
+                    
+                    formData.appendPartWithFileData(image, name: "images", fileName: "image_\(recipiendId)_\(senderId)_\(sequence)", mimeType: "image/jpeg")
+
+                }, success: { (task, responseObject) -> Void in
+                    actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
+                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
+                    if let task = task.response as? NSHTTPURLResponse {
+                        if error.userInfo != nil {
+                            //Request is successful but encounter error in server
+                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
+                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
+                            //Page not found
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
+                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
+                            //Request Timeout
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
+                        } else if task.statusCode == Constants.WebServiceStatusCode.expiredAccessToken {
+                            //The accessToken is already expired
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .AccessTokenExpired)
+                        } else {
+                            //Unrecognized error, this is a rare case.
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
+                        }
+                    } else {
+                        //No internet connection
+                        actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+                    }
+            })
+            
+        } else {
+            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
         }
     }
     
