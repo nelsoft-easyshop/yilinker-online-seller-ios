@@ -206,7 +206,7 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
             }
         })
         /*
-        let manager: APIManager = APIManager.sharedInstance
+        let manager = APIManager.sharedInstance
         
         self.searchTask = manager.GET(APIAtlas.brandUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in

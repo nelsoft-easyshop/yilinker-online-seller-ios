@@ -242,7 +242,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
             }
         })
         /*
-        let manager: APIManager = APIManager.sharedInstance
+        let manager = APIManager.sharedInstance
         manager.GET(APIAtlas.categoryUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
