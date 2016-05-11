@@ -82,7 +82,15 @@ class ProductManagementAllTableViewCell: UITableViewCell {
     
     func setCountries(countries: [String]) {
         
-        let random = 4 + Int(arc4random_uniform(3))
+        // remove previous images
+        for view in self.storesLabel.subviews {
+            if let imgview = view as? UIImageView {
+                imgview.removeFromSuperview()
+            }
+        }
+        
+        // add images
+        let random = Int(arc4random_uniform(7))
         
         for i in 0..<random {
             
@@ -101,14 +109,30 @@ class ProductManagementAllTableViewCell: UITableViewCell {
     
     func setLanguages(language: [String]) {
         
-        let random = 3 + Int(arc4random_uniform(4))
+        // remove previous labels and images
+        for view in self.languageLabel.subviews {
+            if let lblview = view as? UILabel {
+                lblview.removeFromSuperview()
+            } else if let imgview = view as? UIImageView {
+                imgview.removeFromSuperview()
+            }
+        }
         
-        for i in 0..<random {
+        // add labels
+        var limiter = 3 // screen with is 320 or below
+        if UIScreen.mainScreen().bounds.width > 320 {
+            limiter = 4
+        }
+        
+        let random = Int(arc4random_uniform(7))
+        
+        for i in 0..<random/*self.tag*/ {
             
-            if i > 4 {
-                let flagImageView: UIImageView = UIImageView(frame: CGRectMake(CGRectGetWidth(storesLabel.frame) + 179, 2.5, 20, 10))
+            if i > 2 {
+                let flagImageView: UIImageView = UIImageView(frame: CGRectMake(CGRectGetWidth(languageLabel.frame) + 100/*179*/, 2.5, 20, 10))
                 flagImageView.image = UIImage(named: "flags_more")
                 self.languageLabel.addSubview(flagImageView)
+                break
             } else {
                 let langLabel: UILabel = UILabel(frame: CGRectMake(CGRectGetWidth(languageLabel.frame) + (CGFloat(i) * 33.0), 2.5, 30, 10))
                 langLabel.backgroundColor = Constants.Colors.lightBackgroundColor
@@ -117,8 +141,6 @@ class ProductManagementAllTableViewCell: UITableViewCell {
                 langLabel.textAlignment = .Center
                 self.languageLabel.addSubview(langLabel)
             }
-            
-            
         }
         
     }

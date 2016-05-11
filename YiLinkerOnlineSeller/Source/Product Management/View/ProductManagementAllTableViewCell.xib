@@ -63,8 +63,11 @@
                         <color key="textColor" red="0.20392156859999999" green="0.74117647060000003" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Beats Electronics" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Lt-TN-EU6">
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beats Electronics" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Lt-TN-EU6">
                         <rect key="frame" x="108" y="25" width="240" height="14"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="14" id="sBX-Fu-0kk"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -72,7 +75,8 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stores:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i0l-vx-x6e">
                         <rect key="frame" x="108" y="47" width="42" height="15"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="15" id="ZbH-U2-W8R"/>
+                            <constraint firstAttribute="height" constant="15" id="3PK-w6-OJK"/>
+                            <constraint firstAttribute="width" constant="42" id="u1B-Dh-FJF"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -81,7 +85,8 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Language:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W9U-vL-tk0">
                         <rect key="frame" x="108" y="64" width="56" height="15"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="15" id="pDc-CB-SeA"/>
+                            <constraint firstAttribute="width" constant="56" id="TUs-uB-7ZS"/>
+                            <constraint firstAttribute="height" constant="15" id="t6z-F7-b5I"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -89,25 +94,26 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="W9U-vL-tk0" firstAttribute="leading" secondItem="6Mx-SS-Hg1" secondAttribute="trailing" constant="8" id="46F-U8-3r3"/>
-                    <constraint firstItem="W9U-vL-tk0" firstAttribute="top" secondItem="i0l-vx-x6e" secondAttribute="bottom" constant="2" id="4r8-4i-0Q6"/>
                     <constraint firstItem="naN-vc-7dC" firstAttribute="top" secondItem="mBa-P7-9f9" secondAttribute="bottom" constant="2" id="6V9-yu-1GF"/>
+                    <constraint firstItem="W9U-vL-tk0" firstAttribute="top" secondItem="i0l-vx-x6e" secondAttribute="bottom" constant="2" id="8f9-im-cMr"/>
                     <constraint firstItem="6Mx-SS-Hg1" firstAttribute="top" secondItem="Hzy-Br-4Bt" secondAttribute="top" constant="8" id="AdY-yb-lQ3"/>
+                    <constraint firstItem="5Lt-TN-EU6" firstAttribute="leading" secondItem="6Mx-SS-Hg1" secondAttribute="trailing" constant="8" id="CLP-Jx-u5b"/>
                     <constraint firstAttribute="trailing" secondItem="94G-jO-a1g" secondAttribute="trailing" constant="9" id="EQY-89-5UR"/>
+                    <constraint firstItem="5Lt-TN-EU6" firstAttribute="top" secondItem="mBa-P7-9f9" secondAttribute="bottom" constant="2" id="FyD-2b-lq7"/>
                     <constraint firstItem="naN-vc-7dC" firstAttribute="leading" secondItem="6Mx-SS-Hg1" secondAttribute="trailing" constant="8" id="HRz-pf-VZR"/>
                     <constraint firstItem="mBa-P7-9f9" firstAttribute="leading" secondItem="6Mx-SS-Hg1" secondAttribute="trailing" constant="8" id="Rhq-7u-g9V"/>
                     <constraint firstItem="94G-jO-a1g" firstAttribute="top" secondItem="Hzy-Br-4Bt" secondAttribute="top" constant="34" id="S5R-gg-gf4"/>
-                    <constraint firstItem="i0l-vx-x6e" firstAttribute="top" secondItem="naN-vc-7dC" secondAttribute="bottom" constant="8" id="SOy-1g-yw4"/>
                     <constraint firstAttribute="trailing" secondItem="mBa-P7-9f9" secondAttribute="trailing" constant="27" id="TZZ-fb-DW9"/>
                     <constraint firstItem="mBa-P7-9f9" firstAttribute="top" secondItem="Hzy-Br-4Bt" secondAttribute="top" constant="8" id="U2o-Jr-GAX"/>
+                    <constraint firstItem="W9U-vL-tk0" firstAttribute="leading" secondItem="6Mx-SS-Hg1" secondAttribute="trailing" constant="8" id="X5Z-UI-Tkd"/>
                     <constraint firstItem="ADu-rD-xuV" firstAttribute="leading" secondItem="Hzy-Br-4Bt" secondAttribute="leading" id="a5a-hB-3zy"/>
-                    <constraint firstItem="i0l-vx-x6e" firstAttribute="leading" secondItem="6Mx-SS-Hg1" secondAttribute="trailing" constant="8" id="cqn-pu-kF5"/>
+                    <constraint firstItem="i0l-vx-x6e" firstAttribute="leading" secondItem="6Mx-SS-Hg1" secondAttribute="trailing" constant="8" id="gXj-C6-CbN"/>
                     <constraint firstAttribute="bottom" secondItem="ADu-rD-xuV" secondAttribute="bottom" id="j2s-TZ-vTs"/>
-                    <constraint firstItem="94G-jO-a1g" firstAttribute="leading" secondItem="i0l-vx-x6e" secondAttribute="trailing" constant="206" id="mDH-DM-zzA"/>
                     <constraint firstAttribute="trailing" secondItem="ADu-rD-xuV" secondAttribute="trailing" id="omg-ol-Ea7"/>
+                    <constraint firstItem="94G-jO-a1g" firstAttribute="leading" secondItem="5Lt-TN-EU6" secondAttribute="trailing" constant="8" id="ph5-VB-NOD"/>
                     <constraint firstItem="6Mx-SS-Hg1" firstAttribute="leading" secondItem="Hzy-Br-4Bt" secondAttribute="leading" constant="10" id="tKr-1i-Qka"/>
                     <constraint firstItem="94G-jO-a1g" firstAttribute="leading" secondItem="naN-vc-7dC" secondAttribute="trailing" constant="8" id="twJ-iI-yRS"/>
-                    <constraint firstAttribute="trailing" secondItem="W9U-vL-tk0" secondAttribute="trailing" constant="211" id="wgd-Uq-KYq"/>
+                    <constraint firstItem="i0l-vx-x6e" firstAttribute="top" secondItem="5Lt-TN-EU6" secondAttribute="bottom" constant="8" id="xLX-36-rxC"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
