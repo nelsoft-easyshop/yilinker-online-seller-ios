@@ -25,17 +25,31 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        setupNavigationBar()
         
         self.tableView.contentInset = UIEdgeInsetsMake(-36, 0, 0, 0)
-        self.title = "Country Store"
         self.tableView.registerNib(UINib(nibName: "CountryStoreTableViewCell", bundle: nil), forCellReuseIdentifier: "countryId")
     }
 
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+    // MARK: - Functions
+    
+    func setupNavigationBar() {
+        self.title = "Country Store"
         
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -10
+        
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, UIBarButtonItem(image: UIImage(named: "nav-back"), style: .Plain, target: self, action: "backAction")]
     }
+    
+    // MARK: - Actions
+    
+    func backAction() {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -45,6 +59,7 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell: CountryStoreTableViewCell = tableView.dequeueReusableCellWithIdentifier("countryId") as! CountryStoreTableViewCell
+        cell.selectionStyle = .None
         
         cell.flagImageView.sd_setImageWithURL(NSURL(string: flags[indexPath.row]))
         cell.countryLabel.text = countries[indexPath.row]

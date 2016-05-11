@@ -45,12 +45,6 @@ class ProductCombinationViewController: UIViewController {
         
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
-        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
-        backButton.frame = CGRectMake(0, 0, 40, 40)
-        backButton.addTarget(self, action: "backAction", forControlEvents: UIControlEvents.TouchUpInside)
-        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
-        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
-        
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -10
         
