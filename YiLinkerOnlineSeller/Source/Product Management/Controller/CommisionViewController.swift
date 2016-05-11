@@ -20,12 +20,29 @@ class CommisionViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.title = "Commision"
+        setupNavigationBar()
         self.edgesForExtendedLayout = UIRectEdge.None
         self.saveButton.layer.cornerRadius = 2.0
     }
     
+    // MARK: - Functions
+    
+    func setupNavigationBar() {
+        self.title = "Commision"
+        
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -10
+        
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, UIBarButtonItem(image: UIImage(named: "nav-back"), style: .Plain, target: self, action: "backAction")]
+    }
+    
     // MARK: - Actions
+    
+    func backAction() {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
     
     @IBAction func saveCommissionAction(sender: UIButton) {
         

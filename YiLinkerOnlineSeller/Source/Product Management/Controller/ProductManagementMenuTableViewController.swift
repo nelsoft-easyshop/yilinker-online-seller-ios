@@ -75,7 +75,7 @@ class ProductManagementMenuTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier(ProductManagementMenuTableViewCell.reuseIdentidifier, forIndexPath: indexPath) as! ProductManagementMenuTableViewCell
-
+        cell.selectionStyle = .None
         cell.setCellText(self.cellTexts[indexPath.row])
 
         return cell

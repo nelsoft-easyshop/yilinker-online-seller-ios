@@ -109,10 +109,12 @@ class ProductManagementAllTableViewCell: UITableViewCell {
     
     func setLanguages(language: [String]) {
         
-        // remove previous labels
+        // remove previous labels and images
         for view in self.languageLabel.subviews {
             if let lblview = view as? UILabel {
                 lblview.removeFromSuperview()
+            } else if let imgview = view as? UIImageView {
+                imgview.removeFromSuperview()
             }
         }
         
@@ -124,13 +126,10 @@ class ProductManagementAllTableViewCell: UITableViewCell {
         
         let random = Int(arc4random_uniform(7))
         
-        for i in 0..<self.tag {
+        for i in 0..<random/*self.tag*/ {
             
             if i > 2 {
                 let flagImageView: UIImageView = UIImageView(frame: CGRectMake(CGRectGetWidth(languageLabel.frame) + 100/*179*/, 2.5, 20, 10))
-//                if UIScreen.mainScreen().bounds.width > 320 {
-//                    flagImageView.frame.origin.x = CGRectGetWidth(languageLabel.frame) + 179
-//                }
                 flagImageView.image = UIImage(named: "flags_more")
                 self.languageLabel.addSubview(flagImageView)
                 break
