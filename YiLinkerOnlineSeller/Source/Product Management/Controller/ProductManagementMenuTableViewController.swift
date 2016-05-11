@@ -10,6 +10,8 @@ import UIKit
 
 class ProductManagementMenuTableViewController: UITableViewController {
     
+    var selectedIndex = 0
+    var productModel: ProductManagementProductsModel!
     
     let cellTexts: [String] = [
         StringHelper.localizedStringWithKey("MANAGEMENT_MENU_LANGUAGE_TRANSLATION"),
@@ -87,10 +89,29 @@ class ProductManagementMenuTableViewController: UITableViewController {
             Toast.displayToastWithMessage("Language Translation", duration: 1.5, view: self.view)
         } else if indexPath.row == 1 {
             //Redirect to Stores Available
-            Toast.displayToastWithMessage("Stores Available", duration: 1.5, view: self.view)
+            let countryStore = CountryStoreViewController(nibName: "CountryStoreViewController", bundle: nil)
+            self.navigationController?.pushViewController(countryStore, animated: true)
         } else if indexPath.row == 2 {
             //Redirect to Product Details
-            Toast.displayToastWithMessage("Product Details", duration: 1.5, view: self.view)
+            let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
+            productDetails.productId = productModel.id
+            
+            productDetails.isEditable = true
+            if selectedIndex == 0 && self.productModel.status == Status.deleted || self.productModel.status == Status.review {
+                productDetails.isEditable = false
+            } else if selectedIndex == 4 || selectedIndex == 5 {
+                productDetails.isEditable = false
+            }
+            
+            if self.productModel.status == Status.draft {
+                productDetails.isDraft = true
+                ProductUploadCombination.draft = false
+            } else {
+                ProductUploadCombination.draft = true
+            }
+            ProductUploadEdit.uploadType = UploadType.EditProduct
+            ProductUploadEdit.isPreview = false
+            self.navigationController?.pushViewController(productDetails, animated: true)
         }
     }
 

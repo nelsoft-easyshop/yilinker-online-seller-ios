@@ -33,7 +33,7 @@ private struct ManagementStrings {
     static let modalSubtitle2 = StringHelper.localizedStringWithKey("MANAGEMENT_MODAL_SUBTITLE2_LOCALIZE_KEY")
 }
 
-private struct Status {
+struct Status {
     static let all = -1
     static let active = 2
     static let inactive = 6
@@ -611,6 +611,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
         if selectedIndex == 0 || selectedIndex == 5 {
             let cell: ProductManagementAllTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductManagementAllIdentifier") as! ProductManagementAllTableViewCell
             cell.selectionStyle = .None
+            cell.tag = indexPath.row
             
             cell.setProductImage(self.productModel.products[indexPath.row].image)
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
@@ -695,29 +696,10 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
         if Reachability.isConnectedToNetwork() {
             
             let productManagementMenu = ProductManagementMenuTableViewController(nibName: "ProductManagementMenuTableViewController", bundle: nil)
+            productManagementMenu.selectedIndex = self.selectedIndex
+            productManagementMenu.productModel = self.productModel.products[indexPath.row]
             self.navigationController?.pushViewController(productManagementMenu, animated: true)
-            
-            
-            //Chnaged to Menu
-//            let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
-//            productDetails.productId = self.productModel.products[indexPath.row].id
-//
-//            productDetails.isEditable = true
-//            if selectedIndex == 0 && self.productModel.products[indexPath.row].status == Status.deleted || self.productModel.products[indexPath.row].status == Status.review {
-//                productDetails.isEditable = false
-//            } else if selectedIndex == 4 || selectedIndex == 5 {
-//                productDetails.isEditable = false
-//            }
-//            
-//            if self.productModel.products[indexPath.row].status == Status.draft {
-//                productDetails.isDraft = true
-//                ProductUploadCombination.draft = false
-//            } else {
-//                ProductUploadCombination.draft = true
-//            }
-//            ProductUploadEdit.uploadType = UploadType.EditProduct
-//            ProductUploadEdit.isPreview = false
-//            self.navigationController?.pushViewController(productDetails, animated: true)
+          
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
         }
