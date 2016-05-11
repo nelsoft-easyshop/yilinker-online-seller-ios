@@ -413,7 +413,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         //Old Request
 //        self.showHUD()
 //        
-//        let manager: APIManager = APIManager.sharedInstance
+//        let manager = APIManager.sharedInstance
 //        //seller@easyshop.ph
 //        //password
 //        let parameters: NSDictionary = [
@@ -485,7 +485,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
 //        if Reachability.isConnectedToNetwork() {
 //            self.logoutUser()
 //            if(SessionManager.isLoggedIn()){
-//                let manager: APIManager = APIManager.sharedInstance
+//                let manager = APIManager.sharedInstance
 //                let parameters: NSDictionary = [
 //                    
 //                    "registrationId": "\(registrationID)",
