@@ -460,7 +460,11 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: AlertStrings.failed)
                     }
                 } else if requestErrorType == .AccessTokenExpired {
-                    self.requestRefreshToken("get", status: status.toInt()!)
+                    if status == "all" {
+                        self.requestRefreshToken("get", status: Status.all)
+                    } else {
+                        self.requestRefreshToken("get", status: status.toInt()!)
+                    }
                 } else if requestErrorType == .PageNotFound {
                     //Page not found
                     Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
