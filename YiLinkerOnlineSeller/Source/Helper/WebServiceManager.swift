@@ -258,7 +258,7 @@ class WebServiceManager: NSObject {
         //let manager = APIManager.sharedInstance
         if Reachability.isConnectedToNetwork() {
             
-            let manager: APIManager = APIManager(baseURL: NSURL(string: "http://sprint.affiliate.online.api.easydeal.ph/api/"))
+            let manager: APIManager = APIManager.sharedInstance
             
             self.postTask = manager.POST(url, parameters: parameters,
                 constructingBodyWithBlock: { (formData: AFMultipartFormData!) -> Void in
@@ -701,28 +701,9 @@ class WebServiceManager: NSObject {
         
         let parameters: NSDictionary = [self.contactNumberKey: contactNumber, self.areaCodeKey: areaCode, self.typeKey: type, self.storeTypeKey: storeType]
         
-        if Reachability.isConnectedToNetwork() {
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    if let task = task.response as? NSHTTPURLResponse {
-                        if error.userInfo != nil {
-                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
-                        } else {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
-                        }
-                    } else {
-                        actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
-                    }
-            })
-        } else {
-            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            println(responseObject)
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
     

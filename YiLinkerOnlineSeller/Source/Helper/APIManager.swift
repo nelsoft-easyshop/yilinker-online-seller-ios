@@ -140,7 +140,7 @@ struct APIAtlas {
     //MARK: - V2 APIs
     
     //Login
-    static let loginUrlV2 = "v2/login"
+    static let loginUrlV2 = APIAtlas.generateV3URL("login")
     //OTP
     static let unauthenticateOTP = "v2/sms/send"
     
@@ -161,7 +161,7 @@ struct APIAtlas {
     static let uploadImageUrl = APIAtlas.generateV3URL("auth/image/upload")
     
     //Affiliate Store Setup
-    static let affiliateStoreSetupUrl = "v2/auth/store/setup"
+    static let affiliateStoreSetupUrl = APIAtlas.generateV3URL("auth/store/setup")
     
     static let affiliateGetProduct = "v1/auth/product/getAffiliateProducts"
     
@@ -171,9 +171,9 @@ struct APIAtlas {
     
     static func mobileFeedBack() -> String {
         if SessionManager.isLoggedIn() {
-            return "v2/auth/mobile-feedback/add"
+            return APIAtlas.generateV3URL("auth/mobile-feedback/add")
         } else {
-            return "v2/mobile-feedback/add"
+            return APIAtlas.generateV3URL("mobile-feedback/add")
         }
     }
     
