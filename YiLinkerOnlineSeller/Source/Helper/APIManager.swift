@@ -28,6 +28,8 @@ struct APIEnvironment {
 
 struct APIAtlas {
     
+    static let V3 = "v3"
+    
     static let loginUrl = "v1/login"
     static let refreshTokenUrl = "v1/login"
     static let registerUrl = "v1/user/register"
@@ -173,6 +175,11 @@ struct APIAtlas {
         } else {
             return "v2/mobile-feedback/add"
         }
+    }
+    
+    
+    func generateV3URL(url: String) -> String {
+        return "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
     }
 }
 
