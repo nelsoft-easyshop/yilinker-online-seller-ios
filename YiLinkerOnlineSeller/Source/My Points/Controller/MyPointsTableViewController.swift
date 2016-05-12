@@ -291,7 +291,7 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
                 
                 let pointHistory: MyPointsHistoryModel = MyPointsHistoryModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 println("Count 1 \(self.myPointsHistory.data.count)")
-                
+                println(responseObject)
                 if pointHistory.data.count < 15 {
                     self.isMyPointsEnd = true
                 }
