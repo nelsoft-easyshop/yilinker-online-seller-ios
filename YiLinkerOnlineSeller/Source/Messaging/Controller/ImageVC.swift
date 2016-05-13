@@ -78,76 +78,94 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         takePhoto()
     }
     
-    func sendImageByFile(){
-        if (imageView.image != nil){
-            
-            if (Reachability.isConnectedToNetwork()) {
-                //SVProgressHUD.show()
-                self.showHUD()
-                
-                let manager: APIManager = APIManager.sharedInstance
-                manager.requestSerializer = AFHTTPRequestSerializer()
-                
-                let parameters: NSDictionary = [
-                    "access_token"  : SessionManager.accessToken()
-                    ]   as Dictionary<String, String>
-                
-                let url = APIAtlas.baseUrl + APIAtlas.ACTION_IMAGE_ATTACH + "?access_token=\(SessionManager.accessToken())"
-                
-                var imageData : NSData = UIImageJPEGRepresentation(imageView.image, 1)
-                var sequence = DateUtility.convertDateToString(NSDate())
-                //println(parameters)
-                manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (data: AFMultipartFormData) -> Void in
-                    data.appendPartWithFileData(imageData, name: "image", fileName: "image_\(self.recipient?.userId)_\(self.sender?.userId)_\(sequence)", mimeType: "image/JPEG")
-                    }, success: { (task : NSURLSessionDataTask!, responseObject: AnyObject!) -> Void in
-                        self.imageVCDelegate?.sendMessage(W_Messages.parseUploadImageResponse(responseObject))
-                        self.hud?.hide(true)
-                        //SVProgressHUD.dismiss()
-                        self.goBack()
-                    }) { (task : NSURLSessionDataTask!, error: NSError!) -> Void in
-                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                        
-                        if task.statusCode == 401 {
-                            if (SessionManager.isLoggedIn()){
-                                self.fireRefreshToken()
-                            }
-                        } else {
-                            
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "\(LocalizedStrings.errorMessage) (\(error.description))", title: LocalizedStrings.errorTitle)
-                        }
-                        
-                        println(error.description)
-                        self.hud?.hide(true)
-                        //SVProgressHUD.dismiss()
-                }
-            } else {
-                self.showAlert(LocalizedStrings.connectionUnreachableTitle, message: LocalizedStrings.connectionUnreachableMessage)
-            }
-            
-        } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.pickImageFirst, title: LocalizedStrings.errorTitle)
-        }
-        
-    }
+//    func sendImageByFile(){
+//        if (imageView.image != nil){
+//            
+//            if (Reachability.isConnectedToNetwork()) {
+//                //SVProgressHUD.show()
+//                self.showHUD()
+//                
+//                let manager: APIManager = APIManager.sharedInstance
+//                manager.requestSerializer = AFHTTPRequestSerializer()
+//                
+//                let parameters: NSDictionary = [
+//                    "access_token"  : SessionManager.accessToken()
+//                    ]   as Dictionary<String, String>
+//                
+//                let url = APIAtlas.baseUrl + APIAtlas.ACTION_IMAGE_ATTACH + "?access_token=\(SessionManager.accessToken())"
+//                
+//                var imageData : NSData = UIImageJPEGRepresentation(imageView.image, 1)
+//                var sequence = DateUtility.convertDateToString(NSDate())
+//                //println(parameters)
+//                manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (data: AFMultipartFormData) -> Void in
+//                    data.appendPartWithFileData(imageData, name: "image", fileName: "image_\(self.recipient?.userId)_\(self.sender?.userId)_\(sequence)", mimeType: "image/JPEG")
+//                    }, success: { (task : NSURLSessionDataTask!, responseObject: AnyObject!) -> Void in
+//                        self.imageVCDelegate?.sendMessage(W_Messages.parseUploadImageResponse(responseObject))
+//                        self.hud?.hide(true)
+//                        //SVProgressHUD.dismiss()
+//                        self.goBack()
+//                    }) { (task : NSURLSessionDataTask!, error: NSError!) -> Void in
+//                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+//                        
+//                        if task.statusCode == 401 {
+//                            if (SessionManager.isLoggedIn()){
+//                                self.fireRefreshToken()
+//                            }
+//                        } else {
+//                            
+//                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "\(LocalizedStrings.errorMessage) (\(error.description))", title: LocalizedStrings.errorTitle)
+//                        }
+//                        
+//                        println(error.description)
+//                        self.hud?.hide(true)
+//                        //SVProgressHUD.dismiss()
+//                }
+//            } else {
+//                self.showAlert(LocalizedStrings.connectionUnreachableTitle, message: LocalizedStrings.connectionUnreachableMessage)
+//            }
+//            
+//        } else {
+//            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.pickImageFirst, title: LocalizedStrings.errorTitle)
+//        }
+//        
+//    }
     
     func fireRefreshToken() {
-        let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
-        self.showHUD()
-        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.hud?.hide(true)
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
-        })
         
+        self.showHUD()
+        
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            
+            if successful {
+                self.hud?.hide(true)
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            } else {
+                //Show UIAlert and force the user to logout
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                })
+            }
+        })
     }
+    
+//    func fireRefreshToken() {
+//        let manager = APIManager.sharedInstance
+//        //seller@easyshop.ph
+//        //password
+//        self.showHUD()
+//        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
+//        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+//            self.hud?.hide(true)
+//            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+//            }, failure: {
+//                (task: NSURLSessionDataTask!, error: NSError!) in
+//                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+//                
+//                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
+//        })
+//        
+//    }
     
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)

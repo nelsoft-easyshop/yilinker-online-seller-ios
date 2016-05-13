@@ -258,7 +258,7 @@ class WebServiceManager: NSObject {
         //let manager = APIManager.sharedInstance
         if Reachability.isConnectedToNetwork() {
             
-            let manager: APIManager = APIManager(baseURL: NSURL(string: "http://sprint.affiliate.online.api.easydeal.ph/api/"))
+            let manager: APIManager = APIManager.sharedInstance
             
             self.postTask = manager.POST(url, parameters: parameters,
                 constructingBodyWithBlock: { (formData: AFMultipartFormData!) -> Void in
@@ -600,7 +600,7 @@ class WebServiceManager: NSObject {
     //MARK: -
     //MARK: - Fire Email Login Request With URL
     class func fireEmailLoginRequestWithUrl(url: String, emailAddress: String, password: String, grantType: String, isSeller: Bool, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
-        let manager: APIManager = APIManager.sharedInstance
+//        let manager = APIManager.sharedInstance
         
 //        let parameters: NSDictionary = [self.emailKey: emailAddress, self.passwordKey: password, self.clientIdKey: Constants.Credentials.getClientId(isSeller), self.clientSecretKey: Constants.Credentials.getClientSecret(isSeller), self.grantTypeKey: grantType]
 
@@ -616,7 +616,7 @@ class WebServiceManager: NSObject {
     //MARK: -
     //MARK: - Fire Contact Number Login Request With URL
     class func fireContactNumberLoginRequestWithUrl(url: String, contactNo: String, password: String, grantType: String, isSeller: Bool, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
-        let manager: APIManager = APIManager.sharedInstance
+//        let manager = APIManager.sharedInstance
         
         //self.emailKey is used for contact number because the API is not yet configured to accept the 'contactNo' parameter
         let parameters: NSDictionary = [self.emailKey: contactNo, self.passwordKey: password, self.clientIdKey: Constants.Credentials.getClientId(isSeller), self.clientSecretKey: Constants.Credentials.getClientSecret(isSeller), self.grantTypeKey: grantType]
@@ -701,35 +701,16 @@ class WebServiceManager: NSObject {
         
         let parameters: NSDictionary = [self.contactNumberKey: contactNumber, self.areaCodeKey: areaCode, self.typeKey: type, self.storeTypeKey: storeType]
         
-        if Reachability.isConnectedToNetwork() {
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    if let task = task.response as? NSHTTPURLResponse {
-                        if error.userInfo != nil {
-                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
-                        } else {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
-                        }
-                    } else {
-                        actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
-                    }
-            })
-        } else {
-            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            println(responseObject)
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
     
     //MARK: -
     //MARK: - Fire Send Email Verification
     class func fireSendEmailVerificationRequestWithUrl(url: String, email: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
-        let manager: APIManager = APIManager.sharedInstance
+//        let manager = APIManager.sharedInstance
         let parameters: NSDictionary = [self.emailKey: email, self.accessTokenKey: accessToken]
         self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
@@ -737,7 +718,7 @@ class WebServiceManager: NSObject {
     }
     
     class func fireUploadImageWithUrl(url: String, accessToken: String, image: UIImage, type: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
-        let manager: APIManager = APIManager.sharedInstance
+//        let manager = APIManager.sharedInstance
 
         
         let parameters: NSDictionary = [self.imageKey: image, typeKey: type]
@@ -800,7 +781,7 @@ class WebServiceManager: NSObject {
     //MARK: - Fire Affiliate Get Seller Product From Url
     class func fireAffiliateGetSellerProductFromUrl(url: String, categoryIds: String, sortby: String, limit: String, page: String, status: String, name: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         
-        let manager: APIManager = APIManager.sharedInstance
+//        let manager = APIManager.sharedInstance
         
         var parameters: NSDictionary = NSDictionary()
         
@@ -819,7 +800,7 @@ class WebServiceManager: NSObject {
     //MARK: - Fire Affiliate Save Product From Url
     class func fireAffiliateSaveProductFromUrl(url: String, productIds: String, removeManufacturerProductIds: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         
-        let manager: APIManager = APIManager.sharedInstance
+//        let manager = APIManager.sharedInstance
         
         let parameters: NSDictionary = [self.accessTokenKey: SessionManager.accessToken(), self.manufacturerProductIdsKey: productIds, self.removeManufacturerProductIdsKey: removeManufacturerProductIds]
         
@@ -832,7 +813,7 @@ class WebServiceManager: NSObject {
     //MARK: - Fire Affilate Get Categories From Url
     class func fireAffiliateGetCategoriesFromUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         
-        let manager: APIManager = APIManager.sharedInstance
+//        let manager = APIManager.sharedInstance
         
         let parameters: NSDictionary = [self.accessTokenKey: SessionManager.accessToken()]
         
@@ -892,7 +873,7 @@ class WebServiceManager: NSObject {
     //MARK: - Fire Affilate Get Categories From Url
     class func fireGetFollowersFromUrl(url: String, page: String, perPage: String, searchKeyword: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
         
-        let manager: APIManager = APIManager.sharedInstance
+//        let manager = APIManager.sharedInstance
         
         let parameters: NSDictionary = [self.accessTokenKey: SessionManager.accessToken()]
         
@@ -902,5 +883,95 @@ class WebServiceManager: NSObject {
         
         return sessionDataTask
     }
+
+    // MARK: -
+    // MARK: - MESSAGING
     
+    // MARK: - Fire Create Registration
+    
+    class func fireCreateRegistration(url: String, registrationID: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        let parameters: NSDictionary = ["registrationId": "\(registrationID)", "access_token": SessionManager.accessToken(), "deviceType": "1"] as Dictionary<String, String>
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: - Fire Get Contacts
+    
+    class func fireGetContacts(url: String, page: String, limit: String, keyword: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        let parameters: NSDictionary = [
+            "page"          : "\(page)",
+            "limit"         : "\(limit)",
+            "keyword"       : keyword,
+            "access_token"  : SessionManager.accessToken()
+            ]   as Dictionary<String, String>
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: - Fire Get Conversations
+    
+    class func fireGetConversations(url: String, page: String, limit: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        let parameters: NSDictionary = [
+            "page"          : "\(page)",
+            "limit"         : "\(limit)",
+            "access_token"  : SessionManager.accessToken()
+            ]   as Dictionary<String, String>
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: - Fire Send Message
+    
+    class func fireSendMessage(url: String, lastMessage: String, recipientId: String, isImage: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        let parameters: NSDictionary = [
+            "message"       : "\(lastMessage)",
+            "recipientId"  : "\(recipientId)",
+            "isImage"      : isImage,
+            "access_token"  : SessionManager.accessToken()
+            ]   as Dictionary<String, String>
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: - Fire Get Message
+    
+    class func fireGetMessage(url: String, page: String, limit: String, userId: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        let parameters: NSDictionary = [
+            "page"          : "\(page)",
+            "limit"         : "\(limit)",
+            "userId"        : userId, //get user id from somewhere
+            "access_token"  : SessionManager.accessToken()
+            ]   as Dictionary<String, AnyObject>
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: - Fire Set Conversation As Read
+    
+    class func fireSetConversationAsRead(url: String, userId: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        let parameters: NSDictionary = [
+            "userId"        : "\(userId)", //get user id from somewhere
+            "access_token"  : SessionManager.accessToken()
+            ]   as Dictionary<String, String>
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
 }
