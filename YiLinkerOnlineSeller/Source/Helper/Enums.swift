@@ -156,6 +156,13 @@ enum UploadImageStatus {
     case UploadSuccess
 }
 
+enum UploadProduct {
+    case ProductConditions
+    case ShippingCategory
+    case ProductCategory
+    case ProductGroups
+}
+
 enum SetupStoreRefreshType {
     case Cover
     case Profile

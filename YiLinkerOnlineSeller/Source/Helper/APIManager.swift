@@ -28,10 +28,17 @@ struct APIEnvironment {
 
 struct APIAtlas {
     
+    static let V1 = "v1"
+    static let V2 = "v2"
+    static let V3 = "v3"
+    
     static let loginUrl = "v1/login"
     static let refreshTokenUrl = "v1/login"
     static let registerUrl = "v1/user/register"
-    static let conditionUrl = "v1/product/getProductConditions"
+    static let conditionUrl = "v3/ph/en/product/get-product-conditions"
+    static let shippingCategoriesUrl = "v3/ph/en/product/get-shipping-categories"
+    static let productGroupsUrl = "v3/ph/en/auth/product/get-product-groups"
+    static let productBrandsUrl = "v3/ph/en/product/get-brands"
     static let categoryUrl = "v1/product/getCategories"
     static let brandUrl = "v1/product/getBrands"
     static let uploadUrl = "v1/product/upload"

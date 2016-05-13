@@ -21,6 +21,9 @@ class ProductModel {
     var category: CategoryModel = CategoryModel()
     var brand: BrandModel = BrandModel(name: "", brandId:1)
     var condition: ConditionModel = ConditionModel(uid: 0, name: "")
+    var shippingCategories: ConditionModel = ConditionModel(uid: 0, name: "")
+    var productGroups: [ConditionModel] = []
+    
     var quantity: Int = 1
     var uid: String = "0"
     
@@ -50,7 +53,7 @@ class ProductModel {
         self.validCombinations = validCombinations
     }
     
-    init (isSuccessful: Bool, message: String, attributes: [AttributeModel], validCombinations: [CombinationModel], images: [String], imageIds: [String], category: CategoryModel, brand: BrandModel, condition: ConditionModel, name: String, shortDescription: String, completeDescription: String, productId: String,  quantity: Int, retailPrice: String, discountedPrice: String, weight: String, height: String, length: String, width: String, sku: String, productUnitId: String, isAvailable: Bool, isPrimaryPhoto: [Bool]) {
+    init (isSuccessful: Bool, message: String, attributes: [AttributeModel], validCombinations: [CombinationModel], images: [String], imageIds: [String], category: CategoryModel, brand: BrandModel, condition: ConditionModel, shippingCategories: ConditionModel, productGroups: [ConditionModel], name: String, shortDescription: String, completeDescription: String, productId: String,  quantity: Int, retailPrice: String, discountedPrice: String, weight: String, height: String, length: String, width: String, sku: String, productUnitId: String, isAvailable: Bool, isPrimaryPhoto: [Bool]) {
     
         self.isSuccessful = isSuccessful
         self.message = message
@@ -61,6 +64,8 @@ class ProductModel {
         self.category = category
         self.brand = brand
         self.condition = condition
+        self.shippingCategories = shippingCategories
+        self.productGroups = productGroups
         self.name = name
         self.shortDescription = shortDescription
         self.completeDescription = completeDescription
@@ -83,10 +88,12 @@ class ProductModel {
         self.attributes = []
         self.validCombinations = []
         self.images = []
+        self.productGroups = []
         
         self.category = CategoryModel()
         self.brand = BrandModel(name: "", brandId:1)
         self.condition = ConditionModel(uid: 0, name: "")
+        self.shippingCategories = ConditionModel(uid: 0, name: "")
         self.quantity = 1
         self.uid = "0"
         
@@ -122,13 +129,14 @@ class ProductModel {
         
         var attributes: [AttributeModel] = []
         var validCombinations: [CombinationModel] = []
+        var productGroups: [ConditionModel] = []
         var images: [String] = []
         var imageIds: [String] = []
         
         var category: CategoryModel = CategoryModel()
         var brand: BrandModel = BrandModel(name: "", brandId:1)
         var condition: ConditionModel = ConditionModel(uid: 0, name: "")
-        
+        var shippingCategories: ConditionModel = ConditionModel(uid: 0, name: "")
         var name: String = ""
         var shortDescription: String = ""
         var completeDescription: String = ""
@@ -172,6 +180,14 @@ class ProductModel {
                 
                 if let name = value["conditionName"] as? String {
                     condition = ConditionModel(uid: value["conditionId"] as! Int, name: name)
+                }
+                
+                if let name = value["shippingCategoryName"] as? String {
+                    shippingCategories = ConditionModel(uid: value["shippingCategoryId"] as! Int, name: name)
+                }
+                
+                if let name = value["productGroupName"] as? String {
+                    productGroups.append(ConditionModel(uid: value["userProductGroupId"] as! Int, name: name))
                 }
                 
                 if let tempVar = value["title"] as? String {
@@ -365,7 +381,7 @@ class ProductModel {
             } // data
         } // dictionary
         
-        return ProductModel(isSuccessful: isSuccessful, message: message, attributes: attributes, validCombinations: validCombinations, images: images, imageIds: imageIds, category: category, brand: brand, condition: condition, name: name, shortDescription: shortDescription, completeDescription: completeDescription, productId: uid, quantity: quantity, retailPrice: retailPrice, discountedPrice: discoutedPrice, weight: weigth, height: height, length: length, width: width, sku: sku, productUnitId: productUnitId, isAvailable: isAvailable, isPrimaryPhoto: isPrimaryPhoto)
+        return ProductModel(isSuccessful: isSuccessful, message: message, attributes: attributes, validCombinations: validCombinations, images: images, imageIds: imageIds, category: category, brand: brand, condition: condition, shippingCategories: shippingCategories, productGroups: productGroups, name: name, shortDescription: shortDescription, completeDescription: completeDescription, productId: uid, quantity: quantity, retailPrice: retailPrice, discountedPrice: discoutedPrice, weight: weigth, height: height, length: length, width: width, sku: sku, productUnitId: productUnitId, isAvailable: isAvailable, isPrimaryPhoto: isPrimaryPhoto)
         
     } // parseDataWithDictionary
 }

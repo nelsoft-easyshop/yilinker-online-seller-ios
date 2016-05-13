@@ -190,7 +190,7 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
         
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "brandKeyword": keyWord]
         
-        WebServiceManager.fireGetProductUploadRequestWithUrl(APIAtlas.brandUrl, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        WebServiceManager.fireGetProductUploadRequestWithUrl(APIAtlas.productBrandsUrl, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 
                 let data: [NSDictionary] = responseObject["data"] as! [NSDictionary]

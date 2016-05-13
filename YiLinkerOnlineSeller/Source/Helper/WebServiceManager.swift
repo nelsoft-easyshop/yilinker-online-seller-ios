@@ -567,6 +567,12 @@ class WebServiceManager: NSObject {
         }
     }
     
+    class func fireGetProductUploadV3RequestWithUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        self.fireGetRequestWithUrl(url, parameters: []) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
     class func fireGetProductUploadRequestWithUrl(url: String, parameters: NSDictionary, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         self.fireGetRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)

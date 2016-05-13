@@ -80,7 +80,7 @@ class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate,
     
     // MARK: Textfield delegate methods
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-        if self.textFieldType == ProductTextFieldType.Brand || self.textFieldType == ProductTextFieldType.Category {
+        if self.textFieldType == ProductTextFieldType.Brand || self.textFieldType == ProductTextFieldType.Category || self.textFieldType == ProductTextFieldType.ShippingCategory {
             self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: "", cell: self, textFieldType: self.textFieldType!)
             return false
         } else {
