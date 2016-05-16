@@ -181,6 +181,14 @@ struct APIAtlas {
     static func generateV3URL(url: String) -> String {
         return "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
     }
+    
+    
+    // V3
+    
+    // Coutry Store
+    
+    static let countryList = APIAtlas.generateV3URL("auth/country-setup/country-store?access_token=")
+    static let getCountrySetupDetails = APIAtlas.generateV3URL("auth/country-setup?access_token=")
 }
 
 class APIManager: AFHTTPSessionManager {

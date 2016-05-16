@@ -25,6 +25,7 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        fireGetCountries()
         setupNavigationBar()
         
         self.tableView.contentInset = UIEdgeInsetsMake(-36, 0, 0, 0)
@@ -48,6 +49,24 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
     
     func backAction() {
         self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    // MARK: - Requests
+    
+    func fireGetCountries() {
+        
+        println(APIAtlas.getCountrySetupDetails)
+        println(SessionManager.accessToken())
+        
+        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/ph/en/auth/country-setup/country-store?access_token=MWM5YTllODQxY2YzNTVjMzgxOGY3MGMxZWU1Y2IyMGJjMTRkYTkyY2Y2Mzk5MTdlYTc1YjUyMzc0NDY1ZmY4Yg"
+        // APIAtlas.getCountrySetupDetails + SessionManager.accessToken()
+        
+        WebServiceManager.fireGetCountrySetupDetails(url, productId: "964", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            
+            println(responseObject)
+            
+        })
+        
     }
     
     // MARK: - Table View Data Source
