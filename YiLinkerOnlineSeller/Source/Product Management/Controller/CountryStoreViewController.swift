@@ -21,6 +21,10 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
         "http://www.thailanguagehut.com/wp-content/uploads/2010/04/Thai-Flag.gif",
         "http://www.therecycler.com/wp-content/uploads/2013/03/Vietnam-flag.jpg"]
     
+    var countryListModel: [CountryListModel] = []
+    
+    // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -44,6 +48,10 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
         
         self.navigationItem.leftBarButtonItems = [navigationSpacer, UIBarButtonItem(image: UIImage(named: "nav-back"), style: .Plain, target: self, action: "backAction")]
     }
+
+    func populateData() {
+        self.tableView.reloadData()
+    }
     
     // MARK: - Actions
     
@@ -58,12 +66,33 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
         println(APIAtlas.getCountrySetupDetails)
         println(SessionManager.accessToken())
         
-        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/ph/en/auth/country-setup/country-store?access_token=MWM5YTllODQxY2YzNTVjMzgxOGY3MGMxZWU1Y2IyMGJjMTRkYTkyY2Y2Mzk5MTdlYTc1YjUyMzc0NDY1ZmY4Yg"
+        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/ph/en/auth/country-setup/country-store?access_token=ZWUxYThjNGM3MDllM2FiMGJjYjNhNWZmMWJlNGM2MjA0YzhmMzI0ODIzZjc4MzRjY2Q3ZWQwZTcyYTBkYTU3MQ"
         // APIAtlas.getCountrySetupDetails + SessionManager.accessToken()
         
         WebServiceManager.fireGetCountrySetupDetails(url, productId: "964", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             
-            println(responseObject)
+            if successful {
+                
+                var responseList: NSArray = (responseObject["data"] as? NSArray)!
+
+                self.countryListModel = []
+                
+                if responseList.count != 0 {
+                    
+                    for response in responseList {
+                        self.countryListModel.append(CountryListModel.parseDataWithDictionary(response))
+                    }
+                    
+                } else {
+                    println("No countries.")
+                }
+                
+                self.populateData()
+//                println(countryListModel.count)
+                
+            } else {
+                println("Failed")
+            }
             
         })
         
@@ -72,6 +101,10 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if self.countryListModel.count != 0 {
+            return self.countryListModel.count
+        }
+        
         return countries.count
     }
     
@@ -80,13 +113,21 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
         let cell: CountryStoreTableViewCell = tableView.dequeueReusableCellWithIdentifier("countryId") as! CountryStoreTableViewCell
         cell.selectionStyle = .None
         
-        cell.flagImageView.sd_setImageWithURL(NSURL(string: flags[indexPath.row]))
-        cell.countryLabel.text = countries[indexPath.row]
-        
-        let random = Int(arc4random_uniform(UInt32(3)))
-        
-        if random != 1 {
-            cell.availableLabel.hidden = false
+        if self.countryListModel.count != 0 {
+            cell.flagImageView.sd_setImageWithURL(NSURL(string: self.countryListModel[indexPath.row].flag))
+            cell.countryLabel.text = self.countryListModel[indexPath.row].name
+            if self.countryListModel[indexPath.row].isAvailable {
+                cell.availableLabel.hidden = false
+            }
+        } else {
+            cell.flagImageView.sd_setImageWithURL(NSURL(string: flags[indexPath.row]))
+            cell.countryLabel.text = countries[indexPath.row]
+            
+            let random = Int(arc4random_uniform(UInt32(3)))
+            
+            if random != 1 {
+                cell.availableLabel.hidden = false
+            }
         }
         
         

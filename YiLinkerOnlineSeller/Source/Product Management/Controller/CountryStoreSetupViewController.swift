@@ -72,7 +72,7 @@ class CountryStoreSetupViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
+        fireGetCountryStoreDetails()
         setupNavigationBar()
         self.addActions()
         let nib = UINib(nibName: "ProductImagesCollectionViewCell", bundle: nil)
@@ -127,6 +127,24 @@ class CountryStoreSetupViewController: UIViewController {
         self.navigationController!.pushViewController(commision, animated: true)
     }
 
+    // MARK: - Requests
+    
+    func fireGetCountryStoreDetails() {
+        
+        println(APIAtlas.getCountrySetupDetails)
+        println(SessionManager.accessToken())
+        
+        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/PH/EN/auth/country-setup?access_token=OGJhYTQ2ZDEwM2I4YzE2MTE5ZWQyNTVjZDEyNmRhNWNlNGE3YzNjMWQ1NDNmOGVhMzU2Y2JiZjU1NzUzOWM4ZA"
+        // APIAtlas.getCountrySetupDetails + SessionManager.accessToken()
+        
+        WebServiceManager.fireGetCountrySetupDetails(url, productId: "964", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+
+            println(responseObject)
+        
+        })
+        
+    }
+    
 }
 
 extension CountryStoreSetupViewController: UICollectionViewDataSource {
