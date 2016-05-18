@@ -115,35 +115,35 @@ class CSProductModel {
         
         if dictionary.isKindOfClass(NSDictionary) {
             
-            model.id = ParseHelper.int(dictionary, key: "", defaultValue: 0)
-            model.title = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.slug = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.image = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.status = ParseHelper.int(dictionary, key: "", defaultValue: 0)
-            model.raw = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.thumbnail = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.small = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.medium = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.large = ParseHelper.string(dictionary, key: "", defaultValue: "")
+            model.id = ParseHelper.int(dictionary, key: "id", defaultValue: 0)
+            model.title = ParseHelper.string(dictionary, key: "title", defaultValue: "")
+            model.slug = ParseHelper.string(dictionary, key: "slug", defaultValue: "")
+            model.image = ParseHelper.string(dictionary, key: "image", defaultValue: "")
+            model.status = ParseHelper.int(dictionary, key: "status", defaultValue: 0)
+            model.raw = ParseHelper.string(dictionary, key: "raw", defaultValue: "")
+            model.thumbnail = ParseHelper.string(dictionary, key: "thumbnail", defaultValue: "")
+            model.small = ParseHelper.string(dictionary, key: "small", defaultValue: "")
+            model.medium = ParseHelper.string(dictionary, key: "medium", defaultValue: "")
+            model.large = ParseHelper.string(dictionary, key: "large", defaultValue: "")
             // images
             var imagesElement: ImagesElement
             for image in dictionary["images"] as! NSArray {
-                imagesElement.raw = ParseHelper.string(image, key: "", defaultValue: "")
-                imagesElement.imageLocation = ParseHelper.string(image, key: "", defaultValue: "")
-                imagesElement.isPrimary = ParseHelper.bool(image, key: "", defaultValue: false)
-                imagesElement.isDeleted = ParseHelper.bool(image, key: "", defaultValue: false)
-                imagesElement.thumbnail = ParseHelper.string(image, key: "", defaultValue: "")
-                imagesElement.small = ParseHelper.string(image, key: "", defaultValue: "")
-                imagesElement.medium = ParseHelper.string(image, key: "", defaultValue: "")
-                imagesElement.large = ParseHelper.string(image, key: "", defaultValue: "")
-                imagesElement.id = ParseHelper.string(image, key: "", defaultValue: "")
+                imagesElement.raw = ParseHelper.string(image, key: "raw", defaultValue: "")
+                imagesElement.imageLocation = ParseHelper.string(image, key: "imageLocation", defaultValue: "")
+                imagesElement.isPrimary = ParseHelper.bool(image, key: "isPrimary", defaultValue: false)
+                imagesElement.isDeleted = ParseHelper.bool(image, key: "isDeleted", defaultValue: false)
+                imagesElement.thumbnail = ParseHelper.string(image, key: "thumbnail", defaultValue: "")
+                imagesElement.small = ParseHelper.string(image, key: "small", defaultValue: "")
+                imagesElement.medium = ParseHelper.string(image, key: "medium", defaultValue: "")
+                imagesElement.large = ParseHelper.string(image, key: "large", defaultValue: "")
+                imagesElement.id = ParseHelper.string(image, key: "id", defaultValue: "")
                 model.images.append(imagesElement)
             }
-            model.shortDescription = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.fullDescription = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.sellerId = ParseHelper.int(dictionary, key: "", defaultValue: 0)
-            model.brandId = ParseHelper.int(dictionary, key: "", defaultValue: 0)
-            model.productCategoryId = ParseHelper.int(dictionary, key: "", defaultValue: 0)
+            model.shortDescription = ParseHelper.string(dictionary, key: "shortDescription", defaultValue: "")
+            model.fullDescription = ParseHelper.string(dictionary, key: "fullDescription", defaultValue: "")
+            model.sellerId = ParseHelper.int(dictionary, key: "sellerId", defaultValue: 0)
+            model.brandId = ParseHelper.int(dictionary, key: "brandId", defaultValue: 0)
+            model.productCategoryId = ParseHelper.int(dictionary, key: "productCategoryId", defaultValue: 0)
             // attributes
             var attributesElement: AttributesElement
             for attribute in dictionary["attributes"] as! NSArray {
@@ -151,26 +151,26 @@ class CSProductModel {
             }
             // dateCreated
             if let dateCreatedData: AnyObject = dictionary["dateCreated"] {
-                model.dateCreated.date = ParseHelper.string(dateCreatedData, key: "", defaultValue: "")
-                model.dateCreated.timezone_type = ParseHelper.int(dateCreatedData, key: "", defaultValue: 0)
-                model.dateCreated.timezone = ParseHelper.string(dateCreatedData, key: "", defaultValue: "")
+//                model.dateCreated.date = ParseHelper.string(dateCreatedData, key: "date", defaultValue: "")
+//                model.dateCreated.timezone_type = ParseHelper.int(dateCreatedData, key: "timezone_type", defaultValue: 0)
+//                model.dateCreated.timezone = ParseHelper.string(dateCreatedData, key: "timezone", defaultValue: "")
             }
             // dateLastModified
             if let dateLastModifiedData: AnyObject = dictionary["dateLastModified"] {
-                model.dateLastModified.date = ParseHelper.string(dateLastModifiedData, key: "", defaultValue: "")
-                model.dateLastModified.timezone_type = ParseHelper.int(dateLastModifiedData, key: "", defaultValue: 0)
-                model.dateLastModified.timezone = ParseHelper.string(dateLastModifiedData, key: "", defaultValue: "")
+//                model.dateLastModified.date = ParseHelper.string(dateLastModifiedData, key: "date", defaultValue: "")
+//                model.dateLastModified.timezone_type = ParseHelper.int(dateLastModifiedData, key: "timezone_type", defaultValue: 0)
+//                model.dateLastModified.timezone = ParseHelper.string(dateLastModifiedData, key: "timezone", defaultValue: "")
             }
             // productUnits
             for productUnit in dictionary["productUnits"] as! NSArray {
                 model.productUnits.append(CSDefaultUnitModel.parseDataWithDictionary(productUnit as! NSDictionary))
             }
-            model.shippingCost = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.hasCOD = ParseHelper.bool(dictionary, key: "", defaultValue: false)
+            model.shippingCost = ParseHelper.string(dictionary, key: "shippingCost", defaultValue: "")
+            model.hasCOD = ParseHelper.bool(dictionary, key: "hasCOD", defaultValue: false)
 //            model.elastica = nil
-            model.store = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.brand = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.category = ParseHelper.string(dictionary, key: "", defaultValue: "")
+            model.store = ParseHelper.string(dictionary, key: "store", defaultValue: "")
+            model.brand = ParseHelper.string(dictionary, key: "brand", defaultValue: "")
+            model.category = ParseHelper.string(dictionary, key: "category", defaultValue: "")
         }
         
         return model
@@ -220,41 +220,45 @@ class CSDefaultUnitModel {
         var model = CSDefaultUnitModel()
         
         if dictionary.isKindOfClass(NSDictionary) {
-            model.productId = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.productUnitId = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.quantity = ParseHelper.int(dictionary, key: "", defaultValue: 0)
-            model.sku = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.slug = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.price = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.discountedPrice = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.appliedBaseDiscountPrice = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.appliedDiscountPrice = ParseHelper.string(dictionary, key: "", defaultValue: "")
+            model.productId = ParseHelper.string(dictionary, key: "productId", defaultValue: "")
+            model.productUnitId = ParseHelper.string(dictionary, key: "productUnitId", defaultValue: "")
+            model.quantity = ParseHelper.int(dictionary, key: "quantity", defaultValue: 0)
+            model.sku = ParseHelper.string(dictionary, key: "sku", defaultValue: "")
+            model.slug = ParseHelper.string(dictionary, key: "slug", defaultValue: "")
+            model.price = ParseHelper.string(dictionary, key: "price", defaultValue: "")
+            model.discountedPrice = ParseHelper.string(dictionary, key: "discountedPrice", defaultValue: "")
+            model.appliedBaseDiscountPrice = ParseHelper.string(dictionary, key: "appliedBaseDiscountPrice", defaultValue: "")
+            model.appliedDiscountPrice = ParseHelper.string(dictionary, key: "appliedDiscountPrice", defaultValue: "")
 //            model.promoTypeId = nil
 //            model.promoTypeName = nil
-            model.discount = ParseHelper.int(dictionary, key: "", defaultValue: 0)
+            model.discount = ParseHelper.int(dictionary, key: "discount", defaultValue: 0)
             // dateCreated
             if let dateCreatedData: AnyObject = dictionary["dateCreated"] {
-                model.dateCreated.date = ParseHelper.string(dateCreatedData, key: "", defaultValue: "")
-                model.dateCreated.timezone_type = ParseHelper.int(dateCreatedData, key: "", defaultValue: 0)
-                model.dateCreated.timezone = ParseHelper.string(dateCreatedData, key: "", defaultValue: "")
+                var element: DateCreatedElement
+                element.date = ParseHelper.string(dateCreatedData, key: "date", defaultValue: "")
+                element.timezone_type = ParseHelper.int(dateCreatedData, key: "timezone_type", defaultValue: 0)
+                element.timezone = ParseHelper.string(dateCreatedData, key: "timezone", defaultValue: "")
+                model.dateCreated = element
             }
             // dateLastModified
             if let dateLastModifiedData: AnyObject = dictionary["dateLastModified"] {
-                model.dateLastModified.date = ParseHelper.string(dateLastModifiedData, key: "", defaultValue: "")
-                model.dateLastModified.timezone_type = ParseHelper.int(dateLastModifiedData, key: "", defaultValue: 0)
-                model.dateLastModified.timezone = ParseHelper.string(dateLastModifiedData, key: "", defaultValue: "")
+                var element: DateCreatedElement
+                element.date = ParseHelper.string(dateLastModifiedData, key: "date", defaultValue: "")
+                element.timezone_type = ParseHelper.int(dateLastModifiedData, key: "timezone_type", defaultValue: 0)
+                element.timezone = ParseHelper.string(dateLastModifiedData, key: "timezone", defaultValue: "")
+                model.dateLastModified = element
             }
-            model.status = ParseHelper.int(dictionary, key: "", defaultValue: 0)
+            model.status = ParseHelper.int(dictionary, key: "status", defaultValue: 0)
             // Image Ids
             var imageIdElement: ImagesIdsElement
             for imageId in dictionary["imageIds"] as! NSArray {
                 model.imageIds.append(imageIdElement)
             }
-            model.primaryImage = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.primaryThumbnailImage = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.primarySmallImage = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.primaryMediumImage = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.primaryLargeImage = ParseHelper.string(dictionary, key: "", defaultValue: "")
+            model.primaryImage = ParseHelper.string(dictionary, key: "primaryImage", defaultValue: "")
+            model.primaryThumbnailImage = ParseHelper.string(dictionary, key: "primaryThumbnailImage", defaultValue: "")
+            model.primarySmallImage = ParseHelper.string(dictionary, key: "primarySmallImage", defaultValue: "")
+            model.primaryMediumImage = ParseHelper.string(dictionary, key: "primaryMediumImage", defaultValue: "")
+            model.primaryLargeImage = ParseHelper.string(dictionary, key: "primaryLargeImage", defaultValue: "")
             // Promo Instance
             var promoInstanceElement: PromoInstanceElement
             for promoInstanceData in dictionary["promoInstance"] as! NSArray {
@@ -265,12 +269,12 @@ class CSDefaultUnitModel {
             for promoInstanceNotYetStartedData in dictionary["promoInstanceNotYetStarted"] as! NSArray {
                 model.promoInstanceNotYetStarted.append(promoInstanceNotYetStartedElement)
             }
-            model.inWishlist = ParseHelper.bool(dictionary, key: "", defaultValue: false)
-            model.commission = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.weight = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.length = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.height = ParseHelper.string(dictionary, key: "", defaultValue: "")
-            model.width = ParseHelper.string(dictionary, key: "", defaultValue: "")
+            model.inWishlist = ParseHelper.bool(dictionary, key: "inWishlist", defaultValue: false)
+            model.commission = ParseHelper.string(dictionary, key: "commission", defaultValue: "")
+            model.weight = ParseHelper.string(dictionary, key: "weight", defaultValue: "")
+            model.length = ParseHelper.string(dictionary, key: "length", defaultValue: "")
+            model.height = ParseHelper.string(dictionary, key: "height", defaultValue: "")
+            model.width = ParseHelper.string(dictionary, key: "width", defaultValue: "")
         }
         
         return model
@@ -297,20 +301,24 @@ class CSProductWarehousesModel {
         var model = CSProductWarehousesModel()
         
         if dictionary.isKindOfClass(NSDictionary) {
-            model.id = ParseHelper.string(dictionary, key: "", defaultValue: "")
+            model.id = ParseHelper.string(dictionary, key: "id", defaultValue: "")
             // User Warehouse
             if let user_warehouseData: AnyObject = dictionary["user_warehouse"] {
-                model.user_warehouse.id = ParseHelper.int(user_warehouseData, key: "id", defaultValue: 0)
-                model.user_warehouse.name = ParseHelper.string(user_warehouseData, key: "name", defaultValue: "")
-                model.user_warehouse.address = ParseHelper.string(user_warehouseData, key: "address", defaultValue: "")
-                model.user_warehouse.isDelete = ParseHelper.bool(user_warehouseData, key: "isDelete", defaultValue: false)
-                model.user_warehouse.zipCode = ParseHelper.string(user_warehouseData, key: "zipCode", defaultValue: "")
+                var element: UserWarehouseElement
+                element.id = ParseHelper.int(user_warehouseData, key: "id", defaultValue: 0)
+                element.name = ParseHelper.string(user_warehouseData, key: "name", defaultValue: "")
+                element.address = ParseHelper.string(user_warehouseData, key: "address", defaultValue: "")
+                element.isDelete = ParseHelper.bool(user_warehouseData, key: "isDelete", defaultValue: false)
+                element.zipCode = ParseHelper.string(user_warehouseData, key: "zipCode", defaultValue: "")
+                model.user_warehouse = element
             }
             model.priority = ParseHelper.int(dictionary, key: "", defaultValue: 0)
             // Logistic
             if let logisticData: AnyObject = dictionary["logistic"] {
-                model.logistic.id = ParseHelper.int(logisticData, key: "id", defaultValue: 0)
-                model.logistic.name = ParseHelper.string(logisticData, key: "name", defaultValue: "")
+                var element: LogisticElement
+                element.id = ParseHelper.int(logisticData, key: "id", defaultValue: 0)
+                element.name = ParseHelper.string(logisticData, key: "name", defaultValue: "")
+                model.logistic = element
             }
             model.is_cod = ParseHelper.bool(dictionary, key: "is_cod", defaultValue: false)
             model.handlingFee = ParseHelper.string(dictionary, key: "handlingFee", defaultValue: "")
