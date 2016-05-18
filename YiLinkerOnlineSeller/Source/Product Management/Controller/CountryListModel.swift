@@ -23,9 +23,6 @@ class CountryListModel: NSObject {
     var area_code: String = ""
     var isActive: Bool = false
     var defaultLanguage: DefaultLanguage!
-//    var defaultLanguageId: Int = 0
-//    var defaultLanguageName: String = ""
-//    var defaultLanguageCode: String = ""
     var flag: String = ""
     var isAvailable: Bool = false
     var currency: Currency!

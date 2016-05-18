@@ -27,6 +27,7 @@
 		262BEDEE1CC71C8B004882DF /* CountryStoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262BEDEC1CC71C8B004882DF /* CountryStoreTableViewCell.swift */; };
 		262BEDEF1CC71C8B004882DF /* CountryStoreTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 262BEDED1CC71C8B004882DF /* CountryStoreTableViewCell.xib */; };
 		267DD2CA1CE9D089005D219A /* CountryListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267DD2C91CE9D089005D219A /* CountryListModel.swift */; };
+		267DD2CC1CEB1AE8005D219A /* CountrySetupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267DD2CB1CEB1AE8005D219A /* CountrySetupModel.swift */; };
 		26DD270E1CCA263F00A0D63B /* ProductCombination2TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DD270D1CCA263F00A0D63B /* ProductCombination2TableViewCell.swift */; };
 		798D81CC1C8686EB00D2A1F7 /* ActivityLogTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D7EA31C8686EA00D2A1F7 /* ActivityLogTableViewController.swift */; };
 		798D81CD1C8686EB00D2A1F7 /* ActivityLogTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D7EA41C8686EA00D2A1F7 /* ActivityLogTableViewController.xib */; };
@@ -797,6 +798,7 @@
 		262BEDEC1CC71C8B004882DF /* CountryStoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryStoreTableViewCell.swift; sourceTree = "<group>"; };
 		262BEDED1CC71C8B004882DF /* CountryStoreTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryStoreTableViewCell.xib; sourceTree = "<group>"; };
 		267DD2C91CE9D089005D219A /* CountryListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryListModel.swift; sourceTree = "<group>"; };
+		267DD2CB1CEB1AE8005D219A /* CountrySetupModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountrySetupModel.swift; sourceTree = "<group>"; };
 		26DD270D1CCA263F00A0D63B /* ProductCombination2TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductCombination2TableViewCell.swift; path = ../View/ProductCombination2TableViewCell.swift; sourceTree = "<group>"; };
 		3F811DA8573C81594070C601 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		5B825E81D3B27E563C7C3C53 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1604,6 +1606,7 @@
 			isa = PBXGroup;
 			children = (
 				267DD2C91CE9D089005D219A /* CountryListModel.swift */,
+				267DD2CB1CEB1AE8005D219A /* CountrySetupModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -4211,6 +4214,7 @@
 				798D846D1C8686EB00D2A1F7 /* DynamicRoundedLabel.swift in Sources */,
 				798D82701C8686EB00D2A1F7 /* CandleStickChartRenderer.swift in Sources */,
 				798D84081C8686EB00D2A1F7 /* DeactivateModalViewController.swift in Sources */,
+				267DD2CC1CEB1AE8005D219A /* CountrySetupModel.swift in Sources */,
 				798D84401C8686EB00D2A1F7 /* TransactionsFilterItemModel.swift in Sources */,
 				798D84291C8686EB00D2A1F7 /* TransactionDetailsTableViewController.swift in Sources */,
 				798D835D1C8686EB00D2A1F7 /* RemovedItemTableViewCell.swift in Sources */,
