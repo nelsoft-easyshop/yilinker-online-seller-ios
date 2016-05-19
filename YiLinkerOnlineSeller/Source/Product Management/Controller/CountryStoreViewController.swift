@@ -66,12 +66,14 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
         println(APIAtlas.getCountrySetupDetails)
         println(SessionManager.accessToken())
         
-        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/ph/en/auth/country-setup/country-store?access_token=MmJhMTU3MWE0NGRmODE4ODZkZDk3MTEyMTdkMTI1ZDdiMmUwZGZiY2U4Nzk2MThiMjZkNTc0NzEyMmNhNWFhMg"
+        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/ph/en/auth/country-setup/country-store?access_token=YTlmMzZjNmVlZDEwYjFiNmYzYTAwMGQ5MTViODM3MmU1YzQyMDBjMGZiZmEwOWQyOWQ1ZGFhNDFmNGI4MDZjYw"
         // APIAtlas.getCountrySetupDetails + SessionManager.accessToken()
         
-        WebServiceManager.fireGetCountrySetupDetails(url, productId: "964", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        WebServiceManager.fireGetListOfCountries(url, productId: "964", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             
             if successful {
+                
+//                println(responseObject)
                 
                 var responseList: NSArray = (responseObject["data"] as? NSArray)!
 
@@ -140,6 +142,7 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let countryStoreSetup: CountryStoreSetupViewController = CountryStoreSetupViewController(nibName: "CountryStoreSetupViewController", bundle: nil)
+        countryStoreSetup.countryStoreModel = self.countryListModel[indexPath.row]
         self.navigationController?.pushViewController(countryStoreSetup, animated: true)
         
     }

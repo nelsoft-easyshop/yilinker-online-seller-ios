@@ -17,15 +17,21 @@ class CountrySetupModel: NSObject {
     var defaultUnit: CSDefaultUnitModel!
     var productWarehouses: [CSProductWarehousesModel] = []
     var logistics: [CSLogisticsModel] = []
+    var primaryAddress: String = ""
+    var secondaryAddress: String = ""
     
-    init(message: String, isSuccessful: Bool, product: CSProductModel, defaultUnit: CSDefaultUnitModel, productWarehouses: [CSProductWarehousesModel], logistics: [CSLogisticsModel]) {
+    init(message: String, isSuccessful: Bool, product: CSProductModel, defaultUnit: CSDefaultUnitModel, productWarehouses: [CSProductWarehousesModel], logistics: [CSLogisticsModel], primaryAddress: String, secondaryAddress: String) {
         
         self.message = message
         self.isSuccessful = isSuccessful
+        
         self.product = product
         self.defaultUnit = defaultUnit
         self.productWarehouses = productWarehouses
         self.logistics = logistics
+        
+        self.primaryAddress = primaryAddress
+        self.secondaryAddress = secondaryAddress
     }
     
     class func parseDataWithDictionary(dictionary: NSDictionary) -> CountrySetupModel! {
@@ -37,6 +43,9 @@ class CountrySetupModel: NSObject {
         var defaultUnit: CSDefaultUnitModel!
         var productWarehouses: [CSProductWarehousesModel] = []
         var logistics: [CSLogisticsModel] = []
+        
+        var primaryAddress: String = ""
+        var secondaryAddress: String = ""
         
         if dictionary.isKindOfClass(NSDictionary) {
             message = ParseHelper.string(dictionary, key: "", defaultValue: "")
@@ -56,6 +65,14 @@ class CountrySetupModel: NSObject {
                 
                 // Product Warehouses
                 for warehouseData in data["productWarehouses"] as! NSArray {
+                    let warehouse: CSProductWarehousesModel = CSProductWarehousesModel.parseDataWithDictionary(warehouseData as! NSDictionary)
+                    if warehouse.priority == 1 {
+                        primaryAddress = warehouse.user_warehouse.address
+                    } else if warehouse.priority == 2 {
+                        secondaryAddress = warehouse.user_warehouse.address
+                    } else {
+                        
+                    }
                     productWarehouses.append(CSProductWarehousesModel.parseDataWithDictionary(warehouseData as! NSDictionary))
                 }
                 
@@ -67,8 +84,7 @@ class CountrySetupModel: NSObject {
             } // data
         } // dictionary
         
-        return CountrySetupModel(message: message, isSuccessful: isSuccessful, product: product, defaultUnit: defaultUnit, productWarehouses: productWarehouses, logistics: logistics)
-        
+        return CountrySetupModel(message: message, isSuccessful: isSuccessful, product: product, defaultUnit: defaultUnit, productWarehouses: productWarehouses, logistics: logistics, primaryAddress: primaryAddress, secondaryAddress: secondaryAddress)
     }
     
 }
@@ -151,15 +167,19 @@ class CSProductModel {
             }
             // dateCreated
             if let dateCreatedData: AnyObject = dictionary["dateCreated"] {
-//                model.dateCreated.date = ParseHelper.string(dateCreatedData, key: "date", defaultValue: "")
-//                model.dateCreated.timezone_type = ParseHelper.int(dateCreatedData, key: "timezone_type", defaultValue: 0)
-//                model.dateCreated.timezone = ParseHelper.string(dateCreatedData, key: "timezone", defaultValue: "")
+                var element: DateCreatedElement
+                element.date = ParseHelper.string(dateCreatedData, key: "date", defaultValue: "")
+                element.timezone_type = ParseHelper.int(dateCreatedData, key: "timezone_type", defaultValue: 0)
+                element.timezone = ParseHelper.string(dateCreatedData, key: "timezone", defaultValue: "")
+                model.dateCreated = element
             }
             // dateLastModified
             if let dateLastModifiedData: AnyObject = dictionary["dateLastModified"] {
-//                model.dateLastModified.date = ParseHelper.string(dateLastModifiedData, key: "date", defaultValue: "")
-//                model.dateLastModified.timezone_type = ParseHelper.int(dateLastModifiedData, key: "timezone_type", defaultValue: 0)
-//                model.dateLastModified.timezone = ParseHelper.string(dateLastModifiedData, key: "timezone", defaultValue: "")
+                var element: DateCreatedElement
+                element.date = ParseHelper.string(dateLastModifiedData, key: "date", defaultValue: "")
+                element.timezone_type = ParseHelper.int(dateLastModifiedData, key: "timezone_type", defaultValue: 0)
+                element.timezone = ParseHelper.string(dateLastModifiedData, key: "timezone", defaultValue: "")
+                model.dateLastModified = element
             }
             // productUnits
             for productUnit in dictionary["productUnits"] as! NSArray {
@@ -312,7 +332,7 @@ class CSProductWarehousesModel {
                 element.zipCode = ParseHelper.string(user_warehouseData, key: "zipCode", defaultValue: "")
                 model.user_warehouse = element
             }
-            model.priority = ParseHelper.int(dictionary, key: "", defaultValue: 0)
+            model.priority = ParseHelper.int(dictionary, key: "priority", defaultValue: 0)
             // Logistic
             if let logisticData: AnyObject = dictionary["logistic"] {
                 var element: LogisticElement

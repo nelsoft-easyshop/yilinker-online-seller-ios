@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -37,7 +37,8 @@
                 <outlet property="rateLabel" destination="qYi-eX-CVj" id="PIV-mc-Apj"/>
                 <outlet property="rateValueLabel" destination="NBx-Eg-UiG" id="gzC-7j-wfJ"/>
                 <outlet property="scrollView" destination="YAg-Wb-k47" id="dQU-O0-QUO"/>
-                <outlet property="storeNameLabel" destination="nFG-ou-Lcz" id="YWx-D4-p1Q"/>
+                <outlet property="storeNameLabel" destination="O71-qm-Os0" id="DAs-Im-jAz"/>
+                <outlet property="storeNameValueLabel" destination="nFG-ou-Lcz" id="keF-8U-K9p"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="weightLabel" destination="QPz-1a-SNG" id="Wx5-iK-dB8"/>
                 <outlet property="weightValueLabel" destination="Q7d-1c-QtA" id="Zvb-Cm-PhQ"/>

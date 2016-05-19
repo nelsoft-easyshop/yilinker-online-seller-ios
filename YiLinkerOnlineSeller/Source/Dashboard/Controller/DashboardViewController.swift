@@ -92,6 +92,11 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         } else if NSUserDefaults.standardUserDefaults().valueForKey("cooldownKey") as! Int == 0 {
             NSUserDefaults.standardUserDefaults().setObject(60, forKey: "cooldownKey")
         }
+        
+        
+        let countryStore: CountryStoreViewController = CountryStoreViewController(nibName: "CountryStoreViewController", bundle: nil)
+        let root = UINavigationController(rootViewController: countryStore)
+        self.presentViewController(root, animated: false, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {

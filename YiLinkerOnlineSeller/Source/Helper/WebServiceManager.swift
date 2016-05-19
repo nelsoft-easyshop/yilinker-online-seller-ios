@@ -988,9 +988,9 @@ class WebServiceManager: NSObject {
     
     // MARK: - Country Store Setup
     
-    class func fireGetCountrySetupDetails(url: String, productId: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+    class func fireGetCountrySetupDetails(url: String, productId: String, code: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         
-        let parameters = ["productId": "\(productId)", "code": "\(SessionManager.selectedCountryCode())"]
+        let parameters = ["productId": "\(productId)", "code": code]
         
         self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)

@@ -58,6 +58,9 @@ class CountryStoreSetupViewController: UIViewController {
     
     // MARK: Variables
     
+    var countryStoreSetupModel: CountrySetupModel!
+    var countryStoreModel: CountryListModel!
+    
     let flags = ["http://wiki.erepublik.com/images/thumb/2/21/Flag-China.jpg/50px-Flag-China.jpg",
         "http://media.worldflags101.com/i/flags/cambodia.gif",
         "http://www.utazaselott.hu/userfiles/image/indonesian%20flag.jpg",
@@ -77,6 +80,8 @@ class CountryStoreSetupViewController: UIViewController {
         self.addActions()
         let nib = UINib(nibName: "ProductImagesCollectionViewCell", bundle: nil)
         self.productCollectionViewController.registerNib(nib, forCellWithReuseIdentifier: "ProductImagesIdentifier")
+        
+        populateCountryStoreBasicDetails()
     }
     
     // MARK: - Functions
@@ -90,6 +95,42 @@ class CountryStoreSetupViewController: UIViewController {
         navigationSpacer.width = -10
         
         self.navigationItem.leftBarButtonItems = [navigationSpacer, UIBarButtonItem(image: UIImage(named: "nav-back"), style: .Plain, target: self, action: "backAction")]
+    }
+    
+    func populateCountryStoreBasicDetails() {
+        
+        if countryStoreModel != nil {
+            self.countryValueLabel.text = self.countryStoreModel.name
+            self.domainValueLabel.text = self.countryStoreModel.domain
+            self.languageValueLabel.text = self.countryStoreModel.defaultLanguage.name
+            self.currencyValueLabel.text = "\(self.countryStoreModel.currency.name) (\(self.countryStoreModel.currency.symbol))"
+            self.rateValueLabel.text = "1USD = \(self.countryStoreModel.currency.rate) \(self.countryStoreModel.currency.symbol)"
+        } else {
+            println("Country Store Model is nil")
+        }
+        
+    }
+    
+    func populateCountryStoreSetupDetails() {
+        
+        if countryStoreSetupModel != nil {
+            self.storeNameValueLabel.text = self.countryStoreSetupModel.product.store
+            
+            self.productNameLabel.text = self.countryStoreSetupModel.product.title
+            self.productDescriptionLabel.text = self.countryStoreSetupModel.product.shortDescription
+            self.productCollectionViewController.reloadData()
+            self.categoryValueLabel.text = self.countryStoreSetupModel.product.category
+            self.brandValueLabel.text = self.countryStoreSetupModel.product.brand
+            let dimension = "\(self.countryStoreSetupModel.defaultUnit.height)cm x \(self.countryStoreSetupModel.defaultUnit.width)cm x \(self.countryStoreSetupModel.defaultUnit.length)cm"
+            self.packageDimensionValueLabel.text = dimension
+            self.weightValueLabel.text = self.countryStoreSetupModel.defaultUnit.weight + "KG"
+            
+            self.productLocationPrimaryValueLabel.text = self.countryStoreSetupModel.primaryAddress
+            self.productLocationSecondaryValueLabel.text = self.countryStoreSetupModel.secondaryAddress
+        } else {
+            println("Country Store Setup Model is nil")
+        }
+        
     }
     
     // MARK: - Actions
@@ -134,15 +175,16 @@ class CountryStoreSetupViewController: UIViewController {
         println(APIAtlas.getCountrySetupDetails)
         println(SessionManager.accessToken())
         
-        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/PH/EN/auth/country-setup?access_token=ODU3NGZmMDQwMTdiYjkxYTM3MGUwZGJkM2FmZTRhYTk1NTMwOTQ2NmRhYTk0ZDkwYjFlYzA4YWUyNjE2MTQ4Nw"
+        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/PH/EN/auth/country-setup?access_token=YTlmMzZjNmVlZDEwYjFiNmYzYTAwMGQ5MTViODM3MmU1YzQyMDBjMGZiZmEwOWQyOWQ1ZGFhNDFmNGI4MDZjYw"
         // APIAtlas.getCountrySetupDetails + SessionManager.accessToken()
         
-        WebServiceManager.fireGetCountrySetupDetails(url, productId: "964", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        WebServiceManager.fireGetCountrySetupDetails(url, productId: "964", code: self.countryStoreModel.code, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
 
             println(responseObject)
             
             if successful {
-                println(CountrySetupModel.parseDataWithDictionary(responseObject as! NSDictionary))
+                self.countryStoreSetupModel = CountrySetupModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                self.populateCountryStoreSetupDetails()
             } else {
                 println("Failed")
             }
@@ -158,6 +200,9 @@ extension CountryStoreSetupViewController: UICollectionViewDataSource {
     // MARK: - Collection View Data Source
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if self.countryStoreSetupModel != nil {
+            return self.countryStoreSetupModel.product.images.count
+        }
         return flags.count
     }
     
@@ -165,7 +210,12 @@ extension CountryStoreSetupViewController: UICollectionViewDataSource {
         
         let cell: ProductImagesCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("ProductImagesIdentifier", forIndexPath: indexPath) as! ProductImagesCollectionViewCell
 
-        cell.setItemImage(flags[indexPath.row])
+        if self.countryStoreSetupModel != nil {
+            cell.setItemImage(self.countryStoreSetupModel.product.images[indexPath.row].imageLocation)
+        } else {
+            cell.setItemImage(flags[indexPath.row])
+        }
+        
         cell.layer.cornerRadius = 3.0
         
         return cell
