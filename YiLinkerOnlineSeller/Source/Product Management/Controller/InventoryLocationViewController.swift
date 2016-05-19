@@ -11,7 +11,7 @@ import UIKit
 class InventoryLocationViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    let sectionTitles = ["Inventory Location", "Is COD Available?", "Logistics", "Shipping Cost"]
+    var sectionTitles = ["Inventory Location", "Is COD Available?", "Logistics", "Shipping Cost"]
     let locations = ["6th Floor pacific tower, Five E-com Cnter, Mall of Asia Pacific Drive, 1300 Pasay City, philippines",
         "8/F Marc 2000 Tower, 1980 San Andress Street Malate, Manila, Philippines",
         "1660 Bulacan Street, Santa, Cruz Manila, Philippines"]
@@ -22,10 +22,15 @@ class InventoryLocationViewController: UIViewController {
     var isPrimary: Bool = true
     
 //    var selectedValues: [String] = ["", "", "", ""]
-    var location = ""
+    var selectedLocationIndex = -1
     var isCOD = true
     var logistic = ""
     var shippingFee = "0.00"
+    
+    
+    var warehousesModel: [CSProductWarehousesModel] = []
+    var sections = 3
+    var initialValues = true
     
     // MARK: - View Life Cycle
     
@@ -38,8 +43,23 @@ class InventoryLocationViewController: UIViewController {
         setupNavigationBar()
         setupTableView()
         cellValues = [locations, cods, logistics]
-        location = locations[0]
+//        location = locations[0]
         logistic = logistics[0]
+        
+        
+        
+        for i in 0..<warehousesModel.count {
+            if isPrimary && warehousesModel[i].priority == 1 || !isPrimary && warehousesModel[i].priority == 2 {
+                selectedLocationIndex = i
+                if !warehousesModel[i].is_local {
+                    sections = 2
+                }
+                break
+            }
+        }
+
+        sections = 2
+        sectionTitles = ["Inventory Location", "Logistics", "Shipping Cost"]
     }
     
     // MARK: - Functions
@@ -89,12 +109,17 @@ class InventoryLocationViewController: UIViewController {
         }
     }
     
+    func checkIfChosenWarehouseIsLocal(index: Int) -> Bool {
+        
+        return false
+    }
+    
     // MARK: - Actions
     
     func saveAction() {
         getShippingFeeValue()
         
-        println(location)
+//        println(location)
         println(isCOD)
         println(logistic)
         println(shippingFee)
@@ -115,14 +140,18 @@ extension InventoryLocationViewController: UITableViewDataSource, UITableViewDel
     // MARK: - Table View Data Source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 4
+        println(sections)
+        return sections
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if section == 0 {
-            return locations.count
+            return self.warehousesModel.count// locations.count
         } else if section == 1 {
+            if sections == 2 {
+                return logistics.count
+            }
             return cods.count
         } else if section == 2 {
             return logistics.count
@@ -139,22 +168,47 @@ extension InventoryLocationViewController: UITableViewDataSource, UITableViewDel
         
         cell.selectionStyle = .None
         cell.checkImageView.hidden = true
-        if indexPath.section == 0 {
-            cell.label.text = locations[indexPath.row]
-            if cell.label.text == location {
+        if indexPath.section == 0 { // Inventory Location
+            cell.label.text = self.warehousesModel[indexPath.row].user_warehouse.address //locations[indexPath.row]
+            if isPrimary && self.warehousesModel[indexPath.row].priority == 1 && selectedLocationIndex == -1 {
+                cell.checkImageView.hidden = false
+            } else if !isPrimary && self.warehousesModel[indexPath.row].priority == 2 && selectedLocationIndex == -1 {
+                cell.checkImageView.hidden = false
+            } else if selectedLocationIndex == indexPath.row {
                 cell.checkImageView.hidden = false
             }
-        } else if indexPath.section == 1 {
-            cell.label.text = cods[indexPath.row]
-            if isCOD && indexPath.row == 0 || !isCOD && indexPath.row == 1 {
-                cell.checkImageView.hidden = false
+//            if cell.label.text == location {
+//                 cell.checkImageView.hidden = false
+//            }
+        } else if indexPath.section == 1 { // COD
+            if sections == 2 { // logistics
+                cell.label.text = logistics[indexPath.row]
+                if cell.label.text == logistic {
+                    cell.checkImageView.hidden = false
+                }
+            } else { // COD
+                cell.label.text = cods[indexPath.row]
+//                if self.warehousesModel[selectedLocationIndex].is_cod && indexPath.row == 0 || !self.warehousesModel[selectedLocationIndex].is_cod && indexPath.row == 1 {
+//                    cell.checkImageView.hidden = false
+//                }
+                if isCOD && indexPath.row == 0 || !isCOD && indexPath.row == 1 {
+                    cell.checkImageView.hidden = self.warehousesModel[selectedLocationIndex].is_cod
+                }
             }
-        } else if indexPath.section == 2 {
+//            if self.warehousesModel[selectedLocationIndex].is_local {
+//                cell.label.text = cods[indexPath.row]
+//                if isCOD && indexPath.row == 0 || !isCOD && indexPath.row == 1 {
+//                    cell.checkImageView.hidden = self.warehousesModel[selectedLocationIndex].is_cod
+//                }
+//            } else {
+//                cell.contentView.frame.size.height = 0.0
+//            }
+        } else if indexPath.section == 2 { // Logistics
             cell.label.text = logistics[indexPath.row]
             if cell.label.text == logistic {
                 cell.checkImageView.hidden = false
             }
-        } else if indexPath.section == 3 {
+        } else if indexPath.section == 3 { // Shipping Cost
             cell.label.hidden = true
             cell.inputTextField.hidden = false
             cell.checkImageView.hidden = true
@@ -195,14 +249,27 @@ extension InventoryLocationViewController: UITableViewDataSource, UITableViewDel
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! InventoryLocationTableViewCell
-
+        println(warehousesModel[indexPath.row].is_cod)
+        
         if indexPath.section == 0 {
-            location = cell.label.text!
+//            location = cell.label.text!
+            selectedLocationIndex = indexPath.row
+            
+            if warehousesModel[indexPath.row].is_local {
+                self.sections = 3
+                sectionTitles = ["Inventory Location", "Is COD Available?", "Logistics", "Shipping Cost"]
+            } else {
+                self.sections = 2
+                sectionTitles = ["Inventory Location", "Logistics", "Shipping Cost"]
+            }
+            
         } else if indexPath.section == 1 {
             if indexPath.row == 0 {
                 isCOD = true
+//                self.warehousesModel[selectedLocationIndex].is_cod = true
             } else {
                 isCOD = false
+//                self.warehousesModel[selectedLocationIndex].is_cod = false
             }
         } else if indexPath.section == 2 {
             logistic = cell.label.text!
