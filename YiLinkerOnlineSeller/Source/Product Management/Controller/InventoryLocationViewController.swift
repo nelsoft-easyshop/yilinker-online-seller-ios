@@ -190,6 +190,8 @@ extension InventoryLocationViewController: UITableViewDataSource, UITableViewDel
         
         cell.selectionStyle = .None
         cell.checkImageView.hidden = true
+        cell.inputTextField.hidden = true
+        
         if indexPath.section == 0 { // Inventory Location
             cell.label.text = self.warehousesModel[indexPath.row].user_warehouse.address //locations[indexPath.row]
             if isPrimary && self.warehousesModel[indexPath.row].priority == 1 && selectedLocationIndex == -1 {
@@ -270,7 +272,14 @@ extension InventoryLocationViewController: UITableViewDataSource, UITableViewDel
             }
         } else if indexPath.section == 2 {
             selectedLogisticId = logisticsModel[indexPath.row].id
-//            logistic = cell.label.text!
+            
+            if indexPath.row == 0 {
+                if sections == 4 {
+                    sections -= 1
+                }
+            } else if indexPath.row == 1 {
+                sections += 1
+            }
         }
         
         self.tableView.reloadData()

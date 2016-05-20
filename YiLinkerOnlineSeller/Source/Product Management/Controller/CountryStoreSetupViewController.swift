@@ -179,7 +179,7 @@ class CountryStoreSetupViewController: UIViewController {
         println(APIAtlas.getCountrySetupDetails)
         println(SessionManager.accessToken())
         
-        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/PH/EN/auth/country-setup?access_token=MTQxZTY0NGQzNzZkMDUyYTc3YTgwNjE4NTc1ODc5NDE0MTEyOGVhZjZkNTIxNzc1YmFjODQyNzk1NTRlYTc3Yg"
+        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/PH/EN/auth/country-setup?access_token=NTg3M2NjOGUxMmYwNjI0NTNhYzNkOTIyNjgzNjZjZjdiZThiNDE0ZDE2ZjIzM2Y0OWZkNGIxNGEwZDlmZDljMg"
         // APIAtlas.getCountrySetupDetails + SessionManager.accessToken()
         
         WebServiceManager.fireGetCountrySetupDetails(url, productId: "964", code: self.countryStoreModel.code, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
