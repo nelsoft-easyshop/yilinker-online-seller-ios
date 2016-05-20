@@ -161,6 +161,8 @@ enum UploadProduct {
     case ShippingCategory
     case ProductCategory
     case ProductGroups
+    case ProductMainImages
+    case ProductUpload
 }
 
 enum SetupStoreRefreshType {

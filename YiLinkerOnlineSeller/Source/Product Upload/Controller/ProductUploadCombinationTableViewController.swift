@@ -23,15 +23,17 @@ protocol ProductUploadCombinationTableViewControllerDelegate {
     func productUploadCombinationTableViewController(appendCombination combination: CombinationModel, isEdit: Bool, indexPath: NSIndexPath)
 }
 
-class ProductUploadCombinationTableViewController: UITableViewController, UzysAssetsPickerControllerDelegate, SaveButtonViewDelegate, ProductUploadCombinationFooterTVCDelegate {
+class ProductUploadCombinationTableViewController: UITableViewController, UzysAssetsPickerControllerDelegate, SaveButtonViewDelegate, ProductUploadCombinationFooterTVCDelegate, ProductUploadCombinationImagesVCDelegate {
     
     // Models
     var attributes: [AttributeModel]?
     var combination: CombinationModel = CombinationModel()
     var productModel: ProductModel?
+    var productModelCombi: ProductModel = ProductModel()
     
     // Global variables
     var images: [UIImage] = []
+    var combiImages: [String] = []
     var selectedIndexpath: NSIndexPath?
     
     var headerTitle: String = ""
@@ -307,7 +309,16 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
     // MARK: - ProductUploadCombinationFooterTVC Delegate Method - productUploadCombinationFooterTVC
     
     func productUploadCombinationFooterTVC(didClickUploadImage cell: ProductUploadCombinationFooterTVC) {
-        let picker: UzysAssetsPickerController = UzysAssetsPickerController()
+        
+        let productUploadCombiImages: ProductUploadCombinationImagesVC = ProductUploadCombinationImagesVC(nibName: "ProductUploadCombinationImagesVC", bundle: nil)
+        productUploadCombiImages.productModel = self.productModelCombi
+        productUploadCombiImages.delegate = self
+        let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadCombiImages)
+        navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+        //self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
+        self.presentViewController(navigationController, animated: true, completion: nil)
+        
+        /*let picker: UzysAssetsPickerController = UzysAssetsPickerController()
         let maxCount: Int = 6
         
         let imageLimit: Int = maxCount - self.images.count
@@ -315,7 +326,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
         picker.maximumNumberOfSelectionVideo = 0
         picker.maximumNumberOfSelectionPhoto = 100
         UzysAssetsPickerController.setUpAppearanceConfig(self.uzyConfig())
-        self.presentViewController(picker, animated: true, completion: nil)
+        self.presentViewController(picker, animated: true, completion: nil)*/
     }
     
     // MARK: -
@@ -370,6 +381,32 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
     
     func productUploadIsAvailableTableViewCell(switchValueChanged sender: UISwitch, value: Bool, cell: ProductUploadCombinationFooterTVC) {
         self.combination.isAvailable = value
+    }
+    
+    // MARK: -
+    // MARK: - ProductUploadCombinationImagesVC Delegate Method 
+    
+    func productUploadCombinationImagesVC(productModel: ProductModel, indexes: [Int]) {
+        
+        var count: Int = productModel.images.count-1
+        for i in 0..<count {
+            if contains(indexes, i) {
+                self.images.insert(productModel.images[i], atIndex: 0)
+                println(productModel.productMainImagesModel[i].imageName)
+                self.combiImages.insert(productModel.productMainImagesModel[i].imageName, atIndex: 0)
+            }
+        }
+        
+        let indexPath: NSIndexPath = NSIndexPath(forRow: 1, inSection: 0)
+        
+        // Pass 'self.images' to ProductUploadCombinationFooterTableViewCell 'images'
+        let cell: ProductUploadCombinationFooterTVC = self.tableView.cellForRowAtIndexPath(indexPath) as! ProductUploadCombinationFooterTVC
+        cell.images = self.images
+        cell.combiImages = self.combiImages
+        
+        let lastIndexPath: NSIndexPath = NSIndexPath(forItem: self.images.count - 1, inSection: 0)
+        cell.collectionView.reloadData()
+        cell.collectionView.scrollToItemAtIndexPath(lastIndexPath, atScrollPosition: UICollectionViewScrollPosition.Right, animated: true)
     }
     
     // MARK: -
@@ -449,6 +486,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
                 let cell: ProductUploadCombinationFooterTVC = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as! ProductUploadCombinationFooterTVC
                 
                 self.combination.images = cell.uploadedImages()
+                self.combination.combiImagesName = cell.combiImagesName()
                 
                 let cell2: ProductUploadCombinationTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! ProductUploadCombinationTableViewCell
                 

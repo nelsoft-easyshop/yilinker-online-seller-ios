@@ -667,6 +667,7 @@ PRODUCT_NAME_REQUIRED_LOCALIZE_KEY = "Please insert product name.";
 SHORT_DESCRIPTION_REQUIRED_LOCALIZE_KEY = "Please insert short description.";
 COMPLETE_DESCRIPTION_REQUIRED_LOCALIZE_KEY = "Please insert complete description.";
 CATEGORY_REQUIRED_LOCALIZE_KEY = "Please select category.";
+SHIPPING_CATEGORY_REQUIRED_LOCALIZE_KEY = "Please select shipping category.";
 
 CONDITION_REQUIRED_LOCALIZE_KEY = "Please select condition.";
 QUANTITY_REQUIRED_LOCALIZE_KEY = "Please insert quantity.";

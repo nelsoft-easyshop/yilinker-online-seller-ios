@@ -235,7 +235,6 @@ class PUDetailsView: UIView, UITableViewDelegate, UITableViewDataSource, Product
             }
         }
         let indexPath: NSIndexPath = NSIndexPath(forRow: 0, inSection: 0)
-        println(self.tableView.cellForRowAtIndexPath(indexPath))
         let cell: ProductUploadDetailHeaderViewTableViewCell = self.cell!
         
         let collectionViewIndexPath: NSIndexPath = NSIndexPath(forItem: 1, inSection: indexPath.section)

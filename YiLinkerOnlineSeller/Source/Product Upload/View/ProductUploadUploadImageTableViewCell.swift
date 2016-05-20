@@ -72,6 +72,10 @@ class ProductUploadUploadImageTableViewCell: UITableViewCell, UICollectionViewDa
         self.delegate!.productUploadUploadImageTableViewCell(didTapStarAtRowIndexPath: indexPath, cell: cell)
     }
     
+    func productUploadImageCollectionViewCell(didTapReuploadButtonAtCell cell: ProductUploadImageCollectionViewCell) {
+        
+    }
+    
     // MARK: Collection view delegate methods
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.dataSource!.productUploadUploadImageTableViewCell(numberOfCollectionViewRows: self)

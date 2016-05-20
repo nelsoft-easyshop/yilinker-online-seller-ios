@@ -482,7 +482,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
             if successful {
                 let conditionParseModel: ConditionParserModel = ConditionParserModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 
-                let uidKey = "userProductGroupId"
+                let uidKey = "id"
                 let nameKey = "name"
                 
                 for dictionary in conditionParseModel.data as [NSDictionary] {

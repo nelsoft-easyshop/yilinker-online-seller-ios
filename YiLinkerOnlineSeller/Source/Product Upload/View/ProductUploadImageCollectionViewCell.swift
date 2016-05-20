@@ -13,6 +13,7 @@ import UIKit
 protocol ProductUploadImageCollectionViewCellDelegate {
     func productUploadImageCollectionViewCell(didTapDeleteButtonAtCell cell: ProductUploadImageCollectionViewCell)
     func productUploadImageCollectionViewCell(didTapStarButtonAtCell cell: ProductUploadImageCollectionViewCell)
+    func productUploadImageCollectionViewCell(didTapReuploadButtonAtCell cell: ProductUploadImageCollectionViewCell)
 }
 
 class ProductUploadImageCollectionViewCell: UICollectionViewCell {
@@ -22,6 +23,7 @@ class ProductUploadImageCollectionViewCell: UICollectionViewCell {
     
     // Buttons
     @IBOutlet weak var starButton: UIButton!
+    @IBOutlet weak var tapToReuploadButton: UIButton!
     
     // Imageviews
     @IBOutlet weak var imageView: UIImageView!
@@ -45,5 +47,9 @@ class ProductUploadImageCollectionViewCell: UICollectionViewCell {
         println("star clicked")
         self.starButton.setBackgroundImage(UIImage(named: "active2"), forState: UIControlState.Normal)
         self.delegate?.productUploadImageCollectionViewCell(didTapStarButtonAtCell: self)
+    }
+    
+    @IBAction func reupload(sender: UIButton) {
+        self.delegate?.productUploadImageCollectionViewCell(didTapReuploadButtonAtCell: self)
     }
 }

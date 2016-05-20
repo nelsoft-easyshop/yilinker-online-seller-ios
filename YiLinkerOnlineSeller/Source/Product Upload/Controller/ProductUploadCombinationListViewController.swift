@@ -23,6 +23,9 @@ struct ProductSku {
 
 class ProductUploadCombinationListViewController: UIViewController, ProductUploadAddFooterViewDelegate, ProductUploadCombinationTableViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, PUAttributeSetHeaderTableViewCellDelegate {
 
+    // Button
+    @IBOutlet weak var footerButton: UIButton!
+    
     // Tableview
     @IBOutlet weak var tableView: UITableView!
     
@@ -46,6 +49,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.changeButtonName()
     }
     
     override func didReceiveMemoryWarning() {
@@ -85,6 +89,18 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
     func back() {
         self.navigationController?.popViewControllerAnimated(true)
         ProductSku.SKUS.removeAll(keepCapacity: false)
+    }
+    
+    func changeButtonName() {
+        if self.productModel!.validCombinations.count == 0 {
+            self.footerButton.backgroundColor = Constants.Colors.transactionGrey
+            self.footerButton.userInteractionEnabled = false
+        } else {
+            self.footerButton.backgroundColor = Constants.Colors.selectedGreenColor
+            self.footerButton.userInteractionEnabled = true
+        }
+        
+        self.footerButton.setTitle(ProductUploadStrings.saveProductDetails, forState: UIControlState.Normal)
     }
     
     // MARK: Private methods// Add footer in tableview
@@ -171,6 +187,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             return cell
         } else if indexPath.row == 1 {
             let cell: ProductUploadCombinationTableViewCell = tableView.dequeueReusableCellWithIdentifier(PUCTVCConstant.productUploadCombinationTableViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ProductUploadCombinationTableViewCell
+            
             var attributes: [AttributeModel] = []
             for dictionary in  self.productModel!.validCombinations[indexPath.section].attributes as [NSMutableDictionary] {
                 let attributeModel: AttributeModel = AttributeModel()
@@ -248,7 +265,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         let productUploadCombinationTableViewController: ProductUploadCombinationTableViewController = ProductUploadCombinationTableViewController(nibName: "ProductUploadCombinationTableViewController", bundle: nil)
         productUploadCombinationTableViewController.attributes = self.productModel!.attributes
         productUploadCombinationTableViewController.delegate = self
-       
+        productUploadCombinationTableViewController.productModelCombi = self.productModel!
         var counter: Int = 0
         if self.productModel != nil {
            counter = self.productModel!.validCombinations.count
@@ -329,6 +346,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
     
         let productUploadCombinationTableViewController: ProductUploadCombinationTableViewController = ProductUploadCombinationTableViewController(nibName: "ProductUploadCombinationTableViewController", bundle: nil)
         productUploadCombinationTableViewController.attributes = self.productModel!.attributes
+        productUploadCombinationTableViewController.productModelCombi = self.productModel!
         productUploadCombinationTableViewController.productModel = self.productModel!.copy()
         productUploadCombinationTableViewController.selectedIndexpath = indexPath
         productUploadCombinationTableViewController.delegate = self

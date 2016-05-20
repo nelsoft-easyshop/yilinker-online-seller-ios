@@ -11,6 +11,7 @@ import UIKit
 // MARK: Constant variable declarations
 struct ProductUploadImageTVCConstant {
     static let productUploadImageCollectionViewCellNibNameAndIdentifier = "ProductUploadImageCollectionViewCell"
+    static var uploadImages: [Int] = []
 }
 
 // MARK: Data source
@@ -26,7 +27,8 @@ protocol ProductUploadUploadImageTVCDelegate {
     func productUploadUploadImageTableViewCell(didSelecteRowAtIndexPath indexPath: NSIndexPath, cell: ProductUploadImageTVC)
     func productUploadUploadImageTableViewCell(didDeleteAtRowIndexPath indexPath: NSIndexPath, collectionView: UICollectionView)
     
-    func productUploadUploadImageTableViewCell(didTapStarAtRowIndexPath indexPath: NSIndexPath, cell: ProductUploadImageCollectionViewCell, collectionView: UICollectionView)
+    func productUploadUploadImageTableViewCell(didTapStarAtRowIndexPath indexPath: NSIndexPath, cell: ProductUploadImageCollectionViewCell, collectionView: UICollectionView, primaryPhoto: String)
+    func productUploadUploadImageTableViewCell(didTapReuploadAtRowIndexPath indexPath: NSIndexPath, cell: ProductUploadImageCollectionViewCell, collectionView: UICollectionView)
 }
 
 class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, ProductUploadImageCollectionViewCellDelegate {
@@ -43,6 +45,7 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
     var delegate: ProductUploadUploadImageTVCDelegate?
     var productModel: ProductModel?
     var selectedPrimaryPhoto: [String] = []
+    var successfulUploadedImagesIndex: [Int] = []
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -88,11 +91,16 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
         
         if cell.starButton.tag != 1001 {
             self.selectedPrimaryPhoto.append("\(cell.starButton.tag)")
+            self.delegate!.productUploadUploadImageTableViewCell(didTapStarAtRowIndexPath: indexPath, cell: cell, collectionView: self.collectionView, primaryPhoto: self.selectedPrimaryPhoto[0])
         }
-        
-        self.delegate!.productUploadUploadImageTableViewCell(didTapStarAtRowIndexPath: indexPath, cell: cell, collectionView: self.collectionView)
   
         self.collectionView.reloadData()
+    }
+    
+    func productUploadImageCollectionViewCell(didTapReuploadButtonAtCell cell: ProductUploadImageCollectionViewCell) {
+        println("reupload photo")
+        let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
+        self.delegate?.productUploadUploadImageTableViewCell(didTapReuploadAtRowIndexPath: indexPath, cell: cell, collectionView: self.collectionView)
     }
     
     // MARK: -
@@ -110,8 +118,20 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
         if indexPath.row == self.dataSource!.productUploadUploadImageTableViewCell(numberOfCollectionViewRows: self) - 1 {
             cell.closeButton.hidden = true
             cell.starButton.hidden = true
+            cell.tapToReuploadButton.hidden = true
             cell.imageView.contentMode = UIViewContentMode.ScaleAspectFit
         } else {
+            println(self.productModel?.productMainImagesModel[indexPath.row].imageStatus)
+            if self.productModel?.productMainImagesModel[indexPath.row].imageStatus == true && self.productModel?.productMainImagesModel[indexPath.row].imageFailed == false {
+                cell.imageView.alpha = 1.0
+                cell.tapToReuploadButton.hidden = true
+            } else if self.productModel?.productMainImagesModel[indexPath.row].imageStatus == false && self.productModel?.productMainImagesModel[indexPath.row].imageFailed == false {
+                cell.imageView.alpha = 0.5
+                cell.tapToReuploadButton.hidden = true
+            } else if self.productModel?.productMainImagesModel[indexPath.row].imageStatus == false && self.productModel?.productMainImagesModel[indexPath.row].imageFailed == true  {
+                cell.imageView.alpha = 0.5
+                cell.tapToReuploadButton.hidden = false
+            }
             if contains(self.selectedPrimaryPhoto, "\(indexPath.row)") && cell.starButton.tag != 1001{
                 cell.starButton.backgroundColor = UIColor.yellowColor()
                 cell.starButton.tag = 1001

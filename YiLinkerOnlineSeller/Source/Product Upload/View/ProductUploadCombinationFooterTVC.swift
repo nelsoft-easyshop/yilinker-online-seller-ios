@@ -47,6 +47,7 @@ class ProductUploadCombinationFooterTVC: UITableViewCell, UITextFieldDelegate, U
     
     // Global variables
     var images: [UIImage] = []
+    var combiImages: [String] = []
     var isPreview: Bool = false
     
     var delegate: ProductUploadCombinationFooterTVCDelegate?
@@ -119,6 +120,7 @@ class ProductUploadCombinationFooterTVC: UITableViewCell, UITextFieldDelegate, U
         cell.delegate = self
         cell.imageView.image = self.images[indexPath.row]
         cell.starButton.hidden = true
+        cell.tapToReuploadButton.hidden = true
         
         if self.isPreview {
             cell.closeButton.hidden = true
@@ -182,6 +184,10 @@ class ProductUploadCombinationFooterTVC: UITableViewCell, UITextFieldDelegate, U
         return self.images
     }
     
+    func combiImagesName() -> [String] {
+        return self.combiImages
+    }
+    
     // MARK: -
     // MARK: - Textfield data source methods
     
@@ -204,6 +210,10 @@ class ProductUploadCombinationFooterTVC: UITableViewCell, UITextFieldDelegate, U
     
     func productUploadImageCollectionViewCell(didTapStarButtonAtCell cell: ProductUploadImageCollectionViewCell) {
         cell.starButton.setBackgroundImage(UIImage(named:"active2"), forState: UIControlState.Normal)
+    }
+    
+    func productUploadImageCollectionViewCell(didTapReuploadButtonAtCell cell: ProductUploadImageCollectionViewCell) {
+        
     }
     
     // Dealloc

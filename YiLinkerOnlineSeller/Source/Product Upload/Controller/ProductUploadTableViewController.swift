@@ -86,6 +86,7 @@ struct ProductUploadStrings {
     static let shortDescriptionRquired: String = StringHelper.localizedStringWithKey("SHORT_DESCRIPTION_REQUIRED_LOCALIZE_KEY")
     static let completeRequired: String = StringHelper.localizedStringWithKey("COMPLETE_DESCRIPTION_REQUIRED_LOCALIZE_KEY")
     static let categoryRequired: String = StringHelper.localizedStringWithKey("CATEGORY_REQUIRED_LOCALIZE_KEY")
+    static let shippingCategoryRequired: String = StringHelper.localizedStringWithKey("SHIPPING_CATEGORY_REQUIRED_LOCALIZE_KEY")
     
     static let conditionRequired: String = StringHelper.localizedStringWithKey("CONDITION_REQUIRED_LOCALIZE_KEY")
     static let quantityRequired: String = StringHelper.localizedStringWithKey("QUANTITY_REQUIRED_LOCALIZE_KEY")

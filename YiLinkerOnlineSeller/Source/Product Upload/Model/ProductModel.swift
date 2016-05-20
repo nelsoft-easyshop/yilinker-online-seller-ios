@@ -17,12 +17,14 @@ class ProductModel {
     var validCombinations: [CombinationModel] = []
     var images: [UIImage] = []
     var imagesCropped: [UIImage] = []
+    var mainImagesName: [String] = []
     
     var category: CategoryModel = CategoryModel()
     var brand: BrandModel = BrandModel(name: "", brandId:1)
     var condition: ConditionModel = ConditionModel(uid: 0, name: "")
     var shippingCategories: ConditionModel = ConditionModel(uid: 0, name: "")
     var productGroups: [ConditionModel] = []
+    var productMainImagesModel: [ProductMainImagesModel] = []
     
     var quantity: Int = 1
     var uid: String = "0"
@@ -53,7 +55,7 @@ class ProductModel {
         self.validCombinations = validCombinations
     }
     
-    init (isSuccessful: Bool, message: String, attributes: [AttributeModel], validCombinations: [CombinationModel], images: [String], imageIds: [String], category: CategoryModel, brand: BrandModel, condition: ConditionModel, shippingCategories: ConditionModel, productGroups: [ConditionModel], name: String, shortDescription: String, completeDescription: String, productId: String,  quantity: Int, retailPrice: String, discountedPrice: String, weight: String, height: String, length: String, width: String, sku: String, productUnitId: String, isAvailable: Bool, isPrimaryPhoto: [Bool]) {
+    init (isSuccessful: Bool, message: String, attributes: [AttributeModel], validCombinations: [CombinationModel], productMainImagesModel: [ProductMainImagesModel], images: [String], mainImagesName: [String], imageIds: [String], category: CategoryModel, brand: BrandModel, condition: ConditionModel, shippingCategories: ConditionModel, productGroups: [ConditionModel], name: String, shortDescription: String, completeDescription: String, productId: String,  quantity: Int, retailPrice: String, discountedPrice: String, weight: String, height: String, length: String, width: String, sku: String, productUnitId: String, isAvailable: Bool, isPrimaryPhoto: [Bool]) {
     
         self.isSuccessful = isSuccessful
         self.message = message
@@ -82,6 +84,8 @@ class ProductModel {
         self.productUnitId = productUnitId
         self.isAvailable = isAvailable
         self.isPrimaryPhoto = isPrimaryPhoto
+        self.mainImagesName = mainImagesName
+        self.productMainImagesModel = productMainImagesModel
     }
     
     init() {
@@ -89,6 +93,8 @@ class ProductModel {
         self.validCombinations = []
         self.images = []
         self.productGroups = []
+        self.mainImagesName = []
+        self.productMainImagesModel = []
         
         self.category = CategoryModel()
         self.brand = BrandModel(name: "", brandId:1)
@@ -130,6 +136,7 @@ class ProductModel {
         var attributes: [AttributeModel] = []
         var validCombinations: [CombinationModel] = []
         var productGroups: [ConditionModel] = []
+        var productMainImagesModel: [ProductMainImagesModel] = []
         var images: [String] = []
         var imageIds: [String] = []
         
@@ -153,6 +160,7 @@ class ProductModel {
         var quantity: Int = 0
         var isAvailable: Bool = false
         var isPrimaryPhoto: [Bool] = []
+        var mainImagesName: [String] = []
         
         if dictionary.isKindOfClass(NSDictionary) {
             
@@ -381,7 +389,7 @@ class ProductModel {
             } // data
         } // dictionary
         
-        return ProductModel(isSuccessful: isSuccessful, message: message, attributes: attributes, validCombinations: validCombinations, images: images, imageIds: imageIds, category: category, brand: brand, condition: condition, shippingCategories: shippingCategories, productGroups: productGroups, name: name, shortDescription: shortDescription, completeDescription: completeDescription, productId: uid, quantity: quantity, retailPrice: retailPrice, discountedPrice: discoutedPrice, weight: weigth, height: height, length: length, width: width, sku: sku, productUnitId: productUnitId, isAvailable: isAvailable, isPrimaryPhoto: isPrimaryPhoto)
+        return ProductModel(isSuccessful: isSuccessful, message: message, attributes: attributes, validCombinations: validCombinations, productMainImagesModel: productMainImagesModel, images: images, mainImagesName: mainImagesName, imageIds: imageIds, category: category, brand: brand, condition: condition, shippingCategories: shippingCategories, productGroups: productGroups, name: name, shortDescription: shortDescription, completeDescription: completeDescription, productId: uid, quantity: quantity, retailPrice: retailPrice, discountedPrice: discoutedPrice, weight: weigth, height: height, length: length, width: width, sku: sku, productUnitId: productUnitId, isAvailable: isAvailable, isPrimaryPhoto: isPrimaryPhoto)
         
     } // parseDataWithDictionary
 }

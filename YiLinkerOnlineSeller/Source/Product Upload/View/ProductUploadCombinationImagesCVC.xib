@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="ProductUploadCombinationImagesCVC" reuseIdentifier="ProductUploadCombinationImagesCVC" id="gTV-IL-0wX" customClass="ProductUploadCombinationImagesCVC" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="gHH-Ar-Z2i">
+                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                    </imageView>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <constraints>
+                <constraint firstItem="gHH-Ar-Z2i" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="0bi-dO-6zl"/>
+                <constraint firstItem="gHH-Ar-Z2i" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Mv5-MC-U0w"/>
+                <constraint firstAttribute="trailing" secondItem="gHH-Ar-Z2i" secondAttribute="trailing" id="ScB-Gg-eEv"/>
+                <constraint firstAttribute="bottom" secondItem="gHH-Ar-Z2i" secondAttribute="bottom" id="jwW-Y0-yCE"/>
+            </constraints>
+            <size key="customSize" width="90" height="95"/>
+            <connections>
+                <outlet property="mainImage" destination="gHH-Ar-Z2i" id="efJ-1N-23P"/>
+            </connections>
+            <point key="canvasLocation" x="349" y="271"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="dummy-placeholder" width="1280" height="800"/>
+    </resources>
+</document>

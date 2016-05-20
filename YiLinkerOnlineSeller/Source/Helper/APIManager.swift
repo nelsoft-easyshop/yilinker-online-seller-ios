@@ -39,6 +39,8 @@ struct APIAtlas {
     static let shippingCategoriesUrl = "v3/ph/en/product/get-shipping-categories"
     static let productGroupsUrl = "v3/ph/en/auth/product/get-product-groups"
     static let productBrandsUrl = "v3/ph/en/product/get-brands"
+    static let uploadImagesUrl = "v3/ph/en/auth/image/upload"
+    static let uploadProductUrl = "v3/ph/en/auth/product/create"
     static let categoryUrl = "v1/product/getCategories"
     static let brandUrl = "v1/product/getBrands"
     static let uploadUrl = "v1/product/upload"
