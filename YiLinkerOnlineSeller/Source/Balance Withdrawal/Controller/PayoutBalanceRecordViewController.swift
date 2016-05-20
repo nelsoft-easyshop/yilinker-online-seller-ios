@@ -65,7 +65,6 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-//            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         self.showHUD()
         fireGetWithdrawalBalance(self.formatDateToString(self.startDate, type: .Key), endDate: self.formatDateToString(self.endDate.addDays(1), type: .Key))
     }
@@ -137,7 +136,7 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
         // adding days to to dates to complete the dates of the month
         let cal = NSCalendar.currentCalendar()
         let unit: NSCalendarUnit = .CalendarUnitDay
-        let difference = cal.components(unit, fromDate: self.startDate, toDate: self.endDate.addDays(1), options: nil)
+        let difference = cal.components(unit, fromDate: self.startDate.addDays(-1), toDate: self.endDate.addDays(1), options: nil)
         
         for i in 0..<difference.day {
             dates.append(formatDateToString(startDate.addDays(i), type: .Graph).uppercaseString)

@@ -40,8 +40,10 @@ class MyPointsHistoryModel: NSObject {
             
             if dictionary["data"] != nil {
                 for subValue in dictionary["data"] as! NSArray {
-                    let model: MyPointsModel = MyPointsModel.parseDataWithDictionary(subValue as! NSDictionary)
-                    data.append(model)
+                    if let points: NSDictionary = subValue["points"] as? NSDictionary {
+                        let model: MyPointsModel = MyPointsModel.parseDataWithDictionary(points)
+                        data.append(model)
+                    }
                 }
             }
         }

@@ -366,6 +366,41 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
                 }
             }
         })
+        /*
+        let manager = APIManager.sharedInstance
+        manager.GET(APIAtlas.categoryUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            let dictionary: NSDictionary = responseObject as! NSDictionary
+            let isSuccessful = dictionary["isSuccessful"] as! Bool
+            
+            if isSuccessful {
+                let data: NSArray = dictionary["data"] as! NSArray
+                
+                for categoryDictionary in data as! [NSDictionary] {
+                    let categoryModel: CategoryModel = CategoryModel(uid: categoryDictionary["productCategoryId"] as! Int, name: categoryDictionary["name"] as! String, hasChildren: categoryDictionary["hasChildren"] as! String)
+                    self.categories.append(categoryModel)
+                }
+            }
+            self.tableView.reloadData()
+            self.hud?.hide(true)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.fireRefreshToken(parentID)
+                } else {
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        self.showAlert(Constants.Localized.error, message: errorModel.message)
+                    } else {
+                        self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                    }
+                }
+                self.hud?.hide(true)
+        })*/
     }
     
     // MARK: -

@@ -28,19 +28,17 @@ struct APIEnvironment {
 
 struct APIAtlas {
     
-    static let V1 = "v1"
-    static let V2 = "v2"
     static let V3 = "v3"
     
     static let loginUrl = "v1/login"
     static let refreshTokenUrl = "v1/login"
     static let registerUrl = "v1/user/register"
-    static let conditionUrl = "v3/ph/en/product/get-product-conditions"
-    static let shippingCategoriesUrl = "v3/ph/en/product/get-shipping-categories"
-    static let productGroupsUrl = "v3/ph/en/auth/product/get-product-groups"
-    static let productBrandsUrl = "v3/ph/en/product/get-brands"
-    static let uploadImagesUrl = "v3/ph/en/auth/image/upload"
-    static let uploadProductUrl = "v3/ph/en/auth/product/create"
+    static let conditionUrl = APIAtlas.generateV3URL("product/get-product-conditions")
+    static let shippingCategoriesUrl = APIAtlas.generateV3URL("product/get-shipping-categories")
+    static let productGroupsUrl = APIAtlas.generateV3URL("auth/product/get-product-groups")
+    static let productBrandsUrl = APIAtlas.generateV3URL("product/get-brands")
+    static let uploadImagesUrl = APIAtlas.generateV3URL("auth/image/upload")
+    static let uploadProductUrl = APIAtlas.generateV3URL("auth/product/create")
     static let categoryUrl = "v1/product/getCategories"
     static let brandUrl = "v1/product/getBrands"
     static let uploadUrl = "v1/product/upload"
@@ -86,8 +84,8 @@ struct APIAtlas {
     static let sellerEditBankAccount = "v1/auth/bank/account/editBankAccount"
     
     //My Points
-    static let getPointsTotal = "v1/auth/user/getPoints"
-    static let getPointsHistory = "v1/auth/user/getPointHistory"
+    static let getPointsTotal = APIAtlas.generateV3URL("auth/user/getPoints")
+    static let getPointsHistory =  APIAtlas.generateV3URL("auth/user/getPointHistory")
     
     static let getSalesReport = "v1/auth/merchant/getSalesReport"
     static let getFollowers = "v1/auth/merchant/getFollowers"
@@ -147,7 +145,7 @@ struct APIAtlas {
     //MARK: - V2 APIs
     
     //Login
-    static let loginUrlV2 = "v2/login"
+    static let loginUrlV2 = APIAtlas.generateV3URL("login")
     //OTP
     static let unauthenticateOTP = "v2/sms/send"
     
@@ -158,17 +156,17 @@ struct APIAtlas {
     static let forgotPasswordV2 = "v2/user/resetPassword"
     
     //Edit Profile
-    static let sendEmailVerificationAffiliate = "v2/auth/affiliate/verify-email"
-    static let saveEditProfileAffiliate = "v2/auth/affiliate/update-user-info"
+    static let sendEmailVerificationAffiliate = APIAtlas.generateV3URL("auth/affiliate/verify-email")
+    static let saveEditProfileAffiliate = APIAtlas.generateV3URL("auth/affiliate/update-user-info")
     
     //Uploade Image
-    static let uploadImage = "v2/auth/image/upload"
+    static let uploadImage = APIAtlas.generateV3URL("auth/image/upload")
 
     //Upload Image
-    static let uploadImageUrl = "v2/auth/image/upload"
+    static let uploadImageUrl = APIAtlas.generateV3URL("auth/image/upload")
     
     //Affiliate Store Setup
-    static let affiliateStoreSetupUrl = "v2/auth/store/setup"
+    static let affiliateStoreSetupUrl = APIAtlas.generateV3URL("auth/store/setup")
     
     static let affiliateGetProduct = "v1/auth/product/getAffiliateProducts"
     
@@ -178,10 +176,15 @@ struct APIAtlas {
     
     static func mobileFeedBack() -> String {
         if SessionManager.isLoggedIn() {
-            return "v2/auth/mobile-feedback/add"
+            return APIAtlas.generateV3URL("auth/mobile-feedback/add")
         } else {
-            return "v2/mobile-feedback/add"
+            return APIAtlas.generateV3URL("mobile-feedback/add")
         }
+    }
+    
+    
+    static func generateV3URL(url: String) -> String {
+        return "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
     }
 }
 

@@ -279,23 +279,34 @@ class LoginAndRegisterTableViewController: UITableViewController {
     //MARK: - Fire Registration GCM
     func fireCreateRegistration(registrationID : String) {
         if(SessionManager.isLoggedIn()){
-            let manager: APIManager = APIManager.sharedInstance
-            let parameters: NSDictionary = [
+            
+            WebServiceManager.fireCreateRegistration(APIAtlas.ACTION_GCM_CREATE, registrationID: registrationID, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
                 
-                "registrationId": "\(registrationID)",
-                "access_token"  : SessionManager.accessToken(),
-                "deviceType"    : "1"
-                ]   as Dictionary<String, String>
-            
-            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GCM_CREATE
-            
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                println("Registration successful!")
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
+                if successful {
+                    println("Registration successful!")
+                } else {
                     println("Registration unsuccessful!")
+                }
+                
             })
+            
+//            let manager = APIManager.sharedInstance
+//            let parameters: NSDictionary = [
+//                
+//                "registrationId": "\(registrationID)",
+//                "access_token"  : SessionManager.accessToken(),
+//                "deviceType"    : "1"
+//                ]   as Dictionary<String, String>
+//            
+//            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GCM_CREATE
+//            
+//            manager.POST(url, parameters: parameters, success: {
+//                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+//                println("Registration successful!")
+//                }, failure: {
+//                    (task: NSURLSessionDataTask!, error: NSError!) in
+//                    println("Registration unsuccessful!")
+//            })
         }
     }
     

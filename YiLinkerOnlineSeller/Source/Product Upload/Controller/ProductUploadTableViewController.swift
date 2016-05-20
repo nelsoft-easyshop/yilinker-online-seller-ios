@@ -1647,7 +1647,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             parameters[ProductUploadTableViewControllerConstant.uploadProductUnitId] = self.productModel.productUnitId
         }
         
-        let manager: APIManager = APIManager.sharedInstance
+//        let manager = APIManager.sharedInstance
         
         var url: String = ""
         
@@ -1788,7 +1788,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         })
         
         /*
-        let manager: APIManager = APIManager.sharedInstance
+        let manager = APIManager.sharedInstance
         manager.POST(ProductUploadCombination.url, parameters: ProductUploadCombination.parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
             for (index, data) in enumerate(ProductUploadCombination.datas) {
                 println("multipart index: \(index)")
@@ -1895,7 +1895,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         })
         
         /*
-        let manager: APIManager = APIManager.sharedInstance
+        let manager = APIManager.sharedInstance
         manager.GET(APIAtlas.conditionUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             let conditionParseModel: ConditionParserModel = ConditionParserModel.parseDataFromDictionary(responseObject as! NSDictionary)
