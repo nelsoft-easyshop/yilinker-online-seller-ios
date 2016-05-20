@@ -155,12 +155,14 @@ class CountryStoreSetupViewController: UIViewController {
     func primaryLocationAction(gesture: UIGestureRecognizer) {
         let inventoryLocation: InventoryLocationViewController = InventoryLocationViewController(nibName: "InventoryLocationViewController", bundle: nil)
         inventoryLocation.warehousesModel = self.countryStoreSetupModel.productWarehouses
+        inventoryLocation.logisticsModel = self.countryStoreSetupModel.logistics
         self.navigationController!.pushViewController(inventoryLocation, animated: true)
     }
     
     func secondaryLocationAction(gesture: UIGestureRecognizer) {
         let inventoryLocation: InventoryLocationViewController = InventoryLocationViewController(nibName: "InventoryLocationViewController", bundle: nil)
         inventoryLocation.warehousesModel = self.countryStoreSetupModel.productWarehouses
+        inventoryLocation.logisticsModel = self.countryStoreSetupModel.logistics
         inventoryLocation.isPrimary = false
         self.navigationController!.pushViewController(inventoryLocation, animated: true)
     }
@@ -177,12 +179,12 @@ class CountryStoreSetupViewController: UIViewController {
         println(APIAtlas.getCountrySetupDetails)
         println(SessionManager.accessToken())
         
-        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/PH/EN/auth/country-setup?access_token=ZTVmYjQ1ZDUwNjhhMWFjZTJjYWVhMTcwNDM3NDM1ZTQxOGU2NmRjMjM5MTU1NDA1NWZmZDFjOGNkN2RiYzg3YQ"
+        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/PH/EN/auth/country-setup?access_token=MTQxZTY0NGQzNzZkMDUyYTc3YTgwNjE4NTc1ODc5NDE0MTEyOGVhZjZkNTIxNzc1YmFjODQyNzk1NTRlYTc3Yg"
         // APIAtlas.getCountrySetupDetails + SessionManager.accessToken()
         
         WebServiceManager.fireGetCountrySetupDetails(url, productId: "964", code: self.countryStoreModel.code, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
 
-//            println(responseObject)
+            println(responseObject)
             
             if successful {
                 self.countryStoreSetupModel = CountrySetupModel.parseDataWithDictionary(responseObject as! NSDictionary)

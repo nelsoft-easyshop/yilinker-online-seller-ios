@@ -23,14 +23,16 @@ class InventoryLocationViewController: UIViewController {
     
 //    var selectedValues: [String] = ["", "", "", ""]
     var selectedLocationIndex = -1
-    var isCOD = true
+    var isCOD = false
     var logistic = ""
     var shippingFee = "0.00"
     
     
     var warehousesModel: [CSProductWarehousesModel] = []
+    var logisticsModel: [CSLogisticsModel] = []
     var sections = 3
     var initialValues = true
+    var selectedLogisticId = -1
     
     // MARK: - View Life Cycle
     
@@ -45,9 +47,9 @@ class InventoryLocationViewController: UIViewController {
         cellValues = [locations, cods, logistics]
 //        location = locations[0]
         logistic = logistics[0]
-        
-        
-        
+
+        // sections
+        // selectedIndex
         for i in 0..<warehousesModel.count {
             if isPrimary && warehousesModel[i].priority == 1 || !isPrimary && warehousesModel[i].priority == 2 {
                 selectedLocationIndex = i
@@ -57,9 +59,8 @@ class InventoryLocationViewController: UIViewController {
                 break
             }
         }
-
-        sections = 2
-        sectionTitles = ["Inventory Location", "Logistics", "Shipping Cost"]
+        
+        setDefaultData()
     }
     
     // MARK: - Functions
@@ -109,9 +110,31 @@ class InventoryLocationViewController: UIViewController {
         }
     }
     
-    func checkIfChosenWarehouseIsLocal(index: Int) -> Bool {
+    func setSectionsWithIndex(index: Int) {
         
-        return false
+        if warehousesModel[index].is_local {
+            self.sections = 3
+            sectionTitles = ["Inventory Location", "Is COD Available?", "Logistics", "Shipping Cost"]
+        } else {
+            self.sections = 2
+            sectionTitles = ["Inventory Location", "Logistics", "Shipping Cost"]
+        }
+    }
+    
+    func setDefaultData() {
+        
+        if selectedLocationIndex != -1 {
+            // isCOD
+            isCOD = self.warehousesModel[selectedLocationIndex].is_cod
+            
+            // logistic
+            if warehousesModel[selectedLocationIndex].logistic != nil {
+                self.selectedLogisticId = warehousesModel[selectedLocationIndex].logistic.id
+            } else {
+                self.selectedLogisticId = -1
+            }
+        }
+        
     }
     
     // MARK: - Actions
@@ -140,7 +163,6 @@ extension InventoryLocationViewController: UITableViewDataSource, UITableViewDel
     // MARK: - Table View Data Source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        println(sections)
         return sections
     }
     
@@ -150,11 +172,11 @@ extension InventoryLocationViewController: UITableViewDataSource, UITableViewDel
             return self.warehousesModel.count// locations.count
         } else if section == 1 {
             if sections == 2 {
-                return logistics.count
+                return logisticsModel.count
             }
             return cods.count
         } else if section == 2 {
-            return logistics.count
+            return logisticsModel.count
         } else if section == 3 {
             return 1
         }
@@ -177,35 +199,21 @@ extension InventoryLocationViewController: UITableViewDataSource, UITableViewDel
             } else if selectedLocationIndex == indexPath.row {
                 cell.checkImageView.hidden = false
             }
-//            if cell.label.text == location {
-//                 cell.checkImageView.hidden = false
-//            }
         } else if indexPath.section == 1 { // COD
             if sections == 2 { // logistics
-                cell.label.text = logistics[indexPath.row]
-                if cell.label.text == logistic {
+                cell.label.text = logisticsModel[indexPath.row].name
+                if logisticsModel[indexPath.row].id == selectedLogisticId {
                     cell.checkImageView.hidden = false
                 }
             } else { // COD
                 cell.label.text = cods[indexPath.row]
-//                if self.warehousesModel[selectedLocationIndex].is_cod && indexPath.row == 0 || !self.warehousesModel[selectedLocationIndex].is_cod && indexPath.row == 1 {
-//                    cell.checkImageView.hidden = false
-//                }
-                if isCOD && indexPath.row == 0 || !isCOD && indexPath.row == 1 {
-                    cell.checkImageView.hidden = self.warehousesModel[selectedLocationIndex].is_cod
+                if isCOD && indexPath.row == 0 || !isCOD && indexPath.row == 1 && selectedLocationIndex != -1 {
+                    cell.checkImageView.hidden = false
                 }
             }
-//            if self.warehousesModel[selectedLocationIndex].is_local {
-//                cell.label.text = cods[indexPath.row]
-//                if isCOD && indexPath.row == 0 || !isCOD && indexPath.row == 1 {
-//                    cell.checkImageView.hidden = self.warehousesModel[selectedLocationIndex].is_cod
-//                }
-//            } else {
-//                cell.contentView.frame.size.height = 0.0
-//            }
         } else if indexPath.section == 2 { // Logistics
             cell.label.text = logistics[indexPath.row]
-            if cell.label.text == logistic {
+            if logisticsModel[indexPath.row].id == selectedLogisticId {
                 cell.checkImageView.hidden = false
             }
         } else if indexPath.section == 3 { // Shipping Cost
@@ -249,30 +257,20 @@ extension InventoryLocationViewController: UITableViewDataSource, UITableViewDel
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! InventoryLocationTableViewCell
-        println(warehousesModel[indexPath.row].is_cod)
         
         if indexPath.section == 0 {
-//            location = cell.label.text!
             selectedLocationIndex = indexPath.row
-            
-            if warehousesModel[indexPath.row].is_local {
-                self.sections = 3
-                sectionTitles = ["Inventory Location", "Is COD Available?", "Logistics", "Shipping Cost"]
-            } else {
-                self.sections = 2
-                sectionTitles = ["Inventory Location", "Logistics", "Shipping Cost"]
-            }
-            
+            setDefaultData()
+            setSectionsWithIndex(indexPath.row)
         } else if indexPath.section == 1 {
             if indexPath.row == 0 {
                 isCOD = true
-//                self.warehousesModel[selectedLocationIndex].is_cod = true
             } else {
                 isCOD = false
-//                self.warehousesModel[selectedLocationIndex].is_cod = false
             }
         } else if indexPath.section == 2 {
-            logistic = cell.label.text!
+            selectedLogisticId = logisticsModel[indexPath.row].id
+//            logistic = cell.label.text!
         }
         
         self.tableView.reloadData()
