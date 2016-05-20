@@ -202,6 +202,7 @@ class CSProductModel {
 typealias ImagesIdsElement = ()
 typealias PromoInstanceElement = ()
 typealias PromoInstanceNotYetStartedElement = ()
+typealias VariantCombinationElement = (name: String, value: String)
 
 class CSDefaultUnitModel {
     
@@ -228,6 +229,7 @@ class CSDefaultUnitModel {
     var primaryLargeImage: String = ""
     var promoInstance: [PromoInstanceElement] = []
     var promoInstanceNotYetStarted: [PromoInstanceNotYetStartedElement] = []
+    var variantCombination = [VariantCombinationElement]()
     var inWishlist: Bool = false
     var commission: String = ""
     var weight: String = ""
@@ -238,7 +240,7 @@ class CSDefaultUnitModel {
     class func parseDataWithDictionary(dictionary: NSDictionary) -> CSDefaultUnitModel! {
         
         var model = CSDefaultUnitModel()
-        
+
         if dictionary.isKindOfClass(NSDictionary) {
             model.productId = ParseHelper.string(dictionary, key: "productId", defaultValue: "")
             model.productUnitId = ParseHelper.string(dictionary, key: "productUnitId", defaultValue: "")
@@ -289,6 +291,20 @@ class CSDefaultUnitModel {
             for promoInstanceNotYetStartedData in dictionary["promoInstanceNotYetStarted"] as! NSArray {
                 model.promoInstanceNotYetStarted.append(promoInstanceNotYetStartedElement)
             }
+            // Variant Combinations
+            var variantCombinationElement: VariantCombinationElement
+//            for variantCombinationData in dictionary["variantCombination"] as! NSArray {
+//                println("benga")
+//                variantCombinationElement.name = ParseHelper.string(variantCombinationData, key: "name", defaultValue: "")
+//                variantCombinationElement.value = ParseHelper.string(variantCombinationData, key: "value", defaultValue: "")
+//                model.variantCombination.append(variantCombinationElement)
+//            }
+            for i in 0..<3 {
+                variantCombinationElement.name = "Name"
+                variantCombinationElement.value = "Value"
+                model.variantCombination.append(variantCombinationElement)
+            }
+            
             model.inWishlist = ParseHelper.bool(dictionary, key: "inWishlist", defaultValue: false)
             model.commission = ParseHelper.string(dictionary, key: "commission", defaultValue: "")
             model.weight = ParseHelper.string(dictionary, key: "weight", defaultValue: "")

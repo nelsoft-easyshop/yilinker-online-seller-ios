@@ -66,10 +66,10 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
         println(APIAtlas.getCountrySetupDetails)
         println(SessionManager.accessToken())
         
-        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/ph/en/auth/country-setup/country-store?access_token=NTg3M2NjOGUxMmYwNjI0NTNhYzNkOTIyNjgzNjZjZjdiZThiNDE0ZDE2ZjIzM2Y0OWZkNGIxNGEwZDlmZDljMg"
+        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/ph/en/auth/country-setup/country-store?access_token=NGU3NjhjNGJkNDhkYjE5NzBhMDFkZTA1OGVlNDkyOGUwNzNkNzE3N2RiZTAyYWRlMTJmOTI3M2UyZDY1OWM3NA"
         // APIAtlas.getCountrySetupDetails + SessionManager.accessToken()
         
-        WebServiceManager.fireGetListOfCountries(url, productId: "964", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        WebServiceManager.fireGetListOfCountries(url, productId: "30571", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             
             if successful {
                 

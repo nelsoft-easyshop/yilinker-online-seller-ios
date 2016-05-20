@@ -16,8 +16,12 @@ class ProductCombination2TableViewCell: UITableViewCell {
 
     @IBOutlet weak var originalPriceLabel: UILabel!
     @IBOutlet weak var discountLabel: UILabel!
+    @IBOutlet weak var finalPriceLabel: UILabel!
+    @IBOutlet weak var commissionLabel: UILabel!
     @IBOutlet weak var originalTextField: UITextField!
     @IBOutlet weak var discountTextField: UITextField!
+    @IBOutlet weak var finalPriceTextField: UITextField!
+    @IBOutlet weak var commissionTextField: UITextField!
     
     var delegate: ProductCombination2TableViewCellDelegate?
     

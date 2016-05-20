@@ -17,7 +17,9 @@ class ProductCombinationViewController: UIViewController {
     let cellTitles = ["Finish", "Storage", "SKU"]
     let cellValues = ["Silver", "16GB", "G86712835-12"]
     
-    var combinations: [CombinationElement] = []
+    var combinationElements: [CombinationElement] = []
+    
+    var combinationModel: [CSDefaultUnitModel] = []
     
     // MARK: - View Life Cycle
     
@@ -34,7 +36,7 @@ class ProductCombinationViewController: UIViewController {
             element.original = ""
             element.discount = ""
             element.isEnabled = true
-            combinations.append(element)
+            combinationElements.append(element)
         }
     }
 
@@ -82,7 +84,7 @@ class ProductCombinationViewController: UIViewController {
     
     func saveAction() {
         
-        for combination in combinations {
+        for combination in combinationElements {
             
             if combination.isEnabled {
                 println("ON  -- \(combination.original) > \(combination.discount)")
@@ -109,7 +111,7 @@ extension ProductCombinationViewController: UITableViewDataSource, UITableViewDe
     // MARK: - Table View Data Source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 3
+        return combinationModel.count
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -123,8 +125,10 @@ extension ProductCombinationViewController: UITableViewDataSource, UITableViewDe
             cell.delegate = self
             cell.tag = indexPath.section
             
-            cell.originalTextField.text = combinations[indexPath.section].original
-            cell.discountTextField.text = combinations[indexPath.section].discount
+            cell.originalTextField.text = self.combinationModel[indexPath.section].price
+            cell.discountTextField.text = String(self.combinationModel[indexPath.section].discount)
+            cell.finalPriceTextField.text = "\(cell.originalTextField.text.doubleValue * cell.discountTextField.text.doubleValue / 100)"
+            cell.commissionTextField.text = self.combinationModel[indexPath.section].commission
             
             return cell
         } else if indexPath.row == 4 {
@@ -132,14 +136,23 @@ extension ProductCombinationViewController: UITableViewDataSource, UITableViewDe
             cell.delegate = self
             cell.tag = indexPath.section
             
-            cell.availableSwitch.on = combinations[indexPath.section].isEnabled
+            if self.combinationModel[indexPath.section].status == 0 {
+                cell.availableSwitch.on = false
+            } else if self.combinationModel[indexPath.section].status == 1 {
+                cell.availableSwitch.on = true
+            } else {
+                cell.availableSwitch.on = false
+            }
+            
+//            cell.availableSwitch.on = combinationElements[indexPath.section].isEnabled
             
             return cell
         }
         
         let cell: ProductCombinationTableViewCell = tableView.dequeueReusableCellWithIdentifier("combinationCell") as! ProductCombinationTableViewCell
-        cell.titleLabel.text = cellTitles[indexPath.row]
-        cell.valueLabel.text = cellValues[indexPath.row]
+        cell.titleLabel.text = self.combinationModel[indexPath.section].variantCombination[indexPath.row].name
+        cell.valueLabel.text = self.combinationModel[indexPath.section].variantCombination[indexPath.row].value
+        
         return cell
     }
     
@@ -166,7 +179,7 @@ extension ProductCombinationViewController: UITableViewDataSource, UITableViewDe
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         if indexPath.row == 3 {
-            return 89.0
+            return 158.0
         } else if indexPath.row == 4 {
             return 70.0
         }
@@ -179,9 +192,9 @@ extension ProductCombinationViewController: UITableViewDataSource, UITableViewDe
     func getText(view: ProductCombination2TableViewCell, section: Int, text: String, isOriginalPrice: Bool) {
 
         if isOriginalPrice {
-            combinations[section].original = text
+            combinationElements[section].original = text
         } else {
-            combinations[section].discount = text
+            combinationElements[section].discount = text
         }
     }
     
@@ -189,7 +202,7 @@ extension ProductCombinationViewController: UITableViewDataSource, UITableViewDe
     
     func getSwitchValue(view: ProductCombination3TableViewCell, section: Int, value: Bool) {
         
-        combinations[section].isEnabled = value
+        combinationElements[section].isEnabled = value
     }
     
 }

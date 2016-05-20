@@ -144,11 +144,12 @@ class CountryStoreSetupViewController: UIViewController {
         self.productCombinationLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "productCombinationAction:"))
         self.productLocationPrimaryLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "primaryLocationAction:"))
         self.productLocationSecondaryLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "secondaryLocationAction:"))
-        self.commisionTitleLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "commisionAction:"))
+//        self.commisionTitleLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "commisionAction:"))
     }
     
     func productCombinationAction(gesture: UIGestureRecognizer) {
         let productCombinations: ProductCombinationViewController = ProductCombinationViewController(nibName: "ProductCombinationViewController", bundle: nil)
+        productCombinations.combinationModel = self.countryStoreSetupModel.product.productUnits
         self.navigationController!.pushViewController(productCombinations, animated: true)
     }
     
@@ -179,12 +180,12 @@ class CountryStoreSetupViewController: UIViewController {
         println(APIAtlas.getCountrySetupDetails)
         println(SessionManager.accessToken())
         
-        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/PH/EN/auth/country-setup?access_token=NTg3M2NjOGUxMmYwNjI0NTNhYzNkOTIyNjgzNjZjZjdiZThiNDE0ZDE2ZjIzM2Y0OWZkNGIxNGEwZDlmZDljMg"
+        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/PH/EN/auth/country-setup?access_token=NGU3NjhjNGJkNDhkYjE5NzBhMDFkZTA1OGVlNDkyOGUwNzNkNzE3N2RiZTAyYWRlMTJmOTI3M2UyZDY1OWM3NA"
         // APIAtlas.getCountrySetupDetails + SessionManager.accessToken()
         
-        WebServiceManager.fireGetCountrySetupDetails(url, productId: "964", code: self.countryStoreModel.code, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        WebServiceManager.fireGetCountrySetupDetails(url, productId: "30571", code: self.countryStoreModel.code, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
 
-            println(responseObject)
+//            println(responseObject)
             
             if successful {
                 self.countryStoreSetupModel = CountrySetupModel.parseDataWithDictionary(responseObject as! NSDictionary)
