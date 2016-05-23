@@ -39,11 +39,12 @@ struct APIAtlas {
     static let productBrandsUrl = APIAtlas.generateV3URL("product/get-brands")
     static let uploadImagesUrl = APIAtlas.generateV3URL("auth/image/upload")
     static let uploadProductUrl = APIAtlas.generateV3URL("auth/product/create")
+    static let uploadProductEditUrl = APIAtlas.generateV3URL("auth/product/edit")
     static let categoryUrl = "v1/product/getCategories"
     static let brandUrl = "v1/product/getBrands"
     static let uploadUrl = "v1/product/upload"
-    static let getProductDetails = "v1/product/upload-details"
-    static let sellerStoreInfo = "v1/auth/merchant/getUserInfo"
+    static let getProductDetails = APIAtlas.generateV3URL("auth/product/get-upload-details")
+    static let sellerStoreInfo = APIAtlas.generateV3URL("auth/merchant/getUserInfo")
     static let sellerBankAccountList = "v1/auth/bank/account/getBankAccounts"
     static let sellerAddBankAccount = "v1/auth/bank/account/addBankAccount"
     static let sellerDeleteBankAccount = "v1/auth/bank/account/deleteBankAccount"

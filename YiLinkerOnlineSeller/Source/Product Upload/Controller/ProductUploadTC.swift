@@ -56,7 +56,12 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        self.title = "Product Upload"
+        if self.uploadType == UploadType.EditProduct {
+            self.title = "Edit Product"
+        } else {
+            self.title = "Product Upload"
+        }
+        
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         //let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "hideKeyboard")
         //self.tableView.addGestureRecognizer(tap)
@@ -174,7 +179,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.userInteractionEnabled = true
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.productName
-                cell.cellTexField.text = self.productName
+                cell.cellTexField.text = self.productModel.name
                 
                 cell.cellTexField.placeholder = ProductUploadStrings.productName
                 
@@ -189,7 +194,10 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.userInteractionEnabled = true
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.shortDescription
-                cell.productUploadTextView.text = self.productModel.shortDescription
+                
+                if self.productModel.shortDescription != "" {
+                    cell.productUploadTextView.text = self.productModel.shortDescription
+                }
                 
                 cell.cellTitleLabel.required()
                 cell.textFieldType = ProductTextFieldType.ProductShortDescription
@@ -202,7 +210,10 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.userInteractionEnabled = true
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.completeDescription
-                cell.productUploadTextView.text = self.productCompleteDescription
+                
+                if self.productModel.completeDescription != "" {
+                    cell.productUploadTextView.text = self.productModel.completeDescription
+                }
                 
                 cell.cellTitleLabel.required()
                 cell.textFieldType = ProductTextFieldType.ProductCompleteDescription
@@ -783,33 +794,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     
     func productUploadUploadImageTableViewCell(didSelecteRowAtIndexPath indexPath: NSIndexPath, cell: ProductUploadImageTVC) {
         println("tap image")
-        
-        if indexPath.row == self.productModel.images.count - 1 && self.productModel.images.count <= 5 {
-            let picker: UzysAssetsPickerController = UzysAssetsPickerController()
-            let maxCount: Int = 6
-            
-            let imageLimit: Int = maxCount - self.productModel.images.count
-            picker.delegate = self
-            picker.maximumNumberOfSelectionVideo = 0
-            picker.maximumNumberOfSelectionPhoto = 100
-            UzysAssetsPickerController.setUpAppearanceConfig(self.uzyConfig())
-            self.presentViewController(picker, animated: true, completion: nil)
-        }
-        
-        /*if self.uploadType == UploadType.EditProduct {
-            if indexPath.row == self.productModel.editedImage.count - 1 && self.productModel.editedImage.count <= 5 {
-                let picker: UzysAssetsPickerController = UzysAssetsPickerController()
-                let maxCount: Int = 6
-                
-                let imageLimit: Int = maxCount - self.productModel.images.count
-                picker.delegate = self
-                picker.maximumNumberOfSelectionVideo = 0
-                picker.maximumNumberOfSelectionPhoto = 100
-                UzysAssetsPickerController.setUpAppearanceConfig(self.uzyConfig())
-                self.presentViewController(picker, animated: true, completion: nil)
-            }
-            
-        } else {
+        if self.uploadType == UploadType.NewProduct {
             if indexPath.row == self.productModel.images.count - 1 && self.productModel.images.count <= 5 {
                 let picker: UzysAssetsPickerController = UzysAssetsPickerController()
                 let maxCount: Int = 6
@@ -821,7 +806,19 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 UzysAssetsPickerController.setUpAppearanceConfig(self.uzyConfig())
                 self.presentViewController(picker, animated: true, completion: nil)
             }
-        }*/
+        } else {
+            if indexPath.row == self.productModel.editedImage.count - 1 && self.productModel.editedImage.count <= 5 {
+                let picker: UzysAssetsPickerController = UzysAssetsPickerController()
+                let maxCount: Int = 6
+                
+                let imageLimit: Int = maxCount - self.productModel.images.count
+                picker.delegate = self
+                picker.maximumNumberOfSelectionVideo = 0
+                picker.maximumNumberOfSelectionPhoto = 100
+                UzysAssetsPickerController.setUpAppearanceConfig(self.uzyConfig())
+                self.presentViewController(picker, animated: true, completion: nil)
+            }
+        }
     }
     
     // MARK: -
@@ -954,7 +951,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.completeRequired, title: ProductUploadStrings.incompleteProductDetails)
         } else if self.productModel.category.name == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.categoryRequired, title: ProductUploadStrings.incompleteProductDetails)
-        } else if self.productModel.shippingCategories.name == "" {
+        } else if self.productModel.shippingCategories.uid == -1 {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.shippingCategoryRequired, title: ProductUploadStrings.incompleteProductDetails)
         } else if self.productModel.condition == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.conditionRequired, title: ProductUploadStrings.incompleteProductDetails)
@@ -1046,6 +1043,17 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 image.isNew = true
                 image.isRemoved = false
                 self.productModel.editedImage.insert(image, atIndex: self.productModel.editedImage.count - 1)
+                
+                self.productModel.isPrimaryPhoto.append(false)
+                self.productModel.mainImagesName.append("")
+                var productMainImagesModel: ProductMainImagesModel = ProductMainImagesModel(image: image, imageName: "", imageStatus: false, imageFailed: false)
+                
+                if self.productModel.productMainImagesModel.count == 0 {
+                    self.productModel.productMainImagesModel.append(productMainImagesModel)
+                } else {
+                    self.productModel.productMainImagesModel.insert(productMainImagesModel, atIndex: self.productModel.productMainImagesModel.count)
+                }
+                
             } else {
                 // Insert iamges in 'productModel' array of images
                 // Call CropAssetViewController to crop images
@@ -1101,6 +1109,10 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             uploadedImages.append(images)
         }
         
+        for images in self.productModel.editedImage {
+            uploadedImages.append(images)
+        }
+        
         if uploadedImages.count != 0 {
             uploadedImages.removeLast()
         }
@@ -1113,12 +1125,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 }
             }
         }*/
-        
-        for image in uploadedImages as [UIImage] {
-            //let datum: NSData = UIImageJPEGRepresentation(image, 1)
-            //data.append(datum)
-            //self.fireUploadProductMainImages(image)
-        }
+
         self.productImagesCount = 0
         self.fireUploadProductMainImages(uploadedImages[self.productImagesCount])
     }
@@ -1276,7 +1283,14 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             "productUnits" : self.getProductAttributes(),
             "isDraft" : self.productIsDraft]
         
-        WebServiceManager.fireProductUploadRequestWithUrl(APIAtlas.uploadProductUrl+"?access_token=\(SessionManager.accessToken())", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        var url: String = ""
+        if self.uploadType == UploadType.NewProduct {
+            url = APIAtlas.uploadProductUrl
+        } else {
+            url = APIAtlas.uploadProductEditUrl
+        }
+        
+        WebServiceManager.fireProductUploadRequestWithUrl(url+"?access_token=\(SessionManager.accessToken())", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 if let success = responseObject["isSuccessful"] as? Bool {
                     if success {
@@ -1335,18 +1349,27 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                         if let dictionary: NSDictionary = responseObject["data"] as? NSDictionary {
                             if let fileName = dictionary["fileName"] as? String {
                                 self.productImagesName.append(fileName)
-                                self.productModel.mainImagesName.append(fileName)
+                                if self.productModel.mainImagesName.count == 0 {
+                                    self.productModel.mainImagesName.append(fileName)
+                                } else {
+                                    self.productModel.mainImagesName[self.productImagesCount] = fileName
+                                }
                                 
                                 var productMainImagesModel: ProductMainImagesModel = ProductMainImagesModel(image: image, imageName: fileName, imageStatus: true, imageFailed: false)
-                                
-                                self.productModel.productMainImagesModel.removeAtIndex(self.productImagesCount)
-                                self.productModel.productMainImagesModel.insert(productMainImagesModel, atIndex: self.productImagesCount)
+                                //self.productModel.productMainImagesModel.removeAtIndex(self.productImagesCount)
+                                self.productModel.productMainImagesModel[self.productImagesCount] = productMainImagesModel
                                 
                                 self.reloadUploadCellCollectionViewData()
                                 
                                 self.productImagesCount++
-                                if self.productImagesCount !=  self.productModel.images.count-1 {
-                                    self.fireUploadProductMainImages(self.productModel.images[self.productImagesCount])
+                                if self.uploadType == UploadType.NewProduct {
+                                    if self.productImagesCount !=  self.productModel.images.count-1 {
+                                        self.fireUploadProductMainImages(self.productModel.images[self.productImagesCount])
+                                    }
+                                } else {
+                                    if self.productImagesCount !=  self.productModel.editedImage.count-1 {
+                                        self.fireUploadProductMainImages(self.productModel.editedImage[self.productImagesCount])
+                                    }
                                 }
                             }
                         }

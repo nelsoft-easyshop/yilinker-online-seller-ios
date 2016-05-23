@@ -388,7 +388,14 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
     
     func productUploadCombinationImagesVC(productModel: ProductModel, indexes: [Int]) {
         
-        var count: Int = productModel.images.count-1
+        var count: Int = 0
+        if productModel.images.count != 0 {
+            count = productModel.images.count-1
+        } else {
+            count = productModel.editedImage.count-1
+            productModel.images = productModel.editedImage
+        }
+        
         for i in 0..<count {
             if contains(indexes, i) {
                 self.images.insert(productModel.images[i], atIndex: 0)

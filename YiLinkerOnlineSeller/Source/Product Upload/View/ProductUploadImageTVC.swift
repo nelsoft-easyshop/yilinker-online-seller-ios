@@ -121,17 +121,22 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
             cell.tapToReuploadButton.hidden = true
             cell.imageView.contentMode = UIViewContentMode.ScaleAspectFit
         } else {
-            println(self.productModel?.productMainImagesModel[indexPath.row].imageStatus)
-            if self.productModel?.productMainImagesModel[indexPath.row].imageStatus == true && self.productModel?.productMainImagesModel[indexPath.row].imageFailed == false {
-                cell.imageView.alpha = 1.0
+            println(self.productModel?.mainImagesName.count)
+            if self.productModel?.mainImagesName.count != 0 {
+                if self.productModel?.productMainImagesModel[indexPath.row].imageStatus == true && self.productModel?.productMainImagesModel[indexPath.row].imageFailed == false {
+                    cell.imageView.alpha = 1.0
+                    cell.tapToReuploadButton.hidden = true
+                } else if self.productModel?.productMainImagesModel[indexPath.row].imageStatus == false && self.productModel?.productMainImagesModel[indexPath.row].imageFailed == false {
+                    cell.imageView.alpha = 0.5
+                    cell.tapToReuploadButton.hidden = true
+                } else if self.productModel?.productMainImagesModel[indexPath.row].imageStatus == false && self.productModel?.productMainImagesModel[indexPath.row].imageFailed == true  {
+                    cell.imageView.alpha = 0.5
+                    cell.tapToReuploadButton.hidden = false
+                }
+            } else {
                 cell.tapToReuploadButton.hidden = true
-            } else if self.productModel?.productMainImagesModel[indexPath.row].imageStatus == false && self.productModel?.productMainImagesModel[indexPath.row].imageFailed == false {
-                cell.imageView.alpha = 0.5
-                cell.tapToReuploadButton.hidden = true
-            } else if self.productModel?.productMainImagesModel[indexPath.row].imageStatus == false && self.productModel?.productMainImagesModel[indexPath.row].imageFailed == true  {
-                cell.imageView.alpha = 0.5
-                cell.tapToReuploadButton.hidden = false
             }
+            
             if contains(self.selectedPrimaryPhoto, "\(indexPath.row)") && cell.starButton.tag != 1001{
                 cell.starButton.backgroundColor = UIColor.yellowColor()
                 cell.starButton.tag = 1001

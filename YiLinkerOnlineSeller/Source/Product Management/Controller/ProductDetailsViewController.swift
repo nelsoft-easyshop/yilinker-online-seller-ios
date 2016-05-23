@@ -307,7 +307,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     func gotoEditProduct() {
         self.hud?.hide(true)
-        let upload = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
+        let upload: ProductUploadTC = ProductUploadTC(nibName: "ProductUploadTC", bundle: nil)
         upload.uploadType = UploadType.EditProduct
         upload.productModel = self.productModel
         let navigationController: UINavigationController = UINavigationController(rootViewController: upload)
@@ -347,6 +347,14 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                         convertedImage.uid = self.productModel.imageIds[i]
 //                        self.productModel.editedImage.append(convertedImage)
                         self.productModel.editedImage[i] = convertedImage
+                        
+                        var productMainImagesModel: ProductMainImagesModel = ProductMainImagesModel(image: UIImage(data: data,scale:1.0)!, imageName: self.productModel.imageIds[i], imageStatus: true, imageFailed: false)
+                        self.productModel.mainImagesName.append(self.productModel.imageIds[i])
+                        if self.productModel.productMainImagesModel.count == 0 {
+                            self.productModel.productMainImagesModel.append(productMainImagesModel)
+                        } else {
+                            self.productModel.productMainImagesModel.insert(productMainImagesModel, atIndex: self.productModel.productMainImagesModel.count)
+                        }
                         
                         if downloadedImage == self.productModel.imageUrls.count {
                             self.downloadCombinationsImages()
