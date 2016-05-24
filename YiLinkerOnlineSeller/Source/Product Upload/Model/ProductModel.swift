@@ -173,7 +173,6 @@ class ProductModel {
             }
             
             if let value: NSDictionary = dictionary["data"] as? NSDictionary{
-                println(dictionary["data"])
                 if let tempVar = value["brandName"] as? String {
                     brand = BrandModel(name: tempVar, brandId: value["brandId"] as! Int)
                 }
