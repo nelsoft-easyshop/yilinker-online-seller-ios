@@ -30,7 +30,7 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        SessionManager.setAccessToken("Nzk5ZTA2NjlkZDRiNWQxMzhiYTFlOWQ1MGQ2MjRkNzc4MGM0OGYyZjZlMzc2NmRkMDZhMGM5NWM0MjViN2ViZA")
+        SessionManager.setAccessToken("M2Q5MDE4NTg4ZjgyZDNmMGFhN2VmZjI3YmFhYjYyODAxZDllYjNmNjg3YjZlZmIzNGVmZDIyMzE5ZmRhMDZiNA")
         fireGetCountries()
         setupNavigationBar()
         

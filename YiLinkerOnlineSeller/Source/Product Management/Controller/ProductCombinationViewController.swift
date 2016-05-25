@@ -19,7 +19,7 @@ class ProductCombinationViewController: UIViewController {
     
     var combinationElements: [CombinationElement] = []
     
-    var combinationModel: [CSDefaultUnitModel] = []
+    var combinationModel: [CSProductUnitModel] = []
     
     // MARK: - View Life Cycle
     
@@ -38,6 +38,7 @@ class ProductCombinationViewController: UIViewController {
             element.isEnabled = true
             combinationElements.append(element)
         }
+        
     }
 
     // MARK: - Functions
@@ -152,6 +153,7 @@ extension ProductCombinationViewController: UITableViewDataSource, UITableViewDe
         let cell: ProductCombinationTableViewCell = tableView.dequeueReusableCellWithIdentifier("combinationCell") as! ProductCombinationTableViewCell
         cell.titleLabel.text = self.combinationModel[indexPath.section].variantCombination[indexPath.row].name
         cell.valueLabel.text = self.combinationModel[indexPath.section].variantCombination[indexPath.row].value
+        cell.titleLabel.text = self.combinationModel[0].variantCombination[0].name
         
         return cell
     }

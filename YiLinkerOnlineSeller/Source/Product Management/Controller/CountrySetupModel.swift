@@ -117,7 +117,7 @@ class CSProductModel {
     var attributes = [AttributesElement]()
     var dateCreated: DateCreatedElement!
     var dateLastModified: DateLastModifiedElement!
-    var productUnits: [CSDefaultUnitModel] = []
+    var productUnits: [CSProductUnitModel] = []
     var shippingCost: String = ""
     var hasCOD: Bool = false
 //    var elastica = nil
@@ -183,7 +183,7 @@ class CSProductModel {
             }
             // productUnits
             for productUnit in dictionary["productUnits"] as! NSArray {
-                model.productUnits.append(CSDefaultUnitModel.parseDataWithDictionary(productUnit as! NSDictionary))
+                model.productUnits.append(CSProductUnitModel.parseDataWithDictionary(productUnit as! NSDictionary))
             }
             model.shippingCost = ParseHelper.string(dictionary, key: "shippingCost", defaultValue: "")
             model.hasCOD = ParseHelper.bool(dictionary, key: "hasCOD", defaultValue: false)
@@ -197,12 +197,124 @@ class CSProductModel {
     }
 }
 
-// MARK: - Default Unit Model
+// MARK: - Product Unit Model
 
 typealias ImagesIdsElement = ()
 typealias PromoInstanceElement = ()
 typealias PromoInstanceNotYetStartedElement = ()
 typealias VariantCombinationElement = (name: String, value: String)
+
+class CSProductUnitModel {
+    
+    var productId: String = ""
+    var productUnitId: String = ""
+    var quantity: Int = 0
+    var sku: String = ""
+    var slug: String = ""
+    var price: String = ""
+    var discountedPrice: String = ""
+    var appliedBaseDiscountPrice: String = ""
+    var appliedDiscountPrice: String = ""
+    //    var promoTypeId = nil
+    //    var promoTypeName = nil
+    var discount: Int = 0
+    var dateCreated: DateCreatedElement!
+    var dateLastModified: DateLastModifiedElement!
+    var status: Int = 0
+    var imageIds: [ImagesIdsElement] = []
+    var primaryImage: String = ""
+    var primaryThumbnailImage: String = ""
+    var primarySmallImage: String = ""
+    var primaryMediumImage: String = ""
+    var primaryLargeImage: String = ""
+    var promoInstance: [PromoInstanceElement] = []
+    var promoInstanceNotYetStarted: [PromoInstanceNotYetStartedElement] = []
+    var variantCombination = [VariantCombinationElement]()
+    var inWishlist: Bool = false
+    var commission: String = ""
+    var weight: String = ""
+    var length: String = ""
+    var height: String = ""
+    var width: String = ""
+    
+    class func parseDataWithDictionary(dictionary: NSDictionary) -> CSProductUnitModel! {
+        
+        var model = CSProductUnitModel()
+        println(dictionary)
+        if dictionary.isKindOfClass(NSDictionary) {
+            model.productId = ParseHelper.string(dictionary, key: "productId", defaultValue: "")
+            model.productUnitId = ParseHelper.string(dictionary, key: "productUnitId", defaultValue: "")
+            model.quantity = ParseHelper.int(dictionary, key: "quantity", defaultValue: 0)
+            model.sku = ParseHelper.string(dictionary, key: "sku", defaultValue: "")
+            model.slug = ParseHelper.string(dictionary, key: "slug", defaultValue: "")
+            model.price = ParseHelper.string(dictionary, key: "price", defaultValue: "")
+            model.discountedPrice = ParseHelper.string(dictionary, key: "discountedPrice", defaultValue: "")
+            model.appliedBaseDiscountPrice = ParseHelper.string(dictionary, key: "appliedBaseDiscountPrice", defaultValue: "")
+            model.appliedDiscountPrice = ParseHelper.string(dictionary, key: "appliedDiscountPrice", defaultValue: "")
+//            model.promoTypeId = nil
+//            model.promoTypeName = nil
+            model.discount = ParseHelper.int(dictionary, key: "discount", defaultValue: 0)
+            // dateCreated
+            if let dateCreatedData: AnyObject = dictionary["dateCreated"] {
+                var element: DateCreatedElement
+                element.date = ParseHelper.string(dateCreatedData, key: "date", defaultValue: "")
+                element.timezone_type = ParseHelper.int(dateCreatedData, key: "timezone_type", defaultValue: 0)
+                element.timezone = ParseHelper.string(dateCreatedData, key: "timezone", defaultValue: "")
+                model.dateCreated = element
+            }
+            // dateLastModified
+            if let dateLastModifiedData: AnyObject = dictionary["dateLastModified"] {
+                var element: DateCreatedElement
+                element.date = ParseHelper.string(dateLastModifiedData, key: "date", defaultValue: "")
+                element.timezone_type = ParseHelper.int(dateLastModifiedData, key: "timezone_type", defaultValue: 0)
+                element.timezone = ParseHelper.string(dateLastModifiedData, key: "timezone", defaultValue: "")
+                model.dateLastModified = element
+            }
+            model.status = ParseHelper.int(dictionary, key: "status", defaultValue: 0)
+            // Image Ids
+            var imageIdElement: ImagesIdsElement
+            for imageId in dictionary["imageIds"] as! NSArray {
+                model.imageIds.append(imageIdElement)
+            }
+            model.primaryImage = ParseHelper.string(dictionary, key: "primaryImage", defaultValue: "")
+            model.primaryThumbnailImage = ParseHelper.string(dictionary, key: "primaryThumbnailImage", defaultValue: "")
+            model.primarySmallImage = ParseHelper.string(dictionary, key: "primarySmallImage", defaultValue: "")
+            model.primaryMediumImage = ParseHelper.string(dictionary, key: "primaryMediumImage", defaultValue: "")
+            model.primaryLargeImage = ParseHelper.string(dictionary, key: "primaryLargeImage", defaultValue: "")
+            // Promo Instance
+            var promoInstanceElement: PromoInstanceElement
+            for promoInstanceData in dictionary["promoInstance"] as! NSArray {
+                model.promoInstance.append(promoInstanceElement)
+            }
+            // Promo Instance Not Yet Started
+            var promoInstanceNotYetStartedElement: PromoInstanceNotYetStartedElement
+            for promoInstanceNotYetStartedData in dictionary["promoInstanceNotYetStarted"] as! NSArray {
+                model.promoInstanceNotYetStarted.append(promoInstanceNotYetStartedElement)
+            }
+//            println(dictionary["variantCombination"])
+            // Variant Combinations
+            var variantCombinationElement: VariantCombinationElement
+            for variantCombinationData in dictionary["variantCombination"] as! NSArray {
+                variantCombinationElement.name = ParseHelper.string(variantCombinationData, key: "name", defaultValue: "")
+                variantCombinationElement.value = ParseHelper.string(variantCombinationData, key: "value", defaultValue: "")
+                variantCombinationElement.name = variantCombinationElement.name + "name"
+                variantCombinationElement.value = variantCombinationElement.value + "value"
+                model.variantCombination.append(variantCombinationElement)
+            }
+            
+            model.inWishlist = ParseHelper.bool(dictionary, key: "inWishlist", defaultValue: false)
+            model.commission = ParseHelper.string(dictionary, key: "commission", defaultValue: "")
+            model.weight = ParseHelper.string(dictionary, key: "weight", defaultValue: "")
+            model.length = ParseHelper.string(dictionary, key: "length", defaultValue: "")
+            model.height = ParseHelper.string(dictionary, key: "height", defaultValue: "")
+            model.width = ParseHelper.string(dictionary, key: "width", defaultValue: "")
+        }
+        
+        return model
+    }
+}
+
+// MARK: - Default Unit Model
 
 class CSDefaultUnitModel {
     
@@ -229,7 +341,6 @@ class CSDefaultUnitModel {
     var primaryLargeImage: String = ""
     var promoInstance: [PromoInstanceElement] = []
     var promoInstanceNotYetStarted: [PromoInstanceNotYetStartedElement] = []
-    var variantCombination = [VariantCombinationElement]()
     var inWishlist: Bool = false
     var commission: String = ""
     var weight: String = ""
@@ -290,19 +401,6 @@ class CSDefaultUnitModel {
             var promoInstanceNotYetStartedElement: PromoInstanceNotYetStartedElement
             for promoInstanceNotYetStartedData in dictionary["promoInstanceNotYetStarted"] as! NSArray {
                 model.promoInstanceNotYetStarted.append(promoInstanceNotYetStartedElement)
-            }
-            // Variant Combinations
-            var variantCombinationElement: VariantCombinationElement
-//            for variantCombinationData in dictionary["variantCombination"] as! NSArray {
-//                println("benga")
-//                variantCombinationElement.name = ParseHelper.string(variantCombinationData, key: "name", defaultValue: "")
-//                variantCombinationElement.value = ParseHelper.string(variantCombinationData, key: "value", defaultValue: "")
-//                model.variantCombination.append(variantCombinationElement)
-//            }
-            for i in 0..<3 {
-                variantCombinationElement.name = "Name"
-                variantCombinationElement.value = "Value"
-                model.variantCombination.append(variantCombinationElement)
             }
             
             model.inWishlist = ParseHelper.bool(dictionary, key: "inWishlist", defaultValue: false)

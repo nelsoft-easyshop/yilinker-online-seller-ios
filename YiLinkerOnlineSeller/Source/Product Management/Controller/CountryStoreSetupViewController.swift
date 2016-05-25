@@ -185,15 +185,15 @@ class CountryStoreSetupViewController: UIViewController {
     
     func fireGetCountryStoreDetails() {
         
-        println(APIAtlas.getCountrySetupDetails)
-        println(SessionManager.accessToken())
+//        println(APIAtlas.getCountrySetupDetails)
+//        println(SessionManager.accessToken())
         
         let url = "http://dev.seller.online.api.easydeal.ph/api/v3/PH/EN/auth/country-setup?access_token=" + SessionManager.accessToken()
         // APIAtlas.getCountrySetupDetails + SessionManager.accessToken()
         
         WebServiceManager.fireGetCountrySetupDetails(url, productId: "30571", code: self.countryStoreModel.code, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
 
-//            println(responseObject)
+            println(responseObject)
             
             if successful {
                 self.countryStoreSetupModel = CountrySetupModel.parseDataWithDictionary(responseObject as! NSDictionary)

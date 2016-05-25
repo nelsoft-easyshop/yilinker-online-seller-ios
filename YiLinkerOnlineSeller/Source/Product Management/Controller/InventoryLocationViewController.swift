@@ -100,6 +100,14 @@ class InventoryLocationViewController: UIViewController {
         // registering cells
         
         self.tableView.registerNib(UINib(nibName: "InventoryLocationTableViewCell", bundle: nil), forCellReuseIdentifier: "locationId")
+        
+        for i in 0..<self.warehousesModel.count {
+            if isPrimary && self.warehousesModel[i].priority == 2 || !isPrimary && self.warehousesModel[i].priority == 1 {
+                self.warehousesModel.removeAtIndex(i)
+                break
+            }
+        }
+        
     }
     
     func getShippingFeeValue() -> String {
