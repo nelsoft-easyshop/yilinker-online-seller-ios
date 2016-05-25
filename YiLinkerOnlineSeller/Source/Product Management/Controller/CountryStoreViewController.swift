@@ -22,6 +22,7 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
         "http://www.therecycler.com/wp-content/uploads/2013/03/Vietnam-flag.jpg"]
     
     var countryListModel: [CountryListModel] = []
+    var tempAccessToken: String = "NmUzYmIzZGVkYzUwNGViYTY0YzExMzcyNTQxNzZjNjk2NWRjZDQ0YjZiNzg5NzE0NzRiZTU3NGQyNjNhNjZhYQ"
     
     // MARK: - View Life Cycle
     
@@ -29,6 +30,7 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        SessionManager.setAccessToken("Nzk5ZTA2NjlkZDRiNWQxMzhiYTFlOWQ1MGQ2MjRkNzc4MGM0OGYyZjZlMzc2NmRkMDZhMGM5NWM0MjViN2ViZA")
         fireGetCountries()
         setupNavigationBar()
         
@@ -66,7 +68,7 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
         println(APIAtlas.getCountrySetupDetails)
         println(SessionManager.accessToken())
         
-        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/ph/en/auth/country-setup/country-store?access_token=NGU3NjhjNGJkNDhkYjE5NzBhMDFkZTA1OGVlNDkyOGUwNzNkNzE3N2RiZTAyYWRlMTJmOTI3M2UyZDY1OWM3NA"
+        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/ph/en/auth/country-setup/country-store?access_token=" + SessionManager.accessToken()
         // APIAtlas.getCountrySetupDetails + SessionManager.accessToken()
         
         WebServiceManager.fireGetListOfCountries(url, productId: "30571", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
@@ -143,6 +145,7 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
         
         let countryStoreSetup: CountryStoreSetupViewController = CountryStoreSetupViewController(nibName: "CountryStoreSetupViewController", bundle: nil)
         countryStoreSetup.countryStoreModel = self.countryListModel[indexPath.row]
+        countryStoreSetup.tempAccessToken = self.tempAccessToken
         self.navigationController?.pushViewController(countryStoreSetup, animated: true)
         
     }

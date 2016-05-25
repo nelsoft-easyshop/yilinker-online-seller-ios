@@ -28,11 +28,17 @@ class InventoryLocationViewController: UIViewController {
     var shippingFee = "0.00"
     
     
+    var productDetails: CSProductModel!
     var warehousesModel: [CSProductWarehousesModel] = []
     var logisticsModel: [CSLogisticsModel] = []
-    var sections = 3
+    var code: String = ""
+    var sections = 2
     var initialValues = true
     var selectedLogisticId = -1
+    
+    // flags
+    var isLocal: Bool = false
+    var isLogisticThirdParty: Bool = false
     
     // MARK: - View Life Cycle
     
@@ -53,14 +59,11 @@ class InventoryLocationViewController: UIViewController {
         for i in 0..<warehousesModel.count {
             if isPrimary && warehousesModel[i].priority == 1 || !isPrimary && warehousesModel[i].priority == 2 {
                 selectedLocationIndex = i
-                if !warehousesModel[i].is_local {
-                    sections = 2
-                }
                 break
             }
         }
         
-        setDefaultData()
+        refreshData()
     }
     
     // MARK: - Functions
@@ -99,8 +102,11 @@ class InventoryLocationViewController: UIViewController {
         self.tableView.registerNib(UINib(nibName: "InventoryLocationTableViewCell", bundle: nil), forCellReuseIdentifier: "locationId")
     }
     
-    func getShippingFeeValue() {
-        let indexPath = NSIndexPath(forRow: 0, inSection: 3)
+    func getShippingFeeValue() -> String {
+        var indexPath = NSIndexPath(forRow: 0, inSection: 3)
+        if !isLocal {
+           indexPath = NSIndexPath(forRow: 0, inSection: 2)
+        }
         let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! InventoryLocationTableViewCell
         
         if cell.inputTextField.text == "" {
@@ -108,6 +114,8 @@ class InventoryLocationViewController: UIViewController {
         } else {
             shippingFee = cell.inputTextField.text
         }
+        
+        return shippingFee
     }
     
     func setSectionsWithIndex(index: Int) {
@@ -121,18 +129,46 @@ class InventoryLocationViewController: UIViewController {
         }
     }
     
-    func setDefaultData() {
+    func refreshData() {
         
         if selectedLocationIndex != -1 {
+            
+            sections = 2
+            isLocal = false
+            isLogisticThirdParty = false
+            
+            let warehouse = self.warehousesModel[selectedLocationIndex]
+            
             // isCOD
-            isCOD = self.warehousesModel[selectedLocationIndex].is_cod
+            isCOD = warehouse.is_cod
             
             // logistic
-            if warehousesModel[selectedLocationIndex].logistic != nil {
-                self.selectedLogisticId = warehousesModel[selectedLocationIndex].logistic.id
+            if warehouse.logistic != nil {
+                self.selectedLogisticId = warehouse.logistic.id
             } else {
                 self.selectedLogisticId = -1
             }
+            
+            // flags
+            isLocal = warehouse.is_local
+            if warehouse.logistic.id == 2 {
+                isLogisticThirdParty = true
+            }
+            
+            shippingFee = self.warehousesModel[selectedLocationIndex].handlingFee
+            
+            if isLocal {
+                sections = 3
+                sectionTitles = ["Inventory Location", "Is COD Available?", "Logistics", "Shipping Cost"]
+            } else {
+                sections = 2
+                sectionTitles = ["Inventory Location", "Logistics", "Shipping Cost"]
+            }
+            
+            if isLogisticThirdParty {
+                sections += 1
+            }
+            
         }
         
     }
@@ -140,12 +176,38 @@ class InventoryLocationViewController: UIViewController {
     // MARK: - Actions
     
     func saveAction() {
-        getShippingFeeValue()
         
-//        println(location)
-        println(isCOD)
-        println(logistic)
-        println(shippingFee)
+        var priority = ""
+        if isPrimary {
+            priority = "1"
+        } else if !isPrimary {
+            priority = "2"
+        } else {
+            priority = "0"
+        }
+        
+        if isLogisticThirdParty {
+            shippingFee = getShippingFeeValue()
+        } else {
+            shippingFee = "0.0"
+        }
+        
+        let parameters = ["code": code,
+                     "productId": productDetails.id,
+                 "userWarehouse": warehousesModel[selectedLocationIndex].user_warehouse.id,
+                     "logistics": selectedLogisticId,
+                         "isCod": isCOD,
+                   "handlingFee": shippingFee,
+                      "priority": priority]
+        
+        println(parameters)
+        
+        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/ph/en/auth/country-setup/setwarehouse?access_token=" + SessionManager.accessToken()
+        WebServiceManager.fireSetWarehouse(url, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        
+            println(responseObject)
+            
+        })
     }
     
     func backAction() {
@@ -169,13 +231,16 @@ extension InventoryLocationViewController: UITableViewDataSource, UITableViewDel
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if section == 0 {
-            return self.warehousesModel.count// locations.count
+            return self.warehousesModel.count
         } else if section == 1 {
-            if sections == 2 {
+            if !isLocal {
                 return logisticsModel.count
             }
             return cods.count
         } else if section == 2 {
+            if !isLocal {
+                return 1
+            }
             return logisticsModel.count
         } else if section == 3 {
             return 1
@@ -191,41 +256,51 @@ extension InventoryLocationViewController: UITableViewDataSource, UITableViewDel
         cell.selectionStyle = .None
         cell.checkImageView.hidden = true
         cell.inputTextField.hidden = true
+        cell.label.hidden = false
+        cell.backgroundColor = UIColor.whiteColor()
         
         if indexPath.section == 0 { // Inventory Location
-            cell.label.text = self.warehousesModel[indexPath.row].user_warehouse.address //locations[indexPath.row]
-            if isPrimary && self.warehousesModel[indexPath.row].priority == 1 && selectedLocationIndex == -1 {
-                cell.checkImageView.hidden = false
-            } else if !isPrimary && self.warehousesModel[indexPath.row].priority == 2 && selectedLocationIndex == -1 {
-                cell.checkImageView.hidden = false
-            } else if selectedLocationIndex == indexPath.row {
+            cell.label.text = self.warehousesModel[indexPath.row].user_warehouse.address
+            if isPrimary && self.warehousesModel[indexPath.row].priority == 1 && selectedLocationIndex == -1 ||
+               !isPrimary && self.warehousesModel[indexPath.row].priority == 2 && selectedLocationIndex == -1 ||
+               selectedLocationIndex == indexPath.row {
                 cell.checkImageView.hidden = false
             }
         } else if indexPath.section == 1 { // COD
-            if sections == 2 { // logistics
-                cell.label.text = logisticsModel[indexPath.row].name
-                if logisticsModel[indexPath.row].id == selectedLogisticId {
-                    cell.checkImageView.hidden = false
-                }
-            } else { // COD
+            if isLocal {
                 cell.label.text = cods[indexPath.row]
                 if isCOD && indexPath.row == 0 || !isCOD && indexPath.row == 1 && selectedLocationIndex != -1 {
                     cell.checkImageView.hidden = false
                 }
+            } else {
+                cell.label.text = logistics[indexPath.row]
+                if logisticsModel[indexPath.row].id == selectedLogisticId {
+                    cell.checkImageView.hidden = false
+                }
             }
         } else if indexPath.section == 2 { // Logistics
-            cell.label.text = logistics[indexPath.row]
-            if logisticsModel[indexPath.row].id == selectedLogisticId {
-                cell.checkImageView.hidden = false
+            if isLocal {
+                cell.label.text = logistics[indexPath.row]
+                if logisticsModel[indexPath.row].id == selectedLogisticId {
+                    cell.checkImageView.hidden = false
+                }
+            } else {
+                if isLogisticThirdParty {
+                    cell.label.hidden = true
+                    cell.inputTextField.hidden = false
+                    cell.checkImageView.hidden = true
+                    cell.inputTextField.text = shippingFee
+                    cell.backgroundColor = UIColor.clearColor()
+                }
             }
         } else if indexPath.section == 3 { // Shipping Cost
-            cell.label.hidden = true
-            cell.inputTextField.hidden = false
-            cell.checkImageView.hidden = true
-            if shippingFee != "0.00" {
+            if isLogisticThirdParty {
+                cell.label.hidden = true
+                cell.inputTextField.hidden = false
+                cell.checkImageView.hidden = true
                 cell.inputTextField.text = shippingFee
+                cell.backgroundColor = UIColor.clearColor()
             }
-            cell.backgroundColor = UIColor.clearColor()
         }
         
         return cell
@@ -260,29 +335,55 @@ extension InventoryLocationViewController: UITableViewDataSource, UITableViewDel
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! InventoryLocationTableViewCell
         
-        if indexPath.section == 0 {
-            selectedLocationIndex = indexPath.row
-            setDefaultData()
-            setSectionsWithIndex(indexPath.row)
-        } else if indexPath.section == 1 {
-            if indexPath.row == 0 {
-                isCOD = true
-            } else {
-                isCOD = false
-            }
-        } else if indexPath.section == 2 {
-            selectedLogisticId = logisticsModel[indexPath.row].id
-            
-            if indexPath.row == 0 {
-                if sections == 4 {
-                    sections -= 1
+        if cell.checkImageView.hidden == true {
+            if indexPath.section == 0 {
+                selectedLocationIndex = indexPath.row
+                refreshData()
+            } else if indexPath.section == 1 {
+                if isLocal {
+                    if indexPath.row == 0 {
+                        isCOD = true
+                    } else {
+                        isCOD = false
+                    }
+                } else {
+                    selectedLogisticId = logisticsModel[indexPath.row].id
+                    
+                    if selectedLogisticId == 2 {
+//                        if sections < 3 {
+                            sections += 1
+//                        }
+                        isLogisticThirdParty = true
+                    } else {
+                        if sections > 2 {
+                            if !(sections == 3 && isLocal) {
+                                sections -= 1
+                            }
+                        }
+                        isLogisticThirdParty = false
+                    }
                 }
-            } else if indexPath.row == 1 {
-                sections += 1
+            } else if indexPath.section == 2 {
+                
+                selectedLogisticId = logisticsModel[indexPath.row].id
+                
+                if selectedLogisticId == 2 {
+//                    if sections < 3 {
+                        sections += 1
+//                    }
+                    isLogisticThirdParty = true
+                } else {
+                    if sections > 2 {
+                        if !(sections == 3 && isLocal) {
+                            sections -= 1
+                        }
+                    }
+                    isLogisticThirdParty = false
+                }
             }
+            
+            self.tableView.reloadData()
         }
-        
-        self.tableView.reloadData()
         
     }
     

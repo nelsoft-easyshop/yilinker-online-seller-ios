@@ -98,7 +98,7 @@ typealias DateLastModifiedElement = (date: String, timezone_type: Int, timezone:
 
 class CSProductModel {
     
-    var id: Int = 0
+    var id: String = "0"
     var title: String = ""
     var slug: String = ""
     var image: String = ""
@@ -131,7 +131,7 @@ class CSProductModel {
         
         if dictionary.isKindOfClass(NSDictionary) {
             
-            model.id = ParseHelper.int(dictionary, key: "id", defaultValue: 0)
+            model.id = ParseHelper.string(dictionary, key: "id", defaultValue: "0")
             model.title = ParseHelper.string(dictionary, key: "title", defaultValue: "")
             model.slug = ParseHelper.string(dictionary, key: "slug", defaultValue: "")
             model.image = ParseHelper.string(dictionary, key: "image", defaultValue: "")

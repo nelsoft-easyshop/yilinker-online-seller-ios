@@ -69,6 +69,8 @@ class CountryStoreSetupViewController: UIViewController {
         "http://www.thailanguagehut.com/wp-content/uploads/2010/04/Thai-Flag.gif",
         "http://www.therecycler.com/wp-content/uploads/2013/03/Vietnam-flag.jpg"]
     
+    var tempAccessToken: String = ""
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -114,6 +116,7 @@ class CountryStoreSetupViewController: UIViewController {
     func populateCountryStoreSetupDetails() {
         
         if countryStoreSetupModel != nil {
+            println(countryStoreSetupModel.product.id)
             self.storeNameValueLabel.text = self.countryStoreSetupModel.product.store
             
             self.productNameLabel.text = self.countryStoreSetupModel.product.title
@@ -155,6 +158,9 @@ class CountryStoreSetupViewController: UIViewController {
     
     func primaryLocationAction(gesture: UIGestureRecognizer) {
         let inventoryLocation: InventoryLocationViewController = InventoryLocationViewController(nibName: "InventoryLocationViewController", bundle: nil)
+        println(self.countryStoreSetupModel.product)
+        inventoryLocation.productDetails = self.countryStoreSetupModel.product
+        inventoryLocation.code = self.countryStoreModel.code
         inventoryLocation.warehousesModel = self.countryStoreSetupModel.productWarehouses
         inventoryLocation.logisticsModel = self.countryStoreSetupModel.logistics
         self.navigationController!.pushViewController(inventoryLocation, animated: true)
@@ -162,6 +168,8 @@ class CountryStoreSetupViewController: UIViewController {
     
     func secondaryLocationAction(gesture: UIGestureRecognizer) {
         let inventoryLocation: InventoryLocationViewController = InventoryLocationViewController(nibName: "InventoryLocationViewController", bundle: nil)
+        inventoryLocation.productDetails = self.countryStoreSetupModel.product
+        inventoryLocation.code = self.countryStoreModel.code
         inventoryLocation.warehousesModel = self.countryStoreSetupModel.productWarehouses
         inventoryLocation.logisticsModel = self.countryStoreSetupModel.logistics
         inventoryLocation.isPrimary = false
@@ -180,7 +188,7 @@ class CountryStoreSetupViewController: UIViewController {
         println(APIAtlas.getCountrySetupDetails)
         println(SessionManager.accessToken())
         
-        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/PH/EN/auth/country-setup?access_token=NGU3NjhjNGJkNDhkYjE5NzBhMDFkZTA1OGVlNDkyOGUwNzNkNzE3N2RiZTAyYWRlMTJmOTI3M2UyZDY1OWM3NA"
+        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/PH/EN/auth/country-setup?access_token=" + SessionManager.accessToken()
         // APIAtlas.getCountrySetupDetails + SessionManager.accessToken()
         
         WebServiceManager.fireGetCountrySetupDetails(url, productId: "30571", code: self.countryStoreModel.code, actionHandler: { (successful, responseObject, requestErrorType) -> Void in

@@ -997,5 +997,14 @@ class WebServiceManager: NSObject {
         }
     }
     
+    // MARK: - Save Warehouse
+    
+    class func fireSetWarehouse(url: String, parameters: NSDictionary, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
 }
 
