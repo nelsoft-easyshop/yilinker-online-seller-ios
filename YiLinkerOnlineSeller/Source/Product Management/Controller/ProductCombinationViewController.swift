@@ -20,6 +20,7 @@ class ProductCombinationViewController: UIViewController {
     var combinationElements: [CombinationElement] = []
     
     var combinationModel: [CSProductUnitModel] = []
+    var currencySymbol = ""
     
     // MARK: - View Life Cycle
     
@@ -116,23 +117,28 @@ extension ProductCombinationViewController: UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return self.combinationModel[section].variantCombination.count + 3
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        if indexPath.row == 3 {
+        let noOfCombinations = self.combinationModel[indexPath.section].variantCombination.count
+
+        if indexPath.row == noOfCombinations + 1 {
             let cell: ProductCombination2TableViewCell = tableView.dequeueReusableCellWithIdentifier("combinationCell2") as! ProductCombination2TableViewCell
             cell.delegate = self
             cell.tag = indexPath.section
             
-            cell.originalTextField.text = self.combinationModel[indexPath.section].price
+            
+            cell.originalPriceLabel.text = "Original Price (" + currencySymbol + ")"
+            cell.originalTextField.text = "\(self.combinationModel[indexPath.section].price)"
+            cell.discountLabel.text = "Discount (" + currencySymbol + ")"
             cell.discountTextField.text = String(self.combinationModel[indexPath.section].discount)
+            cell.finalPriceLabel.text = "Final Price (" + currencySymbol + ")"
             cell.finalPriceTextField.text = "\(cell.originalTextField.text.doubleValue * cell.discountTextField.text.doubleValue / 100)"
             cell.commissionTextField.text = self.combinationModel[indexPath.section].commission
             
             return cell
-        } else if indexPath.row == 4 {
+        } else if indexPath.row == noOfCombinations + 2 {
             let cell: ProductCombination3TableViewCell = tableView.dequeueReusableCellWithIdentifier("combinationCell3") as! ProductCombination3TableViewCell
             cell.delegate = self
             cell.tag = indexPath.section
@@ -145,16 +151,18 @@ extension ProductCombinationViewController: UITableViewDataSource, UITableViewDe
                 cell.availableSwitch.on = false
             }
             
-//            cell.availableSwitch.on = combinationElements[indexPath.section].isEnabled
+            return cell
+        } else if indexPath.row == noOfCombinations {
+            let cell: ProductCombinationTableViewCell = tableView.dequeueReusableCellWithIdentifier("combinationCell") as! ProductCombinationTableViewCell
+            cell.titleLabel.text = "SKU"
+            cell.valueLabel.text = self.combinationModel[indexPath.section].sku
             
             return cell
         }
         
         let cell: ProductCombinationTableViewCell = tableView.dequeueReusableCellWithIdentifier("combinationCell") as! ProductCombinationTableViewCell
-        cell.titleLabel.text = self.combinationModel[indexPath.section].variantCombination[indexPath.row].name
-        cell.valueLabel.text = self.combinationModel[indexPath.section].variantCombination[indexPath.row].value
-        cell.titleLabel.text = self.combinationModel[0].variantCombination[0].name
-        
+        cell.titleLabel.text = self.combinationModel[indexPath.section].variantCombination[indexPath.row].name.capitalizedString
+        cell.valueLabel.text = self.combinationModel[indexPath.section].variantCombination[indexPath.row].value.capitalizedString
         return cell
     }
     
@@ -179,10 +187,11 @@ extension ProductCombinationViewController: UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let noOfCombinations = self.combinationModel[indexPath.section].variantCombination.count
         
-        if indexPath.row == 3 {
+        if indexPath.row == noOfCombinations + 1 {
             return 158.0
-        } else if indexPath.row == 4 {
+        } else if indexPath.row == noOfCombinations + 2 {
             return 70.0
         }
         

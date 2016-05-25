@@ -153,6 +153,7 @@ class CountryStoreSetupViewController: UIViewController {
     func productCombinationAction(gesture: UIGestureRecognizer) {
         let productCombinations: ProductCombinationViewController = ProductCombinationViewController(nibName: "ProductCombinationViewController", bundle: nil)
         productCombinations.combinationModel = self.countryStoreSetupModel.product.productUnits
+        productCombinations.currencySymbol = self.countryStoreModel.currency.symbol
         self.navigationController!.pushViewController(productCombinations, animated: true)
     }
     
@@ -188,7 +189,7 @@ class CountryStoreSetupViewController: UIViewController {
 //        println(APIAtlas.getCountrySetupDetails)
 //        println(SessionManager.accessToken())
         
-        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/PH/EN/auth/country-setup?access_token=" + SessionManager.accessToken()
+        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/ph/en/auth/country-setup?access_token=" + SessionManager.accessToken()
         // APIAtlas.getCountrySetupDetails + SessionManager.accessToken()
         
         WebServiceManager.fireGetCountrySetupDetails(url, productId: "30571", code: self.countryStoreModel.code, actionHandler: { (successful, responseObject, requestErrorType) -> Void in

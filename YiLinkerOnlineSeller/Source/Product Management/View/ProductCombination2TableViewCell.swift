@@ -28,6 +28,9 @@ class ProductCombination2TableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        originalTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        discountTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
 
     }
 
@@ -55,5 +58,10 @@ extension ProductCombination2TableViewCell: UITextFieldDelegate {
         
         return true
     }
+    
+    func textFieldDidChange(textField: UITextField) {
+        self.finalPriceTextField.text = "\(self.originalTextField.text.doubleValue * self.discountTextField.text.doubleValue / 100)"
+    }
+    
 }
 

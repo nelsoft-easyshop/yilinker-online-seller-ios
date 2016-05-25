@@ -211,7 +211,7 @@ class CSProductUnitModel {
     var quantity: Int = 0
     var sku: String = ""
     var slug: String = ""
-    var price: String = ""
+    var price: Int = 0
     var discountedPrice: String = ""
     var appliedBaseDiscountPrice: String = ""
     var appliedDiscountPrice: String = ""
@@ -240,14 +240,14 @@ class CSProductUnitModel {
     class func parseDataWithDictionary(dictionary: NSDictionary) -> CSProductUnitModel! {
         
         var model = CSProductUnitModel()
-        println(dictionary)
+
         if dictionary.isKindOfClass(NSDictionary) {
             model.productId = ParseHelper.string(dictionary, key: "productId", defaultValue: "")
             model.productUnitId = ParseHelper.string(dictionary, key: "productUnitId", defaultValue: "")
             model.quantity = ParseHelper.int(dictionary, key: "quantity", defaultValue: 0)
             model.sku = ParseHelper.string(dictionary, key: "sku", defaultValue: "")
             model.slug = ParseHelper.string(dictionary, key: "slug", defaultValue: "")
-            model.price = ParseHelper.string(dictionary, key: "price", defaultValue: "")
+            model.price = ParseHelper.int(dictionary, key: "price", defaultValue: 0)
             model.discountedPrice = ParseHelper.string(dictionary, key: "discountedPrice", defaultValue: "")
             model.appliedBaseDiscountPrice = ParseHelper.string(dictionary, key: "appliedBaseDiscountPrice", defaultValue: "")
             model.appliedDiscountPrice = ParseHelper.string(dictionary, key: "appliedDiscountPrice", defaultValue: "")
@@ -291,14 +291,13 @@ class CSProductUnitModel {
             for promoInstanceNotYetStartedData in dictionary["promoInstanceNotYetStarted"] as! NSArray {
                 model.promoInstanceNotYetStarted.append(promoInstanceNotYetStartedElement)
             }
-//            println(dictionary["variantCombination"])
             // Variant Combinations
             var variantCombinationElement: VariantCombinationElement
             for variantCombinationData in dictionary["variantCombination"] as! NSArray {
                 variantCombinationElement.name = ParseHelper.string(variantCombinationData, key: "name", defaultValue: "")
                 variantCombinationElement.value = ParseHelper.string(variantCombinationData, key: "value", defaultValue: "")
-                variantCombinationElement.name = variantCombinationElement.name + "name"
-                variantCombinationElement.value = variantCombinationElement.value + "value"
+//                variantCombinationElement.name = variantCombinationElement.name + "name"
+//                variantCombinationElement.value = variantCombinationElement.value + "value"
                 model.variantCombination.append(variantCombinationElement)
             }
             

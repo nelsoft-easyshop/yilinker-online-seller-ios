@@ -30,7 +30,7 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        SessionManager.setAccessToken("M2Q5MDE4NTg4ZjgyZDNmMGFhN2VmZjI3YmFhYjYyODAxZDllYjNmNjg3YjZlZmIzNGVmZDIyMzE5ZmRhMDZiNA")
+        SessionManager.setAccessToken("ZTM2ZDMxMjhmMmQ3MTkxMzM4MjNjNjJlNDVjOWU4MmMwMzY2ODVkZDdjODMxNTI0NzI0YjM0NWY2NTdjM2QzMg")
         fireGetCountries()
         setupNavigationBar()
         
@@ -65,11 +65,10 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
     
     func fireGetCountries() {
         
-        println(APIAtlas.getCountrySetupDetails)
-        println(SessionManager.accessToken())
+//        println(APIAtlas.getCountrySetupDetails + SessionManager.accessToken())
         
         let url = "http://dev.seller.online.api.easydeal.ph/api/v3/ph/en/auth/country-setup/country-store?access_token=" + SessionManager.accessToken()
-        // APIAtlas.getCountrySetupDetails + SessionManager.accessToken()
+        
         
         WebServiceManager.fireGetListOfCountries(url, productId: "30571", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             
