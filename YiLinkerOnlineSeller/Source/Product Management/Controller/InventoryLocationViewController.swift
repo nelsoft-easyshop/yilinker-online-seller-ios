@@ -40,6 +40,8 @@ class InventoryLocationViewController: UIViewController {
     var isLocal: Bool = false
     var isLogisticThirdParty: Bool = false
     
+    var hud: MBProgressHUD?
+
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -185,6 +187,29 @@ class InventoryLocationViewController: UIViewController {
     
     func saveAction() {
         
+        
+        
+        if isLogisticThirdParty {
+            shippingFee = getShippingFeeValue()
+        } else {
+            shippingFee = "0.0"
+        }
+        
+       
+        self.fireSetWarehouse()
+        
+//        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/ph/en/auth/country-setup/setwarehouse?access_token=" + SessionManager.accessToken()
+//        WebServiceManager.fireSetWarehouse(APIAtlas.setWarehouse + SessionManager.accessToken(), parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+//        
+//            println(responseObject)
+//            
+//        })
+    }
+    
+    // MARK: - Requests
+    
+    func fireSetWarehouse() {
+        
         var priority = ""
         if isPrimary {
             priority = "1"
@@ -194,28 +219,78 @@ class InventoryLocationViewController: UIViewController {
             priority = "0"
         }
         
-        if isLogisticThirdParty {
-            shippingFee = getShippingFeeValue()
-        } else {
-            shippingFee = "0.0"
-        }
-        
         let parameters = ["code": code,
-                     "productId": productDetails.id,
-                 "userWarehouse": warehousesModel[selectedLocationIndex].user_warehouse.id,
-                     "logistics": selectedLogisticId,
-                         "isCod": isCOD,
-                   "handlingFee": shippingFee,
-                      "priority": priority]
+            "productId": productDetails.id,
+            "userWarehouse": warehousesModel[selectedLocationIndex].user_warehouse.id,
+            "logistics": selectedLogisticId,
+            "isCod": isCOD,
+            "handlingFee": shippingFee,
+            "priority": priority]
         
         println(parameters)
         
-        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/ph/en/auth/country-setup/setwarehouse?access_token=" + SessionManager.accessToken()
-        WebServiceManager.fireSetWarehouse(url, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        self.showHUD()
         
-            println(responseObject)
+        WebServiceManager.fireSetWarehouse(APIAtlas.setWarehouse + SessionManager.accessToken(), parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            
+            self.hud?.hide(true)
+            
+            if successful {
+                println("success")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: responseObject["message"] as! String)
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
             
         })
+        
+    }
+    
+    func fireRefreshToken() {
+        self.showHUD()
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.fireSetWarehouse()
+            } else {
+                //Show UIAlert and force the user to logout
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                })
+            }
+        })
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
     
     func backAction() {
@@ -358,9 +433,7 @@ extension InventoryLocationViewController: UITableViewDataSource, UITableViewDel
                     selectedLogisticId = logisticsModel[indexPath.row].id
                     
                     if selectedLogisticId == 2 {
-//                        if sections < 3 {
-                            sections += 1
-//                        }
+                        sections += 1
                         isLogisticThirdParty = true
                     } else {
                         if sections > 2 {
@@ -376,9 +449,7 @@ extension InventoryLocationViewController: UITableViewDataSource, UITableViewDel
                 selectedLogisticId = logisticsModel[indexPath.row].id
                 
                 if selectedLogisticId == 2 {
-//                    if sections < 3 {
-                        sections += 1
-//                    }
+                    sections += 1
                     isLogisticThirdParty = true
                 } else {
                     if sections > 2 {
