@@ -8,20 +8,14 @@
 
 import UIKit
 
-class CountryStoreViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class CountryStoreViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, EmptyViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
-    let countries = ["China", "Cambodia", "Indonesia", "Malaysia", "Philippines", "Thailand", "Viewtnam"]
-    let flags = ["http://wiki.erepublik.com/images/thumb/2/21/Flag-China.jpg/50px-Flag-China.jpg",
-        "http://media.worldflags101.com/i/flags/cambodia.gif",
-        "http://www.utazaselott.hu/userfiles/image/indonesian%20flag.jpg",
-        "https://jeetkunedomalaysia.files.wordpress.com/2014/10/jeet-kune-do-jkd-malaysia-flag.gif",
-        "http://images-mediawiki-sites.thefullwiki.org/04/3/7/0/95484361858573992.png",
-        "http://www.thailanguagehut.com/wp-content/uploads/2010/04/Thai-Flag.gif",
-        "http://www.therecycler.com/wp-content/uploads/2013/03/Vietnam-flag.jpg"]
-    
     var countryListModel: [CountryListModel] = []
+    
+    var hud: MBProgressHUD?
+    var emptyView: EmptyView?
     
     // MARK: - View Life Cycle
     
@@ -29,7 +23,7 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        SessionManager.setAccessToken("Y2U3OTg1YWUxOThmYzI0NjRkNDNlZjVmNzU0YTA4YjliNmY4MTk1ZDkyMDkxYTBjMTc2ODQ2YTI5NDBhM2NiMQ")
+        SessionManager.setAccessToken("NTQ3YThkZDJmZjY5ZjhiNTMyZmM0MDNlNjQ2YTkwYzkwOTBkZWZhZGYzNTUzNGNlMTcwNjYzYmE1YzhmNzlhNw")
         fireGetCountries()
         setupNavigationBar()
         
@@ -63,22 +57,15 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
     // MARK: - Requests
     
     func fireGetCountries() {
-        
-//        println(APIAtlas.getCountrySetupDetails + SessionManager.accessToken())
-        
-        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/ph/en/auth/country-setup/country-store?access_token=" + SessionManager.accessToken()
-        
-        
-        WebServiceManager.fireGetListOfCountries(url, productId: "30571", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+
+        self.showHUD()
+        WebServiceManager.fireGetListOfCountries(APIAtlas.getCountryList + SessionManager.accessToken(), productId: "30571", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+
+            self.hud?.hide(true)
             
             if successful {
-                
-//                println(responseObject)
-                
                 var responseList: NSArray = (responseObject["data"] as? NSArray)!
-
                 self.countryListModel = []
-                
                 if responseList.count != 0 {
                     
                     for response in responseList {
@@ -94,24 +81,84 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
                 }
                 
                 self.populateData()
-//                println(countryListModel.count)
                 
             } else {
-                println("Failed")
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
             }
             
         })
         
     }
     
+    func fireRefreshToken() {
+        self.showHUD()
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.fireGetCountries()
+            } else {
+                //Show UIAlert and force the user to logout
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                })
+            }
+        })
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    // MARK: - Empty View
+    
+    func addEmptyView() {
+        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+        self.emptyView?.frame = self.view.frame
+        self.emptyView!.delegate = self
+        self.view.addSubview(self.emptyView!)
+    }
+    
+    func didTapReload() {
+        self.emptyView?.removeFromSuperview()
+        if Reachability.isConnectedToNetwork() {
+            
+        } else {
+            addEmptyView()
+        }
+    }
+    
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.countryListModel.count != 0 {
-            return self.countryListModel.count
-        }
-        
-        return countries.count
+        return self.countryListModel.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -119,23 +166,11 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
         let cell: CountryStoreTableViewCell = tableView.dequeueReusableCellWithIdentifier("countryId") as! CountryStoreTableViewCell
         cell.selectionStyle = .None
         
-        if self.countryListModel.count != 0 {
-            cell.flagImageView.sd_setImageWithURL(NSURL(string: self.countryListModel[indexPath.row].flag))
-            cell.countryLabel.text = self.countryListModel[indexPath.row].name
-            if self.countryListModel[indexPath.row].isAvailable {
-                cell.availableLabel.hidden = false
-            }
-        } else {
-            cell.flagImageView.sd_setImageWithURL(NSURL(string: flags[indexPath.row]))
-            cell.countryLabel.text = countries[indexPath.row]
-            
-            let random = Int(arc4random_uniform(UInt32(3)))
-            
-            if random != 1 {
-                cell.availableLabel.hidden = false
-            }
+        cell.flagImageView.sd_setImageWithURL(NSURL(string: self.countryListModel[indexPath.row].flag))
+        cell.countryLabel.text = self.countryListModel[indexPath.row].name
+        if self.countryListModel[indexPath.row].isAvailable {
+            cell.availableLabel.hidden = false
         }
-        
         
         return cell
     }
