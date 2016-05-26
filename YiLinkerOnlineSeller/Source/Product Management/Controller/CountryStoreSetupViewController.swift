@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CountryStoreSetupViewController: UIViewController {
+class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
 
     // MARK: Delarations
     
@@ -61,13 +61,8 @@ class CountryStoreSetupViewController: UIViewController {
     var countryStoreSetupModel: CountrySetupModel!
     var countryStoreModel: CountryListModel!
     
-    let flags = ["http://wiki.erepublik.com/images/thumb/2/21/Flag-China.jpg/50px-Flag-China.jpg",
-        "http://media.worldflags101.com/i/flags/cambodia.gif",
-        "http://www.utazaselott.hu/userfiles/image/indonesian%20flag.jpg",
-        "https://jeetkunedomalaysia.files.wordpress.com/2014/10/jeet-kune-do-jkd-malaysia-flag.gif",
-        "http://images-mediawiki-sites.thefullwiki.org/04/3/7/0/95484361858573992.png",
-        "http://www.thailanguagehut.com/wp-content/uploads/2010/04/Thai-Flag.gif",
-        "http://www.therecycler.com/wp-content/uploads/2013/03/Vietnam-flag.jpg"]
+    var hud: MBProgressHUD?
+    var emptyView: EmptyView?
     
     // MARK: - View Life Cycle
     
@@ -185,25 +180,86 @@ class CountryStoreSetupViewController: UIViewController {
     
     func fireGetCountryStoreDetails() {
         
-//        println(APIAtlas.getCountrySetupDetails)
-//        println(SessionManager.accessToken())
+        self.showHUD()
         
-        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/ph/en/auth/country-setup?access_token=" + SessionManager.accessToken()
-        // APIAtlas.getCountrySetupDetails + SessionManager.accessToken()
-        
-        WebServiceManager.fireGetCountrySetupDetails(url, productId: "30571", code: self.countryStoreModel.code, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
-
-            println(responseObject)
+        WebServiceManager.fireGetCountrySetupDetails(APIAtlas.getCountrySetupDetails + SessionManager.accessToken(), productId: "30571", code: self.countryStoreModel.code, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            
+            self.hud?.hide(true)
             
             if successful {
                 self.countryStoreSetupModel = CountrySetupModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 self.populateCountryStoreSetupDetails()
             } else {
-                println("Failed")
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
             }
-        
+            
         })
         
+    }
+    
+    func fireRefreshToken() {
+        self.showHUD()
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.fireGetCountryStoreDetails()
+            } else {
+                //Show UIAlert and force the user to logout
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                })
+            }
+        })
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    // MARK: - Empty View
+    
+    func addEmptyView() {
+        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+        self.emptyView?.frame = self.view.frame
+        self.emptyView!.delegate = self
+        self.view.addSubview(self.emptyView!)
+    }
+    
+    func didTapReload() {
+        self.emptyView?.removeFromSuperview()
+        if Reachability.isConnectedToNetwork() {
+            
+        } else {
+            addEmptyView()
+        }
     }
     
 }
@@ -213,21 +269,17 @@ extension CountryStoreSetupViewController: UICollectionViewDataSource {
     // MARK: - Collection View Data Source
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if self.countryStoreSetupModel != nil {
+        if countryStoreSetupModel != nil {
             return self.countryStoreSetupModel.product.images.count
         }
-        return flags.count
+        return 0
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell: ProductImagesCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("ProductImagesIdentifier", forIndexPath: indexPath) as! ProductImagesCollectionViewCell
 
-        if self.countryStoreSetupModel != nil {
-            cell.setItemImage(self.countryStoreSetupModel.product.images[indexPath.row].imageLocation)
-        } else {
-            cell.setItemImage(flags[indexPath.row])
-        }
+        cell.setItemImage(self.countryStoreSetupModel.product.images[indexPath.row].imageLocation)
         
         cell.layer.cornerRadius = 3.0
         
