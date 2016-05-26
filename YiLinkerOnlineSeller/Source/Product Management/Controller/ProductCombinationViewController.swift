@@ -8,7 +8,14 @@
 
 import UIKit
 
-typealias CombinationElement = (original: String, discount: String, isEnabled: Bool)
+typealias CombinationElement = (original: String, discount: String, final: String, commission: String, isEnabled: Bool)
+
+struct TextFieldID {
+    static let originalPrice = 1
+    static let discount = 2
+    static let finalPrice = 3
+    static let commision = 4
+}
 
 class ProductCombinationViewController: UIViewController {
 
@@ -20,7 +27,15 @@ class ProductCombinationViewController: UIViewController {
     var combinationElements: [CombinationElement] = []
     
     var combinationModel: [CSProductUnitModel] = []
-    var currencySymbol = ""
+    var countryStoreModel: CountryListModel!
+    var productDetails: CSProductModel!
+    
+    var productUnitIds: [String] = []
+    var originalPrices: [String] = []
+    var discounts: [String] = []
+    var finalPrices: [String] = []
+    var commissions: [String] = []
+    var statuses: [Int] = []
     
     // MARK: - View Life Cycle
     
@@ -36,9 +51,22 @@ class ProductCombinationViewController: UIViewController {
             let element: CombinationElement
             element.original = ""
             element.discount = ""
+            element.final = ""
+            element.commission = ""
             element.isEnabled = true
             combinationElements.append(element)
         }
+        
+        for combination in combinationModel {
+            productUnitIds.append(combination.productUnitId)
+            originalPrices.append(String(combination.price))
+            discounts.append(String(combination.discount))
+            finalPrices.append(combination.discountedPrice)
+            commissions.append(combination.commission)
+            statuses.append(combination.status)
+        }
+        
+        self.tableView.reloadData()
         
     }
 
@@ -86,15 +114,29 @@ class ProductCombinationViewController: UIViewController {
     
     func saveAction() {
         
-        for combination in combinationElements {
+        for i in 0..<self.finalPrices.count {
             
-            if combination.isEnabled {
-                println("ON  -- \(combination.original) > \(combination.discount)")
-            } else {
-                println("OFF -- \(combination.original) > \(combination.discount)")
-            }
-
+            self.finalPrices[i] = String(stringInterpolationSegment: String(self.originalPrices[i]).doubleValue * String(stringInterpolationSegment: self.discounts[i]).doubleValue / 100)
+            
         }
+        
+        let parameters = ["code": countryStoreModel.code,
+                     "productId": productDetails.id,
+                 "productUnitId": productUnitIds.description,
+                         "price": originalPrices.description,
+               "discountedPrice": finalPrices.description,
+                    "commission": commissions.description,
+                        "status": statuses.description]
+        
+        println(parameters)
+        
+        print("response > ")
+        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/ph/en/auth/country-setup/save-combinations?access_token=" + SessionManager.accessToken()
+        WebServiceManager.fireSaveCombinations(url, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            
+            println(responseObject)
+            
+        })
         
     }
     
@@ -129,13 +171,16 @@ extension ProductCombinationViewController: UITableViewDataSource, UITableViewDe
             cell.tag = indexPath.section
             
             
-            cell.originalPriceLabel.text = "Original Price (" + currencySymbol + ")"
-            cell.originalTextField.text = "\(self.combinationModel[indexPath.section].price)"
-            cell.discountLabel.text = "Discount (" + currencySymbol + ")"
-            cell.discountTextField.text = String(self.combinationModel[indexPath.section].discount)
-            cell.finalPriceLabel.text = "Final Price (" + currencySymbol + ")"
+            cell.originalPriceLabel.text = "Original Price (" + countryStoreModel.currency.symbol + ")"
+            cell.originalTextField.text = self.originalPrices[indexPath.section]
+            
+            cell.discountLabel.text = "Discount (" + countryStoreModel.currency.symbol + ")"
+            cell.discountTextField.text = self.discounts[indexPath.section]
+            
+            cell.finalPriceLabel.text = "Final Price (" + countryStoreModel.currency.symbol + ")"
             cell.finalPriceTextField.text = "\(cell.originalTextField.text.doubleValue * cell.discountTextField.text.doubleValue / 100)"
-            cell.commissionTextField.text = self.combinationModel[indexPath.section].commission
+            
+            cell.commissionTextField.text = self.commissions[indexPath.section]
             
             return cell
         } else if indexPath.row == noOfCombinations + 2 {
@@ -143,9 +188,7 @@ extension ProductCombinationViewController: UITableViewDataSource, UITableViewDe
             cell.delegate = self
             cell.tag = indexPath.section
             
-            if self.combinationModel[indexPath.section].status == 0 {
-                cell.availableSwitch.on = false
-            } else if self.combinationModel[indexPath.section].status == 1 {
+            if self.combinationModel[indexPath.section].status == 1 {
                 cell.availableSwitch.on = true
             } else {
                 cell.availableSwitch.on = false
@@ -200,20 +243,24 @@ extension ProductCombinationViewController: UITableViewDataSource, UITableViewDe
     
     // MARK: - Product Combination View Delegate 2
     
-    func getText(view: ProductCombination2TableViewCell, section: Int, text: String, isOriginalPrice: Bool) {
+    func getText(view: ProductCombination2TableViewCell, section: Int, text: String, id: Int) {
 
-        if isOriginalPrice {
-            combinationElements[section].original = text
-        } else {
-            combinationElements[section].discount = text
+        if id == TextFieldID.originalPrice {
+            self.originalPrices[section] = text
+        } else if id == TextFieldID.discount {
+            self.discounts[section] = text
+        } else if id == TextFieldID.finalPrice {
+            self.finalPrices[section] = String(stringInterpolationSegment: String(self.originalPrices[section]).doubleValue * String(stringInterpolationSegment: self.discounts).doubleValue / 100)
+        } else if id == TextFieldID.commision {
+            self.commissions[section] = text
         }
+        
     }
     
     // MARK: - Product Combination View Delegate 3
     
-    func getSwitchValue(view: ProductCombination3TableViewCell, section: Int, value: Bool) {
-        
-        combinationElements[section].isEnabled = value
+    func getSwitchValue(view: ProductCombination3TableViewCell, section: Int, value: Int) {
+        self.statuses[section] = value
     }
     
 }

@@ -22,7 +22,6 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
         "http://www.therecycler.com/wp-content/uploads/2013/03/Vietnam-flag.jpg"]
     
     var countryListModel: [CountryListModel] = []
-    var tempAccessToken: String = "NmUzYmIzZGVkYzUwNGViYTY0YzExMzcyNTQxNzZjNjk2NWRjZDQ0YjZiNzg5NzE0NzRiZTU3NGQyNjNhNjZhYQ"
     
     // MARK: - View Life Cycle
     
@@ -30,7 +29,7 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        SessionManager.setAccessToken("ZTM2ZDMxMjhmMmQ3MTkxMzM4MjNjNjJlNDVjOWU4MmMwMzY2ODVkZDdjODMxNTI0NzI0YjM0NWY2NTdjM2QzMg")
+        SessionManager.setAccessToken("Y2U3OTg1YWUxOThmYzI0NjRkNDNlZjVmNzU0YTA4YjliNmY4MTk1ZDkyMDkxYTBjMTc2ODQ2YTI5NDBhM2NiMQ")
         fireGetCountries()
         setupNavigationBar()
         
@@ -86,6 +85,10 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
                         self.countryListModel.append(CountryListModel.parseDataWithDictionary(response))
                     }
                     
+                    let countryStoreSetup: CountryStoreSetupViewController = CountryStoreSetupViewController(nibName: "CountryStoreSetupViewController", bundle: nil)
+                    countryStoreSetup.countryStoreModel = self.countryListModel[1]
+                    self.navigationController?.pushViewController(countryStoreSetup, animated: true)
+                    
                 } else {
                     println("No countries.")
                 }
@@ -140,11 +143,10 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
     
     // MARK: - Table View Delegate
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAt45IndexPath indexPath: NSIndexPath) {
         
         let countryStoreSetup: CountryStoreSetupViewController = CountryStoreSetupViewController(nibName: "CountryStoreSetupViewController", bundle: nil)
         countryStoreSetup.countryStoreModel = self.countryListModel[indexPath.row]
-        countryStoreSetup.tempAccessToken = self.tempAccessToken
         self.navigationController?.pushViewController(countryStoreSetup, animated: true)
         
     }

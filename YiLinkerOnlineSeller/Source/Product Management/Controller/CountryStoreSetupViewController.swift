@@ -69,8 +69,6 @@ class CountryStoreSetupViewController: UIViewController {
         "http://www.thailanguagehut.com/wp-content/uploads/2010/04/Thai-Flag.gif",
         "http://www.therecycler.com/wp-content/uploads/2013/03/Vietnam-flag.jpg"]
     
-    var tempAccessToken: String = ""
-    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -153,7 +151,8 @@ class CountryStoreSetupViewController: UIViewController {
     func productCombinationAction(gesture: UIGestureRecognizer) {
         let productCombinations: ProductCombinationViewController = ProductCombinationViewController(nibName: "ProductCombinationViewController", bundle: nil)
         productCombinations.combinationModel = self.countryStoreSetupModel.product.productUnits
-        productCombinations.currencySymbol = self.countryStoreModel.currency.symbol
+        productCombinations.countryStoreModel = self.countryStoreModel
+        productCombinations.productDetails = self.countryStoreSetupModel.product
         self.navigationController!.pushViewController(productCombinations, animated: true)
     }
     
