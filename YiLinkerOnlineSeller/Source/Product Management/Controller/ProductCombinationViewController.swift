@@ -37,6 +37,8 @@ class ProductCombinationViewController: UIViewController {
     var commissions: [String] = []
     var statuses: [Int] = []
     
+    var hud: MBProgressHUD?
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -109,10 +111,24 @@ class ProductCombinationViewController: UIViewController {
         self.tableView.registerNib(UINib(nibName: "ProductCombination3TableViewCell", bundle: nil), forCellReuseIdentifier: "combinationCell3")
     }
     
+    func filledAllRequirements() -> Bool {
     
-    // MARK: - Actions
+        for i in 0..<statuses.count {
+            
+            if self.originalPrices[i] == "" || self.discounts[i] == "" {
+                return false
+            }
+            
+        }
+        
+        return true
+    }
     
-    func saveAction() {
+    // MARK: - Requests
+    
+    func fireSaveCombination() {
+        
+        self.showHUD()
         
         for i in 0..<self.finalPrices.count {
             
@@ -121,22 +137,108 @@ class ProductCombinationViewController: UIViewController {
         }
         
         let parameters = ["code": countryStoreModel.code,
-                     "productId": productDetails.id,
-                 "productUnitId": productUnitIds.description,
-                         "price": originalPrices.description,
-               "discountedPrice": finalPrices.description,
-                    "commission": commissions.description,
-                        "status": statuses.description]
+            "productId": productDetails.id,
+            "productUnitId": productUnitIds.description,
+            "price": originalPrices.description,
+            "discountedPrice": finalPrices.description,
+            "commission": commissions.description,
+            "status": statuses.description]
         
-        println(parameters)
-        
-        print("response > ")
-        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/ph/en/auth/country-setup/save-combinations?access_token=" + SessionManager.accessToken()
-        WebServiceManager.fireSaveCombinations(url, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        WebServiceManager.fireSaveCombinations(APIAtlas.saveCombinations + SessionManager.accessToken(), parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             
-            println(responseObject)
+            self.hud?.hide(true)
+            
+            if successful {
+                println("success")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: responseObject["message"] as! String)
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
             
         })
+        
+    }
+    
+    func fireRefreshToken() {
+        self.showHUD()
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.fireSaveCombination()
+            } else {
+                //Show UIAlert and force the user to logout
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                })
+            }
+        })
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    // MARK: - Actions
+    
+    func saveAction() {
+        
+        if filledAllRequirements() {
+//            self.fireSaveCombination()
+//            for i in 0..<self.finalPrices.count {
+//                
+//                self.finalPrices[i] = String(stringInterpolationSegment: String(self.originalPrices[i]).doubleValue * String(stringInterpolationSegment: self.discounts[i]).doubleValue / 100)
+//                
+//            }
+//            
+//            let parameters = ["code": countryStoreModel.code,
+//                "productId": productDetails.id,
+//                "productUnitId": productUnitIds.description,
+//                "price": originalPrices.description,
+//                "discountedPrice": finalPrices.description,
+//                "commission": commissions.description,
+//                "status": statuses.description]
+//            
+//            println(parameters)
+//            
+//            print("response > ")
+//            let url = "http://dev.seller.online.api.easydeal.ph/api/v3/ph/en/auth/country-setup/save-combinations?access_token=" + SessionManager.accessToken()
+//            WebServiceManager.fireSaveCombinations(APIAtlas.saveCombinations + SessionManager.accessToken(), parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+//                
+//                println(responseObject)
+//                
+//            })
+            self.fireSaveCombination()
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please fill up all fields.", title: "Cannot Proceed")
+        }
         
     }
     

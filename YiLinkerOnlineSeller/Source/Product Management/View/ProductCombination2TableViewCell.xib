@@ -19,7 +19,7 @@
                             <constraint firstAttribute="height" constant="30" id="JvG-gN-gex"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                        <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
                         <connections>
                             <outlet property="delegate" destination="KGk-i7-Jjw" id="C1i-AL-3Ei"/>
                         </connections>
@@ -30,7 +30,7 @@
                             <constraint firstAttribute="height" constant="30" id="5CD-fW-C86"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                        <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
                         <connections>
                             <outlet property="delegate" destination="KGk-i7-Jjw" id="jFU-FI-juy"/>
                         </connections>
@@ -60,7 +60,7 @@
                             <constraint firstAttribute="height" constant="30" id="WML-Mb-H34"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                        <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
                         <connections>
                             <outlet property="delegate" destination="KGk-i7-Jjw" id="4UT-Zb-Z5k"/>
                         </connections>
@@ -71,7 +71,7 @@
                             <constraint firstAttribute="height" constant="30" id="H1U-SM-QQi"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                        <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
                         <connections>
                             <outlet property="delegate" destination="KGk-i7-Jjw" id="hMV-LJ-PAw"/>
                         </connections>
