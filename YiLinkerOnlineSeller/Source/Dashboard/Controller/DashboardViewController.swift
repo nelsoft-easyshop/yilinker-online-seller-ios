@@ -93,6 +93,10 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             NSUserDefaults.standardUserDefaults().setObject(60, forKey: "cooldownKey")
         }
         
+        
+        let productManagement = ProductManagementViewController(nibName: "ProductManagementViewController", bundle: nil)
+        productManagement.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(productManagement, animated: true)
     }
     
     override func didReceiveMemoryWarning() {

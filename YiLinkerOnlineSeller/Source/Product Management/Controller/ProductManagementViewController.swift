@@ -97,7 +97,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         "http://flaglane.com/download/singaporean-flag/singaporean-flag-graphic.png",
         "http://flaglane.com/download/singaporean-flag/singaporean-flag-graphic.png",
         "http://flaglane.com/download/singaporean-flag/singaporean-flag-graphic.png"]
-    let languages = ["PH - EN", "UK - EN", "SG - CN", "CA - EN", "CA - FR", "RJ 08"]
+    let languages = ["EN", "EN", "CN", "EN", "FR", "08"]
     
     // MARK: - View Life Cycle
     
@@ -105,6 +105,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+//                SessionManager.setAccessToken("YjU4NTRhNzdmNDRmYjU1ODQ5MzVjZmIyN2E1ZjA4NWMxNTEwNDFhNmRlNTA2MDAyMzAxNWIzYWFjZTIxOTZiMA")
         self.showHUD()
         customizeNavigationBar()
         customizeViews()
@@ -426,6 +427,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     
     func requestGetProductList(status: String, key: String) {
         WebServiceManager.fireProductListRequestWithUrl(APIAtlas.managementGetProductList, status: String(status), keyword: key, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            
             if successful {
                     self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
                     if self.productModel.products.count != 0 {
@@ -452,13 +454,14 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 self.searchBarTextField.userInteractionEnabled = true
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
+
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    let data: NSArray = responseObject["data"] as! NSArray
-                    if data == NSArray() {
-                        self.emptyLabel.hidden = false
-                    } else {
+//                    let data: NSArray = responseObject["data"] as! NSArray
+//                    if data == NSArray() {
+//                        self.emptyLabel.hidden = false
+//                    } else {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: AlertStrings.failed)
-                    }
+//                    }
                 } else if requestErrorType == .AccessTokenExpired {
                     if status == "all" {
                         self.requestRefreshToken("get", status: Status.all)
@@ -624,6 +627,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
                 cell.statusLabel.hidden = false
                 cell.setCountries(flags)
                 cell.setLanguages(languages)
+//                cell.setCountriesAndLanguages(self.productModel.products[indexPath.row])
             }
             
             if SessionManager.isReseller() {
@@ -653,7 +657,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             cell.setProductImage(self.productModel.products[indexPath.row].image)
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
             cell.subTitleLabel.text = self.productModel.products[indexPath.row].category
-
+            cell.setCountriesAndLanguages(self.productModel.products[indexPath.row])
 //            if selectedIndex == 3 {
 //                cell.arrowImageView.hidden = true
 //                cell.decreaseAlpha()
@@ -679,7 +683,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
         if self.selectedIndex == 0 {
             return 88.0
         }
-        return 65.0
+        return 80.0
     }
     
     // MARK: - Table View Delegate
