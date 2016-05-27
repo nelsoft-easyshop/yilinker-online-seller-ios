@@ -90,6 +90,7 @@ class ProductManagementMenuTableViewController: UITableViewController {
         } else if indexPath.row == 1 {
             //Redirect to Stores Available
             let countryStore = CountryStoreViewController(nibName: "CountryStoreViewController", bundle: nil)
+            countryStore.productId = self.productModel.id
             self.navigationController?.pushViewController(countryStore, animated: true)
         } else if indexPath.row == 2 {
             //Redirect to Product Details

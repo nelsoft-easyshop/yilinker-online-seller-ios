@@ -21,7 +21,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Country Here" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Z7-6x-aiZ">
-                        <rect key="frame" x="69" y="11" width="156" height="21"/>
+                        <rect key="frame" x="69" y="11" width="225" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="8k4-gn-L4G"/>
                         </constraints>
@@ -52,7 +52,7 @@
                     <constraint firstItem="0Z7-6x-aiZ" firstAttribute="leading" secondItem="vID-7o-1Lh" secondAttribute="trailing" constant="4" id="730-Ed-I38"/>
                     <constraint firstItem="0Z7-6x-aiZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="8Yd-tH-i0r"/>
                     <constraint firstAttribute="trailing" secondItem="FH0-Vd-wsG" secondAttribute="trailing" constant="6" id="9AG-f9-TEF"/>
-                    <constraint firstItem="OTU-t9-4vA" firstAttribute="leading" secondItem="0Z7-6x-aiZ" secondAttribute="trailing" constant="8" id="bHp-p9-KXZ"/>
+                    <constraint firstItem="OTU-t9-4vA" firstAttribute="leading" secondItem="0Z7-6x-aiZ" secondAttribute="trailing" constant="-61" id="bHp-p9-KXZ"/>
                     <constraint firstItem="OTU-t9-4vA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="d5m-uU-p6E"/>
                     <constraint firstItem="vID-7o-1Lh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="npN-Y0-egg"/>
                     <constraint firstItem="vID-7o-1Lh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="9" id="r71-8f-nkb"/>

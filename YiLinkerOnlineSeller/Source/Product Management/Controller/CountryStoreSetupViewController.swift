@@ -64,6 +64,8 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
     var hud: MBProgressHUD?
     var emptyView: EmptyView?
     
+    var productId: String = ""
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -183,7 +185,7 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
         
         self.showHUD()
         
-        WebServiceManager.fireGetCountrySetupDetails(APIAtlas.getCountrySetupDetails + SessionManager.accessToken(), productId: "30571", code: self.countryStoreModel.code, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        WebServiceManager.fireGetCountrySetupDetails(APIAtlas.getCountrySetupDetails + SessionManager.accessToken(), productId: productId, code: self.countryStoreModel.code, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             
             self.hud?.hide(true)
             

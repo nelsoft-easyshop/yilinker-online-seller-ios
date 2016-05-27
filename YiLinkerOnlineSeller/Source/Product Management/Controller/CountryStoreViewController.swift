@@ -17,13 +17,15 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
     var hud: MBProgressHUD?
     var emptyView: EmptyView?
     
+    var productId: String = ""
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        SessionManager.setAccessToken("MTkzM2FmZTU5MWUwMDMzMGM3MzZiNDE5MzljMWViM2YxODI3MDE3YWU4MGYwNDIwNjlmYjZlMGY3NGI1NzI0NQ")
+        SessionManager.setAccessToken("YjU4NTRhNzdmNDRmYjU1ODQ5MzVjZmIyN2E1ZjA4NWMxNTEwNDFhNmRlNTA2MDAyMzAxNWIzYWFjZTIxOTZiMA")
         fireGetCountries()
         setupNavigationBar()
         
@@ -59,7 +61,7 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
     func fireGetCountries() {
 
         self.showHUD()
-        WebServiceManager.fireGetListOfCountries(APIAtlas.getCountryList + SessionManager.accessToken(), productId: "30571", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        WebServiceManager.fireGetListOfCountries(APIAtlas.getCountryList + SessionManager.accessToken(), productId: productId, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
 
             self.hud?.hide(true)
             
@@ -71,10 +73,6 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
                     for response in responseList {
                         self.countryListModel.append(CountryListModel.parseDataWithDictionary(response))
                     }
-                    
-                    let countryStoreSetup: CountryStoreSetupViewController = CountryStoreSetupViewController(nibName: "CountryStoreSetupViewController", bundle: nil)
-                    countryStoreSetup.countryStoreModel = self.countryListModel[1]
-                    self.navigationController?.pushViewController(countryStoreSetup, animated: true)
                     
                 } else {
                     println("No countries.")
