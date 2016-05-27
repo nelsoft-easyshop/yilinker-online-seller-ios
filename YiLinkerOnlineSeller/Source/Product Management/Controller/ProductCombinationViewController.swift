@@ -17,6 +17,10 @@ struct TextFieldID {
     static let commision = 4
 }
 
+protocol ProductCombinationViewControllerDelegate {
+    func reloadDetailsFromProductCombination(controller: ProductCombinationViewController)
+}
+
 class ProductCombinationViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
@@ -38,6 +42,8 @@ class ProductCombinationViewController: UIViewController {
     var statuses: [Int] = []
     
     var hud: MBProgressHUD?
+    
+    var delegate: ProductCombinationViewControllerDelegate?
     
     // MARK: - View Life Cycle
     
@@ -124,6 +130,13 @@ class ProductCombinationViewController: UIViewController {
         return true
     }
     
+    func savingDataSuccessful(message: String) {
+        
+        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: message)
+        delegate?.reloadDetailsFromProductCombination(self)
+        
+    }
+    
     // MARK: - Requests
     
     func fireSaveCombination() {
@@ -149,8 +162,7 @@ class ProductCombinationViewController: UIViewController {
             self.hud?.hide(true)
             
             if successful {
-                println("success")
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: responseObject["message"] as! String)
+                self.savingDataSuccessful(responseObject["message"] as! String)
             } else {
                 if requestErrorType == .ResponseError {
                     //Error in api requirements

@@ -109,7 +109,6 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
     func populateCountryStoreSetupDetails() {
         
         if countryStoreSetupModel != nil {
-            println(countryStoreSetupModel.product.id)
             self.storeNameValueLabel.text = self.countryStoreSetupModel.product.store
             
             self.productNameLabel.text = self.countryStoreSetupModel.product.title
@@ -145,6 +144,7 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
     
     func productCombinationAction(gesture: UIGestureRecognizer) {
         let productCombinations: ProductCombinationViewController = ProductCombinationViewController(nibName: "ProductCombinationViewController", bundle: nil)
+        productCombinations.delegate = self
         productCombinations.combinationModel = self.countryStoreSetupModel.product.productUnits
         productCombinations.countryStoreModel = self.countryStoreModel
         productCombinations.productDetails = self.countryStoreSetupModel.product
@@ -153,7 +153,7 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
     
     func primaryLocationAction(gesture: UIGestureRecognizer) {
         let inventoryLocation: InventoryLocationViewController = InventoryLocationViewController(nibName: "InventoryLocationViewController", bundle: nil)
-        println(self.countryStoreSetupModel.product)
+        inventoryLocation.delegate = self
         inventoryLocation.productDetails = self.countryStoreSetupModel.product
         inventoryLocation.code = self.countryStoreModel.code
         inventoryLocation.warehousesModel = self.countryStoreSetupModel.productWarehouses
@@ -163,6 +163,7 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
     
     func secondaryLocationAction(gesture: UIGestureRecognizer) {
         let inventoryLocation: InventoryLocationViewController = InventoryLocationViewController(nibName: "InventoryLocationViewController", bundle: nil)
+        inventoryLocation.delegate = self
         inventoryLocation.productDetails = self.countryStoreSetupModel.product
         inventoryLocation.code = self.countryStoreModel.code
         inventoryLocation.warehousesModel = self.countryStoreSetupModel.productWarehouses
@@ -187,6 +188,7 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
             self.hud?.hide(true)
             
             if successful {
+                self.countryStoreSetupModel = nil
                 self.countryStoreSetupModel = CountrySetupModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 self.populateCountryStoreSetupDetails()
             } else {
@@ -264,7 +266,7 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
     
 }
 
-extension CountryStoreSetupViewController: UICollectionViewDataSource {
+extension CountryStoreSetupViewController: UICollectionViewDataSource, InventoryLocationViewControllerDelegate, ProductCombinationViewControllerDelegate {
     
     // MARK: - Collection View Data Source
     
@@ -285,5 +287,18 @@ extension CountryStoreSetupViewController: UICollectionViewDataSource {
         
         return cell
     }
+    
+    // MARK: Inventory Location View Controller Delegate
+    
+    func reloadDetailsFromInventoryLocation(controller: InventoryLocationViewController) {
+        self.fireGetCountryStoreDetails()
+    }
+    
+    // MARK: Product Combination View Controller Delegate
+    
+    func reloadDetailsFromProductCombination(controller: ProductCombinationViewController) {
+        self.fireGetCountryStoreDetails()
+    }
+    
 }
 

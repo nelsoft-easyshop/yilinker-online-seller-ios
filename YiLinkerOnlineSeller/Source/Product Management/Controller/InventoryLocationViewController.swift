@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol InventoryLocationViewControllerDelegate {
+    func reloadDetailsFromInventoryLocation(controller: InventoryLocationViewController)
+}
+
 class InventoryLocationViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
@@ -42,6 +46,8 @@ class InventoryLocationViewController: UIViewController {
     
     var hud: MBProgressHUD?
 
+    var delegate: InventoryLocationViewControllerDelegate?
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -196,6 +202,13 @@ class InventoryLocationViewController: UIViewController {
         
     }
     
+    func savingDataSuccessful(message: String) {
+        
+        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: message)
+        delegate?.reloadDetailsFromInventoryLocation(self)
+        
+    }
+    
     // MARK: - Actions
     
     func saveAction() {
@@ -239,8 +252,7 @@ class InventoryLocationViewController: UIViewController {
             self.hud?.hide(true)
             
             if successful {
-                println("success")
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: responseObject["message"] as! String)
+                self.savingDataSuccessful(responseObject["message"] as! String)
             } else {
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
