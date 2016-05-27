@@ -9,21 +9,30 @@
 import UIKit
 
 protocol ProductCombination2TableViewCellDelegate {
-    func getText(view: ProductCombination2TableViewCell, section: Int, text: String, isOriginalPrice: Bool)
+    func getText(view: ProductCombination2TableViewCell, section: Int, text: String, id: Int)
 }
 
 class ProductCombination2TableViewCell: UITableViewCell {
 
     @IBOutlet weak var originalPriceLabel: UILabel!
     @IBOutlet weak var discountLabel: UILabel!
+    @IBOutlet weak var finalPriceLabel: UILabel!
+    @IBOutlet weak var commissionLabel: UILabel!
     @IBOutlet weak var originalTextField: UITextField!
     @IBOutlet weak var discountTextField: UITextField!
+    @IBOutlet weak var finalPriceTextField: UITextField!
+    @IBOutlet weak var commissionTextField: UITextField!
     
     var delegate: ProductCombination2TableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        originalTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        discountTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        finalPriceTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        commissionTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
 
     }
 
@@ -38,11 +47,7 @@ class ProductCombination2TableViewCell: UITableViewCell {
 extension ProductCombination2TableViewCell: UITextFieldDelegate {
     
     func textFieldDidEndEditing(textField: UITextField) {
-        if textField == originalTextField {
-            delegate?.getText(self, section: self.tag, text: textField.text, isOriginalPrice: true)
-        } else {
-            delegate?.getText(self, section: self.tag, text: textField.text, isOriginalPrice: false)
-        }
+        delegate?.getText(self, section: self.tag, text: textField.text, id: textField.tag)
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -51,5 +56,16 @@ extension ProductCombination2TableViewCell: UITextFieldDelegate {
         
         return true
     }
+    
+    func textFieldDidChange(textField: UITextField) {
+        
+        if textField == self.originalTextField || textField == self.discountTextField {
+            self.finalPriceTextField.text = "\(self.originalTextField.text.doubleValue * self.discountTextField.text.doubleValue / 100)"
+        }
+        
+        delegate?.getText(self, section: self.tag, text: textField.text, id: textField.tag)
+        
+    }
+    
 }
 

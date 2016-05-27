@@ -26,6 +26,8 @@
 		262BEDEB1CC71A6D004882DF /* CountryStoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 262BEDE91CC71A6D004882DF /* CountryStoreViewController.xib */; };
 		262BEDEE1CC71C8B004882DF /* CountryStoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262BEDEC1CC71C8B004882DF /* CountryStoreTableViewCell.swift */; };
 		262BEDEF1CC71C8B004882DF /* CountryStoreTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 262BEDED1CC71C8B004882DF /* CountryStoreTableViewCell.xib */; };
+		267DD2CA1CE9D089005D219A /* CountryListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267DD2C91CE9D089005D219A /* CountryListModel.swift */; };
+		267DD2CC1CEB1AE8005D219A /* CountrySetupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267DD2CB1CEB1AE8005D219A /* CountrySetupModel.swift */; };
 		26DD270E1CCA263F00A0D63B /* ProductCombination2TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DD270D1CCA263F00A0D63B /* ProductCombination2TableViewCell.swift */; };
 		798D81CC1C8686EB00D2A1F7 /* ActivityLogTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D7EA31C8686EA00D2A1F7 /* ActivityLogTableViewController.swift */; };
 		798D81CD1C8686EB00D2A1F7 /* ActivityLogTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D7EA41C8686EA00D2A1F7 /* ActivityLogTableViewController.xib */; };
@@ -784,18 +786,20 @@
 		26239D5B1CC8BC9B0099A87C /* InventoryLocationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InventoryLocationViewController.xib; sourceTree = "<group>"; };
 		26239D5E1CC8BF060099A87C /* ProductCombinationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductCombinationViewController.swift; sourceTree = "<group>"; };
 		26239D5F1CC8BF060099A87C /* ProductCombinationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductCombinationViewController.xib; sourceTree = "<group>"; };
-		2623DE1D1CC8CFA200EA241C /* ProductCombinationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductCombinationTableViewCell.swift; sourceTree = "<group>"; };
-		2623DE1E1CC8CFA200EA241C /* ProductCombinationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductCombinationTableViewCell.xib; sourceTree = "<group>"; };
-		2623DE221CC8DA2F00EA241C /* ProductCombination2TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductCombination2TableViewCell.xib; sourceTree = "<group>"; };
-		2623DE251CC8DA3C00EA241C /* ProductCombination3TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductCombination3TableViewCell.swift; sourceTree = "<group>"; };
-		2623DE261CC8DA3C00EA241C /* ProductCombination3TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductCombination3TableViewCell.xib; sourceTree = "<group>"; };
-		2623DE291CC8EB9500EA241C /* InventoryLocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InventoryLocationTableViewCell.swift; sourceTree = "<group>"; };
-		2623DE2A1CC8EB9500EA241C /* InventoryLocationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InventoryLocationTableViewCell.xib; sourceTree = "<group>"; };
+		2623DE1D1CC8CFA200EA241C /* ProductCombinationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductCombinationTableViewCell.swift; path = ../View/ProductCombinationTableViewCell.swift; sourceTree = "<group>"; };
+		2623DE1E1CC8CFA200EA241C /* ProductCombinationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductCombinationTableViewCell.xib; path = ../View/ProductCombinationTableViewCell.xib; sourceTree = "<group>"; };
+		2623DE221CC8DA2F00EA241C /* ProductCombination2TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductCombination2TableViewCell.xib; path = ../View/ProductCombination2TableViewCell.xib; sourceTree = "<group>"; };
+		2623DE251CC8DA3C00EA241C /* ProductCombination3TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductCombination3TableViewCell.swift; path = ../View/ProductCombination3TableViewCell.swift; sourceTree = "<group>"; };
+		2623DE261CC8DA3C00EA241C /* ProductCombination3TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductCombination3TableViewCell.xib; path = ../View/ProductCombination3TableViewCell.xib; sourceTree = "<group>"; };
+		2623DE291CC8EB9500EA241C /* InventoryLocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InventoryLocationTableViewCell.swift; path = ../View/InventoryLocationTableViewCell.swift; sourceTree = "<group>"; };
+		2623DE2A1CC8EB9500EA241C /* InventoryLocationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InventoryLocationTableViewCell.xib; path = ../View/InventoryLocationTableViewCell.xib; sourceTree = "<group>"; };
 		262BEDE81CC71A6D004882DF /* CountryStoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryStoreViewController.swift; sourceTree = "<group>"; };
 		262BEDE91CC71A6D004882DF /* CountryStoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryStoreViewController.xib; sourceTree = "<group>"; };
 		262BEDEC1CC71C8B004882DF /* CountryStoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryStoreTableViewCell.swift; sourceTree = "<group>"; };
 		262BEDED1CC71C8B004882DF /* CountryStoreTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryStoreTableViewCell.xib; sourceTree = "<group>"; };
-		26DD270D1CCA263F00A0D63B /* ProductCombination2TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductCombination2TableViewCell.swift; sourceTree = "<group>"; };
+		267DD2C91CE9D089005D219A /* CountryListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryListModel.swift; sourceTree = "<group>"; };
+		267DD2CB1CEB1AE8005D219A /* CountrySetupModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountrySetupModel.swift; sourceTree = "<group>"; };
+		26DD270D1CCA263F00A0D63B /* ProductCombination2TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductCombination2TableViewCell.swift; path = ../View/ProductCombination2TableViewCell.swift; sourceTree = "<group>"; };
 		3F811DA8573C81594070C601 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		5B825E81D3B27E563C7C3C53 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		798D7EA31C8686EA00D2A1F7 /* ActivityLogTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLogTableViewController.swift; sourceTree = "<group>"; };
@@ -1598,6 +1602,58 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		267DD2C71CE9CF28005D219A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				267DD2C91CE9D089005D219A /* CountryListModel.swift */,
+				267DD2CB1CEB1AE8005D219A /* CountrySetupModel.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		267DD2C81CE9CF34005D219A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2623DE1D1CC8CFA200EA241C /* ProductCombinationTableViewCell.swift */,
+				2623DE1E1CC8CFA200EA241C /* ProductCombinationTableViewCell.xib */,
+				2623DE221CC8DA2F00EA241C /* ProductCombination2TableViewCell.xib */,
+				26DD270D1CCA263F00A0D63B /* ProductCombination2TableViewCell.swift */,
+				2623DE251CC8DA3C00EA241C /* ProductCombination3TableViewCell.swift */,
+				2623DE261CC8DA3C00EA241C /* ProductCombination3TableViewCell.xib */,
+				2623DE291CC8EB9500EA241C /* InventoryLocationTableViewCell.swift */,
+				2623DE2A1CC8EB9500EA241C /* InventoryLocationTableViewCell.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		26A387D11CE9CEC500E98061 /* Country Store */ = {
+			isa = PBXGroup;
+			children = (
+				26A387D21CE9CEDF00E98061 /* Controller */,
+				267DD2C71CE9CF28005D219A /* Model */,
+				267DD2C81CE9CF34005D219A /* View */,
+			);
+			name = "Country Store";
+			path = "Product Management/Controller";
+			sourceTree = "<group>";
+		};
+		26A387D21CE9CEDF00E98061 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				262BEDE81CC71A6D004882DF /* CountryStoreViewController.swift */,
+				262BEDE91CC71A6D004882DF /* CountryStoreViewController.xib */,
+				26239D521CC872A90099A87C /* CountryStoreSetupViewController.swift */,
+				26239D531CC872A90099A87C /* CountryStoreSetupViewController.xib */,
+				26239D561CC8B55C0099A87C /* CommisionViewController.swift */,
+				26239D571CC8B55C0099A87C /* CommisionViewController.xib */,
+				26239D5A1CC8BC9B0099A87C /* InventoryLocationViewController.swift */,
+				26239D5B1CC8BC9B0099A87C /* InventoryLocationViewController.xib */,
+				26239D5E1CC8BF060099A87C /* ProductCombinationViewController.swift */,
+				26239D5F1CC8BF060099A87C /* ProductCombinationViewController.xib */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
 		798D7EA01C8686EA00D2A1F7 /* Source */ = {
 			isa = PBXGroup;
 			children = (
@@ -1618,6 +1674,7 @@
 				798D80011C8686EB00D2A1F7 /* My Points */,
 				798D80141C8686EB00D2A1F7 /* My Store */,
 				798D80521C8686EB00D2A1F7 /* Product Management */,
+				26A387D11CE9CEC500E98061 /* Country Store */,
 				798D807F1C8686EB00D2A1F7 /* Product Upload */,
 				798D80CE1C8686EB00D2A1F7 /* Resolution Center */,
 				798D80E71C8686EB00D2A1F7 /* Sales Report */,
@@ -2470,16 +2527,6 @@
 				798D805D1C8686EB00D2A1F7 /* ProductManagementViewController.xib */,
 				798D805E1C8686EB00D2A1F7 /* SelectDateViewController.swift */,
 				798D805F1C8686EB00D2A1F7 /* SelectDateViewController.xib */,
-				262BEDE81CC71A6D004882DF /* CountryStoreViewController.swift */,
-				262BEDE91CC71A6D004882DF /* CountryStoreViewController.xib */,
-				26239D521CC872A90099A87C /* CountryStoreSetupViewController.swift */,
-				26239D531CC872A90099A87C /* CountryStoreSetupViewController.xib */,
-				26239D561CC8B55C0099A87C /* CommisionViewController.swift */,
-				26239D571CC8B55C0099A87C /* CommisionViewController.xib */,
-				26239D5A1CC8BC9B0099A87C /* InventoryLocationViewController.swift */,
-				26239D5B1CC8BC9B0099A87C /* InventoryLocationViewController.xib */,
-				26239D5E1CC8BF060099A87C /* ProductCombinationViewController.swift */,
-				26239D5F1CC8BF060099A87C /* ProductCombinationViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2525,14 +2572,6 @@
 				798D807C1C8686EB00D2A1F7 /* ProductManagementTableViewCell.xib */,
 				798D807D1C8686EB00D2A1F7 /* RemovedItemTableViewCell.swift */,
 				798D807E1C8686EB00D2A1F7 /* RemovedItemTableViewCell.xib */,
-				2623DE1D1CC8CFA200EA241C /* ProductCombinationTableViewCell.swift */,
-				2623DE1E1CC8CFA200EA241C /* ProductCombinationTableViewCell.xib */,
-				2623DE221CC8DA2F00EA241C /* ProductCombination2TableViewCell.xib */,
-				26DD270D1CCA263F00A0D63B /* ProductCombination2TableViewCell.swift */,
-				2623DE251CC8DA3C00EA241C /* ProductCombination3TableViewCell.swift */,
-				2623DE261CC8DA3C00EA241C /* ProductCombination3TableViewCell.xib */,
-				2623DE291CC8EB9500EA241C /* InventoryLocationTableViewCell.swift */,
-				2623DE2A1CC8EB9500EA241C /* InventoryLocationTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3769,6 +3808,7 @@
 				798D83441C8686EB00D2A1F7 /* ProductDetailsModel.swift in Sources */,
 				798D831B1C8686EB00D2A1F7 /* ChangeAddressCollectionViewCell.swift in Sources */,
 				798D823E1C8686EB00D2A1F7 /* CandleStickChartView.swift in Sources */,
+				267DD2CA1CE9D089005D219A /* CountryListModel.swift in Sources */,
 				798D83671C8686EB00D2A1F7 /* ProductUploadCombinationTableViewController.swift in Sources */,
 				798D82EF1C8686EB00D2A1F7 /* MyPointsHistoryModel.swift in Sources */,
 				798D83DA1C8686EB00D2A1F7 /* SearchRiderNameModel.swift in Sources */,
@@ -4174,6 +4214,7 @@
 				798D846D1C8686EB00D2A1F7 /* DynamicRoundedLabel.swift in Sources */,
 				798D82701C8686EB00D2A1F7 /* CandleStickChartRenderer.swift in Sources */,
 				798D84081C8686EB00D2A1F7 /* DeactivateModalViewController.swift in Sources */,
+				267DD2CC1CEB1AE8005D219A /* CountrySetupModel.swift in Sources */,
 				798D84401C8686EB00D2A1F7 /* TransactionsFilterItemModel.swift in Sources */,
 				798D84291C8686EB00D2A1F7 /* TransactionDetailsTableViewController.swift in Sources */,
 				798D835D1C8686EB00D2A1F7 /* RemovedItemTableViewCell.swift in Sources */,
