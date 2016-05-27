@@ -155,7 +155,8 @@ class ProductCombinationViewController: UIViewController {
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+//                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: "Cannot Proceed")
                 } else if requestErrorType == .AccessTokenExpired {
                     self.fireRefreshToken()
                 } else if requestErrorType == .PageNotFound {
@@ -211,30 +212,6 @@ class ProductCombinationViewController: UIViewController {
     func saveAction() {
         
         if filledAllRequirements() {
-//            self.fireSaveCombination()
-//            for i in 0..<self.finalPrices.count {
-//                
-//                self.finalPrices[i] = String(stringInterpolationSegment: String(self.originalPrices[i]).doubleValue * String(stringInterpolationSegment: self.discounts[i]).doubleValue / 100)
-//                
-//            }
-//            
-//            let parameters = ["code": countryStoreModel.code,
-//                "productId": productDetails.id,
-//                "productUnitId": productUnitIds.description,
-//                "price": originalPrices.description,
-//                "discountedPrice": finalPrices.description,
-//                "commission": commissions.description,
-//                "status": statuses.description]
-//            
-//            println(parameters)
-//            
-//            print("response > ")
-//            let url = "http://dev.seller.online.api.easydeal.ph/api/v3/ph/en/auth/country-setup/save-combinations?access_token=" + SessionManager.accessToken()
-//            WebServiceManager.fireSaveCombinations(APIAtlas.saveCombinations + SessionManager.accessToken(), parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
-//                
-//                println(responseObject)
-//                
-//            })
             self.fireSaveCombination()
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please fill up all fields.", title: "Cannot Proceed")
@@ -247,7 +224,12 @@ class ProductCombinationViewController: UIViewController {
     }
     
     func checkAction() {
-        self.navigationController?.popViewControllerAnimated(true)
+        if filledAllRequirements() {
+            self.fireSaveCombination()
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please fill up all fields.", title: "Cannot Proceed")
+        }
+//        self.navigationController?.popViewControllerAnimated(true)
     }
     
 }

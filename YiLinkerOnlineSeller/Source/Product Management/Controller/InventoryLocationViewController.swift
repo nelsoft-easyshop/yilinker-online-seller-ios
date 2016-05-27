@@ -103,10 +103,23 @@ class InventoryLocationViewController: UIViewController {
         
         self.tableView.registerNib(UINib(nibName: "InventoryLocationTableViewCell", bundle: nil), forCellReuseIdentifier: "locationId")
         
+        var priorityIndex: Int = -1
+        
+        for i in 0..<self.warehousesModel.count {
+        
+            if isPrimary && self.warehousesModel[i].priority == 1 || !isPrimary && self.warehousesModel[i].priority == 2 {
+                priorityIndex = i
+                break
+            }
+            
+        }
+        
         for i in 0..<self.warehousesModel.count {
             if isPrimary && self.warehousesModel[i].priority == 2 || !isPrimary && self.warehousesModel[i].priority == 1 {
-                self.warehousesModel.removeAtIndex(i)
-                break
+                if self.warehousesModel[i].user_warehouse.address == self.warehousesModel[priorityIndex].user_warehouse.address {
+                    self.warehousesModel.removeAtIndex(i)
+                    break
+                }
             }
         }
         
@@ -186,29 +199,19 @@ class InventoryLocationViewController: UIViewController {
     // MARK: - Actions
     
     func saveAction() {
-        
-        
+
+        self.fireSetWarehouse()
+    }
+    
+    // MARK: - Requests
+    
+    func fireSetWarehouse() {
         
         if isLogisticThirdParty {
             shippingFee = getShippingFeeValue()
         } else {
             shippingFee = "0.0"
         }
-        
-       
-        self.fireSetWarehouse()
-        
-//        let url = "http://dev.seller.online.api.easydeal.ph/api/v3/ph/en/auth/country-setup/setwarehouse?access_token=" + SessionManager.accessToken()
-//        WebServiceManager.fireSetWarehouse(APIAtlas.setWarehouse + SessionManager.accessToken(), parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
-//        
-//            println(responseObject)
-//            
-//        })
-    }
-    
-    // MARK: - Requests
-    
-    func fireSetWarehouse() {
         
         var priority = ""
         if isPrimary {
@@ -242,7 +245,8 @@ class InventoryLocationViewController: UIViewController {
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+//                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: "Cannot Proceed")
                 } else if requestErrorType == .AccessTokenExpired {
                     self.fireRefreshToken()
                 } else if requestErrorType == .PageNotFound {
@@ -298,7 +302,8 @@ class InventoryLocationViewController: UIViewController {
     }
     
     func checkAction() {
-        self.navigationController?.popViewControllerAnimated(true)
+        self.fireSetWarehouse()
+//        self.navigationController?.popViewControllerAnimated(true)
     }
     
 }
