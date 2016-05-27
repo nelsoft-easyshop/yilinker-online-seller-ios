@@ -91,12 +91,12 @@ class ProductManagementAllTableViewCell: UITableViewCell {
         
         // add images
         let random = Int(arc4random_uniform(7))
-        
-        for i in 0..<random {
+
+        for i in 0..<5 {
             
             let flagImageView: UIImageView = UIImageView(frame: CGRectMake(CGRectGetWidth(storesLabel.frame) + (CGFloat(i) * 24.0), 2.5, 20, 10))
 
-            if i > 4 {
+            if i > 3 {
                 flagImageView.image = UIImage(named: "flags_more")
             } else {
                 flagImageView.sd_setImageWithURL(NSURL(string: countries[i]))
@@ -119,22 +119,22 @@ class ProductManagementAllTableViewCell: UITableViewCell {
         }
         
         // add labels
-        var limiter = 3 // screen with is 320 or below
+        var limiter = 4 // screen with is 320 or below
         if UIScreen.mainScreen().bounds.width > 320 {
-            limiter = 4
+            limiter = 5
         }
         
         let random = Int(arc4random_uniform(7))
-        
-        for i in 0..<random/*self.tag*/ {
+
+        for i in 0..<5/*self.tag*/ {
             
-            if i > 2 {
-                let flagImageView: UIImageView = UIImageView(frame: CGRectMake(CGRectGetWidth(languageLabel.frame) + 100/*179*/, 2.5, 20, 10))
+            if i > 3 {
+                let flagImageView: UIImageView = UIImageView(frame: CGRectMake(CGRectGetWidth(languageLabel.frame) + 92, 2.5, 20, 10))
                 flagImageView.image = UIImage(named: "flags_more")
                 self.languageLabel.addSubview(flagImageView)
                 break
             } else {
-                let langLabel: UILabel = UILabel(frame: CGRectMake(CGRectGetWidth(languageLabel.frame) + (CGFloat(i) * 33.0), 2.5, 30, 10))
+                let langLabel: UILabel = UILabel(frame: CGRectMake(CGRectGetWidth(languageLabel.frame) + (CGFloat(i) * 23.0), 2.5, 20, 10))
                 langLabel.backgroundColor = Constants.Colors.lightBackgroundColor
                 langLabel.font = UIFont(name: "Helvetica-Light", size: 7.0)
                 langLabel.text = language[i]
@@ -143,6 +143,66 @@ class ProductManagementAllTableViewCell: UITableViewCell {
             }
         }
         
+    }
+    
+    func setCountriesAndLanguages(product: ProductManagementProductsModel) {
+        
+        var limiter = 3 // screen with is 320 or below
+        if UIScreen.mainScreen().bounds.width > 320 {
+            limiter = 4
+        }
+        
+        // Countries
+        
+        // remove previous images
+        for view in self.storesLabel.subviews {
+            if let imgview = view as? UIImageView {
+                imgview.removeFromSuperview()
+            }
+        }
+        
+        // add images
+        
+        for i in 0..<product.selectedCountries.count {
+            
+            let flagImageView: UIImageView = UIImageView(frame: CGRectMake(CGRectGetWidth(storesLabel.frame) + (CGFloat(i) * 24.0), 2.5, 20, 10))
+            if i > limiter {
+                flagImageView.image = UIImage(named: "flags_more")
+            } else {
+                flagImageView.sd_setImageWithURL(NSURL(string: product.selectedCountries[i].image))
+            }
+            self.storesLabel.addSubview(flagImageView)
+            
+        }
+        
+        
+        // Languages
+        
+        // remove previous labels and images
+        for view in self.languageLabel.subviews {
+            if let lblview = view as? UILabel {
+                lblview.removeFromSuperview()
+            } else if let imgview = view as? UIImageView {
+                imgview.removeFromSuperview()
+            }
+        }
+        
+        for i in 0..<product.selectedLanguages.count {
+            
+            if i > limiter {
+                let flagImageView: UIImageView = UIImageView(frame: CGRectMake(CGRectGetWidth(languageLabel.frame) + 100/*179*/, 2.5, 20, 10))
+                flagImageView.image = UIImage(named: "flags_more")
+                self.languageLabel.addSubview(flagImageView)
+                break
+            } else {
+                let langLabel: UILabel = UILabel(frame: CGRectMake(CGRectGetWidth(languageLabel.frame) + (CGFloat(i) * 23.0), 2.5, 20, 10))
+                langLabel.backgroundColor = Constants.Colors.lightBackgroundColor
+                langLabel.font = UIFont(name: "Helvetica-Light", size: 7.0)
+                langLabel.text = /*product.selectedLanguages[i].countryCode + " - " + */product.selectedLanguages[i].languageCode.uppercaseString
+                langLabel.textAlignment = .Center
+                self.languageLabel.addSubview(langLabel)
+            }
+        }
     }
     
 }

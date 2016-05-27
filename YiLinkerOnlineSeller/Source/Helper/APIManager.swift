@@ -68,7 +68,7 @@ struct APIAtlas {
     static let checkIfCategoryNameExists = "v1/auth/category/checkIfCategoryExists"
     static let getAllCategoryProducts    = "v1/auth/category/getAllCategoryProducts"
     
-    static let managementGetProductList = "v1/auth/product/getProductList"
+    static let managementGetProductList = APIAtlas.generateV3URL("auth/product/getProductList")
     static let managementUpdateProductStatus = "v1/auth/product/updateProductStatus"
     static let editAddress = "v1/auth/address/editUserAddress"
     static let provinceUrl = "v1/location/getAllProvinces"
