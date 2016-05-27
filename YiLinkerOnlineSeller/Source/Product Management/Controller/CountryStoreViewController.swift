@@ -74,11 +74,6 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
                         self.countryListModel.append(CountryListModel.parseDataWithDictionary(response))
                     }
                     
-                    let countryStoreSetup: CountryStoreSetupViewController = CountryStoreSetupViewController(nibName: "CountryStoreSetupViewController", bundle: nil)
-                    countryStoreSetup.productId = self.productId
-                    countryStoreSetup.countryStoreModel = self.countryListModel[1]
-                    self.navigationController?.pushViewController(countryStoreSetup, animated: true)
-                    
                 } else {
                     println("No countries.")
                 }
