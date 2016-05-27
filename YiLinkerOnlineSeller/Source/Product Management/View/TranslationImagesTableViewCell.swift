@@ -9,6 +9,8 @@
 import UIKit
 
 class TranslationImagesTableViewCell: UITableViewCell {
+    
+    static let reuseIdentifier = "TranslationImagesTableViewCell"
 
     override func awakeFromNib() {
         super.awakeFromNib()

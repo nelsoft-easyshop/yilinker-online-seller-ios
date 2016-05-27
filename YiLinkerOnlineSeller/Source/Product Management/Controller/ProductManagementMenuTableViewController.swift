@@ -86,7 +86,9 @@ class ProductManagementMenuTableViewController: UITableViewController {
         
         if indexPath.row == 0 {
             //Redirect to Language Translation
-            Toast.displayToastWithMessage("Language Translation", duration: 1.5, view: self.view)
+            let languageTranslation = LanguageTranslationPickerTableViewController(nibName: "LanguageTranslationPickerTableViewController", bundle: nil)
+            languageTranslation.productId = productModel.id
+            self.navigationController?.pushViewController(languageTranslation, animated: true)
         } else if indexPath.row == 1 {
             //Redirect to Stores Available
             let countryStore = CountryStoreViewController(nibName: "CountryStoreViewController", bundle: nil)

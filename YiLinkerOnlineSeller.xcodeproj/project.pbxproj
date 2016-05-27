@@ -717,6 +717,17 @@
 		798D847D1C8686EB00D2A1F7 /* TextViewAutoHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D81C71C8686EB00D2A1F7 /* TextViewAutoHeight.swift */; };
 		798D847E1C8686EB00D2A1F7 /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D81C91C8686EB00D2A1F7 /* EmptyView.xib */; };
 		798D847F1C8686EB00D2A1F7 /* SaveButtonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D81CA1C8686EB00D2A1F7 /* SaveButtonView.xib */; };
+		79CCB65A1CF6A41900E38612 /* LanguageTranslationPickerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CCB6581CF6A41900E38612 /* LanguageTranslationPickerTableViewController.swift */; };
+		79CCB65B1CF6A41900E38612 /* LanguageTranslationPickerTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79CCB6591CF6A41900E38612 /* LanguageTranslationPickerTableViewController.xib */; };
+		79CCB65D1CF6AD1200E38612 /* ProductLanguageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CCB65C1CF6AD1200E38612 /* ProductLanguageModel.swift */; };
+		79CCB6601CF6D60800E38612 /* LanguageTranslationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CCB65E1CF6D60800E38612 /* LanguageTranslationTableViewController.swift */; };
+		79CCB6611CF6D60800E38612 /* LanguageTranslationTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79CCB65F1CF6D60800E38612 /* LanguageTranslationTableViewController.xib */; };
+		79CCB6681CF6F47D00E38612 /* TranslationInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CCB6661CF6F47D00E38612 /* TranslationInputTableViewCell.swift */; };
+		79CCB6691CF6F47D00E38612 /* TranslationInputTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79CCB6671CF6F47D00E38612 /* TranslationInputTableViewCell.xib */; };
+		79D8D6DF1CF8306D00A8D535 /* TranslationImagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D8D6DD1CF8306D00A8D535 /* TranslationImagesTableViewCell.swift */; };
+		79D8D6E01CF8306D00A8D535 /* TranslationImagesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79D8D6DE1CF8306D00A8D535 /* TranslationImagesTableViewCell.xib */; };
+		79D8D6E31CF8397700A8D535 /* TranslationProductGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D8D6E11CF8397700A8D535 /* TranslationProductGroupTableViewCell.swift */; };
+		79D8D6E41CF8397700A8D535 /* TranslationProductGroupTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79D8D6E21CF8397700A8D535 /* TranslationProductGroupTableViewCell.xib */; };
 		79EF66261CA107DF000CDA6B /* SuggestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EF66221CA107DF000CDA6B /* SuggestionViewController.swift */; };
 		79EF66271CA107DF000CDA6B /* SuggestionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EF66231CA107DF000CDA6B /* SuggestionViewController.xib */; };
 		79EF66281CA107DF000CDA6B /* SuggestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EF66251CA107DF000CDA6B /* SuggestionViewModel.swift */; };
@@ -1503,6 +1514,17 @@
 		798D81C91C8686EB00D2A1F7 /* EmptyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
 		798D81CA1C8686EB00D2A1F7 /* SaveButtonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SaveButtonView.xib; sourceTree = "<group>"; };
 		798D81CB1C8686EB00D2A1F7 /* YiLinkerOnlineSeller-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YiLinkerOnlineSeller-Bridging-Header.h"; sourceTree = "<group>"; };
+		79CCB6581CF6A41900E38612 /* LanguageTranslationPickerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageTranslationPickerTableViewController.swift; sourceTree = "<group>"; };
+		79CCB6591CF6A41900E38612 /* LanguageTranslationPickerTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LanguageTranslationPickerTableViewController.xib; sourceTree = "<group>"; };
+		79CCB65C1CF6AD1200E38612 /* ProductLanguageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductLanguageModel.swift; sourceTree = "<group>"; };
+		79CCB65E1CF6D60800E38612 /* LanguageTranslationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageTranslationTableViewController.swift; sourceTree = "<group>"; };
+		79CCB65F1CF6D60800E38612 /* LanguageTranslationTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LanguageTranslationTableViewController.xib; sourceTree = "<group>"; };
+		79CCB6661CF6F47D00E38612 /* TranslationInputTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationInputTableViewCell.swift; sourceTree = "<group>"; };
+		79CCB6671CF6F47D00E38612 /* TranslationInputTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TranslationInputTableViewCell.xib; sourceTree = "<group>"; };
+		79D8D6DD1CF8306D00A8D535 /* TranslationImagesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationImagesTableViewCell.swift; sourceTree = "<group>"; };
+		79D8D6DE1CF8306D00A8D535 /* TranslationImagesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TranslationImagesTableViewCell.xib; sourceTree = "<group>"; };
+		79D8D6E11CF8397700A8D535 /* TranslationProductGroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationProductGroupTableViewCell.swift; sourceTree = "<group>"; };
+		79D8D6E21CF8397700A8D535 /* TranslationProductGroupTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TranslationProductGroupTableViewCell.xib; sourceTree = "<group>"; };
 		79EF66221CA107DF000CDA6B /* SuggestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionViewController.swift; sourceTree = "<group>"; };
 		79EF66231CA107DF000CDA6B /* SuggestionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SuggestionViewController.xib; sourceTree = "<group>"; };
 		79EF66251CA107DF000CDA6B /* SuggestionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionViewModel.swift; sourceTree = "<group>"; };
@@ -2480,6 +2502,10 @@
 				26239D5B1CC8BC9B0099A87C /* InventoryLocationViewController.xib */,
 				26239D5E1CC8BF060099A87C /* ProductCombinationViewController.swift */,
 				26239D5F1CC8BF060099A87C /* ProductCombinationViewController.xib */,
+				79CCB6581CF6A41900E38612 /* LanguageTranslationPickerTableViewController.swift */,
+				79CCB6591CF6A41900E38612 /* LanguageTranslationPickerTableViewController.xib */,
+				79CCB65E1CF6D60800E38612 /* LanguageTranslationTableViewController.swift */,
+				79CCB65F1CF6D60800E38612 /* LanguageTranslationTableViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2494,6 +2520,7 @@
 				798D80651C8686EB00D2A1F7 /* ProductManagementProductModel.swift */,
 				798D80661C8686EB00D2A1F7 /* ProductManagementProductsModel.swift */,
 				798D80671C8686EB00D2A1F7 /* ProductUnitsModel.swift */,
+				79CCB65C1CF6AD1200E38612 /* ProductLanguageModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2533,6 +2560,12 @@
 				2623DE261CC8DA3C00EA241C /* ProductCombination3TableViewCell.xib */,
 				2623DE291CC8EB9500EA241C /* InventoryLocationTableViewCell.swift */,
 				2623DE2A1CC8EB9500EA241C /* InventoryLocationTableViewCell.xib */,
+				79CCB6661CF6F47D00E38612 /* TranslationInputTableViewCell.swift */,
+				79CCB6671CF6F47D00E38612 /* TranslationInputTableViewCell.xib */,
+				79D8D6DD1CF8306D00A8D535 /* TranslationImagesTableViewCell.swift */,
+				79D8D6DE1CF8306D00A8D535 /* TranslationImagesTableViewCell.xib */,
+				79D8D6E11CF8397700A8D535 /* TranslationProductGroupTableViewCell.swift */,
+				79D8D6E21CF8397700A8D535 /* TranslationProductGroupTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3494,6 +3527,7 @@
 				798D82DA1C8686EB00D2A1F7 /* RegisterTableViewCell.xib in Resources */,
 				26239D591CC8B55C0099A87C /* CommisionViewController.xib in Resources */,
 				798D82A31C8686EB00D2A1F7 /* Info.plist in Resources */,
+				79D8D6E41CF8397700A8D535 /* TranslationProductGroupTableViewCell.xib in Resources */,
 				798D82DE1C8686EB00D2A1F7 /* SimplifiedRegistrationUICollectionViewCell.xib in Resources */,
 				798D81DE1C8686EB00D2A1F7 /* PayoutEarningsViewController.xib in Resources */,
 				798D845A1C8686EB00D2A1F7 /* TransactionProductDetailsHeaderView.xib in Resources */,
@@ -3527,10 +3561,12 @@
 				798D83AF1C8686EB00D2A1F7 /* NewDisputeTableViewController2.xib in Resources */,
 				798D82AE1C8686EB00D2A1F7 /* FollowerTableViewCell.xib in Resources */,
 				798D81D31C8686EB00D2A1F7 /* ActivityLogTableViewCell.xib in Resources */,
+				79CCB6611CF6D60800E38612 /* LanguageTranslationTableViewController.xib in Resources */,
 				798D845C1C8686EB00D2A1F7 /* TransactionProductDetailsTableViewCell.xib in Resources */,
 				798D83901C8686EB00D2A1F7 /* ProductUploadDetailHeaderViewCollectionViewCell.xib in Resources */,
 				798D83CF1C8686EB00D2A1F7 /* FilterHeaderSectiionViewController.xib in Resources */,
 				798D833B1C8686EB00D2A1F7 /* ProductDetailsViewController.xib in Resources */,
+				79D8D6E01CF8306D00A8D535 /* TranslationImagesTableViewCell.xib in Resources */,
 				2623DE241CC8DA2F00EA241C /* ProductCombination2TableViewCell.xib in Resources */,
 				798D83701C8686EB00D2A1F7 /* SuccessUploadViewController.xib in Resources */,
 				798D839C1C8686EB00D2A1F7 /* ProductUploadPriceTableViewCell.xib in Resources */,
@@ -3582,6 +3618,7 @@
 				798D822E1C8686EB00D2A1F7 /* DashBoardItemCollectionViewCell.xib in Resources */,
 				F7C40FDB1B983CD90091C16C /* truck.png in Resources */,
 				798D82A71C8686EB00D2A1F7 /* GoogleService-Info.plist in Resources */,
+				79CCB65B1CF6A41900E38612 /* LanguageTranslationPickerTableViewController.xib in Resources */,
 				798D832F1C8686EB00D2A1F7 /* StoreInfoQrCodeTableViewCell.xib in Resources */,
 				798D83601C8686EB00D2A1F7 /* ProductUploadAttributeListTableViewController.xib in Resources */,
 				798D83371C8686EB00D2A1F7 /* EdititemsViewController.xib in Resources */,
@@ -3623,6 +3660,7 @@
 				798D83DE1C8686EB00D2A1F7 /* FilterCalendarTableViewCell.xib in Resources */,
 				798D83281C8686EB00D2A1F7 /* StoreInfoAddressTableViewCell.xib in Resources */,
 				798D838C1C8686EB00D2A1F7 /* ProductUploadCombinationTableViewCell.xib in Resources */,
+				79CCB6691CF6F47D00E38612 /* TranslationInputTableViewCell.xib in Resources */,
 				2623DE2C1CC8EB9500EA241C /* InventoryLocationTableViewCell.xib in Resources */,
 				798D84181C8686EB00D2A1F7 /* AffiliateStoreHeaderView.xib in Resources */,
 				798D82A81C8686EB00D2A1F7 /* old_GoogleService-Info.plist in Resources */,
@@ -3808,6 +3846,7 @@
 				798D83A31C8686EB00D2A1F7 /* ProductUploadTextViewTableViewCell.swift in Sources */,
 				798D83F51C8686EB00D2A1F7 /* ResellerGetProductModel.swift in Sources */,
 				798D83D01C8686EB00D2A1F7 /* FilterResultsRiderNameViewController.swift in Sources */,
+				79CCB65D1CF6AD1200E38612 /* ProductLanguageModel.swift in Sources */,
 				798D843C1C8686EB00D2A1F7 /* TransactionDetailsModel.swift in Sources */,
 				798D83101C8686EB00D2A1F7 /* VerifyViewController.swift in Sources */,
 				798D83461C8686EB00D2A1F7 /* ProductManagementProductModel.swift in Sources */,
@@ -3874,6 +3913,7 @@
 				798D827E1C8686EB00D2A1F7 /* LineChartRenderer.swift in Sources */,
 				798D83D81C8686EB00D2A1F7 /* SearchModel.swift in Sources */,
 				798D83CC1C8686EB00D2A1F7 /* SalesReportTableViewCell.swift in Sources */,
+				79CCB6601CF6D60800E38612 /* LanguageTranslationTableViewController.swift in Sources */,
 				798D84171C8686EB00D2A1F7 /* AffiliateStoreHeaderView.swift in Sources */,
 				798D82BE1C8686EB00D2A1F7 /* NotificationHelper.swift in Sources */,
 				798D82211C8686EB00D2A1F7 /* CustomizedCategoryTableViewCell.swift in Sources */,
@@ -3931,6 +3971,7 @@
 				798D82161C8686EB00D2A1F7 /* CustomizedCategoriesModel.swift in Sources */,
 				798D83FD1C8686EB00D2A1F7 /* ResellerItemTableViewCell.swift in Sources */,
 				798D82B51C8686EB00D2A1F7 /* CommonHelper.swift in Sources */,
+				79CCB65A1CF6A41900E38612 /* LanguageTranslationPickerTableViewController.swift in Sources */,
 				798D82F11C8686EB00D2A1F7 /* PointModel.swift in Sources */,
 				798D83C11C8686EB00D2A1F7 /* RecentProductsTableViewController.swift in Sources */,
 				798D84751C8686EB00D2A1F7 /* SemiRoundedButton.swift in Sources */,
@@ -4097,6 +4138,7 @@
 				798D82811C8686EB00D2A1F7 /* RadarChartRenderer.swift in Sources */,
 				798D842B1C8686EB00D2A1F7 /* TransactionProductDescriptionViewController.swift in Sources */,
 				26239D601CC8BF060099A87C /* ProductCombinationViewController.swift in Sources */,
+				79CCB6681CF6F47D00E38612 /* TranslationInputTableViewCell.swift in Sources */,
 				798D81E91C8686EB00D2A1F7 /* WithdrawTableViewController.swift in Sources */,
 				798D83D51C8686EB00D2A1F7 /* FilterViewController.swift in Sources */,
 				798D820C1C8686EB00D2A1F7 /* CustomizedCategoryViewController.swift in Sources */,
@@ -4128,6 +4170,7 @@
 				798D82201C8686EB00D2A1F7 /* CCSubCategoriesView.swift in Sources */,
 				798D82571C8686EB00D2A1F7 /* CandleChartDataEntry.swift in Sources */,
 				2623DE1F1CC8CFA200EA241C /* ProductCombinationTableViewCell.swift in Sources */,
+				79D8D6E31CF8397700A8D535 /* TranslationProductGroupTableViewCell.swift in Sources */,
 				798D81DD1C8686EB00D2A1F7 /* PayoutEarningsViewController.swift in Sources */,
 				798D84061C8686EB00D2A1F7 /* SelectProductFooterCollectionViewCell.swift in Sources */,
 				798D82251C8686EB00D2A1F7 /* EditSubCategoriesRemovedTableViewCell.swift in Sources */,
@@ -4151,6 +4194,7 @@
 				798D840A1C8686EB00D2A1F7 /* SettingsViewController.swift in Sources */,
 				798D81F41C8686EB00D2A1F7 /* PayoutEarningsTypeTableViewCell.swift in Sources */,
 				798D82DD1C8686EB00D2A1F7 /* SimplifiedRegistrationUICollectionViewCell.swift in Sources */,
+				79D8D6DF1CF8306D00A8D535 /* TranslationImagesTableViewCell.swift in Sources */,
 				798D844D1C8686EB00D2A1F7 /* TransactionDetailsFooterView.swift in Sources */,
 				798D83191C8686EB00D2A1F7 /* StoreAddressModel.swift in Sources */,
 				798D841B1C8686EB00D2A1F7 /* SetupStoreFormTableViewCell.swift in Sources */,

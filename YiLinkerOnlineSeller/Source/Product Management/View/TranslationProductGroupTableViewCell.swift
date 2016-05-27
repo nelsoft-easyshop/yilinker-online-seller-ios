@@ -8,8 +8,16 @@
 
 import UIKit
 
+protocol TranslationProductGroupTableViewCellDelegate  {
+    func translationProductGroupTableViewCell(cell: TranslationProductGroupTableViewCell, onTextChanged textView: UITextView)
+}
+
 class TranslationProductGroupTableViewCell: UITableViewCell {
 
+    var delegate: TranslationProductGroupTableViewCellDelegate?
+    
+    static let reuseIdentifier = "TranslationProductGroupTableViewCell"
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -21,4 +29,10 @@ class TranslationProductGroupTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+}
+
+extension TranslationProductGroupTableViewCell: UITextViewDelegate {
+    func textViewDidChange(textView: UITextView) {
+        self.delegate?.translationProductGroupTableViewCell(self, onTextChanged: textView)
+    }
 }

@@ -896,3 +896,7 @@ SETUP_STORE_TWITTER_ERROR_LOCALIZE_KEY = "Twitter app is not available on your d
 SETUP_STORE_EMAIL_ERROR_LOCALIZE_KEY = "Email composer is not available on your device";
 SETUP_STORE_LINK_ERROR_LOCALIZE_KEY = "Store link must not contain special characters";
 SETUP_STORE_INCOMPLETE_ERROR_LOCALIZE_KEY = "Incomplete Information";
+
+//Language Translation
+TRANSLATION_TITLE = "Language Translation";
+TRANSLATION_TRANSLATED = "Translated";

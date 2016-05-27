@@ -974,4 +974,16 @@ class WebServiceManager: NSObject {
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
+    
+    // MARK: -
+    // MARK: - Language Translation
+    // MARK: - Get Product Languages
+    class func fireGetProductLanguageRequestWithUrl(url: String, productId: String, access_token: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        let parameters: NSDictionary = [self.productIdKey : productId, self.accessTokenKey : access_token]
+        
+        self.fireGetRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
 }

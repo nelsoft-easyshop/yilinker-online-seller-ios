@@ -8,17 +8,43 @@
 
 import UIKit
 
-class TranslationShortDescriptionTableViewCell: UITableViewCell {
+protocol TranslationInputTableViewCellDelegate {
+    func translationInputTableViewCell(cell: TranslationInputTableViewCell, onTextChanged textView: UITextView)
+}
 
+class TranslationInputTableViewCell: UITableViewCell {
+    
+    var delegate: TranslationInputTableViewCellDelegate?
+    
+    static let reuseIdetifier: String = "TranslationInputTableViewCell"
+
+    @IBOutlet weak var defaultLanguageLabel: UILabel!
+    @IBOutlet weak var defaultLanguageTextView: UITextView!
+    @IBOutlet weak var translationLabel: UILabel!
+    @IBOutlet weak var translationTextView: UITextView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        
+        self.initializeViews()
     }
     
+    func initializeViews() {
+        defaultLanguageTextView.delegate = self
+        translationTextView.delegate = self
+        
+        self.defaultLanguageTextView.layer.cornerRadius = 5
+        self.defaultLanguageTextView.layer.borderWidth = 1
+        self.defaultLanguageTextView.layer.borderColor = Constants.Colors.borderColor.CGColor
+        
+        self.translationTextView.layer.cornerRadius = 5
+        self.translationTextView.layer.borderWidth = 1
+        self.translationTextView.layer.borderColor = Constants.Colors.borderColor.CGColor
+    }
+}
+
+extension TranslationInputTableViewCell: UITextViewDelegate {
+    func textViewDidChange(textView: UITextView) {
+        self.delegate?.translationInputTableViewCell(self, onTextChanged: textView)
+    }
 }

@@ -79,6 +79,8 @@ struct Constants {
         static let completedColor: UIColor = HexaColor.colorWithHexa(0x4DB5A6)
         static let tentativeColor: UIColor = HexaColor.colorWithHexa(0x5181D4)
         static let inProgressColor: UIColor = HexaColor.colorWithHexa(0x717171)
+        
+        static let borderColor: UIColor = HexaColor.colorWithHexa(0xC8C8C8)
     }
     
     struct Credentials {
