@@ -74,6 +74,11 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
                         self.countryListModel.append(CountryListModel.parseDataWithDictionary(response))
                     }
                     
+                    let countryStoreSetup: CountryStoreSetupViewController = CountryStoreSetupViewController(nibName: "CountryStoreSetupViewController", bundle: nil)
+                    countryStoreSetup.productId = self.productId
+                    countryStoreSetup.countryStoreModel = self.countryListModel[1]
+                    self.navigationController?.pushViewController(countryStoreSetup, animated: true)
+                    
                 } else {
                     println("No countries.")
                 }
@@ -176,9 +181,10 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
     
     // MARK: - Table View Delegate
     
-    func tableView(tableView: UITableView, didSelectRowAt45IndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let countryStoreSetup: CountryStoreSetupViewController = CountryStoreSetupViewController(nibName: "CountryStoreSetupViewController", bundle: nil)
+        countryStoreSetup.productId = self.productId
         countryStoreSetup.countryStoreModel = self.countryListModel[indexPath.row]
         self.navigationController?.pushViewController(countryStoreSetup, animated: true)
         
