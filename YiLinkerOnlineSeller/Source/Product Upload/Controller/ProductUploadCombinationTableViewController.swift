@@ -41,9 +41,14 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
     var height: String = ""
     var length: String = ""
     var width: String = ""
+    var productImagesCount: Int = 0
+    var hud: MBProgressHUD?
+    var productImagesName: [String] = []
+    var uploadType: UploadType = UploadType.NewProduct
 
     // Initialize ProductUploadCombinationTableViewControllerDelegate
     var delegate: ProductUploadCombinationTableViewControllerDelegate?
+    var cellImage: ProductUploadCombinationFooterTVC?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,8 +58,10 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
             self.title = "Edit Combination"
             let combination: CombinationModel = self.productModel!.validCombinations[self.selectedIndexpath!.section]
             self.combination = combination
+            self.uploadType = UploadType.EditProduct
         } else {
             self.title = "Add Combination"
+            self.uploadType = UploadType.NewProduct
         }
         
         self.tableView.tableFooterView = self.footerView()
@@ -122,6 +129,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
             if self.productModel != nil {
                 
                 cell.images = self.images
+                cell.combiImages = self.combiImages
                 
                 let combination: CombinationModel = self.productModel!.validCombinations[self.selectedIndexpath!.section]
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -213,10 +221,13 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
                 let image: UIImage = UIImage(named: "addPhoto")!
                 let serverImage: ServerUIImage  = ServerUIImage(data: UIImagePNGRepresentation(image)!)!
                 self.images.append(serverImage)
+                self.combiImages = self.productModel!.validCombinations[self.selectedIndexpath!.section].imagesId
+                self.productImagesName = self.productModel!.validCombinations[self.selectedIndexpath!.section].imagesId
             } else {
                 let image: UIImage = UIImage(named: "addPhoto")!
                 let serverImage: ServerUIImage  = ServerUIImage(data: UIImagePNGRepresentation(image)!)!
                 self.images.append(serverImage)
+                self.productImagesName = []
             }
         }
     }
@@ -283,6 +294,38 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
     }
     
     // MARK: -
+    // MARK: - Alert view
+    
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
+            //self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+        }
+    }
+    
+    // MARK: -
+    // MARK: - Show HUD
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    // MARK: -
     // MARK: - ProductUploadCombinationFooterTVCDelegate Method - productUploadCombinationFooterTVC
     
     func productUploadCombinationFooterTVC(didClickDoneButton cell: ProductUploadCombinationFooterTVC, sku: String, length: String, width: String, height: String, weight: String, uploadImages: [UIImage]) {
@@ -310,23 +353,44 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
     
     func productUploadCombinationFooterTVC(didClickUploadImage cell: ProductUploadCombinationFooterTVC) {
         
-        let productUploadCombiImages: ProductUploadCombinationImagesVC = ProductUploadCombinationImagesVC(nibName: "ProductUploadCombinationImagesVC", bundle: nil)
-        productUploadCombiImages.productModel = self.productModelCombi
-        productUploadCombiImages.delegate = self
-        let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadCombiImages)
-        navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-        //self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
-        self.presentViewController(navigationController, animated: true, completion: nil)
+        // create the alert
+        let alert = UIAlertController(title: "Notice", message: "Choose image from:", preferredStyle: UIAlertControllerStyle.Alert)
         
-        /*let picker: UzysAssetsPickerController = UzysAssetsPickerController()
-        let maxCount: Int = 6
+        // add the actions (buttons)
+        alert.addAction(UIAlertAction(title: "Product's main images", style: UIAlertActionStyle.Default, handler: {
+            action in
+            print("main images")
+            let productUploadCombiImages: ProductUploadCombinationImagesVC = ProductUploadCombinationImagesVC(nibName: "ProductUploadCombinationImagesVC", bundle: nil)
+            productUploadCombiImages.productModel = self.productModelCombi
+            productUploadCombiImages.delegate = self
+            let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadCombiImages)
+            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+            //self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
+            self.presentViewController(navigationController, animated: true, completion: nil)
+        }))
         
-        let imageLimit: Int = maxCount - self.images.count
-        picker.delegate = self
-        picker.maximumNumberOfSelectionVideo = 0
-        picker.maximumNumberOfSelectionPhoto = 100
-        UzysAssetsPickerController.setUpAppearanceConfig(self.uzyConfig())
-        self.presentViewController(picker, animated: true, completion: nil)*/
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {
+            action in
+            print("cancel")
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Gallery", style: UIAlertActionStyle.Destructive, handler: {
+            action in
+            print("gallery")
+            let picker: UzysAssetsPickerController = UzysAssetsPickerController()
+            let maxCount: Int = 6
+            
+            let imageLimit: Int = maxCount - self.images.count
+            picker.delegate = self
+            picker.maximumNumberOfSelectionVideo = 0
+            picker.maximumNumberOfSelectionPhoto = 100
+            UzysAssetsPickerController.setUpAppearanceConfig(self.uzyConfig())
+            self.presentViewController(picker, animated: true, completion: nil)
+        }))
+        
+        // show the alert
+        self.presentViewController(alert, animated: true, completion: nil)
+        
     }
     
     // MARK: -
@@ -409,6 +473,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
         // Pass 'self.images' to ProductUploadCombinationFooterTableViewCell 'images'
         let cell: ProductUploadCombinationFooterTVC = self.tableView.cellForRowAtIndexPath(indexPath) as! ProductUploadCombinationFooterTVC
         cell.images = self.images
+        cell.images.removeLast()
         cell.combiImages = self.combiImages
         
         let lastIndexPath: NSIndexPath = NSIndexPath(forItem: self.images.count - 1, inSection: 0)
@@ -429,7 +494,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
     func uzysAssetsPickerController(picker: UzysAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) {
         let assetsLibrary = ALAssetsLibrary()
         let alaSset: ALAsset = assets[0] as! ALAsset
-        
+        println(self.images)
         for allaSset in assets as! [ALAsset] {
             let viewController: ProductUploadTC = self.navigationController?.viewControllers[0] as! ProductUploadTC
             
@@ -437,6 +502,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
                 // Insert selected images on the first index of self.images array
                 let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullScreenImage().takeUnretainedValue())!
                 self.images.insert(image, atIndex: 0)
+                self.productImagesName.append("")
             } else {
                 // Insert selected images in the last index of self.images array
                 // Set ServerUIImage 'isNew' to 'true' for all newly added images
@@ -444,7 +510,8 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
                 image.isNew = true
                 image.isRemoved = false
                 image.isCombination = true
-                self.images.insert(image, atIndex: self.images.count - 1)
+                self.images.insert(image, atIndex: 0)
+                self.productImagesName.append("")
             }
         }
         
@@ -457,6 +524,29 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
         let lastIndexPath: NSIndexPath = NSIndexPath(forItem: self.images.count - 1, inSection: 0)
         cell.collectionView.reloadData()
         cell.collectionView.scrollToItemAtIndexPath(lastIndexPath, atScrollPosition: UICollectionViewScrollPosition.Right, animated: true)
+        self.cellImage = cell
+        
+        var uploadedImages: [UIImage] = []
+        
+        for images in self.images {
+            uploadedImages.append(images)
+        }
+        
+        if uploadedImages.count != 0 {
+            uploadedImages.removeLast()
+        }
+        
+        // Attributes Images
+        /*for combination in self.productModel.validCombinations {
+        if self.uploadType == UploadType.NewProduct {
+        for image in combination.images {
+        uploadedImages.append(image)
+        }
+        }
+        }*/
+        
+        self.productImagesCount = 0
+        self.fireUploadProductMainImages(uploadedImages[self.productImagesCount])
     }
     
     func uzysAssetsPickerControllerDidCancel(picker: UzysAssetsPickerController!) {
@@ -493,7 +583,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
                 let cell: ProductUploadCombinationFooterTVC = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as! ProductUploadCombinationFooterTVC
                 
                 self.combination.images = cell.uploadedImages()
-                self.combination.combiImagesName = cell.combiImagesName()
+                self.combination.imagesId = cell.combiImagesName()
                 
                 let cell2: ProductUploadCombinationTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! ProductUploadCombinationTableViewCell
                 
@@ -511,6 +601,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
                         self.navigationController?.popViewControllerAnimated(true)
                     }
                 } else {
+                    /*
                     ProductSku.SKUS[self.selectedIndexpath!.section] = ""
                     if find(ProductSku.SKUS, self.combination.sku) != nil {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_AVAILABLE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
@@ -518,7 +609,9 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
                         self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: true, indexPath: self.selectedIndexpath!)
                         ProductSku.SKUS[self.selectedIndexpath!.section] = self.combination.sku
                         self.navigationController?.popViewControllerAnimated(true)
-                    }
+                    }*/
+                    self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: true, indexPath: self.selectedIndexpath!)
+                    self.navigationController?.popViewControllerAnimated(true)
                 }
                 /*
                 if self.combination.discountedPrice.toInt() > self.combination.retailPrice.toInt() {
@@ -557,6 +650,159 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
                 }*/
             }
         }
+    }
+    
+    // MARK: -
+    // MARK: - POST METHOD: Refresh token
+    /*
+    *
+    * (Parameters) - client_id, client_secret, grant_type, refresh_token
+    *
+    * Function to refresh token to get another access token
+    *
+    */
+    func fireRefreshToken(uploadProduct: UploadProduct) {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.fireUploadProductMainImages(self.productModel!.images[self.productImagesCount])
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else {
+                    self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                }
+                self.hud?.hide(true)
+        })
+    }
+    
+    func fireUploadProductMainImages(image: UIImage) {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        var parameters: NSMutableDictionary = ["type" : "product"]
+        self.showHUD()
+        WebServiceManager.fireProductUploadImageRequestWithUrlV2(APIAtlas.uploadImagesUrl+"?access_token=\(SessionManager.accessToken())", parameters: parameters, image: image, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                /*if uploadType == UploadType.Draft {
+                ProductUploadEdit.edit = false
+                self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyDraft)
+                } else if uploadType == UploadType.EditProduct {
+                ProductUploadEdit.edit = false
+                self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyEdited)
+                } else {
+                self.success()
+                }*/
+                
+                if let success = responseObject["isSuccessful"] as? Bool {
+                    if success {
+                        if let dictionary: NSDictionary = responseObject["data"] as? NSDictionary {
+                            if let fileName = dictionary["fileName"] as? String {
+                                self.productImagesName.append(fileName)
+                                var oldFileName: String = ""
+                                if self.uploadType == UploadType.NewProduct {
+                                    self.productImagesName.append(fileName)
+                                    oldFileName = fileName
+                                } else {
+                                    if self.productImagesName.count == 0 {
+                                        if self.productImagesName[self.productImagesCount] == "" {
+                                            self.productImagesName[self.productImagesCount] = fileName
+                                            oldFileName = fileName
+                                        } else {
+                                            oldFileName = self.productImagesName[self.productImagesCount]
+                                        }
+                                    } else {
+                                        if self.productImagesName[self.productImagesCount] == "" {
+                                            self.productImagesName[self.productImagesCount] = fileName
+                                            oldFileName = fileName
+                                        } else {
+                                            oldFileName = self.productImagesName[self.productImagesCount]
+                                        }
+                                    }
+                                }
+                                
+                                let imageData: NSData = UIImagePNGRepresentation(image)
+                                let serverImage: ServerUIImage = ServerUIImage(data: imageData)!
+                                
+                                if !contains(self.combiImages, oldFileName) {
+                                    self.combiImages.append(oldFileName)
+                                }
+                                println(self.images)
+                                println(self.images.count)
+                                //self.productModel!.editedImage.append(serverImage)
+                                self.productModel!.validCombinations[self.selectedIndexpath!.section].editedImages.append(serverImage)
+                                self.productModel!.editedImage.append(serverImage)
+                                /*var productMainImagesModel: ProductMainImagesModel = ProductMainImagesModel(image: image, imageName: oldFileName, imageStatus: true, imageFailed: false)
+                                //self.productModel.productMainImagesModel.removeAtIndex(self.productImagesCount)
+                                self.productModel!.productMainImagesModel[self.productImagesCount] = productMainImagesModel
+                                */
+                                
+                                self.productImagesCount++
+                                if self.uploadType == UploadType.NewProduct {
+                                    if self.productImagesCount !=  self.productModel!.images.count-1 {
+                                        self.fireUploadProductMainImages(self.images[self.productImagesCount])
+                                    } else {
+                                        self.cellImage?.images = self.images
+                                        self.cellImage?.images.removeLast()
+                                        println(self.images.count)
+                                        self.cellImage?.combiImages = self.combiImages
+                                    }
+                                } else {
+                                    if self.productImagesCount != self.images.count-1 {
+                                        self.fireUploadProductMainImages(self.images[self.productImagesCount])
+                                    } else {
+                                        self.cellImage?.images = self.images
+                                        self.cellImage?.images.removeLast()
+                                        println(self.images.count)
+                                        self.cellImage?.combiImages = self.combiImages
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    //self.reloadUploadCellCollectionViewData()
+                } else {
+                    //self.updateModelUnsuccessfulUpload()
+                }
+                self.hud?.hide(true)
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            } else {
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                //self.updateModelUnsuccessfulUpload()
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken(UploadProduct.ProductMainImages)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        })
     }
     
     // Dealloc

@@ -74,6 +74,15 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         ProductUploadImageTVCConstant.uploadImages.removeAll(keepCapacity: false)
         // API Call
         self.fireGetProductConditions()
+        
+        // Primary Photo
+        if self.productModel.isPrimaryPhoto.count != 0 {
+            for (index, isPrimary) in enumerate(self.productModel.isPrimaryPhoto) {
+                if isPrimary {
+                    self.primaryPhoto = "\(index)"
+                }
+            }
+        }
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -157,7 +166,11 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         } else if indexPath.section == 3 {
             return 44
         } else {
-            return 245
+            if self.productModel.validCombinations.count != 0 {
+                return 0
+            } else {
+                return 245
+            }
         }
     }
     
@@ -420,7 +433,24 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         } else {
             let cell: ProductUploadDimensionsAndWeightTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadDimensionsAndWeightTableViewCellNibNameAndIdentifier) as! ProductUploadDimensionsAndWeightTableViewCell
             cell.delegate = self
-           
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell.weightTextField.text = self.productModel.weigth
+            //cell.weightLabel.required()
+            cell.lengthTextField.text = self.productModel.length
+            //cell.lengthlabel.required()
+            cell.heightTextField.text = self.productModel.height
+            //cell.heightLabel.required()
+            cell.widthTextField.text = self.productModel.width
+            //cell.widthLabel.required()
+            
+            if self.productModel.validCombinations.count != 0 {
+                cell.hidden = true
+            } else {
+                cell.hidden = false
+            }
+            
+            cell.userInteractionEnabled = self.checkIfSeller()
+            
             // TODO: Add delegate to textfields and add action to delegate methods
             cell.addTextFieldDelegate()
             
@@ -772,8 +802,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             } else if self.productModel.productMainImagesModel[i].imageStatus == false && self.productModel.productMainImagesModel[i].imageFailed == true {
                 productMainImagesModel = ProductMainImagesModel(image: self.productModel.productMainImagesModel[i].image, imageName: self.productModel.productMainImagesModel[i].imageName, imageStatus: false, imageFailed: true)
             }
-            self.productModel.productMainImagesModel.removeAtIndex(i)
-            self.productModel.productMainImagesModel.insert(productMainImagesModel!, atIndex: i)
+            self.productModel.productMainImagesModel[i] = productMainImagesModel!
         }
     }
     
@@ -824,25 +853,39 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: -
     // MARK: - Product Upload Upload Image Table View Cell Delegate method
     // TODO: - Fixed error deleting unsuccessful upload. Index out of bound
-    
-    func productUploadUploadImageTableViewCell(didDeleteAtRowIndexPath indexPath: NSIndexPath, collectionView: UICollectionView) {
+    func productUploadUploadImageTableViewCell(didDeleteAtRowIndexPath indexPath: NSIndexPath, cell: ProductUploadImageTVC, collectionView: UICollectionView) {
         /*if self.uploadType == UploadType.EditProduct {
-            if self.productModel.editedImage[indexPath.row].uid != "" {
-                if !contains(self.deletedImagesId, self.productModel.editedImage[indexPath.row].uid) {
-                    self.deletedImagesId.append(self.productModel.editedImage[indexPath.row].uid)
-                }
-            }
-            self.productModel.editedImage.removeAtIndex(indexPath.row)
+        if self.productModel.editedImage[indexPath.row].uid != "" {
+        if !contains(self.deletedImagesId, self.productModel.editedImage[indexPath.row].uid) {
+        self.deletedImagesId.append(self.productModel.editedImage[indexPath.row].uid)
+        }
+        }
+        self.productModel.editedImage.removeAtIndex(indexPath.row)
         } else {
-            self.productModel.images.removeAtIndex(indexPath.row)
-            ProductCroppedImages.imagesCropped.removeAtIndex(indexPath.row)
+        self.productModel.images.removeAtIndex(indexPath.row)
+        ProductCroppedImages.imagesCropped.removeAtIndex(indexPath.row)
         }
         collectionView.deleteItemsAtIndexPaths([indexPath])*/
         //ProductUploadImageTVCConstant.uploadImages.removeAtIndex(indexPath.row)
-        //self.productModel.mainImagesName.removeAtIndex(indexPath.row)
+        self.productModel.mainImagesName[indexPath.row] = ""
         self.productModel.productMainImagesModel.removeAtIndex(indexPath.row)
-        self.productModel.images.removeAtIndex(indexPath.row)
+        
+        if self.uploadType == UploadType.NewProduct {
+            self.productModel.images.removeAtIndex(indexPath.row)
+        } else {
+            self.productModel.editedImage.removeAtIndex(indexPath.row)
+            if self.primaryPhoto == "\(indexPath.row)" {
+                self.primaryPhoto = ""
+                self.productModel.isPrimaryPhoto.removeAtIndex(indexPath.row)
+                cell.selectedPrimaryPhoto = []
+            }
+        }
+        
         collectionView.deleteItemsAtIndexPaths([indexPath])
+        cell.productModel?.isPrimaryPhoto = self.productModel.isPrimaryPhoto
+        collectionView.reloadData()
+        self.tableView.beginUpdates()
+        self.tableView.endUpdates()
     }
     
     // MARK: -
@@ -1130,21 +1173,24 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         self.fireUploadProductMainImages(uploadedImages[self.productImagesCount])
     }
     
-    func getProductGroups() -> [String] {
+    func getProductGroups() -> String {
         var productGroups: [String] = []
        
         for i in 0..<self.productModel.productGroups.count {
-            productGroups.append(self.productModel.productGroups[i].name)
+            productGroups.append("\(self.productModel.productGroups[i].name)")
         }
 
-        return productGroups
+        let data = NSJSONSerialization.dataWithJSONObject(productGroups, options: nil, error: nil)
+        let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
+        
+        return string as! String
         
     }
     
-    func getProductImages() -> String {
+    func getProductImages(count: Int) -> String {
         var productImages: [NSMutableDictionary] = []
         
-        for i in 0..<self.productModel.images.count-1 {
+        for i in 0..<count-1 {
             var imageStatus: Bool = self.productModel.productMainImagesModel[i].imageStatus
             if imageStatus {
                 var dictionary: NSMutableDictionary = NSMutableDictionary()
@@ -1168,15 +1214,27 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         
         for combination in self.productModel.validCombinations {
             let dictionary: NSMutableDictionary = NSMutableDictionary()
-            dictionary["attribute"] = combination.attributes
+            dictionary["attributes"] = combination.attributes
             dictionary["sku"] = combination.sku
             
             var imageNames: [NSMutableDictionary] = []
             
             for (index, image) in enumerate(combination.images) {
                 //var x: Int = counter
-                var imageDictionary: NSMutableDictionary = ["name" : combination.combiImagesName[index]]
+                var imageDictionary: NSMutableDictionary = ["name" : combination.imagesId[index]]
                 imageNames.append(imageDictionary)
+            }
+            
+            for (index, image) in enumerate(combination.editedImages) {
+                //var x: Int = counter
+                for (index2, mainImage) in enumerate(self.productModel.editedImage) {
+                    if mainImage.uid == image.uid {
+                        var imageDictionary: NSMutableDictionary = ["name" : combination.imagesId[index]]
+                        if !contains(imageNames, imageDictionary) {
+                            imageNames.append(imageDictionary)
+                        }
+                    }
+                }
             }
             
             dictionary["images"] = imageNames
@@ -1265,29 +1323,50 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     func fireUploadProduct() {
         self.showHUD()
         
-        if  self.productModel.images.count-1 == self.productImagesName.count {
-            self.productImages = self.getProductImages()
-            println("\(self.getProductImages())")
+        if self.uploadType == UploadType.NewProduct {
+            if self.productModel.images.count-1 == self.productImagesName.count {
+                self.productImages = self.getProductImages(self.productModel.images.count)
+                println("\(self.getProductImages(self.productModel.images.count))")
+            }
+        } else {
+            if (self.productModel.editedImage.count-1 == self.productImagesName.count) || (self.productImagesCount == 0) {
+                self.productImages = self.getProductImages(self.productModel.editedImage.count)
+                println("\(self.getProductImages(self.productModel.editedImage.count))")
+            }
         }
         
-        var parameters: NSMutableDictionary = ["name" : self.productModel.name,
-            "shortDescription" : self.productModel.shortDescription,
-            "description" : self.productModel.completeDescription,
-            "youtubeVideoUrl" : "https://www.youtube.com/watch?v=SSAhYXby1ao",
-            "productConditionId" : self.productModel.condition.uid,
-            "productCategoryId" : self.productModel.category.uid,
-            "shippingCategoryId" : self.productModel.shippingCategories.uid,
-            "brand" : self.productModel.brand.name,
-            "productGroups" : self.getProductGroups(),
-            "productImages" : self.productImages,
-            "productUnits" : self.getProductAttributes(),
-            "isDraft" : self.productIsDraft]
+        var parameters: NSMutableDictionary = NSMutableDictionary()
         
         var url: String = ""
         if self.uploadType == UploadType.NewProduct {
             url = APIAtlas.uploadProductUrl
+            parameters = ["name" : self.productModel.name,
+                "shortDescription" : self.productModel.shortDescription,
+                "description" : self.productModel.completeDescription,
+                "youtubeVideoUrl" : "https://www.youtube.com/watch?v=SSAhYXby1ao",
+                "productConditionId" : self.productModel.condition.uid,
+                "productCategoryId" : self.productModel.category.uid,
+                "shippingCategoryId" : self.productModel.shippingCategories.uid,
+                "brand" : self.productModel.brand.name,
+                "productGroups" : "\(self.getProductGroups())",
+                "productImages" : self.productImages,
+                "productUnits" : self.getProductAttributes(),
+                "isDraft" : self.productIsDraft]
         } else {
             url = APIAtlas.uploadProductEditUrl
+            parameters = ["name" : self.productModel.name,
+                "shortDescription" : self.productModel.shortDescription,
+                "description" : self.productModel.completeDescription,
+                "youtubeVideoUrl" : self.productModel.youtubeVideoUrl,
+                "productConditionId" : self.productModel.condition.uid,
+                "productCategoryId" : self.productModel.category.uid,
+                "shippingCategoryId" : self.productModel.shippingCategories.uid,
+                "brand" : self.productModel.brand.name,
+                "productGroups" : "\(self.getProductGroups())",
+                "productImages" : self.productImages,
+                "productUnits" : self.getProductAttributes(),
+                "productId" : self.productModel.uid]
+            self.productIsDraft = true
         }
         
         WebServiceManager.fireProductUploadRequestWithUrl(url+"?access_token=\(SessionManager.accessToken())", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
@@ -1349,13 +1428,29 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                         if let dictionary: NSDictionary = responseObject["data"] as? NSDictionary {
                             if let fileName = dictionary["fileName"] as? String {
                                 self.productImagesName.append(fileName)
-                                if self.productModel.mainImagesName.count == 0 {
+                                var oldFileName: String = ""
+                                if self.uploadType == UploadType.NewProduct {
                                     self.productModel.mainImagesName.append(fileName)
+                                    oldFileName = fileName
                                 } else {
-                                    self.productModel.mainImagesName[self.productImagesCount] = fileName
+                                    if self.productModel.mainImagesName.count == 0 {
+                                        if self.productModel.mainImagesName[self.productImagesCount] == "" {
+                                            self.productModel.mainImagesName[self.productImagesCount] = fileName
+                                            oldFileName = fileName
+                                        } else {
+                                            oldFileName = self.productModel.mainImagesName[self.productImagesCount]
+                                        }
+                                    } else {
+                                        if self.productModel.mainImagesName[self.productImagesCount] == "" {
+                                            self.productModel.mainImagesName[self.productImagesCount] = fileName
+                                            oldFileName = fileName
+                                        } else {
+                                            oldFileName = self.productModel.mainImagesName[self.productImagesCount]
+                                        }
+                                    }
                                 }
                                 
-                                var productMainImagesModel: ProductMainImagesModel = ProductMainImagesModel(image: image, imageName: fileName, imageStatus: true, imageFailed: false)
+                                var productMainImagesModel: ProductMainImagesModel = ProductMainImagesModel(image: image, imageName: oldFileName, imageStatus: true, imageFailed: false)
                                 //self.productModel.productMainImagesModel.removeAtIndex(self.productImagesCount)
                                 self.productModel.productMainImagesModel[self.productImagesCount] = productMainImagesModel
                                 

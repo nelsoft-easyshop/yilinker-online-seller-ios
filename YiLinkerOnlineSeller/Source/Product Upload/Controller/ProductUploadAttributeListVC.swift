@@ -25,6 +25,7 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
     var dynamicRowHeight: CGFloat = 0
     var delegate:ProductUploadAttributeListVCDelegate?
     var cellIsInEdit: Bool = false
+    var addMoreTableViewFooter: PUDetailsView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,13 +33,13 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
         // Set navigation bar title
         self.title = Constants.ViewControllersTitleString.atttributeList
         
-        /*
+        
         if self.productModel!.attributes.count == 0 {
-        let productUploadDetailViewController: ProductUploadDetailTableViewController = ProductUploadDetailTableViewController(nibName: "ProductUploadDetailTableViewController", bundle: nil)
-        productUploadDetailViewController.delegate = self
-        self.navigationController!.pushViewController(productUploadDetailViewController, animated: true)
+            let productUploadDetailViewController: ProductUploadDetailTableViewController = ProductUploadDetailTableViewController(nibName: "ProductUploadDetailTableViewController", bundle: nil)
+            productUploadDetailViewController.delegate = self
+            self.navigationController!.pushViewController(productUploadDetailViewController, animated: true)
         }
-        */
+
         
         self.registerCell()
         self.backButton()
@@ -49,15 +50,16 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
         self.tableView.rowHeight = UITableViewAutomaticDimension
         
         // Add tableview footer
-        
-        let addMoreTableViewFooter: PUDetailsView = XibHelper.puffViewWithNibName("PUDetailsView", index: 0) as! PUDetailsView
-        addMoreTableViewFooter.delegate = self
-        self.tableView.tableFooterView = addMoreTableViewFooter
         /*
+        addMoreTableViewFooter = XibHelper.puffViewWithNibName("PUDetailsView", index: 0) as? PUDetailsView
+        addMoreTableViewFooter!.delegate = self
+        self.tableView.tableFooterView = addMoreTableViewFooter
+        */
+        
         let addMoreTableViewFooter: ProductUploadAddFooterView = XibHelper.puffViewWithNibName("ProductUploadAddFooterView", index: 0) as! ProductUploadAddFooterView
         addMoreTableViewFooter.delegate = self
         self.tableView.tableFooterView = addMoreTableViewFooter
-        */
+        
         self.changeButtonName()
     }
     
@@ -131,9 +133,9 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
     
     func removeFooter() {
         self.tableView.tableFooterView = nil
-        let addMoreTableViewFooter: PUDetailsView = XibHelper.puffViewWithNibName("PUDetailsView", index: 0) as! PUDetailsView
-        addMoreTableViewFooter.delegate = self
-        self.tableView.tableFooterView = addMoreTableViewFooter
+        //let addMoreTableViewFooter: PUDetailsView = XibHelper.puffViewWithNibName("PUDetailsView", index: 0) as! PUDetailsView
+        //addMoreTableViewFooter.delegate = self
+        self.tableView.tableFooterView = self.addMoreTableViewFooter!
     }
     
     // MARK: ProductUploadAddFooterView Delegate methods
@@ -193,6 +195,7 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
             
             cell.attributes = attributeModel.values
             cell.collectionView.reloadData()
+            cell.parentViewController = self
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.userInteractionEnabled = false
             return cell
@@ -306,13 +309,13 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
     
     // Edit an attribute
     func pUAttributeSetHeaderTableViewCell(didClickEdit cell: PUAttributeSetHeaderTableViewCell) {
-        self.tableView.tableFooterView = nil
+        /*self.tableView.tableFooterView = nil
         let addMoreTableViewFooter: PUDetailsView = XibHelper.puffViewWithNibName("PUDetailsView", index: 0) as! PUDetailsView
         addMoreTableViewFooter.delegate = self
         addMoreTableViewFooter.productModel = self.productModel!.copy()
         addMoreTableViewFooter.selectedIndexPath = self.tableView.indexPathForCell(cell)!
         addMoreTableViewFooter.puDetailsViewEdit(self.productModel!.copy())
-        addMoreTableViewFooter.tableView.reloadData()
+        addMoreTableViewFooter.parentViewController = self
         
         let indexPath: NSIndexPath = self.tableView.indexPathForCell(cell)!
         let range: NSRange = NSMakeRange(indexPath.section, 1)
@@ -337,14 +340,14 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
         })
         self.cellIsInEdit = true
         self.productModel!.attributes.removeAtIndex(self.tableView.indexPathForCell(cell)!.section)
-        self.tableView.deleteSections(section, withRowAnimation: UITableViewRowAnimation.Fade)
+        self.tableView.deleteSections(section, withRowAnimation: UITableViewRowAnimation.Left)
         self.tableView.reloadData()
-        self.tableView.tableFooterView = addMoreTableViewFooter
-        //let productUploadDetailViewController: ProductUploadDetailTableViewController = ProductUploadDetailTableViewController(nibName: "ProductUploadDetailTableViewController", bundle: nil)
-        //productUploadDetailViewController.selectedIndexPath = self.tableView.indexPathForCell(cell)!
-        //productUploadDetailViewController.delegate = self
-        //productUploadDetailViewController.productModel = self.productModel!.copy()
-        //self.navigationController!.pushViewController(productUploadDetailViewController, animated: true)
+        self.tableView.tableFooterView = addMoreTableViewFooter*/
+        let productUploadDetailViewController: ProductUploadDetailTableViewController = ProductUploadDetailTableViewController(nibName: "ProductUploadDetailTableViewController", bundle: nil)
+        productUploadDetailViewController.selectedIndexPath = self.tableView.indexPathForCell(cell)!
+        productUploadDetailViewController.delegate = self
+        productUploadDetailViewController.productModel = self.productModel!.copy()
+        self.navigationController!.pushViewController(productUploadDetailViewController, animated: true)
     }
     
     func puDetailsView(text: String) {
@@ -365,9 +368,10 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
             self.productModel!.attributes[indexPath.section] = attribute
         } else {
             if self.cellIsInEdit {
-                self.productModel!.attributes.removeAtIndex(indexPath.section)
+                //self.productModel!.attributes.removeAtIndex(indexPath.section)
             }
-            self.productModel!.attributes.append(attribute)
+            println(self.productModel!.attributes.count)
+            self.productModel!.attributes[indexPath.section] = attribute
         }
         
         self.tableView.reloadData()
@@ -411,6 +415,14 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
         
         //self.productModel!.attributes.append(attribute)
         //self.tableView.reloadData()
+    }
+    
+    func puDetailsView(didPressCancelButtonWithAttributes productModel: ProductModel, indexPath: NSIndexPath) {
+        self.productModel = productModel
+        self.cellIsInEdit = false
+        self.tableView.reloadData()
+        self.changeButtonName()
+        self.removeFooter()
     }
     
     // Dealloc

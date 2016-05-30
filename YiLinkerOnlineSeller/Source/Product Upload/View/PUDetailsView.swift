@@ -12,6 +12,7 @@ protocol PUDetailsViewDelegate {
     func puDetailsView(text: String)
     func puDetailsView(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath, productModel: ProductModel)
     func puDetailsView(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath)
+    func puDetailsView(didPressCancelButtonWithAttributes productModel: ProductModel, indexPath: NSIndexPath)
 }
 
 class PUDetailsView: UIView, UITableViewDelegate, UITableViewDataSource, ProductUploadDetailHeaderViewTableViewCellDelegate, ProductUploadAttributeTableViewCellDelegate, ProductUploadDetailFooterTableViewCellDelegate {
@@ -19,10 +20,12 @@ class PUDetailsView: UIView, UITableViewDelegate, UITableViewDataSource, Product
     // TableView
     @IBOutlet weak var tableView: UITableView!
     
-    var parentViewController: ProductUploadDetailTableViewController?
+    var parentViewController: ProductUploadAttributeListVC?
     var cell: ProductUploadDetailHeaderViewTableViewCell?
     // Models
     var productModel: ProductModel?
+    var oldProductModel: ProductModel?
+    var attributes: [AttributeModel] = []
     
     // Variables
     var dynamicRowHeight: CGFloat = 0
@@ -89,7 +92,7 @@ class PUDetailsView: UIView, UITableViewDelegate, UITableViewDataSource, Product
                 cell.attributes = self.productModel!.attributes[self.selectedIndexPath.section].values
             }
             println(cell.frame)
-            //cell.parentViewController = self.parentViewController
+            cell.parentViewController = self.parentViewController
             cell.productModel = self.productModel
             cell.delegate = self
             
@@ -201,6 +204,15 @@ class PUDetailsView: UIView, UITableViewDelegate, UITableViewDataSource, Product
         // Check if 'isValid' is false, add the attribute in the product model
         // Else, show alert view that the attribute is already taken
         if isValid {
+            println(self.attributes.count)
+            println(self.productModel!.attributes.count)
+            if self.attributes.count == 0 {
+                self.attributes = self.productModel!.attributes
+                self.oldProductModel = self.productModel
+                println(self.attributes.count)
+                println(self.productModel!.attributes.count)
+            }
+            
             let value: String = CommonHelper.firstCharacterUppercaseString(cell.cellTextField.text)
             attributeCell.attributes.append(value)
             
@@ -225,6 +237,23 @@ class PUDetailsView: UIView, UITableViewDelegate, UITableViewDataSource, Product
         }
     }
     
+    func productUploadDetailFooterTableViewCell(didPressCancelButton cell: ProductUploadDetailFooterTableViewCell) {
+        let indexPath: NSIndexPath = NSIndexPath(forRow: 0, inSection: 0)
+        let cell: ProductUploadDetailHeaderViewTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! ProductUploadDetailHeaderViewTableViewCell
+        
+        let collectionViewIndexPath: NSIndexPath = NSIndexPath(forItem: 1, inSection: indexPath.section)
+        let attributeCell: ProductUploadAttributeTableViewCell = self.tableView.cellForRowAtIndexPath(collectionViewIndexPath) as! ProductUploadAttributeTableViewCell
+        
+        println(self.attributes.count)
+        println(self.productModel!.attributes.count)
+        if self.attributes.count != 0 {
+            println(self.productModel!.attributes[selectedIndexPath.section].values)
+            println(self.oldProductModel!.attributes[selectedIndexPath.section].values)
+        }
+
+        self.delegate?.puDetailsView(didPressCancelButtonWithAttributes: self.productModel!, indexPath: self.selectedIndexPath)
+    }
+    
     func productUploadDetailFooterTableViewCell(didPressSaveButton cell: ProductUploadDetailFooterTableViewCell) {
         if self.productModel != nil {
             for (index, path) in enumerate(self.deletedCells) {
@@ -244,6 +273,9 @@ class PUDetailsView: UIView, UITableViewDelegate, UITableViewDataSource, Product
             var attributeModel: AttributeModel = AttributeModel()
             attributeModel.definition = CommonHelper.firstCharacterUppercaseString(cell.cellTextField.text)
             attributeModel.values = attributeCell.attributes
+            println(attributeCell.attributes)
+            println(self.productModel!.attributes[selectedIndexPath.section].values)
+            println(self.oldProductModel!.attributes[selectedIndexPath.section].values)
             if self.productModel != nil {
                 self.delegate?.puDetailsView(didPressSaveButtonWithAttributes: attributeModel, indexPath: self.selectedIndexPath, productModel: self.productModel!)
             } else {

@@ -14,6 +14,7 @@ protocol ProductUploadDetailFooterTableViewCellDelegate {
     func productUploadDetailFooterTableViewCell(cell: ProductUploadDetailFooterTableViewCell, didSelectButton button: UIButton)
     func productUploadDetailFooterTableViewCell(didPressDoneButton cell: ProductUploadDetailFooterTableViewCell)
     func productUploadDetailFooterTableViewCell(didPressSaveButton cell: ProductUploadDetailFooterTableViewCell)
+    func productUploadDetailFooterTableViewCell(didPressCancelButton cell: ProductUploadDetailFooterTableViewCell)
 }
 
 class ProductUploadDetailFooterTableViewCell: UITableViewCell, UITextFieldDelegate {
@@ -21,6 +22,7 @@ class ProductUploadDetailFooterTableViewCell: UITableViewCell, UITextFieldDelega
     // Custom buttons
     @IBOutlet weak var cellButton: DynamicRoundedButton!
     @IBOutlet weak var saveButton: DynamicRoundedButton!
+    @IBOutlet weak var cancelButton: DynamicRoundedButton!
     
     // Labels
     @IBOutlet weak var valuesLabel: UILabel!
@@ -47,6 +49,10 @@ class ProductUploadDetailFooterTableViewCell: UITableViewCell, UITextFieldDelega
     // MARK: Button actions
     @IBAction func save(sender: UIButton) {
           self.delegate!.productUploadDetailFooterTableViewCell(didPressSaveButton: self)
+    }
+    
+    @IBAction func cancel(sender: UIButton) {
+        self.delegate!.productUploadDetailFooterTableViewCell(didPressCancelButton: self)
     }
     
     // MARK: Textfield data source method

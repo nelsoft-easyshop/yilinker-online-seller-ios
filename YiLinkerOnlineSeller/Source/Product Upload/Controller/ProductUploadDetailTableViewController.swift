@@ -34,10 +34,17 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
     var tempDetailName: String = ""
     
     var deletedCells: [NSIndexPath] = []
+    var unsavedCells: [NSIndexPath] = []
+    var unsavedValues: [String] = []
+    var valuesDeletedButCancelled: [String] = []
+    
     var selectedIndexPath: NSIndexPath = NSIndexPath.new()
+    var isCancel: Bool = false
+    var isDeleted: Bool = true
     
     // Initialize ProductUploadDetailTableViewControllerDelegate
     var delegate: ProductUploadDetailTableViewControllerDelegate?
+    var detailFooterViewCell: ProductUploadDetailFooterTableViewCell?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,7 +82,12 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
     
     // MARK: Navigation bar button action
     func back() {
-        self.navigationController!.popViewControllerAnimated(true)
+        if self.deletedCells.count != 0 {
+            self.productUploadDetailFooterTableViewCell(didPressSaveButton: self.detailFooterViewCell!)
+        } else {
+            self.navigationController!.popViewControllerAnimated(true)
+        }
+        //self.navigationController!.popViewControllerAnimated(true)
     }
     
     func endEditing() {
@@ -123,19 +135,19 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
             return cell
         } else if indexPath.row == 1 {
             let cell: ProductUploadAttributeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(PUDTConstant.productUploadAttributeTableViewCellNibNameAndIdentifier) as! ProductUploadAttributeTableViewCell
-            
+            println(self.selectedIndexPath.section)
             if self.productModel != nil {
                 cell.attributes = self.productModel!.attributes[self.selectedIndexPath.section].values
             }
             
-            cell.parentViewController = self
+            //cell.parentViewController = self
             cell.delegate = self
             
             return cell
         } else {
             let detailFooterViewCell: ProductUploadDetailFooterTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(PUDTConstant.productUploadDetailFooterTableViewCellNibNameAndIdentifier) as! ProductUploadDetailFooterTableViewCell
-            
             detailFooterViewCell.delegate = self
+            self.detailFooterViewCell = detailFooterViewCell
             return detailFooterViewCell
         }
     }
@@ -179,7 +191,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
     // MARK: ProductUploadDetailFooterTableViewCell Delegate method
     // Save the changes made in product details
     func productUploadDetailFooterTableViewCell(didPressSaveButton cell: ProductUploadDetailFooterTableViewCell) {
-        if self.productModel != nil {
+        if self.productModel != nil || self.isCancel == true {
             for (index, path) in enumerate(self.deletedCells) {
                 if self.productModel!.attributes.count != 0 && self.productModel!.attributes.count < path.section && self.productModel!.attributes[selectedIndexPath.section].values.count < path.row {
                     self.productModel!.attributes[selectedIndexPath.section].values.removeAtIndex(path.row)
@@ -197,6 +209,22 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
             var attributeModel: AttributeModel = AttributeModel()
             attributeModel.definition = CommonHelper.firstCharacterUppercaseString(cell.cellTextField.text)
             attributeModel.values = attributeCell.attributes
+            
+            // Remove unsaved attribute value
+            for (index, path) in enumerate(self.unsavedCells) {
+                if attributeCell.attributes.count != 0 && self.isCancel == true {
+                    self.productModel!.attributes[path.section].values.removeAtIndex(self.productModel!.attributes[path.section].values.count-1)
+                    attributeModel.values = self.productModel!.attributes[path.section].values
+                }
+            }
+            
+            // Add deleted attribute values when cancelled
+            for (index, path) in enumerate(self.deletedCells) {
+                if attributeCell.attributes.count != 0 && self.isDeleted == false && self.isCancel == true {
+                    attributeModel.values.insert(self.valuesDeletedButCancelled[index], atIndex: path.row)
+                }
+            }
+            
             if self.productModel != nil {
                 self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: attributeModel, indexPath: self.selectedIndexPath, productModel: self.productModel!)
             } else {
@@ -213,11 +241,9 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
     func productUploadDetailFooterTableViewCell(didPressDoneButton cell: ProductUploadDetailFooterTableViewCell) {
         let cellPadding: CGFloat = 18
         let indexPath: NSIndexPath = self.tableView.indexPathForCell(cell)!
-        
         let collectionViewIndexPath: NSIndexPath = NSIndexPath(forItem: 1, inSection: indexPath.section)
         let attributeCell: ProductUploadAttributeTableViewCell = self.tableView.cellForRowAtIndexPath(collectionViewIndexPath) as! ProductUploadAttributeTableViewCell
         var isValid: Bool = true
-        
         // Iterate in product attributes to check if the newly added attribute is already added
         for attribute in attributeCell.attributes {
             if (attribute as NSString).lowercaseString == (cell.cellTextField.text).lowercaseString {
@@ -236,6 +262,9 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
                 // Capitalize the first letter of the string
                 let value: String = CommonHelper.firstCharacterUppercaseString(cell.cellTextField.text)
                 self.productModel!.attributes[self.selectedIndexPath.section].values.append(value)
+                var index: NSIndexPath = NSIndexPath(forRow: self.productModel!.attributes[self.selectedIndexPath.section].values.count-1, inSection: self.selectedIndexPath.section)
+                self.unsavedCells.append(index)
+                self.unsavedValues.append(value)
             }
             
             attributeCell.collectionView.reloadData()
@@ -252,6 +281,43 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         }
     }
     
+    func productUploadDetailFooterTableViewCell(didPressCancelButton cell: ProductUploadDetailFooterTableViewCell) {
+        println("cancel")
+        self.isCancel = true
+        self.isDeleted = false
+        self.productUploadDetailFooterTableViewCell(didPressSaveButton: cell)
+        /*
+        if self.productModel != nil {
+            for (index, path) in enumerate(self.unsavedCells) {
+                if self.productModel!.attributes.count != 0 && self.productModel!.attributes.count < path.section && self.productModel!.attributes[selectedIndexPath.section].values.count < path.row {
+                    self.productModel!.attributes[selectedIndexPath.section].values.removeAtIndex(path.row)
+                }
+            }
+            println(self.productModel!.attributes[selectedIndexPath.section].values)
+            for (index, value) in enumerate(self.productModel!.attributes[selectedIndexPath.section].values) {
+                println(self.unsavedValues)
+                if self.productModel!.attributes.count != 0 {
+                    if contains(self.unsavedValues, value) {
+                        println(self.selectedIndexPath.section)
+                        println(self.selectedIndexPath.row)
+                        println(self.selectedIndexPath)
+                        println(self.unsavedCells)
+                        println(self.productModel!.attributes[selectedIndexPath.section].values)
+                        if index < self.productModel!.attributes[selectedIndexPath.section].values.count {
+                            self.productModel!.attributes[selectedIndexPath.section].values.removeAtIndex(index)
+                        } else {
+                            self.productModel!.attributes[selectedIndexPath.section].values.removeAtIndex(self.productModel!.attributes[selectedIndexPath.section].values.count)
+                        }
+                        self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: self.productModel!.attributes[selectedIndexPath.section], indexPath: self.selectedIndexPath, productModel: self.productModel!)
+                        println(self.productModel!.attributes[selectedIndexPath.section].values)
+                        self.navigationController!.popViewControllerAnimated(true)
+                    }
+                }
+            }
+        }
+        */
+    }
+    
     // MARK: ProductUploadDetailFooterTableViewCell Delegate method
     func productUploadDetailFooterTableViewCell(cell: ProductUploadDetailFooterTableViewCell, didSelectButton button: UIButton) {
         self.tableView.reloadData()
@@ -260,6 +326,8 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
     // MARK: ProductUploadAttributeTableViewCell Delegate method
     // Store all the indexpath of the deleted attribute
     func productUploadAttributeTableViewCell(didTapCell cell: ProductUploadAttributeTableViewCell, indexPath: NSIndexPath) {
+        self.isDeleted = true
+        self.valuesDeletedButCancelled.append(cell.attributes[indexPath.row])
         self.deletedCells.append(indexPath)
     }
     

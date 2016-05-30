@@ -234,15 +234,27 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             if self.productModel != nil {
                 
                 let combination: CombinationModel = self.productModel!.validCombinations[indexPath.section]
-                cell.collectionView.reloadData()
                 
                 let viewController: ProductUploadTC = self.navigationController?.viewControllers[0] as! ProductUploadTC
                 
                 if viewController.uploadType == UploadType.NewProduct {
                     cell.images = combination.images
                 } else {
-                    cell.images = combination.editedImages
+                    println(self.productModel!.editedImage)
+                    var combiImages: [ServerUIImage] = []
+                    for (index, image) in enumerate(combination.editedImages) {
+                        for (index2, mainImage) in enumerate(self.productModel!.editedImage) {
+                            if mainImage.uid == image.uid {
+                                if !contains(combiImages, combination.editedImages[index]) {
+                                    combiImages.append(combination.editedImages[index])
+                                }
+                            }
+                        }
+                    }
+                    combination.editedImages = combiImages
                 }
+                cell.images = combination.editedImages
+                cell.collectionView.reloadData()
                 
                 cell.userInteractionEnabled = false
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -307,7 +319,13 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             } else {
                 combination.editedImages.removeAll(keepCapacity: false)
                 for webImage in combination.images {
-                    combination.editedImages.append(webImage as! ServerUIImage)
+                    if let image = webImage as? ServerUIImage {
+                        combination.editedImages.append(image)
+                    } else {
+                        let imageData: NSData = UIImagePNGRepresentation(webImage)
+                        var imageServer: ServerUIImage = ServerUIImage(data: imageData)!
+                        combination.editedImages.append(imageServer)
+                    }
                 }
                 if !isEdit {
                     self.productModel!.validCombinations.append(combination)
@@ -332,7 +350,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         let range: NSRange = NSMakeRange(indexPath.section, 1)
         let section: NSIndexSet = NSIndexSet(indexesInRange: range)
 
-        ProductSku.SKUS.removeAtIndex(indexPath.section)
+        //ProductSku.SKUS.removeAtIndex(indexPath.section)
         
         self.productModel!.validCombinations.removeAtIndex(indexPath.section)
         self.tableView.beginUpdates()
@@ -351,10 +369,11 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         productUploadCombinationTableViewController.selectedIndexpath = indexPath
         productUploadCombinationTableViewController.delegate = self
     
+        /*
         ProductSku.SKUS.removeAll(keepCapacity: false)
         for i in 0..<self.productModel!.validCombinations.count {
             ProductSku.SKUS.append(self.productModel!.validCombinations[i].sku)
-        }
+        }*/
     
         var counter: Int = 0
         if self.productModel != nil {

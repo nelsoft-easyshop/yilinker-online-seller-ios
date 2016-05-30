@@ -300,6 +300,10 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
     func puDetailsView(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath) {
         
     }
+    
+    func puDetailsView(didPressCancelButtonWithAttributes productModel: ProductModel, indexPath: NSIndexPath) {
+        
+    }
         
     // Dealloc
     deinit {

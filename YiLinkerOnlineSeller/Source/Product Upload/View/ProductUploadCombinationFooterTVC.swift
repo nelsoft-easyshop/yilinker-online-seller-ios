@@ -180,7 +180,7 @@ class ProductUploadCombinationFooterTVC: UITableViewCell, UITextFieldDelegate, U
     // MARK: - Uploaded Images
     
     func uploadedImages() -> [UIImage] {
-        self.images.removeLast()
+        //self.images.removeLast()
         return self.images
     }
     

@@ -41,6 +41,7 @@ class ProductModel {
     var weigth: String = ""
     var isAvailable: Bool = false
     var isPrimaryPhoto: [Bool] = []
+    var youtubeVideoUrl: String = ""
     
     var message: String = ""
     var isSuccessful: Bool = false
@@ -55,7 +56,7 @@ class ProductModel {
         self.validCombinations = validCombinations
     }
     
-    init (isSuccessful: Bool, message: String, attributes: [AttributeModel], validCombinations: [CombinationModel], productMainImagesModel: [ProductMainImagesModel], images: [String], mainImagesName: [String], imageIds: [String], category: CategoryModel, brand: BrandModel, condition: ConditionModel, shippingCategories: ConditionModel, productGroups: [ConditionModel], name: String, shortDescription: String, completeDescription: String, productId: String,  quantity: Int, retailPrice: String, discountedPrice: String, weight: String, height: String, length: String, width: String, sku: String, productUnitId: String, isAvailable: Bool, isPrimaryPhoto: [Bool]) {
+    init (isSuccessful: Bool, message: String, attributes: [AttributeModel], validCombinations: [CombinationModel], productMainImagesModel: [ProductMainImagesModel], images: [String], mainImagesName: [String], imageIds: [String], category: CategoryModel, brand: BrandModel, condition: ConditionModel, shippingCategories: ConditionModel, productGroups: [ConditionModel], name: String, shortDescription: String, completeDescription: String, productId: String,  quantity: Int, retailPrice: String, discountedPrice: String, weight: String, height: String, length: String, width: String, sku: String, productUnitId: String, isAvailable: Bool, isPrimaryPhoto: [Bool], youtubeVideoUrl: String) {
     
         self.isSuccessful = isSuccessful
         self.message = message
@@ -86,6 +87,7 @@ class ProductModel {
         self.isPrimaryPhoto = isPrimaryPhoto
         self.mainImagesName = mainImagesName
         self.productMainImagesModel = productMainImagesModel
+        self.youtubeVideoUrl = youtubeVideoUrl
     }
     
     init() {
@@ -115,6 +117,7 @@ class ProductModel {
         self.weigth = ""
         self.isAvailable = true
         self.isPrimaryPhoto = []
+        self.youtubeVideoUrl = ""
         
         self.message = ""
         self.isSuccessful = false
@@ -161,6 +164,7 @@ class ProductModel {
         var isAvailable: Bool = false
         var isPrimaryPhoto: [Bool] = []
         var mainImagesName: [String] = []
+        var youtubeVideoUrl: String = ""
         
         if dictionary.isKindOfClass(NSDictionary) {
             
@@ -189,8 +193,10 @@ class ProductModel {
                     shippingCategories = ConditionModel(uid: value["shippingCategoryId"] as! Int, name: tempVar)
                 }
                 
-                if let tempVar = value["productGroupName"] as? String {
-                    productGroups.append(ConditionModel(uid: value["userProductGroupId"] as! Int, name: tempVar))
+                if let tempVar = value["productGroups"] as? NSArray {
+                    for (index, group) in enumerate(tempVar) {
+                        productGroups.append(ConditionModel(uid: 0, name: group as! String))
+                    }
                 }
                 
                 if let tempVar = value["name"] as? String {
@@ -209,6 +215,10 @@ class ProductModel {
                     completeDescription = tempVar
                 }
                 
+                if let tempVar = value["youtubeVideoUrl"] as? String {
+                    youtubeVideoUrl = tempVar
+                }
+                
                 if !(value["productVariants"] is NSNull) {
                     for subValue in value["productVariants"] as! NSArray {
                         var attributeModel = AttributeModel()
@@ -216,8 +226,10 @@ class ProductModel {
                             attributeModel.definition = tempVar
                         }
                         
-                        if let tempVar = subValue["values"] as? [String] {
-                            attributeModel.values = tempVar
+                        for tempVar in subValue["values"] as! NSArray {
+                            if let tempValue = tempVar["value"] as? String {
+                                attributeModel.values.append(tempValue)
+                            }
                         }
                         
                         attributes.append(attributeModel)
@@ -296,6 +308,10 @@ class ProductModel {
                             */
                             
                             if let attributes = subValue["attributes"] as? NSArray {
+                                
+                                if let tempVar = subValue["attributes"] as? [NSMutableDictionary] {
+                                    combination.attributes = tempVar
+                                }
                                 for subAttribute in subValue["attributes"] as! NSArray {
                                     if let tempVar = subValue["id"] as? String {
                                         combination.combinationID = tempVar
@@ -328,6 +344,7 @@ class ProductModel {
                                         /*var url: String = APIEnvironment.baseUrl() + "/assets/images/uploads/products/" + (subimages["path"] as! String)
                                         println(">> \(url)")
                                         url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)*/
+        
                                         if let sizes = combiImages["sizes"] as? NSDictionary {
                                             if let thumbnail = sizes["thumbnail"] as? String {
                                                 combination.imagesUrl.append(thumbnail)
@@ -335,6 +352,7 @@ class ProductModel {
                                         }
                                         
                                         if let imageId = combiImages["raw"] as? String {
+                                            combination.combiImagesName.append(imageId)
                                             combination.imagesId.append(imageId)
                                         }
                                         
@@ -369,6 +387,8 @@ class ProductModel {
                             }
                         }
                         imageIds.append(subValue["raw"] as! String)
+                        mainImagesName.append(subValue["raw"] as! String)
+                        isPrimaryPhoto.append(subValue["isPrimary"] as! Bool)
                     }
                 } else if let imagesValue: AnyObject = value["images"] {
                     //let image1: AnyObject = imagesValue["1"] as! NSDictionary
@@ -448,7 +468,7 @@ class ProductModel {
             } // data
         } // dictionary
         
-        return ProductModel(isSuccessful: isSuccessful, message: message, attributes: attributes, validCombinations: validCombinations, productMainImagesModel: productMainImagesModel, images: images, mainImagesName: mainImagesName, imageIds: imageIds, category: category, brand: brand, condition: condition, shippingCategories: shippingCategories, productGroups: productGroups, name: name, shortDescription: shortDescription, completeDescription: completeDescription, productId: uid, quantity: quantity, retailPrice: retailPrice, discountedPrice: discoutedPrice, weight: weigth, height: height, length: length, width: width, sku: sku, productUnitId: productUnitId, isAvailable: isAvailable, isPrimaryPhoto: isPrimaryPhoto)
+        return ProductModel(isSuccessful: isSuccessful, message: message, attributes: attributes, validCombinations: validCombinations, productMainImagesModel: productMainImagesModel, images: images, mainImagesName: mainImagesName, imageIds: imageIds, category: category, brand: brand, condition: condition, shippingCategories: shippingCategories, productGroups: productGroups, name: name, shortDescription: shortDescription, completeDescription: completeDescription, productId: uid, quantity: quantity, retailPrice: retailPrice, discountedPrice: discoutedPrice, weight: weigth, height: height, length: length, width: width, sku: sku, productUnitId: productUnitId, isAvailable: isAvailable, isPrimaryPhoto: isPrimaryPhoto, youtubeVideoUrl: youtubeVideoUrl)
         
     } // parseDataWithDictionary
 }

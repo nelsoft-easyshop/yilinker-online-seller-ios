@@ -28,7 +28,7 @@ class ProductUploadAttributeTableViewCell: UITableViewCell, UICollectionViewData
     @IBOutlet weak var colectionViewHeightConstraint: NSLayoutConstraint!
     
     // View Controller initialization
-    var parentViewController: ProductUploadDetailTableViewController?
+    var parentViewController: ProductUploadAttributeListVC?
     
     // Global variable
     var attributes: [String] = []

@@ -25,7 +25,7 @@ protocol ProductUploadUploadImageTVCDataSource {
 // ProductUploadUploadImageTVC delegate methods
 protocol ProductUploadUploadImageTVCDelegate {
     func productUploadUploadImageTableViewCell(didSelecteRowAtIndexPath indexPath: NSIndexPath, cell: ProductUploadImageTVC)
-    func productUploadUploadImageTableViewCell(didDeleteAtRowIndexPath indexPath: NSIndexPath, collectionView: UICollectionView)
+    func productUploadUploadImageTableViewCell(didDeleteAtRowIndexPath indexPath: NSIndexPath, cell: ProductUploadImageTVC, collectionView: UICollectionView)
     
     func productUploadUploadImageTableViewCell(didTapStarAtRowIndexPath indexPath: NSIndexPath, cell: ProductUploadImageCollectionViewCell, collectionView: UICollectionView, primaryPhoto: String)
     func productUploadUploadImageTableViewCell(didTapReuploadAtRowIndexPath indexPath: NSIndexPath, cell: ProductUploadImageCollectionViewCell, collectionView: UICollectionView)
@@ -76,7 +76,7 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
     
     func productUploadImageCollectionViewCell(didTapDeleteButtonAtCell cell: ProductUploadImageCollectionViewCell) {
         let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
-        self.delegate!.productUploadUploadImageTableViewCell(didDeleteAtRowIndexPath: indexPath, collectionView: self.collectionView)
+        self.delegate!.productUploadUploadImageTableViewCell(didDeleteAtRowIndexPath: indexPath, cell: self, collectionView: self.collectionView)
     }
     
     // MARK: -
@@ -88,6 +88,8 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
         let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
         
         self.selectedPrimaryPhoto.removeAll(keepCapacity: false)
+        
+        self.productModel!.isPrimaryPhoto = []
         
         if cell.starButton.tag != 1001 {
             self.selectedPrimaryPhoto.append("\(cell.starButton.tag)")
@@ -121,7 +123,6 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
             cell.tapToReuploadButton.hidden = true
             cell.imageView.contentMode = UIViewContentMode.ScaleAspectFit
         } else {
-            println(self.productModel?.mainImagesName.count)
             if self.productModel?.mainImagesName.count != 0 {
                 if self.productModel?.productMainImagesModel[indexPath.row].imageStatus == true && self.productModel?.productMainImagesModel[indexPath.row].imageFailed == false {
                     cell.imageView.alpha = 1.0
@@ -135,6 +136,14 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
                 }
             } else {
                 cell.tapToReuploadButton.hidden = true
+            }
+            
+            if self.productModel?.isPrimaryPhoto.count != 0 {
+                for (index, isPrimary) in enumerate(self.productModel!.isPrimaryPhoto) {
+                    if isPrimary {
+                        self.selectedPrimaryPhoto.append("\(index)")
+                    }
+                }
             }
             
             if contains(self.selectedPrimaryPhoto, "\(indexPath.row)") && cell.starButton.tag != 1001{

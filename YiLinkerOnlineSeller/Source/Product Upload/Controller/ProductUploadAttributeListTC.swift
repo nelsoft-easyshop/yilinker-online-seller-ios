@@ -296,6 +296,10 @@ class ProductUploadAttributeListTC: UITableViewController, ProductUploadDetailTa
         
     }
     
+    func puDetailsView(didPressCancelButtonWithAttributes productModel: ProductModel, indexPath: NSIndexPath) {
+        
+    }
+    
     // Dealloc
     deinit {
         self.tableView.delegate = nil
