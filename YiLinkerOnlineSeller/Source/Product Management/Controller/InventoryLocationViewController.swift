@@ -8,10 +8,14 @@
 
 import UIKit
 
+protocol InventoryLocationViewControllerDelegate {
+    func reloadDetailsFromInventoryLocation(controller: InventoryLocationViewController)
+}
+
 class InventoryLocationViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    let sectionTitles = ["Inventory Location", "Is COD Available?", "Logistics", "Shipping Cost"]
+    var sectionTitles = ["Inventory Location", "Is COD Available?", "Logistics", "Shipping Cost"]
     let locations = ["6th Floor pacific tower, Five E-com Cnter, Mall of Asia Pacific Drive, 1300 Pasay City, philippines",
         "8/F Marc 2000 Tower, 1980 San Andress Street Malate, Manila, Philippines",
         "1660 Bulacan Street, Santa, Cruz Manila, Philippines"]
@@ -22,10 +26,27 @@ class InventoryLocationViewController: UIViewController {
     var isPrimary: Bool = true
     
 //    var selectedValues: [String] = ["", "", "", ""]
-    var location = ""
-    var isCOD = true
+    var selectedLocationIndex = -1
+    var isCOD = false
     var logistic = ""
     var shippingFee = "0.00"
+    
+    
+    var productDetails: CSProductModel!
+    var warehousesModel: [CSProductWarehousesModel] = []
+    var logisticsModel: [CSLogisticsModel] = []
+    var code: String = ""
+    var sections = 2
+    var initialValues = true
+    var selectedLogisticId = -1
+    
+    // flags
+    var isLocal: Bool = false
+    var isLogisticThirdParty: Bool = false
+    
+    var hud: MBProgressHUD?
+
+    var delegate: InventoryLocationViewControllerDelegate?
     
     // MARK: - View Life Cycle
     
@@ -38,8 +59,19 @@ class InventoryLocationViewController: UIViewController {
         setupNavigationBar()
         setupTableView()
         cellValues = [locations, cods, logistics]
-        location = locations[0]
+//        location = locations[0]
         logistic = logistics[0]
+
+        // sections
+        // selectedIndex
+        for i in 0..<warehousesModel.count {
+            if isPrimary && warehousesModel[i].priority == 1 || !isPrimary && warehousesModel[i].priority == 2 {
+                selectedLocationIndex = i
+                break
+            }
+        }
+        
+        refreshData()
     }
     
     // MARK: - Functions
@@ -76,10 +108,34 @@ class InventoryLocationViewController: UIViewController {
         // registering cells
         
         self.tableView.registerNib(UINib(nibName: "InventoryLocationTableViewCell", bundle: nil), forCellReuseIdentifier: "locationId")
+        
+        var priorityIndex: Int = -1
+        
+        for i in 0..<self.warehousesModel.count {
+        
+            if isPrimary && self.warehousesModel[i].priority == 1 || !isPrimary && self.warehousesModel[i].priority == 2 {
+                priorityIndex = i
+                break
+            }
+            
+        }
+        
+        for i in 0..<self.warehousesModel.count {
+            if isPrimary && self.warehousesModel[i].priority == 2 || !isPrimary && self.warehousesModel[i].priority == 1 {
+                if self.warehousesModel[i].user_warehouse.address == self.warehousesModel[priorityIndex].user_warehouse.address {
+                    self.warehousesModel.removeAtIndex(i)
+                    break
+                }
+            }
+        }
+        
     }
     
-    func getShippingFeeValue() {
-        let indexPath = NSIndexPath(forRow: 0, inSection: 3)
+    func getShippingFeeValue() -> String {
+        var indexPath = NSIndexPath(forRow: 0, inSection: 3)
+        if !isLocal {
+           indexPath = NSIndexPath(forRow: 0, inSection: 2)
+        }
         let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! InventoryLocationTableViewCell
         
         if cell.inputTextField.text == "" {
@@ -87,17 +143,170 @@ class InventoryLocationViewController: UIViewController {
         } else {
             shippingFee = cell.inputTextField.text
         }
+        
+        return shippingFee
+    }
+    
+    func setSectionsWithIndex(index: Int) {
+        
+        if warehousesModel[index].is_local {
+            self.sections = 3
+            sectionTitles = ["Inventory Location", "Is COD Available?", "Logistics", "Shipping Cost"]
+        } else {
+            self.sections = 2
+            sectionTitles = ["Inventory Location", "Logistics", "Shipping Cost"]
+        }
+    }
+    
+    func refreshData() {
+        
+        if selectedLocationIndex != -1 {
+            
+            sections = 2
+            isLocal = false
+            isLogisticThirdParty = false
+            
+            let warehouse = self.warehousesModel[selectedLocationIndex]
+            
+            // isCOD
+            isCOD = warehouse.is_cod
+            
+            // logistic
+            if warehouse.logistic != nil {
+                self.selectedLogisticId = warehouse.logistic.id
+            } else {
+                self.selectedLogisticId = -1
+            }
+            
+            // flags
+            isLocal = warehouse.is_local
+            if warehouse.logistic.id == 2 {
+                isLogisticThirdParty = true
+            }
+            
+            shippingFee = self.warehousesModel[selectedLocationIndex].handlingFee
+            
+            if isLocal {
+                sections = 3
+                sectionTitles = ["Inventory Location", "Is COD Available?", "Logistics", "Shipping Cost"]
+            } else {
+                sections = 2
+                sectionTitles = ["Inventory Location", "Logistics", "Shipping Cost"]
+            }
+            
+            if isLogisticThirdParty {
+                sections += 1
+            }
+            
+        }
+        
+    }
+    
+    func savingDataSuccessful(message: String) {
+        
+        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: message)
+        delegate?.reloadDetailsFromInventoryLocation(self)
+        
     }
     
     // MARK: - Actions
     
     func saveAction() {
-        getShippingFeeValue()
+
+        self.fireSetWarehouse()
+    }
+    
+    // MARK: - Requests
+    
+    func fireSetWarehouse() {
         
-        println(location)
-        println(isCOD)
-        println(logistic)
-        println(shippingFee)
+        if isLogisticThirdParty {
+            shippingFee = getShippingFeeValue()
+        } else {
+            shippingFee = "0.0"
+        }
+        
+        var priority = ""
+        if isPrimary {
+            priority = "1"
+        } else if !isPrimary {
+            priority = "2"
+        } else {
+            priority = "0"
+        }
+        
+        let parameters = ["code": code,
+            "productId": productDetails.id,
+            "userWarehouse": warehousesModel[selectedLocationIndex].user_warehouse.id,
+            "logistics": selectedLogisticId,
+            "isCod": isCOD,
+            "handlingFee": shippingFee,
+            "priority": priority]
+        
+        println(parameters)
+        
+        self.showHUD()
+        
+        WebServiceManager.fireSetWarehouse(APIAtlas.setWarehouse + SessionManager.accessToken(), parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            
+            self.hud?.hide(true)
+            
+            if successful {
+                self.savingDataSuccessful(responseObject["message"] as! String)
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+//                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: "Cannot Proceed")
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
+            
+        })
+        
+    }
+    
+    func fireRefreshToken() {
+        self.showHUD()
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.fireSetWarehouse()
+            } else {
+                //Show UIAlert and force the user to logout
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                })
+            }
+        })
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
     
     func backAction() {
@@ -105,7 +314,8 @@ class InventoryLocationViewController: UIViewController {
     }
     
     func checkAction() {
-        self.navigationController?.popViewControllerAnimated(true)
+        self.fireSetWarehouse()
+//        self.navigationController?.popViewControllerAnimated(true)
     }
     
 }
@@ -115,17 +325,23 @@ extension InventoryLocationViewController: UITableViewDataSource, UITableViewDel
     // MARK: - Table View Data Source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 4
+        return sections
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if section == 0 {
-            return locations.count
+            return self.warehousesModel.count
         } else if section == 1 {
+            if !isLocal {
+                return logisticsModel.count
+            }
             return cods.count
         } else if section == 2 {
-            return logistics.count
+            if !isLocal {
+                return 1
+            }
+            return logisticsModel.count
         } else if section == 3 {
             return 1
         }
@@ -139,29 +355,52 @@ extension InventoryLocationViewController: UITableViewDataSource, UITableViewDel
         
         cell.selectionStyle = .None
         cell.checkImageView.hidden = true
-        if indexPath.section == 0 {
-            cell.label.text = locations[indexPath.row]
-            if cell.label.text == location {
+        cell.inputTextField.hidden = true
+        cell.label.hidden = false
+        cell.backgroundColor = UIColor.whiteColor()
+        
+        if indexPath.section == 0 { // Inventory Location
+            cell.label.text = self.warehousesModel[indexPath.row].user_warehouse.address
+            if isPrimary && self.warehousesModel[indexPath.row].priority == 1 && selectedLocationIndex == -1 ||
+               !isPrimary && self.warehousesModel[indexPath.row].priority == 2 && selectedLocationIndex == -1 ||
+               selectedLocationIndex == indexPath.row {
                 cell.checkImageView.hidden = false
             }
-        } else if indexPath.section == 1 {
-            cell.label.text = cods[indexPath.row]
-            if isCOD && indexPath.row == 0 || !isCOD && indexPath.row == 1 {
-                cell.checkImageView.hidden = false
+        } else if indexPath.section == 1 { // COD
+            if isLocal {
+                cell.label.text = cods[indexPath.row]
+                if isCOD && indexPath.row == 0 || !isCOD && indexPath.row == 1 && selectedLocationIndex != -1 {
+                    cell.checkImageView.hidden = false
+                }
+            } else {
+                cell.label.text = logistics[indexPath.row]
+                if logisticsModel[indexPath.row].id == selectedLogisticId {
+                    cell.checkImageView.hidden = false
+                }
             }
-        } else if indexPath.section == 2 {
-            cell.label.text = logistics[indexPath.row]
-            if cell.label.text == logistic {
-                cell.checkImageView.hidden = false
+        } else if indexPath.section == 2 { // Logistics
+            if isLocal {
+                cell.label.text = logistics[indexPath.row]
+                if logisticsModel[indexPath.row].id == selectedLogisticId {
+                    cell.checkImageView.hidden = false
+                }
+            } else {
+                if isLogisticThirdParty {
+                    cell.label.hidden = true
+                    cell.inputTextField.hidden = false
+                    cell.checkImageView.hidden = true
+                    cell.inputTextField.text = shippingFee
+                    cell.backgroundColor = UIColor.clearColor()
+                }
             }
-        } else if indexPath.section == 3 {
-            cell.label.hidden = true
-            cell.inputTextField.hidden = false
-            cell.checkImageView.hidden = true
-            if shippingFee != "0.00" {
+        } else if indexPath.section == 3 { // Shipping Cost
+            if isLogisticThirdParty {
+                cell.label.hidden = true
+                cell.inputTextField.hidden = false
+                cell.checkImageView.hidden = true
                 cell.inputTextField.text = shippingFee
+                cell.backgroundColor = UIColor.clearColor()
             }
-            cell.backgroundColor = UIColor.clearColor()
         }
         
         return cell
@@ -195,20 +434,52 @@ extension InventoryLocationViewController: UITableViewDataSource, UITableViewDel
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! InventoryLocationTableViewCell
-
-        if indexPath.section == 0 {
-            location = cell.label.text!
-        } else if indexPath.section == 1 {
-            if indexPath.row == 0 {
-                isCOD = true
-            } else {
-                isCOD = false
-            }
-        } else if indexPath.section == 2 {
-            logistic = cell.label.text!
-        }
         
-        self.tableView.reloadData()
+        if cell.checkImageView.hidden == true {
+            if indexPath.section == 0 {
+                selectedLocationIndex = indexPath.row
+                refreshData()
+            } else if indexPath.section == 1 {
+                if isLocal {
+                    if indexPath.row == 0 {
+                        isCOD = true
+                    } else {
+                        isCOD = false
+                    }
+                } else {
+                    selectedLogisticId = logisticsModel[indexPath.row].id
+                    
+                    if selectedLogisticId == 2 {
+                        sections += 1
+                        isLogisticThirdParty = true
+                    } else {
+                        if sections > 2 {
+                            if !(sections == 3 && isLocal) {
+                                sections -= 1
+                            }
+                        }
+                        isLogisticThirdParty = false
+                    }
+                }
+            } else if indexPath.section == 2 {
+                
+                selectedLogisticId = logisticsModel[indexPath.row].id
+                
+                if selectedLogisticId == 2 {
+                    sections += 1
+                    isLogisticThirdParty = true
+                } else {
+                    if sections > 2 {
+                        if !(sections == 3 && isLocal) {
+                            sections -= 1
+                        }
+                    }
+                    isLogisticThirdParty = false
+                }
+            }
+            
+            self.tableView.reloadData()
+        }
         
     }
     

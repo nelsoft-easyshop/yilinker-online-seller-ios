@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ProductCombination3TableViewCellDelegate {
-    func getSwitchValue(view: ProductCombination3TableViewCell, section: Int, value: Bool)
+    func getSwitchValue(view: ProductCombination3TableViewCell, section: Int, value: Int)
 }
 
 class ProductCombination3TableViewCell: UITableViewCell {
@@ -33,9 +33,9 @@ class ProductCombination3TableViewCell: UITableViewCell {
     @IBAction func availableAction(sender: UISwitch) {
         
         if sender.on {
-            delegate?.getSwitchValue(self, section: self.tag, value: true)
+            delegate?.getSwitchValue(self, section: self.tag, value: 1)
         } else {
-            delegate?.getSwitchValue(self, section: self.tag, value: false)
+            delegate?.getSwitchValue(self, section: self.tag, value: 0)
         }
         
     }
