@@ -73,13 +73,16 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
 
         // Do any additional setup after loading the view.
 
-        fireGetCountryStoreDetails()
         setupNavigationBar()
-        self.addActions()
+        populateCountryStoreBasicDetails()
+        fireGetCountryStoreDetails()
+        
         let nib = UINib(nibName: "ProductImagesCollectionViewCell", bundle: nil)
         self.productCollectionViewController.registerNib(nib, forCellWithReuseIdentifier: "ProductImagesIdentifier")
         
-        populateCountryStoreBasicDetails()
+        
+        self.scrollView.backgroundColor = Constants.Colors.lightBackgroundColor
+        
     }
     
     // MARK: - Functions
@@ -125,6 +128,8 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
             
             self.productLocationPrimaryValueLabel.text = self.countryStoreSetupModel.primaryAddress
             self.productLocationSecondaryValueLabel.text = self.countryStoreSetupModel.secondaryAddress
+            
+            self.addActions()
         } else {
             println("Country Store Setup Model is nil")
         }
@@ -277,14 +282,18 @@ extension CountryStoreSetupViewController: UICollectionViewDataSource, Inventory
         if countryStoreSetupModel != nil {
             return self.countryStoreSetupModel.product.images.count
         }
-        return 0
+        return 3
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell: ProductImagesCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("ProductImagesIdentifier", forIndexPath: indexPath) as! ProductImagesCollectionViewCell
 
-        cell.setItemImage(self.countryStoreSetupModel.product.images[indexPath.row].imageLocation)
+        if countryStoreSetupModel != nil {
+            cell.setItemImage(self.countryStoreSetupModel.product.images[indexPath.row].imageLocation)
+        } else {
+            cell.setDefaultImage()
+        }
         
         cell.layer.cornerRadius = 3.0
         

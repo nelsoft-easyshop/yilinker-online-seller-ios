@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CountryStoreViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
             <connections>
+                <outlet property="emptyLabel" destination="bM6-OM-In3" id="MzE-u6-VNL"/>
                 <outlet property="tableView" destination="TGr-fa-sgE" id="si9-lF-fj4"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -24,13 +25,23 @@
                         <outlet property="delegate" destination="-1" id="p3o-vQ-B5K"/>
                     </connections>
                 </tableView>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="bM6-OM-In3">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="20"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="bM6-OM-In3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9bN-Oj-zHP"/>
                 <constraint firstAttribute="trailing" secondItem="TGr-fa-sgE" secondAttribute="trailing" id="KMa-6v-PVt"/>
                 <constraint firstAttribute="bottom" secondItem="TGr-fa-sgE" secondAttribute="bottom" id="SIy-3P-iTN"/>
+                <constraint firstItem="bM6-OM-In3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ZgR-1T-ICi"/>
                 <constraint firstItem="TGr-fa-sgE" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="bad-rc-oZy"/>
                 <constraint firstItem="TGr-fa-sgE" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="lGK-lG-Vgq"/>
+                <constraint firstAttribute="trailing" secondItem="bM6-OM-In3" secondAttribute="trailing" id="tAa-rq-Tn5"/>
+                <constraint firstAttribute="bottom" secondItem="bM6-OM-In3" secondAttribute="bottom" id="vVe-AJ-RnC"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>

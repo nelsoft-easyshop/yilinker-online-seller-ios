@@ -94,7 +94,7 @@ class ProductCombinationViewController: UIViewController {
     
     func setupTableView() {
         
-        self.tableView.backgroundColor = Constants.Colors.backgroundGray
+        self.tableView.backgroundColor = Constants.Colors.lightBackgroundColor
         
         let headerView: UIView = UIView(frame: CGRectMake(0, 0, self.tableView.frame.size.width, 10.0))
         self.tableView.tableHeaderView = headerView
