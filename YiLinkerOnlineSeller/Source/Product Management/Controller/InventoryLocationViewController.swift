@@ -59,7 +59,6 @@ class InventoryLocationViewController: UIViewController {
         setupNavigationBar()
         setupTableView()
         cellValues = [locations, cods, logistics]
-//        location = locations[0]
         logistic = logistics[0]
 
         // sections
@@ -92,7 +91,7 @@ class InventoryLocationViewController: UIViewController {
         
         self.tableView.estimatedRowHeight = 44.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.backgroundColor = Constants.Colors.backgroundGray
+        self.tableView.backgroundColor = Constants.Colors.lightBackgroundColor
         
         let footerView: UIView = UIView(frame: CGRectMake(0, 0, self.tableView.frame.size.width, 100.0))
         let saveButton: UIButton = UIButton(frame: CGRectMake(15, 5, self.tableView.frame.size.width - 30, 50.0))
