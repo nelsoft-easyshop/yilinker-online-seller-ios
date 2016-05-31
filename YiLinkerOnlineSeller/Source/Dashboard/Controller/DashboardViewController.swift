@@ -92,7 +92,6 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         } else if NSUserDefaults.standardUserDefaults().valueForKey("cooldownKey") as! Int == 0 {
             NSUserDefaults.standardUserDefaults().setObject(60, forKey: "cooldownKey")
         }
-        
     }
     
     override func didReceiveMemoryWarning() {
