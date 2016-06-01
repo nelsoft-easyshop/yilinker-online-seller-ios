@@ -8,6 +8,14 @@
 
 import UIKit
 
+// Constants
+struct ProductUploadCombinationFooterTVCConstant {
+    static let productUploadCombinationFooterTVCNibAndIdentifier = "ProductUploadCombinationFooterTVC"
+}
+
+// MARK: -
+// MARK: - Delegate Methods
+
 protocol ProductUploadCombinationFooterTVCDelegate {
     func productUploadIsAvailableTableViewCell(switchValueChanged sender: UISwitch, value: Bool, cell:
         ProductUploadCombinationFooterTVC)

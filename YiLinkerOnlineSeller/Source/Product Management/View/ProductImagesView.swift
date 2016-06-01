@@ -49,12 +49,12 @@ class ProductImagesView: UIView, UICollectionViewDataSource {
                 if self.productModel!.editedImage.count == 0 {
                     return 5
                 }
-                return self.productModel!.editedImage.count
+                return self.productModel!.editedImage.count - 1
             } else {
                 if self.images.count == 0 {
                     return 5
                 }
-                return self.images.count
+                return self.images.count - 1
             }
         } else {
             if imagesUrls.count == 0 {

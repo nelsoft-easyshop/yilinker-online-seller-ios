@@ -8,6 +8,11 @@
 
 import UIKit
 
+// Constants
+struct ProductUploadTextViewTableViewCellConstant {
+    static let productUploadTextViewTableViewCellNibAndIdentifier = "ProductUploadTextViewTableViewCell"
+}
+
 // MARK: Delegate
 // ProductUploadTextViewTableViewCell delegate method
 protocol ProductUploadTextViewTableViewCellDelegate {

@@ -33,34 +33,16 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
         // Set navigation bar title
         self.title = Constants.ViewControllersTitleString.atttributeList
         
-        
         if self.productModel!.attributes.count == 0 {
-            let productUploadDetailViewController: ProductUploadDetailTableViewController = ProductUploadDetailTableViewController(nibName: "ProductUploadDetailTableViewController", bundle: nil)
-            productUploadDetailViewController.delegate = self
-            self.navigationController!.pushViewController(productUploadDetailViewController, animated: true)
+            self.productDetails()
         }
-
         
-        self.registerCell()
         self.backButton()
-        
-        // Initialize tableview
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        self.tableView.estimatedRowHeight = 44.0
-        self.tableView.rowHeight = UITableViewAutomaticDimension
-        
-        // Add tableview footer
-        /*
-        addMoreTableViewFooter = XibHelper.puffViewWithNibName("PUDetailsView", index: 0) as? PUDetailsView
-        addMoreTableViewFooter!.delegate = self
-        self.tableView.tableFooterView = addMoreTableViewFooter
-        */
-        
-        let addMoreTableViewFooter: ProductUploadAddFooterView = XibHelper.puffViewWithNibName("ProductUploadAddFooterView", index: 0) as! ProductUploadAddFooterView
-        addMoreTableViewFooter.delegate = self
-        self.tableView.tableFooterView = addMoreTableViewFooter
-        
+        self.registerCell()
+        self.addTableViewFooter()
         self.changeButtonName()
+        self.initTableView()
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -83,6 +65,16 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
     }
     
     // MARK: -
+    // MARK: - Local methods
+    // MARK: - Add tableview footer
+    
+    func addTableViewFooter() {
+        let addMoreTableViewFooter: ProductUploadAddFooterView = XibHelper.puffViewWithNibName("ProductUploadAddFooterView", index: 0) as! ProductUploadAddFooterView
+        addMoreTableViewFooter.delegate = self
+        self.tableView.tableFooterView = addMoreTableViewFooter
+    }
+    
+    // MARK: -
     // MARK: - Navigation bar
     
     func backButton() {
@@ -98,13 +90,15 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
-    // Navigation bar action method for back button
+    // MARK: -
+    // MARK: - Navigation bar action method for back button
+
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
     
-    // MARK: - Local methods
-    // Change button name
+    // MARK: -
+    // MARK: - Change button name
     
     func changeButtonName() {
         if self.productModel!.attributes.count == 0 {
@@ -115,6 +109,38 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
             self.footerButton.userInteractionEnabled = true
         }
         self.footerButton.setTitle(ProductUploadStrings.proceedToCombination, forState: UIControlState.Normal)
+    }
+    
+    // MARK: -
+    // MARK: -
+    
+    func checkAvailability(attribute: AttributeModel) -> Bool {
+        var isAvailable: Bool = false
+        for productAttribute in self.productModel!.attributes as [AttributeModel] {
+            if (productAttribute.definition).lowercaseString == attribute.definition.lowercaseString {
+                isAvailable = true
+            }
+        }
+        return isAvailable
+    }
+    
+    // MARK: -
+    // MARK: - Init tableview 
+    
+    func initTableView() {
+        // Initialize tableview
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        self.tableView.estimatedRowHeight = 44.0
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+    }
+    
+    // MARK: -
+    // MARK: - Product details
+    
+    func productDetails() {
+        let productUploadDetailViewController: ProductUploadDetailTableViewController = ProductUploadDetailTableViewController(nibName: "ProductUploadDetailTableViewController", bundle: nil)
+        productUploadDetailViewController.delegate = self
+        self.navigationController!.pushViewController(productUploadDetailViewController, animated: true)
     }
     
     // MARK: -
@@ -133,22 +159,14 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
     
     func removeFooter() {
         self.tableView.tableFooterView = nil
-        //let addMoreTableViewFooter: PUDetailsView = XibHelper.puffViewWithNibName("PUDetailsView", index: 0) as! PUDetailsView
-        //addMoreTableViewFooter.delegate = self
         self.tableView.tableFooterView = self.addMoreTableViewFooter!
     }
     
-    // MARK: ProductUploadAddFooterView Delegate methods
+    // MARK: -
+    // MARK: - ProductUploadAddFooterView Delegate methods
     // Calls ProductUploadDetailTableViewController
+    
     func productUploadAddFooterView(didSelectAddMore view: UIView) {
-        // Add tableview footer
-        /*self.tableView.tableFooterView = nil
-        let addMoreTableViewFooter: ProductUploadAddFooterView = XibHelper.puffViewWithNibName("ProductUploadAddFooterView", index: 0) as! ProductUploadAddFooterView
-        addMoreTableViewFooter.addMoreButton.setTitle("Clicked", forState: UIControlState.Normal)
-        addMoreTableViewFooter.delegate = self
-        self.tableView.tableFooterView = addMoreTableViewFooter
-        //self.tableView.reloadData()
-        */
         let productUploadDetailViewController: ProductUploadDetailTableViewController = ProductUploadDetailTableViewController(nibName: "ProductUploadDetailTableViewController", bundle: nil)
         productUploadDetailViewController.delegate = self
         self.navigationController!.pushViewController(productUploadDetailViewController, animated: true)
@@ -160,7 +178,9 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
         self.navigationController!.pushViewController(productUploadDetailViewController, animated: true)
     }
     
+    // MARK: -
     // MARK: - Table view data source
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
@@ -180,11 +200,13 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
             let attributeModel: AttributeModel = self.productModel!.attributes[indexPath.section]
             cell.delegate = self
             cell.attributeDefinitionLabel!.text = attributeModel.definition
+            
             if self.cellIsInEdit {
                 cell.userInteractionEnabled = false
             } else {
                 cell.userInteractionEnabled = true
             }
+            
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             
             return cell
@@ -198,6 +220,7 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
             cell.parentViewController = self
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.userInteractionEnabled = false
+            
             return cell
         }
     }
@@ -205,9 +228,7 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let rowInitialHeight: CGFloat = 18
         
-        if indexPath.row == 0 {
-            return 44
-        } else if indexPath.row == 1 {
+        if indexPath.row == 1 {
             let rowHeight: CGFloat = 52
             
             let cellCount: Int = self.productModel!.attributes[indexPath.section].values.count
@@ -229,15 +250,13 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
         }
     }
     
-    // MARK: ProductUploadDetailTableViewController delegate method
+    // MARK: -
+    // MARK: - ProductUploadDetailTableViewController delegate method
+    
     func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath, productModel: ProductModel) {
-        var attributeIsAvailable: Bool = false
+        var attributeIsAvailable: Bool = self.checkAvailability(attribute)
+        
         self.productModel! = productModel
-        for productAttribute in self.productModel!.attributes as [AttributeModel] {
-            if productAttribute.definition == attribute.definition {
-                attributeIsAvailable = true
-            }
-        }
         
         if attributeIsAvailable {
             self.productModel!.attributes[indexPath.section] = attribute
@@ -249,14 +268,11 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
         self.changeButtonName()
     }
     
-    // MARK: ProductUploadDetailTableViewController delegate method
+    // MARK: -
+    // MARK: - ProductUploadDetailTableViewController delegate method
+    
     func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath) {
-        var attributeIsAvailable: Bool = false
-        for productAttribute in self.productModel!.attributes as [AttributeModel] {
-            if (productAttribute.definition).lowercaseString == attribute.definition.lowercaseString {
-                attributeIsAvailable = true
-            }
-        }
+        var attributeIsAvailable: Bool = self.checkAvailability(attribute)
         
         if attributeIsAvailable {
             if self.productModel!.attributes.count > indexPath.section {
@@ -264,7 +280,6 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "\(ProductUploadStrings.attributeDef) \(attribute.definition) \(ProductUploadStrings.alreadyExist)", title: Constants.Localized.error)
             }
-            
         } else {
             if self.productModel!.validCombinations.count != 0 {
                 for (index, combination) in enumerate(self.productModel!.validCombinations) {
@@ -279,8 +294,10 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
         self.changeButtonName()
     }
     
-    // MARK: ProductUploadAttributeSetHeaderTableViewCell delegate methods
-    // Delete an attribute
+    // MARK: -
+    // MARK: - ProductUploadAttributeSetHeaderTableViewCell delegate methods
+    // MARK: - Delete an attribute
+    
     func pUAttributeSetHeaderTableViewCell(didClickDelete cell: PUAttributeSetHeaderTableViewCell) {
         let indexPath: NSIndexPath = self.tableView.indexPathForCell(cell)!
         let range: NSRange = NSMakeRange(indexPath.section, 1)
@@ -307,7 +324,10 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
         self.changeButtonName()
     }
     
-    // Edit an attribute
+    // MARK: -
+    // MARK: - PUAttributeSetHeaderTableViewCell Delegate method
+    // MARK: - Edit an attribute
+    
     func pUAttributeSetHeaderTableViewCell(didClickEdit cell: PUAttributeSetHeaderTableViewCell) {
         /*self.tableView.tableFooterView = nil
         let addMoreTableViewFooter: PUDetailsView = XibHelper.puffViewWithNibName("PUDetailsView", index: 0) as! PUDetailsView
@@ -343,6 +363,7 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
         self.tableView.deleteSections(section, withRowAnimation: UITableViewRowAnimation.Left)
         self.tableView.reloadData()
         self.tableView.tableFooterView = addMoreTableViewFooter*/
+        
         let productUploadDetailViewController: ProductUploadDetailTableViewController = ProductUploadDetailTableViewController(nibName: "ProductUploadDetailTableViewController", bundle: nil)
         productUploadDetailViewController.selectedIndexPath = self.tableView.indexPathForCell(cell)!
         productUploadDetailViewController.delegate = self
@@ -350,27 +371,22 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
         self.navigationController!.pushViewController(productUploadDetailViewController, animated: true)
     }
     
+    // MARK: -
+    // MARK: - PUDetailsView Delegate Method
+    
     func puDetailsView(text: String) {
-        println("detail name: \(text)")
+        
     }
     
     func puDetailsView(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath, productModel: ProductModel) {
         
-        var attributeIsAvailable: Bool = false
+        var attributeIsAvailable: Bool = self.checkAvailability(attribute)
         self.productModel!.attributes = productModel.attributes
-        for productAttribute in self.productModel!.attributes as [AttributeModel] {
-            if productAttribute.definition == attribute.definition {
-                attributeIsAvailable = true
-            }
-        }
+
         
         if attributeIsAvailable {
             self.productModel!.attributes[indexPath.section] = attribute
         } else {
-            if self.cellIsInEdit {
-                //self.productModel!.attributes.removeAtIndex(indexPath.section)
-            }
-            println(self.productModel!.attributes.count)
             self.productModel!.attributes[indexPath.section] = attribute
         }
         
@@ -382,12 +398,7 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
     
     func puDetailsView(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath) {
         
-        var attributeIsAvailable: Bool = false
-        for productAttribute in self.productModel!.attributes as [AttributeModel] {
-            if (productAttribute.definition).lowercaseString == attribute.definition.lowercaseString {
-                attributeIsAvailable = true
-            }
-        }
+        var attributeIsAvailable: Bool = self.checkAvailability(attribute)
         
         if attributeIsAvailable {
             if self.productModel!.attributes.count > indexPath.section {
@@ -398,7 +409,6 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "\(ProductUploadStrings.attributeDef) \(attribute.definition) \(ProductUploadStrings.alreadyExist)", title: Constants.Localized.error)
             }
-            
         } else {
             if self.productModel!.validCombinations.count != 0 {
                 for (index, combination) in enumerate(self.productModel!.validCombinations) {
@@ -412,9 +422,6 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
             self.changeButtonName()
             self.removeFooter()
         }
-        
-        //self.productModel!.attributes.append(attribute)
-        //self.tableView.reloadData()
     }
     
     func puDetailsView(didPressCancelButtonWithAttributes productModel: ProductModel, indexPath: NSIndexPath) {

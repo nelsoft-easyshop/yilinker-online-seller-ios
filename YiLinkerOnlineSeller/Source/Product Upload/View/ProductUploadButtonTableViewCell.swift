@@ -8,6 +8,10 @@
 
 import UIKit
 
+struct ProductUploadButtonTableViewCellConstant {
+    static let productUploadButtonTableViewCellNibAndIdentifier = "ProductUploadButtonTableViewCell"
+}
+
 class ProductUploadButtonTableViewCell: UITableViewCell {
 
     // Custom Buttons

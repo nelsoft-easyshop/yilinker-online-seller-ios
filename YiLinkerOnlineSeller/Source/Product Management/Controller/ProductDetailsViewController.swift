@@ -38,6 +38,8 @@ struct ProductUploadEdit {
     static var isPreview: Bool = false
     static var combinedImagesDictionary: [NSMutableDictionary] = []
     static var uploadType: UploadType = UploadType.NewProduct
+    static var url: String = ""
+    static var parameters: NSMutableDictionary = NSMutableDictionary()
 }
 
 class ProductDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProductDescriptionViewDelegate, EmptyViewDelegate, SuccessUploadViewControllerDelegate {
@@ -88,7 +90,8 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     var names: [String] = []
     var values: [String] = []
     var uploadType: UploadType = UploadType.NewProduct
-    
+    var url: String = ""
+    var parameters: NSMutableDictionary = NSMutableDictionary()
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -310,6 +313,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         let upload: ProductUploadTC = ProductUploadTC(nibName: "ProductUploadTC", bundle: nil)
         upload.uploadType = UploadType.EditProduct
         upload.productModel = self.productModel
+        ProductUploadCombination.draft = true
         let navigationController: UINavigationController = UINavigationController(rootViewController: upload)
         navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
         self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
@@ -587,7 +591,59 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     func upload(uploadType: UploadType) {
         self.showHUD()
-        
+        println(self.url)
+        WebServiceManager.fireProductUploadRequestWithUrl(ProductUploadEdit.url+"?access_token=\(SessionManager.accessToken())", parameters: ProductUploadEdit.parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                if let success = responseObject["isSuccessful"] as? Bool {
+                    if success {
+                        println(responseObject)
+                        self.hud?.hide(true)
+                        if uploadType == UploadType.Draft {
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                            self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyDraft)
+                        } else if uploadType == UploadType.EditProduct {
+                            ProductUploadEdit.edit = false
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                            self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyEdited)
+                        } else {
+                            self.success()
+                        }
+
+                        /*
+                        if !self.productIsDraft {
+                        self.success()
+                        } else {
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                        }*/
+                    } else {
+                        self.showAlert(Constants.Localized.invalid, message: responseObject["message"] as! String)
+                    }
+                }
+                self.hud?.hide(true)
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                    //self.fireRefreshToken(UploadProduct.ProductUpload)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        })
+        /*
         WebServiceManager.fireProductUploadImageRequestWithUrl(ProductUploadCombination.url, parameters: ProductUploadCombination.parameters!, data: ProductUploadCombination.datas, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 self.hud?.hide(true)
@@ -641,7 +697,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                 }
                 self.tableView.reloadData()
             }
-        })
+        })*/
     }
     
 //    func upload(uploadType: UploadType) {

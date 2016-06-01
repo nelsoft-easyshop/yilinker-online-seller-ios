@@ -11,6 +11,7 @@ import UIKit
 // MARK: Constant variable declarations
 struct ProductUploadImageTVCConstant {
     static let productUploadImageCollectionViewCellNibNameAndIdentifier = "ProductUploadImageCollectionViewCell"
+    static let productUploadImageTVCNibNameAndIdentifier = "ProductUploadImageTVC"
     static var uploadImages: [Int] = []
 }
 
@@ -43,7 +44,11 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
     // Initialiaze ProductUploadImageTVCDataSource and ProductUploadImageTVCDelegate
     var dataSource: ProductUploadUploadImageTVCDataSource?
     var delegate: ProductUploadUploadImageTVCDelegate?
+    
+    // Model
     var productModel: ProductModel?
+    
+    // Variables
     var selectedPrimaryPhoto: [String] = []
     var successfulUploadedImagesIndex: [Int] = []
     
@@ -100,7 +105,6 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
     }
     
     func productUploadImageCollectionViewCell(didTapReuploadButtonAtCell cell: ProductUploadImageCollectionViewCell) {
-        println("reupload photo")
         let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
         self.delegate?.productUploadUploadImageTableViewCell(didTapReuploadAtRowIndexPath: indexPath, cell: cell, collectionView: self.collectionView)
     }
@@ -152,6 +156,7 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
             } else {
                 cell.starButton.backgroundColor = UIColor.redColor()
             }
+            
             cell.closeButton.hidden = false
             cell.starButton.hidden = false
             cell.imageView.contentMode = UIViewContentMode.ScaleAspectFill

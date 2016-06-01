@@ -26,32 +26,10 @@ class ProductUploadCombinationImagesVC: UIViewController, UICollectionViewDelega
         // Do any additional setup after loading the view.
         self.navigationController?.navigationBar.hidden = false
         
-        let screenSize: CGRect = self.view.bounds
-        let screenWidth = screenSize.width
-        let screenHeight = screenSize.height
-        var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
-        if screenHeight <= 480 {
-            layout.itemSize = CGSize(width: ((screenWidth - 5)/3), height: (screenHeight * 0.22))
-        } else {
-            layout.itemSize = CGSize(width: ((screenWidth - 5)/3.5), height: (screenHeight * 0.17))
-        }
-        
-        layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
-        collectionView.setCollectionViewLayout(layout, animated: true)
-        collectionView?.backgroundColor = UIColor.lightGrayColor()
-        collectionView.bounds = self.view.bounds
-        collectionView?.bounces = false
-        collectionView?.alwaysBounceVertical = true
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        
+        self.initCollectionView()
         self.registerNib()
         self.backButton()
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,15 +38,9 @@ class ProductUploadCombinationImagesVC: UIViewController, UICollectionViewDelega
     }
     
     // MARK: -
-    // MARK: - Register nib file
-    
-    func registerNib() {
-        let nib: UINib = UINib(nibName: "ProductUploadCombinationImagesCVC", bundle: nil)
-        self.collectionView.registerNib(nib, forCellWithReuseIdentifier: "ProductUploadCombinationImagesCVC")
-    }
-    
     // MARK: - Navigation bar
     // MARK: - Add back button in navigation bar
+    
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 15, 15)
@@ -95,20 +67,75 @@ class ProductUploadCombinationImagesVC: UIViewController, UICollectionViewDelega
         self.navigationItem.rightBarButtonItems = [navigationSpacer2, customCheckButton]
     }
     
+    // MARK: -
+    // MARK: - Navaigation bar's back button action
+    
     func back() {
-        println("back")
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    // MARK: -
+    // MARK: - Navigation bar's check button action
+    
     func check() {
-        println("check")
-        self.delegate?.productUploadCombinationImagesVC(self.productModel, indexes: self.selectedImages)
-        self.dismissViewControllerAnimated(true, completion: nil)
+        if self.selectedImages.count == 0 {
+            self.showAlert(title: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_NO_IMAGE_LOCALIZE_KEY"))
+        } else {
+            self.delegate?.productUploadCombinationImagesVC(self.productModel, indexes: self.selectedImages)
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
+    
+    // MARK: -
+    // MARK: - Init Collection View
+    
+    func initCollectionView() {
+        let screenSize: CGRect = self.view.bounds
+        let screenWidth = screenSize.width
+        let screenHeight = screenSize.height
+        var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        
+        if screenHeight <= 480 {
+            layout.itemSize = CGSize(width: ((screenWidth - 5)/3), height: (screenHeight * 0.22))
+        } else {
+            layout.itemSize = CGSize(width: ((screenWidth - 5)/3.5), height: (screenHeight * 0.17))
+        }
+        
+        layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        
+        collectionView.setCollectionViewLayout(layout, animated: true)
+        collectionView?.backgroundColor = UIColor.lightGrayColor()
+        collectionView.bounds = self.view.bounds
+        collectionView?.bounces = false
+        collectionView?.alwaysBounceVertical = true
+        collectionView.delegate = self
+        collectionView.dataSource = self
+    }
+    
+    // MARK: -
+    // MARK: - Register nib file
+    
+    func registerNib() {
+        let nib: UINib = UINib(nibName: "ProductUploadCombinationImagesCVC", bundle: nil)
+        self.collectionView.registerNib(nib, forCellWithReuseIdentifier: "ProductUploadCombinationImagesCVC")
+    }
+    
+    // MARK: -
+    // MARK: - Show alert
+    
+    func showAlert(#title: String!) {
+        let alertController = UIAlertController(title: title, message: "", preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let cell: ProductUploadCombinationImagesCVC = self.collectionView.dequeueReusableCellWithReuseIdentifier("ProductUploadCombinationImagesCVC", forIndexPath: indexPath) as! ProductUploadCombinationImagesCVC
+        let cell: ProductUploadCombinationImagesCVC = self.collectionView.dequeueReusableCellWithReuseIdentifier(ProductUploadCombinationImagesCVCConstant.productUploadCombinationImagesCVCNibAndIdentifier, forIndexPath: indexPath) as! ProductUploadCombinationImagesCVC
         cell.mainImage.image = self.productModel.productMainImagesModel[indexPath.row].image
         
         if self.productModel.productMainImagesModel[indexPath.row].imageStatus == true {
@@ -135,7 +162,6 @@ class ProductUploadCombinationImagesVC: UIViewController, UICollectionViewDelega
         cell!.layer.borderWidth = 2.0
         if self.productModel.productMainImagesModel[indexPath.row].imageStatus == true {
             if cell!.selected == true {
-                println(self.selectedImages)
                 var index: Int = self.selectedImages.count - 1
                 if contains(self.selectedImages, indexPath.row) {
                     self.selectedImages.removeAtIndex(index)
@@ -150,10 +176,6 @@ class ProductUploadCombinationImagesVC: UIViewController, UICollectionViewDelega
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.productModel.productMainImagesModel.count
-    }
-    
-    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
-    
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {

@@ -8,6 +8,10 @@
 
 import UIKit
 
+struct ProductUploadCombinationImagesCVCConstant {
+    static let productUploadCombinationImagesCVCNibAndIdentifier = "ProductUploadCombinationImagesCVC"
+}
+
 class ProductUploadCombinationImagesCVC: UICollectionViewCell {
 
     @IBOutlet weak var mainImage: UIImageView!

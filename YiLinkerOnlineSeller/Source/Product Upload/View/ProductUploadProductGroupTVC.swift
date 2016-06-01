@@ -16,7 +16,7 @@ protocol ProductUploadProductGroupTVCDelegate {
 
 // MARK: Constant variable
 struct PUPGConstant {
-    static let productUploadProductGroupTVCNibNameAndIdentier = "ProductUploadProductGroupCVC"
+    static let productUploadProductGroupTVCNibNameAndIdentier = "ProductUploadProductGroupTVC"
 }
 
 class ProductUploadProductGroupTVC: UITableViewCell {

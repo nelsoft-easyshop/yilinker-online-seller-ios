@@ -65,8 +65,10 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         
     }
 
-    // MARK: Navigation bar
+    // MARK: -
+    // MARK: - Navigation bar
     // Add back button in navigation bar
+    
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -80,21 +82,24 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
-    // MARK: Navigation bar button action
+    // MARK: -
+    // MARK: - Navigation bar button action
+    
     func back() {
         if self.deletedCells.count != 0 {
             self.productUploadDetailFooterTableViewCell(didPressSaveButton: self.detailFooterViewCell!)
         } else {
             self.navigationController!.popViewControllerAnimated(true)
         }
-        //self.navigationController!.popViewControllerAnimated(true)
     }
     
     func endEditing() {
         self.tableView.endEditing(true)
     }
     
-    // MARK: Register table view cells
+    // MARK: -
+    // MARK: - Register table view cells
+    
     func registerCell() {
         let nib: UINib = UINib(nibName: ProductUploadCategoryViewControllerConstant.productUploadCategoryTableViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: ProductUploadCategoryViewControllerConstant.productUploadCategoryTableViewCellNibNameAndIdentifier)
@@ -109,7 +114,9 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         self.tableView.registerNib(nib4, forCellReuseIdentifier: PUDTConstant.productUploadAttributeTableViewCellNibNameAndIdentifier)
     }
 
+    // MARK: -
     // MARK: - Table view data source
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
@@ -125,17 +132,20 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell: ProductUploadDetailHeaderViewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(PUDTConstant.productUploadDetailHeaderViewTableViewCellNibNameAndIdentifier) as! ProductUploadDetailHeaderViewTableViewCell
+           
             if self.productModel != nil {
                 cell.cellTextField.text = self.productModel!.attributes[self.selectedIndexPath.section].definition
                 cell.edited = true
             } else {
                 cell.edited = false
             }
+            
             cell.delegate = self
+           
             return cell
         } else if indexPath.row == 1 {
             let cell: ProductUploadAttributeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(PUDTConstant.productUploadAttributeTableViewCellNibNameAndIdentifier) as! ProductUploadAttributeTableViewCell
-            println(self.selectedIndexPath.section)
+            
             if self.productModel != nil {
                 cell.attributes = self.productModel!.attributes[self.selectedIndexPath.section].values
             }
@@ -148,6 +158,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
             let detailFooterViewCell: ProductUploadDetailFooterTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(PUDTConstant.productUploadDetailFooterTableViewCellNibNameAndIdentifier) as! ProductUploadDetailFooterTableViewCell
             detailFooterViewCell.delegate = self
             self.detailFooterViewCell = detailFooterViewCell
+            
             return detailFooterViewCell
         }
     }
@@ -177,19 +188,22 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
                 
                 return cellHeight
             }
-            
         } else {
             return 130
         }
     }
     
-    // MARK: ProductUploadDetailHeaderViewCollectionViewCell Delegate method
+    // MARK: -
+    // MARK: - ProductUploadDetailHeaderViewCollectionViewCell Delegate method
+  
     func productUploadDetailHeaderViewCollectionViewCell(editingCellTextFieldWithText text: String) {
         self.tempDetailName = text
     }
     
-    // MARK: ProductUploadDetailFooterTableViewCell Delegate method
-    // Save the changes made in product details
+    // MARK: -
+    // MARK: - ProductUploadDetailFooterTableViewCell Delegate method
+    // MARK: - Save the changes made in product details
+    
     func productUploadDetailFooterTableViewCell(didPressSaveButton cell: ProductUploadDetailFooterTableViewCell) {
         if self.productModel != nil || self.isCancel == true {
             for (index, path) in enumerate(self.deletedCells) {
@@ -237,13 +251,18 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         }
     }
     
-    // MARK: ProductUploadDetailFooterTableViewCell Delegate method
+    // MARK: -
+    // MARK: - ProductUploadDetailFooterTableViewCell Delegate method
+    // MARK: - Save attribute value after clicking the keyboard's "DONE" key
+    
     func productUploadDetailFooterTableViewCell(didPressDoneButton cell: ProductUploadDetailFooterTableViewCell) {
         let cellPadding: CGFloat = 18
         let indexPath: NSIndexPath = self.tableView.indexPathForCell(cell)!
         let collectionViewIndexPath: NSIndexPath = NSIndexPath(forItem: 1, inSection: indexPath.section)
-        let attributeCell: ProductUploadAttributeTableViewCell = self.tableView.cellForRowAtIndexPath(collectionViewIndexPath) as! ProductUploadAttributeTableViewCell
         var isValid: Bool = true
+        
+        let attributeCell: ProductUploadAttributeTableViewCell = self.tableView.cellForRowAtIndexPath(collectionViewIndexPath) as! ProductUploadAttributeTableViewCell
+
         // Iterate in product attributes to check if the newly added attribute is already added
         for attribute in attributeCell.attributes {
             if (attribute as NSString).lowercaseString == (cell.cellTextField.text).lowercaseString {
@@ -258,6 +277,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
             let value: String = CommonHelper.firstCharacterUppercaseString(cell.cellTextField.text)
             attributeCell.attributes.append(value)
             
+            // Save values in an array of strings and indexpaths
             if self.productModel != nil {
                 // Capitalize the first letter of the string
                 let value: String = CommonHelper.firstCharacterUppercaseString(cell.cellTextField.text)
@@ -281,61 +301,41 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
         }
     }
     
+    // MARK: -
+    // MARK: - ProductUploadDetailFooterTableViewCell Delegate method
+    // MARK: - Cancel the combination
+    
     func productUploadDetailFooterTableViewCell(didPressCancelButton cell: ProductUploadDetailFooterTableViewCell) {
-        println("cancel")
         self.isCancel = true
         self.isDeleted = false
         self.productUploadDetailFooterTableViewCell(didPressSaveButton: cell)
-        /*
-        if self.productModel != nil {
-            for (index, path) in enumerate(self.unsavedCells) {
-                if self.productModel!.attributes.count != 0 && self.productModel!.attributes.count < path.section && self.productModel!.attributes[selectedIndexPath.section].values.count < path.row {
-                    self.productModel!.attributes[selectedIndexPath.section].values.removeAtIndex(path.row)
-                }
-            }
-            println(self.productModel!.attributes[selectedIndexPath.section].values)
-            for (index, value) in enumerate(self.productModel!.attributes[selectedIndexPath.section].values) {
-                println(self.unsavedValues)
-                if self.productModel!.attributes.count != 0 {
-                    if contains(self.unsavedValues, value) {
-                        println(self.selectedIndexPath.section)
-                        println(self.selectedIndexPath.row)
-                        println(self.selectedIndexPath)
-                        println(self.unsavedCells)
-                        println(self.productModel!.attributes[selectedIndexPath.section].values)
-                        if index < self.productModel!.attributes[selectedIndexPath.section].values.count {
-                            self.productModel!.attributes[selectedIndexPath.section].values.removeAtIndex(index)
-                        } else {
-                            self.productModel!.attributes[selectedIndexPath.section].values.removeAtIndex(self.productModel!.attributes[selectedIndexPath.section].values.count)
-                        }
-                        self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: self.productModel!.attributes[selectedIndexPath.section], indexPath: self.selectedIndexPath, productModel: self.productModel!)
-                        println(self.productModel!.attributes[selectedIndexPath.section].values)
-                        self.navigationController!.popViewControllerAnimated(true)
-                    }
-                }
-            }
-        }
-        */
     }
     
-    // MARK: ProductUploadDetailFooterTableViewCell Delegate method
+    // MARK: -
+    // MARK: - ProductUploadDetailFooterTableViewCell Delegate method
+    
     func productUploadDetailFooterTableViewCell(cell: ProductUploadDetailFooterTableViewCell, didSelectButton button: UIButton) {
         self.tableView.reloadData()
     }
     
-    // MARK: ProductUploadAttributeTableViewCell Delegate method
-    // Store all the indexpath of the deleted attribute
+    // MARK: -
+    // MARK: - ProductUploadAttributeTableViewCell Delegate method
+    // MARK: - Delete cell when tapped one cell. Store all the indexpath of the deleted attribute
+    
     func productUploadAttributeTableViewCell(didTapCell cell: ProductUploadAttributeTableViewCell, indexPath: NSIndexPath) {
         self.isDeleted = true
         self.valuesDeletedButCancelled.append(cell.attributes[indexPath.row])
         self.deletedCells.append(indexPath)
     }
     
-    // MARK: ProductUploadDetailHeaderViewTableViewCell Delegate method
+    // MARK: -
+    // MARK: - ProductUploadDetailHeaderViewTableViewCell Delegate method
+    
     func productUploadDetailHeaderViewTableViewCell(didEndEditing productUploadDetailHeaderViewTableViewCell: ProductUploadDetailHeaderViewTableViewCell, text: String) {
     }
     
-    // Dealloc
+    // MARK: -
+    // MARK: - Dealloc
     deinit {
         self.tableView.delegate = nil
         self.tableView.dataSource = nil

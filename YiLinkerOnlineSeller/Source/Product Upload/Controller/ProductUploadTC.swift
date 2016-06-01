@@ -40,22 +40,24 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     var productUploadWeightAndHeightCellHeight: CGFloat = 244
     var sectionPriceHeaderHeight: CGFloat = 41
     var sectionFourRows: Int = 2
-    var productGroupCount: Int = 0
-    var primaryPhoto: String = ""
-    var productImagesName: [String] = []
-    var productImages: String = ""
-    var productImagesCount: Int = 0
+    
     var productIsDraft: Bool = false
+    
+    var productGroupCount: Int = 0
+    var productImagesCount: Int = 0
+    
+    var primaryPhoto: String = ""
+    var productImages: String = ""
+    var productImagesName: [String] = []
+    
+    
+    // Tableview Cell
     var cellImage: ProductUploadImageTVC?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        // Set title of navigation bar
         if self.uploadType == UploadType.EditProduct {
             self.title = "Edit Product"
         } else {
@@ -63,26 +65,15 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         }
         
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        //let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "hideKeyboard")
-        //self.tableView.addGestureRecognizer(tap)
         
         self.addFooter()
         self.addPhoto()
         self.backButton()
         self.registerNib()
+        self.setPrimaryPhoto()
         
-        ProductUploadImageTVCConstant.uploadImages.removeAll(keepCapacity: false)
-        // API Call
+        // API Call to get product conditions
         self.fireGetProductConditions()
-        
-        // Primary Photo
-        if self.productModel.isPrimaryPhoto.count != 0 {
-            for (index, isPrimary) in enumerate(self.productModel.isPrimaryPhoto) {
-                if isPrimary {
-                    self.primaryPhoto = "\(index)"
-                }
-            }
-        }
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -99,6 +90,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         // Dispose of any resources that can be recreated.
     }
 
+    // MARK: -
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -176,6 +168,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
+            // Product images
             let cell: ProductUploadImageTVC = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadImageTVC") as! ProductUploadImageTVC
             self.cellImage = cell
             cell.productModel = self.productModel
@@ -186,13 +179,17 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             
             return cell
         } else if indexPath.section == 1 {
+            // Product Details - Product name, short and complete description
             if indexPath.row == 0 {
                 let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = true
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.productName
-                cell.cellTexField.text = self.productModel.name
+                
+                if self.productModel.name != "" {
+                    cell.cellTexField.text = self.productModel.name
+                }
                 
                 cell.cellTexField.placeholder = ProductUploadStrings.productName
                 
@@ -235,6 +232,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 return cell
             }
         }  else if indexPath.section == 2 {
+            // Product categories, condition, sku and product group
             if indexPath.row == 0 {
                 let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -243,6 +241,10 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.cellTitleLabel.text = ProductUploadStrings.category
                 cell.cellTexField.text = ProductUploadStrings.selectCategory
                 
+                if self.productModel.category.name != "" {
+                    cell.cellTexField.text = self.productModel.category.name
+                }
+                
                 cell.cellTexField.rightView = self.addRightView("cell-right")
                 cell.cellTexField.rightViewMode = UITextFieldViewMode.Always
                 
@@ -250,18 +252,18 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.textFieldType = ProductTextFieldType.Category
                 cell.delegate = self
                 
-                if self.productModel.category.name != "" {
-                    cell.cellTexField.text = self.productModel.category.name
-                }
-                
                 return cell
             } else if indexPath.row == 1 {
                 let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = self.checkIfSeller()
                 
-                cell.cellTitleLabel.text = "Shipping Category"
-                cell.cellTexField.text = "Select Shipping Category"
+                cell.cellTitleLabel.text = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SHIPPING_CATEGORY_LOCALIZE_KEY")
+                cell.cellTexField.text = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SELECT_SHIPPING_LOCALIZE_KEY")
+                
+                if self.productModel.shippingCategories.name != "" {
+                    cell.cellTexField.text = self.productModel.shippingCategories.name
+                }
                 
                 cell.cellTexField.rightView = self.addRightView("cell-right")
                 cell.cellTexField.rightViewMode = UITextFieldViewMode.Always
@@ -269,10 +271,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.cellTitleLabel.required()
                 cell.textFieldType = ProductTextFieldType.ShippingCategory
                 cell.delegate = self
-                
-                if self.productModel.shippingCategories.name != "" {
-                    cell.cellTexField.text = self.productModel.shippingCategories.name
-                }
             
                 return cell
             } else if indexPath.row == 2 {
@@ -283,17 +281,15 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.cellTitleLabel.text = ProductUploadStrings.brand
                 cell.cellTexField.text = ProductUploadStrings.addBrand
                 
+                if self.productModel.brand.name != "" {
+                    cell.cellTexField.text = self.productModel.brand.name
+                }
+                
                 cell.cellTexField.rightView = self.addRightView("arrow_down")
                 cell.cellTexField.rightViewMode = UITextFieldViewMode.Always
                 
                 cell.textFieldType = ProductTextFieldType.Brand
                 cell.delegate = self
-            
-                if self.productModel.brand.name != "" {
-                    cell.cellTexField.text = self.productModel.brand.name
-                }
-                
-                //cell.addTextFieldDelegate()
                 
                 return cell
             } else if indexPath.row == 3 {
@@ -332,7 +328,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = self.checkIfSeller()
                 
-                cell.cellTitleLabel.text = "SKU[Stock Keeping Unit]"
+                cell.cellTitleLabel.text = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_LOCALIZE_KEY")
                 cell.cellTexField.text = self.productSKU
                 
                 cell.cellTexField.placeholder = "SKU"
@@ -347,22 +343,13 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 
                 return cell
             } else {
-                /*let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
-                cell.selectionStyle = UITableViewCellSelectionStyle.None
-                cell.userInteractionEnabled = self.checkIfSeller()
-               
-                cell.cellTitleLabel.text = "Product Group"//ProductUploadStrings.condition
-                cell.cellTexField.text = "Product Group" //self.productModel.condition.name
-                
-                cell.textFieldType = ProductTextFieldType.Condition
-                cell.delegate = self
-            
-                return cell*/
                 let cell: ProductUploadProductGroupTVC = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadProductGroupTVC") as! ProductUploadProductGroupTVC
                 var tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "selectProductGroups")
                 cell.addGestureRecognizer(tap)
+                
+                cell.productGroupLabel.text = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRODUCT_GROUP_LOCALIZE_KEY")
+                
                 if self.productModel.productGroups.count != 0 {
-                    println(productModel.productGroups.count)
                     cell.attributes.removeAll(keepCapacity: false)
                     for i in 0..<self.productModel.productGroups.count {
                         cell.attributes.append(self.productModel.productGroups[i].name)
@@ -370,27 +357,23 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 } else {
                    cell.attributes.removeAll(keepCapacity: false)
                 }
+                
                 cell.collectionView.reloadData()
-                println(cell.frame)
-                //cell.parentViewController = self.parentViewController
                 cell.productModel = self.productModel
                 cell.delegate = self
                 
                 return cell
             }
         } else if indexPath.section == 3 {
-            
+            // Product combination details
             if self.productModel.validCombinations.count == 0 {
-                //if indexPath.row == 0 {
-                    let cell: ProductUploadButtonTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadButtonTableViewCellNibNameAndIdentifier) as! ProductUploadButtonTableViewCell
-                    cell.userInteractionEnabled = self.checkIfSeller()
-                    
-                    // TODO: Add delegate to button and add action to delegate methods
-                    cell.cellButton.setTitle("ADD MORE DETAILS ", forState: UIControlState.Normal)
-                    cell.cellButton.addTarget(self, action: "addMoreDetails:", forControlEvents: UIControlEvents.TouchUpInside)
-                    
-                    return cell
-               // }
+                let cell: ProductUploadButtonTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadButtonTableViewCellNibNameAndIdentifier) as! ProductUploadButtonTableViewCell
+                cell.userInteractionEnabled = self.checkIfSeller()
+                
+                cell.cellButton.setTitle(StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_ADD_MORE_LOCALIZE_KEY"), forState: UIControlState.Normal)
+                cell.cellButton.addTarget(self, action: "addMoreDetails:", forControlEvents: UIControlEvents.TouchUpInside)
+                
+                return cell
             } else {
                 let totalQuantityCell: Int = 1
                 if indexPath.row != self.productModel.validCombinations.count {
@@ -423,7 +406,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                     let cell: ProductUploadButtonTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadButtonTableViewCellNibNameAndIdentifier) as! ProductUploadButtonTableViewCell
                     cell.userInteractionEnabled = self.checkIfSeller()
                     
-                    // TODO: Add delegate to button and add action to delegate methods
                     cell.cellButton.setTitle("ADD MORE DETAILS ", forState: UIControlState.Normal)
                     cell.cellButton.addTarget(self, action: "addMoreDetails:", forControlEvents: UIControlEvents.TouchUpInside)
                     
@@ -450,8 +432,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             }
             
             cell.userInteractionEnabled = self.checkIfSeller()
-            
-            // TODO: Add delegate to textfields and add action to delegate methods
             cell.addTextFieldDelegate()
             
             return cell
@@ -466,9 +446,9 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         } else if section == 2 {
             headerView.headerTitleLabel.text = ProductUploadStrings.productDetails
         } else if section == 3 {
-            headerView.headerTitleLabel.text = ProductUploadStrings.dimensionsAndWeight //ProductUploadStrings.price
+            headerView.headerTitleLabel.text = ProductUploadStrings.dimensionsAndWeight
         } else if section == 4 {
-            headerView.headerTitleLabel.text = ProductUploadStrings.dimensionsAndWeight //ProductUploadStrings.price
+            headerView.headerTitleLabel.text = ProductUploadStrings.dimensionsAndWeight
         } else if section == 5 {
             headerView.headerTitleLabel.text = ProductUploadStrings.dimensionsAndWeight
         }
@@ -481,11 +461,10 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         
         if section == 0 || section == 3 {
             sectionHeight = 0
-        } else if section == 4 {
-            return 41
         } else {
             sectionHeight = 41
         }
+        
         return sectionHeight
     }
     
@@ -510,13 +489,14 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     
     // MARK: -
     // MARK: - Append dummy photo
+    
     func addPhoto() {
+        let image: UIImage = UIImage(named: "addPhoto")!
         if self.uploadType == UploadType.EditProduct {
-            let image: UIImage = UIImage(named: "addPhoto")!
             let serverImage: ServerUIImage  = ServerUIImage(data: UIImagePNGRepresentation(image)!)!
             self.productModel.editedImage.append(serverImage)
         } else {
-            self.productModel.images.append(UIImage(named: "addPhoto")!)
+            self.productModel.images.append(image)
         }
     }
     
@@ -535,7 +515,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - Navigation bar: Add Back Button in navigation bar
     
     func backButton() {
-        //ProductCroppedImages.imagesCropped.removeAll(keepCapacity: false)
         var customBackButton:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "back")
         customBackButton.tintColor = UIColor.whiteColor()
         
@@ -547,20 +526,13 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - Navigation bar back button action
     
     func back() {
-        /*
         if self.productModel.name != "" {
             if ProductUploadCombination.draft {
-                self.draft()
+                self.productIsDraft = true
+                self.draftModal()
             } else {
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
-        } else {
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }*/
-        self.productIsDraft = true
-        
-        if self.productModel.name != "" {
-            self.draftModal()
         } else {
             self.dismissViewControllerAnimated(true, completion: nil)
         }
@@ -569,7 +541,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: -
     // MARK: - Product Brand
     
-    func brand() {
+    func gotoBrand() {
         let brandViewController: ProductUploadBrandViewController = ProductUploadBrandViewController(nibName: "ProductUploadBrandViewController", bundle: nil)
         brandViewController.delegate = self
         self.navigationController!.pushViewController(brandViewController, animated: true)
@@ -578,7 +550,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: -
     // MARK: - Product Category
     
-    func category() {
+    func gotoCategory() {
         let productUploadCategoryViewController: ProductUploadCategoryViewController = ProductUploadCategoryViewController(nibName: "ProductUploadCategoryViewController", bundle: nil)
         productUploadCategoryViewController.pageTitle = ProductUploadStrings.selectCategory
         productUploadCategoryViewController.userType = UserType.Seller
@@ -587,7 +559,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     }
     
     // MARK: - 
-    // MARK: Check if seller
+    // MARK: - Check if seller
     
     func checkIfSeller() -> Bool {
         if SessionManager.isSeller() {
@@ -597,12 +569,17 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         }
     }
     
-    // MARK: - Draft Alert
+    // MARK: -
+    // MARK: - Draft Modal: Call this method if product is not yet saved
+    //       -  This is to prompt the user to either discard of save the changes
+    
     func draftModal() {
         let alertController = UIAlertController(title: ProductUploadStrings.uploadItem, message: ProductUploadStrings.saveAsDraft, preferredStyle: .Alert)
+        
         let cancelAction = UIAlertAction(title: Constants.Localized.no, style: .Cancel) { (action) in
             self.dismissViewControllerAnimated(true, completion: nil)
         }
+        
         alertController.addAction(cancelAction)
         
         let OKAction = UIAlertAction(title: Constants.Localized.yes, style: .Default) { (action) in
@@ -612,6 +589,21 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         alertController.addAction(OKAction)
         
         self.presentViewController(alertController, animated: true) {
+            
+        }
+    }
+    
+    // MARK: -
+    // MARK: - Dismiss Controller Toast Message
+    
+    func dismissControllerWithToastMessage(message: String) {
+        self.tableView.endEditing(true)
+        self.navigationController?.view.makeToast(message)
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC)))
+        
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+            ProductUploadEdit.isPreview = false
+            self.dismissViewControllerAnimated(true, completion: nil)
         }
     }
     
@@ -623,29 +615,43 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     }
     
     // MARK: -
+    // MARK: - Insert image 
+    func insertImage(image: UIImage) {
+        self.productModel.isPrimaryPhoto.append(false)
+        
+        var productMainImagesModel: ProductMainImagesModel = ProductMainImagesModel(image: image, imageName: "", imageStatus: false, imageFailed: false)
+        
+        if self.productModel.productMainImagesModel.count == 0 {
+            self.productModel.productMainImagesModel.append(productMainImagesModel)
+        } else {
+            self.productModel.productMainImagesModel.insert(productMainImagesModel, atIndex: self.productModel.productMainImagesModel.count)
+        }
+    }
+    
+    // MARK: -
     // MARK: - Register table view cells
     
     func registerNib() {
-        let nib: UINib = UINib(nibName: "ProductUploadImageTVC", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: "ProductUploadImageTVC")
+        let nibImageView: UINib = UINib(nibName: ProductUploadImageTVCConstant.productUploadImageTVCNibNameAndIdentifier, bundle: nil)
+        self.tableView.registerNib(nibImageView, forCellReuseIdentifier: ProductUploadImageTVCConstant.productUploadImageTVCNibNameAndIdentifier)
         
-        let nibTextField: UINib = UINib(nibName: "ProductUploadTextFieldTableViewCell", bundle: nil)
-        self.tableView.registerNib(nibTextField, forCellReuseIdentifier: "ProductUploadTextFieldTableViewCell")
+        let nibTextField: UINib = UINib(nibName: ProductUploadTextFieldTableViewCellConstant.productUploadTextFieldTableViewCellNibAndIdentifier, bundle: nil)
+        self.tableView.registerNib(nibTextField, forCellReuseIdentifier: ProductUploadTextFieldTableViewCellConstant.productUploadTextFieldTableViewCellNibAndIdentifier)
        
-        let nibTextView: UINib = UINib(nibName: "ProductUploadTextViewTableViewCell", bundle: nil)
-        self.tableView.registerNib(nibTextView, forCellReuseIdentifier: "ProductUploadTextViewTableViewCell")
+        let nibTextView: UINib = UINib(nibName: ProductUploadTextViewTableViewCellConstant.productUploadTextViewTableViewCellNibAndIdentifier, bundle: nil)
+        self.tableView.registerNib(nibTextView, forCellReuseIdentifier: ProductUploadTextViewTableViewCellConstant.productUploadTextViewTableViewCellNibAndIdentifier)
         
-        let nibAddDetails: UINib = UINib(nibName: "ProductUploadButtonTableViewCell", bundle: nil)
-        self.tableView.registerNib(nibAddDetails, forCellReuseIdentifier: "ProductUploadButtonTableViewCell")
+        let nibAddDetails: UINib = UINib(nibName: ProductUploadButtonTableViewCellConstant.productUploadButtonTableViewCellNibAndIdentifier, bundle: nil)
+        self.tableView.registerNib(nibAddDetails, forCellReuseIdentifier: ProductUploadButtonTableViewCellConstant.productUploadButtonTableViewCellNibAndIdentifier)
         
-        let nibDimensions: UINib = UINib(nibName: "ProductUploadDimensionsAndWeightTableViewCell", bundle: nil)
-        self.tableView.registerNib(nibDimensions, forCellReuseIdentifier: "ProductUploadDimensionsAndWeightTableViewCell")
+        let nibDimensions: UINib = UINib(nibName: ProductUploadDimensionsAndWeightTableViewCellConstant.productUploadDimensionsAndWeightTableViewCellNibAndIdentifier, bundle: nil)
+        self.tableView.registerNib(nibDimensions, forCellReuseIdentifier: ProductUploadDimensionsAndWeightTableViewCellConstant.productUploadDimensionsAndWeightTableViewCellNibAndIdentifier)
         
         let nibProductGroup: UINib = UINib(nibName: ProductUploadCategoryViewControllerConstant.productUploadCategoryTableViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(nibProductGroup, forCellReuseIdentifier: ProductUploadCategoryViewControllerConstant.productUploadCategoryTableViewCellNibNameAndIdentifier)
         
-        let nib4: UINib = UINib(nibName: "ProductUploadProductGroupTVC", bundle: nil)
-        self.tableView.registerNib(nib4, forCellReuseIdentifier: "ProductUploadProductGroupTVC")
+        let nib4: UINib = UINib(nibName: PUPGConstant.productUploadProductGroupTVCNibNameAndIdentier, bundle: nil)
+        self.tableView.registerNib(nib4, forCellReuseIdentifier: PUPGConstant.productUploadProductGroupTVCNibNameAndIdentier)
         
         let quantityNib: UINib = UINib(nibName: ProductUploadTableViewControllerConstant.productUploadQuantityTableViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(quantityNib, forCellReuseIdentifier: ProductUploadTableViewControllerConstant.productUploadQuantityTableViewCellNibNameAndIdentifier)
@@ -654,7 +660,23 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         self.tableView.registerNib(attributeNib, forCellReuseIdentifier: ProductUploadTableViewControllerConstant.productUploadAttributeSummaryTableVieCellNibNameAndIdentifier)
     }
     
+    // MARK: -
+    // MARK: - Primary Photo
+    
+    func setPrimaryPhoto() {
+        // Set Primary Photo
+        if self.productModel.isPrimaryPhoto.count != 0 {
+            for (index, isPrimary) in enumerate(self.productModel.isPrimaryPhoto) {
+                if isPrimary {
+                    self.primaryPhoto = "\(index)"
+                }
+            }
+        }
+    }
+    
+    // MARK: -
     // MARK: - Call SuccessViewController
+    
     func success() {
         let successViewController: SuccessUploadViewController = SuccessUploadViewController(nibName: "SuccessUploadViewController", bundle: nil)
         successViewController.delegate = self
@@ -673,8 +695,8 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - Reupload Cell Collection View Data
     
     func reloadUploadCellCollectionViewData() {
-        //let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
-        //let cell: ProductUploadImageTVC = self.tableView.cellForRowAtIndexPath(indexPath) as! ProductUploadImageTVC
+        
+        // cellImage is an object of ProductUploadImageTVC
         self.cellImage!.productModel = self.productModel
         self.cellImage!.collectionView.reloadData()
         
@@ -722,7 +744,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     }
     
     func selectProductGroups() {
-        println("Product groups")
         let productUploadCategoryViewController: ProductUploadCategoryViewController = ProductUploadCategoryViewController(nibName: "ProductUploadCategoryViewController", bundle: nil)
         productUploadCategoryViewController.pageTitle = ProductUploadStrings.selectCategory
         productUploadCategoryViewController.userType = UserType.Seller
@@ -775,6 +796,18 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         self.hud?.show(true)
     }
     
+    func showUzysPicker(count: Int) {
+        let picker: UzysAssetsPickerController = UzysAssetsPickerController()
+        let maxCount: Int = 6
+        
+        let imageLimit: Int = maxCount - count
+        picker.delegate = self
+        picker.maximumNumberOfSelectionVideo = 0
+        picker.maximumNumberOfSelectionPhoto = 100
+        UzysAssetsPickerController.setUpAppearanceConfig(self.uzyConfig())
+        self.presentViewController(picker, animated: true, completion: nil)
+    }
+    
     // MARK: - Update Combination List Row
     func updateCombinationListRow() {
         if self.productModel.validCombinations.count == 0 {
@@ -822,51 +855,21 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - Upload Delegate
     
     func productUploadUploadImageTableViewCell(didSelecteRowAtIndexPath indexPath: NSIndexPath, cell: ProductUploadImageTVC) {
-        println("tap image")
         if self.uploadType == UploadType.NewProduct {
             if indexPath.row == self.productModel.images.count - 1 && self.productModel.images.count <= 5 {
-                let picker: UzysAssetsPickerController = UzysAssetsPickerController()
-                let maxCount: Int = 6
-                
-                let imageLimit: Int = maxCount - self.productModel.images.count
-                picker.delegate = self
-                picker.maximumNumberOfSelectionVideo = 0
-                picker.maximumNumberOfSelectionPhoto = 100
-                UzysAssetsPickerController.setUpAppearanceConfig(self.uzyConfig())
-                self.presentViewController(picker, animated: true, completion: nil)
+                self.showUzysPicker(self.productModel.images.count)
             }
         } else {
             if indexPath.row == self.productModel.editedImage.count - 1 && self.productModel.editedImage.count <= 5 {
-                let picker: UzysAssetsPickerController = UzysAssetsPickerController()
-                let maxCount: Int = 6
-                
-                let imageLimit: Int = maxCount - self.productModel.images.count
-                picker.delegate = self
-                picker.maximumNumberOfSelectionVideo = 0
-                picker.maximumNumberOfSelectionPhoto = 100
-                UzysAssetsPickerController.setUpAppearanceConfig(self.uzyConfig())
-                self.presentViewController(picker, animated: true, completion: nil)
+                self.showUzysPicker(self.productModel.editedImage.count)
             }
         }
     }
     
     // MARK: -
     // MARK: - Product Upload Upload Image Table View Cell Delegate method
-    // TODO: - Fixed error deleting unsuccessful upload. Index out of bound
+    
     func productUploadUploadImageTableViewCell(didDeleteAtRowIndexPath indexPath: NSIndexPath, cell: ProductUploadImageTVC, collectionView: UICollectionView) {
-        /*if self.uploadType == UploadType.EditProduct {
-        if self.productModel.editedImage[indexPath.row].uid != "" {
-        if !contains(self.deletedImagesId, self.productModel.editedImage[indexPath.row].uid) {
-        self.deletedImagesId.append(self.productModel.editedImage[indexPath.row].uid)
-        }
-        }
-        self.productModel.editedImage.removeAtIndex(indexPath.row)
-        } else {
-        self.productModel.images.removeAtIndex(indexPath.row)
-        ProductCroppedImages.imagesCropped.removeAtIndex(indexPath.row)
-        }
-        collectionView.deleteItemsAtIndexPaths([indexPath])*/
-        //ProductUploadImageTVCConstant.uploadImages.removeAtIndex(indexPath.row)
         self.productModel.mainImagesName[indexPath.row] = ""
         self.productModel.productMainImagesModel.removeAtIndex(indexPath.row)
         
@@ -882,8 +885,8 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         }
         
         collectionView.deleteItemsAtIndexPaths([indexPath])
-        cell.productModel?.isPrimaryPhoto = self.productModel.isPrimaryPhoto
         collectionView.reloadData()
+        cell.productModel?.isPrimaryPhoto = self.productModel.isPrimaryPhoto
         self.tableView.beginUpdates()
         self.tableView.endUpdates()
     }
@@ -892,7 +895,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - ProductUploadImageCollectionViewCell Delegate Method
     
     func productUploadUploadImageTableViewCell(didTapStarAtRowIndexPath indexPath: NSIndexPath, cell: ProductUploadImageCollectionViewCell, collectionView: UICollectionView, primaryPhoto: String) {
-        println("primary photo: \(primaryPhoto)")
         self.primaryPhoto = primaryPhoto
         collectionView.reloadData()
     }
@@ -905,7 +907,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - ProductUploadImageTVC Delegate Method
     
     func productUploadUploadImageTableViewCell(images cell: ProductUploadImageTVC) -> [UIImage] {
-        
         if self.uploadType == UploadType.EditProduct {
             return self.productModel.editedImage
         } else {
@@ -921,9 +922,9 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             self.productName  = text
             self.productModel.name = self.productName
         } else if textFieldType ==  ProductTextFieldType.Category {
-            self.category()
+            self.gotoCategory()
         } else if textFieldType ==  ProductTextFieldType.Brand {
-            self.brand()
+            self.gotoBrand()
         } else if textFieldType ==  ProductTextFieldType.ShippingCategory {
             self.selectedShippingCategory()
         } else if textFieldType ==  ProductTextFieldType.Condition {
@@ -936,7 +937,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     }
     
     func productUploadTextViewTableViewCell(textFieldDidChange text: String, cell: ProductUploadTextViewTableViewCell, textFieldType: ProductTextFieldType) {
-        
         if textFieldType ==  ProductTextFieldType.ProductShortDescription {
             self.productShortDescription = text
             self.productModel.shortDescription = self.productShortDescription
@@ -948,10 +948,8 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     
     // MARK: -
     // MARK: - ProductUploadDimensionsAndWeightTableViewCell Delegate Method
-    // TODO: - Save values from the textfields in variables
     
     func productUploadDimensionsAndWeightTableViewCell(textFieldDidChange textField: UITextField, text: String, cell: ProductUploadDimensionsAndWeightTableViewCell) {
-        
         if textField == cell.lengthTextField {
             self.productLength = text
             self.productModel.length = self.productLength
@@ -969,12 +967,8 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     
     // MARK: - 
     // MARK: - ProductUploadFooterView Delegate Method
-    // TODO: - Add action to upload product details
     
     func productUploadFooterView(didClickUpload view: ProductUploadFooterView) {
-        //self.getProductGroups()
-        //self.getProductAttributes()
-        //self.getMainImages()
         self.productIsDraft = false
         var count: Int = 0
         if self.uploadType == UploadType.EditProduct {
@@ -1009,7 +1003,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         } else if self.productModel.height == "" && self.productModel.validCombinations.count == 0 {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.heightRequried, title: ProductUploadStrings.incompleteProductDetails)
         } else if self.primaryPhoto == "" {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please select a primary image.", title: ProductUploadStrings.incompleteProductDetails)
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRIMARY_PHOTO_LOCALIZE_KEY"), title: ProductUploadStrings.incompleteProductDetails)
         } else {
             self.fireUploadProduct()
         }
@@ -1017,10 +1011,8 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     
     // MARK: -
     // MARK: - ProductUploadBrandViewController Delegate Method
-    // TODO: - Store brand in a variable
     
     func productUploadBrandViewController(didSelectBrand brand: String, brandModel: BrandModel) {
-        
         self.productBrand = brand
         self.productModel.brand.name = self.productBrand
         self.reloadTableViewRowInSection(2, row: 2)
@@ -1064,15 +1056,19 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         self.tableView.setContentOffset(CGPointZero, animated: true)
     }
     
-    // MARK: UzysAssetsPickerView Controller Data Source and Delegate methods
+    // MARK: -
+    // MARK: - UzysAssetsPickerView Controller Data Source and Delegate methods
     // MARK: - Uzy Config
+    
     func uzyConfig() -> UzysAppearanceConfig {
         let config: UzysAppearanceConfig = UzysAppearanceConfig()
         config.finishSelectionButtonColor = Constants.Colors.appTheme
         return config
     }
     
+    // MARK: -
     // MARK: - Uzzy Picker Delegate
+    
     func uzysAssetsPickerController(picker: UzysAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) {
         let assetsLibrary = ALAssetsLibrary()
         let alaSset: ALAsset = assets[0] as! ALAsset
@@ -1085,18 +1081,11 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 let image: ServerUIImage = ServerUIImage(CGImage: allaSset.defaultRepresentation().fullScreenImage().takeUnretainedValue())!
                 image.isNew = true
                 image.isRemoved = false
+                
                 self.productModel.editedImage.insert(image, atIndex: self.productModel.editedImage.count - 1)
-                
-                self.productModel.isPrimaryPhoto.append(false)
                 self.productModel.mainImagesName.append("")
-                var productMainImagesModel: ProductMainImagesModel = ProductMainImagesModel(image: image, imageName: "", imageStatus: false, imageFailed: false)
                 
-                if self.productModel.productMainImagesModel.count == 0 {
-                    self.productModel.productMainImagesModel.append(productMainImagesModel)
-                } else {
-                    self.productModel.productMainImagesModel.insert(productMainImagesModel, atIndex: self.productModel.productMainImagesModel.count)
-                }
-                
+                self.insertImage(image)
             } else {
                 // Insert iamges in 'productModel' array of images
                 // Call CropAssetViewController to crop images
@@ -1104,14 +1093,8 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullScreenImage().takeUnretainedValue(), scale: 1.0, orientation: UIImageOrientation.Up)!
                 
                 self.productModel.images.insert(image, atIndex: self.productModel.images.count - 1)
-                self.productModel.isPrimaryPhoto.append(false)
-                var productMainImagesModel: ProductMainImagesModel = ProductMainImagesModel(image: image, imageName: "", imageStatus: false, imageFailed: false)
                 
-                if self.productModel.productMainImagesModel.count == 0 {
-                    self.productModel.productMainImagesModel.append(productMainImagesModel)
-                } else {
-                    self.productModel.productMainImagesModel.insert(productMainImagesModel, atIndex: self.productModel.productMainImagesModel.count)
-                }
+                self.insertImage(image)
                 
                 /*let storyboard = UIStoryboard(name: "FaImagePicker", bundle: nil)
                 
@@ -1128,12 +1111,11 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         self.reloadUploadCellCollectionViewData()
         self.productImagesName.removeAll(keepCapacity: false)
         self.getMainImages()
-        
-        //self.tableView.reloadData()
-        //self.reloadTable()
     }
     
+    // MARK: -
     // MARK: - Uzy Delegate
+    
     func uzysAssetsPickerControllerDidCancel(picker: UzysAssetsPickerController!) {
         
     }
@@ -1142,49 +1124,46 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         
     }
     
+    // MARK: -
+    // MARK: - Get main images
+    
     func getMainImages() {
+        self.productImagesCount = 0
         var data: [NSData] = []
-        
         var uploadedImages: [UIImage] = []
         
-        // Main Images
+        // Main Images of new product
         for images in self.productModel.images {
             uploadedImages.append(images)
         }
         
+        // Main Images of uploaded product
         for images in self.productModel.editedImage {
             uploadedImages.append(images)
         }
         
+        // Removed the dummy photo
         if uploadedImages.count != 0 {
             uploadedImages.removeLast()
         }
-        
-        // Attributes Images
-        /*for combination in self.productModel.validCombinations {
-            if self.uploadType == UploadType.NewProduct {
-                for image in combination.images {
-                    uploadedImages.append(image)
-                }
-            }
-        }*/
-
-        self.productImagesCount = 0
+    
         self.fireUploadProductMainImages(uploadedImages[self.productImagesCount])
     }
+    
+    // MARK: -
+    // MARK: - Get product groups
     
     func getProductGroups() -> String {
         var productGroups: [String] = []
        
-        for i in 0..<self.productModel.productGroups.count {
-            productGroups.append("\(self.productModel.productGroups[i].name)")
+        for (index, product) in enumerate(self.productModel.productGroups) {
+            productGroups.append(product.name)
         }
 
         let data = NSJSONSerialization.dataWithJSONObject(productGroups, options: nil, error: nil)
         let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
         
         return string as! String
-        
     }
     
     func getProductImages(count: Int) -> String {
@@ -1207,8 +1186,10 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         return self.formatToJson(productImages)
     }
     
+    // MARK: -
     // MARK: - Property
     // Return a formatted string containing dictionary of combinations with values and keys
+    
     func getProductAttributes() -> String {
         var productAttributes: [NSMutableDictionary] = []
         
@@ -1253,6 +1234,9 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
 
         return self.formatToJson(productAttributes)
     }
+    
+    // MARK: -
+    // MARK: - Format dictionary to json
     
     func formatToJson(dictionary: [NSMutableDictionary]) -> String {
         let data = NSJSONSerialization.dataWithJSONObject(dictionary, options: nil, error: nil)
@@ -1326,12 +1310,10 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         if self.uploadType == UploadType.NewProduct {
             if self.productModel.images.count-1 == self.productImagesName.count {
                 self.productImages = self.getProductImages(self.productModel.images.count)
-                println("\(self.getProductImages(self.productModel.images.count))")
             }
         } else {
             if (self.productModel.editedImage.count-1 == self.productImagesName.count) || (self.productImagesCount == 0) {
                 self.productImages = self.getProductImages(self.productModel.editedImage.count)
-                println("\(self.getProductImages(self.productModel.editedImage.count))")
             }
         }
         
@@ -1369,15 +1351,80 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             self.productIsDraft = true
         }
         
+        let productDetailsViewController: ProductDetailsViewController = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
+        
+        if self.uploadType == UploadType.EditProduct {
+            productDetailsViewController.uploadType = UploadType.EditProduct
+        } else if self.uploadType == UploadType.Draft {
+            productDetailsViewController.uploadType = UploadType.Draft
+        } else {
+            productDetailsViewController.uploadType = UploadType.NewProduct
+        }
+        
+        ProductUploadEdit.isPreview = true
+        ProductUploadEdit.parameters = parameters
+        ProductUploadEdit.uploadType = self.uploadType
+        ProductUploadEdit.url = url
+        
+        productDetailsViewController.productModel = self.productModel
+        
+        let alertController = UIAlertController(title: ProductUploadStrings.uploadItem, message: "Do you want to proceed?", preferredStyle: .Alert)
+        
+        if uploadType == UploadType.EditProduct {
+            
+            let cancelAction = UIAlertAction(title: Constants.Localized.no, style: .Cancel) { (action) in
+                
+            }
+            
+            alertController.addAction(cancelAction)
+            
+            let OKAction = UIAlertAction(title: Constants.Localized.yes, style: .Default) { (action) in
+                productDetailsViewController.uploadType = UploadType.EditProduct
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+            
+            alertController.addAction(OKAction)
+            
+            self.presentViewController(alertController, animated: true) {}
+        } else if uploadType == UploadType.NewProduct {
+            let cancelAction = UIAlertAction(title: Constants.Localized.no, style: .Cancel) { (action) in
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+            
+            alertController.addAction(cancelAction)
+            
+            let OKAction = UIAlertAction(title: Constants.Localized.yes, style: .Default) { (action) in
+                productDetailsViewController.uploadType = UploadType.NewProduct
+                self.navigationController?.pushViewController(productDetailsViewController, animated: true)
+            }
+            
+            alertController.addAction(OKAction)
+            
+            self.presentViewController(alertController, animated: true) {}
+        } else {
+            self.fireUploadDraft(url, parameters: parameters)
+        }
+    }
+    
+    func fireUploadDraft(url: String, parameters: NSMutableDictionary) {
         WebServiceManager.fireProductUploadRequestWithUrl(url+"?access_token=\(SessionManager.accessToken())", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 if let success = responseObject["isSuccessful"] as? Bool {
                     if success {
-                        println(responseObject)
+                        /*
                         if !self.productIsDraft {
                             self.success()
                         } else {
-                           self.dismissViewControllerAnimated(true, completion: nil)
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                        }*/
+                        if self.uploadType == UploadType.Draft {
+                            ProductUploadEdit.edit = false
+                            self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyDraft)
+                        } else if self.uploadType == UploadType.EditProduct {
+                            ProductUploadEdit.edit = false
+                            self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyEdited)
+                        } else {
+                            self.success()
                         }
                     }
                 }
@@ -1407,22 +1454,22 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         })
     }
     
+    // MARK: -
+    // MARK: - POST METHOD: Fire Upload Main Images
+    /*
+    *
+    * (Parameters) - type, access_token
+    *
+    * Function to upload images
+    *
+    */
+    
     func fireUploadProductMainImages(image: UIImage) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         var parameters: NSMutableDictionary = ["type" : "product"]
         
         WebServiceManager.fireProductUploadImageRequestWithUrlV2(APIAtlas.uploadImagesUrl+"?access_token=\(SessionManager.accessToken())", parameters: parameters, image: image, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
-                /*if uploadType == UploadType.Draft {
-                    ProductUploadEdit.edit = false
-                    self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyDraft)
-                } else if uploadType == UploadType.EditProduct {
-                    ProductUploadEdit.edit = false
-                    self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyEdited)
-                } else {
-                    self.success()
-                }*/
-                
                 if let success = responseObject["isSuccessful"] as? Bool {
                     if success {
                         if let dictionary: NSDictionary = responseObject["data"] as? NSDictionary {
@@ -1451,7 +1498,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                                 }
                                 
                                 var productMainImagesModel: ProductMainImagesModel = ProductMainImagesModel(image: image, imageName: oldFileName, imageStatus: true, imageFailed: false)
-                                //self.productModel.productMainImagesModel.removeAtIndex(self.productImagesCount)
+                                
                                 self.productModel.productMainImagesModel[self.productImagesCount] = productMainImagesModel
                                 
                                 self.reloadUploadCellCollectionViewData()
@@ -1476,7 +1523,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 }
                 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                println("\(self.productImagesName)")
             } else {
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 self.updateModelUnsuccessfulUpload()
@@ -1512,6 +1558,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     * Function to refresh token to get another access token
     *
     */
+    
     func fireRefreshToken(uploadProduct: UploadProduct) {
         self.showHUD()
         let manager = APIManager.sharedInstance

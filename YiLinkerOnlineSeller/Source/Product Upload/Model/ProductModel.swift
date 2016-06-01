@@ -234,7 +234,7 @@ class ProductModel {
                         
                         attributes.append(attributeModel)
                     }
-                }
+                } // product variants
                 
                 if let properties: NSArray = value["productUnits"] as? NSArray {
                     if properties.count == 0 {
@@ -254,7 +254,7 @@ class ProductModel {
                         combination.width = "0.0"
                         combination.isAvailable = false
                         combination.isPrimaryPhoto.append(false)
-                        //                    validCombinations.append(combination)
+                        validCombinations.append(combination)
                         
                     } else if properties.count > 0 {
                         for subValue in value["productUnits"] as! NSArray {
@@ -295,23 +295,12 @@ class ProductModel {
                                 combination.productUnitId = tempVar
                             }
                             
-                            /*
-                            quantity = subValue["quantity"] as! Int
-                            retailPrice = subValue["price"] as! String
-                            discoutedPrice = subValue["discountedPrice"] as! String
-                            sku = subValue["sku"] as! String
-                            weigth = subValue["weight"] as! String
-                            height = subValue["height"] as! String
-                            length = subValue["length"] as! String
-                            width = subValue["width"] as! String
-                            productUnitId = subValue["productUnitId"] as! String
-                            */
-                            
                             if let attributes = subValue["attributes"] as? NSArray {
                                 
                                 if let tempVar = subValue["attributes"] as? [NSMutableDictionary] {
                                     combination.attributes = tempVar
                                 }
+                                
                                 for subAttribute in subValue["attributes"] as! NSArray {
                                     if let tempVar = subValue["id"] as? String {
                                         combination.combinationID = tempVar
@@ -333,7 +322,7 @@ class ProductModel {
                                         combination.sku = tempVar
                                     }
                                 }
-                            }
+                            } // attributes
                             
                             if let images = subValue["images"] as? NSArray {
                                 for combiImages in subValue["images"] as! NSArray {
@@ -341,10 +330,6 @@ class ProductModel {
                                         combination.imagesUrl.append("")
                                         combination.imagesId.append("")
                                     } else {
-                                        /*var url: String = APIEnvironment.baseUrl() + "/assets/images/uploads/products/" + (subimages["path"] as! String)
-                                        println(">> \(url)")
-                                        url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)*/
-        
                                         if let sizes = combiImages["sizes"] as? NSDictionary {
                                             if let thumbnail = sizes["thumbnail"] as? String {
                                                 combination.imagesUrl.append(thumbnail)
@@ -355,116 +340,35 @@ class ProductModel {
                                             combination.combiImagesName.append(imageId)
                                             combination.imagesId.append(imageId)
                                         }
-                                        
-                                        /*for subimages in subValue["images"] as! NSArray {
-                                            var url: String = APIEnvironment.baseUrl() + "/assets/images/uploads/products/" + (subimages["path"] as! String)
-                                            println(">> \(url)")
-                                            url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
-                                            combination.imagesUrl.append(url)
-                                            combination.imagesId.append(subimages["id"] as! String)
-                                            //images.append(url)
-                                            //imageIds.append(subimages["id"] as! String)
-                                        }*/
                                     }
                                 }
-                            }
-                            
+                            } // images
                             validCombinations.append(combination)
                         }
                         sku = validCombinations[0].sku
                         productUnitId = validCombinations[0].productUnitId
                     }
-                }
+                } // product units
                 
                 if let imagesValue = value["productImages"] as? NSArray {
                     for subValue in value["productImages"] as! NSArray {
-                        //var url: String = APIEnvironment.baseUrl() + "/assets/images/uploads/products/" + (subValue["path"] as! String)
-                        ///url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
                         
                         if let thumbnail = subValue["sizes"] as? NSDictionary {
                             if let image = thumbnail["thumbnail"] as? String {
                                 images.append(image)
                             }
                         }
+                        
                         imageIds.append(subValue["raw"] as! String)
                         mainImagesName.append(subValue["raw"] as! String)
                         isPrimaryPhoto.append(subValue["isPrimary"] as! Bool)
                     }
                 } else if let imagesValue: AnyObject = value["images"] {
-                    //let image1: AnyObject = imagesValue["1"] as! NSDictionary
                     var url: String = APIEnvironment.baseUrl() + "/assets/images/uploads/products/" + (imagesValue["path"] as! String)
                     url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
                     images.append(url)
                     imageIds.append(imagesValue["id"] as! String)
-                }
-                
-                
-                
-//                    for subValue in value["productProperties"] as! NSArray {
-//                        var attributeModel = AttributeModel()
-//                        for attribute in subValue["attributes"] as! NSArray {
-//                            attributeModel.definition = attribute["name"] as! String
-//                            attributeModel.values.append(attribute["value"] as! String)
-//                            attributes.append(attributeModel)
-//                        }
-//                        //                        attributes = subValue["attributes"] as! NSArray as! [AttributeModel]
-//                        quantity = subValue["quantity"] as! Int
-//                        retailPrice = subValue["price"] as! String
-//                        discoutedPrice = subValue["discountedPrice"] as! String
-//                        sku = subValue["sku"] as! String
-//                        weigth = subValue["unitWeight"] as! String
-//                        height = subValue["unitHeight"] as! String
-//                        length = subValue["unitLength"] as! String
-//                        width = subValue["unitWidth"] as! String
-//                        productUnitId = subValue["productUnitId"] as! String
-//                    }
-
-//                else if properties.count == 1 {
-//                    for subValue in value["productProperties"] as! NSArray {
-//                        var attributeModel = AttributeModel()
-//                        for attribute in subValue["attributes"] as! NSArray {
-//                            attributeModel.definition = attribute["name"] as! String
-//                            attributeModel.values.append(attribute["value"] as! String)
-//                            attributes.append(attributeModel)
-//                        }
-////                        attributes = subValue["attributes"] as! NSArray as! [AttributeModel]
-//                        quantity = subValue["quantity"] as! Int
-//                        retailPrice = subValue["price"] as! String
-//                        discoutedPrice = subValue["discountedPrice"] as! String
-//                        sku = subValue["sku"] as! String
-//                        weigth = subValue["unitWeight"] as! String
-//                        height = subValue["unitHeight"] as! String
-//                        length = subValue["unitLength"] as! String
-//                        width = subValue["unitWidth"] as! String
-//                        productUnitId = subValue["productUnitId"] as! String
-//                    }
-//                } else if properties.count > 1 {
-//                    for subValue in value["productProperties"] as! NSArray {
-//                        var combination = CombinationModel()
-//                        combination.combinationID = subValue["id"] as! String
-//                        var attributeModel = AttributeModel()
-//                        for attribute in subValue["attributes"] as! NSArray {
-//                            attributeModel.definition = attribute["name"] as! String
-//                            attributeModel.values.append(attribute["value"] as! String)
-//                            attributes.append(attributeModel)
-//                        }
-////                        combination.attributes = subValue["attributes"] as! NSArray as! [NSMutableDictionary]
-//                        combination.attributes = attributes as NSArray as! [NSMutableDictionary]
-//                        combination.retailPrice = subValue["price"] as! String
-//                        combination.discountedPrice = subValue["discountedPrice"] as! String
-//                        combination.quantity = String(subValue["quantity"] as! Int)
-//                        combination.sku = subValue["sku"] as! String
-//                        combination.images = subValue["images"] as! NSArray as! [UIImage]
-//
-//                        combination.weight = subValue["unitWeight"] as! String
-//                        combination.height = subValue["unitHeight"] as! String
-//                        combination.length = subValue["unitLength"] as! String
-//                        combination.width = subValue["unitWidth"] as! String
-//                        validCombinations.append(combination)
-//                    }
-//                    sku = validCombinations[0].sku
-//                }
-                
+                } // main images
             } // data
         } // dictionary
         

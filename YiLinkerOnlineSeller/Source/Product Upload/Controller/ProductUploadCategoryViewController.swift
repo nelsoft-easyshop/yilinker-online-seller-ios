@@ -57,11 +57,11 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         } else if self.productCategory == UploadProduct.ShippingCategory {
             self.fireShippingCategories()
             // Set navigation bar title
-            self.title = "Select Shipping Category"
+            self.title = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SELECT_SHIPPING_LOCALIZE_KEY")
         } else {
             self.fireProductGroup()
             // Set navigation bar title
-            self.title = "Select Product Group"
+            self.title = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SELECT_PRODUCT_GROUP_LOCALIZE_KEY")
         }
     }
     
@@ -70,8 +70,10 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: Navigation bar
-    // Add back button in navigation bar
+    // MARK: -
+    // MARK: - Navigation bar
+    // MARK: - Add back button in navigation bar
+    
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -100,7 +102,9 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         self.navigationItem.rightBarButtonItems = [navigationSpacer2, customCheckButton]
     }
     
-    // Add search button in navigation bar
+    // MARK: -
+    // MARK: - Add search button in navigation bar
+    
     func searchButton() {
         var searchButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         searchButton.frame = CGRectMake(0, 0, 40, 40)
@@ -129,6 +133,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
     func check() {
         let uploadViewController: ProductUploadTC = self.navigationController!.viewControllers[0] as! ProductUploadTC
         self.selectedProductGroups.removeAll(keepCapacity: false)
+        
         for i in 0..<self.productGroup.count {
             if self.productGroup[i] == true {
                 self.selectedProductGroups.append(self.productGroups[i])
@@ -157,13 +162,17 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         self.tableView.tableFooterView = footerView
     }
     
-    // MARK: Register tableview cell
+    // MARK: -
+    // MARK: - Register tableview cell
+    
     func registerCell() {
         let nib: UINib = UINib(nibName: ProductUploadCategoryViewControllerConstant.productUploadCategoryTableViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: ProductUploadCategoryViewControllerConstant.productUploadCategoryTableViewCellNibNameAndIdentifier)
     }
     
-    //MARK: Alert view
+    // MARK: -
+    // MARK: - Alert view
+    
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         
@@ -177,7 +186,9 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         }
     }
     
-    //MARK: Show HUD
+    // MARK: -
+    // MARK: - Show HUD
+    
     func showHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
@@ -191,7 +202,9 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         self.hud?.show(true)
     }
     
-    // MARK: Table view delegate and data source methods
+    // MARK: -
+    // MARK: - Table view delegate and data source methods
+  
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: ProductUploadCategoryTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadCategoryViewControllerConstant.productUploadCategoryTableViewCellNibNameAndIdentifier) as! ProductUploadCategoryTableViewCell
         
@@ -212,34 +225,12 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
             let productGroup: ConditionModel = self.productGroups[indexPath.row]
             cell.categoryTitleLabel.text = productGroup.name
             if self.productGroup[indexPath.row] == true {
-                //cell.categoryTitleLabel.text = productGroup.name + "*"
                 cell.selected = true
                 cell.accessoryType = UITableViewCellAccessoryType.Checkmark
-                /*if cell.selected {
-                cell.selected = false
-                if cell.accessoryType == UITableViewCellAccessoryType.None {
-                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
-                } else {
-                cell.accessoryType = UITableViewCellAccessoryType.None
-                }
-                }*/
-                //cell.accessoryType = UITableViewCellAccessoryType.Checkmark
             } else {
                 cell.categoryTitleLabel.text = productGroup.name
-                //cell.selected = false
                 cell.accessoryType = UITableViewCellAccessoryType.None
             }
-            
-            
-            /*
-            if cell.selected {
-                cell.selected = false
-                if cell.accessoryType == UITableViewCellAccessoryType.None {
-                    cell.accessoryType = UITableViewCellAccessoryType.Checkmark
-                } else {
-                    cell.accessoryType = UITableViewCellAccessoryType.None
-                }
-            }*/
         }
 
         return cell
@@ -270,20 +261,15 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         } else {
             productGroupsModel = self.productGroups[indexPath.row]
             let cell = self.tableView.cellForRowAtIndexPath(indexPath)
-            println(self.productGroup)
             if cell!.selected {
                 cell!.selected = false
                 if cell!.accessoryType == UITableViewCellAccessoryType.None {
                     cell!.accessoryType = UITableViewCellAccessoryType.Checkmark
-                    self.productGroup.removeAtIndex(indexPath.row)
-                    self.productGroup.insert(true, atIndex: indexPath.row)
+                    self.productGroup[indexPath.row] = true
                 } else {
                     cell!.accessoryType = UITableViewCellAccessoryType.None
-                    println("row: \(indexPath.row)")
                     self.productGroup.removeAtIndex(indexPath.row)
-                    self.productGroup.insert(false, atIndex: indexPath.row)
-                    //self.selectedProductGroups.removeAtIndex(indexPath.row)
-                    println(self.productGroup.count)
+                    self.productGroup[indexPath.row] = false
                 }
             }
         }
@@ -312,14 +298,14 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         }
     }
     
-    //MARK: -
-    //MARK: - REST API request
-    //MARK: - GET METHOD: Fire Category With Parent ID
+    // MARK: -
+    // MARK: - REST API request
+    // MARK: - GET METHOD: Fire Category With Parent ID
     /*
     *
     * (Parameters) - access_token, parentId
     *
-    *Function to get list of category
+    * Function to get list of category
     *
     */
     
@@ -366,41 +352,6 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
                 }
             }
         })
-        /*
-        let manager = APIManager.sharedInstance
-        manager.GET(APIAtlas.categoryUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            let dictionary: NSDictionary = responseObject as! NSDictionary
-            let isSuccessful = dictionary["isSuccessful"] as! Bool
-            
-            if isSuccessful {
-                let data: NSArray = dictionary["data"] as! NSArray
-                
-                for categoryDictionary in data as! [NSDictionary] {
-                    let categoryModel: CategoryModel = CategoryModel(uid: categoryDictionary["productCategoryId"] as! Int, name: categoryDictionary["name"] as! String, hasChildren: categoryDictionary["hasChildren"] as! String)
-                    self.categories.append(categoryModel)
-                }
-            }
-            self.tableView.reloadData()
-            self.hud?.hide(true)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    self.fireRefreshToken(parentID)
-                } else {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        self.showAlert(Constants.Localized.error, message: errorModel.message)
-                    } else {
-                        self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-                    }
-                }
-                self.hud?.hide(true)
-        })*/
     }
     
     // MARK: -
@@ -409,41 +360,29 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
     *
     * (Parameters) - client_id, client_secret, grant_type, refresh_token
     *
-    *Function to refresh token to get another access token
+    * Function to refresh token to get another access token
     *
     */
     
     func fireRefreshToken(parentID: Int, uploadProduct: UploadProduct) {
         self.showHUD()
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = [
-            "client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
         
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            
-            if uploadProduct == UploadProduct.ProductCategory {
-                self.fireCategoryWithParentID(parentID)
-            } else {
-                self.fireShippingCategories()
-            }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if error.userInfo != nil {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                
+                if uploadProduct == UploadProduct.ProductCategory {
+                    self.fireCategoryWithParentID(parentID)
                 } else {
-                    self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                    self.fireShippingCategories()
                 }
-                self.hud?.hide(true)
+            } else {
+                //Show UIAlert and force the user to logout
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                })
+            }
         })
     }
     
@@ -529,20 +468,6 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
                        self.productGroup.append(false)
                     }
                 }
-                /*
-                if self.productGroup.count != 0 {
-                    for i in 0..<self.productGroup.count {
-                        if self.selectedProductGroups.count != 0 {
-                            if !contains(self.productGroupId, self.selectedProductGroups[i].uid) {
-                                self.productGroupId.append(self.selectedProductGroups[i].uid)
-                                
-                            } else {
-                                self.productGroup.removeAtIndex(i)
-                                self.productGroup.insert(false, atIndex: i)
-                            }
-                        }
-                    }
-                }*/
                 
                 self.tableView.reloadData()
                 

@@ -165,6 +165,7 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
         let brandModel: BrandModel = self.brands.objectAtIndex(indexPath.row) as! BrandModel
         let cell: ProductUploadCategoryTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadCategoryViewControllerConstant.productUploadCategoryTableViewCellNibNameAndIdentifier) as! ProductUploadCategoryTableViewCell
         cell.categoryTitleLabel.text = brandModel.name
+        
         return cell
     }
     
@@ -224,42 +225,6 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
                 }
             }
         })
-        /*
-        let manager = APIManager.sharedInstance
-        
-        self.searchTask = manager.GET(APIAtlas.brandUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            let dictionary: NSDictionary = responseObject as! NSDictionary
-            let isSuccessful = dictionary["isSuccessful"] as! Bool
-            let data: [NSDictionary] = dictionary["data"] as! [NSDictionary]
-            if isSuccessful {
-                self.brands.removeAllObjects()
-                for brandDictionary in data {
-                    let brandModel: BrandModel = BrandModel(name: brandDictionary["name"] as! String, brandId: brandDictionary["brandId"] as! Int)
-                    self.brands.addObject(brandModel)
-                }
-                self.tableView.reloadData()
-            }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                if error.code != NSURLErrorCancelled {
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    
-                    if task.statusCode == 401 {
-                        self.fireRefreshTokenWithKeyWord(keyWord)
-                    } else {
-                        if error.userInfo != nil {
-                            let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                            let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                            self.showAlert(Constants.Localized.error, message: errorModel.message)
-                        } else {
-                            self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-                        }
-                    }
-                }
-            })*/
     }
     
     // MARK: -
@@ -274,31 +239,20 @@ class ProductUploadBrandViewController: UIViewController, UITabBarControllerDele
     
     func fireRefreshTokenWithKeyWord(keyWord: String) {
         self.showHUD()
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = [
-            "client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
         
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            
-            self.fireBrandWithKeyWord(keyWord)
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if error.userInfo != nil {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    self.showAlert(Constants.Localized.error, message: errorModel.message)
-                } else {
-                    self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-                }
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                
+                self.fireBrandWithKeyWord(keyWord)
+            } else {
+                //Show UIAlert and force the user to logout
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                })
                 self.hud?.hide(true)
+            }
         })
     }
 
