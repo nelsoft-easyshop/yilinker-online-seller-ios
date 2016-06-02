@@ -31,6 +31,9 @@ private struct ManagementStrings {
     static let modalTitle2 = StringHelper.localizedStringWithKey("MANAGEMENT_MODAL_TITLE2_LOCALIZE_KEY")
     static let modalSubtitle = StringHelper.localizedStringWithKey("MANAGEMENT_MODAL_SUBTITLE_LOCALIZE_KEY")
     static let modalSubtitle2 = StringHelper.localizedStringWithKey("MANAGEMENT_MODAL_SUBTITLE2_LOCALIZE_KEY")
+    
+    static let stores = StringHelper.localizedStringWithKey("MANAGEMENT_STORES_LOCALIZE_KEY")
+    static let language = StringHelper.localizedStringWithKey("MANAGEMENT_LANGUAGE_LOCALIZE_KEY")
 }
 
 struct Status {
@@ -97,7 +100,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         "http://flaglane.com/download/singaporean-flag/singaporean-flag-graphic.png",
         "http://flaglane.com/download/singaporean-flag/singaporean-flag-graphic.png",
         "http://flaglane.com/download/singaporean-flag/singaporean-flag-graphic.png"]
-    let languages = ["PH - EN", "UK - EN", "SG - CN", "CA - EN", "CA - FR", "RJ 08"]
+    let languages = ["EN", "EN", "CN", "EN", "FR", "08"]
     
     // MARK: - View Life Cycle
     
@@ -105,6 +108,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+//                SessionManager.setAccessToken("YjU4NTRhNzdmNDRmYjU1ODQ5MzVjZmIyN2E1ZjA4NWMxNTEwNDFhNmRlNTA2MDAyMzAxNWIzYWFjZTIxOTZiMA")
         self.showHUD()
         customizeNavigationBar()
         customizeViews()
@@ -426,6 +430,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     
     func requestGetProductList(status: String, key: String) {
         WebServiceManager.fireProductListRequestWithUrl(APIAtlas.managementGetProductList, status: String(status), keyword: key, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            
             if successful {
                     self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
                     if self.productModel.products.count != 0 {
@@ -452,13 +457,14 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                 self.searchBarTextField.userInteractionEnabled = true
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
+
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    let data: NSArray = responseObject["data"] as! NSArray
-                    if data == NSArray() {
-                        self.emptyLabel.hidden = false
-                    } else {
+//                    let data: NSArray = responseObject["data"] as! NSArray
+//                    if data == NSArray() {
+//                        self.emptyLabel.hidden = false
+//                    } else {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: AlertStrings.failed)
-                    }
+//                    }
                 } else if requestErrorType == .AccessTokenExpired {
                     if status == "all" {
                         self.requestRefreshToken("get", status: Status.all)
@@ -617,13 +623,15 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
             cell.subTitleLabel.text = self.productModel.products[indexPath.row].category
             cell.setStatus(self.productModel.products[indexPath.row].status)
+            println("\(self.productModel.products[indexPath.row].name) -- \(self.productModel.products[indexPath.row].status)")
             
             if selectedIndex == 5 {
                 cell.statusLabel.hidden = true
             } else {
                 cell.statusLabel.hidden = false
-                cell.setCountries(flags)
-                cell.setLanguages(languages)
+//                cell.setCountries(flags)
+//                cell.setLanguages(languages)
+                cell.setCountriesAndLanguages(self.productModel.products[indexPath.row])
             }
             
             if SessionManager.isReseller() {
@@ -653,19 +661,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             cell.setProductImage(self.productModel.products[indexPath.row].image)
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
             cell.subTitleLabel.text = self.productModel.products[indexPath.row].category
-
-//            if selectedIndex == 3 {
-//                cell.arrowImageView.hidden = true
-//                cell.decreaseAlpha()
-//            } else {
-//                cell.arrowImageView.hidden = false
-//            }
-            
-//            if selectedIndex == 5 {
-//                cell.checkTapView.hidden = true
-//            } else {
-//                cell.checkTapView.hidden = false
-//            }
+            cell.setCountriesAndLanguages(self.productModel.products[indexPath.row])
             
             return cell
         }
@@ -679,7 +675,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
         if self.selectedIndex == 0 {
             return 88.0
         }
-        return 65.0
+        return 80.0
     }
     
     // MARK: - Table View Delegate
@@ -783,12 +779,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             if selectedIndex == 1 {
                 self.activeInactiveLabel.text = ManagementStrings.moveInactive
             } else {
-//                if SessionManager.isReseller() {
-//                    self.activeInactiveView.backgroundColor = .grayColor()
-//                } else {
-                    self.activeInactiveLabel.text = ManagementStrings.moveActive
-//                }
-//                self.activeInactiveView.backgroundColor = .grayColor()
+                self.activeInactiveLabel.text = ManagementStrings.moveActive
             }
             
             self.deleteView.hidden = true

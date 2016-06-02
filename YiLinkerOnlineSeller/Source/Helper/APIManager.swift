@@ -74,7 +74,7 @@ struct APIAtlas {
     static let checkIfCategoryNameExists = "v1/auth/category/checkIfCategoryExists"
     static let getAllCategoryProducts    = "v1/auth/category/getAllCategoryProducts"
     
-    static let managementGetProductList = "v1/auth/product/getProductList"
+    static let managementGetProductList = APIAtlas.generateV3URL("auth/product/getProductList")
     static let managementUpdateProductStatus = "v1/auth/product/updateProductStatus"
     static let editAddress = "v1/auth/address/editUserAddress"
     static let provinceUrl = "v1/location/getAllProvinces"
@@ -187,6 +187,16 @@ struct APIAtlas {
     static func generateV3URL(url: String) -> String {
         return "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
     }
+    
+    
+    // V3
+    
+    // Coutry Store
+    
+    static let getCountryList = APIAtlas.generateV3URL("auth/country-setup/country-store?access_token=")
+    static let getCountrySetupDetails = APIAtlas.generateV3URL("auth/country-setup?access_token=")
+    static let setWarehouse = APIAtlas.generateV3URL("auth/country-setup/setwarehouse?access_token=")
+    static let saveCombinations = APIAtlas.generateV3URL("auth/country-setup/save-combinations?access_token=")
 }
 
 class APIManager: AFHTTPSessionManager {

@@ -8,7 +8,28 @@
 
 import UIKit
 
-class CountryStoreSetupViewController: UIViewController {
+private struct Strings {
+    static let title = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_TITLE_LOCALIZE_KEY")
+    static let countryDetails = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_COUNTRY_DETAILS_LOCALIZE_KEY")
+    static let country = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_COUNTRY_LOCALIZE_KEY")
+    static let domain = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_DOMAIN_LOCALIZE_KEY")
+    static let language = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_LANGUAGE_LOCALIZE_KEY")
+    static let currency = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_CURRENCY_LOCALIZE_KEY")
+    static let rate = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_RATE_LOCALIZE_KEY")
+    static let storeName = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_STORE_NAME_LOCALIZE_KEY")
+    
+    static let productSummary = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_STORE_PRODUCT_SUMMARY_LOCALIZE_KEY")
+    static let category = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_STORE_CATEGORY_LOCALIZE_KEY")
+    static let brand = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_STORE_BRAND_LOCALIZE_KEY")
+    static let packageDimension = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_STORE_PACKAGE_DIMENSION_LOCALIZE_KEY")
+    static let weight = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_STORE_WEIGHT_LOCALIZE_KEY")
+
+    static let productCombination = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_PRODUCT_COMBINATION_TITLE_LOCALIZE_KEY")
+    static let productInventoryLocationPrimary = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_STORE_PIL_PRIMARY_LOCALIZE_KEY")
+    static let productInventoryLocationSecondary = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_STORE_PIL_SECONDARY_LOCALIZE_KEY")
+}
+
+class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
 
     // MARK: Delarations
     
@@ -58,13 +79,13 @@ class CountryStoreSetupViewController: UIViewController {
     
     // MARK: Variables
     
-    let flags = ["http://wiki.erepublik.com/images/thumb/2/21/Flag-China.jpg/50px-Flag-China.jpg",
-        "http://media.worldflags101.com/i/flags/cambodia.gif",
-        "http://www.utazaselott.hu/userfiles/image/indonesian%20flag.jpg",
-        "https://jeetkunedomalaysia.files.wordpress.com/2014/10/jeet-kune-do-jkd-malaysia-flag.gif",
-        "http://images-mediawiki-sites.thefullwiki.org/04/3/7/0/95484361858573992.png",
-        "http://www.thailanguagehut.com/wp-content/uploads/2010/04/Thai-Flag.gif",
-        "http://www.therecycler.com/wp-content/uploads/2013/03/Vietnam-flag.jpg"]
+    var countryStoreSetupModel: CountrySetupModel!
+    var countryStoreModel: CountryListModel!
+    
+    var hud: MBProgressHUD?
+    var emptyView: EmptyView?
+    
+    var productId: String = ""
     
     // MARK: - View Life Cycle
     
@@ -72,17 +93,45 @@ class CountryStoreSetupViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
+
         setupNavigationBar()
-        self.addActions()
+        setupStrings()
+        populateCountryStoreBasicDetails()
+        fireGetCountryStoreDetails()
+        
         let nib = UINib(nibName: "ProductImagesCollectionViewCell", bundle: nil)
         self.productCollectionViewController.registerNib(nib, forCellWithReuseIdentifier: "ProductImagesIdentifier")
+        
+        
+        self.scrollView.backgroundColor = Constants.Colors.lightBackgroundColor
+        
     }
     
     // MARK: - Functions
     
+    func setupStrings() {
+        
+        self.CountryDetailsLabel.text = Strings.countryDetails
+        self.countryLabel.text = Strings.country
+        self.domainLabel.text = Strings.domain
+        self.languageLabel.text = Strings.language
+        self.currencyLabel.text = Strings.currency
+        self.rateLabel.text = Strings.rate
+        self.storeNameLabel.text = Strings.storeName
+        
+        self.productSummaryLabel.text = Strings.productSummary
+        self.categoryLabel.text = Strings.category
+        self.brandLabel.text = Strings.brand
+        self.packageDimensionLabel.text = Strings.packageDimension
+        self.weightLabel.text = Strings.weight
+        
+        self.productCombinationLabel.text = Strings.productCombination
+        self.productLocationPrimaryLabel.text = Strings.productInventoryLocationPrimary
+        self.productLocationSecondaryLabel.text = Strings.productInventoryLocationSecondary
+    }
+    
     func setupNavigationBar() {
-        self.title = "Country Store Setup"
+        self.title = Strings.title
         
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
@@ -90,6 +139,44 @@ class CountryStoreSetupViewController: UIViewController {
         navigationSpacer.width = -10
         
         self.navigationItem.leftBarButtonItems = [navigationSpacer, UIBarButtonItem(image: UIImage(named: "nav-back"), style: .Plain, target: self, action: "backAction")]
+    }
+    
+    func populateCountryStoreBasicDetails() {
+        
+        if countryStoreModel != nil {
+            self.countryValueLabel.text = self.countryStoreModel.name
+            self.domainValueLabel.text = self.countryStoreModel.domain
+            self.languageValueLabel.text = self.countryStoreModel.defaultLanguage.name
+            self.currencyValueLabel.text = "\(self.countryStoreModel.currency.name) (\(self.countryStoreModel.currency.symbol))"
+            self.rateValueLabel.text = "1USD = \(self.countryStoreModel.currency.rate) \(self.countryStoreModel.currency.symbol)"
+        } else {
+            println("Country Store Model is nil")
+        }
+        
+    }
+    
+    func populateCountryStoreSetupDetails() {
+        
+        if countryStoreSetupModel != nil {
+            self.storeNameValueLabel.text = self.countryStoreSetupModel.product.store
+            
+            self.productNameLabel.text = self.countryStoreSetupModel.product.title
+            self.productDescriptionLabel.text = self.countryStoreSetupModel.product.shortDescription
+            self.productCollectionViewController.reloadData()
+            self.categoryValueLabel.text = self.countryStoreSetupModel.product.category
+            self.brandValueLabel.text = self.countryStoreSetupModel.product.brand
+            let dimension = "\(self.countryStoreSetupModel.defaultUnit.height)cm x \(self.countryStoreSetupModel.defaultUnit.width)cm x \(self.countryStoreSetupModel.defaultUnit.length)cm"
+            self.packageDimensionValueLabel.text = dimension
+            self.weightValueLabel.text = self.countryStoreSetupModel.defaultUnit.weight + "KG"
+            
+            self.productLocationPrimaryValueLabel.text = self.countryStoreSetupModel.primaryAddress
+            self.productLocationSecondaryValueLabel.text = self.countryStoreSetupModel.secondaryAddress
+            
+            self.addActions()
+        } else {
+            println("Country Store Setup Model is nil")
+        }
+        
     }
     
     // MARK: - Actions
@@ -103,21 +190,35 @@ class CountryStoreSetupViewController: UIViewController {
         self.productCombinationLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "productCombinationAction:"))
         self.productLocationPrimaryLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "primaryLocationAction:"))
         self.productLocationSecondaryLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "secondaryLocationAction:"))
-        self.commisionTitleLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "commisionAction:"))
+//        self.commisionTitleLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "commisionAction:"))
     }
     
     func productCombinationAction(gesture: UIGestureRecognizer) {
         let productCombinations: ProductCombinationViewController = ProductCombinationViewController(nibName: "ProductCombinationViewController", bundle: nil)
+        productCombinations.delegate = self
+        productCombinations.combinationModel = self.countryStoreSetupModel.product.productUnits
+        productCombinations.countryStoreModel = self.countryStoreModel
+        productCombinations.productDetails = self.countryStoreSetupModel.product
         self.navigationController!.pushViewController(productCombinations, animated: true)
     }
     
     func primaryLocationAction(gesture: UIGestureRecognizer) {
         let inventoryLocation: InventoryLocationViewController = InventoryLocationViewController(nibName: "InventoryLocationViewController", bundle: nil)
+        inventoryLocation.delegate = self
+        inventoryLocation.productDetails = self.countryStoreSetupModel.product
+        inventoryLocation.code = self.countryStoreModel.code
+        inventoryLocation.warehousesModel = self.countryStoreSetupModel.productWarehouses
+        inventoryLocation.logisticsModel = self.countryStoreSetupModel.logistics
         self.navigationController!.pushViewController(inventoryLocation, animated: true)
     }
     
     func secondaryLocationAction(gesture: UIGestureRecognizer) {
         let inventoryLocation: InventoryLocationViewController = InventoryLocationViewController(nibName: "InventoryLocationViewController", bundle: nil)
+        inventoryLocation.delegate = self
+        inventoryLocation.productDetails = self.countryStoreSetupModel.product
+        inventoryLocation.code = self.countryStoreModel.code
+        inventoryLocation.warehousesModel = self.countryStoreSetupModel.productWarehouses
+        inventoryLocation.logisticsModel = self.countryStoreSetupModel.logistics
         inventoryLocation.isPrimary = false
         self.navigationController!.pushViewController(inventoryLocation, animated: true)
     }
@@ -127,24 +228,132 @@ class CountryStoreSetupViewController: UIViewController {
         self.navigationController!.pushViewController(commision, animated: true)
     }
 
+    // MARK: - Requests
+    
+    func fireGetCountryStoreDetails() {
+        
+        self.showHUD()
+
+        WebServiceManager.fireGetCountrySetupDetails(APIAtlas.getCountrySetupDetails + SessionManager.accessToken(), productId: productId, code: self.countryStoreModel.code, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            
+            self.hud?.hide(true)
+            
+            if successful {
+                self.countryStoreSetupModel = nil
+                self.countryStoreSetupModel = CountrySetupModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                self.populateCountryStoreSetupDetails()
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
+            
+        })
+        
+    }
+    
+    func fireRefreshToken() {
+        self.showHUD()
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.fireGetCountryStoreDetails()
+            } else {
+                //Show UIAlert and force the user to logout
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                })
+            }
+        })
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    // MARK: - Empty View
+    
+    func addEmptyView() {
+        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+        self.emptyView?.frame = self.view.frame
+        self.emptyView!.delegate = self
+        self.view.addSubview(self.emptyView!)
+    }
+    
+    func didTapReload() {
+        self.emptyView?.removeFromSuperview()
+        if Reachability.isConnectedToNetwork() {
+            
+        } else {
+            addEmptyView()
+        }
+    }
+    
 }
 
-extension CountryStoreSetupViewController: UICollectionViewDataSource {
+extension CountryStoreSetupViewController: UICollectionViewDataSource, InventoryLocationViewControllerDelegate, ProductCombinationViewControllerDelegate {
     
     // MARK: - Collection View Data Source
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return flags.count
+        if countryStoreSetupModel != nil {
+            return self.countryStoreSetupModel.product.images.count
+        }
+        return 3
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell: ProductImagesCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("ProductImagesIdentifier", forIndexPath: indexPath) as! ProductImagesCollectionViewCell
 
-        cell.setItemImage(flags[indexPath.row])
+        if countryStoreSetupModel != nil {
+            cell.setItemImage(self.countryStoreSetupModel.product.images[indexPath.row].imageLocation)
+        } else {
+            cell.setDefaultImage()
+        }
+        
         cell.layer.cornerRadius = 3.0
         
         return cell
     }
+    
+    // MARK: Inventory Location View Controller Delegate
+    
+    func reloadDetailsFromInventoryLocation(controller: InventoryLocationViewController) {
+        self.fireGetCountryStoreDetails()
+    }
+    
+    // MARK: Product Combination View Controller Delegate
+    
+    func reloadDetailsFromProductCombination(controller: ProductCombinationViewController) {
+        self.fireGetCountryStoreDetails()
+    }
+    
 }
 
