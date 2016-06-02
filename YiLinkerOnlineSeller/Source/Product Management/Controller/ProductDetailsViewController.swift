@@ -243,11 +243,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     func populateDetails() {
         self.uploadType = ProductUploadEdit.uploadType
-        if ProductUploadEdit.uploadType == UploadType.NewProduct {
-            self.productImagesView.setDetails(productModel!, uploadType: self.uploadType, images: self.imagesToEdit)
-        } else {
-            self.productImagesView.setDetails(productModel, uploadType: self.uploadType, images: [])
-        }
+        self.productImagesView.setDetails(productModel, uploadType: self.uploadType)
 //        self.productDescriptionView.descriptionLabel.text = productModel.shortDescription
         self.productDescriptionView.setDescription(productModel.shortDescription)
         if productModel.validCombinations.count != 0 {
@@ -824,7 +820,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         
         let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
-            self.dismissViewControllerAnimated(true, completion: nil)
+            //self.dismissViewControllerAnimated(true, completion: nil)
         }
         
         alertController.addAction(OKAction)

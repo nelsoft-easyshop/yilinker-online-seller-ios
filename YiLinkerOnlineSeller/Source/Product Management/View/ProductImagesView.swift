@@ -15,7 +15,6 @@ class ProductImagesView: UIView, UICollectionViewDataSource {
     @IBOutlet weak var collectionView: UICollectionView!
     var productModel: ProductModel?
     var uploadType: UploadType?
-    var images: [UIImage] = []
     var imagesUrls: [String] = []
     
     override func awakeFromNib() {
@@ -27,9 +26,8 @@ class ProductImagesView: UIView, UICollectionViewDataSource {
     
     // MARK: - Methods
     
-    func setDetails(product: ProductModel, uploadType: UploadType, images: [UIImage]) {
+    func setDetails(product: ProductModel, uploadType: UploadType) {
         self.uploadType = uploadType
-        self.images = images
         self.productModel = product
         self.titleLabel.text = product.name
         self.subTitleLabel.text = product.shortDescription
@@ -47,14 +45,14 @@ class ProductImagesView: UIView, UICollectionViewDataSource {
         if  ProductUploadEdit.isPreview {
             if self.uploadType == UploadType.EditProduct {
                 if self.productModel!.editedImage.count == 0 {
-                    return 5
+                    return 0
                 }
                 return self.productModel!.editedImage.count - 1
             } else {
-                if self.images.count == 0 {
-                    return 5
+                if self.productModel!.images.count == 0 {
+                    return 0
                 }
-                return self.images.count - 1
+                return self.productModel!.images.count - 1
             }
         } else {
             if imagesUrls.count == 0 {
@@ -74,8 +72,8 @@ class ProductImagesView: UIView, UICollectionViewDataSource {
                     cell.setLocalImage(self.productModel!.editedImage[indexPath.row])
                 }
             } else {
-                if self.images.count != 0 {
-                    cell.setLocalImage(self.images[indexPath.row])
+                if self.productModel!.images.count != 0 {
+                    cell.setLocalImage(self.productModel!.images[indexPath.row])
                 }
             }
         } else {
