@@ -300,7 +300,6 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
         let cell: ProductUploadCombinationFooterTVC = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as! ProductUploadCombinationFooterTVC
         
         self.combination.images = cell.uploadedImages()
-        self.combination.images.removeLast()
         self.combination.imagesId = cell.combiImagesName()
         
         let cell2: ProductUploadCombinationTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! ProductUploadCombinationTableViewCell

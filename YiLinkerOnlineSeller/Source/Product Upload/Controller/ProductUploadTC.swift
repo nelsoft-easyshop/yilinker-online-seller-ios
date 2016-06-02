@@ -484,6 +484,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     func addMoreDetails(sender: UIButton) {
         let productUploadAttributeListTableViewController: ProductUploadAttributeListVC = ProductUploadAttributeListVC(nibName: "ProductUploadAttributeListVC", bundle: nil)
         productUploadAttributeListTableViewController.productModel = self.productModel
+        productUploadAttributeListTableViewController.uploadType = self.uploadType
         self.navigationController!.pushViewController(productUploadAttributeListTableViewController, animated: true)
     }
     
@@ -1193,6 +1194,21 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     func getProductAttributes() -> String {
         var productAttributes: [NSMutableDictionary] = []
         
+        if self.productModel.validCombinations.count == 0 {
+            let dictionary: NSMutableDictionary = NSMutableDictionary()
+            dictionary["attributes"] = []
+            dictionary["sku"] = self.productSKU
+            
+            dictionary["images"] = []
+            dictionary["weight"] = (self.productWeight as NSString).doubleValue
+            dictionary["length"] = (self.productLength as NSString).doubleValue
+            dictionary["width"] = (self.productWidth as NSString).doubleValue
+            dictionary["height"] = (self.productHeight as NSString).doubleValue
+            dictionary["isActive"] = false
+            
+            productAttributes.append(dictionary)
+        }
+        
         for combination in self.productModel.validCombinations {
             let dictionary: NSMutableDictionary = NSMutableDictionary()
             dictionary["attributes"] = combination.attributes
@@ -1305,7 +1321,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     }
     
     func fireUploadProduct() {
-        self.showHUD()
+        //self.showHUD()
         
         if self.uploadType == UploadType.NewProduct {
             if self.productModel.images.count-1 == self.productImagesName.count {
@@ -1407,6 +1423,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     }
     
     func fireUploadDraft(url: String, parameters: NSMutableDictionary) {
+        self.showHUD()
         WebServiceManager.fireProductUploadRequestWithUrl(url+"?access_token=\(SessionManager.accessToken())", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 if let success = responseObject["isSuccessful"] as? Bool {

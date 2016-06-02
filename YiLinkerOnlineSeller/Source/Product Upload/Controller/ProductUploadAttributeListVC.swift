@@ -27,6 +27,8 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
     var cellIsInEdit: Bool = false
     var addMoreTableViewFooter: PUDetailsView?
     
+    var uploadType: UploadType = UploadType.NewProduct
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -55,6 +57,7 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
         if self.productModel!.attributes.count != 0 {
             let productUploadCombinationListViewController: ProductUploadCombinationListViewController = ProductUploadCombinationListViewController(nibName: "ProductUploadCombinationListViewController", bundle: nil)
             productUploadCombinationListViewController.productModel = self.productModel
+            productUploadCombinationListViewController.uploadType = self.uploadType
             self.navigationController!.pushViewController(productUploadCombinationListViewController, animated: true)
         } else {
             let productUploadTableViewController: ProductUploadTC

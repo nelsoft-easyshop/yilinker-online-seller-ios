@@ -30,6 +30,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
     
     //  Global variable
     var isValidSku: Bool = false
+    var uploadType: UploadType = UploadType.NewProduct
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -265,6 +266,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         productUploadCombinationTableViewController.attributes = self.productModel!.attributes
         productUploadCombinationTableViewController.delegate = self
         productUploadCombinationTableViewController.productModelCombi = self.productModel!
+        productUploadCombinationTableViewController.uploadType = self.uploadType
         var counter: Int = 0
         if self.productModel != nil {
            counter = self.productModel!.validCombinations.count
@@ -355,7 +357,8 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         productUploadCombinationTableViewController.productModel = self.productModel!.copy()
         productUploadCombinationTableViewController.selectedIndexpath = indexPath
         productUploadCombinationTableViewController.delegate = self
-    
+        productUploadCombinationTableViewController.uploadType = self.uploadType
+        
         var counter: Int = 0
         if self.productModel != nil {
             counter = self.productModel!.validCombinations.count

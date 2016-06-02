@@ -591,7 +591,6 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     func upload(uploadType: UploadType) {
         self.showHUD()
-        println(self.url)
         WebServiceManager.fireProductUploadRequestWithUrl(ProductUploadEdit.url+"?access_token=\(SessionManager.accessToken())", parameters: ProductUploadEdit.parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 if let success = responseObject["isSuccessful"] as? Bool {
