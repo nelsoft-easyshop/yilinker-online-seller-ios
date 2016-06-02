@@ -1210,12 +1210,12 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         }
         
         for combination in self.productModel.validCombinations {
+            combination.images.removeLast()
             let dictionary: NSMutableDictionary = NSMutableDictionary()
             dictionary["attributes"] = combination.attributes
             dictionary["sku"] = combination.sku
             
             var imageNames: [NSMutableDictionary] = []
-            
             for (index, image) in enumerate(combination.images) {
                 //var x: Int = counter
                 var imageDictionary: NSMutableDictionary = ["name" : combination.imagesId[index]]

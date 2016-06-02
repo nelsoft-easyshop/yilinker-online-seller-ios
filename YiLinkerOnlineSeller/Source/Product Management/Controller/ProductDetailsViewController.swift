@@ -622,7 +622,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     self.showAlert(Constants.Localized.error, message: errorModel.message)
                 } else if requestErrorType == .AccessTokenExpired {
-                    //self.fireRefreshToken(UploadProduct.ProductUpload)
+                    self.fireRefreshToken2()
                 } else if requestErrorType == .PageNotFound {
                     //Page not found
                     Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
@@ -749,6 +749,23 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     //MARK: - Fire Refresh Token 2
     func fireRefreshToken2() {
         self.showHUD()
+        
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.loginUrl, actionHandler: { (successful, responseObject, RequestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.upload(ProductUploadEdit.uploadType)
+            } else {
+                //Forcing user to logout.
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    SessionManager.logout()
+                    GPPSignIn.sharedInstance().signOut()
+                    self.navigationController?.popToRootViewControllerAnimated(false)
+                })
+            }
+        })
+
+        /*
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = [
             "client_id": Constants.Credentials.clientID,
@@ -772,7 +789,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                     self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
                 }
                 self.hud?.hide(true)
-        })
+        })*/
     }
     
     //MARK: - Dismiss Controller Toast Message

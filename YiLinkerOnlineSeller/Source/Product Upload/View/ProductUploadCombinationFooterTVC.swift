@@ -71,7 +71,8 @@ class ProductUploadCombinationFooterTVC: UITableViewCell, UITextFieldDelegate, U
         self.heightLabel.text = ProductUploadStrings.height
         self.widthLabel.text = ProductUploadStrings.width
         self.weightLabel.text = ProductUploadStrings.weight
-        
+        self.availableLabel.hidden = true
+        self.availableSwitch.hidden = true
         // Append asterisk (*) in label's text
         // self.lengthLabel.required()
         // self.widthLabel.required()
