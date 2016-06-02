@@ -19,6 +19,8 @@ class CountryStoreTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        self.availableLabel.text = CountryStoreStrings.available
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
