@@ -12,20 +12,28 @@ protocol InventoryLocationViewControllerDelegate {
     func reloadDetailsFromInventoryLocation(controller: InventoryLocationViewController)
 }
 
+private struct Strings {
+    static let title = StringHelper.localizedStringWithKey("INVENTORY_LOCATION_TITLE_LOCALIZE_KEY")
+    static let primary = StringHelper.localizedStringWithKey("INVENTORY_LOCATION_PRIMARY_LOCALIZE_KEY")
+    static let secondary = StringHelper.localizedStringWithKey("INVENTORY_LOCATION_SECONDARY_LOCALIZE_KEY")
+    static let isCodAvailable = StringHelper.localizedStringWithKey("INVENTORY_LOCATION_COD_AVAILABLE_LOCALIZE_KEY")
+    static let logistics = StringHelper.localizedStringWithKey("INVENTORY_LOCATION_LOGISTICS_LOCALIZE_KEY")
+    static let shippingCost = StringHelper.localizedStringWithKey("INVENTORY_LOCATION_SHIPPING_COST_LOCALIZE_KEY")
+    static let saveInventoryLocation = StringHelper.localizedStringWithKey("INVENTORY_LOCATION_SAVE_INVENTORY_LOCATION_LOCALIZE_KEY")
+    static let yes = StringHelper.localizedStringWithKey("INVENTORY_LOCATION_SAVE_INVENTORY_LOCATION_LOCALIZE_KEY")
+    static let no = StringHelper.localizedStringWithKey("INVENTORY_LOCATION_SAVE_INVENTORY_LOCATION_LOCALIZE_KEY")
+    static let cannotProceed = StringHelper.localizedStringWithKey("CANNOT_PROCEED_LOCALIZE_KEY")
+}
+
 class InventoryLocationViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    var sectionTitles = ["Inventory Location", "Is COD Available?", "Logistics", "Shipping Cost"]
-    let locations = ["6th Floor pacific tower, Five E-com Cnter, Mall of Asia Pacific Drive, 1300 Pasay City, philippines",
-        "8/F Marc 2000 Tower, 1980 San Andress Street Malate, Manila, Philippines",
-        "1660 Bulacan Street, Santa, Cruz Manila, Philippines"]
-    let cods = ["Yes", "No"]
-    let logistics = ["YiLinker Express", "Other Third Party Logistics"]
-    var cellValues: [NSArray] = []
+    var sectionTitles = [Strings.primary, Strings.isCodAvailable, Strings.logistics, Strings.shippingCost]
+    let cods = [Strings.yes, Strings.no]
+//    let logistics: [] = [String]//["YiLinker Express", "Other Third Party Logistics"]
     
     var isPrimary: Bool = true
     
-//    var selectedValues: [String] = ["", "", "", ""]
     var selectedLocationIndex = -1
     var isCOD = false
     var logistic = ""
@@ -58,8 +66,7 @@ class InventoryLocationViewController: UIViewController {
         
         setupNavigationBar()
         setupTableView()
-        cellValues = [locations, cods, logistics]
-        logistic = logistics[0]
+        logistic = ""//logistics[0]
 
         // sections
         // selectedIndex
@@ -76,7 +83,7 @@ class InventoryLocationViewController: UIViewController {
     // MARK: - Functions
     
     func setupNavigationBar() {
-        self.title = "Inventory Location"
+        self.title = Strings.title
         
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
@@ -98,7 +105,7 @@ class InventoryLocationViewController: UIViewController {
         saveButton.backgroundColor = Constants.Colors.pmYesGreenColor
         saveButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Bold", size: 12.0)
         saveButton.layer.cornerRadius = 2.0
-        saveButton.setTitle("SAVE INVENTORY LOCATION", forState: .Normal)
+        saveButton.setTitle(Strings.saveInventoryLocation, forState: .Normal)
         saveButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         saveButton.addTarget(self, action: "saveAction", forControlEvents: .TouchUpInside)
         footerView.addSubview(saveButton)
@@ -150,10 +157,10 @@ class InventoryLocationViewController: UIViewController {
         
         if warehousesModel[index].is_local {
             self.sections = 3
-            sectionTitles = ["Inventory Location", "Is COD Available?", "Logistics", "Shipping Cost"]
+            sectionTitles = [Strings.primary, Strings.isCodAvailable, Strings.logistics, Strings.shippingCost]
         } else {
             self.sections = 2
-            sectionTitles = ["Inventory Location", "Logistics", "Shipping Cost"]
+            sectionTitles = [Strings.primary, Strings.logistics, Strings.shippingCost]
         }
     }
     
@@ -187,10 +194,10 @@ class InventoryLocationViewController: UIViewController {
             
             if isLocal {
                 sections = 3
-                sectionTitles = ["Inventory Location", "Is COD Available?", "Logistics", "Shipping Cost"]
+                sectionTitles = [Strings.primary, Strings.isCodAvailable, Strings.logistics, Strings.shippingCost]
             } else {
                 sections = 2
-                sectionTitles = ["Inventory Location", "Logistics", "Shipping Cost"]
+                sectionTitles = [Strings.primary, Strings.logistics, Strings.shippingCost]
             }
             
             if isLogisticThirdParty {
@@ -257,7 +264,7 @@ class InventoryLocationViewController: UIViewController {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
 //                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: "Cannot Proceed")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Strings.cannotProceed)
                 } else if requestErrorType == .AccessTokenExpired {
                     self.fireRefreshToken()
                 } else if requestErrorType == .PageNotFound {
@@ -372,14 +379,14 @@ extension InventoryLocationViewController: UITableViewDataSource, UITableViewDel
                     cell.checkImageView.hidden = false
                 }
             } else {
-                cell.label.text = logistics[indexPath.row]
+                cell.label.text = self.logisticsModel[indexPath.row].name//logistics[indexPath.row]
                 if logisticsModel[indexPath.row].id == selectedLogisticId {
                     cell.checkImageView.hidden = false
                 }
             }
         } else if indexPath.section == 2 { // Logistics
             if isLocal {
-                cell.label.text = logistics[indexPath.row]
+                cell.label.text = self.logisticsModel[indexPath.row].name
                 if logisticsModel[indexPath.row].id == selectedLogisticId {
                     cell.checkImageView.hidden = false
                 }
@@ -418,9 +425,9 @@ extension InventoryLocationViewController: UITableViewDataSource, UITableViewDel
         textLabel.text = sectionTitles[section]
         
         if isPrimary && section == 0 {
-            textLabel.text = textLabel.text! + " (PRIMARY)"
+            textLabel.text = Strings.primary//textLabel.text! + " (PRIMARY)"
         } else if !isPrimary && section == 0 {
-            textLabel.text = textLabel.text! + " (SECONDARY)"
+            textLabel.text = Strings.secondary//textLabel.text! + " (SECONDARY)"
         }
         headerView.addSubview(textLabel)
         

@@ -8,6 +8,19 @@
 
 import UIKit
 
+private struct Strings {
+
+    static let active = StringHelper.localizedStringWithKey("MANAGEMENT_ACTIVE_LOCALIZE_KEY")
+    static let inactive = StringHelper.localizedStringWithKey("MANAGEMENT_INACTIVE_LOCALIZE_KEY")
+    static let drafts = StringHelper.localizedStringWithKey("MANAGEMENT_DRAFTS_LOCALIZE_KEY")
+    static let deleted = StringHelper.localizedStringWithKey("MANAGEMENT_DELETED_LOCALIZE_KEY")
+    static let underReview = StringHelper.localizedStringWithKey("MANAGEMENT_UNDER_REVIEW_LOCALIZE_KEY")
+    static let rejected = StringHelper.localizedStringWithKey("MANAGEMENT_REJECTED_LOCALIZE_KEY")
+    
+    static let stores = StringHelper.localizedStringWithKey("MANAGEMENT_STORES_LOCALIZE_KEY")
+    static let language = StringHelper.localizedStringWithKey("MANAGEMENT_LANGUAGE_LOCALIZE_KEY")
+}
+
 class ProductManagementAllTableViewCell: UITableViewCell {
 
     @IBOutlet weak var productImageView: UIImageView!
@@ -21,6 +34,10 @@ class ProductManagementAllTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        storesLabel.text = Strings.stores + " :"
+        languageLabel.text = Strings.language + " :"
+        
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -36,19 +53,19 @@ class ProductManagementAllTableViewCell: UITableViewCell {
     func setStatus(status: Int) {
         
         if status == 0 {
-            statusLabel.text = "Draft"
+            statusLabel.text = Strings.drafts
             statusLabel.textColor = UIColor.darkGrayColor()
             increaseAlpha()
         } else if status == 1 {
-            statusLabel.text = "Under Review"
+            statusLabel.text = Strings.underReview
             statusLabel.textColor = UIColor.darkGrayColor()
             increaseAlpha()
         } else if status == 2 {
-            statusLabel.text = "Active"
+            statusLabel.text = Strings.active
             statusLabel.textColor = Constants.Colors.pmCheckGreenColor
             increaseAlpha()
         } else if status == 3 {
-            statusLabel.text = "Deleted"
+            statusLabel.text = Strings.deleted
             statusLabel.textColor = UIColor.darkGrayColor()
             setDeleted()
         } else if status == 4 {
@@ -56,12 +73,16 @@ class ProductManagementAllTableViewCell: UITableViewCell {
             statusLabel.textColor = UIColor.darkGrayColor()
             increaseAlpha()
         } else if status == 5 {
-            statusLabel.text = "Rejected"
+            statusLabel.text = Strings.rejected
             statusLabel.textColor = UIColor.redColor()
             increaseAlpha()
         } else if status == 6 {
-            statusLabel.text = "Inactive"
+            statusLabel.text = Strings.inactive
             statusLabel.textColor = UIColor.redColor()
+            increaseAlpha()
+        } else if status == 7 {
+            statusLabel.text = Strings.active
+            statusLabel.textColor = Constants.Colors.pmCheckGreenColor
             increaseAlpha()
         }
     }
