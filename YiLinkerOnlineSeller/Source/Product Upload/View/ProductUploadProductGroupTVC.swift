@@ -19,7 +19,7 @@ struct PUPGConstant {
     static let productUploadProductGroupTVCNibNameAndIdentier = "ProductUploadProductGroupTVC"
 }
 
-class ProductUploadProductGroupTVC: UITableViewCell {
+class ProductUploadProductGroupTVC: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var productGroupLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!

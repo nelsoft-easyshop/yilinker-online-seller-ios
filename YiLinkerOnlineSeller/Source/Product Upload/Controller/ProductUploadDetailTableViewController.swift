@@ -28,6 +28,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
     
     // Models
     var productModel: ProductModel?
+    var productModelCombi: ProductModel?
     
     // Global variables
     var dynamicRowHeight: CGFloat = 0
@@ -240,7 +241,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
             }
             
             if self.productModel != nil {
-                self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: attributeModel, indexPath: self.selectedIndexPath, productModel: self.productModel!)
+                self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: attributeModel, indexPath: self.selectedIndexPath, productModel: self.productModelCombi!)
             } else {
                 self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: attributeModel, indexPath: self.selectedIndexPath)
             }

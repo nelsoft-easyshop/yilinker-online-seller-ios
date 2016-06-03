@@ -41,6 +41,7 @@ enum ProductTextFieldType {
     case ProductWidth
     case ProductWeight
     case ProductHeight
+    case ProductGroup
 }
 
 enum AddressRefreshType {

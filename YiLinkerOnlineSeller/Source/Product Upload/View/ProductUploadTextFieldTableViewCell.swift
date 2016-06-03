@@ -41,8 +41,6 @@ class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate,
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        self.cellTexField.delegate = self
     }
     
     // MARK: -
@@ -87,7 +85,7 @@ class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate,
     }
     
     func textFieldDidChange(sender: UITextField) {
-        self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: sender.text, cell: self, textFieldType: self.textFieldType!)
+       self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: sender.text, cell: self, textFieldType: self.textFieldType!)
     }
     
     // MARK: -

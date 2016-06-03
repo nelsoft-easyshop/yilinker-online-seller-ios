@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSource, ProductUploadUploadImageTVCDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadFooterViewDelegate, ProductUploadBrandViewControllerDelegate, UzysAssetsPickerControllerDelegate, ProductUploadProductGroupTVCDelegate, ProductUploadQuantityTableViewCellDelegate, SuccessUploadViewControllerDelegate {
+class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSource, ProductUploadUploadImageTVCDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadFooterViewDelegate, ProductUploadBrandViewControllerDelegate, UzysAssetsPickerControllerDelegate, ProductUploadProductGroupTVCDelegate, ProductUploadQuantityTableViewCellDelegate, SuccessUploadViewControllerDelegate, ProductUploadProductGroupTextFieldTableViewCellDelegate {
     
     // Variables// Models
     var conditions: [ConditionModel] = []
@@ -96,24 +96,28 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return 5
+        return 7
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        if section == 0 || section == 4 {
+        if section == 0 || section == 6 {
             return 1
         } else if section == 1 {
             return 3
-        } else if section == 3 {
+        } else if section == 5 {
             if self.productModel.validCombinations.count == 0 {
                 return 1
             } else {
                 return self.productModel.validCombinations.count + 1
             }
+        } else if section ==  2 {
+            return 2
+        } else if section == 3 {
+            return 3
         } else {
-            return 6
+            return 2
         }
     }
     
@@ -130,7 +134,19 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 return ProductUploadTableViewControllerConstant.completeDescriptionHeight
             }
         } else if indexPath.section == 2 {
-            if indexPath.row == 5 {
+            return 74
+        } else if indexPath.section == 5 {
+            return 44
+        } else if indexPath.section == 6 {
+            if self.productModel.validCombinations.count != 0 {
+                return 0
+            } else {
+                return 245
+            }
+        } else if indexPath.section == 3 {
+            return 74
+        } else {
+            if indexPath.row == 0 {
                 if self.productModel.productGroups.count == 0 {
                     return 100
                 } else {
@@ -153,15 +169,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                     return cellHeight
                 }
             } else {
-                return 75
-            }
-        } else if indexPath.section == 3 {
-            return 44
-        } else {
-            if self.productModel.validCombinations.count != 0 {
-                return 0
-            } else {
-                return 245
+                return 44
             }
         }
     }
@@ -253,7 +261,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.delegate = self
                 
                 return cell
-            } else if indexPath.row == 1 {
+            } else {
                 let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = self.checkIfSeller()
@@ -273,7 +281,9 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.delegate = self
             
                 return cell
-            } else if indexPath.row == 2 {
+            }
+        } else if indexPath.section == 3 {
+            if indexPath.row == 0 {
                 let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = self.checkIfSeller()
@@ -292,7 +302,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.delegate = self
                 
                 return cell
-            } else if indexPath.row == 3 {
+            } else if indexPath.row == 1 {
                 let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = self.checkIfSeller()
@@ -308,7 +318,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.cellTitleLabel.required()
                 cell.textFieldType = ProductTextFieldType.Condition
                 cell.delegate = self
-
+                
                 var values: [String] = []
                 
                 if self.conditions.count != 0 {
@@ -316,14 +326,14 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                         values.append(condition.name)
                     }
                     
-                    if indexPath.row == 3 {
+                    if indexPath.row == 1 {
                         cell.values = values
                         cell.addPicker()
                     }
                 }
                 
                 return cell
-            } else if indexPath.row == 4 {
+            } else {
                 let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = self.checkIfSeller()
@@ -342,10 +352,12 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 }
                 
                 return cell
-            } else {
+            }
+        } else if indexPath.section == 4 {
+            if indexPath.row == 0 {
                 let cell: ProductUploadProductGroupTVC = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadProductGroupTVC") as! ProductUploadProductGroupTVC
                 var tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "selectProductGroups")
-                cell.addGestureRecognizer(tap)
+                //cell.addGestureRecognizer(tap)
                 
                 cell.productGroupLabel.text = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRODUCT_GROUP_LOCALIZE_KEY")
                 
@@ -355,7 +367,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                         cell.attributes.append(self.productModel.productGroups[i].name)
                     }
                 } else {
-                   cell.attributes.removeAll(keepCapacity: false)
+                    cell.attributes.removeAll(keepCapacity: false)
                 }
                 
                 cell.collectionView.reloadData()
@@ -363,8 +375,16 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.delegate = self
                 
                 return cell
+            } else {
+                let cell: ProductUploadProductGroupTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadProductGroupTextFieldTableViewCell") as! ProductUploadProductGroupTextFieldTableViewCell
+                cell.selectionStyle = UITableViewCellSelectionStyle.None
+                cell.userInteractionEnabled = self.checkIfSeller()
+                
+                cell.delegate = self
+                
+                return cell
             }
-        } else if indexPath.section == 3 {
+        } else if indexPath.section == 5 {
             // Product combination details
             if self.productModel.validCombinations.count == 0 {
                 let cell: ProductUploadButtonTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadButtonTableViewCellNibNameAndIdentifier) as! ProductUploadButtonTableViewCell
@@ -459,8 +479,24 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         var sectionHeight: CGFloat = 0
         
-        if section == 0 || section == 3 {
+        if section == 0 || section == 3 || section == 4 || section == 5{
             sectionHeight = 0
+        } else if section == 6 {
+            if self.uploadType == UploadType.NewProduct {
+                if self.productModel.weigth != "" || self.productModel.height != "" || self.productModel.length != "" || self.productModel.width != "" {
+                    sectionHeight = 41
+                } else if self.productModel.weigth  == "" || self.productModel.height == "" || self.productModel.length == "" || self.productModel.width == "" && self.productModel.validCombinations.count == 0 {
+                    sectionHeight = 41
+                } else {
+                    sectionHeight = 0
+                }
+            } else {
+                if self.productModel.weigth != "" || self.productModel.height != "" || self.productModel.length != "" || self.productModel.width != "" {
+                    sectionHeight = 41
+                } else {
+                    sectionHeight = 0
+                }
+            }
         } else {
             sectionHeight = 41
         }
@@ -648,8 +684,11 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         let nibDimensions: UINib = UINib(nibName: ProductUploadDimensionsAndWeightTableViewCellConstant.productUploadDimensionsAndWeightTableViewCellNibAndIdentifier, bundle: nil)
         self.tableView.registerNib(nibDimensions, forCellReuseIdentifier: ProductUploadDimensionsAndWeightTableViewCellConstant.productUploadDimensionsAndWeightTableViewCellNibAndIdentifier)
         
-        let nibProductGroup: UINib = UINib(nibName: ProductUploadCategoryViewControllerConstant.productUploadCategoryTableViewCellNibNameAndIdentifier, bundle: nil)
-        self.tableView.registerNib(nibProductGroup, forCellReuseIdentifier: ProductUploadCategoryViewControllerConstant.productUploadCategoryTableViewCellNibNameAndIdentifier)
+        let nibProductGroup: UINib = UINib(nibName: PUPGConstant.productUploadProductGroupTVCNibNameAndIdentier, bundle: nil)
+        self.tableView.registerNib(nibProductGroup, forCellReuseIdentifier: PUPGConstant.productUploadProductGroupTVCNibNameAndIdentier)
+        
+        let productGroup: UINib = UINib(nibName: "ProductUploadProductGroupTextFieldTableViewCell", bundle: nil)
+        self.tableView.registerNib(productGroup, forCellReuseIdentifier: "ProductUploadProductGroupTextFieldTableViewCell")
         
         let nib4: UINib = UINib(nibName: PUPGConstant.productUploadProductGroupTVCNibNameAndIdentier, bundle: nil)
         self.tableView.registerNib(nib4, forCellReuseIdentifier: PUPGConstant.productUploadProductGroupTVCNibNameAndIdentier)
@@ -659,6 +698,8 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         
         let attributeNib: UINib = UINib(nibName: ProductUploadTableViewControllerConstant.productUploadAttributeSummaryTableVieCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(attributeNib, forCellReuseIdentifier: ProductUploadTableViewControllerConstant.productUploadAttributeSummaryTableVieCellNibNameAndIdentifier)
+        
+        
     }
     
     // MARK: -
@@ -688,7 +729,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - Reload Tableview row in section 
     
     func reloadTableViewRowInSection(section: Int, row: Int) {
-        let indexPath: NSIndexPath = NSIndexPath(forItem: row, inSection: section)
+        let indexPath: NSIndexPath = NSIndexPath(forRow: row, inSection: section)
         self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
     }
     
@@ -716,6 +757,10 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - Replace Product Attribute With Attribute
     
     func replaceProductAttributeWithAttribute(attributes: [AttributeModel], combinations: [CombinationModel]) {
+        self.productModel.weigth = ""
+        self.productModel.height = ""
+        self.productModel.width = ""
+        self.productModel.length = ""
         self.productModel.attributes = attributes
         self.productModel.validCombinations = combinations
         self.updateCombinationListRow()
@@ -737,11 +782,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         self.productShippingCategory = shippingCategory.name
         self.productModel.shippingCategories = shippingCategory
         self.reloadTableViewRowInSection(2, row: 1)
-    }
-    
-    func selectedProductGroup(productGroups: [ConditionModel]) {
-        self.productModel.productGroups = productGroups
-        self.reloadTableViewRowInSection(2, row: 5)
     }
     
     func selectProductGroups() {
@@ -966,6 +1006,28 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         }
     }
     
+    // MARK: -
+    // MARK: - ProductUploadProductGroupTextFieldTableViewCellConstant Delegate Method
+    
+    func productUploadTextFieldTableViewCell(textFieldDidChange text: String, cell: ProductUploadProductGroupTextFieldTableViewCell) {
+        var productGroup: ConditionModel = ConditionModel(uid: 0, name: text)
+        var isAvailable: Bool = false
+        
+        for (index, name) in enumerate(self.productModel.productGroups) {
+            if name.name.lowercaseString == productGroup.name.lowercaseString {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Product group \(productGroup.name) is already available.", title: "")
+                isAvailable = true
+                break
+            }
+        }
+        
+        if !isAvailable {
+            self.productModel.productGroups.append(productGroup)
+            let indexPath: NSIndexPath = NSIndexPath(forRow: 0, inSection: 4)
+            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
+        }
+    }
+    
     // MARK: - 
     // MARK: - ProductUploadFooterView Delegate Method
     
@@ -1016,7 +1078,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     func productUploadBrandViewController(didSelectBrand brand: String, brandModel: BrandModel) {
         self.productBrand = brand
         self.productModel.brand.name = self.productBrand
-        self.reloadTableViewRowInSection(2, row: 2)
+        self.reloadTableViewRowInSection(3, row: 0)
     }
     
     // MARK: -
@@ -1024,7 +1086,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     
     func productUploadProductGroupTVC(didTapCell cell: ProductUploadProductGroupTVC, indexPath: NSIndexPath) {
         self.productModel.productGroups.removeAtIndex(indexPath.row)
-        self.reloadTableViewRowInSection(2, row: 5)
+        self.reloadTableViewRowInSection(4, row: 0)
     }
     
     // MARK: -
@@ -1196,10 +1258,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         
         if self.productModel.validCombinations.count == 0 {
             let dictionary: NSMutableDictionary = NSMutableDictionary()
-            dictionary["attributes"] = []
             dictionary["sku"] = self.productSKU
-            
-            dictionary["images"] = []
             dictionary["weight"] = (self.productWeight as NSString).doubleValue
             dictionary["length"] = (self.productLength as NSString).doubleValue
             dictionary["width"] = (self.productWidth as NSString).doubleValue
@@ -1210,7 +1269,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         }
         
         for combination in self.productModel.validCombinations {
-            combination.images.removeLast()
             let dictionary: NSMutableDictionary = NSMutableDictionary()
             dictionary["attributes"] = combination.attributes
             dictionary["sku"] = combination.sku
@@ -1221,7 +1279,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 var imageDictionary: NSMutableDictionary = ["name" : combination.imagesId[index]]
                 imageNames.append(imageDictionary)
             }
-            
             for (index, image) in enumerate(combination.editedImages) {
                 //var x: Int = counter
                 for (index2, mainImage) in enumerate(self.productModel.editedImage) {
@@ -1290,7 +1347,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                     self.conditions.append(condition)
                 }
                 
-                let indexPath: NSIndexPath = NSIndexPath(forItem: 2, inSection: 2)
+                let indexPath: NSIndexPath = NSIndexPath(forItem: 1, inSection: 3)
                 self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
                 self.productModel.condition = self.conditions[0]
                 

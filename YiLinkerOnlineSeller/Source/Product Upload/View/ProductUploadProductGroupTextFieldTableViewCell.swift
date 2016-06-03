@@ -8,17 +8,38 @@
 
 import UIKit
 
-class ProductUploadProductGroupTextFieldTableViewCell: UITableViewCell {
+// Constant 
+struct ProductUploadProductGroupTextFieldTableViewCellConstant {
+    static let productUploadProductGroupTextFieldTableViewCellNibAndIdentifier = "ProductUploadProductGroupTextFieldTableViewCell"
+}
 
+// Delegate
+protocol ProductUploadProductGroupTextFieldTableViewCellDelegate {
+    func productUploadTextFieldTableViewCell(textFieldDidChange text: String, cell: ProductUploadProductGroupTextFieldTableViewCell)
+}
+
+class ProductUploadProductGroupTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
+
+    @IBOutlet weak var productGroupTextField: UITextField!
+    
+    var delegate: ProductUploadProductGroupTextFieldTableViewCellDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.productGroupTextField.delegate = self
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: textField.text, cell: self)
+        self.productGroupTextField.text = ""
+        return true
     }
     
 }

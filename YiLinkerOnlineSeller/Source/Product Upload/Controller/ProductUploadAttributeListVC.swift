@@ -370,6 +370,7 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
         let productUploadDetailViewController: ProductUploadDetailTableViewController = ProductUploadDetailTableViewController(nibName: "ProductUploadDetailTableViewController", bundle: nil)
         productUploadDetailViewController.selectedIndexPath = self.tableView.indexPathForCell(cell)!
         productUploadDetailViewController.delegate = self
+        productUploadDetailViewController.productModelCombi = self.productModel!
         productUploadDetailViewController.productModel = self.productModel!.copy()
         self.navigationController!.pushViewController(productUploadDetailViewController, animated: true)
     }

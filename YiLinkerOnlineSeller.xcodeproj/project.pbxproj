@@ -765,6 +765,8 @@
 		F73D39A51C06EE7700673A1A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D39A41C06EE7700673A1A /* Security.framework */; };
 		F73D39A71C06EE8A00673A1A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D39A61C06EE8A00673A1A /* SystemConfiguration.framework */; };
 		F73D39A91C06EE9100673A1A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D39A81C06EE9100673A1A /* UIKit.framework */; };
+		F7525B401D015A090069AE35 /* ProductUploadProductGroupTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7525B3E1D015A090069AE35 /* ProductUploadProductGroupTextFieldTableViewCell.swift */; };
+		F7525B411D015A090069AE35 /* ProductUploadProductGroupTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7525B3F1D015A090069AE35 /* ProductUploadProductGroupTextFieldTableViewCell.xib */; };
 		F79B62371CE56E00001251BF /* ProductUploadProductGroupCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79B62351CE56E00001251BF /* ProductUploadProductGroupCVC.swift */; };
 		F79B62381CE56E00001251BF /* ProductUploadProductGroupCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F79B62361CE56E00001251BF /* ProductUploadProductGroupCVC.xib */; };
 		F7AE36041C08279200A1C9CE /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7AE36021C08279200A1C9CE /* GoogleOpenSource.framework */; };
@@ -1578,6 +1580,8 @@
 		F73D39A41C06EE7700673A1A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		F73D39A61C06EE8A00673A1A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		F73D39A81C06EE9100673A1A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		F7525B3E1D015A090069AE35 /* ProductUploadProductGroupTextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadProductGroupTextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		F7525B3F1D015A090069AE35 /* ProductUploadProductGroupTextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductUploadProductGroupTextFieldTableViewCell.xib; sourceTree = "<group>"; };
 		F79B62351CE56E00001251BF /* ProductUploadProductGroupCVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadProductGroupCVC.swift; sourceTree = "<group>"; };
 		F79B62361CE56E00001251BF /* ProductUploadProductGroupCVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductUploadProductGroupCVC.xib; sourceTree = "<group>"; };
 		F7AE36021C08279200A1C9CE /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleOpenSource.framework; sourceTree = "<group>"; };
@@ -2716,6 +2720,8 @@
 				798D80C41C8686EB00D2A1F7 /* ProductUploadTableHeaderView.xib */,
 				798D80C51C8686EB00D2A1F7 /* ProductUploadTextFieldTableViewCell.swift */,
 				798D80C61C8686EB00D2A1F7 /* ProductUploadTextFieldTableViewCell.xib */,
+				F7525B3E1D015A090069AE35 /* ProductUploadProductGroupTextFieldTableViewCell.swift */,
+				F7525B3F1D015A090069AE35 /* ProductUploadProductGroupTextFieldTableViewCell.xib */,
 				798D80C71C8686EB00D2A1F7 /* ProductUploadTextViewTableViewCell.swift */,
 				798D80C81C8686EB00D2A1F7 /* ProductUploadTextViewTableViewCell.xib */,
 				798D80C91C8686EB00D2A1F7 /* ProductUploadUploadImageTableViewCell.swift */,
@@ -3683,6 +3689,7 @@
 				798D820D1C8686EB00D2A1F7 /* CustomizedCategoryViewController.xib in Resources */,
 				798D83BC1C8686EB00D2A1F7 /* RemarksTableViewCell.xib in Resources */,
 				F7C40FDA1B983CD90091C16C /* sort.png in Resources */,
+				F7525B411D015A090069AE35 /* ProductUploadProductGroupTextFieldTableViewCell.xib in Resources */,
 				798D83641C8686EB00D2A1F7 /* ProductUploadCategoryViewController.xib in Resources */,
 				798D82221C8686EB00D2A1F7 /* CustomizedCategoryTableViewCell.xib in Resources */,
 				798D81F11C8686EB00D2A1F7 /* PayoutEarningsTableViewCell.xib in Resources */,
@@ -3859,6 +3866,7 @@
 				798D82E61C8686EB00D2A1F7 /* MessageThreadVC.swift in Sources */,
 				798D84471C8686EB00D2A1F7 /* TransactionDeliveryLogSignatureTableViewCell.swift in Sources */,
 				798D81FC1C8686EB00D2A1F7 /* PayoutRequestListTableViewCell.swift in Sources */,
+				F7525B401D015A090069AE35 /* ProductUploadProductGroupTextFieldTableViewCell.swift in Sources */,
 				798D832B1C8686EB00D2A1F7 /* StoreInfoPreferredCategoriesSectionView.swift in Sources */,
 				798D829F1C8686EB00D2A1F7 /* FSCalendarCell.m in Sources */,
 				798D82F41C8686EB00D2A1F7 /* PointsBreakdownTableViewCell.swift in Sources */,

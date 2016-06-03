@@ -44,24 +44,14 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         self.footerView()
         self.registerCell()
         
-        for i in 0..<self.selectedProductGroups.count {
-            if !contains(self.productGroupId, self.selectedProductGroups[i].uid) {
-                self.productGroupId.append(self.selectedProductGroups[i].uid)
-            }
-        }
-        
         if self.productCategory == UploadProduct.ProductCategory {
             // Set navigation bar title
             self.title = self.pageTitle
             self.fireCategoryWithParentID(self.parentID)
-        } else if self.productCategory == UploadProduct.ShippingCategory {
+        } else {
             self.fireShippingCategories()
             // Set navigation bar title
             self.title = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SELECT_SHIPPING_LOCALIZE_KEY")
-        } else {
-            self.fireProductGroup()
-            // Set navigation bar title
-            self.title = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SELECT_PRODUCT_GROUP_LOCALIZE_KEY")
         }
     }
     
@@ -84,7 +74,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
-        
+        /*
         var checkButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         checkButton.frame = CGRectMake(0, 0, 25, 25)
         checkButton.addTarget(self, action: "check", forControlEvents: UIControlEvents.TouchUpInside)
@@ -92,14 +82,10 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         var customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: checkButton)
         checkButton.hidden = true
         
-        if self.productCategory == UploadProduct.ProductGroups {
-            checkButton.hidden = false
-        }
-        
         let navigationSpacer2: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer2.width = -10
         
-        self.navigationItem.rightBarButtonItems = [navigationSpacer2, customCheckButton]
+        self.navigationItem.rightBarButtonItems = [navigationSpacer2, customCheckButton]*/
     }
     
     // MARK: -
@@ -128,20 +114,6 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
     
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
-    }
-    
-    func check() {
-        let uploadViewController: ProductUploadTC = self.navigationController!.viewControllers[0] as! ProductUploadTC
-        self.selectedProductGroups.removeAll(keepCapacity: false)
-        
-        for i in 0..<self.productGroup.count {
-            if self.productGroup[i] == true {
-                self.selectedProductGroups.append(self.productGroups[i])
-            }
-        }
-        uploadViewController.selectedProductGroup(self.selectedProductGroups)
-        
-        self.navigationController!.popToRootViewControllerAnimated(true)
     }
     
     func search() {
@@ -216,21 +188,11 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
             if categoryModel.hasChildren == "1" {
                 cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
             }
-        } else if self.productCategory == UploadProduct.ShippingCategory {
+        } else {
             let shippingCategoryModel: ConditionModel = self.shippingCategories[indexPath.row]
             
             cell.categoryTitleLabel.text = shippingCategoryModel.name
             cell.accessoryType = UITableViewCellAccessoryType.None
-        } else {
-            let productGroup: ConditionModel = self.productGroups[indexPath.row]
-            cell.categoryTitleLabel.text = productGroup.name
-            if self.productGroup[indexPath.row] == true {
-                cell.selected = true
-                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
-            } else {
-                cell.categoryTitleLabel.text = productGroup.name
-                cell.accessoryType = UITableViewCellAccessoryType.None
-            }
         }
 
         return cell
@@ -239,10 +201,8 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.productCategory == UploadProduct.ProductCategory {
             return self.categories.count
-        } else if self.productCategory == UploadProduct.ShippingCategory{
-            return self.shippingCategories.count
         } else {
-            return self.productGroups.count
+            return self.shippingCategories.count
         }
     }
     
@@ -250,28 +210,13 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
 
         var categoryModel: CategoryModel = CategoryModel()
         var shippingCategoriesModel: ConditionModel = ConditionModel(uid: 0, name: "")
-        var productGroupsModel: ConditionModel = ConditionModel(uid: 0, name: "")
         
         if self.productCategory == UploadProduct.ProductCategory {
             self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
             categoryModel = self.categories[indexPath.row]
-        } else if self.productCategory == UploadProduct.ShippingCategory {
+        } else {
             self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
             shippingCategoriesModel = self.shippingCategories[indexPath.row]
-        } else {
-            productGroupsModel = self.productGroups[indexPath.row]
-            let cell = self.tableView.cellForRowAtIndexPath(indexPath)
-            if cell!.selected {
-                cell!.selected = false
-                if cell!.accessoryType == UITableViewCellAccessoryType.None {
-                    cell!.accessoryType = UITableViewCellAccessoryType.Checkmark
-                    self.productGroup[indexPath.row] = true
-                } else {
-                    cell!.accessoryType = UITableViewCellAccessoryType.None
-                    self.productGroup.removeAtIndex(indexPath.row)
-                    self.productGroup[indexPath.row] = false
-                }
-            }
         }
         
         if self.userType == UserType.Seller {
@@ -285,11 +230,10 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
                 let uploadViewController: ProductUploadTC = self.navigationController!.viewControllers[0] as! ProductUploadTC
                 if self.productCategory == UploadProduct.ProductCategory {
                     uploadViewController.selectedCategory(categoryModel)
-                    self.navigationController!.popToRootViewControllerAnimated(true)
                 } else if self.productCategory == UploadProduct.ShippingCategory {
                     uploadViewController.selectedShippingCategory(shippingCategoriesModel)
-                    self.navigationController!.popToRootViewControllerAnimated(true)
                 }
+                self.navigationController!.popToRootViewControllerAnimated(true)
             }
         } else {
             let resellerViewController: ResellerItemViewController = ResellerItemViewController(nibName: "ResellerItemViewController", bundle: nil)

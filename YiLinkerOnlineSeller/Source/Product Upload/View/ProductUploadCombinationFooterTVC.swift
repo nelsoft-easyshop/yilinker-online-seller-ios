@@ -189,7 +189,7 @@ class ProductUploadCombinationFooterTVC: UITableViewCell, UITextFieldDelegate, U
     // MARK: - Uploaded Images
     
     func uploadedImages() -> [UIImage] {
-        //self.images.removeLast()
+        self.images.removeLast()
         return self.images
     }
     
@@ -202,11 +202,6 @@ class ProductUploadCombinationFooterTVC: UITableViewCell, UITextFieldDelegate, U
     
     func textFieldDidChange(sender: UITextField) {
         self.delegate!.productUploadSkuDimensionsAndWeightTableViewCell(textFieldDidChange: sender, text: sender.text, cell: self)
-    }
-    
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        self.endEditing(true)
-        return true
     }
     
     // MARK: ProductUploadImageCollectionViewCell Delegate method
