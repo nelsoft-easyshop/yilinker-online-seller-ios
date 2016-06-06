@@ -31,6 +31,7 @@ struct Constants {
         static let noInternetErrorMessage: String = StringHelper.localizedStringWithKey("CONNECTION_ERROR_MESSAGE_LOCALIZE_KEY")
         static let targetNotAvailable: String = StringHelper.localizedStringWithKey("TARGET_NOT_AVAILABLE")
         static let pageNotFound: String = StringHelper.localizedStringWithKey("PAGE_NOT_FOUND_LOCALIZE_KEY")
+        static let cannotProceed: String = StringHelper.localizedStringWithKey("CANNOT_PROCEED_LOCALIZE_KEY")
     }
 
     struct Colors {

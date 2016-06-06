@@ -8,6 +8,27 @@
 
 import UIKit
 
+private struct Strings {
+    static let title = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_TITLE_LOCALIZE_KEY")
+    static let countryDetails = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_COUNTRY_DETAILS_LOCALIZE_KEY")
+    static let country = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_COUNTRY_LOCALIZE_KEY")
+    static let domain = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_DOMAIN_LOCALIZE_KEY")
+    static let language = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_LANGUAGE_LOCALIZE_KEY")
+    static let currency = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_CURRENCY_LOCALIZE_KEY")
+    static let rate = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_RATE_LOCALIZE_KEY")
+    static let storeName = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_STORE_NAME_LOCALIZE_KEY")
+    
+    static let productSummary = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_STORE_PRODUCT_SUMMARY_LOCALIZE_KEY")
+    static let category = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_STORE_CATEGORY_LOCALIZE_KEY")
+    static let brand = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_STORE_BRAND_LOCALIZE_KEY")
+    static let packageDimension = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_STORE_PACKAGE_DIMENSION_LOCALIZE_KEY")
+    static let weight = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_STORE_WEIGHT_LOCALIZE_KEY")
+
+    static let productCombination = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_PRODUCT_COMBINATION_TITLE_LOCALIZE_KEY")
+    static let productInventoryLocationPrimary = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_STORE_PIL_PRIMARY_LOCALIZE_KEY")
+    static let productInventoryLocationSecondary = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_STORE_PIL_SECONDARY_LOCALIZE_KEY")
+}
+
 class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
 
     // MARK: Delarations
@@ -73,19 +94,44 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
 
         // Do any additional setup after loading the view.
 
-        fireGetCountryStoreDetails()
         setupNavigationBar()
-        self.addActions()
+        setupStrings()
+        populateCountryStoreBasicDetails()
+        fireGetCountryStoreDetails()
+        
         let nib = UINib(nibName: "ProductImagesCollectionViewCell", bundle: nil)
         self.productCollectionViewController.registerNib(nib, forCellWithReuseIdentifier: "ProductImagesIdentifier")
         
-        populateCountryStoreBasicDetails()
+        
+        self.scrollView.backgroundColor = Constants.Colors.lightBackgroundColor
+        
     }
     
     // MARK: - Functions
     
+    func setupStrings() {
+        
+        self.CountryDetailsLabel.text = Strings.countryDetails
+        self.countryLabel.text = Strings.country
+        self.domainLabel.text = Strings.domain
+        self.languageLabel.text = Strings.language
+        self.currencyLabel.text = Strings.currency
+        self.rateLabel.text = Strings.rate
+        self.storeNameLabel.text = Strings.storeName
+        
+        self.productSummaryLabel.text = Strings.productSummary
+        self.categoryLabel.text = Strings.category
+        self.brandLabel.text = Strings.brand
+        self.packageDimensionLabel.text = Strings.packageDimension
+        self.weightLabel.text = Strings.weight
+        
+        self.productCombinationLabel.text = Strings.productCombination
+        self.productLocationPrimaryLabel.text = Strings.productInventoryLocationPrimary
+        self.productLocationSecondaryLabel.text = Strings.productInventoryLocationSecondary
+    }
+    
     func setupNavigationBar() {
-        self.title = "Country Store Setup"
+        self.title = Strings.title
         
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
@@ -125,6 +171,8 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
             
             self.productLocationPrimaryValueLabel.text = self.countryStoreSetupModel.primaryAddress
             self.productLocationSecondaryValueLabel.text = self.countryStoreSetupModel.secondaryAddress
+            
+            self.addActions()
         } else {
             println("Country Store Setup Model is nil")
         }
@@ -277,14 +325,18 @@ extension CountryStoreSetupViewController: UICollectionViewDataSource, Inventory
         if countryStoreSetupModel != nil {
             return self.countryStoreSetupModel.product.images.count
         }
-        return 0
+        return 3
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell: ProductImagesCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("ProductImagesIdentifier", forIndexPath: indexPath) as! ProductImagesCollectionViewCell
 
-        cell.setItemImage(self.countryStoreSetupModel.product.images[indexPath.row].imageLocation)
+        if countryStoreSetupModel != nil {
+            cell.setItemImage(self.countryStoreSetupModel.product.images[indexPath.row].imageLocation)
+        } else {
+            cell.setDefaultImage()
+        }
         
         cell.layer.cornerRadius = 3.0
         

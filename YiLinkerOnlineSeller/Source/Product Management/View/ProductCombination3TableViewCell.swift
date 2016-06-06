@@ -22,6 +22,9 @@ class ProductCombination3TableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        availableSwitch.layer.cornerRadius = 16.0
+        
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

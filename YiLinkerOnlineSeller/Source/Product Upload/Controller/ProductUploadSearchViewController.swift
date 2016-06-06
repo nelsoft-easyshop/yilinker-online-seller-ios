@@ -26,7 +26,9 @@ class ProductUploadSearchViewController: UIViewController, UISearchBarDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: Initialize search bar
+    // MARK: -
+    // MARK: - Initialize search bar
+    
     func search() {
         self.view.layoutIfNeeded()
         self.searchBar = UISearchBar(frame: CGRectMake(0, 0, self.view.frame.size.width - 30, 44))
@@ -38,7 +40,9 @@ class ProductUploadSearchViewController: UIViewController, UISearchBarDelegate {
         self.navigationItem.rightBarButtonItem =  UIBarButtonItem(customView: searchBar!)
     }
     
-    // MARK: Serach bar delegate methods
+    // MARK: -
+    // MARK: - Serach bar delegate methods
+    
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         
     }

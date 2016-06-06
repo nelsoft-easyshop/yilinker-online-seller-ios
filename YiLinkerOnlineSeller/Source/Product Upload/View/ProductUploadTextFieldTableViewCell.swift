@@ -8,6 +8,10 @@
 
 import UIKit
 
+struct ProductUploadTextFieldTableViewCellConstant {
+    static let productUploadTextFieldTableViewCellNibAndIdentifier = "ProductUploadTextFieldTableViewCell"
+}
+
 // MARK: Delegate
 // ProductUploadTextFieldTableViewCell Delegate method
 protocol ProductUploadTextFieldTableViewCellDelegate {
@@ -37,23 +41,27 @@ class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate,
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        self.cellTexField.delegate = self
     }
     
-    // MARK: Private methods
-    // Add textfield action
+    // MARK: -
+    // MARK: - Private methods
+    // MARK: - Add textfield action
+    
     func addTextFieldDelegate() {
         self.cellTexField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
     }
+    
+    // MARK: -
+    // MARK: - Add arrow in textfield
     
     func addArrow() {
         self.cellTexField.enabled = false
         self.cellTexField.rightViewMode = UITextFieldViewMode.Always
     }
     
-    // MARK: Add Picker view
-    // Show picker view when textfield is on focus
+    // MARK: -
+    // MARK: - Add Picker view - Show picker view when textfield is on focus
+    
     func addPicker() {
         if self.textFieldType == ProductTextFieldType.Condition {
             let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -68,19 +76,23 @@ class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate,
         }
     }
     
-    // Textfield's action methods
+    // MARK: -
+    // MARK: -Textfield's action methods
+    
     func done() {
         self.cellTexField.endEditing(true)
         self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: self.cellTexField.text, cell: self, textFieldType: self.textFieldType!)
     }
     
     func textFieldDidChange(sender: UITextField) {
-        self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: sender.text, cell: self, textFieldType: self.textFieldType!)
+       self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: sender.text, cell: self, textFieldType: self.textFieldType!)
     }
     
-    // MARK: Textfield delegate methods
+    // MARK: -
+    // MARK: - Textfield delegate methods
+    
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-        if self.textFieldType == ProductTextFieldType.Brand || self.textFieldType == ProductTextFieldType.Category {
+        if self.textFieldType == ProductTextFieldType.Brand || self.textFieldType == ProductTextFieldType.Category || self.textFieldType == ProductTextFieldType.ShippingCategory {
             self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: "", cell: self, textFieldType: self.textFieldType!)
             return false
         } else {
@@ -93,7 +105,9 @@ class ProductUploadTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate,
         return true
     }
     
-    // MARK: Picker view delegate methods
+    // MARK: -
+    // MARK: - Picker view delegate methods
+    
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.cellTexField.text = self.values[row]
     }

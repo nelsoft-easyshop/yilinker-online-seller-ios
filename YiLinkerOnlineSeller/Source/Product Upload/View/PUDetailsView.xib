@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="PUDetailsView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="279"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ZEy-1g-qnd">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="279"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="iN0-l3-epB" id="9GO-Tz-qTK"/>
+                        <outlet property="delegate" destination="iN0-l3-epB" id="gdG-nM-NA3"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="ZEy-1g-qnd" secondAttribute="trailing" id="3q1-Xa-eef"/>
+                <constraint firstItem="ZEy-1g-qnd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="AtJ-sp-67h"/>
+                <constraint firstItem="ZEy-1g-qnd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ri5-vi-Ncc"/>
+                <constraint firstAttribute="bottom" secondItem="ZEy-1g-qnd" secondAttribute="bottom" id="uTq-Xa-P13"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="tableView" destination="ZEy-1g-qnd" id="e1f-o1-w8p"/>
+            </connections>
+            <point key="canvasLocation" x="278.5" y="165.5"/>
+        </view>
+    </objects>
+</document>

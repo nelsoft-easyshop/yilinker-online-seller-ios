@@ -21,12 +21,22 @@ protocol ProductCombinationViewControllerDelegate {
     func reloadDetailsFromProductCombination(controller: ProductCombinationViewController)
 }
 
+private struct Strings {
+    static let title = StringHelper.localizedStringWithKey("COUNTRY_STORE_SETUP_PRODUCT_COMBINATION_TITLE_LOCALIZE_KEY")
+    static let combination = StringHelper.localizedStringWithKey("PRODUCT_COMBINATION_TITLE_LOCALIZE_KEY")
+    static let originalPrice = StringHelper.localizedStringWithKey("PRODUCT_COMBINATION_ORIGINAL_PRICE_LOCALIZE_KEY")
+    static let discount = StringHelper.localizedStringWithKey("PRODUCT_COMBINATION_DISCOUNT_LOCALIZE_KEY")
+    static let finalPrice = StringHelper.localizedStringWithKey("PRODUCT_COMBINATION_FINAL_PRICE_LOCALIZE_KEY")
+    static let commission = StringHelper.localizedStringWithKey("PRODUCT_COMBINATION_COMMISION_LOCALIZE_KEY")
+    static let available = StringHelper.localizedStringWithKey("PRODUCT_COMBINATION_AVAILABLE_LOCALIZE_KEY")
+    static let saveProductCombination = StringHelper.localizedStringWithKey("PRODUCT_COMBINATION_SAVE_PRODUCT_COMBINATION_LOCALIZE_KEY")
+    static let cannotProceed = StringHelper.localizedStringWithKey("CANNOT_PROCEED_LOCALIZE_KEY")
+    static let fillUpAllFields = StringHelper.localizedStringWithKey("PRODUCT_COMBINATION_FILL_UP_LOCALIZE_KEY")
+}
+
 class ProductCombinationViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    
-    let cellTitles = ["Finish", "Storage", "SKU"]
-    let cellValues = ["Silver", "16GB", "G86712835-12"]
     
     var combinationElements: [CombinationElement] = []
     
@@ -81,7 +91,7 @@ class ProductCombinationViewController: UIViewController {
     // MARK: - Functions
     
     func setupNavigationBar() {
-        self.title = "Product Combinations"
+        self.title = Strings.title
         
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
@@ -94,7 +104,7 @@ class ProductCombinationViewController: UIViewController {
     
     func setupTableView() {
         
-        self.tableView.backgroundColor = Constants.Colors.backgroundGray
+        self.tableView.backgroundColor = Constants.Colors.lightBackgroundColor
         
         let headerView: UIView = UIView(frame: CGRectMake(0, 0, self.tableView.frame.size.width, 10.0))
         self.tableView.tableHeaderView = headerView
@@ -104,7 +114,7 @@ class ProductCombinationViewController: UIViewController {
         saveButton.backgroundColor = Constants.Colors.pmYesGreenColor
         saveButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Bold", size: 12.0)
         saveButton.layer.cornerRadius = 3.0
-        saveButton.setTitle("SAVE PRODUCT COMBINATIONS", forState: .Normal)
+        saveButton.setTitle(Strings.saveProductCombination, forState: .Normal)
         saveButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         saveButton.addTarget(self, action: "saveAction", forControlEvents: .TouchUpInside)
         footerView.addSubview(saveButton)
@@ -168,7 +178,7 @@ class ProductCombinationViewController: UIViewController {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
 //                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: "Cannot Proceed")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Strings.cannotProceed)
                 } else if requestErrorType == .AccessTokenExpired {
                     self.fireRefreshToken()
                 } else if requestErrorType == .PageNotFound {
@@ -226,7 +236,7 @@ class ProductCombinationViewController: UIViewController {
         if filledAllRequirements() {
             self.fireSaveCombination()
         } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please fill up all fields.", title: "Cannot Proceed")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Strings.fillUpAllFields, title: Strings.cannotProceed)
         }
         
     }
@@ -239,7 +249,7 @@ class ProductCombinationViewController: UIViewController {
         if filledAllRequirements() {
             self.fireSaveCombination()
         } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please fill up all fields.", title: "Cannot Proceed")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Strings.fillUpAllFields, title: Strings.cannotProceed)
         }
 //        self.navigationController?.popViewControllerAnimated(true)
     }
@@ -267,15 +277,16 @@ extension ProductCombinationViewController: UITableViewDataSource, UITableViewDe
             cell.tag = indexPath.section
             
             
-            cell.originalPriceLabel.text = "Original Price (" + countryStoreModel.currency.symbol + ")"
+            cell.originalPriceLabel.text = "\(Strings.originalPrice) (" + countryStoreModel.currency.symbol + ")"
             cell.originalTextField.text = self.originalPrices[indexPath.section]
             
-            cell.discountLabel.text = "Discount (" + countryStoreModel.currency.symbol + ")"
+            cell.discountLabel.text = "\(Strings.discount) (" + countryStoreModel.currency.symbol + ")"
             cell.discountTextField.text = self.discounts[indexPath.section]
             
-            cell.finalPriceLabel.text = "Final Price (" + countryStoreModel.currency.symbol + ")"
+            cell.finalPriceLabel.text = "\(Strings.finalPrice) (" + countryStoreModel.currency.symbol + ")"
             cell.finalPriceTextField.text = "\(cell.originalTextField.text.doubleValue * cell.discountTextField.text.doubleValue / 100)"
             
+            cell.commissionLabel.text = Strings.commission
             cell.commissionTextField.text = self.commissions[indexPath.section]
             
             return cell
@@ -284,6 +295,7 @@ extension ProductCombinationViewController: UITableViewDataSource, UITableViewDe
             cell.delegate = self
             cell.tag = indexPath.section
             
+            cell.availableLabel.text = Strings.available
             if self.combinationModel[indexPath.section].status == 1 {
                 cell.availableSwitch.on = true
             } else {
@@ -315,7 +327,7 @@ extension ProductCombinationViewController: UITableViewDataSource, UITableViewDe
         let textLabel: UILabel = UILabel(frame: CGRectMake(15, 0, headerView.frame.size.width - 15, headerView.frame.size.height))
         textLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
         textLabel.textColor = UIColor.darkGrayColor()
-        textLabel.text = "Combination \(section + 1)"
+        textLabel.text = "\(Strings.combination) \(section + 1)"
         headerView.addSubview(textLabel)
         
         return headerView

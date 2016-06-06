@@ -24,5 +24,9 @@ class ProductImagesCollectionViewCell: UICollectionViewCell {
     func setLocalImage(image: UIImage) {
         self.itemImageView.image = image
     }
+    
+    func setDefaultImage() {
+        self.itemImageView.image = UIImage(named: "dummy-placeholder")
+    }
 
 }

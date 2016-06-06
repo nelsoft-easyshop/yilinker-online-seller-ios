@@ -8,11 +8,17 @@
 
 import UIKit
 
+struct CountryStoreStrings {
+    static let title = StringHelper.localizedStringWithKey("COUNTRY_STORE_TITLE_LOCALIZE_KEY")
+    static let available = StringHelper.localizedStringWithKey("COUNTRY_STORE_AVAILABLE_LOCALIZE_KEY")
+}
+
 class CountryStoreViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, EmptyViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
     var countryListModel: [CountryListModel] = []
+    @IBOutlet weak var emptyLabel: UILabel!
     
     var hud: MBProgressHUD?
     var emptyView: EmptyView?
@@ -28,7 +34,9 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
 
         fireGetCountries()
         setupNavigationBar()
+        setupTexts()
         
+        self.tableView.backgroundColor = Constants.Colors.lightBackgroundColor
         self.tableView.contentInset = UIEdgeInsetsMake(-36, 0, 0, 0)
         self.tableView.registerNib(UINib(nibName: "CountryStoreTableViewCell", bundle: nil), forCellReuseIdentifier: "countryId")
     }
@@ -36,7 +44,7 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
     // MARK: - Functions
     
     func setupNavigationBar() {
-        self.title = "Country Store"
+        self.title = CountryStoreStrings.title
         
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
@@ -45,7 +53,13 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
         
         self.navigationItem.leftBarButtonItems = [navigationSpacer, UIBarButtonItem(image: UIImage(named: "nav-back"), style: .Plain, target: self, action: "backAction")]
     }
-
+    
+    func setupTexts() {
+        
+        self.emptyLabel.text = "No Available Countries"
+        
+    }
+    
     func populateData() {
         self.tableView.reloadData()
     }
@@ -73,12 +87,12 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
                     for response in responseList {
                         self.countryListModel.append(CountryListModel.parseDataWithDictionary(response))
                     }
+                 
+                    self.populateData()
                     
                 } else {
-                    println("No countries.")
+                    self.emptyLabel.hidden = false
                 }
-                
-                self.populateData()
                 
             } else {
                 if requestErrorType == .ResponseError {
@@ -92,7 +106,8 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
                     Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
                 } else if requestErrorType == .NoInternetConnection {
                     //No internet connection
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+//                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    self.addEmptyView()
                 } else if requestErrorType == .RequestTimeOut {
                     //Request timeout
                     Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
@@ -147,7 +162,7 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
     func didTapReload() {
         self.emptyView?.removeFromSuperview()
         if Reachability.isConnectedToNetwork() {
-            
+            self.fireGetCountries()
         } else {
             addEmptyView()
         }
