@@ -235,19 +235,24 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
             let rowHeight: CGFloat = 52
             
             let cellCount: Int = self.productModel!.attributes[indexPath.section].values.count
-            var numberOfRows: CGFloat = CGFloat(cellCount) / 3
             
-            if numberOfRows == 0 {
-                numberOfRows = 1
-            } else if floor(numberOfRows) != numberOfRows {
-                numberOfRows++
+            if cellCount == 0 {
+                return 0
+            } else {
+                var numberOfRows: CGFloat = CGFloat(cellCount) / 3
+                
+                if numberOfRows == 0 {
+                    numberOfRows = 1
+                } else if floor(numberOfRows) != numberOfRows {
+                    numberOfRows++
+                }
+                
+                var dynamicHeight: CGFloat = floor(numberOfRows) * rowHeight
+                
+                var cellHeight: CGFloat = rowInitialHeight + dynamicHeight
+                
+                return cellHeight
             }
-            
-            var dynamicHeight: CGFloat = floor(numberOfRows) * rowHeight
-            
-            var cellHeight: CGFloat = rowInitialHeight + dynamicHeight
-            
-            return cellHeight
         } else {
             return 44
         }

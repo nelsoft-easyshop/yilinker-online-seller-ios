@@ -175,6 +175,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
                 let rowHeight: CGFloat = 52
                 
                 let cellCount: Int = self.productModel!.attributes[self.selectedIndexPath.section].values.count
+                
                 var numberOfRows: CGFloat = CGFloat(cellCount) / 3
                 
                 if numberOfRows == 0 {

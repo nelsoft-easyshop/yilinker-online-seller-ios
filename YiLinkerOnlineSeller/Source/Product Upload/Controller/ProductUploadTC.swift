@@ -148,7 +148,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         } else {
             if indexPath.row == 0 {
                 if self.productModel.productGroups.count == 0 {
-                    return 100
+                    return 30
                 } else {
                     let rowInitialHeight: CGFloat = 18
                     let rowHeight: CGFloat = 82

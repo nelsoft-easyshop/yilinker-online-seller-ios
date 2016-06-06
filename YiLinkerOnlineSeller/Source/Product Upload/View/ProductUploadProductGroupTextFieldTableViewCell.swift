@@ -39,6 +39,7 @@ class ProductUploadProductGroupTextFieldTableViewCell: UITableViewCell, UITextFi
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.delegate!.productUploadTextFieldTableViewCell(textFieldDidChange: textField.text, cell: self)
         self.productGroupTextField.text = ""
+        self.productGroupTextField.becomeFirstResponder()
         return true
     }
     

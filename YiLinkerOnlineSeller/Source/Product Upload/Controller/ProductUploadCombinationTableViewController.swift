@@ -393,7 +393,15 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
     // MARK: - ProductUploadCombinationFooterTVC Delegate Method - productUploadCombinationFooterTVC
     
     func productUploadCombinationFooterTVC(didClickUploadImage cell: ProductUploadCombinationFooterTVC) {
+        let productUploadCombiImages: ProductUploadCombinationImagesVC = ProductUploadCombinationImagesVC(nibName: "ProductUploadCombinationImagesVC", bundle: nil)
+        productUploadCombiImages.productModel = self.productModelCombi
+        productUploadCombiImages.delegate = self
         
+        let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadCombiImages)
+        navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+        
+        self.presentViewController(navigationController, animated: true, completion: nil)
+        /*
         var notice: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_NOTICE_LOCALIZE_KEY")
         var message: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_MESSAGE_LOCALIZE_KEY")
         var main: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_MAIN_IMAGES_LOCALIZE_KEY")
@@ -443,7 +451,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
         
         // show the alert
         self.presentViewController(alert, animated: true, completion: nil)
-        
+        */
     }
     
     // MARK: -
