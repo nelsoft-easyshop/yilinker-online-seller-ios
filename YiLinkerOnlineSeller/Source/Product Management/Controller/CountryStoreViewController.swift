@@ -25,7 +25,7 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        SessionManager.setAccessToken("YjU4NTRhNzdmNDRmYjU1ODQ5MzVjZmIyN2E1ZjA4NWMxNTEwNDFhNmRlNTA2MDAyMzAxNWIzYWFjZTIxOTZiMA")
+
         fireGetCountries()
         setupNavigationBar()
         
@@ -176,9 +176,10 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
     
     // MARK: - Table View Delegate
     
-    func tableView(tableView: UITableView, didSelectRowAt45IndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let countryStoreSetup: CountryStoreSetupViewController = CountryStoreSetupViewController(nibName: "CountryStoreSetupViewController", bundle: nil)
+        countryStoreSetup.productId = self.productId
         countryStoreSetup.countryStoreModel = self.countryListModel[indexPath.row]
         self.navigationController?.pushViewController(countryStoreSetup, animated: true)
         

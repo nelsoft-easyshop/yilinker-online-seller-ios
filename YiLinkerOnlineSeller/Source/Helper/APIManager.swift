@@ -78,6 +78,7 @@ struct APIAtlas {
     static let sellerBank = APIAtlas.generateV3URL("auth/bank/getEnabledBanks")
     static let sellerEditBankAccount = APIAtlas.generateV3URL("auth/bank/account/editBankAccount")
     
+    
     //My Points
     static let getPointsTotal = APIAtlas.generateV3URL("auth/user/getPoints")
     static let getPointsHistory =  APIAtlas.generateV3URL("auth/user/getPointHistory")
@@ -179,7 +180,8 @@ struct APIAtlas {
     
     //Product Language Translation
     static let productLanguages = APIAtlas.generateV3URL("auth/product/get-languages")
-    
+    static let productTranslation = "auth/product/get-translation"
+    static let translateProduct = "auth/product/translate"
     
     static func generateV3URL(url: String) -> String {
         return "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
