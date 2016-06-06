@@ -32,6 +32,10 @@ class ProductLanguageModel: NSObject {
         
     }
     
+    init(languageId: Int) {
+        self.languageId = languageId
+    }
+    
     class func parseDataWithDictionary(dictionary: AnyObject) -> ProductLanguageModel {
         
         var languageId = ParseHelper.int(dictionary, key: "languageId", defaultValue: 0)

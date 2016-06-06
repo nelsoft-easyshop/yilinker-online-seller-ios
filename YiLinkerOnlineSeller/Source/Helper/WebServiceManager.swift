@@ -89,6 +89,12 @@ class WebServiceManager: NSObject {
     //GCM
     static let deviceTypeKey = "deviceType"
     
+    //Translation
+    static let shortDescriptionKey = "shortDescription"
+    static let productImagesKey = "productImages"
+    static let productVariantsKey = "productVariants"
+    
+    
     // MARK: - CALLS
     // MARK: - Post Request With Url
     // This function is for removing repeated codes in handler
@@ -983,6 +989,27 @@ class WebServiceManager: NSObject {
         let parameters: NSDictionary = [self.productIdKey : productId, self.accessTokenKey : access_token]
         
         self.fireGetRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: - Get Product Languages
+    class func fireGetProductTranslationRequestWithUrl(url: String, productId: String, access_token: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        let parameters: NSDictionary = [self.productIdKey : productId, self.accessTokenKey : access_token]
+        
+        self.fireGetRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: - Save Language Translation
+    class func firePostTranslate(url: String, productId: String, name: String, shortDescription: String, description: String, productImages: AnyObject, productVariants: AnyObject, access_token: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        let parameters = [self.productIdKey: "\(productId)", self.nameKey: "\(name)", self.shortDescriptionKey: "\(shortDescription)", self.descriptionKey: "\(description)", self.productImagesKey: "\(productImages)", self.productVariantsKey: "\(productVariants)"]
+        
+        self.firePostRequestWithUrl("\(url)?access_token=\(access_token)", parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            println(responseObject)
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }

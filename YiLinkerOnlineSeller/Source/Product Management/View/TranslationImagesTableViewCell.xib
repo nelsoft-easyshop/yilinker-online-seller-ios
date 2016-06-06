@@ -36,12 +36,12 @@
                     </label>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="5X2-b6-dUh">
                         <rect key="frame" x="0.0" y="89" width="375" height="125"/>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="125" id="goU-Yp-hVT"/>
                         </constraints>
-                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="16" minimumInteritemSpacing="0.0" id="oMk-GH-hBu">
-                            <size key="itemSize" width="100" height="100"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="8" minimumInteritemSpacing="0.0" id="oMk-GH-hBu">
+                            <size key="itemSize" width="125" height="125"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -62,6 +62,11 @@
                     <constraint firstItem="5X2-b6-dUh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="y1Z-VQ-L3u"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="imagesCollectionView" destination="5X2-b6-dUh" id="xmj-NV-lWn"/>
+                <outlet property="shortDescriptionLabel" destination="YeL-6i-qiX" id="aA7-k6-NuQ"/>
+                <outlet property="titleLabel" destination="o6R-oT-h3J" id="Duy-4M-gHG"/>
+            </connections>
             <point key="canvasLocation" x="221.5" y="188"/>
         </tableViewCell>
     </objects>

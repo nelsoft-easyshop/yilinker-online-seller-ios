@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LanguageVariantsFooterCollectionReusableView" id="U6b-Vx-4bR" customClass="LanguageVariantsFooterCollectionReusableView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dSo-aI-DhT">
+                    <rect key="frame" x="16" y="16" width="343" height="40"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="q4e-DV-Jb3"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="12"/>
+                    <state key="normal" title="VIEW GENERATED COMBINATIONS">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="buttonAction:" destination="U6b-Vx-4bR" eventType="touchUpInside" id="1m1-ab-Pcm"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9G1-5l-4vq">
+                    <rect key="frame" x="16" y="64" width="343" height="40"/>
+                    <color key="backgroundColor" red="0.3294117647" green="0.71372549019999998" blue="0.65490196079999996" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="WbD-b2-hIK"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="12"/>
+                    <state key="normal" title="SAVE VARIANT TRANSLATION">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="buttonAction:" destination="U6b-Vx-4bR" eventType="touchUpInside" id="VmT-uc-G5v"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="9G1-5l-4vq" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="16" id="3TD-P0-ceE"/>
+                <constraint firstAttribute="trailing" secondItem="dSo-aI-DhT" secondAttribute="trailing" constant="16" id="8A0-nh-Rpp"/>
+                <constraint firstItem="dSo-aI-DhT" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="16" id="9fK-DW-mSZ"/>
+                <constraint firstAttribute="trailing" secondItem="9G1-5l-4vq" secondAttribute="trailing" constant="16" id="icI-iw-waC"/>
+                <constraint firstItem="9G1-5l-4vq" firstAttribute="top" secondItem="dSo-aI-DhT" secondAttribute="bottom" constant="8" id="qyN-Ca-PsI"/>
+                <constraint firstItem="dSo-aI-DhT" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="16" id="wkh-nb-17N"/>
+            </constraints>
+            <connections>
+                <outlet property="combinationButton" destination="dSo-aI-DhT" id="WGp-la-cmS"/>
+                <outlet property="saveButton" destination="9G1-5l-4vq" id="CFc-YQ-ZvE"/>
+            </connections>
+        </collectionReusableView>
+    </objects>
+</document>

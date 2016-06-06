@@ -1,18 +1,70 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="TranslationImageCollectionViewCell" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TranslationImageCollectionViewCell" id="gTV-IL-0wX" customClass="TranslationImageCollectionViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="7Ha-Vw-MVz">
+                        <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N4o-0f-xEh">
+                        <rect key="frame" x="0.0" y="90" width="35" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="fiT-zW-BXh"/>
+                            <constraint firstAttribute="width" constant="35" id="pa2-b5-iH6"/>
+                        </constraints>
+                        <inset key="contentEdgeInsets" minX="5" minY="6" maxX="5" maxY="6"/>
+                        <state key="normal" image="ic_unselected_as_primary">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="buttonAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="SXz-p8-1ez"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pwR-Wf-Wah">
+                        <rect key="frame" x="90" y="5" width="30" height="30"/>
+                        <color key="backgroundColor" red="0.3294117647" green="0.71372549019999998" blue="0.65490196079999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="YHM-xX-PEw"/>
+                            <constraint firstAttribute="height" constant="30" id="pcl-iY-40p"/>
+                        </constraints>
+                        <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                        <state key="normal" image="check-white">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
+            <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="7Ha-Vw-MVz" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="FoN-jB-UFO"/>
+                <constraint firstAttribute="trailing" secondItem="7Ha-Vw-MVz" secondAttribute="trailing" id="Ueo-Bd-n6L"/>
+                <constraint firstItem="N4o-0f-xEh" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="kt5-02-Hc8"/>
+                <constraint firstAttribute="bottom" secondItem="N4o-0f-xEh" secondAttribute="bottom" id="ldV-do-Ldw"/>
+                <constraint firstItem="7Ha-Vw-MVz" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="mhJ-we-F8M"/>
+                <constraint firstItem="pwR-Wf-Wah" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="pIl-EJ-EaK"/>
+                <constraint firstAttribute="trailing" secondItem="pwR-Wf-Wah" secondAttribute="trailing" constant="5" id="y4h-f8-hlz"/>
+                <constraint firstAttribute="bottom" secondItem="7Ha-Vw-MVz" secondAttribute="bottom" id="zFX-Ll-r1s"/>
+            </constraints>
+            <connections>
+                <outlet property="cellImageView" destination="7Ha-Vw-MVz" id="Sdo-v9-8dH"/>
+                <outlet property="checkButton" destination="pwR-Wf-Wah" id="U5t-Bt-07Q"/>
+                <outlet property="starButton" destination="N4o-0f-xEh" id="UZ9-13-VMa"/>
+            </connections>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="check-white" width="66" height="66"/>
+        <image name="dummy-placeholder.jpg" width="1280" height="800"/>
+        <image name="ic_unselected_as_primary" width="327" height="294"/>
+    </resources>
 </document>
