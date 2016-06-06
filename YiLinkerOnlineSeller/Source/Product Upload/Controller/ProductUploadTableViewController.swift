@@ -25,6 +25,7 @@ struct ProductUploadStrings {
     static let selectCategory: String = StringHelper.localizedStringWithKey("SELECT_CATEGORY_LOCALIZE_KEY")
     static let category: String = StringHelper.localizedStringWithKey("CATEGORY_LOCALIZE_KEY")
     static let brand: String = StringHelper.localizedStringWithKey("BRAND_LOCALIZE_KEY")
+    static let addBrand: String = StringHelper.localizedStringWithKey("ADD_BRAND_DETAILS_LOCALIZE_KEY")
     static let condition: String = StringHelper.localizedStringWithKey("CONDITION_LOCALIZE_KEY")
     
     static let addMore: String = StringHelper.localizedStringWithKey("ADD_MORE_LOCALIZE_KEY")
@@ -85,6 +86,7 @@ struct ProductUploadStrings {
     static let shortDescriptionRquired: String = StringHelper.localizedStringWithKey("SHORT_DESCRIPTION_REQUIRED_LOCALIZE_KEY")
     static let completeRequired: String = StringHelper.localizedStringWithKey("COMPLETE_DESCRIPTION_REQUIRED_LOCALIZE_KEY")
     static let categoryRequired: String = StringHelper.localizedStringWithKey("CATEGORY_REQUIRED_LOCALIZE_KEY")
+    static let shippingCategoryRequired: String = StringHelper.localizedStringWithKey("SHIPPING_CATEGORY_REQUIRED_LOCALIZE_KEY")
     
     static let conditionRequired: String = StringHelper.localizedStringWithKey("CONDITION_REQUIRED_LOCALIZE_KEY")
     static let quantityRequired: String = StringHelper.localizedStringWithKey("QUANTITY_REQUIRED_LOCALIZE_KEY")
@@ -157,7 +159,7 @@ struct ProductUploadCombination {
     static var draft: Bool = false
 }
 
-class ProductUploadTableViewController: UITableViewController, ProductUploadUploadImageTableViewCellDataSource, ProductUploadUploadImageTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadCategoryViewControllerDelegate, ProductUploadFooterViewDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadPriceTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadBrandViewControllerDelegate, ProductUploadQuantityTableViewCellDelegate, SuccessUploadViewControllerDelegate {
+class ProductUploadTableViewController: UITableViewController, ProductUploadUploadImageTableViewCellDataSource, ProductUploadUploadImageTableViewCellDelegate, UzysAssetsPickerControllerDelegate, ProductUploadFooterViewDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadPriceTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadBrandViewControllerDelegate, ProductUploadQuantityTableViewCellDelegate, SuccessUploadViewControllerDelegate {
     
     // Models
     var conditions: [ConditionModel] = []
@@ -299,7 +301,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
     // MARK: - Category
     func category() {
         let productUploadCategoryViewController: ProductUploadCategoryViewController = ProductUploadCategoryViewController(nibName: "ProductUploadCategoryViewController", bundle: nil)
-        productUploadCategoryViewController.delegate = self
         productUploadCategoryViewController.pageTitle = ProductUploadStrings.selectCategory
         productUploadCategoryViewController.userType = UserType.Seller
         self.navigationController!.pushViewController(productUploadCategoryViewController, animated: true)
@@ -961,11 +962,6 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
     }
     
-    // MARK: - Product Upload Category View Controller Delegate Method
-    func productUploadCategoryViewController(didSelectCategory category: String) {
-        println(category)
-    }
-    
     // MARK: - Product Upload Upload Image Table View Cell Delegate method
     func productUploadUploadImageTableViewCell(numberOfCollectionViewRows cell: ProductUploadUploadImageTableViewCell) -> Int {
         if self.uploadType == UploadType.EditProduct {
@@ -1021,6 +1017,10 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
         collectionView.deleteItemsAtIndexPaths([indexPath])
     }
 
+    func productUploadUploadImageTableViewCell(didTapStarAtRowIndexPath indexPath: NSIndexPath, cell: ProductUploadImageCollectionViewCell) {
+        cell.starButton.setBackgroundImage(UIImage(named: "active2"), forState: UIControlState.Normal)
+    }
+    
     func productUploadUploadImageTableViewCell(images cell: ProductUploadUploadImageTableViewCell) -> [UIImage] {
         if self.uploadType == UploadType.EditProduct {
             return self.productModel.editedImage

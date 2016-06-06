@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProductUploadAttributeListVC" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <connections>
+                <outlet property="footerButton" destination="JGb-IG-auD" id="zvQ-nX-Ags"/>
+                <outlet property="tableView" destination="SVe-3C-69E" id="FDz-yr-pkn"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="SVe-3C-69E">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="537"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="vYj-ho-3ww"/>
+                        <outlet property="delegate" destination="-1" id="8vV-Ga-MoG"/>
+                    </connections>
+                </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JGb-IG-auD">
+                    <rect key="frame" x="8" y="545" width="359" height="47"/>
+                    <color key="backgroundColor" red="0.2666666667" green="0.64313725489999995" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="47" id="Akd-3j-yBb"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
+                    <state key="normal" title="PROCEED TO COMBINATION">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="proceedToCombination:" destination="-1" eventType="touchUpInside" id="Ihy-hu-4cy"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="JGb-IG-auD" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="0CF-LI-HYA"/>
+                <constraint firstItem="JGb-IG-auD" firstAttribute="top" secondItem="SVe-3C-69E" secondAttribute="bottom" constant="8" id="8oW-d5-yYC"/>
+                <constraint firstItem="SVe-3C-69E" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="9Jr-pW-sLU"/>
+                <constraint firstItem="SVe-3C-69E" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Bvt-AJ-11A"/>
+                <constraint firstAttribute="trailing" secondItem="JGb-IG-auD" secondAttribute="trailing" constant="8" id="FHb-pl-GMz"/>
+                <constraint firstAttribute="bottom" secondItem="JGb-IG-auD" secondAttribute="bottom" constant="8" id="lEB-Zj-TIs"/>
+                <constraint firstAttribute="trailing" secondItem="SVe-3C-69E" secondAttribute="trailing" id="zGt-Kj-Xba"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="121.5" y="260"/>
+        </view>
+    </objects>
+</document>

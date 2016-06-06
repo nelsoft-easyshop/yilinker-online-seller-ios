@@ -38,12 +38,22 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="next-white" translatesAutoresizingMaskIntoConstraints="NO" id="xoP-t6-WIv">
+                        <rect key="frame" x="290" y="12" width="18" height="19"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="18" id="KIs-Xy-veL"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="bottom" secondItem="xoP-t6-WIv" secondAttribute="bottom" constant="12" id="GzW-KT-42K"/>
                     <constraint firstAttribute="trailing" secondItem="oCU-fe-caQ" secondAttribute="trailing" constant="8" id="QfB-so-R4T"/>
                     <constraint firstAttribute="bottom" secondItem="oCU-fe-caQ" secondAttribute="bottom" constant="6" id="cPK-Xn-AYa"/>
+                    <constraint firstAttribute="centerY" secondItem="xoP-t6-WIv" secondAttribute="centerY" id="ewH-dx-fvU"/>
                     <constraint firstItem="oCU-fe-caQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="h4j-fk-v6Q"/>
+                    <constraint firstItem="xoP-t6-WIv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="hPU-p5-hSL"/>
                     <constraint firstItem="oCU-fe-caQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="7" id="hrH-Fr-LTc"/>
+                    <constraint firstAttribute="trailing" secondItem="xoP-t6-WIv" secondAttribute="trailing" constant="12" id="sPh-d9-KO5"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -52,4 +62,7 @@
             </connections>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="next-white" width="22" height="22"/>
+    </resources>
 </document>

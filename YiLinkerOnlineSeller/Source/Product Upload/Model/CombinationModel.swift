@@ -19,10 +19,13 @@ class CombinationModel {
     var editedImages: [ServerUIImage] = []
     var imagesUrl: [String] = []
     var imagesId: [String] = []
+    var combiImagesName: [String] = []
     
     var weight: String = ""
     var height: String = ""
     var length: String = ""
     var width: String = ""
     var productUnitId: String = ""
+    var isAvailable: Bool = false
+    var isPrimaryPhoto: [Bool] = []
 }
