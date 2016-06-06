@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
             <string>Panton-Regular</string>
         </mutableArray>
     </customFonts>
@@ -26,30 +27,39 @@
                             <constraint firstAttribute="width" constant="14" id="CP3-qf-bwQ"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6eR-RT-aUL">
-                        <rect key="frame" x="16" y="11" width="321" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6eR-RT-aUL">
+                        <rect key="frame" x="16" y="11" width="250" height="21"/>
                         <animations/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="ooa-ua-5BN"/>
-                        </constraints>
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Translated" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P11-s9-6VK">
+                        <rect key="frame" x="274" y="11" width="63" height="21"/>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <animations/>
                 <constraints>
-                    <constraint firstAttribute="centerY" secondItem="6eR-RT-aUL" secondAttribute="centerY" id="2t4-PU-C5I"/>
-                    <constraint firstItem="vhQ-FX-0vI" firstAttribute="leading" secondItem="6eR-RT-aUL" secondAttribute="trailing" constant="8" id="4y0-yV-9sM"/>
+                    <constraint firstItem="P11-s9-6VK" firstAttribute="leading" secondItem="6eR-RT-aUL" secondAttribute="trailing" constant="8" id="Ge0-W8-yAv"/>
+                    <constraint firstAttribute="bottom" secondItem="P11-s9-6VK" secondAttribute="bottom" constant="11" id="aUx-23-LZM"/>
+                    <constraint firstAttribute="bottom" secondItem="6eR-RT-aUL" secondAttribute="bottom" constant="11" id="bWW-v1-SdJ"/>
+                    <constraint firstItem="vhQ-FX-0vI" firstAttribute="leading" secondItem="P11-s9-6VK" secondAttribute="trailing" constant="8" id="cQ8-NG-jvV"/>
                     <constraint firstAttribute="trailing" secondItem="vhQ-FX-0vI" secondAttribute="trailing" constant="16" id="dK7-gn-qM0"/>
-                    <constraint firstItem="6eR-RT-aUL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="jpH-ZB-I6n"/>
+                    <constraint firstItem="P11-s9-6VK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="dmA-c5-cU7"/>
                     <constraint firstAttribute="centerY" secondItem="vhQ-FX-0vI" secondAttribute="centerY" id="kIa-xy-bTS"/>
+                    <constraint firstItem="6eR-RT-aUL" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="n8e-EI-AWf"/>
+                    <constraint firstItem="P11-s9-6VK" firstAttribute="leading" secondItem="6eR-RT-aUL" secondAttribute="trailing" constant="8" id="qfW-kR-dwC"/>
+                    <constraint firstItem="6eR-RT-aUL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="uTy-Wu-Xkq"/>
                 </constraints>
             </tableViewCellContentView>
             <animations/>
             <connections>
                 <outlet property="cellTextLabel" destination="6eR-RT-aUL" id="1WP-Iq-nqG"/>
                 <outlet property="textLabel" destination="6eR-RT-aUL" id="9pR-Z4-axW"/>
+                <outlet property="typeTextLabel" destination="P11-s9-6VK" id="ptX-d8-Cb9"/>
             </connections>
             <point key="canvasLocation" x="352.5" y="324"/>
         </tableViewCell>

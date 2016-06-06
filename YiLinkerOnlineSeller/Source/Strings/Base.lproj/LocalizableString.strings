@@ -917,6 +917,26 @@ SETUP_STORE_EMAIL_ERROR_LOCALIZE_KEY = "Email composer is not available on your 
 SETUP_STORE_LINK_ERROR_LOCALIZE_KEY = "Store link must not contain special characters";
 SETUP_STORE_INCOMPLETE_ERROR_LOCALIZE_KEY = "Incomplete Information";
 
+//Language Translation
+TRANSLATION_TITLE = "Language Translation";
+TRANSLATION_TRANSLATED = "Translated";
+TRANSLATION_TRANSLATE_TO = "Translate to";
+TRANSLATION_SHORT_DESCRIPTION = "Short instruction for choosing a photo under this language. Lorem ipsum sit dolor amet/";
+TRANSLATION_DEFAULT_LANGUAGE = "Default Language";
+TRANSLATION_YOUR_TRANSLATION = "Your Translation";
+TRANSLATION_SAVE_TRANSLATION = "SAVE TRANSLATION";
+
+TRANSLATION_VARIANT_TITLE = "Product Variant Translation";
+TRANSLATION_VARIANT = "Variant";
+TRANSLATION_NO_VARIANTS = "No product variants available!";
+TRANSLATION_VARIANT_NAME = "Variant Name";
+TRANSLATION_VARIANT_VALUES = "Variant Values";
+TRANSLATION_VARIANT_VIEW_COMBINATION = "VIEW GENERATED COMBINATIONS";
+TRANSLATION_VARIANT_SAVE_TRANSLATION = "SAVE VARIANT TRANSLATION";
+
+TRANSLATION_COMBINATION_TITLE = "Product Combinations";
+TRANSLATION_COMBINATION = "Combination";
+
 // Country Store
 
 COUNTRY_STORE_TITLE_LOCALIZE_KEY = "Country Store";

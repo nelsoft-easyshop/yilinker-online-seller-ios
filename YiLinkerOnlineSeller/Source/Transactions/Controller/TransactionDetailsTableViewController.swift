@@ -251,7 +251,6 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         return headerView
     }
     
-    
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {           //Details
             return 264
@@ -649,8 +648,6 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         sectionHeader.removeAll(keepCapacity: false)
         self.fireGetTransactionDetails()
     }
-    
-    
     
     func formatDateToString(date: NSDate) -> String {
         var dateFormatter = NSDateFormatter()
