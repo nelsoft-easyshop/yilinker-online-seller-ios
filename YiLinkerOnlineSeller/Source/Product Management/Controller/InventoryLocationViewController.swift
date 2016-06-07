@@ -20,8 +20,8 @@ private struct Strings {
     static let logistics = StringHelper.localizedStringWithKey("INVENTORY_LOCATION_LOGISTICS_LOCALIZE_KEY")
     static let shippingCost = StringHelper.localizedStringWithKey("INVENTORY_LOCATION_SHIPPING_COST_LOCALIZE_KEY")
     static let saveInventoryLocation = StringHelper.localizedStringWithKey("INVENTORY_LOCATION_SAVE_INVENTORY_LOCATION_LOCALIZE_KEY")
-    static let yes = StringHelper.localizedStringWithKey("INVENTORY_LOCATION_SAVE_INVENTORY_LOCATION_LOCALIZE_KEY")
-    static let no = StringHelper.localizedStringWithKey("INVENTORY_LOCATION_SAVE_INVENTORY_LOCATION_LOCALIZE_KEY")
+    static let yes = StringHelper.localizedStringWithKey("INVENTORY_LOCATION_YES_LOCALIZE_KEY")
+    static let no = StringHelper.localizedStringWithKey("INVENTORY_LOCATION_NO_LOCALIZE_KEY")
     static let cannotProceed = StringHelper.localizedStringWithKey("CANNOT_PROCEED_LOCALIZE_KEY")
 }
 
