@@ -27,11 +27,13 @@ struct DashboardViewConstants {
     static let helpString = StringHelper.localizedStringWithKey("HELP_LOCALIZE_KEY")
     static let logoutString = StringHelper.localizedStringWithKey("LOGOUT_LOCALIZE_KEY")
     
+    static let warehouseString = StringHelper.localizedStringWithKey("WAREHOUSE_LOCALIZE_KEY")
+    
     static func getButtonTitles(isSeller: Bool) -> [String] {
         var titles: [String] = []
         
         if isSeller {
-            titles = [myStoreString, salesReportString, transactionsString, productManagementString, customizedCategoryString, uploadItemString, payout, followersString, activityLogsString, myPointsString, resolutionCenterString, helpString, logoutString]
+            titles = [myStoreString, salesReportString, transactionsString, productManagementString, customizedCategoryString, uploadItemString, payout, followersString, activityLogsString, myPointsString, resolutionCenterString, helpString, logoutString, warehouseString]
         } else {
             titles = [editProfileString, setupStoreString, salesReportString, transactionsString, productManagementString, customizedCategoryString, selectProduct, payout, followersString, activityLogsString, myPointsString, helpString, logoutString]
         }
@@ -43,7 +45,7 @@ struct DashboardViewConstants {
         var icons: [String] = []
         
         if isSeller {
-            icons = ["mystore", "report", "transaction", "product", "category", "uploadItem", "withdraw2", "followers", "activityLog", "points", "resolution", "help", "logout"]
+            icons = ["mystore", "report", "transaction", "product", "category", "uploadItem", "withdraw2", "followers", "activityLog", "points", "resolution", "help", "logout", "logout"]
         } else {
             icons = ["edit-profile", "mystore", "report", "transaction", "product", "category", "uploadItem", "withdraw2", "followers", "activityLog", "points", "help", "logout"]
         }
@@ -378,9 +380,13 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             }))
             alert.addAction(UIAlertAction(title: cancelString, style: .Cancel, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
+        } else if self.tableData[indexPath.row] == DashboardViewConstants.warehouseString {
+            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let warehouseVC: WarehouseListViewController = storyboard.instantiateViewControllerWithIdentifier("WarehouseListViewController") as! WarehouseListViewController
+            self.navigationController?.pushViewController(warehouseVC, animated: true)
         }
     }
-    
+
     //MARK: -
     //MARK: - API Requests
     func fireCreateRegistration(registrationID : String) {
