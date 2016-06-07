@@ -151,10 +151,10 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
             }
             
             if contains(self.selectedPrimaryPhoto, "\(indexPath.row)") && cell.starButton.tag != 1001{
-                cell.starButton.backgroundColor = UIColor.yellowColor()
+                cell.starButton.setImage(UIImage(named:"ic_selected_as_primary"), forState: UIControlState.Normal)
                 cell.starButton.tag = 1001
             } else {
-                cell.starButton.backgroundColor = UIColor.redColor()
+                cell.starButton.setImage(UIImage(named:"ic_unselected_as_primary"), forState: UIControlState.Normal)
             }
             
             cell.closeButton.hidden = false
