@@ -89,7 +89,6 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
     // TODO: - Add action to set the button checked
     
     func productUploadImageCollectionViewCell(didTapStarButtonAtCell cell: ProductUploadImageCollectionViewCell) {
-        cell.starButton.setBackgroundImage(UIImage(named: "active2"), forState: UIControlState.Normal)
         let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
         
         self.selectedPrimaryPhoto.removeAll(keepCapacity: false)
