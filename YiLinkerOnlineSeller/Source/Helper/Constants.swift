@@ -31,6 +31,7 @@ struct Constants {
         static let noInternetErrorMessage: String = StringHelper.localizedStringWithKey("CONNECTION_ERROR_MESSAGE_LOCALIZE_KEY")
         static let targetNotAvailable: String = StringHelper.localizedStringWithKey("TARGET_NOT_AVAILABLE")
         static let pageNotFound: String = StringHelper.localizedStringWithKey("PAGE_NOT_FOUND_LOCALIZE_KEY")
+        static let cannotProceed: String = StringHelper.localizedStringWithKey("CANNOT_PROCEED_LOCALIZE_KEY")
     }
 
     struct Colors {
@@ -79,6 +80,8 @@ struct Constants {
         static let completedColor: UIColor = HexaColor.colorWithHexa(0x4DB5A6)
         static let tentativeColor: UIColor = HexaColor.colorWithHexa(0x5181D4)
         static let inProgressColor: UIColor = HexaColor.colorWithHexa(0x717171)
+        
+        static let borderColor: UIColor = HexaColor.colorWithHexa(0xC8C8C8)
     }
     
     struct Credentials {

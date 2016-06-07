@@ -13,7 +13,7 @@ struct PUALTVConstant {
     static let pUAttributeSetHeaderTableViewCellNibNameAndIdentifier = "PUAttributeSetHeaderTableViewCell"
 }
 
-class ProductUploadAttributeListTableViewController: UIViewController, ProductUploadDetailTableViewControllerDelegate, ProductUploadAddFooterViewDelegate, PUAttributeSetHeaderTableViewCellDelegate {
+class ProductUploadAttributeListTableViewController: UIViewController, ProductUploadDetailTableViewControllerDelegate, ProductUploadAddFooterViewDelegate, PUAttributeSetHeaderTableViewCellDelegate, PUDetailsViewDelegate {
     
     // Buttons
     @IBOutlet weak var footerButton: UIButton!
@@ -48,10 +48,15 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
         self.tableView.rowHeight = UITableViewAutomaticDimension
         
         // Add tableview footer
+        
+        let addMoreTableViewFooter: PUDetailsView = XibHelper.puffViewWithNibName("PUDetailsView", index: 0) as! PUDetailsView
+        addMoreTableViewFooter.delegate = self
+        self.tableView.tableFooterView = addMoreTableViewFooter
+        /*
         let addMoreTableViewFooter: ProductUploadAddFooterView = XibHelper.puffViewWithNibName("ProductUploadAddFooterView", index: 0) as! ProductUploadAddFooterView
         addMoreTableViewFooter.delegate = self
         self.tableView.tableFooterView = addMoreTableViewFooter
-        
+        */
         self.changeButtonName()
     }
     
@@ -115,6 +120,14 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
     // MARK: ProductUploadAddFooterView Delegate methods
     // Calls ProductUploadDetailTableViewController
     func productUploadAddFooterView(didSelectAddMore view: UIView) {
+        // Add tableview footer
+        /*self.tableView.tableFooterView = nil
+        let addMoreTableViewFooter: ProductUploadAddFooterView = XibHelper.puffViewWithNibName("ProductUploadAddFooterView", index: 0) as! ProductUploadAddFooterView
+        addMoreTableViewFooter.addMoreButton.setTitle("Clicked", forState: UIControlState.Normal)
+        addMoreTableViewFooter.delegate = self
+        self.tableView.tableFooterView = addMoreTableViewFooter
+        //self.tableView.reloadData()
+        */
         let productUploadDetailViewController: ProductUploadDetailTableViewController = ProductUploadDetailTableViewController(nibName: "ProductUploadDetailTableViewController", bundle: nil)
         productUploadDetailViewController.delegate = self
         self.navigationController!.pushViewController(productUploadDetailViewController, animated: true)
@@ -274,6 +287,22 @@ class ProductUploadAttributeListTableViewController: UIViewController, ProductUp
         productUploadDetailViewController.delegate = self
         productUploadDetailViewController.productModel = self.productModel.copy()
         self.navigationController!.pushViewController(productUploadDetailViewController, animated: true)
+    }
+    
+    func puDetailsView(text: String) {
+        println(text)
+    }
+    
+    func puDetailsView(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath, productModel: ProductModel) {
+        
+    }
+    
+    func puDetailsView(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath) {
+        
+    }
+    
+    func puDetailsView(didPressCancelButtonWithAttributes productModel: ProductModel, indexPath: NSIndexPath) {
+        
     }
         
     // Dealloc

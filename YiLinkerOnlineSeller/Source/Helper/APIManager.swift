@@ -30,125 +30,133 @@ struct APIAtlas {
     
     static let V3 = "v3"
     
-    static let loginUrl = "v1/login"
-    static let refreshTokenUrl = "v1/login"
-    static let registerUrl = "v1/user/register"
-    static let conditionUrl = "v1/product/getProductConditions"
-    static let categoryUrl = "v1/product/getCategories"
-    static let brandUrl = "v1/product/getBrands"
-    static let uploadUrl = "v1/product/upload"
-    static let getProductDetails = "v1/product/upload-details"
-    static let sellerStoreInfo = "v1/auth/merchant/getUserInfo"
-    static let sellerBankAccountList = "v1/auth/bank/account/getBankAccounts"
-    static let sellerAddBankAccount = "v1/auth/bank/account/addBankAccount"
-    static let sellerDeleteBankAccount = "v1/auth/bank/account/deleteBankAccount"
-    static let sellerSetDefaultBankAccount = "v1/auth/bank/account/setDefaultBankAccount"
-    static let sellerStoreAddresses = "v1/auth/address/getUserAddresses"
-    static let sellerSetDefaultStoreAddress = "v1/auth/address/setDefaultAddress"
-    static let sellerDeleteStoreAddress = "v1/auth/address/deleteUserAddress"
-    static let transactionList = "v1/auth/getTransactionList"
-    static let transactionDetails = "v1/auth/getTransaction"
-    static let orderProductDetails = "v1/auth/getOrderProductDetail"
-    static let transactionCancellation = "v1/auth/cancellation/reasons"
-    static let transactionConsignee = "v1/auth/getTransactionConsignee"
-    static let postTransactionCancellation = "v1/auth/transaction/cancel"
-    static let shipItem = "v1/auth/transaction/pickup"
-    static let sellerChangeMobileNumber = "v1/auth/user/changeContactNumber"
-    static let sellerResendVerification = "v1/auth/sms/getCode?access_token="
-    static let sellerMobileNumberVerification = "v1/auth/sms/verify"
-    static let sellerChangePassword = "v1/auth/user/changePassword"
-    static let sellerUpdateSellerInfo = "v1/auth/merchant/updateUserInfo"
-    static let sellerGenerateQrCode = "v1/auth/merchant/getQrCode"
-    static let getCustomizedCategories   = "v1/category/getCustomCategories"           // Applied
-    static let getCategoryDetails        = "v1/category/getCategoryDetails"            // Applied
-    static let editCustomizedCategory    = "v1/auth/category/updateCustomCategory"
-    static let addCustomizedCategory     = "v1/auth/category/addCustomCategory"        // Applied
-    static let deleteCustomizedCategory  = "v1/auth/category/deleteCustomCategory"     // Applied
-    static let sortParentCategory        = "v1/auth/category/sortParentCategories"
-    static let checkIfCategoryNameExists = "v1/auth/category/checkIfCategoryExists"
-    static let getAllCategoryProducts    = "v1/auth/category/getAllCategoryProducts"
+    static let loginUrl = APIAtlas.generateV3URL("login")
+    static let refreshTokenUrl = APIAtlas.generateV3URL("login")
+    static let registerUrl = APIAtlas.generateV3URL("user/register")
+    static let categoryUrl = APIAtlas.generateV3URL("product/getCategories")
+    static let brandUrl = APIAtlas.generateV3URL("product/getBrands")
+    static let uploadUrl = APIAtlas.generateV3URL("product/upload")
+    static let getProductDetails = APIAtlas.generateV3URL("auth/product/get-upload-details")
+    static let sellerStoreInfo = APIAtlas.generateV3URL("auth/merchant/getUserInfo")
+    static let sellerBankAccountList = APIAtlas.generateV3URL("auth/bank/account/getBankAccounts")
+    static let sellerAddBankAccount = APIAtlas.generateV3URL("auth/bank/account/addBankAccount")
+    static let sellerDeleteBankAccount = APIAtlas.generateV3URL("auth/bank/account/deleteBankAccount")
+    static let sellerSetDefaultBankAccount = APIAtlas.generateV3URL("auth/bank/account/setDefaultBankAccount")
+    static let sellerStoreAddresses = APIAtlas.generateV3URL("auth/address/getUserAddresses")
+    static let sellerSetDefaultStoreAddress = APIAtlas.generateV3URL("auth/address/setDefaultAddress")
+    static let sellerDeleteStoreAddress = APIAtlas.generateV3URL("auth/address/deleteUserAddress")
+    static let transactionList = APIAtlas.generateV3URL("auth/getTransactionList")
+    static let transactionDetails = APIAtlas.generateV3URL("auth/getTransaction")
+    static let orderProductDetails = APIAtlas.generateV3URL("auth/getOrderProductDetail")
+    static let transactionCancellation = APIAtlas.generateV3URL("auth/cancellation/reasons")
+    static let transactionConsignee = APIAtlas.generateV3URL("auth/getTransactionConsignee")
+    static let postTransactionCancellation = APIAtlas.generateV3URL("auth/transaction/cancel")
+    static let shipItem = APIAtlas.generateV3URL("auth/transaction/pickup")
+    static let sellerChangeMobileNumber = APIAtlas.generateV3URL("auth/user/changeContactNumber")
+    static let sellerResendVerification = APIAtlas.generateV3URL("auth/sms/getCode?access_token=")
+    static let sellerMobileNumberVerification = APIAtlas.generateV3URL("auth/sms/verify")
+    static let sellerChangePassword = APIAtlas.generateV3URL("auth/user/changePassword")
+    static let sellerUpdateSellerInfo = APIAtlas.generateV3URL("auth/merchant/updateUserInfo")
+    static let sellerGenerateQrCode = APIAtlas.generateV3URL("auth/merchant/getQrCode")
+    static let getCustomizedCategories   = APIAtlas.generateV3URL("category/getCustomCategories")           // Applied
+    static let getCategoryDetails        = APIAtlas.generateV3URL("category/getCategoryDetails")            // Applied
+    static let editCustomizedCategory    = APIAtlas.generateV3URL("auth/category/updateCustomCategory")
+    static let addCustomizedCategory     = APIAtlas.generateV3URL("auth/category/addCustomCategory")        // Applied
+    static let deleteCustomizedCategory  = APIAtlas.generateV3URL("auth/category/deleteCustomCategory")     // Applied
+    static let sortParentCategory        = APIAtlas.generateV3URL("auth/category/sortParentCategories")
+    static let checkIfCategoryNameExists = APIAtlas.generateV3URL("auth/category/checkIfCategoryExists")
+    static let getAllCategoryProducts    = APIAtlas.generateV3URL("auth/category/getAllCategoryProducts")
+    
+    static let conditionUrl = APIAtlas.generateV3URL("product/get-product-conditions")
+    static let shippingCategoriesUrl = APIAtlas.generateV3URL("product/get-shipping-categories")
+    static let productGroupsUrl = APIAtlas.generateV3URL("auth/product/get-product-groups")
+    static let productBrandsUrl = APIAtlas.generateV3URL("product/get-brands")
+    static let uploadImagesUrl = APIAtlas.generateV3URL("auth/image/upload")
+    static let uploadProductUrl = APIAtlas.generateV3URL("auth/product/create")
+    static let uploadProductEditUrl = APIAtlas.generateV3URL("auth/product/edit")
     
     static let managementGetProductList = APIAtlas.generateV3URL("auth/product/getProductList")
-    static let managementUpdateProductStatus = "v1/auth/product/updateProductStatus"
-    static let editAddress = "v1/auth/address/editUserAddress"
-    static let provinceUrl = "v1/location/getAllProvinces"
-    static let citiesUrl = "v1/location/getChildCities"
-    static let barangay = "v1/location/getBarangaysByCity"
-    static let addAddressUrl = "v1/auth/address/addNewAddress"
-    static let sellerBank = "v1/auth/bank/getEnabledBanks"
-    static let sellerEditBankAccount = "v1/auth/bank/account/editBankAccount"
+    static let managementUpdateProductStatus = APIAtlas.generateV3URL("auth/product/updateProductStatus")
+    static let editAddress = APIAtlas.generateV3URL("auth/address/editUserAddress")
+    static let provinceUrl = APIAtlas.generateV3URL("location/getAllProvinces")
+    static let citiesUrl = APIAtlas.generateV3URL("location/getChildCities")
+    static let barangay = APIAtlas.generateV3URL("location/getBarangaysByCity")
+    static let addAddressUrl = APIAtlas.generateV3URL("auth/address/addNewAddress")
+    static let sellerBank = APIAtlas.generateV3URL("auth/bank/getEnabledBanks")
+    static let sellerEditBankAccount = APIAtlas.generateV3URL("auth/bank/account/editBankAccount")
+    
     
     //My Points
     static let getPointsTotal = APIAtlas.generateV3URL("auth/user/getPoints")
     static let getPointsHistory =  APIAtlas.generateV3URL("auth/user/getPointHistory")
     
-    static let getSalesReport = "v1/auth/merchant/getSalesReport"
-    static let getFollowers = "v1/auth/merchant/getFollowers"
+    static let getSalesReport = APIAtlas.generateV3URL("auth/merchant/getSalesReport")
+    static let getFollowers = APIAtlas.generateV3URL("auth/merchant/getFollowers")
     
-    static let getActivityLogs = "v1/auth/user/activityLog"
+    static let getActivityLogs = APIAtlas.generateV3URL("auth/user/activityLog")
     
-    static let getDeliveryLogs = "v1/auth/getTransactionDeliveryLogs"
+    static let getDeliveryLogs = APIAtlas.generateV3URL("auth/getTransactionDeliveryLogs")
     
-    static let postEmailNotif = "v1/auth/email/subscription"
-    static let postSMSNotif = "v1/auth/sms/subscription"
-    static let deactivate = "v1/auth/account/disable"
+    static let postEmailNotif = APIAtlas.generateV3URL("auth/email/subscription")
+    static let postSMSNotif = APIAtlas.generateV3URL("auth/sms/subscription")
+    static let deactivate = APIAtlas.generateV3URL("auth/account/disable")
     
     //Search
-    static let transaction = "v1/auth/transaction/searchKeyword?access_token="
-    static let searchNameSuggestion = "v1/auth/product/name-suggestion?access_token="
-    static let searchRiderSuggestion = "v1/auth/suggestPackageHandler?access_token="
-    static let transactionLogs = "v1/auth/getTransactionList?access_token="
+    static let transaction = APIAtlas.generateV3URL("auth/transaction/searchKeyword?access_token=")
+    static let searchNameSuggestion = APIAtlas.generateV3URL("auth/product/name-suggestion?access_token=")
+    static let searchRiderSuggestion = APIAtlas.generateV3URL("auth/suggestPackageHandler?access_token=")
+    static let transactionLogs = APIAtlas.generateV3URL("auth/getTransactionList?access_token=")
     
     //Resolution Center
-    static let getResolutionCenterCases = "v1/auth/dispute/get-case"
-    static let getResolutionCenterCaseDetails = "v1/auth/dispute/get-case-detail"
-    static let resolutionCenterProductListUrl = "v1/auth/getTransactionList"
-    static let resolutionCenterGetTransactionItems = "v1/auth/getTransaction"
-    static let resolutionCenterAddCaseUrl = "v1/auth/dispute/add-case"
-    static let resolutionCenterReasons = "v1/auth/dispute/get-seller-reasons?access_token="
+    static let getResolutionCenterCases = APIAtlas.generateV3URL("auth/dispute/get-case")
+    static let getResolutionCenterCaseDetails = APIAtlas.generateV3URL("auth/dispute/get-case-detail")
+    static let resolutionCenterProductListUrl = APIAtlas.generateV3URL("auth/getTransactionList")
+    static let resolutionCenterGetTransactionItems = APIAtlas.generateV3URL("auth/getTransaction")
+    static let resolutionCenterAddCaseUrl = APIAtlas.generateV3URL("auth/dispute/add-case")
+    static let resolutionCenterReasons = APIAtlas.generateV3URL("auth/dispute/get-seller-reasons?access_token=")
     //Reseller
-    static let resellerUrl = "v1/auth/reseller/products"
-    static let resellerUploadUrl = "v1/auth/reseller/upload"
+    static let resellerUrl = APIAtlas.generateV3URL("auth/reseller/products")
+    static let resellerUploadUrl = APIAtlas.generateV3URL("auth/reseller/upload")
     
     static let baseUrl = APIEnvironment.baseUrl()
     
-    static let uploadDraftUrl = "v1/product/upload/draft"
-    static let uploadEditUrl = "v1/product/edit"
+    static let uploadDraftUrl = APIAtlas.generateV3URL("product/upload/draft")
+    static let uploadEditUrl = APIAtlas.generateV3URL("product/edit")
     
     /* MESSAGING CONSTANTS */
-    static let ACTION_SEND_MESSAGE          = "v1/message/sendMessage"
-    static let ACTION_GET_CONVERSATION_HEAD = "v1/message/getConversationHead"
-    static let ACTION_GET_CONTACTS          = "v1/message/getContacts"
-    static let ACTION_GET_CONVERSATION_MESSAGES = "v1/message/getConversationMessages"
-    static let ACTION_SET_AS_READ           = "v1/message/setConversationAsRead"
-    static let ACTION_IMAGE_ATTACH          = "v1/message/imageAttach"
-    static let ACTION_GCM_CREATE            = "v1/auth/device/addRegistrationId"
-    static let ACTION_GCM_DELETE            = "v1/auth/device/deleteRegistrationId"
-    static let ACTION_GCM_UPDATE            = "v1/device/auth/updateRegistrationId"
+    static let ACTION_SEND_MESSAGE          = APIAtlas.generateV3URL("message/sendMessage")
+    static let ACTION_GET_CONVERSATION_HEAD = APIAtlas.generateV3URL("message/getConversationHead")
+    static let ACTION_GET_CONTACTS          = APIAtlas.generateV3URL("message/getContacts")
+    static let ACTION_GET_CONVERSATION_MESSAGES = APIAtlas.generateV3URL("message/getConversationMessages")
+    static let ACTION_SET_AS_READ           = APIAtlas.generateV3URL("message/setConversationAsRead")
+    static let ACTION_IMAGE_ATTACH          = APIAtlas.generateV3URL("message/imageAttach")
+    static let ACTION_GCM_CREATE            = APIAtlas.generateV3URL("auth/device/addRegistrationId")
+    static let ACTION_GCM_DELETE            = APIAtlas.generateV3URL("auth/device/deleteRegistrationId")
+    static let ACTION_GCM_UPDATE            = APIAtlas.generateV3URL("device/auth/updateRegistrationId")
     static let uploadFileType = "jpeg"
     
     // Sprint1
-    static let getBalanceRecordDetails = "v1/auth/bank/balanceRecordDetails"
-    static let OTPAuth = "v2/auth/sms/send"
-    static let submitWithdrawalRequest = "v1/auth/withdrawal-request"
+    static let getBalanceRecordDetails = APIAtlas.generateV3URL("auth/bank/balanceRecordDetails")
+    static let OTPAuth = APIAtlas.generateV3URL("auth/sms/send")
+    static let submitWithdrawalRequest = APIAtlas.generateV3URL("auth/withdrawal-request")
     
     // Payout
-    static let payoutRequestList = "v1/auth/withdraw-list?access_token="
-    static let payoutEarningsGroup = "v1/auth/earning-groups?access_token="
-    static let payoutEarningsList = "v1/auth/earning-list?access_token="
+    static let payoutRequestList = APIAtlas.generateV3URL("auth/withdraw-list?access_token=")
+    static let payoutEarningsGroup = APIAtlas.generateV3URL("auth/earning-groups?access_token=")
+    static let payoutEarningsList = APIAtlas.generateV3URL("auth/earning-list?access_token=")
     
     //MARK: - V2 APIs
     
     //Login
     static let loginUrlV2 = APIAtlas.generateV3URL("login")
     //OTP
-    static let unauthenticateOTP = "v2/sms/send"
+    static let unauthenticateOTP = APIAtlas.generateV3URL("sms/send")
     
     //Register
-    static let registerV2 = "v2/user/register"
+    static let registerV2 = APIAtlas.generateV3URL("user/register")
     
     //Fogot Password
-    static let forgotPasswordV2 = "v2/user/resetPassword"
+    static let forgotPasswordV2 = APIAtlas.generateV3URL("user/resetPassword")
     
     //Edit Profile
     static let sendEmailVerificationAffiliate = APIAtlas.generateV3URL("auth/affiliate/verify-email")
@@ -163,11 +171,11 @@ struct APIAtlas {
     //Affiliate Store Setup
     static let affiliateStoreSetupUrl = APIAtlas.generateV3URL("auth/store/setup")
     
-    static let affiliateGetProduct = "v1/auth/product/getAffiliateProducts"
+    static let affiliateGetProduct = APIAtlas.generateV3URL("auth/product/getAffiliateProducts")
     
-    static let affiliateSaveOrRemoveProductUrl = "v1/auth/product/saveAffiliateProducts"
+    static let affiliateSaveOrRemoveProductUrl = APIAtlas.generateV3URL("auth/product/saveAffiliateProducts")
     
-    static let affiliateGetCategories = "v1/auth/product/getCategories"
+    static let affiliateGetCategories = APIAtlas.generateV3URL("auth/product/getCategories")
     
     static func mobileFeedBack() -> String {
         if SessionManager.isLoggedIn() {
@@ -177,6 +185,10 @@ struct APIAtlas {
         }
     }
     
+    //Product Language Translation
+    static let productLanguages = APIAtlas.generateV3URL("auth/product/get-languages")
+    static let productTranslation = "auth/product/get-translation"
+    static let translateProduct = "auth/product/translate"
     
     static func generateV3URL(url: String) -> String {
         return "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"

@@ -29,6 +29,7 @@ enum CustomizeShoppingType {
 enum ProductTextFieldType {
     case Brand
     case Category
+    case ShippingCategory
     case Condition
     case ProductName
     case ProductShortDescription
@@ -36,10 +37,11 @@ enum ProductTextFieldType {
     case ProductSKU
     case ProductRetailPrice
     case ProductDiscountPrice
-    case ProductLenght
+    case ProductLength
     case ProductWidth
     case ProductWeight
     case ProductHeight
+    case ProductGroup
 }
 
 enum AddressRefreshType {
@@ -153,6 +155,15 @@ enum UploadImageStatus {
     case NoPhoto
     case UploadError
     case UploadSuccess
+}
+
+enum UploadProduct {
+    case ProductConditions
+    case ShippingCategory
+    case ProductCategory
+    case ProductGroups
+    case ProductMainImages
+    case ProductUpload
 }
 
 enum SetupStoreRefreshType {

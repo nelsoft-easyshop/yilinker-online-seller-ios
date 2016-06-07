@@ -31,6 +31,9 @@ private struct ManagementStrings {
     static let modalTitle2 = StringHelper.localizedStringWithKey("MANAGEMENT_MODAL_TITLE2_LOCALIZE_KEY")
     static let modalSubtitle = StringHelper.localizedStringWithKey("MANAGEMENT_MODAL_SUBTITLE_LOCALIZE_KEY")
     static let modalSubtitle2 = StringHelper.localizedStringWithKey("MANAGEMENT_MODAL_SUBTITLE2_LOCALIZE_KEY")
+    
+    static let stores = StringHelper.localizedStringWithKey("MANAGEMENT_STORES_LOCALIZE_KEY")
+    static let language = StringHelper.localizedStringWithKey("MANAGEMENT_LANGUAGE_LOCALIZE_KEY")
 }
 
 struct Status {
@@ -620,14 +623,15 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
             cell.subTitleLabel.text = self.productModel.products[indexPath.row].category
             cell.setStatus(self.productModel.products[indexPath.row].status)
+            println("\(self.productModel.products[indexPath.row].name) -- \(self.productModel.products[indexPath.row].status)")
             
             if selectedIndex == 5 {
                 cell.statusLabel.hidden = true
             } else {
                 cell.statusLabel.hidden = false
-                cell.setCountries(flags)
-                cell.setLanguages(languages)
-//                cell.setCountriesAndLanguages(self.productModel.products[indexPath.row])
+//                cell.setCountries(flags)
+//                cell.setLanguages(languages)
+                cell.setCountriesAndLanguages(self.productModel.products[indexPath.row])
             }
             
             if SessionManager.isReseller() {
@@ -658,18 +662,6 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
             cell.subTitleLabel.text = self.productModel.products[indexPath.row].category
             cell.setCountriesAndLanguages(self.productModel.products[indexPath.row])
-//            if selectedIndex == 3 {
-//                cell.arrowImageView.hidden = true
-//                cell.decreaseAlpha()
-//            } else {
-//                cell.arrowImageView.hidden = false
-//            }
-            
-//            if selectedIndex == 5 {
-//                cell.checkTapView.hidden = true
-//            } else {
-//                cell.checkTapView.hidden = false
-//            }
             
             return cell
         }
@@ -787,12 +779,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             if selectedIndex == 1 {
                 self.activeInactiveLabel.text = ManagementStrings.moveInactive
             } else {
-//                if SessionManager.isReseller() {
-//                    self.activeInactiveView.backgroundColor = .grayColor()
-//                } else {
-                    self.activeInactiveLabel.text = ManagementStrings.moveActive
-//                }
-//                self.activeInactiveView.backgroundColor = .grayColor()
+                self.activeInactiveLabel.text = ManagementStrings.moveActive
             }
             
             self.deleteView.hidden = true

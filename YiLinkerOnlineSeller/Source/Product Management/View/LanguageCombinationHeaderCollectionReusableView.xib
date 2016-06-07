@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LanguageCombinationHeaderCollectionReusableView" id="U6b-Vx-4bR" customClass="LanguageCombinationHeaderCollectionReusableView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Variant 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cx5-Wz-EP8">
+                    <rect key="frame" x="16" y="10" width="343" height="21"/>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Cx5-Wz-EP8" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="10" id="0v7-Ua-4tR"/>
+                <constraint firstItem="Cx5-Wz-EP8" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="16" id="gaw-9y-Yim"/>
+                <constraint firstAttribute="bottom" secondItem="Cx5-Wz-EP8" secondAttribute="bottom" constant="9" id="qn0-yh-YwJ"/>
+                <constraint firstAttribute="trailing" secondItem="Cx5-Wz-EP8" secondAttribute="trailing" constant="16" id="xJl-dH-zbM"/>
+            </constraints>
+        </collectionReusableView>
+    </objects>
+</document>

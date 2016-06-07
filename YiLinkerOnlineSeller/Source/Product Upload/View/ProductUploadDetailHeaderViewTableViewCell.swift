@@ -50,7 +50,13 @@ class ProductUploadDetailHeaderViewTableViewCell: UITableViewCell, UITextFieldDe
     
     func textFieldDidEndEditing(textField: UITextField) {
         if !edited {
-            self.delegate?.productUploadDetailHeaderViewTableViewCell(didEndEditing: self, text: self.cellTextField.text)
+            
         }
+        self.delegate?.productUploadDetailHeaderViewTableViewCell(didEndEditing: self, text: self.cellTextField.text)
+    }
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        self.delegate?.productUploadDetailHeaderViewTableViewCell(didEndEditing: self, text: self.cellTextField.text)
+        
+        return true
     }
 }

@@ -89,6 +89,12 @@ class WebServiceManager: NSObject {
     //GCM
     static let deviceTypeKey = "deviceType"
     
+    //Translation
+    static let shortDescriptionKey = "shortDescription"
+    static let productImagesKey = "productImages"
+    static let productVariantsKey = "productVariants"
+    
+    
     // MARK: - CALLS
     // MARK: - Post Request With Url
     // This function is for removing repeated codes in handler
@@ -357,7 +363,7 @@ class WebServiceManager: NSObject {
                 constructingBodyWithBlock: { (formData: AFMultipartFormData!) -> Void in
                     
                     for (index, datum) in enumerate(data) {
-                        formData.appendPartWithFileData(datum, name: "images[]", fileName: "\(index)", mimeType: "image/jpeg")
+                        formData.appendPartWithFileData(datum, name: "image[]", fileName: "\(index)", mimeType: "image/jpeg")
                     }
                     
                 }, success: { (task, responseObject) -> Void in
@@ -386,6 +392,46 @@ class WebServiceManager: NSObject {
                     }
             })
             
+        } else {
+            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        }
+    }
+    
+    //MARK: - Post Request With Image
+    //This function is for removing repeated codes in handler
+    private static func firePostRequestWithImageProductUpload(url: String, parameters: AnyObject, image: UIImage, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        //let manager = APIManager.sharedInstance
+        let manager = APIManager.sharedInstance
+        if Reachability.isConnectedToNetwork() {
+            manager.POST(url, parameters: parameters,
+                constructingBodyWithBlock: { (formData: AFMultipartFormData!) -> Void in
+                    formData.appendPartWithFileData(UIImageJPEGRepresentation(image, 1.0), name: "image", fileName: "main_product_image", mimeType: "image/JPEG")
+                }, success: { (task, responseObject) -> Void in
+                    actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
+                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
+                    if let task = task.response as? NSHTTPURLResponse {
+                        println(error)
+                        if error.userInfo != nil {
+                            //Request is successful but encounter error in server
+                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
+                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
+                            //Page not found
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
+                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
+                            //Request Timeout
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
+                        } else if task.statusCode == Constants.WebServiceStatusCode.expiredAccessToken {
+                            //The accessToken is already expired
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .AccessTokenExpired)
+                        } else {
+                            //Unrecognized error, this is a rare case.
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
+                        }
+                    } else {
+                        //No internet connection
+                        actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+                    }
+            })
         } else {
             actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
         }
@@ -567,6 +613,12 @@ class WebServiceManager: NSObject {
         }
     }
     
+    class func fireGetProductUploadV3RequestWithUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        self.fireGetRequestWithUrl(url, parameters: []) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
     class func fireGetProductUploadRequestWithUrl(url: String, parameters: NSDictionary, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         self.fireGetRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
@@ -577,6 +629,15 @@ class WebServiceManager: NSObject {
         self.firePostRequestWithMultipleImage(url, parameters: parameters, data: data) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
+    }
+    
+    class func fireProductUploadImageRequestWithUrlV2(url: String, parameters: NSDictionary, image: UIImage, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        self.firePostRequestWithImageProductUpload(url, parameters: parameters, image: image) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        /*self.firePostRequestWithMultipleImage(url, parameters: parameters, data: data) { (successful, responseObject, requestErrorType) -> Void in
+        actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }*/
     }
 
     // MARK: - Activity Logs
@@ -975,6 +1036,40 @@ class WebServiceManager: NSObject {
         }
     }
     
+    // MARK: -
+    // MARK: - Language Translation
+    // MARK: - Get Product Languages
+    class func fireGetProductLanguageRequestWithUrl(url: String, productId: String, access_token: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        let parameters: NSDictionary = [self.productIdKey : productId, self.accessTokenKey : access_token]
+        
+        self.fireGetRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: - Get Product Languages
+    class func fireGetProductTranslationRequestWithUrl(url: String, productId: String, access_token: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        let parameters: NSDictionary = [self.productIdKey : productId, self.accessTokenKey : access_token]
+        
+        self.fireGetRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: - Save Language Translation
+    class func firePostTranslate(url: String, productId: String, name: String, shortDescription: String, description: String, productImages: AnyObject, productVariants: AnyObject, access_token: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        let parameters = [self.productIdKey: "\(productId)", self.nameKey: "\(name)", self.shortDescriptionKey: "\(shortDescription)", self.descriptionKey: "\(description)", self.productImagesKey: "\(productImages)", self.productVariantsKey: "\(productVariants)"]
+        
+        self.firePostRequestWithUrl("\(url)?access_token=\(access_token)", parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            println(responseObject)
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+
+    
     // MARK: - List of Countries
     
     class func fireGetListOfCountries(url: String, productId: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
@@ -1014,6 +1109,6 @@ class WebServiceManager: NSObject {
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
-    
+
 }
 

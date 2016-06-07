@@ -12,6 +12,11 @@ protocol ProductManagementTableViewCellDelegate {
     func updateSelectedItems(index: Int, selected: Bool)
 }
 
+private struct Strings {
+    static let stores = StringHelper.localizedStringWithKey("MANAGEMENT_STORES_LOCALIZE_KEY")
+    static let language = StringHelper.localizedStringWithKey("MANAGEMENT_LANGUAGE_LOCALIZE_KEY")
+}
+
 class ProductManagementTableViewCell: UITableViewCell {
 
     @IBOutlet weak var checkTapView: UIView!
@@ -50,6 +55,10 @@ class ProductManagementTableViewCell: UITableViewCell {
     }
     
     func costumizeVies() {
+        
+        storesLabel.text = Strings.stores + " :"
+        languageLabel.text = Strings.language + " :"
+        
         checkContainerView.layer.cornerRadius = 4.0
         checkTapView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "checkAction:"))
     }

@@ -17,12 +17,13 @@ class PayoutRequestListModel: NSObject {
     var netAmount: String = ""
     var currencyCode: String = ""
     var status: String = ""
+    var statusId: Int = 0
     var payTo: String = ""
     var bankName: String = ""
     var accountNumber: String = ""
     var accountName: String = ""
     
-    init(date: String, withdrawalMethod: String, totalAmount: String, charge: String, netAmount: String, currencyCode: String, status: String, payTo: String, bankName: String, accountNumber: String, accountName: String) {
+    init(date: String, withdrawalMethod: String, totalAmount: String, charge: String, netAmount: String, currencyCode: String, status: String,statusId: Int, payTo: String, bankName: String, accountNumber: String, accountName: String) {
         self.date = date
         self.withdrawalMethod = withdrawalMethod
         self.totalAmount = totalAmount
@@ -30,6 +31,7 @@ class PayoutRequestListModel: NSObject {
         self.netAmount = netAmount
         self.currencyCode = currencyCode
         self.status = status
+        self.statusId = statusId
         self.payTo = payTo
         self.bankName = bankName
         self.accountName = accountName
@@ -47,6 +49,7 @@ class PayoutRequestListModel: NSObject {
         var netAmount: String = ""
         var currencyCode: String = ""
         var status: String = ""
+        var statusId: Int = 0
         var payTo: String = ""
         var bankName: String = ""
         var accountNumber: String = ""
@@ -64,12 +67,13 @@ class PayoutRequestListModel: NSObject {
                         netAmount = ParseHelper.string(subValue, key: "netAmount", defaultValue: "")
                         currencyCode = ParseHelper.string(subValue, key: "currencyCode", defaultValue: "")
                         status = ParseHelper.string(subValue, key: "status", defaultValue: "")
+                        statusId = ParseHelper.int(subValue, key: "statusId", defaultValue: 0)
                         payTo = ParseHelper.string(subValue, key: "payTo", defaultValue: "")
                         bankName = ParseHelper.string(subValue, key: "bankName", defaultValue: "")
                         accountNumber = ParseHelper.string(subValue, key: "accountNumber", defaultValue: "")
                         accountName = ParseHelper.string(subValue, key: "accountName", defaultValue: "")
                         
-                        payoutRequestListModel.append(PayoutRequestListModel(date: date, withdrawalMethod: withdrawalMethod, totalAmount: totalAmount, charge: charge, netAmount: netAmount, currencyCode: currencyCode, status: status, payTo: payTo, bankName: bankName, accountNumber: accountNumber, accountName: accountName))
+                        payoutRequestListModel.append(PayoutRequestListModel(date: date, withdrawalMethod: withdrawalMethod, totalAmount: totalAmount, charge: charge, netAmount: netAmount, currencyCode: currencyCode, status: status, statusId: statusId, payTo: payTo, bankName: bankName, accountNumber: accountNumber, accountName: accountName))
                     }
                 }
             }

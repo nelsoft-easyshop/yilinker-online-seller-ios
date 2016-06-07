@@ -7,6 +7,7 @@
     <customFonts key="customFonts">
         <mutableArray key="Panton.otf">
             <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -20,9 +21,8 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product name*" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bcn-aJ-Xd5">
-                        <rect key="frame" x="13" y="8" width="127" height="21"/>
+                        <rect key="frame" x="13" y="8" width="299" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="127" id="bc2-iy-aJR"/>
                             <constraint firstAttribute="height" constant="21" id="rZA-af-bNY"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
@@ -34,12 +34,13 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="e2g-Nu-ugz"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
                         <textInputTraits key="textInputTraits" returnKeyType="done"/>
                     </textField>
                 </subviews>
                 <constraints>
                     <constraint firstItem="6f3-n7-MVM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="8V9-9r-Dlf"/>
+                    <constraint firstAttribute="trailing" secondItem="Bcn-aJ-Xd5" secondAttribute="trailing" constant="8" id="Rok-b6-kSJ"/>
                     <constraint firstAttribute="bottomMargin" secondItem="6f3-n7-MVM" secondAttribute="bottom" constant="2" id="T5s-p8-ebT"/>
                     <constraint firstItem="Bcn-aJ-Xd5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="Wms-h1-ymb"/>
                     <constraint firstItem="Bcn-aJ-Xd5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="d28-82-DcZ"/>

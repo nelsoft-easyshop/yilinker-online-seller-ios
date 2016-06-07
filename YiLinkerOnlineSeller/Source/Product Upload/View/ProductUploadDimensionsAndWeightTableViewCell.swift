@@ -8,6 +8,11 @@
 
 import UIKit
 
+// Constant
+struct ProductUploadDimensionsAndWeightTableViewCellConstant {
+    static let productUploadDimensionsAndWeightTableViewCellNibAndIdentifier = "ProductUploadDimensionsAndWeightTableViewCell"
+}
+
 // MARK: Delegate
 // ProductUploadDimensionsAndWeightTableViewCell Delegate methods
 protocol ProductUploadDimensionsAndWeightTableViewCellDelegate {
@@ -58,8 +63,10 @@ class ProductUploadDimensionsAndWeightTableViewCell: UITableViewCell, UITextFiel
         // Configure the view for the selected state
     }
     
-    // MARK: Provate methods
+    // MARK: -
+    // MARK: - Private methods
     // Add textfield delegate actions
+  
     func addTextFieldDelegate() {
         self.heightTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         self.heightTextField.delegate = self
@@ -71,7 +78,9 @@ class ProductUploadDimensionsAndWeightTableViewCell: UITableViewCell, UITextFiel
         self.lengthTextField.delegate = self
     }
     
-    // MARK: Textfield data source methods
+    // MARK: -
+    // MARK: - Textfield data source methods
+    
     func textFieldDidChange(sender: UITextField) {
         self.delegate!.productUploadDimensionsAndWeightTableViewCell(textFieldDidChange: sender, text: sender.text, cell: self)
     }

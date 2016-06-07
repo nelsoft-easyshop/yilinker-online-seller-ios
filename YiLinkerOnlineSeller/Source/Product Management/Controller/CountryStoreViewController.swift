@@ -8,6 +8,11 @@
 
 import UIKit
 
+struct CountryStoreStrings {
+    static let title = StringHelper.localizedStringWithKey("COUNTRY_STORE_TITLE_LOCALIZE_KEY")
+    static let available = StringHelper.localizedStringWithKey("COUNTRY_STORE_AVAILABLE_LOCALIZE_KEY")
+}
+
 class CountryStoreViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, EmptyViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
@@ -39,7 +44,7 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
     // MARK: - Functions
     
     func setupNavigationBar() {
-        self.title = "Country Store"
+        self.title = CountryStoreStrings.title
         
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
@@ -48,7 +53,7 @@ class CountryStoreViewController: UIViewController, UITableViewDataSource, UITab
         
         self.navigationItem.leftBarButtonItems = [navigationSpacer, UIBarButtonItem(image: UIImage(named: "nav-back"), style: .Plain, target: self, action: "backAction")]
     }
-
+    
     func setupTexts() {
         
         self.emptyLabel.text = "No Available Countries"

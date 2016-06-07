@@ -24,6 +24,7 @@ class ProductCombination3TableViewCell: UITableViewCell {
         // Initialization code
         
         availableSwitch.layer.cornerRadius = 16.0
+        
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

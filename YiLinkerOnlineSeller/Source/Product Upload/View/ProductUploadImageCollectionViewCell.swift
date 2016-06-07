@@ -12,12 +12,18 @@ import UIKit
 // ProductUploadImageCollectionViewCell delegate methods
 protocol ProductUploadImageCollectionViewCellDelegate {
     func productUploadImageCollectionViewCell(didTapDeleteButtonAtCell cell: ProductUploadImageCollectionViewCell)
+    func productUploadImageCollectionViewCell(didTapStarButtonAtCell cell: ProductUploadImageCollectionViewCell)
+    func productUploadImageCollectionViewCell(didTapReuploadButtonAtCell cell: ProductUploadImageCollectionViewCell)
 }
 
 class ProductUploadImageCollectionViewCell: UICollectionViewCell {
     
     // Custom buttons
     @IBOutlet weak var closeButton: DynamicRoundedButton!
+    
+    // Buttons
+    @IBOutlet weak var starButton: UIButton!
+    @IBOutlet weak var tapToReuploadButton: UIButton!
     
     // Imageviews
     @IBOutlet weak var imageView: UIImageView!
@@ -34,5 +40,16 @@ class ProductUploadImageCollectionViewCell: UICollectionViewCell {
     // MARK: Button actions
     @IBAction func close(sender: AnyObject) {
         self.delegate!.productUploadImageCollectionViewCell(didTapDeleteButtonAtCell: self)
+    }
+    
+    // MARK: Button actions
+    @IBAction func star(sender: AnyObject) {
+        println("star clicked")
+        self.starButton.setBackgroundImage(UIImage(named: "active2"), forState: UIControlState.Normal)
+        self.delegate?.productUploadImageCollectionViewCell(didTapStarButtonAtCell: self)
+    }
+    
+    @IBAction func reupload(sender: UIButton) {
+        self.delegate?.productUploadImageCollectionViewCell(didTapReuploadButtonAtCell: self)
     }
 }
