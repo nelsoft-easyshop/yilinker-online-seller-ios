@@ -29,6 +29,12 @@
 		267DD2CA1CE9D089005D219A /* CountryListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267DD2C91CE9D089005D219A /* CountryListModel.swift */; };
 		267DD2CC1CEB1AE8005D219A /* CountrySetupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267DD2CB1CEB1AE8005D219A /* CountrySetupModel.swift */; };
 		26DD270E1CCA263F00A0D63B /* ProductCombination2TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DD270D1CCA263F00A0D63B /* ProductCombination2TableViewCell.swift */; };
+		546BF3951D057D8A005DF761 /* AddWarehouseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546BF3901D057D8A005DF761 /* AddWarehouseViewController.swift */; };
+		546BF3961D057D8A005DF761 /* WarehouseDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546BF3911D057D8A005DF761 /* WarehouseDetailViewController.swift */; };
+		546BF3971D057D8A005DF761 /* WarehouseFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546BF3921D057D8A005DF761 /* WarehouseFilterViewController.swift */; };
+		546BF3981D057D8A005DF761 /* WarehouseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546BF3931D057D8A005DF761 /* WarehouseListViewController.swift */; };
+		546BF3991D057D8A005DF761 /* WarehouseProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546BF3941D057D8A005DF761 /* WarehouseProductDetailViewController.swift */; };
+		5823CF30562BC7521FAF7027 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B63964E770102F63A29F38 /* libPods.a */; };
 		798D81CC1C8686EB00D2A1F7 /* ActivityLogTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D7EA31C8686EA00D2A1F7 /* ActivityLogTableViewController.swift */; };
 		798D81CD1C8686EB00D2A1F7 /* ActivityLogTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D7EA41C8686EA00D2A1F7 /* ActivityLogTableViewController.xib */; };
 		798D81CE1C8686EB00D2A1F7 /* ActivityLogItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D7EA61C8686EA00D2A1F7 /* ActivityLogItemModel.swift */; };
@@ -739,7 +745,6 @@
 		79A1C71C1CFD855A001184C4 /* LanguageCombinationHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79A1C71A1CFD855A001184C4 /* LanguageCombinationHeaderCollectionReusableView.xib */; };
 		79A1C71F1CFD8648001184C4 /* LanguageCombinationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A1C71D1CFD8648001184C4 /* LanguageCombinationCollectionViewCell.swift */; };
 		79A1C7201CFD8648001184C4 /* LanguageCombinationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79A1C71E1CFD8648001184C4 /* LanguageCombinationCollectionViewCell.xib */; };
-		79AEFEB28B8BA36BD12136B4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 66516D7217D5EAD685D1BABF /* libPods.a */; };
 		79CCB65A1CF6A41900E38612 /* LanguageTranslationPickerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CCB6581CF6A41900E38612 /* LanguageTranslationPickerTableViewController.swift */; };
 		79CCB65B1CF6A41900E38612 /* LanguageTranslationPickerTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79CCB6591CF6A41900E38612 /* LanguageTranslationPickerTableViewController.xib */; };
 		79CCB65D1CF6AD1200E38612 /* ProductLanguageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CCB65C1CF6AD1200E38612 /* ProductLanguageModel.swift */; };
@@ -765,7 +770,6 @@
 		9B8E7CC41CBE7E6400DF9DFF /* ProductManagementMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8E7CC21CBE7E6400DF9DFF /* ProductManagementMenuTableViewCell.swift */; };
 		9B8E7CC51CBE7E6400DF9DFF /* ProductManagementMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B8E7CC31CBE7E6400DF9DFF /* ProductManagementMenuTableViewCell.xib */; };
 		9F02F9361BF0BAEC00F44E2F /* yilinker_pinned_certificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 9F02F9351BF0BAEC00F44E2F /* yilinker_pinned_certificate.cer */; };
-		E72BD5070233EC6FF42DDA3A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B825E81D3B27E563C7C3C53 /* libPods.a */; };
 		F708E52C1CE568E700805447 /* ProductUploadProductGroupTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F708E52A1CE568E700805447 /* ProductUploadProductGroupTVC.swift */; };
 		F708E52D1CE568E700805447 /* ProductUploadProductGroupTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F708E52B1CE568E700805447 /* ProductUploadProductGroupTVC.xib */; };
 		F70F91431CC9D920000DBD36 /* PUDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70F91421CC9D920000DBD36 /* PUDetailsView.swift */; };
@@ -835,6 +839,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		08B63964E770102F63A29F38 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		24E6D7EDC652DD6CA51EA03A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		26239D521CC872A90099A87C /* CountryStoreSetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryStoreSetupViewController.swift; sourceTree = "<group>"; };
 		26239D531CC872A90099A87C /* CountryStoreSetupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryStoreSetupViewController.xib; sourceTree = "<group>"; };
 		26239D561CC8B55C0099A87C /* CommisionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommisionViewController.swift; sourceTree = "<group>"; };
@@ -857,8 +863,12 @@
 		267DD2C91CE9D089005D219A /* CountryListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryListModel.swift; sourceTree = "<group>"; };
 		267DD2CB1CEB1AE8005D219A /* CountrySetupModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountrySetupModel.swift; sourceTree = "<group>"; };
 		26DD270D1CCA263F00A0D63B /* ProductCombination2TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductCombination2TableViewCell.swift; path = ../View/ProductCombination2TableViewCell.swift; sourceTree = "<group>"; };
-		3F811DA8573C81594070C601 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		66516D7217D5EAD685D1BABF /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		546BF3901D057D8A005DF761 /* AddWarehouseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddWarehouseViewController.swift; sourceTree = "<group>"; };
+		546BF3911D057D8A005DF761 /* WarehouseDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarehouseDetailViewController.swift; sourceTree = "<group>"; };
+		546BF3921D057D8A005DF761 /* WarehouseFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarehouseFilterViewController.swift; sourceTree = "<group>"; };
+		546BF3931D057D8A005DF761 /* WarehouseListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarehouseListViewController.swift; sourceTree = "<group>"; };
+		546BF3941D057D8A005DF761 /* WarehouseProductDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarehouseProductDetailViewController.swift; sourceTree = "<group>"; };
+		700EB734D32404B5E927BC8D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		798D7EA31C8686EA00D2A1F7 /* ActivityLogTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLogTableViewController.swift; sourceTree = "<group>"; };
 		798D7EA41C8686EA00D2A1F7 /* ActivityLogTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityLogTableViewController.xib; sourceTree = "<group>"; };
 		798D7EA61C8686EA00D2A1F7 /* ActivityLogItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLogItemModel.swift; sourceTree = "<group>"; };
@@ -1613,7 +1623,6 @@
 		9B8E7CC21CBE7E6400DF9DFF /* ProductManagementMenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductManagementMenuTableViewCell.swift; sourceTree = "<group>"; };
 		9B8E7CC31CBE7E6400DF9DFF /* ProductManagementMenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductManagementMenuTableViewCell.xib; sourceTree = "<group>"; };
 		9F02F9351BF0BAEC00F44E2F /* yilinker_pinned_certificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = yilinker_pinned_certificate.cer; sourceTree = "<group>"; };
-		D4D17EE114265F93B1630151 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F708E52A1CE568E700805447 /* ProductUploadProductGroupTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadProductGroupTVC.swift; sourceTree = "<group>"; };
 		F708E52B1CE568E700805447 /* ProductUploadProductGroupTVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductUploadProductGroupTVC.xib; sourceTree = "<group>"; };
 		F70F91421CC9D920000DBD36 /* PUDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PUDetailsView.swift; sourceTree = "<group>"; };
@@ -1692,7 +1701,7 @@
 				F73D39951C06EE2600673A1A /* AddressBook.framework in Frameworks */,
 				F73D39911C06E84200673A1A /* MessageUI.framework in Frameworks */,
 				F73D398F1C06E0F500673A1A /* Social.framework in Frameworks */,
-				79AEFEB28B8BA36BD12136B4 /* libPods.a in Frameworks */,
+				5823CF30562BC7521FAF7027 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1706,15 +1715,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1A0C852BDE3E210EF3770A77 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				D4D17EE114265F93B1630151 /* Pods.debug.xcconfig */,
-				3F811DA8573C81594070C601 /* Pods.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		267DD2C71CE9CF28005D219A /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -1767,9 +1767,30 @@
 			name = Controller;
 			sourceTree = "<group>";
 		};
+		546BF38E1D057D8A005DF761 /* Warehouse */ = {
+			isa = PBXGroup;
+			children = (
+				546BF38F1D057D8A005DF761 /* ViewControllers */,
+			);
+			path = Warehouse;
+			sourceTree = "<group>";
+		};
+		546BF38F1D057D8A005DF761 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				546BF3901D057D8A005DF761 /* AddWarehouseViewController.swift */,
+				546BF3911D057D8A005DF761 /* WarehouseDetailViewController.swift */,
+				546BF3921D057D8A005DF761 /* WarehouseFilterViewController.swift */,
+				546BF3931D057D8A005DF761 /* WarehouseListViewController.swift */,
+				546BF3941D057D8A005DF761 /* WarehouseProductDetailViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		798D7EA01C8686EA00D2A1F7 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				546BF38E1D057D8A005DF761 /* Warehouse */,
 				79EF66291CA1088B000CDA6B /* Help */,
 				79EF661E1CA107DF000CDA6B /* Suggestions */,
 				798D7EA11C8686EA00D2A1F7 /* Actvity Logs */,
@@ -3381,8 +3402,8 @@
 				967EE1B61B8AEA25000591AC /* YiLinkerOnlineSeller */,
 				967EE1CC1B8AEA25000591AC /* YiLinkerOnlineSellerTests */,
 				967EE1B51B8AEA25000591AC /* Products */,
-				1A0C852BDE3E210EF3770A77 /* Pods */,
 				D957134FEAF8E3FA392A4C1E /* Frameworks */,
+				FCE49270835BB6F69627C8B3 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -3467,7 +3488,7 @@
 				F73D39941C06EE2600673A1A /* AddressBook.framework */,
 				F73D39901C06E84200673A1A /* MessageUI.framework */,
 				F73D398E1C06E0F500673A1A /* Social.framework */,
-				66516D7217D5EAD685D1BABF /* libPods.a */,
+				08B63964E770102F63A29F38 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -3513,6 +3534,15 @@
 			name = "Product Upload";
 			sourceTree = "<group>";
 		};
+		FCE49270835BB6F69627C8B3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				24E6D7EDC652DD6CA51EA03A /* Pods.debug.xcconfig */,
+				700EB734D32404B5E927BC8D /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -3520,12 +3550,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 967EE1D31B8AEA25000591AC /* Build configuration list for PBXNativeTarget "YiLinkerOnlineSeller" */;
 			buildPhases = (
-				4E0E7DBAB7F718D86CC1CF62 /* Check Pods Manifest.lock */,
+				2A5D75776C7F5B701DC1D98F /* Check Pods Manifest.lock */,
 				967EE1B01B8AEA25000591AC /* Sources */,
 				967EE1B11B8AEA25000591AC /* Frameworks */,
 				967EE1B21B8AEA25000591AC /* Resources */,
-				E9EA2D2D652BCE072148B1D3 /* Copy Pods Resources */,
-				2C60E0E4099482A059653B72 /* Embed Pods Frameworks */,
+				9B86BFA80C93784180E07C37 /* Embed Pods Frameworks */,
+				CA5F5F994F61C9BA934EB8BC /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3909,22 +3939,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2C60E0E4099482A059653B72 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4E0E7DBAB7F718D86CC1CF62 /* Check Pods Manifest.lock */ = {
+		2A5D75776C7F5B701DC1D98F /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3939,7 +3954,22 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		E9EA2D2D652BCE072148B1D3 /* Copy Pods Resources */ = {
+		9B86BFA80C93784180E07C37 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CA5F5F994F61C9BA934EB8BC /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -4001,6 +4031,7 @@
 				798D82C31C8686EB00D2A1F7 /* StringHelper.swift in Sources */,
 				798D83211C8686EB00D2A1F7 /* NewAddressTableViewCell.swift in Sources */,
 				798D81F21C8686EB00D2A1F7 /* PayoutEarningsTransactionTypeTableViewCell.swift in Sources */,
+				546BF3951D057D8A005DF761 /* AddWarehouseViewController.swift in Sources */,
 				798D83E21C8686EB00D2A1F7 /* FilterResultsCollectionViewCell.swift in Sources */,
 				798D823A1C8686EB00D2A1F7 /* ChartAnimator.swift in Sources */,
 				798D83161C8686EB00D2A1F7 /* CityModel.swift in Sources */,
@@ -4216,6 +4247,7 @@
 				798D84571C8686EB00D2A1F7 /* TransactionProductDetailsFooterView.swift in Sources */,
 				798D82BF1C8686EB00D2A1F7 /* ParseHelper.swift in Sources */,
 				798D82F61C8686EB00D2A1F7 /* PointsDetailsTableViewCell.swift in Sources */,
+				546BF3981D057D8A005DF761 /* WarehouseListViewController.swift in Sources */,
 				798D82821C8686EB00D2A1F7 /* ScatterChartRenderer.swift in Sources */,
 				798D82BB1C8686EB00D2A1F7 /* HexaColor.swift in Sources */,
 				798D82101C8686EB00D2A1F7 /* ParentCategoryViewController.swift in Sources */,
@@ -4245,6 +4277,7 @@
 				799AD4501CFBF3B700977428 /* ProductVariantValueModel.swift in Sources */,
 				798D820A1C8686EB00D2A1F7 /* AddSubCategoriesViewController.swift in Sources */,
 				798D82171C8686EB00D2A1F7 /* CustomizedCategoryModel.swift in Sources */,
+				546BF3971D057D8A005DF761 /* WarehouseFilterViewController.swift in Sources */,
 				798D82E51C8686EB00D2A1F7 /* MessageThreadTVC.swift in Sources */,
 				798D83811C8686EB00D2A1F7 /* ProductUploadAttributeValuesCollectionViewCell.swift in Sources */,
 				798D83A11C8686EB00D2A1F7 /* ProductUploadTextFieldTableViewCell.swift in Sources */,
@@ -4343,6 +4376,7 @@
 				798D836D1C8686EB00D2A1F7 /* ProductUploadTableViewController.swift in Sources */,
 				798D822D1C8686EB00D2A1F7 /* DashBoardItemCollectionViewCell.swift in Sources */,
 				798D84711C8686EB00D2A1F7 /* ImageUploadLoader.swift in Sources */,
+				546BF3961D057D8A005DF761 /* WarehouseDetailViewController.swift in Sources */,
 				798D83BB1C8686EB00D2A1F7 /* RemarksTableViewCell.swift in Sources */,
 				798D82DB1C8686EB00D2A1F7 /* SimplifiedLoginUICollectionViewCell.swift in Sources */,
 				79A1C7171CFD8452001184C4 /* LanguageTransalationCombinationsCollectionViewController.swift in Sources */,
@@ -4422,6 +4456,7 @@
 				F71077601CEAA71B00FDCDF1 /* ProductUploadCombinationImagesVC.swift in Sources */,
 				798D83E61C8686EB00D2A1F7 /* FilterTableViewCell.swift in Sources */,
 				798D83F31C8686EB00D2A1F7 /* AffiliateProductModel.swift in Sources */,
+				546BF3991D057D8A005DF761 /* WarehouseProductDetailViewController.swift in Sources */,
 				798D826C1C8686EB00D2A1F7 /* ChartRange.swift in Sources */,
 				798D83991C8686EB00D2A1F7 /* ProductUploadPlainDetailCombinationTableViewCell.swift in Sources */,
 				798D82E31C8686EB00D2A1F7 /* ImageVC.swift in Sources */,
@@ -4606,7 +4641,7 @@
 		};
 		967EE1D41B8AEA25000591AC /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D4D17EE114265F93B1630151 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 24E6D7EDC652DD6CA51EA03A /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -4628,7 +4663,7 @@
 		};
 		967EE1D51B8AEA25000591AC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3F811DA8573C81594070C601 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 700EB734D32404B5E927BC8D /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
