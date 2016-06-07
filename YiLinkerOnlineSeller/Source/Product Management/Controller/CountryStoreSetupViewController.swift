@@ -169,8 +169,20 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
             self.packageDimensionValueLabel.text = dimension
             self.weightValueLabel.text = self.countryStoreSetupModel.defaultUnit.weight + "KG"
             
-            self.productLocationPrimaryValueLabel.text = self.countryStoreSetupModel.primaryAddress
-            self.productLocationSecondaryValueLabel.text = self.countryStoreSetupModel.secondaryAddress
+            if self.countryStoreSetupModel.primaryAddress != "" {
+                self.productLocationPrimaryValueLabel.text = self.countryStoreSetupModel.primaryAddress
+            } else {
+                self.productLocationPrimaryValueLabel.text = "-"
+            }
+            
+            if self.countryStoreSetupModel.secondaryAddress != "" {
+                self.productLocationSecondaryValueLabel.text = self.countryStoreSetupModel.secondaryAddress
+            } else {
+                self.productLocationSecondaryValueLabel.text = "-"
+            }
+            
+            
+            
             
             self.addActions()
         } else {
