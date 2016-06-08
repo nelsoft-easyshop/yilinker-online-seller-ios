@@ -45,6 +45,5 @@ class WarehouseProductDetailViewController: UIViewController {
         println("save product edit, API CALL")
     }
 
-
 }
 

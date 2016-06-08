@@ -34,6 +34,7 @@
 		546BF3971D057D8A005DF761 /* WarehouseFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546BF3921D057D8A005DF761 /* WarehouseFilterViewController.swift */; };
 		546BF3981D057D8A005DF761 /* WarehouseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546BF3931D057D8A005DF761 /* WarehouseListViewController.swift */; };
 		546BF3991D057D8A005DF761 /* WarehouseProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546BF3941D057D8A005DF761 /* WarehouseProductDetailViewController.swift */; };
+		54AC39FA1D067C9300B28176 /* WarehouseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AC39F91D067C9300B28176 /* WarehouseModel.swift */; };
 		5823CF30562BC7521FAF7027 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B63964E770102F63A29F38 /* libPods.a */; };
 		798D81CC1C8686EB00D2A1F7 /* ActivityLogTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D7EA31C8686EA00D2A1F7 /* ActivityLogTableViewController.swift */; };
 		798D81CD1C8686EB00D2A1F7 /* ActivityLogTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D7EA41C8686EA00D2A1F7 /* ActivityLogTableViewController.xib */; };
@@ -752,6 +753,7 @@
 		79CCB6611CF6D60800E38612 /* LanguageTranslationTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79CCB65F1CF6D60800E38612 /* LanguageTranslationTableViewController.xib */; };
 		79CCB6681CF6F47D00E38612 /* TranslationInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CCB6661CF6F47D00E38612 /* TranslationInputTableViewCell.swift */; };
 		79CCB6691CF6F47D00E38612 /* TranslationInputTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79CCB6671CF6F47D00E38612 /* TranslationInputTableViewCell.xib */; };
+		79D0AF331D07B7D3000D6EBD /* WarehouseInventoryProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D0AF321D07B7D3000D6EBD /* WarehouseInventoryProduct.swift */; };
 		79D4238F1D0000490060A0EC /* TranslationImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D4238D1D0000490060A0EC /* TranslationImageCollectionViewCell.swift */; };
 		79D423901D0000490060A0EC /* TranslationImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79D4238E1D0000490060A0EC /* TranslationImageCollectionViewCell.xib */; };
 		79D8D6DF1CF8306D00A8D535 /* TranslationImagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D8D6DD1CF8306D00A8D535 /* TranslationImagesTableViewCell.swift */; };
@@ -870,6 +872,7 @@
 		546BF3921D057D8A005DF761 /* WarehouseFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarehouseFilterViewController.swift; sourceTree = "<group>"; };
 		546BF3931D057D8A005DF761 /* WarehouseListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarehouseListViewController.swift; sourceTree = "<group>"; };
 		546BF3941D057D8A005DF761 /* WarehouseProductDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarehouseProductDetailViewController.swift; sourceTree = "<group>"; };
+		54AC39F91D067C9300B28176 /* WarehouseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarehouseModel.swift; sourceTree = "<group>"; };
 		700EB734D32404B5E927BC8D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		798D7EA31C8686EA00D2A1F7 /* ActivityLogTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLogTableViewController.swift; sourceTree = "<group>"; };
 		798D7EA41C8686EA00D2A1F7 /* ActivityLogTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityLogTableViewController.xib; sourceTree = "<group>"; };
@@ -1603,6 +1606,7 @@
 		79CCB65F1CF6D60800E38612 /* LanguageTranslationTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LanguageTranslationTableViewController.xib; sourceTree = "<group>"; };
 		79CCB6661CF6F47D00E38612 /* TranslationInputTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationInputTableViewCell.swift; sourceTree = "<group>"; };
 		79CCB6671CF6F47D00E38612 /* TranslationInputTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TranslationInputTableViewCell.xib; sourceTree = "<group>"; };
+		79D0AF321D07B7D3000D6EBD /* WarehouseInventoryProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarehouseInventoryProduct.swift; sourceTree = "<group>"; };
 		79D4238D1D0000490060A0EC /* TranslationImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		79D4238E1D0000490060A0EC /* TranslationImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TranslationImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		79D8D6DD1CF8306D00A8D535 /* TranslationImagesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationImagesTableViewCell.swift; sourceTree = "<group>"; };
@@ -1774,6 +1778,8 @@
 		546BF38E1D057D8A005DF761 /* Warehouse */ = {
 			isa = PBXGroup;
 			children = (
+				79D0AF311D07B7AD000D6EBD /* Models */,
+				54AC39F81D067C9300B28176 /* Model */,
 				546BF38F1D057D8A005DF761 /* ViewControllers */,
 				F7D71DE31D07B0D70028FFAD /* Models */,
 			);
@@ -1790,6 +1796,14 @@
 				546BF3941D057D8A005DF761 /* WarehouseProductDetailViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		54AC39F81D067C9300B28176 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				54AC39F91D067C9300B28176 /* WarehouseModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		798D7EA01C8686EA00D2A1F7 /* Source */ = {
@@ -3326,6 +3340,14 @@
 			path = Xib;
 			sourceTree = "<group>";
 		};
+		79D0AF311D07B7AD000D6EBD /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				79D0AF321D07B7D3000D6EBD /* WarehouseInventoryProduct.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		79EF661E1CA107DF000CDA6B /* Suggestions */ = {
 			isa = PBXGroup;
 			children = (
@@ -4024,6 +4046,7 @@
 				798D84471C8686EB00D2A1F7 /* TransactionDeliveryLogSignatureTableViewCell.swift in Sources */,
 				798D81FC1C8686EB00D2A1F7 /* PayoutRequestListTableViewCell.swift in Sources */,
 				F7525B401D015A090069AE35 /* ProductUploadProductGroupTextFieldTableViewCell.swift in Sources */,
+				54AC39FA1D067C9300B28176 /* WarehouseModel.swift in Sources */,
 				798D832B1C8686EB00D2A1F7 /* StoreInfoPreferredCategoriesSectionView.swift in Sources */,
 				798D829F1C8686EB00D2A1F7 /* FSCalendarCell.m in Sources */,
 				798D82F41C8686EB00D2A1F7 /* PointsBreakdownTableViewCell.swift in Sources */,
@@ -4225,6 +4248,7 @@
 				798D827F1C8686EB00D2A1F7 /* LineScatterCandleRadarChartRenderer.swift in Sources */,
 				798D845B1C8686EB00D2A1F7 /* TransactionProductDetailsTableViewCell.swift in Sources */,
 				798D83631C8686EB00D2A1F7 /* ProductUploadCategoryViewController.swift in Sources */,
+				79D0AF331D07B7D3000D6EBD /* WarehouseInventoryProduct.swift in Sources */,
 				262BEDEE1CC71C8B004882DF /* CountryStoreTableViewCell.swift in Sources */,
 				798D83171C8686EB00D2A1F7 /* GetAddressesModel.swift in Sources */,
 				798D839D1C8686EB00D2A1F7 /* ProductUploadQuantityTableViewCell.swift in Sources */,
@@ -4669,6 +4693,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = YiLinkerOnlineSeller/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -4691,6 +4716,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = YiLinkerOnlineSeller/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

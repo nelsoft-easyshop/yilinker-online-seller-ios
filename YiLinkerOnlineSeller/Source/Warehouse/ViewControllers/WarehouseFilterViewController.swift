@@ -184,9 +184,7 @@ class WarehouseFilterViewController: UIViewController {
                             }
                         }
                     }
-                } else {
-                    
-                }
+                } 
                 
                 self.tableView.reloadData()
                 
