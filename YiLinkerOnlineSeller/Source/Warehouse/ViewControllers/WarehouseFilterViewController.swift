@@ -14,9 +14,9 @@ class WarehouseFilterViewController: UIViewController {
 
     var hud: MBProgressHUD?
     var warehouseFilter: WareFilterModel?
-    var status: [Bool] = []
-    var categories: [Bool] = []
-    var productGroup: [Bool] = []
+    var status: String = ""
+    var categories: String = ""
+    var productGroups: String = ""
     
     override func viewDidLoad() {
         self.initializedNavigationBarItems()
@@ -87,22 +87,19 @@ class WarehouseFilterViewController: UIViewController {
         }
         
         if indexPath.section == 0 {
-            if self.status[indexPath.row] == true {
-                cell.selected = true
+            if self.status == self.warehouseFilter!.filterModel[indexPath.section].name[indexPath.row] {
                 cell.accessoryType = UITableViewCellAccessoryType.Checkmark
             } else {
                 cell.accessoryType = UITableViewCellAccessoryType.None
             }
         } else if indexPath.section == 1 {
-            if self.categories[indexPath.row] == true {
-                cell.selected = true
+            if self.categories == self.warehouseFilter!.filterModel[indexPath.section].name[indexPath.row] {
                 cell.accessoryType = UITableViewCellAccessoryType.Checkmark
             } else {
                 cell.accessoryType = UITableViewCellAccessoryType.None
             }
         } else {
-            if self.productGroup[indexPath.row] == true {
-                cell.selected = true
+            if self.productGroups == self.warehouseFilter!.filterModel[indexPath.section].name[indexPath.row] {
                 cell.accessoryType = UITableViewCellAccessoryType.Checkmark
             } else {
                 cell.accessoryType = UITableViewCellAccessoryType.None
@@ -117,31 +114,28 @@ class WarehouseFilterViewController: UIViewController {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
         let cell = self.tableView.cellForRowAtIndexPath(indexPath)
-
-        if cell!.selected {
-            cell!.selected = false
-            if cell!.accessoryType == UITableViewCellAccessoryType.None {
-                cell!.accessoryType = UITableViewCellAccessoryType.Checkmark
-                if indexPath.section == 0 {
-                    self.status[indexPath.row] = true
-                } else if indexPath.section == 1 {
-                    self.categories[indexPath.row] = true
-                } else {
-                    self.productGroup[indexPath.row] = true
-                }
-            } else {
-                cell!.accessoryType = UITableViewCellAccessoryType.None
-                if indexPath.section == 0 {
-                    self.status[indexPath.row] = false
-                } else if indexPath.section == 1 {
-                    self.categories[indexPath.row] = false
-                } else {
-                    self.productGroup[indexPath.row] = false
-                }
-            }
+        if indexPath.section == 0 {
+            self.status = cell!.textLabel!.text!
+        } else if indexPath.section == 1 {
+            self.categories = cell!.textLabel!.text!
+        } else {
+            self.productGroups = cell!.textLabel!.text!
         }
+        /*
+        // toggle old one off and the new one on
+        let newCell = tableView.cellForRowAtIndexPath(indexPath)
+        if newCell?.accessoryType == UITableViewCellAccessoryType.None {
+            newCell?.accessoryType = UITableViewCellAccessoryType.Checkmark
+        }
+        
+        let oldCell = tableView.cellForRowAtIndexPath(self.selectedIndexPath!)
+        if oldCell?.accessoryType == UITableViewCellAccessoryType.Checkmark && indexPath.section == self.selectedIndexPath!.section {
+            oldCell?.accessoryType = UITableViewCellAccessoryType.None
+        }
+        
+        self.selectedIndexPath = indexPath*/
+        self.tableView.reloadData()
     }
     // MARK: -
     // MARK: - Alert view
@@ -222,17 +216,6 @@ class WarehouseFilterViewController: UIViewController {
                 if let success = responseObject["isSuccessful"] as? Bool {
                     if success {
                         self.warehouseFilter = WareFilterModel.parseDataFromDictionary(responseObject as! NSDictionary)
-                        for (i, filter) in enumerate(self.warehouseFilter!.filter) {
-                            for (index, status) in enumerate(self.warehouseFilter!.filterModel[i].name) {
-                                if i == 0 {
-                                    self.status.append(false)
-                                } else if i == 1 {
-                                    self.categories.append(false)
-                                } else {
-                                    self.productGroup.append(false)
-                                }
-                            }
-                        }
                     }
                 }
                 
