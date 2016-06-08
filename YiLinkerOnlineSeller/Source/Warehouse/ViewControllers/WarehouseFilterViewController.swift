@@ -123,11 +123,23 @@ class WarehouseFilterViewController: UIViewController {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = self.tableView.cellForRowAtIndexPath(indexPath)
         if indexPath.section == 0 {
-            self.status = cell!.textLabel!.text!
+            if self.status == cell!.textLabel!.text! {
+                self.status = ""
+            } else {
+               self.status = cell!.textLabel!.text!
+            }
         } else if indexPath.section == 1 {
-            self.category = cell!.textLabel!.text!
+            if self.category == cell!.textLabel!.text! {
+                self.category = ""
+            } else {
+                self.category = cell!.textLabel!.text!
+            }
         } else {
-            self.productGroup = cell!.textLabel!.text!
+            if self.productGroup == cell!.textLabel!.text! {
+                self.productGroup = ""
+            } else {
+                self.productGroup = cell!.textLabel!.text!
+            }
         }
         
         self.tableView.reloadData()
