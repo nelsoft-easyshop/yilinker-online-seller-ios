@@ -11,7 +11,23 @@ import UIKit
 class AddWarehouseViewController: UIViewController {
     
     @IBOutlet weak var scrollView: UIScrollView!
-
+    
+    @IBOutlet weak var warehouseNameLabel: UILabel!
+    @IBOutlet weak var fullAddressLabel: UILabel!
+    @IBOutlet weak var countryLabel: UILabel!
+    @IBOutlet weak var provinceLabel: UILabel!
+    @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var barangayLabel: UILabel!
+    @IBOutlet weak var zipCodeLabel: UILabel!
+    
+    @IBOutlet weak var warehouseNameTextField: UITextField!
+    @IBOutlet weak var fullAddressTextField: UITextField!
+    @IBOutlet weak var countryTextField: UITextField!
+    @IBOutlet weak var provinceTextField: UITextField!
+    @IBOutlet weak var cityTextField: UITextField!
+    @IBOutlet weak var barangayTextField: UITextField!
+    @IBOutlet weak var zipCodeTextField: UITextField!
+    
     override func viewDidLoad() {
         self.initializedNavigationBarItems()
         scrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)
@@ -19,6 +35,13 @@ class AddWarehouseViewController: UIViewController {
     
     func initializedNavigationBarItems() {
         self.title = StringHelper.localizedStringWithKey("Add Warehouse")
+        
+        self.warehouseNameLabel.required()
+        self.fullAddressLabel.required()
+        self.countryLabel.required()
+        self.provinceLabel.required()
+        self.cityLabel.required()
+        self.barangayLabel.required()
         
         var backButton: UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 20, 20)
