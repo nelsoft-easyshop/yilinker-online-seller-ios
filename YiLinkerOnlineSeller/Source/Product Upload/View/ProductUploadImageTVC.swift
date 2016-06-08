@@ -89,7 +89,6 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
     // TODO: - Add action to set the button checked
     
     func productUploadImageCollectionViewCell(didTapStarButtonAtCell cell: ProductUploadImageCollectionViewCell) {
-        cell.starButton.setBackgroundImage(UIImage(named: "active2"), forState: UIControlState.Normal)
         let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
         
         self.selectedPrimaryPhoto.removeAll(keepCapacity: false)
@@ -151,10 +150,10 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
             }
             
             if contains(self.selectedPrimaryPhoto, "\(indexPath.row)") && cell.starButton.tag != 1001{
-                cell.starButton.backgroundColor = UIColor.yellowColor()
+                cell.starButton.setImage(UIImage(named:"ic_selected_as_primary"), forState: UIControlState.Normal)
                 cell.starButton.tag = 1001
             } else {
-                cell.starButton.backgroundColor = UIColor.redColor()
+                cell.starButton.setImage(UIImage(named:"ic_unselected_as_primary"), forState: UIControlState.Normal)
             }
             
             cell.closeButton.hidden = false

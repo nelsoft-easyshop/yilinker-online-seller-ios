@@ -21,27 +21,16 @@
                         <rect key="frame" x="5" y="5" width="110" height="110"/>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DLV-Xj-fNj">
-                        <rect key="frame" x="9" y="87" width="22" height="23"/>
+                        <rect key="frame" x="9" y="87" width="23" height="23"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="23" id="Rmg-K0-rh0"/>
-                            <constraint firstAttribute="width" constant="22" id="pJJ-6M-NWu"/>
+                            <constraint firstAttribute="width" constant="23" id="pJJ-6M-NWu"/>
                         </constraints>
-                        <state key="normal" image="active">
+                        <state key="normal" image="ic_unselected_as_primary">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
                             <action selector="star:" destination="gTV-IL-0wX" eventType="touchUpInside" id="8jh-Bu-H4O"/>
-                        </connections>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JyF-RN-ZLV">
-                        <rect key="frame" x="5" y="5" width="110" height="110"/>
-                        <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="12"/>
-                        <state key="normal" title="tap to reupload">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="reupload:" destination="gTV-IL-0wX" eventType="touchUpInside" id="rTS-MB-BrG"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rgy-pw-CZG" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
@@ -62,6 +51,17 @@
                         </userDefinedRuntimeAttributes>
                         <connections>
                             <action selector="close:" destination="gTV-IL-0wX" eventType="touchUpInside" id="hXi-vF-Akz"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JyF-RN-ZLV">
+                        <rect key="frame" x="5" y="5" width="110" height="110"/>
+                        <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="12"/>
+                        <state key="normal" title="tap to reupload">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="reupload:" destination="gTV-IL-0wX" eventType="touchUpInside" id="rTS-MB-BrG"/>
                         </connections>
                     </button>
                 </subviews>
@@ -92,7 +92,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="active" width="200" height="200"/>
         <image name="dummy-placeholder" width="1280" height="800"/>
+        <image name="ic_unselected_as_primary" width="327" height="294"/>
     </resources>
 </document>

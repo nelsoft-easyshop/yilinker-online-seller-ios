@@ -169,6 +169,4 @@ class WarehouseListViewController: UIViewController, UITableViewDataSource, UITa
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
-
-    
 }
