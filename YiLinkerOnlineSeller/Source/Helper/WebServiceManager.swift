@@ -94,6 +94,11 @@ class WebServiceManager: NSObject {
     static let productImagesKey = "productImages"
     static let productVariantsKey = "productVariants"
     
+    //Warehouse
+    static let warehouseIdKey = "warehouseId"
+    static let categoryKey = "category"
+    static let queryKey = "query"
+    static let groupKey = "group"
     
     // MARK: - CALLS
     // MARK: - Post Request With Url
@@ -1104,6 +1109,33 @@ class WebServiceManager: NSObject {
     // MARK: - Save Combinations
     
     class func fireSaveCombinations(url: String, parameters: NSDictionary, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    
+    // MARK: - Get Inventory
+    class func fireGetWarehouseInventory(url: String, warehouseId: String, page: String, category: String, status: String, query: String, group: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        var parameters = [self.accessTokenKey: accessToken, self.warehouseIdKey: warehouseId, self.pageKey: page]
+        
+        if category.isNotEmpty() {
+            parameters[self.categoryKey] = category
+        }
+        
+        if status.isNotEmpty() {
+            parameters[self.statusKey] = status
+        }
+        
+        if query.isNotEmpty() {
+            parameters[self.queryKey] = query
+        }
+        
+        if group.isNotEmpty() {
+            parameters[self.groupKey] = group
+        }
         
         self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)

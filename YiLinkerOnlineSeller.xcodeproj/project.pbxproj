@@ -752,6 +752,7 @@
 		79CCB6611CF6D60800E38612 /* LanguageTranslationTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79CCB65F1CF6D60800E38612 /* LanguageTranslationTableViewController.xib */; };
 		79CCB6681CF6F47D00E38612 /* TranslationInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CCB6661CF6F47D00E38612 /* TranslationInputTableViewCell.swift */; };
 		79CCB6691CF6F47D00E38612 /* TranslationInputTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79CCB6671CF6F47D00E38612 /* TranslationInputTableViewCell.xib */; };
+		79D0AF331D07B7D3000D6EBD /* WarehouseInventoryProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D0AF321D07B7D3000D6EBD /* WarehouseInventoryProduct.swift */; };
 		79D4238F1D0000490060A0EC /* TranslationImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D4238D1D0000490060A0EC /* TranslationImageCollectionViewCell.swift */; };
 		79D423901D0000490060A0EC /* TranslationImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79D4238E1D0000490060A0EC /* TranslationImageCollectionViewCell.xib */; };
 		79D8D6DF1CF8306D00A8D535 /* TranslationImagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D8D6DD1CF8306D00A8D535 /* TranslationImagesTableViewCell.swift */; };
@@ -1601,6 +1602,7 @@
 		79CCB65F1CF6D60800E38612 /* LanguageTranslationTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LanguageTranslationTableViewController.xib; sourceTree = "<group>"; };
 		79CCB6661CF6F47D00E38612 /* TranslationInputTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationInputTableViewCell.swift; sourceTree = "<group>"; };
 		79CCB6671CF6F47D00E38612 /* TranslationInputTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TranslationInputTableViewCell.xib; sourceTree = "<group>"; };
+		79D0AF321D07B7D3000D6EBD /* WarehouseInventoryProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarehouseInventoryProduct.swift; sourceTree = "<group>"; };
 		79D4238D1D0000490060A0EC /* TranslationImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		79D4238E1D0000490060A0EC /* TranslationImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TranslationImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		79D8D6DD1CF8306D00A8D535 /* TranslationImagesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationImagesTableViewCell.swift; sourceTree = "<group>"; };
@@ -1770,6 +1772,7 @@
 		546BF38E1D057D8A005DF761 /* Warehouse */ = {
 			isa = PBXGroup;
 			children = (
+				79D0AF311D07B7AD000D6EBD /* Models */,
 				546BF38F1D057D8A005DF761 /* ViewControllers */,
 			);
 			path = Warehouse;
@@ -3321,6 +3324,14 @@
 			path = Xib;
 			sourceTree = "<group>";
 		};
+		79D0AF311D07B7AD000D6EBD /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				79D0AF321D07B7D3000D6EBD /* WarehouseInventoryProduct.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		79EF661E1CA107DF000CDA6B /* Suggestions */ = {
 			isa = PBXGroup;
 			children = (
@@ -4211,6 +4222,7 @@
 				798D827F1C8686EB00D2A1F7 /* LineScatterCandleRadarChartRenderer.swift in Sources */,
 				798D845B1C8686EB00D2A1F7 /* TransactionProductDetailsTableViewCell.swift in Sources */,
 				798D83631C8686EB00D2A1F7 /* ProductUploadCategoryViewController.swift in Sources */,
+				79D0AF331D07B7D3000D6EBD /* WarehouseInventoryProduct.swift in Sources */,
 				262BEDEE1CC71C8B004882DF /* CountryStoreTableViewCell.swift in Sources */,
 				798D83171C8686EB00D2A1F7 /* GetAddressesModel.swift in Sources */,
 				798D839D1C8686EB00D2A1F7 /* ProductUploadQuantityTableViewCell.swift in Sources */,
@@ -4653,6 +4665,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = YiLinkerOnlineSeller/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -4675,6 +4688,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = YiLinkerOnlineSeller/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

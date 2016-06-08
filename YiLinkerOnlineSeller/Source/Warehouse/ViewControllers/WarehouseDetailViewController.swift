@@ -12,16 +12,33 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
     
     @IBOutlet weak var tableView: UITableView!
     
+    var hud: MBProgressHUD?
+    
+    //Warehouse Inventory
+    //Get Warehouse Inventory Params
+    var warehouseId: String = "964"
+    var page: Int = 1
+    var category: String = ""
+    var status: String = ""
+    var query: String = ""
+    var group: String = ""
+    
+    var totalpage: Int = 2
+    
+    var warehouseInventory: [WarehouseInventoryProduct] = []
+    
     override func viewDidLoad() {
         self.initializeViews()
         self.initializedNavigationBarItems()
         //self.configureCell()
+        
+        self.fireGetWarehouseInventory()
     }
 
     //MARK: UITableView DataSource Methods
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        let rowNumbers = [1, 5, 4]
+        let rowNumbers = [1, 5, self.warehouseInventory.count]
         
         if section < rowNumbers.count {
             return rowNumbers[section]
@@ -51,6 +68,17 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
         } else if indexPath.section == 2 {
             let cellIdentifier: String = "WarehouseProductListCell"
             let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! UITableViewCell
+            
+            let tempInventory = self.warehouseInventory[indexPath.row]
+            
+            if let nameLabel = cell.viewWithTag(1) as? UILabel {
+                nameLabel.text = tempInventory.name
+            }
+            
+            if let quantityLabel = cell.viewWithTag(2) as? UILabel {
+                quantityLabel.text = "System Inventory: \(tempInventory.quantity)"
+            }
+            
             return cell;
         }
     
@@ -101,6 +129,20 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
         }
     }
     
+    func scrollViewDidEndDragging(aScrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        var offset: CGPoint = aScrollView.contentOffset
+        var bounds: CGRect = aScrollView.bounds
+        var size: CGSize = aScrollView.contentSize
+        var inset: UIEdgeInsets = aScrollView.contentInset
+        var y: CGFloat = offset.y + bounds.size.height - inset.bottom
+        var h: CGFloat = size.height
+        var reload_distance: CGFloat = 10
+        var temp: CGFloat = h + reload_distance
+        if y > temp {
+            self.fireGetWarehouseInventory()
+        }
+    }
+    
     //MARK: Local Methods
     
     func initializeViews() {
@@ -142,4 +184,78 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
         self.tableView.estimatedRowHeight = 160.0
     }
     
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    
+    //MARK: API Methods
+    func fireGetWarehouseInventory() {
+        
+        if self.page <= self.totalpage {
+            self.showHUD()
+            WebServiceManager.fireGetWarehouseInventory(APIAtlas.warehouseInventory, warehouseId: self.warehouseId, page: "\(self.page)", category: self.category, status: self.status, query: self.query, group: self.group, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
+                self.hud?.hide(true)
+                if successful {
+                    self.page++
+                    self.totalpage = WarehouseInventoryProduct.getTotalPage(responseObject)
+                    self.warehouseInventory += WarehouseInventoryProduct.parseArrayWithDictionary(responseObject)
+                    self.tableView.reloadData()
+                } else {
+                    if requestErrorType == .ResponseError {
+                        //Error in api requirements
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .AccessTokenExpired {
+                        self.fireRefreshToken("getWarehousInventory")
+                    } else if requestErrorType == .PageNotFound {
+                        //Page not found
+                        Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .NoInternetConnection {
+                        //No internet connection
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .RequestTimeOut {
+                        //Request timeout
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .UnRecognizeError {
+                        //Unhandled error
+                        Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                    }
+                }
+            }
+        } else {
+            let noMoreDataString = StringHelper.localizedStringWithKey("NO_MORE_DATA_LOCALIZE_KEY")
+            
+            Toast.displayToastWithMessage(noMoreDataString, duration: 1.5, view: self.view)
+        }
+        
+    }
+    
+    func fireRefreshToken(type: String) {
+        self.showHUD()
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                
+                if type == "getWarehousInventory" {
+                    self.fireGetWarehouseInventory()
+                }
+            } else {
+                //Show UIAlert and force the user to logout
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                })
+            }
+        })
+    }
 }

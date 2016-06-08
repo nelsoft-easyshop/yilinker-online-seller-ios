@@ -203,6 +203,9 @@ struct APIAtlas {
     static let getCountrySetupDetails = APIAtlas.generateV3URL("auth/country-setup?access_token=")
     static let setWarehouse = APIAtlas.generateV3URL("auth/country-setup/setwarehouse?access_token=")
     static let saveCombinations = APIAtlas.generateV3URL("auth/country-setup/save-combinations?access_token=")
+    
+    //Warehouse
+    static let warehouseInventory = APIAtlas.generateV3URL("auth/warehouse/inventory")
 }
 
 class APIManager: AFHTTPSessionManager {
