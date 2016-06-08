@@ -46,6 +46,7 @@ class WarehouseListViewController: UIViewController, UITableViewDataSource, UITa
         
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let warehouseDetailVC: WarehouseDetailViewController = storyboard.instantiateViewControllerWithIdentifier("WarehouseDetailViewController") as! WarehouseDetailViewController
+            warehouseDetailVC.warehouse = self.warehouseList[indexPath.row]
         self.navigationController?.pushViewController(warehouseDetailVC, animated: true)
         
     }

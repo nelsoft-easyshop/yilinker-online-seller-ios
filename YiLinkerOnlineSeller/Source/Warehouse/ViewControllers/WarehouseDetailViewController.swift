@@ -13,10 +13,10 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
     @IBOutlet weak var tableView: UITableView!
     
     var hud: MBProgressHUD?
-    
+    var warehouse : WarehouseModel!
     //Warehouse Inventory
     //Get Warehouse Inventory Params
-    var warehouseId: String = "964"
+    var warehouseId: String = ""
     var page: Int = 1
     var category: String = ""
     var status: String = ""
@@ -28,10 +28,12 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
     var warehouseInventory: [WarehouseInventoryProduct] = []
     
     override func viewDidLoad() {
+        warehouseId = "\(warehouse.id)"
+        
         self.initializeViews()
         self.initializedNavigationBarItems()
         //self.configureCell()
-        
+        println("\(self.warehouse.id)")
         self.fireGetWarehouseInventory()
     }
 
@@ -52,19 +54,89 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
         if indexPath.section == 0 {
             let cellIdentifier: String = "WarehouseDetailCell1"
             let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! UITableViewCell
+            
+            if let warehouseNameLabel = cell.viewWithTag(100) as? UILabel {
+                warehouseNameLabel.text = self.warehouse.name
+            }
+            
+            if let warehouseFullAddressLabel = cell.viewWithTag(200) as? UILabel {
+                warehouseFullAddressLabel.text = self.warehouse.fullAddress
+            }
+            
             return cell;
         }
         else if indexPath.section == 1 {
             if indexPath.row == 0 {
                 let cellIdentifier: String = "WarehouseDetailCell2"
                 let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! UITableViewCell
+                
+                if let countryLabel = cell.viewWithTag(300) as? UILabel {
+                    countryLabel.text = "COUNTRY"
+                }
+                
+                if let warehouseNameImageView = cell.viewWithTag(400) as? UIImageView {
+                    warehouseNameImageView.sd_setImageWithURL(NSURL(string: self.warehouse.flag))
+                }
+                
+                if let countryLocationLabel = cell.viewWithTag(500) as? UILabel {
+                    countryLocationLabel.text = self.warehouse.countryLocation
+                }
+                
                 return cell;
-            } else {
+            } else if indexPath.row == 1 {
                 let cellIdentifier: String = "WarehouseDetailCell3"
                 let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! UITableViewCell
+                
+                if let provinceNameLabel = cell.viewWithTag(600) as? UILabel {
+                    provinceNameLabel.text = "PROVINCE"
+                }
+                
+                if let provinceLocationLabel = cell.viewWithTag(700) as? UILabel {
+                    provinceLocationLabel.text = self.warehouse.provinceLocation
+                }
+                
                 return cell;
-
+            } else if indexPath.row == 2 {
+                let cellIdentifier: String = "WarehouseDetailCell3"
+                let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! UITableViewCell
+                
+                if let cityNameLabel = cell.viewWithTag(600) as? UILabel {
+                    cityNameLabel.text = "CITY/MUNICIPALITY"
+                }
+                
+                if let cityLocationLabel = cell.viewWithTag(700) as? UILabel {
+                    cityLocationLabel.text = self.warehouse.cityLocation
+                }
+                
+                return cell;
+            } else if indexPath.row == 3 {
+                let cellIdentifier: String = "WarehouseDetailCell3"
+                let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! UITableViewCell
+                
+                if let barangayNameLabel = cell.viewWithTag(600) as? UILabel {
+                    barangayNameLabel.text = "BARANGAY/DISTRICT"
+                }
+                
+                if let barangayLocationLabel = cell.viewWithTag(700) as? UILabel {
+                    barangayLocationLabel.text = self.warehouse.barangayLocation
+                }
+                
+                return cell;
+            } else if indexPath.row == 4 {
+                let cellIdentifier: String = "WarehouseDetailCell3"
+                let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! UITableViewCell
+                
+                if let zipCodeNameLabel = cell.viewWithTag(600) as? UILabel {
+                    zipCodeNameLabel.text = "ZIPCODE"
+                }
+                
+                if let zipCodeLocationLabel = cell.viewWithTag(700) as? UILabel {
+                    zipCodeLocationLabel.text = self.warehouse.zipCode
+                }
+                
+                return cell;
             }
+            
         } else if indexPath.section == 2 {
             let cellIdentifier: String = "WarehouseProductListCell"
             let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! UITableViewCell
