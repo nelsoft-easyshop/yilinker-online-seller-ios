@@ -75,5 +75,4 @@ class WarehouseListViewController: UIViewController, UITableViewDataSource, UITa
         addWarehouseVC.navigationController!.navigationBar.barTintColor = self.navigationController!.navigationBar.barTintColor
         self.presentViewController(navController, animated: true, completion: nil)
     }
-    
 }
