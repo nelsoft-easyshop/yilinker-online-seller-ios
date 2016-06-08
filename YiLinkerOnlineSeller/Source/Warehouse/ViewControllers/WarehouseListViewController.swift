@@ -86,8 +86,6 @@ class WarehouseListViewController: UIViewController, UITableViewDataSource, UITa
         addWarehouseVC.navigationController!.navigationBar.barTintColor = self.navigationController!.navigationBar.barTintColor
         self.presentViewController(navController, animated: true, completion: nil)
     }
-<<<<<<< HEAD
-=======
     
     func fireGetWarehouseList () {
         self.showHUD()
@@ -170,7 +168,4 @@ class WarehouseListViewController: UIViewController, UITableViewDataSource, UITa
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
-
-    
->>>>>>> f2f87a1a6b3d1b11a56c40253777ce262a280e03
 }

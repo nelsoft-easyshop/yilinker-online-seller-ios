@@ -86,6 +86,29 @@ class WarehouseFilterViewController: UIViewController {
             cell.textLabel!.text = self.warehouseFilter!.filterModel[indexPath.section].name[indexPath.row]
         }
         
+        if indexPath.section == 0 {
+            if self.status[indexPath.row] == true {
+                cell.selected = true
+                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            } else {
+                cell.accessoryType = UITableViewCellAccessoryType.None
+            }
+        } else if indexPath.section == 1 {
+            if self.categories[indexPath.row] == true {
+                cell.selected = true
+                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            } else {
+                cell.accessoryType = UITableViewCellAccessoryType.None
+            }
+        } else {
+            if self.productGroup[indexPath.row] == true {
+                cell.selected = true
+                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            } else {
+                cell.accessoryType = UITableViewCellAccessoryType.None
+            }
+        }
+        
         return cell;
     }
     
@@ -93,6 +116,32 @@ class WarehouseFilterViewController: UIViewController {
         return 30
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = self.tableView.cellForRowAtIndexPath(indexPath)
+
+        if cell!.selected {
+            cell!.selected = false
+            if cell!.accessoryType == UITableViewCellAccessoryType.None {
+                cell!.accessoryType = UITableViewCellAccessoryType.Checkmark
+                if indexPath.section == 0 {
+                    self.status[indexPath.row] = true
+                } else if indexPath.section == 1 {
+                    self.categories[indexPath] = true
+                } else {
+                    self.productGroup[indexPath.row] = true
+                }
+            } else {
+                cell!.accessoryType = UITableViewCellAccessoryType.None
+                if indexPath.section == 0 {
+                    self.status[indexPath.row] = false
+                } else if indexPath.section == 1 {
+                    self.categories[indexPath] = false
+                } else {
+                    self.productGroup[indexPath.row] = false
+                }
+            }
+        }
+    }
     // MARK: -
     // MARK: - Alert view
     
@@ -184,7 +233,7 @@ class WarehouseFilterViewController: UIViewController {
                             }
                         }
                     }
-                } 
+                }
                 
                 self.tableView.reloadData()
                 
