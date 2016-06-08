@@ -18,10 +18,10 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
     //Get Warehouse Inventory Params
     var warehouseId: String = ""
     var page: Int = 1
-    var category: String = ""
-    var status: String = ""
+    var category: [String] = []
+    var status: [String] = []
     var query: String = ""
-    var group: String = ""
+    var group: [String] = []
     
     var totalpage: Int = 2
     
@@ -252,9 +252,9 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let warehouseFilterVC: WarehouseFilterViewController = storyboard.instantiateViewControllerWithIdentifier("WarehouseFilterViewController") as! WarehouseFilterViewController
         warehouseFilterVC.delegate = self
-        warehouseFilterVC.status = self.status
-        warehouseFilterVC.category = self.category
-        warehouseFilterVC.productGroup = self.group
+        warehouseFilterVC.selectedStatus = self.status
+        warehouseFilterVC.selectedCategory = self.category
+        warehouseFilterVC.selectedProductGroup = self.group
         self.navigationController?.pushViewController(warehouseFilterVC, animated: true)
     }
 
@@ -282,7 +282,17 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
         
         if self.page <= self.totalpage {
             self.showHUD()
-            WebServiceManager.fireGetWarehouseInventory(APIAtlas.warehouseInventory, warehouseId: self.warehouseId, page: "\(self.page)", category: self.category, status: self.status, query: self.query, group: self.group, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
+            
+            let data = NSJSONSerialization.dataWithJSONObject(self.status, options: nil, error: nil)
+            let statusString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            
+            let data2 = NSJSONSerialization.dataWithJSONObject(self.category, options: nil, error: nil)
+            let categoryString = NSString(data: data2!, encoding: NSUTF8StringEncoding)
+            
+            let data3 = NSJSONSerialization.dataWithJSONObject(self.group, options: nil, error: nil)
+            let groupString = NSString(data: data3!, encoding: NSUTF8StringEncoding)
+            
+            WebServiceManager.fireGetWarehouseInventory(APIAtlas.warehouseInventory, warehouseId: self.warehouseId, page: "\(self.page)", category: categoryString as! String, status: statusString as! String, query: self.query, group: groupString as! String, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
                 self.hud?.hide(true)
                 if successful {
                     self.page++
@@ -340,7 +350,7 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
     
     // MARK: -
     // MARK: - WarehouseFilterViewController Delegate Method 
-    func warehouseFilter(status: String, category: String, productGroup: String) {
+    func warehouseFilter(status: [String], category: [String], productGroup: [String]) {
         self.status = status
         self.category = category
         self.group = productGroup

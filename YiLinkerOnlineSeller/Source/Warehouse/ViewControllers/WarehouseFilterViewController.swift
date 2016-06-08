@@ -9,7 +9,7 @@
 import UIKit
 
 protocol WarehouseFilterViewControllerDelegate{
-    func warehouseFilter(status: String, category: String, productGroup: String)
+    func warehouseFilter(status: [String], category: [String], productGroup: [String])
 }
 
 class WarehouseFilterViewController: UIViewController {
@@ -18,9 +18,18 @@ class WarehouseFilterViewController: UIViewController {
 
     var hud: MBProgressHUD?
     var warehouseFilter: WareFilterModel?
-    var status: String = ""
-    var category: String = ""
-    var productGroup: String = ""
+    
+    var status: [String] = []
+    var category: [String] = []
+    var productGroup: [String] = []
+    
+    var selectedStatus: [String] = []
+    var selectedCategory: [String] = []
+    var selectedProductGroup: [String] = []
+    
+    var statusValue: [Bool] = []
+    var categoryValue: [Bool] = []
+    var productGroupValue: [Bool] = []
     
     var delegate: WarehouseFilterViewControllerDelegate?
     
@@ -44,7 +53,29 @@ class WarehouseFilterViewController: UIViewController {
     }
 
     func back() {
-        self.delegate?.warehouseFilter(self.status, category: self.category, productGroup: self.productGroup)
+        self.selectedStatus = []
+        self.selectedCategory = []
+        self.selectedProductGroup = []
+        
+        for (index, stat) in enumerate(self.statusValue){
+            if stat {
+                self.selectedStatus.append(self.status[index])
+            }
+        }
+        
+        for (index, cat) in enumerate(self.categoryValue){
+            if cat {
+                self.selectedCategory.append(self.category[index])
+            }
+        }
+        
+        for (index, group) in enumerate(self.productGroupValue){
+            if group {
+                self.selectedProductGroup.append(self.productGroup[index])
+            }
+        }
+        
+        self.delegate?.warehouseFilter(self.selectedStatus, category: self.selectedCategory, productGroup: self.selectedProductGroup)
         self.navigationController?.popViewControllerAnimated(true)
     }
     
@@ -93,20 +124,55 @@ class WarehouseFilterViewController: UIViewController {
             cell.textLabel!.text = self.warehouseFilter!.filterModel[indexPath.section].name[indexPath.row]
         }
         
+        /*
         if indexPath.section == 0 {
-            if self.status == self.warehouseFilter!.filterModel[indexPath.section].name[indexPath.row] {
+            if contains(self.status, self.warehouseFilter!.filterModel[indexPath.section].name[indexPath.row]) {
                 cell.accessoryType = UITableViewCellAccessoryType.Checkmark
             } else {
                 cell.accessoryType = UITableViewCellAccessoryType.None
             }
         } else if indexPath.section == 1 {
+            /*
             if self.category == self.warehouseFilter!.filterModel[indexPath.section].name[indexPath.row] {
+                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            } else {
+                cell.accessoryType = UITableViewCellAccessoryType.None
+            }*/
+            if contains(self.category, self.warehouseFilter!.filterModel[indexPath.section].name[indexPath.row]) {
                 cell.accessoryType = UITableViewCellAccessoryType.Checkmark
             } else {
                 cell.accessoryType = UITableViewCellAccessoryType.None
             }
         } else {
+            /*
             if self.productGroup == self.warehouseFilter!.filterModel[indexPath.section].name[indexPath.row] {
+                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            } else {
+                cell.accessoryType = UITableViewCellAccessoryType.None
+            }*/
+            if contains(self.productGroup, self.warehouseFilter!.filterModel[indexPath.section].name[indexPath.row]) {
+                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            } else {
+                cell.accessoryType = UITableViewCellAccessoryType.None
+            }
+        }*/
+        if indexPath.section == 0 {
+            if self.statusValue[indexPath.row] == true || contains(self.selectedStatus, self.warehouseFilter!.filterModel[indexPath.section].name[indexPath.row]) {
+                cell.selected = true
+                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            } else {
+                cell.accessoryType = UITableViewCellAccessoryType.None
+            }
+        } else if indexPath.section == 1 {
+            if self.categoryValue[indexPath.row] == true || contains(self.selectedCategory, self.warehouseFilter!.filterModel[indexPath.section].name[indexPath.row]) {
+                cell.selected = true
+                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            } else {
+                cell.accessoryType = UITableViewCellAccessoryType.None
+            }
+        } else {
+            if self.productGroupValue[indexPath.row] == true || contains(self.selectedProductGroup, self.warehouseFilter!.filterModel[indexPath.section].name[indexPath.row]){
+                cell.selected = true
                 cell.accessoryType = UITableViewCellAccessoryType.Checkmark
             } else {
                 cell.accessoryType = UITableViewCellAccessoryType.None
@@ -122,27 +188,60 @@ class WarehouseFilterViewController: UIViewController {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = self.tableView.cellForRowAtIndexPath(indexPath)
-        if indexPath.section == 0 {
-            if self.status == cell!.textLabel!.text! {
-                self.status = ""
+        if cell!.selected {
+            cell!.selected = false
+            if cell!.accessoryType == UITableViewCellAccessoryType.None {
+                cell!.accessoryType = UITableViewCellAccessoryType.Checkmark
+                if indexPath.section == 0 {
+                    self.statusValue[indexPath.row] = true
+                } else if indexPath.section == 1 {
+                    self.categoryValue[indexPath.row] = true
+                } else {
+                    self.productGroupValue[indexPath.row] = true
+                }
             } else {
-               self.status = cell!.textLabel!.text!
+                cell!.accessoryType = UITableViewCellAccessoryType.None
+                if indexPath.section == 0 {
+                    self.statusValue[indexPath.row] = false
+                } else if indexPath.section == 1 {
+                    self.categoryValue[indexPath.row] = false
+                } else {
+                    self.productGroupValue[indexPath.row] = false
+                }
+            }
+        }
+        /*if indexPath.section == 0 {
+            if contains(self.status, cell!.textLabel!.text!) {
+                self.statusValue[indexPath.row] = false
+            } else {
+               self.statusValue[indexPath.row] = true
             }
         } else if indexPath.section == 1 {
-            if self.category == cell!.textLabel!.text! {
+            /*if self.category == cell!.textLabel!.text! {
                 self.category = ""
             } else {
                 self.category = cell!.textLabel!.text!
+            }*/
+            if contains(self.category, cell!.textLabel!.text!) {
+                self.categoryValue[indexPath.row] = false
+            } else {
+                self.categoryValue[indexPath.row] = true
             }
         } else {
+            /*
             if self.productGroup == cell!.textLabel!.text! {
                 self.productGroup = ""
             } else {
                 self.productGroup = cell!.textLabel!.text!
+            }*/
+            if contains(self.productGroup, cell!.textLabel!.text!) {
+                self.productGroupValue[indexPath.row] = false
+            } else {
+                self.productGroupValue[indexPath.row] = true
             }
-        }
+        }*/
         
-        self.tableView.reloadData()
+        //self.tableView.reloadData()
     }
     
     // MARK: -
@@ -224,6 +323,20 @@ class WarehouseFilterViewController: UIViewController {
                 if let success = responseObject["isSuccessful"] as? Bool {
                     if success {
                         self.warehouseFilter = WareFilterModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                        for (i, status) in enumerate(self.warehouseFilter!.filter) {
+                            for (j, value) in enumerate(self.warehouseFilter!.filterModel[i].name) {
+                                if i == 0 {
+                                    self.statusValue.append(false)
+                                    self.status.append(self.warehouseFilter!.filterModel[i].name[j])
+                                } else if i == 1 {
+                                    self.categoryValue.append(false)
+                                    self.category.append(self.warehouseFilter!.filterModel[i].name[j])
+                                } else {
+                                    self.productGroupValue.append(false)
+                                    self.productGroup.append(self.warehouseFilter!.filterModel[i].name[j])
+                                }
+                            }
+                        }
                     }
                 }
                 
