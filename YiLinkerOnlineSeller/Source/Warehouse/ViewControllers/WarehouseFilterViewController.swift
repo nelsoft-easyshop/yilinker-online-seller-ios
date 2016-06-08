@@ -117,6 +117,7 @@ class WarehouseFilterViewController: UIViewController {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+
         let cell = self.tableView.cellForRowAtIndexPath(indexPath)
 
         if cell!.selected {
@@ -126,7 +127,7 @@ class WarehouseFilterViewController: UIViewController {
                 if indexPath.section == 0 {
                     self.status[indexPath.row] = true
                 } else if indexPath.section == 1 {
-                    self.categories[indexPath] = true
+                    self.categories[indexPath.row] = true
                 } else {
                     self.productGroup[indexPath.row] = true
                 }
@@ -135,7 +136,7 @@ class WarehouseFilterViewController: UIViewController {
                 if indexPath.section == 0 {
                     self.status[indexPath.row] = false
                 } else if indexPath.section == 1 {
-                    self.categories[indexPath] = false
+                    self.categories[indexPath.row] = false
                 } else {
                     self.productGroup[indexPath.row] = false
                 }
