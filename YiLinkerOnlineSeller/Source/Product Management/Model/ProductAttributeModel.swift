@@ -29,7 +29,7 @@ class ProductAttributeModel {
                 model.valueName.append(value["name"] as! String)
             }
         }
-        
+
         return model
     }
 }

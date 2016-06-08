@@ -206,6 +206,7 @@ struct APIAtlas {
     
     //Warehouse
     static let warehouseInventory = APIAtlas.generateV3URL("auth/warehouse/inventory")
+    static let getWarehouseList = APIAtlas.generateV3URL("auth/warehouse/list?access_token=")
 }
 
 class APIManager: AFHTTPSessionManager {
