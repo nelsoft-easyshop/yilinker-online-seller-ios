@@ -11,21 +11,32 @@ import UIKit
 class WarehouseListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    var warehouseList: [WarehouseModel] = []
+    var hud: MBProgressHUD?
     
     override func viewDidLoad() {
         self.initializeViews()
         self.initializedNavigationBarItems()
+        self.fireGetWarehouseList()
     }
     
     //MARK: UITableView DataSource Methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return self.warehouseList.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellIdentifier: String = "WarehouseCell"
         let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! UITableViewCell
+        
+        var warehouse: WarehouseModel = self.warehouseList[indexPath.row]
+        let warehouseTitle: UILabel = cell.contentView.viewWithTag(100) as! UILabel
+        let warehouseAddress: UILabel = cell.contentView.viewWithTag(200) as! UILabel
+        
+        warehouseTitle.text = warehouse.name
+        warehouseAddress.text = warehouse.fullAddress
+        
         return cell;
     }
     
@@ -75,5 +86,88 @@ class WarehouseListViewController: UIViewController, UITableViewDataSource, UITa
         addWarehouseVC.navigationController!.navigationBar.barTintColor = self.navigationController!.navigationBar.barTintColor
         self.presentViewController(navController, animated: true, completion: nil)
     }
+    
+    func fireGetWarehouseList () {
+        self.showHUD()
+        WebServiceManager.fireGetListOfWarehouses(APIAtlas.getWarehouseList + SessionManager.accessToken(), actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            println("\(responseObject)")
+            
+            self.hud?.hide(true)
+            
+            if successful {
+                var responseList: NSArray = (responseObject["data"] as? NSArray)!
+                
+                println("\(responseList)")
+                if responseList.count != 0 {
+                    
+                    for var i = 0; i < responseList.count; i++ {
+                        let warehouseDic: NSDictionary = responseList[i] as! NSDictionary
+                        let warehouse: WarehouseModel = WarehouseModel.parseDataWithDictionary(warehouseDic)
+                        println("\(warehouse.barangayLocationID)")
+                        println("\(warehouse.barangayLocation)")
+                        println("\(warehouse.cityLocationID)")
+                        println("\(warehouse.cityLocation)")
+                        println("\(warehouse.provinceLocationID)")
+                        println("\(warehouse.provinceLocation)")
+                        println("\(warehouse.countryLocationID)")
+                        println("\(warehouse.countryLocation)")
+                        println("\(warehouse.flag)")
+                        println("\(warehouse.id)")
+                        println("\(warehouse.name)")
+                        println("\(warehouse.fullAddress)")
+                        println("\(warehouse.isDelete)")
+                        println("\(warehouse.zipCode)")
+                        self.warehouseList.append(warehouse)
+                    }
+                    self.tableView.reloadData()
+                    println("\(self.warehouseList.count)")
+                    
+                } else {
+                    // self.emptyLabel.hidden = false
+                }
+                
+            } else {
+                if requestErrorType == .ResponseError {
+                    // Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    //                    self.fireRefreshToken()
+                } else if requestErrorType == .PageNotFound {
+                    // Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    // No internet connection
+                    // Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    // self.addEmptyView()
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
+            
+        })
+    
+    }
+    
+    
+    // Show hud
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+
     
 }

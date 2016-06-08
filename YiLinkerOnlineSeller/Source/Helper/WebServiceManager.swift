@@ -1081,6 +1081,16 @@ class WebServiceManager: NSObject {
         }
     }
     
+    // MARK: - List of Warehouses
+    
+    class func fireGetListOfWarehouses(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        
+        self.firePostRequestWithUrl(url, parameters: []) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
     // MARK: - Country Store Setup
     
     class func fireGetCountrySetupDetails(url: String, productId: String, code: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
