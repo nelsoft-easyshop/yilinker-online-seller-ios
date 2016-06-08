@@ -85,13 +85,13 @@ class WarehouseFilterViewController: UIViewController {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 40))
         view.backgroundColor = Constants.Colors.backgroundGray
         let label = UILabel(frame: CGRect(x: 10, y: 5, width: tableView.frame.size.width, height: 20))
-        label.font = UIFont(name: "Panton", size: 12.0)
+        label.font = UIFont(name: "Panton Bold", size: 14.0)
         if self.warehouseFilter != nil {
             label.text = self.warehouseFilter!.filter[section]
         }
         
         label.backgroundColor = UIColor.clearColor()
-        label.textColor = UIColor.blackColor()
+        label.textColor = Constants.Colors.grayLine
         view.addSubview(label)
         //view.addSubview(view)
         
@@ -119,7 +119,7 @@ class WarehouseFilterViewController: UIViewController {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellIdentifier: String = "FilterCell"
         let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! UITableViewCell
-        cell.textLabel!.font = UIFont(name: "Panton", size: 12.0)
+        cell.textLabel!.font = UIFont(name: "Panton", size: 14.0)
         if self.warehouseFilter != nil {
             cell.textLabel!.text = self.warehouseFilter!.filterModel[indexPath.section].name[indexPath.row]
         }
