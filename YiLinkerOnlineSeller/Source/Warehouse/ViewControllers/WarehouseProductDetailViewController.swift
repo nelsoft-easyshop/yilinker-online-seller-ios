@@ -10,11 +10,28 @@ import UIKit
 
 class WarehouseProductDetailViewController: UIViewController {
     
+    @IBOutlet weak var skuLabel: UILabel!
+    @IBOutlet weak var productNameLabel: UILabel!
+    @IBOutlet weak var systemInventoryLabel: UILabel!
+    @IBOutlet weak var actualInventoryLabel: UILabel!
+    @IBOutlet weak var skuTextField: UITextField!
+    @IBOutlet weak var productNameTextField: UITextField!
+    @IBOutlet weak var systemInventoryTextField: UITextField!
+    @IBOutlet weak var actualInventoryTextField: UITextField!
+    
+    var warehouseProduct: WarehouseInventoryProduct!
+    
     override func viewDidLoad() {
         self.title = "Warehouse Product Detail"
         self.initializedNavigationBarItems()
+
+        self.title = self.warehouseProduct.name
+        self.skuTextField.text = self.warehouseProduct.sku
+        self.productNameTextField.text = self.warehouseProduct.name
+        self.systemInventoryTextField.text = "\(self.warehouseProduct.quantity)"
+        self.actualInventoryTextField.text = "\(self.warehouseProduct.quantity)"
+        
     }
-    
     
     func initializedNavigationBarItems() {
         self.title = StringHelper.localizedStringWithKey("Add Warehouse")
