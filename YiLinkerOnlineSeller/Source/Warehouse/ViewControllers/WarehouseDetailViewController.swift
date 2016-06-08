@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, WarehouseFilterViewControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -31,7 +31,10 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
         self.initializeViews()
         self.initializedNavigationBarItems()
         //self.configureCell()
-        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
         self.fireGetWarehouseInventory()
     }
 
@@ -176,6 +179,10 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
     func addFilter() {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let warehouseFilterVC: WarehouseFilterViewController = storyboard.instantiateViewControllerWithIdentifier("WarehouseFilterViewController") as! WarehouseFilterViewController
+        warehouseFilterVC.delegate = self
+        warehouseFilterVC.status = self.status
+        warehouseFilterVC.category = self.category
+        warehouseFilterVC.productGroup = self.group
         self.navigationController?.pushViewController(warehouseFilterVC, animated: true)
     }
 
@@ -257,5 +264,13 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
                 })
             }
         })
+    }
+    
+    // MARK: -
+    // MARK: - WarehouseFilterViewController Delegate Method 
+    func warehouseFilter(status: String, category: String, productGroup: String) {
+        self.status = status
+        self.category = category
+        self.group = productGroup
     }
 }

@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol WarehouseFilterViewControllerDelegate{
+    func warehouseFilter(status: String, category: String, productGroup: String)
+}
+
 class WarehouseFilterViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
@@ -15,8 +19,10 @@ class WarehouseFilterViewController: UIViewController {
     var hud: MBProgressHUD?
     var warehouseFilter: WareFilterModel?
     var status: String = ""
-    var categories: String = ""
-    var productGroups: String = ""
+    var category: String = ""
+    var productGroup: String = ""
+    
+    var delegate: WarehouseFilterViewControllerDelegate?
     
     override func viewDidLoad() {
         self.initializedNavigationBarItems()
@@ -38,6 +44,7 @@ class WarehouseFilterViewController: UIViewController {
     }
 
     func back() {
+        self.delegate?.warehouseFilter(self.status, category: self.category, productGroup: self.productGroup)
         self.navigationController?.popViewControllerAnimated(true)
     }
     
@@ -93,13 +100,13 @@ class WarehouseFilterViewController: UIViewController {
                 cell.accessoryType = UITableViewCellAccessoryType.None
             }
         } else if indexPath.section == 1 {
-            if self.categories == self.warehouseFilter!.filterModel[indexPath.section].name[indexPath.row] {
+            if self.category == self.warehouseFilter!.filterModel[indexPath.section].name[indexPath.row] {
                 cell.accessoryType = UITableViewCellAccessoryType.Checkmark
             } else {
                 cell.accessoryType = UITableViewCellAccessoryType.None
             }
         } else {
-            if self.productGroups == self.warehouseFilter!.filterModel[indexPath.section].name[indexPath.row] {
+            if self.productGroup == self.warehouseFilter!.filterModel[indexPath.section].name[indexPath.row] {
                 cell.accessoryType = UITableViewCellAccessoryType.Checkmark
             } else {
                 cell.accessoryType = UITableViewCellAccessoryType.None
@@ -118,25 +125,14 @@ class WarehouseFilterViewController: UIViewController {
         if indexPath.section == 0 {
             self.status = cell!.textLabel!.text!
         } else if indexPath.section == 1 {
-            self.categories = cell!.textLabel!.text!
+            self.category = cell!.textLabel!.text!
         } else {
-            self.productGroups = cell!.textLabel!.text!
-        }
-        /*
-        // toggle old one off and the new one on
-        let newCell = tableView.cellForRowAtIndexPath(indexPath)
-        if newCell?.accessoryType == UITableViewCellAccessoryType.None {
-            newCell?.accessoryType = UITableViewCellAccessoryType.Checkmark
+            self.productGroup = cell!.textLabel!.text!
         }
         
-        let oldCell = tableView.cellForRowAtIndexPath(self.selectedIndexPath!)
-        if oldCell?.accessoryType == UITableViewCellAccessoryType.Checkmark && indexPath.section == self.selectedIndexPath!.section {
-            oldCell?.accessoryType = UITableViewCellAccessoryType.None
-        }
-        
-        self.selectedIndexPath = indexPath*/
         self.tableView.reloadData()
     }
+    
     // MARK: -
     // MARK: - Alert view
     
