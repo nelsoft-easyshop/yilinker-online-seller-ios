@@ -35,8 +35,8 @@ class ProductManagementAllTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        storesLabel.text = Strings.stores + " :"
-        languageLabel.text = Strings.language + " :"
+        storesLabel.text = Strings.stores + ":"
+        languageLabel.text = Strings.language + ":"
         
     }
 
