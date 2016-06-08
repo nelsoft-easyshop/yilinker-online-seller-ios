@@ -85,6 +85,8 @@ struct APIAtlas {
     static let sellerBank = APIAtlas.generateV3URL("auth/bank/getEnabledBanks")
     static let sellerEditBankAccount = APIAtlas.generateV3URL("auth/bank/account/editBankAccount")
     
+    // Warehouse
+    static let warehouseFilter = APIAtlas.generateV3URL("auth/warehouse/inventory-filter?access_token=")
     
     //My Points
     static let getPointsTotal = APIAtlas.generateV3URL("auth/user/getPoints")

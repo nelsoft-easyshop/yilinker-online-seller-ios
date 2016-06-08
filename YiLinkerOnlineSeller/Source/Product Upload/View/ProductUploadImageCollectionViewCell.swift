@@ -44,8 +44,6 @@ class ProductUploadImageCollectionViewCell: UICollectionViewCell {
     
     // MARK: Button actions
     @IBAction func star(sender: AnyObject) {
-        println("star clicked")
-        self.starButton.setBackgroundImage(UIImage(named: "active2"), forState: UIControlState.Normal)
         self.delegate?.productUploadImageCollectionViewCell(didTapStarButtonAtCell: self)
     }
     
