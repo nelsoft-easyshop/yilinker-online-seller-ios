@@ -157,21 +157,21 @@ class WarehouseFilterViewController: UIViewController {
             }
         }*/
         if indexPath.section == 0 {
-            if self.statusValue[indexPath.row] == true || contains(self.selectedStatus, self.warehouseFilter!.filterModel[indexPath.section].name[indexPath.row]) {
+            if self.statusValue[indexPath.row] == true {
                 cell.selected = true
                 cell.accessoryType = UITableViewCellAccessoryType.Checkmark
             } else {
                 cell.accessoryType = UITableViewCellAccessoryType.None
             }
         } else if indexPath.section == 1 {
-            if self.categoryValue[indexPath.row] == true || contains(self.selectedCategory, self.warehouseFilter!.filterModel[indexPath.section].name[indexPath.row]) {
+            if self.categoryValue[indexPath.row] == true {
                 cell.selected = true
                 cell.accessoryType = UITableViewCellAccessoryType.Checkmark
             } else {
                 cell.accessoryType = UITableViewCellAccessoryType.None
             }
         } else {
-            if self.productGroupValue[indexPath.row] == true || contains(self.selectedProductGroup, self.warehouseFilter!.filterModel[indexPath.section].name[indexPath.row]){
+            if self.productGroupValue[indexPath.row] == true {
                 cell.selected = true
                 cell.accessoryType = UITableViewCellAccessoryType.Checkmark
             } else {
@@ -326,13 +326,25 @@ class WarehouseFilterViewController: UIViewController {
                         for (i, status) in enumerate(self.warehouseFilter!.filter) {
                             for (j, value) in enumerate(self.warehouseFilter!.filterModel[i].name) {
                                 if i == 0 {
-                                    self.statusValue.append(false)
+                                    if contains(self.selectedStatus, self.warehouseFilter!.filterModel[i].name[j]) {
+                                        self.statusValue.append(true)
+                                    } else {
+                                        self.statusValue.append(false)
+                                    }
                                     self.status.append(self.warehouseFilter!.filterModel[i].name[j])
                                 } else if i == 1 {
-                                    self.categoryValue.append(false)
+                                    if contains(self.selectedCategory, self.warehouseFilter!.filterModel[i].name[j]) {
+                                        self.categoryValue.append(true)
+                                    } else {
+                                        self.categoryValue.append(false)
+                                    }
                                     self.category.append(self.warehouseFilter!.filterModel[i].name[j])
                                 } else {
-                                    self.productGroupValue.append(false)
+                                    if contains(self.selectedProductGroup, self.warehouseFilter!.filterModel[i].name[j]) {
+                                        self.productGroupValue.append(true)
+                                    } else {
+                                        self.productGroupValue.append(false)
+                                    }
                                     self.productGroup.append(self.warehouseFilter!.filterModel[i].name[j])
                                 }
                             }
