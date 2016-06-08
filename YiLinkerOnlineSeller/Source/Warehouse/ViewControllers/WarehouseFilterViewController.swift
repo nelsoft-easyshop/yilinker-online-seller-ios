@@ -119,7 +119,7 @@ class WarehouseFilterViewController: UIViewController {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellIdentifier: String = "FilterCell"
         let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! UITableViewCell
-        cell.textLabel.font = UIFont(name: "Panton", size: 12.0)
+        cell.textLabel!.font = UIFont(name: "Panton", size: 12.0)
         if self.warehouseFilter != nil {
             cell.textLabel!.text = self.warehouseFilter!.filterModel[indexPath.section].name[indexPath.row]
         }
