@@ -240,25 +240,25 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     
     func done() {
         
-        if self.countryTextField.text == "" {
+        if self.countryTextField.text == "" && self.countryModel != nil {
             self.countryTextField.text = self.countryModel!.location[0]
             self.countryId = "\(self.countryModel!.countryId[0])"
             self.textField = self.provinceTextField
         }
         
-        if self.provinceTextField.text == "" {
+        if self.provinceTextField.text == "" && self.provinceModel != nil {
             self.provinceTextField.text = self.provinceModel!.location[0]
             self.provinceId = "\(self.provinceModel!.provinceId[0])"
             self.textField = self.cityMunTextField
         }
         
-        if self.cityMunTextField.text == "" {
+        if self.cityMunTextField.text == "" && self.cityModel != nil {
             self.cityMunTextField.text = self.cityModel!.location[0]
             self.cityId = "\(self.cityModel!.cityId[0])"
             self.textField = self.barangayDistrictTextField
         }
         
-        if self.barangayDistrictTextField.text == "" {
+        if self.barangayDistrictTextField.text == "" && self.barangayModel != nil {
             self.barangayDistrictTextField.text = self.barangayModel!.location[0]
             self.barangayId = "\(self.barangayModel!.barangayId[0])"
             self.textField = self.barangayDistrictTextField
