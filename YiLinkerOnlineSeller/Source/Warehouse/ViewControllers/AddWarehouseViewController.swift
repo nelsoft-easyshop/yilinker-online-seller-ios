@@ -161,23 +161,21 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.selectedIndex = row
-        if self.countryModel != nil || self.provinceModel != nil || self.cityModel != nil || self.barangayModel != nil {
-            if self.selectedTextField == self.countryTextField {
-                self.countryId = "\(self.countryModel!.countryId[row])"
-                self.selectedTextField = self.provinceTextField
-                self.countryTextField.text = self.countryModel!.location[row]
-            } else if self.selectedTextField == self.provinceTextField {
-                self.provinceId = "\(self.provinceModel!.provinceId[row])"
-                self.selectedTextField = self.cityMunTextField
-                self.provinceTextField.text = self.provinceModel!.location[row]
-            } else if self.selectedTextField == self.cityMunTextField {
-                self.cityId = "\(self.cityModel!.cityId[row])"
-                self.selectedTextField = self.barangayDistrictTextField
-                self.cityMunTextField.text = self.cityModel!.location[row]
-            } else if self.selectedTextField == self.barangayDistrictTextField {
-                self.barangayId = "\(self.barangayModel!.barangayId[row])"
-                self.barangayDistrictTextField.text = self.barangayModel!.location[row]
-            }
+        if self.selectedTextField == self.countryTextField && self.countryModel != nil{
+            self.countryId = "\(self.countryModel!.countryId[row])"
+            self.selectedTextField = self.provinceTextField
+            self.countryTextField.text = self.countryModel!.location[row]
+        } else if self.selectedTextField == self.provinceTextField && self.provinceModel != nil {
+            self.provinceId = "\(self.provinceModel!.provinceId[row])"
+            self.selectedTextField = self.cityMunTextField
+            self.provinceTextField.text = self.provinceModel!.location[row]
+        } else if self.selectedTextField == self.cityMunTextField && self.cityModel != nil {
+            self.cityId = "\(self.cityModel!.cityId[row])"
+            self.selectedTextField = self.barangayDistrictTextField
+            self.cityMunTextField.text = self.cityModel!.location[row]
+        } else if self.selectedTextField == self.barangayDistrictTextField && self.barangayModel != nil {
+            self.barangayId = "\(self.barangayModel!.barangayId[row])"
+            self.barangayDistrictTextField.text = self.barangayModel!.location[row]
         }
     }
     
