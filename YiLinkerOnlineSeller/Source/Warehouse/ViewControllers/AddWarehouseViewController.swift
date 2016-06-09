@@ -35,7 +35,7 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     var selectedTextField: UITextField?
     var textField: UITextField?
     
-    // Models 
+    // Models
     var countryModel: WarehouseCountryModel?
     var provinceModel: WarehouseProvinceModel?
     var cityModel: WarehouseCityModel?

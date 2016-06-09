@@ -1493,7 +1493,7 @@
                                     <outlet property="delegate" destination="nOb-Vl-TXr" id="7Gh-fd-Ggt"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No result found." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAN-Ux-RhM">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No result found." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAN-Ux-RhM">
                                 <rect key="frame" x="8" y="323" width="359" height="21"/>
                                 <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
                                 <nil key="highlightedColor"/>
@@ -3440,7 +3440,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Neo-3K-oAL">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WAk-sG-dDb">
+                                            <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WAk-sG-dDb">
                                                 <rect key="frame" x="16" y="51" width="288" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="PSq-HB-6mU"/>
@@ -3457,7 +3457,7 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZEF-68-5eF">
+                                            <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZEF-68-5eF">
                                                 <rect key="frame" x="16" y="118" width="288" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="NRV-75-TSz"/>
@@ -3465,7 +3465,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="y6x-Mj-hEY">
+                                            <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="y6x-Mj-hEY">
                                                 <rect key="frame" x="16" y="185" width="288" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="6oH-b5-jfm"/>
@@ -3488,7 +3488,7 @@
                                                     <constraint firstAttribute="height" constant="30" id="J7G-8c-igZ"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Actual Inventory" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9zt-Ye-ihm">
                                                 <rect key="frame" x="16" y="223" width="288" height="21"/>
@@ -3555,6 +3555,16 @@
                             <constraint firstAttribute="width" secondItem="Neo-3K-oAL" secondAttribute="width" id="zMg-6Y-lYd"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="actualInventoryLabel" destination="9zt-Ye-ihm" id="WC3-oK-YL0"/>
+                        <outlet property="actualInventoryTextField" destination="Qa7-y5-bgD" id="yOb-1E-Jqh"/>
+                        <outlet property="productNameLabel" destination="A1t-FJ-5Fp" id="TWN-yU-2JE"/>
+                        <outlet property="productNameTextField" destination="ZEF-68-5eF" id="oUu-U4-UIF"/>
+                        <outlet property="skuLabel" destination="UWM-4H-OMo" id="Eqj-FW-JzW"/>
+                        <outlet property="skuTextField" destination="WAk-sG-dDb" id="pvf-5E-oHF"/>
+                        <outlet property="systemInventoryLabel" destination="as1-7q-kW5" id="re1-Gf-uoI"/>
+                        <outlet property="systemInventoryTextField" destination="y6x-Mj-hEY" id="cqu-sA-FYd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bsw-0O-ofY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
