@@ -199,6 +199,7 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
             let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let wareHouseProductDetailVC: WarehouseProductDetailViewController = storyboard.instantiateViewControllerWithIdentifier("WarehouseProductDetailViewController") as! WarehouseProductDetailViewController
             wareHouseProductDetailVC.warehouseProduct = self.warehouseInventory[indexPath.row]
+            wareHouseProductDetailVC.warehouseId = "\(warehouse.id)"
             let navController = UINavigationController(rootViewController: wareHouseProductDetailVC)
             wareHouseProductDetailVC.navigationController!.navigationBar.barTintColor = self.navigationController!.navigationBar.barTintColor
             self.presentViewController(navController, animated: true, completion: nil)

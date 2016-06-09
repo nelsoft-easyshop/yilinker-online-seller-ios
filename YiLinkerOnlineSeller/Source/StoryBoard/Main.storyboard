@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="PZ0-iH-fRI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="PZ0-iH-fRI">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -1493,7 +1493,7 @@
                                     <outlet property="delegate" destination="nOb-Vl-TXr" id="7Gh-fd-Ggt"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No result found." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAN-Ux-RhM">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No result found." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAN-Ux-RhM">
                                 <rect key="frame" x="8" y="323" width="359" height="21"/>
                                 <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
                                 <nil key="highlightedColor"/>
@@ -2639,7 +2639,7 @@
                                     <action selector="casesPressed:" destination="eEd-Xe-rMz" eventType="touchUpInside" id="yCs-Ln-NDF"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6YK-VZ-EdR">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6YK-VZ-EdR">
                                 <rect key="frame" x="107" y="64" width="106" height="60"/>
                                 <color key="backgroundColor" red="0.43529411759999997" green="0.20000000000000001" blue="0.52156862749999999" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3124,21 +3124,21 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="barangayLabel" destination="d0v-ui-8tX" id="scq-tr-VWc"/>
-                        <outlet property="barangayTextField" destination="HUL-1u-yKb" id="zA1-4g-cao"/>
-                        <outlet property="cityLabel" destination="sCB-1w-ntQ" id="N6s-PP-U1f"/>
-                        <outlet property="cityTextField" destination="bwv-tO-qEb" id="vAU-cN-Qhq"/>
-                        <outlet property="countryLabel" destination="crf-mM-rVZ" id="Lkn-eq-E8b"/>
-                        <outlet property="countryTextField" destination="mJr-r1-CLe" id="pc4-yc-OG1"/>
-                        <outlet property="fullAddressLabel" destination="TEa-Td-9rC" id="pnT-ah-5Iy"/>
-                        <outlet property="fullAddressTextField" destination="Veb-jp-OUf" id="a4c-zs-Qda"/>
-                        <outlet property="provinceLabel" destination="dCu-5U-dPu" id="UcC-6f-vBL"/>
-                        <outlet property="provinceTextField" destination="Wxm-vt-cfg" id="aXi-3W-VFR"/>
+                        <outlet property="barangayDistrictLabel" destination="d0v-ui-8tX" id="VZj-Oj-AeC"/>
+                        <outlet property="barangayDistrictTextField" destination="HUL-1u-yKb" id="FR3-v2-ZCZ"/>
+                        <outlet property="cityMunLabel" destination="sCB-1w-ntQ" id="NRc-AG-ezP"/>
+                        <outlet property="cityMunTextField" destination="bwv-tO-qEb" id="LLy-RS-jbk"/>
+                        <outlet property="countryLabel" destination="crf-mM-rVZ" id="hmy-oU-BNm"/>
+                        <outlet property="countryTextField" destination="mJr-r1-CLe" id="4ZL-FJ-ZPO"/>
+                        <outlet property="fullAddressLabel" destination="TEa-Td-9rC" id="ACJ-Cb-1IZ"/>
+                        <outlet property="fullAddressTextField" destination="Veb-jp-OUf" id="ZIT-v2-Koj"/>
+                        <outlet property="provinceLabel" destination="dCu-5U-dPu" id="jnV-NT-H5H"/>
+                        <outlet property="provinceTextField" destination="Wxm-vt-cfg" id="sdE-g9-2l1"/>
                         <outlet property="scrollView" destination="LCY-bJ-Vfx" id="vmO-ht-jOr"/>
-                        <outlet property="warehouseNameLabel" destination="IHb-nf-B3A" id="57v-wy-bQd"/>
-                        <outlet property="warehouseNameTextField" destination="uTk-Zc-IHI" id="nIA-1a-h1C"/>
-                        <outlet property="zipCodeLabel" destination="Pad-fI-vDo" id="stL-9M-uGR"/>
-                        <outlet property="zipCodeTextField" destination="5r0-Xk-XfL" id="8DN-QN-N0Y"/>
+                        <outlet property="warehouseNameLabel" destination="IHb-nf-B3A" id="Oke-rH-0Hg"/>
+                        <outlet property="warehouseNameTextField" destination="uTk-Zc-IHI" id="qmr-uL-2vf"/>
+                        <outlet property="zipCodeLabel" destination="Pad-fI-vDo" id="4Hp-er-eAJ"/>
+                        <outlet property="zipCodeTextField" destination="5r0-Xk-XfL" id="HaE-NW-Yce"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pv0-pM-dXt" userLabel="First Responder" sceneMemberID="firstResponder"/>
