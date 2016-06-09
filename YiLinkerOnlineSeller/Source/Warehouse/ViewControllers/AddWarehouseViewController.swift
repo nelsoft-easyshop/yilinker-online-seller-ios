@@ -73,6 +73,9 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
         
         self.fireAddressByType(self.countryTextField)
         self.selectedTextField = self.countryTextField
+        self.provinceTextField.userInteractionEnabled = false
+        self.cityMunTextField.userInteractionEnabled = false
+        self.barangayDistrictTextField.userInteractionEnabled = false
     }
     
     //MARK: Textfield delegate methods
@@ -81,20 +84,13 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
        
         if self.countryModel != nil {
            self.addPicker(self.selectedIndex, textField: textField)
-        }
-        
-        if self.provinceModel != nil && self.countryId != "" {
+        } else if self.provinceModel != nil && self.countryId != "" {
+            self.addPicker(self.selectedIndex, textField: textField)
+        } else if self.cityModel != nil && self.provinceId != "" {
+            self.addPicker(self.selectedIndex, textField: textField)
+        } else if self.barangayModel != nil && self.cityId != "" {
             self.addPicker(self.selectedIndex, textField: textField)
         }
-        
-        if self.cityModel != nil && self.provinceId != "" {
-            self.addPicker(self.selectedIndex, textField: textField)
-        }
-        
-        if self.barangayModel != nil && self.cityId != "" {
-            self.addPicker(self.selectedIndex, textField: textField)
-        }
-        
     }
     
     //MARK: Private Methods
@@ -136,7 +132,7 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     func addWarehouse() {
         println("AddWarehouse, API CALL")
         if self.warehouseNameTextField.text == "" || self.fullAddressTextField.text == "" || self.countryTextField.text == "" || self.provinceTextField.text == "" || self.cityMunTextField.text == "" || self.barangayDistrictTextField.text == "" {
-            self.showAlert("Fill up the followinf textfields.", message: "")
+            self.showAlert("Fill-up the following textfields.", message: "")
         } else {
             self.fireAddWarehouse()
         }
@@ -314,12 +310,24 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
                     if success {
                         if textField == self.countryTextField {
                             self.countryModel = WarehouseCountryModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                            self.provinceTextField.userInteractionEnabled = false
+                            self.cityMunTextField.userInteractionEnabled = false
+                            self.barangayDistrictTextField.userInteractionEnabled = false
                         } else if textField == self.provinceTextField {
                             self.provinceModel = WarehouseProvinceModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                            self.provinceTextField.userInteractionEnabled = true
+                            self.cityMunTextField.userInteractionEnabled = false
+                            self.barangayDistrictTextField.userInteractionEnabled = false
                         } else if textField == self.cityMunTextField {
                             self.cityModel = WarehouseCityModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                            self.provinceTextField.userInteractionEnabled = true
+                            self.cityMunTextField.userInteractionEnabled = true
+                            self.barangayDistrictTextField.userInteractionEnabled = false
                         } else if textField == self.barangayDistrictTextField {
                             self.barangayModel = WarehouseBarangayModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                            self.provinceTextField.userInteractionEnabled = true
+                            self.cityMunTextField.userInteractionEnabled = true
+                            self.barangayDistrictTextField.userInteractionEnabled = true
                         }
                         
                         self.countryTextField!.endEditing(true)
