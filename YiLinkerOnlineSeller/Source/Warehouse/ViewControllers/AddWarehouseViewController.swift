@@ -146,16 +146,14 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
-        if self.countryModel != nil || self.provinceModel != nil || self.cityModel != nil || self.barangayModel != nil {
-            if self.selectedTextField == self.countryTextField {
-                return self.countryModel!.location[row]
-            } else if selectedTextField == self.provinceTextField {
-                return self.provinceModel!.location[row]
-            } else if selectedTextField == self.cityMunTextField {
-                return self.cityModel!.location[row]
-            } else if selectedTextField == self.barangayDistrictTextField {
-                return self.barangayModel!.location[row]
-            }
+        if self.selectedTextField == self.countryTextField && self.countryModel != nil {
+            return self.countryModel!.location[row]
+        } else if selectedTextField == self.provinceTextField &&  self.provinceModel != nil {
+            return self.provinceModel!.location[row]
+        } else if selectedTextField == self.cityMunTextField && self.cityModel != nil {
+            return self.cityModel!.location[row]
+        } else if selectedTextField == self.barangayDistrictTextField && self.barangayModel != nil{
+            return self.barangayModel!.location[row]
         }
         
         return ""
