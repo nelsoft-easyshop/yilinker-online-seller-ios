@@ -8,16 +8,18 @@
 
 import UIKit
 
-class WarehouseListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class WarehouseListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MGSwipeTableCellDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     var warehouseList: [WarehouseModel] = []
     var hud: MBProgressHUD?
+   
     
     override func viewDidLoad() {
         self.initializeViews()
         self.initializedNavigationBarItems()
         self.fireGetWarehouseList()
+    
     }
     
     //MARK: UITableView DataSource Methods
@@ -28,7 +30,13 @@ class WarehouseListViewController: UIViewController, UITableViewDataSource, UITa
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellIdentifier: String = "WarehouseCell"
-        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! UITableViewCell
+        let cell: MGSwipeTableCell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! MGSwipeTableCell
+        
+        cell.delegate = self
+        //configure right buttons
+        cell.rightButtons = [MGSwipeButton(title:"",icon: UIImage(named:"warehouse_delete"), backgroundColor: UIColor.lightGrayColor())
+            ,MGSwipeButton(title: "",icon: UIImage(named:"warehouse_edit"), backgroundColor: UIColor.lightGrayColor())]
+        cell.rightSwipeSettings.transition = MGSwipeTransition.Border
         
         var warehouse: WarehouseModel = self.warehouseList[indexPath.row]
         let warehouseTitle: UILabel = cell.contentView.viewWithTag(100) as! UILabel
@@ -153,8 +161,6 @@ class WarehouseListViewController: UIViewController, UITableViewDataSource, UITa
         })
     
     }
-    
-    
     // Show hud
     
     func showHUD() {
@@ -168,5 +174,24 @@ class WarehouseListViewController: UIViewController, UITableViewDataSource, UITa
         self.hud?.dimBackground = false
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
+    }
+    
+    @IBAction func fireDeleteButton(sender: UIButton) {
+        println("delete")
+    }
+    
+    @IBAction func fireEditButton(sender: UIButton) {
+        println("edit")
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let addWarehouseVC: AddWarehouseViewController = storyboard.instantiateViewControllerWithIdentifier("AddWarehouseViewController") as! AddWarehouseViewController
+        let navController = UINavigationController(rootViewController: addWarehouseVC)
+        addWarehouseVC.navigationController!.navigationBar.barTintColor = self.navigationController!.navigationBar.barTintColor
+        self.presentViewController(navController, animated: true, completion: nil)
+    }
+    
+    func swipeTableCell(cell: MGSwipeTableCell!, tappedButtonAtIndex index: Int, direction: MGSwipeDirection, fromExpansion: Bool) -> Bool {
+        
+        println("\(index)")
+        return true
     }
 }
