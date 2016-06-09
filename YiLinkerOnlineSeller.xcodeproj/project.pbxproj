@@ -831,6 +831,10 @@
 		F7C40FDB1B983CD90091C16C /* truck.png in Resources */ = {isa = PBXBuildFile; fileRef = F7C40FCA1B983CD90091C16C /* truck.png */; };
 		F7D71DE21D07B0D00028FFAD /* WareFilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D71DE11D07B0D00028FFAD /* WareFilterModel.swift */; };
 		F7D71DE51D07B1590028FFAD /* FilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D71DE41D07B1590028FFAD /* FilterModel.swift */; };
+		F7FDD0AF1D08FDD300AEA0BB /* WarehouseCountryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FDD0AE1D08FDD300AEA0BB /* WarehouseCountryModel.swift */; };
+		F7FDD0B11D08FDE800AEA0BB /* WarehouseProvinceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FDD0B01D08FDE800AEA0BB /* WarehouseProvinceModel.swift */; };
+		F7FDD0B31D08FDFA00AEA0BB /* WarehouseCityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FDD0B21D08FDFA00AEA0BB /* WarehouseCityModel.swift */; };
+		F7FDD0B51D08FE0A00AEA0BB /* WarehouseBarangayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FDD0B41D08FE0A00AEA0BB /* WarehouseBarangayModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1689,6 +1693,10 @@
 		F7C40FCA1B983CD90091C16C /* truck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = truck.png; sourceTree = "<group>"; };
 		F7D71DE11D07B0D00028FFAD /* WareFilterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WareFilterModel.swift; sourceTree = "<group>"; };
 		F7D71DE41D07B1590028FFAD /* FilterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterModel.swift; sourceTree = "<group>"; };
+		F7FDD0AE1D08FDD300AEA0BB /* WarehouseCountryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarehouseCountryModel.swift; sourceTree = "<group>"; };
+		F7FDD0B01D08FDE800AEA0BB /* WarehouseProvinceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarehouseProvinceModel.swift; sourceTree = "<group>"; };
+		F7FDD0B21D08FDFA00AEA0BB /* WarehouseCityModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarehouseCityModel.swift; sourceTree = "<group>"; };
+		F7FDD0B41D08FE0A00AEA0BB /* WarehouseBarangayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarehouseBarangayModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1813,6 +1821,10 @@
 			isa = PBXGroup;
 			children = (
 				54AC39F91D067C9300B28176 /* WarehouseModel.swift */,
+				F7FDD0AE1D08FDD300AEA0BB /* WarehouseCountryModel.swift */,
+				F7FDD0B01D08FDE800AEA0BB /* WarehouseProvinceModel.swift */,
+				F7FDD0B21D08FDFA00AEA0BB /* WarehouseCityModel.swift */,
+				F7FDD0B41D08FE0A00AEA0BB /* WarehouseBarangayModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4219,6 +4231,7 @@
 				798D83CC1C8686EB00D2A1F7 /* SalesReportTableViewCell.swift in Sources */,
 				79CCB6601CF6D60800E38612 /* LanguageTranslationTableViewController.swift in Sources */,
 				798D84171C8686EB00D2A1F7 /* AffiliateStoreHeaderView.swift in Sources */,
+				F7FDD0B11D08FDE800AEA0BB /* WarehouseProvinceModel.swift in Sources */,
 				798D82BE1C8686EB00D2A1F7 /* NotificationHelper.swift in Sources */,
 				798D82211C8686EB00D2A1F7 /* CustomizedCategoryTableViewCell.swift in Sources */,
 				798D837F1C8686EB00D2A1F7 /* ProductUploadAttributeTableViewCell.swift in Sources */,
@@ -4297,6 +4310,7 @@
 				798D82BF1C8686EB00D2A1F7 /* ParseHelper.swift in Sources */,
 				798D82F61C8686EB00D2A1F7 /* PointsDetailsTableViewCell.swift in Sources */,
 				546BF3981D057D8A005DF761 /* WarehouseListViewController.swift in Sources */,
+				F7FDD0B31D08FDFA00AEA0BB /* WarehouseCityModel.swift in Sources */,
 				798D82821C8686EB00D2A1F7 /* ScatterChartRenderer.swift in Sources */,
 				798D82BB1C8686EB00D2A1F7 /* HexaColor.swift in Sources */,
 				798D82101C8686EB00D2A1F7 /* ParentCategoryViewController.swift in Sources */,
@@ -4347,6 +4361,7 @@
 				798D83B61C8686EB00D2A1F7 /* ResolutionCenterDisputeReasonModel.swift in Sources */,
 				798D82751C8686EB00D2A1F7 /* ChartXAxisRenderer.swift in Sources */,
 				798D84271C8686EB00D2A1F7 /* TransactionDeliveryLogTableViewController.swift in Sources */,
+				F7FDD0B51D08FE0A00AEA0BB /* WarehouseBarangayModel.swift in Sources */,
 				798D83C51C8686EB00D2A1F7 /* SalesReportViewController.swift in Sources */,
 				798D82151C8686EB00D2A1F7 /* CategoryProductsModel.swift in Sources */,
 				798D83AB1C8686EB00D2A1F7 /* DisputeViewController.swift in Sources */,
@@ -4509,6 +4524,7 @@
 				798D83E61C8686EB00D2A1F7 /* FilterTableViewCell.swift in Sources */,
 				798D83F31C8686EB00D2A1F7 /* AffiliateProductModel.swift in Sources */,
 				546BF3991D057D8A005DF761 /* WarehouseProductDetailViewController.swift in Sources */,
+				F7FDD0AF1D08FDD300AEA0BB /* WarehouseCountryModel.swift in Sources */,
 				798D826C1C8686EB00D2A1F7 /* ChartRange.swift in Sources */,
 				798D83991C8686EB00D2A1F7 /* ProductUploadPlainDetailCombinationTableViewCell.swift in Sources */,
 				798D82E31C8686EB00D2A1F7 /* ImageVC.swift in Sources */,
