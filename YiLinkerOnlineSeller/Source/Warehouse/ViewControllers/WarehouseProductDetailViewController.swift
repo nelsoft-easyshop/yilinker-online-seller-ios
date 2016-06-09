@@ -116,7 +116,7 @@ class WarehouseProductDetailViewController: UIViewController {
         
         var parameters: NSMutableDictionary  = ["warehouseId" : self.warehouseId, "productUnit" : self.warehouseProduct.productUnitId, "quantity" : self.actualInventoryTextField.text]
         
-        WebServiceManager.fireAddWarehouseAddressRequestWithUrl(APIAtlas.addWarehouse + SessionManager.accessToken(), parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        WebServiceManager.fireAddWarehouseAddressRequestWithUrl(APIAtlas.updateInventory + SessionManager.accessToken(), parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 if let success = responseObject["isSuccessful"] as? Bool {
                     if success {
