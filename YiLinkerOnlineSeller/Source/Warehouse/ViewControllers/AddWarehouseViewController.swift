@@ -239,6 +239,31 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     }
     
     func done() {
+        
+        if self.countryTextField.text == "" {
+            self.countryTextField.text = self.countryModel!.location[0]
+            self.countryId = "\(self.countryModel!.countryId[0])"
+            self.textField = self.provinceTextField
+        }
+        
+        if self.provinceTextField.text == "" {
+            self.provinceTextField.text = self.provinceModel!.location[0]
+            self.provinceId = "\(self.provinceModel!.provinceId[0])"
+            self.textField = self.cityMunTextField
+        }
+        
+        if self.cityMunTextField.text == "" {
+            self.cityMunTextField.text = self.cityModel!.location[0]
+            self.cityId = "\(self.cityModel!.cityId[0])"
+            self.textField = self.barangayDistrictTextField
+        }
+        
+        if self.barangayDistrictTextField.text == "" {
+            self.barangayDistrictTextField.text = self.barangayModel!.location[0]
+            self.barangayId = "\(self.barangayModel!.barangayId[0])"
+            self.textField = self.barangayDistrictTextField
+        }
+        
         self.selectedTextField = self.textField
         self.fireAddressByType(self.selectedTextField!)
     }
