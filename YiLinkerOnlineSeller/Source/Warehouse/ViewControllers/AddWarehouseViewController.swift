@@ -413,6 +413,9 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
                         self.provinceModel = nil
                         self.cityModel = nil
                         self.barangayModel = nil
+                        self.provinceTextField.userInteractionEnabled = false
+                        self.cityMunTextField.userInteractionEnabled = false
+                        self.barangayDistrictTextField.userInteractionEnabled = false
                     }
                 }
                 
