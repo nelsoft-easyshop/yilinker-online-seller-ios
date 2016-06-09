@@ -63,6 +63,14 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
         self.cityMunTextField.delegate = self
         self.barangayDistrictTextField.delegate = self
         
+        self.warehouseNameTextField.placeholder = "Warehouse Name"
+        self.fullAddressTextField.placeholder = "Full Address"
+        self.countryTextField.placeholder = "Select Country"
+        self.provinceTextField.placeholder = "Select Province"
+        self.cityMunTextField.placeholder = "Select City/Municipality"
+        self.barangayDistrictTextField.placeholder = "Select Barangay/District"
+        self.zipCodeTextField.placeholder = "Zip Code"
+        
         self.fireAddressByType(self.countryTextField)
         self.selectedTextField = self.countryTextField
     }
@@ -70,7 +78,23 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     //MARK: Textfield delegate methods
     func textFieldDidBeginEditing(textField: UITextField) {
         self.selectedTextField = textField
-        self.addPicker(self.selectedIndex, textField: textField)
+       
+        if self.countryModel != nil {
+           self.addPicker(self.selectedIndex, textField: textField)
+        }
+        
+        if self.provinceModel != nil && self.countryId != "" {
+            self.addPicker(self.selectedIndex, textField: textField)
+        }
+        
+        if self.cityModel != nil && self.provinceId != "" {
+            self.addPicker(self.selectedIndex, textField: textField)
+        }
+        
+        if self.barangayModel != nil && self.cityId != "" {
+            self.addPicker(self.selectedIndex, textField: textField)
+        }
+        
     }
     
     //MARK: Private Methods
@@ -168,14 +192,35 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
         if self.selectedTextField == self.countryTextField && self.countryModel != nil{
             self.countryId = "\(self.countryModel!.countryId[row])"
             self.textField = self.provinceTextField
+            
+            if self.countryTextField.text != self.countryModel!.location[row] {
+                self.provinceTextField.text = ""
+                self.cityMunTextField.text = ""
+                self.barangayDistrictTextField.text = ""
+                self.zipCodeTextField.text = ""
+            }
+            
             self.countryTextField.text = self.countryModel!.location[row]
         } else if self.selectedTextField == self.provinceTextField && self.provinceModel != nil {
             self.provinceId = "\(self.provinceModel!.provinceId[row])"
             self.textField = self.cityMunTextField
+            
+            if self.provinceTextField.text != self.provinceModel!.location[row] {
+                self.cityMunTextField.text = ""
+                self.barangayDistrictTextField.text = ""
+                self.zipCodeTextField.text = ""
+            }
+            
             self.provinceTextField.text = self.provinceModel!.location[row]
         } else if self.selectedTextField == self.cityMunTextField && self.cityModel != nil {
             self.cityId = "\(self.cityModel!.cityId[row])"
             self.textField = self.barangayDistrictTextField
+            
+            if self.cityMunTextField.text != self.cityModel!.location[row] {
+                self.barangayDistrictTextField.text = ""
+                self.zipCodeTextField.text = ""
+            }
+            
             self.cityMunTextField.text = self.cityModel!.location[row]
         } else if self.selectedTextField == self.barangayDistrictTextField && self.barangayModel != nil {
             self.barangayId = "\(self.barangayModel!.barangayId[row])"
@@ -190,7 +235,6 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     
     func done() {
         self.selectedTextField = self.textField
-        self.selectedTextField!.endEditing(true)
         self.fireAddressByType(self.selectedTextField!)
     }
     
@@ -204,7 +248,7 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     *
     */
     
-    func fireRefreshToken() {
+    func fireRefreshToken(token: Int) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
@@ -212,8 +256,11 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                
-                self.fireAddressByType(self.selectedTextField!)
+                if token == 1001 {
+                    self.fireAddressByType(self.selectedTextField!)
+                } else {
+                    self.fireAddWarehouse()
+                }
             } else {
                 //Show UIAlert and force the user to logout
                 UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
@@ -265,6 +312,11 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
                         } else if textField == self.barangayDistrictTextField {
                             self.barangayModel = WarehouseBarangayModel.parseDataWithDictionary(responseObject as! NSDictionary)
                         }
+                        
+                        self.countryTextField!.endEditing(true)
+                        self.provinceTextField!.endEditing(true)
+                        self.cityMunTextField!.endEditing(true)
+                        self.barangayDistrictTextField.endEditing(true)
                     }
                 }
                 
@@ -277,7 +329,7 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     self.showAlert(Constants.Localized.error, message: errorModel.message)
                 } else if requestErrorType == .AccessTokenExpired {
-                    self.fireRefreshToken()
+                    self.fireRefreshToken(1001)
                 } else if requestErrorType == .PageNotFound {
                     //Page not found
                     Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
@@ -304,7 +356,8 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
             if successful {
                 if let success = responseObject["isSuccessful"] as? Bool {
                     if success {
-                        println("Successfully added warehouse")
+                        Toast.displayToastWithMessage(responseObject["message"] as! String, duration: 1.5, view: self.view)
+                        self.back()
                     }
                 }
                 
@@ -317,7 +370,7 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     self.showAlert(Constants.Localized.error, message: errorModel.message)
                 } else if requestErrorType == .AccessTokenExpired {
-                    self.fireRefreshToken()
+                    self.fireRefreshToken(1002)
                 } else if requestErrorType == .PageNotFound {
                     //Page not found
                     Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
