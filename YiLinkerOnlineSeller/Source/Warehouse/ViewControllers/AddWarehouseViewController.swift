@@ -416,6 +416,9 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
                         self.provinceTextField.userInteractionEnabled = false
                         self.cityMunTextField.userInteractionEnabled = false
                         self.barangayDistrictTextField.userInteractionEnabled = false
+                        Delay.delayWithDuration(1.5, completionHandler: { (success) -> Void in
+                            self.back()
+                        })
                     }
                 }
                 

@@ -121,6 +121,11 @@ class WarehouseProductDetailViewController: UIViewController {
                 if let success = responseObject["isSuccessful"] as? Bool {
                     if success {
                         Toast.displayToastWithMessage(responseObject["message"] as! String, duration: 1.5, view: self.view)
+                        Delay.delayWithDuration(1.5, completionHandler: { (success) -> Void in
+                            self.back()
+                        })
+                    } else {
+                        Toast.displayToastWithMessage(responseObject["message"] as! String, duration: 1.5, view: self.view)
                     }
                 }
                 
