@@ -87,6 +87,10 @@ struct APIAtlas {
     
     // Warehouse
     static let warehouseFilter = APIAtlas.generateV3URL("auth/warehouse/inventory-filter?access_token=")
+    static let allCountries = APIAtlas.generateV3URL("auth/location/getAllCountries?access_token=")
+    static let childProvinces = APIAtlas.generateV3URL("auth/location/getChildProvinces?access_token=")
+    static let childCities = APIAtlas.generateV3URL("auth/location/getChildCities?access_token=")
+    static let barangaysByCity = APIAtlas.generateV3URL("auth/location/getBarangaysByCity?access_token=")
     
     //My Points
     static let getPointsTotal = APIAtlas.generateV3URL("auth/user/getPoints")
