@@ -184,8 +184,10 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     }
     
     func done() {
-        self.selectedTextField!.resignFirstResponder()
-        self.fireAddressByType(self.selectedTextField!)
+        self.selectedTextField!.endEditing()
+        if self.selectedTextField != self.barangayDistrictTextField {
+            self.fireAddressByType(self.selectedTextField!)
+        }
     }
     
     // MARK: -
