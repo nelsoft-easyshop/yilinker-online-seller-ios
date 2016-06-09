@@ -91,6 +91,7 @@ struct APIAtlas {
     static let childProvinces = APIAtlas.generateV3URL("auth/location/getChildProvinces?access_token=")
     static let childCities = APIAtlas.generateV3URL("auth/location/getChildCities?access_token=")
     static let barangaysByCity = APIAtlas.generateV3URL("auth/location/getBarangaysByCity?access_token=")
+    static let addWarehouse = APIAtlas.generateV3URL("auth/warehouse/form?access_token=")
     
     //My Points
     static let getPointsTotal = APIAtlas.generateV3URL("auth/user/getPoints")

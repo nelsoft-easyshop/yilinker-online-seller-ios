@@ -33,6 +33,7 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     // Variables
     var selectedIndex: Int = 0
     var selectedTextField: UITextField?
+    var textField: UITextField?
     
     // Models 
     var countryModel: WarehouseCountryModel?
@@ -110,6 +111,11 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     
     func addWarehouse() {
         println("AddWarehouse, API CALL")
+        if self.warehouseNameTextField.text == "" || self.fullAddressTextField.text == "" || self.countryTextField.text == "" || self.provinceTextField.text == "" || self.cityMunTextField.text == "" || self.barangayDistrictTextField.text == "" {
+            self.showAlert("Fill up the followinf textfields.", message: "")
+        } else {
+            self.fireAddWarehouse()
+        }
     }
     
     // MARK: -
@@ -130,16 +136,14 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     
     //MARK: Pickerview delegate methods
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if self.countryModel != nil || self.provinceModel != nil || self.cityModel != nil || self.barangayModel != nil {
-            if self.selectedTextField == self.countryTextField {
-                return self.countryModel!.location.count
-            } else if selectedTextField == self.provinceTextField {
-                return self.provinceModel!.location.count
-            } else if selectedTextField == self.cityMunTextField {
-                return self.cityModel!.location.count
-            } else if selectedTextField == self.barangayDistrictTextField {
-                return self.barangayModel!.location.count
-            }
+        if self.selectedTextField == self.countryTextField && self.countryModel != nil {
+            return self.countryModel!.location.count
+        } else if selectedTextField == self.provinceTextField &&  self.provinceModel != nil {
+            return self.provinceModel!.location.count
+        } else if selectedTextField == self.cityMunTextField && self.cityModel != nil {
+            return self.cityModel!.location.count
+        } else if selectedTextField == self.barangayDistrictTextField && self.barangayModel != nil{
+            return self.barangayModel!.location.count
         }
         
         return 0
@@ -163,19 +167,19 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
         self.selectedIndex = row
         if self.selectedTextField == self.countryTextField && self.countryModel != nil{
             self.countryId = "\(self.countryModel!.countryId[row])"
-            self.selectedTextField = self.provinceTextField
+            self.textField = self.provinceTextField
             self.countryTextField.text = self.countryModel!.location[row]
         } else if self.selectedTextField == self.provinceTextField && self.provinceModel != nil {
             self.provinceId = "\(self.provinceModel!.provinceId[row])"
-            self.selectedTextField = self.cityMunTextField
+            self.textField = self.cityMunTextField
             self.provinceTextField.text = self.provinceModel!.location[row]
         } else if self.selectedTextField == self.cityMunTextField && self.cityModel != nil {
             self.cityId = "\(self.cityModel!.cityId[row])"
-            self.selectedTextField = self.barangayDistrictTextField
+            self.textField = self.barangayDistrictTextField
             self.cityMunTextField.text = self.cityModel!.location[row]
         } else if self.selectedTextField == self.barangayDistrictTextField && self.barangayModel != nil {
             self.barangayId = "\(self.barangayModel!.barangayId[row])"
-            self.selectedTextField = self.barangayDistrictTextField
+            self.textField = self.barangayDistrictTextField
             self.barangayDistrictTextField.text = self.barangayModel!.location[row]
         }
     }
@@ -185,10 +189,9 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     }
     
     func done() {
+        self.selectedTextField = self.textField
         self.selectedTextField!.endEditing(true)
-        if self.selectedTextField != self.barangayDistrictTextField {
-            self.fireAddressByType(self.selectedTextField!)
-        }
+        self.fireAddressByType(self.selectedTextField!)
     }
     
     // MARK: -
@@ -262,6 +265,46 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
                         } else if textField == self.barangayDistrictTextField {
                             self.barangayModel = WarehouseBarangayModel.parseDataWithDictionary(responseObject as! NSDictionary)
                         }
+                    }
+                }
+                
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            } else {
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        })
+    }
+    
+    func fireAddWarehouse() {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        var parameters: NSMutableDictionary  = ["warehouseId" : "", "name" : self.warehouseNameTextField.text, "address" : self.fullAddressTextField.text, "location" : self.barangayId, "zipCode" : self.zipCodeTextField.text]
+
+        WebServiceManager.fireAddWarehouseAddressRequestWithUrl(APIAtlas.addWarehouse + SessionManager.accessToken(), parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                if let success = responseObject["isSuccessful"] as? Bool {
+                    if success {
+                        println("Successfully added warehouse")
                     }
                 }
                 
