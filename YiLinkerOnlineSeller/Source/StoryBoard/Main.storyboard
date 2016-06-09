@@ -2861,39 +2861,39 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="WarehouseCell" rowHeight="67" id="c7w-Nb-BNn">
+                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="MGSwipeTableCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="WarehouseCell" rowHeight="67" id="c7w-Nb-BNn" customClass="MGSwipeTableCell">
                                         <rect key="frame" x="0.0" y="22" width="320" height="67"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c7w-Nb-BNn" id="a7E-nt-QFm">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="66.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="200" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manila Warehouse Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kRt-eY-p6c">
-                                                    <rect key="frame" x="8" y="34" width="304" height="20"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manila Warehouse" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qRd-yh-TOt">
+                                                    <rect key="frame" x="8" y="12" width="304" height="20"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="20" id="uYU-Qg-dQr"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manila Warehouse" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gi0-Aq-zhs">
-                                                    <rect key="frame" x="8" y="13" width="304" height="20"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="20" id="TAy-W7-Va0"/>
+                                                        <constraint firstAttribute="height" constant="20" id="QvC-j5-r9i"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="200" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manila Warehouse Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JHT-qT-i6p">
+                                                    <rect key="frame" x="8" y="35" width="304" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="3Yv-ve-XS8"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="kRt-eY-p6c" secondAttribute="bottom" constant="12.5" id="6Os-aO-PAe"/>
-                                                <constraint firstAttribute="trailing" secondItem="gi0-Aq-zhs" secondAttribute="trailing" constant="8" id="A6y-VG-uJy"/>
-                                                <constraint firstItem="gi0-Aq-zhs" firstAttribute="leading" secondItem="a7E-nt-QFm" secondAttribute="leading" constant="8" id="EA2-Uh-yW8"/>
-                                                <constraint firstItem="kRt-eY-p6c" firstAttribute="leading" secondItem="a7E-nt-QFm" secondAttribute="leading" constant="8" id="QYM-KL-G3p"/>
-                                                <constraint firstItem="gi0-Aq-zhs" firstAttribute="top" secondItem="a7E-nt-QFm" secondAttribute="top" constant="13" id="Vuu-3L-yLz"/>
-                                                <constraint firstAttribute="trailing" secondItem="kRt-eY-p6c" secondAttribute="trailing" constant="8" id="ubk-ee-39J"/>
+                                                <constraint firstItem="qRd-yh-TOt" firstAttribute="trailing" secondItem="a7E-nt-QFm" secondAttribute="trailingMargin" id="1Vp-b7-fME"/>
+                                                <constraint firstItem="JHT-qT-i6p" firstAttribute="leading" secondItem="a7E-nt-QFm" secondAttribute="leading" constant="8" id="MTF-bf-gHZ"/>
+                                                <constraint firstItem="qRd-yh-TOt" firstAttribute="leading" secondItem="a7E-nt-QFm" secondAttribute="leadingMargin" id="Wlu-Du-HqQ"/>
+                                                <constraint firstAttribute="trailing" secondItem="JHT-qT-i6p" secondAttribute="trailing" constant="8" id="gOq-2G-gdQ"/>
+                                                <constraint firstItem="JHT-qT-i6p" firstAttribute="top" secondItem="qRd-yh-TOt" secondAttribute="bottom" constant="3" id="oi4-tB-IFb"/>
+                                                <constraint firstItem="qRd-yh-TOt" firstAttribute="top" secondItem="a7E-nt-QFm" secondAttribute="topMargin" constant="4" id="v18-rf-d0t"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -3046,7 +3046,7 @@
                                                     <constraint firstAttribute="height" constant="30" id="7Sq-6g-FFi"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Zip Code" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pad-fI-vDo">
                                                 <rect key="frame" x="8" y="422" width="304" height="21"/>

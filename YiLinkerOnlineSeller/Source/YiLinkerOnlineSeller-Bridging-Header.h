@@ -14,3 +14,4 @@
 #import <GooglePlus/GooglePlus.h>
 #import <GoogleOpenSource/GoogleOpenSource.h>
 #import <pop/POP.h>
+#import "MGSwipeTableCell.h"
