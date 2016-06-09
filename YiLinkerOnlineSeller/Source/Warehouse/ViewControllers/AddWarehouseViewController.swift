@@ -398,7 +398,7 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
             if successful {
                 if let success = responseObject["isSuccessful"] as? Bool {
                     if success {
-                        Toast.displayToastWithMessage(responseObject["message"] as! String, duration: 1.5, view: self.tabBarController!.view)
+                        Toast.displayToastWithMessage(responseObject["message"] as! String, duration: 1.5, view: self.view)
                         self.warehouseNameTextField.text = ""
                         self.fullAddressTextField.text = ""
                         self.countryTextField.text = ""
@@ -406,7 +406,13 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
                         self.cityMunTextField.text = ""
                         self.barangayDistrictTextField.text = ""
                         self.zipCodeTextField.text = ""
-                        self.back()
+                        self.countryId = ""
+                        self.provinceId = ""
+                        self.cityId = ""
+                        self.barangayId = ""
+                        self.provinceModel = nil
+                        self.cityModel = nil
+                        self.barangayModel = nil
                     }
                 }
                 
