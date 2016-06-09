@@ -175,6 +175,7 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
             self.cityMunTextField.text = self.cityModel!.location[row]
         } else if self.selectedTextField == self.barangayDistrictTextField && self.barangayModel != nil {
             self.barangayId = "\(self.barangayModel!.barangayId[row])"
+            self.selectedTextField = self.barangayDistrictTextField
             self.barangayDistrictTextField.text = self.barangayModel!.location[row]
         }
     }
@@ -184,7 +185,7 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     }
     
     func done() {
-        self.selectedTextField!.endEditing()
+        self.selectedTextField!.endEditing(true)
         if self.selectedTextField != self.barangayDistrictTextField {
             self.fireAddressByType(self.selectedTextField!)
         }
