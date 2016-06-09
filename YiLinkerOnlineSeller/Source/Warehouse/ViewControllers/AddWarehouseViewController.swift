@@ -198,6 +198,9 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
                 self.cityMunTextField.text = ""
                 self.barangayDistrictTextField.text = ""
                 self.zipCodeTextField.text = ""
+                self.provinceId = ""
+                self.cityId = ""
+                self.barangayId = ""
             }
             
             self.countryTextField.text = self.countryModel!.location[row]
@@ -209,6 +212,10 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
                 self.cityMunTextField.text = ""
                 self.barangayDistrictTextField.text = ""
                 self.zipCodeTextField.text = ""
+                self.cityId = ""
+                self.barangayId = ""
+                self.cityModel = nil
+                self.barangayModel = nil
             }
             
             self.provinceTextField.text = self.provinceModel!.location[row]
@@ -219,6 +226,8 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
             if self.cityMunTextField.text != self.cityModel!.location[row] {
                 self.barangayDistrictTextField.text = ""
                 self.zipCodeTextField.text = ""
+                self.barangayId = ""
+                self.barangayModel = nil
             }
             
             self.cityMunTextField.text = self.cityModel!.location[row]
