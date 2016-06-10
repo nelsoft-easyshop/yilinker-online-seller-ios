@@ -823,7 +823,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     //MARK: - Success Upload View Controller
     func successUploadViewController(didTapUploadAgain viewController: SuccessUploadViewController) {
-        let productUploadTableViewController: ProductUploadTC = ProductUploadTC(nibName: "ProductUploadTC", bundle: nil)
+        let productUploadTableViewController: ProductUploadTableViewController = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
         let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadTableViewController)
         navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
         self.navigationController?.pushViewController(productUploadTableViewController, animated: true)
