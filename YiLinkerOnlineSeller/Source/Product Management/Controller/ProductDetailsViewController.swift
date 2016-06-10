@@ -823,7 +823,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     //MARK: - Success Upload View Controller
     func successUploadViewController(didTapUploadAgain viewController: SuccessUploadViewController) {
-        let productUploadTableViewController: ProductUploadTableViewController = ProductUploadTableViewController(nibName: "ProductUploadTableViewController", bundle: nil)
+        let productUploadTableViewController: ProductUploadTC = ProductUploadTC(nibName: "ProductUploadTC", bundle: nil)
         let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadTableViewController)
         navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
         self.navigationController?.pushViewController(productUploadTableViewController, animated: true)
@@ -837,7 +837,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         
         let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
-            //self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismissViewControllerAnimated(true, completion: nil)
         }
         
         alertController.addAction(OKAction)
