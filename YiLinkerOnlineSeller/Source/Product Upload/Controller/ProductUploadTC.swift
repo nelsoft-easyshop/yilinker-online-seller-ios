@@ -75,7 +75,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         // API Call to get product conditions
         self.fireGetProductConditions()
     }
-
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
@@ -89,16 +89,16 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: -
     // MARK: - Table view data source
-
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
         return 7
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
@@ -279,7 +279,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.cellTitleLabel.required()
                 cell.textFieldType = ProductTextFieldType.ShippingCategory
                 cell.delegate = self
-            
+                
                 return cell
             }
         } else if indexPath.section == 3 {
@@ -420,7 +420,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                     }
                     
                     cell.userInteractionEnabled = self.checkIfSeller()
-                   
+                    
                     return cell
                 } else {
                     let cell: ProductUploadButtonTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadButtonTableViewCellNibNameAndIdentifier) as! ProductUploadButtonTableViewCell
@@ -594,7 +594,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         self.navigationController!.pushViewController(productUploadCategoryViewController, animated: true)
     }
     
-    // MARK: - 
+    // MARK: -
     // MARK: - Check if seller
     
     func checkIfSeller() -> Bool {
@@ -613,14 +613,14 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         let alertController = UIAlertController(title: ProductUploadStrings.uploadItem, message: ProductUploadStrings.saveAsDraft, preferredStyle: .Alert)
         
         let cancelAction = UIAlertAction(title: Constants.Localized.no, style: .Cancel) { (action) in
-            //self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismissViewControllerAnimated(true, completion: nil)
         }
         
         alertController.addAction(cancelAction)
         
         let OKAction = UIAlertAction(title: Constants.Localized.yes, style: .Default) { (action) in
-             self.productIsDraft = true
-             self.fireUploadProduct()
+            self.productIsDraft = true
+            self.fireUploadProduct()
         }
         
         alertController.addAction(OKAction)
@@ -652,7 +652,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     }
     
     // MARK: -
-    // MARK: - Insert image 
+    // MARK: - Insert image
     func insertImage(image: UIImage) {
         self.productModel.isPrimaryPhoto.append(false)
         
@@ -674,7 +674,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         
         let nibTextField: UINib = UINib(nibName: ProductUploadTextFieldTableViewCellConstant.productUploadTextFieldTableViewCellNibAndIdentifier, bundle: nil)
         self.tableView.registerNib(nibTextField, forCellReuseIdentifier: ProductUploadTextFieldTableViewCellConstant.productUploadTextFieldTableViewCellNibAndIdentifier)
-       
+        
         let nibTextView: UINib = UINib(nibName: ProductUploadTextViewTableViewCellConstant.productUploadTextViewTableViewCellNibAndIdentifier, bundle: nil)
         self.tableView.registerNib(nibTextView, forCellReuseIdentifier: ProductUploadTextViewTableViewCellConstant.productUploadTextViewTableViewCellNibAndIdentifier)
         
@@ -726,7 +726,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     }
     
     // MARK: -
-    // MARK: - Reload Tableview row in section 
+    // MARK: - Reload Tableview row in section
     
     func reloadTableViewRowInSection(section: Int, row: Int) {
         let indexPath: NSIndexPath = NSIndexPath(forRow: row, inSection: section)
@@ -878,6 +878,22 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             }
             self.productModel.productMainImagesModel[i] = productMainImagesModel!
         }
+        self.cellImage?.collectionView.reloadData()
+    }
+    
+    func updateModelReupload() {
+        for i in 0..<self.productModel.productMainImagesModel.count {
+            var productMainImagesModel: ProductMainImagesModel?
+            if self.productModel.productMainImagesModel[i].imageStatus == true && self.productModel.productMainImagesModel[i].imageFailed == false {
+                productMainImagesModel = ProductMainImagesModel(image: self.productModel.productMainImagesModel[i].image, imageName: self.productModel.productMainImagesModel[i].imageName, imageStatus: true, imageFailed: false)
+            } else if self.productModel.productMainImagesModel[i].imageStatus == false && self.productModel.productMainImagesModel[i].imageFailed == true {
+                productMainImagesModel = ProductMainImagesModel(image: self.productModel.productMainImagesModel[i].image, imageName: self.productModel.productMainImagesModel[i].imageName, imageStatus: false, imageFailed: false)
+            } else if self.productModel.productMainImagesModel[i].imageStatus == false && self.productModel.productMainImagesModel[i].imageFailed == true {
+                productMainImagesModel = ProductMainImagesModel(image: self.productModel.productMainImagesModel[i].image, imageName: self.productModel.productMainImagesModel[i].imageName, imageStatus: false, imageFailed: false)
+            }
+            self.productModel.productMainImagesModel[i] = productMainImagesModel!
+        }
+        self.cellImage?.collectionView.reloadData()
     }
     
     // MARK: -
@@ -945,6 +961,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     }
     
     func productUploadUploadImageTableViewCell(didTapReuploadAtRowIndexPath indexPath: NSIndexPath, cell: ProductUploadImageCollectionViewCell, collectionView: UICollectionView) {
+        self.updateModelReupload()
         self.fireUploadProductMainImages(self.productModel.productMainImagesModel[indexPath.row].image)
     }
     
@@ -1032,7 +1049,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         }
     }
     
-    // MARK: - 
+    // MARK: -
     // MARK: - ProductUploadFooterView Delegate Method
     
     func productUploadFooterView(didClickUpload view: ProductUploadFooterView) {
@@ -1217,7 +1234,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         if uploadedImages.count != 0 {
             uploadedImages.removeLast()
         }
-    
+        
         self.fireUploadProductMainImages(uploadedImages[self.productImagesCount])
     }
     
@@ -1226,11 +1243,11 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     
     func getProductGroups() -> String {
         var productGroups: [String] = []
-       
+        
         for (index, product) in enumerate(self.productModel.productGroups) {
             productGroups.append(product.name)
         }
-
+        
         let data = NSJSONSerialization.dataWithJSONObject(productGroups, options: nil, error: nil)
         let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
         
@@ -1312,7 +1329,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             
             productAttributes.append(dictionary)
         }
-
+        
         return self.formatToJson(productAttributes)
     }
     
@@ -1495,9 +1512,9 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                     if success {
                         /*
                         if !self.productIsDraft {
-                            self.success()
+                        self.success()
                         } else {
-                            self.dismissViewControllerAnimated(true, completion: nil)
+                        self.dismissViewControllerAnimated(true, completion: nil)
                         }*/
                         if self.uploadType == UploadType.Draft {
                             ProductUploadEdit.edit = false
@@ -1679,45 +1696,45 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
+    // Return NO if you do not want the specified item to be editable.
+    return true
     }
     */
-
+    
     /*
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    if editingStyle == .Delete {
+    // Delete the row from the data source
+    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+    } else if editingStyle == .Insert {
+    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }
     }
     */
-
+    
     /*
     // Override to support rearranging the table view.
     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
+    
     }
     */
-
+    
     /*
     // Override to support conditional rearranging of the table view.
     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
+    // Return NO if you do not want the item to be re-orderable.
+    return true
     }
     */
-
+    
     /*
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
     }
     */
     
