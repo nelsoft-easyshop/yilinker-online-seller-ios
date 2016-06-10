@@ -914,8 +914,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         self.productModel.mainImagesName.removeAtIndex(indexPath.row)
         self.productModel.productMainImagesModel.removeAtIndex(indexPath.row)
         self.productImagesCount--
-        println(self.productImagesCount)
-        println(self.productModel.mainImagesName)
         if self.uploadType == UploadType.NewProduct {
             self.productModel.images.removeAtIndex(indexPath.row)
             if self.primaryPhoto == "\(indexPath.row)" {
