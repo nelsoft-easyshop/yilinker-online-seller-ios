@@ -132,75 +132,103 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellPointsEarned, forIndexPath: indexPath) as! PointsEarnedTableViewCell
-            if totalPointsModel.data.formatToTwoDecimalNoTrailling() == ".00" {
-                cell.pointsLabel.text = "0\(totalPointsModel.data.formatToTwoDecimalNoTrailling())"
-            } else {
-                cell.pointsLabel.text = "\(totalPointsModel.data.formatToTwoDecimalNoTrailling())"
-            }
+            cell.pointsLabel.text = totalPointsModel.data
+//            if totalPointsModel.data.formatToTwoDecimalNoTrailling() == ".00" {
+//                cell.pointsLabel.text = "0\(totalPointsModel.data.formatToTwoDecimalNoTrailling())"
+//            } else {
+//                cell.pointsLabel.text = "\(totalPointsModel.data.formatToTwoDecimalNoTrailling())"
+//            }
             return cell
         } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellPointsDetails, forIndexPath: indexPath) as! PointsDetailsTableViewCell
+            if myPointsHistory.data.count == 0 {
+                cell.detailsLabel.text = StringHelper.localizedStringWithKey("MY_POINTS_DESCRIPTION_LOCALIZE_KEY")
+            } else {
+                cell.hide()
+            }
             return cell
-        }else if indexPath.row == 2 {
+        } else if indexPath.row == 2 {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellPointsBreakDownHeader, forIndexPath: indexPath) as! PointsBreakdownTableViewCell
             cell.delegate = self
             
             if myPointsHistory.data.count == 0 {
-                cell.breakDownView.hidden = true
+//                cell.breakDownView.hidden = true
+                cell.breakDownLabel.text = ""
             } else {
                 cell.breakDownView.hidden = false
             }
             
             return cell
-        }else {
+        } else {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellPoints, forIndexPath: indexPath) as! PointsTableViewCell
             
             println("Index \(indexPath.row)")
             println("Count \(myPointsHistory.data.count)")
             
-            let tempModel: MyPointsModel = myPointsHistory.data[indexPath.row - 3]
+            let tempModel: PointV2Model = myPointsHistory.data[indexPath.row - 3]
             
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.s6"
-            let date: NSDate = dateFormatter.dateFromString(tempModel.date)!
+            if tempModel.date.isNotEmpty() {
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = "MM/dd/yyyy"
+                let date: NSDate = dateFormatter.dateFromString(tempModel.date)!
+                
+                let dateFormatter1 = NSDateFormatter()
+                dateFormatter1.dateFormat = "MMM dd, yyyy"
+                let dateAdded = dateFormatter1.stringFromDate(date)
+                
+                cell.dateLabel.text = dateAdded
+            }
             
-            let dateFormatter1 = NSDateFormatter()
-            dateFormatter1.dateFormat = "MMM dd, yyyy"
-            let dateAdded = dateFormatter1.stringFromDate(date)
-            
-            
-            cell.dateLabel.text = dateAdded
-            cell.detailsLabel.text = tempModel.userPointTypeName
+            cell.detailsLabel.text = tempModel.pointDescription
         
-            var points: String = tempModel.points
+            var points: String = tempModel.amount
             
-            if Array(tempModel.points)[0] != "-" {
-                points = "+\(tempModel.points)"
-            }
+            points = tempModel.amount
             
-            if points.rangeOfString("+") != nil {
-                cell.pointsLabel.textColor = UIColor(red: 85/255.0, green: 85/255.0, blue: 85/255.0, alpha: 1.0)
-                cell.pointsTitleLabel.textColor = UIColor(red: 85/255.0, green: 85/255.0, blue: 85/255.0, alpha: 1.0)
-            } else {
-                cell.pointsLabel.textColor = UIColor(red: 255/255.0, green: 59/255.0, blue: 48/255.0, alpha: 1.0)
-                cell.pointsTitleLabel.textColor = UIColor(red: 255/255.0, green: 59/255.0, blue: 48/255.0, alpha: 0.75)
-            }
+//            if Array(tempModel.amount)[0] != "-" {
+//                points = "+\(tempModel.amount)"
+//            }
             
-            if points.toInt() < 1 {
-                if Array(tempModel.points)[0] != "-" {
-                    cell.pointsLabel.text = "+0" + points.formatToTwoDecimalNoTrailling()
-                } else {
-                    cell.pointsLabel.text = "-0" + points.formatToTwoDecimalNoTrailling()
-                }
-            } else {
-                if Array(tempModel.points)[0] != "-" {
-                    cell.pointsLabel.text = "+" + points.formatToTwoDecimalNoTrailling()
-                } else {
-                    cell.pointsLabel.text = "-" + points.formatToTwoDecimalNoTrailling()
-                }
-            }
+            cell.pointsLabel.textColor = UIColor(red: 85/255.0, green: 85/255.0, blue: 85/255.0, alpha: 1.0)
+            cell.pointsTitleLabel.textColor = UIColor(red: 85/255.0, green: 85/255.0, blue: 85/255.0, alpha: 1.0)
+            
+//            if points.rangeOfString("+") != nil {
+//                cell.pointsLabel.textColor = UIColor(red: 85/255.0, green: 85/255.0, blue: 85/255.0, alpha: 1.0)
+//                cell.pointsTitleLabel.textColor = UIColor(red: 85/255.0, green: 85/255.0, blue: 85/255.0, alpha: 1.0)
+//            } else {
+//                cell.pointsLabel.textColor = UIColor(red: 255/255.0, green: 59/255.0, blue: 48/255.0, alpha: 1.0)
+//                cell.pointsTitleLabel.textColor = UIColor(red: 255/255.0, green: 59/255.0, blue: 48/255.0, alpha: 0.75)
+//            }
+            
+            cell.pointsLabel.text = points
+            
+//            if points.toInt() < 1 {
+//                if Array(tempModel.amount)[0] != "-" {
+//                    cell.pointsLabel.text = "+" + points
+//                } else {
+//                    cell.pointsLabel.text = "-" + points
+//                }
+//            } else {
+//                if Array(tempModel.amount)[0] != "-" {
+//                    cell.pointsLabel.text = "+" + points
+//                } else {
+//                    cell.pointsLabel.text = "-" + points
+//                }
+//            }
             
             return cell
+        }
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if myPointsHistory.data.count != 0 {
+            if indexPath.row == 1 {
+                return 0
+            } else {
+                return UITableViewAutomaticDimension
+            }
+        } else {
+            return UITableViewAutomaticDimension
         }
     }
     
@@ -236,89 +264,109 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
         self.navigationController?.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
-
     
     func fireGetTotalPoints() {
         showHUD()
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
         
-        manager.GET(APIAtlas.getPointsTotal, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            self.totalPointsModel = TotalPointsModel.parseDataWithDictionary(responseObject as! NSDictionary)
-            
-            if self.totalPointsModel.isSuccessful {
-                self.fireGetPointsHistory()
-            } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.totalPointsModel.message, title: self.errorLocalizeString)
-            }
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
+        WebServiceManager.fireGetTotalPointFromUrl(APIAtlas.getPointsTotal, access_token: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.totalPointsModel = TotalPointsModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    self.fireRefreshToken("totalPoints")
+                if self.totalPointsModel.isSuccessful {
+                    self.fireGetPointsHistory()
                 } else {
-                    if Reachability.isConnectedToNetwork() {
-                        UIAlertController.displaySomethingWentWrongError(self)
-                    } else {
-                        UIAlertController.displayNoInternetConnectionError(self)
-                    }
-                    println(error)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.totalPointsModel.message, title: self.errorLocalizeString)
                 }
-                
-                
-        })
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    
+                    if errorModel.message == "The access token provided is invalid." {
+                        UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                        })
+                    } else {
+                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    }
+                    
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken("totalPoints")
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
+        }
     }
     
     func fireGetPointsHistory() {
         if !isMyPointsEnd {
             
             showHUD()
-            let manager = APIManager.sharedInstance
-
             myPointsPage++
             
-            let url: String = "\(APIAtlas.getPointsHistory)?access_token=\(SessionManager.accessToken())&perPage=15&page=\(myPointsPage)"
+            let url: String = "\(APIAtlas.getPointsHistory)?access_token=\(SessionManager.accessToken())&perPage=10&page=\(myPointsPage)"
             
-            manager.GET(url, parameters: nil, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-    
-                self.getCtr++
-                //self.myPointsHistory = MyPointsHistoryModel.parseDataWithDictionary(responseObject as! NSDictionary)
-                
-                let pointHistory: MyPointsHistoryModel = MyPointsHistoryModel.parseDataWithDictionary(responseObject as! NSDictionary)
-                println("Count 1 \(self.myPointsHistory.data.count)")
-                println(responseObject)
-                if pointHistory.data.count < 15 {
-                    self.isMyPointsEnd = true
-                }
-                
-                if self.totalPointsModel.isSuccessful {
-                    self.myPointsHistory.data += pointHistory.data
-                    self.tableView.reloadData()
-                } else {
-                    self.isMyPointsEnd = true
-                    self.tableView.reloadData()
-                }
-                self.hud?.hide(true)
-                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                    self.hud?.hide(true)
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+            WebServiceManager.fireGetPointsFromUrl(url) { (successful, responseObject, requestErrorType) -> Void in
+                if successful {
+                    println(responseObject)
+                    self.getCtr++
+                    //self.myPointsHistory = MyPointsHistoryModel.parseDataWithDictionary(responseObject as! NSDictionary)
                     
-                    if task.statusCode == 401 {
-                        self.fireRefreshToken("pointsHistory")
-                    } else {
-                        if Reachability.isConnectedToNetwork() {
-                            UIAlertController.displaySomethingWentWrongError(self)
-                        } else {
-                            UIAlertController.displayNoInternetConnectionError(self)
-                        }
-                        println(error)
+                    let pointHistory: MyPointsHistoryModel = MyPointsHistoryModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                    println("Count 1 \(self.myPointsHistory.data.count)")
+                    
+                    if pointHistory.data.count < 10 {
+                        self.isMyPointsEnd = true
                     }
-            })
+                    
+                    if self.totalPointsModel.isSuccessful {
+                        self.myPointsHistory.data += pointHistory.data
+                        self.tableView.reloadData()
+                    } else {
+                        self.isMyPointsEnd = true
+                        self.tableView.reloadData()
+                    }
+                    self.hud?.hide(true)
+                } else {
+                    if requestErrorType == .ResponseError {
+                        //Error in api requirements
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        
+                        if errorModel.message == "The access token provided is invalid." {
+                            UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                            })
+                        } else {
+                            Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                        }
+                        
+                    } else if requestErrorType == .AccessTokenExpired {
+                        self.fireRefreshToken("pointsHistory")
+                    } else if requestErrorType == .PageNotFound {
+                        //Page not found
+                        Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .NoInternetConnection {
+                        //No internet connection
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .RequestTimeOut {
+                        //Request timeout
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .UnRecognizeError {
+                        //Unhandled error
+                        Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                    }
+                }
+            }
+            
         } else {
             self.hud?.hide(true)
             if self.myPointsHistory.data.count != 0 {
@@ -332,29 +380,22 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
     
     func fireRefreshToken(type: String) {
         self.showHUD()
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = [
-            "client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            if type == "totalPoints" {
-                self.fireGetTotalPoints()
-            } else if type == "pointsHistory" {
-                self.fireGetPointsHistory()
-            }
-            
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+            if successful {
+                if type == "totalPoints" {
+                    self.fireGetTotalPoints()
+                } else if type == "pointsHistory" {
+                    self.fireGetPointsHistory()
+                }
+            } else {
+                //Show UIAlert and force the user to logout
                 self.hud?.hide(true)
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                })
+            }
         })
-        
     }
-    
 }

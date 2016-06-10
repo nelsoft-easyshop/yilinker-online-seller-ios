@@ -324,21 +324,6 @@
 		798D82EA1C8686EB00D2A1F7 /* W_Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D7FFC1C8686EB00D2A1F7 /* W_Messages.swift */; };
 		798D82EB1C8686EB00D2A1F7 /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D7FFF1C8686EB00D2A1F7 /* ErrorModel.swift */; };
 		798D82EC1C8686EB00D2A1F7 /* UploadImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D80001C8686EB00D2A1F7 /* UploadImageModel.swift */; };
-		798D82ED1C8686EB00D2A1F7 /* MyPointsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D80031C8686EB00D2A1F7 /* MyPointsTableViewController.swift */; };
-		798D82EE1C8686EB00D2A1F7 /* MyPointsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D80041C8686EB00D2A1F7 /* MyPointsTableViewController.xib */; };
-		798D82EF1C8686EB00D2A1F7 /* MyPointsHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D80061C8686EB00D2A1F7 /* MyPointsHistoryModel.swift */; };
-		798D82F01C8686EB00D2A1F7 /* MyPointsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D80071C8686EB00D2A1F7 /* MyPointsModel.swift */; };
-		798D82F11C8686EB00D2A1F7 /* PointModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D80081C8686EB00D2A1F7 /* PointModel.swift */; };
-		798D82F21C8686EB00D2A1F7 /* TotalPointsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D80091C8686EB00D2A1F7 /* TotalPointsModel.swift */; };
-		798D82F31C8686EB00D2A1F7 /* UserPointsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D800A1C8686EB00D2A1F7 /* UserPointsModel.swift */; };
-		798D82F41C8686EB00D2A1F7 /* PointsBreakdownTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D800C1C8686EB00D2A1F7 /* PointsBreakdownTableViewCell.swift */; };
-		798D82F51C8686EB00D2A1F7 /* PointsBreakdownTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D800D1C8686EB00D2A1F7 /* PointsBreakdownTableViewCell.xib */; };
-		798D82F61C8686EB00D2A1F7 /* PointsDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D800E1C8686EB00D2A1F7 /* PointsDetailsTableViewCell.swift */; };
-		798D82F71C8686EB00D2A1F7 /* PointsDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D800F1C8686EB00D2A1F7 /* PointsDetailsTableViewCell.xib */; };
-		798D82F81C8686EB00D2A1F7 /* PointsEarnedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D80101C8686EB00D2A1F7 /* PointsEarnedTableViewCell.swift */; };
-		798D82F91C8686EB00D2A1F7 /* PointsEarnedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D80111C8686EB00D2A1F7 /* PointsEarnedTableViewCell.xib */; };
-		798D82FA1C8686EB00D2A1F7 /* PointsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D80121C8686EB00D2A1F7 /* PointsTableViewCell.swift */; };
-		798D82FB1C8686EB00D2A1F7 /* PointsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D80131C8686EB00D2A1F7 /* PointsTableViewCell.xib */; };
 		798D82FC1C8686EB00D2A1F7 /* AddAddressTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D80161C8686EB00D2A1F7 /* AddAddressTableViewController.swift */; };
 		798D82FD1C8686EB00D2A1F7 /* AddAddressTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D80171C8686EB00D2A1F7 /* AddAddressTableViewController.xib */; };
 		798D82FE1C8686EB00D2A1F7 /* ChangeAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D80181C8686EB00D2A1F7 /* ChangeAddressViewController.swift */; };
@@ -761,6 +746,22 @@
 		79D8D6E01CF8306D00A8D535 /* TranslationImagesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79D8D6DE1CF8306D00A8D535 /* TranslationImagesTableViewCell.xib */; };
 		79D8D6E31CF8397700A8D535 /* TranslationProductGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D8D6E11CF8397700A8D535 /* TranslationProductGroupTableViewCell.swift */; };
 		79D8D6E41CF8397700A8D535 /* TranslationProductGroupTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79D8D6E21CF8397700A8D535 /* TranslationProductGroupTableViewCell.xib */; };
+		79EBAC171D0AAE8400B72DB9 /* MyPointsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EBAC061D0AAE8400B72DB9 /* MyPointsTableViewController.swift */; };
+		79EBAC181D0AAE8400B72DB9 /* MyPointsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EBAC071D0AAE8400B72DB9 /* MyPointsTableViewController.xib */; };
+		79EBAC191D0AAE8400B72DB9 /* MyPointsHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EBAC091D0AAE8400B72DB9 /* MyPointsHistoryModel.swift */; };
+		79EBAC1A1D0AAE8400B72DB9 /* MyPointsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EBAC0A1D0AAE8400B72DB9 /* MyPointsModel.swift */; };
+		79EBAC1B1D0AAE8400B72DB9 /* PointModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EBAC0B1D0AAE8400B72DB9 /* PointModel.swift */; };
+		79EBAC1C1D0AAE8400B72DB9 /* TotalPointsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EBAC0C1D0AAE8400B72DB9 /* TotalPointsModel.swift */; };
+		79EBAC1D1D0AAE8400B72DB9 /* UserPointsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EBAC0D1D0AAE8400B72DB9 /* UserPointsModel.swift */; };
+		79EBAC1E1D0AAE8400B72DB9 /* PointsBreakdownTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EBAC0F1D0AAE8400B72DB9 /* PointsBreakdownTableViewCell.swift */; };
+		79EBAC1F1D0AAE8400B72DB9 /* PointsBreakdownTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EBAC101D0AAE8400B72DB9 /* PointsBreakdownTableViewCell.xib */; };
+		79EBAC201D0AAE8400B72DB9 /* PointsDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EBAC111D0AAE8400B72DB9 /* PointsDetailsTableViewCell.swift */; };
+		79EBAC211D0AAE8400B72DB9 /* PointsDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EBAC121D0AAE8400B72DB9 /* PointsDetailsTableViewCell.xib */; };
+		79EBAC221D0AAE8400B72DB9 /* PointsEarnedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EBAC131D0AAE8400B72DB9 /* PointsEarnedTableViewCell.swift */; };
+		79EBAC231D0AAE8400B72DB9 /* PointsEarnedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EBAC141D0AAE8400B72DB9 /* PointsEarnedTableViewCell.xib */; };
+		79EBAC241D0AAE8400B72DB9 /* PointsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EBAC151D0AAE8400B72DB9 /* PointsTableViewCell.swift */; };
+		79EBAC251D0AAE8400B72DB9 /* PointsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EBAC161D0AAE8400B72DB9 /* PointsTableViewCell.xib */; };
+		79EBAC271D0ABC4E00B72DB9 /* PointV2Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EBAC261D0ABC4E00B72DB9 /* PointV2Model.swift */; };
 		79EF66261CA107DF000CDA6B /* SuggestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EF66221CA107DF000CDA6B /* SuggestionViewController.swift */; };
 		79EF66271CA107DF000CDA6B /* SuggestionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EF66231CA107DF000CDA6B /* SuggestionViewController.xib */; };
 		79EF66281CA107DF000CDA6B /* SuggestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EF66251CA107DF000CDA6B /* SuggestionViewModel.swift */; };
@@ -1178,21 +1179,6 @@
 		798D7FFC1C8686EB00D2A1F7 /* W_Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_Messages.swift; sourceTree = "<group>"; };
 		798D7FFF1C8686EB00D2A1F7 /* ErrorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorModel.swift; sourceTree = "<group>"; };
 		798D80001C8686EB00D2A1F7 /* UploadImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadImageModel.swift; sourceTree = "<group>"; };
-		798D80031C8686EB00D2A1F7 /* MyPointsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsTableViewController.swift; sourceTree = "<group>"; };
-		798D80041C8686EB00D2A1F7 /* MyPointsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPointsTableViewController.xib; sourceTree = "<group>"; };
-		798D80061C8686EB00D2A1F7 /* MyPointsHistoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsHistoryModel.swift; sourceTree = "<group>"; };
-		798D80071C8686EB00D2A1F7 /* MyPointsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsModel.swift; sourceTree = "<group>"; };
-		798D80081C8686EB00D2A1F7 /* PointModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointModel.swift; sourceTree = "<group>"; };
-		798D80091C8686EB00D2A1F7 /* TotalPointsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalPointsModel.swift; sourceTree = "<group>"; };
-		798D800A1C8686EB00D2A1F7 /* UserPointsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserPointsModel.swift; sourceTree = "<group>"; };
-		798D800C1C8686EB00D2A1F7 /* PointsBreakdownTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsBreakdownTableViewCell.swift; sourceTree = "<group>"; };
-		798D800D1C8686EB00D2A1F7 /* PointsBreakdownTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsBreakdownTableViewCell.xib; sourceTree = "<group>"; };
-		798D800E1C8686EB00D2A1F7 /* PointsDetailsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsDetailsTableViewCell.swift; sourceTree = "<group>"; };
-		798D800F1C8686EB00D2A1F7 /* PointsDetailsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsDetailsTableViewCell.xib; sourceTree = "<group>"; };
-		798D80101C8686EB00D2A1F7 /* PointsEarnedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsEarnedTableViewCell.swift; sourceTree = "<group>"; };
-		798D80111C8686EB00D2A1F7 /* PointsEarnedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsEarnedTableViewCell.xib; sourceTree = "<group>"; };
-		798D80121C8686EB00D2A1F7 /* PointsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsTableViewCell.swift; sourceTree = "<group>"; };
-		798D80131C8686EB00D2A1F7 /* PointsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsTableViewCell.xib; sourceTree = "<group>"; };
 		798D80161C8686EB00D2A1F7 /* AddAddressTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAddressTableViewController.swift; sourceTree = "<group>"; };
 		798D80171C8686EB00D2A1F7 /* AddAddressTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddAddressTableViewController.xib; sourceTree = "<group>"; };
 		798D80181C8686EB00D2A1F7 /* ChangeAddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeAddressViewController.swift; sourceTree = "<group>"; };
@@ -1619,6 +1605,22 @@
 		79D8D6DE1CF8306D00A8D535 /* TranslationImagesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TranslationImagesTableViewCell.xib; sourceTree = "<group>"; };
 		79D8D6E11CF8397700A8D535 /* TranslationProductGroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationProductGroupTableViewCell.swift; sourceTree = "<group>"; };
 		79D8D6E21CF8397700A8D535 /* TranslationProductGroupTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TranslationProductGroupTableViewCell.xib; sourceTree = "<group>"; };
+		79EBAC061D0AAE8400B72DB9 /* MyPointsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsTableViewController.swift; sourceTree = "<group>"; };
+		79EBAC071D0AAE8400B72DB9 /* MyPointsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPointsTableViewController.xib; sourceTree = "<group>"; };
+		79EBAC091D0AAE8400B72DB9 /* MyPointsHistoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsHistoryModel.swift; sourceTree = "<group>"; };
+		79EBAC0A1D0AAE8400B72DB9 /* MyPointsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsModel.swift; sourceTree = "<group>"; };
+		79EBAC0B1D0AAE8400B72DB9 /* PointModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointModel.swift; sourceTree = "<group>"; };
+		79EBAC0C1D0AAE8400B72DB9 /* TotalPointsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalPointsModel.swift; sourceTree = "<group>"; };
+		79EBAC0D1D0AAE8400B72DB9 /* UserPointsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserPointsModel.swift; sourceTree = "<group>"; };
+		79EBAC0F1D0AAE8400B72DB9 /* PointsBreakdownTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsBreakdownTableViewCell.swift; sourceTree = "<group>"; };
+		79EBAC101D0AAE8400B72DB9 /* PointsBreakdownTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsBreakdownTableViewCell.xib; sourceTree = "<group>"; };
+		79EBAC111D0AAE8400B72DB9 /* PointsDetailsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsDetailsTableViewCell.swift; sourceTree = "<group>"; };
+		79EBAC121D0AAE8400B72DB9 /* PointsDetailsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsDetailsTableViewCell.xib; sourceTree = "<group>"; };
+		79EBAC131D0AAE8400B72DB9 /* PointsEarnedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsEarnedTableViewCell.swift; sourceTree = "<group>"; };
+		79EBAC141D0AAE8400B72DB9 /* PointsEarnedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsEarnedTableViewCell.xib; sourceTree = "<group>"; };
+		79EBAC151D0AAE8400B72DB9 /* PointsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsTableViewCell.swift; sourceTree = "<group>"; };
+		79EBAC161D0AAE8400B72DB9 /* PointsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsTableViewCell.xib; sourceTree = "<group>"; };
+		79EBAC261D0ABC4E00B72DB9 /* PointV2Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointV2Model.swift; sourceTree = "<group>"; };
 		79EF66221CA107DF000CDA6B /* SuggestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionViewController.swift; sourceTree = "<group>"; };
 		79EF66231CA107DF000CDA6B /* SuggestionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SuggestionViewController.xib; sourceTree = "<group>"; };
 		79EF66251CA107DF000CDA6B /* SuggestionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionViewModel.swift; sourceTree = "<group>"; };
@@ -1832,6 +1834,7 @@
 		798D7EA01C8686EA00D2A1F7 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				79EBAC041D0AAE8400B72DB9 /* My Points */,
 				546BF38E1D057D8A005DF761 /* Warehouse */,
 				79EF66291CA1088B000CDA6B /* Help */,
 				79EF661E1CA107DF000CDA6B /* Suggestions */,
@@ -1847,7 +1850,6 @@
 				798D7FD21C8686EB00D2A1F7 /* Login And Registration */,
 				798D7FEE1C8686EB00D2A1F7 /* Messaging */,
 				798D7FFE1C8686EB00D2A1F7 /* Model */,
-				798D80011C8686EB00D2A1F7 /* My Points */,
 				798D80141C8686EB00D2A1F7 /* My Store */,
 				798D80521C8686EB00D2A1F7 /* Product Management */,
 				26A387D11CE9CEC500E98061 /* Country Store */,
@@ -2537,52 +2539,6 @@
 				798D80001C8686EB00D2A1F7 /* UploadImageModel.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		798D80011C8686EB00D2A1F7 /* My Points */ = {
-			isa = PBXGroup;
-			children = (
-				798D80021C8686EB00D2A1F7 /* Controller */,
-				798D80051C8686EB00D2A1F7 /* Model */,
-				798D800B1C8686EB00D2A1F7 /* View */,
-			);
-			path = "My Points";
-			sourceTree = "<group>";
-		};
-		798D80021C8686EB00D2A1F7 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				798D80031C8686EB00D2A1F7 /* MyPointsTableViewController.swift */,
-				798D80041C8686EB00D2A1F7 /* MyPointsTableViewController.xib */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		798D80051C8686EB00D2A1F7 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				798D80061C8686EB00D2A1F7 /* MyPointsHistoryModel.swift */,
-				798D80071C8686EB00D2A1F7 /* MyPointsModel.swift */,
-				798D80081C8686EB00D2A1F7 /* PointModel.swift */,
-				798D80091C8686EB00D2A1F7 /* TotalPointsModel.swift */,
-				798D800A1C8686EB00D2A1F7 /* UserPointsModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		798D800B1C8686EB00D2A1F7 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				798D800C1C8686EB00D2A1F7 /* PointsBreakdownTableViewCell.swift */,
-				798D800D1C8686EB00D2A1F7 /* PointsBreakdownTableViewCell.xib */,
-				798D800E1C8686EB00D2A1F7 /* PointsDetailsTableViewCell.swift */,
-				798D800F1C8686EB00D2A1F7 /* PointsDetailsTableViewCell.xib */,
-				798D80101C8686EB00D2A1F7 /* PointsEarnedTableViewCell.swift */,
-				798D80111C8686EB00D2A1F7 /* PointsEarnedTableViewCell.xib */,
-				798D80121C8686EB00D2A1F7 /* PointsTableViewCell.swift */,
-				798D80131C8686EB00D2A1F7 /* PointsTableViewCell.xib */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		798D80141C8686EB00D2A1F7 /* My Store */ = {
@@ -3371,6 +3327,53 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		79EBAC041D0AAE8400B72DB9 /* My Points */ = {
+			isa = PBXGroup;
+			children = (
+				79EBAC051D0AAE8400B72DB9 /* Controller */,
+				79EBAC081D0AAE8400B72DB9 /* Model */,
+				79EBAC0E1D0AAE8400B72DB9 /* View */,
+			);
+			path = "My Points";
+			sourceTree = "<group>";
+		};
+		79EBAC051D0AAE8400B72DB9 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				79EBAC061D0AAE8400B72DB9 /* MyPointsTableViewController.swift */,
+				79EBAC071D0AAE8400B72DB9 /* MyPointsTableViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		79EBAC081D0AAE8400B72DB9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				79EBAC091D0AAE8400B72DB9 /* MyPointsHistoryModel.swift */,
+				79EBAC0A1D0AAE8400B72DB9 /* MyPointsModel.swift */,
+				79EBAC0B1D0AAE8400B72DB9 /* PointModel.swift */,
+				79EBAC0C1D0AAE8400B72DB9 /* TotalPointsModel.swift */,
+				79EBAC0D1D0AAE8400B72DB9 /* UserPointsModel.swift */,
+				79EBAC261D0ABC4E00B72DB9 /* PointV2Model.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		79EBAC0E1D0AAE8400B72DB9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				79EBAC0F1D0AAE8400B72DB9 /* PointsBreakdownTableViewCell.swift */,
+				79EBAC101D0AAE8400B72DB9 /* PointsBreakdownTableViewCell.xib */,
+				79EBAC111D0AAE8400B72DB9 /* PointsDetailsTableViewCell.swift */,
+				79EBAC121D0AAE8400B72DB9 /* PointsDetailsTableViewCell.xib */,
+				79EBAC131D0AAE8400B72DB9 /* PointsEarnedTableViewCell.swift */,
+				79EBAC141D0AAE8400B72DB9 /* PointsEarnedTableViewCell.xib */,
+				79EBAC151D0AAE8400B72DB9 /* PointsTableViewCell.swift */,
+				79EBAC161D0AAE8400B72DB9 /* PointsTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		79EF661E1CA107DF000CDA6B /* Suggestions */ = {
 			isa = PBXGroup;
 			children = (
@@ -3717,9 +3720,9 @@
 				2623DE201CC8CFA200EA241C /* ProductCombinationTableViewCell.xib in Resources */,
 				798D82341C8686EB00D2A1F7 /* EditProfileButtonTableViewCell.xib in Resources */,
 				F7C40FD71B983CD90091C16C /* filter2.png in Resources */,
-				798D82F71C8686EB00D2A1F7 /* PointsDetailsTableViewCell.xib in Resources */,
 				798D81E01C8686EB00D2A1F7 /* PayoutRequestListDetailViewController.xib in Resources */,
 				798D83D31C8686EB00D2A1F7 /* FilterResultsViewController.xib in Resources */,
+				79EBAC231D0AAE8400B72DB9 /* PointsEarnedTableViewCell.xib in Resources */,
 				798D834E1C8686EB00D2A1F7 /* ItemImagesHorizontalCollectionViewCell.xib in Resources */,
 				798D844E1C8686EB00D2A1F7 /* TransactionDetailsFooterView.xib in Resources */,
 				798D84541C8686EB00D2A1F7 /* TransactionImageCollectionViewCell.xib in Resources */,
@@ -3758,7 +3761,6 @@
 				798D82381C8686EB00D2A1F7 /* EditProfilePersonalTableViewCell.xib in Resources */,
 				798D84261C8686EB00D2A1F7 /* TransactionCancelReasonOrderViewController.xib in Resources */,
 				F71077651CEAA7B900FDCDF1 /* ProductUploadCombinationImagesCVC.xib in Resources */,
-				798D82F51C8686EB00D2A1F7 /* PointsBreakdownTableViewCell.xib in Resources */,
 				798D83011C8686EB00D2A1F7 /* ChangeBankAccountViewController.xib in Resources */,
 				798D82091C8686EB00D2A1F7 /* AddCustomizedCategoryViewController.xib in Resources */,
 				798D83111C8686EB00D2A1F7 /* VerifyViewController.xib in Resources */,
@@ -3771,7 +3773,6 @@
 				798D82941C8686EB00D2A1F7 /* Panton Light Italic.otf in Resources */,
 				798D84281C8686EB00D2A1F7 /* TransactionDeliveryLogTableViewController.xib in Resources */,
 				798D81F31C8686EB00D2A1F7 /* PayoutEarningsTransactionTypeTableViewCell.xib in Resources */,
-				798D82EE1C8686EB00D2A1F7 /* MyPointsTableViewController.xib in Resources */,
 				798D83BA1C8686EB00D2A1F7 /* DisputeTextFieldTableViewCell.xib in Resources */,
 				798D840C1C8686EB00D2A1F7 /* SettingDeactivateTableViewCell.xib in Resources */,
 				262BEDEF1CC71C8B004882DF /* CountryStoreTableViewCell.xib in Resources */,
@@ -3797,7 +3798,7 @@
 				F7C40FD91B983CD90091C16C /* photo.png in Resources */,
 				798D81DA1C8686EB00D2A1F7 /* PayoutBalanceWithdrawalViewController.xib in Resources */,
 				798D81E61C8686EB00D2A1F7 /* PayoutViewController.xib in Resources */,
-				798D82FB1C8686EB00D2A1F7 /* PointsTableViewCell.xib in Resources */,
+				79EBAC181D0AAE8400B72DB9 /* MyPointsTableViewController.xib in Resources */,
 				798D82AA1C8686EB00D2A1F7 /* FollowersViewController.xib in Resources */,
 				798D83D61C8686EB00D2A1F7 /* FilterViewController.xib in Resources */,
 				798D837A1C8686EB00D2A1F7 /* ProductUploadAddFooterView.xib in Resources */,
@@ -3847,13 +3848,13 @@
 				798D820B1C8686EB00D2A1F7 /* AddSubCategoriesViewController.xib in Resources */,
 				F71606BC1CC4DE7F00C2F5E8 /* ProductUploadImageTVC.xib in Resources */,
 				F7C40FCC1B983CD90091C16C /* addressRight.png in Resources */,
-				798D82F91C8686EB00D2A1F7 /* PointsEarnedTableViewCell.xib in Resources */,
 				798D840E1C8686EB00D2A1F7 /* SettingsHeaderTableViewCell.xib in Resources */,
 				F7C40FCB1B983CD90091C16C /* address.png in Resources */,
 				798D83331C8686EB00D2A1F7 /* StoreInfoSectionTableViewCell.xib in Resources */,
 				798D83C01C8686EB00D2A1F7 /* DatePickerViewController.xib in Resources */,
 				79A1C71C1CFD855A001184C4 /* LanguageCombinationHeaderCollectionReusableView.xib in Resources */,
 				798D820F1C8686EB00D2A1F7 /* CustomizedCategoryViewsViewController.xib in Resources */,
+				79EBAC1F1D0AAE8400B72DB9 /* PointsBreakdownTableViewCell.xib in Resources */,
 				79A1C7101CFD5566001184C4 /* LanguageVariantsCollectionViewCell.xib in Resources */,
 				26239D551CC872A90099A87C /* CountryStoreSetupViewController.xib in Resources */,
 				798D83AF1C8686EB00D2A1F7 /* NewDisputeTableViewController2.xib in Resources */,
@@ -3915,6 +3916,7 @@
 				798D82301C8686EB00D2A1F7 /* EditProfileTableViewController.xib in Resources */,
 				798D82261C8686EB00D2A1F7 /* EditSubCategoriesRemovedTableViewCell.xib in Resources */,
 				262BEDEB1CC71A6D004882DF /* CountryStoreViewController.xib in Resources */,
+				79EBAC251D0AAE8400B72DB9 /* PointsTableViewCell.xib in Resources */,
 				798D84601C8686EB00D2A1F7 /* TransactionProductTableViewCell.xib in Resources */,
 				F70F914D1CCA0240000DBD36 /* ProductUploadAttributeListVC.xib in Resources */,
 				798D835A1C8686EB00D2A1F7 /* ProductManagementCollectionViewCell.xib in Resources */,
@@ -3967,6 +3969,7 @@
 				79A1C7181CFD8452001184C4 /* LanguageTransalationCombinationsCollectionViewController.xib in Resources */,
 				798D83281C8686EB00D2A1F7 /* StoreInfoAddressTableViewCell.xib in Resources */,
 				798D838C1C8686EB00D2A1F7 /* ProductUploadCombinationTableViewCell.xib in Resources */,
+				79EBAC211D0AAE8400B72DB9 /* PointsDetailsTableViewCell.xib in Resources */,
 				79CCB6691CF6F47D00E38612 /* TranslationInputTableViewCell.xib in Resources */,
 				2623DE2C1CC8EB9500EA241C /* InventoryLocationTableViewCell.xib in Resources */,
 				798D84181C8686EB00D2A1F7 /* AffiliateStoreHeaderView.xib in Resources */,
@@ -4061,8 +4064,6 @@
 				798D843E1C8686EB00D2A1F7 /* TransactionModel.swift in Sources */,
 				798D81D91C8686EB00D2A1F7 /* PayoutBalanceWithdrawalViewController.swift in Sources */,
 				798D84511C8686EB00D2A1F7 /* TransactionFilterTableViewCell.swift in Sources */,
-				798D82F81C8686EB00D2A1F7 /* PointsEarnedTableViewCell.swift in Sources */,
-				798D82F31C8686EB00D2A1F7 /* UserPointsModel.swift in Sources */,
 				798D82541C8686EB00D2A1F7 /* BubbleChartDataEntry.swift in Sources */,
 				798D84131C8686EB00D2A1F7 /* AffiliateGenerateQrCodeModel.swift in Sources */,
 				798D82E61C8686EB00D2A1F7 /* MessageThreadVC.swift in Sources */,
@@ -4072,7 +4073,7 @@
 				54AC39FA1D067C9300B28176 /* WarehouseModel.swift in Sources */,
 				798D832B1C8686EB00D2A1F7 /* StoreInfoPreferredCategoriesSectionView.swift in Sources */,
 				798D829F1C8686EB00D2A1F7 /* FSCalendarCell.m in Sources */,
-				798D82F41C8686EB00D2A1F7 /* PointsBreakdownTableViewCell.swift in Sources */,
+				79EBAC1C1D0AAE8400B72DB9 /* TotalPointsModel.swift in Sources */,
 				F71077641CEAA7B900FDCDF1 /* ProductUploadCombinationImagesCVC.swift in Sources */,
 				798D83481C8686EB00D2A1F7 /* ProductUnitsModel.swift in Sources */,
 				798D831F1C8686EB00D2A1F7 /* NewAddressHeaderTableViewCell.swift in Sources */,
@@ -4088,6 +4089,8 @@
 				798D829E1C8686EB00D2A1F7 /* FSCalendarAppearance.m in Sources */,
 				798D82BD1C8686EB00D2A1F7 /* JSONResponseSerializer.swift in Sources */,
 				798D82591C8686EB00D2A1F7 /* ChartData.swift in Sources */,
+				79EBAC241D0AAE8400B72DB9 /* PointsTableViewCell.swift in Sources */,
+				79EBAC201D0AAE8400B72DB9 /* PointsDetailsTableViewCell.swift in Sources */,
 				798D82C31C8686EB00D2A1F7 /* StringHelper.swift in Sources */,
 				798D83211C8686EB00D2A1F7 /* NewAddressTableViewCell.swift in Sources */,
 				798D81F21C8686EB00D2A1F7 /* PayoutEarningsTransactionTypeTableViewCell.swift in Sources */,
@@ -4121,7 +4124,6 @@
 				267DD2CA1CE9D089005D219A /* CountryListModel.swift in Sources */,
 				798D83671C8686EB00D2A1F7 /* ProductUploadCombinationTableViewController.swift in Sources */,
 				F79B62371CE56E00001251BF /* ProductUploadProductGroupCVC.swift in Sources */,
-				798D82EF1C8686EB00D2A1F7 /* MyPointsHistoryModel.swift in Sources */,
 				798D83DA1C8686EB00D2A1F7 /* SearchRiderNameModel.swift in Sources */,
 				798D82871C8686EB00D2A1F7 /* ChartTransformerHorizontalBarChart.swift in Sources */,
 				798D845D1C8686EB00D2A1F7 /* TransactionProductPurchaseTableViewCell.swift in Sources */,
@@ -4153,7 +4155,6 @@
 				798D82B31C8686EB00D2A1F7 /* Category.swift in Sources */,
 				798D83931C8686EB00D2A1F7 /* ProductUploadDimensionsAndWeightTableViewCell.swift in Sources */,
 				798D83B91C8686EB00D2A1F7 /* DisputeTextFieldTableViewCell.swift in Sources */,
-				798D82F21C8686EB00D2A1F7 /* TotalPointsModel.swift in Sources */,
 				798D84331C8686EB00D2A1F7 /* TransactionViewController.swift in Sources */,
 				798D847D1C8686EB00D2A1F7 /* TextViewAutoHeight.swift in Sources */,
 				798D84421C8686EB00D2A1F7 /* TransactionsModel.swift in Sources */,
@@ -4184,6 +4185,7 @@
 				798D84391C8686EB00D2A1F7 /* OrderProductDetailsModel.swift in Sources */,
 				798D82A21C8686EB00D2A1F7 /* FSCalendarHeaderTouchDeliver.m in Sources */,
 				798D82371C8686EB00D2A1F7 /* EditProfilePersonalTableViewCell.swift in Sources */,
+				79EBAC171D0AAE8400B72DB9 /* MyPointsTableViewController.swift in Sources */,
 				798D822A1C8686EB00D2A1F7 /* StoreInfoModel.swift in Sources */,
 				798D82B41C8686EB00D2A1F7 /* CheckBox.swift in Sources */,
 				798D83041C8686EB00D2A1F7 /* ChangeMobileNumberViewController.swift in Sources */,
@@ -4209,6 +4211,8 @@
 				798D83451C8686EB00D2A1F7 /* ProductImagesModel.swift in Sources */,
 				798D82401C8686EB00D2A1F7 /* CombinedChartView.swift in Sources */,
 				798D83A81C8686EB00D2A1F7 /* PUAttributeSetHeaderTableViewCell.swift in Sources */,
+				79EBAC191D0AAE8400B72DB9 /* MyPointsHistoryModel.swift in Sources */,
+				79EBAC271D0ABC4E00B72DB9 /* PointV2Model.swift in Sources */,
 				798D82611C8686EB00D2A1F7 /* PieChartData.swift in Sources */,
 				798D826A1C8686EB00D2A1F7 /* ChartHighlight.swift in Sources */,
 				798D82771C8686EB00D2A1F7 /* ChartXAxisRendererHorizontalBarChart.swift in Sources */,
@@ -4276,7 +4280,6 @@
 				262BEDEE1CC71C8B004882DF /* CountryStoreTableViewCell.swift in Sources */,
 				798D83171C8686EB00D2A1F7 /* GetAddressesModel.swift in Sources */,
 				798D839D1C8686EB00D2A1F7 /* ProductUploadQuantityTableViewCell.swift in Sources */,
-				798D82F01C8686EB00D2A1F7 /* MyPointsModel.swift in Sources */,
 				798D83791C8686EB00D2A1F7 /* ProductUploadAddFooterView.swift in Sources */,
 				798D84041C8686EB00D2A1F7 /* SelectProductCollectionViewCell.swift in Sources */,
 				79EF66281CA107DF000CDA6B /* SuggestionViewModel.swift in Sources */,
@@ -4290,10 +4293,10 @@
 				798D84731C8686EB00D2A1F7 /* RoundedView.swift in Sources */,
 				798D83BF1C8686EB00D2A1F7 /* DatePickerViewController.swift in Sources */,
 				798D82161C8686EB00D2A1F7 /* CustomizedCategoriesModel.swift in Sources */,
+				79EBAC1E1D0AAE8400B72DB9 /* PointsBreakdownTableViewCell.swift in Sources */,
 				798D83FD1C8686EB00D2A1F7 /* ResellerItemTableViewCell.swift in Sources */,
 				798D82B51C8686EB00D2A1F7 /* CommonHelper.swift in Sources */,
 				79CCB65A1CF6A41900E38612 /* LanguageTranslationPickerTableViewController.swift in Sources */,
-				798D82F11C8686EB00D2A1F7 /* PointModel.swift in Sources */,
 				798D83C11C8686EB00D2A1F7 /* RecentProductsTableViewController.swift in Sources */,
 				798D84751C8686EB00D2A1F7 /* SemiRoundedButton.swift in Sources */,
 				799AD44E1CFBF38700977428 /* ProductTranslationVariantModel.swift in Sources */,
@@ -4308,7 +4311,6 @@
 				798D83691C8686EB00D2A1F7 /* ProductUploadDetailTableViewController.swift in Sources */,
 				798D84571C8686EB00D2A1F7 /* TransactionProductDetailsFooterView.swift in Sources */,
 				798D82BF1C8686EB00D2A1F7 /* ParseHelper.swift in Sources */,
-				798D82F61C8686EB00D2A1F7 /* PointsDetailsTableViewCell.swift in Sources */,
 				546BF3981D057D8A005DF761 /* WarehouseListViewController.swift in Sources */,
 				F7FDD0B31D08FDFA00AEA0BB /* WarehouseCityModel.swift in Sources */,
 				798D82821C8686EB00D2A1F7 /* ScatterChartRenderer.swift in Sources */,
@@ -4424,6 +4426,7 @@
 				F70F914C1CCA0240000DBD36 /* ProductUploadAttributeListVC.swift in Sources */,
 				798D834B1C8686EB00D2A1F7 /* AddItemViewController.swift in Sources */,
 				798D84631C8686EB00D2A1F7 /* TransactionTableViewCell.swift in Sources */,
+				79EBAC1B1D0AAE8400B72DB9 /* PointModel.swift in Sources */,
 				798D84371C8686EB00D2A1F7 /* DeliveryLogsSectionModel.swift in Sources */,
 				798D83501C8686EB00D2A1F7 /* ProductDetailsTableViewCell.swift in Sources */,
 				798D83061C8686EB00D2A1F7 /* CongratulationsViewController.swift in Sources */,
@@ -4431,6 +4434,7 @@
 				798D82121C8686EB00D2A1F7 /* CategoryDetailModel.swift in Sources */,
 				798D82481C8686EB00D2A1F7 /* ChartComponentBase.swift in Sources */,
 				798D83271C8686EB00D2A1F7 /* StoreInfoAddressTableViewCell.swift in Sources */,
+				79EBAC1D1D0AAE8400B72DB9 /* UserPointsModel.swift in Sources */,
 				798D83B41C8686EB00D2A1F7 /* ResolutionFilterViewController.swift in Sources */,
 				798D83521C8686EB00D2A1F7 /* ProductDetailViews.swift in Sources */,
 				798D826E1C8686EB00D2A1F7 /* BarChartRenderer.swift in Sources */,
@@ -4496,7 +4500,6 @@
 				798D83E01C8686EB00D2A1F7 /* FilterFooterTableViewCell.swift in Sources */,
 				798D82191C8686EB00D2A1F7 /* AddCustomizedCategoryTableViewCell.swift in Sources */,
 				798D836F1C8686EB00D2A1F7 /* SuccessUploadViewController.swift in Sources */,
-				798D82ED1C8686EB00D2A1F7 /* MyPointsTableViewController.swift in Sources */,
 				798D827C1C8686EB00D2A1F7 /* CombinedChartRenderer.swift in Sources */,
 				798D83771C8686EB00D2A1F7 /* EditImageModel.swift in Sources */,
 				798D82081C8686EB00D2A1F7 /* AddCustomizedCategoryViewController.swift in Sources */,
@@ -4531,7 +4534,6 @@
 				798D839B1C8686EB00D2A1F7 /* ProductUploadPriceTableViewCell.swift in Sources */,
 				798D82051C8686EB00D2A1F7 /* WithdrawMethodView.swift in Sources */,
 				798D82E11C8686EB00D2A1F7 /* ConversationTVC.swift in Sources */,
-				798D82FA1C8686EB00D2A1F7 /* PointsTableViewCell.swift in Sources */,
 				798D821F1C8686EB00D2A1F7 /* CCCItemImagesView.swift in Sources */,
 				798D83731C8686EB00D2A1F7 /* CategoryModel.swift in Sources */,
 				798D84251C8686EB00D2A1F7 /* TransactionCancelReasonOrderViewController.swift in Sources */,
@@ -4553,6 +4555,7 @@
 				798D83BD1C8686EB00D2A1F7 /* ResolutionCenterCell.swift in Sources */,
 				798D84681C8686EB00D2A1F7 /* CustomUploadView.swift in Sources */,
 				798D83D71C8686EB00D2A1F7 /* SearchViewController.swift in Sources */,
+				79EBAC1A1D0AAE8400B72DB9 /* MyPointsModel.swift in Sources */,
 				798D833C1C8686EB00D2A1F7 /* ProductManagementModelViewController.swift in Sources */,
 				798D82731C8686EB00D2A1F7 /* ChartLegendRenderer.swift in Sources */,
 				798D840D1C8686EB00D2A1F7 /* SettingsHeaderTableViewCell.swift in Sources */,
@@ -4568,6 +4571,7 @@
 				798D84081C8686EB00D2A1F7 /* DeactivateModalViewController.swift in Sources */,
 				267DD2CC1CEB1AE8005D219A /* CountrySetupModel.swift in Sources */,
 				798D84401C8686EB00D2A1F7 /* TransactionsFilterItemModel.swift in Sources */,
+				79EBAC221D0AAE8400B72DB9 /* PointsEarnedTableViewCell.swift in Sources */,
 				798D84291C8686EB00D2A1F7 /* TransactionDetailsTableViewController.swift in Sources */,
 				798D835D1C8686EB00D2A1F7 /* RemovedItemTableViewCell.swift in Sources */,
 			);
