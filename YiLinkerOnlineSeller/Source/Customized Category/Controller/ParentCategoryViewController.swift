@@ -52,7 +52,7 @@ class ParentCategoryViewController: UIViewController, UITableViewDataSource, UIT
         navigationSpacer.width = -20
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "closeAction")
-        self.navigationItem.rightBarButtonItems = [UIBarButtonItem(image: UIImage(named: "check"), style: .Plain, target: self, action: "checkAction"), navigationSpacer]
+        self.navigationItem.rightBarButtonItems = [UIBarButtonItem(image: UIImage(named: "nav-check"), style: .Plain, target: self, action: "checkAction"), navigationSpacer]
     }
     
     func customizedViews() {

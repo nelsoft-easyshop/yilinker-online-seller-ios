@@ -117,7 +117,7 @@ class SessionManager {
     }
     
     class func isLoggedIn() -> Bool {
-        println(self.accessToken())
+
         if self.accessToken() != "" {
             return true
         } else {
@@ -193,6 +193,11 @@ class SessionManager {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
+    class func setUserId(userId: String) {
+        NSUserDefaults.standardUserDefaults().setObject(userId, forKey: "userId")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
     class func setFullAddress(userAddress: String) {
         NSUserDefaults.standardUserDefaults().setObject(userAddress, forKey: "userAddress")
         NSUserDefaults.standardUserDefaults().synchronize()
@@ -234,6 +239,15 @@ class SessionManager {
     class func userFullName() -> String {
         var result: String = ""
         if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("userFullName") as? String {
+            result = val as! String
+        }
+        
+        return result
+    }
+    
+    class func userId() -> String {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("userId") as? String {
             result = val as! String
         }
         

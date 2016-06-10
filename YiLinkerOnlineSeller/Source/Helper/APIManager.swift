@@ -58,8 +58,8 @@ struct APIAtlas {
     static let sellerChangePassword = APIAtlas.generateV3URL("auth/user/changePassword")
     static let sellerUpdateSellerInfo = APIAtlas.generateV3URL("auth/merchant/updateUserInfo")
     static let sellerGenerateQrCode = APIAtlas.generateV3URL("auth/merchant/getQrCode")
-    static let getCustomizedCategories   = APIAtlas.generateV3URL("category/getCustomCategories")           // Applied
-    static let getCategoryDetails        = APIAtlas.generateV3URL("category/getCategoryDetails")            // Applied
+    static let getCustomizedCategories   = APIAtlas.generateV3URL("auth/category/getCustomCategories?access_token=")           // Applied
+    static let getCategoryDetails        = APIAtlas.generateV3URL("auth/category/getCategoryDetails")            // Applied
     static let editCustomizedCategory    = APIAtlas.generateV3URL("auth/category/updateCustomCategory")
     static let addCustomizedCategory     = APIAtlas.generateV3URL("auth/category/addCustomCategory")        // Applied
     static let deleteCustomizedCategory  = APIAtlas.generateV3URL("auth/category/deleteCustomCategory")     // Applied

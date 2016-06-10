@@ -280,7 +280,7 @@ extension ProductCombinationViewController: UITableViewDataSource, UITableViewDe
             cell.originalPriceLabel.text = "\(Strings.originalPrice) (" + countryStoreModel.currency.symbol + ")"
             cell.originalTextField.text = self.originalPrices[indexPath.section]
             
-            cell.discountLabel.text = "\(Strings.discount) (" + countryStoreModel.currency.symbol + ")"
+            cell.discountLabel.text = "\(Strings.discount) (%)"
             cell.discountTextField.text = self.discounts[indexPath.section]
             
             cell.finalPriceLabel.text = "\(Strings.finalPrice) (" + countryStoreModel.currency.symbol + ")"

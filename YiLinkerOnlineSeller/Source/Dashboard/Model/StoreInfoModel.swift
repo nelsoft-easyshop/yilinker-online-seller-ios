@@ -46,6 +46,7 @@ class StoreInfoModel: NSObject {
     var bankAccount: String = ""
     var accountTitle: String = ""
     var bankId: Int = 0
+    var userId: String = ""
     
     var productCount: Int = 0
     var transactionCount: Int = 0
@@ -73,7 +74,7 @@ class StoreInfoModel: NSObject {
     
     override init() {}
 
-    init(name : String, firstName: String, lastName: String, email : String, gender : String, nickname : String, contact_number : String, specialty : String, birthdate : String, store_name : String, store_description : String, storeSlug: String,  avatar : NSURL, cover_photo : NSURL, is_allowed : Bool, title: String, unit_number: String, bldg_name: String, street_number: String, street_name: String, subdivision: String, zip_code: String, full_address: String, account_title: String, account_number: String, bank_account: String, bank_id: Int, productCount: Int, transactionCount: Int, totalSales: String, isReseller: Bool, isEmailVerified: Bool, isEmailSubscribed: Bool, isSmsSubscribed: Bool, productId: NSArray, productCategoryName: NSArray, isSelected: NSArray, tin: String, messageCount: Int, referralCode: String = "", referrerCode: String = "", referrerName: String = "", accountName: String, bankName: String, validId: String, isBankEditable: Bool, isBusinessEditable: Bool, isLegalDocsEditable: Bool, validIdMessage: String) {
+    init(name : String, firstName: String, lastName: String, email : String, gender : String, nickname : String, contact_number : String, specialty : String, birthdate : String, store_name : String, store_description : String, storeSlug: String,  avatar : NSURL, cover_photo : NSURL, is_allowed : Bool, title: String, unit_number: String, bldg_name: String, street_number: String, street_name: String, subdivision: String, zip_code: String, full_address: String, account_title: String, account_number: String, bank_account: String, bank_id: Int, productCount: Int, transactionCount: Int, totalSales: String, isReseller: Bool, isEmailVerified: Bool, isEmailSubscribed: Bool, isSmsSubscribed: Bool, productId: NSArray, productCategoryName: NSArray, isSelected: NSArray, tin: String, messageCount: Int, referralCode: String = "", referrerCode: String = "", referrerName: String = "", accountName: String, bankName: String, validId: String, isBankEditable: Bool, isBusinessEditable: Bool, isLegalDocsEditable: Bool, validIdMessage: String, userId: String) {
 
         self.lastName = lastName
         self.firstName = firstName
@@ -123,6 +124,7 @@ class StoreInfoModel: NSObject {
         self.isBusinessEditable = isBusinessEditable
         self.isLegalDocsEditable = isLegalDocsEditable
         self.validIdMessage = validIdMessage
+        self.userId = userId;
     }
 
     class func parseSellerDataFromDictionary(dictionary: NSDictionary) -> StoreInfoModel {
@@ -155,6 +157,7 @@ class StoreInfoModel: NSObject {
         var bank_name: String = ""
         var bank_account: String = ""
         var bank_id: Int = 0
+        var userId: String = ""
         var account_title: String = ""
         var productCount: Int = 0
         var transactionCount: Int = 0
@@ -240,6 +243,14 @@ class StoreInfoModel: NSObject {
                 store_name = sellerStoreName
             } else {
                 store_name = ""
+            }
+            
+            if let user_id = value["userId"] as? String {
+                userId = user_id
+            } else if let user_id = value["userId"] as? Int {
+                userId = "\(user_id)"
+            } else {
+                userId = ""
             }
             
             if let sellerStoreDescription = value["storeDescription"] as? String {
@@ -467,7 +478,7 @@ class StoreInfoModel: NSObject {
             
         }
 
-        let storeInfo: StoreInfoModel = StoreInfoModel(name: name, firstName: firstName, lastName: lastName, email: email, gender: gender, nickname: nickname, contact_number: contact_number, specialty: contact_number, birthdate: birthdate, store_name: store_name, store_description: store_description, storeSlug: storeSlug, avatar: avatar, cover_photo: cover_photo, is_allowed: is_followed, title: title, unit_number: unit_number, bldg_name: bldg_name, street_number: street_number, street_name: street_name, subdivision: subdivision, zip_code: zip_code, full_address: store_address, account_title: account_title, account_number: account_number,bank_account: bank_account, bank_id: bank_id, productCount: productCount, transactionCount: transactionCount, totalSales: totalSales, isReseller: isReseller, isEmailVerified: isEmailVerified, isEmailSubscribed: isEmailSubscribed, isSmsSubscribed: isSmsSubscribed, productId: productId, productCategoryName: productCategoryName, isSelected: isSelected, tin: tin, messageCount: messageCount, referralCode: referralCode, referrerCode: referrerCode, referrerName: referrerName, accountName: account_name, bankName: bank_name, validId: validId, isBankEditable: isBankEditable, isBusinessEditable: isBusinessEditable, isLegalDocsEditable: isLegalDocsEditable, validIdMessage: validIdMessage)
+        let storeInfo: StoreInfoModel = StoreInfoModel(name: name, firstName: firstName, lastName: lastName, email: email, gender: gender, nickname: nickname, contact_number: contact_number, specialty: contact_number, birthdate: birthdate, store_name: store_name, store_description: store_description, storeSlug: storeSlug, avatar: avatar, cover_photo: cover_photo, is_allowed: is_followed, title: title, unit_number: unit_number, bldg_name: bldg_name, street_number: street_number, street_name: street_name, subdivision: subdivision, zip_code: zip_code, full_address: store_address, account_title: account_title, account_number: account_number,bank_account: bank_account, bank_id: bank_id, productCount: productCount, transactionCount: transactionCount, totalSales: totalSales, isReseller: isReseller, isEmailVerified: isEmailVerified, isEmailSubscribed: isEmailSubscribed, isSmsSubscribed: isSmsSubscribed, productId: productId, productCategoryName: productCategoryName, isSelected: isSelected, tin: tin, messageCount: messageCount, referralCode: referralCode, referrerCode: referrerCode, referrerName: referrerName, accountName: account_name, bankName: bank_name, validId: validId, isBankEditable: isBankEditable, isBusinessEditable: isBusinessEditable, isLegalDocsEditable: isLegalDocsEditable, validIdMessage: validIdMessage, userId: userId)
         
         return storeInfo
     }
