@@ -8,22 +8,25 @@
 
 import UIKit
 
-class PointModel: NSObject {
+class PointV2Model: NSObject {
     var amount: String = ""
-    var pointDescription: String = ""
+    var currencyCode: String = ""
     var date: String = ""
+    var pointDescription: String = ""
     
-    init(amount: String, pointDescription: String, date: String) {
+    init(amount: String, currencyCode: String, date: String, pointDescription: String) {
         self.amount = amount
-        self.pointDescription = pointDescription
+        self.currencyCode = currencyCode
         self.date = date
+        self.pointDescription = pointDescription
     }
     
-    class func parseDataWithDictionary(dictionary: AnyObject) -> PointModel {
+    class func parseDataWithDictionary(dictionary: AnyObject) -> PointV2Model {
         
         var amount: String = ""
-        var pointDescription: String = ""
+        var currencyCode: String = ""
         var date: String = ""
+        var pointDescription: String = ""
         
         if dictionary.isKindOfClass(NSDictionary) {
             
@@ -44,8 +47,14 @@ class PointModel: NSObject {
                     date = tempVar
                 }
             }
+            
+            if dictionary["currencyCode"] != nil {
+                if let tempVar = dictionary["currencyCode"] as? String {
+                    currencyCode = tempVar
+                }
+            }
         }
         
-        return PointModel(amount: amount, pointDescription: pointDescription, date: date)
+        return PointV2Model(amount: amount, currencyCode: currencyCode, date: date, pointDescription: pointDescription)
     }
 }
