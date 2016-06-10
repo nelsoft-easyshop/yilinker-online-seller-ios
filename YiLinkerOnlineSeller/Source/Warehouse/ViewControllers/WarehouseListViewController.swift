@@ -18,8 +18,12 @@ class WarehouseListViewController: UIViewController, UITableViewDataSource, UITa
     override func viewDidLoad() {
         self.initializeViews()
         self.initializedNavigationBarItems()
-        self.fireGetWarehouseList()
+    }
     
+    override func viewWillAppear(animated: Bool) {
+        self.warehouseList = []
+        self.fireGetWarehouseList()
+
     }
     
     //MARK: UITableView DataSource Methods
@@ -95,6 +99,49 @@ class WarehouseListViewController: UIViewController, UITableViewDataSource, UITa
         addWarehouseVC.navigationController!.navigationBar.barTintColor = self.navigationController!.navigationBar.barTintColor
         self.presentViewController(navController, animated: true, completion: nil)
     }
+    
+    func fireDeleteWarehouse(warehouseId: Int) {
+        
+        self.showHUD()
+        
+        WebServiceManager.fireDeleteWarehouse(APIAtlas.deleteWarehouse + SessionManager.accessToken(), warehouseId: warehouseId) { (successful, responseObject, requestErrorType) -> Void in
+            
+            //self.hud?.hide(true)
+            
+            if successful {
+                println("\(responseObject)")
+                self.warehouseList = []
+                Toast.displayToastWithMessage(responseObject["message"] as! String, duration: 2.0, view: self.view)
+                self.fireGetWarehouseList()
+                println("\(self.warehouseList.count)")
+                self.tableView.reloadData()
+                
+            } else {
+                if requestErrorType == .ResponseError {
+                    // Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    //                    self.fireRefreshToken()
+                } else if requestErrorType == .PageNotFound {
+                    // Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    // No internet connection
+                    // Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    // self.addEmptyView()
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
+            
+        }
+    }
+    
     
     func fireGetWarehouseList () {
         self.showHUD()
@@ -189,9 +236,25 @@ class WarehouseListViewController: UIViewController, UITableViewDataSource, UITa
         self.presentViewController(navController, animated: true, completion: nil)
     }
     
-    func swipeTableCell(cell: MGSwipeTableCell!, tappedButtonAtIndex index: Int, direction: MGSwipeDirection, fromExpansion: Bool) -> Bool {
+    func swipeTableCell(cell: MGSwipeTableCell!, tappedButtonAtIndex index: Int, direction: MGSwipeDirection, fromExpansion: Bool) -> Bool
+    {
+        let indexPath = tableView.indexPathForCell(cell)
+        if index == 0 {
+            println("delete")
+            if self.warehouseList.count != 0 {
+                let selectedWarehouse: WarehouseModel = self.warehouseList[indexPath!.row]
+                self.fireDeleteWarehouse(selectedWarehouse.id)
+            }
+        } else {
+            println("edit")
+            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let addWarehouseVC: AddWarehouseViewController = storyboard.instantiateViewControllerWithIdentifier("AddWarehouseViewController") as! AddWarehouseViewController
+            addWarehouseVC.warehouseModel = self.warehouseList[indexPath!.row]
+            let navController = UINavigationController(rootViewController: addWarehouseVC)
+            addWarehouseVC.navigationController!.navigationBar.barTintColor = self.navigationController!.navigationBar.barTintColor
+            self.presentViewController(navController, animated: true, completion: nil)
+        }
         
-        println("\(index)")
         return true
     }
 }
