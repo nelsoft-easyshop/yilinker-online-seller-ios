@@ -911,11 +911,17 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - Product Upload Upload Image Table View Cell Delegate method
     
     func productUploadUploadImageTableViewCell(didDeleteAtRowIndexPath indexPath: NSIndexPath, cell: ProductUploadImageTVC, collectionView: UICollectionView) {
-        self.productModel.mainImagesName[indexPath.row] = ""
+        self.productModel.mainImagesName.removeAtIndex(indexPath.row)
         self.productModel.productMainImagesModel.removeAtIndex(indexPath.row)
-        
+        self.productImagesCount--
+        println(self.productImagesCount)
+        println(self.productModel.mainImagesName)
         if self.uploadType == UploadType.NewProduct {
             self.productModel.images.removeAtIndex(indexPath.row)
+            if self.primaryPhoto == "\(indexPath.row)" {
+                self.primaryPhoto = ""
+                cell.selectedPrimaryPhoto = []
+            }
         } else {
             self.productModel.editedImage.removeAtIndex(indexPath.row)
             if self.primaryPhoto == "\(indexPath.row)" {
