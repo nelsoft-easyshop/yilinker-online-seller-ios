@@ -213,12 +213,12 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             self.next()
             showAlert(title: self.error, message: self.barangayRequired)
             index2 =  1002
-        } else if index == 9 {
+        } /*else if index == 9 {
             self.activeTextField = index - 1
             self.next()
             showAlert(title: self.error, message: self.zipCodeRequired)
             index2 =  1002
-        }
+        }*/
         
         //If index is zero all required fields are filled up
         if index2 == 1001 {
@@ -296,7 +296,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         } else if indexPath.row == 7 {
             cell.rowTitleLabel.required()
         } else if indexPath.row == 9 {
-            cell.rowTitleLabel.required()
+            //cell.rowTitleLabel.required()
             cell.rowTextField.keyboardType = UIKeyboardType.NumberPad
         }
         
@@ -685,9 +685,9 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         self.showHUD()
         
         //Add parameter of POST method
-        let parameters = ["access_token": SessionManager.accessToken()]
+        let parameters = ["" : ""]
         
-        WebServiceManager.fireStoreInfoRequestWithUrl(APIAtlas.provinceUrl, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        WebServiceManager.fireStoreInfoRequestWithUrl(APIAtlas.provinceUrl + SessionManager.accessToken(), parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 //Parse responseObject
                 self.provinceModel = ProvinceModel.parseDataWithDictionary(responseObject)
