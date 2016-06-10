@@ -284,7 +284,7 @@ extension ProductCombinationViewController: UITableViewDataSource, UITableViewDe
             cell.discountTextField.text = self.discounts[indexPath.section]
             
             cell.finalPriceLabel.text = "\(Strings.finalPrice) (" + countryStoreModel.currency.symbol + ")"
-            cell.finalPriceTextField.text = "\(cell.originalTextField.text.doubleValue * cell.discountTextField.text.doubleValue / 100)"
+            cell.finalPriceTextField.text = "\(cell.originalTextField.text.doubleValue - (cell.originalTextField.text.doubleValue * (cell.discountTextField.text.doubleValue / 100)))"
             
             cell.commissionLabel.text = Strings.commission
             cell.commissionTextField.text = self.commissions[indexPath.section]
@@ -358,7 +358,9 @@ extension ProductCombinationViewController: UITableViewDataSource, UITableViewDe
         } else if id == TextFieldID.discount {
             self.discounts[section] = text
         } else if id == TextFieldID.finalPrice {
-            self.finalPrices[section] = String(stringInterpolationSegment: String(self.originalPrices[section]).doubleValue * String(stringInterpolationSegment: self.discounts).doubleValue / 100)
+//            self.finalPrices[section] = String(stringInterpolationSegment: String(self.originalPrices[section]).doubleValue - (self.originalPrices[section].doubleValue * (=)String(stringInterpolationSegment: self.discounts).doubleValue / 100)
+//self.finalPrices[section] = "\(self.originalPrices[section]).doubleValue = (self.originalPrices[section]).doubleValue * ()))"
+            self.finalPrices[section] = "\(String(self.originalPrices[section]).doubleValue - (String(self.originalPrices[section]).doubleValue * (String(stringInterpolationSegment: self.discounts).doubleValue / 100)))"
         } else if id == TextFieldID.commision {
             self.commissions[section] = text
         }
