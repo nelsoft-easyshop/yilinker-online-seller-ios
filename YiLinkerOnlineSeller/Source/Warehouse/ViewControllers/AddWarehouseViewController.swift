@@ -40,11 +40,13 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     var provinceModel: WarehouseProvinceModel?
     var cityModel: WarehouseCityModel?
     var barangayModel: WarehouseBarangayModel?
+    var warehouseModel: WarehouseModel?
     
     var countryId: String = ""
     var provinceId: String = ""
     var cityId: String = ""
     var barangayId: String = ""
+    var warehouseId: String = ""
     
     override func viewDidLoad() {
         self.initializedNavigationBarItems()
@@ -76,6 +78,22 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
         self.provinceTextField.userInteractionEnabled = false
         self.cityMunTextField.userInteractionEnabled = false
         self.barangayDistrictTextField.userInteractionEnabled = false
+        
+        if self.warehouseModel != nil {
+            self.warehouseNameTextField.text = self.warehouseModel!.name
+            self.fullAddressTextField.text = self.warehouseModel!.address
+            self.countryTextField.text = self.warehouseModel!.countryLocation
+            self.provinceTextField.text = self.warehouseModel!.provinceLocation
+            self.cityMunTextField.text = self.warehouseModel!.cityLocation
+            self.barangayDistrictTextField.text = self.warehouseModel!.barangayLocation
+            self.zipCodeTextField.text = self.warehouseModel!.zipCode
+            self.countryId = "\(self.warehouseModel!.countryLocationID)"
+            self.provinceId = "\(self.warehouseModel!.provinceLocationID)"
+            self.cityId = "\(self.warehouseModel!.cityLocationID)"
+            self.barangayId = "\(self.warehouseModel!.barangayLocationID)"
+            self.warehouseId = "\(self.warehouseModel!.id)"
+            self.textField = self.provinceTextField
+        }
     }
     
     //MARK: Textfield delegate methods
@@ -240,25 +258,25 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     
     func done() {
         
-        if self.countryTextField.text == "" && self.countryModel != nil {
+        if (self.countryTextField.text == "" && self.countryModel != nil) {
             self.countryTextField.text = self.countryModel!.location[0]
             self.countryId = "\(self.countryModel!.countryId[0])"
             self.textField = self.provinceTextField
         }
         
-        if self.provinceTextField.text == "" && self.provinceModel != nil {
+        if (self.provinceTextField.text == "" && self.provinceModel != nil) {
             self.provinceTextField.text = self.provinceModel!.location[0]
             self.provinceId = "\(self.provinceModel!.provinceId[0])"
             self.textField = self.cityMunTextField
         }
         
-        if self.cityMunTextField.text == "" && self.cityModel != nil {
+        if (self.cityMunTextField.text == "" && self.cityModel != nil) {
             self.cityMunTextField.text = self.cityModel!.location[0]
             self.cityId = "\(self.cityModel!.cityId[0])"
             self.textField = self.barangayDistrictTextField
         }
         
-        if self.barangayDistrictTextField.text == "" && self.barangayModel != nil {
+        if (self.barangayDistrictTextField.text == "" && self.barangayModel != nil) {
             self.barangayDistrictTextField.text = self.barangayModel!.location[0]
             self.barangayId = "\(self.barangayModel!.barangayId[0])"
             self.textField = self.barangayDistrictTextField
@@ -392,7 +410,7 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     func fireAddWarehouse() {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var parameters: NSMutableDictionary  = ["warehouseId" : "", "name" : self.warehouseNameTextField.text, "address" : self.fullAddressTextField.text, "location" : self.barangayId, "zipCode" : self.zipCodeTextField.text]
+        var parameters: NSMutableDictionary  = ["warehouseId" : self.warehouseId, "name" : self.warehouseNameTextField.text, "address" : self.fullAddressTextField.text, "location" : self.barangayId, "zipCode" : self.zipCodeTextField.text]
 
         WebServiceManager.fireAddWarehouseAddressRequestWithUrl(APIAtlas.addWarehouse + SessionManager.accessToken(), parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
@@ -421,7 +439,6 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
                         })
                     }
                 }
-                
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             } else {
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false

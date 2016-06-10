@@ -1132,6 +1132,17 @@ class WebServiceManager: NSObject {
         }
     }
     
+    // MARK: - Delete Warehouse
+    
+    class func fireDeleteWarehouse(url: String, warehouseId: Int, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        let parameters = ["warehouseId": warehouseId]
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
     // MARK: - Save Combinations
     
     class func fireSaveCombinations(url: String, parameters: NSDictionary, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
@@ -1140,7 +1151,6 @@ class WebServiceManager: NSObject {
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
-    
     
     // MARK: - Get Inventory
     class func fireGetWarehouseInventory(url: String, warehouseId: String, page: String, category: String, status: String, query: String, group: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
@@ -1167,6 +1177,7 @@ class WebServiceManager: NSObject {
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
+    
 
 }
 

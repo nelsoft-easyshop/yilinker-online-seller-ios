@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="PZ0-iH-fRI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="PZ0-iH-fRI">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -1493,7 +1493,7 @@
                                     <outlet property="delegate" destination="nOb-Vl-TXr" id="7Gh-fd-Ggt"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No result found." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAN-Ux-RhM">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No result found." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAN-Ux-RhM">
                                 <rect key="frame" x="8" y="323" width="359" height="21"/>
                                 <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
                                 <nil key="highlightedColor"/>
@@ -2639,7 +2639,7 @@
                                     <action selector="casesPressed:" destination="eEd-Xe-rMz" eventType="touchUpInside" id="yCs-Ln-NDF"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6YK-VZ-EdR">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6YK-VZ-EdR">
                                 <rect key="frame" x="107" y="64" width="106" height="60"/>
                                 <color key="backgroundColor" red="0.43529411759999997" green="0.20000000000000001" blue="0.52156862749999999" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2871,7 +2871,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manila Warehouse" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qRd-yh-TOt">
                                                     <rect key="frame" x="8" y="12" width="304" height="20"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="20" id="QvC-j5-r9i"/>
+                                                        <constraint firstAttribute="height" constant="20" id="df4-LA-oFz"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -2880,20 +2880,20 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="200" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manila Warehouse Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JHT-qT-i6p">
                                                     <rect key="frame" x="8" y="35" width="304" height="20"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="20" id="3Yv-ve-XS8"/>
+                                                        <constraint firstAttribute="height" constant="20" id="qUu-KR-Eza"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="qRd-yh-TOt" firstAttribute="trailing" secondItem="a7E-nt-QFm" secondAttribute="trailingMargin" id="1Vp-b7-fME"/>
-                                                <constraint firstItem="JHT-qT-i6p" firstAttribute="leading" secondItem="a7E-nt-QFm" secondAttribute="leading" constant="8" id="MTF-bf-gHZ"/>
-                                                <constraint firstItem="qRd-yh-TOt" firstAttribute="leading" secondItem="a7E-nt-QFm" secondAttribute="leadingMargin" id="Wlu-Du-HqQ"/>
-                                                <constraint firstAttribute="trailing" secondItem="JHT-qT-i6p" secondAttribute="trailing" constant="8" id="gOq-2G-gdQ"/>
-                                                <constraint firstItem="JHT-qT-i6p" firstAttribute="top" secondItem="qRd-yh-TOt" secondAttribute="bottom" constant="3" id="oi4-tB-IFb"/>
-                                                <constraint firstItem="qRd-yh-TOt" firstAttribute="top" secondItem="a7E-nt-QFm" secondAttribute="topMargin" constant="4" id="v18-rf-d0t"/>
+                                                <constraint firstItem="qRd-yh-TOt" firstAttribute="leading" secondItem="a7E-nt-QFm" secondAttribute="leading" constant="8" id="AOY-x0-33f"/>
+                                                <constraint firstAttribute="trailing" secondItem="qRd-yh-TOt" secondAttribute="trailing" constant="8" id="IEx-5N-tEi"/>
+                                                <constraint firstItem="JHT-qT-i6p" firstAttribute="leading" secondItem="a7E-nt-QFm" secondAttribute="leading" constant="8" id="NbG-p0-CCi"/>
+                                                <constraint firstAttribute="trailing" secondItem="JHT-qT-i6p" secondAttribute="trailing" constant="8" id="UCE-mh-IMa"/>
+                                                <constraint firstItem="qRd-yh-TOt" firstAttribute="top" secondItem="a7E-nt-QFm" secondAttribute="top" constant="12" id="X6f-tw-n5I"/>
+                                                <constraint firstItem="JHT-qT-i6p" firstAttribute="top" secondItem="qRd-yh-TOt" secondAttribute="bottom" constant="3" id="j4F-1d-lm2"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -3168,21 +3168,21 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="69.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manila Warehouse" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="doT-mL-fYg">
-                                                    <rect key="frame" x="8" y="8" width="304" height="18"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="18" id="9zU-hJ-ei7"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="200" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="kdadjaljkdjaskldjakldjklsadjlkasjdlkadjlksajdkasjdklsajdsklajdklasjdsakldjlskadjaskldjkla" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wzr-qT-BhA">
                                                     <rect key="frame" x="8" y="28" width="304" height="37"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="36.5" id="Q49-G3-2Mm"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manila Warehouse" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="doT-mL-fYg">
+                                                    <rect key="frame" x="8" y="8" width="304" height="18"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="18" id="9zU-hJ-ei7"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -3303,7 +3303,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Actual Inventory: 2" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VvS-5O-ILm">
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Actual Inventory: 2" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VvS-5O-ILm">
                                                     <rect key="frame" x="109" y="35" width="88" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="14" id="BIx-w7-VKk"/>

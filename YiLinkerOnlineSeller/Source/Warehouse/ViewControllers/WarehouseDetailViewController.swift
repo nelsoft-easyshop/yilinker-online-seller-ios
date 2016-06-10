@@ -37,6 +37,8 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
+        self.page = 1
+        self.warehouseInventory = []
         self.fireGetWarehouseInventory()
     }
 
@@ -154,6 +156,10 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
                 quantityLabel.text = "System Inventory: \(tempInventory.quantity)"
             }
             
+            if let quantityLabel = cell.viewWithTag(3) as? UILabel {
+                quantityLabel.text = "Actual Inventory: \(tempInventory.quantity)"
+            }
+            
             return cell;
         }
     
@@ -175,6 +181,38 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
         }
         
         return nil
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 0
+        }
+        else {
+            return 30
+        }
+
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        //let view = UIView(frame: CGRect.zeroRect)
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 40))
+        view.backgroundColor = Constants.Colors.backgroundGray
+        let label = UILabel(frame: CGRect(x: 10, y: 5, width: tableView.frame.size.width, height: 20))
+        label.font = UIFont(name: "Panton Bold", size: 14.0)
+//        if self.warehouseFilter != nil {
+//            label.text = self.warehouseFilter!.filter[section]
+//        }
+        
+        let sectionTitles = ["","Details", "Product List"]
+        label.text = sectionTitles[section]
+        
+        label.backgroundColor = UIColor.clearColor()
+        label.textColor = Constants.Colors.grayLine
+        view.addSubview(label)
+        //view.addSubview(view)
+        
+        return view
     }
     
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

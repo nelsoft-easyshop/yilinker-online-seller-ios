@@ -33,7 +33,7 @@ struct DashboardViewConstants {
         var titles: [String] = []
         
         if isSeller {
-            titles = [myStoreString, salesReportString, transactionsString, productManagementString, customizedCategoryString, uploadItemString, payout, followersString, activityLogsString, myPointsString, resolutionCenterString, helpString, logoutString, warehouseString]
+            titles = [myStoreString, warehouseString, salesReportString, transactionsString, productManagementString, customizedCategoryString, uploadItemString, payout, followersString, activityLogsString, myPointsString, resolutionCenterString, helpString, logoutString]
         } else {
             titles = [editProfileString, setupStoreString, salesReportString, transactionsString, productManagementString, customizedCategoryString, selectProduct, payout, followersString, activityLogsString, myPointsString, helpString, logoutString]
         }
@@ -45,7 +45,7 @@ struct DashboardViewConstants {
         var icons: [String] = []
         
         if isSeller {
-            icons = ["mystore", "report", "transaction", "product", "category", "uploadItem", "withdraw2", "followers", "activityLog", "points", "resolution", "help", "logout", "logout"]
+            icons = ["mystore", "warehouse_icon", "report", "transaction", "product", "category", "uploadItem", "withdraw2", "followers", "activityLog", "points", "resolution", "help", "logout"]
         } else {
             icons = ["edit-profile", "mystore", "report", "transaction", "product", "category", "uploadItem", "withdraw2", "followers", "activityLog", "points", "help", "logout"]
         }
