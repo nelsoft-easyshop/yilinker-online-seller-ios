@@ -565,7 +565,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     func back() {
         if self.productModel.name != "" {
             if ProductUploadCombination.draft {
-                self.productIsDraft = true
                 self.draftModal()
             } else {
                 self.dismissViewControllerAnimated(true, completion: nil)
@@ -614,12 +613,13 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         let alertController = UIAlertController(title: ProductUploadStrings.uploadItem, message: ProductUploadStrings.saveAsDraft, preferredStyle: .Alert)
         
         let cancelAction = UIAlertAction(title: Constants.Localized.no, style: .Cancel) { (action) in
-            self.dismissViewControllerAnimated(true, completion: nil)
+            //self.dismissViewControllerAnimated(true, completion: nil)
         }
         
         alertController.addAction(cancelAction)
         
         let OKAction = UIAlertAction(title: Constants.Localized.yes, style: .Default) { (action) in
+             self.productIsDraft = true
              self.fireUploadProduct()
         }
         
@@ -911,11 +911,15 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - Product Upload Upload Image Table View Cell Delegate method
     
     func productUploadUploadImageTableViewCell(didDeleteAtRowIndexPath indexPath: NSIndexPath, cell: ProductUploadImageTVC, collectionView: UICollectionView) {
-        self.productModel.mainImagesName[indexPath.row] = ""
+        self.productModel.mainImagesName.removeAtIndex(indexPath.row)
         self.productModel.productMainImagesModel.removeAtIndex(indexPath.row)
-        
+        self.productImagesCount--
         if self.uploadType == UploadType.NewProduct {
             self.productModel.images.removeAtIndex(indexPath.row)
+            if self.primaryPhoto == "\(indexPath.row)" {
+                self.primaryPhoto = ""
+                cell.selectedPrimaryPhoto = []
+            }
         } else {
             self.productModel.editedImage.removeAtIndex(indexPath.row)
             if self.primaryPhoto == "\(indexPath.row)" {
@@ -1068,7 +1072,11 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         } else if self.primaryPhoto == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRIMARY_PHOTO_LOCALIZE_KEY"), title: ProductUploadStrings.incompleteProductDetails)
         } else {
-            self.fireUploadProduct()
+            if self.productImagesCount !=  self.productModel.images.count-1 {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_UPLOADING_PHOTO_LOCALIZE_KEY"), title: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_OPS_PHOTO_LOCALIZE_KEY"))
+            } else {
+                self.fireUploadProduct()
+            }
         }
     }
     
@@ -1461,7 +1469,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             self.presentViewController(alertController, animated: true) {}
         } else if uploadType == UploadType.NewProduct {
             let cancelAction = UIAlertAction(title: Constants.Localized.no, style: .Cancel) { (action) in
-                self.dismissViewControllerAnimated(true, completion: nil)
+                //self.dismissViewControllerAnimated(true, completion: nil)
             }
             
             alertController.addAction(cancelAction)

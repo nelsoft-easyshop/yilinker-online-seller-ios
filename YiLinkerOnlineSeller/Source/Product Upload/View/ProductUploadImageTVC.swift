@@ -130,15 +130,23 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
                 if self.productModel?.productMainImagesModel[indexPath.row].imageStatus == true && self.productModel?.productMainImagesModel[indexPath.row].imageFailed == false {
                     cell.imageView.alpha = 1.0
                     cell.tapToReuploadButton.hidden = true
+                    cell.closeButton.userInteractionEnabled = true
+                    cell.starButton.userInteractionEnabled = true
                 } else if self.productModel?.productMainImagesModel[indexPath.row].imageStatus == false && self.productModel?.productMainImagesModel[indexPath.row].imageFailed == false {
                     cell.imageView.alpha = 0.5
                     cell.tapToReuploadButton.hidden = true
+                    cell.closeButton.userInteractionEnabled = false
+                    cell.starButton.userInteractionEnabled = false
                 } else if self.productModel?.productMainImagesModel[indexPath.row].imageStatus == false && self.productModel?.productMainImagesModel[indexPath.row].imageFailed == true  {
                     cell.imageView.alpha = 0.5
                     cell.tapToReuploadButton.hidden = false
+                    cell.closeButton.userInteractionEnabled = false
+                    cell.starButton.userInteractionEnabled = false
                 }
             } else {
                 cell.tapToReuploadButton.hidden = true
+                cell.closeButton.userInteractionEnabled = false
+                cell.starButton.userInteractionEnabled = false
             }
             
             if self.productModel?.isPrimaryPhoto.count != 0 {
