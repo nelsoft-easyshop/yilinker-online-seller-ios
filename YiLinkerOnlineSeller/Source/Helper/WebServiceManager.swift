@@ -498,7 +498,9 @@ class WebServiceManager: NSObject {
     // MARK: - Customized Category Calls
     // MARK: - Fire Get Customized Categories Request With URL
     class func fireGetCustomizedCategoriesRequestWithUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
-        let parameters: NSDictionary = [self.accessTokenKey: SessionManager.accessToken(), self.accessTokenKey: SessionManager.accessToken()]
+        let parameters: NSDictionary = ["sellerId": SessionManager.userId(), "queryString": ""]
+//        println(url)
+//        println(parameters)
         self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }

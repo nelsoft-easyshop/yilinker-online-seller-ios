@@ -60,7 +60,8 @@ extension ProductCombination2TableViewCell: UITextFieldDelegate {
     func textFieldDidChange(textField: UITextField) {
         
         if textField == self.originalTextField || textField == self.discountTextField {
-            self.finalPriceTextField.text = "\(self.originalTextField.text.doubleValue * self.discountTextField.text.doubleValue / 100)"
+//            self.finalPriceTextField.text = "\(self.originalTextField.text.doubleValue * self.discountTextField.text.doubleValue / 100)"
+            self.finalPriceTextField.text = "\(self.originalTextField.text.doubleValue - (self.originalTextField.text.doubleValue * (self.discountTextField.text.doubleValue / 100)))"
         }
         
         delegate?.getText(self, section: self.tag, text: textField.text, id: textField.tag)

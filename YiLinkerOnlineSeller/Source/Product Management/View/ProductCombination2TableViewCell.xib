@@ -13,7 +13,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0.00" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="fgi-V2-flK">
+                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0.00" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="fgi-V2-flK">
                         <rect key="frame" x="10" y="38" width="142" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="JvG-gN-gex"/>
@@ -24,7 +24,7 @@
                             <outlet property="delegate" destination="KGk-i7-Jjw" id="C1i-AL-3Ei"/>
                         </connections>
                     </textField>
-                    <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0.0" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="3Qb-so-M4Z">
+                    <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0.0" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="3Qb-so-M4Z">
                         <rect key="frame" x="168" y="38" width="142" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="5CD-fW-C86"/>
@@ -66,7 +66,7 @@
                             <outlet property="delegate" destination="KGk-i7-Jjw" id="4UT-Zb-Z5k"/>
                         </connections>
                     </textField>
-                    <textField opaque="NO" clipsSubviews="YES" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0.0" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="OZJ-Ay-4lw">
+                    <textField opaque="NO" clipsSubviews="YES" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0.0" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="OZJ-Ay-4lw">
                         <rect key="frame" x="168" y="106" width="142" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="H1U-SM-QQi"/>

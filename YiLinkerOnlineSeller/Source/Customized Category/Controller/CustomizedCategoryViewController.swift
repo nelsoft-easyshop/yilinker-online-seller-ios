@@ -129,8 +129,9 @@ class CustomizedCategoryViewController: UIViewController, UITableViewDataSource 
                 self.showHUD()
             }
             
-            WebServiceManager.fireGetCustomizedCategoriesRequestWithUrl(APIAtlas.getCustomizedCategories, actionHandler: {
+            WebServiceManager.fireGetCustomizedCategoriesRequestWithUrl(APIAtlas.getCustomizedCategories + SessionManager.accessToken(), actionHandler: {
                 (successful, responseObject, requestErrorType) -> Void in
+//                println(responseObject)
                 if successful {
                     self.customizedCategoriesModel = CustomizedCategoriesModel.parseDataWithDictionary(responseObject as! NSDictionary)
                     
