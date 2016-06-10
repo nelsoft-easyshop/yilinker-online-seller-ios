@@ -613,7 +613,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         let alertController = UIAlertController(title: ProductUploadStrings.uploadItem, message: ProductUploadStrings.saveAsDraft, preferredStyle: .Alert)
         
         let cancelAction = UIAlertAction(title: Constants.Localized.no, style: .Cancel) { (action) in
-            self.dismissViewControllerAnimated(true, completion: nil)
+            //self.dismissViewControllerAnimated(true, completion: nil)
         }
         
         alertController.addAction(cancelAction)
@@ -878,22 +878,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             }
             self.productModel.productMainImagesModel[i] = productMainImagesModel!
         }
-        self.cellImage?.collectionView.reloadData()
-    }
-    
-    func updateModelReupload() {
-        for i in 0..<self.productModel.productMainImagesModel.count {
-            var productMainImagesModel: ProductMainImagesModel?
-            if self.productModel.productMainImagesModel[i].imageStatus == true && self.productModel.productMainImagesModel[i].imageFailed == false {
-                productMainImagesModel = ProductMainImagesModel(image: self.productModel.productMainImagesModel[i].image, imageName: self.productModel.productMainImagesModel[i].imageName, imageStatus: true, imageFailed: false)
-            } else if self.productModel.productMainImagesModel[i].imageStatus == false && self.productModel.productMainImagesModel[i].imageFailed == true {
-                productMainImagesModel = ProductMainImagesModel(image: self.productModel.productMainImagesModel[i].image, imageName: self.productModel.productMainImagesModel[i].imageName, imageStatus: false, imageFailed: false)
-            } else if self.productModel.productMainImagesModel[i].imageStatus == false && self.productModel.productMainImagesModel[i].imageFailed == true {
-                productMainImagesModel = ProductMainImagesModel(image: self.productModel.productMainImagesModel[i].image, imageName: self.productModel.productMainImagesModel[i].imageName, imageStatus: false, imageFailed: false)
-            }
-            self.productModel.productMainImagesModel[i] = productMainImagesModel!
-        }
-        self.cellImage?.collectionView.reloadData()
     }
     
     // MARK: -
@@ -961,7 +945,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     }
     
     func productUploadUploadImageTableViewCell(didTapReuploadAtRowIndexPath indexPath: NSIndexPath, cell: ProductUploadImageCollectionViewCell, collectionView: UICollectionView) {
-        self.updateModelReupload()
         self.fireUploadProductMainImages(self.productModel.productMainImagesModel[indexPath.row].image)
     }
     
