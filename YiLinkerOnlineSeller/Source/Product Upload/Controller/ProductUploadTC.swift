@@ -379,6 +379,8 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 let cell: ProductUploadProductGroupTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadProductGroupTextFieldTableViewCell") as! ProductUploadProductGroupTextFieldTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = self.checkIfSeller()
+                cell.toolTipLabel.text = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRODUCT_GROUP_TOOLTIP_LOCALIZE_KEY")
+                cell.productGroupTextField.placeholder = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRODUCT_GROUP_LOCALIZE_KEY")
                 
                 cell.delegate = self
                 

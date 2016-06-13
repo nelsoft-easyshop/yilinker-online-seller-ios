@@ -24,7 +24,7 @@
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
                     </textField>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="You can add new product group by typing the new group and hit the 'DONE' key to add the group " lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="fFe-Lz-OBe">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You can add new product group by typing the new group and hit the 'DONE' key to add the group " lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="fFe-Lz-OBe">
                         <rect key="frame" x="8" y="44" width="303" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="dxP-xa-Yze"/>
@@ -38,8 +38,8 @@
                     <constraint firstItem="HF4-RK-Sos" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="7aP-09-MOO"/>
                     <constraint firstAttribute="trailing" secondItem="HF4-RK-Sos" secondAttribute="trailing" constant="9" id="Qgy-Ve-RNc"/>
                     <constraint firstAttribute="bottom" secondItem="fFe-Lz-OBe" secondAttribute="bottom" constant="8.5" id="eMJ-BO-FId"/>
-                    <constraint firstAttribute="trailing" secondItem="fFe-Lz-OBe" secondAttribute="trailing" constant="12" id="gCs-iL-NbW"/>
-                    <constraint firstItem="fFe-Lz-OBe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="mmT-Nw-bke"/>
+                    <constraint firstAttribute="trailing" secondItem="fFe-Lz-OBe" secondAttribute="trailing" constant="9" id="gCs-iL-NbW"/>
+                    <constraint firstItem="fFe-Lz-OBe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="mmT-Nw-bke"/>
                     <constraint firstItem="fFe-Lz-OBe" firstAttribute="top" secondItem="HF4-RK-Sos" secondAttribute="bottom" constant="7" id="oRf-cS-LMJ"/>
                     <constraint firstItem="HF4-RK-Sos" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="7" id="pWE-ml-AFh"/>
                 </constraints>

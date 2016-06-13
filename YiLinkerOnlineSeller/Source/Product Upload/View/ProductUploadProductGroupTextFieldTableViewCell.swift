@@ -29,8 +29,6 @@ class ProductUploadProductGroupTextFieldTableViewCell: UITableViewCell, UITextFi
         super.awakeFromNib()
         // Initialization code
         self.productGroupTextField.delegate = self
-        self.toolTipLabel.text = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRODUCT_GROUP_TOOLTIP_LOCALIZE_KEY")
-        self.productGroupTextField.placeholder = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRODUCT_GROUP_LOCALIZE_KEY")
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
