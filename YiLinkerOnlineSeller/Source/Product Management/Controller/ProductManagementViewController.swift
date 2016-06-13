@@ -45,6 +45,7 @@ struct Status {
     static let review = 1
     static let rejected = 5
     static let fullyDeleted = 4
+    static let newUpload = 7
 }
 
 struct Draft {
@@ -627,12 +628,21 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             
             if selectedIndex == 5 {
                 cell.statusLabel.hidden = true
-            } else {
-                cell.statusLabel.hidden = false
-//                cell.setCountries(flags)
-//                cell.setLanguages(languages)
-                cell.setCountriesAndLanguages(self.productModel.products[indexPath.row])
+            } else { // ALL TAB
+                if self.productModel.products[indexPath.row].status == Status.newUpload {
+                    cell.statusLabel.hidden = true
+                    cell.subTitleLabel.hidden = false
+                } else {
+                    cell.statusLabel.hidden = false
+                    cell.subTitleLabel.hidden = false
+                    cell.adjustLabels()
+                    cell.setCountriesAndLanguages(self.productModel.products[indexPath.row])
+                }
             }
+            
+//            if self.productModel.products[indexPath.row].status == Status.newUpload {
+//                cell.statusLabel.hidden = true
+//            }
             
             if SessionManager.isReseller() {
                 if self.productModel.products[indexPath.row].status == Status.active || self.productModel.products[indexPath.row].status == Status.inactive {
