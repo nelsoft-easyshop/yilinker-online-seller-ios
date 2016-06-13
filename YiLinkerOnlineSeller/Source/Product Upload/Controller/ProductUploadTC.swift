@@ -49,7 +49,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     var primaryPhoto: String = ""
     var productImages: String = ""
     var productImagesName: [String] = []
-    
+    var isCombinationAvailable: Bool = false
     
     // Tableview Cell
     var cellImage: ProductUploadImageTVC?
@@ -60,6 +60,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         // Set title of navigation bar
         if self.uploadType == UploadType.EditProduct {
             self.title = "Edit Product"
+            self.productImagesCount = self.productModel.editedImage.count
         } else {
             self.title = "Product Upload"
         }
@@ -144,7 +145,14 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 return 245
             }
         } else if indexPath.section == 3 {
-            return 74
+            if indexPath.row == 2 {
+                if self.isCombinationAvailable {
+                    return 0
+                }
+                return 74
+            } else {
+               return 74
+            }
         } else {
             if indexPath.row == 0 {
                 if self.productModel.productGroups.count == 0 {
@@ -337,13 +345,17 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = self.checkIfSeller()
+               
+                if !self.isCombinationAvailable {
+                    cell.cellTitleLabel.text = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_LOCALIZE_KEY")
+                    cell.cellTitleLabel.required()
+                } else {
+                    cell.cellTitleLabel.text = ""
+                }
                 
-                cell.cellTitleLabel.text = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_LOCALIZE_KEY")
                 cell.cellTexField.text = self.productSKU
                 
                 cell.cellTexField.placeholder = "SKU"
-                
-                cell.cellTitleLabel.required()
                 cell.textFieldType = ProductTextFieldType.ProductSKU
                 cell.delegate = self
                 
@@ -359,8 +371,8 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 var tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "selectProductGroups")
                 //cell.addGestureRecognizer(tap)
                 
-                cell.productGroupLabel.text = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRODUCT_GROUP_LOCALIZE_KEY")
-                
+                cell.productGroupLabel.text = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_GROUP_LOCALIZE_KEY")
+    
                 if self.productModel.productGroups.count != 0 {
                     cell.attributes.removeAll(keepCapacity: false)
                     for i in 0..<self.productModel.productGroups.count {
@@ -473,6 +485,12 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             headerView.headerTitleLabel.text = ProductUploadStrings.dimensionsAndWeight
         } else if section == 5 {
             headerView.headerTitleLabel.text = ProductUploadStrings.dimensionsAndWeight
+        } else {
+            if self.productModel.validCombinations.count == 0 {
+                headerView.headerTitleLabel.text = ProductUploadStrings.dimensionsAndWeight
+            } else {
+                headerView.headerTitleLabel.text =  ""
+            }
         }
         
         return headerView
@@ -487,7 +505,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             if self.uploadType == UploadType.NewProduct {
                 if self.productModel.weigth != "" || self.productModel.height != "" || self.productModel.length != "" || self.productModel.width != "" {
                     sectionHeight = 41
-                } else if self.productModel.weigth  == "" || self.productModel.height == "" || self.productModel.length == "" || self.productModel.width == "" && self.productModel.validCombinations.count == 0 {
+                } else if (self.productModel.weigth  == "" || self.productModel.height == "" || self.productModel.length == "" || self.productModel.width == "") && (self.productModel.validCombinations.count == 0) {
                     sectionHeight = 41
                 } else {
                     sectionHeight = 0
@@ -759,6 +777,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - Replace Product Attribute With Attribute
     
     func replaceProductAttributeWithAttribute(attributes: [AttributeModel], combinations: [CombinationModel]) {
+        self.isCombinationAvailable = true
         self.productModel.weigth = ""
         self.productModel.height = ""
         self.productModel.width = ""
@@ -1091,6 +1110,9 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         } else if self.primaryPhoto == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRIMARY_PHOTO_LOCALIZE_KEY"), title: ProductUploadStrings.incompleteProductDetails)
         } else {
+            println(self.productModel.images.count-1)
+            println(self.productModel.editedImage.count-1)
+            println(self.productImagesCount)
             var isUploading: Bool = false
             if self.uploadType == UploadType.NewProduct {
                 if self.productImagesCount !=  self.productModel.images.count-1 {
@@ -1247,7 +1269,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         if uploadedImages.count != 0 {
             uploadedImages.removeLast()
         }
-        
+        self.productImagesCount = 0
         self.fireUploadProductMainImages(uploadedImages[self.productImagesCount])
     }
     
@@ -1308,7 +1330,11 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         
         for combination in self.productModel.validCombinations {
             let dictionary: NSMutableDictionary = NSMutableDictionary()
-            dictionary["attributes"] = combination.attributes
+            
+            if combination.attributes.count != 0 {
+                dictionary["attributes"] = combination.attributes
+            }
+            
             dictionary["sku"] = combination.sku
             
             var imageNames: [NSMutableDictionary] = []

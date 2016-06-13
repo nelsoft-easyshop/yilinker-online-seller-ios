@@ -668,7 +668,7 @@ PRODUCT_UPLOAD_UPLOADING_PHOTO_LOCALIZE_KEY = "Product images is still uploading
 PRODUCT_UPLOAD_OPS_PHOTO_LOCALIZE_KEY = "Ooopss!";
 PRODUCT_UPLOAD_PRODUCT_GROUP_TOOLTIP_LOCALIZE_KEY = "You can add new product group by typing the new group and hit the 'DONE' key to add the group";
 PRODUCT_UPLOAD_PRODUCT_GROUP_LOCALIZE_KEY = "Enter product group here";
-
+PRODUCT_UPLOAD_GROUP_LOCALIZE_KEY = "Product Group";
 // MARK: - Upload Error Messages
 WARNING_LOCALIZE_KEY  = "Warning";
 WARNING_REMOVE_ATTRIBUTE_LOCALIZE_KEY  = "This attribute item has an existing combination. Continue removing this item?";

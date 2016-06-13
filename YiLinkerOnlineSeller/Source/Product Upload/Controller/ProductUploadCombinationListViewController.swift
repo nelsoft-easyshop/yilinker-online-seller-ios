@@ -199,12 +199,26 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             let cell: ProductUploadCombinationTableViewCell = tableView.dequeueReusableCellWithIdentifier(PUCTVCConstant.productUploadCombinationTableViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ProductUploadCombinationTableViewCell
             
             var attributes: [AttributeModel] = []
+            
+            for (index, definition) in enumerate(self.productModel!.attributes) {
+                
+            }
+            
+            for (index, dictionary) in enumerate(self.productModel!.validCombinations[indexPath.section].attributes as [NSMutableDictionary]) {
+                let attributeModel: AttributeModel = AttributeModel()
+                var dict: NSMutableDictionary = ["name" : self.productModel!.attributes[index].definition]
+                dictionary["name"] =  self.productModel!.attributes[index].definition
+                attributeModel.definition = dictionary["name"] as! String
+                attributeModel.values = [dictionary["value"] as! String]
+                attributes.append(attributeModel)
+            }
+            /*
             for dictionary in  self.productModel!.validCombinations[indexPath.section].attributes as [NSMutableDictionary] {
                 let attributeModel: AttributeModel = AttributeModel()
                 attributeModel.definition = dictionary["name"] as! String
                 attributeModel.values = [dictionary["value"] as! String]
                 attributes.append(attributeModel)
-            }
+            }*/
             
             cell.attributes = attributes
             cell.collectionView.reloadData()
