@@ -48,6 +48,8 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     var barangayId: String = ""
     var warehouseId: String = ""
     
+    var navBarTitle: String = ""
+    
     override func viewDidLoad() {
         self.initializedNavigationBarItems()
         scrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)
@@ -123,7 +125,7 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     }
     
     func initializedNavigationBarItems() {
-        self.title = StringHelper.localizedStringWithKey("Add Warehouse")
+        self.title = self.navBarTitle
         
         var backButton: UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 20, 20)
