@@ -1091,9 +1091,20 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         } else if self.primaryPhoto == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRIMARY_PHOTO_LOCALIZE_KEY"), title: ProductUploadStrings.incompleteProductDetails)
         } else {
-            if self.productImagesCount !=  self.productModel.images.count-1 {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_UPLOADING_PHOTO_LOCALIZE_KEY"), title: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_OPS_PHOTO_LOCALIZE_KEY"))
+            var isUploading: Bool = false
+            if self.uploadType == UploadType.NewProduct {
+                if self.productImagesCount !=  self.productModel.images.count-1 {
+                     self.showAlert(StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_OPS_PHOTO_LOCALIZE_KEY"), message: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_UPLOADING_PHOTO_LOCALIZE_KEY"))
+                    isUploading = true
+                }
             } else {
+                if self.productImagesCount != self.productModel.editedImage.count-1 {
+                    self.showAlert(StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_OPS_PHOTO_LOCALIZE_KEY"), message: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_UPLOADING_PHOTO_LOCALIZE_KEY"))
+                    isUploading = true
+                }
+            }
+            
+            if !isUploading {
                 self.fireUploadProduct()
             }
         }
