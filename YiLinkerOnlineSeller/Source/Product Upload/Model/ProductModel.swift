@@ -178,7 +178,9 @@ class ProductModel {
             
             if let value: NSDictionary = dictionary["data"] as? NSDictionary{
                 if let tempVar = value["brandName"] as? String {
-                    brand = BrandModel(name: tempVar, brandId: value["brandId"] as! Int)
+                    if !(value["brandId"] is NSNull) {
+                        brand = BrandModel(name: tempVar, brandId: value["brandId"] as! Int)
+                    }
                 }
                 
                 if let tempVar = value["productCategoryName"] as? String {
