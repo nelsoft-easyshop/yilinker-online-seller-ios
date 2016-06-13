@@ -169,7 +169,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                     return cellHeight
                 }
             } else {
-                return 44
+                return 74
             }
         }
     }
