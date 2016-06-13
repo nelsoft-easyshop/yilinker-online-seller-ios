@@ -705,7 +705,7 @@ HEIGHT_REQUIRED_LOCALIZE_KEY = "Please insert height.";
 //MARK: - Upload Success Message
 SUCCESSFULLY_EDITED_LOCALIZE_KEY = "Successfully edited the product.";
 SUCCESSFULLY_DRAFT_LOCALIZE_KEY = "Successfully uploaded into draft.";
-SUCCESSFULLY_UPLOADED_LOCALIZE_KEY = "Your product has been successfuly uploaded";
+SUCCESSFULLY_UPLOADED_LOCALIZE_KEY = "Your product has been successfully uploaded";
 
 
 // MARK: - View Controller Titles
