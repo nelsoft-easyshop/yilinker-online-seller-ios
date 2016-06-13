@@ -305,9 +305,6 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
         
         let cell2: ProductUploadCombinationTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! ProductUploadCombinationTableViewCell
         
-        let combination2: CombinationModel = cell2.data()
-        self.combination.attributes = combination2.attributes
-        
         // Check if SKU is already used
         // SKU's must be unique
         if self.productModel == nil {
@@ -320,8 +317,10 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
             }
             
             if !isSkuAvailable {
-                self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: false, indexPath: NSIndexPath())
                 self.combination.images = cell.uploadedImages()
+                let combination2: CombinationModel = cell2.data()
+                self.combination.attributes = combination2.attributes
+                self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: false, indexPath: NSIndexPath())
             }
         } else {
             var isSkuAvailable: Bool = false
@@ -337,8 +336,10 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
             }
             
             if !isSkuAvailable {
-                self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: true, indexPath: self.selectedIndexpath!)
                 self.combination.images = cell.uploadedImages()
+                let combination2: CombinationModel = cell2.data()
+                self.combination.attributes = combination2.attributes
+                self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: true, indexPath: self.selectedIndexpath!)
             }
         }
         
