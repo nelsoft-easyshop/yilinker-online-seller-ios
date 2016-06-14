@@ -624,7 +624,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
             cell.subTitleLabel.text = self.productModel.products[indexPath.row].category
             cell.setStatus(self.productModel.products[indexPath.row].status)
-            println("\(self.productModel.products[indexPath.row].name) -- \(self.productModel.products[indexPath.row].status)")
+//            println("\(self.productModel.products[indexPath.row].name) -- \(self.productModel.products[indexPath.row].status)")
             
             if selectedIndex == 5 {
                 cell.statusLabel.hidden = true
