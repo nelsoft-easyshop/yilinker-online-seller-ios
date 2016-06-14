@@ -17,6 +17,7 @@ private struct ManagementStrings {
     static let deleted = StringHelper.localizedStringWithKey("MANAGEMENT_DELETED_LOCALIZE_KEY")
     static let underReview = StringHelper.localizedStringWithKey("MANAGEMENT_UNDER_REVIEW_LOCALIZE_KEY")
     static let rejected = StringHelper.localizedStringWithKey("MANAGEMENT_REJECTED_LOCALIZE_KEY")
+    static let forCompletion = StringHelper.localizedStringWithKey("MANAGEMENT_COMPLETION_LOCALIZE_KEY")
     
     static let disableAll = StringHelper.localizedStringWithKey("MANAGEMENT_DISABLE_ALL_LOCALIZE_KEY")
     static let restoreAll = StringHelper.localizedStringWithKey("MANAGEMENT_RESTORE_ALL_LOCALIZE_KEY")
@@ -45,7 +46,7 @@ struct Status {
     static let review = 1
     static let rejected = 5
     static let fullyDeleted = 4
-    static let newUpload = 7
+    static let forCompletion = 7
 }
 
 struct Draft {
@@ -464,7 +465,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
 //                    if data == NSArray() {
 //                        self.emptyLabel.hidden = false
 //                    } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: AlertStrings.failed)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: errorModel.message)
 //                    }
                 } else if requestErrorType == .AccessTokenExpired {
                     if status == "all" {
@@ -624,25 +625,20 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             cell.titleLabel.text = self.productModel.products[indexPath.row].name
             cell.subTitleLabel.text = self.productModel.products[indexPath.row].category
             cell.setStatus(self.productModel.products[indexPath.row].status)
-//            println("\(self.productModel.products[indexPath.row].name) -- \(self.productModel.products[indexPath.row].status)")
             
             if selectedIndex == 5 {
                 cell.statusLabel.hidden = true
-            } else { // ALL TAB
-                if self.productModel.products[indexPath.row].status == Status.newUpload {
-                    cell.statusLabel.hidden = true
-                    cell.subTitleLabel.hidden = false
-                } else {
+            } else { // adjust labels
+//                if self.productModel.products[indexPath.row].status == Status.newUpload {
+//                    cell.statusLabel.hidden = true
+//                    cell.subTitleLabel.hidden = false
+//                } else {
                     cell.statusLabel.hidden = false
                     cell.subTitleLabel.hidden = false
                     cell.adjustLabels()
                     cell.setCountriesAndLanguages(self.productModel.products[indexPath.row])
-                }
+//                }
             }
-            
-//            if self.productModel.products[indexPath.row].status == Status.newUpload {
-//                cell.statusLabel.hidden = true
-//            }
             
             if SessionManager.isReseller() {
                 if self.productModel.products[indexPath.row].status == Status.active || self.productModel.products[indexPath.row].status == Status.inactive {
@@ -682,7 +678,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             return 0.0
         }
         
-        if self.selectedIndex == 0 {
+        if self.selectedIndex == 0 || self.selectedIndex == 5 {
             return 88.0
         }
         return 80.0
