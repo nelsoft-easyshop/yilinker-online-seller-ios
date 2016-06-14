@@ -86,8 +86,10 @@ class WarehouseFilterViewController: UIViewController {
         view.backgroundColor = Constants.Colors.backgroundGray
         let label = UILabel(frame: CGRect(x: 10, y: 5, width: tableView.frame.size.width, height: 20))
         label.font = UIFont(name: "Panton Bold", size: 14.0)
+        
         if self.warehouseFilter != nil {
-            label.text = self.warehouseFilter!.filter[section]
+            let sectionTitles: [String] = ["Product Status","Product Category", "Product Group"]
+            label.text = sectionTitles[section]
         }
         
         label.backgroundColor = UIColor.clearColor()

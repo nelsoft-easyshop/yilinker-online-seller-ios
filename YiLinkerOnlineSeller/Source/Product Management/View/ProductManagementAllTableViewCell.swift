@@ -226,4 +226,10 @@ class ProductManagementAllTableViewCell: UITableViewCell {
         }
     }
     
+    func adjustLabels() {
+        self.titleLabel.transform = CGAffineTransformMakeTranslation(0.0, -3.0)
+        self.subTitleLabel.transform = CGAffineTransformMakeTranslation(0.0, -5.0)
+        self.statusLabel.transform = CGAffineTransformMakeTranslation(0.0, 8.0)
+    }
+    
 }
