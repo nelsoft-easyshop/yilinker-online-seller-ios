@@ -507,12 +507,13 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                     if requestErrorType == .ResponseError {
                         //Error in api requirements
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                        let data: NSArray = responseObject["data"] as! NSArray
-                        if data == NSArray() {
-                            self.emptyLabel.hidden = false
-                        } else {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: AlertStrings.failed)
-                        }
+                        
+//                        let data: NSArray = (responseObject["data"] as? NSArray)!
+//                        if data == NSArray() {
+//                            self.emptyLabel.hidden = false
+//                        } else {
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String, title: AlertStrings.failed)
+//                        }
                     } else if requestErrorType == .AccessTokenExpired {
                         self.requestRefreshToken("update", status: status)
                     } else if requestErrorType == .PageNotFound {
