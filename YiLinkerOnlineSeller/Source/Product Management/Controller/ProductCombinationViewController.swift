@@ -99,7 +99,7 @@ class ProductCombinationViewController: UIViewController {
         navigationSpacer.width = -10
         
         self.navigationItem.leftBarButtonItems = [navigationSpacer, UIBarButtonItem(image: UIImage(named: "nav-back"), style: .Plain, target: self, action: "backAction")]
-        self.navigationItem.rightBarButtonItems = [navigationSpacer, UIBarButtonItem(image: UIImage(named: "nav-check"), style: .Plain, target: self, action: "checkAction")]
+//        self.navigationItem.rightBarButtonItems = [navigationSpacer, UIBarButtonItem(image: UIImage(named: "nav-check"), style: .Plain, target: self, action: "checkAction")]
     }
     
     func setupTableView() {
@@ -110,7 +110,7 @@ class ProductCombinationViewController: UIViewController {
         self.tableView.tableHeaderView = headerView
         
         let footerView: UIView = UIView(frame: CGRectMake(0, 0, self.tableView.frame.size.width, 80.0))
-        let saveButton: UIButton = UIButton(frame: CGRectMake(15, 0, self.tableView.frame.size.width - 30, 50.0))
+        let saveButton: UIButton = UIButton(frame: CGRectMake(15, 0, UIScreen.mainScreen().bounds.size.width - 30, 50.0))
         saveButton.backgroundColor = Constants.Colors.pmYesGreenColor
         saveButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Bold", size: 12.0)
         saveButton.layer.cornerRadius = 3.0

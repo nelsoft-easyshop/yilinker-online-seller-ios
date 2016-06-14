@@ -20,7 +20,7 @@ struct PUDTConstant {
 // MARK: Delegate
 // ProductUploadDetailTableViewController Delegate method
 protocol ProductUploadDetailTableViewControllerDelegate {
-    func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath, productModel: ProductModel)
+    func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath, productModel: ProductModel, isEdit: Bool)
     func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath)
 }
 
@@ -242,7 +242,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
             }
             
             if self.productModel != nil {
-                self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: attributeModel, indexPath: self.selectedIndexPath, productModel: self.productModelCombi!)
+                self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: attributeModel, indexPath: self.selectedIndexPath, productModel: self.productModelCombi!, isEdit: true)
             } else {
                 self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: attributeModel, indexPath: self.selectedIndexPath)
             }

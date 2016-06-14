@@ -17,6 +17,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
 
     // Tableview
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchTextField: UITextField!
     
     // Models
     var categories: [CategoryModel] = []

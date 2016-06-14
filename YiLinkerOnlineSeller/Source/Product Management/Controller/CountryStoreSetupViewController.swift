@@ -149,6 +149,7 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
             self.languageValueLabel.text = self.countryStoreModel.defaultLanguage.name
             self.currencyValueLabel.text = "\(self.countryStoreModel.currency.name) (\(self.countryStoreModel.currency.symbol))"
             self.rateValueLabel.text = "1USD = \(self.countryStoreModel.currency.rate) \(self.countryStoreModel.currency.symbol)"
+            self.storeNameValueLabel.text = SessionManager.userFullName()
         } else {
             println("Country Store Model is nil")
         }
@@ -158,7 +159,7 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
     func populateCountryStoreSetupDetails() {
         
         if countryStoreSetupModel != nil {
-            self.storeNameValueLabel.text = self.countryStoreSetupModel.product.store
+//            self.storeNameValueLabel.text = self.countryStoreSetupModel.product.store
             
             self.productNameLabel.text = self.countryStoreSetupModel.product.title
             self.productDescriptionLabel.text = self.countryStoreSetupModel.product.shortDescription
@@ -181,14 +182,11 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
                 self.productLocationSecondaryValueLabel.text = "-"
             }
             
-            
-            
-            
-            self.addActions()
         } else {
             println("Country Store Setup Model is nil")
         }
         
+        self.addActions()
     }
     
     // MARK: - Actions
@@ -206,33 +204,45 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
     }
     
     func productCombinationAction(gesture: UIGestureRecognizer) {
-        let productCombinations: ProductCombinationViewController = ProductCombinationViewController(nibName: "ProductCombinationViewController", bundle: nil)
-        productCombinations.delegate = self
-        productCombinations.combinationModel = self.countryStoreSetupModel.product.productUnits
-        productCombinations.countryStoreModel = self.countryStoreModel
-        productCombinations.productDetails = self.countryStoreSetupModel.product
-        self.navigationController!.pushViewController(productCombinations, animated: true)
+        if countryStoreSetupModel != nil {
+            let productCombinations: ProductCombinationViewController = ProductCombinationViewController(nibName: "ProductCombinationViewController", bundle: nil)
+            productCombinations.delegate = self
+            productCombinations.combinationModel = self.countryStoreSetupModel.product.productUnits
+            productCombinations.countryStoreModel = self.countryStoreModel
+            productCombinations.productDetails = self.countryStoreSetupModel.product
+            self.navigationController!.pushViewController(productCombinations, animated: true)
+        } else {
+            self.showAlertReloadDetails()
+        }
     }
     
     func primaryLocationAction(gesture: UIGestureRecognizer) {
-        let inventoryLocation: InventoryLocationViewController = InventoryLocationViewController(nibName: "InventoryLocationViewController", bundle: nil)
-        inventoryLocation.delegate = self
-        inventoryLocation.productDetails = self.countryStoreSetupModel.product
-        inventoryLocation.code = self.countryStoreModel.code
-        inventoryLocation.warehousesModel = self.countryStoreSetupModel.productWarehouses
-        inventoryLocation.logisticsModel = self.countryStoreSetupModel.logistics
-        self.navigationController!.pushViewController(inventoryLocation, animated: true)
+        if countryStoreSetupModel != nil {
+            let inventoryLocation: InventoryLocationViewController = InventoryLocationViewController(nibName: "InventoryLocationViewController", bundle: nil)
+            inventoryLocation.delegate = self
+            inventoryLocation.productDetails = self.countryStoreSetupModel.product
+            inventoryLocation.code = self.countryStoreModel.code
+            inventoryLocation.warehousesModel = self.countryStoreSetupModel.productWarehouses
+            inventoryLocation.logisticsModel = self.countryStoreSetupModel.logistics
+            self.navigationController!.pushViewController(inventoryLocation, animated: true)
+        } else {
+            self.showAlertReloadDetails()
+        }
     }
     
     func secondaryLocationAction(gesture: UIGestureRecognizer) {
-        let inventoryLocation: InventoryLocationViewController = InventoryLocationViewController(nibName: "InventoryLocationViewController", bundle: nil)
-        inventoryLocation.delegate = self
-        inventoryLocation.productDetails = self.countryStoreSetupModel.product
-        inventoryLocation.code = self.countryStoreModel.code
-        inventoryLocation.warehousesModel = self.countryStoreSetupModel.productWarehouses
-        inventoryLocation.logisticsModel = self.countryStoreSetupModel.logistics
-        inventoryLocation.isPrimary = false
-        self.navigationController!.pushViewController(inventoryLocation, animated: true)
+        if countryStoreSetupModel != nil {
+            let inventoryLocation: InventoryLocationViewController = InventoryLocationViewController(nibName: "InventoryLocationViewController", bundle: nil)
+            inventoryLocation.delegate = self
+            inventoryLocation.productDetails = self.countryStoreSetupModel.product
+            inventoryLocation.code = self.countryStoreModel.code
+            inventoryLocation.warehousesModel = self.countryStoreSetupModel.productWarehouses
+            inventoryLocation.logisticsModel = self.countryStoreSetupModel.logistics
+            inventoryLocation.isPrimary = false
+            self.navigationController!.pushViewController(inventoryLocation, animated: true)
+        } else {
+            self.showAlertReloadDetails()
+        }
     }
     
     func commisionAction(gesture: UIGestureRecognizer) {
@@ -240,6 +250,10 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
         self.navigationController!.pushViewController(commision, animated: true)
     }
 
+    func showAlertReloadDetails() {
+        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please reload data.", title: Constants.Localized.cannotProceed)
+    }
+    
     // MARK: - Requests
     
     func fireGetCountryStoreDetails() {
@@ -251,6 +265,7 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
             self.hud?.hide(true)
             
             if successful {
+                println(responseObject)
                 self.countryStoreSetupModel = nil
                 self.countryStoreSetupModel = CountrySetupModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 self.populateCountryStoreSetupDetails()
@@ -326,6 +341,8 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
             addEmptyView()
         }
     }
+    
+    
     
 }
 
