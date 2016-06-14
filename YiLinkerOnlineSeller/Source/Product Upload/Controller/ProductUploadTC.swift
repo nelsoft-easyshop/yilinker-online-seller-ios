@@ -630,7 +630,37 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     //       -  This is to prompt the user to either discard of save the changes
     
     func draftModal() {
-        let alertController = UIAlertController(title: ProductUploadStrings.uploadItem, message: ProductUploadStrings.saveAsDraft, preferredStyle: .Alert)
+        
+        // create the alert
+        let alert = UIAlertController(title: ProductUploadStrings.uploadItem, message: ProductUploadStrings.saveAsDraft, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        // add the actions (buttons)
+        // Open product's main images
+        
+        alert.addAction(UIAlertAction(title: Constants.Localized.yes, style: UIAlertActionStyle.Default, handler: {
+            action in
+            self.productIsDraft = true
+            self.fireUploadProduct()
+        }))
+        
+        // Dismiss the alert view
+        
+        alert.addAction(UIAlertAction(title: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_CANCEL_LOCALIZE_KEY"), style: UIAlertActionStyle.Cancel, handler: {
+            action in
+            
+        }))
+        
+        // Call the UzysAssetsPickerController
+        
+        alert.addAction(UIAlertAction(title: Constants.Localized.no, style: UIAlertActionStyle.Destructive, handler: {
+            action in
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }))
+        
+        // show the alert
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+        /*let alertController = UIAlertController(title: ProductUploadStrings.uploadItem, message: ProductUploadStrings.saveAsDraft, preferredStyle: .Alert)
         
         let cancelAction = UIAlertAction(title: Constants.Localized.no, style: .Cancel) { (action) in
             self.dismissViewControllerAnimated(true, completion: nil)
@@ -647,7 +677,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         
         self.presentViewController(alertController, animated: true) {
             
-        }
+        }*/
     }
     
     // MARK: -
