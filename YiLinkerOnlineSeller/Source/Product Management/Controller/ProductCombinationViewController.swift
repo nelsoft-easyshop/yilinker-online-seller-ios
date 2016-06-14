@@ -78,8 +78,8 @@ class ProductCombinationViewController: UIViewController {
         for combination in combinationModel {
             productUnitIds.append(combination.productUnitId)
             originalPrices.append(String(combination.price))
-            discounts.append(String(combination.discount))
-            finalPrices.append(combination.discountedPrice)
+            discounts.append(String(combination.discountedPrice))
+            finalPrices.append(String(combination.discountedPrice))
             commissions.append(combination.commission)
             statuses.append(combination.status)
         }
@@ -163,10 +163,10 @@ class ProductCombinationViewController: UIViewController {
             "productId": productDetails.id,
             "productUnitId": productUnitIds.description,
             "price": originalPrices.description,
-            "discountedPrice": finalPrices.description,
+            "discountedPrice": discounts.description,
             "commission": commissions.description,
             "status": statuses.description]
-        
+        println(parameters)
         WebServiceManager.fireSaveCombinations(APIAtlas.saveCombinations + SessionManager.accessToken(), parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             
             self.hud?.hide(true)
