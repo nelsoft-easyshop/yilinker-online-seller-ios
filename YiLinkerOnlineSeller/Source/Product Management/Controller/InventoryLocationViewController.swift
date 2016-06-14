@@ -117,15 +117,13 @@ class InventoryLocationViewController: UIViewController {
         
         self.tableView.registerNib(UINib(nibName: "InventoryLocationTableViewCell", bundle: nil), forCellReuseIdentifier: "locationId")
         
-        var priorityIndex: Int = -1
+        var priorityIndex: Int = 0
         
         for i in 0..<self.warehousesModel.count {
-        
             if isPrimary && self.warehousesModel[i].priority == 1 || !isPrimary && self.warehousesModel[i].priority == 2 {
                 priorityIndex = i
                 break
             }
-            
         }
         
         for i in 0..<self.warehousesModel.count {
