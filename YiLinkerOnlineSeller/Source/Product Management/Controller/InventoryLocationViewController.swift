@@ -91,7 +91,7 @@ class InventoryLocationViewController: UIViewController {
         navigationSpacer.width = -10
         
         self.navigationItem.leftBarButtonItems = [navigationSpacer, UIBarButtonItem(image: UIImage(named: "nav-back"), style: .Plain, target: self, action: "backAction")]
-        self.navigationItem.rightBarButtonItems = [navigationSpacer, UIBarButtonItem(image: UIImage(named: "nav-check"), style: .Plain, target: self, action: "checkAction")]
+//        self.navigationItem.rightBarButtonItems = [navigationSpacer, UIBarButtonItem(image: UIImage(named: "nav-check"), style: .Plain, target: self, action: "checkAction")]
     }
     
     func setupTableView() {
@@ -101,7 +101,7 @@ class InventoryLocationViewController: UIViewController {
         self.tableView.backgroundColor = Constants.Colors.lightBackgroundColor
         
         let footerView: UIView = UIView(frame: CGRectMake(0, 0, self.tableView.frame.size.width, 100.0))
-        let saveButton: UIButton = UIButton(frame: CGRectMake(15, 5, self.tableView.frame.size.width - 30, 50.0))
+        let saveButton: UIButton = UIButton(frame: CGRectMake(15, 5, UIScreen.mainScreen().bounds.size.width - 30, 50.0))
         saveButton.backgroundColor = Constants.Colors.pmYesGreenColor
         saveButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Bold", size: 12.0)
         saveButton.layer.cornerRadius = 2.0
