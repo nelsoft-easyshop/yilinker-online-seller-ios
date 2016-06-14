@@ -78,7 +78,7 @@ class ProductCombinationViewController: UIViewController {
         for combination in combinationModel {
             productUnitIds.append(combination.productUnitId)
             originalPrices.append(String(combination.price))
-            discounts.append(String(combination.discountedPrice))
+            discounts.append(String(combination.discount))
             finalPrices.append(String(combination.discountedPrice))
             commissions.append(combination.commission)
             statuses.append(combination.status)
@@ -154,8 +154,10 @@ class ProductCombinationViewController: UIViewController {
         self.showHUD()
         
         for i in 0..<self.finalPrices.count {
-            
-            self.finalPrices[i] = String(stringInterpolationSegment: String(self.originalPrices[i]).doubleValue * String(stringInterpolationSegment: self.discounts[i]).doubleValue / 100)
+            let originalPrice: Double = String(self.originalPrices[i]).doubleValue
+            let discount: Double = String(self.discounts[i]).doubleValue
+            self.finalPrices[i] = "\(originalPrice - (originalPrice * (discount / 100)))"
+//                String(stringInterpolationSegment: String(self.originalPrices[i]).doubleValue * String(stringInterpolationSegment: self.discounts[i]).doubleValue / 100)
             
         }
         
@@ -163,10 +165,13 @@ class ProductCombinationViewController: UIViewController {
             "productId": productDetails.id,
             "productUnitId": productUnitIds.description,
             "price": originalPrices.description,
-            "discountedPrice": discounts.description,
+            "discountedPrice": finalPrices.description,
             "commission": commissions.description,
             "status": statuses.description]
+        
+        println(APIAtlas.saveCombinations + SessionManager.accessToken())
         println(parameters)
+        
         WebServiceManager.fireSaveCombinations(APIAtlas.saveCombinations + SessionManager.accessToken(), parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             
             self.hud?.hide(true)
