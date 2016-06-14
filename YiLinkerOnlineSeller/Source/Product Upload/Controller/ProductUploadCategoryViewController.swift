@@ -41,6 +41,8 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
             self.edgesForExtendedLayout = UIRectEdge.None
         }
         
+        self.searchTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        
         self.backButton()
         self.footerView()
         self.registerCell()
@@ -176,6 +178,13 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
     }
     
     // MARK: -
+    // MARK: - Category TextField action
+    
+    func textFieldDidChange(sender: UITextField) {
+        self.fireFilterCategory(sender.text)
+    }
+    
+    // MARK: -
     // MARK: - Table view delegate and data source methods
   
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -282,6 +291,50 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
                     self.showAlert(Constants.Localized.error, message: errorModel.message)
                 } else if requestErrorType == .AccessTokenExpired {
                     self.fireRefreshToken(parentID, uploadProduct: UploadProduct.ProductCategory)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        })
+    }
+    
+    func fireFilterCategory(categoryName: String) {
+        self.showHUD()
+        self.categories = []
+        let accessTokenKey = "access_token"
+        let parameters: NSDictionary = [accessTokenKey: SessionManager.accessToken(), "queryString": categoryName]
+        
+        WebServiceManager.fireGetProductUploadRequestWithUrl(APIAtlas.categoryUrl, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                
+                let dictionary: NSDictionary = responseObject as! NSDictionary
+                let data: NSArray = dictionary["data"] as! NSArray
+                
+                for categoryDictionary in data as! [NSDictionary] {
+                    let categoryModel: CategoryModel = CategoryModel(uid: categoryDictionary["productCategoryId"] as! Int, name: categoryDictionary["name"] as! String, hasChildren: categoryDictionary["hasChildren"] as! String)
+                    self.categories.append(categoryModel)
+                }
+                
+                self.tableView.reloadData()
+                self.hud?.hide(true)
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                    //self.fireRefreshToken(parentID, uploadProduct: UploadProduct.ProductCategory)
                 } else if requestErrorType == .PageNotFound {
                     //Page not found
                     Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
