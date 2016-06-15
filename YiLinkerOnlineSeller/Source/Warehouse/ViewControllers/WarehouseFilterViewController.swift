@@ -9,7 +9,7 @@
 import UIKit
 
 protocol WarehouseFilterViewControllerDelegate{
-    func warehouseFilter(status: [String], category: [String], productGroup: [String])
+    func warehouseFilter(status: [Int], category: [Int], productGroup: [Int])
 }
 
 class WarehouseFilterViewController: UIViewController {
@@ -19,13 +19,13 @@ class WarehouseFilterViewController: UIViewController {
     var hud: MBProgressHUD?
     var warehouseFilter: WareFilterModel?
     
-    var status: [String] = []
-    var category: [String] = []
-    var productGroup: [String] = []
+    var status: [Int] = []
+    var category: [Int] = []
+    var productGroup: [Int] = []
     
-    var selectedStatus: [String] = []
-    var selectedCategory: [String] = []
-    var selectedProductGroup: [String] = []
+    var selectedStatus: [Int] = []
+    var selectedCategory: [Int] = []
+    var selectedProductGroup: [Int] = []
     
     var statusValue: [Bool] = []
     var categoryValue: [Bool] = []
@@ -328,26 +328,26 @@ class WarehouseFilterViewController: UIViewController {
                         for (i, status) in enumerate(self.warehouseFilter!.filter) {
                             for (j, value) in enumerate(self.warehouseFilter!.filterModel[i].name) {
                                 if i == 0 {
-                                    if contains(self.selectedStatus, self.warehouseFilter!.filterModel[i].name[j]) {
+                                    if contains(self.selectedStatus, self.warehouseFilter!.filterModel[i].id[j]) {
                                         self.statusValue.append(true)
                                     } else {
                                         self.statusValue.append(false)
                                     }
-                                    self.status.append(self.warehouseFilter!.filterModel[i].name[j])
+                                    self.status.append(self.warehouseFilter!.filterModel[i].id[j])
                                 } else if i == 1 {
-                                    if contains(self.selectedCategory, self.warehouseFilter!.filterModel[i].name[j]) {
+                                    if contains(self.selectedCategory, self.warehouseFilter!.filterModel[i].id[j]) {
                                         self.categoryValue.append(true)
                                     } else {
                                         self.categoryValue.append(false)
                                     }
-                                    self.category.append(self.warehouseFilter!.filterModel[i].name[j])
+                                    self.category.append(self.warehouseFilter!.filterModel[i].id[j])
                                 } else {
-                                    if contains(self.selectedProductGroup, self.warehouseFilter!.filterModel[i].name[j]) {
+                                    if contains(self.selectedProductGroup, self.warehouseFilter!.filterModel[i].id[j]) {
                                         self.productGroupValue.append(true)
                                     } else {
                                         self.productGroupValue.append(false)
                                     }
-                                    self.productGroup.append(self.warehouseFilter!.filterModel[i].name[j])
+                                    self.productGroup.append(self.warehouseFilter!.filterModel[i].id[j])
                                 }
                             }
                         }
