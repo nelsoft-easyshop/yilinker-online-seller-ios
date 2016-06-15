@@ -528,7 +528,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
             var url: String = APIAtlas.baseUrl
             url = url.stringByReplacingOccurrencesOfString("v1", withString: APIAtlas.OTPAuth, options: nil, range: nil)
             
-            WebServiceManager.fireOTPAuthenticatedRequestWithUrl(url, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            WebServiceManager.fireOTPAuthenticatedRequestWithUrl(APIAtlas.OTPAuth, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
                 self.hud?.hidden = true
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 

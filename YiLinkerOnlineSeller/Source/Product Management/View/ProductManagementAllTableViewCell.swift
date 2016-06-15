@@ -16,6 +16,7 @@ private struct Strings {
     static let deleted = StringHelper.localizedStringWithKey("MANAGEMENT_DELETED_LOCALIZE_KEY")
     static let underReview = StringHelper.localizedStringWithKey("MANAGEMENT_UNDER_REVIEW_LOCALIZE_KEY")
     static let rejected = StringHelper.localizedStringWithKey("MANAGEMENT_REJECTED_LOCALIZE_KEY")
+    static let forCompletion = StringHelper.localizedStringWithKey("MANAGEMENT_COMPLETION_LOCALIZE_KEY")
     
     static let stores = StringHelper.localizedStringWithKey("MANAGEMENT_STORES_LOCALIZE_KEY")
     static let language = StringHelper.localizedStringWithKey("MANAGEMENT_LANGUAGE_LOCALIZE_KEY")
@@ -81,8 +82,8 @@ class ProductManagementAllTableViewCell: UITableViewCell {
             statusLabel.textColor = UIColor.redColor()
             increaseAlpha()
         } else if status == 7 {
-            statusLabel.text = Strings.active
-            statusLabel.textColor = Constants.Colors.pmCheckGreenColor
+            statusLabel.text = Strings.forCompletion
+            statusLabel.textColor = UIColor.darkGrayColor()
             increaseAlpha()
         }
     }
@@ -228,7 +229,7 @@ class ProductManagementAllTableViewCell: UITableViewCell {
     
     func adjustLabels() {
         self.titleLabel.transform = CGAffineTransformMakeTranslation(0.0, -3.0)
-        self.subTitleLabel.transform = CGAffineTransformMakeTranslation(0.0, -5.0)
+        self.subTitleLabel.transform = CGAffineTransformMakeTranslation(0.0, -6.0)
         self.statusLabel.transform = CGAffineTransformMakeTranslation(0.0, 8.0)
     }
     
