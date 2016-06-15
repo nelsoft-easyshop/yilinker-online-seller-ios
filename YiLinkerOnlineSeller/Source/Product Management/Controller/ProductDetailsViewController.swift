@@ -435,6 +435,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         self.showHUD()
         let id: String = "?access_token=" + SessionManager.accessToken() + "&productId=" + productId
         WebServiceManager.fireGetProductDetailsRequestWithUrl(APIAtlas.getProductDetails + id, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            println(responseObject)
             if successful {
                 self.productModel = ProductModel.parseDataWithDictionary(responseObject)
                 self.populateDetails()

@@ -212,9 +212,9 @@ class CSProductUnitModel {
     var sku: String = ""
     var slug: String = ""
     var price: Int = 0
-    var discountedPrice: String = ""
+    var discountedPrice: Int = 0
     var appliedBaseDiscountPrice: String = ""
-    var appliedDiscountPrice: String = ""
+    var appliedDiscountPrice: Int = 0
     //    var promoTypeId = nil
     //    var promoTypeName = nil
     var discount: Int = 0
@@ -248,9 +248,9 @@ class CSProductUnitModel {
             model.sku = ParseHelper.string(dictionary, key: "sku", defaultValue: "")
             model.slug = ParseHelper.string(dictionary, key: "slug", defaultValue: "")
             model.price = ParseHelper.int(dictionary, key: "price", defaultValue: 0)
-            model.discountedPrice = ParseHelper.string(dictionary, key: "discountedPrice", defaultValue: "")
+            model.discountedPrice = ParseHelper.int(dictionary, key: "discountedPrice", defaultValue: 0)
             model.appliedBaseDiscountPrice = ParseHelper.string(dictionary, key: "appliedBaseDiscountPrice", defaultValue: "")
-            model.appliedDiscountPrice = ParseHelper.string(dictionary, key: "appliedDiscountPrice", defaultValue: "")
+            model.appliedDiscountPrice = ParseHelper.int(dictionary, key: "appliedDiscountPrice", defaultValue: 0)
 //            model.promoTypeId = nil
 //            model.promoTypeName = nil
             model.discount = ParseHelper.int(dictionary, key: "discount", defaultValue: 0)
