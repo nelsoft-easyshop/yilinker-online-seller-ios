@@ -461,6 +461,10 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                     //Error in api requirements
 
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+//                    let responseData: NSDictionary = responseObject["data"] as! NSDictionary
+
+//                    println(responseData)
+                    
 //                    let data: NSArray = responseObject["data"] as! NSArray
 //                    if data == NSArray() {
 //                        self.emptyLabel.hidden = false
