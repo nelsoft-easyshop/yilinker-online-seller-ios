@@ -332,7 +332,25 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
             let data3 = NSJSONSerialization.dataWithJSONObject(self.group, options: nil, error: nil)
             let groupString = NSString(data: data3!, encoding: NSUTF8StringEncoding)
             
-            WebServiceManager.fireGetWarehouseInventory(APIAtlas.warehouseInventory, warehouseId: self.warehouseId, page: "\(self.page)", category: categoryString as! String, status: statusString as! String, query: self.query, group: groupString as! String, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
+            var url: String = ""
+            
+            if self.category.count != 0 {
+                url += "&\(categoryString as! String)"
+            }
+            
+            if self.status.count != 0 {
+                url += "&\(statusString as! String)"
+            }
+            
+            if self.query.isNotEmpty() {
+                url += "&\(categoryString as! String)"
+            }
+            
+            if self.group.count != 0 {
+                url += "&\(groupString as! String)"
+            }
+            
+            WebServiceManager.fireGetWarehouseInventory(APIAtlas.warehouseInventory + "?access_token=\(SessionManager.accessToken())" + url, warehouseId: self.warehouseId, page: "\(self.page)", category: categoryString as! String, status: statusString as! String, query: self.query, group: groupString as! String, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
                 self.hud?.hide(true)
                 if successful {
                     self.page++
