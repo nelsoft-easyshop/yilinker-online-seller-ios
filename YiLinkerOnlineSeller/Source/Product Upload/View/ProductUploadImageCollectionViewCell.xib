@@ -56,7 +56,7 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JyF-RN-ZLV">
                         <rect key="frame" x="5" y="5" width="110" height="110"/>
                         <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="12"/>
-                        <state key="normal" title="tap to reupload">
+                        <state key="normal" title="tap to retry">
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>

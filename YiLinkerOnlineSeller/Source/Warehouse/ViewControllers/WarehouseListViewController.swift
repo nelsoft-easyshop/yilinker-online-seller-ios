@@ -95,6 +95,7 @@ class WarehouseListViewController: UIViewController, UITableViewDataSource, UITa
         print("Add Warehouse!")
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let addWarehouseVC: AddWarehouseViewController = storyboard.instantiateViewControllerWithIdentifier("AddWarehouseViewController") as! AddWarehouseViewController
+        addWarehouseVC.navBarTitle = "Add Warehouse"
         let navController = UINavigationController(rootViewController: addWarehouseVC)
         addWarehouseVC.navigationController!.navigationBar.barTintColor = self.navigationController!.navigationBar.barTintColor
         self.presentViewController(navController, animated: true, completion: nil)
@@ -231,6 +232,7 @@ class WarehouseListViewController: UIViewController, UITableViewDataSource, UITa
         println("edit")
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let addWarehouseVC: AddWarehouseViewController = storyboard.instantiateViewControllerWithIdentifier("AddWarehouseViewController") as! AddWarehouseViewController
+        addWarehouseVC.navBarTitle = "Edit Warehouse"
         let navController = UINavigationController(rootViewController: addWarehouseVC)
         addWarehouseVC.navigationController!.navigationBar.barTintColor = self.navigationController!.navigationBar.barTintColor
         self.presentViewController(navController, animated: true, completion: nil)
@@ -249,6 +251,7 @@ class WarehouseListViewController: UIViewController, UITableViewDataSource, UITa
             println("edit")
             let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let addWarehouseVC: AddWarehouseViewController = storyboard.instantiateViewControllerWithIdentifier("AddWarehouseViewController") as! AddWarehouseViewController
+            addWarehouseVC.navBarTitle = "Edit Warehouse"
             addWarehouseVC.warehouseModel = self.warehouseList[indexPath!.row]
             let navController = UINavigationController(rootViewController: addWarehouseVC)
             addWarehouseVC.navigationController!.navigationBar.barTintColor = self.navigationController!.navigationBar.barTintColor

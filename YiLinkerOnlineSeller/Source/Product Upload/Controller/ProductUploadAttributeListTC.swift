@@ -197,7 +197,7 @@ class ProductUploadAttributeListTC: UITableViewController, ProductUploadDetailTa
     }
     
     // MARK: ProductUploadDetailTableViewController delegate method
-    func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath, productModel: ProductModel) {
+    func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath, productModel: ProductModel, isEdit: Bool) {
         var attributeIsAvailable: Bool = false
         self.productModel = productModel
         for productAttribute in self.productModel.attributes as [AttributeModel] {

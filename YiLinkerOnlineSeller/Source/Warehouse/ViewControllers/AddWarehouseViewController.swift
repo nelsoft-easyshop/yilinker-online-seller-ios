@@ -48,6 +48,9 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     var barangayId: String = ""
     var warehouseId: String = ""
     
+    var navBarTitle: String = ""
+    var isDone: Bool = false
+    
     override func viewDidLoad() {
         self.initializedNavigationBarItems()
         scrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)
@@ -123,7 +126,7 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     }
     
     func initializedNavigationBarItems() {
-        self.title = StringHelper.localizedStringWithKey("Add Warehouse")
+        self.title = self.navBarTitle
         
         var backButton: UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 20, 20)
@@ -334,20 +337,20 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
         var parameters: NSMutableDictionary = NSMutableDictionary()
         
         if textField == self.countryTextField {
-            url = APIAtlas.allCountries + SessionManager.accessToken()
+            url = APIAtlas.allCountries
             parameters = ["" : ""]
         } else if textField == self.provinceTextField {
-            url = APIAtlas.childProvinces + SessionManager.accessToken()
+            url = APIAtlas.childProvinces
             parameters = ["regionId" : self.countryId]
         } else if textField == self.cityMunTextField {
-            url = APIAtlas.childCities + SessionManager.accessToken()
+            url = APIAtlas.childCities
             parameters = ["provinceId" : self.provinceId]
         } else if textField == self.barangayDistrictTextField {
-            url = APIAtlas.barangaysByCity + SessionManager.accessToken()
+            url = APIAtlas.barangaysByCity
             parameters = ["cityId" : self.cityId]
         }
         
-        WebServiceManager.fireAddWarehouseAddressRequestWithUrl(url, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        WebServiceManager.fireAddWarehouseAddressRequestWithUrl(url + SessionManager.accessToken(), parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 if let success = responseObject["isSuccessful"] as? Bool {
                     if success {
@@ -356,21 +359,37 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
                             self.provinceTextField.userInteractionEnabled = false
                             self.cityMunTextField.userInteractionEnabled = false
                             self.barangayDistrictTextField.userInteractionEnabled = false
+                            
+                            if self.warehouseId != "" && self.isDone == false {
+                                self.fireAddressByType(self.provinceTextField)
+                            }
+                            
                         } else if textField == self.provinceTextField {
                             self.provinceModel = WarehouseProvinceModel.parseDataWithDictionary(responseObject as! NSDictionary)
                             self.provinceTextField.userInteractionEnabled = true
                             self.cityMunTextField.userInteractionEnabled = false
                             self.barangayDistrictTextField.userInteractionEnabled = false
+                            
+                            if self.warehouseId != "" && self.isDone == false {
+                                self.fireAddressByType(self.cityMunTextField)
+                            }
+                            
                         } else if textField == self.cityMunTextField {
                             self.cityModel = WarehouseCityModel.parseDataWithDictionary(responseObject as! NSDictionary)
                             self.provinceTextField.userInteractionEnabled = true
                             self.cityMunTextField.userInteractionEnabled = true
                             self.barangayDistrictTextField.userInteractionEnabled = false
+                            
+                            if self.warehouseId != "" && self.isDone == false {
+                                self.fireAddressByType(self.barangayDistrictTextField)
+                            }
+                            
                         } else if textField == self.barangayDistrictTextField {
                             self.barangayModel = WarehouseBarangayModel.parseDataWithDictionary(responseObject as! NSDictionary)
                             self.provinceTextField.userInteractionEnabled = true
                             self.cityMunTextField.userInteractionEnabled = true
                             self.barangayDistrictTextField.userInteractionEnabled = true
+                            self.isDone = true
                         }
                         
                         self.countryTextField!.endEditing(true)

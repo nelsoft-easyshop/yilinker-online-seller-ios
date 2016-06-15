@@ -19,6 +19,8 @@ class WarehouseProductDetailViewController: UIViewController {
     @IBOutlet weak var systemInventoryTextField: UITextField!
     @IBOutlet weak var actualInventoryTextField: UITextField!
     
+    var hud: MBProgressHUD?
+    
     var warehouseProduct: WarehouseInventoryProduct!
     var warehouseId: String = ""
     
@@ -112,13 +114,17 @@ class WarehouseProductDetailViewController: UIViewController {
     }
     
     func fireUpdateInventory() {
+        
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         var parameters: NSMutableDictionary  = ["warehouseId" : self.warehouseId, "productUnit" : self.warehouseProduct.productUnitId, "quantity" : self.actualInventoryTextField.text]
         
+        self.showHUD()
+        
         WebServiceManager.fireAddWarehouseAddressRequestWithUrl(APIAtlas.updateInventory + SessionManager.accessToken(), parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 if let success = responseObject["isSuccessful"] as? Bool {
+                        self.hud?.hide(true)
                     if success {
                         Toast.displayToastWithMessage(responseObject["message"] as! String, duration: 1.5, view: self.view)
                         Delay.delayWithDuration(1.5, completionHandler: { (success) -> Void in
@@ -156,6 +162,25 @@ class WarehouseProductDetailViewController: UIViewController {
         })
 
     }
+    
+    // MARK: -
+    // MARK: - Show HUD
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+
+    
+    
 
 }
 

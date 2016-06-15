@@ -265,7 +265,7 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func initializedNavigationBarItems() {
-        self.title = StringHelper.localizedStringWithKey("Warehouse Detail")
+        self.title = self.warehouse.name
         
         var backButton: UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
