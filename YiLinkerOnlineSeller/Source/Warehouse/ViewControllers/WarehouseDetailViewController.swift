@@ -335,15 +335,15 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
             var url: String = ""
             
             if self.category.count != 0 {
-                url += "&\(categoryString)"
+                url += "&category=\(categoryString)"
             }
             
             if self.status.count != 0 {
-                url += "&\(statusString)"
+                url += "&status=\(statusString)"
             }
             
             if self.group.count != 0 {
-                url += "&\(groupString)"
+                url += "&group=\(groupString)"
             }
             
             WebServiceManager.fireGetWarehouseInventory(APIAtlas.warehouseInventory + "?access_token=\(SessionManager.accessToken())&page=\(self.page)&warehouseId=\(self.warehouseId)" + url, warehouseId: self.warehouseId, page: "\(self.page)", category: categoryString, status: statusString, query: self.query, group: groupString, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
