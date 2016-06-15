@@ -23,6 +23,8 @@ private struct Strings {
     static let yes = StringHelper.localizedStringWithKey("INVENTORY_LOCATION_YES_LOCALIZE_KEY")
     static let no = StringHelper.localizedStringWithKey("INVENTORY_LOCATION_NO_LOCALIZE_KEY")
     static let cannotProceed = StringHelper.localizedStringWithKey("CANNOT_PROCEED_LOCALIZE_KEY")
+    static let alertWarehouse = StringHelper.localizedStringWithKey("INVENTORY_LOCATION_ALERT_WAREHOUSE_LOCALIZE_KEY")
+    static let alertLogistic = StringHelper.localizedStringWithKey("INVENTORY_LOCATION_ALERT_LOGISTIC_LOCALIZE_KEY")
 }
 
 class InventoryLocationViewController: UIViewController {
@@ -115,15 +117,13 @@ class InventoryLocationViewController: UIViewController {
         
         self.tableView.registerNib(UINib(nibName: "InventoryLocationTableViewCell", bundle: nil), forCellReuseIdentifier: "locationId")
         
-        var priorityIndex: Int = -1
+        var priorityIndex: Int = 0
         
         for i in 0..<self.warehousesModel.count {
-        
             if isPrimary && self.warehousesModel[i].priority == 1 || !isPrimary && self.warehousesModel[i].priority == 2 {
                 priorityIndex = i
                 break
             }
-            
         }
         
         for i in 0..<self.warehousesModel.count {
@@ -219,7 +219,22 @@ class InventoryLocationViewController: UIViewController {
     
     func saveAction() {
 
+        if selectedLocationIndex == -1 {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Strings.alertWarehouse, title: Strings.cannotProceed)
+        } else if selectedLogisticId == 0 {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Strings.alertLogistic, title: Strings.cannotProceed)
+        } else {
+            self.fireSetWarehouse()
+        }
+    }
+    
+    func backAction() {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func checkAction() {
         self.fireSetWarehouse()
+        //        self.navigationController?.popViewControllerAnimated(true)
     }
     
     // MARK: - Requests
@@ -313,15 +328,6 @@ class InventoryLocationViewController: UIViewController {
         self.hud?.dimBackground = false
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
-    }
-    
-    func backAction() {
-        self.navigationController?.popViewControllerAnimated(true)
-    }
-    
-    func checkAction() {
-        self.fireSetWarehouse()
-//        self.navigationController?.popViewControllerAnimated(true)
     }
     
 }

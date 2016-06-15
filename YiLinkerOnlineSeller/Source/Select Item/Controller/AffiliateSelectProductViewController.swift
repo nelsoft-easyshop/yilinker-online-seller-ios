@@ -620,7 +620,7 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
     func fireSaveAffiliateProductsWithProductId(addProductId: String, removeProductId: String, index: Int) {
         WebServiceManager.fireAffiliateSaveProductFromUrl(APIAtlas.affiliateSaveOrRemoveProductUrl, productIds: "[\(addProductId)]", removeManufacturerProductIds: "[\(removeProductId)]") {
             (successful, responseObject, requestErrorType) -> Void in
-            
+            println(responseObject)
             if successful {
                 let indexPath: NSIndexPath = NSIndexPath(forItem: index, inSection: 0)
                 

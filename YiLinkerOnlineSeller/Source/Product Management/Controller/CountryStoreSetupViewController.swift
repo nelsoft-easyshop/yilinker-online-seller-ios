@@ -157,7 +157,6 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
     }
     
     func populateCountryStoreSetupDetails() {
-        
         if countryStoreSetupModel != nil {
 //            self.storeNameValueLabel.text = self.countryStoreSetupModel.product.store
             
@@ -341,8 +340,6 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
             addEmptyView()
         }
     }
-    
-    
     
 }
 
