@@ -1140,9 +1140,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         } else if self.primaryPhoto == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRIMARY_PHOTO_LOCALIZE_KEY"), title: ProductUploadStrings.incompleteProductDetails)
         } else {
-            println(self.productModel.images.count-1)
-            println(self.productModel.editedImage.count-1)
-            println(self.productImagesCount)
             var isUploading: Bool = false
             if self.uploadType == UploadType.NewProduct {
                 if self.productImagesCount !=  self.productModel.images.count-1 {
