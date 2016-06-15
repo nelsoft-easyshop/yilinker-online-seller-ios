@@ -188,12 +188,12 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }
         }
         
-        if index == 0 {
+        /*if index == 0 {
             //self.activeTextField = index - 1
             //self.next()
             //showAlert(title: self.error, message: self.addressTitleRequired)
             //index2 =  1002
-        } else if index == 4 {
+        } else*/ if index == 4 {
             self.activeTextField = index - 1
             self.next()
             showAlert(title: self.error, message: self.streetNameRequired)
