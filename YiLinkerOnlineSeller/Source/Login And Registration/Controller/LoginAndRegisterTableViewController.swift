@@ -414,6 +414,12 @@ class LoginAndRegisterTableViewController: UITableViewController {
                 } else {
                     self.tempSimplifiedRegistrationCell!.startTimer()
                 }
+                
+                if let temp = responseObject as? NSDictionary {
+                    if let tempMessage = temp["message"] as? String {
+                        Toast.displayToastWithMessage(tempMessage, duration: 1.5, view: self.view)
+                    }
+                }
             } else {
                 self.dismissLoader()
                 if requestErrorType == .ResponseError {
