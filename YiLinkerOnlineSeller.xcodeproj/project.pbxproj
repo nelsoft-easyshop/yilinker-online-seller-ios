@@ -4725,7 +4725,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = YiLinkerOnlineSeller/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "f48e6f50-b916-4812-879e-64e25067dea7";
@@ -4748,7 +4748,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = YiLinkerOnlineSeller/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "f48e6f50-b916-4812-879e-64e25067dea7";
