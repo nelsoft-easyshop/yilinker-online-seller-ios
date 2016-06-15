@@ -335,7 +335,7 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
             var url: String = ""
             
             if self.category.count != 0 {
-                url += "&category=\(categoryString)"
+                url += "&categories=\(categoryString)"
             }
             
             if self.status.count != 0 {
@@ -343,7 +343,7 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
             }
             
             if self.group.count != 0 {
-                url += "&group=\(groupString)"
+                url += "&productGroups=\(groupString)"
             }
             
             WebServiceManager.fireGetWarehouseInventory(APIAtlas.warehouseInventory + "?access_token=\(SessionManager.accessToken())&page=\(self.page)&warehouseId=\(self.warehouseId)" + url, warehouseId: self.warehouseId, page: "\(self.page)", category: categoryString, status: statusString, query: self.query, group: groupString, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
