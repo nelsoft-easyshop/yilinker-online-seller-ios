@@ -1156,25 +1156,7 @@ class WebServiceManager: NSObject {
     
     // MARK: - Get Inventory
     class func fireGetWarehouseInventory(url: String, warehouseId: String, page: String, category: String, status: String, query: String, group: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
-        
-        var parameters = [self.accessTokenKey: accessToken, self.warehouseIdKey: warehouseId, self.pageKey: page]
-
-        if category.isNotEmpty() {
-            parameters[self.categoryKey] = category
-        }
-        
-        if status.isNotEmpty() {
-            parameters[self.statusKey] = status
-        }
-        
-        if query.isNotEmpty() {
-            parameters[self.queryKey] = query
-        }
-        
-        if group.isNotEmpty() {
-            parameters[self.groupKey] = group
-        }
-        
+    
         self.fireGetRequestWithUrl(url, parameters: []) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }

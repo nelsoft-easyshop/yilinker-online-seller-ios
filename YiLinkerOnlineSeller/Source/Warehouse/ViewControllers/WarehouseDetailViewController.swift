@@ -18,10 +18,10 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
     //Get Warehouse Inventory Params
     var warehouseId: String = ""
     var page: Int = 1
-    var category: [String] = []
-    var status: [String] = []
+    var category: [Int] = []
+    var status: [Int] = []
     var query: String = ""
-    var group: [String] = []
+    var group: [Int] = []
     
     var totalpage: Int = 2
     
@@ -324,33 +324,29 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
             self.showHUD()
             
             let data = NSJSONSerialization.dataWithJSONObject(self.status, options: nil, error: nil)
-            let statusString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            let statusString = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
             
             let data2 = NSJSONSerialization.dataWithJSONObject(self.category, options: nil, error: nil)
-            let categoryString = NSString(data: data2!, encoding: NSUTF8StringEncoding)
+            let categoryString = NSString(data: data2!, encoding: NSUTF8StringEncoding) as! String
             
             let data3 = NSJSONSerialization.dataWithJSONObject(self.group, options: nil, error: nil)
-            let groupString = NSString(data: data3!, encoding: NSUTF8StringEncoding)
+            let groupString = NSString(data: data3!, encoding: NSUTF8StringEncoding) as! String
             
             var url: String = ""
             
             if self.category.count != 0 {
-                url += "&\(categoryString as! String)"
+                url += "&\(categoryString)"
             }
             
             if self.status.count != 0 {
-                url += "&\(statusString as! String)"
-            }
-            
-            if self.query.isNotEmpty() {
-                url += "&\(categoryString as! String)"
+                url += "&\(statusString)"
             }
             
             if self.group.count != 0 {
-                url += "&\(groupString as! String)"
+                url += "&\(groupString)"
             }
             
-            WebServiceManager.fireGetWarehouseInventory(APIAtlas.warehouseInventory + "?access_token=\(SessionManager.accessToken())" + url, warehouseId: self.warehouseId, page: "\(self.page)", category: categoryString as! String, status: statusString as! String, query: self.query, group: groupString as! String, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
+            WebServiceManager.fireGetWarehouseInventory(APIAtlas.warehouseInventory + "?access_token=\(SessionManager.accessToken())&page=\(self.page)&warehouseId=\(self.warehouseId)" + url, warehouseId: self.warehouseId, page: "\(self.page)", category: categoryString, status: statusString, query: self.query, group: groupString, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
                 self.hud?.hide(true)
                 if successful {
                     self.page++
@@ -408,7 +404,7 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
     
     // MARK: -
     // MARK: - WarehouseFilterViewController Delegate Method 
-    func warehouseFilter(status: [String], category: [String], productGroup: [String]) {
+    func warehouseFilter(status: [Int], category: [Int], productGroup: [Int]) {
         self.status = status
         self.category = category
         self.group = productGroup
