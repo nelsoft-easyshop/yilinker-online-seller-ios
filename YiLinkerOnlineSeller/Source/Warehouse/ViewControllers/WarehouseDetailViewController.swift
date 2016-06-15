@@ -38,6 +38,7 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         self.page = 1
+        self.totalpage = 2
         self.warehouseInventory = []
         self.fireGetWarehouseInventory()
     }
@@ -335,7 +336,7 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
             var url: String = ""
             
             if self.category.count != 0 {
-                url += "&categories=\(categoryString)"
+                url += "&category=\(categoryString)"
             }
             
             if self.status.count != 0 {
@@ -343,7 +344,7 @@ class WarehouseDetailViewController: UIViewController, UITableViewDataSource, UI
             }
             
             if self.group.count != 0 {
-                url += "&productGroups=\(groupString)"
+                url += "&group=\(groupString)"
             }
             
             WebServiceManager.fireGetWarehouseInventory(APIAtlas.warehouseInventory + "?access_token=\(SessionManager.accessToken())&page=\(self.page)&warehouseId=\(self.warehouseId)" + url, warehouseId: self.warehouseId, page: "\(self.page)", category: categoryString, status: statusString, query: self.query, group: groupString, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
