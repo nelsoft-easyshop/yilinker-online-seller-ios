@@ -179,3 +179,10 @@ enum AffiliateSelectProductRefreshType {
     case GetProduct
     case Add
 }
+
+enum WarehouseAddress {
+    case Country
+    case Province
+    case City
+    case Barangay
+}
