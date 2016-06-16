@@ -12,6 +12,7 @@ class ProductUploadProductGroupCVC: UICollectionViewCell {
 
     // Buttons
     @IBOutlet weak var attributeLabel: UILabel!
+    @IBOutlet weak var deleteButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()

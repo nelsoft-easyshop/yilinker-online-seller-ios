@@ -44,6 +44,7 @@
             <size key="customSize" width="117" height="27"/>
             <connections>
                 <outlet property="attributeLabel" destination="21N-Bu-SaE" id="6ca-FN-TSL"/>
+                <outlet property="deleteButton" destination="oJr-me-OK4" id="MR4-H8-uJL"/>
             </connections>
             <point key="canvasLocation" x="313.5" y="332.5"/>
         </collectionViewCell>

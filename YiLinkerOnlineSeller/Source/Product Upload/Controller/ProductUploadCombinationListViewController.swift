@@ -207,7 +207,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             for (index, dictionary) in enumerate(self.productModel!.validCombinations[indexPath.section].attributes as [NSMutableDictionary]) {
                 let attributeModel: AttributeModel = AttributeModel()
                 var dict: NSMutableDictionary = ["name" : self.productModel!.attributes[index].definition]
-                dictionary["name"] =  self.productModel!.attributes[index].definition
+                //dictionary["name"] =  dict.mutableCopy() as? NSMutableDictionary //"\(self.productModel!.attributes[index].definition)"
                 attributeModel.definition = dictionary["name"] as! String
                 attributeModel.values = [dictionary["value"] as! String]
                 attributes.append(attributeModel)

@@ -37,6 +37,8 @@
 		546BF3991D057D8A005DF761 /* WarehouseProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546BF3941D057D8A005DF761 /* WarehouseProductDetailViewController.swift */; };
 		54AC39FA1D067C9300B28176 /* WarehouseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AC39F91D067C9300B28176 /* WarehouseModel.swift */; };
 		5823CF30562BC7521FAF7027 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B63964E770102F63A29F38 /* libPods.a */; };
+		6DD8732C1D1272A6001C4D21 /* ProductUploadProductGroupPreviewTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD8732A1D1272A6001C4D21 /* ProductUploadProductGroupPreviewTVC.swift */; };
+		6DD8732D1D1272A6001C4D21 /* ProductUploadProductGroupPreviewTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6DD8732B1D1272A6001C4D21 /* ProductUploadProductGroupPreviewTVC.xib */; };
 		798D81CC1C8686EB00D2A1F7 /* ActivityLogTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D7EA31C8686EA00D2A1F7 /* ActivityLogTableViewController.swift */; };
 		798D81CD1C8686EB00D2A1F7 /* ActivityLogTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D7EA41C8686EA00D2A1F7 /* ActivityLogTableViewController.xib */; };
 		798D81CE1C8686EB00D2A1F7 /* ActivityLogItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D7EA61C8686EA00D2A1F7 /* ActivityLogItemModel.swift */; };
@@ -880,6 +882,8 @@
 		546BF3931D057D8A005DF761 /* WarehouseListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarehouseListViewController.swift; sourceTree = "<group>"; };
 		546BF3941D057D8A005DF761 /* WarehouseProductDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarehouseProductDetailViewController.swift; sourceTree = "<group>"; };
 		54AC39F91D067C9300B28176 /* WarehouseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarehouseModel.swift; sourceTree = "<group>"; };
+		6DD8732A1D1272A6001C4D21 /* ProductUploadProductGroupPreviewTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadProductGroupPreviewTVC.swift; sourceTree = "<group>"; };
+		6DD8732B1D1272A6001C4D21 /* ProductUploadProductGroupPreviewTVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductUploadProductGroupPreviewTVC.xib; sourceTree = "<group>"; };
 		700EB734D32404B5E927BC8D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		798D7EA31C8686EA00D2A1F7 /* ActivityLogTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLogTableViewController.swift; sourceTree = "<group>"; };
 		798D7EA41C8686EA00D2A1F7 /* ActivityLogTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityLogTableViewController.xib; sourceTree = "<group>"; };
@@ -3583,6 +3587,8 @@
 				F79B62361CE56E00001251BF /* ProductUploadProductGroupCVC.xib */,
 				F71077621CEAA7B900FDCDF1 /* ProductUploadCombinationImagesCVC.swift */,
 				F71077631CEAA7B900FDCDF1 /* ProductUploadCombinationImagesCVC.xib */,
+				6DD8732A1D1272A6001C4D21 /* ProductUploadProductGroupPreviewTVC.swift */,
+				6DD8732B1D1272A6001C4D21 /* ProductUploadProductGroupPreviewTVC.xib */,
 			);
 			name = "Product Upload";
 			sourceTree = "<group>";
@@ -3844,6 +3850,7 @@
 				798D81D61C8686EB00D2A1F7 /* BalanceWithdrawalViewsViewController.xib in Resources */,
 				798D846A1C8686EB00D2A1F7 /* dev.developerprofile in Resources */,
 				798D83CD1C8686EB00D2A1F7 /* SalesReportTableViewCell.xib in Resources */,
+				6DD8732D1D1272A6001C4D21 /* ProductUploadProductGroupPreviewTVC.xib in Resources */,
 				798D82981C8686EB00D2A1F7 /* Panton SemiBold.otf in Resources */,
 				798D820B1C8686EB00D2A1F7 /* AddSubCategoriesViewController.xib in Resources */,
 				F71606BC1CC4DE7F00C2F5E8 /* ProductUploadImageTVC.xib in Resources */,
@@ -4200,6 +4207,7 @@
 				798D82CC1C8686EB00D2A1F7 /* RegisterModel.swift in Sources */,
 				798D83911C8686EB00D2A1F7 /* ProductUploadDetailHeaderViewTableViewCell.swift in Sources */,
 				798D83EC1C8686EB00D2A1F7 /* FilterModalViewController.swift in Sources */,
+				6DD8732C1D1272A6001C4D21 /* ProductUploadProductGroupPreviewTVC.swift in Sources */,
 				798D81E11C8686EB00D2A1F7 /* PayoutRequestListViewController.swift in Sources */,
 				798D82491C8686EB00D2A1F7 /* ChartLegend.swift in Sources */,
 				798D824F1C8686EB00D2A1F7 /* BarChartDataEntry.swift in Sources */,

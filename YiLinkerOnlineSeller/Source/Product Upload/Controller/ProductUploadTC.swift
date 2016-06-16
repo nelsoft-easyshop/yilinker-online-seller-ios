@@ -42,6 +42,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     var sectionFourRows: Int = 2
     
     var productIsDraft: Bool = false
+    var isDraft: Bool = false
     
     var productGroupCount: Int = 0
     var productImagesCount: Int = 0
@@ -61,6 +62,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         if self.uploadType == UploadType.EditProduct {
             self.title = "Edit Product"
             self.productImagesCount = self.productModel.editedImage.count
+            self.productImagesName = self.productModel.imageIds
         } else {
             self.title = "Product Upload"
         }
@@ -584,7 +586,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     
     func back() {
         if self.productModel.name != "" {
-            if ProductUploadCombination.draft {
+            if ProductUploadCombination.draft && self.isDraft == false {
                 self.uploadType = UploadType.Draft
                 self.draftModal()
             } else {
@@ -640,8 +642,24 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         
         alert.addAction(UIAlertAction(title: Constants.Localized.yes, style: UIAlertActionStyle.Default, handler: {
             action in
-            self.productIsDraft = true
-            self.fireUploadProduct()
+            
+            var isUploading: Bool = false
+            if self.uploadType == UploadType.NewProduct || self.uploadType == UploadType.Draft{
+                if self.productImagesCount !=  self.productModel.images.count-1 {
+                    self.showAlert(StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_OPS_PHOTO_LOCALIZE_KEY"), message: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_UPLOADING_PHOTO_LOCALIZE_KEY"))
+                    isUploading = true
+                }
+            } else {
+                if self.productImagesCount != self.productModel.editedImage.count-1 {
+                    self.showAlert(StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_OPS_PHOTO_LOCALIZE_KEY"), message: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_UPLOADING_PHOTO_LOCALIZE_KEY"))
+                    isUploading = true
+                }
+            }
+            
+            if !isUploading {
+                self.productIsDraft = true
+                self.fireUploadProduct()
+            }
         }))
         
         // Dismiss the alert view
@@ -1513,7 +1531,8 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 "productImages" : self.productImages,
                 "productUnits" : self.getProductAttributes(),
                 "productId" : self.productModel.uid]
-            self.productIsDraft = true
+                //"isDraft" : self.productIsDraft]
+            //self.productIsDraft = true
         }
         
         let productDetailsViewController: ProductDetailsViewController = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
@@ -1642,7 +1661,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                             if let fileName = dictionary["fileName"] as? String {
                                 self.productImagesName.append(fileName)
                                 var oldFileName: String = ""
-                                if self.uploadType == UploadType.NewProduct {
+                                if self.uploadType == UploadType.NewProduct || self.uploadType == UploadType.Draft {
                                     self.productModel.mainImagesName.append(fileName)
                                     oldFileName = fileName
                                 } else {
