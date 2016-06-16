@@ -85,23 +85,42 @@ extension TranslationImagesTableViewCell: UICollectionViewDataSource, UICollecti
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        self.images[indexPath.row].isSelected = !self.images[indexPath.row].isSelected
-        self.imagesCollectionView.reloadData()
-        
-        self.delegate?.translationImagesTableViewCell(self, didImagesValuesChanged: self.images)
+        if self.images.count > 1 {
+            var selectedCtr = 0
+            
+            for image in self.images {
+                if image.isSelected {
+                    selectedCtr++
+                }
+            }
+            
+            if selectedCtr == 1 &&  self.images[indexPath.row].isSelected {
+                self.images[indexPath.row].isSelected = true
+                self.imagesCollectionView.reloadData()
+                
+                self.delegate?.translationImagesTableViewCell(self, didImagesValuesChanged: self.images)
+            } else {
+                self.images[indexPath.row].isSelected = !self.images[indexPath.row].isSelected
+                self.imagesCollectionView.reloadData()
+                
+                self.delegate?.translationImagesTableViewCell(self, didImagesValuesChanged: self.images)
+            }
+        }
     }
 }
 
 extension TranslationImagesTableViewCell: TranslationImageCollectionViewCellDelegate {
     func translationImageCollectionViewCell(cell: TranslationImageCollectionViewCell, didTapAtIndexPath indexPath: NSIndexPath) {
         
-        for var i = 0; i < self.images.count; i++ {
-            self.images[i].isPrimary = false
+        if self.images.count > 1{
+            for var i = 0; i < self.images.count; i++ {
+                self.images[i].isPrimary = false
+            }
+            
+            self.images[indexPath.row].isPrimary = true
+            self.imagesCollectionView.reloadData()
+            
+            self.delegate?.translationImagesTableViewCell(self, didImagesValuesChanged: self.images)
         }
-        
-        self.images[indexPath.row].isPrimary = true
-        self.imagesCollectionView.reloadData()
-        
-        self.delegate?.translationImagesTableViewCell(self, didImagesValuesChanged: self.images)
     }
 }
