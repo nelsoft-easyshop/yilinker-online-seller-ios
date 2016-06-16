@@ -264,7 +264,7 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
             self.hud?.hide(true)
             
             if successful {
-                println(responseObject)
+//                println(responseObject)
                 self.countryStoreSetupModel = nil
                 self.countryStoreSetupModel = CountrySetupModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 self.populateCountryStoreSetupDetails()

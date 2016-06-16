@@ -260,10 +260,11 @@ class InventoryLocationViewController: UIViewController {
             "productId": productDetails.id,
             "userWarehouse": warehousesModel[selectedLocationIndex].user_warehouse.id,
             "logistics": selectedLogisticId,
-            "isCod": isCOD,
+            "isCod": isCOD.description,
             "handlingFee": shippingFee,
             "priority": priority]
         
+        println(APIAtlas.setWarehouse + SessionManager.accessToken())
         println(parameters)
         
         self.showHUD()
