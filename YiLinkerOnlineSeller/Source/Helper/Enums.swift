@@ -42,6 +42,7 @@ enum ProductTextFieldType {
     case ProductWeight
     case ProductHeight
     case ProductGroup
+    case ProductYoutubeVideoUrl
 }
 
 enum AddressRefreshType {

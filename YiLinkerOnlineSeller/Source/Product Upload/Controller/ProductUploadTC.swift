@@ -21,6 +21,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     var productName: String = ""
     var productShortDescription: String = ""
     var productCompleteDescription: String = ""
+    var productYoutubeVideoUrl: String = ""
     
     // Product Details
     var productCategory: String = ""
@@ -113,6 +114,9 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             if self.productModel.validCombinations.count == 0 {
                 return 1
             } else {
+                if self.productModel.validCombinations[0].attributes.count == 0 {
+                    return 1
+                }
                 return self.productModel.validCombinations.count + 1
             }
         } else if section ==  2 {
@@ -232,7 +236,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.delegate = self
                 
                 return cell
-            } else {
+            } else if indexPath.row == 2 {
                 let cell: ProductUploadTextViewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextViewTableViewCellNibNameAndIdentifier) as! ProductUploadTextViewTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = true
@@ -245,6 +249,22 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 
                 cell.cellTitleLabel.required()
                 cell.textFieldType = ProductTextFieldType.ProductCompleteDescription
+                cell.delegate = self
+                
+                return cell
+            } else {
+                let cell: ProductUploadTextViewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextViewTableViewCellNibNameAndIdentifier) as! ProductUploadTextViewTableViewCell
+                cell.selectionStyle = UITableViewCellSelectionStyle.None
+                cell.userInteractionEnabled = true
+                
+                cell.cellTitleLabel.text = "Youtube Video Url"
+                
+                if self.productModel.youtubeVideoUrl != "" {
+                    cell.productUploadTextView.text = self.productModel.youtubeVideoUrl
+                }
+                
+                cell.cellTitleLabel.required()
+                cell.textFieldType = ProductTextFieldType.ProductYoutubeVideoUrl
                 cell.delegate = self
                 
                 return cell
@@ -286,7 +306,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.cellTexField.rightView = self.addRightView("cell-right")
                 cell.cellTexField.rightViewMode = UITextFieldViewMode.Always
                 
-                cell.cellTitleLabel.required()
+                //cell.cellTitleLabel.required()
                 cell.textFieldType = ProductTextFieldType.ShippingCategory
                 cell.delegate = self
                 
@@ -411,34 +431,8 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 
                 return cell
             } else {
-                let totalQuantityCell: Int = 1
-                if indexPath.row != self.productModel.validCombinations.count {
-                    let cell: ProductUploadAttributeSummaryTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadAttributeSummaryTableVieCellNibNameAndIdentifier) as! ProductUploadAttributeSummaryTableViewCell
-                    
-                    if indexPath.row < self.productModel.validCombinations.count {
-                        let combination: CombinationModel = self.productModel.validCombinations[indexPath.row]
-                        
-                        cell.cellQuantityLabel.text = "" //"x" + combination.quantity
-                        
-                        var title: String = ""
-                        
-                        for dictionary in self.productModel.validCombinations[indexPath.row].attributes as [NSMutableDictionary] {
-                            let value: String = dictionary["value"] as! String
-                            title = title + value + ", "
-                        }
-                        
-                        if title != "" {
-                            title = dropLast(title)
-                            title = dropLast(title)
-                        }
-                        
-                        cell.cellTitleLabel.text = title
-                    }
-                    
-                    cell.userInteractionEnabled = self.checkIfSeller()
-                    
-                    return cell
-                } else {
+                println(self.productModel.validCombinations[0].attributes.count)
+                if self.productModel.validCombinations[0].attributes.count == 0 {
                     let cell: ProductUploadButtonTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadButtonTableViewCellNibNameAndIdentifier) as! ProductUploadButtonTableViewCell
                     cell.userInteractionEnabled = self.checkIfSeller()
                     
@@ -446,6 +440,43 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                     cell.cellButton.addTarget(self, action: "addMoreDetails:", forControlEvents: UIControlEvents.TouchUpInside)
                     
                     return cell
+                } else {
+                    let totalQuantityCell: Int = 1
+                    if indexPath.row != self.productModel.validCombinations.count {
+                        let cell: ProductUploadAttributeSummaryTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadAttributeSummaryTableVieCellNibNameAndIdentifier) as! ProductUploadAttributeSummaryTableViewCell
+                        
+                        if indexPath.row < self.productModel.validCombinations.count {
+                            let combination: CombinationModel = self.productModel.validCombinations[indexPath.row]
+                            
+                            cell.cellQuantityLabel.text = "" //"x" + combination.quantity
+                            
+                            var title: String = ""
+                            
+                            for dictionary in self.productModel.validCombinations[indexPath.row].attributes as [NSMutableDictionary] {
+                                let value: String = dictionary["value"] as! String
+                                title = title + value + ", "
+                            }
+                            
+                            if title != "" {
+                                title = dropLast(title)
+                                title = dropLast(title)
+                            }
+                            
+                            cell.cellTitleLabel.text = title
+                        }
+                        
+                        cell.userInteractionEnabled = self.checkIfSeller()
+                        
+                        return cell
+                    } else {
+                        let cell: ProductUploadButtonTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadButtonTableViewCellNibNameAndIdentifier) as! ProductUploadButtonTableViewCell
+                        cell.userInteractionEnabled = self.checkIfSeller()
+                        
+                        cell.cellButton.setTitle("ADD MORE DETAILS ", forState: UIControlState.Normal)
+                        cell.cellButton.addTarget(self, action: "addMoreDetails:", forControlEvents: UIControlEvents.TouchUpInside)
+                        
+                        return cell
+                    }
                 }
             }
         } else {
@@ -1075,6 +1106,9 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         } else if textFieldType ==  ProductTextFieldType.ProductCompleteDescription {
             self.productCompleteDescription = text
             self.productModel.completeDescription = self.productCompleteDescription
+        } else if textFieldType == ProductTextFieldType.ProductYoutubeVideoUrl {
+            self.productYoutubeVideoUrl = text
+            self.productModel.youtubeVideoUrl = self.productYoutubeVideoUrl
         }
     }
     
@@ -1142,9 +1176,9 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.completeRequired, title: ProductUploadStrings.incompleteProductDetails)
         } else if self.productModel.category.name == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.categoryRequired, title: ProductUploadStrings.incompleteProductDetails)
-        } else if self.productModel.shippingCategories.uid == -1 {
+        } /*else if self.productModel.shippingCategories.uid == -1 {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.shippingCategoryRequired, title: ProductUploadStrings.incompleteProductDetails)
-        } else if self.productModel.condition == "" {
+        }*/ else if self.productModel.condition == "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.conditionRequired, title: ProductUploadStrings.incompleteProductDetails)
         }  else if self.productModel.sku == "" && self.productModel.validCombinations.count == 0 {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.skuRequried, title: ProductUploadStrings.incompleteProductDetails)
@@ -1501,38 +1535,49 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         }
         
         var parameters: NSMutableDictionary = NSMutableDictionary()
+       
+        parameters = ["name" : self.productModel.name,
+            "shortDescription" : self.productModel.shortDescription,
+            "description" : self.productModel.completeDescription,
+            "productConditionId" : self.productModel.condition.uid,
+            "productCategoryId" : self.productModel.category.uid,
+            "productGroups" : "\(self.getProductGroups())",
+            "productImages" : self.productImages,
+            "productUnits" : self.getProductAttributes()]
         
         var url: String = ""
         if self.uploadType == UploadType.NewProduct || self.uploadType == UploadType.Draft {
             url = APIAtlas.uploadProductUrl
-            parameters = ["name" : self.productModel.name,
-                "shortDescription" : self.productModel.shortDescription,
-                "description" : self.productModel.completeDescription,
-                "youtubeVideoUrl" : "https://www.youtube.com/watch?v=SSAhYXby1ao",
-                "productConditionId" : self.productModel.condition.uid,
-                "productCategoryId" : self.productModel.category.uid,
-                "shippingCategoryId" : self.productModel.shippingCategories.uid,
-                "brand" : self.productModel.brand.name,
-                "productGroups" : "\(self.getProductGroups())",
-                "productImages" : self.productImages,
-                "productUnits" : self.getProductAttributes(),
-                "isDraft" : self.productIsDraft]
+            parameters["isDraft"] = self.productIsDraft
         } else {
             url = APIAtlas.uploadProductEditUrl
-            parameters = ["name" : self.productModel.name,
-                "shortDescription" : self.productModel.shortDescription,
-                "description" : self.productModel.completeDescription,
-                "youtubeVideoUrl" : self.productModel.youtubeVideoUrl,
-                "productConditionId" : self.productModel.condition.uid,
-                "productCategoryId" : self.productModel.category.uid,
-                "shippingCategoryId" : self.productModel.shippingCategories.uid,
-                "brand" : self.productModel.brand.name,
-                "productGroups" : "\(self.getProductGroups())",
-                "productImages" : self.productImages,
-                "productUnits" : self.getProductAttributes(),
-                "productId" : self.productModel.uid]
-                //"isDraft" : self.productIsDraft]
-            //self.productIsDraft = true
+        }
+        
+        if self.productModel.shippingCategories.uid != 0 && self.productModel.youtubeVideoUrl != "" && self.productModel.brand.name == "" {
+            parameters["youtubeVideoUrl"] = self.productModel.youtubeVideoUrl
+            parameters["shippingCategoryId"] = self.productModel.shippingCategories.uid
+        }
+        
+        if self.productModel.shippingCategories.uid != 0 && self.productModel.youtubeVideoUrl == "" && self.productModel.brand.name != "" {
+            parameters["shippingCategoryId"] = self.productModel.shippingCategories.uid
+            parameters["brand"] = self.productModel.brand.name
+        }
+        
+        if self.productModel.shippingCategories.uid == 0 && self.productModel.youtubeVideoUrl != "" && self.productModel.brand.name != "" {
+            parameters["youtubeVideoUrl"] = self.productModel.youtubeVideoUrl
+            parameters["brand"] = self.productModel.brand.name
+        }
+        
+        if self.productModel.shippingCategories.uid != 0 && self.productModel.youtubeVideoUrl == "" && self.productModel.brand.name == "" {
+            parameters["shippingCategoryId"] = self.productModel.shippingCategories.uid
+        }
+        
+        if self.productModel.shippingCategories.uid == 0 && self.productModel.youtubeVideoUrl != "" && self.productModel.brand.name == "" {
+            parameters["youtubeVideoUrl"] = self.productModel.youtubeVideoUrl
+        }
+        
+        if self.productModel.shippingCategories.uid == 0 && self.productModel.youtubeVideoUrl == "" && self.productModel.brand.name != "" {
+            parameters["brand"] = self.productModel.brand.name
         }
         
         let productDetailsViewController: ProductDetailsViewController = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
