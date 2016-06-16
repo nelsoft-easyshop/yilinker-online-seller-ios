@@ -21,6 +21,7 @@ protocol ProductUploadProductGroupTextFieldTableViewCellDelegate {
 class ProductUploadProductGroupTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var productGroupTextField: UITextField!
+    @IBOutlet weak var toolTipLabel: UILabel!
     
     var delegate: ProductUploadProductGroupTextFieldTableViewCellDelegate?
     

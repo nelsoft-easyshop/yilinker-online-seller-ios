@@ -93,7 +93,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         tableFooterView = nil
         
         transactionDetailsModel.isCancellable = false       //Remove cancel Button
-        
+        transactionDetailsModel.isShippable = false         //Remove ship Button
         
         if  (transactionDetailsModel.isShippable || transactionDetailsModel.isCancellable) && !SessionManager.isReseller(){
             if tableFooterView == nil {

@@ -261,7 +261,7 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
     // MARK: -
     // MARK: - ProductUploadDetailTableViewController delegate method
     
-    func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath, productModel: ProductModel) {
+    func productUploadDetailTableViewController(didPressSaveButtonWithAttributes attribute: AttributeModel, indexPath: NSIndexPath, productModel: ProductModel, isEdit: Bool) {
         var attributeIsAvailable: Bool = self.checkAvailability(attribute)
         
         self.productModel! = productModel
@@ -269,7 +269,11 @@ class ProductUploadAttributeListVC: UIViewController, UITableViewDelegate, UITab
         if attributeIsAvailable {
             self.productModel!.attributes[indexPath.section] = attribute
         } else {
-            self.productModel!.attributes.append(attribute)
+            if isEdit {
+                self.productModel!.attributes[indexPath.section] = attribute
+            } else {
+                self.productModel!.attributes.append(attribute)
+            }
         }
         
         self.tableView.reloadData()

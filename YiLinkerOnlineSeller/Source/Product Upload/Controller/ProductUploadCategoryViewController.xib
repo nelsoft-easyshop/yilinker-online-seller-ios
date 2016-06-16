@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProductUploadCategoryViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
             <connections>
+                <outlet property="searchTextField" destination="rR8-nX-lAN" id="sfh-Vj-rhh"/>
                 <outlet property="tableView" destination="aJh-Da-hPX" id="WrD-ft-hcs"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -15,8 +16,13 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search category" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rR8-nX-lAN">
+                    <rect key="frame" x="8" y="8" width="359" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="aJh-Da-hPX">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <rect key="frame" x="0.0" y="50" width="375" height="617"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="5cU-AZ-tdS"/>
@@ -26,10 +32,13 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="aJh-Da-hPX" firstAttribute="top" secondItem="rR8-nX-lAN" secondAttribute="bottom" constant="12" id="2na-lc-Khz"/>
                 <constraint firstAttribute="bottom" secondItem="aJh-Da-hPX" secondAttribute="bottom" id="340-WL-Aic"/>
+                <constraint firstItem="rR8-nX-lAN" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="7AI-Kd-XQN"/>
                 <constraint firstAttribute="trailing" secondItem="aJh-Da-hPX" secondAttribute="trailing" id="Ezd-Yl-uDI"/>
+                <constraint firstItem="rR8-nX-lAN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="aSJ-Fo-ZzR"/>
                 <constraint firstItem="aJh-Da-hPX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="dHz-32-he7"/>
-                <constraint firstItem="aJh-Da-hPX" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="mBR-MZ-SkG"/>
+                <constraint firstAttribute="trailing" secondItem="rR8-nX-lAN" secondAttribute="trailing" constant="8" id="xqP-oX-rGh"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="477.5" y="348.5"/>

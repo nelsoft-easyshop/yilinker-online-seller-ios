@@ -42,6 +42,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
     var height: String = ""
     var length: String = ""
     var width: String = ""
+    var sku: String = ""
     
     var productImagesCount: Int = 0
     
@@ -61,6 +62,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
             title = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_EDIT_LOCALIZE_KEY")
             let combination: CombinationModel = self.productModel!.validCombinations[self.selectedIndexpath!.section]
             self.combination = combination
+            self.sku = self.combination.sku
         } else {
             title = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_ADD_LOCALIZE_KEY")
         }
@@ -298,37 +300,47 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
     
     func saveDetails() {
         let cell: ProductUploadCombinationFooterTVC = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as! ProductUploadCombinationFooterTVC
-        
-        self.combination.images = cell.uploadedImages()
+    
         self.combination.imagesId = cell.combiImagesName()
         
         let cell2: ProductUploadCombinationTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! ProductUploadCombinationTableViewCell
         
-        let combination2: CombinationModel = cell2.data()
-        self.combination.attributes = combination2.attributes
-        
         // Check if SKU is already used
         // SKU's must be unique
         if self.productModel == nil {
-            /*if find(ProductSku.SKUS, self.combination.sku) != nil {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_AVAILABLE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
-            } else {
-                self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: false,  indexPath: NSIndexPath())
-                ProductSku.SKUS.append(self.combination.sku)
-                self.navigationController?.popViewControllerAnimated(true)
-            }*/
-            self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: false, indexPath: NSIndexPath())
+            var isSkuAvailable: Bool = false
+            for (index, skus) in enumerate(self.productModelCombi.validCombinations) {
+                if self.combination.sku == skus.sku {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_AVAILABLE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
+                    isSkuAvailable = true
+                }
+            }
+            
+            if !isSkuAvailable {
+                self.combination.images = cell.uploadedImages()
+                let combination2: CombinationModel = cell2.data()
+                self.combination.attributes = combination2.attributes
+                self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: false, indexPath: NSIndexPath())
+            }
         } else {
-            /*
-            ProductSku.SKUS[self.selectedIndexpath!.section] = ""
-            if find(ProductSku.SKUS, self.combination.sku) != nil {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_AVAILABLE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
+            var isSkuAvailable: Bool = false
+            if self.sku == self.combination.sku {
+                isSkuAvailable = false
             } else {
+                for (index, skus) in enumerate(self.productModel!.validCombinations) {
+                    if self.combination.sku == skus.sku {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_AVAILABLE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
+                        isSkuAvailable = true
+                    }
+                }
+            }
+            
+            if !isSkuAvailable {
+                self.combination.images = cell.uploadedImages()
+                let combination2: CombinationModel = cell2.data()
+                self.combination.attributes = combination2.attributes
                 self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: true, indexPath: self.selectedIndexpath!)
-                ProductSku.SKUS[self.selectedIndexpath!.section] = self.combination.sku
-                self.navigationController?.popViewControllerAnimated(true)
-            }*/
-            self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: true, indexPath: self.selectedIndexpath!)
+            }
         }
         
         self.navigationController?.popViewControllerAnimated(true)

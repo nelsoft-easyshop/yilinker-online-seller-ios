@@ -339,39 +339,52 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     //MARK: StoreInfoQRCodeTableViewCell Delegate Method
     func shareEMAction(postImage: UIImageView, title: String) {
-        imageToPost = postImage.image
-        let mailComposeViewController = configuredMailComposeViewController()
-        if MFMailComposeViewController.canSendMail() {
-            self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+        if postImage.image != nil {
+            imageToPost = postImage.image
+            let mailComposeViewController = configuredMailComposeViewController()
+            if MFMailComposeViewController.canSendMail() {
+                self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+            } else {
+                self.showSendMailErrorAlert()
+            }
         } else {
-            self.showSendMailErrorAlert()
+            println("no qr code")
         }
     }
     
     func shareGPAction(postImage: UIImageView, title: String) {
-        self.imageToPost = postImage.image
-        self.googlePlusSignIn()
-        self.shareToGooglePlus()
+        if postImage.image != nil {
+            self.imageToPost = postImage.image
+            self.googlePlusSignIn()
+            self.shareToGooglePlus()
+        } else {
+            println("no qr code")
+        }
     }
     
     func shareFBAction(postImage: UIImageView, title: String) {
-        let vc = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
         
-        var socialVC :SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
-        socialVC.setInitialText("")
-        let image = postImage.image
-        socialVC.addImage(image)
-        socialVC.completionHandler = {
-            (result:SLComposeViewControllerResult) in
-            if result == SLComposeViewControllerResult.Done {
-                Toast.displayToastBottomWithMessage(StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_FB_LOCALIZE_KEY"), duration: 1.5, view: self.tabBarController!.view)
-                //self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_FB_LOCALIZE_KEY"))
-            } else {
-                Toast.displayToastBottomWithMessage("Failed to share qr code.", duration: 1.5, view: self.tabBarController!.view)
-                //self.showAlert(self.error, message: "Failed to share qr code.")
+        if postImage.image != nil {
+            let vc = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+            
+            var socialVC :SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+            socialVC.setInitialText("")
+            let image = postImage.image
+            socialVC.addImage(image)
+            socialVC.completionHandler = {
+                (result:SLComposeViewControllerResult) in
+                if result == SLComposeViewControllerResult.Done {
+                    Toast.displayToastBottomWithMessage(StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_FB_LOCALIZE_KEY"), duration: 1.5, view: self.tabBarController!.view)
+                    //self.showAlert(self.successTitle, message: StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_FB_LOCALIZE_KEY"))
+                } else {
+                    Toast.displayToastBottomWithMessage("Failed to share qr code.", duration: 1.5, view: self.tabBarController!.view)
+                    //self.showAlert(self.error, message: "Failed to share qr code.")
+                }
             }
+            presentViewController(socialVC, animated: true, completion: nil)
+        } else {
+            println("no qr code")
         }
-        presentViewController(socialVC, animated: true, completion: nil)
     }
     
     func storeInfoQrCodeTableViewCell(storeInfoQrCodeTableViewCell: StoreInfoQrCodeTableViewCell, didTapGenerateQRButton button: UIButton) {
@@ -379,24 +392,25 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     }
     
     func shareTWAction(postImage: UIImageView, title: String) {
-        
-        let vc = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
-        
-        
-        var socialVC :SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
-        socialVC.setInitialText("")
-        let image = postImage.image
-        socialVC.addImage(image)
-        socialVC.completionHandler = {
-            (result:SLComposeViewControllerResult) in
-            if result == SLComposeViewControllerResult.Done{
-                Toast.displayToastBottomWithMessage(StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"), duration: 1.5, view: self.tabBarController!.view)
-            } else {
-                Toast.displayToastBottomWithMessage("Cancelled", duration: 1.5, view: self.tabBarController!.view)
+        if postImage.image != nil {
+            let vc = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+            
+            var socialVC :SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+            socialVC.setInitialText("")
+            let image = postImage.image
+            socialVC.addImage(image)
+            socialVC.completionHandler = {
+                (result:SLComposeViewControllerResult) in
+                if result == SLComposeViewControllerResult.Done{
+                    Toast.displayToastBottomWithMessage(StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TWITTER_LOCALIZE_KEY"), duration: 1.5, view: self.tabBarController!.view)
+                } else {
+                    Toast.displayToastBottomWithMessage("Cancelled", duration: 1.5, view: self.tabBarController!.view)
+                }
             }
+            presentViewController(socialVC, animated: true, completion: nil)
+        } else {
+            println("no qr code")
         }
-        presentViewController(socialVC, animated: true, completion: nil)
-        
     }
     
     //MARK: Google Plus Sign In
@@ -714,6 +728,9 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 if let url = NSURL(string: "\(self.qrUrl)") {
                     if let data = NSData(contentsOfURL: url){
                         cell.qrCodeImageView.image = UIImage(data: data)
+                    } else {
+                        cell.qrCodeImageView.image = nil
+                        cell.qrCodeImageView.backgroundColor = UIColor.lightGrayColor()
                     }
                 }
                 

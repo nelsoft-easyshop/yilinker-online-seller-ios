@@ -188,12 +188,12 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }
         }
         
-        if index == 0 {
-            self.activeTextField = index - 1
-            self.next()
-            showAlert(title: self.error, message: self.addressTitleRequired)
-            index2 =  1002
-        } else if index == 4 {
+        /*if index == 0 {
+            //self.activeTextField = index - 1
+            //self.next()
+            //showAlert(title: self.error, message: self.addressTitleRequired)
+            //index2 =  1002
+        } else*/ if index == 4 {
             self.activeTextField = index - 1
             self.next()
             showAlert(title: self.error, message: self.streetNameRequired)
@@ -288,7 +288,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         if indexPath.row == 8 {
             cell.rowTitleLabel.required()
         } else if indexPath.row == 0 {
-            cell.rowTitleLabel.required()
+            //cell.rowTitleLabel.required()
         } else if indexPath.row == 4 {
             cell.rowTitleLabel.required()
         } else if indexPath.row == 6 {
