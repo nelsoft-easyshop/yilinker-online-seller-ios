@@ -184,8 +184,6 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
         } else {
             println("Country Store Setup Model is nil")
         }
-        
-        self.addActions()
     }
     
     // MARK: - Actions
@@ -250,7 +248,20 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
     }
 
     func showAlertReloadDetails() {
-        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please reload data.", title: Constants.Localized.cannotProceed)
+//        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please reload data.", title: Constants.Localized.cannotProceed)
+        let alertController = UIAlertController(title: Constants.Localized.cannotProceed, message: "Please reload data.", preferredStyle: .Alert)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
+        alertController.addAction(UIAlertAction(title: "Reload", style: UIAlertActionStyle.Cancel) { UIAlertAction in
+            self.fireGetCountryStoreDetails()
+            })
+        
+//        alert.addAction(UIAlertAction(title: SignInStrings.sheetAffiliate, style: UIAlertActionStyle.Default) { UIAlertAction in
+//            var url: String = APIEnvironment.baseUrl() + "/affiliate-program/forgot-password-request"
+//            url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
+//            UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+//            })
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     // MARK: - Requests
@@ -262,9 +273,10 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
         WebServiceManager.fireGetCountrySetupDetails(APIAtlas.getCountrySetupDetails + SessionManager.accessToken(), productId: productId, code: self.countryStoreModel.code, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             
             self.hud?.hide(true)
+            self.addActions()
             
             if successful {
-                println(responseObject)
+//                println(responseObject)
                 self.countryStoreSetupModel = nil
                 self.countryStoreSetupModel = CountrySetupModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 self.populateCountryStoreSetupDetails()

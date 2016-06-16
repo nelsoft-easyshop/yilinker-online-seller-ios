@@ -126,7 +126,7 @@ class LanguageTranslationTableViewController: UITableViewController {
         self.hud = MBProgressHUD(view: self.navigationController!.view)
         self.hud?.removeFromSuperViewOnHide = true
         self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
+        self.navigationController!.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
     
