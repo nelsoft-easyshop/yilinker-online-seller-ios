@@ -110,7 +110,7 @@
                             <constraint firstAttribute="width" priority="750" constant="160" id="oVa-yx-AD6"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done"/>
+                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
                     </textField>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="UpB-PP-H8s">
                         <rect key="frame" x="8" y="8" width="333" height="51"/>
