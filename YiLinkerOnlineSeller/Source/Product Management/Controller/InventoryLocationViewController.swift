@@ -264,9 +264,6 @@ class InventoryLocationViewController: UIViewController {
             "handlingFee": shippingFee,
             "priority": priority]
         
-        println(APIAtlas.setWarehouse + SessionManager.accessToken())
-        println(parameters)
-        
         self.showHUD()
         
         WebServiceManager.fireSetWarehouse(APIAtlas.setWarehouse + SessionManager.accessToken(), parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in

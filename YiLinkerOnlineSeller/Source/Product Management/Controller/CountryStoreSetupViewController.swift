@@ -184,8 +184,6 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
         } else {
             println("Country Store Setup Model is nil")
         }
-        
-        self.addActions()
     }
     
     // MARK: - Actions
@@ -262,6 +260,7 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
         WebServiceManager.fireGetCountrySetupDetails(APIAtlas.getCountrySetupDetails + SessionManager.accessToken(), productId: productId, code: self.countryStoreModel.code, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             
             self.hud?.hide(true)
+            self.addActions()
             
             if successful {
 //                println(responseObject)
