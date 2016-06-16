@@ -248,7 +248,20 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
     }
 
     func showAlertReloadDetails() {
-        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please reload data.", title: Constants.Localized.cannotProceed)
+//        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please reload data.", title: Constants.Localized.cannotProceed)
+        let alertController = UIAlertController(title: Constants.Localized.cannotProceed, message: "Please reload data.", preferredStyle: .Alert)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
+        alertController.addAction(UIAlertAction(title: "Reload", style: UIAlertActionStyle.Cancel) { UIAlertAction in
+            self.fireGetCountryStoreDetails()
+            })
+        
+//        alert.addAction(UIAlertAction(title: SignInStrings.sheetAffiliate, style: UIAlertActionStyle.Default) { UIAlertAction in
+//            var url: String = APIEnvironment.baseUrl() + "/affiliate-program/forgot-password-request"
+//            url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
+//            UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+//            })
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     // MARK: - Requests
