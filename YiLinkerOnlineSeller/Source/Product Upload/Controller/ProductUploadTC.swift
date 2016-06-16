@@ -585,6 +585,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     func back() {
         if self.productModel.name != "" {
             if ProductUploadCombination.draft {
+                self.uploadType = UploadType.Draft
                 self.draftModal()
             } else {
                 self.dismissViewControllerAnimated(true, completion: nil)
@@ -1484,7 +1485,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         var parameters: NSMutableDictionary = NSMutableDictionary()
         
         var url: String = ""
-        if self.uploadType == UploadType.NewProduct {
+        if self.uploadType == UploadType.NewProduct || self.uploadType == UploadType.Draft {
             url = APIAtlas.uploadProductUrl
             parameters = ["name" : self.productModel.name,
                 "shortDescription" : self.productModel.shortDescription,
