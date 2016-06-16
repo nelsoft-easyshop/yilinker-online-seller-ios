@@ -33,7 +33,7 @@ struct DashboardViewConstants {
         var titles: [String] = []
         
         if isSeller {
-            titles = [myStoreString, warehouseString, salesReportString, transactionsString, productManagementString, customizedCategoryString, uploadItemString, payout, followersString, activityLogsString, myPointsString, resolutionCenterString, helpString, logoutString]
+            titles = [myStoreString, warehouseString, salesReportString, transactionsString, productManagementString, customizedCategoryString, uploadItemString, payout, followersString, activityLogsString, resolutionCenterString, helpString, logoutString]
         } else {
             titles = [editProfileString, setupStoreString, salesReportString, transactionsString, productManagementString, customizedCategoryString, selectProduct, payout, followersString, activityLogsString, helpString, logoutString]
         }
@@ -45,7 +45,7 @@ struct DashboardViewConstants {
         var icons: [String] = []
         
         if isSeller {
-            icons = ["mystore", "warehouse_icon", "report", "transaction", "product", "category", "uploadItem", "withdraw2", "followers", "activityLog", "points", "resolution", "help", "logout"]
+            icons = ["mystore", "warehouse_icon", "report", "transaction", "product", "category", "uploadItem", "withdraw2", "followers", "activityLog", "resolution", "help", "logout"]
         } else {
             icons = ["edit-profile", "mystore", "report", "transaction", "product", "category", "uploadItem", "withdraw2", "followers", "activityLog", "help", "logout"]
         }
@@ -80,6 +80,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     var messagingController: UIViewController = UIViewController()
     var searchViewController: UIViewController = UIViewController()
     
+    var refreshTokenCtr: Int = 0;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController!.tabBar.tintColor = Constants.Colors.appTheme
@@ -103,7 +105,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
-        
+        self.refreshTokenCtr = 0
         if SessionManager.isLoggedIn() {
             self.loginBlockerView.hidden = true
             self.fireStoreInfo(true)
@@ -702,9 +704,15 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
             self.hud?.hide(true)
+            self.refreshTokenCtr++;
             if successful {
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-               self.fireStoreInfo(showHud)
+                if self.refreshTokenCtr > 1 {
+                    self.fireDeleteRegistration(SessionManager.gcmToken())
+                } else {
+                    SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                    self.fireStoreInfo(showHud)
+                }
+                
             } else {
                 //Show UIAlert and force the user to logout
                 UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
