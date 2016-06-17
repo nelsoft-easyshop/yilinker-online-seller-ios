@@ -578,15 +578,20 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
                 "amount": self.amountView.amountTextField.text]
             println(parameters)
             WebServiceManager.fireSubmitWithdrawalRequestWithUrl(APIAtlas.submitWithdrawalRequest, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+
                 self.hud?.hidden = true
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 if self.dimView != nil {
                     self.dimView.removeFromSuperview()
                 }
                 
-                if responseObject["isSuccessful"] as! Bool {
-                    self.clearInputData()
-                    self.delegate?.withdrawToRequest(self)
+                if successful {
+                    if responseObject["isSuccessful"] as! Bool {
+                        self.clearInputData()
+                        self.delegate?.withdrawToRequest(self)
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: Constants.Localized.someThingWentWrong)
+                    }
                 } else {
                     if requestErrorType == .ResponseError {
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)

@@ -271,7 +271,7 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
         self.showHUD()
 
         WebServiceManager.fireGetCountrySetupDetails(APIAtlas.getCountrySetupDetails + SessionManager.accessToken(), productId: productId, code: self.countryStoreModel.code, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
-            
+
             self.hud?.hide(true)
             self.addActions()
             
