@@ -74,6 +74,31 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
         self.backButton()
         self.headerView()
         self.registerCell()
+        
+        var combi: CombinationModel = CombinationModel()
+        
+        for (index, attribute) in enumerate(self.productModelCombi.attributes) {
+            println(attribute)
+            var dictionary: NSMutableDictionary = NSMutableDictionary()
+            let definitionKey: String = "name"
+            let valueKey: String = "value"
+            dictionary[definitionKey] = attribute.definition
+           
+            for i in 0..<attribute.values.count {
+                dictionary[valueKey] = attribute.values[i]
+                combi.attributes.append(dictionary)
+                println("combi: \(dictionary)")
+            }
+            /*
+            for (i, value) in enumerate(attribute.values) {
+                dictionary[valueKey] = value
+                combi.attributes.append(dictionary)
+                println("combi: \(dictionary)")
+            }*/
+            
+            
+            
+        }
     }
     
     override func didReceiveMemoryWarning() {
