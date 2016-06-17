@@ -45,6 +45,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
     var sku: String = ""
     
     var productImagesCount: Int = 0
+    var startPosition: Int = 0
     
     var hud: MBProgressHUD?
     var uploadType: UploadType = UploadType.NewProduct
@@ -52,6 +53,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
     // Initialize ProductUploadCombinationTableViewControllerDelegate
     var delegate: ProductUploadCombinationTableViewControllerDelegate?
     var cellImage: ProductUploadCombinationFooterTVC?
+    var a: [NSArray] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,6 +79,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
         
         var combi: CombinationModel = CombinationModel()
         
+        var array: [NSArray] = []
         for (index, attribute) in enumerate(self.productModelCombi.attributes) {
             println(attribute)
             var dictionary: NSMutableDictionary = NSMutableDictionary()
@@ -84,11 +87,20 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
             let valueKey: String = "value"
             dictionary[definitionKey] = attribute.definition
            
-            for i in 0..<attribute.values.count {
-                dictionary[valueKey] = attribute.values[i]
-                combi.attributes.append(dictionary)
+            var i: Int = index
+            var stringArr: [String] = []
+    
+            for i; i<attribute.values.count; i++ {
+                
+            }
+            for index in 0..<attribute.values.count {
+                stringArr.append(attribute.values[index])
+                //dictionary[valueKey] = attribute.values[index]
+                //combi.attributes.append(dictionary)
                 println("combi: \(dictionary)")
             }
+            
+            array.append(stringArr)
             /*
             for (i, value) in enumerate(attribute.values) {
                 dictionary[valueKey] = value
@@ -98,6 +110,25 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
             
             
             
+        }
+        println(array)
+        var com: [String] = []
+        for (index, arr) in enumerate(array) {
+            println(arr)
+            for (i, a) in enumerate(arr) {
+                println(a)
+            }
+        }
+    }
+    
+    func generateCombination(position: Int) {
+        if position < self.productModelCombi.attributes.count - 1{
+            self.startPosition++
+            var array: [String] = []
+            for (index, value) in enumerate(self.productModelCombi.attributes[position].values) {
+                array.append(value)
+                self.a.append(array)
+            }
         }
     }
     
