@@ -145,7 +145,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         } else if indexPath.section == 5 {
             return 44
         } else if indexPath.section == 6 {
-            if self.productModel.validCombinations.count != 0 {
+            if self.productModel.validCombinations.count != 0 && self.productModel.validCombinations[0].attributes.count != 0 {
                 return 0
             } else {
                 return 245
@@ -492,9 +492,18 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             cell.widthTextField.text = self.productModel.width
             //cell.widthLabel.required()
             
-            if self.productModel.validCombinations.count != 0 {
+            if self.productModel.validCombinations.count != 0 && self.productModel.validCombinations[0].attributes.count != 0 {
                 cell.hidden = true
             } else {
+                if self.productModel.validCombinations[0].attributes.count == 0 {
+                    cell.weightTextField.text = self.productModel.validCombinations[0].weight
+                    //cell.weightLabel.required()
+                    cell.lengthTextField.text = self.productModel.validCombinations[0].length
+                    //cell.lengthlabel.required()
+                    cell.heightTextField.text = self.productModel.validCombinations[0].height
+                    //cell.heightLabel.required()
+                    cell.widthTextField.text = self.productModel.validCombinations[0].width
+                }
                 cell.hidden = false
             }
             
@@ -544,7 +553,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                     sectionHeight = 0
                 }
             } else {
-                if self.productModel.weigth != "" || self.productModel.height != "" || self.productModel.length != "" || self.productModel.width != "" {
+                if (self.productModel.weigth != "" || self.productModel.height != "" || self.productModel.length != "" || self.productModel.width != "") || (self.productModel.validCombinations.count != 0 && self.productModel.validCombinations[0].attributes.count == 0) {
                     sectionHeight = 41
                 } else {
                     sectionHeight = 0
