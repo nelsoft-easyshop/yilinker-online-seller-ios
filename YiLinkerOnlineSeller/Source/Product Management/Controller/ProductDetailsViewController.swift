@@ -71,7 +71,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     var isDraft: Bool = false
     
     
-    let detailNames = [DetailsString.category, DetailsString.brand, DetailsString.sku, DetailsString.quantity]
+    let detailNames = [DetailsString.category, "Shipping Category", DetailsString.brand, "Condition", DetailsString.quantity, DetailsString.sku]
     let priceNames = [DetailsString.retail, DetailsString.discounted]
     let dimensionWeightNames = [DetailsString.length, DetailsString.width, DetailsString.weight, DetailsString.height]
     
@@ -81,12 +81,13 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     
     var listNames: [String] = []
     var listValues: [String] = []
+    var listProductGroup: [String] = []
     
     var listDetails: NSDictionary = [:]
     var listPrice: NSDictionary = [:]
     var listDimensionsWeight: NSDictionary = [:]
     var listSections: [NSArray] = []
-    var listSectionTitle = [DetailsString.titleDetails, DetailsString.titlePrice, DetailsString.titleDimensionsWeight]
+    var listSectionTitle = [DetailsString.titleDetails, "Product Group", DetailsString.titlePrice, DetailsString.titleDimensionsWeight]
     var names: [String] = []
     var values: [String] = []
     var uploadType: UploadType = UploadType.NewProduct
@@ -99,6 +100,9 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         // Do any additional setup after loading the view.
         let nib = UINib(nibName: "ProductDetailsTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: DetailsString.cellIdentifier)
+        
+        let nib4: UINib = UINib(nibName: PUPGPreviewConstant.productUploadProductGroupTVCNibNameAndIdentier, bundle: nil)
+        self.tableView.registerNib(nib4, forCellReuseIdentifier: PUPGPreviewConstant.productUploadProductGroupTVCNibNameAndIdentier)
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -246,9 +250,10 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         self.productImagesView.setDetails(productModel, uploadType: self.uploadType)
 //        self.productDescriptionView.descriptionLabel.text = productModel.shortDescription
         self.productDescriptionView.setDescription(productModel.shortDescription)
+        
         if productModel.validCombinations.count != 0 {
             let def: CombinationModel = productModel.validCombinations[0]
-            self.detailValues = [productModel.category.name, productModel.brand.name, def.sku, def.quantity]
+            self.detailValues = [productModel.category.name, productModel.shippingCategories.name, productModel.brand.name, productModel.condition.name, def.quantity, def.sku]
             self.priceValues = ["₱ " + def.retailPrice, "₱ " + def.discountedPrice]
             self.dimensionWeightValues = [def.length + "cm", def.width + "cm", def.weight + "kg", def.height + "cm"]
 
@@ -256,7 +261,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
 //                "₱" + def.retailPrice.floatValue.string(2), "₱" + def.discountedPrice.floatValue.string(2),
 //                def.length + "cm", def.width + "cm", def.weight + "kg", def.height + "cm"]
         } else {
-            self.detailValues = [productModel.category.name, productModel.brand.name, productModel.sku, String(productModel.quantity)]
+            self.detailValues = [productModel.category.name, productModel.shippingCategories.name, productModel.brand.name, productModel.condition.name, String(productModel.quantity), productModel.sku]
             self.priceValues = ["₱ " + productModel.retailPrice, "₱ " + productModel.discoutedPrice]
             self.dimensionWeightValues = [productModel.length + "cm", productModel.width + "cm", productModel.weigth + "kg", productModel.height + "cm"]
             
@@ -265,10 +270,10 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
 //                productModel.length + "cm", productModel.width + "cm", productModel.weigth + "kg", productModel.height + "cm"]
         }
         
-        self.listNames = [DetailsString.category, DetailsString.brand, DetailsString.sku, DetailsString.quantity,
+        self.listNames = [DetailsString.category, "Shipping Categories", DetailsString.brand, "Condition",DetailsString.quantity, DetailsString.sku,
             DetailsString.retail, DetailsString.discounted,
             DetailsString.length, DetailsString.width, DetailsString.weight, DetailsString.height]
-        self.listSections = [detailValues, priceValues, dimensionWeightValues]
+        self.listSections = [detailValues, [], priceValues, dimensionWeightValues]
         self.tableView.reloadData()
     }
     
@@ -310,6 +315,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         upload.uploadType = UploadType.EditProduct
         upload.productModel = self.productModel
         ProductUploadCombination.draft = true
+        upload.isDraft = self.isDraft
         let navigationController: UINavigationController = UINavigationController(rootViewController: upload)
         navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
         self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
@@ -523,14 +529,53 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     // MARK: - Table View Data Source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.listSections.count != 0 {
-            return self.listSections[section].count
+            if section == 1 {
+                if self.productModel.productGroups.count == 0 {
+                    return 0
+                }
+                return 1
+            } else {
+                return self.listSections[section].count
+            }
         }
         return 0
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.section == 1 {
+            if indexPath.row == 0 {
+                if self.productModel.productGroups.count == 0 {
+                    return 30
+                } else {
+                    let rowInitialHeight: CGFloat = 18
+                    let rowHeight: CGFloat = 45
+                    
+                    let cellCount: Int = self.productModel.productGroups.count
+                    var numberOfRows: CGFloat = CGFloat(cellCount) / 3
+                    
+                    if numberOfRows == 0 {
+                        numberOfRows = 1
+                    } else if floor(numberOfRows) != numberOfRows {
+                        numberOfRows++
+                    }
+                    
+                    var dynamicHeight: CGFloat = floor(numberOfRows) * rowHeight
+                    
+                    var cellHeight: CGFloat = rowInitialHeight + dynamicHeight
+                    
+                    return cellHeight
+                }
+            } else {
+                return 74
+            }
+        } else {
+            return 45
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -545,22 +590,44 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
             } else {
                 cell.itemValueLabel.text = self.detailValues[indexPath.row]
             }
-        } else if indexPath.section == 1 {
+            
+            return cell
+        } else if indexPath.section == 2 {
             cell.itemNameLabel.text = self.priceNames[indexPath.row]
             cell.itemValueLabel.text = self.priceValues[indexPath.row]
             if indexPath.row == 1 {
                 cell.itemValueLabel.textColor = Constants.Colors.productPrice
             }
-        } else if indexPath.section == 2 {
+            
+            return cell
+        } else if indexPath.section == 3 {
             cell.itemNameLabel.text = self.dimensionWeightNames[indexPath.row]
             if count(self.dimensionWeightValues[indexPath.row]) == 2 {
                 cell.itemValueLabel.text = "-"
             } else {
                 cell.itemValueLabel.text = self.dimensionWeightValues[indexPath.row]
             }
+            
+            return cell
+        } else {
+            let cell: ProductUploadProductGroupPreviewTVC = self.tableView.dequeueReusableCellWithIdentifier(PUPGPreviewConstant.productUploadProductGroupTVCNibNameAndIdentier) as! ProductUploadProductGroupPreviewTVC
+            cell.isPreview = true
+            
+            if self.productModel.productGroups.count != 0 {
+                cell.attributes.removeAll(keepCapacity: false)
+                for i in 0..<self.productModel.productGroups.count {
+                    cell.attributes.append(self.productModel.productGroups[i].name)
+                }
+            } else {
+                cell.attributes.removeAll(keepCapacity: false)
+            }
+            
+            cell.collectionView.reloadData()
+            cell.productModel = self.productModel
+            
+            return cell
         }
         
-        return cell
     }
     
     // MARK: - Table View Delegate
