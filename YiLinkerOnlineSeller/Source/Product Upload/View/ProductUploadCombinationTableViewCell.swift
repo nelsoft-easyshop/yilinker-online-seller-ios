@@ -99,7 +99,7 @@ class ProductUploadCombinationTableViewCell: UITableViewCell {
         }
       
         cell.values = attributeModel.values
-        cell.addPicker()
+        //cell.addPicker()
         return cell
     }
     
