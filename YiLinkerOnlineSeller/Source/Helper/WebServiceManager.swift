@@ -475,6 +475,7 @@ class WebServiceManager: NSObject {
     // MARK: - Fire Product List Request With URL
     class func fireProductListRequestWithUrl(url: String, status: String, keyword: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let parameters: NSDictionary = [self.statusKey: status, self.keywordKey: keyword, self.accessTokenKey: SessionManager.accessToken()]
+
         self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
@@ -483,6 +484,7 @@ class WebServiceManager: NSObject {
     // MARK: Fire Update Product Status Request With URL
     class func fireUpdateProductStatusRequestWithUrl(url: String, productId: String, status: Int, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let parameters: NSDictionary = [self.productIdKey: productId, self.statusKey: status, self.accessTokenKey: SessionManager.accessToken()]
+        
         self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
@@ -499,8 +501,7 @@ class WebServiceManager: NSObject {
     // MARK: - Fire Get Customized Categories Request With URL
     class func fireGetCustomizedCategoriesRequestWithUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let parameters: NSDictionary = ["sellerId": SessionManager.userId(), "queryString": ""]
-//        println(url)
-//        println(parameters)
+
         self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
@@ -1118,8 +1119,7 @@ class WebServiceManager: NSObject {
     
     class func fireGetCountrySetupDetails(url: String, productId: String, code: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         
-        let parameters = ["productId": productId, "code": code]
-        
+        let parameters: NSDictionary = ["productId": productId, "code": code]
         self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }

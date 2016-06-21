@@ -466,15 +466,6 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
                     } else {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: errorModel.message)
                     }
-//                    let responseData: AnyObject = (responseObject["data"] as? NSDictionary)!
-//                    println(responseData)
-                    
-//                    let data: NSArray = responseObject["data"] as! NSArray
-//                    if data == NSArray() {
-//                        self.emptyLabel.hidden = false
-//                    } else {
-//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: errorModel.message)
-//                    }
                 } else if requestErrorType == .AccessTokenExpired {
                     if status == "all" {
                         self.requestRefreshToken("get", status: Status.all)
@@ -504,6 +495,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             self.showHUD()
             
             WebServiceManager.fireUpdateProductStatusRequestWithUrl(APIAtlas.managementUpdateProductStatus, productId: selectedItems.description, status: status, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+
                 if successful {
                     self.selectedItems = []
                     self.updateSelectedItems(0, selected: false)

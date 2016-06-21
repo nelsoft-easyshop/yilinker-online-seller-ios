@@ -251,7 +251,7 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
 //        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please reload data.", title: Constants.Localized.cannotProceed)
         let alertController = UIAlertController(title: Constants.Localized.cannotProceed, message: "Please reload data.", preferredStyle: .Alert)
         alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
-        alertController.addAction(UIAlertAction(title: "Reload", style: UIAlertActionStyle.Cancel) { UIAlertAction in
+        alertController.addAction(UIAlertAction(title: "Reload", style: UIAlertActionStyle.Default) { UIAlertAction in
             self.fireGetCountryStoreDetails()
             })
         
@@ -271,12 +271,11 @@ class CountryStoreSetupViewController: UIViewController, EmptyViewDelegate {
         self.showHUD()
 
         WebServiceManager.fireGetCountrySetupDetails(APIAtlas.getCountrySetupDetails + SessionManager.accessToken(), productId: productId, code: self.countryStoreModel.code, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
-            
+
             self.hud?.hide(true)
             self.addActions()
             
             if successful {
-//                println(responseObject)
                 self.countryStoreSetupModel = nil
                 self.countryStoreSetupModel = CountrySetupModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 self.populateCountryStoreSetupDetails()
