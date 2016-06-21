@@ -873,6 +873,8 @@ class WebServiceManager: NSObject {
             parameters = [self.accessTokenKey: SessionManager.accessToken(), self.categoryIdsKey: categoryIds, self.sortbyKey: sortby, self.limitKey: limit, self.pageKey: page, self.statusKey: status]
         }
         
+        println(parameters)
+        
         let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
@@ -885,7 +887,7 @@ class WebServiceManager: NSObject {
 //        let manager = APIManager.sharedInstance
         
         let parameters: NSDictionary = [self.accessTokenKey: SessionManager.accessToken(), self.manufacturerProductIdsKey: productIds, self.removeManufacturerProductIdsKey: removeManufacturerProductIds]
-        
+        println(parameters)
         let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }

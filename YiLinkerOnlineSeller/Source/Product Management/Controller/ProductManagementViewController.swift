@@ -432,7 +432,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     
     func requestGetProductList(status: String, key: String) {
         WebServiceManager.fireProductListRequestWithUrl(APIAtlas.managementGetProductList, status: String(status), keyword: key, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
-            
+
             if successful {
                     self.productModel = ProductManagementProductModel.parseDataWithDictionary(responseObject as! NSDictionary)
                     if self.productModel.products.count != 0 {
