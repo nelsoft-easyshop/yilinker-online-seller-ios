@@ -99,7 +99,7 @@ struct RegisterStrings {
     static let resetPassword: String = StringHelper.localizedStringWithKey("RESET_PASSWORD_LOCALIZED_KEY")
 }
 
-class LoginAndRegisterTableViewController: UITableViewController {
+class LoginAndRegisterTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let headerViewNibName = "LoginHeaderTableViewCell"
     let loginResgisterTableViewCellNibName = "LoginRegisterTableViewCell"
@@ -111,6 +111,8 @@ class LoginAndRegisterTableViewController: UITableViewController {
     let loginCellHeight: CGFloat = 400
     let logoCellHeight: CGFloat = 190
     let registerCellHeight: CGFloat = 412
+    
+    @IBOutlet weak var tableView: UITableView!
     
     var hud: MBProgressHUD?
     
@@ -144,6 +146,8 @@ class LoginAndRegisterTableViewController: UITableViewController {
         self.tableView.tableFooterView = self.footerView()
         self.tableView.separatorColor = .clearColor()
         self.tableView.backgroundColor = UIColor.whiteColor()
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         
         let viewTapGesture = UITapGestureRecognizer(target:self, action:"closeKeyboard")
         self.view.addGestureRecognizer(viewTapGesture)
@@ -182,19 +186,19 @@ class LoginAndRegisterTableViewController: UITableViewController {
     
     //MARK: -
     //MARK: - Table view data source
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         return 2
     }
     
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let loginHeaderView = tableView.dequeueReusableCellWithIdentifier(self.headerViewNibName) as! LoginHeaderTableViewCell
         loginHeaderView.setBackButtonToClose(self.isCloseButton)
         loginHeaderView.setTitle(self.pageTitle)
@@ -202,11 +206,11 @@ class LoginAndRegisterTableViewController: UITableViewController {
         return loginHeaderView
     }
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return self.headerCellHeight
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let logoRegisterTableViewCell: LoginRegisterLogoTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.logoRegisterTableViewCellNibName) as! LoginRegisterLogoTableViewCell
             if self.isLogin || self.isResetPassword {
@@ -252,7 +256,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.row == 0 {
             return self.logoCellHeight
         }  else {
