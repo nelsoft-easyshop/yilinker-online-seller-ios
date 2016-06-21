@@ -91,6 +91,7 @@ class ProductUploadCombinationTableViewCell: UITableViewCell {
         
         cell.attributeDefinitionLabel.text = attributeModel.definition
         cell.attributeTextField.text = attributeModel.values[0]
+        cell.attributeTextField.userInteractionEnabled = false
         
         if self.productModel != nil {
             let dictionary: NSMutableDictionary = self.productModel!.validCombinations[selectedIndexPath!.section].attributes[indexPath.row]
