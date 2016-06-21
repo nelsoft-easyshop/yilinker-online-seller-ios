@@ -289,8 +289,6 @@
 		798D82C51C8686EB00D2A1F7 /* WebServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D7FD01C8686EB00D2A1F7 /* WebServiceManager.swift */; };
 		798D82C61C8686EB00D2A1F7 /* XibHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D7FD11C8686EB00D2A1F7 /* XibHelper.swift */; };
 		798D82C71C8686EB00D2A1F7 /* LoginAndRegisterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D7FD41C8686EB00D2A1F7 /* LoginAndRegisterTableViewController.swift */; };
-		798D82C81C8686EB00D2A1F7 /* LoginAndRegisterTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D7FD51C8686EB00D2A1F7 /* LoginAndRegisterTableViewController.xib */; };
-		798D82C91C8686EB00D2A1F7 /* SignInViewController copy.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D7FD61C8686EB00D2A1F7 /* SignInViewController copy.xib */; };
 		798D82CA1C8686EB00D2A1F7 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D7FD71C8686EB00D2A1F7 /* SignInViewController.swift */; };
 		798D82CB1C8686EB00D2A1F7 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D7FD81C8686EB00D2A1F7 /* SignInViewController.xib */; };
 		798D82CC1C8686EB00D2A1F7 /* RegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D7FDA1C8686EB00D2A1F7 /* RegisterModel.swift */; };
@@ -748,6 +746,7 @@
 		79D8D6E01CF8306D00A8D535 /* TranslationImagesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79D8D6DE1CF8306D00A8D535 /* TranslationImagesTableViewCell.xib */; };
 		79D8D6E31CF8397700A8D535 /* TranslationProductGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D8D6E11CF8397700A8D535 /* TranslationProductGroupTableViewCell.swift */; };
 		79D8D6E41CF8397700A8D535 /* TranslationProductGroupTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79D8D6E21CF8397700A8D535 /* TranslationProductGroupTableViewCell.xib */; };
+		79DDA5C51D192EEC0074768F /* LoginAndRegisterTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79DDA5C41D192EEC0074768F /* LoginAndRegisterTableViewController.xib */; };
 		79EBAC171D0AAE8400B72DB9 /* MyPointsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EBAC061D0AAE8400B72DB9 /* MyPointsTableViewController.swift */; };
 		79EBAC181D0AAE8400B72DB9 /* MyPointsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EBAC071D0AAE8400B72DB9 /* MyPointsTableViewController.xib */; };
 		79EBAC191D0AAE8400B72DB9 /* MyPointsHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EBAC091D0AAE8400B72DB9 /* MyPointsHistoryModel.swift */; };
@@ -1146,8 +1145,6 @@
 		798D7FD01C8686EB00D2A1F7 /* WebServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebServiceManager.swift; sourceTree = "<group>"; };
 		798D7FD11C8686EB00D2A1F7 /* XibHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XibHelper.swift; sourceTree = "<group>"; };
 		798D7FD41C8686EB00D2A1F7 /* LoginAndRegisterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginAndRegisterTableViewController.swift; sourceTree = "<group>"; };
-		798D7FD51C8686EB00D2A1F7 /* LoginAndRegisterTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginAndRegisterTableViewController.xib; sourceTree = "<group>"; };
-		798D7FD61C8686EB00D2A1F7 /* SignInViewController copy.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SignInViewController copy.xib"; sourceTree = "<group>"; };
 		798D7FD71C8686EB00D2A1F7 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		798D7FD81C8686EB00D2A1F7 /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
 		798D7FDA1C8686EB00D2A1F7 /* RegisterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterModel.swift; sourceTree = "<group>"; };
@@ -1609,6 +1606,7 @@
 		79D8D6DE1CF8306D00A8D535 /* TranslationImagesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TranslationImagesTableViewCell.xib; sourceTree = "<group>"; };
 		79D8D6E11CF8397700A8D535 /* TranslationProductGroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationProductGroupTableViewCell.swift; sourceTree = "<group>"; };
 		79D8D6E21CF8397700A8D535 /* TranslationProductGroupTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TranslationProductGroupTableViewCell.xib; sourceTree = "<group>"; };
+		79DDA5C41D192EEC0074768F /* LoginAndRegisterTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginAndRegisterTableViewController.xib; sourceTree = "<group>"; };
 		79EBAC061D0AAE8400B72DB9 /* MyPointsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsTableViewController.swift; sourceTree = "<group>"; };
 		79EBAC071D0AAE8400B72DB9 /* MyPointsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPointsTableViewController.xib; sourceTree = "<group>"; };
 		79EBAC091D0AAE8400B72DB9 /* MyPointsHistoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsHistoryModel.swift; sourceTree = "<group>"; };
@@ -2452,8 +2450,7 @@
 			isa = PBXGroup;
 			children = (
 				798D7FD41C8686EB00D2A1F7 /* LoginAndRegisterTableViewController.swift */,
-				798D7FD51C8686EB00D2A1F7 /* LoginAndRegisterTableViewController.xib */,
-				798D7FD61C8686EB00D2A1F7 /* SignInViewController copy.xib */,
+				79DDA5C41D192EEC0074768F /* LoginAndRegisterTableViewController.xib */,
 				798D7FD71C8686EB00D2A1F7 /* SignInViewController.swift */,
 				798D7FD81C8686EB00D2A1F7 /* SignInViewController.xib */,
 			);
@@ -3706,7 +3703,6 @@
 				798D847E1C8686EB00D2A1F7 /* EmptyView.xib in Resources */,
 				2623DE281CC8DA3C00EA241C /* ProductCombination3TableViewCell.xib in Resources */,
 				798D81FB1C8686EB00D2A1F7 /* PayoutRequestListItemTableViewCell.xib in Resources */,
-				798D82C91C8686EB00D2A1F7 /* SignInViewController copy.xib in Resources */,
 				798D836E1C8686EB00D2A1F7 /* ProductUploadTableViewController.xib in Resources */,
 				798D82D41C8686EB00D2A1F7 /* LoginRegisterTableViewCell.xib in Resources */,
 				798D83051C8686EB00D2A1F7 /* ChangeMobileNumberViewController.xib in Resources */,
@@ -3803,6 +3799,7 @@
 				798D84691C8686EB00D2A1F7 /* CustomUploadView.xib in Resources */,
 				F7C40FD91B983CD90091C16C /* photo.png in Resources */,
 				798D81DA1C8686EB00D2A1F7 /* PayoutBalanceWithdrawalViewController.xib in Resources */,
+				79DDA5C51D192EEC0074768F /* LoginAndRegisterTableViewController.xib in Resources */,
 				798D81E61C8686EB00D2A1F7 /* PayoutViewController.xib in Resources */,
 				79EBAC181D0AAE8400B72DB9 /* MyPointsTableViewController.xib in Resources */,
 				798D82AA1C8686EB00D2A1F7 /* FollowersViewController.xib in Resources */,
@@ -3813,7 +3810,6 @@
 				798D83841C8686EB00D2A1F7 /* ProductUploadButtonTableViewCell.xib in Resources */,
 				798D835C1C8686EB00D2A1F7 /* ProductManagementTableViewCell.xib in Resources */,
 				F7C40FCF1B983CD90091C16C /* bankAccount.png in Resources */,
-				798D82C81C8686EB00D2A1F7 /* LoginAndRegisterTableViewController.xib in Resources */,
 				798D829B1C8686EB00D2A1F7 /* Panton.otf in Resources */,
 				798D84481C8686EB00D2A1F7 /* TransactionDeliveryLogSignatureTableViewCell.xib in Resources */,
 				798D841A1C8686EB00D2A1F7 /* FooterButtonTableViewCell.xib in Resources */,
