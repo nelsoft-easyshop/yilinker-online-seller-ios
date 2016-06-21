@@ -278,7 +278,6 @@ class WebServiceManager: NSObject {
                     actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
                     if let task = task.response as? NSHTTPURLResponse {
-                        println(error)
                         if error.userInfo != nil {
                             //Request is successful but encounter error in server
                             actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
@@ -415,7 +414,6 @@ class WebServiceManager: NSObject {
                     actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
                     if let task = task.response as? NSHTTPURLResponse {
-                        println(error)
                         if error.userInfo != nil {
                             //Request is successful but encounter error in server
                             actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
@@ -758,7 +756,6 @@ class WebServiceManager: NSObject {
                 actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
-                    println(error)
                     if let task = task.response as? NSHTTPURLResponse {
                         if error.userInfo != nil {
                             actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
@@ -960,7 +957,7 @@ class WebServiceManager: NSObject {
         
 //        let manager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = [self.accessTokenKey: SessionManager.accessToken()]
+        let parameters: NSDictionary = [self.accessTokenKey: SessionManager.accessToken(), self.pageKey: page, self.perPageKey: perPage]
         
         let sessionDataTask: NSURLSessionDataTask = self.fireGetRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
