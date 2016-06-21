@@ -49,7 +49,7 @@ class SessionManager {
     //MARK: -
     //MARK: - Country Code
     class func selectedCountryCode() -> String {
-        var result: String = "ph"
+        var result: String = "PH"
         if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("countryCode") as? String {
             result = val as! String
         }
