@@ -137,8 +137,10 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 return ProductUploadTableViewControllerConstant.normalcellHeight
             } else if indexPath.row == 1 {
                 return ProductUploadTableViewControllerConstant.normalTextViewCellHeight
-            } else {
+            } else if indexPath.row == 2 {
                 return ProductUploadTableViewControllerConstant.completeDescriptionHeight
+            } else {
+                return ProductUploadTableViewControllerConstant.normalTextViewCellHeight
             }
         } else if indexPath.section == 2 {
             return 74
@@ -257,17 +259,16 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 
                 return cell
             } else {
-                let cell: ProductUploadTextViewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextViewTableViewCellNibNameAndIdentifier) as! ProductUploadTextViewTableViewCell
+                let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = true
                 
                 cell.cellTitleLabel.text = "Youtube Video Url"
                 
                 if self.productModel.youtubeVideoUrl != "" {
-                    cell.productUploadTextView.text = self.productModel.youtubeVideoUrl
+                    cell.cellTexField.text = self.productModel.youtubeVideoUrl
                 }
                 
-                cell.cellTitleLabel.required()
                 cell.textFieldType = ProductTextFieldType.ProductYoutubeVideoUrl
                 cell.delegate = self
                 
@@ -1116,6 +1117,9 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         } else if textFieldType ==  ProductTextFieldType.ProductSKU {
             self.productSKU = text
             self.productModel.sku = self.productSKU
+        } else if textFieldType == ProductTextFieldType.ProductYoutubeVideoUrl {
+            self.productYoutubeVideoUrl = text
+            self.productModel.youtubeVideoUrl = self.productYoutubeVideoUrl
         }
     }
     
@@ -1126,9 +1130,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         } else if textFieldType ==  ProductTextFieldType.ProductCompleteDescription {
             self.productCompleteDescription = text
             self.productModel.completeDescription = self.productCompleteDescription
-        } else if textFieldType == ProductTextFieldType.ProductYoutubeVideoUrl {
-            self.productYoutubeVideoUrl = text
-            self.productModel.youtubeVideoUrl = self.productYoutubeVideoUrl
         }
     }
     
