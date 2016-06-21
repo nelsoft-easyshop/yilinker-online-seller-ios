@@ -227,7 +227,7 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
             
             let accessToken = SessionManager.accessToken()
             let pageKey = "\(page)"
-            let perPage = "15"
+            let perPage = "10"
             var searchKeyword = ""
             
             if searchKey.isEmpty {
@@ -255,7 +255,7 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
                             self.emptyLabel.hidden = false
                         }
                         
-                        if followerModel.data.count < 15 {
+                        if followerModel.data.count < 10 {
                             self.isPageEnd = true
                         }
                         
