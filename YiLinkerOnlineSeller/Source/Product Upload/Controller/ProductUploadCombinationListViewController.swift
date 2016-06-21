@@ -48,9 +48,18 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         //self.footerView()
         self.backButton()
         self.registerCell()
+        /*
         self.combine("", pos: -1)
-        self.productModel?.validCombinations = []
         for (index, combination) in enumerate(self.combinations) {
+            for (index2, validCombination) in enumerate(self.productModel!.validCombinations) {
+                for (index3, attribute) in enumerate(validCombination.attributes) {
+                    var name: String = combination.variants[index].variantDefault
+                    var attribName: String = attribute["name"] as! String
+                    if (name == attribName) && (attribute.count == self.productModel!.attributes.count) {
+                        
+                    }
+                }
+            }
             var validCombi: [NSMutableDictionary] = []
             var values: [NSString] = []
             var pos: Int = 0
@@ -65,12 +74,15 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
                 //values.append(variant.variantTranslation)
                 pos++
             }
-            
+            attribute.length = self.productModel!.validCombinations[index].length
+            attribute.width = self.productModel!.validCombinations[index].width
+            attribute.weight = self.productModel!.validCombinations[index].weight
+            attribute.height = self.productModel!.validCombinations[index].height
             attribute.attributes = validCombi
             self.productModel?.validCombinations.append(attribute)
             //[index].attributes.append(validCombi)
             pos = 0
-        }
+        }*/
         
         let viewController: ProductUploadTC = self.navigationController?.viewControllers[0] as! ProductUploadTC
     }

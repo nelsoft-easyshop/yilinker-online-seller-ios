@@ -57,6 +57,7 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
         self.registerNib()
         
         self.productPhotosLabel.text = ProductUploadStrings.productPhotos
+        self.noteLabel.text = ProductUploadStrings.productPhotosNote
         self.productPhotosLabel.required()
     }
     
@@ -119,27 +120,30 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
         let cell: ProductUploadImageCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(ProductUploadImageTVCConstant.productUploadImageCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ProductUploadImageCollectionViewCell
         cell.starButton.tag = indexPath.row
         cell.imageView.image = self.dataSource!.productUploadUploadImageTableViewCell(images: self)[indexPath.row]
-        
+        cell.activityIndicator.startAnimating()
         if indexPath.row == self.dataSource!.productUploadUploadImageTableViewCell(numberOfCollectionViewRows: self) - 1 {
             cell.closeButton.hidden = true
             cell.starButton.hidden = true
             cell.tapToReuploadButton.hidden = true
+            cell.activityIndicator.hidden = true
+            cell.activityIndicator.stopAnimating()
             cell.imageView.contentMode = UIViewContentMode.ScaleAspectFit
         } else {
             if self.productModel?.mainImagesName.count != 0 {
                 if self.productModel?.productMainImagesModel[indexPath.row].imageStatus == true && self.productModel?.productMainImagesModel[indexPath.row].imageFailed == false {
-                    cell.imageView.alpha = 1.0
                     cell.tapToReuploadButton.hidden = true
                     cell.closeButton.userInteractionEnabled = true
                     cell.starButton.userInteractionEnabled = true
+                    cell.activityIndicator.hidden = true
+                    cell.activityIndicator.stopAnimating()
                 } else if self.productModel?.productMainImagesModel[indexPath.row].imageStatus == false && self.productModel?.productMainImagesModel[indexPath.row].imageFailed == false {
-                    cell.imageView.alpha = 0.5
                     cell.tapToReuploadButton.hidden = true
+                    cell.activityIndicator.hidden = false
                     cell.closeButton.userInteractionEnabled = false
                     cell.starButton.userInteractionEnabled = false
                 } else if self.productModel?.productMainImagesModel[indexPath.row].imageStatus == false && self.productModel?.productMainImagesModel[indexPath.row].imageFailed == true  {
-                    cell.imageView.alpha = 0.5
                     cell.tapToReuploadButton.hidden = false
+                    cell.activityIndicator.hidden = true
                     cell.closeButton.userInteractionEnabled = false
                     cell.starButton.userInteractionEnabled = false
                 }
@@ -147,6 +151,7 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
                 cell.tapToReuploadButton.hidden = true
                 cell.closeButton.userInteractionEnabled = false
                 cell.starButton.userInteractionEnabled = false
+                cell.activityIndicator.hidden = false
             }
             
             if self.productModel?.isPrimaryPhoto.count != 0 {
@@ -164,6 +169,7 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
                 cell.starButton.setImage(UIImage(named:"ic_unselected_as_primary"), forState: UIControlState.Normal)
             }
             
+            //cell.imageView.alpha = 0.5
             cell.closeButton.hidden = false
             cell.starButton.hidden = false
             cell.imageView.contentMode = UIViewContentMode.ScaleAspectFill
