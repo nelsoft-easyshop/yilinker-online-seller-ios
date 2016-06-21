@@ -33,6 +33,7 @@ class ProductUploadProductGroupTVC: UITableViewCell, UITextFieldDelegate {
     
     // Initialized ProductUploadProductGroupTVCDelegate
     var delegate: ProductUploadProductGroupTVCDelegate?
+    var cellProuctGroup: ProductUploadProductGroupCVC?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -67,11 +68,11 @@ class ProductUploadProductGroupTVC: UITableViewCell, UITextFieldDelegate {
         cell.attributeLabel.text = self.attributes[indexPath.row]
         cell.attributeLabel.adjustsFontSizeToFitWidth = true
         cell.layer.cornerRadius = 5
-        
+        self.cellProuctGroup = cell
         let gestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapRecognizer:")
         cell.userInteractionEnabled = true
         cell.addGestureRecognizer(gestureRecognizer)
-        
+        cell.deleteButton.addGestureRecognizer(gestureRecognizer)
         return cell
     }
     
@@ -81,12 +82,11 @@ class ProductUploadProductGroupTVC: UITableViewCell, UITextFieldDelegate {
     
     // MARK: Cell action
     func tapRecognizer(sender: UITapGestureRecognizer) {
-        let cell: ProductUploadProductGroupCVC = sender.view as! ProductUploadProductGroupCVC
-        
+        //let cell: ProductUploadProductGroupCVC = sender.view as! ProductUploadProductGroupCVC
         var isValidToDelete: Bool = true
         var combinationNumber: Int = 0
         
-        let attributeValue: String = cell.attributeLabel.text!
+        let attributeValue: String = self.cellProuctGroup!.attributeLabel.text!
         
         if self.productModel != nil {
             for (index, combination) in enumerate(self.productModel!.validCombinations){
@@ -105,7 +105,7 @@ class ProductUploadProductGroupTVC: UITableViewCell, UITextFieldDelegate {
         }
         
         if isValidToDelete {
-            let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
+            let indexPath: NSIndexPath = self.collectionView.indexPathForCell(self.cellProuctGroup!)!
             self.delegate!.productUploadProductGroupTVC(didTapCell: self, indexPath: indexPath)
             self.attributes.removeAtIndex(indexPath.row)
             self.collectionView.deleteItemsAtIndexPaths([indexPath])
@@ -118,7 +118,7 @@ class ProductUploadProductGroupTVC: UITableViewCell, UITextFieldDelegate {
             
             alertController.addAction(cancelAction)
             let OKAction = UIAlertAction(title: Constants.Localized.yes, style: .Default) { (action) in
-                let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
+                let indexPath: NSIndexPath = self.collectionView.indexPathForCell(self.cellProuctGroup!)!
                 self.delegate!.productUploadProductGroupTVC(didTapCell: self, indexPath: indexPath)
                 self.attributes.removeAtIndex(indexPath.row)
                 self.collectionView.deleteItemsAtIndexPaths([indexPath])

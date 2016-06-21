@@ -32,14 +32,57 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
     var isValidSku: Bool = false
     var uploadType: UploadType = UploadType.NewProduct
     
+    var comPos: Int = 0
+    
+    var defaultDetails: ProductTranslationDetailsModel = ProductTranslationDetailsModel(productId: "")
+    var targetDetails: ProductTranslationDetailsModel = ProductTranslationDetailsModel(productId: "")
+    typealias Variant = (variantDefault: String, variantTranslation: String)
+    typealias Combination = (combinationName: String, variants: [Variant])
+    var combinations: [Combination] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Set navigation bar title
         self.title = Constants.ViewControllersTitleString.attributeCombination
-        self.footerView()
+        //self.footerView()
         self.backButton()
         self.registerCell()
+        /*
+        self.combine("", pos: -1)
+        for (index, combination) in enumerate(self.combinations) {
+            for (index2, validCombination) in enumerate(self.productModel!.validCombinations) {
+                for (index3, attribute) in enumerate(validCombination.attributes) {
+                    var name: String = combination.variants[index].variantDefault
+                    var attribName: String = attribute["name"] as! String
+                    if (name == attribName) && (attribute.count == self.productModel!.attributes.count) {
+                        
+                    }
+                }
+            }
+            var validCombi: [NSMutableDictionary] = []
+            var values: [NSString] = []
+            var pos: Int = 0
+            
+            var attribute: CombinationModel = CombinationModel()
+            
+            for (index2, variant) in enumerate(combination.variants) {
+                var combi: NSMutableDictionary = NSMutableDictionary()
+                combi["name"] = variant.variantDefault
+                combi["value"] = variant.variantTranslation
+                validCombi.append(combi)
+                //values.append(variant.variantTranslation)
+                pos++
+            }
+            attribute.length = self.productModel!.validCombinations[index].length
+            attribute.width = self.productModel!.validCombinations[index].width
+            attribute.weight = self.productModel!.validCombinations[index].weight
+            attribute.height = self.productModel!.validCombinations[index].height
+            attribute.attributes = validCombi
+            self.productModel?.validCombinations.append(attribute)
+            //[index].attributes.append(validCombi)
+            pos = 0
+        }*/
         
         let viewController: ProductUploadTC = self.navigationController?.viewControllers[0] as! ProductUploadTC
     }
@@ -105,6 +148,34 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         self.footerButton.setTitle(ProductUploadStrings.saveProductDetails, forState: UIControlState.Normal)
     }
     
+    func combine(temp: String, pos: Int) {
+        if pos == self.productModel!.attributes.count - 1 {
+            var array = temp.componentsSeparatedByString("&&&&&&&&&")
+            comPos++
+            var variants: [Variant] = []
+            
+            for(var x = 0; x < array.count; x++) {
+                variants.append(Variant(variantDefault: self.productModel!.attributes[x].definition, variantTranslation: array[x]))
+            }
+            
+            combinations.append(Combination((combinationName: "Combination \(comPos)", variants: variants)))
+        } else {
+            var nextPos = pos + 1
+            
+            for(var x = 0; x < self.productModel!.attributes[nextPos].values.count; x++) {
+                var str = ""
+                if x < self.productModel!.attributes[nextPos].values.count {
+                    if !(self.productModel!.attributes[nextPos].values.isEmpty) {
+                        str = self.productModel!.attributes[nextPos].values[x]
+                    }
+                } else {
+                    str = self.productModel!.attributes[nextPos].values[x]
+                }
+                combine(temp.isEmpty ? str : "\(temp)&&&&&&&&&\(str)", pos: nextPos)
+            }
+        }
+    }
+    
     // MARK: -
     // MARK: - Private methods
     // MARK: - Add footer in tableview
@@ -149,7 +220,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.productModel!.validCombinations.count
+        return self.productModel!.validCombinations.count //self.combinations.count
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -160,6 +231,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             let rowInitialHeight: CGFloat = 14
             
             var attributes: [AttributeModel] = []
+            
             for dictionary in  self.productModel!.validCombinations[indexPath.section].attributes as [NSMutableDictionary] {
                 let attributeModel: AttributeModel = AttributeModel()
                 attributeModel.definition = dictionary["name"] as! String
@@ -203,22 +275,22 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             for (index, definition) in enumerate(self.productModel!.attributes) {
                 
             }
-            
-            for (index, dictionary) in enumerate(self.productModel!.validCombinations[indexPath.section].attributes as [NSMutableDictionary]) {
-                let attributeModel: AttributeModel = AttributeModel()
-                var dict: NSMutableDictionary = ["name" : self.productModel!.attributes[index].definition]
-                //dictionary["name"] =  dict.mutableCopy() as? NSMutableDictionary //"\(self.productModel!.attributes[index].definition)"
-                attributeModel.definition = dictionary["name"] as! String
-                attributeModel.values = [dictionary["value"] as! String]
-                attributes.append(attributeModel)
-            }
             /*
+            let attributeModel: AttributeModel = AttributeModel()
+            attributeModel.definition = self.combinations[indexPath.section].variants[indexPath.row].variantDefault
+          
+            for (index, variant) in enumerate(self.combinations[indexPath.section].variants) {
+                attributeModel.values.append(variant.variantTranslation)
+            }
+            
+            attributes.append(attributeModel)*/
+            
             for dictionary in  self.productModel!.validCombinations[indexPath.section].attributes as [NSMutableDictionary] {
                 let attributeModel: AttributeModel = AttributeModel()
                 attributeModel.definition = dictionary["name"] as! String
                 attributeModel.values = [dictionary["value"] as! String]
                 attributes.append(attributeModel)
-            }*/
+            }
             
             cell.attributes = attributes
             cell.collectionView.reloadData()

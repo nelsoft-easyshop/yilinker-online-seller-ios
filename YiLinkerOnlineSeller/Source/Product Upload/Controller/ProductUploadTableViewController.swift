@@ -12,6 +12,7 @@ import UIKit
 struct ProductUploadStrings {
     static let uploadItem: String = StringHelper.localizedStringWithKey("UPLOAD_ITEM_LOCALIZE_KEY")
     static let productPhotos: String = StringHelper.localizedStringWithKey("PRODUCT_PHOTOS_LOCALIZE_KEY")
+    static let productPhotosNote: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_NOTE_LOCALIZE_KEY")
     static let addPhoto: String = StringHelper.localizedStringWithKey("ADD_PHOTO_LOCALIZE_KEY")
     
     static let productInformation: String = StringHelper.localizedStringWithKey("PRODUCT_INFORMATION_LOCALIZE_KEY")

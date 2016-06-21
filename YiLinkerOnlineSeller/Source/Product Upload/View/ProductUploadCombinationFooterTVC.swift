@@ -130,6 +130,7 @@ class ProductUploadCombinationFooterTVC: UITableViewCell, UITextFieldDelegate, U
         cell.imageView.image = self.images[indexPath.row]
         cell.starButton.hidden = true
         cell.tapToReuploadButton.hidden = true
+        cell.activityIndicator.hidden = true
         
         if self.isPreview {
             cell.closeButton.hidden = true
@@ -189,7 +190,9 @@ class ProductUploadCombinationFooterTVC: UITableViewCell, UITextFieldDelegate, U
     // MARK: - Uploaded Images
     
     func uploadedImages() -> [UIImage] {
-        self.images.removeLast()
+        if self.images.count != 0 {
+            self.images.removeLast()
+        }
         return self.images
     }
     

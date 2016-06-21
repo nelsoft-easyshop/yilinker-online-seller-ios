@@ -30,6 +30,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
     var combination: CombinationModel = CombinationModel()
     var productModel: ProductModel?
     var productModelCombi: ProductModel = ProductModel()
+    var productModelCombi2: ProductModel = ProductModel()
     
     // Global variables
     var images: [UIImage] = []
@@ -55,6 +56,17 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
     var cellImage: ProductUploadCombinationFooterTVC?
     var a: [NSArray] = []
     
+    // Auto-generated combination
+    var attrib: [AttributeModel] = []
+    var comPos: Int = 0
+    var combination2: [CombinationModel] = []
+    
+    var defaultDetails: ProductTranslationDetailsModel = ProductTranslationDetailsModel(productId: "")
+    var targetDetails: ProductTranslationDetailsModel = ProductTranslationDetailsModel(productId: "")
+    typealias Variant = (variantDefault: String, variantTranslation: String)
+    typealias Combination = (combinationName: String, variants: [Variant])
+    var combinations: [Combination] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -65,6 +77,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
             let combination: CombinationModel = self.productModel!.validCombinations[self.selectedIndexpath!.section]
             self.combination = combination
             self.sku = self.combination.sku
+            self.productModelCombi2 = self.productModelCombi
         } else {
             title = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_ADD_LOCALIZE_KEY")
         }
@@ -76,60 +89,6 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
         self.backButton()
         self.headerView()
         self.registerCell()
-        
-        var combi: CombinationModel = CombinationModel()
-        
-        var array: [NSArray] = []
-        for (index, attribute) in enumerate(self.productModelCombi.attributes) {
-            println(attribute)
-            var dictionary: NSMutableDictionary = NSMutableDictionary()
-            let definitionKey: String = "name"
-            let valueKey: String = "value"
-            dictionary[definitionKey] = attribute.definition
-           
-            var i: Int = index
-            var stringArr: [String] = []
-    
-            for i; i<attribute.values.count; i++ {
-                
-            }
-            for index in 0..<attribute.values.count {
-                stringArr.append(attribute.values[index])
-                //dictionary[valueKey] = attribute.values[index]
-                //combi.attributes.append(dictionary)
-                println("combi: \(dictionary)")
-            }
-            
-            array.append(stringArr)
-            /*
-            for (i, value) in enumerate(attribute.values) {
-                dictionary[valueKey] = value
-                combi.attributes.append(dictionary)
-                println("combi: \(dictionary)")
-            }*/
-            
-            
-            
-        }
-        println(array)
-        var com: [String] = []
-        for (index, arr) in enumerate(array) {
-            println(arr)
-            for (i, a) in enumerate(arr) {
-                println(a)
-            }
-        }
-    }
-    
-    func generateCombination(position: Int) {
-        if position < self.productModelCombi.attributes.count - 1{
-            self.startPosition++
-            var array: [String] = []
-            for (index, value) in enumerate(self.productModelCombi.attributes[position].values) {
-                array.append(value)
-                self.a.append(array)
-            }
-        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -357,6 +316,7 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
     func saveDetails() {
         let cell: ProductUploadCombinationFooterTVC = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as! ProductUploadCombinationFooterTVC
     
+        
         self.combination.imagesId = cell.combiImagesName()
         
         let cell2: ProductUploadCombinationTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! ProductUploadCombinationTableViewCell
@@ -383,8 +343,8 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
             if self.sku == self.combination.sku {
                 isSkuAvailable = false
             } else {
-                for (index, skus) in enumerate(self.productModel!.validCombinations) {
-                    if self.combination.sku == skus.sku {
+                for (index, skus) in enumerate(self.productModelCombi.validCombinations) {
+                    if self.combination.sku == skus.sku && self.selectedIndexpath?.section != index {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_AVAILABLE_LOCALIZE_KEY"), title: Constants.Localized.invalid)
                         isSkuAvailable = true
                     }
@@ -392,7 +352,9 @@ class ProductUploadCombinationTableViewController: UITableViewController, UzysAs
             }
             
             if !isSkuAvailable {
-                self.combination.images = cell.uploadedImages()
+                if self.combination.imagesId.count != 0 {
+                    self.combination.images = cell.uploadedImages()
+                }
                 let combination2: CombinationModel = cell2.data()
                 self.combination.attributes = combination2.attributes
                 self.delegate!.productUploadCombinationTableViewController(appendCombination: self.combination, isEdit: true, indexPath: self.selectedIndexpath!)

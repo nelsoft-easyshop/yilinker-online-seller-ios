@@ -8,15 +8,24 @@
 
 import UIKit
 
+protocol ProductUploadProductGroupCVCDelegate {
+    func deleteProductGroup()
+}
+
 class ProductUploadProductGroupCVC: UICollectionViewCell {
 
     // Buttons
     @IBOutlet weak var attributeLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
     
+    var delegate: ProductUploadProductGroupCVCDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
+    @IBAction func deleteButton(sender: UIButton) {
+        self.delegate?.deleteProductGroup()
+    }
 }

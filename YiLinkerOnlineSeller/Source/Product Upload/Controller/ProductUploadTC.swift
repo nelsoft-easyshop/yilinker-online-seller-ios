@@ -109,7 +109,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         if section == 0 || section == 6 {
             return 1
         } else if section == 1 {
-            return 3
+            return 4
         } else if section == 5 {
             if self.productModel.validCombinations.count == 0 {
                 return 1

@@ -24,6 +24,7 @@ class ProductUploadImageCollectionViewCell: UICollectionViewCell {
     // Buttons
     @IBOutlet weak var starButton: UIButton!
     @IBOutlet weak var tapToReuploadButton: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     // Imageviews
     @IBOutlet weak var imageView: UIImageView!

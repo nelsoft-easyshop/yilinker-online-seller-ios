@@ -64,11 +64,17 @@
                             <action selector="reupload:" destination="gTV-IL-0wX" eventType="touchUpInside" id="rTS-MB-BrG"/>
                         </connections>
                     </button>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="xIV-ya-np6">
+                        <rect key="frame" x="50" y="50" width="20" height="20"/>
+                        <color key="color" red="0.4839025528527654" green="0.0" blue="0.67956912878787878" alpha="1" colorSpace="calibratedRGB"/>
+                    </activityIndicatorView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
                 <constraint firstItem="JyF-RN-ZLV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="3b2-pZ-dza"/>
+                <constraint firstAttribute="centerY" secondItem="xIV-ya-np6" secondAttribute="centerY" id="5W3-gr-PO1"/>
+                <constraint firstAttribute="centerX" secondItem="xIV-ya-np6" secondAttribute="centerX" id="84n-h0-i6y"/>
                 <constraint firstAttribute="trailing" secondItem="Rgy-pw-CZG" secondAttribute="trailing" id="Cd0-Ml-a6y"/>
                 <constraint firstAttribute="trailing" secondItem="qht-bm-xcM" secondAttribute="trailing" constant="5" id="Lqd-Z2-r7m"/>
                 <constraint firstAttribute="bottom" secondItem="DLV-Xj-fNj" secondAttribute="bottom" constant="10" id="XqW-2J-IgZ"/>
@@ -83,6 +89,7 @@
             </constraints>
             <size key="customSize" width="308" height="224"/>
             <connections>
+                <outlet property="activityIndicator" destination="xIV-ya-np6" id="fo8-0p-Aak"/>
                 <outlet property="closeButton" destination="Rgy-pw-CZG" id="52A-Hu-bWb"/>
                 <outlet property="imageView" destination="qht-bm-xcM" id="Idh-jH-plj"/>
                 <outlet property="starButton" destination="DLV-Xj-fNj" id="bry-FE-UOm"/>
