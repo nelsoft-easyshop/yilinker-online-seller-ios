@@ -140,7 +140,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             } else if indexPath.row == 2 {
                 return ProductUploadTableViewControllerConstant.completeDescriptionHeight
             } else {
-                return ProductUploadTableViewControllerConstant.normalTextViewCellHeight
+                return ProductUploadTableViewControllerConstant.normalcellHeight
             }
         } else if indexPath.section == 2 {
             return 74
@@ -232,9 +232,13 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.userInteractionEnabled = true
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.shortDescription
-                
+                 
                 if self.productModel.shortDescription != "" {
+                    cell.productUploadTextView.textColor = UIColor.blackColor()
                     cell.productUploadTextView.text = self.productModel.shortDescription
+                } else {
+                    cell.productUploadTextView.textColor = UIColor.lightGrayColor()
+                    cell.productUploadTextView.text = ProductUploadStrings.completeDescriptionPlaceholder
                 }
                 
                 cell.cellTitleLabel.required()
@@ -250,7 +254,11 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.cellTitleLabel.text = ProductUploadStrings.completeDescription
                 
                 if self.productModel.completeDescription != "" {
+                    cell.productUploadTextView.textColor = UIColor.blackColor()
                     cell.productUploadTextView.text = self.productModel.completeDescription
+                } else {
+                    cell.productUploadTextView.textColor = UIColor.lightGrayColor()
+                    cell.productUploadTextView.text = ProductUploadStrings.completeDescriptionPlaceholder
                 }
                 
                 cell.cellTitleLabel.required()
@@ -263,7 +271,8 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = true
                 
-                cell.cellTitleLabel.text = "Youtube Video Url"
+                cell.cellTitleLabel.text = ProductUploadStrings.youtubeUrl
+                cell.cellTexField.placeholder = ProductUploadStrings.youtubeUrlPlaceholder
                 
                 if self.productModel.youtubeVideoUrl != "" {
                     cell.cellTexField.text = self.productModel.youtubeVideoUrl
@@ -282,7 +291,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.userInteractionEnabled = self.checkIfSeller()
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.category
-                cell.cellTexField.text = ProductUploadStrings.selectCategory
+                cell.cellTexField.placeholder = ProductUploadStrings.selectCategory
                 
                 if self.productModel.category.name != "" {
                     cell.cellTexField.text = self.productModel.category.name
@@ -301,8 +310,8 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = self.checkIfSeller()
                 
-                cell.cellTitleLabel.text = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SHIPPING_CATEGORY_LOCALIZE_KEY")
-                cell.cellTexField.text = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SELECT_SHIPPING_LOCALIZE_KEY")
+                cell.cellTitleLabel.text = ProductUploadStrings.shippingCategory
+                cell.cellTexField.placeholder = ProductUploadStrings.selectShippingCategory
                 
                 if self.productModel.shippingCategories.name != "" {
                     cell.cellTexField.text = self.productModel.shippingCategories.name
@@ -324,7 +333,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.userInteractionEnabled = self.checkIfSeller()
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.brand
-                cell.cellTexField.text = ProductUploadStrings.addBrand
+                cell.cellTexField.placeholder = ProductUploadStrings.addBrand
                 
                 if self.productModel.brand.name != "" {
                     cell.cellTexField.text = self.productModel.brand.name
@@ -343,7 +352,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.userInteractionEnabled = self.checkIfSeller()
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.condition
-                cell.cellTexField.text = self.productCondition
+                cell.cellTexField.placeholder = self.productCondition
                 
                 cell.cellTexField.placeholder = ProductUploadStrings.condition
                 
@@ -382,7 +391,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 
                 cell.cellTexField.text = self.productSKU
                 
-                cell.cellTexField.placeholder = "SKU"
+                cell.cellTexField.placeholder = ProductUploadStrings.productSku
                 cell.textFieldType = ProductTextFieldType.ProductSKU
                 cell.delegate = self
                 
@@ -398,7 +407,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 var tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "selectProductGroups")
                 //cell.addGestureRecognizer(tap)
                 
-                cell.productGroupLabel.text = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_GROUP_LOCALIZE_KEY")
+                cell.productGroupLabel.text = ProductUploadStrings.productGroup
     
                 if self.productModel.productGroups.count != 0 {
                     cell.attributes.removeAll(keepCapacity: false)
@@ -418,8 +427,8 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 let cell: ProductUploadProductGroupTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadProductGroupTextFieldTableViewCell") as! ProductUploadProductGroupTextFieldTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = self.checkIfSeller()
-                cell.toolTipLabel.text = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRODUCT_GROUP_TOOLTIP_LOCALIZE_KEY")
-                cell.productGroupTextField.placeholder = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRODUCT_GROUP_LOCALIZE_KEY")
+                cell.toolTipLabel.text = ProductUploadStrings.tooltip
+                cell.productGroupTextField.placeholder = ProductUploadStrings.productGroupPlaceHolder
                 
                 cell.delegate = self
                 
@@ -431,7 +440,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 let cell: ProductUploadButtonTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadButtonTableViewCellNibNameAndIdentifier) as! ProductUploadButtonTableViewCell
                 cell.userInteractionEnabled = self.checkIfSeller()
                 
-                cell.cellButton.setTitle(StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_ADD_MORE_LOCALIZE_KEY"), forState: UIControlState.Normal)
+                cell.cellButton.setTitle(ProductUploadStrings.addMoreDtails, forState: UIControlState.Normal)
                 cell.cellButton.addTarget(self, action: "addMoreDetails:", forControlEvents: UIControlEvents.TouchUpInside)
                 
                 return cell
@@ -441,7 +450,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                     let cell: ProductUploadButtonTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadButtonTableViewCellNibNameAndIdentifier) as! ProductUploadButtonTableViewCell
                     cell.userInteractionEnabled = self.checkIfSeller()
                     
-                    cell.cellButton.setTitle("ADD MORE DETAILS ", forState: UIControlState.Normal)
+                    cell.cellButton.setTitle(ProductUploadStrings.addMoreDtails, forState: UIControlState.Normal)
                     cell.cellButton.addTarget(self, action: "addMoreDetails:", forControlEvents: UIControlEvents.TouchUpInside)
                     
                     return cell
@@ -477,7 +486,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                         let cell: ProductUploadButtonTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadButtonTableViewCellNibNameAndIdentifier) as! ProductUploadButtonTableViewCell
                         cell.userInteractionEnabled = self.checkIfSeller()
                         
-                        cell.cellButton.setTitle("ADD MORE DETAILS ", forState: UIControlState.Normal)
+                        cell.cellButton.setTitle(ProductUploadStrings.addMoreDtails, forState: UIControlState.Normal)
                         cell.cellButton.addTarget(self, action: "addMoreDetails:", forControlEvents: UIControlEvents.TouchUpInside)
                         
                         return cell
@@ -489,12 +498,16 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             cell.delegate = self
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.weightTextField.text = self.productModel.weigth
+            cell.weightTextField.placeholder = ProductUploadStrings.productDimensions
             //cell.weightLabel.required()
             cell.lengthTextField.text = self.productModel.length
+            cell.lengthTextField.placeholder = ProductUploadStrings.productDimensions
             //cell.lengthlabel.required()
             cell.heightTextField.text = self.productModel.height
+            cell.heightTextField.placeholder = ProductUploadStrings.productDimensions
             //cell.heightLabel.required()
             cell.widthTextField.text = self.productModel.width
+            cell.widthTextField.placeholder = ProductUploadStrings.productDimensions
             //cell.widthLabel.required()
             
             if self.productModel.validCombinations.count != 0 && self.productModel.validCombinations[0].attributes.count != 0 {
@@ -1130,6 +1143,34 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         } else if textFieldType ==  ProductTextFieldType.ProductCompleteDescription {
             self.productCompleteDescription = text
             self.productModel.completeDescription = self.productCompleteDescription
+        }
+    }
+    
+    func productUploadTextViewTableViewCell(textFieldDidBeginEditing text: String, cell: ProductUploadTextViewTableViewCell, textFieldType: ProductTextFieldType) {
+        if textFieldType ==  ProductTextFieldType.ProductShortDescription {
+            if cell.productUploadTextView.textColor == UIColor.lightGrayColor() {
+                cell.productUploadTextView.text = ""
+                cell.productUploadTextView.textColor = UIColor.blackColor()
+            }
+        } else if textFieldType ==  ProductTextFieldType.ProductCompleteDescription {
+            if cell.productUploadTextView.textColor == UIColor.lightGrayColor() {
+                cell.productUploadTextView.text = ""
+                cell.productUploadTextView.textColor = UIColor.blackColor()
+            }
+        }
+    }
+    
+    func productUploadTextViewTableViewCell(textFieldDidEndEditing text: String, cell: ProductUploadTextViewTableViewCell, textFieldType: ProductTextFieldType) {
+        if textFieldType ==  ProductTextFieldType.ProductShortDescription {
+            if cell.productUploadTextView.text.isEmpty {
+                cell.productUploadTextView.text = ProductUploadStrings.shortDescriptionPlaceholder
+                cell.productUploadTextView.textColor = UIColor.lightGrayColor()
+            }
+        } else if textFieldType ==  ProductTextFieldType.ProductCompleteDescription {
+            if cell.productUploadTextView.text.isEmpty {
+                cell.productUploadTextView.text = ProductUploadStrings.completeDescriptionPlaceholder
+                cell.productUploadTextView.textColor = UIColor.lightGrayColor()
+            }
         }
     }
     

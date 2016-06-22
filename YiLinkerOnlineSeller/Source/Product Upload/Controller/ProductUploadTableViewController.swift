@@ -17,20 +17,30 @@ struct ProductUploadStrings {
     
     static let productInformation: String = StringHelper.localizedStringWithKey("PRODUCT_INFORMATION_LOCALIZE_KEY")
     
-    static let productName: String = StringHelper.localizedStringWithKey("PRODUCT_NAME_LOCALIZE_KEY")
+    static let productName: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRODUCT_NAME_LOCALIZE_KEY")
     static let shortDescription: String = StringHelper.localizedStringWithKey("SHORT_DESCRIPTION_LOCALIZE_KEY")
+    static let shortDescriptionPlaceholder: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SHORT_DESC_LOCALIZE_KEY")
     static let completeDescription: String = StringHelper.localizedStringWithKey("COMPLETE_DESCRIPTION_LOCALIZE_KEY")
+    static let completeDescriptionPlaceholder: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_COMPLETE_DESC_LOCALIZE_KEY")
     
     static let productDetails: String = StringHelper.localizedStringWithKey("PRODUCT_DETAILS_LOCALIZE_KEY")
 
     static let selectCategory: String = StringHelper.localizedStringWithKey("SELECT_CATEGORY_LOCALIZE_KEY")
+    static let shippingCategory: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SHIPPING_CATEGORY_LOCALIZE_KEY")
+    static let selectShippingCategory: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SELECT_SHIPPING_LOCALIZE_KEY")
+    static let youtubeUrl: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_YOUTUBE_URL_LOCALIZE_KEY")
+    static let youtubeUrlPlaceholder: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_YOUTUBE_URL_PLACEHOLDER_LOCALIZE_KEY")
     static let category: String = StringHelper.localizedStringWithKey("CATEGORY_LOCALIZE_KEY")
     static let brand: String = StringHelper.localizedStringWithKey("BRAND_LOCALIZE_KEY")
-    static let addBrand: String = StringHelper.localizedStringWithKey("ADD_BRAND_DETAILS_LOCALIZE_KEY")
-    static let condition: String = StringHelper.localizedStringWithKey("CONDITION_LOCALIZE_KEY")
-    
+    static let addBrand: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_BRAND_LOCALIZE_KEY")
+    static let condition: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_CONDITION_LOCALIZE_KEY")
+    static let productSku: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_PLACEHOLDER_LOCALIZE_KEY")
+    static let tooltip: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRODUCT_GROUP_TOOLTIP_LOCALIZE_KEY")
+    static let productGroup: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_GROUP_LOCALIZE_KEY")
+    static let productGroupPlaceHolder = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRODUCT_GROUP_LOCALIZE_KEY")
+    static let productDimensions: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_DIMENSIONS_PLACEHOLDER_LOCALIZE_KEY")
     static let addMore: String = StringHelper.localizedStringWithKey("ADD_MORE_LOCALIZE_KEY")
-    static let addMoreDtails: String = StringHelper.localizedStringWithKey("ADD_MORE_DETAILS_LOCALIZE_KEY")
+    static let addMoreDtails: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_ADD_MORE_LOCALIZE_KEY")
     static let addEdit: String = StringHelper.localizedStringWithKey("ADD_EDIT_MORE_DETAILS_LOCALIZE_KEY")
     
     static let quantity: String = StringHelper.localizedStringWithKey("QUANTITY_LOCALIZE_KEY")
@@ -128,7 +138,7 @@ struct ProductUploadTableViewControllerConstant {
     static let productUploadAttributeSummaryTableVieCellNibNameAndIdentifier = "ProductUploadAttributeSummaryTableViewCell"
     
     static let normalcellHeight: CGFloat = 72
-    static let normalTextViewCellHeight: CGFloat = 80
+    static let normalTextViewCellHeight: CGFloat = 100
     
     static let completeDescriptionHeight: CGFloat = 170
     static let priceCellHeight: CGFloat = 73
@@ -1156,6 +1166,30 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
             self.productModel.shortDescription = text
         } else if textFieldType == ProductTextFieldType.ProductCompleteDescription {
             self.productModel.completeDescription = text
+        }
+    }
+    
+    func productUploadTextViewTableViewCell(textFieldDidBeginEditing text: String, cell: ProductUploadTextViewTableViewCell, textFieldType: ProductTextFieldType) {
+        if textFieldType ==  ProductTextFieldType.ProductShortDescription {
+            cell.productUploadTextView.text = ""
+            cell.productUploadTextView.textColor = UIColor.blackColor()
+        } else if textFieldType ==  ProductTextFieldType.ProductCompleteDescription {
+            cell.productUploadTextView.text = ""
+            cell.productUploadTextView.textColor = UIColor.blackColor()
+        }
+    }
+    
+    func productUploadTextViewTableViewCell(textFieldDidEndEditing text: String, cell: ProductUploadTextViewTableViewCell, textFieldType: ProductTextFieldType) {
+        if textFieldType ==  ProductTextFieldType.ProductShortDescription {
+            if cell.productUploadTextView.text.isEmpty {
+                cell.productUploadTextView.text = ProductUploadStrings.shortDescriptionPlaceholder
+                cell.productUploadTextView.textColor = UIColor.lightGrayColor()
+            }
+        } else if textFieldType ==  ProductTextFieldType.ProductCompleteDescription {
+            if cell.productUploadTextView.text.isEmpty {
+                cell.productUploadTextView.text = ProductUploadStrings.completeDescriptionPlaceholder
+                cell.productUploadTextView.textColor = UIColor.lightGrayColor()
+            }
         }
     }
     
