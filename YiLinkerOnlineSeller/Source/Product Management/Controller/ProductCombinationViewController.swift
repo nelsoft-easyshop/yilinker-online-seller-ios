@@ -78,7 +78,7 @@ class ProductCombinationViewController: UIViewController {
         for combination in combinationModel {
             productUnitIds.append(combination.productUnitId)
             originalPrices.append(combination.appliedBaseDiscountPrice/*String(combination.price)*/)
-            discounts.append(String(combination.discount))
+            discounts.append(String(stringInterpolationSegment: combination.discount))
             finalPrices.append(String(combination.discountedPrice))
             commissions.append(combination.commission)
             statuses.append(combination.status)

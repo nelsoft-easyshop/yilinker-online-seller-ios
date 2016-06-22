@@ -34,6 +34,18 @@ class ParseHelper: NSObject {
         return defaultValue
     }
     
+    // Use this when parsing double
+    class func double(object: AnyObject, key: String, defaultValue: Double) -> Double {
+        let dictionary = object as! NSDictionary
+        if dictionary[key] != nil {
+            if let parsedValue = dictionary[key] as? Double {
+                return parsedValue
+            }
+        }
+        
+        return defaultValue
+    }
+    
     // Use this when parsing bool
     class func bool(object: AnyObject, key: String, defaultValue: Bool) -> Bool {
         let dictionary = object as! NSDictionary
