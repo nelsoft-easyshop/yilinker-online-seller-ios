@@ -322,15 +322,12 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func showAlertDownloadFail() {
+        self.hud?.hide(true)
         let alert = UIAlertController(title: AlertStrings.failed, message: DetailsString.downloadFailed, preferredStyle: UIAlertControllerStyle.Alert)
         let okButton = UIAlertAction(title: AlertStrings.ok, style: UIAlertActionStyle.Cancel) { (alert) -> Void in
-            self.navigationController?.popViewControllerAnimated(true)
+//            self.navigationController?.popViewControllerAnimated(true)
         }
         alert.addAction(okButton)
-//        let tryAgainButton = UIAlertAction(title: DetailsString.downloadFailed, style: UIAlertActionStyle.Default) { (alert) -> Void in
-//            self.navigationController?.popViewControllerAnimated(true)
-//        }
-//        alert.addAction(tryAgainButton)
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
@@ -346,27 +343,30 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
             NSURLConnection.sendAsynchronousRequest(
                 request, queue: NSOperationQueue.mainQueue(),
                 completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
-                    if error == nil {
-                        downloadedImage++
-                        println("success downloading main image - \(i + 1)")
-                        var convertedImage: ServerUIImage = ServerUIImage(data: data)!
-                        convertedImage.uid = self.productModel.imageIds[i]
-//                        self.productModel.editedImage.append(convertedImage)
-                        self.productModel.editedImage[i] = convertedImage
-                        
-                        var productMainImagesModel: ProductMainImagesModel = ProductMainImagesModel(image: UIImage(data: data,scale:1.0)!, imageName: self.productModel.imageIds[i], imageStatus: true, imageFailed: false)
-                        self.productModel.mainImagesName.append(self.productModel.imageIds[i])
-                        if self.productModel.productMainImagesModel.count == 0 {
-                            self.productModel.productMainImagesModel.append(productMainImagesModel)
+                    
+                    if let httpResponse = response as? NSHTTPURLResponse {
+                        if httpResponse.statusCode == 200 && error == nil {
+                            downloadedImage++
+                            println("success downloading main image - \(i + 1)")
+                            
+                            var convertedImage: ServerUIImage = ServerUIImage(data: data)!
+                            convertedImage.uid = self.productModel.imageIds[i]
+                            self.productModel.editedImage[i] = convertedImage
+                            
+                            var productMainImagesModel: ProductMainImagesModel = ProductMainImagesModel(image: UIImage(data: data,scale:1.0)!, imageName: self.productModel.imageIds[i], imageStatus: true, imageFailed: false)
+                            self.productModel.mainImagesName.append(self.productModel.imageIds[i])
+                            if self.productModel.productMainImagesModel.count == 0 {
+                                self.productModel.productMainImagesModel.append(productMainImagesModel)
+                            } else {
+                                self.productModel.productMainImagesModel.insert(productMainImagesModel, atIndex: self.productModel.productMainImagesModel.count)
+                            }
+                            
+                            if downloadedImage == self.productModel.imageUrls.count {
+                                self.downloadCombinationsImages()
+                            }
                         } else {
-                            self.productModel.productMainImagesModel.insert(productMainImagesModel, atIndex: self.productModel.productMainImagesModel.count)
+                            self.showAlertDownloadFail()
                         }
-                        
-                        if downloadedImage == self.productModel.imageUrls.count {
-                            self.downloadCombinationsImages()
-                        }
-                    } else {
-                        self.showAlertDownloadFail()
                     }
             })
         }
@@ -583,7 +583,6 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         cell.selectionStyle = .None
         
         if indexPath.section == 0 {
-            println(self.detailNames[indexPath.row])
             cell.itemNameLabel.text = self.detailNames[indexPath.row]
             if self.detailValues[indexPath.row] == "" {
                 cell.itemValueLabel.text = "-"
