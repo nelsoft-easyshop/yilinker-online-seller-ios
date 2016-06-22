@@ -45,7 +45,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         
         // Set navigation bar title
         self.title = Constants.ViewControllersTitleString.attributeCombination
-        //self.footerView()
+        self.footerView()
         self.backButton()
         self.registerCell()
         /*
