@@ -339,9 +339,15 @@ class ChangeBankAccountViewController: UIViewController, UICollectionViewDelegat
                 
                 self.cellCount = self.bankAccountModel.account_name.count
                 
+                
                 for i in 0..<self.bankAccountModel.account_name.count {
+                    if self.bankAccountModel.account_name.count == 1 {
+                        self.selectedBankId = self.bankAccountModel.bank_account_id[i]
+                    }
+                    
                     if self.bankAccountModel.is_default[i] {
                         self.defaultBank = i
+                        self.selectedBankId = self.bankAccountModel.bank_account_id[i]
                     }
                 }
             } else {
