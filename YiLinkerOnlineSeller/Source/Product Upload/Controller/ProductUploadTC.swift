@@ -647,7 +647,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     
     func back() {
         if self.productModel.name != "" {
-            if ProductUploadCombination.draft && self.isDraft == false {
+            if (ProductUploadCombination.draft && self.isDraft == false) && self.uploadType != UploadType.EditProduct {
                 self.uploadType = UploadType.Draft
                 self.draftModal()
             } else {
