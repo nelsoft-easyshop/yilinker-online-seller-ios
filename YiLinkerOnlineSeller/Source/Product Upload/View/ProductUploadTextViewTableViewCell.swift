@@ -17,6 +17,8 @@ struct ProductUploadTextViewTableViewCellConstant {
 // ProductUploadTextViewTableViewCell delegate method
 protocol ProductUploadTextViewTableViewCellDelegate {
     func productUploadTextViewTableViewCell(textFieldDidChange text: String, cell: ProductUploadTextViewTableViewCell, textFieldType: ProductTextFieldType)
+    func productUploadTextViewTableViewCell(textFieldDidBeginEditing text: String, cell: ProductUploadTextViewTableViewCell, textFieldType: ProductTextFieldType)
+    func productUploadTextViewTableViewCell(textFieldDidEndEditing text: String, cell: ProductUploadTextViewTableViewCell, textFieldType: ProductTextFieldType)
 }
 
 class ProductUploadTextViewTableViewCell: UITableViewCell, UITextViewDelegate {
@@ -53,6 +55,14 @@ class ProductUploadTextViewTableViewCell: UITableViewCell, UITextViewDelegate {
     // Textfield action methods
     func textViewDidChange(textView: UITextView) {
         self.delegate!.productUploadTextViewTableViewCell(textFieldDidChange: textView.text, cell: self, textFieldType: self.textFieldType!)
+    }
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        self.delegate!.productUploadTextViewTableViewCell(textFieldDidBeginEditing: textView.text, cell: self, textFieldType: self.textFieldType!)
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        self.delegate!.productUploadTextViewTableViewCell(textFieldDidEndEditing: textView.text, cell: self, textFieldType: self.textFieldType!)
     }
     
     // MARK: Textview delegate method
