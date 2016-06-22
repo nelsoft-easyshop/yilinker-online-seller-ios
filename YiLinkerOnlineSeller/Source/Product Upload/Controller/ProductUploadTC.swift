@@ -722,8 +722,42 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             }
             
             if !isUploading {
-                self.productIsDraft = true
-                self.fireUploadProduct()
+                var count: Int = 0
+                if self.uploadType == UploadType.EditProduct {
+                    count = self.productModel.editedImage.count
+                } else {
+                    count = self.productModel.images.count
+                }
+                
+                // Error validation, catch error if any of the required textfield is empty
+                if count == 1 {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.insertOneImage, title: ProductUploadStrings.incompleteProductDetails)
+                } else if self.productModel.name == "" {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.productNameRequired, title: ProductUploadStrings.incompleteProductDetails)
+                } else if self.productModel.shortDescription == "" {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.shortDescriptionRquired, title: ProductUploadStrings.incompleteProductDetails)
+                } else if self.productModel.completeDescription == "" {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.completeRequired, title: ProductUploadStrings.incompleteProductDetails)
+                } else if self.productModel.category.name == "" {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.categoryRequired, title: ProductUploadStrings.incompleteProductDetails)
+                } else if self.productModel.condition == "" {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.conditionRequired, title: ProductUploadStrings.incompleteProductDetails)
+                }  else if self.productModel.sku == "" && self.productModel.validCombinations.count == 0 {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.skuRequried, title: ProductUploadStrings.incompleteProductDetails)
+                } else if self.productModel.length == "" && self.productModel.validCombinations.count == 0 {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.lengthRequried, title: ProductUploadStrings.incompleteProductDetails)
+                } else if self.productModel.weigth == "" && self.productModel.validCombinations.count == 0  {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.weightRequried, title: ProductUploadStrings.incompleteProductDetails)
+                } else if self.productModel.width == "" && self.productModel.validCombinations.count == 0 {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.widthRequried, title: ProductUploadStrings.incompleteProductDetails)
+                } else if self.productModel.height == "" && self.productModel.validCombinations.count == 0 {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.heightRequried, title: ProductUploadStrings.incompleteProductDetails)
+                } else if self.primaryPhoto == "" {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRIMARY_PHOTO_LOCALIZE_KEY"), title: ProductUploadStrings.incompleteProductDetails)
+                } else {
+                    self.productIsDraft = true
+                    self.fireUploadProduct()
+                }
             }
         }))
         
@@ -1138,11 +1172,15 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     
     func productUploadTextViewTableViewCell(textFieldDidChange text: String, cell: ProductUploadTextViewTableViewCell, textFieldType: ProductTextFieldType) {
         if textFieldType ==  ProductTextFieldType.ProductShortDescription {
-            self.productShortDescription = text
-            self.productModel.shortDescription = self.productShortDescription
+            if cell.productUploadTextView.textColor == UIColor.blackColor() {
+                self.productShortDescription = text
+                self.productModel.shortDescription = self.productShortDescription
+            }
         } else if textFieldType ==  ProductTextFieldType.ProductCompleteDescription {
-            self.productCompleteDescription = text
-            self.productModel.completeDescription = self.productCompleteDescription
+            if cell.productUploadTextView.textColor == UIColor.blackColor() {
+                self.productCompleteDescription = text
+                self.productModel.completeDescription = self.productCompleteDescription
+            }
         }
     }
     
@@ -1586,7 +1624,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     func fireUploadProduct() {
         //self.showHUD()
         
-        if self.uploadType == UploadType.NewProduct {
+        if self.uploadType == UploadType.NewProduct || self.uploadType == UploadType.Draft {
             if self.productModel.images.count-1 == self.productImagesName.count {
                 self.productImages = self.getProductImages(self.productModel.images.count)
             }
