@@ -68,5 +68,20 @@ extension ProductCombination2TableViewCell: UITextFieldDelegate {
         
     }
     
+    func textField(textField: UITextField,shouldChangeCharactersInRange range: NSRange,replacementString string: String) -> Bool {
+       
+        let countdots = textField.text.componentsSeparatedByString(".").count - 1
+        if countdots > 0 && string == "." {
+            return false
+        }
+        
+//        let decimalPlaces = textField.text.componentsSeparatedByString(".").count + 2
+//        if decimalPlaces > 0 {
+//            return false
+//        }
+        
+        return true
+    }
+    
 }
 

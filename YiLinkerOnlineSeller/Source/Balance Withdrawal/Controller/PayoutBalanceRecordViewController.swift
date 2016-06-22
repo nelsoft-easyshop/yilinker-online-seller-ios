@@ -66,7 +66,7 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
         super.viewDidAppear(animated)
         
         self.showHUD()
-        fireGetWithdrawalBalance(self.formatDateToString(self.startDate, type: .Key), endDate: self.formatDateToString(self.endDate.addDays(1), type: .Key))
+        fireGetWithdrawalBalance(self.formatDateToString(self.startDate, type: .Key), endDate: self.formatDateToString(self.endDate, type: .Key))
     }
     
     // MARK: - Functions
@@ -266,6 +266,8 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
     func fireGetWithdrawalBalance(startDate: String, endDate: String) {
         if Reachability.isConnectedToNetwork() {
             let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "dateFrom": startDate, "dateTo": endDate, "page": "", "perPage": ""]
+            println(APIAtlas.getBalanceRecordDetails)
+            println(parameters)
             WebServiceManager.fireGetBalanceRecordRequestWithUrl(APIAtlas.getBalanceRecordDetails, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
                 self.hud?.hidden = true
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -307,7 +309,7 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
             WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.loginUrl, actionHandler: { (successful, responseObject, RequestErrorType) -> Void in
                 self.hud?.hide(true)
                 if successful {
-                    self.fireGetWithdrawalBalance(self.formatDateToString(self.startDate, type: .Key), endDate: self.formatDateToString(self.endDate.addDays(1), type: .Key))
+                    self.fireGetWithdrawalBalance(self.formatDateToString(self.startDate, type: .Key), endDate: self.formatDateToString(self.endDate, type: .Key))
                 } else {
                     //Forcing user to logout.
                     UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
