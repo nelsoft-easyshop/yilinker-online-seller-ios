@@ -208,9 +208,10 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             return cell
         } else if indexPath.section == 1 {
             // Product Details - Product name, short and complete description
+            let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            
             if indexPath.row == 0 {
-                let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
-                cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = true
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.productName
@@ -267,8 +268,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 
                 return cell
             } else {
-                let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
-                cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = true
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.youtubeUrl
@@ -285,9 +284,10 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             }
         }  else if indexPath.section == 2 {
             // Product categories, condition, sku and product group
+            let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            
             if indexPath.row == 0 {
-                let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
-                cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = self.checkIfSeller()
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.category
@@ -306,8 +306,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 
                 return cell
             } else {
-                let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
-                cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = self.checkIfSeller()
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.shippingCategory
@@ -327,9 +325,9 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 return cell
             }
         } else if indexPath.section == 3 {
+            let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             if indexPath.row == 0 {
-                let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
-                cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = self.checkIfSeller()
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.brand
@@ -347,7 +345,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 
                 return cell
             } else if indexPath.row == 1 {
-                let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = self.checkIfSeller()
                 
@@ -378,7 +375,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 
                 return cell
             } else {
-                let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = self.checkIfSeller()
                
