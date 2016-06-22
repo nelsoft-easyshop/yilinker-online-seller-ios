@@ -495,7 +495,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
             self.showHUD()
             
             WebServiceManager.fireUpdateProductStatusRequestWithUrl(APIAtlas.managementUpdateProductStatus, productId: selectedItems.description, status: status, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
-
+                println("update status response > ")
                 if successful {
                     self.selectedItems = []
                     self.updateSelectedItems(0, selected: false)
@@ -512,7 +512,8 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
 //                        if data == NSArray() {
 //                            self.emptyLabel.hidden = false
 //                        } else {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String, title: AlertStrings.failed)
+                        let message = ParseHelper.string(responseObject, key: "message", defaultValue: "")
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: message, title: AlertStrings.failed)
 //                        }
                     } else if requestErrorType == .AccessTokenExpired {
                         self.requestRefreshToken("update", status: status)
@@ -630,15 +631,10 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             if selectedIndex == 5 {
                 cell.statusLabel.hidden = true
             } else { // adjust labels
-//                if self.productModel.products[indexPath.row].status == Status.newUpload {
-//                    cell.statusLabel.hidden = true
-//                    cell.subTitleLabel.hidden = false
-//                } else {
-                    cell.statusLabel.hidden = false
-                    cell.subTitleLabel.hidden = false
-                    cell.adjustLabels()
-                    cell.setCountriesAndLanguages(self.productModel.products[indexPath.row])
-//                }
+                cell.statusLabel.hidden = false
+                cell.subTitleLabel.hidden = false
+                cell.adjustLabels()
+                cell.setCountriesAndLanguages(self.productModel.products[indexPath.row])
             }
             
             if SessionManager.isReseller() {
@@ -675,13 +671,20 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if SessionManager.isReseller() && self.productModel.products[indexPath.row].status == 0 {
-            return 0.0
-        }
         
         if self.selectedIndex == 0 || self.selectedIndex == 5 {
+            
+            if SessionManager.isReseller() {
+                if self.productModel.products[indexPath.row].status == Status.active || self.productModel.products[indexPath.row].status == Status.inactive {
+                    return 88.0
+                } else {
+                    return 0.0
+                }
+            }
+            
             return 88.0
         }
+        
         return 80.0
     }
     
