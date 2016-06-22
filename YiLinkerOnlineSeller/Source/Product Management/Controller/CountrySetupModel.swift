@@ -214,10 +214,10 @@ class CSProductUnitModel {
     var price: Int = 0
     var discountedPrice: String = ""
     var appliedBaseDiscountPrice: String = ""
-    var appliedDiscountPrice: Int = 0
+    var appliedDiscountPrice: Double = 0.0
     //    var promoTypeId = nil
     //    var promoTypeName = nil
-    var discount: Int = 0
+    var discount: Double = 0.0
     var dateCreated: DateCreatedElement!
     var dateLastModified: DateLastModifiedElement!
     var status: Int = 0
@@ -250,10 +250,14 @@ class CSProductUnitModel {
             model.price = ParseHelper.int(dictionary, key: "price", defaultValue: 0)
             model.discountedPrice = ParseHelper.string(dictionary, key: "discountedPrice", defaultValue: "")
             model.appliedBaseDiscountPrice = ParseHelper.string(dictionary, key: "appliedBaseDiscountPrice", defaultValue: "")
-            model.appliedDiscountPrice = ParseHelper.int(dictionary, key: "appliedDiscountPrice", defaultValue: 0)
+//            model.appliedDiscountPrice = ParseHelper.int(dictionary, key: "appliedDiscountPrice", defaultValue: 0)
+            model.appliedDiscountPrice = ParseHelper.double(dictionary, key: "appliedDiscountPrice", defaultValue: 0.0)
+//            println(model.appliedDiscountPrice)
 //            model.promoTypeId = nil
 //            model.promoTypeName = nil
-            model.discount = ParseHelper.int(dictionary, key: "discount", defaultValue: 0)
+//            model.discount = ParseHelper.int(dictionary, key: "discount", defaultValue: 0)
+            model.discount = ParseHelper.double(dictionary, key: "discount", defaultValue: 0.0)
+//            println(model.discount)
             // dateCreated
             if let dateCreatedData: AnyObject = dictionary["dateCreated"] {
                 var element: DateCreatedElement

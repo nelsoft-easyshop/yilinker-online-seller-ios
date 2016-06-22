@@ -61,11 +61,31 @@ extension ProductCombination2TableViewCell: UITextFieldDelegate {
         
         if textField == self.originalTextField || textField == self.discountTextField {
 //            self.finalPriceTextField.text = "\(self.originalTextField.text.doubleValue * self.discountTextField.text.doubleValue / 100)"
-            self.finalPriceTextField.text = "\(self.originalTextField.text.doubleValue - (self.originalTextField.text.doubleValue * (self.discountTextField.text.doubleValue / 100)))"
+            self.finalPriceTextField.text = "\(self.originalTextField.text.doubleValue - (self.originalTextField.text.doubleValue * (self.discountTextField.text.doubleValue / 100)))".formatToTwoDecimal()
         }
         
         delegate?.getText(self, section: self.tag, text: textField.text, id: textField.tag)
         
+    }
+    
+    func textField(textField: UITextField,shouldChangeCharactersInRange range: NSRange,replacementString string: String) -> Bool {
+       
+        // decimal point
+        let countdots = textField.text.componentsSeparatedByString(".").count - 1
+        if countdots > 0 && string == "." {
+            return false
+        }
+        
+        // decimal places
+        let numbers = textField.text.componentsSeparatedByString(".")
+        if numbers.count == 2 {
+            let decimanPlaces: String = numbers[1]
+            if count(decimanPlaces) == 2 && string.toInt() != nil {
+                return false
+            }
+        }
+        
+        return true
     }
     
 }

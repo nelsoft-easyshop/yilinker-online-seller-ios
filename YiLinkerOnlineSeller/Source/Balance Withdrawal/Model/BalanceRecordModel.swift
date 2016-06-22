@@ -71,7 +71,7 @@ class BalanceRecordModel: NSObject {
         var bankAccount: String = ""
         
         if dictionary.isKindOfClass(NSDictionary) {
-            println(dictionary)
+
             if let data = dictionary["data"] as? NSDictionary {
                 availableBalance = ParseHelper.string(data, key: "availableBalance", defaultValue: "0.00")
                 currencyCode = ParseHelper.string(data, key: "currencyCode", defaultValue: "₱")
