@@ -22,6 +22,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     var productShortDescription: String = ""
     var productCompleteDescription: String = ""
     var productYoutubeVideoUrl: String = ""
+    var productId: String = ""
     
     // Product Details
     var productCategory: String = ""
@@ -64,6 +65,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             self.title = "Edit Product"
             self.productImagesCount = self.productModel.editedImage.count
             self.productImagesName = self.productModel.imageIds
+            self.productId = self.productModel.uid
         } else {
             self.title = "Product Upload"
         }
@@ -647,7 +649,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     
     func back() {
         if self.productModel.name != "" {
-            if ProductUploadCombination.draft && self.isDraft == false {
+            if (ProductUploadCombination.draft && self.isDraft == false) && self.uploadType != UploadType.EditProduct {
                 self.uploadType = UploadType.Draft
                 self.draftModal()
             } else {
@@ -1647,6 +1649,10 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             parameters["isDraft"] = self.productIsDraft
         } else {
             url = APIAtlas.uploadProductEditUrl
+        }
+        
+        if self.productId != "" {
+            parameters["productId"] = self.productId
         }
         
         if self.productModel.shippingCategories.uid != 0 && self.productModel.youtubeVideoUrl != "" && self.productModel.brand.name == "" {
