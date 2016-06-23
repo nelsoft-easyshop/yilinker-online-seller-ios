@@ -202,17 +202,17 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             self.next()
             showAlert(title: self.error, message: self.streetNameRequired)
             index2 =  1002
-        } else if index == 6 || self.addressModel.provinceId == -1 {
+        } else if index == 6 || self.addressModel.province == self.selectProvince {
             self.activeTextField = index - 1
             self.next()
             showAlert(title: self.error, message: self.provinceRequired)
             index2 =  1002
-        } else if index == 7 || self.addressModel.cityId == -1 {
+        } else if index == 7 || self.addressModel.city == self.selectCity {
             self.activeTextField = index - 1
             self.next()
             showAlert(title: self.error, message: self.cityRequired)
             index2 =  1002
-        } else if index == 8 || self.addressModel.barangayId == -1 {
+        } else if index == 8 || self.addressModel.barangay == self.selectBarangay {
             self.activeTextField = index - 1
             self.next()
             showAlert(title: self.error, message: self.barangayRequired)
