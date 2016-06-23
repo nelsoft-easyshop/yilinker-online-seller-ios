@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSource, ProductUploadUploadImageTVCDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadFooterViewDelegate, ProductUploadBrandViewControllerDelegate, UzysAssetsPickerControllerDelegate, ProductUploadProductGroupTVCDelegate, ProductUploadQuantityTableViewCellDelegate, SuccessUploadViewControllerDelegate, ProductUploadProductGroupTextFieldTableViewCellDelegate {
+class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSource, ProductUploadUploadImageTVCDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadFooterViewDelegate, ProductUploadBrandViewControllerDelegate, UzysAssetsPickerControllerDelegate, ProductUploadProductGroupTVCDelegate, ProductUploadQuantityTableViewCellDelegate, SuccessUploadViewControllerDelegate, ProductUploadProductGroupTextFieldTableViewCellDelegate, ProductUploadCategoryViewControllerDelegate {
     
     // Variables// Models
     var conditions: [ConditionModel] = []
@@ -53,6 +53,9 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     var productImages: String = ""
     var productImagesName: [String] = []
     var isCombinationAvailable: Bool = false
+    
+    var selectedProductGroupIds: [Int] = []
+    var selectedProductGroupName: [String] = []
     
     // Tableview Cell
     var cellImage: ProductUploadImageTVC?
@@ -411,6 +414,9 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                     cell.attributes.removeAll(keepCapacity: false)
                     for i in 0..<self.productModel.productGroups.count {
                         cell.attributes.append(self.productModel.productGroups[i].name)
+                        if !contains(self.selectedProductGroupName, self.productModel.productGroups[i].name) {
+                            self.selectedProductGroupName.append(self.productModel.productGroups[i].name)
+                        }
                     }
                 } else {
                     cell.attributes.removeAll(keepCapacity: false)
@@ -1251,6 +1257,33 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         }
     }
     
+    func productUploadAddProductGroup() {
+        println("Add product group")
+        let productUploadCategoryViewController: ProductUploadCategoryViewController = ProductUploadCategoryViewController(nibName: "ProductUploadCategoryViewController", bundle: nil)
+        productUploadCategoryViewController.pageTitle = ProductUploadStrings.selectCategory
+        productUploadCategoryViewController.userType = UserType.Seller
+        productUploadCategoryViewController.productCategory = UploadProduct.ProductGroups
+        productUploadCategoryViewController.selectedProductGroups = self.productModel.productGroups
+        productUploadCategoryViewController.delegate = self
+        self.navigationController!.pushViewController(productUploadCategoryViewController, animated: true)
+    }
+    
+    // MARK: -
+    // MARK: - ProductUploadCategoryViewController 
+    
+    func productUploadCategorySelectedProductGroup(productGroups: [String], productGroupId: [Int]) {
+        self.selectedProductGroupIds = productGroupId
+        for(index, name) in enumerate(productGroups) {
+            let product: ConditionModel = ConditionModel(uid: productGroupId[index], name: name)
+            if !contains(self.selectedProductGroupName, name) {
+                self.productModel.productGroups.append(product)
+            }
+        }
+        
+        let indexPath: NSIndexPath = NSIndexPath(forRow: 0, inSection: 4)
+        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+    }
+    
     // MARK: -
     // MARK: - ProductUploadFooterView Delegate Method
     
@@ -1323,6 +1356,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - ProductUploadProductGroupTVC Delegate Method
     
     func productUploadProductGroupTVC(didTapCell cell: ProductUploadProductGroupTVC, indexPath: NSIndexPath) {
+        self.selectedProductGroupName.removeAtIndex(indexPath.row)
         self.productModel.productGroups.removeAtIndex(indexPath.row)
         self.reloadTableViewRowInSection(4, row: 0)
     }

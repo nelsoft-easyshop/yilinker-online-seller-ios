@@ -72,7 +72,7 @@ class ProductUploadProductGroupTVC: UITableViewCell, UITextFieldDelegate {
         let gestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapRecognizer:")
         cell.userInteractionEnabled = true
         cell.addGestureRecognizer(gestureRecognizer)
-        cell.deleteButton.addGestureRecognizer(gestureRecognizer)
+        //cell.deleteButton.addGestureRecognizer(gestureRecognizer)
         return cell
     }
     
@@ -82,11 +82,11 @@ class ProductUploadProductGroupTVC: UITableViewCell, UITextFieldDelegate {
     
     // MARK: Cell action
     func tapRecognizer(sender: UITapGestureRecognizer) {
-        //let cell: ProductUploadProductGroupCVC = sender.view as! ProductUploadProductGroupCVC
+        let cell: ProductUploadProductGroupCVC = sender.view as! ProductUploadProductGroupCVC
         var isValidToDelete: Bool = true
         var combinationNumber: Int = 0
         
-        let attributeValue: String = self.cellProuctGroup!.attributeLabel.text!
+        let attributeValue: String = cell.attributeLabel.text!
         
         if self.productModel != nil {
             for (index, combination) in enumerate(self.productModel!.validCombinations){
@@ -105,7 +105,7 @@ class ProductUploadProductGroupTVC: UITableViewCell, UITextFieldDelegate {
         }
         
         if isValidToDelete {
-            let indexPath: NSIndexPath = self.collectionView.indexPathForCell(self.cellProuctGroup!)!
+            let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
             self.delegate!.productUploadProductGroupTVC(didTapCell: self, indexPath: indexPath)
             self.attributes.removeAtIndex(indexPath.row)
             self.collectionView.deleteItemsAtIndexPaths([indexPath])
@@ -118,7 +118,7 @@ class ProductUploadProductGroupTVC: UITableViewCell, UITextFieldDelegate {
             
             alertController.addAction(cancelAction)
             let OKAction = UIAlertAction(title: Constants.Localized.yes, style: .Default) { (action) in
-                let indexPath: NSIndexPath = self.collectionView.indexPathForCell(self.cellProuctGroup!)!
+                let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
                 self.delegate!.productUploadProductGroupTVC(didTapCell: self, indexPath: indexPath)
                 self.attributes.removeAtIndex(indexPath.row)
                 self.collectionView.deleteItemsAtIndexPaths([indexPath])

@@ -667,7 +667,7 @@ PRODUCT_UPLOAD_CANCEL_LOCALIZE_KEY = "Cancel";
 PRODUCT_UPLOAD_MESSAGE_LOCALIZE_KEY = "Choose image from:";
 PRODUCT_UPLOAD_UPLOADING_PHOTO_LOCALIZE_KEY = "Product images is still uploading.";
 PRODUCT_UPLOAD_OPS_PHOTO_LOCALIZE_KEY = "Ooopss!";
-PRODUCT_UPLOAD_PRODUCT_GROUP_TOOLTIP_LOCALIZE_KEY = "You can add new product group by typing the new group and hit the 'DONE' key to add the group";
+PRODUCT_UPLOAD_PRODUCT_GROUP_TOOLTIP_LOCALIZE_KEY = "You can add new product group by typing the new group and hit the 'DONE' key to add the group OR tap the '+' icon to select product groups.";
 PRODUCT_UPLOAD_PRODUCT_GROUP_LOCALIZE_KEY = "Enter product group here";
 PRODUCT_UPLOAD_GROUP_LOCALIZE_KEY = "Product Group";
 

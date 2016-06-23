@@ -19,11 +19,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter product group here" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HF4-RK-Sos">
-                        <rect key="frame" x="8" y="7" width="303" height="30"/>
-                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
-                        <textInputTraits key="textInputTraits"/>
-                    </textField>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You can add new product group by typing the new group and hit the 'DONE' key to add the group " lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="fFe-Lz-OBe">
                         <rect key="frame" x="8" y="44" width="303" height="21"/>
                         <constraints>
@@ -33,19 +28,41 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kMQ-FR-I6i">
+                        <rect key="frame" x="287" y="11" width="22" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="shV-XF-EPc"/>
+                            <constraint firstAttribute="width" constant="22" id="zXL-8Y-5Se"/>
+                        </constraints>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="addProductGroup:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xnk-D5-VKD"/>
+                        </connections>
+                    </button>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter product group here" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HF4-RK-Sos">
+                        <rect key="frame" x="8" y="7" width="271" height="30"/>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="kMQ-FR-I6i" firstAttribute="leading" secondItem="HF4-RK-Sos" secondAttribute="trailing" constant="8" id="05Z-0o-c05"/>
+                    <constraint firstItem="kMQ-FR-I6i" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="2Cz-Sy-869"/>
                     <constraint firstItem="HF4-RK-Sos" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="7aP-09-MOO"/>
-                    <constraint firstAttribute="trailing" secondItem="HF4-RK-Sos" secondAttribute="trailing" constant="9" id="Qgy-Ve-RNc"/>
                     <constraint firstAttribute="bottom" secondItem="fFe-Lz-OBe" secondAttribute="bottom" constant="8.5" id="eMJ-BO-FId"/>
                     <constraint firstAttribute="trailing" secondItem="fFe-Lz-OBe" secondAttribute="trailing" constant="9" id="gCs-iL-NbW"/>
+                    <constraint firstAttribute="trailing" secondItem="kMQ-FR-I6i" secondAttribute="trailing" constant="11" id="iKt-TS-nRP"/>
                     <constraint firstItem="fFe-Lz-OBe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="mmT-Nw-bke"/>
                     <constraint firstItem="fFe-Lz-OBe" firstAttribute="top" secondItem="HF4-RK-Sos" secondAttribute="bottom" constant="7" id="oRf-cS-LMJ"/>
                     <constraint firstItem="HF4-RK-Sos" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="7" id="pWE-ml-AFh"/>
+                    <constraint firstItem="fFe-Lz-OBe" firstAttribute="top" secondItem="kMQ-FR-I6i" secondAttribute="bottom" constant="11" id="qlB-SZ-Sto"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
+                <outlet property="addProductGroupButton" destination="H2p-sc-9uM" id="WYQ-bM-3tx"/>
                 <outlet property="productGroupTextField" destination="HF4-RK-Sos" id="hXT-j3-iY9"/>
                 <outlet property="toolTipLabel" destination="fFe-Lz-OBe" id="eeo-O1-op1"/>
             </connections>
