@@ -365,6 +365,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                                 self.downloadCombinationsImages()
                             }
                         } else {
+                            self.productModel.editedImage = []
                             self.showAlertDownloadFail()
                         }
                     }

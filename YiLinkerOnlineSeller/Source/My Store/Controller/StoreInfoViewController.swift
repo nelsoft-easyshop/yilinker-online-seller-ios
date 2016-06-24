@@ -35,6 +35,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     let qrCode: String = StringHelper.localizedStringWithKey("STORE_INFO_QR_LOCALIZE_KEY")
     let generate: String = StringHelper.localizedStringWithKey("STORE_INFO_GENERATE_LOCALIZE_KEY")
     let generateQRCodeTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_GENERATE_QR_LOCALIZE_KEY")
+    let retryGenerate: String = StringHelper.localizedStringWithKey("STORE_INFO_RETRY_GENERATE_LOCALIZE_KEY")
+    let cannotGenerate: String = StringHelper.localizedStringWithKey("STORE_INFO_CANNOT_GENERATE_LOCALIZE_KEY")
     let storeAddressTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_STORE_ADDRESS_LOCALIZE_KEY")
     let newAddress: String = StringHelper.localizedStringWithKey("STORE_INFO_NEW_ADDRESS_LOCALIZE_KEY")
     let changeAddress: String = StringHelper.localizedStringWithKey("STORE_INFO_CHANGE_ADDRESS_LOCALIZE_KEY")
@@ -91,6 +93,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     var storeAddressModel: StoreAddressModel?
     
     var referrerCode: String = ""
+    var isFail: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -724,6 +727,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 cell.shareButtonContainerView.hidden = false
                 cell.generateQrButton.hidden = true
                 cell.shareButtonContainerView.userInteractionEnabled = true
+                cell.cannotGenerateLabel.hidden = true
+                cell.cannotGenerateLabel.text = self.cannotGenerate
                 
                 if let url = NSURL(string: "\(self.qrUrl)") {
                     if let data = NSData(contentsOfURL: url){
@@ -731,6 +736,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                     } else {
                         cell.qrCodeImageView.image = nil
                         cell.qrCodeImageView.backgroundColor = UIColor.lightGrayColor()
+                        cell.cannotGenerateLabel.hidden = false
                     }
                 }
                 
@@ -742,7 +748,13 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.qrCodeLabel.text = self.qrCode
                 cell.generateLabel.text = self.generate
-                cell.generateQRCodeButton.setTitle(self.generateQRCodeTitle, forState: UIControlState.Normal)
+                
+                if self.isFail {
+                    cell.generateQRCodeButton.setTitle(self.retryGenerate, forState: UIControlState.Normal)
+                } else {
+                    cell.generateQRCodeButton.setTitle(self.generateQRCodeTitle, forState: UIControlState.Normal)
+                }
+                
                 cell.delegate = self
                 
                 return cell
@@ -1065,6 +1077,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 } else {
                     self.qrUrl = ""
                 }
+                
                 self.tableView.reloadData()
                 self.dismissView()
                 
@@ -1072,24 +1085,35 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             } else {
                 self.hud?.hide(true)
                 self.dismissView()
+                let indexPath: NSIndexPath = NSIndexPath(forRow: 0, inSection: 2)
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     self.showAlert(self.error, message: errorModel.message)
+                    self.isFail = true
+                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
                 } else if requestErrorType == .AccessTokenExpired {
                     self.fireRefreshToken(StoreInfoType.GenerateQR)
                 } else if requestErrorType == .PageNotFound {
                     //Page not found
                     Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                    self.isFail = true
+                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
                 } else if requestErrorType == .NoInternetConnection {
                     //No internet connection
                     Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    self.isFail = true
+                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
                 } else if requestErrorType == .RequestTimeOut {
                     //Request timeout
                     Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    self.isFail = true
+                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
                 } else if requestErrorType == .UnRecognizeError {
                     //Unhandled error
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                    self.isFail = true
+                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
                 }
             }
         })

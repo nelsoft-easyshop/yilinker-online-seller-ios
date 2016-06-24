@@ -16,12 +16,14 @@ struct ProductUploadProductGroupTextFieldTableViewCellConstant {
 // Delegate
 protocol ProductUploadProductGroupTextFieldTableViewCellDelegate {
     func productUploadTextFieldTableViewCell(textFieldDidChange text: String, cell: ProductUploadProductGroupTextFieldTableViewCell)
+    func productUploadAddProductGroup()
 }
 
 class ProductUploadProductGroupTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var productGroupTextField: UITextField!
     @IBOutlet weak var toolTipLabel: UILabel!
+    @IBOutlet weak var addProductGroupButton: UIView!
     
     var delegate: ProductUploadProductGroupTextFieldTableViewCellDelegate?
     
@@ -42,6 +44,10 @@ class ProductUploadProductGroupTextFieldTableViewCell: UITableViewCell, UITextFi
         self.productGroupTextField.text = ""
         self.productGroupTextField.becomeFirstResponder()
         return true
+    }
+    
+    @IBAction func addProductGroup(sender: UIButton) {
+        self.delegate?.productUploadAddProductGroup()
     }
     
 }
