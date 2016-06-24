@@ -109,10 +109,12 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         super.viewWillAppear(animated)
         customizeNavigationBar()
         loadloadViewsWithDetails()
+        self.title = "Product Details"
         if Reachability.isConnectedToNetwork() {
             if ProductUploadEdit.isPreview {
                 isEditable = true
                 populateDetails()
+                self.title = "Product Preview"
             } else {
                 ProductUploadEdit.combinedImagesDictionary.removeAll(keepCapacity: false)
                 requestProductDetails()
