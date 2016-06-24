@@ -15,6 +15,7 @@
             <string>Panton-SemiBold</string>
             <string>Panton-SemiBold</string>
             <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -77,7 +78,7 @@
                         </connections>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hUY-fC-7fP">
-                        <rect key="frame" x="8" y="186" width="360" height="188"/>
+                        <rect key="frame" x="8" y="199" width="360" height="188"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S1h-kg-wmD" customClass="DynamicRoundedView" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
                                 <rect key="frame" x="135" y="98" width="215" height="36"/>
@@ -293,15 +294,26 @@
                         </constraints>
                         <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </activityIndicatorView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Cannot generate qr code." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MXi-8d-bPI">
+                        <rect key="frame" x="8" y="181" width="352" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="Yzw-hM-gGK"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="12"/>
+                        <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="NhT-EN-VS8" firstAttribute="top" secondItem="aki-aG-hkV" secondAttribute="bottom" constant="8" id="0TT-qZ-NBg"/>
                     <constraint firstItem="NhT-EN-VS8" firstAttribute="leading" secondItem="3xV-nq-Fx5" secondAttribute="leadingMargin" id="1WJ-40-rKK"/>
+                    <constraint firstItem="hUY-fC-7fP" firstAttribute="top" secondItem="MXi-8d-bPI" secondAttribute="bottom" constant="3" id="2qq-wd-gVd"/>
                     <constraint firstAttribute="trailingMargin" secondItem="vVu-OL-goO" secondAttribute="trailing" constant="1" id="3Kp-hp-fHm"/>
                     <constraint firstAttribute="trailingMargin" secondItem="9AU-gO-DhM" secondAttribute="trailing" constant="8" id="7i5-7G-D49"/>
-                    <constraint firstItem="hUY-fC-7fP" firstAttribute="top" secondItem="vVu-OL-goO" secondAttribute="bottom" constant="49" id="Iya-48-S7z"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="MXi-8d-bPI" secondAttribute="trailing" constant="8" id="Fra-qp-U2E"/>
                     <constraint firstItem="r9F-YC-lLW" firstAttribute="top" secondItem="NhT-EN-VS8" secondAttribute="bottom" constant="8" id="PBM-dZ-8Xf"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Vz8-zY-XWi" secondAttribute="trailing" constant="1" id="PpL-WD-1qp"/>
+                    <constraint firstItem="MXi-8d-bPI" firstAttribute="top" secondItem="Vz8-zY-XWi" secondAttribute="bottom" constant="8" id="Pwx-a3-1qk"/>
                     <constraint firstItem="hUY-fC-7fP" firstAttribute="leading" secondItem="3xV-nq-Fx5" secondAttribute="leadingMargin" id="VE1-vh-EUd"/>
                     <constraint firstItem="r9F-YC-lLW" firstAttribute="leading" secondItem="3xV-nq-Fx5" secondAttribute="leadingMargin" constant="6" id="X99-yP-zgY"/>
                     <constraint firstItem="aki-aG-hkV" firstAttribute="leading" secondItem="3xV-nq-Fx5" secondAttribute="leadingMargin" constant="-71" id="cSp-ZU-Vcf"/>
@@ -309,6 +321,7 @@
                     <constraint firstAttribute="trailingMargin" secondItem="r9F-YC-lLW" secondAttribute="trailing" constant="-63" id="i5M-aL-R3y"/>
                     <constraint firstItem="Vz8-zY-XWi" firstAttribute="leading" secondItem="3xV-nq-Fx5" secondAttribute="leadingMargin" id="jYI-es-7yw"/>
                     <constraint firstItem="vVu-OL-goO" firstAttribute="top" secondItem="r9F-YC-lLW" secondAttribute="bottom" constant="6" id="lYs-4s-UyT"/>
+                    <constraint firstItem="MXi-8d-bPI" firstAttribute="leading" secondItem="3xV-nq-Fx5" secondAttribute="leadingMargin" id="nDM-ba-iwH"/>
                     <constraint firstItem="vVu-OL-goO" firstAttribute="leading" secondItem="3xV-nq-Fx5" secondAttribute="leadingMargin" id="pEc-oa-fpK"/>
                     <constraint firstAttribute="trailingMargin" secondItem="aki-aG-hkV" secondAttribute="trailing" constant="-69" id="pLl-Ln-enR"/>
                     <constraint firstItem="aki-aG-hkV" firstAttribute="top" secondItem="3xV-nq-Fx5" secondAttribute="topMargin" constant="-8" id="tYv-Mk-lk8"/>
@@ -318,6 +331,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="activityIndicatorView" destination="9AU-gO-DhM" id="auX-lJ-EUi"/>
+                <outlet property="cannotGenerateLabel" destination="MXi-8d-bPI" id="wbd-yp-cDH"/>
                 <outlet property="emailButton" destination="88o-9z-FrP" id="5za-Hh-CUf"/>
                 <outlet property="facebookButton" destination="o4g-oo-oQW" id="kOA-Nc-VLp"/>
                 <outlet property="generateQrButton" destination="Vz8-zY-XWi" id="1up-nv-oS4"/>
@@ -326,7 +340,6 @@
                 <outlet property="qrCodeImageView" destination="2d1-at-m0P" id="obF-ec-YTD"/>
                 <outlet property="qrCodeLabel" destination="NhT-EN-VS8" id="S3O-PE-YBp"/>
                 <outlet property="shareButtonContainerView" destination="hUY-fC-7fP" id="Ta0-2k-chL"/>
-                <outlet property="shareContainerVerticalSpaceConstraint" destination="Iya-48-S7z" id="xDu-NN-shZ"/>
                 <outlet property="shareWithEmailLabel" destination="MEO-So-kG9" id="USV-4H-Ajt"/>
                 <outlet property="shareWithFbLabel" destination="mKJ-pp-7Qy" id="r7a-Eb-9np"/>
                 <outlet property="shareWithGoogleLabel" destination="T1g-z9-mUZ" id="2Pf-ov-igb"/>

@@ -23,6 +23,8 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchTextField: UITextField!
     
+    @IBOutlet weak var topConstraint: NSLayoutConstraint!
+    
     // Models
     var categories: [CategoryModel] = []
     var shippingCategories: [ConditionModel] = []
@@ -64,6 +66,8 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         } else {
             self.fireProductGroup()
             self.searchTextField.hidden = true
+            println(self.topConstraint)
+            self.topConstraint.constant = -30
             self.title = "Select Product Groups"
         }
     }

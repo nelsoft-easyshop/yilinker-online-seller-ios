@@ -51,6 +51,7 @@ class StoreInfoQrCodeTableViewCell: UITableViewCell {
     @IBOutlet var shareWithFbLabel: UILabel!
     @IBOutlet var shareWithGoogleLabel: UILabel!
     @IBOutlet var shareWithTwitterLabel: UILabel!
+    @IBOutlet weak var cannotGenerateLabel: UILabel!
     
     @IBOutlet weak var shareContainerVerticalSpaceConstraint: NSLayoutConstraint!
     //Global variables declarations
