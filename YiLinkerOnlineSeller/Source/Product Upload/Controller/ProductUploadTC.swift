@@ -654,7 +654,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - Navigation bar back button action
     
     func back() {
-        if self.productModel.name != "" {
+        if self.productModel.name != "" ||  self.productModel.name == ""{
             if (ProductUploadCombination.draft && self.isDraft == false) && self.uploadType != UploadType.EditProduct {
                 self.uploadType = UploadType.Draft
                 self.draftModal()
@@ -733,12 +733,11 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                     count = self.productModel.images.count
                 }
                 
+                /*
                 // Error validation, catch error if any of the required textfield is empty
                 if count == 1 {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.insertOneImage, title: ProductUploadStrings.incompleteProductDetails)
-                } else if self.productModel.name == "" {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.productNameRequired, title: ProductUploadStrings.incompleteProductDetails)
-                } else if self.productModel.shortDescription == "" {
+                } else  else if self.productModel.shortDescription == "" {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.shortDescriptionRquired, title: ProductUploadStrings.incompleteProductDetails)
                 } else if self.productModel.completeDescription == "" {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.completeRequired, title: ProductUploadStrings.incompleteProductDetails)
@@ -758,6 +757,10 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.heightRequried, title: ProductUploadStrings.incompleteProductDetails)
                 } else if self.primaryPhoto == "" {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRIMARY_PHOTO_LOCALIZE_KEY"), title: ProductUploadStrings.incompleteProductDetails)
+                } */
+                
+                if self.productModel.name == "" {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.productNameRequired, title: ProductUploadStrings.incompleteProductDetails)
                 } else {
                     self.productIsDraft = true
                     self.fireUploadProduct()
@@ -1103,7 +1106,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         self.productModel.mainImagesName.removeAtIndex(indexPath.row)
         self.productModel.productMainImagesModel.removeAtIndex(indexPath.row)
         self.productImagesCount--
-        if self.uploadType == UploadType.NewProduct {
+        if self.uploadType == UploadType.NewProduct || self.uploadType == UploadType.Draft {
             self.productModel.images.removeAtIndex(indexPath.row)
             if self.primaryPhoto == "\(indexPath.row)" {
                 self.primaryPhoto = ""
@@ -1530,12 +1533,26 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         
         if self.productModel.validCombinations.count == 0 {
             let dictionary: NSMutableDictionary = NSMutableDictionary()
-            dictionary["sku"] = self.productSKU
-            dictionary["weight"] = (self.productWeight as NSString).doubleValue
-            dictionary["length"] = (self.productLength as NSString).doubleValue
-            dictionary["width"] = (self.productWidth as NSString).doubleValue
-            dictionary["height"] = (self.productHeight as NSString).doubleValue
-            dictionary["isActive"] = false
+            if self.productWeight != "" {
+                dictionary["weight"] = (self.productWeight as NSString).doubleValue
+            }
+            
+            if self.productLength != "" {
+                dictionary["length"] = (self.productLength as NSString).doubleValue
+            }
+            
+            if self.productWidth != "" {
+                dictionary["width"] = (self.productWidth as NSString).doubleValue
+            }
+            
+            if self.productHeight != "" {
+                dictionary["height"] = (self.productHeight as NSString).doubleValue
+            }
+            
+            if self.productSKU != "" {
+                dictionary["sku"] = self.productSKU
+                dictionary["isActive"] = false
+            }
             
             productAttributes.append(dictionary)
         }
@@ -1672,10 +1689,16 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             "shortDescription" : self.productModel.shortDescription,
             "description" : self.productModel.completeDescription,
             "productConditionId" : self.productModel.condition.uid,
-            "productCategoryId" : self.productModel.category.uid,
             "productGroups" : "\(self.getProductGroups())",
-            "productImages" : self.productImages,
-            "productUnits" : self.getProductAttributes()]
+            "productImages" : self.productImages]
+        
+        if self.getProductAttributes() != "[{}]" {
+            parameters["productUnits"] = self.getProductAttributes()
+        }
+        
+        if self.productModel.category.uid != 0 {
+            parameters["productCategoryId"] = self.productModel.category.uid
+        }
         
         var url: String = ""
         if self.uploadType == UploadType.NewProduct || self.uploadType == UploadType.Draft {
