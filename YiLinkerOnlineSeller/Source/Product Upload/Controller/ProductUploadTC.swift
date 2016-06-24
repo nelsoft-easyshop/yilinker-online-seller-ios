@@ -1020,7 +1020,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         let imageLimit: Int = maxCount - count
         picker.delegate = self
         picker.maximumNumberOfSelectionVideo = 0
-        picker.maximumNumberOfSelectionPhoto = 100
+        picker.maximumNumberOfSelectionPhoto = 10
         UzysAssetsPickerController.setUpAppearanceConfig(self.uzyConfig())
         self.presentViewController(picker, animated: true, completion: nil)
     }
@@ -1089,12 +1089,16 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     
     func productUploadUploadImageTableViewCell(didSelecteRowAtIndexPath indexPath: NSIndexPath, cell: ProductUploadImageTVC) {
         if self.uploadType == UploadType.NewProduct || self.uploadType == UploadType.Draft {
-            if indexPath.row == self.productModel.images.count - 1 && self.productModel.images.count <= 5 {
+            if indexPath.row == self.productModel.images.count - 1 && self.productModel.images.count <= 10 {
                 self.showUzysPicker(self.productModel.images.count)
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage:"", title: "You can only upload a maximun of ten(10) images.")
             }
         } else {
-            if indexPath.row == self.productModel.editedImage.count - 1 && self.productModel.editedImage.count <= 5 {
+            if indexPath.row == self.productModel.editedImage.count - 1 && self.productModel.editedImage.count <= 10 {
                 self.showUzysPicker(self.productModel.editedImage.count)
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage:"", title: "You can only upload a maximun of ten(10) images.")
             }
         }
     }
