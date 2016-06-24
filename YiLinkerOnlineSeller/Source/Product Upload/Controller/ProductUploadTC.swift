@@ -1,4 +1,4 @@
-//
+ //
 //  ProductUploadTC.swift
 //  YiLinkerOnlineSeller
 //
@@ -1085,7 +1085,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - Upload Delegate
     
     func productUploadUploadImageTableViewCell(didSelecteRowAtIndexPath indexPath: NSIndexPath, cell: ProductUploadImageTVC) {
-        if self.uploadType == UploadType.NewProduct {
+        if self.uploadType == UploadType.NewProduct || self.uploadType == UploadType.Draft {
             if indexPath.row == self.productModel.images.count - 1 && self.productModel.images.count <= 5 {
                 self.showUzysPicker(self.productModel.images.count)
             }
@@ -1870,7 +1870,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                                 self.reloadUploadCellCollectionViewData()
                                 
                                 self.productImagesCount++
-                                if self.uploadType == UploadType.NewProduct {
+                                if self.uploadType == UploadType.NewProduct || self.uploadType == UploadType.Draft {
                                     if self.productImagesCount !=  self.productModel.images.count-1 {
                                         self.fireUploadProductMainImages(self.productModel.images[self.productImagesCount])
                                     }
