@@ -654,7 +654,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - Navigation bar back button action
     
     func back() {
-        if (self.productModel.name != "" ||  self.productModel.name == "") && (self.productModel.shortDescription != "" || self.productModel.completeDescription != "" || self.productModel.category.uid != 0 || self.productModel.images.count != 0 || self.productModel.condition.uid != 0) {
+        if (self.productModel.name != "" ||  self.productModel.name == "") && (self.productModel.shortDescription != "" || self.productModel.completeDescription != "" || self.productModel.category.uid != 0 || self.productModel.images.count != 1) {
             if (ProductUploadCombination.draft && self.isDraft == false) && self.uploadType != UploadType.EditProduct {
                 self.uploadType = UploadType.Draft
                 self.draftModal()

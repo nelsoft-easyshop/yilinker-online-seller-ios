@@ -391,7 +391,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     }
     
     func storeInfoQrCodeTableViewCell(storeInfoQrCodeTableViewCell: StoreInfoQrCodeTableViewCell, didTapGenerateQRButton button: UIButton) {
-        
+        self.generateQRCode()
     }
     
     func shareTWAction(postImage: UIImageView, title: String) {
@@ -737,6 +737,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                         cell.qrCodeImageView.image = nil
                         cell.qrCodeImageView.backgroundColor = UIColor.lightGrayColor()
                         cell.cannotGenerateLabel.hidden = false
+                        cell.generateQrButton.hidden = false
+                        cell.generateQrButton.setTitle(self.retryGenerate, forState: UIControlState.Normal)
                     }
                 }
                 
