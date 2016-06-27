@@ -21,7 +21,7 @@ protocol StoreInfoQrCodeTableViewCellDelegate {
 class StoreInfoQrCodeTableViewCell: UITableViewCell {
     
     class func heightIfQRCodeIsHidden() -> CGFloat {
-        return 190.0
+        return 200.0
     }
     
     class func heightIfQRCodeIsNotHidden() -> CGFloat {
