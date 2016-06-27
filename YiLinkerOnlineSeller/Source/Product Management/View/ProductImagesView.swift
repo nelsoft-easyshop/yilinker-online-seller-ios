@@ -56,7 +56,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource {
             }
         } else {
             if imagesUrls.count == 0 {
-                return 5
+                return 0
             }
             return imagesUrls.count
         }

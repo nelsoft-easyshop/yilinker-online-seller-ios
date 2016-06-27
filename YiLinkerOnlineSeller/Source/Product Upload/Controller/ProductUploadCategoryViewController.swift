@@ -32,6 +32,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
     var selectedProductGroups: [ConditionModel] = []
     var productGroupId: [Int] = []
     var productGroup: [Bool] = []
+    var productModel: ProductModel = ProductModel()
     
     // Global variables
     var hud: MBProgressHUD?
@@ -297,14 +298,15 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
                 productUploadCategoryViewController.pageTitle = categoryModel.name
                 productUploadCategoryViewController.parentID = categoryModel.uid
                 productUploadCategoryViewController.userType = self.userType
+                productUploadCategoryViewController.productModel = self.productModel
                 self.navigationController!.pushViewController(productUploadCategoryViewController, animated: true)
             } else {
                 let uploadViewController: ProductUploadTC = self.navigationController!.viewControllers[0] as! ProductUploadTC
                 if self.productCategory == UploadProduct.ProductCategory {
-                    uploadViewController.selectedCategory(categoryModel)
+                    uploadViewController.selectedCategory(categoryModel, productModel: self.productModel)
                     self.navigationController!.popToRootViewControllerAnimated(true)
                 } else if self.productCategory == UploadProduct.ShippingCategory {
-                    uploadViewController.selectedShippingCategory(shippingCategoriesModel)
+                    uploadViewController.selectedShippingCategory(shippingCategoriesModel, productModel: self.productModel)
                     self.navigationController!.popToRootViewControllerAnimated(true)
                 }
             }

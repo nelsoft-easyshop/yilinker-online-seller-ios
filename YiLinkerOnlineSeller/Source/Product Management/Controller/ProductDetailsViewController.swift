@@ -882,6 +882,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     func success() {
         let successViewController: SuccessUploadViewController = SuccessUploadViewController(nibName: "SuccessUploadViewController", bundle: nil)
         successViewController.delegate = self
+        self.productModel = ProductModel()
         self.presentViewController(successViewController, animated: true, completion: nil)
     }
     
@@ -895,6 +896,9 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     func successUploadViewController(didTapUploadAgain viewController: SuccessUploadViewController) {
         let productUploadTableViewController: ProductUploadTC = ProductUploadTC(nibName: "ProductUploadTC", bundle: nil)
         let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadTableViewController)
+        productUploadTableViewController.uploadType = UploadType.NewProduct
+        productUploadTableViewController.productModel = ProductModel()
+
         navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
         self.navigationController?.pushViewController(productUploadTableViewController, animated: true)
         //self.dismissViewControllerAnimated(true, completion: nil)

@@ -219,7 +219,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             if indexPath.row == 0 {
                 cell.userInteractionEnabled = true
                 
-                cell.cellTitleLabel.text = ProductUploadStrings.productName
+                cell.cellTitleLabel.text = ProductUploadStrings.prodName
                 
                 if self.productModel.name != "" {
                     cell.cellTexField.text = self.productModel.name
@@ -654,7 +654,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - Navigation bar back button action
     
     func back() {
-        if self.productModel.name != "" ||  self.productModel.name == ""{
+        if (self.productModel.name != "" ||  self.productModel.name == "") && (self.productModel.shortDescription != "" || self.productModel.completeDescription != "" || self.productModel.category.uid != 0 || self.productModel.images.count != 1) {
             if (ProductUploadCombination.draft && self.isDraft == false) && self.uploadType != UploadType.EditProduct {
                 self.uploadType = UploadType.Draft
                 self.draftModal()
@@ -683,6 +683,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         productUploadCategoryViewController.pageTitle = ProductUploadStrings.selectCategory
         productUploadCategoryViewController.userType = UserType.Seller
         productUploadCategoryViewController.productCategory = UploadProduct.ProductCategory
+        productUploadCategoryViewController.productModel = self.productModel
         self.navigationController!.pushViewController(productUploadCategoryViewController, animated: true)
     }
     
@@ -945,16 +946,19 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: -
     // MARK: - Selected Category
     
-    func selectedCategory(categoryModel: CategoryModel) {
+    func selectedCategory(categoryModel: CategoryModel, productModel: ProductModel) {
+        self.productModel = productModel
         self.productCategory = categoryModel.name
         self.productModel.category = categoryModel
-        self.reloadTableViewRowInSection(2, row: 0)
+        self.tableView.reloadData()
+        //self.reloadTableViewRowInSection(2, row: 0)
     }
     
     // MARK: -
     // MARK: - Selected Category
     
-    func selectedShippingCategory(shippingCategory: ConditionModel) {
+    func selectedShippingCategory(shippingCategory: ConditionModel, productModel: ProductModel) {
+        self.productModel = productModel
         self.productShippingCategory = shippingCategory.name
         self.productModel.shippingCategories = shippingCategory
         self.reloadTableViewRowInSection(2, row: 1)
@@ -1020,7 +1024,8 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         let imageLimit: Int = maxCount - count
         picker.delegate = self
         picker.maximumNumberOfSelectionVideo = 0
-        picker.maximumNumberOfSelectionPhoto = 10
+        picker.maximumNumberOfSelectionPhoto = count
+        println("count \(count)")
         UzysAssetsPickerController.setUpAppearanceConfig(self.uzyConfig())
         self.presentViewController(picker, animated: true, completion: nil)
     }
@@ -1088,18 +1093,18 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - Upload Delegate
     
     func productUploadUploadImageTableViewCell(didSelecteRowAtIndexPath indexPath: NSIndexPath, cell: ProductUploadImageTVC) {
-        if self.uploadType == UploadType.NewProduct || self.uploadType == UploadType.Draft {
-            if indexPath.row == self.productModel.images.count - 1 && self.productModel.images.count <= 10 {
-                self.showUzysPicker(self.productModel.images.count)
+        if indexPath.row < 10 {
+            if self.uploadType == UploadType.NewProduct || self.uploadType == UploadType.Draft {
+                if indexPath.row == self.productModel.images.count - 1 && self.productModel.images.count <= 10 {
+                    self.showUzysPicker(11 - self.productModel.images.count)
+                }
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage:"", title: "You can only upload a maximun of ten(10) images.")
+                if indexPath.row == self.productModel.editedImage.count - 1 && self.productModel.editedImage.count <= 10 {
+                    self.showUzysPicker(11 - self.productModel.editedImage.count)
+                }
             }
         } else {
-            if indexPath.row == self.productModel.editedImage.count - 1 && self.productModel.editedImage.count <= 10 {
-                self.showUzysPicker(self.productModel.editedImage.count)
-            } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage:"", title: "You can only upload a maximun of ten(10) images.")
-            }
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage:"", title: "You can only upload a maximun of ten(10) images.")
         }
     }
     
@@ -1424,19 +1429,24 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 image.isNew = true
                 image.isRemoved = false
                 
-                self.productModel.editedImage.insert(image, atIndex: self.productModel.editedImage.count - 1)
-                self.productModel.mainImagesName.append("")
+                if self.productModel.editedImage.count <= 0 && self.productModel.productMainImagesModel.count <= 10 {
+                    self.productModel.editedImage.insert(image, atIndex: self.productModel.editedImage.count - 1)
+                    self.productModel.mainImagesName.append("")
+                    
+                    self.insertImage(image)
+                }
                 
-                self.insertImage(image)
             } else {
                 // Insert iamges in 'productModel' array of images
                 // Call CropAssetViewController to crop images
                 let representation: ALAssetRepresentation = allaSset.defaultRepresentation()
                 let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullScreenImage().takeUnretainedValue(), scale: 1.0, orientation: UIImageOrientation.Up)!
                 
-                self.productModel.images.insert(image, atIndex: self.productModel.images.count - 1)
-                
-                self.insertImage(image)
+                if self.productModel.images.count <= 10 && self.productModel.productMainImagesModel.count <= 10 {
+                    self.productModel.images.insert(image, atIndex: self.productModel.images.count - 1)
+                    
+                    self.insertImage(image)
+                }
                 
                 /*let storyboard = UIStoryboard(name: "FaImagePicker", bundle: nil)
                 
@@ -1463,14 +1473,13 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     }
     
     func uzysAssetsPickerControllerDidExceedMaximumNumberOfSelection(picker: UzysAssetsPickerController!) {
-        
+        picker.maximumNumberOfSelectionPhoto = 10;
     }
     
     // MARK: -
     // MARK: - Get main images
     
     func getMainImages() {
-        self.productImagesCount = 0
         var data: [NSData] = []
         var uploadedImages: [UIImage] = []
         
@@ -1488,6 +1497,9 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         if uploadedImages.count != 0 {
             uploadedImages.removeLast()
         }
+        
+        println("uploaded images \(uploadedImages.count)")
+        
         self.productImagesCount = 0
         self.fireUploadProductMainImages(uploadedImages[self.productImagesCount])
     }
@@ -1867,11 +1879,16 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                     if success {
                         if let dictionary: NSDictionary = responseObject["data"] as? NSDictionary {
                             if let fileName = dictionary["fileName"] as? String {
-                                self.productImagesName.append(fileName)
+                                if self.productImagesName.count <= 10 {
+                                    self.productImagesName.append(fileName)
+                                }
+    
                                 var oldFileName: String = ""
                                 if self.uploadType == UploadType.NewProduct || self.uploadType == UploadType.Draft {
-                                    self.productModel.mainImagesName.append(fileName)
-                                    oldFileName = fileName
+                                    if self.productModel.mainImagesName.count <= 10 {
+                                        self.productModel.mainImagesName.append(fileName)
+                                        oldFileName = fileName
+                                    }
                                 } else {
                                     if self.productModel.mainImagesName.count == 0 {
                                         if self.productModel.mainImagesName[self.productImagesCount] == "" {
@@ -1891,18 +1908,20 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                                 }
                                 
                                 var productMainImagesModel: ProductMainImagesModel = ProductMainImagesModel(image: image, imageName: oldFileName, imageStatus: true, imageFailed: false)
-                                
-                                self.productModel.productMainImagesModel[self.productImagesCount] = productMainImagesModel
+                            
+                                if self.productImagesCount < 10 && self.productModel.productMainImagesModel.count <= 10 {
+                                    self.productModel.productMainImagesModel[self.productImagesCount] = productMainImagesModel
+                                    self.productImagesCount++
+                                }
                                 
                                 self.reloadUploadCellCollectionViewData()
                                 
-                                self.productImagesCount++
                                 if self.uploadType == UploadType.NewProduct || self.uploadType == UploadType.Draft {
-                                    if self.productImagesCount !=  self.productModel.images.count-1 {
+                                    if (self.productImagesCount !=  self.productModel.images.count-1) && self.productImagesCount < 10 && self.productModel.productMainImagesModel.count <= 10 {
                                         self.fireUploadProductMainImages(self.productModel.images[self.productImagesCount])
                                     }
                                 } else {
-                                    if self.productImagesCount !=  self.productModel.editedImage.count-1 {
+                                    if (self.productImagesCount !=  self.productModel.editedImage.count-1) && self.productImagesCount < 10 && self.productModel.productMainImagesModel.count <= 10 {
                                         self.fireUploadProductMainImages(self.productModel.editedImage[self.productImagesCount])
                                     }
                                 }

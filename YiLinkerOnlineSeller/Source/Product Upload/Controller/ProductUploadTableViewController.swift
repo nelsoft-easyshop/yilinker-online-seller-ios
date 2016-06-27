@@ -17,6 +17,7 @@ struct ProductUploadStrings {
     
     static let productInformation: String = StringHelper.localizedStringWithKey("PRODUCT_INFORMATION_LOCALIZE_KEY")
     
+    static let prodName: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_NAME_LOCALIZE_KEY")
     static let productName: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRODUCT_NAME_LOCALIZE_KEY")
     static let shortDescription: String = StringHelper.localizedStringWithKey("SHORT_DESCRIPTION_LOCALIZE_KEY")
     static let shortDescriptionPlaceholder: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SHORT_DESC_LOCALIZE_KEY")
@@ -662,7 +663,7 @@ class ProductUploadTableViewController: UITableViewController, ProductUploadUplo
                 let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.delegate = self
-                cell.cellTitleLabel.text = ProductUploadStrings.productName
+                cell.cellTitleLabel.text = ProductUploadStrings.prodName
                 cell.cellTitleLabel.required()
                 cell.cellTexField.placeholder = ProductUploadStrings.productName
                 cell.cellTexField.text = self.productModel.name
