@@ -126,19 +126,23 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
             cell.selectionStyle = .None
             // Configure the cell...
             cell.delegate = self
-            
+            cell.cannotGenerateLabel.hidden = true
             if self.isQRVisible {
+                println("qr is visible")
                 cell.shareButtonContainerView.hidden = false
+                cell.shareButtonContainerView.transform = CGAffineTransformMakeTranslation(0, -60.0)
                 cell.generateQrButton.hidden = true
-                cell.shareContainerVerticalSpaceConstraint.constant = 0
+//                cell.shareContainerVerticalSpaceConstraint.constant = 0
                 cell.shareButtonContainerView.hidden = false
                 cell.shareButtonContainerView.userInteractionEnabled = true
-                println(self.affiliateStoreInfoModel.qrCodeImageUrl)
+
                 cell.qrCodeImageView.sd_setImageWithURL(NSURL(string: self.affiliateStoreInfoModel.qrCodeImageUrl), placeholderImage: UIImage(named: "dummy-placeholder")!, completed: { (image, error, cacheType, url) -> Void in
                     if image != nil {
                         self.affiliateStoreInfoModel.qrCodeImage = image
                     }
                 })
+            } else {
+                println("qr is not visible")
             }
             
             return cell
