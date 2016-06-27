@@ -13,11 +13,17 @@ struct ProductUploadCategoryViewControllerConstant {
     static let productUploadCategoryTableViewCellNibNameAndIdentifier = "ProductUploadCategoryTableViewCell"
 }
 
+protocol ProductUploadCategoryViewControllerDelegate {
+    func productUploadCategorySelectedProductGroup(productGroups: [String], productGroupId: [Int])
+}
+
 class ProductUploadCategoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     // Tableview
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchTextField: UITextField!
+    
+    @IBOutlet weak var topConstraint: NSLayoutConstraint!
     
     // Models
     var categories: [CategoryModel] = []
@@ -33,6 +39,8 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
     var productCategory: UploadProduct = UploadProduct.ProductCategory
     var parentID: Int = 1
     var pageTitle: String = ""
+    
+    var delegate: ProductUploadCategoryViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,10 +59,16 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
             // Set navigation bar title
             self.title = self.pageTitle
             self.fireCategoryWithParentID(self.parentID)
-        } else {
+        } else if self.productCategory == UploadProduct.ShippingCategory {
             self.fireShippingCategories()
             // Set navigation bar title
             self.title = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SELECT_SHIPPING_LOCALIZE_KEY")
+        } else {
+            self.fireProductGroup()
+            self.searchTextField.hidden = true
+            println(self.topConstraint)
+            self.topConstraint.constant = -30
+            self.title = "Select Product Groups"
         }
     }
     
@@ -77,18 +91,24 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
-        /*
+        
         var checkButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         checkButton.frame = CGRectMake(0, 0, 25, 25)
         checkButton.addTarget(self, action: "check", forControlEvents: UIControlEvents.TouchUpInside)
         checkButton.setImage(UIImage(named: "check-white"), forState: UIControlState.Normal)
         var customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: checkButton)
+        
         checkButton.hidden = true
+        
+        if self.productCategory == UploadProduct.ProductGroups {
+            checkButton.hidden = false
+        }
+        
         
         let navigationSpacer2: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer2.width = -10
         
-        self.navigationItem.rightBarButtonItems = [navigationSpacer2, customCheckButton]*/
+        self.navigationItem.rightBarButtonItems = [navigationSpacer2, customCheckButton]
     }
     
     // MARK: -
@@ -116,6 +136,21 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
     // MARK: - Navigation bar button actions
     
     func back() {
+        self.navigationController!.popViewControllerAnimated(true)
+    }
+    
+    func check() {
+        var selectedProductGroup: [String] = []
+        println(self.productGroup)
+        self.productGroupId = []
+        for(index, productGroup) in enumerate(self.productGroup) {
+            if productGroup {
+                self.productGroupId.append(self.productGroups[index].uid)
+                selectedProductGroup.append(self.productGroups[index].name)
+            }
+        }
+        
+        self.delegate?.productUploadCategorySelectedProductGroup(selectedProductGroup, productGroupId: self.productGroupId)
         self.navigationController!.popViewControllerAnimated(true)
     }
     
@@ -198,11 +233,22 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
             if categoryModel.hasChildren == "1" {
                 cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
             }
-        } else {
+        } else if self.productCategory == UploadProduct.ShippingCategory {
             let shippingCategoryModel: ConditionModel = self.shippingCategories[indexPath.row]
             
             cell.categoryTitleLabel.text = shippingCategoryModel.name
             cell.accessoryType = UITableViewCellAccessoryType.None
+        } else {
+            let productGroupModel: ConditionModel = self.productGroups[indexPath.row]
+            
+            cell.categoryTitleLabel.text = productGroupModel.name
+            
+            if self.productGroup[indexPath.row] == true {
+                cell.selected = true
+                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            } else {
+                cell.accessoryType = UITableViewCellAccessoryType.None
+            }
         }
 
         return cell
@@ -211,8 +257,10 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.productCategory == UploadProduct.ProductCategory {
             return self.categories.count
-        } else {
+        } else if self.productCategory == UploadProduct.ShippingCategory {
             return self.shippingCategories.count
+        } else {
+            return self.productGroups.count
         }
     }
     
@@ -220,13 +268,27 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
 
         var categoryModel: CategoryModel = CategoryModel()
         var shippingCategoriesModel: ConditionModel = ConditionModel(uid: 0, name: "")
+        var productGroupsModel: ConditionModel = ConditionModel(uid: 0, name: "")
         
         if self.productCategory == UploadProduct.ProductCategory {
             self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
             categoryModel = self.categories[indexPath.row]
-        } else {
+        } else if self.productCategory == UploadProduct.ShippingCategory {
             self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
             shippingCategoriesModel = self.shippingCategories[indexPath.row]
+        } else {
+            //self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            let cell = self.tableView.cellForRowAtIndexPath(indexPath)
+            if cell!.selected {
+                cell!.selected = false
+                if cell!.accessoryType == UITableViewCellAccessoryType.None {
+                    cell!.accessoryType = UITableViewCellAccessoryType.Checkmark
+                    self.productGroup[indexPath.row] = true
+                } else {
+                    cell!.accessoryType = UITableViewCellAccessoryType.None
+                    self.productGroup[indexPath.row] = false
+                }
+            }
         }
         
         if self.userType == UserType.Seller {
@@ -240,10 +302,11 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
                 let uploadViewController: ProductUploadTC = self.navigationController!.viewControllers[0] as! ProductUploadTC
                 if self.productCategory == UploadProduct.ProductCategory {
                     uploadViewController.selectedCategory(categoryModel)
+                    self.navigationController!.popToRootViewControllerAnimated(true)
                 } else if self.productCategory == UploadProduct.ShippingCategory {
                     uploadViewController.selectedShippingCategory(shippingCategoriesModel)
+                    self.navigationController!.popToRootViewControllerAnimated(true)
                 }
-                self.navigationController!.popToRootViewControllerAnimated(true)
             }
         } else {
             let resellerViewController: ResellerItemViewController = ResellerItemViewController(nibName: "ResellerItemViewController", bundle: nil)
@@ -460,13 +523,22 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
                 for dictionary in conditionParseModel.data as [NSDictionary] {
                     let condition: ConditionModel = ConditionModel(uid: dictionary[uidKey] as! Int, name: dictionary[nameKey] as! String)
                     self.productGroups.append(condition)
-                    if contains(self.productGroupId, condition.uid) {
+                    self.productGroup.append(false)
+                    /*if contains(self.productGroupId, condition.uid) {
                         self.productGroup.append(true)
                     } else {
-                       self.productGroup.append(false)
-                    }
+                       
+                    }*/
                 }
                 
+                /*
+                for (index, name) in enumerate(self.productGroups) {
+                    for (index2, name2) in enumerate(self.selectedProductGroups) {
+                        if name.name == name2.name {
+                            self.productGroup[index] = true
+                        }
+                    }
+                }*/
                 self.tableView.reloadData()
                 
                 self.hud?.hide(true)

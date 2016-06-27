@@ -25,7 +25,7 @@ class StoreInfoQrCodeTableViewCell: UITableViewCell {
     }
     
     class func heightIfQRCodeIsNotHidden() -> CGFloat {
-        return 280.0
+        return 290.0
     }
     
     class func nibNameAndIdentifier() -> String {
@@ -51,6 +51,7 @@ class StoreInfoQrCodeTableViewCell: UITableViewCell {
     @IBOutlet var shareWithFbLabel: UILabel!
     @IBOutlet var shareWithGoogleLabel: UILabel!
     @IBOutlet var shareWithTwitterLabel: UILabel!
+    @IBOutlet weak var cannotGenerateLabel: UILabel!
     
     @IBOutlet weak var shareContainerVerticalSpaceConstraint: NSLayoutConstraint!
     //Global variables declarations

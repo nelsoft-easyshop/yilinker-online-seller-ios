@@ -129,7 +129,9 @@ class ProductUploadImageTVC: UITableViewCell, UICollectionViewDataSource, UIColl
             cell.activityIndicator.stopAnimating()
             cell.imageView.contentMode = UIViewContentMode.ScaleAspectFit
         } else {
+            println(productModel?.mainImagesName.count)
             if self.productModel?.mainImagesName.count != 0 {
+                println(productModel?.productMainImagesModel.count)
                 if self.productModel?.productMainImagesModel[indexPath.row].imageStatus == true && self.productModel?.productMainImagesModel[indexPath.row].imageFailed == false {
                     cell.tapToReuploadButton.hidden = true
                     cell.closeButton.userInteractionEnabled = true

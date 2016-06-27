@@ -91,7 +91,7 @@ class ProductUploadCombinationTableViewCell: UITableViewCell {
         
         cell.attributeDefinitionLabel.text = attributeModel.definition
         cell.attributeTextField.text = attributeModel.values[0]
-        cell.attributeTextField.userInteractionEnabled = false
+        //cell.attributeTextField.userInteractionEnabled = false //comment this
         
         if self.productModel != nil {
             let dictionary: NSMutableDictionary = self.productModel!.validCombinations[selectedIndexPath!.section].attributes[indexPath.row]
@@ -100,7 +100,7 @@ class ProductUploadCombinationTableViewCell: UITableViewCell {
         }
       
         cell.values = attributeModel.values
-        //cell.addPicker()
+        cell.addPicker() // uncomment
         return cell
     }
     

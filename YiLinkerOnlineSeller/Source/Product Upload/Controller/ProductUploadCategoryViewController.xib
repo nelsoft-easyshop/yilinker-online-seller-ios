@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="searchTextField" destination="rR8-nX-lAN" id="sfh-Vj-rhh"/>
                 <outlet property="tableView" destination="aJh-Da-hPX" id="WrD-ft-hcs"/>
+                <outlet property="topConstraint" destination="2na-lc-Khz" id="CaC-iH-bTy"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
