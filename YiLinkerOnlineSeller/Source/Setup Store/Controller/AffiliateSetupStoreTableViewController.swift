@@ -25,6 +25,8 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
     var storeInfoModel: StoreInfoModel = StoreInfoModel()
     
     var numberOfRows: Int = 2
+    var isRequestedQR = false
+    var isRequestFailed = false
     
     //MARK: -
     //MARK: - Nib Name
@@ -126,19 +128,27 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
             cell.selectionStyle = .None
             // Configure the cell...
             cell.delegate = self
-            
+            cell.cannotGenerateLabel.hidden = true
+
             if self.isQRVisible {
                 cell.shareButtonContainerView.hidden = false
+                cell.shareButtonContainerView.transform = CGAffineTransformMakeTranslation(0, -60.0)
                 cell.generateQrButton.hidden = true
-                cell.shareContainerVerticalSpaceConstraint.constant = 0
+//                cell.shareContainerVerticalSpaceConstraint.constant = 0
                 cell.shareButtonContainerView.hidden = false
                 cell.shareButtonContainerView.userInteractionEnabled = true
-                println(self.affiliateStoreInfoModel.qrCodeImageUrl)
+
                 cell.qrCodeImageView.sd_setImageWithURL(NSURL(string: self.affiliateStoreInfoModel.qrCodeImageUrl), placeholderImage: UIImage(named: "dummy-placeholder")!, completed: { (image, error, cacheType, url) -> Void in
                     if image != nil {
                         self.affiliateStoreInfoModel.qrCodeImage = image
                     }
                 })
+            } else {
+                if self.isRequestedQR && self.isRequestFailed {
+                    cell.cannotGenerateLabel.hidden = false
+                    cell.shareButtonContainerView.hidden = true
+                    cell.generateQrButton.setTitle("Try to generate again", forState: UIControlState.Normal)
+                }
             }
             
             return cell
@@ -398,6 +408,8 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
         
         let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()]
         
+        self.isRequestedQR = true
+        
         WebServiceManager.fireStoreInfoRequestWithUrl(APIAtlas.sellerGenerateQrCode, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             storeInfoQrCodeTableViewCell.stopLoading()
             
@@ -413,6 +425,7 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
                 }
                 
             } else {
+                self.isRequestFailed = true
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
