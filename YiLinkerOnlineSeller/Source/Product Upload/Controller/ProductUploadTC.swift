@@ -654,7 +654,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - Navigation bar back button action
     
     func back() {
-        if self.productModel.name != "" ||  self.productModel.name == ""{
+        if (self.productModel.name != "" ||  self.productModel.name == "") && (self.productModel.shortDescription != "" || self.productModel.completeDescription != "" || self.productModel.category.uid != 0 || self.productModel.images.count != 0 || self.productModel.condition.uid != 0) {
             if (ProductUploadCombination.draft && self.isDraft == false) && self.uploadType != UploadType.EditProduct {
                 self.uploadType = UploadType.Draft
                 self.draftModal()
@@ -1088,18 +1088,18 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - Upload Delegate
     
     func productUploadUploadImageTableViewCell(didSelecteRowAtIndexPath indexPath: NSIndexPath, cell: ProductUploadImageTVC) {
-        if self.uploadType == UploadType.NewProduct || self.uploadType == UploadType.Draft {
-            if indexPath.row == self.productModel.images.count - 1 && self.productModel.images.count <= 10 {
-                self.showUzysPicker(self.productModel.images.count)
+        if indexPath.row < 10 {
+            if self.uploadType == UploadType.NewProduct || self.uploadType == UploadType.Draft {
+                if indexPath.row == self.productModel.images.count - 1 && self.productModel.images.count <= 10 {
+                    self.showUzysPicker(self.productModel.images.count)
+                }
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage:"", title: "You can only upload a maximun of ten(10) images.")
+                if indexPath.row == self.productModel.editedImage.count - 1 && self.productModel.editedImage.count <= 10 {
+                    self.showUzysPicker(self.productModel.editedImage.count)
+                }
             }
         } else {
-            if indexPath.row == self.productModel.editedImage.count - 1 && self.productModel.editedImage.count <= 10 {
-                self.showUzysPicker(self.productModel.editedImage.count)
-            } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage:"", title: "You can only upload a maximun of ten(10) images.")
-            }
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage:"", title: "You can only upload a maximun of ten(10) images.")
         }
     }
     
@@ -1424,19 +1424,24 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 image.isNew = true
                 image.isRemoved = false
                 
-                self.productModel.editedImage.insert(image, atIndex: self.productModel.editedImage.count - 1)
-                self.productModel.mainImagesName.append("")
+                if self.productModel.editedImage.count <= 0 {
+                    self.productModel.editedImage.insert(image, atIndex: self.productModel.editedImage.count - 1)
+                    self.productModel.mainImagesName.append("")
+                    
+                    self.insertImage(image)
+                }
                 
-                self.insertImage(image)
             } else {
                 // Insert iamges in 'productModel' array of images
                 // Call CropAssetViewController to crop images
                 let representation: ALAssetRepresentation = allaSset.defaultRepresentation()
                 let image: UIImage = UIImage(CGImage: allaSset.defaultRepresentation().fullScreenImage().takeUnretainedValue(), scale: 1.0, orientation: UIImageOrientation.Up)!
                 
-                self.productModel.images.insert(image, atIndex: self.productModel.images.count - 1)
-                
-                self.insertImage(image)
+                if self.productModel.images.count <= 10 {
+                    self.productModel.images.insert(image, atIndex: self.productModel.images.count - 1)
+                    
+                    self.insertImage(image)
+                }
                 
                 /*let storyboard = UIStoryboard(name: "FaImagePicker", bundle: nil)
                 
@@ -1891,6 +1896,9 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                                 }
                                 
                                 var productMainImagesModel: ProductMainImagesModel = ProductMainImagesModel(image: image, imageName: oldFileName, imageStatus: true, imageFailed: false)
+                                
+                                println(self.productImagesCount);
+                                println(self.productModel.productMainImagesModel.count);
                                 
                                 self.productModel.productMainImagesModel[self.productImagesCount] = productMainImagesModel
                                 
