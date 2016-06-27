@@ -219,7 +219,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             if indexPath.row == 0 {
                 cell.userInteractionEnabled = true
                 
-                cell.cellTitleLabel.text = ProductUploadStrings.productName
+                cell.cellTitleLabel.text = ProductUploadStrings.prodName
                 
                 if self.productModel.name != "" {
                     cell.cellTexField.text = self.productModel.name
@@ -683,6 +683,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         productUploadCategoryViewController.pageTitle = ProductUploadStrings.selectCategory
         productUploadCategoryViewController.userType = UserType.Seller
         productUploadCategoryViewController.productCategory = UploadProduct.ProductCategory
+        productUploadCategoryViewController.productModel = self.productModel
         self.navigationController!.pushViewController(productUploadCategoryViewController, animated: true)
     }
     
@@ -945,16 +946,19 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: -
     // MARK: - Selected Category
     
-    func selectedCategory(categoryModel: CategoryModel) {
+    func selectedCategory(categoryModel: CategoryModel, productModel: ProductModel) {
+        self.productModel = productModel
         self.productCategory = categoryModel.name
         self.productModel.category = categoryModel
-        self.reloadTableViewRowInSection(2, row: 0)
+        self.tableView.reloadData()
+        //self.reloadTableViewRowInSection(2, row: 0)
     }
     
     // MARK: -
     // MARK: - Selected Category
     
-    func selectedShippingCategory(shippingCategory: ConditionModel) {
+    func selectedShippingCategory(shippingCategory: ConditionModel, productModel: ProductModel) {
+        self.productModel = productModel
         self.productShippingCategory = shippingCategory.name
         self.productModel.shippingCategories = shippingCategory
         self.reloadTableViewRowInSection(2, row: 1)

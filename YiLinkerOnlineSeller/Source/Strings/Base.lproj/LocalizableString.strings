@@ -677,6 +677,7 @@ PRODUCT_UPLOAD_PRODUCT_GROUP_LOCALIZE_KEY = "Enter product group here";
 PRODUCT_UPLOAD_GROUP_LOCALIZE_KEY = "Product Group";
 
 PRODUCT_UPLOAD_NOTE_LOCALIZE_KEY = "Tap the star to set as primary photo";
+PRODUCT_UPLOAD_NAME_LOCALIZE_KEY = "Product Name";
 PRODUCT_UPLOAD_PRODUCT_NAME_LOCALIZE_KEY = "Make your name as enticing as possible.";
 PRODUCT_UPLOAD_SHORT_DESC_LOCALIZE_KEY = "Think of a good description about your product that you can say in one breath.";
 PRODUCT_UPLOAD_COMPLETE_DESC_LOCALIZE_KEY = "This is where you write an amazingly long and beautiful description about your product and why users should buy it over your competitor.";

@@ -56,6 +56,11 @@ class SuccessUploadViewController: UIViewController {
     }
 
     @IBAction func uploadAgain(sender: AnyObject) {
+        let productTC: ProductUploadTC = ProductUploadTC(nibName: "ProductUploadTC", bundle: nil)
+        productTC.productModel = ProductModel()
+        productTC.productImagesName = []
+        productTC.productImagesCount = 0;
+        //self.navigationController!.pushViewController(productTC, animated: true)
         self.delegate?.successUploadViewController(didTapUploadAgain: self)
         self.dismissViewControllerAnimated(true, completion: nil)
     }

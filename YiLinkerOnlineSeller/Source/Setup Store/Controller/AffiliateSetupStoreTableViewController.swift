@@ -126,6 +126,7 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
             cell.selectionStyle = .None
             // Configure the cell...
             cell.delegate = self
+            cell.cannotGenerateLabel.hidden = true
             
             if self.isQRVisible {
                 cell.shareButtonContainerView.hidden = false

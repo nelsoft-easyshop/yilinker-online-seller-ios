@@ -246,7 +246,7 @@ class PayoutRequestListViewController: UIViewController, UITableViewDelegate, UI
                         for i in 0..<earnings.count {
                             self.requestListModel.append(PayoutRequestListModel(date: earnings[i].date, withdrawalMethod: earnings[i].withdrawalMethod, totalAmount: earnings[i].totalAmount, charge: earnings[i].charge, netAmount: earnings[i].netAmount, currencyCode: earnings[i].currencyCode, status: earnings[i].status, statusId: earnings[i].statusId, payTo: earnings[i].payTo, bankName: earnings[i].bankName, accountNumber: earnings[i].accountNumber, accountName: earnings[i].accountName))
                         }
-                        
+                        self.noResultLabel.hidden = true
                         self.tableView.hidden = false
                     } else {
                         if self.requestListModel.count == 0 {
