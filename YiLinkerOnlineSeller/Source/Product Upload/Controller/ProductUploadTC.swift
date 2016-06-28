@@ -8,7 +8,11 @@
 
 import UIKit
 
-class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSource, ProductUploadUploadImageTVCDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadFooterViewDelegate, ProductUploadBrandViewControllerDelegate, UzysAssetsPickerControllerDelegate, ProductUploadProductGroupTVCDelegate, ProductUploadQuantityTableViewCellDelegate, SuccessUploadViewControllerDelegate, ProductUploadProductGroupTextFieldTableViewCellDelegate, ProductUploadCategoryViewControllerDelegate {
+struct ProductUploadTCSuccessUpload {
+    static var isUploadAgain: Bool = false
+ }
+ 
+class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSource, ProductUploadUploadImageTVCDelegate, ProductUploadTextFieldTableViewCellDelegate, ProductUploadTextViewTableViewCellDelegate, ProductUploadDimensionsAndWeightTableViewCellDelegate, ProductUploadFooterViewDelegate, ProductUploadBrandViewControllerDelegate, UzysAssetsPickerControllerDelegate, ProductUploadProductGroupTVCDelegate, ProductUploadQuantityTableViewCellDelegate, SuccessUploadViewControllerDelegate, ProductUploadProductGroupTextFieldTableViewCellDelegate, ProductUploadCategoryViewControllerDelegate, ProductUploadBrandTextFieldTableViewCellDelegate, ProductUploadSkuTextFieldTableViewCellDelegate, ProductUploadConditionTextFieldTableViewCellDelegate, ProductUploadShippingTextFieldTableViewCellDelegate, ProductUploadCategoryTextFieldTableViewCellDelegate, ProductUploadNameTextFieldTableViewCellDelegate, ProductUploadYoutubeTextFieldTableViewCellDelegate {
     
     // Variables// Models
     var conditions: [ConditionModel] = []
@@ -31,6 +35,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     var productCondition: String = ""
     var productSKU: String = ""
     var productGroup: String = ""
+    var productYoutube: String = ""
     
     // Product Dimensions and Weight
     var productLength: String = ""
@@ -92,6 +97,56 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        if ProductUploadTCSuccessUpload.isUploadAgain {
+            ProductUploadTCSuccessUpload.isUploadAgain = false
+            // Variables// Models
+            self.conditions = []
+            self.shippingCategories = []
+            self.productModel = ProductModel()
+            self.uploadType = UploadType.NewProduct
+            self.productIsDraft = false
+            self.isDraft = false
+            
+            self.productGroupCount = 0
+            self.productImagesCount = 0
+            
+            self.primaryPhoto = ""
+            self.productImages = ""
+            self.productImagesName = []
+            self.isCombinationAvailable = false
+            
+            self.selectedProductGroupIds = []
+            self.selectedProductGroupName = []
+            
+            // Product Information
+            self.productName = ""
+            self.productShortDescription = ""
+            self.productCompleteDescription = ""
+            self.productYoutubeVideoUrl = ""
+            self.productId = ""
+            
+            // Product Details
+            self.productCategory = ""
+            self.productShippingCategory = ""
+            self.productBrand = ""
+            self.productCondition = ""
+            self.productSKU = ""
+            self.productGroup = ""
+            
+            // Product Dimensions and Weight
+            self.productLength = ""
+            self.productWidth = ""
+            self.productHeight = ""
+            self.productWeight = ""
+            
+            self.addPhoto()
+            self.fireGetProductConditions()
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.tableView.reloadData()
+            })
+            
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -212,23 +267,22 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             
             return cell
         } else if indexPath.section == 1 {
-            // Product Details - Product name, short and complete description
-            let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
-            cell.selectionStyle = UITableViewCellSelectionStyle.None
-            
             if indexPath.row == 0 {
+                // Product Details - Product name, short and complete description
+                let cell: ProductUploadNameTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadNameTextFieldTableViewCell") as! ProductUploadNameTextFieldTableViewCell
+                cell.selectionStyle = UITableViewCellSelectionStyle.None
+                
                 cell.userInteractionEnabled = true
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.prodName
                 
-                if self.productModel.name != "" {
-                    cell.cellTexField.text = self.productModel.name
+                if self.productName != "" {
+                    cell.cellTexField.text = self.productName
                 }
                 
                 cell.cellTexField.placeholder = ProductUploadStrings.productName
                 
                 cell.cellTitleLabel.required()
-                cell.textFieldType = ProductTextFieldType.ProductName
                 cell.delegate = self
                 
                 return cell
@@ -273,88 +327,89 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 
                 return cell
             } else {
+                // Product Details - Product name, short and complete description
+                let cell: ProductUploadYoutubeTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadYoutubeTextFieldTableViewCell") as! ProductUploadYoutubeTextFieldTableViewCell
+                cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = true
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.youtubeUrl
                 cell.cellTexField.placeholder = ProductUploadStrings.youtubeUrlPlaceholder
                 
-                if self.productModel.youtubeVideoUrl != "" {
-                    cell.cellTexField.text = self.productModel.youtubeVideoUrl
+                if self.productYoutube != "" {
+                    cell.cellTexField.text = self.productYoutube
                 }
                 
-                cell.textFieldType = ProductTextFieldType.ProductYoutubeVideoUrl
                 cell.delegate = self
                 
                 return cell
             }
         }  else if indexPath.section == 2 {
             // Product categories, condition, sku and product group
-            let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
-            cell.selectionStyle = UITableViewCellSelectionStyle.None
             
             if indexPath.row == 0 {
+                let cell: ProductUploadCategoryTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadCategoryTextFieldTableViewCell") as! ProductUploadCategoryTextFieldTableViewCell
+                cell.selectionStyle = UITableViewCellSelectionStyle.None
+                
                 cell.userInteractionEnabled = self.checkIfSeller()
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.category
                 cell.cellTexField.placeholder = ProductUploadStrings.selectCategory
                 
-                if self.productModel.category.name != "" {
-                    cell.cellTexField.text = self.productModel.category.name
+                if self.productCategory != "" {
+                    cell.cellTexField.text = self.productCategory
                 }
                 
                 cell.cellTexField.rightView = self.addRightView("cell-right")
                 cell.cellTexField.rightViewMode = UITextFieldViewMode.Always
                 
                 cell.cellTitleLabel.required()
-                cell.textFieldType = ProductTextFieldType.Category
                 cell.delegate = self
                 
                 return cell
             } else {
+                let cell: ProductUploadShippingTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadShippingTextFieldTableViewCell") as! ProductUploadShippingTextFieldTableViewCell
                 cell.userInteractionEnabled = self.checkIfSeller()
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.shippingCategory
                 cell.cellTexField.placeholder = ProductUploadStrings.selectShippingCategory
                 
-                if self.productModel.shippingCategories.name != "" {
-                    cell.cellTexField.text = self.productModel.shippingCategories.name
+                if self.productShippingCategory != "" {
+                    cell.cellTexField.text = self.productShippingCategory
                 }
                 
                 cell.cellTexField.rightView = self.addRightView("cell-right")
                 cell.cellTexField.rightViewMode = UITextFieldViewMode.Always
                 
                 //cell.cellTitleLabel.required()
-                cell.textFieldType = ProductTextFieldType.ShippingCategory
                 cell.delegate = self
                 
                 return cell
             }
         } else if indexPath.section == 3 {
-            let cell: ProductUploadTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextfieldTableViewCellNibNameAndIdentifier) as! ProductUploadTextFieldTableViewCell
-            cell.selectionStyle = UITableViewCellSelectionStyle.None
             if indexPath.row == 0 {
+                let cell: ProductUploadBrandTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadBrandTextFieldTableViewCell") as! ProductUploadBrandTextFieldTableViewCell
+                cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = self.checkIfSeller()
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.brand
                 cell.cellTexField.placeholder = ProductUploadStrings.addBrand
                 
-                if self.productModel.brand.name != "" {
-                    cell.cellTexField.text = self.productModel.brand.name
+                if self.productBrand != "" {
+                    cell.cellTexField.text = self.productBrand
                 }
                 
                 cell.cellTexField.rightView = self.addRightView("arrow_down")
                 cell.cellTexField.rightViewMode = UITextFieldViewMode.Always
                 
-                cell.textFieldType = ProductTextFieldType.Brand
                 cell.delegate = self
                 
                 return cell
             } else if indexPath.row == 1 {
+                let cell: ProductUploadConditionTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadConditionTextFieldTableViewCell") as! ProductUploadConditionTextFieldTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = self.checkIfSeller()
                 
-                cell.cellTitleLabel.text = ProductUploadStrings.condition
-                cell.cellTexField.placeholder = self.productCondition
+                cell.cellTitleLabel.text = ProductUploadStrings.conditionTitle
                 
                 cell.cellTexField.placeholder = ProductUploadStrings.condition
                 
@@ -362,7 +417,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.cellTexField.rightViewMode = UITextFieldViewMode.Always
                 
                 cell.cellTitleLabel.required()
-                cell.textFieldType = ProductTextFieldType.Condition
                 cell.delegate = self
                 
                 var values: [String] = []
@@ -380,6 +434,8 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 
                 return cell
             } else {
+                let cell: ProductUploadSkuTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadSkuTextFieldTableViewCell") as! ProductUploadSkuTextFieldTableViewCell
+                
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = self.checkIfSeller()
                
@@ -393,12 +449,12 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.cellTexField.text = self.productSKU
                 
                 cell.cellTexField.placeholder = ProductUploadStrings.productSku
-                cell.textFieldType = ProductTextFieldType.ProductSKU
-                cell.delegate = self
                 
-                if self.productModel.sku != "" {
-                    cell.cellTexField.text = self.productModel.sku
+                if self.productSKU != "" {
+                    cell.cellTexField.text = self.productSKU
                 }
+                
+                cell.delegate = self
                 
                 return cell
             }
@@ -875,6 +931,26 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         let attributeNib: UINib = UINib(nibName: ProductUploadTableViewControllerConstant.productUploadAttributeSummaryTableVieCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(attributeNib, forCellReuseIdentifier: ProductUploadTableViewControllerConstant.productUploadAttributeSummaryTableVieCellNibNameAndIdentifier)
         
+        let productName: UINib = UINib(nibName: "ProductUploadNameTextFieldTableViewCell", bundle: nil)
+        self.tableView.registerNib(productName, forCellReuseIdentifier: "ProductUploadNameTextFieldTableViewCell")
+        
+        let productCategory: UINib = UINib(nibName: "ProductUploadCategoryTextFieldTableViewCell", bundle: nil)
+        self.tableView.registerNib(productCategory, forCellReuseIdentifier: "ProductUploadCategoryTextFieldTableViewCell")
+        
+        let productShipping: UINib = UINib(nibName: "ProductUploadShippingTextFieldTableViewCell", bundle: nil)
+        self.tableView.registerNib(productShipping, forCellReuseIdentifier: "ProductUploadShippingTextFieldTableViewCell")
+        
+        let productBrand: UINib = UINib(nibName: "ProductUploadBrandTextFieldTableViewCell", bundle: nil)
+        self.tableView.registerNib(productBrand, forCellReuseIdentifier: "ProductUploadBrandTextFieldTableViewCell")
+        
+        let productCondition: UINib = UINib(nibName: "ProductUploadConditionTextFieldTableViewCell", bundle: nil)
+        self.tableView.registerNib(productCondition, forCellReuseIdentifier: "ProductUploadConditionTextFieldTableViewCell")
+        
+        let productYoutube: UINib = UINib(nibName: "ProductUploadYoutubeTextFieldTableViewCell", bundle: nil)
+        self.tableView.registerNib(productYoutube, forCellReuseIdentifier: "ProductUploadYoutubeTextFieldTableViewCell")
+        
+        let productSku: UINib = UINib(nibName: "ProductUploadSkuTextFieldTableViewCell", bundle: nil)
+        self.tableView.registerNib(productSku, forCellReuseIdentifier: "ProductUploadSkuTextFieldTableViewCell")
         
     }
     
@@ -947,18 +1023,15 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - Selected Category
     
     func selectedCategory(categoryModel: CategoryModel, productModel: ProductModel) {
-        self.productModel = productModel
         self.productCategory = categoryModel.name
         self.productModel.category = categoryModel
-        self.tableView.reloadData()
-        //self.reloadTableViewRowInSection(2, row: 0)
+        self.reloadTableViewRowInSection(2, row: 0)
     }
     
     // MARK: -
     // MARK: - Selected Category
     
     func selectedShippingCategory(shippingCategory: ConditionModel, productModel: ProductModel) {
-        self.productModel = productModel
         self.productShippingCategory = shippingCategory.name
         self.productModel.shippingCategories = shippingCategory
         self.reloadTableViewRowInSection(2, row: 1)
@@ -1184,6 +1257,41 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             self.productYoutubeVideoUrl = text
             self.productModel.youtubeVideoUrl = self.productYoutubeVideoUrl
         }
+    }
+    
+    // MARK: -
+    // MARK: - ProductUploadTextFieldTableViewCell Delegate Methods
+    
+    func productUploadBrandTextFieldTableViewCell(textFieldDidChange text: String, cell: ProductUploadBrandTextFieldTableViewCell) {
+        self.gotoBrand()
+    }
+    
+    func productUploadNameTextFieldTableViewCell(textFieldDidChange text: String, cell: ProductUploadNameTextFieldTableViewCell) {
+        self.productName  = text
+        self.productModel.name = self.productName
+    }
+    
+    func productUploadCategoryTextFieldTableViewCell(textFieldDidChange text: String, cell: ProductUploadCategoryTextFieldTableViewCell) {
+        self.gotoCategory()
+    }
+    
+    func productUploadShippingTextFieldTableViewCell(textFieldDidChange text: String, cell: ProductUploadShippingTextFieldTableViewCell) {
+        self.selectedShippingCategory()
+    }
+    
+    func productUploadConditionTextFieldTableViewCell(textFieldDidChange text: String, cell: ProductUploadConditionTextFieldTableViewCell) {
+        self.productCondition = text
+        self.productModel.condition.name = self.productCondition
+    }
+    
+    func productUploadSkuTextFieldTableViewCell(textFieldDidChange text: String, cell: ProductUploadSkuTextFieldTableViewCell) {
+        self.productSKU = text
+        self.productModel.sku = self.productSKU
+    }
+    
+    func productUploadYoutubeTextFieldTableViewCell(textFieldDidChange text: String, cell: ProductUploadYoutubeTextFieldTableViewCell) {
+        self.productYoutubeVideoUrl = text
+        self.productModel.youtubeVideoUrl = self.productYoutubeVideoUrl
     }
     
     func productUploadTextViewTableViewCell(textFieldDidChange text: String, cell: ProductUploadTextViewTableViewCell, textFieldType: ProductTextFieldType) {
@@ -1657,10 +1765,11 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 }
                 
                 let indexPath: NSIndexPath = NSIndexPath(forItem: 1, inSection: 3)
-                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
+                //self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
                 self.productModel.condition = self.conditions[0]
                 
                 self.hud?.hide(true)
+                self.tableView.reloadData();
             } else {
                 self.hud?.hide(true)
                 if requestErrorType == .ResponseError {
@@ -1961,6 +2070,61 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         })
     }
     
+    func upload(uploadType: UploadType) {
+        self.showHUD()
+        WebServiceManager.fireProductUploadRequestWithUrl(ProductUploadEdit.url+"?access_token=\(SessionManager.accessToken())", parameters: ProductUploadEdit.parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                if let success = responseObject["isSuccessful"] as? Bool {
+                    if success {
+                        println(responseObject)
+                        self.hud?.hide(true)
+                        if uploadType == UploadType.Draft {
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                            self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyDraft)
+                        } else if uploadType == UploadType.EditProduct {
+                            ProductUploadEdit.edit = false
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                            self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyEdited)
+                        } else {
+                            self.success()
+                        }
+                        
+                        /*
+                        if !self.productIsDraft {
+                        self.success()
+                        } else {
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                        }*/
+                    } else {
+                        self.showAlert(Constants.Localized.invalid, message: responseObject["message"] as! String)
+                    }
+                }
+                self.hud?.hide(true)
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(Constants.Localized.error, message: errorModel.message)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken(UploadProduct.ProductUpload)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        })
+    }
+    
     // MARK: -
     // MARK: - POST METHOD: Refresh token
     /*
@@ -1988,6 +2152,8 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 self.fireGetProductConditions()
             } else if uploadProduct == UploadProduct.ProductMainImages {
                 self.fireUploadProductMainImages(self.productModel.images[self.productImagesCount])
+            } else if uploadProduct == UploadProduct.ProductUpload {
+                self.upload(self.uploadType)
             } else {
                 self.fireUploadProduct()
             }

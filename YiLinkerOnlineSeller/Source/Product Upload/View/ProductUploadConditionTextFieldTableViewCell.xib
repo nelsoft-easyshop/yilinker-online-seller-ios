@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProductUploadConditionTextFieldTableViewCell" rowHeight="72" id="crb-r2-rYL" customClass="ProductUploadConditionTextFieldTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="72"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="crb-r2-rYL" id="tYp-gW-Gr5">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lk1-o6-LMM">
+                        <rect key="frame" x="13" y="8" width="299" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="2HB-bv-rSI"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mVE-JD-kga">
+                        <rect key="frame" x="13" y="31" width="299" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="Yhb-hh-jMi"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                    </textField>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottomMargin" secondItem="mVE-JD-kga" secondAttribute="bottom" constant="2" id="37x-N5-ZD4"/>
+                    <constraint firstItem="Lk1-o6-LMM" firstAttribute="top" secondItem="tYp-gW-Gr5" secondAttribute="topMargin" id="CFn-Jd-bjM"/>
+                    <constraint firstItem="mVE-JD-kga" firstAttribute="trailing" secondItem="tYp-gW-Gr5" secondAttribute="trailingMargin" id="MDi-eh-AaH"/>
+                    <constraint firstAttribute="trailing" secondItem="Lk1-o6-LMM" secondAttribute="trailing" constant="8" id="oWf-Zz-N2G"/>
+                    <constraint firstItem="mVE-JD-kga" firstAttribute="leading" secondItem="tYp-gW-Gr5" secondAttribute="leadingMargin" constant="5" id="ps9-OI-j7c"/>
+                    <constraint firstItem="Lk1-o6-LMM" firstAttribute="leading" secondItem="tYp-gW-Gr5" secondAttribute="leadingMargin" constant="5" id="uj8-95-FXT"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="cellTexField" destination="mVE-JD-kga" id="Sl2-bE-yZB"/>
+                <outlet property="cellTitleLabel" destination="Lk1-o6-LMM" id="7G5-Ve-HCI"/>
+            </connections>
+            <point key="canvasLocation" x="341" y="331"/>
+        </tableViewCell>
+    </objects>
+</document>
