@@ -62,6 +62,10 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var loginBlockerView: UIView!
+    @IBOutlet weak var coverPhotoImageView: UIImageView!
+    @IBOutlet weak var coverPhotoHeightConstraint: NSLayoutConstraint!
+    
+    let coverPhotoHeight = 125;
     
     var tableData: [String] = []
     
@@ -180,7 +184,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         
         layout.sectionInset = UIEdgeInsetsMake(0, 16.0, 0, 16.0)
         collectionView.setCollectionViewLayout(layout, animated: true)
-        collectionView?.backgroundColor = UIColor.whiteColor()
+        collectionView?.backgroundColor = UIColor.clearColor()
         //collectionView?.bounces = false
         collectionView?.alwaysBounceVertical = true
         
@@ -388,6 +392,18 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             self.navigationController?.pushViewController(warehouseVC, animated: true)
         }
     }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        var offset: CGPoint = scrollView.contentOffset
+        println("Y: \(offset.y)")
+        
+//        if offset.y == 0 {
+//            self.coverPhotoHeightConstraint.constant = CGFloat(self.coverPhotoHeight)
+//        } else {
+            self.coverPhotoHeightConstraint.constant = CGFloat(self.coverPhotoHeight) + (offset.y * -1)
+//        }
+        self.view.layoutIfNeeded()
+    }
 
     //MARK: -
     //MARK: - API Requests
@@ -560,6 +576,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
                 NSUserDefaults.standardUserDefaults().setObject(self.storeInfo?.userId, forKey: "userId")
                 
                 NSUserDefaults.standardUserDefaults().synchronize()
+                
+                self.coverPhotoImageView.sd_setImageWithURL(self.storeInfo.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder"))
                 
                 self.intializeCollectionViewData()
                 self.collectionView.reloadData()
