@@ -898,7 +898,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadTableViewController)
         productUploadTableViewController.uploadType = UploadType.NewProduct
         productUploadTableViewController.productModel = ProductModel()
-
+        productUploadTableViewController.tableView.reloadData()
         navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
         self.navigationController?.pushViewController(productUploadTableViewController, animated: true)
         //self.dismissViewControllerAnimated(true, completion: nil)

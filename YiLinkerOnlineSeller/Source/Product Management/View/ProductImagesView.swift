@@ -10,6 +10,7 @@ import UIKit
 
 class ProductImagesView: UIView, UICollectionViewDataSource {
     
+    @IBOutlet weak var noUploadedLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subTitleLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -35,7 +36,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource {
         if !ProductUploadEdit.isPreview {
             self.imagesUrls = product.imageUrls
         }
-
+    
         self.collectionView.reloadData()
     }
     
@@ -45,19 +46,31 @@ class ProductImagesView: UIView, UICollectionViewDataSource {
         if  ProductUploadEdit.isPreview {
             if self.uploadType == UploadType.EditProduct {
                 if self.productModel!.editedImage.count == 0 {
+                    self.noUploadedLabel.hidden = false
                     return 0
                 }
+                self.noUploadedLabel.hidden = true
                 return self.productModel!.editedImage.count - 1
             } else {
                 if self.productModel!.images.count == 0 {
+                    self.noUploadedLabel.hidden = false
                     return 0
                 }
+                self.noUploadedLabel.hidden = true
                 return self.productModel!.images.count - 1
             }
         } else {
-            if imagesUrls.count == 0 {
-                return 0
+            
+            if self.productModel != nil {
+                if imagesUrls.count == 0 {
+                    self.noUploadedLabel.hidden = false
+                    return 0
+                } else {
+                    self.noUploadedLabel.hidden = true
+                    return imagesUrls.count
+                }
             }
+            
             return imagesUrls.count
         }
 
