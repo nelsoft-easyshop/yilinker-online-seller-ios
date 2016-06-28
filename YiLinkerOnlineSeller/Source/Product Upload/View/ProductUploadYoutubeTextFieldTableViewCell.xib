@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProductUploadYoutubeTextFieldTableViewCell" rowHeight="72" id="bzs-gi-mm7" customClass="ProductUploadYoutubeTextFieldTableViewCell" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="72"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bzs-gi-mm7" id="RFs-fc-ohS">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b3e-Uu-d1c">
+                        <rect key="frame" x="13" y="8" width="299" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="GSP-9V-fbX"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nei-Pw-8vk">
+                        <rect key="frame" x="13" y="31" width="299" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="Rtf-Vc-5Ea"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                    </textField>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottomMargin" secondItem="Nei-Pw-8vk" secondAttribute="bottom" constant="2" id="Aof-M5-PqM"/>
+                    <constraint firstAttribute="trailing" secondItem="b3e-Uu-d1c" secondAttribute="trailing" constant="8" id="IsM-KJ-ecL"/>
+                    <constraint firstItem="b3e-Uu-d1c" firstAttribute="leading" secondItem="RFs-fc-ohS" secondAttribute="leadingMargin" constant="5" id="SWz-lN-AtS"/>
+                    <constraint firstItem="Nei-Pw-8vk" firstAttribute="trailing" secondItem="RFs-fc-ohS" secondAttribute="trailingMargin" id="i1n-Sv-EwA"/>
+                    <constraint firstItem="b3e-Uu-d1c" firstAttribute="top" secondItem="RFs-fc-ohS" secondAttribute="topMargin" id="pOu-KR-Hew"/>
+                    <constraint firstItem="Nei-Pw-8vk" firstAttribute="leading" secondItem="RFs-fc-ohS" secondAttribute="leadingMargin" constant="5" id="ytt-2g-9bu"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="cellTexField" destination="Nei-Pw-8vk" id="bHI-2q-a1Q"/>
+                <outlet property="cellTitleLabel" destination="b3e-Uu-d1c" id="Ey8-DN-rZa"/>
+            </connections>
+            <point key="canvasLocation" x="341" y="331"/>
+        </tableViewCell>
+    </objects>
+</document>

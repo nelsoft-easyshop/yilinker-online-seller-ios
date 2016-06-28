@@ -35,6 +35,7 @@ struct ProductUploadStrings {
     static let brand: String = StringHelper.localizedStringWithKey("BRAND_LOCALIZE_KEY")
     static let addBrand: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_BRAND_LOCALIZE_KEY")
     static let condition: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_CONDITION_LOCALIZE_KEY")
+    static let conditionTitle: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_CONDITION_TITLE_LOCALIZE_KEY")
     static let productSku: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_PLACEHOLDER_LOCALIZE_KEY")
     static let tooltip: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_PRODUCT_GROUP_TOOLTIP_LOCALIZE_KEY")
     static let productGroup: String = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_GROUP_LOCALIZE_KEY")

@@ -37,6 +37,20 @@
 		546BF3991D057D8A005DF761 /* WarehouseProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546BF3941D057D8A005DF761 /* WarehouseProductDetailViewController.swift */; };
 		54AC39FA1D067C9300B28176 /* WarehouseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AC39F91D067C9300B28176 /* WarehouseModel.swift */; };
 		5823CF30562BC7521FAF7027 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B63964E770102F63A29F38 /* libPods.a */; };
+		6D8F4CBA1D2241A400B24394 /* ProductUploadYoutubeTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8F4CB81D2241A400B24394 /* ProductUploadYoutubeTextFieldTableViewCell.swift */; };
+		6D8F4CBB1D2241A400B24394 /* ProductUploadYoutubeTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D8F4CB91D2241A400B24394 /* ProductUploadYoutubeTextFieldTableViewCell.xib */; };
+		6D8F4CBE1D2241CD00B24394 /* ProductUploadNameTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8F4CBC1D2241CD00B24394 /* ProductUploadNameTextFieldTableViewCell.swift */; };
+		6D8F4CBF1D2241CD00B24394 /* ProductUploadNameTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D8F4CBD1D2241CD00B24394 /* ProductUploadNameTextFieldTableViewCell.xib */; };
+		6D8F4CC21D22423300B24394 /* ProductUploadCategoryTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8F4CC01D22423300B24394 /* ProductUploadCategoryTextFieldTableViewCell.swift */; };
+		6D8F4CC31D22423300B24394 /* ProductUploadCategoryTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D8F4CC11D22423300B24394 /* ProductUploadCategoryTextFieldTableViewCell.xib */; };
+		6D8F4CC61D22427400B24394 /* ProductUploadShippingTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8F4CC41D22427400B24394 /* ProductUploadShippingTextFieldTableViewCell.swift */; };
+		6D8F4CC71D22427400B24394 /* ProductUploadShippingTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D8F4CC51D22427400B24394 /* ProductUploadShippingTextFieldTableViewCell.xib */; };
+		6D8F4CCA1D22429600B24394 /* ProductUploadBrandTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8F4CC81D22429600B24394 /* ProductUploadBrandTextFieldTableViewCell.swift */; };
+		6D8F4CCB1D22429600B24394 /* ProductUploadBrandTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D8F4CC91D22429600B24394 /* ProductUploadBrandTextFieldTableViewCell.xib */; };
+		6D8F4CCE1D2242BD00B24394 /* ProductUploadConditionTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8F4CCC1D2242BD00B24394 /* ProductUploadConditionTextFieldTableViewCell.swift */; };
+		6D8F4CCF1D2242BD00B24394 /* ProductUploadConditionTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D8F4CCD1D2242BD00B24394 /* ProductUploadConditionTextFieldTableViewCell.xib */; };
+		6D8F4CD21D22433300B24394 /* ProductUploadSkuTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8F4CD01D22433300B24394 /* ProductUploadSkuTextFieldTableViewCell.swift */; };
+		6D8F4CD31D22433300B24394 /* ProductUploadSkuTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D8F4CD11D22433300B24394 /* ProductUploadSkuTextFieldTableViewCell.xib */; };
 		6DD8732C1D1272A6001C4D21 /* ProductUploadProductGroupPreviewTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD8732A1D1272A6001C4D21 /* ProductUploadProductGroupPreviewTVC.swift */; };
 		6DD8732D1D1272A6001C4D21 /* ProductUploadProductGroupPreviewTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6DD8732B1D1272A6001C4D21 /* ProductUploadProductGroupPreviewTVC.xib */; };
 		798D81CC1C8686EB00D2A1F7 /* ActivityLogTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D7EA31C8686EA00D2A1F7 /* ActivityLogTableViewController.swift */; };
@@ -881,6 +895,20 @@
 		546BF3931D057D8A005DF761 /* WarehouseListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarehouseListViewController.swift; sourceTree = "<group>"; };
 		546BF3941D057D8A005DF761 /* WarehouseProductDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarehouseProductDetailViewController.swift; sourceTree = "<group>"; };
 		54AC39F91D067C9300B28176 /* WarehouseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarehouseModel.swift; sourceTree = "<group>"; };
+		6D8F4CB81D2241A400B24394 /* ProductUploadYoutubeTextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadYoutubeTextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		6D8F4CB91D2241A400B24394 /* ProductUploadYoutubeTextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductUploadYoutubeTextFieldTableViewCell.xib; sourceTree = "<group>"; };
+		6D8F4CBC1D2241CD00B24394 /* ProductUploadNameTextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadNameTextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		6D8F4CBD1D2241CD00B24394 /* ProductUploadNameTextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductUploadNameTextFieldTableViewCell.xib; sourceTree = "<group>"; };
+		6D8F4CC01D22423300B24394 /* ProductUploadCategoryTextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadCategoryTextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		6D8F4CC11D22423300B24394 /* ProductUploadCategoryTextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductUploadCategoryTextFieldTableViewCell.xib; sourceTree = "<group>"; };
+		6D8F4CC41D22427400B24394 /* ProductUploadShippingTextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadShippingTextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		6D8F4CC51D22427400B24394 /* ProductUploadShippingTextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductUploadShippingTextFieldTableViewCell.xib; sourceTree = "<group>"; };
+		6D8F4CC81D22429600B24394 /* ProductUploadBrandTextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadBrandTextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		6D8F4CC91D22429600B24394 /* ProductUploadBrandTextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductUploadBrandTextFieldTableViewCell.xib; sourceTree = "<group>"; };
+		6D8F4CCC1D2242BD00B24394 /* ProductUploadConditionTextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadConditionTextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		6D8F4CCD1D2242BD00B24394 /* ProductUploadConditionTextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductUploadConditionTextFieldTableViewCell.xib; sourceTree = "<group>"; };
+		6D8F4CD01D22433300B24394 /* ProductUploadSkuTextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadSkuTextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		6D8F4CD11D22433300B24394 /* ProductUploadSkuTextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductUploadSkuTextFieldTableViewCell.xib; sourceTree = "<group>"; };
 		6DD8732A1D1272A6001C4D21 /* ProductUploadProductGroupPreviewTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadProductGroupPreviewTVC.swift; sourceTree = "<group>"; };
 		6DD8732B1D1272A6001C4D21 /* ProductUploadProductGroupPreviewTVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductUploadProductGroupPreviewTVC.xib; sourceTree = "<group>"; };
 		700EB734D32404B5E927BC8D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -2850,6 +2878,20 @@
 				798D80CC1C8686EB00D2A1F7 /* PUAttributeSetHeaderTableViewCell.swift */,
 				798D80CD1C8686EB00D2A1F7 /* PUAttributeSetHeaderTableViewCell.xib */,
 				F71606BD1CC4DE8800C2F5E8 /* Product Upload */,
+				6D8F4CD01D22433300B24394 /* ProductUploadSkuTextFieldTableViewCell.swift */,
+				6D8F4CD11D22433300B24394 /* ProductUploadSkuTextFieldTableViewCell.xib */,
+				6D8F4CCC1D2242BD00B24394 /* ProductUploadConditionTextFieldTableViewCell.swift */,
+				6D8F4CCD1D2242BD00B24394 /* ProductUploadConditionTextFieldTableViewCell.xib */,
+				6D8F4CC81D22429600B24394 /* ProductUploadBrandTextFieldTableViewCell.swift */,
+				6D8F4CC91D22429600B24394 /* ProductUploadBrandTextFieldTableViewCell.xib */,
+				6D8F4CC41D22427400B24394 /* ProductUploadShippingTextFieldTableViewCell.swift */,
+				6D8F4CC51D22427400B24394 /* ProductUploadShippingTextFieldTableViewCell.xib */,
+				6D8F4CC01D22423300B24394 /* ProductUploadCategoryTextFieldTableViewCell.swift */,
+				6D8F4CC11D22423300B24394 /* ProductUploadCategoryTextFieldTableViewCell.xib */,
+				6D8F4CBC1D2241CD00B24394 /* ProductUploadNameTextFieldTableViewCell.swift */,
+				6D8F4CBD1D2241CD00B24394 /* ProductUploadNameTextFieldTableViewCell.xib */,
+				6D8F4CB81D2241A400B24394 /* ProductUploadYoutubeTextFieldTableViewCell.swift */,
+				6D8F4CB91D2241A400B24394 /* ProductUploadYoutubeTextFieldTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3742,6 +3784,7 @@
 				F713DBA11CC8BCF300E17212 /* ProductUploadCombinationFooterTVC.xib in Resources */,
 				F79B62381CE56E00001251BF /* ProductUploadProductGroupCVC.xib in Resources */,
 				798D83581C8686EB00D2A1F7 /* ProductManagementAllTableViewCell.xib in Resources */,
+				6D8F4CC31D22423300B24394 /* ProductUploadCategoryTextFieldTableViewCell.xib in Resources */,
 				79D423901D0000490060A0EC /* TranslationImageCollectionViewCell.xib in Resources */,
 				798D82971C8686EB00D2A1F7 /* Panton SemiBold Italic.otf in Resources */,
 				798D83821C8686EB00D2A1F7 /* ProductUploadAttributeValuesCollectionViewCell.xib in Resources */,
@@ -3770,6 +3813,7 @@
 				798D844C1C8686EB00D2A1F7 /* TransactionDeliveryTableViewCell.xib in Resources */,
 				798D83F81C8686EB00D2A1F7 /* AddProductHeaderView.xib in Resources */,
 				F727FF591B99C94700872E11 /* edit.png in Resources */,
+				6D8F4CBB1D2241A400B24394 /* ProductUploadYoutubeTextFieldTableViewCell.xib in Resources */,
 				798D84461C8686EB00D2A1F7 /* TransactionConsigneeTableViewCell.xib in Resources */,
 				798D828A1C8686EB00D2A1F7 /* Black Italic.otf in Resources */,
 				798D82941C8686EB00D2A1F7 /* Panton Light Italic.otf in Resources */,
@@ -3850,6 +3894,7 @@
 				798D82981C8686EB00D2A1F7 /* Panton SemiBold.otf in Resources */,
 				798D820B1C8686EB00D2A1F7 /* AddSubCategoriesViewController.xib in Resources */,
 				F71606BC1CC4DE7F00C2F5E8 /* ProductUploadImageTVC.xib in Resources */,
+				6D8F4CCF1D2242BD00B24394 /* ProductUploadConditionTextFieldTableViewCell.xib in Resources */,
 				F7C40FCC1B983CD90091C16C /* addressRight.png in Resources */,
 				798D840E1C8686EB00D2A1F7 /* SettingsHeaderTableViewCell.xib in Resources */,
 				F7C40FCB1B983CD90091C16C /* address.png in Resources */,
@@ -3886,6 +3931,7 @@
 				F7C40FCD1B983CD90091C16C /* arrow_up.png in Resources */,
 				967EE1C11B8AEA25000591AC /* Images.xcassets in Resources */,
 				798D83351C8686EB00D2A1F7 /* StoreInfoTableViewCell.xib in Resources */,
+				6D8F4CC71D22427400B24394 /* ProductUploadShippingTextFieldTableViewCell.xib in Resources */,
 				798D820D1C8686EB00D2A1F7 /* CustomizedCategoryViewController.xib in Resources */,
 				798D83BC1C8686EB00D2A1F7 /* RemarksTableViewCell.xib in Resources */,
 				F7C40FDA1B983CD90091C16C /* sort.png in Resources */,
@@ -3926,6 +3972,7 @@
 				798D822E1C8686EB00D2A1F7 /* DashBoardItemCollectionViewCell.xib in Resources */,
 				F7C40FDB1B983CD90091C16C /* truck.png in Resources */,
 				798D82A71C8686EB00D2A1F7 /* GoogleService-Info.plist in Resources */,
+				6D8F4CD31D22433300B24394 /* ProductUploadSkuTextFieldTableViewCell.xib in Resources */,
 				79CCB65B1CF6A41900E38612 /* LanguageTranslationPickerTableViewController.xib in Resources */,
 				798D832F1C8686EB00D2A1F7 /* StoreInfoQrCodeTableViewCell.xib in Resources */,
 				798D83601C8686EB00D2A1F7 /* ProductUploadAttributeListTableViewController.xib in Resources */,
@@ -3951,6 +3998,7 @@
 				798D838A1C8686EB00D2A1F7 /* ProductUploadCombinationHeaderTableViewCell.xib in Resources */,
 				798D83411C8686EB00D2A1F7 /* SelectDateViewController.xib in Resources */,
 				798D82D21C8686EB00D2A1F7 /* LoginRegisterLogoTableViewCell.xib in Resources */,
+				6D8F4CCB1D22429600B24394 /* ProductUploadBrandTextFieldTableViewCell.xib in Resources */,
 				798D82CB1C8686EB00D2A1F7 /* SignInViewController.xib in Resources */,
 				79EF66271CA107DF000CDA6B /* SuggestionViewController.xib in Resources */,
 				79A1C7081CFD3C54001184C4 /* LanguageTransalationVariantsCollectionViewController.xib in Resources */,
@@ -3991,6 +4039,7 @@
 				798D82CE1C8686EB00D2A1F7 /* ForgotPasswordTableViewCell.xib in Resources */,
 				798D83A41C8686EB00D2A1F7 /* ProductUploadTextViewTableViewCell.xib in Resources */,
 				798D82991C8686EB00D2A1F7 /* Panton Thin Italic.otf in Resources */,
+				6D8F4CBF1D2241CD00B24394 /* ProductUploadNameTextFieldTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4110,6 +4159,7 @@
 				798D83361C8686EB00D2A1F7 /* EdititemsViewController.swift in Sources */,
 				798D84311C8686EB00D2A1F7 /* TransactionTableViewController.swift in Sources */,
 				798D82DF1C8686EB00D2A1F7 /* ContactListTVC.swift in Sources */,
+				6D8F4CCE1D2242BD00B24394 /* ProductUploadConditionTextFieldTableViewCell.swift in Sources */,
 				798D81F61C8686EB00D2A1F7 /* PayoutRequestListBankDetailHeaderTableViewCell.swift in Sources */,
 				798D83121C8686EB00D2A1F7 /* AddressModelV2.swift in Sources */,
 				798D81D11C8686EB00D2A1F7 /* ActivityModel.swift in Sources */,
@@ -4172,6 +4222,7 @@
 				798D82581C8686EB00D2A1F7 /* CandleChartDataSet.swift in Sources */,
 				798D84741C8686EB00D2A1F7 /* SaveButtonView.swift in Sources */,
 				798D834F1C8686EB00D2A1F7 /* ProductDescriptionView.swift in Sources */,
+				6D8F4CC21D22423300B24394 /* ProductUploadCategoryTextFieldTableViewCell.swift in Sources */,
 				798D83721C8686EB00D2A1F7 /* BrandModel.swift in Sources */,
 				798D84661C8686EB00D2A1F7 /* AlbumTableViewController.swift in Sources */,
 				798D823F1C8686EB00D2A1F7 /* ChartViewBase.swift in Sources */,
@@ -4305,6 +4356,7 @@
 				798D84751C8686EB00D2A1F7 /* SemiRoundedButton.swift in Sources */,
 				799AD44E1CFBF38700977428 /* ProductTranslationVariantModel.swift in Sources */,
 				798D838B1C8686EB00D2A1F7 /* ProductUploadCombinationTableViewCell.swift in Sources */,
+				6D8F4CC61D22427400B24394 /* ProductUploadShippingTextFieldTableViewCell.swift in Sources */,
 				798D82831C8686EB00D2A1F7 /* ChartColorTemplates.swift in Sources */,
 				798D832C1C8686EB00D2A1F7 /* StoreInfoPreferredCategoriesTableViewCell.swift in Sources */,
 				798D82D11C8686EB00D2A1F7 /* LoginRegisterLogoTableViewCell.swift in Sources */,
@@ -4373,6 +4425,7 @@
 				798D83AB1C8686EB00D2A1F7 /* DisputeViewController.swift in Sources */,
 				798D824B1C8686EB00D2A1F7 /* ChartMarker.swift in Sources */,
 				798D84701C8686EB00D2A1F7 /* EmptyView.swift in Sources */,
+				6D8F4CBA1D2241A400B24394 /* ProductUploadYoutubeTextFieldTableViewCell.swift in Sources */,
 				798D838F1C8686EB00D2A1F7 /* ProductUploadDetailHeaderViewCollectionViewCell.swift in Sources */,
 				798D82AD1C8686EB00D2A1F7 /* FollowerTableViewCell.swift in Sources */,
 				798D82E71C8686EB00D2A1F7 /* MessageViewController.swift in Sources */,
@@ -4534,8 +4587,10 @@
 				F7FDD0AF1D08FDD300AEA0BB /* WarehouseCountryModel.swift in Sources */,
 				798D826C1C8686EB00D2A1F7 /* ChartRange.swift in Sources */,
 				798D83991C8686EB00D2A1F7 /* ProductUploadPlainDetailCombinationTableViewCell.swift in Sources */,
+				6D8F4CBE1D2241CD00B24394 /* ProductUploadNameTextFieldTableViewCell.swift in Sources */,
 				798D82E31C8686EB00D2A1F7 /* ImageVC.swift in Sources */,
 				798D839B1C8686EB00D2A1F7 /* ProductUploadPriceTableViewCell.swift in Sources */,
+				6D8F4CD21D22433300B24394 /* ProductUploadSkuTextFieldTableViewCell.swift in Sources */,
 				798D82051C8686EB00D2A1F7 /* WithdrawMethodView.swift in Sources */,
 				798D82E11C8686EB00D2A1F7 /* ConversationTVC.swift in Sources */,
 				798D821F1C8686EB00D2A1F7 /* CCCItemImagesView.swift in Sources */,
@@ -4566,6 +4621,7 @@
 				798D82A41C8686EB00D2A1F7 /* NSDate+FSExtension.m in Sources */,
 				798D84231C8686EB00D2A1F7 /* TransactionCancelOrderViewController.swift in Sources */,
 				798D83B81C8686EB00D2A1F7 /* ResolutionCenterModel.swift in Sources */,
+				6D8F4CCA1D22429600B24394 /* ProductUploadBrandTextFieldTableViewCell.swift in Sources */,
 				798D82E41C8686EB00D2A1F7 /* MessageThreadImageTVC.swift in Sources */,
 				798D81FA1C8686EB00D2A1F7 /* PayoutRequestListItemTableViewCell.swift in Sources */,
 				798D846B1C8686EB00D2A1F7 /* DiscountLabel.swift in Sources */,

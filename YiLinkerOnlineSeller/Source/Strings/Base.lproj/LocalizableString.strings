@@ -682,6 +682,7 @@ PRODUCT_UPLOAD_PRODUCT_NAME_LOCALIZE_KEY = "Make your name as enticing as possib
 PRODUCT_UPLOAD_SHORT_DESC_LOCALIZE_KEY = "Think of a good description about your product that you can say in one breath.";
 PRODUCT_UPLOAD_COMPLETE_DESC_LOCALIZE_KEY = "This is where you write an amazingly long and beautiful description about your product and why users should buy it over your competitor.";
 PRODUCT_UPLOAD_BRAND_LOCALIZE_KEY = "Select or input product brand";
+PRODUCT_UPLOAD_CONDITION_TITLE_LOCALIZE_KEY = "Condition";
 PRODUCT_UPLOAD_CONDITION_LOCALIZE_KEY = "Select the condition of the product";
 PRODUCT_UPLOAD_YOUTUBE_URL_LOCALIZE_KEY = "Youtube Video Url";
 PRODUCT_UPLOAD_YOUTUBE_URL_PLACEHOLDER_LOCALIZE_KEY = "Enter youtube video url here";

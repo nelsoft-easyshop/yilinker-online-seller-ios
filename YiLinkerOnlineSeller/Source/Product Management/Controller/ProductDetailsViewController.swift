@@ -103,10 +103,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         
         let nib4: UINib = UINib(nibName: PUPGPreviewConstant.productUploadProductGroupTVCNibNameAndIdentier, bundle: nil)
         self.tableView.registerNib(nib4, forCellReuseIdentifier: PUPGPreviewConstant.productUploadProductGroupTVCNibNameAndIdentier)
-    }
-
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+        
         customizeNavigationBar()
         loadloadViewsWithDetails()
         self.title = "Product Details"
@@ -122,6 +119,11 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
         }
+        
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     // MARK: - Init Views
@@ -673,7 +675,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                         } else {
                             self.success()
                         }
-
+                        
                         /*
                         if !self.productIsDraft {
                         self.success()
@@ -708,114 +710,8 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
                 }
             }
         })
-        /*
-        WebServiceManager.fireProductUploadImageRequestWithUrl(ProductUploadCombination.url, parameters: ProductUploadCombination.parameters!, data: ProductUploadCombination.datas, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
-            if successful {
-                self.hud?.hide(true)
-                let dictionary: NSDictionary = responseObject as! NSDictionary
-                
-                if dictionary["isSuccessful"] as! Bool == true {
-                    if uploadType == UploadType.Draft {
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                        self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyDraft)
-                    } else if uploadType == UploadType.EditProduct {
-                        ProductUploadEdit.edit = false
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                        self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyEdited)
-                    } else {
-                        self.success()
-                    }
-                } else {
-                    self.showAlert(Constants.Localized.invalid, message: dictionary["message"] as! String)
-                }
-
-//                if uploadType == UploadType.Draft {
-//                    ProductUploadEdit.edit = false
-//                    self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyDraft)
-//                } else if uploadType == UploadType.EditProduct {
-//                    ProductUploadEdit.edit = false
-//                    self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyEdited)
-//                } else {
-//                    self.success()
-//                }
-//                self.hud?.hide(true)
-            } else {
-                self.hud?.hide(true)
-                if requestErrorType == .ResponseError {
-                    //Error in api requirements
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    self.showAlert(Constants.Localized.error, message: errorModel.message)
-                } else if requestErrorType == .AccessTokenExpired {
-                    self.fireRefreshToken2()
-                } else if requestErrorType == .PageNotFound {
-                    //Page not found
-                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
-                } else if requestErrorType == .NoInternetConnection {
-                    //No internet connection
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                } else if requestErrorType == .RequestTimeOut {
-                    //Request timeout
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                } else if requestErrorType == .UnRecognizeError {
-                    //Unhandled error
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
-                }
-                self.tableView.reloadData()
-            }
-        })*/
     }
-    
-//    func upload(uploadType: UploadType) {
-//        self.showHUD()
-//        self.uploadType = uploadType
-//        let manager = APIManager.sharedInstance
-//        manager.POST(ProductUploadCombination.url, parameters: ProductUploadCombination.parameters, constructingBodyWithBlock: { (formData: AFMultipartFormData) -> Void in
-//            for (index, data) in enumerate(ProductUploadCombination.datas) {
-//                println("multipart index: \(index)")
-//                formData.appendPartWithFileData(data, name: "images[]", fileName: "\(index)", mimeType: "image/jpeg")
-//            }
-//            
-//            }, success: { (NSURLSessionDataTask, response: AnyObject) -> Void in
-//                self.hud?.hide(true)
-//                let dictionary: NSDictionary = response as! NSDictionary
-//                
-//                if dictionary["isSuccessful"] as! Bool == true {
-//                    if uploadType == UploadType.Draft {
-//                        self.dismissViewControllerAnimated(true, completion: nil)
-//                        self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyDraft)
-//                    } else if uploadType == UploadType.EditProduct {
-//                        ProductUploadEdit.edit = false
-//                        self.dismissViewControllerAnimated(true, completion: nil)
-//                        //self.dismissViewControllerAnimated(true, completion: nil)
-//                        self.dismissControllerWithToastMessage(ProductUploadStrings.successfullyEdited)
-//                    } else {
-//                        self.success()
-//                    }
-//                } else {
-//                    self.showAlert(Constants.Localized.invalid, message: dictionary["message"] as! String)
-//                }
-//                println(response)
-//            }) { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
-//                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-//                let data = NSJSONSerialization.dataWithJSONObject(error.userInfo!, options: nil, error: nil)
-//                let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
-//                println("error response: \(string)")
-//                if task.statusCode == 401 {
-//                    self.fireRefreshToken2()
-//                } else {
-//                    if error.userInfo != nil {
-//                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-//                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-//                        self.showAlert(Constants.Localized.error, message: errorModel.message)
-//                    } else {
-//                        self.showAlert(Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-//                    }
-//                    self.tableView.reloadData()
-//                }
-//                self.hud?.hide(true)
-//        }
-//    }
-    
+
     //MARK: - Fire Refresh Token 2
     func fireRefreshToken2() {
         self.showHUD()
@@ -898,9 +794,10 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         let navigationController: UINavigationController = UINavigationController(rootViewController: productUploadTableViewController)
         productUploadTableViewController.uploadType = UploadType.NewProduct
         productUploadTableViewController.productModel = ProductModel()
-
         navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-        self.navigationController?.pushViewController(productUploadTableViewController, animated: true)
+        ProductUploadTCSuccessUpload.isUploadAgain = true
+        self.navigationController!.popToRootViewControllerAnimated(true)
+        //self.navigationController?.pushViewController(productUploadTableViewController, animated: true)
         //self.dismissViewControllerAnimated(true, completion: nil)
         //self.presentViewController(productUploadTableViewController, animated: true, completion: nil)
         //self.tabBarController!.presentViewController(navigationController, animated: true, completion: nil)
@@ -927,4 +824,3 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         self.tableView.dataSource = nil
     }*/
 }
-
