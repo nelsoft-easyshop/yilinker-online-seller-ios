@@ -395,13 +395,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         var offset: CGPoint = scrollView.contentOffset
-        println("Y: \(offset.y)")
-        
-//        if offset.y == 0 {
-//            self.coverPhotoHeightConstraint.constant = CGFloat(self.coverPhotoHeight)
-//        } else {
-            self.coverPhotoHeightConstraint.constant = CGFloat(self.coverPhotoHeight) + (offset.y * -1)
-//        }
+        self.coverPhotoHeightConstraint.constant = CGFloat(self.coverPhotoHeight) + (offset.y * -1)
         self.view.layoutIfNeeded()
     }
 
