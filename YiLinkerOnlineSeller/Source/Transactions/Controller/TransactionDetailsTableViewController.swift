@@ -403,7 +403,7 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         if (Reachability.isConnectedToNetwork()) {
             self.showHUD()
             
-            WebServiceManager.fireGetContacts(APIAtlas.ACTION_GET_CONTACTS, page: "1", limit: "1", keyword: keyword, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            WebServiceManager.fireGetContacts(APIAtlas.ACTION_GET_CONTACTS, page: "1", limit: "100", keyword: keyword, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
                 
                 if successful {
                     self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
@@ -484,9 +484,16 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
         var selectedContact : W_Contact?
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let messagingViewController: MessageThreadVC = (storyBoard.instantiateViewControllerWithIdentifier("MessageThreadVC") as? MessageThreadVC)!
+//        
+//        if contacts.count != 0 {
+//            selectedContact = contacts[0]
+//        }
         
-        if contacts.count != 0 {
-            selectedContact = contacts[0]
+        for contact in contacts {
+            if contact.fullName == transactionConsigneeModel.consigneeName {
+                selectedContact = contact
+                break
+            }
         }
         
         println("SELECTED CONTACT \(contacts[0].userId)")
@@ -622,6 +629,8 @@ class TransactionDetailsTableViewController: UITableViewController, TransactionD
        println("Message")
         if transactionConsigneeModel.email.isNotEmpty() {
             self.getContactsFromEndpoint(transactionConsigneeModel.email)
+        } else {
+            self.getContactsFromEndpoint("")
         }
     }
     
