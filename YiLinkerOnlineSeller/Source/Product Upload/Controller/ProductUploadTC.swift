@@ -64,6 +64,14 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     
     // Tableview Cell
     var cellImage: ProductUploadImageTVC?
+    var cellName: ProductUploadNameTextFieldTableViewCell?
+    var cellCategory: ProductUploadCategoryTextFieldTableViewCell?
+    var cellShipping: ProductUploadShippingTextFieldTableViewCell?
+    var cellSku: ProductUploadSkuTextFieldTableViewCell?
+    var cellBrand: ProductUploadBrandTextFieldTableViewCell?
+    var cellYoutube: ProductUploadYoutubeTextFieldTableViewCell?
+    var cellGroup: ProductUploadProductGroupTextFieldTableViewCell?
+    var cellPGroup: ProductUploadProductGroupTVC?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -143,7 +151,18 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             self.fireGetProductConditions()
             
             dispatch_async(dispatch_get_main_queue(), {
-                self.tableView.reloadData()
+                self.cellImage!.productModel = self.productModel
+                self.cellImage!.selectedPrimaryPhoto = []
+                self.cellName!.cellTexField.text = ""
+                self.cellCategory!.cellTexField.text = ""
+                self.cellBrand!.cellTexField.text = ""
+                self.cellSku!.cellTexField.text = ""
+                self.cellShipping!.cellTexField.text = ""
+                self.cellYoutube!.cellTexField.text = ""
+                self.cellGroup!.productGroupTextField.text = ""
+                self.cellPGroup!.productModel = self.productModel
+                self.tableView.setContentOffset(CGPointZero, animated:true)
+                super.viewDidLoad()
             })
             
         }
@@ -273,7 +292,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 
                 cell.userInteractionEnabled = true
-                
+                self.cellName = cell
                 cell.cellTitleLabel.text = ProductUploadStrings.prodName
                 
                 if self.productName != "" {
@@ -290,7 +309,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 let cell: ProductUploadTextViewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadTextViewTableViewCellNibNameAndIdentifier) as! ProductUploadTextViewTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = true
-                
+        
                 cell.cellTitleLabel.text = ProductUploadStrings.shortDescription
                  
                 if self.productModel.shortDescription != "" {
@@ -331,6 +350,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 let cell: ProductUploadYoutubeTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadYoutubeTextFieldTableViewCell") as! ProductUploadYoutubeTextFieldTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = true
+                self.cellYoutube = cell
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.youtubeUrl
                 cell.cellTexField.placeholder = ProductUploadStrings.youtubeUrlPlaceholder
@@ -351,6 +371,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 
                 cell.userInteractionEnabled = self.checkIfSeller()
+                self.cellCategory = cell
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.category
                 cell.cellTexField.placeholder = ProductUploadStrings.selectCategory
@@ -369,6 +390,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             } else {
                 let cell: ProductUploadShippingTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadShippingTextFieldTableViewCell") as! ProductUploadShippingTextFieldTableViewCell
                 cell.userInteractionEnabled = self.checkIfSeller()
+                self.cellShipping = cell
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.shippingCategory
                 cell.cellTexField.placeholder = ProductUploadStrings.selectShippingCategory
@@ -390,6 +412,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 let cell: ProductUploadBrandTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadBrandTextFieldTableViewCell") as! ProductUploadBrandTextFieldTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = self.checkIfSeller()
+                self.cellBrand = cell
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.brand
                 cell.cellTexField.placeholder = ProductUploadStrings.addBrand
@@ -438,7 +461,8 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = self.checkIfSeller()
-               
+                self.cellSku = cell
+                
                 if !self.isCombinationAvailable {
                     cell.cellTitleLabel.text = StringHelper.localizedStringWithKey("PRODUCT_UPLOAD_SKU_LOCALIZE_KEY")
                     cell.cellTitleLabel.required()
@@ -461,6 +485,8 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
         } else if indexPath.section == 4 {
             if indexPath.row == 0 {
                 let cell: ProductUploadProductGroupTVC = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadProductGroupTVC") as! ProductUploadProductGroupTVC
+                self.cellPGroup = cell
+                
                 var tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "selectProductGroups")
                 //cell.addGestureRecognizer(tap)
                 
@@ -487,6 +513,8 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 let cell: ProductUploadProductGroupTextFieldTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductUploadProductGroupTextFieldTableViewCell") as! ProductUploadProductGroupTextFieldTableViewCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 cell.userInteractionEnabled = self.checkIfSeller()
+                self.cellGroup = cell
+                
                 cell.toolTipLabel.text = ProductUploadStrings.tooltip
                 cell.productGroupTextField.placeholder = ProductUploadStrings.productGroupPlaceHolder
                 
@@ -505,7 +533,6 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 
                 return cell
             } else {
-                println(self.productModel.validCombinations[0].attributes.count)
                 if self.productModel.validCombinations[0].attributes.count == 0 {
                     let cell: ProductUploadButtonTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ProductUploadTableViewControllerConstant.productUploadButtonTableViewCellNibNameAndIdentifier) as! ProductUploadButtonTableViewCell
                     cell.userInteractionEnabled = self.checkIfSeller()
@@ -710,7 +737,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - Navigation bar back button action
     
     func back() {
-        if (self.productModel.name != "" ||  self.productModel.name == "") && (self.productModel.shortDescription != "" || self.productModel.completeDescription != "" || self.productModel.category.uid != 0 || self.productModel.images.count != 1) {
+        if (self.productModel.name != "" && (self.productModel.shortDescription == "" || self.productModel.completeDescription == "" || self.productModel.category.uid == 0 || self.productModel.images.count == 1)) ||  (self.productModel.name == "" && (self.productModel.shortDescription != "" || self.productModel.completeDescription != "" || self.productModel.category.uid != 0 || self.productModel.images.count != 1)) {
             if (ProductUploadCombination.draft && self.isDraft == false) && self.uploadType != UploadType.EditProduct {
                 self.uploadType = UploadType.Draft
                 self.draftModal()
