@@ -161,6 +161,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 self.cellYoutube!.cellTexField.text = ""
                 self.cellGroup!.productGroupTextField.text = ""
                 self.cellPGroup!.productModel = self.productModel
+                self.tableView.setContentOffset(CGPointZero, animated:true)
                 super.viewDidLoad()
             })
             
@@ -736,7 +737,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     // MARK: - Navigation bar back button action
     
     func back() {
-        if (self.productModel.name != "" ||  self.productModel.name == "") && (self.productModel.shortDescription != "" || self.productModel.completeDescription != "" || self.productModel.category.uid != 0 || self.productModel.images.count != 1) {
+        if (self.productModel.name != "" && (self.productModel.shortDescription == "" || self.productModel.completeDescription == "" || self.productModel.category.uid == 0 || self.productModel.images.count == 1)) ||  (self.productModel.name == "" && (self.productModel.shortDescription != "" || self.productModel.completeDescription != "" || self.productModel.category.uid != 0 || self.productModel.images.count != 1)) {
             if (ProductUploadCombination.draft && self.isDraft == false) && self.uploadType != UploadType.EditProduct {
                 self.uploadType = UploadType.Draft
                 self.draftModal()
