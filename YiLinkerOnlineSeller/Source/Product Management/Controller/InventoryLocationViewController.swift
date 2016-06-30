@@ -218,7 +218,17 @@ class InventoryLocationViewController: UIViewController {
     // MARK: - Actions
     
     func saveAction() {
-
+        
+        if isLogisticThirdParty {
+            if isLocal {
+                let cell: InventoryLocationTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 3)) as! InventoryLocationTableViewCell
+                cell.inputTextField.resignFirstResponder()
+            } else {
+                let cell: InventoryLocationTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 2)) as! InventoryLocationTableViewCell
+                cell.inputTextField.resignFirstResponder()
+            }
+        }
+        
         if selectedLocationIndex == -1 {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Strings.alertWarehouse, title: Strings.cannotProceed)
         } else if selectedLogisticId == 0 {
@@ -399,7 +409,7 @@ extension InventoryLocationViewController: UITableViewDataSource, UITableViewDel
                     cell.label.hidden = true
                     cell.inputTextField.hidden = false
                     cell.checkImageView.hidden = true
-                    cell.inputTextField.text = shippingFee
+                    cell.inputTextField.text = shippingFee.formatToTwoDecimal()
                     cell.backgroundColor = UIColor.clearColor()
                 }
             }
@@ -408,7 +418,7 @@ extension InventoryLocationViewController: UITableViewDataSource, UITableViewDel
                 cell.label.hidden = true
                 cell.inputTextField.hidden = false
                 cell.checkImageView.hidden = true
-                cell.inputTextField.text = shippingFee
+                cell.inputTextField.text = shippingFee.formatToTwoDecimal()
                 cell.backgroundColor = UIColor.clearColor()
             }
         }
