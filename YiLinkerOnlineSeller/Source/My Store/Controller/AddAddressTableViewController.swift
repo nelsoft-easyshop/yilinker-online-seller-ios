@@ -579,7 +579,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                     if !self.isEdit3 {
                         self.addressModel.barangay = self.selectBarangay
                         self.addressModel.barangayId = 0
-                    } else if self.addressModel.barangayId == 0 && self.addressModel.title == "" {
+                    } else if self.addressModel.barangayId == 0 && self.addressModel.streetName == "" {
                         self.addressModel.barangayId = self.barangayModel.barangayId[0]
                         self.addressModel.barangay = self.barangayModel.location[0]
                     }else {
@@ -635,7 +635,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 self.cityModel = CityModel.parseDataWithDictionary(responseObject)
                 self.cityModel.location.insert(self.selectCity, atIndex: 0)
                 self.cityModel.cityId.insert(-1, atIndex: 0)
-                if self.cityModel.cityId.count != 0 && self.addressModel.title == "" {
+                if self.cityModel.cityId.count != 0 && self.addressModel.streetName == "" {
                     self.addressModel.city = self.cityModel.location[0]
                     self.addressModel.cityId = self.cityModel.cityId[0]
                     self.requestGetBarangay(self.addressModel.cityId)
@@ -699,7 +699,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 self.provinceModel = ProvinceModel.parseDataWithDictionary(responseObject)
                 self.provinceModel.location.insert(self.selectProvince, atIndex: 0)
                 self.provinceModel.provinceId.insert(-1, atIndex: 0)
-                if self.provinceModel.location.count != 0 && self.addressModel.title == "" {
+                if self.provinceModel.location.count != 0 && self.addressModel.streetName == "" {
                     self.addressModel.province = self.provinceModel.location[0]
                     self.addressModel.provinceId = self.provinceModel.provinceId[0]
                     self.requestGetCities(self.provinceModel.provinceId[0])

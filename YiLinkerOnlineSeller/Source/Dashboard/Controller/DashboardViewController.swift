@@ -191,7 +191,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         var gradient: CAGradientLayer = CAGradientLayer()
         gradient.frame = CGRectMake(0, 0, view.frame.width, 20)
         gradient.colors = [UIColor.grayColor().CGColor, UIColor.clearColor().CGColor]
-        self.view.layer.insertSublayer(gradient, atIndex: 1)
+        self.view.layer.insertSublayer(gradient, atIndex: 10)
     }
     
     func registerNibs() {
@@ -395,7 +395,15 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         var offset: CGPoint = scrollView.contentOffset
-        self.coverPhotoHeightConstraint.constant = CGFloat(self.coverPhotoHeight) + (offset.y * -1)
+        let tempSize = CGFloat(self.coverPhotoHeight) + (offset.y * -1)
+        if tempSize < 0 {
+            self.coverPhotoHeightConstraint.constant = 0
+            self.coverPhotoImageView.hidden = true
+        } else {
+            self.coverPhotoHeightConstraint.constant = CGFloat(self.coverPhotoHeight) + (offset.y * -1)
+            self.coverPhotoImageView.hidden = false
+        }
+        
         self.view.layoutIfNeeded()
     }
 
