@@ -106,27 +106,34 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     //MARK: Textfield delegate methods
     func textFieldDidBeginEditing(textField: UITextField) {
         self.selectedTextField = textField
-        self.selectedIndex = 0
+        /*self.selectedIndex = 0
         self.selectedProvinceIndex = 0
         self.selectedCityIndex = 0
-        self.selectedBrgyIndex = 0
+        self.selectedBrgyIndex = 0*/
         if self.countryModel != nil && textField == self.countryTextField {
             self.warehouseAddressType = WarehouseAddress.Country
             self.countryTextField.inputView = self.addPicker(self.selectedIndex)
             self.countryTextField.addToolBarWithDoneTarget(self, done: "done")
         } else if self.provinceModel != nil && self.countryId != "" && textField == self.provinceTextField {
             self.warehouseAddressType = WarehouseAddress.Province
-            self.provinceTextField.inputView = self.addPicker(self.selectedIndex)
+            self.provinceTextField.inputView = self.addPicker(self.selectedProvinceIndex)
             self.provinceTextField.addToolBarWithDoneTarget(self, done: "done")
         } else if self.cityModel != nil && self.provinceId != "" && textField == self.cityMunTextField {
             self.warehouseAddressType = WarehouseAddress.City
-            self.cityMunTextField.inputView = self.addPicker(self.selectedIndex)
+            self.cityMunTextField.inputView = self.addPicker(self.selectedCityIndex)
             self.cityMunTextField.addToolBarWithDoneTarget(self, done: "done")
         } else if self.barangayModel != nil && self.cityId != "" && textField == self.barangayDistrictTextField {
             self.warehouseAddressType = WarehouseAddress.Barangay
-            self.barangayDistrictTextField.inputView = self.addPicker(self.selectedIndex)
+            self.barangayDistrictTextField.inputView = self.addPicker(self.selectedBrgyIndex)
             self.barangayDistrictTextField.addToolBarWithDoneTarget(self, done: "done")
         }
+    }
+    
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        if textField == self.countryTextField || textField == self.provinceTextField || textField == self.cityMunTextField || textField == self.barangayDistrictTextField {
+            return false
+        }
+        return true
     }
     
     //MARK: Private Methods
@@ -135,7 +142,7 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
         let pickerView: UIPickerView = UIPickerView(frame:CGRectMake(0, 0, screenSize.width, 225))
         pickerView.delegate = self
         pickerView.dataSource = self
-        pickerView.selectRow(0, inComponent: 0, animated: false)
+        pickerView.selectRow(selectedIndex, inComponent: 0, animated: false)
         return pickerView
     }
     
@@ -271,9 +278,9 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
                 self.provinceId = ""
                 self.cityId = ""
                 self.barangayId = ""
-                self.selectedProvinceIndex = 0
-                self.selectedCityIndex = 0
-                self.selectedBrgyIndex = 0
+//                self.selectedProvinceIndex = 0
+//                self.selectedCityIndex = 0
+//                self.selectedBrgyIndex = 0
             }
             
             self.countryTextField.text = self.countryModel!.location[self.selectedIndex]
@@ -484,9 +491,17 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
                             self.provinceTextField.userInteractionEnabled = false
                             self.cityMunTextField.userInteractionEnabled = false
                             self.barangayDistrictTextField.userInteractionEnabled = false
+                            
                             if self.countryTextField.text != "" {
                                 self.getProvince(self.countryId)
                             }
+                            
+                            for (index, country) in enumerate(self.countryModel!.location) {
+                                if country == self.warehouseModel!.countryLocation {
+                                    self.selectedIndex = index
+                                }
+                            }
+                            
                         } else if type == WarehouseAddress.Province {
                             self.provinceModel = WarehouseProvinceModel.parseDataWithDictionary(responseObject as! NSDictionary)
                             self.provinceTextField.userInteractionEnabled = true
@@ -495,6 +510,13 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
                             if self.provinceTextField.text != "" {
                                 self.getCity(self.provinceId)
                             }
+                            
+                            for (index, province) in enumerate(self.provinceModel!.location) {
+                                if province == self.warehouseModel!.provinceLocation {
+                                    self.selectedProvinceIndex = index
+                                }
+                            }
+                            
                         } else if type == WarehouseAddress.City {
                             self.cityModel = WarehouseCityModel.parseDataWithDictionary(responseObject as! NSDictionary)
                             self.provinceTextField.userInteractionEnabled = true
@@ -503,11 +525,25 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
                             if self.cityMunTextField.text != "" {
                                 self.getBarangay(self.cityId)
                             }
+                            
+                            for (index, city) in enumerate(self.cityModel!.location) {
+                                if city == self.warehouseModel!.cityLocation {
+                                    self.selectedCityIndex = index
+                                }
+                            }
+                            
                         } else if type == WarehouseAddress.Barangay {
                             self.barangayModel = WarehouseBarangayModel.parseDataWithDictionary(responseObject as! NSDictionary)
                             self.provinceTextField.userInteractionEnabled = true
                             self.cityMunTextField.userInteractionEnabled = true
                             self.barangayDistrictTextField.userInteractionEnabled = true
+                            
+                            for (index, brgy) in enumerate(self.barangayModel!.location) {
+                                if brgy == self.warehouseModel!.barangayLocation {
+                                    self.selectedBrgyIndex = index
+                                }
+                            }
+                            
                         }
                         
                         self.countryTextField!.endEditing(true)

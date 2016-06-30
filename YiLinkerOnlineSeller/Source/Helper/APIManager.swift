@@ -33,7 +33,7 @@ struct APIAtlas {
     static let loginUrl = APIAtlas.generateV3URL("login")
     static let refreshTokenUrl = APIAtlas.generateV3URL("login")
     static let registerUrl = APIAtlas.generateV3URL("user/register")
-    static let categoryUrl = APIAtlas.generateV3URL("product/getCategories")
+    static let categoryUrl = APIAtlas.generateV3URL("product/get-categories")
     static let brandUrl = APIAtlas.generateV3URL("product/getBrands")
     static let uploadUrl = APIAtlas.generateV3URL("product/upload")
     static let getProductDetails = APIAtlas.generateV3URL("auth/product/get-upload-details")

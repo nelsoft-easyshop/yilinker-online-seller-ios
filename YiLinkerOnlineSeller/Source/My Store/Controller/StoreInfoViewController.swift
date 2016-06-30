@@ -807,7 +807,9 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 cell.bankAccountInfoLabel.text = ""
             }
             
-            cell.accountTitle = self.storeInfoModel!.accountTitle
+            if self.storeInfoModel != nil {
+                cell.accountTitle = self.storeInfoModel!.accountTitle
+            }
             
             return cell
         } else {
@@ -1322,16 +1324,20 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     func referralCodeWithIndexPath(indexPath: NSIndexPath) -> ReferralCodeTableViewCell {
         let cell: ReferralCodeTableViewCell = tableView.dequeueReusableCellWithIdentifier(ReferralCodeTableViewCell.nibNameAndIdentifier(), forIndexPath: indexPath) as! ReferralCodeTableViewCell
         
-        if self.storeInfoModel!.referralCode != "" {
-            cell.setYourReferralCodeWithCode(self.storeInfoModel!.referralCode)
-        }
-        
-        if self.storeInfoModel!.referrerCode != "" {
-            cell.setReferrerCodeWithCode("\(self.storeInfoModel!.referrerCode) - \(self.storeInfoModel!.referrerName)")
-        }
-        
         cell.delegate = self
         cell.clipsToBounds = true
+        
+        if self.storeInfoModel != nil {
+            if self.storeInfoModel!.referralCode != "" {
+                cell.setYourReferralCodeWithCode(self.storeInfoModel!.referralCode)
+            }
+            
+            if self.storeInfoModel!.referrerCode != "" {
+                cell.setReferrerCodeWithCode("\(self.storeInfoModel!.referrerCode) - \(self.storeInfoModel!.referrerName)")
+            }
+            
+            return cell
+        }
         
         return cell
     }
