@@ -745,6 +745,7 @@ class WithdrawTableViewController: UITableViewController, EmptyViewDelegate, Ava
 //            self.dimView.removeFromSuperview()
 //        }
     }
+    
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
