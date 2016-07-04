@@ -331,7 +331,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
     func fireCategoryWithParentID(parentID: Int) {
         self.showHUD()
         
-        let parentIDKey = "parentId"
+        let parentIDKey = "productCategoryId"
         let accessTokenKey = "access_token"
         let parameters: NSDictionary = [accessTokenKey: SessionManager.accessToken(), parentIDKey: parentID]
         
