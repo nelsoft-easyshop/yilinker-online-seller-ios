@@ -18,6 +18,7 @@ protocol SetupStoreFormTableViewCellDelegate {
 
 class SetupStoreFormTableViewCell: UITableViewCell, UITextFieldDelegate, UITextViewDelegate {
     
+    @IBOutlet weak var baseUrlLabel: UILabel!
     @IBOutlet weak var storeLinkTextField: UITextField!
     @IBOutlet weak var storeNameTextField: UITextField!
     @IBOutlet weak var storeDescriptionTextView: UITextView!

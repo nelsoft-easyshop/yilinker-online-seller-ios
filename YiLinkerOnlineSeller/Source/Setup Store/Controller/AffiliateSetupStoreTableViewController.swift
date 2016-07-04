@@ -111,6 +111,8 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
                 cell.storeNameTextField.enabled = true
             }
             
+            cell.baseUrlLabel.text = APIEnvironment.baseUrl().stringByReplacingOccurrencesOfString("api/", withString: "")
+            
             if self.storeInfoModel.storeSlug != "" {
                 cell.storeLinkTextField.enabled = false
                 cell.storeLinkTextField.text = self.storeInfoModel.storeSlug
@@ -138,11 +140,23 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
                 cell.shareButtonContainerView.hidden = false
                 cell.shareButtonContainerView.userInteractionEnabled = true
 
+                if let url = NSURL(string: "\(self.affiliateStoreInfoModel.qrCodeImageUrl)") {
+                    if let data = NSData(contentsOfURL: url){
+                        self.affiliateStoreInfoModel.qrCodeImage = UIImage(data: data)!
+                    } else {
+                        cell.qrCodeImageView.image = nil
+                        cell.qrCodeImageView.backgroundColor = UIColor.lightGrayColor()
+                        cell.cannotGenerateLabel.hidden = false
+                        cell.generateQrButton.hidden = false
+                        cell.generateQrButton.setTitle("RETRY GENERATING QR CODE", forState: UIControlState.Normal)
+                    }
+                }
+                /*
                 cell.qrCodeImageView.sd_setImageWithURL(NSURL(string: self.affiliateStoreInfoModel.qrCodeImageUrl), placeholderImage: UIImage(named: "dummy-placeholder")!, completed: { (image, error, cacheType, url) -> Void in
                     if image != nil {
                         self.affiliateStoreInfoModel.qrCodeImage = image
                     }
-                })
+                })*/
             } else {
                 if self.isRequestedQR && self.isRequestFailed {
                     cell.cannotGenerateLabel.hidden = false
@@ -228,7 +242,9 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
     func shareFBAction(postImage: UIImageView, title: String) {
         if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook) {
             var facebookSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
-            facebookSheet.setInitialText(self.affiliateStoreInfoModel.qrCodeImageUrl)
+            let image = postImage.image
+            facebookSheet.addImage(image)
+            facebookSheet.setInitialText("")
             self.presentViewController(facebookSheet, animated: true, completion: nil)
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("SETUP_STORE_FB_ERROR_LOCALIZE_KEY"), title: StringHelper.localizedStringWithKey("SETUP_STORE_UNABLE_ERROR_LOCALIZE_KEY"))
@@ -238,7 +254,9 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
     func shareTWAction(postImage: UIImageView, title: String) {
         if SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter) {
             var tweetShare: SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
-            tweetShare.setInitialText(self.affiliateStoreInfoModel.qrCodeImageUrl)
+            let image = postImage.image
+            tweetShare.addImage(image)
+            tweetShare.setInitialText("");
             self.presentViewController(tweetShare, animated: true, completion: nil)
             
         } else {
