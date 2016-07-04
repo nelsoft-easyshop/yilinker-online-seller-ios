@@ -184,7 +184,7 @@ class ProductModel {
                 }
                 
                 if let tempVar = value["productCategoryName"] as? String {
-                    category = CategoryModel(uid: value["productCategoryId"] as! Int, name: tempVar, hasChildren: "")
+                    category = CategoryModel(uid: value["productCategoryId"] as! Int, name: tempVar, hasChildren: false)
                 }
                 
                 if let tempVar = value["productConditionName"] as? String {
