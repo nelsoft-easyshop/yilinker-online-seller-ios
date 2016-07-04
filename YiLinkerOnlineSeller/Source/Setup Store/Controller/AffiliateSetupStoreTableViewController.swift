@@ -143,6 +143,7 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
                 if let url = NSURL(string: "\(self.affiliateStoreInfoModel.qrCodeImageUrl)") {
                     if let data = NSData(contentsOfURL: url){
                         self.affiliateStoreInfoModel.qrCodeImage = UIImage(data: data)!
+                        cell.qrCodeImageView!.image = UIImage(data: data)
                     } else {
                         cell.qrCodeImageView.image = nil
                         cell.qrCodeImageView.backgroundColor = UIColor.lightGrayColor()
