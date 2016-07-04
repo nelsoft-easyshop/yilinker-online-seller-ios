@@ -231,7 +231,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
             
             cell.categoryTitleLabel.text = categoryModel.name
             
-            if categoryModel.hasChildren == "1" {
+            if categoryModel.hasChildren {
                 cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
             }
         } else if self.productCategory == UploadProduct.ShippingCategory {
@@ -293,7 +293,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
         }
         
         if self.userType == UserType.Seller {
-            if categoryModel.hasChildren == "1" {
+            if categoryModel.hasChildren {
                 let productUploadCategoryViewController: ProductUploadCategoryViewController = ProductUploadCategoryViewController(nibName: "ProductUploadCategoryViewController", bundle: nil)
                 productUploadCategoryViewController.pageTitle = categoryModel.name
                 productUploadCategoryViewController.parentID = categoryModel.uid
@@ -342,7 +342,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
                 let data: NSArray = dictionary["data"] as! NSArray
                 
                 for categoryDictionary in data as! [NSDictionary] {
-                    let categoryModel: CategoryModel = CategoryModel(uid: categoryDictionary["productCategoryId"] as! Int, name: categoryDictionary["name"] as! String, hasChildren: categoryDictionary["hasChildren"] as! String)
+                    let categoryModel: CategoryModel = CategoryModel(uid: categoryDictionary["id"] as! Int, name: categoryDictionary["name"] as! String, hasChildren:  categoryDictionary["hasChildren"] as! Bool)
                     self.categories.append(categoryModel)
                 }
                 
@@ -386,7 +386,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
                 let data: NSArray = dictionary["data"] as! NSArray
                 
                 for categoryDictionary in data as! [NSDictionary] {
-                    let categoryModel: CategoryModel = CategoryModel(uid: categoryDictionary["productCategoryId"] as! Int, name: categoryDictionary["name"] as! String, hasChildren: categoryDictionary["hasChildren"] as! String)
+                    let categoryModel: CategoryModel = CategoryModel(uid: categoryDictionary["productCategoryId"] as! Int, name: categoryDictionary["name"] as! String, hasChildren: categoryDictionary["hasChildren"] as! Bool)
                     self.categories.append(categoryModel)
                 }
                 
