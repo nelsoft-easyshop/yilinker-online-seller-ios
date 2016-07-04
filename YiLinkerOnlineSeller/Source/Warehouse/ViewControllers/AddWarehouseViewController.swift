@@ -496,10 +496,12 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
                                 self.getProvince(self.countryId)
                             }
                             
+                            
                             for (index, country) in enumerate(self.countryModel!.location) {
-                                if country == self.warehouseModel!.countryLocation {
-                                    self.selectedIndex = index
-                                }
+                     
+                                    if country == self.warehouseModel?.countryLocation {
+                                        self.selectedIndex = index
+                                    }
                             }
                             
                         } else if type == WarehouseAddress.Province {
@@ -512,7 +514,7 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
                             }
                             
                             for (index, province) in enumerate(self.provinceModel!.location) {
-                                if province == self.warehouseModel!.provinceLocation {
+                                if province == self.warehouseModel?.provinceLocation {
                                     self.selectedProvinceIndex = index
                                 }
                             }
@@ -527,7 +529,7 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
                             }
                             
                             for (index, city) in enumerate(self.cityModel!.location) {
-                                if city == self.warehouseModel!.cityLocation {
+                                if city == self.warehouseModel?.cityLocation {
                                     self.selectedCityIndex = index
                                 }
                             }
@@ -539,7 +541,7 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
                             self.barangayDistrictTextField.userInteractionEnabled = true
                             
                             for (index, brgy) in enumerate(self.barangayModel!.location) {
-                                if brgy == self.warehouseModel!.barangayLocation {
+                                if brgy == self.warehouseModel?.barangayLocation {
                                     self.selectedBrgyIndex = index
                                 }
                             }
