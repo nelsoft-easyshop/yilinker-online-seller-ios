@@ -87,7 +87,7 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="www.yilinker.com/" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uyy-UN-EIL">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="www.yilinker.com/" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="4" translatesAutoresizingMaskIntoConstraints="NO" id="Uyy-UN-EIL">
                         <rect key="frame" x="17" y="291" width="124" height="21"/>
                         <color key="backgroundColor" red="0.83529411764705885" green="0.83529411764705885" blue="0.83529411764705885" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -132,6 +132,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="baseUrlLabel" destination="Uyy-UN-EIL" id="8aZ-2k-TMT"/>
                 <outlet property="storeDescriptionLabel" destination="G9u-oZ-bJO" id="txT-1n-w6d"/>
                 <outlet property="storeDescriptionTextView" destination="8gU-S2-duA" id="TDH-mx-LOp"/>
                 <outlet property="storeInfoLabel" destination="2dS-xl-1I2" id="3YZ-0H-7KS"/>
