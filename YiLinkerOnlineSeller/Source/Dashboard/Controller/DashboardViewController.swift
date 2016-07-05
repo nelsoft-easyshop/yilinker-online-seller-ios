@@ -188,7 +188,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             layout.itemSize = CGSize(width: ((screenWidth - 32)/4), height: (screenHeight * 0.19))
         }
         
-        layout.sectionInset = UIEdgeInsetsMake(0, 16.0, 32.0, 16.0)
+        layout.sectionInset = UIEdgeInsetsMake(0, 16.0, 40.0, 16.0)
         collectionView.setCollectionViewLayout(layout, animated: true)
         collectionView?.backgroundColor = UIColor.clearColor()
         //collectionView?.bounces = false
