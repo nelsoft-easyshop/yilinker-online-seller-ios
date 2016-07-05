@@ -111,7 +111,18 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
                 cell.storeNameTextField.enabled = true
             }
             
-            cell.baseUrlLabel.text = APIEnvironment.baseUrl().stringByReplacingOccurrencesOfString("api/", withString: "")
+            if SessionManager.isReseller() {
+                if APIEnvironment.staging {
+                    cell.baseUrlLabel.text = "http://affiliate.online.api.easydeal.ph/".stringByReplacingOccurrencesOfString("api/", withString: "")
+                } else if APIEnvironment.development {
+                    cell.baseUrlLabel.text = "http://dev.affiliate.online.api.easydeal.ph/".stringByReplacingOccurrencesOfString("api/", withString: "")
+                } else if APIEnvironment.production {
+                     cell.baseUrlLabel.text = "https://affiliate.yilinker.com/".stringByReplacingOccurrencesOfString("api/", withString: "")
+                }
+            } else  {
+                cell.baseUrlLabel.text = APIEnvironment.baseUrl().stringByReplacingOccurrencesOfString("api/", withString: "")
+            }
+            
             cell.storeLinkLabel.required()
             if self.storeInfoModel.storeSlug != "" {
                 cell.storeLinkTextField.enabled = false
