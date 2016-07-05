@@ -503,7 +503,6 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
                 cell.checkBoxImageView.image = UIImage(named: "old-check")
                 self.fireSaveAffiliateProductsWithProductId("", removeProductId: "\(affiliateProductModel.manufacturerProductId)", index: indexPath.row)
             } else {
-                println("selected product \(self.selectedProduct)")
                 if self.affiliateGetProductModel.selectedProductCount < self.affiliateGetProductModel.storeSpace {
                     if self.selectedProduct < self.affiliateGetProductModel.storeSpace {
                         self.selectedProduct++
