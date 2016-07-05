@@ -386,7 +386,7 @@ class ProductUploadCategoryViewController: UIViewController, UITableViewDataSour
                 let data: NSArray = dictionary["data"] as! NSArray
                 
                 for categoryDictionary in data as! [NSDictionary] {
-                    let categoryModel: CategoryModel = CategoryModel(uid: categoryDictionary["productCategoryId"] as! Int, name: categoryDictionary["name"] as! String, hasChildren: categoryDictionary["hasChildren"] as! Bool)
+                    let categoryModel: CategoryModel = CategoryModel(uid: categoryDictionary["id"] as! Int, name: categoryDictionary["name"] as! String, hasChildren: categoryDictionary["hasChildren"] as! Bool)
                     self.categories.append(categoryModel)
                 }
                 
