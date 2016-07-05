@@ -700,12 +700,32 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if Reachability.isConnectedToNetwork() {
-            
-            let productManagementMenu = ProductManagementMenuTableViewController(nibName: "ProductManagementMenuTableViewController", bundle: nil)
-            productManagementMenu.selectedIndex = self.selectedIndex
-            productManagementMenu.productModel = self.productModel.products[indexPath.row]
-            self.navigationController?.pushViewController(productManagementMenu, animated: true)
-          
+            if SessionManager.isSeller() {
+                let productManagementMenu = ProductManagementMenuTableViewController(nibName: "ProductManagementMenuTableViewController", bundle: nil)
+                productManagementMenu.selectedIndex = self.selectedIndex
+                productManagementMenu.productModel = self.productModel.products[indexPath.row]
+                self.navigationController?.pushViewController(productManagementMenu, animated: true)
+            } else {
+                let productDetails = ProductDetailsViewController(nibName: "ProductDetailsViewController", bundle: nil)
+                productDetails.productId = self.productModel.products[indexPath.row].id
+                
+                productDetails.isEditable = true
+                if selectedIndex == 0 && self.productModel.products[indexPath.row].status == Status.deleted || self.productModel.products[indexPath.row].status == Status.review {
+                    productDetails.isEditable = false
+                } else if selectedIndex == 4 || selectedIndex == 5 {
+                    productDetails.isEditable = false
+                }
+                
+                if self.productModel.products[indexPath.row].status == Status.draft {
+                    productDetails.isDraft = true
+                    ProductUploadCombination.draft = false
+                } else {
+                    ProductUploadCombination.draft = true
+                }
+                ProductUploadEdit.uploadType = UploadType.EditProduct
+                ProductUploadEdit.isPreview = false
+                self.navigationController?.pushViewController(productDetails, animated: true)
+            }
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
         }
