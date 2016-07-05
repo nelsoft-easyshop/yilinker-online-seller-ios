@@ -42,6 +42,7 @@ class AffiliateStoreHeaderTableViewCell: UITableViewCell, CustomUploadViewDelega
     private func addCoverPhoto() {
         self.coverPhotoCustomUploadView = XibHelper.puffViewWithNibName(CustomUploadView.nibName(), index: 0) as! CustomUploadView
         self.coverPhotoCustomUploadView.tag = 1
+        self.coverPhotoCustomUploadView.placeHolderLabel.text = "Add Cover Photo"
         coverPhotoContainerView.layoutIfNeeded()
         self.coverPhotoCustomUploadView.delegate = self
         self.coverPhotoCustomUploadView.frame = coverPhotoContainerView.frame
@@ -53,7 +54,7 @@ class AffiliateStoreHeaderTableViewCell: UITableViewCell, CustomUploadViewDelega
     private func addProfilePhoto() {
         self.profilePhotoCustomView = XibHelper.puffViewWithNibName(CustomUploadView.nibName(), index: 0) as! CustomUploadView
         profilePhotoContainerView.layoutIfNeeded()
-        
+        self.profilePhotoCustomView.placeHolderLabel.text = "Add Profile Photo"
         self.profilePhotoCustomView.tag = 2
         self.profilePhotoCustomView.delegate = self
         self.profilePhotoCustomView.frame = CGRectMake(0, 0, profilePhotoContainerView.frame.size.width, profilePhotoContainerView.frame.size.height)

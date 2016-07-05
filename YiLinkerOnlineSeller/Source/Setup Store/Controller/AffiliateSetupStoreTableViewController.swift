@@ -102,7 +102,7 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
             let cell: SetupStoreFormTableViewCell = tableView.dequeueReusableCellWithIdentifier(SetupStoreFormTableViewCell.nibNameAndIdentifier(), forIndexPath: indexPath) as! SetupStoreFormTableViewCell
             cell.selectionStyle = .None
             cell.delegate = self
-            
+            cell.storeNameLabel.required()
             if self.storeInfoModel.store_name != "" {
                 cell.storeNameTextField.enabled = false
                 cell.storeNameTextField.text = self.storeInfoModel.store_name
@@ -112,7 +112,7 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
             }
             
             cell.baseUrlLabel.text = APIEnvironment.baseUrl().stringByReplacingOccurrencesOfString("api/", withString: "")
-            
+            cell.storeLinkLabel.required()
             if self.storeInfoModel.storeSlug != "" {
                 cell.storeLinkTextField.enabled = false
                 cell.storeLinkTextField.text = self.storeInfoModel.storeSlug
@@ -122,6 +122,7 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
             }
             
             cell.storeDescriptionTextView.text = self.storeInfoModel.store_description
+            cell.storeDescriptionLabel.required()
             self.affiliateStoreInfoModel.storeDescription = self.storeInfoModel.store_description
             
             return cell
@@ -351,6 +352,8 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
                 self.fireSetupStoreInfoWithUrl(footerButtonTableViewCell)
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("SETUP_STORE_LINK_ERROR_LOCALIZE_KEY"), title: StringHelper.localizedStringWithKey("SETUP_STORE_UNABLE_ERROR_LOCALIZE_KEY"))
+                self.tableView.userInteractionEnabled = true
+                footerButtonTableViewCell.stopActivityIndicatorViewFromAnimating()
             }
             
         } else {

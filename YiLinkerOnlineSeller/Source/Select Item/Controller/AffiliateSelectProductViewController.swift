@@ -499,7 +499,11 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
             if affiliateProductModel.isSelected {
                 affiliateProductModel.isSelected = false
                 cell.checkBoxImageView.image = UIImage(named: "old-check")
-                self.fireSaveAffiliateProductsWithProductId("", removeProductId: "\(affiliateProductModel.manufacturerProductId)", index: indexPath.row)
+                if self.affiliateGetProductModel.selectedProductCount <= self.affiliateGetProductModel.storeSpace {
+                    self.fireSaveAffiliateProductsWithProductId("", removeProductId: "\(affiliateProductModel.manufacturerProductId)", index: indexPath.row)
+                } else {
+                    self.showLimitAlert()
+                }
             } else {
                 affiliateProductModel.isSelected = true
                 cell.checkBoxImageView.image = UIImage(named: "new-check")
@@ -509,6 +513,10 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
         }
         
         cell.activityIndicatorView.startAnimating()
+    }
+    
+    func showLimitAlert() {
+        Toast.displayToastWithMessage("You have reached the maximum(\(self.affiliateGetProductModel.storeSpace)) item.", duration: 1.5, view: self.view)
     }
     
     //MARK: - 

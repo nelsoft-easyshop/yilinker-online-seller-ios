@@ -33,7 +33,7 @@
                                 <constraint firstAttribute="width" constant="39" id="iLt-10-avx"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Cover Photo" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="eF1-XS-5wM">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Profile Photo" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="eF1-XS-5wM">
                             <rect key="frame" x="10" y="48" width="62" height="28"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="28" id="alo-j2-EbQ"/>
