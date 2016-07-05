@@ -41,10 +41,10 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Store Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IHw-hI-r2l">
-                        <rect key="frame" x="8" y="54" width="70" height="21"/>
+                        <rect key="frame" x="8" y="54" width="85" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="BbM-TP-Nij"/>
-                            <constraint firstAttribute="width" constant="70" id="fQT-J8-ImC"/>
+                            <constraint firstAttribute="width" constant="85" id="fQT-J8-ImC"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -87,12 +87,12 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="www.yilinker.com/" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="4" translatesAutoresizingMaskIntoConstraints="NO" id="Uyy-UN-EIL">
-                        <rect key="frame" x="17" y="291" width="124" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="www.yilinker.com/" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="4" translatesAutoresizingMaskIntoConstraints="NO" id="Uyy-UN-EIL">
+                        <rect key="frame" x="8" y="291" width="133" height="21"/>
                         <color key="backgroundColor" red="0.83529411764705885" green="0.83529411764705885" blue="0.83529411764705885" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="YSV-Ta-mss"/>
-                            <constraint firstAttribute="width" constant="124" id="obh-7j-kfb"/>
+                            <constraint firstAttribute="width" constant="133" id="obh-7j-kfb"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -121,7 +121,7 @@
                     <constraint firstItem="8gU-S2-duA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="EdP-LG-wLh"/>
                     <constraint firstItem="duD-9W-8nZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="LyX-Z5-Vin"/>
                     <constraint firstItem="IHw-hI-r2l" firstAttribute="top" secondItem="SN1-db-RwZ" secondAttribute="bottom" constant="14" id="O1i-OT-jax"/>
-                    <constraint firstItem="Uyy-UN-EIL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="9" id="QGV-DZ-8z5"/>
+                    <constraint firstItem="Uyy-UN-EIL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="QGV-DZ-8z5"/>
                     <constraint firstItem="Uyy-UN-EIL" firstAttribute="top" secondItem="duD-9W-8nZ" secondAttribute="bottom" constant="3" id="Txw-TM-1CS"/>
                     <constraint firstItem="G9u-oZ-bJO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="UYk-ls-Ifv"/>
                     <constraint firstItem="SN1-db-RwZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="e4L-rp-qMm"/>

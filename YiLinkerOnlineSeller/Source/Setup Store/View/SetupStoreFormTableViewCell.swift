@@ -70,16 +70,22 @@ class SetupStoreFormTableViewCell: UITableViewCell, UITextFieldDelegate, UITextV
     //MARK: -
     //MARK: - Text View Delegate
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n" {
+        
+        return true
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        if textView.text == "\n" {
             self.delegate?.setupStoreFormTableViewCell(self, didTapReturnInTextViewtextField: textView)
-            return false
-        } else {
-            return true
         }
     }
     
     func textViewDidChange(textView: UITextView) {
         self.delegate?.setupStoreFormTableViewCell(self, didTextViewChange: textView)
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+         self.delegate?.setupStoreFormTableViewCell(self, didTextFieldChange: textField)
     }
     
     //MARK: - 
@@ -89,7 +95,7 @@ class SetupStoreFormTableViewCell: UITableViewCell, UITextFieldDelegate, UITextV
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        self.delegate?.setupStoreFormTableViewCell(self, didTextFieldChange: textField)
+       
         return true
     }
 }

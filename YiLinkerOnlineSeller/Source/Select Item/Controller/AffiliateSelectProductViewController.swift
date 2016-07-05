@@ -486,29 +486,43 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
         sprintAnimation.toValue = NSValue(CGPoint: CGPointMake(1.0, 1.0))
         sprintAnimation.velocity = NSValue(CGPoint: CGPointMake(2.0, 2.0))
         sprintAnimation.springBounciness = 10.0
-       
+
         let cell: SelectProductCollectionViewCell = self.collectionView.cellForItemAtIndexPath(indexPath) as! SelectProductCollectionViewCell
         cell.pop_addAnimation(sprintAnimation, forKey: "springAnimation")
-        
+    
         if indexPath.row < self.affiliateProductModels.count {
             let affiliateProductModel: AffiliateProductModel = self.affiliateProductModels[indexPath.row]
-            affiliateProductModel.isLoading = true
-            
-            cell.checkBoxImageView.hidden = true
-            
             if affiliateProductModel.isSelected {
+                cell.activityIndicatorView.startAnimating()
+                affiliateProductModel.isLoading = true
+                
+                cell.checkBoxImageView.hidden = true
                 affiliateProductModel.isSelected = false
                 cell.checkBoxImageView.image = UIImage(named: "old-check")
                 self.fireSaveAffiliateProductsWithProductId("", removeProductId: "\(affiliateProductModel.manufacturerProductId)", index: indexPath.row)
             } else {
-                affiliateProductModel.isSelected = true
-                cell.checkBoxImageView.image = UIImage(named: "new-check")
-                
-                self.fireSaveAffiliateProductsWithProductId("\(affiliateProductModel.manufacturerProductId)", removeProductId: "", index: indexPath.row)
+                if self.affiliateGetProductModel.selectedProductCount < self.affiliateGetProductModel.storeSpace {
+                    cell.activityIndicatorView.startAnimating()
+                    affiliateProductModel.isSelected = true
+                    cell.checkBoxImageView.image = UIImage(named: "new-check")
+                    affiliateProductModel.isLoading = true
+                    
+                    cell.checkBoxImageView.hidden = true
+                    self.fireSaveAffiliateProductsWithProductId("\(affiliateProductModel.manufacturerProductId)", removeProductId: "", index: indexPath.row)
+                } else {
+                    cell.activityIndicatorView.stopAnimating()
+                    cell.activityIndicatorView.hidden = true
+                    self.showLimitAlert()
+                }
             }
         }
-        
-        cell.activityIndicatorView.startAnimating()
+    }
+    
+    func showLimitAlert() {
+        let alertController = UIAlertController(title: "You have reached the maximum(\(self.affiliateGetProductModel.storeSpace)) item.", message: nil, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
     }
     
     //MARK: - 
