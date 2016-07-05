@@ -67,7 +67,7 @@ class EditProfilePersonalTableViewCell: UITableViewCell {
         self.mobilePhoneTextField.delegate = self
         self.firstNameTextField.delegate = self
         self.lastNameTextField.delegate = self
-//        self.emailTextField.delegate = self
+        self.emailTextField.delegate = self
         self.tinTextField.delegate = self
         
         //Set button to round rect
@@ -234,7 +234,8 @@ extension EditProfilePersonalTableViewCell: UITextFieldDelegate {
         return true
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textFieldDidEndEditing(textField: UITextField) {
+        
         if textField == self.emailTextField {
             if textField.text != self.storeInfo?.email {
                 self.sendVerificationButton(false)
@@ -244,8 +245,12 @@ extension EditProfilePersonalTableViewCell: UITextFieldDelegate {
                 }
             }
         }
-        self.delegate?.editProfilePersonalCell(self, textFieldValueChanged: textField)
         
+        self.delegate?.editProfilePersonalCell(self, textFieldValueChanged: textField)
+    }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    
         return true
     }
 }
