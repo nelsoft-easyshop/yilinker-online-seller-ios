@@ -44,6 +44,7 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
     var limit: String = "6"
     var page: Int = 1
     var name: String = ""
+    var selectedProduct: Int = 0
     
     private var affiliateGetProductModel: AffiliateGetProductModel = AffiliateGetProductModel()
     
@@ -493,6 +494,7 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
         if indexPath.row < self.affiliateProductModels.count {
             let affiliateProductModel: AffiliateProductModel = self.affiliateProductModels[indexPath.row]
             if affiliateProductModel.isSelected {
+                self.selectedProduct--
                 cell.activityIndicatorView.startAnimating()
                 affiliateProductModel.isLoading = true
                 
@@ -501,14 +503,22 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
                 cell.checkBoxImageView.image = UIImage(named: "old-check")
                 self.fireSaveAffiliateProductsWithProductId("", removeProductId: "\(affiliateProductModel.manufacturerProductId)", index: indexPath.row)
             } else {
+                println("selected product \(self.selectedProduct)")
                 if self.affiliateGetProductModel.selectedProductCount < self.affiliateGetProductModel.storeSpace {
-                    cell.activityIndicatorView.startAnimating()
-                    affiliateProductModel.isSelected = true
-                    cell.checkBoxImageView.image = UIImage(named: "new-check")
-                    affiliateProductModel.isLoading = true
-                    
-                    cell.checkBoxImageView.hidden = true
-                    self.fireSaveAffiliateProductsWithProductId("\(affiliateProductModel.manufacturerProductId)", removeProductId: "", index: indexPath.row)
+                    if self.selectedProduct < self.affiliateGetProductModel.storeSpace {
+                        self.selectedProduct++
+                        cell.activityIndicatorView.startAnimating()
+                        affiliateProductModel.isSelected = true
+                        cell.checkBoxImageView.image = UIImage(named: "new-check")
+                        affiliateProductModel.isLoading = true
+                        
+                        cell.checkBoxImageView.hidden = true
+                        self.fireSaveAffiliateProductsWithProductId("\(affiliateProductModel.manufacturerProductId)", removeProductId: "", index: indexPath.row)
+                    } else {
+                        cell.activityIndicatorView.stopAnimating()
+                        cell.activityIndicatorView.hidden = true
+                        self.showLimitAlert()
+                    }
                 } else {
                     cell.activityIndicatorView.stopAnimating()
                     cell.activityIndicatorView.hidden = true
@@ -589,6 +599,7 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
             if successful {
                 self.affiliateGetProductModel = AffiliateGetProductModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 self.showProductCount()
+                self.selectedProduct = self.affiliateGetProductModel.selectedProductCount
                 
                 println(responseObject as! NSDictionary)
                 
@@ -634,7 +645,6 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
     func fireSaveAffiliateProductsWithProductId(addProductId: String, removeProductId: String, index: Int) {
         WebServiceManager.fireAffiliateSaveProductFromUrl(APIAtlas.affiliateSaveOrRemoveProductUrl, productIds: "[\(addProductId)]", removeManufacturerProductIds: "[\(removeProductId)]") {
             (successful, responseObject, requestErrorType) -> Void in
-            println(responseObject)
             if successful {
                 let indexPath: NSIndexPath = NSIndexPath(forItem: index, inSection: 0)
                 
