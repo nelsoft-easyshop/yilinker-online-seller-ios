@@ -61,7 +61,7 @@
                                 <action selector="cancelAction:" destination="-1" eventType="touchUpInside" id="UDq-MR-fYx"/>
                             </connections>
                         </button>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9bI-Ay-kwo">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9bI-Ay-kwo">
                             <rect key="frame" x="265" y="8" width="47" height="29"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="29" id="YMK-tM-8zO"/>
@@ -72,6 +72,9 @@
                                 <color key="titleColor" red="0.3803921569" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="resetFilter:" destination="-1" eventType="touchUpInside" id="ZoT-fg-KX6"/>
+                            </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZFn-Yv-cof">
                             <rect key="frame" x="0.0" y="36" width="320" height="1"/>

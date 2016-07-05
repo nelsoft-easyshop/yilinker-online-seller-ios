@@ -148,6 +148,20 @@ class FilterModalViewController: UIViewController, UICollectionViewDelegate, UIC
         }
     }
     
+    @IBAction func resetFilter(sender: UIButton) {
+        self.status = "all"
+        self.sortBy = "latest"
+        self.initButtons()
+        
+        for (index, category) in enumerate(self.categories) {
+            if category.isSelected {
+                self.categories[index].isSelected = false
+            }
+        }
+        
+        self.collectionView.reloadData()
+    }
+    
     //MARK: -
     //MARK: - Did Select Item Action
     @IBAction func disSelectItemAction(sender: UIButton) {

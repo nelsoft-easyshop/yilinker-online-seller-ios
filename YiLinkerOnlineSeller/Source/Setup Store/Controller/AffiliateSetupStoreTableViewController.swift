@@ -110,7 +110,8 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
             } else {
                 cell.storeNameTextField.enabled = true
             }
-            
+            cell.baseUrlLabel.text = "www.online.api.easydeal.ph/"
+            /*
             if SessionManager.isReseller() {
                 if APIEnvironment.staging {
                     cell.baseUrlLabel.text = "http://affiliate.online.api.easydeal.ph/".stringByReplacingOccurrencesOfString("api/", withString: "")
@@ -122,7 +123,7 @@ class AffiliateSetupStoreTableViewController: UITableViewController, StoreInfoQr
             } else  {
                 cell.baseUrlLabel.text = APIEnvironment.baseUrl().stringByReplacingOccurrencesOfString("api/", withString: "")
             }
-            
+            */
             cell.storeLinkLabel.required()
             if self.storeInfoModel.storeSlug != "" {
                 cell.storeLinkTextField.enabled = false
