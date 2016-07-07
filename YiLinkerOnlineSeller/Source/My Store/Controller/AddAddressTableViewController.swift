@@ -186,7 +186,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         var index: Int = -1
         var index2: Int = 1001
         for i in 0..<10 {
-            if getTextAtIndex(i) == "" && i != 1 && i != 2 && i != 3 && i != 5 {
+            if getTextAtIndex(i) == "" {
                 index = i
                 break
             }
@@ -202,22 +202,23 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             self.next()
             showAlert(title: self.error, message: self.streetNameRequired)
             index2 =  1002
-        } else if index == 6 || self.addressModel.province == self.selectProvince {
+        } else if self.getTextAtIndex(6) == self.selectProvince {
             self.activeTextField = index - 1
             self.next()
             showAlert(title: self.error, message: self.provinceRequired)
             index2 =  1002
-        } else if index == 7 || self.addressModel.city == self.selectCity {
+        } else if self.getTextAtIndex(7) == self.selectCity {
             self.activeTextField = index - 1
             self.next()
             showAlert(title: self.error, message: self.cityRequired)
             index2 =  1002
-        } else if index == 8 || self.addressModel.barangay == self.selectBarangay {
+        } else if self.getTextAtIndex(8) == self.selectBarangay {
             self.activeTextField = index - 1
             self.next()
             showAlert(title: self.error, message: self.barangayRequired)
             index2 =  1002
-        } /*else if index == 9 {
+        } /*else if index == 9 {po index2
+
             self.activeTextField = index - 1
             self.next()
             showAlert(title: self.error, message: self.zipCodeRequired)
@@ -460,6 +461,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         ]
         
         WebServiceManager.fireStoreInfoRequestWithUrl(APIAtlas.editAddress, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            println(responseObject)
             if successful {
                 //If isSuccessful is true, call the delegate method to add new address in collection view
                 self.delegate!.addAddressTableViewController(didAddAddressSucceed: self)
@@ -520,6 +522,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         ]
         
         WebServiceManager.fireStoreInfoRequestWithUrl(APIAtlas.addAddressUrl, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            println(responseObject)
             if successful {
                 //If isSuccessful is true, call the delegate method to add new address in collection view
                 self.delegate!.addAddressTableViewController(didAddAddressSucceed: self)
