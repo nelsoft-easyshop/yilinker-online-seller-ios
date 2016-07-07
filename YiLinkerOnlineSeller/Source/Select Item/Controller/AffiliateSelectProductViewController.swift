@@ -494,7 +494,9 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
         if indexPath.row < self.affiliateProductModels.count {
             let affiliateProductModel: AffiliateProductModel = self.affiliateProductModels[indexPath.row]
             if affiliateProductModel.isSelected {
-                self.selectedProduct--
+                if self.selectedProduct != 0 && self.affiliateGetProductModel.selectedProductCount != 0 {
+                    self.selectedProduct--
+                }
                 cell.activityIndicatorView.startAnimating()
                 affiliateProductModel.isLoading = true
                 
