@@ -136,7 +136,7 @@ class PayoutBalanceRecordViewController: UIViewController, DatePickerViewControl
         // adding days to to dates to complete the dates of the month
         let cal = NSCalendar.currentCalendar()
         let unit: NSCalendarUnit = .CalendarUnitDay
-        let difference = cal.components(unit, fromDate: self.startDate.addDays(-1), toDate: self.endDate.addDays(1), options: nil)
+        let difference = cal.components(unit, fromDate: self.startDate.addDays(-1), toDate: self.endDate, options: nil)
         
         for i in 0..<difference.day {
             dates.append(formatDateToString(startDate.addDays(i), type: .Graph).uppercaseString)
