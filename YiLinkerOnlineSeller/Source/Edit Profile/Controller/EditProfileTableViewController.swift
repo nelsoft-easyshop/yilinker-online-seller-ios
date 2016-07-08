@@ -183,6 +183,13 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 self.dismissLoader()
                 let response: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                 Toast.displayToastWithMessage(response.message, duration: 1.5, view: self.navigationController!.view!)
+                self.storeInfo?.firstName = firstName
+                self.storeInfo?.lastName = lastName
+                self.storeInfo?.tin = tin
+                self.storeInfo?.email = email
+                self.storeInfo?.referrerCode = referralCode
+                self.storeInfo?.validId = validId
+                self.tableView.reloadData()
                 
                 if self.isNewUser {
                     let affiliateSelectProductViewController: AffiliateSetupStoreTableViewController = AffiliateSetupStoreTableViewController(nibName: AffiliateSetupStoreTableViewController.nibName(), bundle: nil) as AffiliateSetupStoreTableViewController
