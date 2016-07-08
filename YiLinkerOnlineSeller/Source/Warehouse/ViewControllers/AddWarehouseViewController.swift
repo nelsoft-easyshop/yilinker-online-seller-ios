@@ -112,28 +112,25 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
         self.selectedBrgyIndex = 0*/
         if self.countryModel != nil && textField == self.countryTextField {
             self.warehouseAddressType = WarehouseAddress.Country
+            self.countryTextField.tintColor = UIColor.clearColor()
             self.countryTextField.inputView = self.addPicker(self.selectedIndex)
             self.countryTextField.addToolBarWithDoneTarget(self, done: "done")
         } else if self.provinceModel != nil && self.countryId != "" && textField == self.provinceTextField {
             self.warehouseAddressType = WarehouseAddress.Province
+            self.provinceTextField.tintColor = UIColor.clearColor()
             self.provinceTextField.inputView = self.addPicker(self.selectedProvinceIndex)
             self.provinceTextField.addToolBarWithDoneTarget(self, done: "done")
         } else if self.cityModel != nil && self.provinceId != "" && textField == self.cityMunTextField {
             self.warehouseAddressType = WarehouseAddress.City
+            self.cityMunTextField.tintColor = UIColor.clearColor()
             self.cityMunTextField.inputView = self.addPicker(self.selectedCityIndex)
             self.cityMunTextField.addToolBarWithDoneTarget(self, done: "done")
         } else if self.barangayModel != nil && self.cityId != "" && textField == self.barangayDistrictTextField {
             self.warehouseAddressType = WarehouseAddress.Barangay
+            self.barangayDistrictTextField.tintColor = UIColor.clearColor()
             self.barangayDistrictTextField.inputView = self.addPicker(self.selectedBrgyIndex)
             self.barangayDistrictTextField.addToolBarWithDoneTarget(self, done: "done")
         }
-    }
-    
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-        if textField == self.countryTextField || textField == self.provinceTextField || textField == self.cityMunTextField || textField == self.barangayDistrictTextField {
-            return false
-        }
-        return true
     }
     
     //MARK: Private Methods
