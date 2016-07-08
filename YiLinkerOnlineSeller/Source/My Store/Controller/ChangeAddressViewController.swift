@@ -461,6 +461,10 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                     }
                 }
                 
+                if self.getAddressModel.listOfAddress.count == 1 {
+                    self.selectedAddressId = self.getAddressModel.listOfAddress[0].userAddressId
+                }
+                
                 self.changeAddressCollectionView.reloadData()
                 self.hud?.hide(true)
             } else {
