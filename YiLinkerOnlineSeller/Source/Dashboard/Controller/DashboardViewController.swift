@@ -240,12 +240,9 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             } else {
                 cell.iconView.alpha = 0.5
             }
-        } else {
-            cell.iconView.alpha = 1.0
-        }
-        
-        if self.checkIfNewStore() {
+        } else if self.checkIfNewStore() {
             if self.tableData[indexPath.row] == DashboardViewConstants.editProfileString ||
+                self.tableData[indexPath.row] == DashboardViewConstants.setupStoreString ||
                 self.tableData[indexPath.row] == DashboardViewConstants.helpString ||
                 self.tableData[indexPath.row] == DashboardViewConstants.logoutString {
                     cell.iconView.alpha = 1.0
@@ -255,6 +252,8 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         } else {
             cell.iconView.alpha = 1.0
         }
+        
+        
         
         cell.layoutIfNeeded()
         return cell
