@@ -127,10 +127,10 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             self.hud = nil
         }
         
-        self.hud = MBProgressHUD(view: self.view)
+        self.hud = MBProgressHUD(view: self.navigationController?.view)
         self.hud?.removeFromSuperViewOnHide = true
         self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
+        self.navigationController!.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
     
@@ -285,6 +285,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     
     //MARK: AddAddressTableViewController Delegate Method
     func addAddressTableViewController(didAddAddressSucceed addAddressTableViewController: AddAddressTableViewController) {
+        
         self.requestGetAddressess()
     }
     
@@ -457,6 +458,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 
                 for i in 0..<self.getAddressModel.listOfAddress.count {
                     if self.getAddressModel.listOfAddress[i].isDefault {
+                        self.selectedAddressId = self.getAddressModel.listOfAddress[i].userAddressId
                         self.defaultAddress = i
                     }
                 }

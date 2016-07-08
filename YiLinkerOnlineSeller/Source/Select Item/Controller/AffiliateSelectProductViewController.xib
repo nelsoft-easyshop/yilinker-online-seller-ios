@@ -10,6 +10,7 @@
         </mutableArray>
         <mutableArray key="Panton.otf">
             <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -20,6 +21,7 @@
                 <outlet property="filterButton" destination="kV5-FL-cfy" id="v0G-AL-Lkx"/>
                 <outlet property="mainContainerVerticalConstraint" destination="How-tP-yfY" id="brF-vO-DqD"/>
                 <outlet property="mainContainerView" destination="kLe-8I-1CK" id="LKn-Mo-SOw"/>
+                <outlet property="noResultFoundLabel" destination="GqL-mv-VwU" id="mpx-bu-o23"/>
                 <outlet property="searchBar" destination="iwV-YW-be7" id="vyH-Eg-CdV"/>
                 <outlet property="searchBarHeightConstraint" destination="dyB-vB-77i" id="NSU-yt-V7a"/>
                 <outlet property="selectYourProductLabel" destination="XjR-eZ-Z0c" id="hEG-XZ-PqY"/>
@@ -77,15 +79,26 @@
                                 <action selector="doneAction:" destination="-1" eventType="touchUpInside" id="d2q-xG-fcS"/>
                             </connections>
                         </button>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No result found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GqL-mv-VwU">
+                            <rect key="frame" x="10" y="222" width="300" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="300" id="FNH-Bn-1Bu"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="KGQ-im-RqB" secondAttribute="bottom" constant="7" id="13D-X6-Pf0"/>
                         <constraint firstItem="KGQ-im-RqB" firstAttribute="leading" secondItem="kLe-8I-1CK" secondAttribute="leading" constant="10" id="GST-ZO-7Yp"/>
+                        <constraint firstAttribute="centerY" secondItem="GqL-mv-VwU" secondAttribute="centerY" constant="5" id="Kuy-mb-FkU"/>
                         <constraint firstItem="XjR-eZ-Z0c" firstAttribute="leading" secondItem="kLe-8I-1CK" secondAttribute="leading" constant="8" id="S0F-8j-Yot"/>
                         <constraint firstItem="XjR-eZ-Z0c" firstAttribute="top" secondItem="kLe-8I-1CK" secondAttribute="top" constant="13" id="b3Q-lW-7of"/>
                         <constraint firstAttribute="trailing" secondItem="Ni2-Th-Mfz" secondAttribute="trailing" id="cGX-7v-4hk"/>
                         <constraint firstAttribute="trailing" secondItem="XjR-eZ-Z0c" secondAttribute="trailing" constant="8" id="gzK-IH-rbs"/>
+                        <constraint firstAttribute="centerX" secondItem="GqL-mv-VwU" secondAttribute="centerX" id="jld-0S-sHF"/>
                         <constraint firstItem="Ni2-Th-Mfz" firstAttribute="leading" secondItem="kLe-8I-1CK" secondAttribute="leading" id="pHc-dF-b5M"/>
                         <constraint firstItem="KGQ-im-RqB" firstAttribute="top" secondItem="Ni2-Th-Mfz" secondAttribute="bottom" constant="4" id="swV-U0-91K"/>
                         <constraint firstItem="Ni2-Th-Mfz" firstAttribute="top" secondItem="XjR-eZ-Z0c" secondAttribute="bottom" constant="12" id="ukp-g7-BGX"/>

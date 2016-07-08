@@ -145,7 +145,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             self.hud = nil
         }
         
-        self.hud = MBProgressHUD(view: self.view)
+        self.hud = MBProgressHUD(view: self.navigationController?.view)
         self.hud?.removeFromSuperViewOnHide = true
         self.hud?.dimBackground = false
         self.navigationController!.view.addSubview(self.hud!)

@@ -16,6 +16,7 @@ FAILED_LOCALIZE_KEY = "Failed";
 CONNECTION_UNREACHABLE_LOCALIZE_KEY = "Connection Unreachable";
 CONNECTION_ERROR_MESSAGE_LOCALIZE_KEY = "Cannot retrieve data. Please check your internet connection.";
 CANCEL_LOCALIZE_KEY = "CANCEL";
+NO_RESULT_FOUND_LOCALIZE_KEY = "No result found";
 
 DONE_LOCALIZE_KEY  = "DONE";
 INCOMPLETE_PRODUCT_DETAILS_LOCALIZE_KEY  = "Incomplete Product Details";

@@ -19,6 +19,7 @@ CANCEL_LOCALIZE_KEY = "CANCEL";
 TARGET_NOT_AVAILABLE = "No items to load.";
 PAGE_NOT_FOUND_LOCALIZE_KEY = "Page not found.";
 CANNOT_PROCEED_LOCALIZE_KEY = "Cannot Proceed";
+NO_RESULT_FOUND_LOCALIZE_KEY = "No result found";
 
 DONE_LOCALIZE_KEY  = "DONE";
 INCOMPLETE_PRODUCT_DETAILS_LOCALIZE_KEY  = "Incomplete Product Details";
@@ -422,7 +423,9 @@ STORE_INFO_GENERATE_QR_LOCALIZE_KEY = "GENERATE QR CODE";
 //Error messages
 STORE_INFO_SUCCESS_TITLE_LOCALIZE_KEY = "Success!";
 STORE_INFO_INFORMATION_LOCALIZE_KEY = "Information";
-STORE_INFO_EMPTY_LOCALIZE_KEY = "Either your store name or store description is empty.";
+STORE_INFO_EMPTY_LOCALIZE_KEY = "Your store name and store description is empty.";
+STORE_INFO_STORE_NAME_EMPTY_LOCALIZE_KEY = "Your store name is empty.";
+STORE_INFO_STORE_DESCRIPTION_EMPTY_LOCALIZE_KEY = "Your store description is empty.";
 STORE_INFO_SUCCESS_LOCALIZE_KEY = "You have successfully updated your store information.";
 STORE_INFO_INFORMATION_TITLE_LOCALIZE_KEY = "Information";
 STORE_INFO_SUCCESS_EMAIL_LOCALIZE_KEY = "You have successfully shared your qr code on email.";

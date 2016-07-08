@@ -146,7 +146,7 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
     func addWarehouse() {
         
         if self.warehouseNameTextField.text == "" || self.fullAddressTextField.text == "" || self.countryTextField.text == "" || self.provinceTextField.text == "" || self.cityMunTextField.text == "" || self.barangayDistrictTextField.text == "" {
-            self.showAlert("Fill-up the following textfields.", message: "")
+            self.showAlert("Kindly fill-up the required fields.", message: "")
         } else {
             self.fireAddWarehouse()
         }
@@ -275,9 +275,9 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
                 self.provinceId = ""
                 self.cityId = ""
                 self.barangayId = ""
-//                self.selectedProvinceIndex = 0
-//                self.selectedCityIndex = 0
-//                self.selectedBrgyIndex = 0
+                self.selectedProvinceIndex = 0
+                self.selectedCityIndex = 0
+                self.selectedBrgyIndex = 0
             }
             
             self.countryTextField.text = self.countryModel!.location[self.selectedIndex]
