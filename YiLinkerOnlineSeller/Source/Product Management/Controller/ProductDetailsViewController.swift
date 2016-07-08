@@ -103,10 +103,14 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         
         let nib4: UINib = UINib(nibName: PUPGPreviewConstant.productUploadProductGroupTVCNibNameAndIdentier, bundle: nil)
         self.tableView.registerNib(nib4, forCellReuseIdentifier: PUPGPreviewConstant.productUploadProductGroupTVCNibNameAndIdentier)
-        
+
+        self.title = "Product Details"
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         customizeNavigationBar()
         loadloadViewsWithDetails()
-        self.title = "Product Details"
         if Reachability.isConnectedToNetwork() {
             if ProductUploadEdit.isPreview {
                 isEditable = true
@@ -119,11 +123,6 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AlertStrings.checkInternet, title: AlertStrings.error)
         }
-        
-    }
-
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
     }
     
     // MARK: - Init Views

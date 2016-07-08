@@ -239,7 +239,7 @@ class ProductModel {
                 } // product variants
                 
                 if let properties: NSArray = value["productUnits"] as? NSArray {
-                    if properties.count == 0 {
+                    /*if properties.count == 0 {
                         var combination = CombinationModel()
                         combination.combinationID = ""
                         combination.attributes = []
@@ -258,7 +258,7 @@ class ProductModel {
                         combination.isPrimaryPhoto.append(false)
                         validCombinations.append(combination)
                         
-                    } else if properties.count > 0 {
+                    } else */if properties.count > 0 {
                         for subValue in value["productUnits"] as! NSArray {
                             var combination = CombinationModel()
                             if let tempVar = subValue["quantity"] as? String {
