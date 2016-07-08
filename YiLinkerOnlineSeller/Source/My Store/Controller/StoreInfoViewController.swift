@@ -52,6 +52,8 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     let success: String = StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_LOCALIZE_KEY")
     let info: String = StringHelper.localizedStringWithKey("STORE_INFO_INFORMATION_LOCALIZE_KEY")
     let empty: String = StringHelper.localizedStringWithKey("STORE_INFO_EMPTY_LOCALIZE_KEY")
+    let emptyStoreName: String = StringHelper.localizedStringWithKey("STORE_INFO_STORE_NAME_EMPTY_LOCALIZE_KEY")
+    let emptyStoreDesc: String = StringHelper.localizedStringWithKey("STORE_INFO_STORE_DESCRIPTION_EMPTY_LOCALIZE_KEY")
     let successTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_SUCCESS_TITLE_LOCALIZE_KEY")
     let tinTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_TIN_LOCALIZE_KEY")
     let bankNotSet: String = StringHelper.localizedStringWithKey("STORE_INFO_NO_BANK_LOCALIZE_KEY")
@@ -1203,7 +1205,15 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                 }
             })
         } else {
-            self.showAlert(self.error, message: self.empty)
+            var message: String = self.empty
+            
+            if self.storeInfoModel!.store_name.isEmpty && !self.storeInfoModel!.store_description.isEmpty {
+                message = self.emptyStoreName
+            } else if !self.storeInfoModel!.store_name.isEmpty && self.storeInfoModel!.store_description.isEmpty {
+                message = self.emptyStoreDesc
+            }
+            
+            self.showAlert(self.error, message: message)
             self.hud?.hide(true)
             self.dismissView()
         }

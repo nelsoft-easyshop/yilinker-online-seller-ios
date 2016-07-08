@@ -16,6 +16,7 @@ private struct Strings {
 
 class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate, FilterModalViewControllerDelegate {
     
+    @IBOutlet weak var noResultFoundLabel: UILabel!
     @IBOutlet weak var selectYourProductLabel: UILabel!
     @IBOutlet weak var mainContainerVerticalConstraint: NSLayoutConstraint!
     @IBOutlet weak var searchBarHeightConstraint: NSLayoutConstraint!
@@ -606,6 +607,14 @@ class AffiliateSelectProductViewController: UIViewController, UISearchBarDelegat
                 
                 for product in self.affiliateGetProductModel.products {
                     self.affiliateProductModels.append(product)
+                }
+                
+                self.noResultFoundLabel.text = StringHelper.localizedStringWithKey("NO_RESULT_FOUND_LOCALIZE_KEY");
+                
+                if self.affiliateGetProductModel.products.count == 0 {
+                    self.noResultFoundLabel.hidden = false
+                } else {
+                    self.noResultFoundLabel.hidden = true
                 }
                 
                 self.page++

@@ -275,9 +275,9 @@ class AddWarehouseViewController: UIViewController, UIPickerViewDataSource, UIPi
                 self.provinceId = ""
                 self.cityId = ""
                 self.barangayId = ""
-//                self.selectedProvinceIndex = 0
-//                self.selectedCityIndex = 0
-//                self.selectedBrgyIndex = 0
+                self.selectedProvinceIndex = 0
+                self.selectedCityIndex = 0
+                self.selectedBrgyIndex = 0
             }
             
             self.countryTextField.text = self.countryModel!.location[self.selectedIndex]

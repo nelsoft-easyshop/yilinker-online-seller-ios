@@ -567,7 +567,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         }
         
         WebServiceManager.fireGetStoreInfoWithUrl(APIAtlas.sellerStoreInfo, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
-//            println(responseObject)
+            println(responseObject)
             self.hideHud()
             if successful {
                 self.storeInfo = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
