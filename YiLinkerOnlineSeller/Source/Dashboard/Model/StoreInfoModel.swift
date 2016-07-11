@@ -208,12 +208,14 @@ class StoreInfoModel: NSObject {
             } else {
                 email = ""
             }
+            SessionManager.setEmail(email)
             
             if let sellerGender = value["gender"] as? String {
                 gender = sellerGender
             } else {
                 gender = ""
             }
+            
             
             if let sellerNickname = value["nickname"] as? String {
                 nickname = sellerNickname
@@ -312,6 +314,8 @@ class StoreInfoModel: NSObject {
             } else {
                 isEmailVerified = false
             }
+            
+            SessionManager.setIsEmailVerified(isEmailVerified)
             
             if let tempVar = value["isEmailSubscribed"] as? Bool {
                 isEmailSubscribed = tempVar
