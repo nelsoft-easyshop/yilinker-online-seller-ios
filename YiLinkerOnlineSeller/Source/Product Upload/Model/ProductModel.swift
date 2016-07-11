@@ -265,6 +265,10 @@ class ProductModel {
                                 combination.quantity = tempVar
                             }
                             
+                            if let tempVar = subValue["quantity"] as? Int {
+                                combination.quantity = String(tempVar)
+                            }
+                            
                             if let tempVar = subValue["price"] as? String {
                                 combination.retailPrice = tempVar
                             }
