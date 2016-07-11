@@ -207,8 +207,14 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
     // MARK: - Save the changes made in product details
     
     func productUploadDetailFooterTableViewCell(didPressSaveButton cell: ProductUploadDetailFooterTableViewCell) {
+        
         if self.productModel != nil || self.isCancel == true {
             for (index, path) in enumerate(self.deletedCells) {
+                println("\(self.productModel!.attributes.count)")
+                println("< \(path.section)")
+                println("\(productModel!.attributes[selectedIndexPath.section].values.count)")
+                println("< \(path.row)")
+                println(selectedIndexPath.section)
                 if self.productModel!.attributes.count != 0 && self.productModel!.attributes.count < path.section && self.productModel!.attributes[selectedIndexPath.section].values.count < path.row {
                     self.productModel!.attributes[selectedIndexPath.section].values.removeAtIndex(path.row)
                 }
@@ -251,8 +257,12 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
             
             self.navigationController!.popViewControllerAnimated(true)
         } else {
-            self.navigationController!.popViewControllerAnimated(true)
-            //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.attributeValuesRequired)
+            //self.navigationController!.popViewControllerAnimated(true)
+            if attributeCell.attributes.count == 0 {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.attributeValuesRequired)
+            } else {
+                self.navigationController!.popViewControllerAnimated(true)
+            }
         }
     }
     

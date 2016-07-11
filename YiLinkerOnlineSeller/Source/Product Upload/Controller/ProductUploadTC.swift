@@ -110,6 +110,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.tableView.reloadData()
         if ProductUploadTCSuccessUpload.isUploadAgain {
             ProductUploadTCSuccessUpload.isUploadAgain = false
             // Variables// Models

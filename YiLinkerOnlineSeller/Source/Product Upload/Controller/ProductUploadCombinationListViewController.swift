@@ -40,6 +40,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
     typealias Combination = (combinationName: String, variants: [Variant])
     var combinations: [Combination] = []
     var validCombinations: [CombinationModel] = []
+    var attrib: [[NSMutableDictionary]] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,9 +50,41 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         self.footerView()
         self.backButton()
         self.registerCell()
-        /*
+        
         self.combine("", pos: -1)
+        
         for (index, combination) in enumerate(self.combinations) {
+            var dictionary: [NSMutableDictionary] = []
+            for (index2, variant) in enumerate(combination.variants) {
+                var dict: NSMutableDictionary = NSMutableDictionary()
+                dict["name"] = variant.variantDefault
+                dict["value"] = variant.variantTranslation
+                dictionary.append(dict)
+            }
+            attrib.append(dictionary)
+        }
+        
+        for (index2, attributes) in enumerate(self.attrib) {
+            for (index, validCombination) in enumerate(self.productModel!.validCombinations) {
+                if attributes != validCombination.attributes && index2 == index {
+                    self.productModel!.validCombinations[index] = CombinationModel()
+                }
+            }
+        }
+        
+        var combiModel: [CombinationModel] = []
+        for (index, combination) in enumerate(self.productModel!.validCombinations) {
+            if combination.attributes.count != 0 {
+                combiModel.append(combination)
+            }
+        }
+        
+        if self.productModel != nil {
+            self.productModel!.validCombinations = combiModel
+        }
+        
+        
+        /*for (index, combination) in enumerate(self.combinations) {
             for (index2, validCombination) in enumerate(self.productModel!.validCombinations) {
                 for (index3, attribute) in enumerate(validCombination.attributes) {
                     var name: String = combination.variants[index].variantDefault
@@ -279,6 +312,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             for (index, definition) in enumerate(self.productModel!.attributes) {
                 
             }
+            
             /*
             let attributeModel: AttributeModel = AttributeModel()
             attributeModel.definition = self.combinations[indexPath.section].variants[indexPath.row].variantDefault
@@ -288,6 +322,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             }
             
             attributes.append(attributeModel)*/
+            var attrib: [NSMutableDictionary] = []
             
             for dictionary in self.productModel!.validCombinations[indexPath.section].attributes as [NSMutableDictionary] {
                 /*var combiValue: String = ""
@@ -308,7 +343,19 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
                 let attributeModel: AttributeModel = AttributeModel()
                 attributeModel.definition = dictionary["name"] as! String
                 attributeModel.values = [dictionary["value"] as! String]
+                attrib.append(dictionary)
                 attributes.append(attributeModel)
+            }
+            
+            println("attributes \(attrib)")
+            
+            if self.productModel != nil {
+                for (index, combinationLoop) in enumerate(self.productModel!.validCombinations) {
+                    println("attributes \(combinationLoop.attributes)")
+                    if combinationLoop.attributes != attrib && indexPath.section == index {
+                        //self.productModel!.validCombinations.removeAtIndex(index)
+                    }
+                }
             }
             
             cell.attributes = attributes
