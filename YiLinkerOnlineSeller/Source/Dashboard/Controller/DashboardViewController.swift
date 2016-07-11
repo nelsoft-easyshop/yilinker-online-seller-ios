@@ -881,6 +881,7 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
         self.ctr = 0
         NSUserDefaults.standardUserDefaults().setBool(false, forKey: "rememberMe")
         SessionManager.setAccessToken("")
+        SessionManager.setEmail("")
         let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.changeRootToDashboard()
     }

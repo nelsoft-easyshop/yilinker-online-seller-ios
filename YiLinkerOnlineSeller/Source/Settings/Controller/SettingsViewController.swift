@@ -28,7 +28,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     var connectionLocalizeString: String = ""
     var connectionMessageLocalizeString: String = ""
     var deactivateLocalizeString: String = ""
+    var deactivateEmailLocalizeString: String = ""
     var deactivateAccountLocalizeString: String = ""
+    var deactivateEmailVerificationLocalizeString: String = ""
     var cancelLocalizeString: String = ""
     
     override func viewDidLoad() {
@@ -60,6 +62,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         deactivateLocalizeString = StringHelper.localizedStringWithKey("DEACTIVATE_LOCALIZED_KEY")
         deactivateAccountLocalizeString = StringHelper.localizedStringWithKey("DEACTIVATE_ACCOUNT_LOCALIZED_KEY")
         cancelLocalizeString = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
+        deactivateEmailLocalizeString = StringHelper.localizedStringWithKey("DEACTIVATE_EMAIL_ERROR_LOCALIZED_KEY")
+        deactivateEmailVerificationLocalizeString = StringHelper.localizedStringWithKey("DEACTIVATE_EMAIL_VERIFICATION_ERROR_LOCALIZED_KEY")
     }
     
     func initializeViews() {
@@ -162,14 +166,21 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: - SettingDeactivateTableViewCellDelegate : Deactivate My Account is Tapped
     func deactivateTapped(sender: AnyObject) {
-        if(controllerAvailable()){
-            handleIOS8()
+        
+        if !SessionManager.isEmailVerified() {
+            Toast.displayToastWithMessage(deactivateEmailVerificationLocalizeString, duration: 2, view: self.view)
+        } else if SessionManager.email().isEmpty {
+            Toast.displayToastWithMessage(deactivateEmailLocalizeString, duration: 2, view: self.view)
         } else {
-            var actionSheet: UIActionSheet
-            actionSheet = UIActionSheet(title: deactivateAccountLocalizeString, delegate: self, cancelButtonTitle: self.cancelLocalizeString, destructiveButtonTitle: deactivateLocalizeString)
-            
-            actionSheet.delegate = self
-            actionSheet.showInView(self.view)
+            if(controllerAvailable()){
+                handleIOS8()
+            } else {
+                var actionSheet: UIActionSheet
+                actionSheet = UIActionSheet(title: deactivateAccountLocalizeString, delegate: self, cancelButtonTitle: self.cancelLocalizeString, destructiveButtonTitle: deactivateLocalizeString)
+                
+                actionSheet.delegate = self
+                actionSheet.showInView(self.view)
+            }
         }
     }
     
