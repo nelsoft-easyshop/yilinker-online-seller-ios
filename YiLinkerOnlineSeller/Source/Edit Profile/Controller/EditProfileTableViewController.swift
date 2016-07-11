@@ -11,6 +11,7 @@ import UIKit
 enum EditProfileRequestType {
     case SendEmailVerification
     case SaveProfile
+    case GetProfile
 }
 
 struct EditProfileLocalizedStrings {
@@ -183,13 +184,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 self.dismissLoader()
                 let response: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                 Toast.displayToastWithMessage(response.message, duration: 1.5, view: self.navigationController!.view!)
-                self.storeInfo?.firstName = firstName
-                self.storeInfo?.lastName = lastName
-                self.storeInfo?.tin = tin
-                self.storeInfo?.email = email
-                self.storeInfo?.referrerCode = referralCode
-                self.storeInfo?.validId = validId
-                self.tableView.reloadData()
+                self.fireStoreInfo()
                 
                 if self.isNewUser {
                     let affiliateSelectProductViewController: AffiliateSetupStoreTableViewController = AffiliateSetupStoreTableViewController(nibName: AffiliateSetupStoreTableViewController.nibName(), bundle: nil) as AffiliateSetupStoreTableViewController
@@ -201,6 +196,39 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 self.handleErrorWithType(requestErrorType, responseObject: responseObject, requestType: .SaveProfile, params: [firstName, lastName, tin, email, referralCode, isSent, validId])
             }
         })
+    }
+    
+    func fireStoreInfo(){
+        self.showLoader()
+        WebServiceManager.fireGetStoreInfoWithUrl(APIAtlas.sellerStoreInfo, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
+            self.dismissLoader()
+            if successful {
+                self.storeInfo = StoreInfoModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
+                self.tableView.reloadData()
+            } else {
+                
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken([], requestType: .GetProfile)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+                
+            }
+        }
     }
     
     // MARK: - API Requests
@@ -297,7 +325,10 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                     self.fireSendVerification(params[0])
                 case .SaveProfile:
                     self.fireSaveProfile(params[0], lastName: params[1], tin: params[2], email: params[3],referralCode: params[4], isSent: params[5], validId: params[6])
+                case .GetProfile:
+                    self.fireStoreInfo()
                 }
+                
                 
             } else {
                 UIAlertController.displaySomethingWentWrongError(self)
@@ -310,7 +341,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
@@ -362,9 +393,9 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                     cell.setValueChangeable(false)
                 }
             } else {
-//                let accountInfo: String = self.storeInfo!.accountNumber + "\n" + self.storeInfo!.accountName + "\n" + self.storeInfo!.bankName
-//                cell.setValue(self.storeInfo!.accountTitle, value: accountInfo)
-//                cell.setValueChangeable(false)
+                //                let accountInfo: String = self.storeInfo!.accountNumber + "\n" + self.storeInfo!.accountName + "\n" + self.storeInfo!.bankName
+                //                cell.setValue(self.storeInfo!.accountTitle, value: accountInfo)
+                //                cell.setValueChangeable(false)
                 cell.setValue("No Bank Account yet.", value: "")
                 cell.setValueChangeable(true)
             }
@@ -542,7 +573,7 @@ extension EditProfileTableViewController: EditProfilePersonalTableViewCellDelega
         } else if textField == editProfilePersonalCell.tinTextField {
             self.tin = editProfilePersonalCell.tinTextField.text
             self.storeInfo?.tin = editProfilePersonalCell.tinTextField.text
-        } 
+        }
     }
     
     func editProfilePersonalCell(editProfilePersonalCell: EditProfilePersonalTableViewCell, didTapSendVerification button: UIButton) {
