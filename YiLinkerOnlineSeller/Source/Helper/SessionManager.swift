@@ -228,6 +228,32 @@ class SessionManager {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
+    class func setEmail(email: String) {
+        NSUserDefaults.standardUserDefaults().setObject(email, forKey: "email")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func setIsEmailVerified(isEmailVerified: Bool) {
+        NSUserDefaults.standardUserDefaults().setObject(isEmailVerified, forKey: "isEmailVerified")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func email() -> String {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("email") as? String {
+            result = val as! String
+        }
+        return result
+    }
+    
+    class func isEmailVerified() -> Bool {
+        var result: Bool = false
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("isEmailVerified") as? Bool {
+            result = val as! Bool
+        }
+        return result
+    }
+    
     class func addressId() -> Int {
         var result: String = ""
         if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("addressId") as? String {
