@@ -965,7 +965,7 @@ class WebServiceManager: NSObject {
         
 //        let manager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = [self.accessTokenKey: SessionManager.accessToken(), self.pageKey: page, self.perPageKey: perPage]
+        let parameters: NSDictionary = [self.accessTokenKey: SessionManager.accessToken(), self.pageKey: page, self.perPageKey: perPage, "searchKeyword": searchKeyword]
         
         let sessionDataTask: NSURLSessionDataTask = self.fireGetRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
