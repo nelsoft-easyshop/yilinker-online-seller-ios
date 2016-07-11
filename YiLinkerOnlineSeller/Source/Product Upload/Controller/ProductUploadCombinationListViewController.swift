@@ -39,6 +39,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
     typealias Variant = (variantDefault: String, variantTranslation: String)
     typealias Combination = (combinationName: String, variants: [Variant])
     var combinations: [Combination] = []
+    var validCombinations: [CombinationModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -130,6 +131,9 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
     // MARK: - Navigation bar back button action
     
     func back() {
+        for (index, combination) in enumerate(self.validCombinations) {
+            self.productModel?.validCombinations.append(combination)
+        }
         self.navigationController?.popViewControllerAnimated(true)
     }
     
@@ -285,7 +289,22 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             
             attributes.append(attributeModel)*/
             
-            for dictionary in  self.productModel!.validCombinations[indexPath.section].attributes as [NSMutableDictionary] {
+            for dictionary in self.productModel!.validCombinations[indexPath.section].attributes as [NSMutableDictionary] {
+                /*var combiValue: String = ""
+                var newValues: [String] = [dictionary["value"] as! String]
+                var oldIndex: Int = 0
+                for (index, value) in enumerate([dictionary["value"] as! String]) {
+                    combiValue = value
+                    oldIndex = index
+                }
+                for attribute in self.productModel!.attributes {
+                    for (index, value) in enumerate(attribute.values) {
+                        if combiValue != value && oldIndex == index {
+                            newValues[index] = value
+                        }
+                    }
+                }
+                */
                 let attributeModel: AttributeModel = AttributeModel()
                 attributeModel.definition = dictionary["name"] as! String
                 attributeModel.values = [dictionary["value"] as! String]
@@ -423,7 +442,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         let indexPath: NSIndexPath = self.tableView.indexPathForCell(cell)!
         let range: NSRange = NSMakeRange(indexPath.section, 1)
         let section: NSIndexSet = NSIndexSet(indexesInRange: range)
-        
+        self.validCombinations.append(self.productModel!.validCombinations[indexPath.section])
         self.productModel!.validCombinations.removeAtIndex(indexPath.section)
         self.tableView.beginUpdates()
         self.tableView.deleteSections(section, withRowAnimation: UITableViewRowAnimation.Fade)

@@ -82,6 +82,11 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             self.productImagesCount = self.productModel.editedImage.count
             self.productImagesName = self.productModel.imageIds
             self.productId = self.productModel.uid
+            if self.productModel.validCombinations.count != 0  {
+                if (self.productModel.validCombinations.count != 0 && self.productModel.validCombinations[0].attributes.count != 0) {
+                    self.isCombinationAvailable = true
+                }
+            }
         } else {
             self.title = "Product Upload"
         }
@@ -237,8 +242,10 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
             }
         } else if indexPath.section == 3 {
             if indexPath.row == 2 {
-                if self.isCombinationAvailable {
-                    return 0
+                if self.productModel.validCombinations.count != 0  {
+                    if (self.productModel.validCombinations.count != 0 && self.productModel.validCombinations[0].attributes.count != 0) || self.isCombinationAvailable {
+                        return 0
+                    }
                 }
                 return 74
             } else {
@@ -294,6 +301,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.userInteractionEnabled = true
                 self.cellName = cell
                 cell.cellTitleLabel.text = ProductUploadStrings.prodName
+                cell.cellTexField.text = self.productModel.name
                 
                 if self.productName != "" {
                     cell.cellTexField.text = self.productName
@@ -354,6 +362,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.youtubeUrl
                 cell.cellTexField.placeholder = ProductUploadStrings.youtubeUrlPlaceholder
+                cell.cellTexField.text = self.productModel.youtubeVideoUrl
                 
                 if self.productYoutube != "" {
                     cell.cellTexField.text = self.productYoutube
@@ -375,6 +384,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.category
                 cell.cellTexField.placeholder = ProductUploadStrings.selectCategory
+                cell.cellTexField.text = self.productModel.category.name
                 
                 if self.productCategory != "" {
                     cell.cellTexField.text = self.productCategory
@@ -394,6 +404,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.shippingCategory
                 cell.cellTexField.placeholder = ProductUploadStrings.selectShippingCategory
+                cell.cellTexField.text = self.productModel.shippingCategories.name
                 
                 if self.productShippingCategory != "" {
                     cell.cellTexField.text = self.productShippingCategory
@@ -416,6 +427,8 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 
                 cell.cellTitleLabel.text = ProductUploadStrings.brand
                 cell.cellTexField.placeholder = ProductUploadStrings.addBrand
+                
+                cell.cellTexField.text = self.productModel.brand.name
                 
                 if self.productBrand != "" {
                     cell.cellTexField.text = self.productBrand
@@ -473,6 +486,7 @@ class ProductUploadTC: UITableViewController, ProductUploadUploadImageTVCDataSou
                 cell.cellTexField.text = self.productSKU
                 
                 cell.cellTexField.placeholder = ProductUploadStrings.productSku
+                cell.cellTexField.text = self.productModel.sku
                 
                 if self.productSKU != "" {
                     cell.cellTexField.text = self.productSKU
