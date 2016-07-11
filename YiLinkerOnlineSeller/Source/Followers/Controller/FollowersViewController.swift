@@ -198,7 +198,7 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
         var pathOfTheCell: NSIndexPath = tableView.indexPathForCell(sender as! UITableViewCell)!
         var rowOfTheCell: Int = pathOfTheCell.row
 
-        getContactsFromEndpoint(followersModel.data[rowOfTheCell].email)
+        getContactsFromEndpoint("\(followersModel.data[rowOfTheCell].userId)")
     }
     
     func showHUD() {
@@ -237,6 +237,7 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
             } else {
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = true
                 searchKeyword = searchKey
+                self.followersModel.data.removeAll(keepCapacity: false)
             }
             
             getCtr++
@@ -397,10 +398,19 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
         if (Reachability.isConnectedToNetwork()) {
             self.showHUD()
             
-            WebServiceManager.fireGetContacts(APIAtlas.ACTION_GET_CONTACTS, page: "1", limit: "1", keyword: keyword, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            WebServiceManager.fireGetContacts(APIAtlas.ACTION_GET_CONTACTS, page: "1", limit: "100", keyword: "", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
                 
                 if successful {
                     self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
+                    
+                    for contact in self.contacts {
+                        if "\(contact.userId)" == keyword {
+                            self.contacts.removeAll(keepCapacity: false)
+                            self.contacts.append(contact)
+                            break;
+                        }
+                    }
+                    
                     self.goToMessaging()
                     self.hud?.hide(true)
                 } else {
