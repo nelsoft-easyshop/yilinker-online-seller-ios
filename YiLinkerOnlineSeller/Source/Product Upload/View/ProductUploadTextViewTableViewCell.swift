@@ -68,6 +68,10 @@ class ProductUploadTextViewTableViewCell: UITableViewCell, UITextViewDelegate {
     // MARK: Textview delegate method
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         let prospectiveText = (textView.text! as NSString).stringByReplacingCharactersInRange(range, withString: text)
-        return count(prospectiveText) <= 160 && prospectiveText.containsOnlyCharactersIn("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .'-&:!/?()@%*_{}[],;")
+        if self.textFieldType == ProductTextFieldType.ProductShortDescription {
+            return count(prospectiveText) <= 160 && prospectiveText.containsOnlyCharactersIn("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .'-&:!/?()@%*_{}[],;")
+        } else {
+            return prospectiveText.containsOnlyCharactersIn("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .'-&:!/?()@%*_{}[],;")
+        }
     }
 }

@@ -244,12 +244,15 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
             if self.productModel != nil {
                 self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: attributeModel, indexPath: self.selectedIndexPath, productModel: self.productModelCombi!, isEdit: true)
             } else {
-                self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: attributeModel, indexPath: self.selectedIndexPath)
+                if !self.isCancel {
+                    self.delegate!.productUploadDetailTableViewController(didPressSaveButtonWithAttributes: attributeModel, indexPath: self.selectedIndexPath)
+                }
             }
             
             self.navigationController!.popViewControllerAnimated(true)
         } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.attributeValuesRequired)
+            self.navigationController!.popViewControllerAnimated(true)
+            //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.attributeValuesRequired)
         }
     }
     

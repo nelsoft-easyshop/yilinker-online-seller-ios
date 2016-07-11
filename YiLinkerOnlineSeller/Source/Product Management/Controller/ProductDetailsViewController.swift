@@ -807,7 +807,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         
         let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
-            self.dismissViewControllerAnimated(true, completion: nil)
+            //self.dismissViewControllerAnimated(true, completion: nil)
         }
         
         alertController.addAction(OKAction)
