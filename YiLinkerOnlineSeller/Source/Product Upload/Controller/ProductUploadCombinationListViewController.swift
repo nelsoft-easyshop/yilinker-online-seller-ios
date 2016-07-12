@@ -36,10 +36,11 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
     
     var defaultDetails: ProductTranslationDetailsModel = ProductTranslationDetailsModel(productId: "")
     var targetDetails: ProductTranslationDetailsModel = ProductTranslationDetailsModel(productId: "")
-    typealias Variant = (variantDefault: String, variantTranslation: String)
+    typealias Variant = (variantDefault: String, variantTranslation: String, variantId: String)
     typealias Combination = (combinationName: String, variants: [Variant])
     var combinations: [Combination] = []
     var validCombinations: [CombinationModel] = []
+    var attrib: [[NSMutableDictionary]] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,9 +50,85 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         self.footerView()
         self.backButton()
         self.registerCell()
-        /*
+        
         self.combine("", pos: -1)
-        for (index, combination) in enumerate(self.combinations) {
+        
+        // Format combinations in dictionary
+        for (i, combination) in enumerate(self.combinations) {
+            var dictionary: [NSMutableDictionary] = []
+            for (j, variant) in enumerate(combination.variants) {
+                var dict: NSMutableDictionary = NSMutableDictionary()
+                dict["name"] = variant.variantDefault
+                dict["value"] = variant.variantTranslation
+                dict["id"] = variant.variantId
+                dictionary.append(dict)
+            }
+            self.attrib.append(dictionary)
+        }
+        
+        // Check if combinations in productModel!.validCombinations and add it in combiModel, then assign all the valid combinations to productModel!.validCombinations
+        //var attrib2: [[NSMutableDictionary]] = []
+        //var attrib3: [[NSMutableDictionary]] = []
+        var combiModel: [CombinationModel] = []
+        for (x, validCombination) in enumerate(self.productModel!.validCombinations) {
+            for (y, attributes) in enumerate(self.attrib) {
+                if validCombination.attributes == attributes  && attributes.count != 0 {
+                    //attrib3.append(attributes)
+                    combiModel.append(validCombination)
+                }
+            }
+        }
+        
+        self.productModel!.validCombinations = combiModel
+        
+        /*
+        for attr in attrib3 {
+            if attr.count != 0 {
+                attrib2.append(attr)
+            }
+        }
+        
+        self.attrib == attrib2
+        */
+        
+        /*for (index3, validCombination2) in enumerate(self.productModel!.validCombinations) {
+            //println("index: \(index) - \(validCombination.attributes)")
+            for (index2, attributes2) in enumerate(self.attrib) {
+                if attributes2 != validCombination2.attributes && index3 == index2 {
+                    self.productModel!.validCombinations[index3] = CombinationModel()
+                } else {
+                    println(self.productModel!.validCombinations[index3].attributes)
+                }
+            }
+        }*/
+        
+        /*
+        for (index2, attributes) in enumerate(self.attrib) {
+            //println("index2: \(index2) - \(attributes)")
+            for (index, validCombination) in enumerate(self.productModel!.validCombinations) {
+                //println("index: \(index) - \(validCombination.attributes)")
+                if attributes != validCombination.attributes {
+                    self.productModel!.validCombinations[index] = CombinationModel()
+                }
+            }
+        }*/
+        
+        // Get all valid combinations in self.productModel!.validCombinations then add it to combiModel and assign this to self.productModel!.validCombinations
+        
+        /*
+        var combiModel: [CombinationModel] = []
+        for (index, combination) in enumerate(self.productModel!.validCombinations) {
+            if combination.attributes.count != 0 {
+                combiModel.append(combination)
+            }
+        }
+        
+        if self.productModel != nil {
+            self.productModel!.validCombinations = combiModel
+        }*/
+        
+        // Autogenerate combi not used
+        /*for (index, combination) in enumerate(self.combinations) {
             for (index2, validCombination) in enumerate(self.productModel!.validCombinations) {
                 for (index3, attribute) in enumerate(validCombination.attributes) {
                     var name: String = combination.variants[index].variantDefault
@@ -159,7 +236,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             var variants: [Variant] = []
             
             for(var x = 0; x < array.count; x++) {
-                variants.append(Variant(variantDefault: self.productModel!.attributes[x].definition, variantTranslation: array[x]))
+                variants.append(Variant(variantDefault: self.productModel!.attributes[x].definition, variantTranslation: array[x], variantId: self.productModel!.attributes[x].id))
             }
             
             combinations.append(Combination((combinationName: "Combination \(comPos)", variants: variants)))
@@ -279,6 +356,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             for (index, definition) in enumerate(self.productModel!.attributes) {
                 
             }
+            
             /*
             let attributeModel: AttributeModel = AttributeModel()
             attributeModel.definition = self.combinations[indexPath.section].variants[indexPath.row].variantDefault
@@ -288,6 +366,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             }
             
             attributes.append(attributeModel)*/
+            var attrib: [NSMutableDictionary] = []
             
             for dictionary in self.productModel!.validCombinations[indexPath.section].attributes as [NSMutableDictionary] {
                 /*var combiValue: String = ""
@@ -308,7 +387,19 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
                 let attributeModel: AttributeModel = AttributeModel()
                 attributeModel.definition = dictionary["name"] as! String
                 attributeModel.values = [dictionary["value"] as! String]
+                attrib.append(dictionary)
                 attributes.append(attributeModel)
+            }
+            
+            println("attributes \(attrib)")
+            
+            if self.productModel != nil {
+                for (index, combinationLoop) in enumerate(self.productModel!.validCombinations) {
+                    println("attributes \(combinationLoop.attributes)")
+                    if combinationLoop.attributes != attrib && indexPath.section == index {
+                        //self.productModel!.validCombinations.removeAtIndex(index)
+                    }
+                }
             }
             
             cell.attributes = attributes

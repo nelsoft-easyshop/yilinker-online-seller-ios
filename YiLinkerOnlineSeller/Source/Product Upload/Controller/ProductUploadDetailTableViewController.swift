@@ -88,6 +88,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
     
     func back() {
         if self.deletedCells.count != 0 {
+            self.isCancel = true
             self.productUploadDetailFooterTableViewCell(didPressSaveButton: self.detailFooterViewCell!)
         } else {
             self.navigationController!.popViewControllerAnimated(true)
@@ -136,6 +137,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
            
             if self.productModel != nil {
                 cell.cellTextField.text = self.productModel!.attributes[self.selectedIndexPath.section].definition
+                cell.cellTextField.tag = self.productModel!.attributes[self.selectedIndexPath.section].id.toInt()!
                 cell.edited = true
             } else {
                 cell.edited = false
@@ -207,6 +209,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
     // MARK: - Save the changes made in product details
     
     func productUploadDetailFooterTableViewCell(didPressSaveButton cell: ProductUploadDetailFooterTableViewCell) {
+        
         if self.productModel != nil || self.isCancel == true {
             for (index, path) in enumerate(self.deletedCells) {
                 if self.productModel!.attributes.count != 0 && self.productModel!.attributes.count < path.section && self.productModel!.attributes[selectedIndexPath.section].values.count < path.row {
@@ -225,7 +228,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
             var attributeModel: AttributeModel = AttributeModel()
             attributeModel.definition = CommonHelper.firstCharacterUppercaseString(cell.cellTextField.text)
             attributeModel.values = attributeCell.attributes
-            
+            attributeModel.id =  "\(cell.cellTextField.tag)"
             // Remove unsaved attribute value
             for (index, path) in enumerate(self.unsavedCells) {
                 if attributeCell.attributes.count != 0 && self.isCancel == true {
@@ -251,8 +254,12 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
             
             self.navigationController!.popViewControllerAnimated(true)
         } else {
-            self.navigationController!.popViewControllerAnimated(true)
-            //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.attributeValuesRequired)
+            //self.navigationController!.popViewControllerAnimated(true)
+            if attributeCell.attributes.count == 0 && !self.isCancel {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductUploadStrings.attributeValuesRequired)
+            } else {
+                self.navigationController!.popViewControllerAnimated(true)
+            }
         }
     }
     

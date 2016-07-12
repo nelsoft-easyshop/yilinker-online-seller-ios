@@ -50,9 +50,12 @@ class ProductUploadCombinationTableViewCell: UITableViewCell {
             
             let definitionKey: String = "name"
             let valueKey: String = "value"
+            let idKey: String = "id"
             
             dictionary[definitionKey] = cell.attributeDefinitionLabel.text
             dictionary[valueKey] = cell.attributeTextField.text
+            dictionary[idKey] = "\(cell.attributeTextField.tag)"
+            
             combinationModel.attributes.append(dictionary)
         }
         
@@ -91,12 +94,14 @@ class ProductUploadCombinationTableViewCell: UITableViewCell {
         
         cell.attributeDefinitionLabel.text = attributeModel.definition
         cell.attributeTextField.text = attributeModel.values[0]
+        cell.attributeTextField.tag = attributeModel.id.toInt()!
         //cell.attributeTextField.userInteractionEnabled = false //comment this
         
         if self.productModel != nil {
             let dictionary: NSMutableDictionary = self.productModel!.validCombinations[selectedIndexPath!.section].attributes[indexPath.row]
             cell.attributeDefinitionLabel.text = dictionary["name"] as? String
             cell.attributeTextField.text  = dictionary["value"] as! String
+            cell.attributeTextField.tag = (dictionary["id"] as! String).toInt()!
         }
       
         cell.values = attributeModel.values

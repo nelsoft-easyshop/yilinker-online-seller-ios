@@ -9,6 +9,7 @@
 import UIKit
 
 class AttributeModel: NSObject {
+    var id: String = "0"
     var definition: String = ""
     var values: [String] = []
 }
