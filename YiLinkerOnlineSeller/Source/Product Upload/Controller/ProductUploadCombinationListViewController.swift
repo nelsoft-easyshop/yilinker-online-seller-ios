@@ -53,25 +53,68 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         
         self.combine("", pos: -1)
         
-        for (index, combination) in enumerate(self.combinations) {
+        // Format combinations in dictionary
+        for (i, combination) in enumerate(self.combinations) {
             var dictionary: [NSMutableDictionary] = []
-            for (index2, variant) in enumerate(combination.variants) {
+            for (j, variant) in enumerate(combination.variants) {
                 var dict: NSMutableDictionary = NSMutableDictionary()
                 dict["name"] = variant.variantDefault
                 dict["value"] = variant.variantTranslation
                 dictionary.append(dict)
             }
-            attrib.append(dictionary)
+            self.attrib.append(dictionary)
         }
         
-        for (index2, attributes) in enumerate(self.attrib) {
-            for (index, validCombination) in enumerate(self.productModel!.validCombinations) {
-                if attributes != validCombination.attributes && index2 == index {
-                    self.productModel!.validCombinations[index] = CombinationModel()
+        // Check if combinations in productModel!.validCombinations and add it in combiModel, then assign all the valid combinations to productModel!.validCombinations
+        //var attrib2: [[NSMutableDictionary]] = []
+        //var attrib3: [[NSMutableDictionary]] = []
+        var combiModel: [CombinationModel] = []
+        for (x, validCombination) in enumerate(self.productModel!.validCombinations) {
+            for (y, attributes) in enumerate(self.attrib) {
+                if validCombination.attributes == attributes  && attributes.count != 0 {
+                    //attrib3.append(attributes)
+                    combiModel.append(validCombination)
                 }
             }
         }
         
+        self.productModel!.validCombinations = combiModel
+        
+        /*
+        for attr in attrib3 {
+            if attr.count != 0 {
+                attrib2.append(attr)
+            }
+        }
+        
+        self.attrib == attrib2
+        */
+        
+        /*for (index3, validCombination2) in enumerate(self.productModel!.validCombinations) {
+            //println("index: \(index) - \(validCombination.attributes)")
+            for (index2, attributes2) in enumerate(self.attrib) {
+                if attributes2 != validCombination2.attributes && index3 == index2 {
+                    self.productModel!.validCombinations[index3] = CombinationModel()
+                } else {
+                    println(self.productModel!.validCombinations[index3].attributes)
+                }
+            }
+        }*/
+        
+        /*
+        for (index2, attributes) in enumerate(self.attrib) {
+            //println("index2: \(index2) - \(attributes)")
+            for (index, validCombination) in enumerate(self.productModel!.validCombinations) {
+                //println("index: \(index) - \(validCombination.attributes)")
+                if attributes != validCombination.attributes {
+                    self.productModel!.validCombinations[index] = CombinationModel()
+                }
+            }
+        }*/
+        
+        // Get all valid combinations in self.productModel!.validCombinations then add it to combiModel and assign this to self.productModel!.validCombinations
+        
+        /*
         var combiModel: [CombinationModel] = []
         for (index, combination) in enumerate(self.productModel!.validCombinations) {
             if combination.attributes.count != 0 {
@@ -81,9 +124,9 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
         
         if self.productModel != nil {
             self.productModel!.validCombinations = combiModel
-        }
+        }*/
         
-        
+        // Autogenerate combi not used
         /*for (index, combination) in enumerate(self.combinations) {
             for (index2, validCombination) in enumerate(self.productModel!.validCombinations) {
                 for (index3, attribute) in enumerate(validCombination.attributes) {
