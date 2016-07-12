@@ -136,6 +136,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
            
             if self.productModel != nil {
                 cell.cellTextField.text = self.productModel!.attributes[self.selectedIndexPath.section].definition
+                cell.cellTextField.tag = self.productModel!.attributes[self.selectedIndexPath.section].id.toInt()!
                 cell.edited = true
             } else {
                 cell.edited = false
@@ -231,7 +232,7 @@ class ProductUploadDetailTableViewController: UITableViewController, ProductUplo
             var attributeModel: AttributeModel = AttributeModel()
             attributeModel.definition = CommonHelper.firstCharacterUppercaseString(cell.cellTextField.text)
             attributeModel.values = attributeCell.attributes
-            
+            attributeModel.id =  "\(cell.cellTextField.tag)"
             // Remove unsaved attribute value
             for (index, path) in enumerate(self.unsavedCells) {
                 if attributeCell.attributes.count != 0 && self.isCancel == true {

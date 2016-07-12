@@ -36,7 +36,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
     
     var defaultDetails: ProductTranslationDetailsModel = ProductTranslationDetailsModel(productId: "")
     var targetDetails: ProductTranslationDetailsModel = ProductTranslationDetailsModel(productId: "")
-    typealias Variant = (variantDefault: String, variantTranslation: String)
+    typealias Variant = (variantDefault: String, variantTranslation: String, variantId: String)
     typealias Combination = (combinationName: String, variants: [Variant])
     var combinations: [Combination] = []
     var validCombinations: [CombinationModel] = []
@@ -60,6 +60,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
                 var dict: NSMutableDictionary = NSMutableDictionary()
                 dict["name"] = variant.variantDefault
                 dict["value"] = variant.variantTranslation
+                dict["id"] = variant.variantId
                 dictionary.append(dict)
             }
             self.attrib.append(dictionary)
@@ -235,7 +236,7 @@ class ProductUploadCombinationListViewController: UIViewController, ProductUploa
             var variants: [Variant] = []
             
             for(var x = 0; x < array.count; x++) {
-                variants.append(Variant(variantDefault: self.productModel!.attributes[x].definition, variantTranslation: array[x]))
+                variants.append(Variant(variantDefault: self.productModel!.attributes[x].definition, variantTranslation: array[x], variantId: self.productModel!.attributes[x].id))
             }
             
             combinations.append(Combination((combinationName: "Combination \(comPos)", variants: variants)))

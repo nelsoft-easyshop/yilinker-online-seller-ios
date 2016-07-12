@@ -228,6 +228,10 @@ class ProductModel {
                             attributeModel.definition = tempVar
                         }
                         
+                        if let tempVar =  subValue["id"] as? String {
+                            attributeModel.id = tempVar
+                        }
+                        
                         for tempVar in subValue["values"] as! NSArray {
                             if let tempValue = tempVar["value"] as? String {
                                 attributeModel.values.append(tempValue)
