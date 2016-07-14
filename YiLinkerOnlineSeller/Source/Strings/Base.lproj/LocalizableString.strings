@@ -392,10 +392,12 @@ STORE_INFO_EDIT_COVER_LOCALIZE_KEY = "Edit Cover Photo";
 
 STORE_INFO_STORE_INFO_LOCALIZE_KEY = "Store Information";
 STORE_INFO_STORE_NAME_LOCALIZE_KEY = "Store Name";
+STORE_INFO_STORE_LINK_LOCALIZE_KEY = "Store Link";
 STORE_INFO_STORE_DESC_LOCALIZE_KEY = "Store Description";
 STORE_INFO_MOBILE_LOCALIZE_KEY = "Mobile Phone";
 STORE_INFO_CHANGE_LOCALIZE_KEY = "Change";
 STORE_INFO_TIN_LOCALIZE_KEY = "Tax Identification Number";
+STORE_INFO_COPIED_LOCALIZE_KEY = "Copied to clipboard";
 
 STORE_INFO_QR_LOCALIZE_KEY = "QR Code";
 STORE_INFO_GENERATE_LOCALIZE_KEY = "Generate your store QR code and spread the word about your store. Your QR code points to your store page can be scanned by most smartphones for easier process.";

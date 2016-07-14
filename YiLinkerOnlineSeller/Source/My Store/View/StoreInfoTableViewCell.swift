@@ -18,6 +18,7 @@ struct IMAGETYPE {
 protocol StoreInfoTableViewCellDelegate {
     func callUzyPicker(imageType: String)
     func storeInfoVerify(mobile: String)
+    func storeInfoCopyToClipboard(link: String)
     func storeNameAndDescription(storeName: String, storeDescription: String)
     func textViewNextResponder(textView: UITextView)
     func textViewScrollUp(textView: UITextView)
@@ -27,6 +28,7 @@ class StoreInfoTableViewCell: UITableViewCell, UITextFieldDelegate, UITextViewDe
 
     //Buttons
     @IBOutlet weak var verifyButton: UIButton!
+    @IBOutlet weak var storeLinkButton: UIButton!
     
     //Imageviews
     @IBOutlet weak var coverEditImageView: UIImageView!
@@ -42,6 +44,8 @@ class StoreInfoTableViewCell: UITableViewCell, UITextFieldDelegate, UITextViewDe
     @IBOutlet weak var storeDescriptionLabel: UILabel!
     @IBOutlet weak var storeInfoLabel: UILabel!
     @IBOutlet weak var storeNameLabel: UILabel!
+    @IBOutlet weak var storeLinkTitleLabel: UILabel!
+    @IBOutlet weak var storeLinkLabel: UILabel!
     
     //Textfields
     @IBOutlet var tinTextField: UITextField!
@@ -138,6 +142,12 @@ class StoreInfoTableViewCell: UITableViewCell, UITextFieldDelegate, UITextViewDe
     //Method to call ChangeMobileNumberViewController
     @IBAction func callVerification(sender: AnyObject){
         self.delegate?.storeInfoVerify(self.mobilePhoneTextField.text)
+    }
+    
+    //MARK: Action method for button
+    //Method to call ChangeMobileNumberViewController
+    @IBAction func copyToClipboard(sender: AnyObject){
+        self.delegate?.storeInfoCopyToClipboard(self.storeLinkLabel!.text!)
     }
     
     //MARK: Private method
