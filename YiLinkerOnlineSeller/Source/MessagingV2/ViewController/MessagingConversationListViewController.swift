@@ -138,7 +138,7 @@ class MessagingConversationListViewController: UIViewController {
         self.newMessageButton.layer.shadowOpacity = 0.75;
         self.newMessageButton.layer.shadowRadius = 2.0;
         
-        self.addBackButton()
+//        self.addBackButton()
         
         //Initialize no message label
         self.noMessageLabel.hidden = true

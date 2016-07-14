@@ -4913,7 +4913,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "00309adb-c47b-433b-afc3-71e80bcb6b7b";
+				PROVISIONING_PROFILE = "681d3a71-7328-46ab-b6ab-261d514aab2d";
 				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineSeller/Source/YiLinkerOnlineSeller-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -4936,7 +4936,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "00309adb-c47b-433b-afc3-71e80bcb6b7b";
+				PROVISIONING_PROFILE = "681d3a71-7328-46ab-b6ab-261d514aab2d";
 				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineSeller/Source/YiLinkerOnlineSeller-Bridging-Header.h";
 			};
 			name = Release;
