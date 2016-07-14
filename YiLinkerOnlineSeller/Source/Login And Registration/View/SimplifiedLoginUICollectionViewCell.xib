@@ -30,6 +30,9 @@
                         </constraints>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                        <connections>
+                            <action selector="textFieldAction:" destination="gTV-IL-0wX" eventType="editingChanged" id="bzA-cV-JBn"/>
+                        </connections>
                     </textField>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nW8-Ch-5IR">
                         <rect key="frame" x="102" y="19" width="75" height="20"/>
@@ -63,6 +66,9 @@
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
                         <textInputTraits key="textInputTraits"/>
+                        <connections>
+                            <action selector="textFieldAction:" destination="gTV-IL-0wX" eventType="editingChanged" id="klG-83-Idv"/>
+                        </connections>
                     </textField>
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Af-we-U0l">
                         <rect key="frame" x="16" y="61" width="69" height="35"/>
