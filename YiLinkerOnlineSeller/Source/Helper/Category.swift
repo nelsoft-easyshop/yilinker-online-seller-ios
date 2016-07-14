@@ -295,6 +295,12 @@ extension CAGradientLayer {
 }
 
 extension NSDate {
+    
+    
+    func differenceInMinutesWithCurrentDate() -> Double {
+        return ((NSDate().timeIntervalSinceDate(self)) / 60)
+    }
+    
     func isGreaterThanDate(dateToCompare : NSDate) -> Bool {
         var isGreater = false
         if self.compare(dateToCompare) == NSComparisonResult.OrderedDescending {
@@ -358,9 +364,36 @@ extension NSDate {
         
         return nil
     }
+    
+    func formatDateToString(desiredFormat: String) -> String {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = desiredFormat
+        return dateFormatter.stringFromDate(self)
+    }
+}
+
+extension Double {
+    func formatToNoDecimal() -> String {
+        var stringNumber: String = ""
+        
+        let formatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 0
+        formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+        stringNumber = formatter.stringFromNumber(self)!
+        
+        return stringNumber
+    }
+    
 }
 
 extension String {
+    
+    func formatStringToDate(format: String) -> NSDate {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.dateFromString(self)!
+    }
    
     var floatValue: Float {
         return (self as NSString).floatValue

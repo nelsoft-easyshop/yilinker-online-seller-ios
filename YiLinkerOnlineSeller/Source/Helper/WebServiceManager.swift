@@ -100,6 +100,12 @@ class WebServiceManager: NSObject {
     static let queryKey = "query"
     static let groupKey = "group"
     
+    //Messaging dictionary keys
+    static let userIdKey = "userId"
+    static let messageKey = "message"
+    static let recipientIdKey = "recipientId"
+    static let isImageKey = "isImage"
+    
     // MARK: - CALLS
     // MARK: - Post Request With Url
     // This function is for removing repeated codes in handler
@@ -1191,6 +1197,66 @@ class WebServiceManager: NSObject {
         }
         
         return sessionDataTask
+    }
+    
+    //MARK: - Fire Get Conversation list With Url
+    class func fireGetConversationListWithUrl(url: String, page: String, limit: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [pageKey: page, limitKey: limit]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: - Fire Get Conversation thread list With Url
+    class func fireGetConversationThreadListWithUrl(url: String, page: String, limit: String, userId: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [pageKey: page, limitKey: limit, userIdKey: userId]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: - Fire Get Contacts lis With Url
+    class func fireGetContactListWithUrl(url: String, keyword: String, page: String, limit: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [pageKey: page, limitKey: limit, keywordKey: keyword]
+        let manager = APIManager.sharedInstance
+        if (self.postTask != nil) {
+            self.postTask?.cancel()
+            manager.operationQueue.cancelAllOperations()
+            self.postTask = nil
+        }
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: - Fire Get Contacts list With Url
+    class func fireSendMessageWithUrl(url: String, isImage: Bool, recipientId: String, message: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        if !isImage {
+            let parameters: NSDictionary = [isImageKey: "0", messageKey: message, recipientIdKey: recipientId]
+            self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+                actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+            }
+        } else {
+            let parameters: NSDictionary = [isImageKey: "1", messageKey: message, recipientIdKey: recipientId]
+            self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+                actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+            }
+        }
+    }
+    
+    //MARK: - Fire set conversation as read
+    class func fireSetConversationAsReadWithUrl(url: String, userId: String, access_token: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [userIdKey: userId]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: - Fire Get Contacts list With Url
+    class func fireAttachImageWithUrl(url: String, image: UIImage, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        self.firePostRequestWithImage(url, parameters: [], image: image) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
     }
 }
 
