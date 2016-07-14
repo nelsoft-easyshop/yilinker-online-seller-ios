@@ -134,7 +134,8 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        fireGetFollower(searchBar.text)
+        self.searchBar.endEditing(true)
+//        fireGetFollower(searchBar.text)
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
