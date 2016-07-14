@@ -501,16 +501,10 @@ class FollowersViewController: UIViewController, UISearchBarDelegate, UITableVie
         } else {
             isOnline = "0"
         }
-//        messagingViewController.recipient = selectedContact
-//        messagingViewController.sender = W_Contact(fullName: SessionManager.userFullName(), userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken() , profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
-//        
-//        self.navigationController?.pushViewController(messagingViewController, animated: true)
+        messagingViewController.recipient = selectedContact
+        messagingViewController.sender = W_Contact(fullName: SessionManager.userFullName(), userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken() , profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
         
-        var viewController = MessagingThreadViewController(nibName: "MessagingThreadViewController", bundle: nil)
-        if let temp: W_Contact = selectedContact {
-            viewController.receiver = MessagingContactModel(userId: temp.userId, slug: "", fullName: temp.fullName, profileImageUrl: temp.profileImageUrl, profileThumbnailImageUrl: temp.profileImageUrl, profileSmallImageUrl: temp.profileImageUrl, profileMediumImageUrl: temp.profileImageUrl, profileLargeImageUrl: temp.profileImageUrl, isOnline: temp.isOnline, hasUnreadMessage: "")
-        }
-        self.navigationController?.pushViewController(viewController, animated:true)
+        self.navigationController?.pushViewController(messagingViewController, animated: true)
     }
     
     func fireRefreshToken() {
