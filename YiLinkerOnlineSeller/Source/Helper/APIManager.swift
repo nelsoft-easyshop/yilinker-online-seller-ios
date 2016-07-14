@@ -216,6 +216,18 @@ struct APIAtlas {
     static let warehouseInventory = APIAtlas.generateV3URL("auth/warehouse/inventory")
     static let getWarehouseList = APIAtlas.generateV3URL("auth/warehouse/list?access_token=")
     static let deleteWarehouse = APIAtlas.generateV3URL("auth/warehouse/delete?access_token=")
+    
+    /* MESSAGING CONSTANTS V2 */
+    static let ACTION_SEND_MESSAGE_V2          =  APIAtlas.generateV3URL("message/sendMessage")
+    static let ACTION_GET_CONVERSATION_HEAD_V2 =  APIAtlas.generateV3URL("message/getConversationHead")
+    static let ACTION_GET_CONTACTS_V2          =  APIAtlas.generateV3URL("message/getContacts")
+    static let ACTION_GET_CONVERSATION_MESSAGES_V2 =  APIAtlas.generateV3URL("message/getConversationMessages")
+    static let ACTION_SET_AS_READ_V2           =  APIAtlas.generateV3URL("message/setConversationAsRead")
+    static let ACTION_IMAGE_ATTACH_V2          =  APIAtlas.generateV3URL("message/imageAttach")
+    static let ACTION_GCM_CREATE_V2            =  APIAtlas.generateV3URL("auth/device/addRegistrationId")
+    static let ACTION_GCM_DELETE_V2            =  APIAtlas.generateV3URL("auth/device/deleteRegistrationId")
+    static let ACTION_GCM_UPDATE_V2           =  APIAtlas.generateV3URL("device/auth/updateRegistrationId")
+    static let uploadFileType_V2 = "jpeg"
 }
 
 class APIManager: AFHTTPSessionManager {

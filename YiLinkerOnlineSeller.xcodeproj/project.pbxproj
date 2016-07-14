@@ -53,6 +53,29 @@
 		6D8F4CD31D22433300B24394 /* ProductUploadSkuTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D8F4CD11D22433300B24394 /* ProductUploadSkuTextFieldTableViewCell.xib */; };
 		6DD8732C1D1272A6001C4D21 /* ProductUploadProductGroupPreviewTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD8732A1D1272A6001C4D21 /* ProductUploadProductGroupPreviewTVC.swift */; };
 		6DD8732D1D1272A6001C4D21 /* ProductUploadProductGroupPreviewTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6DD8732B1D1272A6001C4D21 /* ProductUploadProductGroupPreviewTVC.xib */; };
+		791E42431D35E3C700AE3E61 /* MessagingContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791E422C1D35E3C700AE3E61 /* MessagingContactModel.swift */; };
+		791E42441D35E3C700AE3E61 /* MessagingConversationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791E422D1D35E3C700AE3E61 /* MessagingConversationModel.swift */; };
+		791E42451D35E3C700AE3E61 /* MessagingMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791E422E1D35E3C700AE3E61 /* MessagingMessageModel.swift */; };
+		791E42461D35E3C700AE3E61 /* MessagingContactListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791E42301D35E3C700AE3E61 /* MessagingContactListViewController.swift */; };
+		791E42471D35E3C700AE3E61 /* MessagingContactListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 791E42311D35E3C700AE3E61 /* MessagingContactListViewController.xib */; };
+		791E42481D35E3C700AE3E61 /* MessagingConversationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791E42321D35E3C700AE3E61 /* MessagingConversationListViewController.swift */; };
+		791E42491D35E3C700AE3E61 /* MessagingConversationListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 791E42331D35E3C700AE3E61 /* MessagingConversationListViewController.xib */; };
+		791E424A1D35E3C700AE3E61 /* MessagingThreadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791E42341D35E3C700AE3E61 /* MessagingThreadViewController.swift */; };
+		791E424B1D35E3C700AE3E61 /* MessagingThreadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 791E42351D35E3C700AE3E61 /* MessagingThreadViewController.xib */; };
+		791E424C1D35E3C700AE3E61 /* MessagingContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791E42371D35E3C700AE3E61 /* MessagingContactTableViewCell.swift */; };
+		791E424D1D35E3C700AE3E61 /* MessagingContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 791E42381D35E3C700AE3E61 /* MessagingContactTableViewCell.xib */; };
+		791E424E1D35E3C700AE3E61 /* MessagingConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791E42391D35E3C700AE3E61 /* MessagingConversationTableViewCell.swift */; };
+		791E424F1D35E3C700AE3E61 /* MessagingConversationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 791E423A1D35E3C700AE3E61 /* MessagingConversationTableViewCell.xib */; };
+		791E42501D35E3C700AE3E61 /* MessagingReceiverImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791E423B1D35E3C700AE3E61 /* MessagingReceiverImageTableViewCell.swift */; };
+		791E42511D35E3C700AE3E61 /* MessagingReceiverImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 791E423C1D35E3C700AE3E61 /* MessagingReceiverImageTableViewCell.xib */; };
+		791E42521D35E3C700AE3E61 /* MessagingReceiverTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791E423D1D35E3C700AE3E61 /* MessagingReceiverTableViewCell.swift */; };
+		791E42531D35E3C700AE3E61 /* MessagingReceiverTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 791E423E1D35E3C700AE3E61 /* MessagingReceiverTableViewCell.xib */; };
+		791E42541D35E3C700AE3E61 /* MessagingSenderImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791E423F1D35E3C700AE3E61 /* MessagingSenderImageTableViewCell.swift */; };
+		791E42551D35E3C700AE3E61 /* MessagingSenderImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 791E42401D35E3C700AE3E61 /* MessagingSenderImageTableViewCell.xib */; };
+		791E42561D35E3C700AE3E61 /* MessagingSenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791E42411D35E3C700AE3E61 /* MessagingSenderTableViewCell.swift */; };
+		791E42571D35E3C700AE3E61 /* MessagingSenderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 791E42421D35E3C700AE3E61 /* MessagingSenderTableViewCell.xib */; };
+		791E425A1D35EF5B00AE3E61 /* ProductFullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791E42581D35EF5B00AE3E61 /* ProductFullScreenViewController.swift */; };
+		791E425B1D35EF5B00AE3E61 /* ProductFullScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 791E42591D35EF5B00AE3E61 /* ProductFullScreenViewController.xib */; };
 		798D81CC1C8686EB00D2A1F7 /* ActivityLogTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D7EA31C8686EA00D2A1F7 /* ActivityLogTableViewController.swift */; };
 		798D81CD1C8686EB00D2A1F7 /* ActivityLogTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D7EA41C8686EA00D2A1F7 /* ActivityLogTableViewController.xib */; };
 		798D81CE1C8686EB00D2A1F7 /* ActivityLogItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D7EA61C8686EA00D2A1F7 /* ActivityLogItemModel.swift */; };
@@ -912,6 +935,29 @@
 		6DD8732A1D1272A6001C4D21 /* ProductUploadProductGroupPreviewTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductUploadProductGroupPreviewTVC.swift; sourceTree = "<group>"; };
 		6DD8732B1D1272A6001C4D21 /* ProductUploadProductGroupPreviewTVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductUploadProductGroupPreviewTVC.xib; sourceTree = "<group>"; };
 		700EB734D32404B5E927BC8D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		791E422C1D35E3C700AE3E61 /* MessagingContactModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagingContactModel.swift; sourceTree = "<group>"; };
+		791E422D1D35E3C700AE3E61 /* MessagingConversationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagingConversationModel.swift; sourceTree = "<group>"; };
+		791E422E1D35E3C700AE3E61 /* MessagingMessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagingMessageModel.swift; sourceTree = "<group>"; };
+		791E42301D35E3C700AE3E61 /* MessagingContactListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagingContactListViewController.swift; sourceTree = "<group>"; };
+		791E42311D35E3C700AE3E61 /* MessagingContactListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessagingContactListViewController.xib; sourceTree = "<group>"; };
+		791E42321D35E3C700AE3E61 /* MessagingConversationListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagingConversationListViewController.swift; sourceTree = "<group>"; };
+		791E42331D35E3C700AE3E61 /* MessagingConversationListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessagingConversationListViewController.xib; sourceTree = "<group>"; };
+		791E42341D35E3C700AE3E61 /* MessagingThreadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagingThreadViewController.swift; sourceTree = "<group>"; };
+		791E42351D35E3C700AE3E61 /* MessagingThreadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessagingThreadViewController.xib; sourceTree = "<group>"; };
+		791E42371D35E3C700AE3E61 /* MessagingContactTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagingContactTableViewCell.swift; sourceTree = "<group>"; };
+		791E42381D35E3C700AE3E61 /* MessagingContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessagingContactTableViewCell.xib; sourceTree = "<group>"; };
+		791E42391D35E3C700AE3E61 /* MessagingConversationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagingConversationTableViewCell.swift; sourceTree = "<group>"; };
+		791E423A1D35E3C700AE3E61 /* MessagingConversationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessagingConversationTableViewCell.xib; sourceTree = "<group>"; };
+		791E423B1D35E3C700AE3E61 /* MessagingReceiverImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagingReceiverImageTableViewCell.swift; sourceTree = "<group>"; };
+		791E423C1D35E3C700AE3E61 /* MessagingReceiverImageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessagingReceiverImageTableViewCell.xib; sourceTree = "<group>"; };
+		791E423D1D35E3C700AE3E61 /* MessagingReceiverTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagingReceiverTableViewCell.swift; sourceTree = "<group>"; };
+		791E423E1D35E3C700AE3E61 /* MessagingReceiverTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessagingReceiverTableViewCell.xib; sourceTree = "<group>"; };
+		791E423F1D35E3C700AE3E61 /* MessagingSenderImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagingSenderImageTableViewCell.swift; sourceTree = "<group>"; };
+		791E42401D35E3C700AE3E61 /* MessagingSenderImageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessagingSenderImageTableViewCell.xib; sourceTree = "<group>"; };
+		791E42411D35E3C700AE3E61 /* MessagingSenderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagingSenderTableViewCell.swift; sourceTree = "<group>"; };
+		791E42421D35E3C700AE3E61 /* MessagingSenderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessagingSenderTableViewCell.xib; sourceTree = "<group>"; };
+		791E42581D35EF5B00AE3E61 /* ProductFullScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductFullScreenViewController.swift; path = YiLinkerOnlineSeller/Source/MessagingV2/ViewController/ProductFullScreenViewController.swift; sourceTree = SOURCE_ROOT; };
+		791E42591D35EF5B00AE3E61 /* ProductFullScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductFullScreenViewController.xib; path = YiLinkerOnlineSeller/Source/MessagingV2/ViewController/ProductFullScreenViewController.xib; sourceTree = SOURCE_ROOT; };
 		798D7EA31C8686EA00D2A1F7 /* ActivityLogTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLogTableViewController.swift; sourceTree = "<group>"; };
 		798D7EA41C8686EA00D2A1F7 /* ActivityLogTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityLogTableViewController.xib; sourceTree = "<group>"; };
 		798D7EA61C8686EA00D2A1F7 /* ActivityLogItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLogItemModel.swift; sourceTree = "<group>"; };
@@ -1861,9 +1907,64 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		791E422A1D35E3C700AE3E61 /* MessagingV2 */ = {
+			isa = PBXGroup;
+			children = (
+				791E422B1D35E3C700AE3E61 /* Models */,
+				791E422F1D35E3C700AE3E61 /* ViewController */,
+				791E42361D35E3C700AE3E61 /* Views */,
+			);
+			path = MessagingV2;
+			sourceTree = "<group>";
+		};
+		791E422B1D35E3C700AE3E61 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				791E422C1D35E3C700AE3E61 /* MessagingContactModel.swift */,
+				791E422D1D35E3C700AE3E61 /* MessagingConversationModel.swift */,
+				791E422E1D35E3C700AE3E61 /* MessagingMessageModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		791E422F1D35E3C700AE3E61 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				791E42301D35E3C700AE3E61 /* MessagingContactListViewController.swift */,
+				791E42311D35E3C700AE3E61 /* MessagingContactListViewController.xib */,
+				791E42321D35E3C700AE3E61 /* MessagingConversationListViewController.swift */,
+				791E42331D35E3C700AE3E61 /* MessagingConversationListViewController.xib */,
+				791E42341D35E3C700AE3E61 /* MessagingThreadViewController.swift */,
+				791E42351D35E3C700AE3E61 /* MessagingThreadViewController.xib */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		791E42361D35E3C700AE3E61 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				791E42581D35EF5B00AE3E61 /* ProductFullScreenViewController.swift */,
+				791E42591D35EF5B00AE3E61 /* ProductFullScreenViewController.xib */,
+				791E42371D35E3C700AE3E61 /* MessagingContactTableViewCell.swift */,
+				791E42381D35E3C700AE3E61 /* MessagingContactTableViewCell.xib */,
+				791E42391D35E3C700AE3E61 /* MessagingConversationTableViewCell.swift */,
+				791E423A1D35E3C700AE3E61 /* MessagingConversationTableViewCell.xib */,
+				791E423B1D35E3C700AE3E61 /* MessagingReceiverImageTableViewCell.swift */,
+				791E423C1D35E3C700AE3E61 /* MessagingReceiverImageTableViewCell.xib */,
+				791E423D1D35E3C700AE3E61 /* MessagingReceiverTableViewCell.swift */,
+				791E423E1D35E3C700AE3E61 /* MessagingReceiverTableViewCell.xib */,
+				791E423F1D35E3C700AE3E61 /* MessagingSenderImageTableViewCell.swift */,
+				791E42401D35E3C700AE3E61 /* MessagingSenderImageTableViewCell.xib */,
+				791E42411D35E3C700AE3E61 /* MessagingSenderTableViewCell.swift */,
+				791E42421D35E3C700AE3E61 /* MessagingSenderTableViewCell.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		798D7EA01C8686EA00D2A1F7 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				791E422A1D35E3C700AE3E61 /* MessagingV2 */,
 				79EBAC041D0AAE8400B72DB9 /* My Points */,
 				546BF38E1D057D8A005DF761 /* Warehouse */,
 				79EF66291CA1088B000CDA6B /* Help */,
@@ -3742,6 +3843,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				791E42531D35E3C700AE3E61 /* MessagingReceiverTableViewCell.xib in Resources */,
 				798D847E1C8686EB00D2A1F7 /* EmptyView.xib in Resources */,
 				2623DE281CC8DA3C00EA241C /* ProductCombination3TableViewCell.xib in Resources */,
 				798D81FB1C8686EB00D2A1F7 /* PayoutRequestListItemTableViewCell.xib in Resources */,
@@ -3755,6 +3857,7 @@
 				798D83BE1C8686EB00D2A1F7 /* ResolutionCenterCell.xib in Resources */,
 				F7C40FD31B983CD90091C16C /* close2-2.png in Resources */,
 				798D81F71C8686EB00D2A1F7 /* PayoutRequestListBankDetailHeaderTableViewCell.xib in Resources */,
+				791E424B1D35E3C700AE3E61 /* MessagingThreadViewController.xib in Resources */,
 				798D81E21C8686EB00D2A1F7 /* PayoutRequestListViewController.xib in Resources */,
 				798D83201C8686EB00D2A1F7 /* NewAddressHeaderTableViewCell.xib in Resources */,
 				798D836A1C8686EB00D2A1F7 /* ProductUploadDetailTableViewController.xib in Resources */,
@@ -3774,6 +3877,7 @@
 				798D841F1C8686EB00D2A1F7 /* LaunchScreen.strings in Resources */,
 				798D832A1C8686EB00D2A1F7 /* StoreInfoBankAccountTableViewCell.xib in Resources */,
 				798D837E1C8686EB00D2A1F7 /* ProductUploadAttributeSummaryTableViewCell.xib in Resources */,
+				791E42511D35E3C700AE3E61 /* MessagingReceiverImageTableViewCell.xib in Resources */,
 				F70F91491CC9F749000DBD36 /* ProductUploadAttributeListTC.xib in Resources */,
 				798D82D61C8686EB00D2A1F7 /* LoginTableViewCell.xib in Resources */,
 				798D82241C8686EB00D2A1F7 /* CustomizedCategoryViews.xib in Resources */,
@@ -3818,6 +3922,7 @@
 				798D828A1C8686EB00D2A1F7 /* Black Italic.otf in Resources */,
 				798D82941C8686EB00D2A1F7 /* Panton Light Italic.otf in Resources */,
 				798D84281C8686EB00D2A1F7 /* TransactionDeliveryLogTableViewController.xib in Resources */,
+				791E42491D35E3C700AE3E61 /* MessagingConversationListViewController.xib in Resources */,
 				798D81F31C8686EB00D2A1F7 /* PayoutEarningsTransactionTypeTableViewCell.xib in Resources */,
 				798D83BA1C8686EB00D2A1F7 /* DisputeTextFieldTableViewCell.xib in Resources */,
 				798D840C1C8686EB00D2A1F7 /* SettingDeactivateTableViewCell.xib in Resources */,
@@ -3842,11 +3947,13 @@
 				798D828B1C8686EB00D2A1F7 /* Panton Black.otf in Resources */,
 				798D84691C8686EB00D2A1F7 /* CustomUploadView.xib in Resources */,
 				F7C40FD91B983CD90091C16C /* photo.png in Resources */,
+				791E42571D35E3C700AE3E61 /* MessagingSenderTableViewCell.xib in Resources */,
 				798D81DA1C8686EB00D2A1F7 /* PayoutBalanceWithdrawalViewController.xib in Resources */,
 				79DDA5C51D192EEC0074768F /* LoginAndRegisterTableViewController.xib in Resources */,
 				798D81E61C8686EB00D2A1F7 /* PayoutViewController.xib in Resources */,
 				79EBAC181D0AAE8400B72DB9 /* MyPointsTableViewController.xib in Resources */,
 				798D82AA1C8686EB00D2A1F7 /* FollowersViewController.xib in Resources */,
+				791E42551D35E3C700AE3E61 /* MessagingSenderImageTableViewCell.xib in Resources */,
 				798D83D61C8686EB00D2A1F7 /* FilterViewController.xib in Resources */,
 				798D837A1C8686EB00D2A1F7 /* ProductUploadAddFooterView.xib in Resources */,
 				798D828E1C8686EB00D2A1F7 /* Panton ExtraBold Italic.otf in Resources */,
@@ -3902,6 +4009,7 @@
 				798D83C01C8686EB00D2A1F7 /* DatePickerViewController.xib in Resources */,
 				79A1C71C1CFD855A001184C4 /* LanguageCombinationHeaderCollectionReusableView.xib in Resources */,
 				798D820F1C8686EB00D2A1F7 /* CustomizedCategoryViewsViewController.xib in Resources */,
+				791E424F1D35E3C700AE3E61 /* MessagingConversationTableViewCell.xib in Resources */,
 				79EBAC1F1D0AAE8400B72DB9 /* PointsBreakdownTableViewCell.xib in Resources */,
 				79A1C7101CFD5566001184C4 /* LanguageVariantsCollectionViewCell.xib in Resources */,
 				26239D551CC872A90099A87C /* CountryStoreSetupViewController.xib in Resources */,
@@ -3912,6 +4020,7 @@
 				F71606B71CC4DBDA00C2F5E8 /* ProductUploadTC.xib in Resources */,
 				798D845C1C8686EB00D2A1F7 /* TransactionProductDetailsTableViewCell.xib in Resources */,
 				798D83901C8686EB00D2A1F7 /* ProductUploadDetailHeaderViewCollectionViewCell.xib in Resources */,
+				791E42471D35E3C700AE3E61 /* MessagingContactListViewController.xib in Resources */,
 				798D83CF1C8686EB00D2A1F7 /* FilterHeaderSectiionViewController.xib in Resources */,
 				798D833B1C8686EB00D2A1F7 /* ProductDetailsViewController.xib in Resources */,
 				79D8D6E01CF8306D00A8D535 /* TranslationImagesTableViewCell.xib in Resources */,
@@ -3997,6 +4106,7 @@
 				798D83DC1C8686EB00D2A1F7 /* FilterByTableViewCell.xib in Resources */,
 				798D838A1C8686EB00D2A1F7 /* ProductUploadCombinationHeaderTableViewCell.xib in Resources */,
 				798D83411C8686EB00D2A1F7 /* SelectDateViewController.xib in Resources */,
+				791E425B1D35EF5B00AE3E61 /* ProductFullScreenViewController.xib in Resources */,
 				798D82D21C8686EB00D2A1F7 /* LoginRegisterLogoTableViewCell.xib in Resources */,
 				6D8F4CCB1D22429600B24394 /* ProductUploadBrandTextFieldTableViewCell.xib in Resources */,
 				798D82CB1C8686EB00D2A1F7 /* SignInViewController.xib in Resources */,
@@ -4020,6 +4130,7 @@
 				79A1C7181CFD8452001184C4 /* LanguageTransalationCombinationsCollectionViewController.xib in Resources */,
 				798D83281C8686EB00D2A1F7 /* StoreInfoAddressTableViewCell.xib in Resources */,
 				798D838C1C8686EB00D2A1F7 /* ProductUploadCombinationTableViewCell.xib in Resources */,
+				791E424D1D35E3C700AE3E61 /* MessagingContactTableViewCell.xib in Resources */,
 				79EBAC211D0AAE8400B72DB9 /* PointsDetailsTableViewCell.xib in Resources */,
 				79CCB6691CF6F47D00E38612 /* TranslationInputTableViewCell.xib in Resources */,
 				2623DE2C1CC8EB9500EA241C /* InventoryLocationTableViewCell.xib in Resources */,
@@ -4144,6 +4255,7 @@
 				79EBAC241D0AAE8400B72DB9 /* PointsTableViewCell.swift in Sources */,
 				79EBAC201D0AAE8400B72DB9 /* PointsDetailsTableViewCell.swift in Sources */,
 				798D82C31C8686EB00D2A1F7 /* StringHelper.swift in Sources */,
+				791E42541D35E3C700AE3E61 /* MessagingSenderImageTableViewCell.swift in Sources */,
 				798D83211C8686EB00D2A1F7 /* NewAddressTableViewCell.swift in Sources */,
 				798D81F21C8686EB00D2A1F7 /* PayoutEarningsTransactionTypeTableViewCell.swift in Sources */,
 				546BF3951D057D8A005DF761 /* AddWarehouseViewController.swift in Sources */,
@@ -4170,6 +4282,7 @@
 				798D831D1C8686EB00D2A1F7 /* ChangeAddressFooterCollectionViewCell.swift in Sources */,
 				798D83541C8686EB00D2A1F7 /* ProductImagesCollectionViewCell.swift in Sources */,
 				798D83651C8686EB00D2A1F7 /* ProductUploadCombinationListViewController.swift in Sources */,
+				791E42561D35E3C700AE3E61 /* MessagingSenderTableViewCell.swift in Sources */,
 				798D82411C8686EB00D2A1F7 /* HorizontalBarChartView.swift in Sources */,
 				798D83441C8686EB00D2A1F7 /* ProductDetailsModel.swift in Sources */,
 				798D831B1C8686EB00D2A1F7 /* ChangeAddressCollectionViewCell.swift in Sources */,
@@ -4220,6 +4333,7 @@
 				798D83101C8686EB00D2A1F7 /* VerifyViewController.swift in Sources */,
 				798D83461C8686EB00D2A1F7 /* ProductManagementProductModel.swift in Sources */,
 				798D82581C8686EB00D2A1F7 /* CandleChartDataSet.swift in Sources */,
+				791E42501D35E3C700AE3E61 /* MessagingReceiverImageTableViewCell.swift in Sources */,
 				798D84741C8686EB00D2A1F7 /* SaveButtonView.swift in Sources */,
 				798D834F1C8686EB00D2A1F7 /* ProductDescriptionView.swift in Sources */,
 				6D8F4CC21D22423300B24394 /* ProductUploadCategoryTextFieldTableViewCell.swift in Sources */,
@@ -4287,6 +4401,7 @@
 				798D827E1C8686EB00D2A1F7 /* LineChartRenderer.swift in Sources */,
 				798D83D81C8686EB00D2A1F7 /* SearchModel.swift in Sources */,
 				799AD44C1CFBEE1100977428 /* ProductUnitAttributeModel.swift in Sources */,
+				791E42451D35E3C700AE3E61 /* MessagingMessageModel.swift in Sources */,
 				798D83CC1C8686EB00D2A1F7 /* SalesReportTableViewCell.swift in Sources */,
 				79CCB6601CF6D60800E38612 /* LanguageTranslationTableViewController.swift in Sources */,
 				798D84171C8686EB00D2A1F7 /* AffiliateStoreHeaderView.swift in Sources */,
@@ -4298,6 +4413,7 @@
 				798D838D1C8686EB00D2A1F7 /* ProductUploadDetailFooterTableViewCell.swift in Sources */,
 				798D82181C8686EB00D2A1F7 /* SubCategoryModel.swift in Sources */,
 				798D84381C8686EB00D2A1F7 /* OrderModel.swift in Sources */,
+				791E424A1D35E3C700AE3E61 /* MessagingThreadViewController.swift in Sources */,
 				798D82621C8686EB00D2A1F7 /* PieChartDataSet.swift in Sources */,
 				798D83401C8686EB00D2A1F7 /* SelectDateViewController.swift in Sources */,
 				798D84531C8686EB00D2A1F7 /* TransactionImageCollectionViewCell.swift in Sources */,
@@ -4319,6 +4435,7 @@
 				798D82801C8686EB00D2A1F7 /* PieChartRenderer.swift in Sources */,
 				798D82761C8686EB00D2A1F7 /* ChartXAxisRendererBarChart.swift in Sources */,
 				798D81D71C8686EB00D2A1F7 /* PayoutBalanceRecordViewController.swift in Sources */,
+				791E42441D35E3C700AE3E61 /* MessagingConversationModel.swift in Sources */,
 				798D84791C8686EB00D2A1F7 /* DummyNavigationController.swift in Sources */,
 				798D83C31C8686EB00D2A1F7 /* SalesReportTableViewController.swift in Sources */,
 				798D82EC1C8686EB00D2A1F7 /* UploadImageModel.swift in Sources */,
@@ -4369,6 +4486,7 @@
 				798D82BF1C8686EB00D2A1F7 /* ParseHelper.swift in Sources */,
 				546BF3981D057D8A005DF761 /* WarehouseListViewController.swift in Sources */,
 				F7FDD0B31D08FDFA00AEA0BB /* WarehouseCityModel.swift in Sources */,
+				791E424C1D35E3C700AE3E61 /* MessagingContactTableViewCell.swift in Sources */,
 				798D82821C8686EB00D2A1F7 /* ScatterChartRenderer.swift in Sources */,
 				798D82BB1C8686EB00D2A1F7 /* HexaColor.swift in Sources */,
 				798D82101C8686EB00D2A1F7 /* ParentCategoryViewController.swift in Sources */,
@@ -4416,6 +4534,7 @@
 				798D840B1C8686EB00D2A1F7 /* SettingDeactivateTableViewCell.swift in Sources */,
 				798D82CF1C8686EB00D2A1F7 /* LoginHeaderTableViewCell.swift in Sources */,
 				79D4238F1D0000490060A0EC /* TranslationImageCollectionViewCell.swift in Sources */,
+				791E42461D35E3C700AE3E61 /* MessagingContactListViewController.swift in Sources */,
 				798D83B61C8686EB00D2A1F7 /* ResolutionCenterDisputeReasonModel.swift in Sources */,
 				798D82751C8686EB00D2A1F7 /* ChartXAxisRenderer.swift in Sources */,
 				798D84271C8686EB00D2A1F7 /* TransactionDeliveryLogTableViewController.swift in Sources */,
@@ -4447,6 +4566,7 @@
 				798D82331C8686EB00D2A1F7 /* EditProfileButtonTableViewCell.swift in Sources */,
 				798D82851C8686EB00D2A1F7 /* ChartSelectionDetail.swift in Sources */,
 				798D82311C8686EB00D2A1F7 /* EditProfileAddressTableViewCell.swift in Sources */,
+				791E42521D35E3C700AE3E61 /* MessagingReceiverTableViewCell.swift in Sources */,
 				799AD4491CFBE64600977428 /* ProductTranslationUnitModel.swift in Sources */,
 				798D83761C8686EB00D2A1F7 /* ConditionParserModel.swift in Sources */,
 				798D84771C8686EB00D2A1F7 /* AssetCollectionViewController.swift in Sources */,
@@ -4524,6 +4644,7 @@
 				798D83231C8686EB00D2A1F7 /* ReferralCodeTableViewCell.swift in Sources */,
 				798D82231C8686EB00D2A1F7 /* CustomizedCategoryViews.swift in Sources */,
 				798D82551C8686EB00D2A1F7 /* BubbleChartDataSet.swift in Sources */,
+				791E42481D35E3C700AE3E61 /* MessagingConversationListViewController.swift in Sources */,
 				798D83301C8686EB00D2A1F7 /* StoreInfoReferralCodeTableViewCell.swift in Sources */,
 				798D82D91C8686EB00D2A1F7 /* RegisterTableViewCell.swift in Sources */,
 				798D82C51C8686EB00D2A1F7 /* WebServiceManager.swift in Sources */,
@@ -4561,6 +4682,8 @@
 				798D83771C8686EB00D2A1F7 /* EditImageModel.swift in Sources */,
 				798D82081C8686EB00D2A1F7 /* AddCustomizedCategoryViewController.swift in Sources */,
 				798D821E1C8686EB00D2A1F7 /* CCCategoryItemsView.swift in Sources */,
+				791E424E1D35E3C700AE3E61 /* MessagingConversationTableViewCell.swift in Sources */,
+				791E425A1D35EF5B00AE3E61 /* ProductFullScreenViewController.swift in Sources */,
 				798D84351C8686EB00D2A1F7 /* DeliveryLogsItemModel.swift in Sources */,
 				798D837B1C8686EB00D2A1F7 /* ProductUploadAttributeCollectionViewCell.swift in Sources */,
 				798D830C1C8686EB00D2A1F7 /* StoreInfoViewController.swift in Sources */,
@@ -4608,6 +4731,7 @@
 				798D83191C8686EB00D2A1F7 /* StoreAddressModel.swift in Sources */,
 				798D841B1C8686EB00D2A1F7 /* SetupStoreFormTableViewCell.swift in Sources */,
 				798D825A1C8686EB00D2A1F7 /* ChartDataEntry.swift in Sources */,
+				791E42431D35E3C700AE3E61 /* MessagingContactModel.swift in Sources */,
 				798D81D51C8686EB00D2A1F7 /* BalanceWithdrawalViewsViewController.swift in Sources */,
 				798D842D1C8686EB00D2A1F7 /* TransactionProductTableViewController.swift in Sources */,
 				798D83591C8686EB00D2A1F7 /* ProductManagementCollectionViewCell.swift in Sources */,
@@ -4778,8 +4902,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Technology Nelsoft (2A6XNT4658)";
-				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: Technology Nelsoft (2A6XNT4658)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Technology Nelsoft (2A6XNT4658)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/yhelfronda/Downloads/google-plus-ios-sdk-1.7.1",
@@ -4789,7 +4913,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0ff4338b-a972-46bd-8e80-2a5ecf39b955";
+				PROVISIONING_PROFILE = "681d3a71-7328-46ab-b6ab-261d514aab2d";
 				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineSeller/Source/YiLinkerOnlineSeller-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -4801,8 +4925,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Technology Nelsoft (2A6XNT4658)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Technology Nelsoft (2A6XNT4658)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/yhelfronda/Downloads/google-plus-ios-sdk-1.7.1",
@@ -4812,7 +4936,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0ff4338b-a972-46bd-8e80-2a5ecf39b955";
+				PROVISIONING_PROFILE = "681d3a71-7328-46ab-b6ab-261d514aab2d";
 				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineSeller/Source/YiLinkerOnlineSeller-Bridging-Header.h";
 			};
 			name = Release;

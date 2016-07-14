@@ -365,7 +365,11 @@ class DashboardViewController: UIViewController, UICollectionViewDataSource, UIC
             self.navigationController?.pushViewController(resolutionCenter, animated:true)
             
         } else if self.tableData[indexPath.row] == DashboardViewConstants.helpString {
-            let help = HelpViewController(nibName: "HelpViewController", bundle: nil)
+//            let help = HelpViewController(nibName: "HelpViewController", bundle: nil)
+//            help.hidesBottomBarWhenPushed = true
+//            self.navigationController?.pushViewController(help, animated: true)
+            
+            let help = MessagingConversationListViewController(nibName: "MessagingConversationListViewController", bundle: nil)
             help.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(help, animated: true)
             

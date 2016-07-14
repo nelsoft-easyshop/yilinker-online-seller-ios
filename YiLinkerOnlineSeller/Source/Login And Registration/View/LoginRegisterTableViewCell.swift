@@ -121,10 +121,13 @@ extension LoginRegisterTableViewCell: UICollectionViewDataSource, UICollectionVi
         if indexPath.row == 0 {
             let cell: SimplifiedLoginUICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierLogin, forIndexPath: indexPath) as! SimplifiedLoginUICollectionViewCell
             cell.delegate = self
+            cell.setButtonEnabled(false)
             return cell
         } else {
             let cell: SimplifiedRegistrationUICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierRegistration, forIndexPath: indexPath) as! SimplifiedRegistrationUICollectionViewCell
             cell.delegate = self
+            cell.setButtonEnabled(false, button: cell.registerButton)
+            cell.setButtonEnabled(false, button: cell.sendActivationCodeButton)
             return cell
         }
     }
