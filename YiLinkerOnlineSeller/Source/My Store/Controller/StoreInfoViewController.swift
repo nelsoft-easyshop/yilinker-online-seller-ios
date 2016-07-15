@@ -29,6 +29,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     let editCover: String = StringHelper.localizedStringWithKey("STORE_INFO_EDIT_COVER_LOCALIZE_KEY")
     let storeInfo: String = StringHelper.localizedStringWithKey("STORE_INFO_STORE_INFO_LOCALIZE_KEY")
     let storeName: String = StringHelper.localizedStringWithKey("STORE_INFO_STORE_NAME_LOCALIZE_KEY")
+    let storeLink: String = StringHelper.localizedStringWithKey("STORE_INFO_STORE_LINK_LOCALIZE_KEY")
     let storeDesc: String = StringHelper.localizedStringWithKey("STORE_INFO_STORE_DESC_LOCALIZE_KEY")
     let mobilePhone: String = StringHelper.localizedStringWithKey("STORE_INFO_MOBILE_LOCALIZE_KEY")
     let changeTitle: String = StringHelper.localizedStringWithKey("STORE_INFO_CHANGE_LOCALIZE_KEY")
@@ -231,6 +232,12 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
         picker.maximumNumberOfSelectionPhoto = 1
         UzysAssetsPickerController.setUpAppearanceConfig(self.uzyConfig())
         self.presentViewController(picker, animated: true, completion: nil)
+    }
+    
+    func storeInfoCopyToClipboard(link: String) {
+        let board = UIPasteboard.generalPasteboard()
+        board.string = link
+        Toast.displayToastBottomWithMessage(StringHelper.localizedStringWithKey("STORE_INFO_COPIED_LOCALIZE_KEY"), duration: 1.5, view: self.tabBarController!.view)
     }
     
     func storeInfoVerify(mobile: String) {
@@ -645,11 +652,16 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
             cell.storeDescriptionLabel.text = self.storeDesc
             cell.storeInfoLabel.text = self.storeInfo
             cell.storeNameLabel.text = self.storeName
+            cell.storeLinkTitleLabel.text = self.storeLink
+            cell.storeLinkTitleLabel.required()
+            
             cell.verifyButton.setTitle(self.changeTitle, forState: UIControlState.Normal)
             
             if self.storeInfoModel != nil {
                 let url: NSString = NSString(string: (self.storeInfoModel?.avatar)!.absoluteString!)
                 
+                cell.storeLinkLabel.text = "http://www.online.api.easydeal.ph/\(self.storeInfoModel!.storeSlug)"
+               
                 if(self.storeInfoModel?.store_name != nil) {
                     if self.image != nil && self.imageCover != nil {
                         cell.coverEditImageView.image = self.imageCover
@@ -850,7 +862,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 556
+            return 623
         } else if indexPath.section == 1 {
             if SessionManager.isReseller() {
                 return 44
