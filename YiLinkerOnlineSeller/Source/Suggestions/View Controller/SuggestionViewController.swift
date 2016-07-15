@@ -182,6 +182,8 @@ class SuggestionViewController: UIViewController {
             self.activityIndicator.stopAnimating()
             self.titleTextField.text = SuggestionStrings.titlePlaceholder
             self.descriptionTextView.text = SuggestionStrings.descriptionPlaceholder
+            self.titleTextField.required()
+            self.descriptionTextView.required()
         }
     }
     
