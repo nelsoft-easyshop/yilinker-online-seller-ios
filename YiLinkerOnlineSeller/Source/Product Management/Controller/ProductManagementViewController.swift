@@ -219,7 +219,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         
         if selectedIndex == 1 {
             button1.setTitle(ManagementStrings.disableAll, forState: .Normal)
-        } else if selectedIndex == 2 || selectedIndex == 3 || selectedIndex == 6 {
+        } else if selectedIndex == 2 || selectedIndex == 3 || selectedIndex == 5 || selectedIndex == 6 {
             button1.setTitle(ManagementStrings.deleteAll, forState: .Normal)
             
             if selectedIndex == 2 {
@@ -618,7 +618,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if selectedIndex == 0 || selectedIndex == 5 {
+        if selectedIndex == 0/* || selectedIndex == 5 */{
             let cell: ProductManagementAllTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductManagementAllIdentifier") as! ProductManagementAllTableViewCell
             cell.selectionStyle = .None
             cell.tag = indexPath.row
@@ -815,7 +815,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             self.deleteView.hidden = true
             self.activeInactiveContainerView.hidden = true
             
-        } else if selectedIndex == 3 {
+        } else if selectedIndex == 3 || selectedIndex == 5 {
             self.deleteView.hidden = false
             
             self.activeInactiveContainerView.hidden = true
