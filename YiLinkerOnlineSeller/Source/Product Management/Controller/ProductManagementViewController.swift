@@ -77,10 +77,10 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     @IBOutlet weak var emptyLabel: UILabel!
     @IBOutlet weak var dimView: UIView!
     
-    var pageTitle: [String] = [ManagementStrings.all, ManagementStrings.active, ManagementStrings.inactive, ManagementStrings.drafts, ManagementStrings.deleted, ManagementStrings.underReview, ManagementStrings.rejected]
-    var selectedImage: [String] = ["all2", "active2", "inactive2", "drafts2", "deleted2", "review2", "review2"]
-    var deSelectedImage: [String] = ["all", "active", "inactive", "drafts", "deleted", "review", "review"]
-    var statusId: [Int] = [Status.all, Status.active, Status.inactive, Status.draft, Status.deleted, Status.review, Status.rejected]
+    var pageTitle: [String] = [ManagementStrings.all, ManagementStrings.active, ManagementStrings.inactive, ManagementStrings.drafts, ManagementStrings.deleted, ManagementStrings.underReview, ManagementStrings.rejected, ManagementStrings.forCompletion]
+    var selectedImage: [String] = ["all2", "active2", "inactive2", "drafts2", "deleted2", "review2", "review2", "all2"]
+    var deSelectedImage: [String] = ["all", "active", "inactive", "drafts", "deleted", "review", "review", "all"]
+    var statusId: [Int] = [Status.all, Status.active, Status.inactive, Status.draft, Status.deleted, Status.review, Status.rejected, Status.forCompletion]
     
     var selectedIndex: Int = 0
     var tableViewSectionHeight: CGFloat = 0
@@ -95,22 +95,12 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     var productModel: ProductManagementProductModel!
     var requestTask: NSURLSessionDataTask!
     
-    let flags = ["http://images-mediawiki-sites.thefullwiki.org/04/3/7/0/95484361858573992.png",
-        "http://wiki.erepublik.com/images/thumb/2/21/Flag-China.jpg/50px-Flag-China.jpg",
-        "https://jeetkunedomalaysia.files.wordpress.com/2014/10/jeet-kune-do-jkd-malaysia-flag.gif",
-        "http://www.thailanguagehut.com/wp-content/uploads/2010/04/Thai-Flag.gif",
-        "http://flaglane.com/download/singaporean-flag/singaporean-flag-graphic.png",
-        "http://flaglane.com/download/singaporean-flag/singaporean-flag-graphic.png",
-        "http://flaglane.com/download/singaporean-flag/singaporean-flag-graphic.png"]
-    let languages = ["EN", "EN", "CN", "EN", "FR", "08"]
-    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-//                SessionManager.setAccessToken("YjU4NTRhNzdmNDRmYjU1ODQ5MzVjZmIyN2E1ZjA4NWMxNTEwNDFhNmRlNTA2MDAyMzAxNWIzYWFjZTIxOTZiMA")
         self.showHUD()
         customizeNavigationBar()
         customizeViews()
@@ -219,7 +209,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         
         if selectedIndex == 1 {
             button1.setTitle(ManagementStrings.disableAll, forState: .Normal)
-        } else if selectedIndex == 2 || selectedIndex == 3 || selectedIndex == 6 {
+        } else if selectedIndex == 2 || selectedIndex == 3 || selectedIndex == 5 || selectedIndex == 6 {
             button1.setTitle(ManagementStrings.deleteAll, forState: .Normal)
             
             if selectedIndex == 2 {
@@ -618,7 +608,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if selectedIndex == 0 || selectedIndex == 5 {
+        if selectedIndex == 0/* || selectedIndex == 5 */{
             let cell: ProductManagementAllTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ProductManagementAllIdentifier") as! ProductManagementAllTableViewCell
             cell.selectionStyle = .None
             cell.tag = indexPath.row
@@ -738,7 +728,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
     // MARK: - Collection View Data Source
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 7
+        return 8
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -815,7 +805,7 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             self.deleteView.hidden = true
             self.activeInactiveContainerView.hidden = true
             
-        } else if selectedIndex == 3 {
+        } else if selectedIndex == 3 || selectedIndex == 5 {
             self.deleteView.hidden = false
             
             self.activeInactiveContainerView.hidden = true
