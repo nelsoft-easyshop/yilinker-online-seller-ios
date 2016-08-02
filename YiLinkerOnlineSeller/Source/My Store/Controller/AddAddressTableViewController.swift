@@ -466,7 +466,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 //If isSuccessful is true, call the delegate method to add new address in collection view
                 self.delegate!.addAddressTableViewController(didAddAddressSucceed: self)
                 
-                self.navigationController!.popViewControllerAnimated(true)
+                self.navigationController?.popViewControllerAnimated(true)
                 self.hud?.hide(true)
             } else {
                 self.hud?.hide(true)

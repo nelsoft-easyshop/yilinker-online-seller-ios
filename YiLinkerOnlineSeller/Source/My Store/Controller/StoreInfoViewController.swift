@@ -713,6 +713,7 @@ class StoreInfoViewController: UITableViewController, UITableViewDelegate, UITab
                     
                     cell.verifyButton.setTitle(self.changeTitle, forState: UIControlState.Normal)
                     cell.tinLabel.text = self.tinTitle
+                    cell.tinLabel.required()
                     cell.tinTextField.placeholder = self.tinTitle
                     cell.verifyButton.tag = 2
                 } else {
