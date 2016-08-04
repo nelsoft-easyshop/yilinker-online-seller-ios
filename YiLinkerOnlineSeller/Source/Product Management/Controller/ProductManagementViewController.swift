@@ -78,8 +78,8 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
     @IBOutlet weak var dimView: UIView!
     
     var pageTitle: [String] = [ManagementStrings.all, ManagementStrings.active, ManagementStrings.inactive, ManagementStrings.drafts, ManagementStrings.deleted, ManagementStrings.underReview, ManagementStrings.rejected, ManagementStrings.forCompletion]
-    var selectedImage: [String] = ["all2", "active2", "inactive2", "drafts2", "deleted2", "review2", "review2", "all2"]
-    var deSelectedImage: [String] = ["all", "active", "inactive", "drafts", "deleted", "review", "review", "all"]
+    var selectedImage: [String] = ["all2", "active2", "inactive2", "drafts2", "deleted2", "review2", "review2", "completion2"]
+    var deSelectedImage: [String] = ["all", "active", "inactive", "drafts", "deleted", "review", "review", "completion"]
     var statusId: [Int] = [Status.all, Status.active, Status.inactive, Status.draft, Status.deleted, Status.review, Status.rejected, Status.forCompletion]
     
     var selectedIndex: Int = 0
@@ -209,7 +209,7 @@ class ProductManagementViewController: UIViewController, ProductManagementModelV
         
         if selectedIndex == 1 {
             button1.setTitle(ManagementStrings.disableAll, forState: .Normal)
-        } else if selectedIndex == 2 || selectedIndex == 3 || selectedIndex == 5 || selectedIndex == 6 {
+        } else if selectedIndex == 2 || selectedIndex == 3 || selectedIndex == 5 || selectedIndex == 6 || selectedIndex == 7 {
             button1.setTitle(ManagementStrings.deleteAll, forState: .Normal)
             
             if selectedIndex == 2 {
@@ -779,6 +779,10 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             } else {
                 return CGSize(width: 0.0, height: 60.0)
             }
+        } else {
+            if indexPath.row == 6 {
+                return CGSize(width: 0.0, height: 60.0)
+            }
         }
         return CGSize(width: self.view.frame.size.width / 6, height: 60)
     }
@@ -816,6 +820,11 @@ extension ProductManagementViewController: UITextFieldDelegate, UITableViewDataS
             self.deleteView.hidden = true
             self.activeInactiveDeleteContainerView.hidden = true
         } else if selectedIndex == 6 {
+            self.deleteView.hidden = false
+            
+            self.activeInactiveDeleteContainerView.hidden = true
+            self.activeInactiveContainerView.hidden = true
+        } else if selectedIndex == 7 {
             self.deleteView.hidden = false
             
             self.activeInactiveDeleteContainerView.hidden = true

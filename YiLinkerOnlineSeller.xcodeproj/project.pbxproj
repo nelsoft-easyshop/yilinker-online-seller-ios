@@ -28,7 +28,9 @@
 		262BEDEF1CC71C8B004882DF /* CountryStoreTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 262BEDED1CC71C8B004882DF /* CountryStoreTableViewCell.xib */; };
 		267DD2CA1CE9D089005D219A /* CountryListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267DD2C91CE9D089005D219A /* CountryListModel.swift */; };
 		267DD2CC1CEB1AE8005D219A /* CountrySetupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267DD2CB1CEB1AE8005D219A /* CountrySetupModel.swift */; };
+		26B791911D51C1F9005FBB6F /* ProductManagementCombinationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26B7918F1D51C1F9005FBB6F /* ProductManagementCombinationViewController.xib */; };
 		26DD270E1CCA263F00A0D63B /* ProductCombination2TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DD270D1CCA263F00A0D63B /* ProductCombination2TableViewCell.swift */; };
+		26E8A8EC1D51F0340023C557 /* ProductManagementCombinationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B7918E1D51C1F9005FBB6F /* ProductManagementCombinationViewController.swift */; };
 		542D07531D08E233003F1075 /* SwipeableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542D07521D08E233003F1075 /* SwipeableCell.swift */; };
 		546BF3951D057D8A005DF761 /* AddWarehouseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546BF3901D057D8A005DF761 /* AddWarehouseViewController.swift */; };
 		546BF3961D057D8A005DF761 /* WarehouseDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546BF3911D057D8A005DF761 /* WarehouseDetailViewController.swift */; };
@@ -910,6 +912,8 @@
 		262BEDED1CC71C8B004882DF /* CountryStoreTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryStoreTableViewCell.xib; sourceTree = "<group>"; };
 		267DD2C91CE9D089005D219A /* CountryListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryListModel.swift; sourceTree = "<group>"; };
 		267DD2CB1CEB1AE8005D219A /* CountrySetupModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountrySetupModel.swift; sourceTree = "<group>"; };
+		26B7918E1D51C1F9005FBB6F /* ProductManagementCombinationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductManagementCombinationViewController.swift; sourceTree = "<group>"; };
+		26B7918F1D51C1F9005FBB6F /* ProductManagementCombinationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductManagementCombinationViewController.xib; sourceTree = "<group>"; };
 		26DD270D1CCA263F00A0D63B /* ProductCombination2TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductCombination2TableViewCell.swift; path = ../View/ProductCombination2TableViewCell.swift; sourceTree = "<group>"; };
 		542D07521D08E233003F1075 /* SwipeableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeableCell.swift; sourceTree = "<group>"; };
 		546BF3901D057D8A005DF761 /* AddWarehouseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddWarehouseViewController.swift; sourceTree = "<group>"; };
@@ -2797,6 +2801,8 @@
 				79A1C7061CFD3C54001184C4 /* LanguageTransalationVariantsCollectionViewController.xib */,
 				79A1C7151CFD8452001184C4 /* LanguageTransalationCombinationsCollectionViewController.swift */,
 				79A1C7161CFD8452001184C4 /* LanguageTransalationCombinationsCollectionViewController.xib */,
+				26B7918E1D51C1F9005FBB6F /* ProductManagementCombinationViewController.swift */,
+				26B7918F1D51C1F9005FBB6F /* ProductManagementCombinationViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -3897,6 +3903,7 @@
 				798D81FD1C8686EB00D2A1F7 /* PayoutRequestListTableViewCell.xib in Resources */,
 				79EF66301CA1088B000CDA6B /* HelpViewController.xib in Resources */,
 				798D84301C8686EB00D2A1F7 /* TransactionShipItemTableViewController.xib in Resources */,
+				26B791911D51C1F9005FBB6F /* ProductManagementCombinationViewController.xib in Resources */,
 				798D841C1C8686EB00D2A1F7 /* SetupStoreFormTableViewCell.xib in Resources */,
 				798D81E81C8686EB00D2A1F7 /* WithdrawModalViewController.xib in Resources */,
 				798D839E1C8686EB00D2A1F7 /* ProductUploadQuantityTableViewCell.xib in Resources */,
@@ -4216,6 +4223,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26E8A8EC1D51F0340023C557 /* ProductManagementCombinationViewController.swift in Sources */,
 				798D83321C8686EB00D2A1F7 /* StoreInfoSectionTableViewCell.swift in Sources */,
 				798D82A91C8686EB00D2A1F7 /* FollowersViewController.swift in Sources */,
 				798D83C81C8686EB00D2A1F7 /* SalesReportModel.swift in Sources */,

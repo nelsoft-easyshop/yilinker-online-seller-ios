@@ -76,6 +76,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     let dimensionWeightNames = [DetailsString.length, DetailsString.width, DetailsString.weight, DetailsString.height]
     
     var detailValues: [String] = []
+    var combinationValues: [String] = []
     var priceValues: [String] = []
     var dimensionWeightValues: [String] = []
     
@@ -83,16 +84,14 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     var listValues: [String] = []
     var listProductGroup: [String] = []
     
-    var listDetails: NSDictionary = [:]
-    var listPrice: NSDictionary = [:]
-    var listDimensionsWeight: NSDictionary = [:]
     var listSections: [NSArray] = []
-    var listSectionTitle = [DetailsString.titleDetails, "Product Group", DetailsString.titlePrice, DetailsString.titleDimensionsWeight]
+    var listSectionTitle = [DetailsString.titleDetails, "Product Group", "Combinations", DetailsString.titlePrice, DetailsString.titleDimensionsWeight]
     var names: [String] = []
     var values: [String] = []
     var uploadType: UploadType = UploadType.NewProduct
     var url: String = ""
     var parameters: NSMutableDictionary = NSMutableDictionary()
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -253,30 +252,36 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         self.productImagesView.setDetails(productModel, uploadType: self.uploadType)
 //        self.productDescriptionView.descriptionLabel.text = productModel.shortDescription
         self.productDescriptionView.setDescription(productModel.shortDescription)
-        
+        println(productModel.validCombinations)
         if productModel.validCombinations.count != 0 {
             let def: CombinationModel = productModel.validCombinations[0]
             self.detailValues = [productModel.category.name, productModel.shippingCategories.name, productModel.brand.name, productModel.condition.name, def.quantity, def.sku]
+            
+            if self.combinationValues.count == 0 {
+                for i in 0..<productModel.validCombinations.count {
+                    self.combinationValues.append("Combination \(i + 1)")
+                }
+            }
+            
             self.priceValues = ["₱ " + def.retailPrice, "₱ " + def.discountedPrice]
+            
             self.dimensionWeightValues = [def.length + "cm", def.width + "cm", def.weight + "kg", def.height + "cm"]
-
-//            self.listValues = [productModel.category.name, productModel.brand.name, def.sku, def.quantity,
-//                "₱" + def.retailPrice.floatValue.string(2), "₱" + def.discountedPrice.floatValue.string(2),
-//                def.length + "cm", def.width + "cm", def.weight + "kg", def.height + "cm"]
         } else {
             self.detailValues = [productModel.category.name, productModel.shippingCategories.name, productModel.brand.name, productModel.condition.name, String(productModel.quantity), productModel.sku]
-            self.priceValues = ["₱ " + productModel.retailPrice, "₱ " + productModel.discoutedPrice]
-            self.dimensionWeightValues = [productModel.length + "cm", productModel.width + "cm", productModel.weigth + "kg", productModel.height + "cm"]
             
-//            self.listValues = [productModel.category.name, productModel.brand.name, productModel.sku, String(productModel.quantity),
-//                "₱" + productModel.retailPrice.floatValue.string(2), "₱" + productModel.discoutedPrice.floatValue.string(2),
-//                productModel.length + "cm", productModel.width + "cm", productModel.weigth + "kg", productModel.height + "cm"]
+            if self.combinationValues.count == 0 {
+                for i in 0..<productModel.validCombinations.count {
+                    self.combinationValues.append("Combination \(i + 1)")
+                }
+            }
+            
+            self.priceValues = ["₱ " + productModel.retailPrice, "₱ " + productModel.discoutedPrice]
+            
+            self.dimensionWeightValues = [productModel.length + "cm", productModel.width + "cm", productModel.weigth + "kg", productModel.height + "cm"]
         }
         
-        self.listNames = [DetailsString.category, "Shipping Categories", DetailsString.brand, "Condition",DetailsString.quantity, DetailsString.sku,
-            DetailsString.retail, DetailsString.discounted,
-            DetailsString.length, DetailsString.width, DetailsString.weight, DetailsString.height]
-        self.listSections = [detailValues, [], priceValues, dimensionWeightValues]
+//        self.listNames = [DetailsString.category, "Shipping Categories", DetailsString.brand, "Condition",DetailsString.quantity, DetailsString.sku, DetailsString.retail, DetailsString.discounted, DetailsString.length, DetailsString.width, DetailsString.weight, DetailsString.height]
+        self.listSections = [detailValues, [], combinationValues, priceValues, dimensionWeightValues]
         self.tableView.reloadData()
     }
     
@@ -533,7 +538,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
     // MARK: - Table View Data Source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 4
+        return listSectionTitle.count
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -596,6 +601,10 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
             
             return cell
         } else if indexPath.section == 2 {
+            cell.itemNameLabel.text = self.combinationValues[indexPath.row]
+            cell.itemValueLabel.text = ">"
+            return cell
+        } else if indexPath.section == 3 {
             cell.itemNameLabel.text = self.priceNames[indexPath.row]
             cell.itemValueLabel.text = self.priceValues[indexPath.row]
             if indexPath.row == 1 {
@@ -603,7 +612,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
             }
             
             return cell
-        } else if indexPath.section == 3 {
+        } else if indexPath.section == 4 {
             cell.itemNameLabel.text = self.dimensionWeightNames[indexPath.row]
             if count(self.dimensionWeightValues[indexPath.row]) == 2 {
                 cell.itemValueLabel.text = "-"
@@ -646,6 +655,15 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         return footerView
     }
 
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 2 {
+            let vc = ProductManagementCombinationViewController(nibName: "ProductManagementCombinationViewController", bundle: nil)
+            vc.combinationModel = productModel.validCombinations[indexPath.row]
+            vc.index = indexPath.row + 1
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
     // MARK: - Product Description Delegate
     
     func gotoDescriptionViewController(view: ProductDescriptionView) {
