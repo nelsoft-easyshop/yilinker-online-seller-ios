@@ -257,7 +257,11 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
             let def: CombinationModel = productModel.validCombinations[0]
             self.detailValues = [productModel.category.name, productModel.shippingCategories.name, productModel.brand.name, productModel.condition.name, def.quantity, def.sku]
             
-            self.combinationValues = ["Combination 1", "Combination 2"]
+            if self.combinationValues.count == 0 {
+                for i in 0..<productModel.validCombinations.count {
+                    self.combinationValues.append("Combination \(i + 1)")
+                }
+            }
             
             self.priceValues = ["₱ " + def.retailPrice, "₱ " + def.discountedPrice]
             
@@ -265,7 +269,11 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         } else {
             self.detailValues = [productModel.category.name, productModel.shippingCategories.name, productModel.brand.name, productModel.condition.name, String(productModel.quantity), productModel.sku]
             
-            self.combinationValues = ["Combination 1", "Combination 2"]
+            if self.combinationValues.count == 0 {
+                for i in 0..<productModel.validCombinations.count {
+                    self.combinationValues.append("Combination \(i + 1)")
+                }
+            }
             
             self.priceValues = ["₱ " + productModel.retailPrice, "₱ " + productModel.discoutedPrice]
             
@@ -593,11 +601,7 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
             
             return cell
         } else if indexPath.section == 2 {
-//            cell.itemNameLabel.text = self.priceNames[indexPath.row]
-//            cell.itemValueLabel.text = self.priceValues[indexPath.row]
-//            if indexPath.row == 1 {
-//                cell.itemValueLabel.textColor = Constants.Colors.productPrice
-//            }
+            cell.itemNameLabel.text = self.combinationValues[indexPath.row]
             cell.itemValueLabel.text = ">"
             return cell
         } else if indexPath.section == 3 {
@@ -651,6 +655,15 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
         return footerView
     }
 
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 2 {
+            let vc = ProductManagementCombinationViewController(nibName: "ProductManagementCombinationViewController", bundle: nil)
+            vc.combinationModel = productModel.validCombinations[indexPath.row]
+            vc.index = indexPath.row + 1
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
     // MARK: - Product Description Delegate
     
     func gotoDescriptionViewController(view: ProductDescriptionView) {
