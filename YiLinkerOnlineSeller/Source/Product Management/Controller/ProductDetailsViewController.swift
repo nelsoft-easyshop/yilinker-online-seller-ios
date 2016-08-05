@@ -280,7 +280,6 @@ class ProductDetailsViewController: UIViewController, UITableViewDataSource, UIT
             self.dimensionWeightValues = [productModel.length + "cm", productModel.width + "cm", productModel.weigth + "kg", productModel.height + "cm"]
         }
         
-//        self.listNames = [DetailsString.category, "Shipping Categories", DetailsString.brand, "Condition",DetailsString.quantity, DetailsString.sku, DetailsString.retail, DetailsString.discounted, DetailsString.length, DetailsString.width, DetailsString.weight, DetailsString.height]
         self.listSections = [detailValues, [], combinationValues, priceValues, dimensionWeightValues]
         self.tableView.reloadData()
     }
